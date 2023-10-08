@@ -1,0 +1,42 @@
+{
+  "private": true,
+  "name": "rsbuild-monorepo",
+  "scripts": {
+    "new": "modern new",
+    "bump": "modern bump",
+    "lint": "modern lint",
+    "build": "turbo run build --filter {packages/**} --cache-dir=.turbo --no-daemon",
+    "change": "modern change",
+    "release": "modern release",
+    "prepare": "pnpm run build && husky install",
+    "change-status": "modern change-status",
+    "gen-release-note": "modern gen-release-note"
+  },
+  "engines": {
+    "node": ">=16.18.1"
+  },
+  "packageManager": "pnpm@8.8.0",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "eslint --fix --color --cache --quiet"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/"
+  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "devDependencies": {
+    "@modern-js-app/eslint-config": "2.35.1",
+    "@modern-js/eslint-config": "2.35.1",
+    "@modern-js/monorepo-tools": "2.35.1",
+    "eslint": "^8.51.0",
+    "husky": "^8.0.3",
+    "prettier": "^3.0.3",
+    "turbo": "^1.10.12"
+  }
+}

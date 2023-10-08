@@ -1,0 +1,15 @@
+.DS_Store
+*.log*
+node_modules/
+.turbo
+.eslintcache
+
+dist/
+coverage/
+doc_build/
+playwright-report/
+
+.vscode/**/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/

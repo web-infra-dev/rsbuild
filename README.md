@@ -4,7 +4,7 @@
   <img alt="Rsbuild Banner" src="https://github.com/web-infra-dev/rsbuild/assets/39261479/999e7946-45ff-45d5-b9cd-594e634e0e5a">
 </picture> -->
 
-<h2 align="center">A fast Rspack-based static site generator.</h2>
+A fast Rspack-based static site generator.
 
 ## Features
 
