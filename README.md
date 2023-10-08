@@ -1,10 +1,8 @@
-# Rsbuild
-
 <picture>
   <img alt="Rsbuild Banner" src="https://lf3-static.bytednsdoc.com/obj/eden-cn/aphqeh7uhohpquloj/modern-js/rsbuild/Rsbuild-10081601.png">
 </picture>
 
-An Rspack-based build tool for the web.
+# Rsbuild
 
 ## Features
 
@@ -16,7 +14,7 @@ Go to the [Quick Start](TODO) to get started.
 
 ## Contribution
 
-Please read the [contributing guide](TODO) and let's build Rsbuild together.
+Please read the [Contribution Guide](./CONTRIBUTING.md) and let's build Rsbuild together.
 
 ### Code of Conduct
 
