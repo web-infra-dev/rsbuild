@@ -5,6 +5,8 @@
     "new": "modern new",
     "bump": "modern bump",
     "lint": "modern lint",
+    "test:ut": "echo 'foo'",
+    "test:e2e": "echo 'e2e'",
     "build": "turbo run build --filter {packages/**} --cache-dir=.turbo --no-daemon",
     "change": "modern change",
     "release": "modern release",
