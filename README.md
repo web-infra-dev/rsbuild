@@ -4,9 +4,18 @@
 
 # Rsbuild
 
+Rsbuild is an Rspack-based build tool for the web.
+
+The main goal of Rsbuild is to provide out-of-the-box building capabilities for Rspack users, allowing us to start a Rspack project with zero configuration.
+
 ## Features
 
-TODO
+- 🚀 **Rspack Based**: Using Rspack to bring you the ultimate development experience.
+- 🍭 **Easy to Configure**: Start with zero configuration and everything is configurable.
+- 🦄 **Batteries Included**: Out-of-the-box integration with the most practical building features in the ecosystem.
+- 🛠️ **Deep Optimization**: Automatically optimize static assets to maximizing production performance.
+- 🎨 **Highly Pluggable**: Comes with a lightweight plugin system and a set of high quality plugins.
+- 🎯 **Framework Agnostic**: Supports React, Vue, Svelte, and more.
 
 ## Getting Started
 
