@@ -1,0 +1,15 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@2.0.0/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "linked": [],
+  "access": "restricted",
+  "baseBranch": "main",
+  "fixed": [["@rsbuild/*"]],
+  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+    "onlyUpdatePeerDependentsWhenOutOfRange": true,
+    "updateInternalDependents": "always"
+  },
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}
