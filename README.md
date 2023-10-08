@@ -1,10 +1,10 @@
 # Rsbuild
 
-<!-- <picture>
-  <img alt="Rsbuild Banner" src="https://github.com/web-infra-dev/rsbuild/assets/39261479/999e7946-45ff-45d5-b9cd-594e634e0e5a">
-</picture> -->
+<picture>
+  <img alt="Rsbuild Banner" src="https://lf3-static.bytednsdoc.com/obj/eden-cn/aphqeh7uhohpquloj/modern-js/rsbuild/Rsbuild-10081601.png">
+</picture>
 
-A fast Rspack-based static site generator.
+An Rspack-based build tool for the web.
 
 ## Features
 
