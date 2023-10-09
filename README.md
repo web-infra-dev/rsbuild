@@ -21,6 +21,12 @@ The main goal of Rsbuild is to provide out-of-the-box building capabilities for 
 
 Go to the [Quick Start](TODO) to get started.
 
+## Ecosystem
+
+- 🦀 [Rspack](https://github.com/web-infra-dev/rspack): the underlying bundler of Rsbuild.
+- 🐹 [Rspress](https://github.com/web-infra-dev/rspress): A fast static site generator based on Rsbuild.
+- 🦄 [Modern.js](https://github.com/web-infra-dev/modern.js): A progressive React framework based on Rsbuild.
+
 ## Contribution
 
 Please read the [Contribution Guide](./CONTRIBUTING.md) and let's build Rsbuild together.
