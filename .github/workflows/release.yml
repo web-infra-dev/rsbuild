@@ -1,0 +1,124 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: choice
+        description: 'Release Version(next, beta, alpha, latest)'
+        required: true
+        default: 'next'
+        options:
+          - next
+          - beta
+          - alpha
+          - latest
+      branch:
+        description: 'Release Branch(confirm release branch)'
+        required: true
+        default: 'main'
+  issue_comment:
+    types: [created]
+
+permissions:
+  id-token: write
+
+jobs:
+  issue_comment:
+    name: Release with comment
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '!canary')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          ref: refs/pull/${{ github.event.issue.number }}/head
+
+      - name: Install Pnpm
+        run: corepack enable
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install npm v9
+        run: npm install -g npm@9
+
+      - name: Turbo Cache
+        id: turbo-cache
+        uses: actions/cache@v3
+        with:
+          path: .turbo
+          key: turbo-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.ref_name }}-
+            turbo-
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Release
+        uses: web-infra-dev/actions@v2
+        with:
+          version: 'next'
+          type: 'release'
+          branch: ''
+          tools: 'modern'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          PULL_REQUEST_NUMBER: ${{ github.event.issue.number }}
+          COMMENT: ${{ toJson(github.event.comment) }}
+
+  release:
+    name: Release
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 25
+
+      - name: Install Pnpm
+        run: corepack enable
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install npm v9
+        run: npm install -g npm@9
+
+      - name: Turbo Cache
+        id: turbo-cache
+        uses: actions/cache@v3
+        with:
+          path: .turbo
+          key: turbo-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.ref_name }}-
+            turbo-
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Release
+        uses: web-infra-dev/actions@v2
+        with:
+          version: ${{ github.event.inputs.version }}
+          branch: ${{ github.event.inputs.branch }}
+          type: 'release'
+          tools: 'modern'
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          REF: ${{ github.ref }}
