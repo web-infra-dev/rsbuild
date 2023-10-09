@@ -1,0 +1,45 @@
+{
+  "name": "@rsbuild/monorepo-utils",
+  "description": "The monorepo utils of Rsbuild.",
+  "homepage": "https://rsbuild.dev",
+  "bugs": "https://github.com/web-infra-dev/rsbuild/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/monorepo-utils"
+  },
+  "license": "MIT",
+  "version": "0.0.1",
+  "jsnext:source": "./src/index.ts",
+  "types": "./src/index.ts",
+  "main": "./dist/cjs/index.js",
+  "exports": {
+    ".": {
+      "jsnext:source": "./src/index.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "types": "./dist/types/index.d.ts"
+  },
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
+  "dependencies": {
+    "@modern-js/utils": "^2.35.1",
+    "@swc/helpers": "0.5.1",
+    "p-map": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16",
+    "typescript": "^5"
+  }
+}

@@ -2,22 +2,13 @@
   "name": "@rsbuild/friendly-errors-webpack-plugin",
   "description": "Recognizes certain classes of webpack errors and cleans, aggregates and prioritizes them to provide a better Developer Experience",
   "homepage": "https://rsbuild.dev",
-  "bugs": "https://github.com/modern-js-dev/rsbuild/issues",
+  "bugs": "https://github.com/web-infra-dev/rsbuild/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/friendly-errors-webpack-plugin"
   },
   "license": "MIT",
-  "keywords": [
-    "friendly",
-    "errors",
-    "webpack",
-    "plugin"
-  ],
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "version": "0.0.1",
   "jsnext:source": "./src/index.ts",
   "types": "./src/index.ts",
@@ -54,8 +45,14 @@
       ]
     }
   },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "scripts": {
-    "prepublishOnly": "only-allow-pnpm",
     "build": "modern build",
     "dev": "modern build --watch",
     "test": "echo foo",
@@ -65,14 +62,12 @@
     "example:build": "webpack -c example/webpack.config.js"
   },
   "dependencies": {
-    "stacktracey": "^2.1.8",
-    "@modern-js/utils": "^2.35.1"
+    "@modern-js/utils": "^2.35.1",
+    "stacktracey": "^2.1.8"
   },
   "devDependencies": {
     "@modern-js/builder-shared": "^2.35.1",
-    "@modern-js/module-tools": "^2.35.1",
-    "@modern-js/tsconfig": "^2.35.1",
-    "@types/node": "^14",
+    "@types/node": "^16",
     "ansi-to-html": "^0.7.2",
     "typescript": "^5",
     "webpack": "^5.88.1",
@@ -80,10 +75,5 @@
   },
   "peerDependencies": {
     "webpack": "^5.0.0"
-  },
-  "sideEffects": false,
-  "files": [
-    "dist",
-    "compiled"
-  ]
+  }
 }
