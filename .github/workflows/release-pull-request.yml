@@ -55,7 +55,6 @@ jobs:
           versionNumber: 'auto'
           type: 'pull request'
           tools: 'modern'
-          beforeBumpScript: 'update:modern'
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
