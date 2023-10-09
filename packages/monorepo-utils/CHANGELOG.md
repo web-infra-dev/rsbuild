@@ -1,5 +1,11 @@
 # @rsbuild/monorepo-utils
 
+## 0.0.2
+
+### Patch Changes
+
+- 024e0c0: fix(monorepo-utils): incorrect exports path
+
 ## 0.0.1
 
 ### Patch Changes
