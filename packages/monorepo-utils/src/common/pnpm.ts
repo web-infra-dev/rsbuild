@@ -1,5 +1,7 @@
 import path from 'path';
-import { fs, yaml, globby, type GlobbyOptions } from '@modern-js/utils';
+import fs from 'fs-extra';
+import { load } from 'js-yaml';
+import glob, { Options as GlobOptions } from 'fast-glob';
 import pMap from 'p-map';
 import { Project } from '../project/project';
 import { PNPM_WORKSPACE_FILE, PACKAGE_JSON } from '../constants';
@@ -9,7 +11,7 @@ import type { IPnpmWorkSpace } from '../types';
 export const getPatternsFromYaml = async (monorepoRoot: string) => {
   const workspaceYamlFilePath = path.join(monorepoRoot, PNPM_WORKSPACE_FILE);
   const yamlContent = await fs.readFile(workspaceYamlFilePath, 'utf8');
-  const pnpmWorkspace = yaml.load(yamlContent) as IPnpmWorkSpace;
+  const pnpmWorkspace = load(yamlContent) as IPnpmWorkSpace;
   return pnpmWorkspace.packages || [];
 };
 
@@ -20,11 +22,10 @@ const getGlobOpts = (
   rootPath: string,
   patterns: string[],
   ignore: string[] = [],
-): GlobbyOptions => {
-  const globOpts: any = {
+): GlobOptions => {
+  const globOpts: GlobOptions = {
     cwd: rootPath,
     absolute: true,
-    expandDirectories: false,
     followSymbolicLinks: false,
   };
 
@@ -51,13 +52,13 @@ export const makeFileFinder = (
   return async <FileMapperType>(
     fileName: string,
     fileMapper: (filepath: string[]) => Promise<FileMapperType[]>,
-    customGlobOpts: GlobbyOptions = {},
+    customGlobOpts: GlobOptions = {},
   ) => {
     const options = { ...customGlobOpts, ...globOpts };
     const promise = pMap(
       Array.from(patterns).sort(),
       async (globPath: string) => {
-        let result = await globby(path.posix.join(globPath, fileName), options);
+        let result = await glob(path.posix.join(globPath, fileName), options);
 
         // fast-glob does not respect pattern order, so we re-sort by absolute path
         result = result.sort();
@@ -90,7 +91,7 @@ export const readPnpmProjects = async (
   };
   const projects = await finder(
     PACKAGE_JSON,
-    filePaths =>
+    (filePaths) =>
       pMap(filePaths, mapper, { concurrency: filePaths.length || Infinity }),
     {},
   );
@@ -103,8 +104,8 @@ export const getProjects = async (monorepoRoot: string): Promise<Project[]> => {
 
   return Promise.all(
     pnpmProjects
-      .filter(p => p.manifest.name)
-      .map(async p => {
+      .filter((p) => p.manifest.name)
+      .map(async (p) => {
         const project = new Project(p.manifest.name, p.dir);
         await project.init();
         return project;

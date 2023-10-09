@@ -1,5 +1,6 @@
 import path from 'path';
-import { fs, json5 } from '@modern-js/utils';
+import fs from 'fs-extra';
+import json5 from 'json5';
 import { PACKAGE_JSON, RUSH_JSON_FILE } from './constants';
 import type { INodePackageJson, IRushConfig } from './types';
 

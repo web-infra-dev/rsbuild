@@ -1,4 +1,4 @@
-import chalk from '@modern-js/utils/chalk';
+import chalk from 'chalk';
 import { ErrorTransformer } from '../shared/types';
 
 export const moduleParseErrorTransformer: ErrorTransformer = (e) => {

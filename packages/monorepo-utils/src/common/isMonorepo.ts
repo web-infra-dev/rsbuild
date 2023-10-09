@@ -1,5 +1,5 @@
-import * as path from 'path';
-import { fs } from '@modern-js/utils';
+import path from 'path';
+import fs from 'fs-extra';
 import { PNPM_WORKSPACE_FILE, RUSH_JSON_FILE } from '../constants';
 
 export type IsMonorepoFn = (

@@ -1,4 +1,4 @@
-import _ from '@modern-js/utils/lodash';
+import _ from 'lodash';
 import StackTracey from 'stacktracey';
 import { ErrorTransformer } from '../shared/types';
 

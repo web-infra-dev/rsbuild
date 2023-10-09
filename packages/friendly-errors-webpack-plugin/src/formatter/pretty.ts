@@ -1,5 +1,5 @@
 import { WebpackError } from 'webpack';
-import chalk from '@modern-js/utils/chalk';
+import chalk from 'chalk';
 import type StackTracey from 'stacktracey';
 import { ErrorFormatter } from '../shared/types';
 

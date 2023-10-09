@@ -1,4 +1,4 @@
-import _ from '@modern-js/utils/lodash';
+import _ from 'lodash';
 import { baseFormatter } from '../formatter';
 import { ParsedError } from '../core/parse';
 import { ErrorFormatter, ErrorTransformer } from './types';

@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { inspect } from 'util';
-import _ from '@modern-js/utils/lodash';
+import _ from 'lodash';
 import { JSONValue } from '@modern-js/builder-shared';
 import { ThrowableType, TracingFrame } from '../shared/types';
 import StackTracey from 'stacktracey';
