@@ -1,0 +1,63 @@
+name: Release Pull Request
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: choice
+        description: 'Release Type (next, beta, alpha, latest)'
+        required: true
+        default: 'latest'
+        options:
+          - next
+          - beta
+          - alpha
+          - latest
+
+jobs:
+  release:
+    name: Create Release Pull Request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+        with:
+          # This makes Actions fetch only one branch to release
+          fetch-depth: 10
+
+      - name: Install Pnpm
+        run: corepack enable
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Turbo Cache
+        id: turbo-cache
+        uses: actions/cache@v3
+        with:
+          path: .turbo
+          key: turbo-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.ref_name }}-
+            turbo-
+
+      - name: Install Dependencies
+        run: pnpm install --ignore-scripts
+
+      - name: Create Release Pull Request
+        uses: web-infra-dev/actions@v2
+        with:
+          # this expects you to have a script called release which does a build for your packages and calls changeset publish
+          version: ${{ github.event.inputs.version || 'latest' }}
+          versionNumber: 'auto'
+          type: 'pull request'
+          tools: 'modern'
+          beforeBumpScript: 'update:modern'
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          REF: ${{ github.ref }}

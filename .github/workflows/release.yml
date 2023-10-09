@@ -5,7 +5,7 @@ on:
     inputs:
       version:
         type: choice
-        description: 'Release Version(next, beta, alpha, latest)'
+        description: 'Release Version (next, beta, alpha, latest)'
         required: true
         default: 'next'
         options:
@@ -14,7 +14,7 @@ on:
           - alpha
           - latest
       branch:
-        description: 'Release Branch(confirm release branch)'
+        description: 'Release Branch (confirm release branch)'
         required: true
         default: 'main'
   issue_comment:
