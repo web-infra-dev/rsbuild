@@ -1,7 +1,7 @@
-name: "✨ Feature Request"
+name: "💡 Feature Request"
 description: Submit a new feature request to Rsbuild
 title: "[Feature]: "
-labels: ["✨ feature request"]
+labels: ["💡 feature"]
 body:
   - type: markdown
     attributes:

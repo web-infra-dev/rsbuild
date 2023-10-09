@@ -1,7 +1,7 @@
-name: "✨ 新功能建议"
+name: "💡 新功能建议"
 description: 给 Rsbuild 提交新功能建议
 title: "[Feature]: "
-labels: ["✨ feature request"]
+labels: ["💡 feature"]
 body:
   - type: markdown
     attributes:

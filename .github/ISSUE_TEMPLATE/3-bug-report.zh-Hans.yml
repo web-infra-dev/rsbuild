@@ -1,7 +1,7 @@
 name: "🐞 Bug 报告"
 description: 给 Rsbuild 报告 bug
 title: "[Bug]: "
-labels: ["bug"]
+labels: ["🐞 bug"]
 body:
   - type: markdown
     attributes:

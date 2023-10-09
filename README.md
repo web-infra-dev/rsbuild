@@ -8,6 +8,8 @@ Rsbuild is an Rspack-based build tool for the web.
 
 The main goal of Rsbuild is to provide out-of-the-box building capabilities for Rspack users, allowing us to start a Rspack project with zero configuration.
 
+Rsbuild was formerly known as Modern.js Builder, and has now been rebranded. It has been decoupled from Modern.js to provide greater flexibility to meet the needs of community users.
+
 ## Features
 
 - 🚀 **Rspack Based**: Using Rspack to bring you the ultimate development experience.
@@ -31,10 +33,10 @@ Go to the [Quick Start](TODO) to get started.
 
 Please read the [Contribution Guide](./CONTRIBUTING.md) and let's build Rsbuild together.
 
-### Code of Conduct
+## Code of Conduct
 
 This repo has adopted the ByteDance Open Source Code of Conduct. Please check [Code of Conduct](./CODE_OF_CONDUCT.md) for more details.
 
-### License
+## License
 
 Rsbuild is licensed under the [MIT License](./LICENSE).
