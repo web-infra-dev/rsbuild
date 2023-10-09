@@ -10,25 +10,20 @@
   },
   "license": "MIT",
   "version": "0.0.2",
-  "jsnext:source": "./src/index.ts",
   "types": "./src/index.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "exports": {
     ".": {
-      "jsnext:source": "./src/index.ts",
       "default": "./dist/index.js"
     },
     "./formatter": {
-      "jsnext:source": "./src/formatter/index.ts",
       "default": "./dist/formatter/index.ts"
     },
     "./transformer": {
-      "jsnext:source": "./src/transformer/index.ts",
       "default": "./dist/transformer/index.ts"
     },
     "./shared/*": {
-      "jsnext:source": "./src/shared/*.ts",
       "default": "./dist/shared/*.js"
     }
   },
