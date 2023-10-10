@@ -136,9 +136,6 @@ importers:
       '@types/lodash':
         specifier: ^4.14.199
         version: 4.14.199
-      browserslist:
-        specifier: ^4.22.1
-        version: 4.22.1
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
