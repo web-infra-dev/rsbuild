@@ -4,7 +4,7 @@
   "scripts": {
     "new": "modern new",
     "bump": "modern bump",
-    "lint": "modern lint",
+    "lint": "oxlint .",
     "test:ut": "echo 'foo'",
     "test:e2e": "echo 'e2e'",
     "build": "turbo run build --filter {packages/**} --cache-dir=.turbo --no-daemon",
@@ -19,7 +19,7 @@
   "packageManager": "pnpm@8.8.0",
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "eslint --fix --color --cache --quiet"
+      "oxlint"
     ]
   },
   "eslintIgnore": [
@@ -32,12 +32,11 @@
     ]
   },
   "devDependencies": {
-    "@modern-js/eslint-config": "2.35.1",
     "@modern-js/module-tools": "^2.35.1",
     "@modern-js/monorepo-tools": "2.35.1",
     "@modern-js/tsconfig": "^2.35.1",
-    "eslint": "^8.51.0",
     "husky": "^8.0.3",
+    "oxlint": "^0.0.13",
     "prettier": "^3.0.3",
     "turbo": "^1.10.12",
     "vitest": "0.33.0"
