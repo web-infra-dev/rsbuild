@@ -17,8 +17,10 @@
     "node": ">=16.18.1"
   },
   "packageManager": "pnpm@8.8.0",
-  "lint-staged": {
+  "nano-staged": {
+    "*.{md,json,css,less,scss}": "prettier --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "prettier --write",
       "oxlint"
     ]
   },
@@ -32,6 +34,7 @@
     "@modern-js/monorepo-tools": "2.35.1",
     "@modern-js/tsconfig": "^2.35.1",
     "husky": "^8.0.3",
+    "nano-staged": "^0.8.0",
     "oxlint": "^0.0.13",
     "prettier": "^3.0.3",
     "turbo": "^1.10.12",
