@@ -10,6 +10,8 @@ The main goal of Rsbuild is to provide out-of-the-box building capabilities for 
 
 Rsbuild was formerly known as Modern.js Builder, and has now been rebranded. It has been decoupled from Modern.js to provide greater flexibility to meet the needs of community users.
 
+> This project is new and under active development. It will be available in November 2023.
+
 ## Features
 
 - 🚀 **Rspack Based**: Using Rspack to bring you the ultimate development experience.
