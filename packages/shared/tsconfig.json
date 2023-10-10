@@ -2,10 +2,9 @@
   "extends": "@modern-js/tsconfig/base",
   "compilerOptions": {
     "target": "ES2019",
-    "declaration": true,
+    "outDir": "./dist",
     "baseUrl": "./",
-    "isolatedModules": true,
-    "jsx": "react-jsx"
+    "isolatedModules": true
   },
   "include": ["src"]
 }

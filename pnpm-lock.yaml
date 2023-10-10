@@ -36,6 +36,19 @@ importers:
         specifier: 0.33.0
         version: 0.33.0
 
+  packages/babel-config:
+    dependencies:
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@types/node':
+        specifier: ^16
+        version: 16.18.58
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
   packages/friendly-errors-webpack-plugin:
     dependencies:
       '@rsbuild/shared':

@@ -1,0 +1,38 @@
+{
+  "name": "@rsbuild/babel-config",
+  "description": "The babel config of Rsbuild.",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/babel-config"
+  },
+  "license": "MIT",
+  "version": "0.0.3",
+  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "types": "./dist/index.d.ts"
+  },
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
+  "dependencies": {
+    "@rsbuild/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^16",
+    "typescript": "^5"
+  }
+}
