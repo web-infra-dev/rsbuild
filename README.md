@@ -7,7 +7,7 @@
 <p>
   <a href="https://discord.gg/79ZZ66GH9E">
     <img src="https://img.shields.io/discord/977448667919286283?logo=discord&label=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
-  </a>
+  </a>    
   <a href="https://www.npmjs.com/package/@rsbuild/shared?activeTab=readme">
    <img src="https://img.shields.io/npm/v/@rsbuild/shared?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />
   </a>
@@ -15,6 +15,8 @@
     <img src="https://img.shields.io/npm/l/@rsbuild/shared?style=flat-square&colorA=564341&colorB=EDED91" alt="license" />
   </a>
 </p>
+
+1
 
 Rsbuild is an Rspack-based build tool for the web.
 
