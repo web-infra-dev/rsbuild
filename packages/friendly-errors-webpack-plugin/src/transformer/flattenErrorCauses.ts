@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { lodash } from '@rsbuild/shared/lodash';
 import StackTracey from 'stacktracey';
 import { ErrorTransformer } from '../shared/types';
 
@@ -47,7 +47,7 @@ export const mergeTraceHeads = (traces: StackTracey.Entry[][]) => {
 };
 
 export const flattenCausesTransformer: ErrorTransformer = (e) => {
-  const traces = [e.trace, ..._.map(e.causes, 'trace')];
+  const traces = [e.trace, ...lodash.map(e.causes, 'trace')];
   const merged = mergeTraceHeads(traces);
   if (merged) {
     e.trace = merged;

@@ -1,5 +1,5 @@
 import path from 'path';
-import fs from 'fs-extra';
+import { fs } from '@rsbuild/shared/fs-extra';
 import { load } from 'js-yaml';
 import glob, { Options as GlobOptions } from 'fast-glob';
 import pMap from 'p-map';

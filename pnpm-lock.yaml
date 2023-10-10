@@ -38,15 +38,9 @@ importers:
 
   packages/friendly-errors-webpack-plugin:
     dependencies:
-      '@types/lodash':
-        specifier: ^4.14.199
-        version: 4.14.199
-      chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
       stacktracey:
         specifier: ^2.1.8
         version: 2.1.8
@@ -54,18 +48,12 @@ importers:
       '@modern-js/builder-shared':
         specifier: ^2.35.1
         version: 2.35.1(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
-      '@types/fs-extra':
-        specifier: ^11.0.2
-        version: 11.0.2
       '@types/node':
         specifier: ^16
         version: 16.18.58
       ansi-to-html:
         specifier: ^0.7.2
         version: 0.7.2
-      fs-extra:
-        specifier: ^11.1.1
-        version: 11.1.1
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -73,38 +61,53 @@ importers:
         specifier: ^5.88.1
         version: 5.88.2
 
+  packages/friendly-errors-webpack-plugin/example: {}
+
   packages/monorepo-utils:
     dependencies:
-      '@types/fs-extra':
-        specifier: ^11.0.2
-        version: 11.0.2
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@types/js-yaml':
         specifier: ^4.0.6
         version: 4.0.6
-      '@types/lodash':
-        specifier: ^4.14.199
-        version: 4.14.199
-      chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
       fast-glob:
         specifier: ^3.3.1
         version: 3.3.1
-      fs-extra:
-        specifier: ^11.1.1
-        version: 11.1.1
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
       json5:
         specifier: ^2.2.3
         version: 2.2.3
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       p-map:
         specifier: ^4.0.0
         version: 4.0.0
+    devDependencies:
+      '@types/node':
+        specifier: ^16
+        version: 16.18.58
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
+  packages/shared:
+    dependencies:
+      '@types/fs-extra':
+        specifier: ^11.0.2
+        version: 11.0.2
+      '@types/lodash':
+        specifier: ^4.14.199
+        version: 4.14.199
+      chalk:
+        specifier: ^4.1.2
+        version: 4.1.2
+      fs-extra:
+        specifier: ^11.1.1
+        version: 11.1.1
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
     devDependencies:
       '@types/node':
         specifier: ^16
@@ -3172,6 +3175,7 @@ packages:
     dependencies:
       '@types/jsonfile': 6.1.2
       '@types/node': 16.18.58
+    dev: false
 
   /@types/http-proxy@1.17.12:
     resolution: {integrity: sha512-kQtujO08dVtQ2wXAuSFfk9ASy3sug4+ogFR8Kd8UgP8PEuc1/G/8yjYRmp//PcDNJEUKOza/MrQu15bouEUCiw==}
@@ -3217,6 +3221,7 @@ packages:
     resolution: {integrity: sha512-8t92P+oeW4d/CRQfJaSqEwXujrhH4OEeHRjGU3v1Q8mUS8GPF3yiX26sw4svv6faL2HfBtGTe2xWIoVgN3dy9w==}
     dependencies:
       '@types/node': 16.18.58
+    dev: false
 
   /@types/lodash@4.14.199:
     resolution: {integrity: sha512-Vrjz5N5Ia4SEzWWgIVwnHNEnb1UE1XMkvY5DGXrAeOGE9imk0hgTHh5GyDjLDJi9OTCn9oo9dXH1uToK1VRfrg==}
@@ -5382,6 +5387,7 @@ packages:
       graceful-fs: 4.2.11
       jsonfile: 6.1.0
       universalify: 2.0.0
+    dev: false
 
   /fs-extra@7.0.1:
     resolution: {integrity: sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==}

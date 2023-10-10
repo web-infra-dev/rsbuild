@@ -1,5 +1,5 @@
 import path from 'path';
-import fs from 'fs-extra';
+import { fs } from '@rsbuild/shared/fs-extra';
 import json5 from 'json5';
 import { PACKAGE_JSON, RUSH_JSON_FILE } from './constants';
 import type { INodePackageJson, IRushConfig } from './types';
