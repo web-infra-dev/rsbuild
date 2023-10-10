@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import { chalk } from '@rsbuild/shared/chalk';
 import { ErrorTransformer } from '../shared/types';
 
 export const moduleParseErrorTransformer: ErrorTransformer = (e) => {

@@ -1,5 +1,5 @@
 import path from 'path';
-import fs from 'fs-extra';
+import { fs } from '@rsbuild/shared/fs-extra';
 import { getMonorepoBaseData, getMonorepoSubProjects } from '../common';
 import type { Project } from '../project/project';
 import type { MonorepoAnalyzer } from '../types';

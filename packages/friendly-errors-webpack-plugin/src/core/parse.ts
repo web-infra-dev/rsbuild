@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { inspect } from 'util';
-import _ from 'lodash';
+import { lodash } from '@rsbuild/shared/lodash';
 import { JSONValue } from '@modern-js/builder-shared';
 import { ThrowableType, TracingFrame } from '../shared/types';
 import StackTracey from 'stacktracey';
@@ -10,7 +10,7 @@ import { Context } from './context';
 export const getErrorCause = (error: Error) => {
   assert(typeof error === 'object', 'Error must be an object');
   const err = error as any;
-  return [err.cause, err.error, err.originalError].find(_.isError);
+  return [err.cause, err.error, err.originalError].find(lodash.isError);
 };
 
 export type Serializable<T> = {
@@ -62,7 +62,7 @@ export class ParsedError<E extends Error = Error> {
   }
 
   freeze(): Readonly<this> {
-    const ret = { ...this, [inspect.custom]: _.constant(inspect(this)) };
+    const ret = { ...this, [inspect.custom]: lodash.constant(inspect(this)) };
     return Object.freeze(ret);
   }
 }

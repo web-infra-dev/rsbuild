@@ -1,0 +1,67 @@
+{
+  "name": "@rsbuild/shared",
+  "description": "The shared modules and dependencies of Rsbuild.",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/shared"
+  },
+  "license": "MIT",
+  "version": "0.0.2",
+  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js"
+    },
+    "./chalk": {
+      "types": "./dist/re-exports/chalk.d.ts",
+      "default": "./dist/re-exports/chalk.js"
+    },
+    "./lodash": {
+      "types": "./dist/re-exports/lodash.d.ts",
+      "default": "./dist/re-exports/lodash.js"
+    },
+    "./fs-extra": {
+      "types": "./dist/re-exports/fs-extra.d.ts",
+      "default": "./dist/re-exports/fs-extra.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "chalk": [
+        "./dist/re-exports/chalk.d.ts"
+      ],
+      "lodash": [
+        "./dist/re-exports/lodash.d.ts"
+      ],
+      "fs-extra": [
+        "./dist/re-exports/fs-extra.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "types": "./dist/index.d.ts"
+  },
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
+  "dependencies": {
+    "@types/fs-extra": "^11.0.2",
+    "@types/lodash": "^4.14.199",
+    "chalk": "^4.1.2",
+    "fs-extra": "^11.1.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/node": "^16",
+    "typescript": "^5"
+  }
+}

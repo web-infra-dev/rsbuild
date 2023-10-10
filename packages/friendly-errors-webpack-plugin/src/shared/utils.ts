@@ -1,11 +1,11 @@
-import _ from 'lodash';
+import { lodash } from '@rsbuild/shared/lodash';
 import { baseFormatter } from '../formatter';
 import { ParsedError } from '../core/parse';
 import { ErrorFormatter, ErrorTransformer } from './types';
 
 export const cloneObject = <T>(error: T): T => {
   const cloned = Object.create(Object.getPrototypeOf(error));
-  return _.merge(cloned, error);
+  return lodash.merge(cloned, error);
 };
 
 export const cloneErrorObject = <T extends Error>(error: T): T => {

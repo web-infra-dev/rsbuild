@@ -2,8 +2,8 @@ import path from 'path';
 import { SpyInstance, describe, expect, test, vi } from 'vitest';
 import webpack, { WebpackError } from 'webpack';
 import TerminalRenderer from 'ansi-to-html';
-import _ from 'lodash';
-import fs from 'fs-extra';
+import { lodash } from '@rsbuild/shared/lodash';
+import { fs } from '@rsbuild/shared/fs-extra';
 import webpackConfig from '../example/webpack.config';
 import { FriendlyErrorsWebpackPlugin } from '@/plugin';
 import { outputPrettyError } from '@/core/output';
@@ -96,7 +96,7 @@ const renderMockedLogs = (mocked: SpyInstance) => {
 
 describe('webpack', () => {
   test('compilation.errors', async () => {
-    const mockedError = vi.spyOn(console, 'error').mockImplementation(_.noop);
+    const mockedError = vi.spyOn(console, 'error').mockImplementation(lodash.noop);
     const config: webpack.Configuration = {
       ...webpackConfig,
       plugins: [new FriendlyErrorsWebpackPlugin()],
@@ -111,7 +111,7 @@ describe('webpack', () => {
   }, 30_000);
 
   test('throw new error', async () => {
-    const mockedError = vi.spyOn(console, 'error').mockImplementation(_.noop);
+    const mockedError = vi.spyOn(console, 'error').mockImplementation(lodash.noop);
     const config: webpack.Configuration = {
       ...webpackConfig,
     };

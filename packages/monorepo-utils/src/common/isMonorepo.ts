@@ -1,5 +1,5 @@
 import path from 'path';
-import fs from 'fs-extra';
+import { fs } from '@rsbuild/shared/fs-extra';
 import { PNPM_WORKSPACE_FILE, RUSH_JSON_FILE } from '../constants';
 
 export type IsMonorepoFn = (

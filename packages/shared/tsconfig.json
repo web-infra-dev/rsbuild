@@ -1,0 +1,11 @@
+{
+  "extends": "@modern-js/tsconfig/base",
+  "compilerOptions": {
+    "target": "ES2019",
+    "declaration": true,
+    "baseUrl": "./",
+    "isolatedModules": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["src"]
+}
