@@ -3,7 +3,6 @@ import { outputPrettyError } from './core/output';
 import { ContextInitiationOptions } from './core/context';
 
 export class FriendlyErrorsWebpackPlugin {
-  // eslint-disable-next-line @typescript-eslint/typedef
   name = 'FriendlyErrorsWebpackPlugin' as const;
 
   options: ContextInitiationOptions;

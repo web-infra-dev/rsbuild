@@ -22,10 +22,6 @@
       "oxlint"
     ]
   },
-  "eslintIgnore": [
-    "node_modules/",
-    "dist/"
-  ],
   "workspaces": {
     "packages": [
       "packages/*"

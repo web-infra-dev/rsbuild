@@ -24,7 +24,6 @@ declare module 'webpack/lib/ModuleParseError' {
 
   export default class ModuleParseError extends WebpackError {
     constructor(
-      // eslint-disable-next-line node/prefer-global/buffer
       source: string | Buffer,
       err: Error,
       loaders: string[],

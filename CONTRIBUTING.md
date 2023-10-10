@@ -164,7 +164,7 @@ npx jest copy-assets
 
 ## Linting
 
-To help maintain consistency and readability of the codebase, we use a ESLint to lint the codes.
+To help maintain consistency and readability of the codebase, we use a [Oxc](https://github.com/web-infra-dev/oxc) to lint the codes.
 
 You can run the Linter by executing the following command:
 
