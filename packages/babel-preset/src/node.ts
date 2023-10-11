@@ -1,9 +1,6 @@
-import { generateBaseConfig, type BasePresetOptions } from './base';
-import type { BabelOptions } from './types';
-
-export type NodePresetOptions = BasePresetOptions & {
-  //
-};
+import { lodash } from '@rsbuild/shared/lodash';
+import { generateBaseConfig } from './base';
+import type { BabelOptions, NodePresetOptions } from './types';
 
 export default function (
   api: any,
@@ -11,16 +8,16 @@ export default function (
 ): BabelOptions {
   api.cache(true);
 
-  const config = generateBaseConfig(options);
-
-  config.presets?.push([
-    require.resolve('@babel/preset-env'),
+  const mergedOptions = lodash.merge(
     {
-      modules: false,
-      targets: ['node >= 14'],
-      exclude: ['transform-typeof-symbol'],
+      presetEnv: {
+        targets: ['node >= 14'],
+      },
     },
-  ]);
+    options,
+  );
+
+  const config = generateBaseConfig(mergedOptions);
 
   return config;
 }
