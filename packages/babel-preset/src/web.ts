@@ -1,33 +1,32 @@
 import { getCoreJsVersion } from '@rsbuild/shared';
-import { generateBaseConfig, type BasePresetOptions } from './base';
-import type { BabelOptions } from './types';
-
-export type WebPresetOptions = BasePresetOptions & {
-  useBuiltIns?: 'entry' | 'usage' | false;
-  browserslist: string[];
-};
+import { lodash } from '@rsbuild/shared/lodash';
+import { generateBaseConfig } from './base';
+import type { BabelOptions, WebPresetOptions } from './types';
 
 export default function (api: any, options: WebPresetOptions): BabelOptions {
   api.cache(true);
 
-  const config = generateBaseConfig(options);
-
-  config.presets?.push([
-    require.resolve('@babel/preset-env'),
+  const mergedOptions = lodash.merge(
     {
-      targets: options.browserslist,
-      modules: false,
-      bugfixes: true,
-      useBuiltIns: options.useBuiltIns,
-      exclude: ['transform-typeof-symbol'],
-      corejs: options.useBuiltIns
-        ? {
-            version: getCoreJsVersion(require.resolve('core-js/package.json')),
-            proposals: true,
-          }
-        : undefined,
+      pluginTransformRuntime: {
+        useESModules: true,
+      },
+      presetEnv: {
+        bugfixes: true,
+        corejs: options.presetEnv.useBuiltIns
+          ? {
+              version: getCoreJsVersion(
+                require.resolve('core-js/package.json'),
+              ),
+              proposals: true,
+            }
+          : undefined,
+      },
     },
-  ]);
+    options,
+  );
+
+  const config = generateBaseConfig(mergedOptions);
 
   return config;
 }

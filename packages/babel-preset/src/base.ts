@@ -1,8 +1,4 @@
-import { BabelOptions } from './types';
-
-export type BasePresetOptions = {
-  presetTypeScript?: Record<string, unknown> | false;
-};
+import type { BabelOptions, BasePresetOptions } from './types';
 
 export const generateBaseConfig = (
   options: BasePresetOptions = {},
@@ -11,7 +7,24 @@ export const generateBaseConfig = (
     presets: [],
     plugins: [],
   };
-  const { presetTypeScript = {} } = options;
+
+  const {
+    presetEnv = {},
+    presetTypeScript = {},
+    pluginDecorators = false,
+    pluginTransformRuntime = {},
+  } = options;
+
+  if (presetEnv) {
+    config.presets?.push([
+      require.resolve('@babel/preset-env'),
+      {
+        modules: false,
+        exclude: ['transform-typeof-symbol'],
+        ...presetEnv,
+      },
+    ]);
+  }
 
   if (presetTypeScript) {
     config.presets?.push([
@@ -28,6 +41,42 @@ export const generateBaseConfig = (
       },
     ]);
   }
+
+  if (pluginTransformRuntime) {
+    config.plugins?.push(require.resolve('babel-plugin-dynamic-import-node'), [
+      require.resolve('@babel/plugin-transform-runtime'),
+      {
+        version: require('@babel/runtime/package.json').version,
+        regenerator: true,
+      },
+    ]);
+  }
+
+  if (pluginDecorators) {
+    // link: https://github.com/tc39/proposal-decorators
+    config.plugins?.push([
+      require.resolve('@babel/plugin-proposal-decorators'),
+      {
+        version: pluginDecorators.version,
+        decoratorsBeforeExport: pluginDecorators.version === '2018-09',
+      },
+    ]);
+  }
+
+  config.plugins?.push(
+    // Stage 1
+    // link: https://github.com/tc39/proposal-export-default-from
+    require.resolve('@babel/plugin-proposal-export-default-from'),
+    // Stage 1
+    // link: https://github.com/tc39/proposal-partial-application
+    require.resolve('@babel/plugin-proposal-partial-application'),
+    // Stage 2
+    // link: https://github.com/tc39/proposal-pipeline-operator
+    [
+      require.resolve('@babel/plugin-proposal-pipeline-operator'),
+      { proposal: 'minimal' },
+    ],
+  );
 
   return config;
 };

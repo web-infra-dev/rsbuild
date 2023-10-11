@@ -12,6 +12,7 @@
     "rsbuild",
     "rspack",
     "rspress",
-    "stacktracey"
+    "stacktracey",
+    "systemjs"
   ]
 }
