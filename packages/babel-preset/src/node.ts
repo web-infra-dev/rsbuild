@@ -8,11 +8,16 @@ export const getBabelPresetForNode = (options: NodePresetOptions = {}) => {
       presetEnv: {
         targets: ['node >= 14'],
       },
+      pluginTransformRuntime: {
+        regenerator: true,
+      },
     },
     options,
   );
 
   const config = generateBaseConfig(mergedOptions);
+
+  config.plugins?.push(require.resolve('babel-plugin-dynamic-import-node'));
 
   return config;
 };
