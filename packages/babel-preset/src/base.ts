@@ -43,11 +43,10 @@ export const generateBaseConfig = (
   }
 
   if (pluginTransformRuntime) {
-    config.plugins?.push(require.resolve('babel-plugin-dynamic-import-node'), [
+    config.plugins?.push([
       require.resolve('@babel/plugin-transform-runtime'),
       {
         version: require('@babel/runtime/package.json').version,
-        regenerator: true,
       },
     ]);
   }

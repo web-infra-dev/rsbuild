@@ -1,5 +1,13 @@
 {
   "name": "@rsbuild/vitest-helper",
+  "description": "The vitest helpers of Rsbuild.",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/vitest-helper"
+  },
+  "license": "MIT",
   "version": "0.0.3",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,6 +24,12 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true,
+    "types": "./dist/index.d.ts"
+  },
   "dependencies": {
     "@types/node": "^16",
     "@types/lodash": "^4.14.195",
