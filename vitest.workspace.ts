@@ -9,6 +9,7 @@ export default defineWorkspace([
       testTimeout: 30000,
       restoreMocks: true,
       include: ['packages/**/*.test.ts'],
+      setupFiles: ['./scripts/vitest.setup.ts'],
     },
   },
 ]);

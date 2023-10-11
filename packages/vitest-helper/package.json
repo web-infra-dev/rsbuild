@@ -1,0 +1,26 @@
+{
+  "name": "@rsbuild/vitest-helper",
+  "version": "0.0.3",
+  "main": "./dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@types/node": "^16",
+    "@types/lodash": "^4.14.195",
+    "lodash": "^4.17.21",
+    "upath": "2.0.1",
+    "typescript": "^5"
+  }
+}
