@@ -15,9 +15,10 @@
     "gen-release-note": "modern gen-release-note"
   },
   "engines": {
-    "node": ">=16.18.1"
+    "node": ">=16.18.1",
+    "pnpm": ">=8.7.0"
   },
-  "packageManager": "pnpm@8.8.0",
+  "packageManager": "pnpm@8.9.0",
   "nano-staged": {
     "*.{md,json,css,less,scss}": "prettier --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
