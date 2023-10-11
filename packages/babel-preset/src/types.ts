@@ -1,4 +1,4 @@
-export type { TransformOptions as BabelOptions } from '@babel/core';
+export type { TransformOptions as BabelConfig } from '@babel/core';
 
 type DecoratorsVersion =
   | '2023-05'

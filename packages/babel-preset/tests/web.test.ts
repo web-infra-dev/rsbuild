@@ -1,8 +1,8 @@
-import { getBabelPresetForWeb } from '../src/web';
+import { getBabelConfigForWeb } from '../src/web';
 
 test('should provide web preset as expected', () => {
   expect(
-    getBabelPresetForWeb({
+    getBabelConfigForWeb({
       presetEnv: {
         targets: ['Chrome >= 53'],
         useBuiltIns: false,
@@ -13,7 +13,7 @@ test('should provide web preset as expected', () => {
 
 test('should support inject core-js polyfills by entry', () => {
   expect(
-    getBabelPresetForWeb({
+    getBabelConfigForWeb({
       presetEnv: {
         targets: ['Chrome >= 53'],
         useBuiltIns: 'entry',
@@ -24,7 +24,7 @@ test('should support inject core-js polyfills by entry', () => {
 
 test('should support inject core-js polyfills by usage', () => {
   expect(
-    getBabelPresetForWeb({
+    getBabelConfigForWeb({
       presetEnv: {
         targets: ['Chrome >= 53'],
         useBuiltIns: 'usage',
@@ -35,7 +35,7 @@ test('should support inject core-js polyfills by usage', () => {
 
 test('should allow to enable legacy decorator', () => {
   expect(
-    getBabelPresetForWeb({
+    getBabelConfigForWeb({
       presetEnv: {
         targets: ['Chrome >= 53'],
         useBuiltIns: false,
@@ -49,7 +49,7 @@ test('should allow to enable legacy decorator', () => {
 
 test('should allow to enable specific version decorator', () => {
   expect(
-    getBabelPresetForWeb({
+    getBabelConfigForWeb({
       presetEnv: {
         targets: ['Chrome >= 53'],
         useBuiltIns: false,
