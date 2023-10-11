@@ -1,5 +1,12 @@
 # @rsbuild/babel-preset
 
+## 0.0.5
+
+### Patch Changes
+
+- 471a549: feat(babel-preset): add lockCorejsVersion plugin
+  - @rsbuild/shared@0.0.5
+
 ## 0.0.4
 
 ### Patch Changes
