@@ -1,9 +1,10 @@
+import { join } from 'path';
 import { getCoreJsVersion } from '@rsbuild/shared';
 import { deepmerge } from '@rsbuild/shared/deepmerge';
 import { generateBaseConfig } from './base';
-import type { BabelOptions, WebPresetOptions } from './types';
+import type { BabelConfig, WebPresetOptions } from './types';
 
-export const getBabelPresetForWeb = (options: WebPresetOptions) => {
+export const getBabelConfigForWeb = (options: WebPresetOptions) => {
   const mergedOptions = deepmerge(
     {
       pluginTransformRuntime: {
@@ -24,13 +25,17 @@ export const getBabelPresetForWeb = (options: WebPresetOptions) => {
     options,
   );
 
-  return generateBaseConfig(mergedOptions);
+  const config = generateBaseConfig(mergedOptions);
+
+  config.plugins?.push(join(__dirname, './pluginLockCorejsVersion'));
+
+  return config;
 };
 
 export default function (
   api: { cache: (flag: boolean) => void },
   options: WebPresetOptions,
-): BabelOptions {
+): BabelConfig {
   api.cache(true);
-  return getBabelPresetForWeb(options);
+  return getBabelConfigForWeb(options);
 }

@@ -1,9 +1,9 @@
-import type { BabelOptions, BasePresetOptions } from './types';
+import type { BabelConfig, BasePresetOptions } from './types';
 
 export const generateBaseConfig = (
   options: BasePresetOptions = {},
-): BabelOptions => {
-  const config: BabelOptions = {
+): BabelConfig => {
+  const config: BabelConfig = {
     presets: [],
     plugins: [],
   };

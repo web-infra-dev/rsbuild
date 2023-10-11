@@ -24,6 +24,7 @@ exports[`should allow to enable legacy decorator 1`] = `
         "proposal": "minimal",
       },
     ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -79,6 +80,7 @@ exports[`should allow to enable specific version decorator 1`] = `
         "proposal": "minimal",
       },
     ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -127,6 +129,7 @@ exports[`should provide web preset as expected 1`] = `
         "proposal": "minimal",
       },
     ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -175,6 +178,7 @@ exports[`should support inject core-js polyfills by entry 1`] = `
         "proposal": "minimal",
       },
     ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -226,6 +230,7 @@ exports[`should support inject core-js polyfills by usage 1`] = `
         "proposal": "minimal",
       },
     ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [

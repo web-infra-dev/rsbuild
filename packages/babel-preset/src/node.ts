@@ -1,8 +1,8 @@
 import { deepmerge } from '@rsbuild/shared/deepmerge';
 import { generateBaseConfig } from './base';
-import type { BabelOptions, NodePresetOptions } from './types';
+import type { BabelConfig, NodePresetOptions } from './types';
 
-export const getBabelPresetForNode = (options: NodePresetOptions = {}) => {
+export const getBabelConfigForNode = (options: NodePresetOptions = {}) => {
   const mergedOptions = deepmerge(
     {
       presetEnv: {
@@ -25,7 +25,7 @@ export const getBabelPresetForNode = (options: NodePresetOptions = {}) => {
 export default function (
   api: { cache: (flag: boolean) => void },
   options: NodePresetOptions = {},
-): BabelOptions {
+): BabelConfig {
   api.cache(true);
-  return getBabelPresetForNode(options);
+  return getBabelConfigForNode(options);
 }
