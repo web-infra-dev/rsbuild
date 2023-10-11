@@ -12,7 +12,6 @@ exports[`should allow to enable legacy decorator 1`] = `
     [
       "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
       {
-        "decoratorsBeforeExport": false,
         "version": "legacy",
       },
     ],

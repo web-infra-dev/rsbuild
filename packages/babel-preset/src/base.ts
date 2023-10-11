@@ -57,7 +57,10 @@ export const generateBaseConfig = (
       require.resolve('@babel/plugin-proposal-decorators'),
       {
         version: pluginDecorators.version,
-        decoratorsBeforeExport: pluginDecorators.version === '2018-09',
+        // decoratorsBeforeExport property is not allowed when version is legacy
+        ...(pluginDecorators.version === '2018-09'
+          ? { decoratorsBeforeExport: true }
+          : {}),
       },
     ]);
   }
