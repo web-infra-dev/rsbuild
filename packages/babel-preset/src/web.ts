@@ -1,12 +1,10 @@
 import { getCoreJsVersion } from '@rsbuild/shared';
-import { lodash } from '@rsbuild/shared/lodash';
+import { deepmerge } from '@rsbuild/shared/deepmerge';
 import { generateBaseConfig } from './base';
 import type { BabelOptions, WebPresetOptions } from './types';
 
-export default function (api: any, options: WebPresetOptions): BabelOptions {
-  api.cache(true);
-
-  const mergedOptions = lodash.merge(
+export const getBabelPresetForWeb = (options: WebPresetOptions) => {
+  const mergedOptions = deepmerge(
     {
       pluginTransformRuntime: {
         useESModules: true,
@@ -26,7 +24,13 @@ export default function (api: any, options: WebPresetOptions): BabelOptions {
     options,
   );
 
-  const config = generateBaseConfig(mergedOptions);
+  return generateBaseConfig(mergedOptions);
+};
 
-  return config;
+export default function (
+  api: { cache: (flag: boolean) => void },
+  options: WebPresetOptions,
+): BabelOptions {
+  api.cache(true);
+  return getBabelPresetForWeb(options);
 }

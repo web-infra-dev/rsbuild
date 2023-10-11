@@ -1,14 +1,9 @@
-import { lodash } from '@rsbuild/shared/lodash';
+import { deepmerge } from '@rsbuild/shared/deepmerge';
 import { generateBaseConfig } from './base';
 import type { BabelOptions, NodePresetOptions } from './types';
 
-export default function (
-  api: any,
-  options: NodePresetOptions = {},
-): BabelOptions {
-  api.cache(true);
-
-  const mergedOptions = lodash.merge(
+export const getBabelPresetForNode = (options: NodePresetOptions = {}) => {
+  const mergedOptions = deepmerge(
     {
       presetEnv: {
         targets: ['node >= 14'],
@@ -20,4 +15,12 @@ export default function (
   const config = generateBaseConfig(mergedOptions);
 
   return config;
+};
+
+export default function (
+  api: { cache: (flag: boolean) => void },
+  options: NodePresetOptions = {},
+): BabelOptions {
+  api.cache(true);
+  return getBabelPresetForNode(options);
 }

@@ -31,7 +31,7 @@ export type PresetEnvOptions = {
   configPath?: string;
   ignoreBrowserslistConfig?: boolean;
   browserslistEnv?: string;
-  shippedProposals: boolean;
+  shippedProposals?: boolean;
 };
 
 export type BasePresetOptions = {
