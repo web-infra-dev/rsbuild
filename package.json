@@ -2,11 +2,12 @@
   "private": true,
   "name": "rsbuild-monorepo",
   "scripts": {
+    "ut": "vitest run",
+    "ut:watch": "vitest",
+    "e2e": "echo 'e2e'",
     "new": "modern new",
     "bump": "modern bump",
     "lint": "oxlint .",
-    "test:ut": "echo 'foo'",
-    "test:e2e": "echo 'e2e'",
     "build": "turbo run build --filter {packages/**} --cache-dir=.turbo --no-daemon",
     "change": "modern change",
     "release": "modern release",
@@ -38,6 +39,6 @@
     "oxlint": "^0.0.13",
     "prettier": "^3.0.3",
     "turbo": "^1.10.12",
-    "vitest": "0.33.0"
+    "vitest": "1.0.0-beta.1"
   }
 }

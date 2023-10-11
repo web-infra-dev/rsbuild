@@ -65,8 +65,8 @@ jobs:
 
       - name: Unit Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        run: pnpm run test:ut
+        run: pnpm run ut
 
       - name: E2E Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        run: pnpm run test:e2e
+        run: pnpm run e2e
