@@ -10,6 +10,7 @@ exports[`should provide node preset as expected 1`] = `
         "version": "7.23.1",
       },
     ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
     [
