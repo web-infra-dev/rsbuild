@@ -6,6 +6,7 @@ exports[`should provide node preset as expected 1`] = `
     [
       "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
       {
+        "useESModules": true,
         "version": "7.23.1",
       },
     ],

@@ -47,6 +47,9 @@ export const generateBaseConfig = (
       require.resolve('@babel/plugin-transform-runtime'),
       {
         version: require('@babel/runtime/package.json').version,
+        // this option has been deprecated
+        // but enabling it can help to reduce bundle size
+        useESModules: true,
       },
     ]);
   }
