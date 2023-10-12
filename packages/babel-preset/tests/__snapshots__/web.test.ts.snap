@@ -16,6 +16,7 @@ exports[`should allow to enable legacy decorator 1`] = `
         "version": "legacy",
       },
     ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
     [
@@ -24,7 +25,6 @@ exports[`should allow to enable legacy decorator 1`] = `
         "proposal": "minimal",
       },
     ],
-    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -73,6 +73,7 @@ exports[`should allow to enable specific version decorator 1`] = `
         "version": "2018-09",
       },
     ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
     [
@@ -81,7 +82,6 @@ exports[`should allow to enable specific version decorator 1`] = `
         "proposal": "minimal",
       },
     ],
-    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -123,6 +123,7 @@ exports[`should provide web preset as expected 1`] = `
         "version": "7.23.1",
       },
     ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
     [
@@ -131,7 +132,6 @@ exports[`should provide web preset as expected 1`] = `
         "proposal": "minimal",
       },
     ],
-    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -173,6 +173,7 @@ exports[`should support inject core-js polyfills by entry 1`] = `
         "version": "7.23.1",
       },
     ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
     [
@@ -181,7 +182,6 @@ exports[`should support inject core-js polyfills by entry 1`] = `
         "proposal": "minimal",
       },
     ],
-    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -226,6 +226,7 @@ exports[`should support inject core-js polyfills by usage 1`] = `
         "version": "7.23.1",
       },
     ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
     [
@@ -234,7 +235,6 @@ exports[`should support inject core-js polyfills by usage 1`] = `
         "proposal": "minimal",
       },
     ],
-    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
