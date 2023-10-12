@@ -1,3 +1,4 @@
+import { join } from 'path';
 import type { BabelConfig, BasePresetOptions } from './types';
 
 export const generateBaseConfig = (
@@ -69,6 +70,7 @@ export const generateBaseConfig = (
   }
 
   config.plugins?.push(
+    join(__dirname, './pluginLockCorejsVersion'),
     // Stage 1
     // link: https://github.com/tc39/proposal-export-default-from
     require.resolve('@babel/plugin-proposal-export-default-from'),

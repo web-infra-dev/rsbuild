@@ -1,4 +1,3 @@
-import { join } from 'path';
 import { getCoreJsVersion } from '@rsbuild/shared';
 import { deepmerge } from '@rsbuild/shared/deepmerge';
 import { generateBaseConfig } from './base';
@@ -26,8 +25,6 @@ export const getBabelConfigForWeb = (options: WebPresetOptions) => {
   );
 
   const config = generateBaseConfig(mergedOptions);
-
-  config.plugins?.push(join(__dirname, './pluginLockCorejsVersion'));
 
   return config;
 };
