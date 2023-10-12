@@ -8,9 +8,6 @@ export const getBabelConfigForNode = (options: NodePresetOptions = {}) => {
       presetEnv: {
         targets: ['node >= 14'],
       },
-      pluginTransformRuntime: {
-        regenerator: true,
-      },
     },
     options,
   );

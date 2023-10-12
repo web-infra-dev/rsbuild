@@ -13,14 +13,16 @@ export const generateBaseConfig = (
     presetEnv = {},
     presetTypeScript = {},
     pluginDecorators = false,
-    pluginTransformRuntime = {},
   } = options;
 
   if (presetEnv) {
+    const isTest = process.env.NODE_ENV === 'test';
+
     config.presets?.push([
       require.resolve('@babel/preset-env'),
       {
-        modules: false,
+        // Jest only supports commonjs
+        modules: isTest ? 'commonjs' : false,
         exclude: ['transform-typeof-symbol'],
         ...presetEnv,
       },
@@ -43,34 +45,21 @@ export const generateBaseConfig = (
     ]);
   }
 
-  if (pluginTransformRuntime) {
-    config.plugins?.push([
-      require.resolve('@babel/plugin-transform-runtime'),
-      {
-        version: require('@babel/runtime/package.json').version,
-        // this option has been deprecated
-        // but enabling it can help to reduce bundle size
-        useESModules: true,
-      },
-    ]);
-  }
-
   if (pluginDecorators) {
     // link: https://github.com/tc39/proposal-decorators
     config.plugins?.push([
       require.resolve('@babel/plugin-proposal-decorators'),
       {
-        version: pluginDecorators.version,
         // decoratorsBeforeExport property is not allowed when version is legacy
         ...(pluginDecorators.version === '2018-09'
           ? { decoratorsBeforeExport: true }
           : {}),
+        ...pluginDecorators,
       },
     ]);
   }
 
   config.plugins?.push(
-    join(__dirname, './pluginLockCorejsVersion'),
     // Stage 1
     // link: https://github.com/tc39/proposal-export-default-from
     require.resolve('@babel/plugin-proposal-export-default-from'),

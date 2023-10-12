@@ -38,7 +38,6 @@ export type BasePresetOptions = {
   presetEnv?: PresetEnvOptions | false;
   presetTypeScript?: Record<string, unknown> | false;
   pluginDecorators?: PluginDecoratorsOptions | false;
-  pluginTransformRuntime?: Record<string, unknown> | false;
 };
 
 export type WebPresetOptions = BasePresetOptions & {
@@ -46,6 +45,7 @@ export type WebPresetOptions = BasePresetOptions & {
     targets: PresetEnvTargets;
     useBuiltIns: PresetEnvBuiltIns;
   };
+  pluginTransformRuntime?: Record<string, unknown> | false;
 };
 
 export type NodePresetOptions = BasePresetOptions & {
