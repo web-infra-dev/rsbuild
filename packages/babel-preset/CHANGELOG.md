@@ -1,5 +1,13 @@
 # @rsbuild/babel-preset
 
+## 0.0.6
+
+### Patch Changes
+
+- 038f07c: fix(babel-preset): failed to resolve babel runtime for node bundles
+- 0ca8837: fix(babel-preset): enable useESModules for transform runtime
+  - @rsbuild/shared@0.0.6
+
 ## 0.0.5
 
 ### Patch Changes
