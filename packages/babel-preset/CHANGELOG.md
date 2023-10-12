@@ -1,5 +1,12 @@
 # @rsbuild/babel-preset
 
+## 0.0.7
+
+### Patch Changes
+
+- fd18cc3: feat(babel-preset): support Jest to use node preset
+  - @rsbuild/shared@0.0.7
+
 ## 0.0.6
 
 ### Patch Changes
