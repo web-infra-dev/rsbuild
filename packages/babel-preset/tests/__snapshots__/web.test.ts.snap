@@ -4,19 +4,11 @@ exports[`should allow to enable legacy decorator 1`] = `
 {
   "plugins": [
     [
-      "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-      {
-        "useESModules": true,
-        "version": "7.23.1",
-      },
-    ],
-    [
       "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
       {
         "version": "legacy",
       },
     ],
-    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
     [
@@ -25,6 +17,14 @@ exports[`should allow to enable legacy decorator 1`] = `
         "proposal": "minimal",
       },
     ],
+    [
+      "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+      {
+        "useESModules": true,
+        "version": "7.23.1",
+      },
+    ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -35,7 +35,7 @@ exports[`should allow to enable legacy decorator 1`] = `
         "exclude": [
           "transform-typeof-symbol",
         ],
-        "modules": false,
+        "modules": "commonjs",
         "targets": [
           "Chrome >= 53",
         ],
@@ -60,20 +60,12 @@ exports[`should allow to enable specific version decorator 1`] = `
 {
   "plugins": [
     [
-      "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-      {
-        "useESModules": true,
-        "version": "7.23.1",
-      },
-    ],
-    [
       "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
       {
         "decoratorsBeforeExport": true,
         "version": "2018-09",
       },
     ],
-    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
     [
@@ -82,6 +74,14 @@ exports[`should allow to enable specific version decorator 1`] = `
         "proposal": "minimal",
       },
     ],
+    [
+      "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+      {
+        "useESModules": true,
+        "version": "7.23.1",
+      },
+    ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -92,7 +92,7 @@ exports[`should allow to enable specific version decorator 1`] = `
         "exclude": [
           "transform-typeof-symbol",
         ],
-        "modules": false,
+        "modules": "commonjs",
         "targets": [
           "Chrome >= 53",
         ],
@@ -116,14 +116,6 @@ exports[`should allow to enable specific version decorator 1`] = `
 exports[`should provide web preset as expected 1`] = `
 {
   "plugins": [
-    [
-      "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-      {
-        "useESModules": true,
-        "version": "7.23.1",
-      },
-    ],
-    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
     [
@@ -132,6 +124,14 @@ exports[`should provide web preset as expected 1`] = `
         "proposal": "minimal",
       },
     ],
+    [
+      "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+      {
+        "useESModules": true,
+        "version": "7.23.1",
+      },
+    ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -142,7 +142,7 @@ exports[`should provide web preset as expected 1`] = `
         "exclude": [
           "transform-typeof-symbol",
         ],
-        "modules": false,
+        "modules": "commonjs",
         "targets": [
           "Chrome >= 53",
         ],
@@ -166,14 +166,6 @@ exports[`should provide web preset as expected 1`] = `
 exports[`should support inject core-js polyfills by entry 1`] = `
 {
   "plugins": [
-    [
-      "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-      {
-        "useESModules": true,
-        "version": "7.23.1",
-      },
-    ],
-    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
     [
@@ -182,6 +174,14 @@ exports[`should support inject core-js polyfills by entry 1`] = `
         "proposal": "minimal",
       },
     ],
+    [
+      "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+      {
+        "useESModules": true,
+        "version": "7.23.1",
+      },
+    ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -195,7 +195,7 @@ exports[`should support inject core-js polyfills by entry 1`] = `
         "exclude": [
           "transform-typeof-symbol",
         ],
-        "modules": false,
+        "modules": "commonjs",
         "targets": [
           "Chrome >= 53",
         ],
@@ -219,14 +219,6 @@ exports[`should support inject core-js polyfills by entry 1`] = `
 exports[`should support inject core-js polyfills by usage 1`] = `
 {
   "plugins": [
-    [
-      "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-      {
-        "useESModules": true,
-        "version": "7.23.1",
-      },
-    ],
-    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
     "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
     [
@@ -235,6 +227,14 @@ exports[`should support inject core-js polyfills by usage 1`] = `
         "proposal": "minimal",
       },
     ],
+    [
+      "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+      {
+        "useESModules": true,
+        "version": "7.23.1",
+      },
+    ],
+    "<ROOT>/packages/babel-preset/src/pluginLockCorejsVersion",
   ],
   "presets": [
     [
@@ -248,7 +248,7 @@ exports[`should support inject core-js polyfills by usage 1`] = `
         "exclude": [
           "transform-typeof-symbol",
         ],
-        "modules": false,
+        "modules": "commonjs",
         "targets": [
           "Chrome >= 53",
         ],

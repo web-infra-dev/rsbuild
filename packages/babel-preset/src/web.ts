@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { getCoreJsVersion } from '@rsbuild/shared';
 import { deepmerge } from '@rsbuild/shared/deepmerge';
 import { generateBaseConfig } from './base';
@@ -6,9 +7,6 @@ import type { BabelConfig, WebPresetOptions } from './types';
 export const getBabelConfigForWeb = (options: WebPresetOptions) => {
   const mergedOptions = deepmerge(
     {
-      pluginTransformRuntime: {
-        useESModules: true,
-      },
       presetEnv: {
         bugfixes: true,
         corejs: options.presetEnv.useBuiltIns
@@ -25,6 +23,23 @@ export const getBabelConfigForWeb = (options: WebPresetOptions) => {
   );
 
   const config = generateBaseConfig(mergedOptions);
+  const { pluginTransformRuntime = {} } = mergedOptions;
+
+  // Skip plugin-transform-runtime when testing
+  if (pluginTransformRuntime) {
+    config.plugins?.push([
+      require.resolve('@babel/plugin-transform-runtime'),
+      {
+        version: require('@babel/runtime/package.json').version,
+        // this option has been deprecated
+        // but enabling it can help to reduce bundle size
+        useESModules: true,
+        ...pluginTransformRuntime,
+      },
+    ]);
+  }
+
+  config.plugins?.push(join(__dirname, './pluginLockCorejsVersion'));
 
   return config;
 };
