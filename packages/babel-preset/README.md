@@ -1,12 +1,10 @@
 <p align="center">
-  <a href="https://rsbuild.dev" target="blank"><img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/ylaelkeh7nuhfnuhf/modernjs-cover.png" width="300" alt="Rsbuild Logo" /></a>
+  <a href="https://rsbuild.dev" target="blank"><img src="https://github.com/web-infra-dev/rsbuild/assets/7237365/84abc13e-b620-468f-a90b-dbf28e7e9427" alt="Rsbuild Logo" /></a>
 </p>
 
-<h1 align="center">Rsbuild</h1>
+# Rsbuild
 
-<p align="center">
-  An Rspack-based build tool for the web
-</p>
+Unleash the power of Rspack with the ready-made build tool.
 
 ## Getting Started
 

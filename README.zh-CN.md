@@ -1,5 +1,5 @@
 <picture>
-  <img alt="Rsbuild Banner" src="https://lf3-static.bytednsdoc.com/obj/eden-cn/aphqeh7uhohpquloj/modern-js/rsbuild/Rsbuild-10081601.png">
+  <img alt="Rsbuild Banner" src="https://github.com/web-infra-dev/rsbuild/assets/7237365/84abc13e-b620-468f-a90b-dbf28e7e9427">
 </picture>
 
 # Rsbuild
