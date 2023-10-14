@@ -274,7 +274,7 @@ export default {
 
 `assetsRetry` 通过监听页面 error 事件来获悉当前资源是否加载失败需要重试。因此，如果自定义模版中的资源执行早于 `assetsRetry`，那 `assetsRetry` 无法监听到该资源加载失败的事件，故无法 retry。
 
-如果想要 `assetsRetry` 对自定义模版中的资源生效，可参考 [自定义插入示例](https://github.com/jantimon/html-webpack-plugin/tree/main/examples/custom-insertion-position) 来修改 [html.inject](https://rsbuild.dev/api/config-html.html#htmlinject) 配置和自定义模版。
+如果想要 `assetsRetry` 对自定义模版中的资源生效，可参考 [自定义插入示例](https://github.com/jantimon/html-webpack-plugin/tree/main/examples/custom-insertion-position) 来修改 [html.inject](https://rsbuild.dev/zh/api/config-html.html#htmlinject) 配置和自定义模版。
 
 ```diff
 <!DOCTYPE html>

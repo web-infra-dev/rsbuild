@@ -12,4 +12,4 @@ export default {
 };
 ```
 
-更多信息可参考[「进阶-源码构建模式」](https://rsbuild.dev/guide/advanced/source-build.html)。
+更多信息可参考[「进阶-源码构建模式」](https://rsbuild.dev/zh/guide/advanced/source-build.html)。

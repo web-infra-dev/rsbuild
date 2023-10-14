@@ -68,7 +68,7 @@ If a syntax error is detected, you can handle it in the following ways:
 - **Type:** `string[]`
 - **Default:** `The browserslist configuration of the current project`
 
-`targets` is the target browser range of the project. Its value is a standard browserslist array. If you are not familiar with the usage of browserslist, please refer to ["Browserslist"](https://rsbuild.dev/en/guide/advanced/browser-compatibility.html).
+`targets` is the target browser range of the project. Its value is a standard browserslist array. If you are not familiar with the usage of browserslist, please refer to ["Browserslist"](https://rsbuild.dev/guide/advanced/browser-compatibility.html).
 
 Rsbuild will read the value of `targets` and automatically deduce the minimum ECMAScript syntax version that can be used in the build artifacts, such as `ES5` or `ES6`.
 

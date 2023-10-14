@@ -38,7 +38,7 @@ export default () => {
 
 By default, only files ending in `*.module.css` are treated CSS Modules.
 
-If you want to treat all CSS files in the source directory as CSS Modules, you can enable the [output.disableCssModuleExtension](https://rsbuild.dev/en/api/config-output.html#outputdisablecssmoduleextension) config, for example:
+If you want to treat all CSS files in the source directory as CSS Modules, you can enable the [output.disableCssModuleExtension](https://rsbuild.dev/api/config-output.html#outputdisablecssmoduleextension) config, for example:
 
 ```ts
 export default {
