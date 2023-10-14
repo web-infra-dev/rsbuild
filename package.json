@@ -8,7 +8,7 @@
     "new": "modern new",
     "bump": "modern bump",
     "lint": "oxlint .",
-    "build": "turbo run build --filter {packages/**} --cache-dir=.turbo --no-daemon",
+    "build": "pnpm --filter \"./packages/**\" run build",
     "change": "modern change",
     "release": "modern release",
     "prepare": "pnpm run build && husky install",
@@ -40,7 +40,6 @@
     "nano-staged": "^0.8.0",
     "oxlint": "^0.0.13",
     "prettier": "^3.0.3",
-    "turbo": "^1.10.12",
     "vitest": "1.0.0-beta.1"
   }
 }
