@@ -34,16 +34,6 @@ jobs:
           node-version: '18'
           cache: 'pnpm'
 
-      - name: Turbo Cache
-        id: turbo-cache
-        uses: actions/cache@v3
-        with:
-          path: .turbo
-          key: turbo-${{ github.ref_name }}-${{ github.sha }}
-          restore-keys: |
-            turbo-${{ github.ref_name }}-
-            turbo-
-
       - name: Install Dependencies
         run: pnpm install --ignore-scripts
 
