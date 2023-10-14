@@ -1,0 +1,7 @@
+{
+  "extends": "@modern-js/tsconfig/base",
+  "compilerOptions": {
+    "jsx": "preserve"
+  },
+  "include": ["docs", "rspress.config.ts", "src"]
+}
