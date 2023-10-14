@@ -1,0 +1,35 @@
+{
+  "name": "@rsbuild/document",
+  "version": "0.0.7",
+  "description": "Shared documentation of Rsbuild",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/document"
+  },
+  "license": "MIT",
+  "scripts": {
+    "dev": "rspress dev",
+    "build:doc": "rspress build",
+    "preview": "rspress preview"
+  },
+  "files": [
+    "docs",
+    "src",
+    "rspress.config.ts"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true
+  },
+  "devDependencies": {
+    "@modern-js/tsconfig": "^2.35.1",
+    "@rspress/shared": "1.0.2",
+    "@types/node": "^16",
+    "rspress": "1.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
