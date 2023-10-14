@@ -154,7 +154,7 @@ export default {
 该方法通常在需要与 builder 复用同一份依赖时会被用到。
 
 :::tip
-Builder 内部依赖会随着版本迭代而发生变化，例如产生大版本变更。在非必要的情况下，请避免使用此 API。
+Rsbuild 内部依赖会随着版本迭代而发生变化，例如产生大版本变更。在非必要的情况下，请避免使用此 API。
 :::
 
 ```js
@@ -170,7 +170,7 @@ export default {
 
 #### CHAIN_ID
 
-Builder 中预先定义了一些常用的 Chain ID，你可以通过这些 ID 来定位到内置的 Rule 或 Plugin。
+Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID 来定位到内置的 Rule 或 Plugin。
 
 :::tip
 请留意，下列的一部分 Rule 或 Plugin 并不是默认存在的，当你开启特定配置项、或是注册某些插件后，它们才会被包含在 webpack 配置中。
@@ -262,8 +262,8 @@ Builder 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 | `PLUGIN.NODE_POLYFILL_PROVIDE` | 对应处理 node polyfill 的 `ProvidePlugin`                                          |
 | `PLUGIN.INSPECTOR`             | 对应 `@modern-js/inspector-webpack-plugin`                                         |
 | `PLUGIN.SUBRESOURCE_INTEGRITY` | 对应 `webpack-subresource-integrity`                                               |
-| `PLUGIN.ASSETS_RETRY`          | 对应 Builder 中的 webpack 静态资源重试插件 `WebpackAssetsRetryPlugin`              |
-| `PLUGIN.AUTO_SET_ROOT_SIZE`    | 对应 Builder 中的自动设置根字体大小插件 `AutoSetRootSizePlugin`                    |
+| `PLUGIN.ASSETS_RETRY`          | 对应 Rsbuild 中的 webpack 静态资源重试插件 `WebpackAssetsRetryPlugin`              |
+| `PLUGIN.AUTO_SET_ROOT_SIZE`    | 对应 Rsbuild 中的自动设置根字体大小插件 `AutoSetRootSizePlugin`                    |
 
 #### CHAIN_ID.MINIMIZER
 
@@ -278,4 +278,4 @@ Builder 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 
 ### 使用示例
 
-使用示例可参考：[WebpackChain 使用示例](https://modernjs.dev/builder/guide/advanced/custom-webpack-config.html#%E4%BD%BF%E7%94%A8-webpack-chain)。
+使用示例可参考：[WebpackChain 使用示例](https://rsbuild.dev/guide/advanced/custom-webpack-config.html#%E4%BD%BF%E7%94%A8-webpack-chain)。

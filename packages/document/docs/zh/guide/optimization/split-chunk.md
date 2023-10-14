@@ -2,13 +2,13 @@
 
 良好的拆包策略对于提升应用的加载性能是十分重要的，可以充分利用浏览器的缓存机制，减少请求数量，加快页面加载速度。
 
-在 Builder 中内置了多种拆包策略，可以满足大部分应用的需求，你也可以根据自己的业务场景，自定义拆包配置。
+在 Rsbuild 中内置了多种拆包策略，可以满足大部分应用的需求，你也可以根据自己的业务场景，自定义拆包配置。
 
 ## 拆包策略
 
-> Builder 的拆包配置集中在 [performance.chunkSplit](/api/config-performance.html#performancechunksplit) 中。
+> Rsbuild 的拆包配置集中在 [performance.chunkSplit](/api/config-performance.html#performancechunksplit) 中。
 
-Builder 支持设置以下几种拆包策略：
+Rsbuild 支持设置以下几种拆包策略：
 
 - `split-by-experience`: 根据经验制定的拆分策略，自动将一些常用的 npm 包拆分为体积适中的 chunk。
 - `split-by-module`: 按 NPM 包的粒度拆分，每个 NPM 包对应一个 chunk。
@@ -21,7 +21,7 @@ Builder 支持设置以下几种拆包策略：
 
 #### 分包策略
 
-Builder 默认采用 `split-by-experience` 策略，这是我们根据经验制定的策略。具体来说，当你的项目中引用了以下 npm 包时，它们会自动被拆分为单独的 chunk：
+Rsbuild 默认采用 `split-by-experience` 策略，这是我们根据经验制定的策略。具体来说，当你的项目中引用了以下 npm 包时，它们会自动被拆分为单独的 chunk：
 
 - `lib-polyfill.js`：包含 `core-js`，`@babel/runtime`，`@swc/helpers`，`tslib`。
 - `lib-react.js`：包含 `react`，`react-dom`。
@@ -123,7 +123,7 @@ export default {
 
 #### 分包策略
 
-该策略下，设置 `minSize`、`maxSize` 为一个固定值后，Builder 会自动进行拆分，无需干预。
+该策略下，设置 `minSize`、`maxSize` 为一个固定值后，Rsbuild 会自动进行拆分，无需干预。
 
 #### 配置
 
@@ -141,7 +141,7 @@ export default {
 
 ## 自定义拆包
 
-除了使用内置的拆包策略外，你也可以通过 Builder 自定义拆包功能来满足更多的定制化需求。自定义拆包分为两部分:
+除了使用内置的拆包策略外，你也可以通过 Rsbuild 自定义拆包功能来满足更多的定制化需求。自定义拆包分为两部分:
 
 - 自定义拆包分组
 - 自定义原生 bundler 拆包配置
@@ -150,7 +150,7 @@ export default {
 
 ### 自定义分组
 
-Builder 支持自定义拆包分组，这样比内置拆包策略更灵活，同时比手写 bundler 底层配置更简单。
+Rsbuild 支持自定义拆包分组，这样比内置拆包策略更灵活，同时比手写 bundler 底层配置更简单。
 
 比如将 node_modules 下的 `axios` 库拆分到 `axios.js` 中：
 
@@ -198,7 +198,7 @@ export default {
 除了 `chunkSplit` 配置，使用 dynamic import 拆包也是一项重要的优化手段，它可以有效减少首屏的包体积。
 
 :::tip 关于 dynamic import
-Dynamic import 是 ECMAScript 2020 引入的一个新特性，它允许你动态地加载一些 JavaScript 模块。Builder 底层的 Rspack / webpack 默认支持 dynamic import，所以你可以直接在代码中使用它。
+Dynamic import 是 ECMAScript 2020 引入的一个新特性，它允许你动态地加载一些 JavaScript 模块。Rsbuild 底层的 Rspack / webpack 默认支持 dynamic import，所以你可以直接在代码中使用它。
 :::
 
 当打包工具遇到 `import()` 语法时，它会自动将相关的代码分割成一个新的 chunk，并在运行时按需加载。

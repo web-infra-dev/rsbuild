@@ -11,7 +11,7 @@ In most cases, it is recommended to use the `.browserslistrc` file rather than t
 
 #### Default Value
 
-If there is no `browserslist` configs defined in the project, nor `overrideBrowserslist` defined, then Builder will set the default browserslist to:
+If there is no `browserslist` configs defined in the project, nor `overrideBrowserslist` defined, then Rsbuild will set the default browserslist to:
 
 ```js
 ['> 0.01%', 'not dead', 'not op_mini all'];

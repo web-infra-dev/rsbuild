@@ -1,6 +1,6 @@
 # 开启 REM 适配
 
-Builder 支持通过 [output.convertToRem](/api/config-output.html#outputconverttorem) 一键开启 REM 适配能力，能够根据屏幕大小来动态调整字体大小，让网页在不同大小的屏幕上都能够自适应显示。
+Rsbuild 支持通过 [output.convertToRem](/api/config-output.html#outputconverttorem) 一键开启 REM 适配能力，能够根据屏幕大小来动态调整字体大小，让网页在不同大小的屏幕上都能够自适应显示。
 
 ## 开启 REM 的适配能力
 
@@ -39,7 +39,7 @@ h1 {
 }
 ```
 
-Builder 默认会对所有 CSS 属性进行转换，如果希望仅对 font-size 属性进行转换，可通过设置 pxtorem.propList 实现。
+Rsbuild 默认会对所有 CSS 属性进行转换，如果希望仅对 font-size 属性进行转换，可通过设置 pxtorem.propList 实现。
 
 ```ts
 export default {

@@ -1,21 +1,21 @@
 # 插件系统
 
-Builder 提供了一套轻量强大的插件系统，用以实现自身的大多数功能，并允许用户进行扩展。
-开发者编写的插件能够修改 Builder 的默认行为并添加各类额外功能，包括但不限于：
+Rsbuild 提供了一套轻量强大的插件系统，用以实现自身的大多数功能，并允许用户进行扩展。
+开发者编写的插件能够修改 Rsbuild 的默认行为并添加各类额外功能，包括但不限于：
 
 - 修改 bundler 配置
 - 处理新的文件类型
 - 修改或编译文件
 - 部署产物
 
-Builder 底层支持 webpack 和 Rspack 等 bundler，并提供统一的 Node.js API 来抹平插件开发的差异，进而接入不同的上层框架、降低用户对底层 bundler 切换的感知。
+Rsbuild 底层支持 webpack 和 Rspack 等 bundler，并提供统一的 Node.js API 来抹平插件开发的差异，进而接入不同的上层框架、降低用户对底层 bundler 切换的感知。
 
 ## 开发插件
 
 插件提供类似 `(options?: PluginOptions) => BuilderPlugin` 的函数作为入口，建议将插件函数命名为 `builderPluginXXX`。
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder-webpack-provider';
+import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 
 export interface PluginFooOptions {
   message?: string;
@@ -48,17 +48,17 @@ builder.addPlugins([builderPluginFoo({ message: 'some other message.' })]);
 
 ## 生命周期钩子
 
-Builder 在内部按照约定的生命周期进行任务调度，插件可以通过注册钩子来介入工作流程的任意阶段，并实现自己的功能。
+Rsbuild 在内部按照约定的生命周期进行任务调度，插件可以通过注册钩子来介入工作流程的任意阶段，并实现自己的功能。
 
-Builder 生命周期钩子的完整列表参考 [API 文档](/api/plugin-hooks.html)。
+Rsbuild 生命周期钩子的完整列表参考 [API 文档](/api/plugin-hooks.html)。
 
-Builder 不会接管底层 Bundler 的生命周期，相关生命周期钩子的使用方式见对应文档：[webpack hooks](https://webpack.js.org/api/compiler-hooks/)
+Rsbuild 不会接管底层 Bundler 的生命周期，相关生命周期钩子的使用方式见对应文档：[webpack hooks](https://webpack.js.org/api/compiler-hooks/)
 
 ## 使用配置项
 
 自行编写的插件通常使用初始化时传入函数的参数作为配置项即可，开发者可以随意定义和使用函数的入参。
 
-但某些情况下插件可能需要读取 / 修改 Builder 公用的配置项，这时就需要了解 Builder 内部对配置项的生产和消费流程：
+但某些情况下插件可能需要读取 / 修改 Rsbuild 公用的配置项，这时就需要了解 Rsbuild 内部对配置项的生产和消费流程：
 
 - 读取、解析配置并合并默认值
 - 插件通过 `api.modifyBuilderConfig(...)` 回调修改配置项
@@ -140,7 +140,7 @@ type NormalizedConfig = {
 
 通常推荐使用 [neutrinojs/webpack-chain](https://github.com/neutrinojs/webpack-chain) 提供的链式 API 来修改 webpack 配置的工作。
 
-Builder 使用的是兼容 webpack5 的修改版本：[sorrycc/webpack-chain](https://github.com/sorrycc/webpack-chain)。
+Rsbuild 使用的是兼容 webpack5 的修改版本：[sorrycc/webpack-chain](https://github.com/sorrycc/webpack-chain)。
 
 ## 参考范例
 
@@ -149,7 +149,7 @@ Builder 使用的是兼容 webpack5 的修改版本：[sorrycc/webpack-chain](ht
 Loader 可以读取和处理不同类型的文件模块，具体参考 [concepts](https://webpack.js.org/concepts/loaders) 和 [loaders](https://webpack.js.org/loaders/)。
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder-webpack-provider';
+import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 
 export const builderPluginTypeScriptExt = (): BuilderPlugin => ({
   name: 'builder-typescript-ext',
@@ -165,7 +165,7 @@ export const builderPluginTypeScriptExt = (): BuilderPlugin => ({
 ### 添加模块入口
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder-webpack-provider';
+import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 
 export const builderPluginAdminPanel = (): BuilderPlugin => ({
   name: 'builder-admin-panel',
@@ -179,10 +179,10 @@ export const builderPluginAdminPanel = (): BuilderPlugin => ({
 
 ### 接入 webpack 插件
 
-开发者可以在 Builder 插件中接入已有的 webpack 插件来平缓迁移项目：
+开发者可以在 Rsbuild 插件中接入已有的 webpack 插件来平缓迁移项目：
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder-webpack-provider';
+import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 import type { Options } from '@modern-js/inspector-webpack-plugin';
 
 export const builderPluginInspector = (options?: Options): BuilderPlugin => ({

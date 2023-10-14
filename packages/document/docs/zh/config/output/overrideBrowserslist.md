@@ -11,7 +11,7 @@
 
 #### 默认值
 
-如果项目中没有定义任何 `browserslist` 相关的配置，也没有定义 `overrideBrowserslist`，那么 Builder 会设置默认值为：
+如果项目中没有定义任何 `browserslist` 相关的配置，也没有定义 `overrideBrowserslist`，那么 Rsbuild 会设置默认值为：
 
 ```js
 ['> 0.01%', 'not dead', 'not op_mini all'];

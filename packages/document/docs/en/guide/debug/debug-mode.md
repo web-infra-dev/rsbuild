@@ -1,6 +1,6 @@
 # Debug Mode
 
-Builder provides a debug mode to troubleshoot problems, you can add the `DEBUG=builder` environment variable when executing a build to enable Builder's debug mode.
+Rsbuild provides a debug mode to troubleshoot problems, you can add the `DEBUG=builder` environment variable when executing a build to enable Rsbuild's debug mode.
 
 ```bash
 # Debug development environment
@@ -10,11 +10,11 @@ DEBUG=builder pnpm dev
 DEBUG=builder pnpm build
 ```
 
-In debug mode, Builder will output some additional log information, and write the Builder config and webpack config to the dist directory, which is convenient for developers to view and debug.
+In debug mode, Rsbuild will output some additional log information, and write the Rsbuild config and webpack config to the dist directory, which is convenient for developers to view and debug.
 
 ## Log Information
 
-In debug mode, you will see some additional information output from the shell, among which are some process logs starting with `debug`, indicating what operations are performed inside the Builder.
+In debug mode, you will see some additional information output from the shell, among which are some process logs starting with `debug`, indicating what operations are performed inside the Rsbuild.
 
 ```bash
 $ DEBUG=builder pnpm dev
@@ -27,18 +27,18 @@ debug init plugins done [2389.48 ms]
 ...
 ```
 
-In addition, the following logs will be output in the Shell, indicating that the Builder has written the internally generated build configs to disk, and you can open these config files to view the corresponding content.
+In addition, the following logs will be output in the Shell, indicating that the Rsbuild has written the internally generated build configs to disk, and you can open these config files to view the corresponding content.
 
 ```bash
 Inspect config succeeds, open following files to view the content:
 
-   - Builder Config: /Project/demo/dist/builder.config.js
+   - Rsbuild Config: /Project/demo/dist/builder.config.js
    - Webpack Config (web): /Project/demo/dist/webpack.config.web.js
 ```
 
-## Builder Config File
+## Rsbuild Config File
 
-In debug mode, Builder will automatically generate `dist/builder.config.js` file, which contains the final generated Builder config. In this file, you can know the final result of the Builder config you passed in after being processed by the framework and Builder.
+In debug mode, Rsbuild will automatically generate `dist/builder.config.js` file, which contains the final generated Rsbuild config. In this file, you can know the final result of the Rsbuild config you passed in after being processed by the framework and Rsbuild.
 
 The structure of the file is as follows:
 
@@ -54,11 +54,11 @@ module.exports = {
 };
 ```
 
-For a complete introduction to Builder config, please see the [Builder Config](/guide/basic/builder-config.html) chapter.
+For a complete introduction to Rsbuild config, please see the [Rsbuild Config](/guide/basic/builder-config.html) chapter.
 
 ## Webpack Config File
 
-If the current project is built using webpack, then in debug mode, Builder will also automatically generate `dist/webpack.config.web.js` file, which contains the final generated webpack config. In this file, you can see what is included in the config that Builder finally passes to webpack.
+If the current project is built using webpack, then in debug mode, Rsbuild will also automatically generate `dist/webpack.config.web.js` file, which contains the final generated webpack config. In this file, you can see what is included in the config that Rsbuild finally passes to webpack.
 
 The structure of the file is as follows:
 
@@ -83,7 +83,7 @@ For a complete introduction to webpack configs, please see [webpack official doc
 
 ## Rspack Config File
 
-If the current project is built using Rspack, then in debug mode, Builder will also automatically generate `dist/rspack.config.web.js` file, which contains the final generated Rspack config. In this file, you can see what is included in the config that Builder finally passes to Rspack.
+If the current project is built using Rspack, then in debug mode, Rsbuild will also automatically generate `dist/rspack.config.web.js` file, which contains the final generated Rspack config. In this file, you can see what is included in the config that Rsbuild finally passes to Rspack.
 
 The structure of the file is as follows:
 

@@ -8,7 +8,7 @@ import NodeVersion from '@en/shared/nodeVersion.md';
 
 ## Use the Modern.js Framework
 
-**The Modern.js Framework uses Modern.js Builder as its build tool by default**. If you are a business developer, you do not need to manually install Builder, just create a Modern.js project and use all the features provided by Builder.
+**The Modern.js Framework uses Rsbuild as its build tool by default**. If you are a business developer, you do not need to manually install Rsbuild, just create a Modern.js project and use all the features provided by Rsbuild.
 
 ```bash
 npx @modern-js/create@latest my-app
@@ -17,47 +17,47 @@ npx @modern-js/create@latest my-app
 Please refer to [Modern.js - Introduction](https://modernjs.dev/en/guides/get-started/introduction.html) and [Modern.js - Quick Start](https://modernjs.dev/en/guides/get-started/quick-start.html) to learn how to use Modern.js framework.
 
 :::tip About the documentation
-Modern.js framework documentation and Modern.js Builder documentation are deployed under two separate sites. If you encounter any build-related problems while using the Modern.js framework, you can always refer to the documentation of Modern.js Builder to find solutions.
+Modern.js framework documentation and Rsbuild documentation are deployed under two separate sites. If you encounter any build-related problems while using the Modern.js framework, you can always refer to the documentation of Rsbuild to find solutions.
 :::
 
-## Usse the Builder CLI Tool
+## Usse the Rsbuild CLI Tool
 
-Modern.js Builder provides a lightweight CLI tool that includes basic commands such as `dev` and `build`. It is primarily used for building non-React projects.
+Rsbuild provides a lightweight CLI tool that includes basic commands such as `dev` and `build`. It is primarily used for building non-React projects.
 
-If your project is not based on the React, for example, if you are developing a Vue project, you can use the Builder CLI tool to build your project.
+If your project is not based on the React, for example, if you are developing a Vue project, you can use the Rsbuild CLI tool to build your project.
 
-Please refer to [Use Builder CLI](/guide/basic/builder-cli) for more information on how to use it.
+Please refer to [Use Rsbuild CLI](/guide/basic/builder-cli) for more information on how to use it.
 
-## Use Builder in a Front-end Framework
+## Use Rsbuild in a Front-end Framework
 
-If you are developing a front-end framework, you can use Builder by following these steps:
+If you are developing a front-end framework, you can use Rsbuild by following these steps:
 
-### 1. Install Builder
+### 1. Install Rsbuild
 
 You need to install two packages:
 
-- `@modern-js/builder`: This is the core package of Builder, which exports the core API of Builder.
-- `@modern-js/builder-rspack-provider`: To provide the building capabilities based on Rspack.
+- `@rsbuild/core`: This is the core package of Rsbuild, which exports the core API of Rsbuild.
+- `@rsbuild/rspack-provider`: To provide the building capabilities based on Rspack.
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @modern-js/builder @modern-js/builder-rspack-provider -D" />
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/rspack-provider -D" />
 
-if you want to use webpack instead of Rspack, you can replace the `@modern-js/builder-rspack-provider` with `@modern-js/builder-webpack-provider`:
+if you want to use webpack instead of Rspack, you can replace the `@rsbuild/rspack-provider` with `@rsbuild/webpack-provider`:
 
-> When performing a version upgrade, please ensure that the Builder and Provider packages you install are of the same version.
+> When performing a version upgrade, please ensure that the Rsbuild and Provider packages you install are of the same version.
 
-### 2. Create Builder Instance
+### 2. Create Rsbuild Instance
 
-There are two steps to creating a Builder instance:
+There are two steps to creating a Rsbuild instance:
 
-First you need to initialize the Builder Provider and pass in the `builderConfig` config object. Builder provides a lot of configs that allow you to customize the build behavior. At this point, you don't need to know the specific content of the config, just pass in an empty object. You can find all available configs in [API - config](/en/api/#config).
+First you need to initialize the Rsbuild Provider and pass in the `builderConfig` config object. Rsbuild provides a lot of configs that allow you to customize the build behavior. At this point, you don't need to know the specific content of the config, just pass in an empty object. You can find all available configs in [API - config](/en/api/#config).
 
 - Initialize the Rspack Provider:
 
 ```ts
-import { createBuilder } from '@modern-js/builder';
-import { builderWebpackProvider } from '@modern-js/builder-webpack-provider';
+import { createRsbuild } from '@rsbuild/core';
+import { builderWebpackProvider } from '@rsbuild/webpack-provider';
 
 const provider = builderWebpackProvider({
   builderConfig: {
@@ -69,8 +69,8 @@ const provider = builderWebpackProvider({
 - Initialize the Rspack Provider：
 
 ```ts
-import { createBuilder } from '@modern-js/builder';
-import { builderRspackProvider } from '@modern-js/builder-rspack-provider';
+import { createRsbuild } from '@rsbuild/core';
+import { builderRspackProvider } from '@rsbuild/rspack-provider';
 
 const provider = builderRspackProvider({
   builderConfig: {
@@ -79,21 +79,21 @@ const provider = builderRspackProvider({
 });
 ```
 
-After getting the provider instance, you can call the `createBuilder` method to create a Builder instance object:
+After getting the provider instance, you can call the `createRsbuild` method to create a Rsbuild instance object:
 
 ```ts
-const builder = await createBuilder(provider, {
+const builder = await createRsbuild(provider, {
   entry: {
     index: './src/index.ts',
   },
 });
 ```
 
-Except the `entry` option, the `createBuilder` method also provides some other options, which you can learn more about in [API - createBuilder](/en/api/builder-core.html#createbuilder).
+Except the `entry` option, the `createRsbuild` method also provides some other options, which you can learn more about in [API - createRsbuild](/en/api/builder-core.html#createbuilder).
 
-### 3. Call Builder Instance Method
+### 3. Call Rsbuild Instance Method
 
-The Builder instance provides some methods, which you can use it according to the usage scenarios.
+The Rsbuild instance provides some methods, which you can use it according to the usage scenarios.
 
 To start local development, it is recommended to use the [builder.startDevServer](/en/api/builder-instance.html#builder-startdevserver) method, which will start a local Dev Server.
 
@@ -116,9 +116,9 @@ To deploy the App to production environment, it is recommended to use the [build
 await builder.build();
 ```
 
-> For more introduction of Builder instance methods, please read the [Builder Instance](/en/api/builder-instance.html) chapter.
+> For more introduction of Rsbuild instance methods, please read the [Rsbuild Instance](/en/api/builder-instance.html) chapter.
 
-After completing the above three steps, you have learned the basic usage of Builder. Next, you can customize the build process through the Builder plugin and Builder configs.
+After completing the above three steps, you have learned the basic usage of Rsbuild. Next, you can customize the build process through the Rsbuild plugin and Rsbuild configs.
 
 ## Next Step
 
@@ -131,12 +131,12 @@ import Step from '@components/Step';
   <Step
     href="/guide/glossary.html"
     title="Glossary"
-    description="Learn about Builder related concepts"
+    description="Learn about Rsbuild related concepts"
   />
   <Step
     href="/guide/features.html"
     title="All Features"
-    description="Learn all features of Builder"
+    description="Learn all features of Rsbuild"
   />
   <Step
     href="/api/index.html"

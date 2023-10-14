@@ -4,12 +4,12 @@
 设置文件引用的别名，对应 webpack 和 Rspack 的 [resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) 配置。
 
 :::tip
-对于 TypeScript 项目，你只需要在 `tsconfig.json` 中配置 [compilerOptions.paths](https://www.typescriptlang.org/tsconfig#paths) 即可，Builder 会自动识别它，不需要额外配置 `source.alias` 字段，详见 [「路径别名」](https://modernjs.dev/builder/guide/advanced/alias.html)。
+对于 TypeScript 项目，你只需要在 `tsconfig.json` 中配置 [compilerOptions.paths](https://www.typescriptlang.org/tsconfig#paths) 即可，Rsbuild 会自动识别它，不需要额外配置 `source.alias` 字段，详见 [「路径别名」](https://rsbuild.dev/guide/advanced/alias.html)。
 :::
 
 ### Object 类型
 
-`alias` 的值可以定义为 Object 类型，其中的相对路径会自动被 Builder 转换为绝对路径。
+`alias` 的值可以定义为 Object 类型，其中的相对路径会自动被 Rsbuild 转换为绝对路径。
 
 ```js
 export default {

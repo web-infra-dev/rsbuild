@@ -2,7 +2,7 @@
 
 [CSS Modules](https://github.com/css-modules/css-modules) allows us to write CSS code in a modular way, and these styles can be imported and used in JavaScript files. Using CSS Modules can automatically generate unique class names, isolate styles between different modules, and avoid class name conflicts.
 
-Builder supports CSS Modules by default, you don't need to add additional configuration. Our convention is to use the `[name].module.css` filename to enable CSS Modules.
+Rsbuild supports CSS Modules by default, you don't need to add additional configuration. Our convention is to use the `[name].module.css` filename to enable CSS Modules.
 
 The following style files are considered CSS Modules:
 
@@ -38,7 +38,7 @@ export default () => {
 
 By default, only files ending in `*.module.css` are treated CSS Modules.
 
-If you want to treat all CSS files in the source directory as CSS Modules, you can enable the [output.disableCssModuleExtension](https://modernjs.dev/builder/en/api/config-output.html#outputdisablecssmoduleextension) config, for example:
+If you want to treat all CSS files in the source directory as CSS Modules, you can enable the [output.disableCssModuleExtension](https://rsbuild.dev/en/api/config-output.html#outputdisablecssmoduleextension) config, for example:
 
 ```ts
 export default {
@@ -163,7 +163,7 @@ After adding the type declaration, if the type error still exists, you can try t
 
 Although the above method can provide the type of CSS Modules, it cannot accurately prompt which classNames are exported by a certain CSS file.
 
-Builder supports generating accurate type declarations for CSS Modules, you only need to enable the [output.enableCssModuleTSDeclaration](/en/api/config-output.html#outputenablecssmodulesdeclaration) config, and then execute the build, Builder will generate type declaration files for all CSS Modules.
+Rsbuild supports generating accurate type declarations for CSS Modules, you only need to enable the [output.enableCssModuleTSDeclaration](/en/api/config-output.html#outputenablecssmodulesdeclaration) config, and then execute the build, Rsbuild will generate type declaration files for all CSS Modules.
 
 ```ts
 export default {

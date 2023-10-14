@@ -55,7 +55,7 @@ export const defaultAssetsRetryOptions: AssetsRetryOptions = {
 - **类型：** `string[]`
 - **默认值：** `[]`
 
-指定资源加载失败时的重试域名列表。在 `domain` 数组中，第一项是当前使用的域名，后面几项为备用域名。当某个域名的资源请求失败时，Builder 会在数组中找到该域名，并替换为数组的下一个域名。
+指定资源加载失败时的重试域名列表。在 `domain` 数组中，第一项是当前使用的域名，后面几项为备用域名。当某个域名的资源请求失败时，Rsbuild 会在数组中找到该域名，并替换为数组的下一个域名。
 
 比如：
 
@@ -131,7 +131,7 @@ export default {
 - **类型：** `undefined | boolean | 'anonymous' | 'use-credentials'`
 - **默认值：** `与 html.crossorigin 一致`
 
-在发起资源重新请求时，Builder 会重新创建 `<script>` 标签，此选项可以设置这些标签的 `crossorigin` 属性。
+在发起资源重新请求时，Rsbuild 会重新创建 `<script>` 标签，此选项可以设置这些标签的 `crossorigin` 属性。
 
 默认情况下，`assetsRetry.crossOrigin` 的值会与 `html.crossorigin` 配置项保持一致，无须额外配置。如果你需要对重新创建的标签进行单独配置，可以使用该选项，比如：
 
@@ -230,7 +230,7 @@ export default {
 
 ### 注意事项
 
-当你使用 `assetsRetry` 时，Builder 会向 HTML 中注入一段运行时代码，并将 `assetsRetry` 配置的内容序列化，插入到这段代码中，因此你需要注意：
+当你使用 `assetsRetry` 时，Rsbuild 会向 HTML 中注入一段运行时代码，并将 `assetsRetry` 配置的内容序列化，插入到这段代码中，因此你需要注意：
 
 - 避免在 `assetsRetry` 中配置敏感信息，比如内部使用的 token。
 - 避免在 `onRetry`，`onSuccess`，`onFail` 中引用函数外部的变量或方法。
@@ -274,7 +274,7 @@ export default {
 
 `assetsRetry` 通过监听页面 error 事件来获悉当前资源是否加载失败需要重试。因此，如果自定义模版中的资源执行早于 `assetsRetry`，那 `assetsRetry` 无法监听到该资源加载失败的事件，故无法 retry。
 
-如果想要 `assetsRetry` 对自定义模版中的资源生效，可参考 [自定义插入示例](https://github.com/jantimon/html-webpack-plugin/tree/main/examples/custom-insertion-position) 来修改 [html.inject](https://modernjs.dev/builder/api/config-html.html#htmlinject) 配置和自定义模版。
+如果想要 `assetsRetry` 对自定义模版中的资源生效，可参考 [自定义插入示例](https://github.com/jantimon/html-webpack-plugin/tree/main/examples/custom-insertion-position) 来修改 [html.inject](https://rsbuild.dev/api/config-html.html#htmlinject) 配置和自定义模版。
 
 ```diff
 <!DOCTYPE html>

@@ -15,7 +15,7 @@ import Esbuild from '@zh/shared/esbuild.md';
 
 ### 在 Modern.js 框架中使用
 
-Modern.js 框架默认集成了 Builder 的 esbuild 插件，因此，你不需要手动安装和注册插件，只需要使用 [tools.esbuild](https://modernjs.dev/configure/app/tools/esbuild.html) 配置项即可：
+Modern.js 框架默认集成了 Rsbuild 的 esbuild 插件，因此，你不需要手动安装和注册插件，只需要使用 [tools.esbuild](https://modernjs.dev/configure/app/tools/esbuild.html) 配置项即可：
 
 ```js
 export default defineConfig({
@@ -34,7 +34,7 @@ export default defineConfig({
 
 ### 通过 Node API 使用
 
-如果你直接使用了 Builder 的 Node API，那么需要手动安装和注册 esbuild 插件。
+如果你直接使用了 Rsbuild 的 Node API，那么需要手动安装和注册 esbuild 插件。
 
 #### 安装插件
 
@@ -42,14 +42,14 @@ export default defineConfig({
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @modern-js/builder-plugin-esbuild -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-esbuild -D" />
 
 #### 注册插件
 
 通过 `addPlugins` 方法来注册 esbuild 插件：
 
 ```js
-import { builderPluginEsbuild } from '@modern-js/builder-plugin-esbuild';
+import { builderPluginEsbuild } from '@rsbuild/plugin-esbuild';
 
 // 往 builder 实例上添加插件
 builder.addPlugins([builderPluginEsbuild()]);
@@ -121,7 +121,7 @@ builderPluginEsbuild({
 
 #### 关闭代码转译
 
-将 `loader` 设置为 `false` 来关闭 esbuild 代码转译，此时 Builder 会继续使用 Babel 来进行代码转译。
+将 `loader` 设置为 `false` 来关闭 esbuild 代码转译，此时 Rsbuild 会继续使用 Babel 来进行代码转译。
 
 ```ts
 builderPluginEsbuild({
@@ -165,7 +165,7 @@ builderPluginEsbuild({
 
 #### 关闭代码压缩
 
-将 `minimize` 设置为 `false` 来关闭 esbuild 代码压缩，此时 Builder 会继续使用 Terser 进行代码压缩。
+将 `minimize` 设置为 `false` 来关闭 esbuild 代码压缩，此时 Rsbuild 会继续使用 Terser 进行代码压缩。
 
 ```ts
 builderPluginEsbuild({
@@ -175,7 +175,7 @@ builderPluginEsbuild({
 
 ## esbuild 局限性
 
-虽然 esbuild 能给现有的 webpack 项目带来明显的构建性能提升，但这个工具在接入 Builder 时还存在一定的局限性，需要大家在接入的时候格外注意。
+虽然 esbuild 能给现有的 webpack 项目带来明显的构建性能提升，但这个工具在接入 Rsbuild 时还存在一定的局限性，需要大家在接入的时候格外注意。
 
 ### 兼容性
 
@@ -209,7 +209,7 @@ builderPluginEsbuild({
 
 ### 不支持 Babel 插件
 
-使用 esbuild 进行代码转译时，诸如 `babel-plugin-import` 等原有 Babel 插件的语法编译功能在开启 esbuild 后无法使用。并且由于 Builder 底层使用的是 esbuild 的 `Transform API`，因此不支持使用额外 esbuild 插件来进行自定义编译过程。
+使用 esbuild 进行代码转译时，诸如 `babel-plugin-import` 等原有 Babel 插件的语法编译功能在开启 esbuild 后无法使用。并且由于 Rsbuild 底层使用的是 esbuild 的 `Transform API`，因此不支持使用额外 esbuild 插件来进行自定义编译过程。
 
 如果你有 `babel-plugin-import` 等 Babel 插件相关诉求，可以使用 SWC 插件。
 

@@ -19,7 +19,7 @@ HTTPS:
 
 #### Automatically generate certificates
 
-You can directly set `https` to `true`, Builder will automatically generate the HTTPS certificate based on [devcert](https://github.com/davewasmer/devcert).
+You can directly set `https` to `true`, Rsbuild will automatically generate the HTTPS certificate based on [devcert](https://github.com/davewasmer/devcert).
 
 When using this method, you need to manually install the [devcert](https://github.com/davewasmer/devcert) dependency in your project:
 

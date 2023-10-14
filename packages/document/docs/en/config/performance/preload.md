@@ -32,7 +32,7 @@ When setting `performance.preload` to `true`, resources will be preloaded accord
 
 ### Object Type
 
-When the value of `performance.preload` is `object` type, the Builder will enable the preload capability for the specified resource according to the current configuration.
+When the value of `performance.preload` is `object` type, the Rsbuild will enable the preload capability for the specified resource according to the current configuration.
 
 #### preload.type
 

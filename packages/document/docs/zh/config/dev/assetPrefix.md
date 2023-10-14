@@ -9,7 +9,7 @@
 
 ### Boolean 类型
 
-如果设置 `assetPrefix` 为 `true`，Builder 会使用 `http://localhost:port/` 作为 URL 前缀：
+如果设置 `assetPrefix` 为 `true`，Rsbuild 会使用 `http://localhost:port/` 作为 URL 前缀：
 
 ```js
 export default {

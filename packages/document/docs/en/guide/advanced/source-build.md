@@ -16,7 +16,7 @@ monorepo
         └── index.ts
 ```
 
-The app is built using Modern.js Builder and relies on some methods from the lib:
+The app is built using Rsbuild and relies on some methods from the lib:
 
 ```json
 {
@@ -47,7 +47,7 @@ The disadvantages are:
 
 **When using source code referencing, the current project references the source code of other sub-projects for building.**
 
-In the example mentioned earlier, when you enable the source code build mode and add the relevant configuration in the `lib` directory, Modern.js Builder will automatically reference the `src/index.ts` source code of the lib. This means that you don't need to build the lib's code in advance, and when the source code of the lib is updated, it can trigger automatic hot updates for the app.
+In the example mentioned earlier, when you enable the source code build mode and add the relevant configuration in the `lib` directory, Rsbuild will automatically reference the `src/index.ts` source code of the lib. This means that you don't need to build the lib's code in advance, and when the source code of the lib is updated, it can trigger automatic hot updates for the app.
 
 The advantages of this approach are:
 
@@ -76,7 +76,7 @@ export default {
 
 ### Configuring Sub-projects
 
-When the source code build mode is enabled, the Modern.js Builder will prioritize reading the file specified in the `source` field of the sub-project during the build process. Therefore, you need to configure the `source` field in the package.json file of the sub-project and point it to the source code file.
+When the source code build mode is enabled, the Rsbuild will prioritize reading the file specified in the `source` field of the sub-project during the build process. Therefore, you need to configure the `source` field in the package.json file of the sub-project and point it to the source code file.
 
 For example, in the following example, when the lib package is referenced, the `./src/index.ts` file will be read for building:
 
@@ -116,7 +116,7 @@ Project reference provides the following capabilities:
 
 - It allows TypeScript to correctly recognize the types of other sub-projects without the need to build them.
 - When you navigate the code in VS Code, it automatically takes you to the corresponding source code file of the module.
-- Modern.js Builder reads the project reference configuration and automatically recognizes the `tsconfig.compilerOptions.path` configuration of the sub-project, so that the use of aliases in the sub-project works correctly.
+- Rsbuild reads the project reference configuration and automatically recognizes the `tsconfig.compilerOptions.path` configuration of the sub-project, so that the use of aliases in the sub-project works correctly.
 
 ### Example
 

@@ -5,7 +5,7 @@
 
 ### defer
 
-默认情况下，Builder 生成的 `<script>` 标签会自动设置 `defer` 属性，以避免阻塞页面的解析和渲染。
+默认情况下，Rsbuild 生成的 `<script>` 标签会自动设置 `defer` 属性，以避免阻塞页面的解析和渲染。
 
 ```html
 <head>

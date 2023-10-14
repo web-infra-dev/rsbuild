@@ -8,7 +8,7 @@ This optimization is implemented using [babel-plugin-lodash](https://www.npmjs.c
 
 ### Example
 
-This option is enabled by default, and Builder will automatically redirects the code references of `lodash` to sub-paths.
+This option is enabled by default, and Rsbuild will automatically redirects the code references of `lodash` to sub-paths.
 
 For example:
 

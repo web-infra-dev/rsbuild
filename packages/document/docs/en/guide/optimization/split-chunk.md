@@ -2,13 +2,13 @@
 
 A great chunk splitting strategy is very important to improve the loading performance of the application. It can make full use of the browser's caching mechanism to reduce the number of requests and improve the loading speed of the application.
 
-A variety of chunk splitting strategies are built into Builder, which can meet the needs of most applications. You can also customize the chunk splitting config according to your own business scenarios.
+A variety of chunk splitting strategies are built into Rsbuild, which can meet the needs of most applications. You can also customize the chunk splitting config according to your own business scenarios.
 
 ## Splitting Strategies
 
-> The chunk splitting config of Builder is in [performance.chunkSplit](/en/api/config-performance.html#performancechunksplit).
+> The chunk splitting config of Rsbuild is in [performance.chunkSplit](/en/api/config-performance.html#performancechunksplit).
 
-Builder supports the following chunk splitting strategies:
+Rsbuild supports the following chunk splitting strategies:
 
 - `split-by-experience`: an empirical splitting strategy, automatically splits some commonly used npm packages into chunks of moderate size.
 - `split-by-module`: split by NPM package granularity, each NPM package corresponds to a chunk.
@@ -21,7 +21,7 @@ Builder supports the following chunk splitting strategies:
 
 #### Behavior
 
-Builder adopts the `split-by-experience` strategy by default, which is a strategy we have developed from experience. Specifically, when the following npm packages are referenced in your project, they will automatically be split into separate chunks:
+Rsbuild adopts the `split-by-experience` strategy by default, which is a strategy we have developed from experience. Specifically, when the following npm packages are referenced in your project, they will automatically be split into separate chunks:
 
 - `lib-polyfill.js`: includes `core-js`, `@babel/runtime`, `@swc/helpers`, `tslib`.
 - `lib-react.js`: includes `react`, `react-dom`.
@@ -127,7 +127,7 @@ export default {
 
 #### Behavior
 
-Under this strategy, after setting `minSize`, `maxSize` to a fixed value, Builder will automatically split them without extra config.
+Under this strategy, after setting `minSize`, `maxSize` to a fixed value, Rsbuild will automatically split them without extra config.
 
 #### Config
 
@@ -154,7 +154,7 @@ It is worth noting that these two custom capabilities can be used together with 
 
 ### Custom Group
 
-Builder supports custom group, which is more flexible than the built-in strategies, and simpler than writing bundler config.
+Rsbuild supports custom group, which is more flexible than the built-in strategies, and simpler than writing bundler config.
 
 For example, split the `axios` library under node_modules into `axios.js`:
 
@@ -202,7 +202,7 @@ The config in `override` will be merged with the bundler config. For specific co
 In addition to the `chunkSplit` configurations, using dynamic import for code splitting is also an important optimization technique that can effectively reduce the initial bundle size.
 
 :::tip About dynamic import
-Dynamic import is a new feature introduced in ECMAScript 2020 that allows you to dynamically load JavaScript modules. The underlying Rspack/webpack used by the Builder supports dynamic import by default, so you can use it directly in your code.
+Dynamic import is a new feature introduced in ECMAScript 2020 that allows you to dynamically load JavaScript modules. The underlying Rspack/webpack used by the Rsbuild supports dynamic import by default, so you can use it directly in your code.
 :::
 
 When the bundler encounters the `import()` syntax, it automatically splits the relevant code into a new chunk and loads it on-demand at runtime.

@@ -5,7 +5,7 @@
 
 ### Boolean 类型
 
-Builder 默认不启用 Pug 模板引擎，你可以将 `tools.pug` 设置为 `true` 来启用它。
+Rsbuild 默认不启用 Pug 模板引擎，你可以将 `tools.pug` 设置为 `true` 来启用它。
 
 ```ts
 export default {

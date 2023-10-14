@@ -2,7 +2,7 @@
 
 用于开启 [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer) 插件来分析产物体积。
 
-默认情况下，Builder 不会开启 `webpack-bundle-analyzer`。当开启该功能后，内部的默认配置如下:
+默认情况下，Rsbuild 不会开启 `webpack-bundle-analyzer`。当开启该功能后，内部的默认配置如下:
 
 ```js
 const defaultConfig = {
@@ -33,7 +33,7 @@ export default {
 };
 ```
 
-在启用后，Builder 会生成一个分析构建产物体积的 HTML 文件，并在 Terminal 中打印以下日志：
+在启用后，Rsbuild 会生成一个分析构建产物体积的 HTML 文件，并在 Terminal 中打印以下日志：
 
 ```bash
 Webpack Bundle Analyzer saved report to /Project/my-project/dist/report-web.html

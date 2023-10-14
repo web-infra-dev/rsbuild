@@ -1,8 +1,8 @@
 # Build Vue 2 App
 
-Although the Modern.js framework is built on React, the underlying Modern.js Builder is not coupled with React. Therefore, you can use Modern.js Builder to build your Vue applications and leverage most of the capabilities provided by Modern.js Builder.
+Although the Modern.js framework is built on React, the underlying Rsbuild is not coupled with React. Therefore, you can use Rsbuild to build your Vue applications and leverage most of the capabilities provided by Rsbuild.
 
-In this document, you will learn how to build a Vue 2 application using Modern.js Builder.
+In this document, you will learn how to build a Vue 2 application using Rsbuild.
 
 import Vue2Project from '@en/shared/vue2Project.md';
 
@@ -14,13 +14,13 @@ import CliToolVue from '@en/shared/cliToolVue.md';
 
 ## Using Vue Plugin
 
-To compile Vue SFC (Single File Components) and JSX syntax, you need to register the Builder [Vue 2 plugin](/plugins/plugin-vue2). The plugin will automatically add the necessary configuration for Vue builds and remove the built-in React-related configurations.
+To compile Vue SFC (Single File Components) and JSX syntax, you need to register the Rsbuild [Vue 2 plugin](/plugins/plugin-vue2). The plugin will automatically add the necessary configuration for Vue builds and remove the built-in React-related configurations.
 
 For example, register in `builder.config.ts`:
 
 ```ts title="builder.config.ts"
-import { defineConfig } from '@modern-js/builder-cli';
-import { builderPluginVue2 } from '@modern-js/builder-plugin-vue2';
+import { defineConfig } from '@rsbuild/cli';
+import { builderPluginVue2 } from '@rsbuild/plugin-vue2';
 
 export default defineConfig({
   builderPlugins: [builderPluginVue2()],

@@ -1,6 +1,6 @@
 # Using Rspack
 
-This document will show you how to enable Rspack build mode in the Builder.
+This document will show you how to enable Rspack build mode in the Rsbuild.
 
 import Rspack from '@en/shared/rspackTip.mdx';
 
@@ -12,13 +12,13 @@ import Rspack from '@en/shared/rspackTip.mdx';
 
 Modern.js framework uses webpack as the default bundler. If you want to use Rspack as the bundler, you can refer to: [Using Rspack](https://modernjs.dev/en/guides/advanced-features/rspack-start.html#initializing-an-rspack-project).
 
-### Use Builder in a front-end framework
+### Use Rsbuild in a front-end framework
 
-Integrating rspack-provider into a frontend framework is similar to integrating webpack-provider. You only need to change the dependency from `@modern-js/builder-webpack-provider` to `@modern-js/builder-rspack-provider`.
+Integrating rspack-provider into a frontend framework is similar to integrating webpack-provider. You only need to change the dependency from `@rsbuild/webpack-provider` to `@rsbuild/rspack-provider`.
 
 ```ts title=modern.config.ts
-import { createBuilder } from '@modern-js/builder';
-import { builderRspackProvider } from '@modern-js/builder-rspack-provider';
+import { createRsbuild } from '@rsbuild/core';
+import { builderRspackProvider } from '@rsbuild/rspack-provider';
 
 const provider = builderRspackProvider({
   builderConfig: {
@@ -30,8 +30,8 @@ const provider = builderRspackProvider({
 ```diff title=package.json
 {
   "devDependencies": {
--    "@modern-js/builder-webpack-provider": "2.8.0",
-+    "@modern-js/builder-rspack-provider": "2.8.0"
+-    "@rsbuild/webpack-provider": "2.8.0",
++    "@rsbuild/rspack-provider": "2.8.0"
   }
 }
 ```
@@ -42,17 +42,17 @@ import RspackPrecautions from '@en/shared/rspackPrecautions.md';
 
 ## Migrating from webpack to Rspack
 
-Builder aims to eliminate the main differences between different bundlers and help users migrate at a lower cost. However, due to the different capabilities of each bundler, you still need to be aware of some differences.
+Rsbuild aims to eliminate the main differences between different bundlers and help users migrate at a lower cost. However, due to the different capabilities of each bundler, you still need to be aware of some differences.
 
-This article will introduce the differences between webpack and Rspack from the perspective of Builder. If you need to know more in-depth differences, please refer to the [Rspack documentation](http://rspack.dev/guide/migrate-from-webpack.html).
+This article will introduce the differences between webpack and Rspack from the perspective of Rsbuild. If you need to know more in-depth differences, please refer to the [Rspack documentation](http://rspack.dev/guide/migrate-from-webpack.html).
 
-### 1. Builder configuration differences
+### 1. Rsbuild configuration differences
 
-Currently, most of configuration options in Builder have been adapted for Rspack, but there are still some configurations that are in the process of being supported.
+Currently, most of configuration options in Rsbuild have been adapted for Rspack, but there are still some configurations that are in the process of being supported.
 
 #### Source Config
 
-> Source code parsing and compilation related configurations in Builder.
+> Source code parsing and compilation related configurations in Rsbuild.
 
 Unsupported configurations and capabilities include:
 
@@ -62,13 +62,13 @@ Unsupported configurations and capabilities include:
 
 #### Html Config
 
-> HTML related configurations in Builder.
+> HTML related configurations in Rsbuild.
 
 All configurations and capabilities under html are available within rspack.
 
 #### Security Config
 
-> Security related configurations in Builder.
+> Security related configurations in Rsbuild.
 
 Unsupported configurations and capabilities include:
 
@@ -76,13 +76,13 @@ Unsupported configurations and capabilities include:
 
 #### Dev Config
 
-> Dev related configurations in Builder.
+> Dev related configurations in Rsbuild.
 
 All configurations and capabilities under dev are available within rspack.
 
 #### Output Config
 
-> Output related configurations in Builder.
+> Output related configurations in Rsbuild.
 
 Unsupported configurations and capabilities include:
 
@@ -91,7 +91,7 @@ Unsupported configurations and capabilities include:
 
 #### Experiments Config
 
-> Experimental related configurations in the Builder
+> Experimental related configurations in the Rsbuild
 
 Unsupported configurations and capabilities include:
 
@@ -99,7 +99,7 @@ Unsupported configurations and capabilities include:
 
 #### Performance Config
 
-> Performance related configurations in Builder.
+> Performance related configurations in Rsbuild.
 
 Unsupported configurations and capabilities include:
 
@@ -108,7 +108,7 @@ Unsupported configurations and capabilities include:
 
 #### Tools Config
 
-> Low-level tools configurations in Builder.
+> Low-level tools configurations in Rsbuild.
 
 Unsupported configurations and capabilities include:
 
@@ -127,7 +127,7 @@ In addition to the above configurations, some of the supported configurations ma
 
 ### 2. Migrating from webpackChain to bundlerChain
 
-Builder supports modifying Rspack config via [bundlerChain](/api/config-tools.html#toolsbundlerchain). configurations modified via bundlerChain will take effect on both webpack and Rspack builds.
+Rsbuild supports modifying Rspack config via [bundlerChain](/api/config-tools.html#toolsbundlerchain). configurations modified via bundlerChain will take effect on both webpack and Rspack builds.
 
 ```diff
 export default {
@@ -178,9 +178,9 @@ More information about Rspack, please refer to the [Rspack website](https://www.
 
 By default, Rspack uses SWC for transpilation and compression. Therefore, when using Rspack as the bundler, `babel-loader` is not loaded by default.
 
-For most common Babel plugins, you can find corresponding alternatives in Rspack, and there are also corresponding compatible configuration options in Builder.
+For most common Babel plugins, you can find corresponding alternatives in Rspack, and there are also corresponding compatible configuration options in Rsbuild.
 
-| Babel Plugin                                    | Rspack Configuration                                                                      | Builder Configuration                                                                                                        |
+| Babel Plugin                                    | Rspack Configuration                                                                      | Rsbuild Configuration                                                                                                        |
 | ----------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | @babel/preset-env                               | [builtins.presetEnv](https://www.rspack.dev/config/builtins.html#builtinspresetenv)       | [Browserslist](/guide/advanced/browserslist.html)、<br />[Browser Compatibility](/guide/advanced/browser-compatibility.html) |
 | @babel/preset-react                             | [builtins.react](https://www.rspack.dev/config/builtins.html#builtinsreact)               | [Hot Module Replacement](/guide/advanced/hmr.html)                                                                           |
@@ -218,7 +218,7 @@ The plugins not listed can be judged according to [Rspack Plugin API](https://ww
 
 ### 7. CSS Modules Configuration Migration
 
-Rspack mode does not support modifying CSS Modules configuration through `tools.cssLoader`, however, Builder provides [output.cssModules](/api/config-output.html#outputcssmodules) configuration, it used to smooth Rspack mode and webpack mode difference.
+Rspack mode does not support modifying CSS Modules configuration through `tools.cssLoader`, however, Rsbuild provides [output.cssModules](/api/config-output.html#outputcssmodules) configuration, it used to smooth Rspack mode and webpack mode difference.
 
 ```diff
 export default {
@@ -243,7 +243,7 @@ export default {
 
 ## Build performance profile
 
-Builder supports the use of the `RSPACK_PROFILE` environment variable for build performance profile.
+Rsbuild supports the use of the `RSPACK_PROFILE` environment variable for build performance profile.
 
 ```bash
 $ RSPACK_PROFILE=ALL pnpm build
@@ -257,18 +257,18 @@ This command will generate a `rspack-profile-${timestamp}` folder in the dist fo
 
 ## Compare with Rspack CLI
 
-Builder Rspack build mode comparison [Rspack CLI](https://www.rspack.dev/guide/quick-start.html#using-the-rspack-cli) adds a lot of out-of-the-box capabilities. At the same time, these capabilities will bring a certain degree of performance overhead and behavioral differences:
+Rsbuild Rspack build mode comparison [Rspack CLI](https://www.rspack.dev/guide/quick-start.html#using-the-rspack-cli) adds a lot of out-of-the-box capabilities. At the same time, these capabilities will bring a certain degree of performance overhead and behavioral differences:
 
 | Features                                  | Description                                                                                                                                                                                                                      | Links                                                                                                                                                      |
 | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Browser Compatibility                     | Builder will set different default values of Browserslist according to [build target](/guide/basic/build-target)                                                                                                                 | <ul><li>[browserslist](/guide/advanced/browserslist.html)</li></ul>                                                                                        |
-| SourceMap generation                      | Builder generates different SourceMaps according to the environment by default (false is used by default in Rspack CLI)                                                                                                          | <ul><li>[output.disableSourceMap](/api/config-output.html#outputdisablesourcemap)</li></ul>                                                                |
-| SVG to React component                    | Builder support to import SVG as component by default                                                                                                                                                                            | <ul><li>[Import SVG Assets](/guide/basic/svg-assets.html)</li><li>[output.disableSvgr](/api/config-output.html#outputdisablesvgr)</li></ul>                |
-| Import common component library on demand | When using [Ant Design](https://www.npmjs.com/package/antd) or [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) component library, Builder will automatically enable the on-demand import function by default | <ul><li>[source.transformImport](/api/config-source#sourcetransformimport)</li></ul>                                                                       |
-| Type Checker                              | Builder runs TypeScript type checker by default                                                                                                                                                                                  | <ul><li>[Type checking](/guide/basic/typescript.html#type-checking)</li><li>[output.disableTsChecker](/api/config-output#outputdisabletschecker)</li></ul> |
+| Browser Compatibility                     | Rsbuild will set different default values of Browserslist according to [build target](/guide/basic/build-target)                                                                                                                 | <ul><li>[browserslist](/guide/advanced/browserslist.html)</li></ul>                                                                                        |
+| SourceMap generation                      | Rsbuild generates different SourceMaps according to the environment by default (false is used by default in Rspack CLI)                                                                                                          | <ul><li>[output.disableSourceMap](/api/config-output.html#outputdisablesourcemap)</li></ul>                                                                |
+| SVG to React component                    | Rsbuild support to import SVG as component by default                                                                                                                                                                            | <ul><li>[Import SVG Assets](/guide/basic/svg-assets.html)</li><li>[output.disableSvgr](/api/config-output.html#outputdisablesvgr)</li></ul>                |
+| Import common component library on demand | When using [Ant Design](https://www.npmjs.com/package/antd) or [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) component library, Rsbuild will automatically enable the on-demand import function by default | <ul><li>[source.transformImport](/api/config-source#sourcetransformimport)</li></ul>                                                                       |
+| Type Checker                              | Rsbuild runs TypeScript type checker by default                                                                                                                                                                                  | <ul><li>[Type checking](/guide/basic/typescript.html#type-checking)</li><li>[output.disableTsChecker](/api/config-output#outputdisabletschecker)</li></ul> |
 | PostCSS compilation                       | PostCSS compilation is enabled by default, built-in autoprefixer and other plugins                                                                                                                                               | <ul><li>[Using PostCSS](/guide/basic/css-usage.html#using-postcss)</li></ul>                                                                               |
-| Integrate @rspack/html-plugin             | Builder integrates `@rspack/html-plugin` by default to support more HTML template features (builtins.html is used by default in Rspack CLI)                                                                                      | <ul><li>[tools.htmlPlugin](/api/config-tools.html#toolshtmlplugin)</li></ul>                                                                               |
-| DevServer                                 | Builder implement DevServer based on [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) ([@rspack/dev-server](https://www.rspack.dev/guide/dev-server.html) is used in Rspack CLI)                      | <ul><li>[tools.devServer](/api/config-tools.html#toolsdevserver)</li></ul>                                                                                 |
+| Integrate @rspack/html-plugin             | Rsbuild integrates `@rspack/html-plugin` by default to support more HTML template features (builtins.html is used by default in Rspack CLI)                                                                                      | <ul><li>[tools.htmlPlugin](/api/config-tools.html#toolshtmlplugin)</li></ul>                                                                               |
+| DevServer                                 | Rsbuild implement DevServer based on [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) ([@rspack/dev-server](https://www.rspack.dev/guide/dev-server.html) is used in Rspack CLI)                      | <ul><li>[tools.devServer](/api/config-tools.html#toolsdevserver)</li></ul>                                                                                 |
 
 All of the above capabilities provide configurable options that can be adjusted as needed based on the actual situation of the project.
 
@@ -296,7 +296,7 @@ You can check whether the Babel plugin exists in the final generated Rspack conf
 
 ##### Enable TypeScript type checking
 
-By default, Builder enables TypeScript type checking during build. In large projects, type checking can take much longer than the actual build time of Rspack, so this behavior can slow down the build speed to some extent during production environment builds.
+By default, Rsbuild enables TypeScript type checking during build. In large projects, type checking can take much longer than the actual build time of Rspack, so this behavior can slow down the build speed to some extent during production environment builds.
 
 In this case, you can disable type checking using [output.disableTsChecker](/api/config-output.html#outputdisabletschecker) to see if Rspack performance meets your expectations after excluding type checking.
 
@@ -316,6 +316,6 @@ If you don't need this feature, you can set [output.disableSvgr](/api/config-out
 
 ##### Not import component library on demand
 
-By default, when using [Ant Design](https://www.npmjs.com/package/antd) or [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) component library, Builder will automatically enable the on-demand import function, and the default configuration can refer to [source.transformImport](/api/config-source.html#sourcetransformimport).
+By default, when using [Ant Design](https://www.npmjs.com/package/antd) or [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) component library, Rsbuild will automatically enable the on-demand import function, and the default configuration can refer to [source.transformImport](/api/config-source.html#sourcetransformimport).
 
 When using other component libraries, if the component library supports on-demand import, we recommend to configure on-demand import through [source.transformImport](/api/config-source.html#sourcetransformimport) first.

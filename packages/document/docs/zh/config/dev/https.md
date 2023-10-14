@@ -19,7 +19,7 @@
 
 #### 自动生成证书
 
-你可以直接将 `https` 设置为 `true`，Builder 会基于 [devcert](https://github.com/davewasmer/devcert) 来自动生成 Dev Server 所需的 HTTPS 证书。
+你可以直接将 `https` 设置为 `true`，Rsbuild 会基于 [devcert](https://github.com/davewasmer/devcert) 来自动生成 Dev Server 所需的 HTTPS 证书。
 
 使用这种方式时，你需要在当前项目中手动安装 [devcert](https://github.com/davewasmer/devcert) 依赖：
 

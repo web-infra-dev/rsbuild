@@ -1,10 +1,10 @@
 # Use TypeScript
 
-Builder supports TypeScript compilation and type checking by default, you can use `. ts` and `. tsx' files in the project without any configuration.
+Rsbuild supports TypeScript compilation and type checking by default, you can use `. ts` and `. tsx' files in the project without any configuration.
 
 ## TypeScript compilation
 
-Builder has three ways to compile TypeScript files.
+Rsbuild has three ways to compile TypeScript files.
 
 **Babel**
 
@@ -36,7 +36,7 @@ If ts-loader is enabled with default configuration, it does not have type checki
 
 If you want a super fast compiler, and you don't need some custom Babel plugins, then you can use SWC for compilation and minification.
 
-SWC plugin in Builder supports TypeScript, TSX and legacy decorator, you can check [SWC plugin](/en/plugins/plugin-swc.html).
+SWC plugin in Rsbuild supports TypeScript, TSX and legacy decorator, you can check [SWC plugin](/en/plugins/plugin-swc.html).
 
 ### Why Babel is the default option
 
@@ -44,7 +44,7 @@ Babel supports TypeScript well. It cannot check types, but we can check types in
 
 ## Type checking
 
-Currently, the only stable TypeScript type checking tool is TSC, and it usually takes a while to check types in a large project, so Builder by default using tsChecker([fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)) for asynchronous type checking, it won't block project setup.
+Currently, the only stable TypeScript type checking tool is TSC, and it usually takes a while to check types in a large project, so Rsbuild by default using tsChecker([fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)) for asynchronous type checking, it won't block project setup.
 
 Set tsChecker(with default options):
 
@@ -61,5 +61,5 @@ More configurations can be seen at [tsChecker configuration](/en/api/config-tool
 Note that if ts-loader is enabled and `compileOnly: false` is set, please disable tsChecker to avoid duplicate type-checking.
 
 :::tip STC
-The author of SWC has announced a new open-source type-checking tool based on Rust, which is called [STC](https://github.com/dudykr/stc), it's super fast but it cannot used for production now, really don't recommend you use that for now, when it's stabled we will use that in Builder SWC plugin as experimental ability.
+The author of SWC has announced a new open-source type-checking tool based on Rust, which is called [STC](https://github.com/dudykr/stc), it's super fast but it cannot used for production now, really don't recommend you use that for now, when it's stabled we will use that in Rsbuild SWC plugin as experimental ability.
 :::

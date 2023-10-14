@@ -2,7 +2,7 @@
 pageType: home
 
 hero:
-  name: Modern.js Builder
+  name: Rsbuild
   tagline: A Build Engine for web development.
   actions:
     - theme: brand

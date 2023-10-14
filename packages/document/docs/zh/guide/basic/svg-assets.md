@@ -1,6 +1,6 @@
 # 引用 SVG 资源
 
-Builder 支持在代码中引用 SVG 资源，并将 SVG 图片转换为 React 组件或 URL。
+Rsbuild 支持在代码中引用 SVG 资源，并将 SVG 图片转换为 React 组件或 URL。
 
 :::tip 什么是 SVG
 SVG 是 Scalable Vector Graphics 的缩写，意为可伸缩矢量图形。SVG 是一种用来描述二维矢量图形的 XML-based 格式，可以用来创建可以无限放大或缩小而不失真的图像。因为 SVG 图形是由矢量图形元素组成的，所以可以轻松地在各种尺寸和分辨率下渲染。
@@ -8,7 +8,7 @@ SVG 是 Scalable Vector Graphics 的缩写，意为可伸缩矢量图形。SVG �
 
 ## 在 JS 文件中引用
 
-在 JS 文件中引用 SVG 资源时，如果你具名导入 `ReactComponent` 对象，Builder 会调用 [SVGR](https://react-svgr.com/)，将 SVG 图片转换为一个 React 组件。
+在 JS 文件中引用 SVG 资源时，如果你具名导入 `ReactComponent` 对象，Rsbuild 会调用 [SVGR](https://react-svgr.com/)，将 SVG 图片转换为一个 React 组件。
 
 ```tsx title="src/component/Logo.tsx"
 import { ReactComponent as Logo } from './static/logo.svg';
@@ -62,7 +62,7 @@ export default () => <Logo />;
 
 ## 禁用 SVGR 处理
 
-默认情况下，在 JS 文件中引用 SVG 资源时，Builder 会调用 SVGR，将 SVG 图片转换为一个 React 组件。
+默认情况下，在 JS 文件中引用 SVG 资源时，Rsbuild 会调用 SVGR，将 SVG 图片转换为一个 React 组件。
 如果你确定项目内的所有 SVG 资源都没有当成 React 组件使用时，可以通过将 [disableSvgr](/api/config-output.html#outputdisablesvgr) 设置为 true 来关闭此项转换，以提升构建性能。
 
 ```js

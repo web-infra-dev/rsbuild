@@ -1,8 +1,8 @@
 # HTML Template
 
-During the build process, Builder will compile based on the HTML template and template parameters to generate several HTML files.
+During the build process, Rsbuild will compile based on the HTML template and template parameters to generate several HTML files.
 
-Builder provides some configs to set the HTML template. Through this chapter, you can learn the basic usage of these configs.
+Rsbuild provides some configs to set the HTML template. Through this chapter, you can learn the basic usage of these configs.
 
 ## Set Template
 
@@ -10,7 +10,7 @@ HTML templates are usually predefined by the upper framework.
 
 For example, in the Modern.js framework, the HTML template is preset by default, and users can also customize the content of the template. You can read the ["Modern.js - HTML Template"](https://modernjs.dev/en/guides/basic-features/html.html) chapter to learn about it.
 
-In Builder, you can use [html.template](/en/api/config-html.html#htmltemplate) and [html.templateByEntries](/en/api/config-html.html#htmltemplatebyentries) configs to define the path to the custom HTML template.
+In Rsbuild, you can use [html.template](/en/api/config-html.html#htmltemplate) and [html.templateByEntries](/en/api/config-html.html#htmltemplatebyentries) configs to define the path to the custom HTML template.
 
 ```ts
 export default {
@@ -49,7 +49,7 @@ export default {
 
 ## Set Page Icon
 
-Builder supports setting [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) icon and [apple-touch-icon](https://webhint.io/docs/user-guide/hints/hint-apple-touch-icons/) icon.
+Rsbuild supports setting [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) icon and [apple-touch-icon](https://webhint.io/docs/user-guide/hints/hint-apple-touch-icons/) icon.
 
 You can set the favicon through the [html.favicon](/en/api/config-html.html#htmlfavicon) and [html.faviconByEntries](/en/api/config-html.html#htmlfaviconbyentries) configs.
 
@@ -95,7 +95,7 @@ The generated meta tag in HTML is:
 
 ## Set Template Parameters
 
-In HTML templates, you can use a variety of template parameters. The template parameters injected by Builder by default include:
+In HTML templates, you can use a variety of template parameters. The template parameters injected by Rsbuild by default include:
 
 ```ts
 type DefaultParameters = {
@@ -144,13 +144,13 @@ The generated HTML code is as follows:
 
 ## Template Engine
 
-Builder supports using [Lodash Template](https://www.lodashjs.com/docs/lodash.template), [EJS](https://ejs.co/), [Pug](https://pugjs.org/) as template engines, the most basic Lodash Template is used as the default template engine.
+Rsbuild supports using [Lodash Template](https://www.lodashjs.com/docs/lodash.template), [EJS](https://ejs.co/), [Pug](https://pugjs.org/) as template engines, the most basic Lodash Template is used as the default template engine.
 
 ### [Lodash Template](https://www.lodashjs.com/docs/lodash.template)
 
-When the suffix of the template is `.html`, Builder will use Lodash Template to compile it.
+When the suffix of the template is `.html`, Rsbuild will use Lodash Template to compile it.
 
-For example, if you define a `text` parameter in a template with a value of `'world'`, Builder will automatically replace `<%= text %>` with the value.
+For example, if you define a `text` parameter in a template with a value of `'world'`, Rsbuild will automatically replace `<%= text %>` with the value.
 
 ```html
 <!-- input -->
@@ -164,7 +164,7 @@ Please read the [Lodash Template](https://www.lodashjs.com/docs/lodash.template)
 
 ### [EJS](https://ejs.co/)
 
-When the suffix of the template is `.ejs`, Builder will use the EJS template engine to compile it. EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.
+When the suffix of the template is `.ejs`, Rsbuild will use the EJS template engine to compile it. EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.
 
 For example, you can first refer to a `.ejs` template through the [html.template](/en/api/config-html.html#htmltemplate) config:
 
@@ -176,7 +176,7 @@ export default {
 };
 ```
 
-Then define a `user` parameter in the template with a value of `{ name: 'Jack' }`. Builder will automatically replace `<%= user.name %>` with the value.
+Then define a `user` parameter in the template with a value of `{ name: 'Jack' }`. Rsbuild will automatically replace `<%= user.name %>` with the value.
 
 ```html
 <!-- input -->
@@ -192,7 +192,7 @@ Please read the [EJS](https://ejs.co/) documentation for details.
 
 ### [Pug](https://pugjs.org/)
 
-When the suffix of the template is `.pug`, Builder will use the Pug template engine to compile it. Pug is a robust, elegant, feature rich template engine for Node.js.
+When the suffix of the template is `.pug`, Rsbuild will use the Pug template engine to compile it. Pug is a robust, elegant, feature rich template engine for Node.js.
 
 Before using the Pug template, you need to enable the [tools.pug](/en/api/config-tools.html#toolspug) config, and define the [html.template](/en/api/config-html.html#htmltemplate) config to reference a `.pug` template:
 

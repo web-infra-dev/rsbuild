@@ -1,26 +1,26 @@
-# 使用 Builder CLI
+# 使用 Rsbuild CLI
 
-Modern.js Builder 提供了一个轻量的 CLI 工具，包含 dev、build 等基础命令，它主要用于构建非 React 项目。
+Rsbuild 提供了一个轻量的 CLI 工具，包含 dev、build 等基础命令，它主要用于构建非 React 项目。
 
 - 对于 React 项目，我们建议直接使用 Modern.js 框架，参考 [Modern.js - 快速上手](https://modernjs.dev/guides/get-started/quick-start.html)。
-- 对于非 React 项目，比如开发一个 Vue 项目，那么你可以使用 Builder CLI 工具来构建你的项目。
+- 对于非 React 项目，比如开发一个 Vue 项目，那么你可以使用 Rsbuild CLI 工具来构建你的项目。
 
 ## 安装
 
 你需要安装两个包，其中：
 
-- `@modern-js/builder-cli`：Builder 的 CLI 工具，提供基础的 CLI 命令，并会自动加载当前项目中安装的 Provider。
-- `@modern-js/builder-rspack-provider`：提供基于 webpack 或 Rspack 的构建能力。
+- `@rsbuild/cli`：Rsbuild 的 CLI 工具，提供基础的 CLI 命令，并会自动加载当前项目中安装的 Provider。
+- `@rsbuild/rspack-provider`：提供基于 webpack 或 Rspack 的构建能力。
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @modern-js/builder-cli @modern-js/builder-rspack-provider -D" />
+<PackageManagerTabs command="add @rsbuild/cli @rsbuild/rspack-provider -D" />
 
-如果你想使用 webpack 而不是 Rspack，可以将 `@modern-js/builder-rspack-provider` 替换为 `@modern-js/builder-webpack-provider`：
+如果你想使用 webpack 而不是 Rspack，可以将 `@rsbuild/rspack-provider` 替换为 `@rsbuild/webpack-provider`：
 
 ## 命令
 
-Builder CLI 提供了以下命令，可以帮助你快速启动开发服务器、构建生产环境代码等。
+Rsbuild CLI 提供了以下命令，可以帮助你快速启动开发服务器、构建生产环境代码等。
 
 ### builder dev
 
@@ -57,10 +57,10 @@ Options:
 
 ## 配置
 
-Builder CLI 默认会读取项目根目录下的 `builder.config.ts` 配置文件，你可以在配置文件中使用 Builder 提供的[所有配置项](/api/index)。
+Rsbuild CLI 默认会读取项目根目录下的 `builder.config.ts` 配置文件，你可以在配置文件中使用 Rsbuild 提供的[所有配置项](/api/index)。
 
 ```ts title="builder.config.ts"
-import { defineConfig } from '@modern-js/builder-cli';
+import { defineConfig } from '@rsbuild/cli';
 
 export default defineConfig({
   output: {
@@ -80,7 +80,7 @@ export default defineConfig({
 
 ## 构建入口
 
-Builder CLI 默认会使用 `src/index.(js|ts|jsx|tsx)` 作为构建入口，你可以使用 `source.entries` 配置项来修改构建入口。
+Rsbuild CLI 默认会使用 `src/index.(js|ts|jsx|tsx)` 作为构建入口，你可以使用 `source.entries` 配置项来修改构建入口。
 
 - **类型：**
 
@@ -99,7 +99,7 @@ const defaultEntry = {
 - **示例：**
 
 ```ts title="builder.config.ts"
-import { defineConfig } from '@modern-js/builder-cli';
+import { defineConfig } from '@rsbuild/cli';
 
 export default defineConfig({
   source: {
@@ -113,13 +113,13 @@ export default defineConfig({
 
 ## 注册插件
 
-你可以在 `builder.config.ts` 中使用 `builderPlugins` 选项来注册 Builder 插件。
+你可以在 `builder.config.ts` 中使用 `builderPlugins` 选项来注册 Rsbuild 插件。
 
 比如注册 Vue 插件：
 
 ```ts title="builder.config.ts"
-import { defineConfig } from '@modern-js/builder-cli';
-import { builderPluginVue } from '@modern-js/builder-plugin-vue';
+import { defineConfig } from '@rsbuild/cli';
+import { builderPluginVue } from '@rsbuild/plugin-vue';
 
 export default defineConfig({
   builderPlugins: [builderPluginVue()],

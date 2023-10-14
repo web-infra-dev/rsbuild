@@ -28,10 +28,10 @@ export type BuilderPlugin<API = BuilderPluginAPI> = {
 };
 ```
 
-You can import this type from `@modern-js/builder`:
+You can import this type from `@rsbuild/core`:
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder';
+import type { BuilderPlugin } from '@rsbuild/core';
 
 export default (): BuilderPlugin => ({
   name: 'builder-plugin-foo',
@@ -109,11 +109,11 @@ When using webpack-provider or rspack-provider, the type definition of `BuilderP
 
 ### Plugin for webpack-provider
 
-When developing plugins for webpack-provider, please import `BuilderPluginAPI` from `@modern-js/builder-webpack-provider`.
+When developing plugins for webpack-provider, please import `BuilderPluginAPI` from `@rsbuild/webpack-provider`.
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder';
-import type { BuilderPluginAPI } from '@modern-js/builder-webpack-provider';
+import type { BuilderPlugin } from '@rsbuild/core';
+import type { BuilderPluginAPI } from '@rsbuild/webpack-provider';
 
 export default (): BuilderPlugin<BuilderPluginAPI> => ({
   name: 'builder-plugin-foo',
@@ -128,11 +128,11 @@ export default (): BuilderPlugin<BuilderPluginAPI> => ({
 
 ### Plugins for rspack-provider
 
-When developing plugins for rspack-provider, please import `BuilderPluginAPI` from `@modern-js/builder-rspack-provider`.
+When developing plugins for rspack-provider, please import `BuilderPluginAPI` from `@rsbuild/rspack-provider`.
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder';
-import type { BuilderPluginAPI } from '@modern-js/builder-rspack-provider';
+import type { BuilderPlugin } from '@rsbuild/core';
+import type { BuilderPluginAPI } from '@rsbuild/rspack-provider';
 
 export default (): BuilderPlugin<BuilderPluginAPI> => ({
   name: 'builder-plugin-foo',
@@ -147,15 +147,15 @@ export default (): BuilderPlugin<BuilderPluginAPI> => ({
 
 ### Plugins for both webpack-provider and rspack-provider
 
-When developing plugins for both webpack-provider and rspack-provider, please import `DefaultBuilderPlugin` from `@modern-js/builder-shared`.
+When developing plugins for both webpack-provider and rspack-provider, please import `DefaultBuilderPlugin` from `@rsbuild/shared`.
 
 Note that developing plugins that can support both webpack and Rspack at the same time means that you cannot use any APIs with webpack / Rspack identifiers, such as `modifyWebpackConfig` or `modifyRspackConfig`.
 
 You can use [modifyBundlerChain](/api/plugin-hooks.html#modifybundlerchain-experimental) to modify the configuration that applies to both webpack and Rspack.
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder';
-import type { DefaultBuilderPlugin } from '@modern-js/builder-shared';
+import type { BuilderPlugin } from '@rsbuild/core';
+import type { DefaultBuilderPlugin } from '@rsbuild/shared';
 
 export default (): BuilderPlugin<DefaultBuilderPlugin> => ({
   name: 'builder-plugin-foo',

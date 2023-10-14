@@ -16,7 +16,7 @@ monorepo
         └── index.ts
 ```
 
-其中，app 是基于 Modern.js Builder 构建的，app 依赖了 lib 中的一些方法：
+其中，app 是基于 Rsbuild 构建的，app 依赖了 lib 中的一些方法：
 
 ```json
 {
@@ -47,7 +47,7 @@ monorepo
 
 **源码引用指的是当前项目引用其他子项目的源码进行构建。**
 
-比如上述例子，当你开启了源码构建模式，并在 lib 中添加相关配置后，Modern.js Builder 会自动引用 lib 的 `src/index.ts` 源代码。这意味着，你不需要提前构建 lib 的代码，并且当 lib 的源代码更新时，也可以自动触发 app 的热更新。
+比如上述例子，当你开启了源码构建模式，并在 lib 中添加相关配置后，Rsbuild 会自动引用 lib 的 `src/index.ts` 源代码。这意味着，你不需要提前构建 lib 的代码，并且当 lib 的源代码更新时，也可以自动触发 app 的热更新。
 
 这种方式的优势在于：
 
@@ -76,7 +76,7 @@ export default {
 
 ### 配置子项目
 
-当开启源码构建模式后，Modern.js Builder 在构建过程中，会优先读取子项目的 `source` 字段对应的文件。因此，你需要在子项目的 package.json 中配置 `source` 字段，并且指向源码文件路径。
+当开启源码构建模式后，Rsbuild 在构建过程中，会优先读取子项目的 `source` 字段对应的文件。因此，你需要在子项目的 package.json 中配置 `source` 字段，并且指向源码文件路径。
 
 比如以下例子，当 lib 包被引用时，会读取 `./src/index.ts` 文件进行构建：
 
@@ -116,7 +116,7 @@ Project reference 提供了以下能力：
 
 - 使 TypeScript 可以正确识别其他子项目的类型，而无须对子项目进行构建。
 - 当你在 VS Code 内进行代码跳转时，VS Code 可以自动跳转到对应模块的源代码文件。
-- Modern.js Builder 会读取 project reference 配置，并自动识别子项目的 `tsconfig.compilerOptions.path` 配置，从而让子项目的别名可以正确生效。
+- Rsbuild 会读取 project reference 配置，并自动识别子项目的 `tsconfig.compilerOptions.path` 配置，从而让子项目的别名可以正确生效。
 
 ### 示例
 

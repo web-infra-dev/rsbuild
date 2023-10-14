@@ -1,8 +1,8 @@
 # 构建 Vue 2 应用
 
-尽管 Modern.js 框架是基于 React 实现的，但底层的 Modern.js Builder 并不与 React 耦合。因此，你可以使用 Modern.js Builder 来构建你的 Vue 应用，并使用 Modern.js Builder 提供的绝大多数能力。
+尽管 Modern.js 框架是基于 React 实现的，但底层的 Rsbuild 并不与 React 耦合。因此，你可以使用 Rsbuild 来构建你的 Vue 应用，并使用 Rsbuild 提供的绝大多数能力。
 
-在这篇文档中，你可以了解到如何基于 Modern.js Builder 来构建一个 Vue 2 应用。
+在这篇文档中，你可以了解到如何基于 Rsbuild 来构建一个 Vue 2 应用。
 
 import Vue2Project from '@zh/shared/vue2Project.md';
 
@@ -14,13 +14,13 @@ import CliToolVue from '@zh/shared/cliToolVue.md';
 
 ## 使用 Vue 插件
 
-为了能够编译 Vue 的 SFC（单文件组件）和 JSX 语法，你需要注册 Builder 的 [Vue 2 插件](/plugins/plugin-vue2)，插件会自动添加 Vue 构建所需的配置，并移除内置的 React 相关配置。
+为了能够编译 Vue 的 SFC（单文件组件）和 JSX 语法，你需要注册 Rsbuild 的 [Vue 2 插件](/plugins/plugin-vue2)，插件会自动添加 Vue 构建所需的配置，并移除内置的 React 相关配置。
 
 例如，在 `builder.config.ts` 中注册：
 
 ```ts title="builder.config.ts"
-import { defineConfig } from '@modern-js/builder-cli';
-import { builderPluginVue2 } from '@modern-js/builder-plugin-vue2';
+import { defineConfig } from '@rsbuild/cli';
+import { builderPluginVue2 } from '@rsbuild/plugin-vue2';
 
 export default defineConfig({
   builderPlugins: [builderPluginVue2()],

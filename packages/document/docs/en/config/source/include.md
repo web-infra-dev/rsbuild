@@ -2,9 +2,9 @@
 - **Default:** `[]`
 - **Bundler:** `only support webpack`
 
-In order to maintain faster compilation speed, Builder will not compile JavaScript/TypeScript files under node_modules through `babel-loader` or `ts-loader` by default, as will as the JavaScript/TypeScript files outside the current project directory.
+In order to maintain faster compilation speed, Rsbuild will not compile JavaScript/TypeScript files under node_modules through `babel-loader` or `ts-loader` by default, as will as the JavaScript/TypeScript files outside the current project directory.
 
-Through the `source.include` config, you can specify directories or modules that need to be compiled by Builder. The usage of `source.include` is consistent with [Rule.include](https://webpack.js.org/configuration/module/#ruleinclude) in webpack, which supports passing in strings or regular expressions to match the module path.
+Through the `source.include` config, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://webpack.js.org/configuration/module/#ruleinclude) in webpack, which supports passing in strings or regular expressions to match the module path.
 
 For example:
 
@@ -51,7 +51,7 @@ The above two methods match the absolute paths of files using "path prefixes" an
 
 ### Compile Sub Dependencies
 
-When you compile an npm package via `source.include`, Builder will only compile the matching module by default, not the **Sub Dependencies** of the module.
+When you compile an npm package via `source.include`, Rsbuild will only compile the matching module by default, not the **Sub Dependencies** of the module.
 
 Take `query-string` for example, it depends on the `decode-uri-component` package, which also has ES6+ code, so you need to add the `decode-uri-component` package to `source.include` as well.
 

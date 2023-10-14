@@ -55,7 +55,7 @@ At the same time, you can also customize your retry logic using the following co
 - **Type:** `string[]`
 - **Default:** `[]`
 
-Specifies the retry domain when assets fail to load. In the `domain` array, the first item is the currently used domain, and the following items are backup domains. When a asset request for a domain fails, Builder will find that domain in the array and replace it with the next domain in the array.
+Specifies the retry domain when assets fail to load. In the `domain` array, the first item is the currently used domain, and the following items are backup domains. When a asset request for a domain fails, Rsbuild will find that domain in the array and replace it with the next domain in the array.
 
 For example:
 
@@ -131,7 +131,7 @@ export default {
 - **Type:** `undefined | boolean | 'anonymous' | 'use-credentials'`
 - **Default:** `same as html.crossorigin`
 
-When initiating a retry for assets, Builder will recreate the `<script>` tags. This option allows you to set the `crossorigin` attribute for these tags.
+When initiating a retry for assets, Rsbuild will recreate the `<script>` tags. This option allows you to set the `crossorigin` attribute for these tags.
 
 By default, the value of `assetsRetry.crossOrigin` will be consistent with the `html.crossorigin` configuration, so no additional configuration is required. If you need to configure the recreated tags separately, you can use this option, for example:
 
@@ -230,7 +230,7 @@ The downside is that `assets-retry.[version].js` itself may fail to load. If thi
 
 ### Notes
 
-When you use `assetsRetry`, the Builder injects some runtime code into the HTML and serializes the `assetsRetry` config, inserting it into the runtime code. Therefore, you need to be aware of the following:
+When you use `assetsRetry`, the Rsbuild injects some runtime code into the HTML and serializes the `assetsRetry` config, inserting it into the runtime code. Therefore, you need to be aware of the following:
 
 - Avoid configuring sensitive information in `assetsRetry`, such as internal tokens.
 - Avoid referencing variables or methods outside of `onRetry`, `onSuccess`, and `onFail`.
@@ -274,7 +274,7 @@ Currently, `assetsRetry` cannot work on dynamically imported resources. This fea
 
 `assetsRetry` listens to the page error event to know whether the current resource fails to load and needs to be retried. Therefore, if the resource in the custom template is executed earlier than `assetsRetry`, then `assetsRetry` cannot listen to the event that the resource fails to load, so it cannot retry.
 
-If you want `assetsRetry` to work on resources in custom templates, you can refer to [Custom Insertion Example](https://github.com/jantimon/html-webpack-plugin/tree/main/examples/custom-insertion-position) to modify [html.inject](https://modernjs.dev/builder/en/api/config-html.html) configuration and custom template.
+If you want `assetsRetry` to work on resources in custom templates, you can refer to [Custom Insertion Example](https://github.com/jantimon/html-webpack-plugin/tree/main/examples/custom-insertion-position) to modify [html.inject](https://rsbuild.dev/en/api/config-html.html) configuration and custom template.
 
 ```diff
 <!DOCTYPE html>

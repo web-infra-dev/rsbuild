@@ -34,7 +34,7 @@ const defaultDistPath = {
 };
 ```
 
-Set the directory of the dist files. Builder will output files to the corresponding subdirectory according to the file type.
+Set the directory of the dist files. Rsbuild will output files to the corresponding subdirectory according to the file type.
 
 Detail:
 

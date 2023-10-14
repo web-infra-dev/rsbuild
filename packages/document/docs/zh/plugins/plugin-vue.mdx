@@ -10,14 +10,14 @@ Vue 插件提供了对 Vue 3 应用构建的支持，插件内部集成了 [vue-
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @modern-js/builder-plugin-vue -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-vue -D" />
 
 ### 注册插件
 
 你可以通过 `addPlugins` 方法来注册 Vue 插件：
 
 ```js
-import { builderPluginVue } from '@modern-js/builder-plugin-vue';
+import { builderPluginVue } from '@rsbuild/plugin-vue';
 
 builder.addPlugins([builderPluginVue()]);
 ```

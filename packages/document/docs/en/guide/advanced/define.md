@@ -1,12 +1,12 @@
 # Environment Variables
 
-Builder supports injecting environment variables or expressions into the code during compilation, which is helpful for distinguishing the running environment or injecting constant values. This chapter introduces how to use environment variables.
+Rsbuild supports injecting environment variables or expressions into the code during compilation, which is helpful for distinguishing the running environment or injecting constant values. This chapter introduces how to use environment variables.
 
 ## Default Variables
 
 ### process.env.NODE_ENV
 
-By default, Builder will automatically set the `process.env.NODE_ENV` environment variable to `'development'` in development mode and `'production'` in production mode.
+By default, Rsbuild will automatically set the `process.env.NODE_ENV` environment variable to `'development'` in development mode and `'production'` in production mode.
 
 You can use `process.env.NODE_ENV` directly in Node.js and in the runtime code.
 
@@ -40,7 +40,7 @@ You can use `process.env.ASSET_PREFIX` in the runtime code to access the URL pre
 
 - In development, it is equivalent to the value set by [dev.assetPrefix](/api/config-dev.html#dev-assetprefix).
 - In production, it is equivalent to the value set by [output.assetPrefix](/api/config-output.html#output-assetprefix).
-- Builder will automatically remove the trailing slash from `assetPrefix` to make string concatenation easier.
+- Rsbuild will automatically remove the trailing slash from `assetPrefix` to make string concatenation easier.
 
 For example, we copy the `static/icon.png` image to the `dist` directory through [output.copy](/api/config-output.html#output-copy) configuration:
 
@@ -78,7 +78,7 @@ const Image = <img src={`https://example.com/static/icon.png`} />;
 
 By configuring the [source.define](/en/api/config-source.html#sourcedefine), you can replace expressions with other expressions or values in compile time.
 
-`Define` looks like macro definitions in other programming languages. But JavaScript has powerful runtime capabilities, so you don't need to use it as a complicated code generator. You can use it to pass simple data, such as environment variables, from compile time to runtime. Almost there, it can be used to work with Builder to shake trees.
+`Define` looks like macro definitions in other programming languages. But JavaScript has powerful runtime capabilities, so you don't need to use it as a complicated code generator. You can use it to pass simple data, such as environment variables, from compile time to runtime. Almost there, it can be used to work with Rsbuild to shake trees.
 
 ### Replace Expressions
 
@@ -103,7 +103,7 @@ Similarly `{ foo: "bar" }` should be converted to `"{\"foo\":\"bar\"}"`, which i
 For more about `source.define`, just refer to [API References](/api/config-source.html#sourcedefine).
 
 :::tip
-The environment variable `NODE_ENV` shown in the example above is already injected by the Builder, and you usually do not need to configure it manually.
+The environment variable `NODE_ENV` shown in the example above is already injected by the Rsbuild, and you usually do not need to configure it manually.
 :::
 
 ### process.env Injection
@@ -143,7 +143,7 @@ export default {
 };
 ```
 
-Note that either of these methods will only match the full expression; destructing the expression will prevent the Builder from correctly recognizing it.
+Note that either of these methods will only match the full expression; destructing the expression will prevent the Rsbuild from correctly recognizing it.
 
 ```js
 console.log(process.env.NODE_ENV);
@@ -176,7 +176,7 @@ declare const CUSTOM_VAR: string;
 
 ## Tree Shaking
 
-`Define` can also be used to mark dead code to assist the Builder with Tree Shaking optimization.
+`Define` can also be used to mark dead code to assist the Rsbuild with Tree Shaking optimization.
 
 Build artifacts for different regions is achieved by replacing `process.env.REGION` with a specific value, for example.
 

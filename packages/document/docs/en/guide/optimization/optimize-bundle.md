@@ -1,6 +1,6 @@
 # Bundle Size Optimization
 
-Bundle size optimization is an important part in production environment because it directly affects the user experience of online users. In this document, we will introduce some common bundle size optimization methods in Builder.
+Bundle size optimization is an important part in production environment because it directly affects the user experience of online users. In this document, we will introduce some common bundle size optimization methods in Rsbuild.
 
 ## Reduce duplicate dependencies
 
@@ -40,9 +40,9 @@ See the [performance.bundleAnalyze](/api/config-performance.html#performancebund
 
 ## Adjust Browserslist
 
-The Builder will compile the code according to the project's Browserslist config, and inject some Polyfills. If the project does not need to be compatible with legacy browsers, you can adjust the Browserslist and drop some legacy browsers, thereby reducing the compilation overhead on syntax and polyfill.
+The Rsbuild will compile the code according to the project's Browserslist config, and inject some Polyfills. If the project does not need to be compatible with legacy browsers, you can adjust the Browserslist and drop some legacy browsers, thereby reducing the compilation overhead on syntax and polyfill.
 
-Builder's default Browserslist config is:
+Rsbuild's default Browserslist config is:
 
 ```js
 ['> 0.01%', 'not dead', 'not op_mini all'];
@@ -62,7 +62,7 @@ Please read the [Browserslist](/guide/advanced/browserslist.html) chapter to kno
 
 When it is clear that third-party dependencies do not require additional polyfill, you can set [output.polyfill](/en/api/config-output.html#outputpolyfill) to `usage`.
 
-In `usage` mode, Builder analyzes the syntax used in the source code and injects the required polyfill code on demand to reduce the size of polyfill.
+In `usage` mode, Rsbuild analyzes the syntax used in the source code and injects the required polyfill code on demand to reduce the size of polyfill.
 
 ```js
 export default {
@@ -78,12 +78,12 @@ Please read the [Browser Compatibility](/guide/advanced/browser-compatibility.ht
 
 ## Image Compression
 
-In general front-end projects, the size of image often accounts for a large proportion of the total bundle size of the project.So if the image size can be reduced as much as possible, it will have a significant optimization effect on the project bundle size. You can enable image compression by registering a plugin in the Builder:
+In general front-end projects, the size of image often accounts for a large proportion of the total bundle size of the project.So if the image size can be reduced as much as possible, it will have a significant optimization effect on the project bundle size. You can enable image compression by registering a plugin in the Rsbuild:
 
 ```js
-import { builderPluginImageCompress } from '@modern-js/builder-plugin-image-compress';
+import { builderPluginImageCompress } from '@rsbuild/plugin-image-compress';
 
-// Add the plugin to the Builder
+// Add the plugin to the Rsbuild
 builder.addPlugins([builderPluginImageCompress()]);
 ```
 
@@ -93,7 +93,7 @@ See details in [plugin-image-compress](/en/plugins/plugin-image-compress).
 
 A great chunk splitting strategy is very important to improve the loading performance of the application. It can make full use of the browser's caching mechanism to reduce the number of requests and improve the loading speed of the application.
 
-A variety of [chunk splitting strategies](/en/guide/optimization/split-chunk) are built into Builder, which can meet the needs of most applications. You can also customize the chunk splitting config according to your own business scenarios.
+A variety of [chunk splitting strategies](/en/guide/optimization/split-chunk) are built into Rsbuild, which can meet the needs of most applications. You can also customize the chunk splitting config according to your own business scenarios.
 
 For example, split the `axios` library under node_modules into `axios.js`:
 

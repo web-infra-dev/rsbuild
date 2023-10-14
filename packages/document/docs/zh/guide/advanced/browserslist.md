@@ -1,6 +1,6 @@
 # 设置浏览器范围
 
-Builder 支持通过 [Browserslist](https://browsersl.ist/) 来设置 Web 应用需要兼容的浏览器范围。
+Rsbuild 支持通过 [Browserslist](https://browsersl.ist/) 来设置 Web 应用需要兼容的浏览器范围。
 
 ## 什么是 Browserslist
 
@@ -8,9 +8,9 @@ Builder 支持通过 [Browserslist](https://browsersl.ist/) 来设置 Web 应用
 
 [Browserslist](https://browsersl.ist/) 可以指定 Web 应用能够在哪些浏览器中正常运行，它提供了统一的配置格式，并且已经成为了前端社区中的标准。Browserslist 被 Autoprefixer, Babel, ESLint, PostCSS，SWC 和 Webpack 等库所使用。
 
-当你通过 Browserslist 指定了一个浏览器范围时，Builder 会将 JavaScript 代码和 CSS 代码编译到指定的语法，并注入相应的 polyfill 代码。**当你只需要兼容更现代的浏览器时，编译过程会引入更少的兼容代码和 polyfills，页面的性能会更好。**
+当你通过 Browserslist 指定了一个浏览器范围时，Rsbuild 会将 JavaScript 代码和 CSS 代码编译到指定的语法，并注入相应的 polyfill 代码。**当你只需要兼容更现代的浏览器时，编译过程会引入更少的兼容代码和 polyfills，页面的性能会更好。**
 
-比如，当你需要适配 IE11 浏览器时，Builder 会将代码编译至 ES5，并通过 `core-js` 注入 IE11 所需的 polyfill。
+比如，当你需要适配 IE11 浏览器时，Rsbuild 会将代码编译至 ES5，并通过 `core-js` 注入 IE11 所需的 polyfill。
 
 :::tip 什么是 polyfill
 polyfill 是一种用于解决浏览器兼容问题的技术。它用于模拟某些浏览器不支持的新特性，使得这些特性能在不支持的浏览器中正常工作。例如，如果某个浏览器不支持 `Array.prototype.flat()` 方法，那么我们可以使用 polyfill 来模拟这个方法，从而让代码在这个浏览器中也能正常工作。
@@ -54,7 +54,7 @@ not dead
 
 ### 使用 output.overrideBrowserslist 配置
 
-除了上述的标准用法，Builder 还提供了 [output.overrideBrowserslist](/api/config-output.html#outputoverridebrowserslist) 配置项，同样可以设置 Browserslist 的值。
+除了上述的标准用法，Rsbuild 还提供了 [output.overrideBrowserslist](/api/config-output.html#outputoverridebrowserslist) 配置项，同样可以设置 Browserslist 的值。
 
 `overrideBrowserslist` 可以被设置为一个数组，数组的写法与 `browserslistrc` 配置是一样的，但比 `browserslistrc` 拥有更高的优先级。
 
@@ -163,7 +163,7 @@ not op_mini all
 
 ## Browserslist 默认值
 
-Builder 会根据[构建产物类型](/guide/basic/build-target.html)来设置不同的 Browserslist 默认值，但我们推荐你在项目中显式设置 Browserslist，这会让项目的兼容范围更加明确。
+Rsbuild 会根据[构建产物类型](/guide/basic/build-target.html)来设置不同的 Browserslist 默认值，但我们推荐你在项目中显式设置 Browserslist，这会让项目的兼容范围更加明确。
 
 ### Web 产物
 

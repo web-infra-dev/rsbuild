@@ -1,6 +1,6 @@
 # 修改 webpack 配置
 
-Builder 支持直接修改 webpack 配置对象，也支持通过 webpack-chain 来深度定制 webpack 配置。
+Rsbuild 支持直接修改 webpack 配置对象，也支持通过 webpack-chain 来深度定制 webpack 配置。
 
 ## 修改 webpack 配置对象
 
@@ -20,7 +20,7 @@ export default {
 ```
 
 :::tip 何时使用
-当你只需要修改少量 webpack 配置时，可以使用 `tools.webpack`。但如果你需要修改 Builder 内置的 webpack plugins 或 loaders，请使用 `tools.webpackChain` 进行修改。
+当你只需要修改少量 webpack 配置时，可以使用 `tools.webpack`。但如果你需要修改 Rsbuild 内置的 webpack plugins 或 loaders，请使用 `tools.webpackChain` 进行修改。
 :::
 
 ## 使用 webpack-chain
@@ -29,7 +29,7 @@ webpack-chain 是区别于直接修改 webpack 配置的另一种配置修改方
 
 ### tools.webpackChain 配置项
 
-Builder 提供了 [tools.webpackChain](/api/config-tools.html#toolswebpackchain) 配置项来修改 webpack-chain。
+Rsbuild 提供了 [tools.webpackChain](/api/config-tools.html#toolswebpackchain) 配置项来修改 webpack-chain。
 
 `tools.webpackChain` 的值为 `Function` 类型，接收两个参数：
 
@@ -58,7 +58,7 @@ export default {
 
 简单来说，webpack-chain 要求使用者为每个 Rule、Loader、Plugin、Minimizer 都设置一个独一无二的 id，通过这个 id，就可以便捷地从嵌套层级很深的对象中找到所需的对象。
 
-Builder 将内部定义的全部 id 都通过 `CHAIN_ID` 对象导出，因此你可以通过这些导出的 id，快速定位到你想要修改的 Loader 或 Plugin，而不需要在 webpack 配置对象里通过复杂的遍历寻找。
+Rsbuild 将内部定义的全部 id 都通过 `CHAIN_ID` 对象导出，因此你可以通过这些导出的 id，快速定位到你想要修改的 Loader 或 Plugin，而不需要在 webpack 配置对象里通过复杂的遍历寻找。
 
 比如通过 `CHAIN_ID.PLUGIN.HTML` 来删除内置的 HTML 插件：
 
