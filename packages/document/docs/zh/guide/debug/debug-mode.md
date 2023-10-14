@@ -1,6 +1,6 @@
 # 开启调试模式
 
-为了便于排查问题，Builder 提供了调试模式，你可以在执行构建时添加 `DEBUG=builder` 环境变量来开启 Builder 的调试模式。
+为了便于排查问题，Rsbuild 提供了调试模式，你可以在执行构建时添加 `DEBUG=builder` 环境变量来开启 Rsbuild 的调试模式。
 
 ```bash
 # 调试开发环境
@@ -10,11 +10,11 @@ DEBUG=builder pnpm dev
 DEBUG=builder pnpm build
 ```
 
-在调试模式下，Builder 会输出一些额外的日志信息，并将内部最终生成的 Builder 配置和 webpack 配置写入到产物目录下，便于开发者查看和调试。
+在调试模式下，Rsbuild 会输出一些额外的日志信息，并将内部最终生成的 Rsbuild 配置和 webpack 配置写入到产物目录下，便于开发者查看和调试。
 
 ## 日志信息
 
-在调试模式下，你会看到 Shell 中输出了一些额外的信息，其中以 `debug` 开头的是一些流程日志，表明 Builder 内部执行了哪些操作。
+在调试模式下，你会看到 Shell 中输出了一些额外的信息，其中以 `debug` 开头的是一些流程日志，表明 Rsbuild 内部执行了哪些操作。
 
 ```bash
 $ DEBUG=builder pnpm dev
@@ -27,18 +27,18 @@ debug   init plugins done [2389.48 ms]
 ...
 ```
 
-此外，Shell 中还会输出以下日志，表示 Builder 将内部生成的构建配置写入到磁盘中，此时你可以打开这些配置文件来查看相应的内容。
+此外，Shell 中还会输出以下日志，表示 Rsbuild 将内部生成的构建配置写入到磁盘中，此时你可以打开这些配置文件来查看相应的内容。
 
 ```bash
 Inspect config succeed, open following files to view the content:
 
-  - Builder Config: /Project/demo/dist/builder.config.js
+  - Rsbuild Config: /Project/demo/dist/builder.config.js
   - Webpack Config (web): /Project/demo/dist/webpack.config.web.js
 ```
 
-## Builder 配置文件
+## Rsbuild 配置文件
 
-在调试模式下，Builder 会自动生成 `dist/builder.config.js` 文件，这里面包含了最终生成的 Builder 配置。在这个文件里，你可以了解到你传入的 Builder 配置在经过框架层和 Builder 处理后的最终结果。
+在调试模式下，Rsbuild 会自动生成 `dist/builder.config.js` 文件，这里面包含了最终生成的 Rsbuild 配置。在这个文件里，你可以了解到你传入的 Rsbuild 配置在经过框架层和 Rsbuild 处理后的最终结果。
 
 该文件的大致结构如下：
 
@@ -54,11 +54,11 @@ module.exports = {
 };
 ```
 
-关于 Builder 配置项的完整介绍，请查看 [Builder 配置项](/guide/basic/builder-config.html) 章节。
+关于 Rsbuild 配置项的完整介绍，请查看 [Rsbuild 配置项](/guide/basic/builder-config.html) 章节。
 
 ## webpack 配置文件
 
-如果当前项目是使用 webpack 进行构建的，那么在调试模式下，Builder 还会自动生成 `dist/webpack.config.web.js` 文件，这里面包含了最终生成的 webpack 配置。在这个文件里，你可以了解到 Builder 最终传递给 webpack 的配置里包含了哪些内容。
+如果当前项目是使用 webpack 进行构建的，那么在调试模式下，Rsbuild 还会自动生成 `dist/webpack.config.web.js` 文件，这里面包含了最终生成的 webpack 配置。在这个文件里，你可以了解到 Rsbuild 最终传递给 webpack 的配置里包含了哪些内容。
 
 该文件的大致结构如下：
 
@@ -83,7 +83,7 @@ module.exports = {
 
 ## Rspack 配置文件
 
-如果当前项目是使用 Rspack 进行构建的，那么在调试模式下，Builder 还会自动生成 `dist/rspack.config.web.js` 文件，这里面包含了最终生成的 Rspack 配置。在这个文件里，你可以了解到 Builder 最终传递给 Rspack 的配置里包含了哪些内容。
+如果当前项目是使用 Rspack 进行构建的，那么在调试模式下，Rsbuild 还会自动生成 `dist/rspack.config.web.js` 文件，这里面包含了最终生成的 Rspack 配置。在这个文件里，你可以了解到 Rsbuild 最终传递给 Rspack 的配置里包含了哪些内容。
 
 该文件的大致结构如下：
 

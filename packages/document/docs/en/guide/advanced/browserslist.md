@@ -1,6 +1,6 @@
 # Browserslist
 
-Builder supports using [Browserslist](https://browsersl.ist/) to specify which browsers should be supported in your Web application.
+Rsbuild supports using [Browserslist](https://browsersl.ist/) to specify which browsers should be supported in your Web application.
 
 ## What is Browserslist
 
@@ -8,9 +8,9 @@ Since different browsers support ECMAScript and CSS differently, developers need
 
 [Browserslist](https://browsersl.ist/) can specify which browsers your web application can run in, it provides a configuration for specifying browsers range. Browserslist has become a standard in the industry, it is used by libraries such as Autoprefixer, Babel, ESLint, PostCSS, SWC and Webpack.
 
-When you specify a browser range through Browserslist, Builder will compile JavaScript and CSS code to the specified syntax, and inject the corresponding polyfill code. **When you only need to be compatible with modern browsers, the compilation process will introduce less compatible code and polyfills, and the performance of the page will be better.**
+When you specify a browser range through Browserslist, Rsbuild will compile JavaScript and CSS code to the specified syntax, and inject the corresponding polyfill code. **When you only need to be compatible with modern browsers, the compilation process will introduce less compatible code and polyfills, and the performance of the page will be better.**
 
-For example, when you need to be compatible with IE11 browser, Builder will compile the code to ES5 and inject the polyfill required by IE11 through `core-js`.
+For example, when you need to be compatible with IE11 browser, Rsbuild will compile the code to ES5 and inject the polyfill required by IE11 through `core-js`.
 
 :::tip What is polyfill
 A polyfill is a piece of code that provides the functionality of a newer feature to older browsers that do not support that feature natively. It is used to fill in the gaps in older browsers' implementations of web standards, allowing developers to use newer features safely without having to worry about whether or not they will work in older browsers. For example, if a browser does not support the Array.map() method, a polyfill can be used to provide that functionality, allowing code that uses `Array.prototype.flat()` to work in that browser. Polyfills are commonly used to ensure that web applications can work on a wide range of browsers, including older ones.
@@ -54,7 +54,7 @@ When you are building multiple targets at the same time, for example if the targ
 
 ### Use output.overrideBrowserslist config
 
-In addition to the above standard usage, Builder also provides [output.overrideBrowserslist](/en/api/config-output.html#outputoverridebrowserslist) config, which can also set the value of Browserslist.
+In addition to the above standard usage, Rsbuild also provides [output.overrideBrowserslist](/en/api/config-output.html#outputoverridebrowserslist) config, which can also set the value of Browserslist.
 
 `overrideBrowserslist` can be set to an array, which is written in the same way as the `browserslistrc` configuration, but has a higher priority than `browserslistrc`.
 
@@ -163,7 +163,7 @@ not op_mini all
 
 ## Default Browserslist
 
-Builder will set different default values of Browserslist according to [build target](/guide/basic/build-target.html), but we recommend that you explicitly set Browserslist in your project, which will make the compatible scope of the project more clear.
+Rsbuild will set different default values of Browserslist according to [build target](/guide/basic/build-target.html), but we recommend that you explicitly set Browserslist in your project, which will make the compatible scope of the project more clear.
 
 ### Web Target
 

@@ -1,6 +1,6 @@
 # 引用静态资源
 
-Builder 支持在代码中引用图片、字体、媒体类型的静态资源。
+Rsbuild 支持在代码中引用图片、字体、媒体类型的静态资源。
 
 :::tip 什么是静态资源
 静态资源是指 Web 应用中不会发生变化的文件。常见的静态资源包括图片、字体、视频、样式表和 JavaScript 文件。这些资源通常存储在服务器或 CDN 上，当用户访问 Web 应用时会被传送到用户的浏览器。由于它们不会发生变化，静态资源可以被浏览器缓存，从而提高 Web 应用的性能。
@@ -8,7 +8,7 @@ Builder 支持在代码中引用图片、字体、媒体类型的静态资源。
 
 ## 静态资源格式
 
-以下是 Builder 默认支持的静态资源格式：
+以下是 Rsbuild 默认支持的静态资源格式：
 
 - **图片**：png、jpg、jpeg、gif、svg、bmp、webp、ico、apng、avif、tiff。
 - **字体**：woff、woff2、eot、ttf、otf、ttc。
@@ -17,7 +17,7 @@ Builder 支持在代码中引用图片、字体、媒体类型的静态资源。
 如果你需要引用其他格式的静态资源，请参考 [扩展静态资源类型](#扩展静态资源类型)。
 
 :::tip SVG 图片
-SVG 图片是一种特殊情况，Builder 提供了 SVG 转 React 组件的能力，对 SVG 进行单独处理，详见 [引用 SVG 资源](/guide/basic/svg-assets.html)。
+SVG 图片是一种特殊情况，Rsbuild 提供了 SVG 转 React 组件的能力，对 SVG 进行单独处理，详见 [引用 SVG 资源](/guide/basic/svg-assets.html)。
 :::
 
 ## 在 JS 文件中引用
@@ -119,7 +119,7 @@ declare module '*.png' {
 
 ## 扩展静态资源类型
 
-如果 Builder 内置的静态资源类型不能满足你的需求，那么你可以通过 [tools.bundlerChain](/api/config-tools.html#toolsbundlerchain) 来修改内置的 webpack / Rspack 配置，并扩展你需要的静态资源类型。
+如果 Rsbuild 内置的静态资源类型不能满足你的需求，那么你可以通过 [tools.bundlerChain](/api/config-tools.html#toolsbundlerchain) 来修改内置的 webpack / Rspack 配置，并扩展你需要的静态资源类型。
 
 比如，你需要把 `*.pdf` 文件当做静态资源直接输出到产物目录，可以添加以下配置：
 

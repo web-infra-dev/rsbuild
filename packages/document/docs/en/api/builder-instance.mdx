@@ -2,9 +2,9 @@
 extractApiHeaders: [2]
 ---
 
-# Builder Instance
+# Rsbuild Instance
 
-This section describes all the properties and methods on the Builder instance object.
+This section describes all the properties and methods on the Rsbuild instance object.
 
 ## builder.context
 
@@ -12,7 +12,7 @@ This section describes all the properties and methods on the Builder instance ob
 
 ### builder.context.entry
 
-The entry object, corresponding to the `entry` option of `createBuilder` method.
+The entry object, corresponding to the `entry` option of `createRsbuild` method.
 
 - **Type**
 
@@ -22,7 +22,7 @@ type BuilderEntry = Record<string, string | string[]>;
 
 ### builder.context.target
 
-Build target type, corresponding to the `target` option of `createBuilder` method.
+Build target type, corresponding to the `target` option of `createRsbuild` method.
 
 - **Type**
 
@@ -36,7 +36,7 @@ type Context = {
 
 ### builder.context.rootPath
 
-The root path of current build, corresponding to the `cwd` option of `createBuilder` method.
+The root path of current build, corresponding to the `cwd` option of `createRsbuild` method.
 
 - **Type**
 
@@ -76,7 +76,7 @@ type CachePath = string;
 
 ### builder.context.configPath
 
-The absolute path to the framework config file, corresponding to the `configPath` option of `createBuilder` method.
+The absolute path to the framework config file, corresponding to the `configPath` option of `createRsbuild` method.
 
 - **Type**
 
@@ -273,9 +273,9 @@ await builder.startDevServer({
 
 ### Strict Port
 
-When a port is occupied, Builder will automatically increment the port number until an available port is found.
+When a port is occupied, Rsbuild will automatically increment the port number until an available port is found.
 
-Set `strictPort` to `true` and Builder will throw an exception when the port is occupied.
+Set `strictPort` to `true` and Rsbuild will throw an exception when the port is occupied.
 
 ```ts
 await builder.startDevServer({
@@ -298,7 +298,7 @@ await builder.startDevServer({
 
 ### Get Port Silently
 
-In some cases, the default startup port number is already occupied. In this situation, Builder will automatically increment the port number until it finds an available one. This process will output a prompt log. If you do not want this log, you can set `getPortSliently` to `true`.
+In some cases, the default startup port number is already occupied. In this situation, Rsbuild will automatically increment the port number until it finds an available one. This process will output a prompt log. If you do not want this log, you can set `getPortSliently` to `true`.
 
 ```ts
 await builder.startDevServer({
@@ -308,7 +308,7 @@ await builder.startDevServer({
 
 ### Custom Logger
 
-By default, Builder uses `@modern-js/utils/logger` to output logs. You can customize the log output object through the `logger` parameter.
+By default, Rsbuild uses `@modern-js/utils/logger` to output logs. You can customize the log output object through the `logger` parameter.
 
 ```ts
 const customLogger = {
@@ -340,7 +340,7 @@ await builder.startDevServer({
 });
 ```
 
-Then Builder will use the custom logger to output logs.
+Then Rsbuild will use the custom logger to output logs.
 
 ## builder.serve
 
@@ -385,7 +385,7 @@ await server.close();
 
 Create a Compiler object.
 
-When the `target` option of `createBuilder` contains only one value, the return value is `Compiler`; when `target` contains multiple values, the return value is `MultiCompiler`.
+When the `target` option of `createRsbuild` contains only one value, the return value is `Compiler`; when `target` contains multiple values, the return value is `MultiCompiler`.
 
 - **Type**
 
@@ -403,7 +403,7 @@ const compiler = await builder.createCompiler();
 
 ## builder.addPlugins
 
-Register one or more Builder plugins, which can be called multiple times.
+Register one or more Rsbuild plugins, which can be called multiple times.
 
 This method needs to be called before compiling. If it is called after compiling, it will not affect the compilation result.
 
@@ -432,7 +432,7 @@ builder.addPlugins([builderPluginFoo()], { after: 'bar' });
 
 ## builder.removePlugins
 
-Removes one or more Builder plugins, which can be called multiple times.
+Removes one or more Rsbuild plugins, which can be called multiple times.
 
 This method needs to be called before compiling. If it is called after compiling, it will not affect the compilation result.
 

@@ -1,7 +1,7 @@
 - **类型：** `Object`
 - **默认值：** `{ strategy: 'split-by-experience' }`
 
-`performance.chunkSplit` 用于配置 Builder 的拆包策略。配置项的类型 `ChunkSplit` 如下:
+`performance.chunkSplit` 用于配置 Rsbuild 的拆包策略。配置项的类型 `ChunkSplit` 如下:
 
 ```ts
 type ForceSplitting = RegExp[] | Record<string, RegExp>;
@@ -35,7 +35,7 @@ export type ChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;
 
 ### chunkSplit.strategy
 
-Builder 支持设置以下几种拆包策略：
+Rsbuild 支持设置以下几种拆包策略：
 
 - `split-by-experience`: 根据经验制定的拆分策略，自动将一些常用的 npm 包拆分为体积适中的 chunk。
 - `split-by-module`: 按 NPM 包的粒度拆分，每个 NPM 包对应一个 chunk。
@@ -46,7 +46,7 @@ Builder 支持设置以下几种拆包策略：
 
 ### 默认拆包策略
 
-Builder 默认采用 `split-by-experience` 策略，这是我们根据经验制定的策略。具体来说，当你的项目中引用了以下 npm 包时，它们会自动被拆分为单独的 chunk：
+Rsbuild 默认采用 `split-by-experience` 策略，这是我们根据经验制定的策略。具体来说，当你的项目中引用了以下 npm 包时，它们会自动被拆分为单独的 chunk：
 
 - `lib-polyfill.js`：包含 `core-js`，`@babel/runtime`，`@swc/helpers`，`tslib`。
 - `lib-react.js`：包含 `react`，`react-dom`。
@@ -176,4 +176,4 @@ export default {
 };
 ```
 
-> 当 Builder 构建 "node" 类型的产物时，由于 Node Bundles 不需要通过拆包来优化加载性能，因此 chunkSplit 规则不会生效。
+> 当 Rsbuild 构建 "node" 类型的产物时，由于 Node Bundles 不需要通过拆包来优化加载性能，因此 chunkSplit 规则不会生效。

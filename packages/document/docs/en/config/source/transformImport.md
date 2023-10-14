@@ -1,6 +1,6 @@
 Used to import the code and style of the component library on demand, which is equivalent to [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import).
 
-The difference between it and [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import) is that `source.transformImport` is not coupled with Babel. Builder will automatically identify whether the currently used tools is Babel, SWC or Rspack, and apply the corresponding on-demand import configuration.
+The difference between it and [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import) is that `source.transformImport` is not coupled with Babel. Rsbuild will automatically identify whether the currently used tools is Babel, SWC or Rspack, and apply the corresponding on-demand import configuration.
 
 - **Type:**
 
@@ -21,7 +21,7 @@ type Config =
 
 - **Default:**
 
-When the [Ant Design component library](https://www.npmjs.com/package/antd) &lt;= 4.x version is installed in the project, Builder will automatically add the following default configurations:
+When the [Ant Design component library](https://www.npmjs.com/package/antd) &lt;= 4.x version is installed in the project, Rsbuild will automatically add the following default configurations:
 
 ```js
 const defaultAntdConfig = {
@@ -31,7 +31,7 @@ const defaultAntdConfig = {
 };
 ```
 
-When the [Arco Design component library](https://www.npmjs.com/package/@arco-design/web-react) is installed in the project, Builder will automatically add the following default configurations:
+When the [Arco Design component library](https://www.npmjs.com/package/@arco-design/web-react) is installed in the project, Rsbuild will automatically add the following default configurations:
 
 ```js
 const defaultArcoConfig = [

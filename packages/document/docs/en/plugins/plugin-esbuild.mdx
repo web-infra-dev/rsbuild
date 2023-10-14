@@ -15,7 +15,7 @@ Therefore, we recommend that you use SWC instead of esbuild, please refer to [SW
 
 ### Used in Modern.js framework
 
-The Modern.js framework integrates the Builder's esbuild plugin by default, so you don't need to manually install and register the plugin, just use the [tools.esbuild](https://modernjs.dev/en/configure/app/tools/esbuild.html) configuration:
+The Modern.js framework integrates the Rsbuild's esbuild plugin by default, so you don't need to manually install and register the plugin, just use the [tools.esbuild](https://modernjs.dev/en/configure/app/tools/esbuild.html) configuration:
 
 ```js
 export default defineConfig({
@@ -34,7 +34,7 @@ export default defineConfig({
 
 ### Use via the Node API
 
-If you use the Builder's Node API, you need to manually install and register the esbuild plugin.
+If you use the Rsbuild's Node API, you need to manually install and register the esbuild plugin.
 
 #### Install
 
@@ -42,14 +42,14 @@ You can install the plugin with the following command:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @modern-js/builder-plugin-esbuild -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-esbuild -D" />
 
 #### Register
 
 Register esbuild plugin through the `addPlugins` method:
 
 ```js
-import { builderPluginEsbuild } from '@modern-js/builder-plugin-esbuild';
+import { builderPluginEsbuild } from '@rsbuild/plugin-esbuild';
 
 // add the plugin to the builder instance
 builder.addPlugins([builderPluginEsbuild()]);
@@ -121,7 +121,7 @@ builderPluginEsbuild({
 
 #### Disable transformation
 
-Set `loader` to `false` to disable esbuild transformation, and Builder will continue to use Babel to transform the code.
+Set `loader` to `false` to disable esbuild transformation, and Rsbuild will continue to use Babel to transform the code.
 
 ```ts
 builderPluginEsbuild({
@@ -165,7 +165,7 @@ builderPluginEsbuild({
 
 #### Disable minification
 
-Set `minimize` to `false` to disable esbuild minification, and Builder will continue to use Terser to minify the code.
+Set `minimize` to `false` to disable esbuild minification, and Rsbuild will continue to use Terser to minify the code.
 
 ```ts
 builderPluginEsbuild({

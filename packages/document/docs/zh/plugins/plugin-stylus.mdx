@@ -1,6 +1,6 @@
 # Stylus 插件
 
-Stylus 是一个富于表现力、动态的、健壮的 CSS 预处理器，本章节介绍如何在 Builder 中使用 Stylus。
+Stylus 是一个富于表现力、动态的、健壮的 CSS 预处理器，本章节介绍如何在 Rsbuild 中使用 Stylus。
 
 ## 快速开始
 
@@ -10,24 +10,24 @@ Stylus 是一个富于表现力、动态的、健壮的 CSS 预处理器，本�
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @modern-js/builder-plugin-stylus -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-stylus -D" />
 
 ### 注册插件
 
 在 Modern.js 等上层框架中，你可以通过 `builderPlugins` 配置项来注册 Stylus 插件：
 
 ```ts
-import { builderPluginStylus } from '@modern-js/builder-plugin-stylus';
+import { builderPluginStylus } from '@rsbuild/plugin-stylus';
 
 export default {
   builderPlugins: [builderPluginStylus()],
 };
 ```
 
-当你直接调用 Builder 的 Node API 时，可以通过 `addPlugins` 方法来注册 Stylus 插件：
+当你直接调用 Rsbuild 的 Node API 时，可以通过 `addPlugins` 方法来注册 Stylus 插件：
 
 ```js
-import { builderPluginStylus } from '@modern-js/builder-plugin-stylus';
+import { builderPluginStylus } from '@rsbuild/plugin-stylus';
 
 // 往 builder 实例上添加插件
 builder.addPlugins([builderPluginStylus()]);

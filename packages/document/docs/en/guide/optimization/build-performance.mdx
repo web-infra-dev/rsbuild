@@ -1,6 +1,6 @@
 # Improve Build Performance
 
-Modern.js Builder optimizes build performance by default, but as the project becomes larger, you may encounter some build performance problems.
+Rsbuild optimizes build performance by default, but as the project becomes larger, you may encounter some build performance problems.
 
 This document provides some optional speed-up strategies, developers can choose some of them to improve the build performance.
 
@@ -50,7 +50,7 @@ If you have higher build performance requirements, you can easily switch to Rspa
 
 [esbuild](https://esbuild.github.io/) is a front-end build tool based on Golang. It has the functions of bundling, compiling and minimizing JavaScript code. Compared with traditional tools, the performance is significantly improved. When minimizing code, compared to webpack's built-in terser minimizer, esbuild has dozens of times better performance.
 
-Builder provides SWC plugin and esbuild plugin that allow you to use SWC or esbuild instead of babel-loader, ts-loader and terser for transformation and minification process. See:
+Rsbuild provides SWC plugin and esbuild plugin that allow you to use SWC or esbuild instead of babel-loader, ts-loader and terser for transformation and minification process. See:
 
 - [SWC plugin document](/plugins/plugin-swc.html)
 - [esbuild plugin document](/plugins/plugin-esbuild.html)
@@ -61,7 +61,7 @@ The SWC compiled outputs has better compatibility, supports polyfills such as co
 
 ### Avoid using ts-loader
 
-By default, Builder uses Babel to compile TS files. After enabling the [tools.tsLoader](/en/api/config-tools.html#toolstsloader) option, `ts-loader` will be used to compile TS files.
+By default, Rsbuild uses Babel to compile TS files. After enabling the [tools.tsLoader](/en/api/config-tools.html#toolstsloader) option, `ts-loader` will be used to compile TS files.
 
 Please avoid using `ts-loader` because it requires additional parsing and type checking, which will slow down the build.
 
@@ -99,7 +99,7 @@ This is an experimental feature and may not work correctly in some scenarios, se
 
 ### Adjust Source Map format
 
-In order to provide a good debugging experience, Builder uses the `cheap-module-source-map` format Source Map by default in the development environment, which is a high-quality Source Map format and will bring certain performance overhead.
+In order to provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format Source Map by default in the development environment, which is a high-quality Source Map format and will bring certain performance overhead.
 
 You can improve build speed by adjusting the source map format of your development environment.
 

@@ -4,11 +4,11 @@ Inline static assets refer to the practice of including the content of a static 
 
 However, static assets inlining also has some disadvantages, such as increasing the size of a single file, which may lead to slower loading. Therefore, in the actual scenario, it is necessary to decide whether to use static assets inlining according to the specific situation.
 
-Builder will automatically inline static assets that are less than 10KB, but sometimes you may need to manually control assets to force them to be inlined or not, and this document explains how to precisely control the inlining behavior of static assets.
+Rsbuild will automatically inline static assets that are less than 10KB, but sometimes you may need to manually control assets to force them to be inlined or not, and this document explains how to precisely control the inlining behavior of static assets.
 
 ## Automatic Inlining
 
-By default, Builder will inline assets when the file size of is less than a threshold (the default is 10KB). When inlined, the asset will be converted to a Base64 encoded string and will no longer send a separate HTTP request. When the file size is greater than this threshold, it is loaded as a separate file with a separate HTTP request.
+By default, Rsbuild will inline assets when the file size of is less than a threshold (the default is 10KB). When inlined, the asset will be converted to a Base64 encoded string and will no longer send a separate HTTP request. When the file size is greater than this threshold, it is loaded as a separate file with a separate HTTP request.
 
 The threshold can be modified with the [output.dataUriLimit](/en/api/config-output.html#outputdataurilimit) config. For example, set the threshold of images to 5000 Bytes, and set media assets not to be inlined:
 
@@ -94,7 +94,7 @@ Excluding assets from inlining will increase the number of assets that the Web A
 
 ## Inline JS files
 
-In addition to inlining static assets into JS files, Builder also supports inlining JS files into HTML files.
+In addition to inlining static assets into JS files, Rsbuild also supports inlining JS files into HTML files.
 
 Just enable the [output.enableInlineScripts](/en/api/config-output.html#outputenableinlinescripts) config, and the generated JS files will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
 

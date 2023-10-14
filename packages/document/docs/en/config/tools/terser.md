@@ -13,7 +13,7 @@ const defaultTerserOptions = {
 
 - **Bundler:** `only support webpack`
 
-When building for production, Builder will minimize the JavaScript code through [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin). The config of [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin) can be modified via `tools.terser`.
+When building for production, Rsbuild will minimize the JavaScript code through [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin). The config of [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin) can be modified via `tools.terser`.
 
 ### Object Type
 
@@ -46,5 +46,5 @@ export default {
 ```
 
 :::tip Disable code minification
-If you need to disable code minification, you can use the [output.disableMinimize](https://modernjs.dev/builder/en/api/config-output.html#outputdisableminimize) configuration.
+If you need to disable code minification, you can use the [output.disableMinimize](https://rsbuild.dev/en/api/config-output.html#outputdisableminimize) configuration.
 :::

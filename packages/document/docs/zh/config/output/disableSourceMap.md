@@ -24,7 +24,7 @@ const defaultDisableSourceMap = {
 Source Map 是保存源代码映射关系的信息文件，它记录了编译后的代码的每一个位置，以及所对应的编译前的位置。通过 Source Map，可以在调试编译后的代码时，直接查看对应的源代码。
 :::
 
-默认情况下，Builder 的 Source Map 生成规则如下：
+默认情况下，Rsbuild 的 Source Map 生成规则如下：
 
 - 在开发环境构建时，会生成 JS 文件和 CSS 文件的 SourceMap，便于进行开发调试。
 - 在生产环境构建时，会生成 JS 文件的 Source Map，用于调试和排查线上问题；不会生成 CSS 文件的 Source Map。

@@ -1,6 +1,6 @@
 # 浏览器兼容性
 
-本章节介绍如何使用 Builder 提供的能力来处理浏览器兼容性问题。
+本章节介绍如何使用 Rsbuild 提供的能力来处理浏览器兼容性问题。
 
 ## 设置浏览器范围
 
@@ -8,7 +8,7 @@
 
 - 如果你还没有设置浏览器范围，请先阅读 [设置浏览器范围](/guide/advanced/browserslist.html) 章节。
 
-- 如果你已经设置了浏览器范围，那么 Builder 会自动根据该范围进行编译，对 JavaScript 语法和 CSS 语法进行降级处理，并注入所需的 polyfill 代码。大部分情况下，你可以放心地使用现代 ECMAScript 特性，无须担心兼容性问题。
+- 如果你已经设置了浏览器范围，那么 Rsbuild 会自动根据该范围进行编译，对 JavaScript 语法和 CSS 语法进行降级处理，并注入所需的 polyfill 代码。大部分情况下，你可以放心地使用现代 ECMAScript 特性，无须担心兼容性问题。
 
 在设置浏览器范围之后，如果你依然在开发中遇到了一些兼容性问题，请继续阅读下面的内容来寻找解决方案。
 
@@ -20,7 +20,7 @@
 
 当你在项目中使用高版本语法和 API 时，为了让编译后的代码能稳定运行在低版本浏览器中，需要完成两部分降级：语法降级和 API 降级。
 
-**Builder 通过语法转译来对语法进行降级，通过 polyfill 来对 API 进行进行降级。**
+**Rsbuild 通过语法转译来对语法进行降级，通过 polyfill 来对 API 进行进行降级。**
 
 > 语法和 API 并不是强绑定的，浏览器厂商在实现引擎的时候，会根据规范或者自身需要提前支持一些语法或者提前实现一些 API。因此，同一时期的不同厂商的浏览器，对语法和 API 的兼容都不一定相同。所以在一般的实践中，语法和 API 是分成两个部分进行处理的。
 
@@ -116,13 +116,13 @@ if (!String.prototype.replaceAll) {
 
 ## 降级方式
 
-在 Builder 中，我们将代码分为三类：
+在 Rsbuild 中，我们将代码分为三类：
 
 - 第一类是当前项目中的源代码。
 - 第二类是通过 npm 安装的第三方依赖代码。
 - 第三类是非当前项目的代码，比如 monorepo 中其他目录下的代码。
 
-默认情况下，Builder 只会对第一类代码进行编译和降级，而其他类型的代码默认是不进行降级处理的。
+默认情况下，Rsbuild 只会对第一类代码进行编译和降级，而其他类型的代码默认是不进行降级处理的。
 
 之所以这样处理，主要有几个考虑：
 
@@ -136,7 +136,7 @@ if (!String.prototype.replaceAll) {
 
 ### 降级第三方依赖
 
-当你发现某个第三方依赖的代码导致了兼容性问题时，你可以将这个依赖添加到 Builder 的 [source.include](/api/config-source.html#sourceinclude) 配置中，使 Builder 对该依赖进行额外的编译。
+当你发现某个第三方依赖的代码导致了兼容性问题时，你可以将这个依赖添加到 Rsbuild 的 [source.include](/api/config-source.html#sourceinclude) 配置中，使 Rsbuild 对该依赖进行额外的编译。
 
 以 `query-string` 这个 npm 包为例，你可以做如下的配置：
 
@@ -179,15 +179,15 @@ export default {
 
 ## Polyfill 方案
 
-Builder 底层通过 Babel 或 SWC 编译 JavaScript 代码，并注入 [core-js](https://github.com/zloirock/core-js)、[@babel/runtime](https://www.npmjs.com/package/@babel/runtime)、[@swc/helpers](https://www.npmjs.com/package/@swc/helpers) 等 polyfill 库。
+Rsbuild 底层通过 Babel 或 SWC 编译 JavaScript 代码，并注入 [core-js](https://github.com/zloirock/core-js)、[@babel/runtime](https://www.npmjs.com/package/@babel/runtime)、[@swc/helpers](https://www.npmjs.com/package/@swc/helpers) 等 polyfill 库。
 
-在不同的使用场景下，你可能会需要不同的 polyfill 方案。Builder 提供了 [output.polyfill](/api/config-output.html#outputpolyfill) 配置项来切换不同的 polyfill 方案。
+在不同的使用场景下，你可能会需要不同的 polyfill 方案。Rsbuild 提供了 [output.polyfill](/api/config-output.html#outputpolyfill) 配置项来切换不同的 polyfill 方案。
 
 ### entry 方案
 
 entry 为默认方案，无须手动设置。
 
-在使用 entry 方案时，Builder 会根据当前项目设置的浏览器范围来计算需要注入哪些 `core-js` 方法，并在每个页面的入口文件中进行注入。这种方式注入的 polyfill 较为全面，不需要再担心项目源码和第三方依赖的 polyfill 问题，但是因为包含了一些没有用到的 polyfill 代码，所以最终的包大小可能会有所增加。
+在使用 entry 方案时，Rsbuild 会根据当前项目设置的浏览器范围来计算需要注入哪些 `core-js` 方法，并在每个页面的入口文件中进行注入。这种方式注入的 polyfill 较为全面，不需要再担心项目源码和第三方依赖的 polyfill 问题，但是因为包含了一些没有用到的 polyfill 代码，所以最终的包大小可能会有所增加。
 
 entry 方案对应的配置为：
 
@@ -203,7 +203,7 @@ export default {
 
 usage 方案可以更精确地控制需要注入哪些 core-js polyfill。
 
-当你开启 usage 方案时，Builder 会分析项目中的源代码，并判断需要注入哪些 polyfill。
+当你开启 usage 方案时，Rsbuild 会分析项目中的源代码，并判断需要注入哪些 polyfill。
 
 比如代码中使用了 `Map`:
 

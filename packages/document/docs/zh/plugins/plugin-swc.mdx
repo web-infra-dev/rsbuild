@@ -40,7 +40,7 @@ import SWC from '@zh/shared/swc.md';
 
 ### 在 Modern.js 框架中使用
 
-Modern.js 框架对 Builder 的 SWC 插件进行了封装，你可以通过以下方式来使用：
+Modern.js 框架对 Rsbuild 的 SWC 插件进行了封装，你可以通过以下方式来使用：
 
 import EnableSWC from '@zh/shared/enableSwc.md';
 
@@ -48,7 +48,7 @@ import EnableSWC from '@zh/shared/enableSwc.md';
 
 ### 通过 Node API 使用
 
-如果你直接使用了 Builder 的 Node API，那么需要手动安装和注册 Builder 的 SWC 插件。
+如果你直接使用了 Rsbuild 的 Node API，那么需要手动安装和注册 Rsbuild 的 SWC 插件。
 
 #### 安装插件
 
@@ -56,14 +56,14 @@ import EnableSWC from '@zh/shared/enableSwc.md';
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @modern-js/builder-plugin-swc -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-swc -D" />
 
 #### 注册插件
 
 通过 `addPlugins` 方法来注册 SWC 插件：
 
 ```js
-import { builderPluginSwc } from '@modern-js/builder-plugin-swc';
+import { builderPluginSwc } from '@rsbuild/plugin-swc';
 
 // 往 builder 实例上添加插件
 builder.addPlugins([builderPluginSwc()]);
@@ -297,7 +297,7 @@ boolean | {
 #### extensions.pluginImport
 
 :::tip
-Builder 提供了 [source.transformImport](/api/config-source.html#sourcetransformimport) 配置项，因此你不需要手动配置 `extensions.pluginImport`。
+Rsbuild 提供了 [source.transformImport](/api/config-source.html#sourcetransformimport) 配置项，因此你不需要手动配置 `extensions.pluginImport`。
 :::
 
 移植自 [babel-plugin-import](https://github.com/umijs/babel-plugin-import)，配置选项保持一致。

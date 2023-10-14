@@ -1,26 +1,26 @@
-# Use Builder CLI
+# Use Rsbuild CLI
 
-Modern.js Builder provides a lightweight CLI tool that includes basic commands such as `dev` and `build`. It is primarily used for building non-React projects.
+Rsbuild provides a lightweight CLI tool that includes basic commands such as `dev` and `build`. It is primarily used for building non-React projects.
 
 - For React projects, we recommend using the Modern.js framework directly. Please refer to [Modern.js - Quick Start](https://modernjs.dev/en/guides/get-started/quick-start.html) for more information.
-- For non-React projects, such as developing a Vue project, you can use the Builder CLI tool to build your project.
+- For non-React projects, such as developing a Vue project, you can use the Rsbuild CLI tool to build your project.
 
 ## Install
 
 You need to install two packages:
 
-- `@modern-js/builder-cli`: the CLI tool for Builder, providing basic CLI commands and automatically loading the installed Provider in the current project.
-- `@modern-js/builder-rspack-provider`: To provide the building capabilities based on Rspack.
+- `@rsbuild/cli`: the CLI tool for Rsbuild, providing basic CLI commands and automatically loading the installed Provider in the current project.
+- `@rsbuild/rspack-provider`: To provide the building capabilities based on Rspack.
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @modern-js/builder-cli @modern-js/builder-rspack-provider -D" />
+<PackageManagerTabs command="add @rsbuild/cli @rsbuild/rspack-provider -D" />
 
-if you want to use webpack instead of Rspack, you can replace the `@modern-js/builder-rspack-provider` with `@modern-js/builder-webpack-provider`:
+if you want to use webpack instead of Rspack, you can replace the `@rsbuild/rspack-provider` with `@rsbuild/webpack-provider`:
 
 ## Commands
 
-Builder CLI provides the following commands to help you quickly start a development server, build production-ready code, and more.
+Rsbuild CLI provides the following commands to help you quickly start a development server, build production-ready code, and more.
 
 ### builder dev
 
@@ -57,10 +57,10 @@ Options:
 
 ## Configuration
 
-Builder CLI will read the `builder.config.ts` configuration file located in the root directory of your project by default. You can use [all the configuration options](/api/index) provided by Builder in the configuration file.
+Rsbuild CLI will read the `builder.config.ts` configuration file located in the root directory of your project by default. You can use [all the configuration options](/api/index) provided by Rsbuild in the configuration file.
 
 ```ts title="builder.config.ts"
-import { defineConfig } from '@modern-js/builder-cli';
+import { defineConfig } from '@rsbuild/cli';
 
 export default defineConfig({
   output: {
@@ -80,7 +80,7 @@ When you use Rspack as the bundler, there are some differences in configuration 
 
 ## Build Entry
 
-By default, Builder CLI uses `src/index.(js|ts|jsx|tsx)` as the build entry. You can modify the build entry using the `source.entries` configuration option.
+By default, Rsbuild CLI uses `src/index.(js|ts|jsx|tsx)` as the build entry. You can modify the build entry using the `source.entries` configuration option.
 
 - **Type:**
 
@@ -99,7 +99,7 @@ const defaultEntry = {
 - **Example:**
 
 ```ts title="builder.config.ts"
-import { defineConfig } from '@modern-js/builder-cli';
+import { defineConfig } from '@rsbuild/cli';
 
 export default defineConfig({
   source: {
@@ -113,13 +113,13 @@ export default defineConfig({
 
 ## Registering Plugins
 
-You can register Builder plugins using the `builderPlugins` option in `builder.config.ts`.
+You can register Rsbuild plugins using the `builderPlugins` option in `builder.config.ts`.
 
 For example, to register a Vue plugin:
 
 ```ts title="builder.config.ts"
-import { defineConfig } from '@modern-js/builder-cli';
-import { builderPluginVue } from '@modern-js/builder-plugin-vue';
+import { defineConfig } from '@rsbuild/cli';
+import { builderPluginVue } from '@rsbuild/plugin-vue';
 
 export default defineConfig({
   builderPlugins: [builderPluginVue()],

@@ -1,6 +1,6 @@
 # Stylus Plugin
 
-Stylus is an Expressive, dynamic and robust CSS preprocessor. This chapter introduces how to use Stylus in Builder.
+Stylus is an Expressive, dynamic and robust CSS preprocessor. This chapter introduces how to use Stylus in Rsbuild.
 
 ## Quick Start
 
@@ -10,24 +10,24 @@ You can install the plugin with the following command:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @modern-js/builder-plugin-stylus -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-stylus -D" />
 
 ### Register
 
 In upper-level frameworks such as Modern.js, you can register Stylus plugin through the `builderPlugins` config:
 
 ```ts
-import { builderPluginStylus } from '@modern-js/builder-plugin-stylus';
+import { builderPluginStylus } from '@rsbuild/plugin-stylus';
 
 export default {
   builderPlugins: [builderPluginStylus()],
 };
 ```
 
-When you call the Builder's Node API directly, you can register Stylus plugin with the `addPlugins` method:
+When you call the Rsbuild's Node API directly, you can register Stylus plugin with the `addPlugins` method:
 
 ```js
-import { builderPluginStylus } from '@modern-js/builder-plugin-stylus';
+import { builderPluginStylus } from '@rsbuild/plugin-stylus';
 
 // add the plugin to the builder instance
 builder.addPlugins([builderPluginStylus()]);

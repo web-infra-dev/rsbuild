@@ -4,7 +4,7 @@ extractApiHeaders: [2]
 
 # Plugin Core
 
-本章节描述了 Builder 插件核心的类型定义和 API。
+本章节描述了 Rsbuild 插件核心的类型定义和 API。
 
 ## BuilderPlugin
 
@@ -26,10 +26,10 @@ type BuilderPlugin<API = BuilderPluginAPI> = {
 };
 ```
 
-你可以从 `@modern-js/builder` 中导入该类型：
+你可以从 `@rsbuild/core` 中导入该类型：
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder';
+import type { BuilderPlugin } from '@rsbuild/core';
 
 export default (): BuilderPlugin => ({
   name: 'builder-plugin-foo',
@@ -107,11 +107,11 @@ const builderPluginBar = {
 
 ### 适用于 webpack-provider 的插件
 
-开发适用于 webpack-provider 的插件时，请从 `@modern-js/builder-webpack-provider` 中引入 `BuilderPluginAPI`。
+开发适用于 webpack-provider 的插件时，请从 `@rsbuild/webpack-provider` 中引入 `BuilderPluginAPI`。
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder';
-import type { BuilderPluginAPI } from '@modern-js/builder-webpack-provider';
+import type { BuilderPlugin } from '@rsbuild/core';
+import type { BuilderPluginAPI } from '@rsbuild/webpack-provider';
 
 export default (): BuilderPlugin<BuilderPluginAPI> => ({
   name: 'builder-plugin-foo',
@@ -126,11 +126,11 @@ export default (): BuilderPlugin<BuilderPluginAPI> => ({
 
 ### 适用于 rspack-provider 的插件
 
-开发适用于 rspack-provider 的插件时，请从 `@modern-js/builder-rspack-provider` 中引入 `BuilderPluginAPI`。
+开发适用于 rspack-provider 的插件时，请从 `@rsbuild/rspack-provider` 中引入 `BuilderPluginAPI`。
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder';
-import type { BuilderPluginAPI } from '@modern-js/builder-rspack-provider';
+import type { BuilderPlugin } from '@rsbuild/core';
+import type { BuilderPluginAPI } from '@rsbuild/rspack-provider';
 
 export default (): BuilderPlugin<BuilderPluginAPI> => ({
   name: 'builder-plugin-foo',
@@ -145,15 +145,15 @@ export default (): BuilderPlugin<BuilderPluginAPI> => ({
 
 ### 同时适用于 webpack-provider 和 rspack-provider 的插件
 
-想要开发同时适用于 webpack-provider 和 rspack-provider 的插件时，请从 `@modern-js/builder-shared` 中引入 `DefaultBuilderPlugin`。
+想要开发同时适用于 webpack-provider 和 rspack-provider 的插件时，请从 `@rsbuild/shared` 中引入 `DefaultBuilderPlugin`。
 
 需要注意的是，开发 webpack 和 Rspack 同时支持的插件，意味着不能使用任何带有 webpack 或 Rspack 标识的 api，如 `modifyWebpackConfig` 或 `modifyRspackConfig`。
 
 可通过 [modifyBundlerChain](/api/plugin-hooks.html#modifybundlerchain-experimental) 修改同时适用于 webpack 和 Rspack 的配置。
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder';
-import type { DefaultBuilderPlugin } from '@modern-js/builder-shared';
+import type { BuilderPlugin } from '@rsbuild/core';
+import type { DefaultBuilderPlugin } from '@rsbuild/shared';
 
 export default (): BuilderPlugin<DefaultBuilderPlugin> => ({
   name: 'builder-plugin-foo',

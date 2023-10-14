@@ -1,6 +1,6 @@
 # Using Webpack Inspector
 
-Builder has a built-in [webpack inspector](https://github.com/web-infra-dev/webpack-inspector) to debug webpack.
+Rsbuild has a built-in [webpack inspector](https://github.com/web-infra-dev/webpack-inspector) to debug webpack.
 
 ## Introduction
 
@@ -10,7 +10,7 @@ The internal workflow of webpack is relatively black box, when using webpack, we
 - Each module will be processed by different loaders, and the compilation results of each loader are difficult to perceive.
 - It is difficult to analyze the time cost of each webpack loader (such as babel-loader, ts-loader).
 
-In order to make performance analysis, error investigation and loader development more convenient, we provide the [webpack inspector](https://github.com/web-infra-dev/webpack-inspector) tool in the Builder.
+In order to make performance analysis, error investigation and loader development more convenient, we provide the [webpack inspector](https://github.com/web-infra-dev/webpack-inspector) tool in the Rsbuild.
 
 ## Enable
 
@@ -34,7 +34,7 @@ export default {
 };
 ```
 
-After adding the above config, when you execute `DEBUG=true pnpm dev`, Builder will start the inspector after the compilation is complete. At this time, you can see the following information in the Shell:
+After adding the above config, when you execute `DEBUG=true pnpm dev`, Rsbuild will start the inspector after the compilation is complete. At this time, you can see the following information in the Shell:
 
 ```shell
 info    Starting dev server...

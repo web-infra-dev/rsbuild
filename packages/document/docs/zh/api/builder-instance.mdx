@@ -2,9 +2,9 @@
 extractApiHeaders: [2]
 ---
 
-# Builder Instance
+# Rsbuild Instance
 
-本章节描述了 Builder 实例对象上所有的属性和方法。
+本章节描述了 Rsbuild 实例对象上所有的属性和方法。
 
 ## builder.context
 
@@ -12,7 +12,7 @@ extractApiHeaders: [2]
 
 ### builder.context.entry
 
-构建入口对象，对应调用 `createBuilder` 时传入的 `entry` 选项。
+构建入口对象，对应调用 `createRsbuild` 时传入的 `entry` 选项。
 
 - **类型**
 
@@ -22,7 +22,7 @@ type BuilderEntry = Record<string, string | string[]>;
 
 ### builder.context.target
 
-构建产物类型，对应调用 `createBuilder` 时传入的 `target` 选项。
+构建产物类型，对应调用 `createRsbuild` 时传入的 `target` 选项。
 
 - **类型**
 
@@ -36,7 +36,7 @@ type Context = {
 
 ### builder.context.rootPath
 
-当前执行构建的根路径，对应调用 `createBuilder` 时传入的 `cwd` 选项。
+当前执行构建的根路径，对应调用 `createRsbuild` 时传入的 `cwd` 选项。
 
 - **类型**
 
@@ -76,7 +76,7 @@ type CachePath = string;
 
 ### builder.context.configPath
 
-框架配置文件的绝对路径，对应调用 `createBuilder` 时传入的 `configPath` 选项。
+框架配置文件的绝对路径，对应调用 `createRsbuild` 时传入的 `configPath` 选项。
 
 - **类型**
 
@@ -273,7 +273,7 @@ await builder.startDevServer({
 
 ### 严格限制端口
 
-当端口被占用时，Builder 会自动递增端口号，直至找到一个可用端口。
+当端口被占用时，Rsbuild 会自动递增端口号，直至找到一个可用端口。
 
 如果你希望在端口被占用时抛出异常，可以将 `strictPort` 设置为 `true`。
 
@@ -298,7 +298,7 @@ await builder.startDevServer({
 
 ### 静默获取端口号
 
-某些情况下，默认启动的端口号已经被占用，此时 Builder 会自动递增端口号，直至找到一个可用端口。这个过程会输出提示日志，如果你不希望这段日志，可以将 `getPortSliently` 设置为 `true`。
+某些情况下，默认启动的端口号已经被占用，此时 Rsbuild 会自动递增端口号，直至找到一个可用端口。这个过程会输出提示日志，如果你不希望这段日志，可以将 `getPortSliently` 设置为 `true`。
 
 ```ts
 await builder.startDevServer({
@@ -308,7 +308,7 @@ await builder.startDevServer({
 
 ### 自定义日志输出对象
 
-默认情况下，Builder 会使用 `@modern-js/utils/logger` 来输出日志，你可以通过 `logger` 参数来自定义日志输出对象。
+默认情况下，Rsbuild 会使用 `@modern-js/utils/logger` 来输出日志，你可以通过 `logger` 参数来自定义日志输出对象。
 
 ```ts
 const customLogger = {
@@ -340,7 +340,7 @@ await builder.startDevServer({
 });
 ```
 
-这样，Builder 会使用你自定义的日志输出对象来输出日志。
+这样，Rsbuild 会使用你自定义的日志输出对象来输出日志。
 
 ## builder.serve
 
@@ -385,7 +385,7 @@ await server.close();
 
 创建一个 compiler 对象。
 
-当 `createBuilder` 的 `target` 选项包含一个值时，返回值为 `Compiler`；当 `target` 包含多个值时，返回值为 `MultiCompiler`。
+当 `createRsbuild` 的 `target` 选项包含一个值时，返回值为 `Compiler`；当 `target` 包含多个值时，返回值为 `MultiCompiler`。
 
 - **类型**
 
@@ -469,7 +469,7 @@ builder.isPluginExists(builderPluginFoo().name); // true
 
 ## builder.inspectConfig
 
-查看 Builder 内部最终生成的 builder 配置和 bundler 配置。
+查看 Rsbuild 内部最终生成的 builder 配置和 bundler 配置。
 
 :::tip
 `inspectConfig` 方法不支持与 `startDevServer` / `build` 方法同时使用。

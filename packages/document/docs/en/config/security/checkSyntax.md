@@ -26,7 +26,7 @@ export default {
 };
 ```
 
-When you enable `checkSyntax`, Builder will perform the detection during production builds. If any incompatible advanced syntax is detected in the build artifacts, error logs will be printed to the terminal, and the current build process will be terminated.
+When you enable `checkSyntax`, Rsbuild will perform the detection during production builds. If any incompatible advanced syntax is detected in the build artifacts, error logs will be printed to the terminal, and the current build process will be terminated.
 
 ### Error Logs
 
@@ -68,9 +68,9 @@ If a syntax error is detected, you can handle it in the following ways:
 - **Type:** `string[]`
 - **Default:** `The browserslist configuration of the current project`
 
-`targets` is the target browser range of the project. Its value is a standard browserslist array. If you are not familiar with the usage of browserslist, please refer to ["Browserslist"](https://modernjs.dev/builder/en/guide/advanced/browser-compatibility.html).
+`targets` is the target browser range of the project. Its value is a standard browserslist array. If you are not familiar with the usage of browserslist, please refer to ["Browserslist"](https://rsbuild.dev/en/guide/advanced/browser-compatibility.html).
 
-Builder will read the value of `targets` and automatically deduce the minimum ECMAScript syntax version that can be used in the build artifacts, such as `ES5` or `ES6`.
+Rsbuild will read the value of `targets` and automatically deduce the minimum ECMAScript syntax version that can be used in the build artifacts, such as `ES5` or `ES6`.
 
 - **Example:**
 
@@ -86,10 +86,10 @@ export default {
 };
 ```
 
-Builder will deduce that the ECMAScript syntax version that can be used with `chrome >= 53` is `ES6`. When the build artifacts contain `ES2016` or higher syntax, it triggers syntax error prompts.
+Rsbuild will deduce that the ECMAScript syntax version that can be used with `chrome >= 53` is `ES6`. When the build artifacts contain `ES2016` or higher syntax, it triggers syntax error prompts.
 
 :::tip
-Please note that Builder does not support automatic analysis of syntax versions above ES6 based on `targets`. If the syntax version compatible with your build artifacts exceeds ES6, please use `checkSyntax.ecmaVersion` to set it.
+Please note that Rsbuild does not support automatic analysis of syntax versions above ES6 based on `targets`. If the syntax version compatible with your build artifacts exceeds ES6, please use `checkSyntax.ecmaVersion` to set it.
 :::
 
 #### checkSyntax.ecmaVersion

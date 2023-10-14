@@ -34,7 +34,7 @@ interface PrefetchOption {
 
 ### Object 类型
 
-当 `performance.prefetch` 的值为 object 类型时，Builder 会根据当前配置对指定资源开启 prefetch 能力。
+当 `performance.prefetch` 的值为 object 类型时，Rsbuild 会根据当前配置对指定资源开启 prefetch 能力。
 
 #### prefetch.type
 

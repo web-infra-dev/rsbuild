@@ -1,6 +1,6 @@
 # Custom webpack config
 
-Builder supports directly modifying webpack configuration objects, and also supports deep customization of webpack configuration through webpack-chain.
+Rsbuild supports directly modifying webpack configuration objects, and also supports deep customization of webpack configuration through webpack-chain.
 
 ## Modify the webpack configuration object
 
@@ -20,7 +20,7 @@ export default {
 ```
 
 :::tip When to use
-When you only need to modify a small amount of webpack configuration, you can use `tools.webpack`. But if you need to modify the built-in webpack plugins or loaders of Builder, please use `tools.webpackChain` to modify.
+When you only need to modify a small amount of webpack configuration, you can use `tools.webpack`. But if you need to modify the built-in webpack plugins or loaders of Rsbuild, please use `tools.webpackChain` to modify.
 :::
 
 ## Using webpack-chain
@@ -29,7 +29,7 @@ webpack-chain is a configuration modification tools that is different from modif
 
 ### tools.webpackChain config
 
-Builder provides [tools.webpackChain](/api/config-tools.html#toolswebpackchain) config to modify webpack-chain.
+Rsbuild provides [tools.webpackChain](/api/config-tools.html#toolswebpackchain) config to modify webpack-chain.
 
 The value of `tools.webpackChain` is `Function` type, which receives two parameters:
 
@@ -58,7 +58,7 @@ Before you start using webpack-chain to modify your webpack configuration, it is
 
 Simply put, webpack-chain requires users to set a unique id for each Rule, Loader, Plugin, and Minimizer. Through these ids, you can easily find the desired object from deeply nested webpack configuration object.
 
-Builder exports all internally defined ids through the `CHAIN_ID` object, so you can use these exported ids to locate the Loader or Plugin you want to modify, without having to search through complex traversal in the webpack configuration object.
+Rsbuild exports all internally defined ids through the `CHAIN_ID` object, so you can use these exported ids to locate the Loader or Plugin you want to modify, without having to search through complex traversal in the webpack configuration object.
 
 For example, to delete the built-in HTML plugin via `CHAIN_ID.PLUGIN.HTML`:
 

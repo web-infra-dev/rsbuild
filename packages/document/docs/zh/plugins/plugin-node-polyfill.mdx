@@ -10,7 +10,7 @@
 
 ### 在 Modern.js 框架中使用
 
-Modern.js 框架默认集成了 Builder 的 Node Polyfill 插件，因此，你不需要手动安装和注册插件，只需要将 [output.disableNodePolyfill](https://modernjs.dev/configure/app/output/disable-node-polyfill.html) 设置为 `false` 即可：
+Modern.js 框架默认集成了 Rsbuild 的 Node Polyfill 插件，因此，你不需要手动安装和注册插件，只需要将 [output.disableNodePolyfill](https://modernjs.dev/configure/app/output/disable-node-polyfill.html) 设置为 `false` 即可：
 
 ```js
 export default defineConfig({
@@ -22,7 +22,7 @@ export default defineConfig({
 
 ### 通过 Node API 使用
 
-如果你直接使用了 Builder 的 Node API，那么需要手动安装和注册 Node Polyfill 插件。
+如果你直接使用了 Rsbuild 的 Node API，那么需要手动安装和注册 Node Polyfill 插件。
 
 #### 安装插件
 
@@ -30,14 +30,14 @@ export default defineConfig({
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @modern-js/builder-plugin-node-polyfill -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-node-polyfill -D" />
 
 #### 注册插件
 
 通过 `addPlugins` 方法来注册 Node Polyfill 插件：
 
 ```js
-import { builderPluginNodePolyfill } from '@modern-js/builder-plugin-node-polyfill';
+import { builderPluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
 
 // 往 builder 实例上添加插件
 builder.addPlugins([builderPluginNodePolyfill()]);

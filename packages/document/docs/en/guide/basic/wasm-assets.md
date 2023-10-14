@@ -1,6 +1,6 @@
 # Import Wasm Assets
 
-Builder supports import WebAssembly assets in code.
+Rsbuild supports import WebAssembly assets in code.
 
 :::tip What is WebAssembly
 WebAssembly (Wasm) is a portable, high-performance binary format designed to execute CPU-intensive computing tasks in modern web browsers, bringing performance and reliability similar to native compiled code to the web platform.
@@ -37,7 +37,7 @@ console.log(wasmURL).pathname; // "/static/wasm/[hash].module.wasm"
 
 ## Output Directory
 
-When a `.wasm` asset is imported, it will be output by Builder to the `dist/static/wasm` directory by default.
+When a `.wasm` asset is imported, it will be output by Rsbuild to the `dist/static/wasm` directory by default.
 
 You can change the output directory of `.wasm` files via [output.distPath](/api/config-output.html#outputdistpath) config.
 

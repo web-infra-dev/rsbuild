@@ -1,14 +1,14 @@
 # Build Target
 
-Builder supports build multiple target types for running in different target environments. After setting the correct target type, Builder will optimize the build results for the environment, and enable some plugins or configs for the target environment during the build process.
+Rsbuild supports build multiple target types for running in different target environments. After setting the correct target type, Rsbuild will optimize the build results for the environment, and enable some plugins or configs for the target environment during the build process.
 
-You can set the type through the `target` parameter of the [createBuilder](/en/api/builder-core.html#createbuilder) method.
+You can set the type through the `target` parameter of the [createRsbuild](/en/api/builder-core.html#createbuilder) method.
 
 ## Default Target
 
 By default, the build target is `'web'`, and the build result can run in a browser environment.
 
-the Builder will read the [Browserslist config](https://github.com/browserslist/browserslist) in the project to determine the range of browsers.
+the Rsbuild will read the [Browserslist config](https://github.com/browserslist/browserslist) in the project to determine the range of browsers.
 
 ## Optional Targets
 
@@ -21,19 +21,19 @@ the Builder will read the [Browserslist config](https://github.com/browserslist/
 For example, to build for the Node.js environment:
 
 ```ts
-const builder = await createBuilder(provider, {
+const builder = await createRsbuild(provider, {
   target: 'node',
 });
 ```
 
 ## Multiple Targets
 
-When target is an array containing multiple values, Builder will perform multiple builds at the same time.
+When target is an array containing multiple values, Rsbuild will perform multiple builds at the same time.
 
 For example, we can build a browser target and an node target at the same time:
 
 ```ts
-const builder = await createBuilder(provider, {
+const builder = await createRsbuild(provider, {
   target: ['web', 'node'],
 });
 ```
@@ -42,7 +42,7 @@ const builder = await createBuilder(provider, {
 
 Refers to the build target running in the Node.js environment, usually used in scenarios such as SSR.
 
-When `target` is set to `'node'`, Builder will:
+When `target` is set to `'node'`, Rsbuild will:
 
 - No HTML files will be generated, and HTML-related logic will not be executed, since HTML is not required by the Node.js environment.
 - CSS code will not be bundled or extracted, but the id information of CSS Modules will be included in the bundle.
@@ -62,7 +62,7 @@ Refers to the build target running in the [Web Worker](https://developer.mozilla
 A web worker is a type of JavaScript program that runs in the background, independently of other scripts, without affecting the performance of the page. This makes it possible to run long-running scripts, such as ones that handle complex calculations or access remote resources, without blocking the user interface or other scripts. Web workers provide an easy way to run tasks in the background and improve the overall performance of web applications.
 :::
 
-When `target` is set to `'web-worker'`, Builder will:
+When `target` is set to `'web-worker'`, Rsbuild will:
 
 - No HTML files will be generated, and HTML-related logic will not be executed, since HTML is not required by the Web Worker environment.
 - CSS code will not be bundled or extracted, but the id information of CSS Modules will be included in the bundle.
@@ -77,7 +77,7 @@ Refers to the build target running in the modern browsers.
 Modern browsers are one of our conventions to refer to browsers that support [native ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
 :::
 
-When `target` is set to `'modern-web'`, Builder will:
+When `target` is set to `'modern-web'`, Rsbuild will:
 
 - Adjust the default value of Browserslist to:
 

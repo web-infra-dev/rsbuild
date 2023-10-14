@@ -151,7 +151,7 @@ Get the path to the builder built-in dependencies, such as:
 This method is usually used when you need to reuse the same dependency with the builder.
 
 :::tip
-Builder built-in dependencies are subject to change with version iterations, e.g. generate large version break changes. Please avoid using this API if it is not necessary.
+Rsbuild built-in dependencies are subject to change with version iterations, e.g. generate large version break changes. Please avoid using this API if it is not necessary.
 :::
 
 ```js
@@ -167,7 +167,7 @@ export default {
 
 #### CHAIN_ID
 
-Some common Chain IDs are predefined in the Builder, and you can use these IDs to locate the built-in Rule or Plugin.
+Some common Chain IDs are predefined in the Rsbuild, and you can use these IDs to locate the built-in Rule or Plugin.
 
 :::tip
 Please note that some of the rules or plugins listed below are not available by default. They will only be included in the webpack configuration when you enable specific options or register certain plugins.
@@ -259,8 +259,8 @@ For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is regist
 | `PLUGIN.NODE_POLYFILL_PROVIDE` | correspond to `ProvidePlugin` for node polyfills                                                               |
 | `PLUGIN.INSPECTOR`             | correspond to `@modern-js/inspector-webpack-plugin`                                                            |
 | `PLUGIN.SUBRESOURCE_INTEGRITY` | correspond to `webpack-subresource-integrity`                                                                  |
-| `PLUGIN.ASSETS_RETRY`          | correspond to webpack static asset retry plugin in Builder                                                     |
-| `PLUGIN.AUTO_SET_ROOT_SIZE`    | correspond to automatically set root font size plugin in Builder                                               |
+| `PLUGIN.ASSETS_RETRY`          | correspond to webpack static asset retry plugin in Rsbuild                                                     |
+| `PLUGIN.AUTO_SET_ROOT_SIZE`    | correspond to automatically set root font size plugin in Rsbuild                                               |
 
 #### CHAIN_ID.MINIMIZER
 
@@ -275,4 +275,4 @@ For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is regist
 
 ### Examples
 
-For usage examples, please refer to: [WebpackChain usage examples](https://modernjs.dev/builder/en/guide/advanced/custom-webpack-config.html#webpack-chain-basics).
+For usage examples, please refer to: [WebpackChain usage examples](https://rsbuild.dev/en/guide/advanced/custom-webpack-config.html#webpack-chain-basics).

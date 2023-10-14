@@ -10,24 +10,24 @@ You can install the plugin with the following command:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @modern-js/builder-plugin-image-compress -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-image-compress -D" />
 
 ### Register
 
 In upper-level frameworks such as Modern.js, you can register image compress plugin through the `builderPlugins` config:
 
 ```ts
-import { builderPluginImageCompress } from '@modern-js/builder-plugin-image-compress';
+import { builderPluginImageCompress } from '@rsbuild/plugin-image-compress';
 
 export default {
   builderPlugins: [builderPluginImageCompress()],
 };
 ```
 
-If you are using the Builder's Node API, you can register image compress plugin through the `addPlugins` method:
+If you are using the Rsbuild's Node API, you can register image compress plugin through the `addPlugins` method:
 
 ```js
-import { builderPluginImageCompress } from '@modern-js/builder-plugin-image-compress';
+import { builderPluginImageCompress } from '@rsbuild/plugin-image-compress';
 
 // add the plugin to the builder instance
 builder.addPlugins([builderPluginImageCompress()]);

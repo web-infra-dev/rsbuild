@@ -1,6 +1,6 @@
 用于按需引入组件库的代码和样式，能力等价于 [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import)。
 
-它与 [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import) 的区别在于，`source.transformImport` 不与 Babel 耦合。Builder 会自动识别当前使用的编译工具是 Babel、SWC 还是 Rspack，并添加相应的按需引入配置。
+它与 [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import) 的区别在于，`source.transformImport` 不与 Babel 耦合。Rsbuild 会自动识别当前使用的编译工具是 Babel、SWC 还是 Rspack，并添加相应的按需引入配置。
 
 - **类型：**
 
@@ -21,7 +21,7 @@ type Config =
 
 - **默认值：**
 
-当项目中安装了 [Ant Design 组件库](https://www.npmjs.com/package/antd) &lt;= 4.x 版本时，Builder 会自动添加以下默认配置：
+当项目中安装了 [Ant Design 组件库](https://www.npmjs.com/package/antd) &lt;= 4.x 版本时，Rsbuild 会自动添加以下默认配置：
 
 ```js
 const defaultAntdConfig = {
@@ -31,7 +31,7 @@ const defaultAntdConfig = {
 };
 ```
 
-当项目中安装了 [Arco Design 组件库](https://www.npmjs.com/package/@arco-design/web-react) 时，Builder 会自动添加以下默认配置：
+当项目中安装了 [Arco Design 组件库](https://www.npmjs.com/package/@arco-design/web-react) 时，Rsbuild 会自动添加以下默认配置：
 
 ```js
 const defaultArcoConfig = [
@@ -104,7 +104,7 @@ export default {
 
 - **类型：** `string`
 
-用于指定需要按需加载的模块名称。当 Builder 遍历代码时，如果遇到了对应模块的 import 语句，则会对其进行转换。
+用于指定需要按需加载的模块名称。当 Rsbuild 遍历代码时，如果遇到了对应模块的 import 语句，则会对其进行转换。
 
 #### libraryDirectory
 

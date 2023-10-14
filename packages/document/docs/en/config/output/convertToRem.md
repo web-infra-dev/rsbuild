@@ -1,7 +1,7 @@
 - **Type:** `boolean | object`
 - **Default:** `false`
 
-By setting `output.convertToRem`, the Builder can do the following things:
+By setting `output.convertToRem`, the Rsbuild can do the following things:
 
 - Convert px to rem in CSS.
 - Insert runtime code into the HTML template to set the fontSize of the root element.
@@ -41,7 +41,7 @@ At this point, the rem configuration defaults as follows:
 
 ### Object Type
 
-When the value of `output.convertToRem` is `object` type, The Builder will perform Rem processing based on the current configuration.
+When the value of `output.convertToRem` is `object` type, The Rsbuild will perform Rem processing based on the current configuration.
 
 options:
 

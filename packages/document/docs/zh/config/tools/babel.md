@@ -8,7 +8,7 @@
 请留意 `tools.babel` 在以下使用场景中的局限性：
 
 - Rspack 场景：在使用 Rspack 作为打包工具时，使用 `tools.babel` 配置项将会明显拖慢 Rspack 构建速度。因为 Rspack 默认使用的是 SWC 编译，配置 Babel 会导致代码需要被编译两次，产生了额外的编译开销。
-- webpack + SWC 场景：在使用 webpack 作为打包工具时，如果你使用了 Builder 的 SWC 插件进行代码编译，那么 `tools.babel` 选项将不会生效。
+- webpack + SWC 场景：在使用 webpack 作为打包工具时，如果你使用了 Rsbuild 的 SWC 插件进行代码编译，那么 `tools.babel` 选项将不会生效。
 
 ### Function 类型
 
@@ -35,7 +35,7 @@ export default {
 `tools.babel` 函数的第二个参数提供了一些方便的工具函数，请继续阅读下方文档。
 
 :::tip
-以上示例仅作为参考，通常来说，你不需要手动配置 `babel-plugin-import`，因为 Builder 已经提供了更通用的 `source.transformImport` 配置。
+以上示例仅作为参考，通常来说，你不需要手动配置 `babel-plugin-import`，因为 Rsbuild 已经提供了更通用的 `source.transformImport` 配置。
 :::
 
 ### Object 类型
@@ -161,7 +161,7 @@ export default {
 :::tip
 `addIncludes` 函数的用法与 `source.include` 配置项完全一致，我们建议直接使用 `source.include` 来代替它，因为 `source.include` 的使用场景更广。比如，当你从 Babel 迁移切换到 SWC 编译时，`source.include` 仍然可以生效，而 `addIncludes` 函数则无法生效。
 
-请查看 [「source.include 文档」](https://modernjs.dev/builder/api/config-source.html#sourceinclude) 来查看更详细的用法说明。
+请查看 [「source.include 文档」](https://rsbuild.dev/api/config-source.html#sourceinclude) 来查看更详细的用法说明。
 
 :::
 
@@ -184,7 +184,7 @@ export default {
 ```
 
 :::tip
-`addExcludes` 函数的用法与 `source.exclude` 配置项基本一致，请查看 [source.exclude 文档](https://modernjs.dev/builder/api/config-source.html#sourceexclude) 来查看更详细的用法说明。也可以直接使用 `source.exclude` 来代替 `addExcludes` 函数。
+`addExcludes` 函数的用法与 `source.exclude` 配置项基本一致，请查看 [source.exclude 文档](https://rsbuild.dev/api/config-source.html#sourceexclude) 来查看更详细的用法说明。也可以直接使用 `source.exclude` 来代替 `addExcludes` 函数。
 :::
 
 #### modifyPresetEnvOptions
@@ -227,7 +227,7 @@ export default {
 
 ### 调试 Babel 配置
 
-当你通过 `tools.babel` 修改 `babel-loader` 配置后，可以在 [Builder 调试模式](https://modernjs.dev/builder/guide/debug/debug-mode.html) 下查看最终生成的配置。
+当你通过 `tools.babel` 修改 `babel-loader` 配置后，可以在 [Rsbuild 调试模式](https://rsbuild.dev/guide/debug/debug-mode.html) 下查看最终生成的配置。
 
 首先通过 `DEBUG=builder` 参数开启调试模式：
 

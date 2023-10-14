@@ -2,10 +2,10 @@
 
 例如，假如你在项目中经常引用 `src/common/request.ts` 模块，你可以为它定义一个别名 `@request`，然后在代码中通过 `import request from '@request'` 来引用它，而不需要每次都写出完整的相对路径。同时，这也允许你将模块移动到不同的位置，而不需要更新代码中的所有 import 语法。
 
-在 Modern.js Builder 中，你有两种方式可以设置路径别名:
+在 Rsbuild 中，你有两种方式可以设置路径别名:
 
 - 通过 `tsconfig.json` 中的 `paths` 配置。
-- 通过 [source.alias](http://modernjs.dev/builder/api/config-source.html#sourcealias) 配置。
+- 通过 [source.alias](http://rsbuild.dev/api/config-source.html#sourcealias) 配置。
 
 ## 通过 `tsconfig.json` 的 `paths` 配置
 
@@ -31,7 +31,7 @@
 
 ## 通过 `source.alias` 配置
 
-Modern.js Builder 提供了 [source.alias](http://modernjs.dev/builder/api/config-source.html#sourcealias) 配置项，对应 webpack / Rspack 原生的 [resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) 配置，你可以通过对象或者函数的方式来配置这个选项。
+Rsbuild 提供了 [source.alias](http://rsbuild.dev/api/config-source.html#sourcealias) 配置项，对应 webpack / Rspack 原生的 [resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) 配置，你可以通过对象或者函数的方式来配置这个选项。
 
 ### 使用场景
 
@@ -78,4 +78,4 @@ export default {
 
 `tsconfig.json` 的 `paths` 配置的优先级高于 `source.alias`，当一个路径同时匹配到这两者定义的规则时，会优先使用 `tsconfig.json` 的 `paths` 定义的值。
 
-你可以通过 [source.aliasStrategy](http://modernjs.dev/builder/api/config-source.html#sourcealiasstrategy) 来调整这两个选项的优先级。
+你可以通过 [source.aliasStrategy](http://rsbuild.dev/api/config-source.html#sourcealiasstrategy) 来调整这两个选项的优先级。

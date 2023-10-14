@@ -35,7 +35,7 @@ export type ChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;
 
 ### chunkSplit.strategy
 
-Builder supports the following chunk splitting strategies:
+Rsbuild supports the following chunk splitting strategies:
 
 - `split-by-experience`: an empirical splitting strategy, automatically splits some commonly used npm packages into chunks of moderate size.
 - `split-by-module`: split by NPM package granularity, each NPM package corresponds to a chunk.
@@ -46,7 +46,7 @@ Builder supports the following chunk splitting strategies:
 
 ### Default Strategy
 
-Builder adopts the `split-by-experience` strategy by default, which is a strategy we have developed from experience. Specifically, when the following npm packages are referenced in your project, they will automatically be split into separate chunks:
+Rsbuild adopts the `split-by-experience` strategy by default, which is a strategy we have developed from experience. Specifically, when the following npm packages are referenced in your project, they will automatically be split into separate chunks:
 
 - `lib-polyfill.js`: includes `core-js`, `@babel/runtime`, `@swc/helpers`, `tslib`.
 - `lib-react.js`: includes `react`, `react-dom`.
@@ -176,4 +176,4 @@ export default {
 };
 ```
 
-> When the Builder target is "node", since Node Bundles do not need to be splitted to optimize loading performance, the chunkSplit rule will not take effect.
+> When the Rsbuild target is "node", since Node Bundles do not need to be splitted to optimize loading performance, the chunkSplit rule will not take effect.

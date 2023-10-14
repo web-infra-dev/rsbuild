@@ -8,7 +8,7 @@ With `tools.babel` you can modify the options of [babel-loader](https://github.c
 Please note the limitations of `tools.babel` in the following usage scenarios:
 
 - Rspack scenario: When using Rspack as the bundler, using the `tools.babel` option will significantly slow down the Rspack's build speed. This is because Rspack defaults to using SWC for compilation, and configuring Babel will cause the code to be compiled twice, resulting in additional compilation overhead.
-- webpack + SWC scenario: When using webpack as the bundler, if you use Builder's SWC plugin for code compilation, the `tools.babel` option will not take effect.
+- webpack + SWC scenario: When using webpack as the bundler, if you use Rsbuild's SWC plugin for code compilation, the `tools.babel` option will not take effect.
 
 ### Function Type
 
@@ -36,7 +36,7 @@ export default {
 The second parameter of the `tools.babel` function provides some more convenient utility functions. Please continue reading the documentation below.
 
 :::tip
-The above example is just for reference, usually you don't need to manually configure `babel-plugin-import`, because the Builder already provides a more general `source.transformImport` configuration.
+The above example is just for reference, usually you don't need to manually configure `babel-plugin-import`, because the Rsbuild already provides a more general `source.transformImport` configuration.
 :::
 
 ### Object Type
@@ -162,7 +162,7 @@ export default {
 :::tip
 The usage of the `addIncludes` function is identical to the `source.include` configuration option. We recommend using `source.include` instead of `addIncludes` because `source.include` has a wider range of use cases. For example, when migrating from Babel to SWC compilation, `source.include` can still work, while the `addIncludes` function will not be effective.
 
-Please refer to the [source.include documentation](https://modernjs.dev/builder/en/api/config-source.html#sourceinclude) for more detailed usage.
+Please refer to the [source.include documentation](https://rsbuild.dev/en/api/config-source.html#sourceinclude) for more detailed usage.
 :::
 
 #### addExcludes
@@ -184,7 +184,7 @@ export default {
 ```
 
 :::tip
-The usage of the `addExcludes` function is basically the same as the `source.exclude` config, please see the [source.exclude documentation](https://modernjs.dev/builder/api/config-source.html#sourceexclude) for a more detailed usage. You can also use `source.exclude` directly instead of the `addExcludes` function.
+The usage of the `addExcludes` function is basically the same as the `source.exclude` config, please see the [source.exclude documentation](https://rsbuild.dev/api/config-source.html#sourceexclude) for a more detailed usage. You can also use `source.exclude` directly instead of the `addExcludes` function.
 :::
 
 #### modifyPresetEnvOptions
@@ -227,7 +227,7 @@ export default {
 
 ### Debugging Babel Configuration
 
-After modifying the `babel-loader` configuration through `tools.babel`, you can view the final generated configuration in [Builder debug mode](https://modernjs.dev/builder/en/guide/debug/debug-mode.html).
+After modifying the `babel-loader` configuration through `tools.babel`, you can view the final generated configuration in [Rsbuild debug mode](https://rsbuild.dev/en/guide/debug/debug-mode.html).
 
 First, enable debug mode by using the `DEBUG=builder` parameter:
 

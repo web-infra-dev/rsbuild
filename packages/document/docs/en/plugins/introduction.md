@@ -1,21 +1,21 @@
 # Introduce to Plugin
 
-Builder provides developers with a lightweight but powerful plugin system to build itself and any other plugins.
-Developing plugins to change the Builder's behavior and introduce extra features. such as:
+Rsbuild provides developers with a lightweight but powerful plugin system to build itself and any other plugins.
+Developing plugins to change the Rsbuild's behavior and introduce extra features. such as:
 
 - Modify config of bundlers.
 - Resolve and handle new file types.
 - Modify and compile file modules.
 - Deploy your application.
 
-Builder can use webpack or Rspack as the bundler, expose unified Node.js API, and integrate into different frameworks. Users can painlessly switch between bundlers.
+Rsbuild can use webpack or Rspack as the bundler, expose unified Node.js API, and integrate into different frameworks. Users can painlessly switch between bundlers.
 
 ## Write a plugin
 
 Plugin module should export an entry function just like `(options?: PluginOptions) => BuilderPlugin`, It is recommended to name plugin functions `builderPluginXXX`.
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder-webpack-provider';
+import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 
 export interface PluginFooOptions {
   message?: string;
@@ -48,18 +48,18 @@ The package name of the plugin needs to contain the conventional `builder-plugin
 
 ## Lifetime Hooks
 
-Builder uses lifetime planning work internally, and plugins can also register hooks to take part in any stage of the workflow and implement their own features.
+Rsbuild uses lifetime planning work internally, and plugins can also register hooks to take part in any stage of the workflow and implement their own features.
 
-The full list of Builder's lifetime hooks can be found in the [API References](/api/plugin-hooks.html).
+The full list of Rsbuild's lifetime hooks can be found in the [API References](/api/plugin-hooks.html).
 
-The Builder does not take over the hooks of the underlying bundlers, whose documents can be found here: [webpack hooks](https://webpack.js.org/api/compiler-hooks/)
+The Rsbuild does not take over the hooks of the underlying bundlers, whose documents can be found here: [webpack hooks](https://webpack.js.org/api/compiler-hooks/)
 
-## Use Builder Config
+## Use Rsbuild Config
 
 Custom plugins can usually get config from function parameters,
 just define and use it at your pleasure.
 
-But sometimes you may need to read and change the public config of the Builder. To begin with, you should understand how the Builder generates and uses its config:
+But sometimes you may need to read and change the public config of the Rsbuild. To begin with, you should understand how the Rsbuild generates and uses its config:
 
 - Read, parse config and merge with default values.
 - Plugins modify the config by `api.modifyBuilderConfig(...)`.
@@ -97,10 +97,10 @@ export const builderPluginUploadDist = (): BuilderPlugin => ({
 });
 ```
 
-There are 3 ways to use Builder config:
+There are 3 ways to use Rsbuild config:
 
 - register callback with `api.modifyBuilderConfig(config => {})` to modify config.
-- use `api.getBuilderConfig()` to get Builder config.
+- use `api.getBuilderConfig()` to get Rsbuild config.
 - use `api.getNormalizedConfig()` to get finally normalized config.
 
 When normalized, it will again merge the config object with the default values
@@ -145,7 +145,7 @@ Plugins can handle webpack's config by:
 We recommend that you use [neutrinojs/webpack-chain](https://github.com/neutrinojs/webpack-chain)'s
 chained api to handle the config of webpack whenever possible.
 
-Builder integrated a webpack5-compatible version,
+Rsbuild integrated a webpack5-compatible version,
 which can be found in [sorrycc/webpack-chain](https://github.com/sorrycc/webpack-chain).
 
 ## Examples
@@ -155,7 +155,7 @@ which can be found in [sorrycc/webpack-chain](https://github.com/sorrycc/webpack
 The webpack loaders can be used to load and transform various file types. For more information, see [concepts](https://webpack.js.org/concepts/loaders) and [loaders](https://webpack.js.org/loaders/).
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder-webpack-provider';
+import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 
 export const builderPluginTypeScriptExt = (): BuilderPlugin => ({
   name: 'builder-typescript-ext',
@@ -171,7 +171,7 @@ export const builderPluginTypeScriptExt = (): BuilderPlugin => ({
 ### Add Entry Points
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder-webpack-provider';
+import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 
 export const builderPluginAdminPanel = (): BuilderPlugin => ({
   name: 'builder-admin-panel',
@@ -188,7 +188,7 @@ export const builderPluginAdminPanel = (): BuilderPlugin => ({
 Integrate existing webpack plugins to migrate your applications:
 
 ```ts
-import type { BuilderPlugin } from '@modern-js/builder-webpack-provider';
+import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 import type { Options } from '@modern-js/inspector-webpack-plugin';
 
 export const builderPluginInspector = (options?: Options): BuilderPlugin => ({

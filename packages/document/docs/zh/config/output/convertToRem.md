@@ -1,7 +1,7 @@
 - **类型：** `boolean | object`
 - **默认值：** `false`
 
-通过设置 `output.convertToRem`，Builder 可进行如下处理：
+通过设置 `output.convertToRem`，Rsbuild 可进行如下处理：
 
 - 将 CSS 中的 px 转成 rem
 - 在 HTML 模版中插入运行时代码，对根元素 fontSize 进行设置
@@ -41,7 +41,7 @@ export default {
 
 ### Object 类型
 
-当 `output.convertToRem` 的值为 `object` 类型时，Builder 会根据当前配置进行 rem 处理。
+当 `output.convertToRem` 的值为 `object` 类型时，Rsbuild 会根据当前配置进行 rem 处理。
 
 选项：
 

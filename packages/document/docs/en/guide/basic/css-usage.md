@@ -1,20 +1,20 @@
 # CSS Usage
 
-Builder has built-in multiple style resource processing capabilities, including Less / Sass preprocessor, PostCSS, CSS Modules, CSS inline and CSS compression.
+Rsbuild has built-in multiple style resource processing capabilities, including Less / Sass preprocessor, PostCSS, CSS Modules, CSS inline and CSS compression.
 
-In addition, Builder also provides multiple configs to customize the compile rules of style resources.
+In addition, Rsbuild also provides multiple configs to customize the compile rules of style resources.
 
 ## Using Less, Sass and Stylus
 
-The Builder has built-in community popular CSS preprocessors such as Less, Sass.
+The Rsbuild has built-in community popular CSS preprocessors such as Less, Sass.
 
 By default, you don't need to configure anything for Less and Sass. If you need to customize loader config, you can configure [tools.less](/en/api/config-tools.html#toolsless), [tools.sass](/en/api/config-tools.html#toolssass) to set it up.
 
-You can also use Stylus in Builder, just install the Stylus plugin provided by Builder, please refer to [Stylus Plugin](/plugins/plugin-stylus.html) for usage.
+You can also use Stylus in Rsbuild, just install the Stylus plugin provided by Rsbuild, please refer to [Stylus Plugin](/plugins/plugin-stylus.html) for usage.
 
 ## Using PostCSS
 
-Builder has built-in [PostCSS](https://postcss.org/) to transform the CSS code. You can configure the postcss-loader via [tools.postcss](/en/api/config-tools.html#toolspostcss).
+Rsbuild has built-in [PostCSS](https://postcss.org/) to transform the CSS code. You can configure the postcss-loader via [tools.postcss](/en/api/config-tools.html#toolspostcss).
 
 ```ts
 export default {
@@ -31,7 +31,7 @@ export default {
 
 ### Builtin PostCSS plugins
 
-Builder has some builtin PostCSS plugins, which will perform the following transformations on CSS:
+Rsbuild has some builtin PostCSS plugins, which will perform the following transformations on CSS:
 
 - [autoprefixer](https://github.com/postcss/autoprefixer): we have enabled [autoprefixer](https://github.com/postcss/autoprefixer) to add vendor prefixes to CSS rules. If you want to configure the target browser, you can use [output.overrideBrowserslist](/en/api/config-output.html#outputoverridebrowserslist) config.
 - [postcss-nesting](https://www.npmjs.com/package/postcss-nested): Provide [CSS Nesting](https://drafts.csswg.org/css-nesting-1/) support, you can Use nested writing in CSS, such as:
@@ -73,7 +73,7 @@ Please read the [Using CSS Modules](/guide/basic/css-modules.html) chapter for a
 
 Usually, in production environments we compress static assets such as CSS, JS, etc. to achieve better transfer efficiency.
 
-Builder automatically compresses CSS code at production build time with [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin) (The compression tool used at the bottom is [cssnano](https://cssnano.co/)).
+Rsbuild automatically compresses CSS code at production build time with [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin) (The compression tool used at the bottom is [cssnano](https://cssnano.co/)).
 
 You can configure [tools.minifyCss](/en/api/config-tools.html#toolsminifycss) to make it more customizable.
 
@@ -83,7 +83,7 @@ cssnano is a tool for optimizing and minifying CSS files. It reduces the size of
 
 ## Inline CSS Files
 
-By default, Builder will extract CSS into a separate `.css` file and output it to the dist directory.
+By default, Rsbuild will extract CSS into a separate `.css` file and output it to the dist directory.
 
 If you want to inline styles into your JS file, you can set [output.disableCssExtract](/en/api/config-output.html#outputdisablecssextract) to true to disable CSS extraction logic.When the JS file is requested by the browser, JS dynamically inserts the `<style>` tag into the Html to load the CSS styles.
 

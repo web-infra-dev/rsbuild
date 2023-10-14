@@ -26,7 +26,7 @@ export default {
 };
 ```
 
-当你开启 `checkSyntax` 后，Builder 会在生产环境构建时进行检测，当在构建产物中检测到不兼容的高级语法后，会将错误日志打印在终端，并退出当前构建流程。
+当你开启 `checkSyntax` 后，Rsbuild 会在生产环境构建时进行检测，当在构建产物中检测到不兼容的高级语法后，会将错误日志打印在终端，并退出当前构建流程。
 
 ### 错误日志
 
@@ -68,9 +68,9 @@ error   [Syntax Checker] Find some syntax errors after production build:
 - **类型：** `string[]`
 - **默认值：** `当前项目的 browserslist 配置`
 
-`targets` 表示项目的目标浏览器范围，它的值为标准的 browserslist 数组，如果你不了解 browserslist 的用法，请参考 [「设置浏览器范围」](https://modernjs.dev/builder/guide/advanced/browser-compatibility.html)。
+`targets` 表示项目的目标浏览器范围，它的值为标准的 browserslist 数组，如果你不了解 browserslist 的用法，请参考 [「设置浏览器范围」](https://rsbuild.dev/guide/advanced/browser-compatibility.html)。
 
-Builder 会读取 `targets` 的值，并自动推导出构建产物中可以使用的最低 ECMAScript 语法版本，比如 `ES5` 或 `ES6`。
+Rsbuild 会读取 `targets` 的值，并自动推导出构建产物中可以使用的最低 ECMAScript 语法版本，比如 `ES5` 或 `ES6`。
 
 - **示例：**
 
@@ -86,10 +86,10 @@ export default {
 };
 ```
 
-Builder 会推导出 `chrome >= 53` 可以使用的 ECMAScript 语法版本为 `ES6`，当构建产物中包含 `es2016` 或更高的语法时，就会触发语法错误提示。
+Rsbuild 会推导出 `chrome >= 53` 可以使用的 ECMAScript 语法版本为 `ES6`，当构建产物中包含 `es2016` 或更高的语法时，就会触发语法错误提示。
 
 :::tip
-请留意，Builder 不支持基于 `targets` 来自动分析 ES6 以上的语法版本，如果你的构建产物兼容的语法版本超过 ES6，请通过 `checkSyntax.ecmaVersion` 进行设置。
+请留意，Rsbuild 不支持基于 `targets` 来自动分析 ES6 以上的语法版本，如果你的构建产物兼容的语法版本超过 ES6，请通过 `checkSyntax.ecmaVersion` 进行设置。
 :::
 
 #### checkSyntax.ecmaVersion

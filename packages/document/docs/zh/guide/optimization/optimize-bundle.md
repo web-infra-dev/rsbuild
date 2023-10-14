@@ -1,6 +1,6 @@
 # 产物体积优化
 
-产物体积的优化在生产环境中是非常重要的，因为它直接影响到了线上的用户体验。在这篇文档中，我们将介绍在 Builder 中一些常见的产物体积优化方式。
+产物体积的优化在生产环境中是非常重要的，因为它直接影响到了线上的用户体验。在这篇文档中，我们将介绍在 Rsbuild 中一些常见的产物体积优化方式。
 
 ## 减少重复依赖
 
@@ -40,9 +40,9 @@ BUNDLE_ANALYZE=true pnpm build
 
 ## 提升 Browserslist 范围
 
-Builder 会根据项目的 Browserslist 配置范围进行代码编译，并注入相应的 Polyfill。如果项目不需要兼容旧版浏览器，可以根据实际情况来提升 Browserslist 范围，从而减少在语法和 Polyfill 上的编译开销。
+Rsbuild 会根据项目的 Browserslist 配置范围进行代码编译，并注入相应的 Polyfill。如果项目不需要兼容旧版浏览器，可以根据实际情况来提升 Browserslist 范围，从而减少在语法和 Polyfill 上的编译开销。
 
-Builder 默认的 Browserslist 配置为：
+Rsbuild 默认的 Browserslist 配置为：
 
 ```js
 ['> 0.01%', 'not dead', 'not op_mini all'];
@@ -62,7 +62,7 @@ Builder 默认的 Browserslist 配置为：
 
 在明确第三方依赖不需要额外 polyfill 的情况下，你可以将 [output.polyfill](/api/config-output.html#outputpolyfill) 设置为 `usage`。
 
-在 `usage` 模式下，Builder 会分析源代码中使用的语法，按需注入所需的 polyfill 代码，从而减少 polyfill 的代码量。
+在 `usage` 模式下，Rsbuild 会分析源代码中使用的语法，按需注入所需的 polyfill 代码，从而减少 polyfill 的代码量。
 
 ```js
 export default {
@@ -78,10 +78,10 @@ export default {
 
 ## 使用图片压缩
 
-在一般的前端项目中，图片资源的体积往往是项目产物体积的大头，因此如果能尽可能精简图片的体积，那么将会对项目的打包产物体积起到明显的优化效果。你可以在 Builder 中注册插件来启用图片压缩功能:
+在一般的前端项目中，图片资源的体积往往是项目产物体积的大头，因此如果能尽可能精简图片的体积，那么将会对项目的打包产物体积起到明显的优化效果。你可以在 Rsbuild 中注册插件来启用图片压缩功能:
 
 ```js
-import { builderPluginImageCompress } from '@modern-js/builder-plugin-image-compress';
+import { builderPluginImageCompress } from '@rsbuild/plugin-image-compress';
 
 // 往 builder 实例上添加插件
 builder.addPlugins([builderPluginImageCompress()]);
@@ -93,7 +93,7 @@ builder.addPlugins([builderPluginImageCompress()]);
 
 良好的拆包策略对于提升应用的加载性能是十分重要的，可以充分利用浏览器的缓存机制，减少请求数量，加快页面加载速度。
 
-在 Builder 中内置了[多种拆包策略](/guide/optimization/split-chunk)，可以满足大部分应用的需求，你也可以根据自己的业务场景，自定义拆包配置。
+在 Rsbuild 中内置了[多种拆包策略](/guide/optimization/split-chunk)，可以满足大部分应用的需求，你也可以根据自己的业务场景，自定义拆包配置。
 
 比如将 node_modules 下的 `axios` 库拆分到 `axios.js` 中：
 

@@ -32,7 +32,7 @@ When setting `performance.prefetch` to `true`, resources will be prefetched acco
 
 ### Object Type
 
-When the value of `performance.prefetch` is `object` type, the Builder will enable the prefetch capability for the specified resource according to the current configuration.
+When the value of `performance.prefetch` is `object` type, the Rsbuild will enable the prefetch capability for the specified resource according to the current configuration.
 
 #### prefetch.type
 

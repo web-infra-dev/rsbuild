@@ -14,7 +14,7 @@ type LazyCompilationOptions =
 - **Default:** `false`
 - **Bundler:** `only support webpack`
 
-Used to enable the lazy compilation (i.e. compile on demand). When this config is enabled, Builder will compile entrypoints and dynamic imports only when they are used. It will improve the compilation startup time of the project.
+Used to enable the lazy compilation (i.e. compile on demand). When this config is enabled, Rsbuild will compile entrypoints and dynamic imports only when they are used. It will improve the compilation startup time of the project.
 
 Lazy compilation only takes effect in the development.
 
@@ -71,7 +71,7 @@ When using lazy compilation for entries, there are some considerations:
 
 #### Disable split chunks
 
-When you enable lazy compilation, in order to ensure the compilation results, Builder will disable split chunks in the development. This will not affect the build results in the production, but will cause a difference between the build results of the development and production.
+When you enable lazy compilation, in order to ensure the compilation results, Rsbuild will disable split chunks in the development. This will not affect the build results in the production, but will cause a difference between the build results of the development and production.
 
 #### Use proxy
 

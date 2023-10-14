@@ -38,7 +38,7 @@ In the filename, `[name]` represents the entry name corresponding to this file, 
 
 ## Modify the Directory
 
-Builder provides some configs to modify the directory or filename, you can:
+Rsbuild provides some configs to modify the directory or filename, you can:
 
 - Modify the filename through [output.filename](/en/api/config-output.html#outputfilename).
 - Modify the output path of through [output.distPath](/en/api/config-output.html#outputdistpath).
@@ -94,7 +94,7 @@ dist
 
 ## Node.js Output Directory
 
-When the [Build Target](/guide/basic/build-target.html) of Builder contains `'node'`, or you have enabled server-side features such as SSR in the upper framework, Builder will generate some output files for Node.js and output them to the `bundles` directory:
+When the [Build Target](/guide/basic/build-target.html) of Rsbuild contains `'node'`, or you have enabled server-side features such as SSR in the upper framework, Rsbuild will generate some output files for Node.js and output them to the `bundles` directory:
 
 ```bash
 dist
@@ -152,7 +152,7 @@ dist
 
 ## Not Written to Disk
 
-By default, Builder will write the generated files to disk, so developers can view the file content or configure proxy rules for static assets.
+By default, Rsbuild will write the generated files to disk, so developers can view the file content or configure proxy rules for static assets.
 
 In development, you can choose to keep the generated files in the Dev Server's memory to reduce the overhead of file operations.
 

@@ -8,7 +8,7 @@
 
 ## 启用 HMR
 
-Builder 已内置了对 HMR 的支持，在开发环境下默认启用。
+Rsbuild 已内置了对 HMR 的支持，在开发环境下默认启用。
 
 如果你不需要使用 HMR 能力，可以将 [dev.hmr](/api/config-dev.html#devhmr) 设置为 false，此时将不再提供热更新和 react-refresh 功能。
 
@@ -22,13 +22,13 @@ export default {
 
 ## 自定义 HMR URL
 
-在默认情况下，Builder 使用当前页面的 host 和端口号来拼接 HMR 对应的 WebSocket URL。
+在默认情况下，Rsbuild 使用当前页面的 host 和端口号来拼接 HMR 对应的 WebSocket URL。
 
 当出现 HMR 连接失败的情况时，你可以通过自定义 `devServer.client` 配置的方式来指定 WebSocket URL。
 
 ### 默认配置
 
-默认配置如下，Builder 会根据当前页面的 location 自动推导 WebSocket 请求的 URL：
+默认配置如下，Rsbuild 会根据当前页面的 location 自动推导 WebSocket 请求的 URL：
 
 ```ts
 export default {

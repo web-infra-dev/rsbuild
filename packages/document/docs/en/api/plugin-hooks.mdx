@@ -4,13 +4,13 @@ extractApiHeaders: [2]
 
 # Plugin Hooks
 
-This section describes the lifetime hooks provided by Builder plugin.
+This section describes the lifetime hooks provided by Rsbuild plugin.
 
 ## Overview
 
 **Common Hooks**
 
-- `modifyBuilderConfig`: Modify raw config of Builder.
+- `modifyBuilderConfig`: Modify raw config of Rsbuild.
 - `modifyBundlerChain` (experimental): Modify config of webpack or Rspack via the bundler chain api.
 - `modifyWebpackChain`: Modify webpack-chain.
 - `modifyWebpackConfig`: Modify raw config of webpack.
@@ -37,7 +37,7 @@ This section describes the lifetime hooks provided by Builder plugin.
 
 ### modifyBuilderConfig
 
-Modify the config passed to the Builder, you can directly modify the config object, or return a new object to replace the previous object.
+Modify the config passed to the Rsbuild, you can directly modify the config object, or return a new object to replace the previous object.
 
 - **Type**
 

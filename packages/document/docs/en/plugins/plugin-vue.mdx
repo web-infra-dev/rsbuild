@@ -10,14 +10,14 @@ You can install the plugin with the following command:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @modern-js/builder-plugin-vue -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-vue -D" />
 
 ### Register
 
 You can register Vue plugin with the `addPlugins` method:
 
 ```js
-import { builderPluginVue } from '@modern-js/builder-plugin-vue';
+import { builderPluginVue } from '@rsbuild/plugin-vue';
 
 builder.addPlugins([builderPluginVue()]);
 ```

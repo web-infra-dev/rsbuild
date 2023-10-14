@@ -10,13 +10,13 @@ TypeError: The 'compilation' argument must be an instance of Compilation
 
 The webpack version problem has the following situations:
 
-1. The webpack dependency is directly declared in the project's package.json, and the version range of the webpack that the Builder depends on is different and cannot match the same version.
+1. The webpack dependency is directly declared in the project's package.json, and the version range of the webpack that the Rsbuild depends on is different and cannot match the same version.
 2. Multiple npm packages installed in the project all depend on webpack, and the webpack version ranges they depend on are different and cannot match the same version.
 3. Due to the lock mechanism of the package manager, multiple webpack versions are generated in the lock file.
 
-In the first case, it is recommended to remove the webpack dependency from the project's package.json. Because Builder encapsulates webpack-related capabilities by default, and will pass in the webpack object in the [tools.webpack](/en/api/config-tools.html#toolswebpack) configuration option. Therefore, in most cases, it is not recommended to install additional webpack dependencies in the project.
+In the first case, it is recommended to remove the webpack dependency from the project's package.json. Because Rsbuild encapsulates webpack-related capabilities by default, and will pass in the webpack object in the [tools.webpack](/en/api/config-tools.html#toolswebpack) configuration option. Therefore, in most cases, it is not recommended to install additional webpack dependencies in the project.
 
-In the second case, it is recommended to see if you can upgrade an npm package so that its dependent webpack version range is consistent with the Builder. It is also possible to manually unify versions through the ability of the package manager, e.g. using [yarn resolutions](https://classic.yarnpkg.com/lang/en/docs/selective-version-resolutions/) or [pnpm overrides](https ://pnpm.io/package_json#pnpmoverrides).
+In the second case, it is recommended to see if you can upgrade an npm package so that its dependent webpack version range is consistent with the Rsbuild. It is also possible to manually unify versions through the ability of the package manager, e.g. using [yarn resolutions](https://classic.yarnpkg.com/lang/en/docs/selective-version-resolutions/) or [pnpm overrides](https ://pnpm.io/package_json#pnpmoverrides).
 
 If it is the third case, you can use the two methods mentioned in the second case, or you can try to delete the lock file and reinstall it to solve it.
 
@@ -28,7 +28,7 @@ Deleting the lock file will automatically upgrade the dependency version in the 
 
 ### Find ES6+ code in the compiled files?
 
-By default, Builder will not compile files under `node_modules` through `babel-loader` or `ts-loader`. If the npm package introduced by the project contains ES6+ syntax, it will be bundled into the output files.
+By default, Rsbuild will not compile files under `node_modules` through `babel-loader` or `ts-loader`. If the npm package introduced by the project contains ES6+ syntax, it will be bundled into the output files.
 
 When this happens, you can specify directories or modules that need to be compiled additionally through the [source.include](/en/api/config-source.html#sourceinclude) configuration option.
 
@@ -36,7 +36,7 @@ When this happens, you can specify directories or modules that need to be compil
 
 ### Failed import other modules in Monorepo?
 
-Due to considerations of compilation performance, by default, the Builder does not compile files under `node_modules` or files outside the current project directory.
+Due to considerations of compilation performance, by default, the Rsbuild does not compile files under `node_modules` or files outside the current project directory.
 
 Therefore, when you reference the source code of other sub-projects, you may encounter an error similar to `You may need an additional loader to handle the result of these loaders.`
 
@@ -80,7 +80,7 @@ You may need an additional loader to handle the result of these loaders.
 Solution:
 
 - If the `.ts` file outside the current project is referenced, or the `.ts` file under node_modules, please add the [source.include](/en/api/config-source.html#sourceinclude) configuration Items that specify files that require additional compilation.
-- If you refer to a file format that is not supported by Builder, please configure the corresponding webpack loader for compilation.
+- If you refer to a file format that is not supported by Rsbuild, please configure the corresponding webpack loader for compilation.
 
 ---
 
@@ -88,7 +88,7 @@ Solution:
 
 If the compilation is succeed, but the `exports is not defined` error appears after opening the page, it is usually because a CommonJS module is compiled by Babel.
 
-Under normal circumstances, Builder will not use Babel to compile CommonJS modules. If the [source.include](/en/api/config-source.html#sourceinclude) configuration option is used in the project, or the [tools.babel](/en/api/config-tools.html#tools-babel) `addIncludes` method, some CommonJS modules may be added to the Babel compilation.
+Under normal circumstances, Rsbuild will not use Babel to compile CommonJS modules. If the [source.include](/en/api/config-source.html#sourceinclude) configuration option is used in the project, or the [tools.babel](/en/api/config-tools.html#tools-babel) `addIncludes` method, some CommonJS modules may be added to the Babel compilation.
 
 There are two workarounds for this problem:
 
@@ -135,7 +135,7 @@ export const bar = 'bar';
 import { foo } from './utils';
 ```
 
-In this case, Builder will throw the following error:
+In this case, Rsbuild will throw the following error:
 
 ```bash
 Compile Error:
@@ -260,7 +260,7 @@ export default {
 
 ### The webpack cache does not work?
 
-Builder enables webpack's persistent cache by default.
+Rsbuild enables webpack's persistent cache by default.
 
 After the first compilation is completed, the cache file will be automatically generated and output to the `./node_modules/.cache/webpack` directory. When the second compilation is performed, the cache is hit and the compilation speed is greatly improved.
 
@@ -287,7 +287,7 @@ After adding the above configuration, webpack will output logs for debugging. Pl
 
 ### Tree shaking does not take effect?
 
-Builder will enable the tree shaking function of webpack by default during production construction. Whether tree shaking can take effect depends on whether the business code can meet the tree shaking conditions of webpack.
+Rsbuild will enable the tree shaking function of webpack by default during production construction. Whether tree shaking can take effect depends on whether the business code can meet the tree shaking conditions of webpack.
 
 If you encounter the problem that tree shaking does not take effect, you can check whether the `sideEffects` configuration of the relevant npm package is correct. If you don't know what `sideEffects` is, or are interested in the principles behind tree shaking, you can read the following two documents:
 
@@ -336,14 +336,14 @@ If you get an error similar to the following when compiling, it means that [core
 Module not found: Can't resolve 'core-js/modules/es.error.cause.js'
 ```
 
-Usually, you don't need to install `core-js` in the project, because the Builder already has a built-in `core-js` v3.
+Usually, you don't need to install `core-js` in the project, because the Rsbuild already has a built-in `core-js` v3.
 
 If there is an error that `core-js` cannot be found, there may be several reasons:
 
 1. The `plugins` configured by Babel is overwritten in the project, causing the built-in `babelPluginLockCorejsVersion` does not work. In this case, just change `tools.babel` to a function:
 
 ```ts
-// Wrong usage, will override Builder's default Babel plugins
+// Wrong usage, will override Rsbuild's default Babel plugins
 export default {
   tools: {
     babel: {
@@ -375,14 +375,14 @@ If the `@types/lodash` package is installed in your project, you may import some
 import { debounce, DebouncedFunc } from 'lodash';
 ```
 
-Builder will throw an error after compiling the above code:
+Rsbuild will throw an error after compiling the above code:
 
 ```bash
 Syntax error: /project/src/index.ts: The lodash method `DebouncedFunc` is not a known module.
 Please report bugs to https://github.com/lodash/babel-plugin-lodash/issues.
 ```
 
-The reason is that Builder has enabled the [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash) plugin by default to optimize the bundle size of lodash, but Babel cannot distinguish between "value" and "type", which resulting in an exception in the compiled code.
+The reason is that Rsbuild has enabled the [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash) plugin by default to optimize the bundle size of lodash, but Babel cannot distinguish between "value" and "type", which resulting in an exception in the compiled code.
 
 The solution is to use TypeScript's `import type` syntax to explicitly declare the `DebouncedFunc` type:
 
@@ -417,7 +417,7 @@ Compared with the v3 version, the Less v4 version has some differences in the wa
 }
 ```
 
-The built-in Less version of Builder is v4, and the writing method of the lower version will not take effect. Please pay attention to the distinction.
+The built-in Less version of Rsbuild is v4, and the writing method of the lower version will not take effect. Please pay attention to the distinction.
 
 The writing of division in Less can also be modified through configuration options, see [Less - Math](https://lesscss.org/usage/#less-options-math).
 

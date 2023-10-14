@@ -1,6 +1,6 @@
 # Browser Compatibility
 
-This chapter introduces how to use the capabilities provided by Builder to deal with browser compatibility issues.
+This chapter introduces how to use the capabilities provided by Rsbuild to deal with browser compatibility issues.
 
 ## Set browserslist
 
@@ -8,7 +8,7 @@ Before dealing with compatibility issues, you first need to clarify which browse
 
 - If you haven't set browserslist yet, please read the [Browserslist](/guide/advanced/browserslist.html) chapter first.
 
-- If you have set a browserslist, Builder will automatically compile according to that scope, downgrade JavaScript syntax and CSS syntax, and inject the required polyfill. In most cases, you can safely use modern ECMAScript features without worrying about compatibility issues.
+- If you have set a browserslist, Rsbuild will automatically compile according to that scope, downgrade JavaScript syntax and CSS syntax, and inject the required polyfill. In most cases, you can safely use modern ECMAScript features without worrying about compatibility issues.
 
 After setting the browserslist, if you still encountered some compatibility issues, please continue reading below contents to find some solutions.
 
@@ -20,7 +20,7 @@ Before dealing with compatibility issues, it is recommended that you understand 
 
 When you use higher-version syntax and API in your project, in order to make the compiled code run stably in lower-version browsers, we need to downgrade two parts: syntax downgrade and API downgrade.
 
-**Builder downgrades syntax through syntax transpilation, and downgrades API through inject polyfill.**
+**Rsbuild downgrades syntax through syntax transpilation, and downgrades API through inject polyfill.**
 
 > Grammar and API are not strongly bound. When browser manufacturers implement the engine, they will support some syntax or implement some APIs in advance according to the specification or their own needs. Therefore, browsers from different manufacturers in the same period are not necessarily compatible with syntax and API. So in general practice, syntax and API are handled in two parts.
 
@@ -116,13 +116,13 @@ if (!String.prototype.replaceAll) {
 
 ## Downgrade method
 
-In Builder, we divide code into three categories:
+In Rsbuild, we divide code into three categories:
 
 - The first category is the source code in the current project.
 - The second category is third-party dependencies installed through npm.
 - The third category is the code out of the current project, such as the code in other directories in the monorepo.
 
-By default, Builder will only compile and downgrade the first category, other categories will not be downgraded by default.
+By default, Rsbuild will only compile and downgrade the first category, other categories will not be downgraded by default.
 
 There are several considerations for this approach:
 
@@ -136,7 +136,7 @@ The code of the current project will be downgraded by default, so you don't need
 
 ### Downgrade third-party dependencies
 
-When you find that a third-party dependencies causes compatibility issues, you can add this dependency to Builder's [source.include](/en/api/config-source.html#sourceinclude) config, Make Builder do extra compilation for this dependency.
+When you find that a third-party dependencies causes compatibility issues, you can add this dependency to Rsbuild's [source.include](/en/api/config-source.html#sourceinclude) config, Make Rsbuild do extra compilation for this dependency.
 
 Taking the npm package `query-string` as an example, you can add the following config:
 
@@ -179,15 +179,15 @@ export default {
 
 ## Polyfill mode
 
-Builder compiles JavaScript code through Babel or SWC, and injects polyfill libraries like [core-js](https://github.com/zloirock/core-js), [@babel/runtime](https://www.npmjs.com/package/@babel/runtime) and [@swc/helpers](https://www.npmjs.com/package/@swc/helpers).
+Rsbuild compiles JavaScript code through Babel or SWC, and injects polyfill libraries like [core-js](https://github.com/zloirock/core-js), [@babel/runtime](https://www.npmjs.com/package/@babel/runtime) and [@swc/helpers](https://www.npmjs.com/package/@swc/helpers).
 
-In different usage scenarios, you may need different polyfill solutions. Builder provides [output.polyfill](/en/api/config-output.html#outputpolyfill) config to switch between different polyfill modes.
+In different usage scenarios, you may need different polyfill solutions. Rsbuild provides [output.polyfill](/en/api/config-output.html#outputpolyfill) config to switch between different polyfill modes.
 
 ### entry mode
 
 entry is the default mode and does not need to be set manually.
 
-When using the entry mode, Builder will analyze which `core-js` methods need to be injected according to the browserslist set by the current project, and inject them to the entry file of each page. The polyfill injected in this way is more comprehensive, and there is no need to worry about the project source code and third-party dependencies polyfill issues. However, because some unused polyfill codes are included, the bundle size may increase.
+When using the entry mode, Rsbuild will analyze which `core-js` methods need to be injected according to the browserslist set by the current project, and inject them to the entry file of each page. The polyfill injected in this way is more comprehensive, and there is no need to worry about the project source code and third-party dependencies polyfill issues. However, because some unused polyfill codes are included, the bundle size may increase.
 
 The config of entry mode is:
 
@@ -203,7 +203,7 @@ export default {
 
 The usage mode allows more precise control over which core-js polyfills need to be injected.
 
-When you enable the usage mode, Builder will analyze the source code in the project and determine which polyfills need to be injected.
+When you enable the usage mode, Rsbuild will analyze the source code in the project and determine which polyfills need to be injected.
 
 For example, the code uses the `Map` object:
 

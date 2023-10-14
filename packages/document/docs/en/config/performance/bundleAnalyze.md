@@ -2,7 +2,7 @@
 
 Used to enable the [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer) plugin to analyze the size of the output.
 
-By default, Builder does not enable `webpack-bundle-analyzer`. When this feature is enabled, the default configuration is as follows:
+By default, Rsbuild does not enable `webpack-bundle-analyzer`. When this feature is enabled, the default configuration is as follows:
 
 ```js
 const defaultConfig = {
@@ -33,7 +33,7 @@ export default {
 };
 ```
 
-After enabling it, Builder will generate an HTML file that analyzes the size of the output files, and print the following log in the Terminal:
+After enabling it, Rsbuild will generate an HTML file that analyzes the size of the output files, and print the following log in the Terminal:
 
 ```bash
 Webpack Bundle Analyzer saved report to /Project/my-project/dist/report-web.html

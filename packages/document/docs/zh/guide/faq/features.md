@@ -22,7 +22,7 @@ export default {
 
 ### 如何在编译过程中进行 ESLint 代码校验？
 
-出于编译性能的考虑，Builder 默认不会在编译过程中进行 ESLint 校验，如果需要该功能，可以手动安装并注册社区中的 [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin)。
+出于编译性能的考虑，Rsbuild 默认不会在编译过程中进行 ESLint 校验，如果需要该功能，可以手动安装并注册社区中的 [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin)。
 
 注册该插件的示例代码如下：
 
@@ -62,7 +62,7 @@ export default {
 
 ### 如何清空 webpack 编译缓存？
 
-默认情况下，Builder 的 webpack 编译缓存生成在 `./node_modules/.cache/webpack` 目录下。
+默认情况下，Rsbuild 的 webpack 编译缓存生成在 `./node_modules/.cache/webpack` 目录下。
 
 如果需要清空本地的编译缓存，可以执行以下命令：
 
@@ -76,7 +76,7 @@ rm -rf ./node_modules/.cache
 
 在生产环境构建时，我们可以移除代码中的 `console`，从而避免开发环境的日志被输出到生产环境。
 
-Builder 默认提供了移除 console 的配置项，请查看 [performance.removeConsole](/api/config-performance.html#performanceremoveconsole)。
+Rsbuild 默认提供了移除 console 的配置项，请查看 [performance.removeConsole](/api/config-performance.html#performanceremoveconsole)。
 
 ---
 
@@ -84,20 +84,20 @@ Builder 默认提供了移除 console 的配置项，请查看 [performance.remo
 
 #### 通过 inspect 命令查看
 
-当你使用 Modern.js 等上层框架时，框架通常会提供 [inspect 命令](https://modernjs.dev/apis/app/commands.html) 用于查看项目最终生成的 Modern.js Builder 配置以及 webpack / Rspack 配置。
+当你使用 Modern.js 等上层框架时，框架通常会提供 [inspect 命令](https://modernjs.dev/apis/app/commands.html) 用于查看项目最终生成的 Rsbuild 配置以及 webpack / Rspack 配置。
 
 ```bash
 ➜ npx modern inspect
 
 Inspect config succeed, open following files to view the content:
 
-  - Builder Config: /root/my-project/dist/builder.config.js
+  - Rsbuild Config: /root/my-project/dist/builder.config.js
   - Rspack Config (web): /root/my-project/dist/rspack.config.web.js
 ```
 
-#### 通过 Builder 调试模式查看
+#### 通过 Rsbuild 调试模式查看
 
-通过在执行构建时添加 `DEBUG=builder` 环境变量可开启 Builder 的[调试模式](/guide/debug/debug-mode.html)，此时会输出最终生成的 webpack 或 Rspack 配置到 dist 目录下。
+通过在执行构建时添加 `DEBUG=builder` 环境变量可开启 Rsbuild 的[调试模式](/guide/debug/debug-mode.html)，此时会输出最终生成的 webpack 或 Rspack 配置到 dist 目录下。
 
 ```bash
 ➜ DEBUG=builder pnpm dev
@@ -109,7 +109,7 @@ debug   add default plugins done [1938.57 ms]
 
 Inspect config succeed, open following files to view the content:
 
-  - Builder Config: /root/my-project/dist/builder.config.js
+  - Rsbuild Config: /root/my-project/dist/builder.config.js
   - Rspack Config (web): /root/my-project/dist/rspack.config.web.js
 ```
 
@@ -117,7 +117,7 @@ Inspect config succeed, open following files to view the content:
 
 ### 如何忽略特定 warning 日志？
 
-默认情况下，Builder 会打印构建过程产生的所有 error 和 warning 日志。
+默认情况下，Rsbuild 会打印构建过程产生的所有 error 和 warning 日志。
 
 如果遇到由于三方包产生大量 warning 日志，暂时又无法处理，希望忽略的情况。可通过 webpack / Rspack 提供的构建配置忽略特定 warning 日志。
 

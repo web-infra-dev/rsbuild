@@ -2,7 +2,7 @@
 pageType: home
 
 hero:
-  name: Modern.js Builder
+  name: Rsbuild
   tagline: 基于 Rspack 的 Web 构建工具
   actions:
     - theme: brand

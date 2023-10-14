@@ -1,6 +1,6 @@
 # Import SVG Assets
 
-Builder supports import SVG assets and transform SVG into React components or URLs.
+Rsbuild supports import SVG assets and transform SVG into React components or URLs.
 
 :::tip What is SVG
 SVG stands for Scalable Vector Graphics. It is a type of image format that uses vector graphics to represent images. Vector graphics are different from raster graphics, which are made up of pixels. Instead, vector graphics use geometric shapes, lines, and curves to represent images. Because vector graphics are not made up of pixels, they can be scaled to any size without losing resolution or quality.
@@ -8,7 +8,7 @@ SVG stands for Scalable Vector Graphics. It is a type of image format that uses 
 
 ## Import SVG in JS file
 
-When import an SVG in a JS file, if you import `ReactComponent`, Builder will call [SVGR](https://react-svgr.com/) to convert the SVG into a React component.
+When import an SVG in a JS file, if you import `ReactComponent`, Rsbuild will call [SVGR](https://react-svgr.com/) to convert the SVG into a React component.
 
 ```tsx title="src/component/Logo.tsx"
 import { ReactComponent as Logo } from './static/logo.svg';
@@ -62,7 +62,7 @@ Please read the [Import Static Assets](/guide/basic/static-assets.html) section 
 
 ## Disable SVGR Processing
 
-By default, when an SVG resource is referenced in a JS file, Builder will call SVGR to convert the SVG into a React component. If you are sure that all SVG resources in your project are not being used as React components, you can turn off this conversion by setting [disableSvgr](/api/config-output.html#outputdisablesvgr) to true to improve build performance.
+By default, when an SVG resource is referenced in a JS file, Rsbuild will call SVGR to convert the SVG into a React component. If you are sure that all SVG resources in your project are not being used as React components, you can turn off this conversion by setting [disableSvgr](/api/config-output.html#outputdisablesvgr) to true to improve build performance.
 
 ```js
 export default {

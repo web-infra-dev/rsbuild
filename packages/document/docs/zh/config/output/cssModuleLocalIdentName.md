@@ -14,7 +14,7 @@ const localIdentName = isProd
 
 `cssModuleLocalIdentName` 在开发环境和生产环境有不同的默认值。
 
-在生产环境，Builder 会生成更简短的类名，从而减少构建产物的体积。
+在生产环境，Rsbuild 会生成更简短的类名，从而减少构建产物的体积。
 
 ```ts
 import styles from './index.module.scss';

@@ -178,8 +178,8 @@ function getSidebar(lang: 'zh' | 'en'): Sidebar {
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
   lang: 'zh',
-  base: '/builder/',
-  title: 'Modern.js Builder',
+  base: '/',
+  title: 'Rsbuild',
   icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/zq-uylkvT/ljhwZthlaukjlkulzlp/logo-1x-0104.png',
   markdown: {
     checkDeadLinks: true,
@@ -202,8 +202,7 @@ export default defineConfig({
       {
         icon: 'github',
         mode: 'link',
-        content:
-          'https://github.com/web-infra-dev/modern.js/tree/main/packages/builder',
+        content: 'https://github.com/web-infra-dev/rsbuild',
       },
     ],
     locales: [
@@ -212,7 +211,7 @@ export default defineConfig({
         label: '简体中文',
         nav: getNavbar('zh'),
         sidebar: getSidebar('zh'),
-        title: 'Modern.js Builder',
+        title: 'Rsbuild',
         outlineTitle: '目录',
         prevPageText: '上一页',
         nextPageText: '下一页',
@@ -223,13 +222,13 @@ export default defineConfig({
         label: 'English',
         nav: getNavbar('en'),
         sidebar: getSidebar('en'),
-        title: 'Modern.js Builder',
-        description: 'An Rspack-based build tool for web development.',
+        title: 'Rsbuild',
+        description: 'The Rspack-based build tool for the web',
       },
     ],
     editLink: {
       docRepoBaseUrl:
-        'https://github.com/web-infra-dev/modern.js/tree/main/packages/document/builder-doc/docs',
+        'https://github.com/web-infra-dev/rsbuild/tree/main/packages/document/docs',
       text: 'Edit this page on GitHub',
     },
   },
@@ -250,7 +249,7 @@ export default defineConfig({
       },
     },
     dev: {
-      startUrl: 'http://localhost:<port>/builder/',
+      startUrl: 'http://localhost:<port>/',
     },
   },
 });

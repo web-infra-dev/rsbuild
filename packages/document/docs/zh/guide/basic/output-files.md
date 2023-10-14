@@ -38,7 +38,7 @@ dist
 
 ## 修改产物目录
 
-Builder 提供了多个配置项来修改产物目录和产物名称，你可以：
+Rsbuild 提供了多个配置项来修改产物目录和产物名称，你可以：
 
 - 通过 [output.filename](/api/config-output.html#outputfilename) 来修改产物的文件名。
 - 通过 [output.distPath](/api/config-output.html#outputdistpath) 来修改产物的输出路径。
@@ -94,7 +94,7 @@ dist
 
 ## Node.js 产物目录
 
-当 Builder 的 [构建产物类型](/guide/basic/build-target.html) 中包含 `'node'`，或者你在上层框架中开启了 SSR 等服务端功能时，Builder 会在构建后生成一份 Node.js 产物，并输出到 `bundles` 目录下：
+当 Rsbuild 的 [构建产物类型](/guide/basic/build-target.html) 中包含 `'node'`，或者你在上层框架中开启了 SSR 等服务端功能时，Rsbuild 会在构建后生成一份 Node.js 产物，并输出到 `bundles` 目录下：
 
 ```bash
 dist
@@ -152,7 +152,7 @@ dist
 
 ## 产物不写入磁盘
 
-默认情况下，Builder 会将构建产物写入磁盘，以方便开发者查看产物的内容，或是配置静态资源的代理规则。
+默认情况下，Rsbuild 会将构建产物写入磁盘，以方便开发者查看产物的内容，或是配置静态资源的代理规则。
 
 在开发环境，你可以选择将构建产物保存在 Dev Server 的内存中，从而减少文件操作产生的开销。
 

@@ -2,7 +2,7 @@
 
 - If the current bundler is webpack, you will get a webpack configuration array.
 - If the current bundler is Rspack, you will get an Rspack configuration array.
-- The configuration array can contain one or more configurations, depending on the current `target` config of Builder.
+- The configuration array can contain one or more configurations, depending on the current `target` config of Rsbuild.
 
 - **Type**
 

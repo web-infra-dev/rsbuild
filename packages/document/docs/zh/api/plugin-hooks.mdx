@@ -4,13 +4,13 @@ extractApiHeaders: [2]
 
 # Plugin Hooks
 
-本章节描述了 Builder 插件提供的生命周期钩子。
+本章节描述了 Rsbuild 插件提供的生命周期钩子。
 
 ## 概览
 
 **通用钩子**
 
-- `modifyBuilderConfig`：修改传递给 Builder 的配置项。
+- `modifyBuilderConfig`：修改传递给 Rsbuild 的配置项。
 - `modifyBundlerChain` (实验性)：通过 chain api 修改 webpack / Rspack 配置。
 - `modifyWebpackChain`：修改 webpack chain 配置。
 - `modifyWebpackConfig`：修改最终的 webpack 配置对象。
@@ -37,7 +37,7 @@ extractApiHeaders: [2]
 
 ### modifyBuilderConfig
 
-修改传递给 Builder 的配置项，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
+修改传递给 Rsbuild 的配置项，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
 
 - **类型**
 

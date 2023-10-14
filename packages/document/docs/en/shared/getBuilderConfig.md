@@ -1,4 +1,4 @@
-Get the Builder config, this method must be called after the `modifyBuilderConfig` hook is executed.
+Get the Rsbuild config, this method must be called after the `modifyBuilderConfig` hook is executed.
 
 - **Type**
 

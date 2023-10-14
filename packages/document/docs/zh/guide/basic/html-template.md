@@ -1,8 +1,8 @@
 # 配置 HTML 模板
 
-在构建的过程中，Builder 会基于 HTML 模板文件和模板参数进行编译，生成若干份 HTML 文件。
+在构建的过程中，Rsbuild 会基于 HTML 模板文件和模板参数进行编译，生成若干份 HTML 文件。
 
-Builder 提供了一些配置项来对 HTML 模板进行设置。通过本章节你可以了解到这些配置项的基本用法。
+Rsbuild 提供了一些配置项来对 HTML 模板进行设置。通过本章节你可以了解到这些配置项的基本用法。
 
 ## 设置模板文件
 
@@ -10,7 +10,7 @@ Builder 提供了一些配置项来对 HTML 模板进行设置。通过本章节
 
 比如在 Modern.js 框架中，默认会预设一份 HTML 模板，同时也支持用户自定义模板的内容。你可以阅读 [「Modern.js - HTML 模板」](https://modernjs.dev/guides/basic-features/html.html) 章节来了解相关内容。
 
-在 Builder 中，你可以使用 [html.template](/api/config-html.html#htmltemplate) 和 [html.templateByEntries](/api/config-html.html#htmltemplatebyentries) 配置项来设置自定义的 HTML 模板文件。
+在 Rsbuild 中，你可以使用 [html.template](/api/config-html.html#htmltemplate) 和 [html.templateByEntries](/api/config-html.html#htmltemplatebyentries) 配置项来设置自定义的 HTML 模板文件。
 
 ```ts
 export default {
@@ -49,7 +49,7 @@ export default {
 
 ## 设置页面图标
 
-Builder 支持设置 [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) 图标 和 iOS 系统下的 [apple-touch-icon](https://webhint.io/docs/user-guide/hints/hint-apple-touch-icons/) 图标。
+Rsbuild 支持设置 [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) 图标 和 iOS 系统下的 [apple-touch-icon](https://webhint.io/docs/user-guide/hints/hint-apple-touch-icons/) 图标。
 
 你可以通过 [html.favicon](/api/config-html.html#htmlfavicon) 和 [html.faviconByEntries](/api/config-html.html#htmlfaviconbyentries) 配置项来设置 favicon 图标。
 
@@ -95,7 +95,7 @@ export default {
 
 ## 设置模板参数
 
-在 HTML 模板中，你可以使用丰富的模板参数，Builder 默认注入的模板参数包括：
+在 HTML 模板中，你可以使用丰富的模板参数，Rsbuild 默认注入的模板参数包括：
 
 ```ts
 type DefaultParameters = {
@@ -144,11 +144,11 @@ export default {
 
 ## 模板引擎
 
-Builder 支持 [Lodash Template](https://www.lodashjs.com/docs/lodash.template)、[EJS](https://ejs.co/)、[Pug](https://pugjs.org/) 等多个模板引擎，默认使用最基础的 Lodash Template 作为模板引擎。
+Rsbuild 支持 [Lodash Template](https://www.lodashjs.com/docs/lodash.template)、[EJS](https://ejs.co/)、[Pug](https://pugjs.org/) 等多个模板引擎，默认使用最基础的 Lodash Template 作为模板引擎。
 
 ### [Lodash Template](https://www.lodashjs.com/docs/lodash.template)
 
-当模板文件的后缀为 `.html` 时，Builder 会使用 Lodash Template 对模板进行编译。
+当模板文件的后缀为 `.html` 时，Rsbuild 会使用 Lodash Template 对模板进行编译。
 
 例如，在模板中定义一个 `text` 参数，值为 `'world'`，在构建时会自动将 `<%= text %>` 替换为对应的值。
 
@@ -164,7 +164,7 @@ Builder 支持 [Lodash Template](https://www.lodashjs.com/docs/lodash.template)�
 
 ### [EJS](https://ejs.co/)
 
-当模板文件的后缀为 `.ejs` 时，Builder 会使用 EJS 模板引擎对模板进行编译。EJS 是一套简单的模板语言，支持直接在标签内书写简单、直白的 JavaScript 代码，并通过 JavaScript 输出最终所需的 HTML。
+当模板文件的后缀为 `.ejs` 时，Rsbuild 会使用 EJS 模板引擎对模板进行编译。EJS 是一套简单的模板语言，支持直接在标签内书写简单、直白的 JavaScript 代码，并通过 JavaScript 输出最终所需的 HTML。
 
 例如，你可以先通过 [html.template](/api/config-html.html#htmltemplate) 配置项来引用一个 `.ejs` 模板文件：
 
@@ -192,7 +192,7 @@ export default {
 
 ### [Pug](https://pugjs.org/)
 
-当模板文件的后缀为 `.pug` 时，Builder 会使用 Pug 模板引擎对模板进行编译。Pug 是一款健壮、灵活、功能丰富的模板引擎，专门为 Node.js 平台开发。
+当模板文件的后缀为 `.pug` 时，Rsbuild 会使用 Pug 模板引擎对模板进行编译。Pug 是一款健壮、灵活、功能丰富的模板引擎，专门为 Node.js 平台开发。
 
 使用 Pug 模板前，需要开启 [tools.pug](/api/config-tools.html#toolspug) 配置项，并通过 [html.template](/api/config-html.html#htmltemplate) 配置项来引用一个 `.pug` 模板文件：
 

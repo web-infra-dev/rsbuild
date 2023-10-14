@@ -1,6 +1,6 @@
 # 使用 Rspack
 
-这篇文档会向你介绍如何在 Builder 中开启 Rspack 构建模式。
+这篇文档会向你介绍如何在 Rsbuild 中开启 Rspack 构建模式。
 
 import Rspack from '@zh/shared/rspackTip.mdx';
 
@@ -14,11 +14,11 @@ Modern.js 框架默认使用 webpack 作为打包工具。如果希望启用 Rsp
 
 ### 在前端框架中接入
 
-如果你基于 Builder 开发了一个前端框架，接入 rspack-provider 和 [接入 webpack-provider](/guide/quick-start.html#在前端框架中接入) 的方式类似，只需要把依赖从 `@modern-js/builder-webpack-provider` 改为 `@modern-js/builder-rspack-provider` 即可。
+如果你基于 Rsbuild 开发了一个前端框架，接入 rspack-provider 和 [接入 webpack-provider](/guide/quick-start.html#在前端框架中接入) 的方式类似，只需要把依赖从 `@rsbuild/webpack-provider` 改为 `@rsbuild/rspack-provider` 即可。
 
 ```ts title=modern.config.ts
-import { createBuilder } from '@modern-js/builder';
-import { builderRspackProvider } from '@modern-js/builder-rspack-provider';
+import { createRsbuild } from '@rsbuild/core';
+import { builderRspackProvider } from '@rsbuild/rspack-provider';
 
 const provider = builderRspackProvider({
   builderConfig: {
@@ -30,8 +30,8 @@ const provider = builderRspackProvider({
 ```diff title=package.json
 {
   "devDependencies": {
--    "@modern-js/builder-webpack-provider": "2.8.0",
-+    "@modern-js/builder-rspack-provider": "2.8.0"
+-    "@rsbuild/webpack-provider": "2.8.0",
++    "@rsbuild/rspack-provider": "2.8.0"
   }
 }
 ```
@@ -42,17 +42,17 @@ import RspackPrecautions from '@zh/shared/rspackPrecautions.md';
 
 ## 从 webpack 迁移到 Rspack
 
-Builder 旨在消除不同打包工具之间的主要差异，帮助用户以较低成本进行迁移。但由于各个打包工具提供的能力不同，你仍需要了解其中的部分差异。
+Rsbuild 旨在消除不同打包工具之间的主要差异，帮助用户以较低成本进行迁移。但由于各个打包工具提供的能力不同，你仍需要了解其中的部分差异。
 
-本文将从 Builder 的角度介绍 webpack 和 Rspack 之间的区别。如果需要了解更深层次的差异，请参考 [Rspack 文档](http://rspack.dev/zh/guide/migrate-from-webpack.html)。
+本文将从 Rsbuild 的角度介绍 webpack 和 Rspack 之间的区别。如果需要了解更深层次的差异，请参考 [Rspack 文档](http://rspack.dev/zh/guide/migrate-from-webpack.html)。
 
-### 1. Builder 配置差异
+### 1. Rsbuild 配置差异
 
-目前，Builder 内大部分的配置项已经适配了 Rspack，但仍有部分配置在支持中。
+目前，Rsbuild 内大部分的配置项已经适配了 Rspack，但仍有部分配置在支持中。
 
 #### Source Config
 
-> Builder 中与源代码解析、编译方式相关的配置。
+> Rsbuild 中与源代码解析、编译方式相关的配置。
 
 不支持的配置项及能力包括：
 
@@ -62,13 +62,13 @@ Builder 旨在消除不同打包工具之间的主要差异，帮助用户以较
 
 #### Html Config
 
-> Builder 中与 HTML 有关的配置。
+> Rsbuild 中与 HTML 有关的配置。
 
 所有 html 下的配置项及能力在 Rspack 内均可使用。
 
 #### Security Config
 
-> Builder 中与安全有关的配置。
+> Rsbuild 中与安全有关的配置。
 
 不支持的配置项及能力包括：
 
@@ -76,13 +76,13 @@ Builder 旨在消除不同打包工具之间的主要差异，帮助用户以较
 
 #### Dev Config
 
-> Builder 中与本地开发有关的配置。
+> Rsbuild 中与本地开发有关的配置。
 
 所有 dev 下的配置项及能力在 Rspack 内均可使用。
 
 #### Output Config
 
-> Builder 中与构建产物有关的配置。
+> Rsbuild 中与构建产物有关的配置。
 
 不支持的配置项及能力包括：
 
@@ -91,7 +91,7 @@ Builder 旨在消除不同打包工具之间的主要差异，帮助用户以较
 
 #### Experiments Config
 
-> Builder 中的一些实验性配置。
+> Rsbuild 中的一些实验性配置。
 
 不支持的配置项及能力包括：
 
@@ -99,7 +99,7 @@ Builder 旨在消除不同打包工具之间的主要差异，帮助用户以较
 
 #### Performance Config
 
-> Builder 中与性能有关的配置。
+> Rsbuild 中与性能有关的配置。
 
 不支持的配置项及能力包括：
 
@@ -108,7 +108,7 @@ Builder 旨在消除不同打包工具之间的主要差异，帮助用户以较
 
 #### Tools Config
 
-> Builder 中与底层工具有关的配置。
+> Rsbuild 中与底层工具有关的配置。
 
 不支持的配置项包括：
 
@@ -127,7 +127,7 @@ Builder 旨在消除不同打包工具之间的主要差异，帮助用户以较
 
 ### 2. 从 tools.webpackChain 迁移至 tools.bundlerChain
 
-Builder 支持通过 [bundlerChain](/api/config-tools.html#toolsbundlerchain) 来修改 Rspack config。通过 bundlerChain 修改的配置，在 webpack 和 Rspack 构建时均可生效。
+Rsbuild 支持通过 [bundlerChain](/api/config-tools.html#toolsbundlerchain) 来修改 Rspack config。通过 bundlerChain 修改的配置，在 webpack 和 Rspack 构建时均可生效。
 
 ```diff
 export default {
@@ -178,9 +178,9 @@ export default {
 
 Rspack 默认会使用 SWC 进行转译和压缩，因此，在启用 Rspack 构建时，babel-loader 默认不会被启用。
 
-对于大部分常见的 Babel 插件，你可以在 Rspack 中找到对应的替代品，同时 Builder 也提供了一些相应的配置项。
+对于大部分常见的 Babel 插件，你可以在 Rspack 中找到对应的替代品，同时 Rsbuild 也提供了一些相应的配置项。
 
-| Babel 插件                                      | Rspack 配置项                                                                                | Builder 配置项                                                                                                        |
+| Babel 插件                                      | Rspack 配置项                                                                                | Rsbuild 配置项                                                                                                        |
 | ----------------------------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | @babel/preset-env                               | [builtins.presetEnv](https://www.rspack.dev/zh/config/builtins.html#builtinspresetenv)       | [设置浏览器范围](/guide/advanced/browserslist.html)、<br />[浏览器兼容性](/guide/advanced/browser-compatibility.html) |
 | @babel/preset-react                             | [builtins.react](https://www.rspack.dev/zh/config/builtins.html#builtinsreact)               | [模块热更新](/guide/advanced/hmr.html)                                                                                |
@@ -216,7 +216,7 @@ Rspack 中已内置了一部分的 swc 配置支持，如 builtins.react 等，�
 
 ### 7. CSS Modules 配置迁移
 
-Rspack 模式下不支持通过 `tools.cssLoader` 修改 CSS Modules 配置，Builder 提供了 [output.cssModules](/api/config-output.html#outputcssmodules) 配置项，用来抹平 Rspack 模式和 webpack 模式下的实现差异。
+Rspack 模式下不支持通过 `tools.cssLoader` 修改 CSS Modules 配置，Rsbuild 提供了 [output.cssModules](/api/config-output.html#outputcssmodules) 配置项，用来抹平 Rspack 模式和 webpack 模式下的实现差异。
 
 ```diff
 export default {
@@ -241,7 +241,7 @@ export default {
 
 ## Rspack 性能分析
 
-Builder 支持使用 `RSPACK_PROFILE` 环境变量来进行构建性能分析。
+Rsbuild 支持使用 `RSPACK_PROFILE` 环境变量来进行构建性能分析。
 
 ```bash
 $ RSPACK_PROFILE=ALL pnpm build
@@ -255,18 +255,18 @@ $ RSPACK_PROFILE=ALL pnpm build
 
 ## 对比 Rspack CLI
 
-Builder Rspack 构建模式对比 [Rspack CLI](https://www.rspack.dev/zh/guide/quick-start.html#%E4%BD%BF%E7%94%A8-rspack-cli) 添加了很多开箱即用的能力，同时，这些能力的封装会带来一定程度上的性能开销和行为表现上的差异:
+Rsbuild Rspack 构建模式对比 [Rspack CLI](https://www.rspack.dev/zh/guide/quick-start.html#%E4%BD%BF%E7%94%A8-rspack-cli) 添加了很多开箱即用的能力，同时，这些能力的封装会带来一定程度上的性能开销和行为表现上的差异:
 
 | 功能                         | 描述                                                                                                                                                                                           | 相关链接                                                                                                                                          |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 浏览器兼容性                 | Builder 会根据[构建产物类型](/guide/basic/build-target)来设置不同的 Browserslist 默认值                                                                                                        | <ul><li>[浏览器范围](/guide/advanced/browserslist.html)</li></ul>                                                                                 |
-| SourceMap 生成               | Builder 默认根据环境生成不同的 SourceMap (Rspack CLI 中默认是 false)                                                                                                                           | <ul><li>[output.disableSourceMap](/api/config-output.html#outputdisablesourcemap)</li></ul>                                                       |
-| SVG 转 React 组件            | Builder 默认支持在 React 组件中引用 SVG 作为组件                                                                                                                                               | <ul><li>[引用 SVG 资源](/guide/basic/svg-assets.html)</li><li>[output.disableSvgr](/api/config-output.html#outputdisablesvgr)</li></ul>           |
-| 按需引入常用组件库           | 当项目中安装了 [Ant Design](https://www.npmjs.com/package/antd) 或 [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) 组件库时，Builder 会自动添加对应的按需引入能力          | <ul><li>[source.transformImport](/api/config-source#sourcetransformimport)</li></ul>                                                              |
-| 默认开启 TypeScript 类型检查 | Builder 会默认通过 TS Checker 检查类型问题                                                                                                                                                     | <ul><li>[类型检查](/guide/basic/typescript.html#类型检查) </li><li>[output.disableTsChecker](/api/config-output#outputdisabletschecker)</li></ul> |
-| 默认集成 PostCSS             | Builder 内默认开启 PostCSS 编译，并内置 autoprefixer 等多个插件                                                                                                                                | <ul><li>[使用 PostCSS](/guide/basic/css-usage.html#使用-postcss)</li></ul>                                                                        |
-| 使用 @rspack/html-plugin     | Builder 内默认集成 @rspack/html-plugin 以支持更多 HTML 模版功能 (Rspack CLI 中默认使用 builtins.html)                                                                                          | <ul><li>[tools.htmlPlugin](/api/config-tools.html#toolshtmlplugin)</li></ul>                                                                      |
-| DevServer                    | Builder 内基于 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) 实现 DevServer (Rspack CLI 使用 [@rspack/dev-server](https://www.rspack.dev/guide/dev-server.html)) | <ul><li>[tools.devServer](/api/config-tools.html#toolsdevserver)</li></ul>                                                                        |
+| 浏览器兼容性                 | Rsbuild 会根据[构建产物类型](/guide/basic/build-target)来设置不同的 Browserslist 默认值                                                                                                        | <ul><li>[浏览器范围](/guide/advanced/browserslist.html)</li></ul>                                                                                 |
+| SourceMap 生成               | Rsbuild 默认根据环境生成不同的 SourceMap (Rspack CLI 中默认是 false)                                                                                                                           | <ul><li>[output.disableSourceMap](/api/config-output.html#outputdisablesourcemap)</li></ul>                                                       |
+| SVG 转 React 组件            | Rsbuild 默认支持在 React 组件中引用 SVG 作为组件                                                                                                                                               | <ul><li>[引用 SVG 资源](/guide/basic/svg-assets.html)</li><li>[output.disableSvgr](/api/config-output.html#outputdisablesvgr)</li></ul>           |
+| 按需引入常用组件库           | 当项目中安装了 [Ant Design](https://www.npmjs.com/package/antd) 或 [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) 组件库时，Rsbuild 会自动添加对应的按需引入能力          | <ul><li>[source.transformImport](/api/config-source#sourcetransformimport)</li></ul>                                                              |
+| 默认开启 TypeScript 类型检查 | Rsbuild 会默认通过 TS Checker 检查类型问题                                                                                                                                                     | <ul><li>[类型检查](/guide/basic/typescript.html#类型检查) </li><li>[output.disableTsChecker](/api/config-output#outputdisabletschecker)</li></ul> |
+| 默认集成 PostCSS             | Rsbuild 内默认开启 PostCSS 编译，并内置 autoprefixer 等多个插件                                                                                                                                | <ul><li>[使用 PostCSS](/guide/basic/css-usage.html#使用-postcss)</li></ul>                                                                        |
+| 使用 @rspack/html-plugin     | Rsbuild 内默认集成 @rspack/html-plugin 以支持更多 HTML 模版功能 (Rspack CLI 中默认使用 builtins.html)                                                                                          | <ul><li>[tools.htmlPlugin](/api/config-tools.html#toolshtmlplugin)</li></ul>                                                                      |
+| DevServer                    | Rsbuild 内基于 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) 实现 DevServer (Rspack CLI 使用 [@rspack/dev-server](https://www.rspack.dev/guide/dev-server.html)) | <ul><li>[tools.devServer](/api/config-tools.html#toolsdevserver)</li></ul>                                                                        |
 
 以上能力均提供可调整的配置选项，可以根据项目实际情况按需进行调整。
 
@@ -282,7 +282,7 @@ Builder Rspack 构建模式对比 [Rspack CLI](https://www.rspack.dev/zh/guide/q
 
 ##### 使用依赖 Babel 实现的配置项或插件
 
-在使用 Rspack 构建时，Builder 默认不会启用 `babel-loader`。但当项目中使用到依赖 Babel 实现的配置项或插件时，会额外添加 `babel-loader` 进行文件转译：
+在使用 Rspack 构建时，Rsbuild 默认不会启用 `babel-loader`。但当项目中使用到依赖 Babel 实现的配置项或插件时，会额外添加 `babel-loader` 进行文件转译：
 
 - 通过 [tools.babel](/api/config-tools.html#toolsbabel) 添加 Babel plugin
 - 使用 [Modern.js SSR 功能](https://modernjs.dev/guides/advanced-features/ssr.html)
@@ -292,7 +292,7 @@ Builder Rspack 构建模式对比 [Rspack CLI](https://www.rspack.dev/zh/guide/q
 
 ##### 开启 TypeScript 类型检查
 
-Builder 构建时会默认开启 TypeScript 类型检查。在大型项目中，类型检查的耗时可能远超过 Rspack 本身的构建耗时，因此在生产环境构建时，该行为会在一定程度上拖慢构建速度。
+Rsbuild 构建时会默认开启 TypeScript 类型检查。在大型项目中，类型检查的耗时可能远超过 Rspack 本身的构建耗时，因此在生产环境构建时，该行为会在一定程度上拖慢构建速度。
 
 此时，可通过 [output.disableTsChecker](/api/config-output.html#outputdisabletschecker) 关闭类型检查，以查看排除类型检查后 Rspack 性能是否符合预期。
 
@@ -306,10 +306,10 @@ Builder 构建时会默认开启 TypeScript 类型检查。在大型项目中，
 
 ##### 大量 SVG 文件
 
-Builder 默认支持将 SVG 资源作为 React 组件使用，这会产生一定的性能开销。如果你不需要此能力，可以将 [output.disableSvgr](/api/config-output.html#outputdisablesvgr) 设置为 `true` 来关闭此行为，以提升构建性能。
+Rsbuild 默认支持将 SVG 资源作为 React 组件使用，这会产生一定的性能开销。如果你不需要此能力，可以将 [output.disableSvgr](/api/config-output.html#outputdisablesvgr) 设置为 `true` 来关闭此行为，以提升构建性能。
 
 ##### 组件库未按需引入
 
-默认情况下，在使用 [Ant Design](https://www.npmjs.com/package/antd) 或 [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) 组件库时，Builder 会自动开启按需引入功能，默认配置可参考 [source.transformImport](/api/config-source.html#sourcetransformimport)。
+默认情况下，在使用 [Ant Design](https://www.npmjs.com/package/antd) 或 [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) 组件库时，Rsbuild 会自动开启按需引入功能，默认配置可参考 [source.transformImport](/api/config-source.html#sourcetransformimport)。
 
 在使用其他组件库时，如果该组件库支持按需引入，我们推荐优先通过 [source.transformImport](/api/config-source.html#sourcetransformimport) 配置按需引入。

@@ -25,9 +25,9 @@ const defaultBuildCacheConfig = {
 
 - **Bundler:** `only support webpack`
 
-Controls the Builder's caching behavior during the build process.
+Controls the Rsbuild's caching behavior during the build process.
 
-Builder will enable build cache by default to improve the compile speed, the generated cache files are write to the `./node_modules/.cache/webpack` directory by default.
+Rsbuild will enable build cache by default to improve the compile speed, the generated cache files are write to the `./node_modules/.cache/webpack` directory by default.
 
 You can configure the cache path with `buildCache`, e.g.
 
@@ -53,7 +53,7 @@ export default {
 
 ### cacheDigest
 
-`cacheDigest` is used to add some environment variables that will affect the build results. The Builder will set the cache name based on the `cacheDigest` content and the current build mode to ensure that different cacheDigests can hit different caches.
+`cacheDigest` is used to add some environment variables that will affect the build results. The Rsbuild will set the cache name based on the `cacheDigest` content and the current build mode to ensure that different cacheDigests can hit different caches.
 
 #### Example
 

@@ -1,6 +1,6 @@
 # Import Static Assets
 
-Builder supports import static assets, including images, fonts, and medias.
+Rsbuild supports import static assets, including images, fonts, and medias.
 
 :::tip What is Static Assets
 Static assets are files that are part of a web application and do not change, even when the application is being used. Examples of static assets include images, fonts, medias, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN, and delivered to the user's web browser when the Web application is accessed. Because they do not change, static assets can be cached by the browser, which helps to improve the performance of the Web application.
@@ -8,7 +8,7 @@ Static assets are files that are part of a web application and do not change, ev
 
 ## Assets Format
 
-The following are the formats supported by Builder by default:
+The following are the formats supported by Rsbuild by default:
 
 - **Image**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tiff.
 - **Fonts**: woff, woff2, eot, ttf, otf, ttc.
@@ -17,7 +17,7 @@ The following are the formats supported by Builder by default:
 If you need to import assets in other formats, please refer to [Extend Asset Types](#extend-asset-types).
 
 :::tip SVG images
-SVG image is a special case. Builder support convert SVG to React components, so SVG is processed separately. For details, see [Import SVG Assets](/guide/basic/svg-assets.html).
+SVG image is a special case. Rsbuild support convert SVG to React components, so SVG is processed separately. For details, see [Import SVG Assets](/guide/basic/svg-assets.html).
 :::
 
 ## Import Assets in JS file
@@ -119,7 +119,7 @@ After adding the type declaration, if the type error still exists, you can try t
 
 ## Extend Asset Types
 
-If the built-in asset types in Builder cannot meet your requirements, you can modify the built-in webpack/Rspack configuration and extend the asset types you need using [tools.bundlerChain](/api/config-tools.html#toolsbundlerchain).
+If the built-in asset types in Rsbuild cannot meet your requirements, you can modify the built-in webpack/Rspack configuration and extend the asset types you need using [tools.bundlerChain](/api/config-tools.html#toolsbundlerchain).
 
 For example, if you want to treat `*.pdf` files as assets and directly output them to the dist directory, you can add the following configuration:
 
