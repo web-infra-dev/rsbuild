@@ -12,4 +12,4 @@ export default {
 };
 ```
 
-More detail can see ["Advanced - Source-code Build Mode"](https://rsbuild.dev/en/guide/advanced/source-build.html)。
+More detail can see ["Advanced - Source-code Build Mode"](https://rsbuild.dev/guide/advanced/source-build.html)。

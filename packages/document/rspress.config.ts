@@ -4,7 +4,7 @@ import { defineConfig } from 'rspress/config';
 
 function getI18nHelper(lang: 'zh' | 'en') {
   const cn = lang === 'zh';
-  const prefix = cn ? '' : '/en';
+  const prefix = cn ? '/zh' : '';
   const getLink = (str: string) => `${prefix}${str}`;
   const getText = (cnText: string, enText: string) => (cn ? cnText : enText);
   return { getText, getLink };
@@ -177,7 +177,7 @@ function getSidebar(lang: 'zh' | 'en'): Sidebar {
 
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
-  lang: 'zh',
+  lang: 'en',
   base: '/',
   title: 'Rsbuild',
   icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/zq-uylkvT/ljhwZthlaukjlkulzlp/logo-1x-0104.png',

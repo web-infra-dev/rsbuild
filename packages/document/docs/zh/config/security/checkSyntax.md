@@ -68,7 +68,7 @@ error   [Syntax Checker] Find some syntax errors after production build:
 - **类型：** `string[]`
 - **默认值：** `当前项目的 browserslist 配置`
 
-`targets` 表示项目的目标浏览器范围，它的值为标准的 browserslist 数组，如果你不了解 browserslist 的用法，请参考 [「设置浏览器范围」](https://rsbuild.dev/guide/advanced/browser-compatibility.html)。
+`targets` 表示项目的目标浏览器范围，它的值为标准的 browserslist 数组，如果你不了解 browserslist 的用法，请参考 [「设置浏览器范围」](https://rsbuild.dev/zh/guide/advanced/browser-compatibility.html)。
 
 Rsbuild 会读取 `targets` 的值，并自动推导出构建产物中可以使用的最低 ECMAScript 语法版本，比如 `ES5` 或 `ES6`。
 

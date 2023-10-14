@@ -162,7 +162,7 @@ export default {
 :::tip
 The usage of the `addIncludes` function is identical to the `source.include` configuration option. We recommend using `source.include` instead of `addIncludes` because `source.include` has a wider range of use cases. For example, when migrating from Babel to SWC compilation, `source.include` can still work, while the `addIncludes` function will not be effective.
 
-Please refer to the [source.include documentation](https://rsbuild.dev/en/api/config-source.html#sourceinclude) for more detailed usage.
+Please refer to the [source.include documentation](https://rsbuild.dev/api/config-source.html#sourceinclude) for more detailed usage.
 :::
 
 #### addExcludes
@@ -227,7 +227,7 @@ export default {
 
 ### Debugging Babel Configuration
 
-After modifying the `babel-loader` configuration through `tools.babel`, you can view the final generated configuration in [Rsbuild debug mode](https://rsbuild.dev/en/guide/debug/debug-mode.html).
+After modifying the `babel-loader` configuration through `tools.babel`, you can view the final generated configuration in [Rsbuild debug mode](https://rsbuild.dev/guide/debug/debug-mode.html).
 
 First, enable debug mode by using the `DEBUG=builder` parameter:
 

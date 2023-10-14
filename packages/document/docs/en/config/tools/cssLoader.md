@@ -21,9 +21,9 @@ The config of [css-loader](https://github.com/webpack-contrib/css-loader) can be
 ```
 
 :::tip
-When using Rspack as the bundler, this configuration is only supported when set [disableCssExtract](https://rsbuild.dev/en/api/config-output.html#outputdisablecssextract) is true.
+When using Rspack as the bundler, this configuration is only supported when set [disableCssExtract](https://rsbuild.dev/api/config-output.html#outputdisablecssextract) is true.
 
-To modify CSS Modules configuration, it is recommended to use the [output.cssModules](https://rsbuild.dev/en/api/config-output.html#outputcssmodules) configuration.
+To modify CSS Modules configuration, it is recommended to use the [output.cssModules](https://rsbuild.dev/api/config-output.html#outputcssmodules) configuration.
 :::
 
 ### Object Type

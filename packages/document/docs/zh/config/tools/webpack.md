@@ -299,4 +299,4 @@ export default {
 
 - **类型：** `(name: string) => string`
 
-获取 builder 内置依赖的所在路径，等价于 [webpackChain#getCompiledPath](https://rsbuild.dev/api/config-tools.html#toolswebpackchain)。
+获取 builder 内置依赖的所在路径，等价于 [webpackChain#getCompiledPath](https://rsbuild.dev/zh/api/config-tools.html#toolswebpackchain)。
