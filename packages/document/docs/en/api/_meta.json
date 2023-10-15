@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "API Overview"
+  },
+  {
+    "type": "dir",
+    "name": "config",
+    "label": "Config"
+  },
+  {
+    "type": "dir",
+    "name": "javascript-api",
+    "label": "JavaScript API"
+  }
+]

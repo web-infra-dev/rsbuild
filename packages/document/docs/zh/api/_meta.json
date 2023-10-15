@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "API 总览"
+  },
+  {
+    "type": "dir",
+    "name": "config",
+    "label": "配置"
+  },
+  {
+    "type": "dir",
+    "name": "javascript-api",
+    "label": "JavaScript API"
+  }
+]

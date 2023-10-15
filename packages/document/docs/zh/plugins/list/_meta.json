@@ -1,0 +1,10 @@
+[
+  "index",
+  "plugin-vue",
+  "plugin-vue2",
+  "plugin-swc",
+  "plugin-stylus",
+  "plugin-esbuild",
+  "plugin-node-polyfill",
+  "plugin-image-compress"
+]
