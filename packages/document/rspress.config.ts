@@ -30,6 +30,16 @@ export default defineConfig({
         mode: 'link',
         content: 'https://github.com/web-infra-dev/rsbuild',
       },
+      {
+        icon: 'twitter',
+        mode: 'link',
+        content: 'https://twitter.com/rspack_dev',
+      },
+      {
+        icon: 'discord',
+        mode: 'link',
+        content: 'https://discord.gg/79ZZ66GH9E',
+      },
     ],
     locales: [
       {
