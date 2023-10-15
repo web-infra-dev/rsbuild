@@ -1,0 +1,12 @@
+[
+  {
+    "type": "dir",
+    "name": "list",
+    "label": "插件列表"
+  },
+  {
+    "type": "dir",
+    "name": "dev",
+    "label": "插件开发"
+  }
+]

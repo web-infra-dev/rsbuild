@@ -1,0 +1,11 @@
+[
+  "rspack-start",
+  "alias",
+  "define",
+  "hmr",
+  "rem",
+  "browserslist",
+  "browser-compatibility",
+  "custom-webpack-config",
+  "source-build"
+]

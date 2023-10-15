@@ -1,4 +1,4 @@
-# Introduce to Plugin
+# Plugin System
 
 Rsbuild provides developers with a lightweight but powerful plugin system to build itself and any other plugins.
 Developing plugins to change the Rsbuild's behavior and introduce extra features. such as:

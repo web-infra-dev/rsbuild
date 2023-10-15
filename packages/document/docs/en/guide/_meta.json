@@ -1,0 +1,37 @@
+[
+  {
+    "type": "dir",
+    "name": "start",
+    "label": "Getting Started"
+  },
+  {
+    "type": "dir",
+    "name": "basic",
+    "label": "Basic"
+  },
+  {
+    "type": "dir",
+    "name": "advanced",
+    "label": "Advanced"
+  },
+  {
+    "type": "dir",
+    "name": "framework",
+    "label": "Framework"
+  },
+  {
+    "type": "dir",
+    "name": "optimization",
+    "label": "Optimization"
+  },
+  {
+    "type": "dir",
+    "name": "debug",
+    "label": "Debug"
+  },
+  {
+    "type": "dir",
+    "name": "faq",
+    "label": "FAQ"
+  }
+]

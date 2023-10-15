@@ -1,45 +1,41 @@
----
-extractApiHeaders: [2]
----
-
 # Plugin Hooks
 
-This section describes the lifetime hooks provided by Rsbuild plugin.
+本章节描述了 Rsbuild 插件提供的生命周期钩子。
 
-## Overview
+## 概览
 
-**Common Hooks**
+**通用钩子**
 
-- `modifyBuilderConfig`: Modify raw config of Rsbuild.
-- `modifyBundlerChain` (experimental): Modify config of webpack or Rspack via the bundler chain api.
-- `modifyWebpackChain`: Modify webpack-chain.
-- `modifyWebpackConfig`: Modify raw config of webpack.
-- `modifyRspackConfig`: Modify raw config of Rspack.
-- `onBeforeCreateCompiler`: Called before creating compiler instance.
-- `onAfterCreateCompiler`: Called after the compiler object is created, but before the build is executed.
+- `modifyBuilderConfig`：修改传递给 Rsbuild 的配置项。
+- `modifyBundlerChain` (实验性)：通过 chain api 修改 webpack / Rspack 配置。
+- `modifyWebpackChain`：修改 webpack chain 配置。
+- `modifyWebpackConfig`：修改最终的 webpack 配置对象。
+- `modifyRspackConfig`：修改最终的 Rspack 配置对象。
+- `onBeforeCreateCompiler`：在创建 compiler 实例前调用。
+- `onAfterCreateCompiler`：在创建 compiler 实例后、执行构建前调用。
 
-**Build Hooks**: Called only when the build method is executed to build the production outputs.
+**构建钩子**：仅在执行 build 方法构建生产环境产物时调用。
 
-- `onBeforeBuild`: Called before the production build is executed.
-- `onAfterBuild`: Called after executing the production build, you can get the build stats.
+- `onBeforeBuild`：在执行生产环境构建前调用。
+- `onAfterBuild`：在执行生产环境构建后调用，可以获取到构建结果信息。
 
-**Dev Server Hooks**: Called only when the startDevServer method is executed to run the development server.
+**开发服务钩子**：仅在执行 startDevServer 方法运行开发服务器时调用。
 
-- `onBeforeStartDevServer`: Called before starting the development server.
-- `onAfterStartDevServer`: Called after starting the development server.
-- `onDevCompileDone`: Called after each development compile.
+- `onBeforeStartDevServer`：在启动开发服务器前调用。
+- `onAfterStartDevServer`：在启动开发服务器后调用。
+- `onDevCompileDone`：在每次开发环境构建结束后调用。
 
-**Other Hooks**
+**其他钩子**
 
-- `onExit`: Called when the process is going to exit.
+- `onExit`：在进程即将退出时调用。
 
-## Common Hooks
+## 通用钩子
 
 ### modifyBuilderConfig
 
-Modify the config passed to the Rsbuild, you can directly modify the config object, or return a new object to replace the previous object.
+修改传递给 Rsbuild 的配置项，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
 
-- **Type**
+- **类型**
 
 ```ts
 type ModifyWebpackChainUtils = {
@@ -70,15 +66,18 @@ export default () => ({
 });
 ```
 
-### modifyBundlerChain `experimental`
+### modifyBundlerChain `实验性`
 
-Bundler chain is a subset of webpack chain, which contains part of the webpack chain API that you can use to modify both webpack and Rspack configuration.
+:::tip 什么是 BundlerChain
 
-`modifyBundlerChain` is used to call the bundler chain to modify the webpack / Rspack configuration. You can use this hook when using webpack-provider or rspack-provider.
+import BundlerChain from '@zh/shared/bundlerChain.md';
 
-This hook only supports modifying the configuration of the non-differentiated parts of webpack and Rspack. For example, modifying the devtool configuration option (webpack and Rspack have the same devtool property value type), or adding an [Rspack-compatible](https://www.rspack.dev/guide/plugin-compat.html) webpack plugin.
+<BundlerChain />
+:::
 
-- **Type**
+`modifyBundlerChain` 用于调用 bundler chain 来修改 webpack / Rspack 的配置。你在使用 webpack-provider 或 rspack-provider 时都可以使用该 hook。
+
+- **类型**
 
 ```ts
 type ModifyBundlerChainUtils = {
@@ -90,7 +89,7 @@ type ModifyBundlerChainUtils = {
   CHAIN_ID: ChainIdentifier;
   HtmlPlugin: typeof import('html-webpack-plugin');
   bundler: {
-    // Depends on bundler type
+    // 取决于 bundler 类型
     BannerPlugin: typeof webpack.BannerPlugin | typeof rspack.BannerPlugin;
     DefinePlugin: typeof webpack.DefinePlugin | typeof rspack.DefinePlugin;
   }
@@ -124,9 +123,9 @@ export default () => ({
 
 ### modifyWebpackChain
 
-Modify the webpack config through the webpack chain. This method is only called when using webpack-provider.
+通过 webpack chain 来修改 webpack 配置。该方法仅在使用 webpack-provider 时调用。
 
-- **Type**
+- **类型**
 
 ```ts
 type ModifyWebpackChainUtils = {
@@ -165,11 +164,11 @@ export default () => ({
 
 ### modifyWebpackConfig
 
-To modify the final webpack config object, you can directly modify the config object, or return a new object to replace the previous object. This method is only called when using webpack-provider.
+修改最终的 webpack 配置对象，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。该方法仅在使用 webpack-provider 时调用。
 
-This method is called later than the `modifyWebpackChain` hook.
+该方法的调用时机晚于 `modifyWebpackChain` 钩子。
 
-- **Type**
+- **类型**
 
 ```ts
 type ModifyWebpackConfigUtils = {
@@ -216,9 +215,9 @@ export default () => ({
 
 ### modifyRspackConfig
 
-To modify the final Rspack config object, you can directly modify the config object, or return a new object to replace the previous object. This method is only called when using rspack-provider.
+修改最终的 Rspack 配置对象，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。该方法仅在使用 rspack-provider 时调用。
 
-- **Type**
+- **类型**
 
 ```ts
 type ModifyRspackConfigUtils = {
@@ -255,7 +254,7 @@ export default () => ({
 
 ### onBeforeCreateCompiler
 
-import OnBeforeCreateCompiler from '@en/shared/onBeforeCreateCompiler.md';
+import OnBeforeCreateCompiler from '@zh/shared/onBeforeCreateCompiler.md';
 
 <OnBeforeCreateCompiler />
 
@@ -273,7 +272,7 @@ export default () => ({
 
 ### onAfterCreateCompiler
 
-import OnAfterCreateCompiler from '@en/shared/onAfterCreateCompiler.md';
+import OnAfterCreateCompiler from '@zh/shared/onAfterCreateCompiler.md';
 
 <OnAfterCreateCompiler />
 
@@ -289,11 +288,11 @@ export default () => ({
 });
 ```
 
-## Build Hooks
+## 构建钩子
 
 ### onBeforeBuild
 
-import OnBeforeBuild from '@en/shared/onBeforeBuild.md';
+import OnBeforeBuild from '@zh/shared/onBeforeBuild.md';
 
 <OnBeforeBuild />
 
@@ -311,7 +310,7 @@ export default () => ({
 
 ### onAfterBuild
 
-import OnAfterBuild from '@en/shared/onAfterBuild.md';
+import OnAfterBuild from '@zh/shared/onAfterBuild.md';
 
 <OnAfterBuild />
 
@@ -327,11 +326,11 @@ export default () => ({
 });
 ```
 
-## Dev Server Hooks
+## 开发服务钩子
 
 ### onBeforeStartDevServer
 
-import OnBeforeStartDevServer from '@en/shared/onBeforeStartDevServer.md';
+import OnBeforeStartDevServer from '@zh/shared/onBeforeStartDevServer.md';
 
 <OnBeforeStartDevServer />
 
@@ -349,7 +348,7 @@ export default () => ({
 
 ### onAfterStartDevServer
 
-import OnAfterStartDevServer from '@en/shared/onAfterStartDevServer.md';
+import OnAfterStartDevServer from '@zh/shared/onAfterStartDevServer.md';
 
 <OnAfterStartDevServer />
 
@@ -367,7 +366,7 @@ export default () => ({
 
 ### onDevCompileDone
 
-import OnDevCompileDone from '@en/shared/onDevCompileDone.md';
+import OnDevCompileDone from '@zh/shared/onDevCompileDone.md';
 
 <OnDevCompileDone />
 
@@ -387,11 +386,11 @@ export default () => ({
 });
 ```
 
-## Other Hooks
+## 其他钩子
 
 ### onExit
 
-import OnExit from '@en/shared/onExit.md';
+import OnExit from '@zh/shared/onExit.md';
 
 <OnExit />
 
