@@ -3,7 +3,8 @@ pageType: home
 
 hero:
   name: Rsbuild
-  tagline: 基于 Rspack 的 Web 构建工具
+  text: 基于 Rspack 的 Web 构建工具
+  tagline: 释放 Rspack 的能量
   actions:
     - theme: brand
       text: 介绍
@@ -11,6 +12,9 @@ hero:
     - theme: alt
       text: 快速上手
       link: /guide/quick-start.html
+  image:
+    src: https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/rsbuild-logo-1013.png
+    alt: Rsbuild Logo
 
 features:
   - title: Rust 构建

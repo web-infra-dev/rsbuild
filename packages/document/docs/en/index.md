@@ -3,7 +3,8 @@ pageType: home
 
 hero:
   name: Rsbuild
-  tagline: A Build Engine for web development.
+  text: The Rspack-based Build Tool
+  tagline: Unleash the power of Rspack
   actions:
     - theme: brand
       text: Introduction
@@ -11,6 +12,9 @@ hero:
     - theme: alt
       text: Quick Start
       link: /en/guide/quick-start.html
+  image:
+    src: https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/rsbuild-logo-1013.png
+    alt: Rsbuild Logo
 
 features:
   - title: Rust Bundler
