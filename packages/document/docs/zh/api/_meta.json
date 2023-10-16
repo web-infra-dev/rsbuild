@@ -1,13 +1,8 @@
 [
   {
-    "type": "file",
-    "name": "index",
-    "label": "API 总览"
-  },
-  {
     "type": "dir",
-    "name": "config",
-    "label": "配置"
+    "name": "start",
+    "label": "开始"
   },
   {
     "type": "dir",

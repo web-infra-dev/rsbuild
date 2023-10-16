@@ -13,12 +13,7 @@ export default defineConfig({
   },
   route: {
     // exclude document fragments from routes
-    exclude: [
-      '**/zh/config/**',
-      '**/en/config/**',
-      '**/zh/shared/**',
-      '**/en/shared/**',
-    ],
+    exclude: ['**/zh/shared/**', '**/en/shared/**'],
   },
   themeConfig: {
     footer: {

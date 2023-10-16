@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "总览"
+  },
+  {
+    "type": "dir",
+    "name": "options",
+    "label": "配置项"
+  }
+]
