@@ -4,7 +4,7 @@
 
 # Rsbuild
 
-Unleash the power of Rspack with the ready-made build tool.
+Unleash the power of Rspack with the out-of-the-box build tool.
 
 ## Getting Started
 

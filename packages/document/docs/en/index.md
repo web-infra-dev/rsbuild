@@ -16,22 +16,22 @@ hero:
     alt: Rsbuild Logo
 
 features:
-  - title: Rust Bundler
-    details: Easily switch to Rspack bundler with faster build speed.
+  - title: Rspack Based
+    details: Using Rspack to bring you the ultimate development experience.
     icon: 🚀
-  - title: Deep optimization
-    details: Automatically optimize static assets, ensure the performance of production app.
-    icon: 🍭
-  - title: Out of the box
-    details: Base on the best practice at ByteDance, various capabilities are out-of-the-box.
-    icon: 📦
-  - title: Easy to Configure
-    details: Launch with zero configuration, then everything is configurable.
-    icon: 📖
-  - title: Pluggable
-    details: Comes with a lightweight plugin system to meet your customization needs.
+  - title: Batteries Included
+    details: Out-of-the-box integration with the most practical building features in the ecosystem.
+    icon: 🦄
+  - title: Framework Agnostic
+    details: Supports React, Vue, Svelte, and more frameworks.
+    icon: 🎯
+  - title: Deep Optimization
+    details: Automatically optimize static assets to maximizing production performance.
+    icon: 🛠️
+  - title: Highly Pluggable
+    details: Comes with a lightweight plugin system and a set of high quality plugins.
     icon: 🎨
-  - title: Multiple Outputs
-    details: Supports building output for Node.js, Web Workers, and other environments.
-    icon: ✨
+  - title: Easy to Configure
+    details: Start with zero configuration and everything is configurable.
+    icon: 🍭
 ---
