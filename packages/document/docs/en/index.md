@@ -12,7 +12,7 @@ hero:
       text: Quick Start
       link: /guide/start/quick-start
   image:
-    src: https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/rsbuild-logo-1013.png
+    src: https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/home-logo-1200.png
     alt: Rsbuild Logo
 
 features:
