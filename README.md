@@ -25,11 +25,11 @@ Rsbuild is rebranded from Modern.js Builder. It has been decoupled from Modern.j
 ## Features
 
 - 🚀 **Rspack Based**: Using Rspack to bring you the ultimate development experience.
-- 🍭 **Easy to Configure**: Start with zero configuration and everything is configurable.
 - 🦄 **Batteries Included**: Out-of-the-box integration with the most practical building features in the ecosystem.
+- 🎯 **Framework Agnostic**: Supports React, Vue, Svelte, and more frameworks.
 - 🛠️ **Deep Optimization**: Automatically optimize static assets to maximizing production performance.
 - 🎨 **Highly Pluggable**: Comes with a lightweight plugin system and a set of high quality plugins.
-- 🎯 **Framework Agnostic**: Supports React, Vue, Svelte, and more.
+- 🍭 **Easy to Configure**: Start with zero configuration and everything is configurable.
 
 ## Getting Started
 
