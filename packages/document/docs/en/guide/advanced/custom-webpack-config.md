@@ -4,7 +4,7 @@ Rsbuild supports directly modifying webpack configuration objects, and also supp
 
 ## Modify the webpack configuration object
 
-You can use [tools.webpack](/api/config-tools.html#toolswebpack) to modify the webpack configuration object.
+You can use [tools.webpack](/config/options/tools.html#toolswebpack) to modify the webpack configuration object.
 
 ```ts
 export default {
@@ -29,12 +29,12 @@ webpack-chain is a configuration modification tools that is different from modif
 
 ### tools.webpackChain config
 
-Rsbuild provides [tools.webpackChain](/api/config-tools.html#toolswebpackchain) config to modify webpack-chain.
+Rsbuild provides [tools.webpackChain](/config/options/tools.html#toolswebpackchain) config to modify webpack-chain.
 
 The value of `tools.webpackChain` is `Function` type, which receives two parameters:
 
 - The first parameter is the `webpack-chain` instance, you can use this instance to modify the default webpack config.
-- The second parameter is a [utils collection](/en/api/config-tools.html#utils-2), including `env`, `isProd`, `CHAIN_ID`, etc.
+- The second parameter is a [utils collection](/config/options/tools.html#utils-2), including `env`, `isProd`, `CHAIN_ID`, etc.
 
 Here's a basic example:
 

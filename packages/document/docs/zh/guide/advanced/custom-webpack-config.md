@@ -4,7 +4,7 @@ Rsbuild 支持直接修改 webpack 配置对象，也支持通过 webpack-chain 
 
 ## 修改 webpack 配置对象
 
-你可以使用 [tools.webpack](/api/config-tools.html#toolswebpack) 来修改 webpack 配置对象。
+你可以使用 [tools.webpack](/config/options/tools.html#toolswebpack) 来修改 webpack 配置对象。
 
 ```ts
 export default {
@@ -29,12 +29,12 @@ webpack-chain 是区别于直接修改 webpack 配置的另一种配置修改方
 
 ### tools.webpackChain 配置项
 
-Rsbuild 提供了 [tools.webpackChain](/api/config-tools.html#toolswebpackchain) 配置项来修改 webpack-chain。
+Rsbuild 提供了 [tools.webpackChain](/config/options/tools.html#toolswebpackchain) 配置项来修改 webpack-chain。
 
 `tools.webpackChain` 的值为 `Function` 类型，接收两个参数：
 
 - 第一个参数为 `webpack-chain` 实例对象，你可以通过这个实例来修改默认的 webpack 配置。
-- 第二个参数为一个[工具集合](/api/config-tools.html#工具集合-2)，包括 `env`、`isProd`、`CHAIN_ID` 等。
+- 第二个参数为一个[工具集合](/config/options/tools.html#工具集合-2)，包括 `env`、`isProd`、`CHAIN_ID` 等。
 
 下面是一个基本示例：
 

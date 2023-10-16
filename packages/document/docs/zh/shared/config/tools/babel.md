@@ -161,7 +161,7 @@ export default {
 :::tip
 `addIncludes` 函数的用法与 `source.include` 配置项完全一致，我们建议直接使用 `source.include` 来代替它，因为 `source.include` 的使用场景更广。比如，当你从 Babel 迁移切换到 SWC 编译时，`source.include` 仍然可以生效，而 `addIncludes` 函数则无法生效。
 
-请查看 [「source.include 文档」](https://rsbuild.dev/zh/api/config-source.html#sourceinclude) 来查看更详细的用法说明。
+请查看 [「source.include 文档」](https://rsbuild.dev/zh/config/options/source.html#sourceinclude) 来查看更详细的用法说明。
 
 :::
 
@@ -184,7 +184,7 @@ export default {
 ```
 
 :::tip
-`addExcludes` 函数的用法与 `source.exclude` 配置项基本一致，请查看 [source.exclude 文档](https://rsbuild.dev/zh/api/config-source.html#sourceexclude) 来查看更详细的用法说明。也可以直接使用 `source.exclude` 来代替 `addExcludes` 函数。
+`addExcludes` 函数的用法与 `source.exclude` 配置项基本一致，请查看 [source.exclude 文档](https://rsbuild.dev/zh/config/options/source.html#sourceexclude) 来查看更详细的用法说明。也可以直接使用 `source.exclude` 来代替 `addExcludes` 函数。
 :::
 
 #### modifyPresetEnvOptions

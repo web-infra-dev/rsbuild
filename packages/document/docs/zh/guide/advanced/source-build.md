@@ -64,7 +64,7 @@ monorepo
 
 ### 开启配置
 
-你可以通过设置 [experiments.sourceBuild](/api/config-experiments.html#experimentssourcebuild) 为 `true` 来开启源码构建模式。
+你可以通过设置 [experiments.sourceBuild](/config/options/experiments.html#experimentssourcebuild) 为 `true` 来开启源码构建模式。
 
 ```ts
 export default {

@@ -14,7 +14,7 @@ Rsbuild 内置了 [webpack inspector](https://github.com/web-infra-dev/webpack-i
 
 ## 启用
 
-你可以通过 [tools.inspector](/api/config-tools.html#toolsinspector) 配置项来开启 webpack inspector:
+你可以通过 [tools.inspector](/config/options/tools.html#toolsinspector) 配置项来开启 webpack inspector:
 
 ```ts
 export default {

@@ -52,8 +52,8 @@ import Rspack from '@zh/shared/rspack.md';
 
 Rsbuild 提供了 SWC 插件和 esbuild 插件，让你能使用 SWC 或 esbuild 代替 babel-loader、ts-loader 和 terser 等库进行代码编译和压缩。详见：
 
-- [SWC 插件文档](/plugins/plugin-swc.html)
-- [esbuild 插件文档](/plugins/plugin-esbuild.html)
+- [SWC 插件文档](/plugins/list/plugin-swc.html)
+- [esbuild 插件文档](/plugins/list/plugin-esbuild.html)
 
 :::tip SWC vs esbuild
 SWC 编译产物的兼容性较好，支持注入 core-js 等 Polyfill，并且功能更加完备，因此推荐优先使用 SWC 插件。
@@ -61,7 +61,7 @@ SWC 编译产物的兼容性较好，支持注入 core-js 等 Polyfill，并且�
 
 ### 避免使用 ts-loader
 
-默认情况下，Rsbuild 使用 Babel 编译 TS 文件，开启 [tools.tsLoader](/api/config-tools.html#toolstsloader) 选项后，会使用 `ts-loader` 编译 TS 文件。
+默认情况下，Rsbuild 使用 Babel 编译 TS 文件，开启 [tools.tsLoader](/config/options/tools.html#toolstsloader) 选项后，会使用 `ts-loader` 编译 TS 文件。
 
 由于 `ts-loader` 需要进行额外的语法解析和类型检查，因此会导致项目构建速度变慢，请避免使用。
 
@@ -74,7 +74,7 @@ export default {
 };
 ```
 
-详见 [tools.tsLoader 文档](/api/config-tools.html#toolstsloader)。
+详见 [tools.tsLoader 文档](/config/options/tools.html#toolstsloader)。
 
 ## 开发环境优化策略
 
@@ -95,7 +95,7 @@ export default {
 };
 ```
 
-这是一项实验性功能，在某些场景下可能无法正确工作，请查看 [experiments.lazyCompilation](/api/config-experiments.html#experiments-lazycompilation) 来了解具体用法。
+这是一项实验性功能，在某些场景下可能无法正确工作，请查看 [experiments.lazyCompilation](/config/options/experiments.html#experiments-lazycompilation) 来了解具体用法。
 
 ### 调整 Source Map 格式
 
@@ -170,4 +170,4 @@ export default {
 };
 ```
 
-详见 [output.disableSourceMap](/api/config-output.html#outputdisablesourcemap)。
+详见 [output.disableSourceMap](/config/options/output.html#outputdisablesourcemap)。

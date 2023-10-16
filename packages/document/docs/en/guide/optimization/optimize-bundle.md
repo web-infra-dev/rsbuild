@@ -36,7 +36,7 @@ If you want to find out the large libraries in the project, you can add the `BUN
 BUNDLE_ANALYZE=true pnpm build
 ```
 
-See the [performance.bundleAnalyze](/api/config-performance.html#performancebundleanalyze) configuration for details.
+See the [performance.bundleAnalyze](/config/options/performance.html#performancebundleanalyze) configuration for details.
 
 ## Adjust Browserslist
 
@@ -60,7 +60,7 @@ Please read the [Browserslist](/guide/advanced/browserslist.html) chapter to kno
 
 ## Usage polyfill
 
-When it is clear that third-party dependencies do not require additional polyfill, you can set [output.polyfill](/en/api/config-output.html#outputpolyfill) to `usage`.
+When it is clear that third-party dependencies do not require additional polyfill, you can set [output.polyfill](/config/options/output.html#outputpolyfill) to `usage`.
 
 In `usage` mode, Rsbuild analyzes the syntax used in the source code and injects the required polyfill code on demand to reduce the size of polyfill.
 
@@ -87,13 +87,13 @@ import { builderPluginImageCompress } from '@rsbuild/plugin-image-compress';
 builder.addPlugins([builderPluginImageCompress()]);
 ```
 
-See details in [plugin-image-compress](/en/plugins/plugin-image-compress).
+See details in [plugin-image-compress](/plugins/list/plugin-image-compress).
 
 ## Split Chunk
 
 A great chunk splitting strategy is very important to improve the loading performance of the application. It can make full use of the browser's caching mechanism to reduce the number of requests and improve the loading speed of the application.
 
-A variety of [chunk splitting strategies](/en/guide/optimization/split-chunk) are built into Rsbuild, which can meet the needs of most applications. You can also customize the chunk splitting config according to your own business scenarios.
+A variety of [chunk splitting strategies](/guide/optimization/split-chunk) are built into Rsbuild, which can meet the needs of most applications. You can also customize the chunk splitting config according to your own business scenarios.
 
 For example, split the `axios` library under node_modules into `axios.js`:
 

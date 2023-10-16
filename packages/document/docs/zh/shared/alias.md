@@ -5,7 +5,7 @@
 在 Rsbuild 中，你有两种方式可以设置路径别名:
 
 - 通过 `tsconfig.json` 中的 `paths` 配置。
-- 通过 [source.alias](http://rsbuild.dev/zh/api/config-source.html#sourcealias) 配置。
+- 通过 [source.alias](http://rsbuild.dev/zh/config/options/source.html#sourcealias) 配置。
 
 ## 通过 `tsconfig.json` 的 `paths` 配置
 
@@ -31,7 +31,7 @@
 
 ## 通过 `source.alias` 配置
 
-Rsbuild 提供了 [source.alias](http://rsbuild.dev/zh/api/config-source.html#sourcealias) 配置项，对应 webpack / Rspack 原生的 [resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) 配置，你可以通过对象或者函数的方式来配置这个选项。
+Rsbuild 提供了 [source.alias](http://rsbuild.dev/zh/config/options/source.html#sourcealias) 配置项，对应 webpack / Rspack 原生的 [resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) 配置，你可以通过对象或者函数的方式来配置这个选项。
 
 ### 使用场景
 
@@ -78,4 +78,4 @@ export default {
 
 `tsconfig.json` 的 `paths` 配置的优先级高于 `source.alias`，当一个路径同时匹配到这两者定义的规则时，会优先使用 `tsconfig.json` 的 `paths` 定义的值。
 
-你可以通过 [source.aliasStrategy](http://rsbuild.dev/zh/api/config-source.html#sourcealiasstrategy) 来调整这两个选项的优先级。
+你可以通过 [source.aliasStrategy](http://rsbuild.dev/zh/config/options/source.html#sourcealiasstrategy) 来调整这两个选项的优先级。

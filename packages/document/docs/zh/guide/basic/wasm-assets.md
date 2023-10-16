@@ -39,7 +39,7 @@ console.log(wasmURL).pathname; // "/static/wasm/[hash].module.wasm"
 
 当 `.wasm` 资源被引用后，默认会被 Rsbuild 输出到 `dist/static/wasm` 目录下。
 
-你可以通过 [output.distPath](/api/config-output.html#outputdistpath) 配置项来修改 `.wasm` 产物的输出目录。
+你可以通过 [output.distPath](/config/options/output.html#outputdistpath) 配置项来修改 `.wasm` 产物的输出目录。
 
 ```ts
 export default {

@@ -6,15 +6,15 @@ Rsbuild 提供了丰富的配置项，以帮助使用者对构建行为进行定
 
 Rsbuild 中的配置可以分为以下几类：
 
-- [Dev](/api/config-dev.html)：与本地开发有关的配置。
-- [Html](/api/config-html.html)：与 HTML 有关的配置。
-- [Tools](/api/config-tools.html)：与底层工具有关的配置。
-- [Source](/api/config-source.html)：与源代码解析、编译方式相关的配置。
-- [Output](/api/config-output.html)：与构建产物有关的配置。
-- [Security](/api/config-security.html)：与安全有关的配置。
-- [Performance](/api/config-performance.html)：与编译性能、产物性能有关的配置。
+- [Dev](/config/options/dev.html)：与本地开发有关的配置。
+- [Html](/config/options/html.html)：与 HTML 有关的配置。
+- [Tools](/config/options/tools.html)：与底层工具有关的配置。
+- [Source](/config/options/source.html)：与源代码解析、编译方式相关的配置。
+- [Output](/config/options/output.html)：与构建产物有关的配置。
+- [Security](/config/options/security.html)：与安全有关的配置。
+- [Performance](/config/options/performance.html)：与编译性能、产物性能有关的配置。
 
-你可以在 [API Reference](/api/) 页面找到所有配置项的详细说明。
+你可以在 [配置](/config/) 页面找到所有配置项的详细说明。
 
 ## 配置默认值
 
@@ -28,7 +28,7 @@ Rsbuild 为每个配置项预设了一个默认值，默认值可以满足大部
 
 当你使用一个基于 Rsbuild 的上层框架时，你可以直接通过框架的配置文件来定义 Rsbuild 配置，上层框架会自动将相关配置透传给 Rsbuild。
 
-比如在 Modern.js 框架中，你可以直接在 [modern.config.ts](https://modernjs.dev/configure/app/usage.html) 文件里定义 Rsbuild 的 [source.alias](/api/config-source.html#sourcealias) 配置：
+比如在 Modern.js 框架中，你可以直接在 [modern.config.ts](https://modernjs.dev/configure/app/usage.html) 文件里定义 Rsbuild 的 [source.alias](/config/options/source.html#sourcealias) 配置：
 
 ```ts title="modern.config.ts"
 export default {
@@ -54,7 +54,7 @@ const provider = builderWebpackProvider({
 });
 ```
 
-关于 Node API 的完整用法，请参考 [API - createRsbuild](/api/builder-core.html#createbuilder)。
+关于 Node API 的完整用法，请参考 [API - createRsbuild](/api/javascript-api/builder-core.html#createbuilder)。
 
 ## 与框架配置的关系
 

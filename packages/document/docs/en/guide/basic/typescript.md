@@ -28,7 +28,7 @@ export default {
 };
 ```
 
-More configuration can be found at [tools.tsLoader](/en/api/config-tools.html#toolstsloader).
+More configuration can be found at [tools.tsLoader](/config/options/tools.html#toolstsloader).
 
 If ts-loader is enabled with default configuration, it does not have type checking, we do type checking by [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin).
 
@@ -36,7 +36,7 @@ If ts-loader is enabled with default configuration, it does not have type checki
 
 If you want a super fast compiler, and you don't need some custom Babel plugins, then you can use SWC for compilation and minification.
 
-SWC plugin in Rsbuild supports TypeScript, TSX and legacy decorator, you can check [SWC plugin](/en/plugins/plugin-swc.html).
+SWC plugin in Rsbuild supports TypeScript, TSX and legacy decorator, you can check [SWC plugin](/plugins/list/plugin-swc.html).
 
 ### Why Babel is the default option
 
@@ -56,7 +56,7 @@ export default {
 };
 ```
 
-More configurations can be seen at [tsChecker configuration](/en/api/config-tools.html#toolstschecker).
+More configurations can be seen at [tsChecker configuration](/config/options/tools.html#toolstschecker).
 
 Note that if ts-loader is enabled and `compileOnly: false` is set, please disable tsChecker to avoid duplicate type-checking.
 
