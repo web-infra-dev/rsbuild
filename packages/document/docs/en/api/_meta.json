@@ -1,13 +1,8 @@
 [
   {
-    "type": "file",
-    "name": "index",
-    "label": "API Overview"
-  },
-  {
     "type": "dir",
-    "name": "config",
-    "label": "Config"
+    "name": "start",
+    "label": "Start"
   },
   {
     "type": "dir",

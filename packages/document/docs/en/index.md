@@ -4,14 +4,13 @@ pageType: home
 hero:
   name: Rsbuild
   text: The Rspack-based Build Tool
-  tagline: Unleash the power of Rspack
   actions:
     - theme: brand
       text: Introduction
-      link: /en/guide/introduction.html
+      link: /guide/start/
     - theme: alt
       text: Quick Start
-      link: /en/guide/quick-start.html
+      link: /guide/start/quick-start
   image:
     src: https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/rsbuild-logo-1013.png
     alt: Rsbuild Logo
