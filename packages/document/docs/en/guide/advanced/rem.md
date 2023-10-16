@@ -1,6 +1,6 @@
 # REM adaptation
 
-Rsbuild supports REM adaptation via [output.convertToRem](/en/api/config-output.html#outputconverttorem), which can dynamically adjusts the font size according to the screen size, so that the page will be displayed correctly on different screen sizes.
+Rsbuild supports REM adaptation via [output.convertToRem](/config/options/output.html#outputconverttorem), which can dynamically adjusts the font size according to the screen size, so that the page will be displayed correctly on different screen sizes.
 
 ## Enabling REM adaptability
 

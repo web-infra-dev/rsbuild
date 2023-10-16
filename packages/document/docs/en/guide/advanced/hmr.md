@@ -10,7 +10,7 @@ Hot Module Replacement (HMR) exchanges, adds, or removes modules while an applic
 
 Rsbuild has built-in support for HMR. By default, HMR is enabled in development.
 
-By setting [dev.hmr](/en/api/config-dev.html#devhmr) to false, HMR can be disabled, which the HMR and react-refresh will no longer work.
+By setting [dev.hmr](/config/options/dev.html#devhmr) to false, HMR can be disabled, which the HMR and react-refresh will no longer work.
 
 ```ts
 export default {
@@ -70,7 +70,7 @@ export default {
 - Live reloading: After modifying the file, webpack recompiles and forces a browser refresh, which is a global (application-wide) refresh, equivalent to `window.location.reload()`.
 - Hot reloading: After modifying the file, webpack recompiles the corresponding module and remembers the state of the application when it is refreshed, thus enabling a partial refresh, i.e. hot update.
 
-DevServer provides two configuration options, [hot](/en/api/config-tools.html#hot) and [liveReload](/en/api/config-tools.html#livereload), to control how updates are made. When both hot and liveReload are open, DevServer will attempt to use hot mode (HMR) first, and will degrade to reloading the page if the HMR update fails.
+DevServer provides two configuration options, [hot](/config/options/tools.html#hot) and [liveReload](/config/options/tools.html#livereload), to control how updates are made. When both hot and liveReload are open, DevServer will attempt to use hot mode (HMR) first, and will degrade to reloading the page if the HMR update fails.
 
 ## FAQ
 

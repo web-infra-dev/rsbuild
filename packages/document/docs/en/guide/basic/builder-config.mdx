@@ -6,15 +6,15 @@ Rsbuild provides a wealth of configs to help users customize the build behavior.
 
 Rsbuild Configs are divided into the following categories:
 
-- [Dev](/api/config-dev.html): Config related to local development.
-- [Html](/api/config-html.html): Config related to HTML.
-- [Tools](/api/config-tools.html): Config related to the low-level tools.
-- [Source](/api/config-source.html): Config related to source code parsing and compilation.
-- [Output](/api/config-output.html): Config related to output.
-- [Security](/api/config-security.html): Config related to security.
-- [Performance](/api/config-performance.html): Config related to performance.
+- [Dev](/config/options/dev.html): Config related to local development.
+- [Html](/config/options/html.html): Config related to HTML.
+- [Tools](/config/options/tools.html): Config related to the low-level tools.
+- [Source](/config/options/source.html): Config related to source code parsing and compilation.
+- [Output](/config/options/output.html): Config related to output.
+- [Security](/config/options/security.html): Config related to security.
+- [Performance](/config/options/performance.html): Config related to performance.
 
-You can find detailed descriptions of all configs on the [API Reference](/en/api/) page.
+You can find detailed descriptions of all configs on the [Config](/config/) page.
 
 ## Default Values
 
@@ -28,7 +28,7 @@ In most cases, you don't need to define any Rsbuild config, just use it right ou
 
 When you use a Rsbuild-based upper-level framework, you can define the Rsbuild config directly through the framework's config file, and the upper-level framework will pass the config to the Rsbuild.
 
-For example, in the Modern.js framework, you can define the Rsbuild's [source.alias](/en/api/config-source.html#sourcealias) config in [modern.config.ts](https://modernjs.dev/en/configure/app/usage.html) file.
+For example, in the Modern.js framework, you can define the Rsbuild's [source.alias](/config/options/source.html#sourcealias) config in [modern.config.ts](https://modernjs.dev/en/configure/app/usage.html) file.
 
 ```ts title="modern.config.ts"
 export default {
@@ -54,7 +54,7 @@ const provider = builderWebpackProvider({
 });
 ```
 
-Please refer to [API - createRsbuild](/en/api/builder-core.html#createbuilder) for details.
+Please refer to [API - createRsbuild](/api/javascript-api/builder-core.html#createbuilder) for details.
 
 ## Relationship with Framework Config
 

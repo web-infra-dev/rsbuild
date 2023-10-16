@@ -48,7 +48,7 @@ import Rspack from '@zh/shared/rspackTip.mdx';
 
 Rsbuild **充分利用 webpack 生态内的各种优化手段**，保证生产环境的产物性能得到深度优化，并在稳定性上提供保障。
 
-以拆包场景为例，webpack 原生的 splitChunks 配置较为复杂，Rsbuild 将其封装为开箱即用的 [performance.chunkSplit](/api/config-performance.html#performancechunksplit) 配置项，默认将常见的三方库拆分为体积适中的 chunk，使页面加载速度达到最优状态。
+以拆包场景为例，webpack 原生的 splitChunks 配置较为复杂，Rsbuild 将其封装为开箱即用的 [performance.chunkSplit](/config/options/performance.html#performancechunksplit) 配置项，默认将常见的三方库拆分为体积适中的 chunk，使页面加载速度达到最优状态。
 
 ### 易于扩展的插件系统
 
@@ -92,18 +92,18 @@ import Step from '@components/Step';
 
 <NextSteps>
   <Step
-    href="/guide/quick-start.html"
+    href="/guide/start/quick-start.html"
     title="快速上手"
     description="了解如何使用 Rsbuild"
   />
   <Step
-    href="/guide/features.html"
+    href="/guide/start/features.html"
     title="功能导航"
     description="了解 Rsbuild 提供的所有功能"
   />
   <Step
-    href="/api/index.html"
-    title="查阅 API"
-    description="查看详细的 API 文档"
+    href="/config/index.html"
+    title="查阅配置"
+    description="查看详细的配置文档"
   />
 </NextSteps>

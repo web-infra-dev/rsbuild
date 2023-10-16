@@ -26,7 +26,7 @@ console.log(logoURL); // => "/static/logo.6c12aba3.png"
 
 ## Modify the Default Export
 
-You can modify the default export of SVG files through the [output.svgDefaultExport](/en/api/config-output.html#outputsvgdefaultexport) config. For example, set the default export as a React component:
+You can modify the default export of SVG files through the [output.svgDefaultExport](/config/options/output.html#outputsvgdefaultexport) config. For example, set the default export as a React component:
 
 ```ts
 export default {
@@ -62,7 +62,7 @@ Please read the [Import Static Assets](/guide/basic/static-assets.html) section 
 
 ## Disable SVGR Processing
 
-By default, when an SVG resource is referenced in a JS file, Rsbuild will call SVGR to convert the SVG into a React component. If you are sure that all SVG resources in your project are not being used as React components, you can turn off this conversion by setting [disableSvgr](/api/config-output.html#outputdisablesvgr) to true to improve build performance.
+By default, when an SVG resource is referenced in a JS file, Rsbuild will call SVGR to convert the SVG into a React component. If you are sure that all SVG resources in your project are not being used as React components, you can turn off this conversion by setting [disableSvgr](/config/options/output.html#outputdisablesvgr) to true to improve build performance.
 
 ```js
 export default {

@@ -54,7 +54,7 @@ not dead
 
 ### 使用 output.overrideBrowserslist 配置
 
-除了上述的标准用法，Rsbuild 还提供了 [output.overrideBrowserslist](/api/config-output.html#outputoverridebrowserslist) 配置项，同样可以设置 Browserslist 的值。
+除了上述的标准用法，Rsbuild 还提供了 [output.overrideBrowserslist](/config/options/output.html#outputoverridebrowserslist) 配置项，同样可以设置 Browserslist 的值。
 
 `overrideBrowserslist` 可以被设置为一个数组，数组的写法与 `browserslistrc` 配置是一样的，但比 `browserslistrc` 拥有更高的优先级。
 
@@ -163,7 +163,7 @@ not op_mini all
 
 ## Browserslist 默认值
 
-Rsbuild 会根据[构建产物类型](/guide/basic/build-target.html)来设置不同的 Browserslist 默认值，但我们推荐你在项目中显式设置 Browserslist，这会让项目的兼容范围更加明确。
+Rsbuild 会根据[构建产物类型](/api/start/build-target.html)来设置不同的 Browserslist 默认值，但我们推荐你在项目中显式设置 Browserslist，这会让项目的兼容范围更加明确。
 
 ### Web 产物
 

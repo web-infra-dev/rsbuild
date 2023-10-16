@@ -5,7 +5,7 @@ Rsbuild optimizes build performance by default, but as the project becomes large
 This document provides some optional speed-up strategies, developers can choose some of them to improve the build performance.
 
 :::tip 📢 Notice
-The strategies in [Bundle Size Optimization](/en/guide/optimization/optimize-bundle.html) can also be used to improve build performance, so we won't repeat them here.
+The strategies in [Bundle Size Optimization](/guide/optimization/optimize-bundle.html) can also be used to improve build performance, so we won't repeat them here.
 :::
 
 ## General optimization strategy
@@ -52,8 +52,8 @@ If you have higher build performance requirements, you can easily switch to Rspa
 
 Rsbuild provides SWC plugin and esbuild plugin that allow you to use SWC or esbuild instead of babel-loader, ts-loader and terser for transformation and minification process. See:
 
-- [SWC plugin document](/plugins/plugin-swc.html)
-- [esbuild plugin document](/plugins/plugin-esbuild.html)
+- [SWC plugin document](/plugins/list/plugin-swc.html)
+- [esbuild plugin document](/plugins/list/plugin-esbuild.html)
 
 :::tip SWC vs esbuild
 The SWC compiled outputs has better compatibility, supports polyfills such as core-js, and has more complete features, so it is recommended to use the SWC plugin first.
@@ -61,7 +61,7 @@ The SWC compiled outputs has better compatibility, supports polyfills such as co
 
 ### Avoid using ts-loader
 
-By default, Rsbuild uses Babel to compile TS files. After enabling the [tools.tsLoader](/en/api/config-tools.html#toolstsloader) option, `ts-loader` will be used to compile TS files.
+By default, Rsbuild uses Babel to compile TS files. After enabling the [tools.tsLoader](/config/options/tools.html#toolstsloader) option, `ts-loader` will be used to compile TS files.
 
 Please avoid using `ts-loader` because it requires additional parsing and type checking, which will slow down the build.
 
@@ -74,7 +74,7 @@ export default {
 };
 ```
 
-See the [tools.tsLoader documentation](/en/api/config-tools.html#toolstsloader) for details.
+See the [tools.tsLoader documentation](/config/options/tools.html#toolstsloader) for details.
 
 ## Development optimization strategies
 
@@ -95,7 +95,7 @@ export default {
 };
 ```
 
-This is an experimental feature and may not work correctly in some scenarios, see [experiments.lazyCompilation](/en/api/config-experiments.html#experiments-lazycompilation) for details.
+This is an experimental feature and may not work correctly in some scenarios, see [experiments.lazyCompilation](/config/options/experiments.html#experiments-lazycompilation) for details.
 
 ### Adjust Source Map format
 
@@ -135,7 +135,7 @@ export default {
 
 ### Adjust Browserslist for development
 
-This strategy is similar to ["Adjust Browserslist"](/en/guide/optimization/optimize-bundle.html#adjust-browserslist), the difference is that we can set different browserslist for development and production environment, thereby reducing the compilation overhead in the development environment.
+This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle.html#adjust-browserslist), the difference is that we can set different browserslist for development and production environment, thereby reducing the compilation overhead in the development environment.
 
 For example, you can add the following config to `package.json`, which means that only the latest browsers are compatible in the development environment, and the actual browsers are compatible in the production environment:
 
@@ -170,4 +170,4 @@ export default {
 };
 ```
 
-See [output.disableSourceMap](/en/api/config-output.html#outputdisablesourcemap) for details.
+See [output.disableSourceMap](/config/options/output.html#outputdisablesourcemap) for details.

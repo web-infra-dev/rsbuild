@@ -6,7 +6,7 @@
 
 ## 拆包策略
 
-> Rsbuild 的拆包配置集中在 [performance.chunkSplit](/api/config-performance.html#performancechunksplit) 中。
+> Rsbuild 的拆包配置集中在 [performance.chunkSplit](/config/options/performance.html#performancechunksplit) 中。
 
 Rsbuild 支持设置以下几种拆包策略：
 

@@ -97,7 +97,7 @@ const builderPluginBar = {
 
 插件 API 对象的类型。插件 API 对象上挂载了提供给插件使用的上下文数据、工具函数和注册生命周期钩子的函数。
 
-关于生命周期钩子的完整介绍，请阅读 [Plugin Hooks](/api/plugin-hooks.html) 章节。
+关于生命周期钩子的完整介绍，请阅读 [Plugin Hooks](/plugins/dev/hooks.html) 章节。
 
 在使用 webpack-provider 或 rspack-provider 时，`BuilderPluginAPI` 的类型定义有一定不同，你可以根据插件的使用场景来引入对应的类型。
 
@@ -145,7 +145,7 @@ export default (): BuilderPlugin<BuilderPluginAPI> => ({
 
 需要注意的是，开发 webpack 和 Rspack 同时支持的插件，意味着不能使用任何带有 webpack 或 Rspack 标识的 api，如 `modifyWebpackConfig` 或 `modifyRspackConfig`。
 
-可通过 [modifyBundlerChain](/api/plugin-hooks.html#modifybundlerchain-experimental) 修改同时适用于 webpack 和 Rspack 的配置。
+可通过 [modifyBundlerChain](/plugins/dev/hooks.html#modifybundlerchain-experimental) 修改同时适用于 webpack 和 Rspack 的配置。
 
 ```ts
 import type { BuilderPlugin } from '@rsbuild/core';
@@ -166,7 +166,7 @@ export default (): BuilderPlugin<DefaultBuilderPlugin> => ({
 
 `api.context` 是一个只读对象，提供一些上下文信息。
 
-`api.context` 的内容与 `builder.context` 完全一致，请参考 [builder.context](/api/builder-instance.html#builder-context)。
+`api.context` 的内容与 `builder.context` 完全一致，请参考 [builder.context](/api/javascript-api/builder-instance.html#builder-context)。
 
 - **Example**
 

@@ -51,7 +51,7 @@ if you want to use webpack instead of Rspack, you can replace the `@rsbuild/rspa
 
 There are two steps to creating a Rsbuild instance:
 
-First you need to initialize the Rsbuild Provider and pass in the `builderConfig` config object. Rsbuild provides a lot of configs that allow you to customize the build behavior. At this point, you don't need to know the specific content of the config, just pass in an empty object. You can find all available configs in [API - config](/en/api/#config).
+First you need to initialize the Rsbuild Provider and pass in the `builderConfig` config object. Rsbuild provides a lot of configs that allow you to customize the build behavior. At this point, you don't need to know the specific content of the config, just pass in an empty object. You can find all available configs in [Config](/config/).
 
 - Initialize the Rspack Provider:
 
@@ -89,13 +89,13 @@ const builder = await createRsbuild(provider, {
 });
 ```
 
-Except the `entry` option, the `createRsbuild` method also provides some other options, which you can learn more about in [API - createRsbuild](/en/api/builder-core.html#createbuilder).
+Except the `entry` option, the `createRsbuild` method also provides some other options, which you can learn more about in [API - createRsbuild](/api/javascript-api/builder-core.html#createbuilder).
 
 ### 3. Call Rsbuild Instance Method
 
 The Rsbuild instance provides some methods, which you can use it according to the usage scenarios.
 
-To start local development, it is recommended to use the [builder.startDevServer](/en/api/builder-instance.html#builder-startdevserver) method, which will start a local Dev Server.
+To start local development, it is recommended to use the [builder.startDevServer](/api/javascript-api/builder-instance.html#builder-startdevserver) method, which will start a local Dev Server.
 
 ```ts
 await builder.startDevServer();
@@ -110,13 +110,13 @@ info    Starting dev server...
   > Network:  http://192.168.0.1:8081
 ```
 
-To deploy the App to production environment, it is recommended to use the [builder.build](/en/api/builder-instance.html#builder-build) method, which will build the production outputs.
+To deploy the App to production environment, it is recommended to use the [builder.build](/api/javascript-api/builder-instance.html#builder-build) method, which will build the production outputs.
 
 ```ts
 await builder.build();
 ```
 
-> For more introduction of Rsbuild instance methods, please read the [Rsbuild Instance](/en/api/builder-instance.html) chapter.
+> For more introduction of Rsbuild instance methods, please read the [Rsbuild Instance](/api/javascript-api/builder-instance.html) chapter.
 
 After completing the above three steps, you have learned the basic usage of Rsbuild. Next, you can customize the build process through the Rsbuild plugin and Rsbuild configs.
 
@@ -129,18 +129,18 @@ import Step from '@components/Step';
 
 <NextSteps>
   <Step
-    href="/guide/glossary.html"
+    href="/guide/start/glossary.html"
     title="Glossary"
     description="Learn about Rsbuild related concepts"
   />
   <Step
-    href="/guide/features.html"
+    href="/guide/start/features.html"
     title="All Features"
     description="Learn all features of Rsbuild"
   />
   <Step
-    href="/api/index.html"
-    title="API Reference"
-    description="View detailed API documentation"
+    href="/config/index.html"
+    title="Config"
+    description="View detailed config documentation"
   />
 </NextSteps>

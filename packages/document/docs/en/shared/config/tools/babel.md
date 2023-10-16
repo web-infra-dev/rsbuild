@@ -162,7 +162,7 @@ export default {
 :::tip
 The usage of the `addIncludes` function is identical to the `source.include` configuration option. We recommend using `source.include` instead of `addIncludes` because `source.include` has a wider range of use cases. For example, when migrating from Babel to SWC compilation, `source.include` can still work, while the `addIncludes` function will not be effective.
 
-Please refer to the [source.include documentation](https://rsbuild.dev/api/config-source.html#sourceinclude) for more detailed usage.
+Please refer to the [source.include documentation](https://rsbuild.dev/config/options/source.html#sourceinclude) for more detailed usage.
 :::
 
 #### addExcludes
@@ -184,7 +184,7 @@ export default {
 ```
 
 :::tip
-The usage of the `addExcludes` function is basically the same as the `source.exclude` config, please see the [source.exclude documentation](https://rsbuild.dev/api/config-source.html#sourceexclude) for a more detailed usage. You can also use `source.exclude` directly instead of the `addExcludes` function.
+The usage of the `addExcludes` function is basically the same as the `source.exclude` config, please see the [source.exclude documentation](https://rsbuild.dev/config/options/source.html#sourceexclude) for a more detailed usage. You can also use `source.exclude` directly instead of the `addExcludes` function.
 :::
 
 #### modifyPresetEnvOptions

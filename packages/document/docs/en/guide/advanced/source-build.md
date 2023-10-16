@@ -64,7 +64,7 @@ The disadvantages are:
 
 ### Enabling Configuration
 
-You can enable source code build mode by setting [experiments.sourceBuild](/api/config-experiments.html#experimentssourcebuild) to `true`.
+You can enable source code build mode by setting [experiments.sourceBuild](/config/options/experiments.html#experimentssourcebuild) to `true`.
 
 ```ts
 export default {
