@@ -6,16 +6,21 @@ export default defineConfig({
   lang: 'en',
   base: '/',
   title: 'Rsbuild',
-  icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/zq-uylkvT/ljhwZthlaukjlkulzlp/logo-1x-0104.png',
+  icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/favicon-200x200.png',
+  logo: {
+    light:
+      'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/navbar-logo-10164.png',
+    dark: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/navbar-logo-dark-10164.png',
+  },
   markdown: {
     checkDeadLinks: true,
-    experimentalMdxRs: true,
   },
   route: {
     // exclude document fragments from routes
     exclude: ['**/zh/shared/**', '**/en/shared/**'],
   },
   themeConfig: {
+    enableContentAnimation: true,
     footer: {
       message: 'Copyright © 2023 ByteDance.',
     },
