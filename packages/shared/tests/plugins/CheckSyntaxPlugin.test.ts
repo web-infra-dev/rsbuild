@@ -92,20 +92,20 @@ describe('makeCodeFrame', () => {
 
     expect(makeCodeFrame(lines, 0)).toMatchInlineSnapshot(`
       "
-      [33m   > 1 | const a = 1;[39m
-      [90m     2 | [39m
-      [90m     3 | var b = 2;[39m
-      [90m     4 | [39m"
+         > 1 | const a = 1;
+           2 | 
+           3 | var b = 2;
+           4 | "
     `);
     expect(makeCodeFrame(lines, 4)).toMatchInlineSnapshot(`
       "
-      [90m     2 | [39m
-      [90m     3 | var b = 2;[39m
-      [90m     4 | [39m
-      [33m   > 5 | console.log(() => {[39m
-      [90m     6 |   return a + b;[39m
-      [90m     7 | });[39m
-      [90m     8 | [39m"
+           2 | 
+           3 | var b = 2;
+           4 | 
+         > 5 | console.log(() => {
+           6 |   return a + b;
+           7 | });
+           8 | "
     `);
   });
 });
@@ -118,7 +118,7 @@ describe('displayCodePointer', () => {
       .toMatchInlineSnapshot(`
         "
           code:    .webpackChunktmp||[]).push([[179],{530:()=>{console.log(1);let e=1;e="2"}},e=>{v
-        [33m                                                  ^[39m"
+                                                          ^"
       `);
   });
 });

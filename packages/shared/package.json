@@ -160,7 +160,9 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "compiled",
+    "static"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
