@@ -27,6 +27,7 @@ export const builderPluginSvg = (): DefaultBuilderPlugin => {
 
         const rule = chain.module.rule(CHAIN_ID.RULE.SVG).test(SVG_REGEX);
 
+        // TODO: extract svgr support into react plugin
         if (config.output.disableSvgr) {
           // treat all .svg files as assets.
           chainStaticAssetRule({

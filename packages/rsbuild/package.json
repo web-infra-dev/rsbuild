@@ -40,7 +40,8 @@
   "dependencies": {
     "@modern-js/utils": "2.26.0",
     "@rsbuild/shared": "workspace:*",
-    "webpack": "^5.88.1"
+    "webpack": "^5.88.1",
+    "@svgr/webpack": "8.0.1"
   },
   "devDependencies": {
     "@types/node": "^16",
