@@ -1,6 +1,6 @@
-import type { chalk } from './re-exports/chalk';
+import type chalk from 'chalk';
 
-type Color = typeof chalk['ForegroundColor'];
+type Color = (typeof chalk)['ForegroundColor'];
 
 const colorList: Array<Color> = [
   'green',

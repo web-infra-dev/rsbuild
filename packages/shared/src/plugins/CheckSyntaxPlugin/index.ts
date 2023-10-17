@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 import { parse } from 'acorn';
-import { fs } from '../../re-exports';
+import fs from 'fs-extra';
 import {
   AcornParseError,
   SyntaxError,
@@ -46,15 +46,15 @@ export class CheckSyntaxPlugin {
         // not support compilation.emittedAssets in Rspack
         const emittedAssets = compilation
           .getAssets()
-          .filter(a => a.source)
-          .map(a => a.name)
-          .map(p => resolve(outputPath, p));
+          .filter((a) => a.source)
+          .map((a) => a.name)
+          .map((p) => resolve(outputPath, p));
 
         const files = emittedAssets.filter(
-          assets => HTML_REGEX.test(assets) || JS_REGEX.test(assets),
+          (assets) => HTML_REGEX.test(assets) || JS_REGEX.test(assets),
         );
         await Promise.all(
-          files.map(async file => {
+          files.map(async (file) => {
             await this.check(file);
           }),
         );
@@ -68,7 +68,7 @@ export class CheckSyntaxPlugin {
     if (HTML_REGEX.test(filepath)) {
       const htmlScripts = await generateHtmlScripts(filepath);
       await Promise.all(
-        htmlScripts.map(async script => {
+        htmlScripts.map(async (script) => {
           if (!checkIsExcludeSource(filepath, this.exclude)) {
             await this.tryParse(filepath, script);
           }

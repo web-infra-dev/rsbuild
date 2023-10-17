@@ -2,7 +2,7 @@ import prodServer, {
   Logger,
   type ModernServerOptions,
 } from '@modern-js/prod-server';
-import { chalk } from './re-exports';
+import chalk from 'chalk';
 import { logger as defaultLogger } from './logger';
 import { DEFAULT_PORT } from './constants';
 import type {
@@ -68,7 +68,7 @@ export async function startProdServer(
 
   await server.init();
 
-  return new Promise<StartServerResult>(resolve => {
+  return new Promise<StartServerResult>((resolve) => {
     server.listen(
       {
         host: DEFAULT_DEV_HOST,
@@ -85,7 +85,7 @@ export async function startProdServer(
         await printServerURLs(urls);
         resolve({
           port,
-          urls: urls.map(item => item.url),
+          urls: urls.map((item) => item.url),
           server,
         });
       },

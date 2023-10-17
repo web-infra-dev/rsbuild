@@ -1,6 +1,7 @@
 import { BuilderConfig, webpack } from '@modern-js/builder-webpack-provider';
 import { merge } from '@modern-js/utils/lodash';
-import { chalk, logger } from '@modern-js/utils';
+import { chalk } from '@rsbuild/shared/chalk';
+import { logger } from '@rsbuild/shared';
 import {
   Output,
   JsMinifyOptions,

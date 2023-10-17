@@ -55,6 +55,7 @@
     "@modern-js/builder-shared": "2.36.0",
     "@modern-js/swc-plugins": "0.6.4",
     "@modern-js/utils": "2.36.0",
+    "@rsbuild/shared": "workspace:*",
     "@swc/helpers": "0.5.1",
     "core-js": "~3.32.1"
   },

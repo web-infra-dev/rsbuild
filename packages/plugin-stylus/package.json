@@ -27,7 +27,6 @@
   "dependencies": {
     "@modern-js/builder-shared": "2.36.0",
     "@modern-js/builder-webpack-provider": "2.36.0",
-    "@swc/helpers": "0.5.1",
     "stylus": "0.59.0",
     "stylus-loader": "7.1.0"
   },

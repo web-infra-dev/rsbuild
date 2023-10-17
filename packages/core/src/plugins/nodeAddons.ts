@@ -3,6 +3,7 @@ import {
   getSharedPkgCompiledPath,
   type DefaultBuilderPlugin,
 } from '@rsbuild/shared';
+import { chalk } from '@rsbuild/shared/chalk';
 
 export const builderPluginNodeAddons = (): DefaultBuilderPlugin => ({
   name: 'builder-plugin-node-addons',
@@ -14,7 +15,7 @@ export const builderPluginNodeAddons = (): DefaultBuilderPlugin => ({
           return;
         }
 
-        const { chalk, pkgUp } = await import('@modern-js/utils');
+        const { pkgUp } = await import('@modern-js/utils');
 
         const getDistName = (resource: string) => {
           const pkgJSON = pkgUp.sync({ cwd: resource });

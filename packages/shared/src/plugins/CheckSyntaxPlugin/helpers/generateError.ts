@@ -1,7 +1,12 @@
-import { AcornParseError, CheckSyntaxExclude, SyntaxError } from './type';
+import fs from 'fs-extra';
+import chalk from 'chalk';
 import { SourceMapConsumer } from 'source-map';
-import { chalk, fs } from '../../../re-exports';
 import { checkIsExcludeSource } from './utils';
+import {
+  SyntaxError,
+  type AcornParseError,
+  type CheckSyntaxExclude,
+} from './type';
 
 export function displayCodePointer(code: string, pos: number) {
   const SUB_LEN = 80;

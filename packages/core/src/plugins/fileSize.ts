@@ -3,7 +3,7 @@
  * license at https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
 import path from 'path';
-import chalk from '@modern-js/utils/chalk';
+import { chalk } from '@rsbuild/shared/chalk';
 import { logger, Stats, MultiStats, StatsAsset } from '@rsbuild/shared';
 import type { DefaultBuilderPlugin } from '@rsbuild/shared';
 

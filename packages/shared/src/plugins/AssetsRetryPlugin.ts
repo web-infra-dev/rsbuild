@@ -1,4 +1,4 @@
-import { fs } from '../re-exports';
+import fs from 'fs-extra';
 // @ts-expect-error
 import { RawSource } from 'webpack-sources';
 import { getSharedPkgCompiledPath } from '../utils';
@@ -76,7 +76,7 @@ export class AssetsRetryPlugin implements WebpackPluginInstance {
               name: this.name,
               stage: COMPILATION_PROCESS_STAGE.PROCESS_ASSETS_STAGE_PRE_PROCESS,
             },
-            async assets => {
+            async (assets) => {
               const scriptPath = await this.getScriptPath();
               assets[scriptPath] = new RawSource(
                 await this.getRetryCode(),
@@ -88,11 +88,11 @@ export class AssetsRetryPlugin implements WebpackPluginInstance {
       );
     }
 
-    compiler.hooks.compilation.tap(this.name, compilation => {
+    compiler.hooks.compilation.tap(this.name, (compilation) => {
       // the behavior of inject/modify tags in afterTemplateExecution hook will not take effect when inject option is false
       this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapPromise(
         this.name,
-        async data => {
+        async (data) => {
           const scriptTag = generateScriptTag();
 
           if (this.inlineScript) {
