@@ -1,5 +1,5 @@
+import { logger } from 'rslog';
 import { chalk } from './re-exports';
-import { logger } from '@modern-js/utils/logger';
 
 export const isDebug = () => process.env.DEBUG === 'builder';
 
