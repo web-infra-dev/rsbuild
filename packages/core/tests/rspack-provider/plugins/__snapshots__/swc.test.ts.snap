@@ -7,6 +7,13 @@ exports[`plugins/swc > should add antd pluginImport 1`] = `
       "emitMetadata": true,
       "legacy": true,
     },
+    "pluginImport": [
+      {
+        "libraryDirectory": "es",
+        "libraryName": "antd",
+        "style": true,
+      },
+    ],
     "presetEnv": {
       "coreJs": "3.32",
       "mode": "entry",

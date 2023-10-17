@@ -1,0 +1,61 @@
+{
+  "name": "@rsbuild/plugin-vue2",
+  "description": "Vue 2 plugin of Rsbuild",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/plugin-vue"
+  },
+  "license": "MIT",
+  "version": "2.36.0",
+  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
+  "dependencies": {
+    "@modern-js/builder-shared": "2.36.0",
+    "@swc/helpers": "0.5.1",
+    "@vue/babel-preset-jsx": "^1.4.0",
+    "vue-loader": "^15.10.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.15",
+    "@modern-js/builder": "2.36.0",
+    "@modern-js/builder-webpack-provider": "2.36.0",
+    "@modern-js/builder-rspack-provider": "2.36.0",
+    "@modern-js/utils": "2.36.0",
+    "typescript": "^5",
+    "webpack": "^5.88.1"
+  },
+  "peerDependencies": {
+    "@modern-js/builder-webpack-provider": "^2.36.0",
+    "@modern-js/builder-rspack-provider": "^2.36.0"
+  },
+  "peerDependenciesMeta": {
+    "@modern-js/builder-webpack-provider": {
+      "optional": true
+    },
+    "@modern-js/builder-rspack-provider": {
+      "optional": true
+    }
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true,
+    "types": "./dist/index.d.ts"
+  }
+}

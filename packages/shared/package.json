@@ -29,7 +29,6 @@
       "default": "./dist/re-exports/fs-extra.js"
     },
     "./fork-ts-checker-webpack-plugin": {
-      "jsnext:source": "./src/exports/fork-ts-checker-webpack-plugin.ts",
       "default": "./dist/exports/fork-ts-checker-webpack-plugin.js"
     },
     "./open": {
@@ -53,22 +52,18 @@
       "default": "./compiled/pug/index.js"
     },
     "./test-stub": {
-      "jsnext:source": "./src/test-stub/index.ts",
       "types": "./dist/test-stub/index.d.ts",
       "default": "./dist/test-stub/index.js"
     },
     "./zod": {
-      "jsnext:source": "./src/exports/zod.ts",
       "types": "./dist/exports/zod.d.ts",
       "default": "./dist/exports/zod.js"
     },
     "./css-modules-typescript-loader": {
-      "jsnext:source": "./src/loaders/css-modules-typescript-loader.ts",
       "types": "./dist/loaders/css-modules-typescript-loader.d.ts",
       "default": "./dist/loaders/css-modules-typescript-loader.js"
     },
     "./ignore-css-loader": {
-      "jsnext:source": "./src/loaders/ignore-css-loader.ts",
       "types": "./dist/loaders/ignore-css-loader.d.ts",
       "default": "./dist/loaders/ignore-css-loader.js"
     },

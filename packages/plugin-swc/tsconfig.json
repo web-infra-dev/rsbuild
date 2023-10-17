@@ -1,0 +1,11 @@
+{
+  "extends": "@modern-js/tsconfig/base",
+  "compilerOptions": {
+    "target": "ES2019",
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "isolatedModules": true
+  },
+  "include": ["src"],
+  "exclude": ["./tests/fixtures"]
+}
