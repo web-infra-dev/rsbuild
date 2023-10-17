@@ -14,7 +14,7 @@ The following are universal plugins that can be used in Rspack mode and Webpack 
 
 The following are plugins that can only be used in the Webpack mode of Rsbuild, and are not required in Rspack mode.
 
-- [@rsbuild/plugin-swc](/plugins/list/plugin-swc.html): Use SWC as the transformer and minimizer to improve build performance.
-- [@rsbuild/plugin-esbuild](/plugins/list/plugin-esbuild.html): Use esbuild as the transformer and minimizer to improve build performance.
+- [@rsbuild/plugin-swc](/plugins/list/plugin-swc.html): Use SWC as the transformer and minimizer to improve the build performance of Webpack mode.
+- [@rsbuild/plugin-esbuild](/plugins/list/plugin-esbuild.html): Use esbuild as the transformer and minimizer to improve the build performance of Webpack mode.
 
 > You can find the source code of all official plugins in the [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) repository.
