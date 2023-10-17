@@ -98,7 +98,7 @@ export const sharedOutputConfigSchema = z.partialObj({
   disableCssExtract: z.boolean(),
   disableMinimize: z.boolean(),
   disableSourceMap: DisableSourceMapOptionSchema,
-  disableTsChecker: z.boolean(),
+  // disableTsChecker: z.boolean(),
   disableFilenameHash: z.boolean(),
   disableInlineRuntimeChunk: z.boolean(),
   disableCssModuleExtension: z.boolean(),
