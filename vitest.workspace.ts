@@ -1,5 +1,8 @@
 import { defineWorkspace } from 'vitest/config';
 
+// Disable chalk in test
+process.env.FORCE_COLOR = '0';
+
 export default defineWorkspace([
   {
     test: {

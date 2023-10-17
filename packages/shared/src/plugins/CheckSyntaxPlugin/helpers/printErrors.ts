@@ -1,5 +1,6 @@
 import { SyntaxError } from './type';
-import chalk from '@modern-js/utils/chalk';
+import { chalk } from '../../../re-exports';
+
 import { logger } from '../../../logger';
 
 type Error = {

@@ -15,6 +15,7 @@
     "rspress",
     "stacktracey",
     "systemjs",
-    "vitest"
+    "vitest",
+    "deepmerge"
   ]
 }

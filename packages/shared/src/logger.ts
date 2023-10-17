@@ -1,4 +1,4 @@
-import chalk from '@modern-js/utils/chalk';
+import { chalk } from './re-exports';
 import { logger } from '@modern-js/utils/logger';
 
 export const isDebug = () => process.env.DEBUG === 'builder';

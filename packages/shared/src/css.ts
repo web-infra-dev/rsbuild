@@ -5,7 +5,7 @@ import {
   NODE_MODULES_REGEX,
 } from './constants';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
-import { merge as deepMerge } from '@modern-js/utils/lodash';
+import { deepmerge } from './re-exports';
 import { getCssSupport } from './getCssSupport';
 import { getSharedPkgCompiledPath as getCompiledPath } from './utils';
 import type {
@@ -231,7 +231,7 @@ export const getCssLoaderOptions = async ({
     },
     config.tools.cssLoader,
     undefined,
-    deepMerge,
+    deepmerge,
   );
   const cssLoaderOptions = normalizeCssLoaderOptions(
     mergedCssLoaderOptions,

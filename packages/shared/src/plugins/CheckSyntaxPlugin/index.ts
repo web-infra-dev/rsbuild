@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 import { parse } from 'acorn';
-import { fs } from '@modern-js/utils';
+import { fs } from '../../re-exports';
 import {
   AcornParseError,
   SyntaxError,

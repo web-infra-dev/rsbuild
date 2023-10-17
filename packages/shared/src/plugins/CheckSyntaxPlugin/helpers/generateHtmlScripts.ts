@@ -1,4 +1,4 @@
-import { fs } from '@modern-js/utils';
+import { fs } from '../../../re-exports';
 import { Parser } from 'htmlparser2';
 
 export async function generateHtmlScripts(filepath: string) {

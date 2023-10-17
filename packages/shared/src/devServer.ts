@@ -8,7 +8,7 @@ import type {
   CompilerTapFn,
 } from './types';
 import type { ModernDevServerOptions, Server } from '@modern-js/server';
-import { merge } from '@modern-js/utils/lodash';
+import { deepmerge } from './re-exports';
 import { logger as defaultLogger, debug } from './logger';
 import { DEFAULT_PORT } from './constants';
 import { createAsyncHook } from './createHook';
@@ -30,9 +30,8 @@ export const getDevServerOptions = async ({
   devConfig: ModernDevServerOptions['dev'];
 }> => {
   const { applyOptionsChain } = await import('@modern-js/utils');
-  const { merge: deepMerge } = await import('@modern-js/utils/lodash');
 
-  const defaultDevConfig = deepMerge(
+  const defaultDevConfig = deepmerge(
     {
       hot: builderConfig.dev?.hmr ?? true,
       watch: true,
@@ -47,19 +46,19 @@ export const getDevServerOptions = async ({
       https: builderConfig.dev?.https,
     },
     // merge devServerOptions from serverOptions
-    serverOptions.dev as Exclude<typeof serverOptions.dev, boolean>,
+    serverOptions.dev as Exclude<typeof serverOptions.dev, boolean> || {},
   );
 
   const devConfig = applyOptionsChain(
     defaultDevConfig,
     builderConfig.tools?.devServer,
     {},
-    deepMerge,
+    deepmerge,
   );
 
   const defaultConfig = getServerOptions(builderConfig);
   const config = serverOptions.config
-    ? merge({}, defaultConfig, serverOptions.config)
+    ? deepmerge(defaultConfig, serverOptions.config)
     : defaultConfig;
 
   return { config, devConfig };

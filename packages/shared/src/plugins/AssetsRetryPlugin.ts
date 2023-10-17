@@ -1,4 +1,4 @@
-import { fs } from '@modern-js/utils';
+import { fs } from '../re-exports';
 // @ts-expect-error
 import { RawSource } from 'webpack-sources';
 import { getSharedPkgCompiledPath } from '../utils';

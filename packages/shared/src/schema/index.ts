@@ -1,5 +1,5 @@
 import { fromZodError, z, ZodError, ZodIssueCode } from '../zod';
-import chalk from '@modern-js/utils/chalk';
+import { chalk } from '../re-exports';
 
 export * from './source';
 export * from './dev';
