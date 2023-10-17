@@ -170,12 +170,14 @@ Rsbuild 会根据[构建产物类型](/api/start/build-target.html)来设置不�
 Web 产物的默认值如下所示：
 
 ```yaml
-> 0.01%
-not dead
-not op_mini all
+chrome >= 61
+edge >= 16
+firefox >= 60
+safari >= 11
+ios_saf >= 11
 ```
 
-在该浏览器范围下，JavaScript 代码被会编译到 ES5 语法。
+在该浏览器范围下，JavaScript 产物最低兼容到支持[原生 ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) 的浏览器。
 
 ### Node 产物
 
@@ -188,16 +190,6 @@ node >= 14
 ### Web Worker 产物
 
 Web Worker 产物默认的浏览器范围与 Web 一致。
-
-```yaml
-> 0.01%
-not dead
-not op_mini all
-```
-
-### Modern Web 产物
-
-Modern Web 产物默认最低兼容到支持[原生 ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) 的浏览器。
 
 ```yaml
 chrome >= 61
