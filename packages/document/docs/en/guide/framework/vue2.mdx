@@ -16,14 +16,14 @@ import CliToolVue from '@en/shared/cliToolVue.md';
 
 To compile Vue SFC (Single File Components) and JSX syntax, you need to register the Rsbuild [Vue 2 plugin](/plugins/list/plugin-vue2). The plugin will automatically add the necessary configuration for Vue builds and remove the built-in React-related configurations.
 
-For example, register in `builder.config.ts`:
+For example, register in `rsbuild.config.ts`:
 
-```ts title="builder.config.ts"
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/cli';
-import { builderPluginVue2 } from '@rsbuild/plugin-vue2';
+import { pluginVue2 } from '@rsbuild/plugin-vue2';
 
 export default defineConfig({
-  builderPlugins: [builderPluginVue2()],
+  plugins: [pluginVue2()],
 });
 ```
 

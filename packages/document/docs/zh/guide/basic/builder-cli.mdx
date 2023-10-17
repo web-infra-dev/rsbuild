@@ -57,9 +57,9 @@ Options:
 
 ## 配置
 
-Rsbuild CLI 默认会读取项目根目录下的 `builder.config.ts` 配置文件，你可以在配置文件中使用 Rsbuild 提供的[所有配置项](/config/index)。
+Rsbuild CLI 默认会读取项目根目录下的 `rsbuild.config.ts` 配置文件，你可以在配置文件中使用 Rsbuild 提供的[所有配置项](/config/index)。
 
-```ts title="builder.config.ts"
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/cli';
 
 export default defineConfig({
@@ -71,7 +71,7 @@ export default defineConfig({
 
 当你使用 Rspack 作为打包工具时，由于 webpack 和 Rspack 的配置类型存在一些差异，需要为 defineConfig 指定 `<'rspack'>` 泛型：
 
-```diff title="builder.config.ts"
+```diff title="rsbuild.config.ts"
 - export default defineConfig({
 + export default defineConfig<'rspack'>({
   // ...
@@ -98,7 +98,7 @@ const defaultEntry = {
 
 - **示例：**
 
-```ts title="builder.config.ts"
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/cli';
 
 export default defineConfig({
@@ -113,15 +113,15 @@ export default defineConfig({
 
 ## 注册插件
 
-你可以在 `builder.config.ts` 中使用 `builderPlugins` 选项来注册 Rsbuild 插件。
+你可以在 `rsbuild.config.ts` 中使用 `plugins` 选项来注册 Rsbuild 插件。
 
 比如注册 Vue 插件：
 
-```ts title="builder.config.ts"
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/cli';
-import { builderPluginVue } from '@rsbuild/plugin-vue';
+import { pluginVue } from '@rsbuild/plugin-vue';
 
 export default defineConfig({
-  builderPlugins: [builderPluginVue()],
+  plugins: [pluginVue()],
 });
 ```

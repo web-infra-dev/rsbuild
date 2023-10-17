@@ -421,13 +421,13 @@ function AddPlugins(
 - **Example**
 
 ```ts
-builder.addPlugins([builderPluginFoo(), builderPluginBar()]);
+builder.addPlugins([pluginFoo(), pluginBar()]);
 
 // 在 bar 插件之前插入
-builder.addPlugins([builderPluginFoo()], { before: 'bar' });
+builder.addPlugins([pluginFoo()], { before: 'bar' });
 
 // 在 bar 插件之后插入
-builder.addPlugins([builderPluginFoo()], { after: 'bar' });
+builder.addPlugins([pluginFoo()], { after: 'bar' });
 ```
 
 ## builder.removePlugins
@@ -446,7 +446,7 @@ function RemovePlugins(pluginNames: string[]): void;
 
 ```ts
 // 添加插件
-const pluginFoo = builderPluginFoo();
+const pluginFoo = pluginFoo();
 builder.addPlugins(pluginFoo);
 
 // 移除插件
@@ -462,9 +462,9 @@ import IsPluginExists from '@zh/shared/isPluginExists.md';
 - **Example**
 
 ```ts
-builder.addPlugins([builderPluginFoo()]);
+builder.addPlugins([pluginFoo()]);
 
-builder.isPluginExists(builderPluginFoo().name); // true
+builder.isPluginExists(pluginFoo().name); // true
 ```
 
 ## builder.inspectConfig

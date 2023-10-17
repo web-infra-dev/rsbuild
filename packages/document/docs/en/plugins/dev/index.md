@@ -12,7 +12,7 @@ Rsbuild can use webpack or Rspack as the bundler, expose unified Node.js API, an
 
 ## Write a plugin
 
-Plugin module should export an entry function just like `(options?: PluginOptions) => BuilderPlugin`, It is recommended to name plugin functions `builderPluginXXX`.
+Plugin module should export an entry function just like `(options?: PluginOptions) => BuilderPlugin`, It is recommended to name plugin functions `pluginXXX`.
 
 ```ts
 import type { BuilderPlugin } from '@rsbuild/webpack-provider';
@@ -21,9 +21,7 @@ export interface PluginFooOptions {
   message?: string;
 }
 
-export const builderPluginFoo = (
-  options?: PluginFooOptions,
-): BuilderPlugin => ({
+export const pluginFoo = (options?: PluginFooOptions): BuilderPlugin => ({
   name: 'plugin-foo',
   setup(api) {
     api.onExit(() => {
@@ -33,7 +31,7 @@ export const builderPluginFoo = (
   },
 });
 
-builder.addPlugins([builderPluginFoo('some other message.')]);
+builder.addPlugins([pluginFoo('some other message.')]);
 ```
 
 The function usually **takes an options object** and **returns the plugin instance**, which manages state through closures.
@@ -44,7 +42,7 @@ Let's look at each part:
 - `setup` as the main entry point of plugins
 - `api` provides context object, lifetime hooks and utils.
 
-The package name of the plugin needs to contain the conventional `builder-plugin` prefix for identification, just like `builder-plugin-foo`, `@scope/builder-plugin-bar`, etc.
+The package name of the plugin needs to contain the conventional `builder-plugin` prefix for identification, just like `plugin-foo`, `@scope/plugin-bar`, etc.
 
 ## Lifetime Hooks
 
@@ -68,7 +66,7 @@ But sometimes you may need to read and change the public config of the Rsbuild. 
 Refer to this tiny example:
 
 ```ts
-export const builderPluginUploadDist = (): BuilderPlugin => ({
+export const pluginUploadDist = (): BuilderPlugin => ({
   name: 'plugin-upload-dist',
   setup(api) {
     api.modifyBuilderConfig((config) => {
@@ -157,7 +155,7 @@ The webpack loaders can be used to load and transform various file types. For mo
 ```ts
 import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 
-export const builderPluginTypeScriptExt = (): BuilderPlugin => ({
+export const pluginTypeScriptExt = (): BuilderPlugin => ({
   name: 'builder-typescript-ext',
   setup(api) {
     api.modifyWebpackChain(async (chain) => {
@@ -173,7 +171,7 @@ export const builderPluginTypeScriptExt = (): BuilderPlugin => ({
 ```ts
 import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 
-export const builderPluginAdminPanel = (): BuilderPlugin => ({
+export const pluginAdminPanel = (): BuilderPlugin => ({
   name: 'builder-admin-panel',
   setup(api) {
     api.modifyWebpackChain(async (chain) => {
@@ -191,8 +189,8 @@ Integrate existing webpack plugins to migrate your applications:
 import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 import type { Options } from '@modern-js/inspector-webpack-plugin';
 
-export const builderPluginInspector = (options?: Options): BuilderPlugin => ({
-  name: 'builder-plugin-inspector',
+export const pluginInspector = (options?: Options): BuilderPlugin => ({
+  name: 'plugin-inspector',
   setup(api) {
     api.modifyWebpackChain(async (chain) => {
       // load modules dynamically only when needed

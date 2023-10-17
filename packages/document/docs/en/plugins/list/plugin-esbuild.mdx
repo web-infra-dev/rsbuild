@@ -26,10 +26,10 @@ import { PackageManagerTabs } from '@theme';
 You can register the plugin in the `rsbuild.config.ts` file:
 
 ```ts title="rsbuild.config.ts"
-import { builderPluginEsbuild } from '@rsbuild/plugin-esbuild';
+import { pluginEsbuild } from '@rsbuild/plugin-esbuild';
 
 export default {
-  plugins: [builderPluginEsbuild()],
+  plugins: [pluginEsbuild()],
 };
 ```
 
@@ -92,7 +92,7 @@ target supports setting to the following environments:
 - safari
 
 ```ts
-builderPluginEsbuild({
+pluginEsbuild({
   loader: {
     target: 'chrome61',
   },
@@ -104,7 +104,7 @@ builderPluginEsbuild({
 Set `loader` to `false` to disable esbuild transformation, and Rsbuild will continue to use Babel to transform the code.
 
 ```ts
-builderPluginEsbuild({
+pluginEsbuild({
   loader: false,
 });
 ```
@@ -136,7 +136,7 @@ If you want to modify the options, you can check the [esbuild-loader documentati
 Use the `target` option to set the target environment for minification.
 
 ```ts
-builderPluginEsbuild({
+pluginEsbuild({
   minimize: {
     target: 'chrome61',
   },
@@ -148,7 +148,7 @@ builderPluginEsbuild({
 Set `minimize` to `false` to disable esbuild minification, and Rsbuild will continue to use Terser to minify the code.
 
 ```ts
-builderPluginEsbuild({
+pluginEsbuild({
   minimize: false,
 });
 ```
@@ -164,7 +164,7 @@ As a compiler (i.e. `loader` capability), esbuild usually supports at least ES20
 You can specify the target syntax version by following config:
 
 ```ts
-builderPluginEsbuild({
+pluginEsbuild({
   loader: {
     target: 'es2015',
   },
@@ -180,7 +180,7 @@ Therefore, for projects that need to be compatible with ES5 and below syntax in 
 You can specify the target syntax version by following config:
 
 ```js
-builderPluginEsbuild({
+pluginEsbuild({
   minimize: {
     target: 'es2015',
   },

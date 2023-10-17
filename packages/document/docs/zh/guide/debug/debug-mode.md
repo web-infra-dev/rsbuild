@@ -32,13 +32,13 @@ debug   init plugins done [2389.48 ms]
 ```bash
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /Project/demo/dist/builder.config.js
+  - Rsbuild Config: /Project/demo/dist/rsbuild.config.js
   - Webpack Config (web): /Project/demo/dist/webpack.config.web.js
 ```
 
 ## Rsbuild 配置文件
 
-在调试模式下，Rsbuild 会自动生成 `dist/builder.config.js` 文件，这里面包含了最终生成的 Rsbuild 配置。在这个文件里，你可以了解到你传入的 Rsbuild 配置在经过框架层和 Rsbuild 处理后的最终结果。
+在调试模式下，Rsbuild 会自动生成 `dist/rsbuild.config.js` 文件，这里面包含了最终生成的 Rsbuild 配置。在这个文件里，你可以了解到你传入的 Rsbuild 配置在经过框架层和 Rsbuild 处理后的最终结果。
 
 该文件的大致结构如下：
 

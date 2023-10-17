@@ -17,10 +17,10 @@ import { PackageManagerTabs } from '@theme';
 You can register the plugin in the `rsbuild.config.ts` file:
 
 ```ts title="rsbuild.config.ts"
-import { builderPluginStylus } from '@rsbuild/plugin-stylus';
+import { pluginStylus } from '@rsbuild/plugin-stylus';
 
 export default {
-  plugins: [builderPluginStylus()],
+  plugins: [pluginStylus()],
 };
 ```
 
@@ -78,7 +78,7 @@ type StylusOptions = {
 Options passed to Stylus, please refer to the [Stylus documentation](https://stylus-lang.com/docs/js.html) for specific usage.
 
 ```ts
-builderPluginStylus({
+pluginStylus({
   stylusOptions: {
     lineNumbers: false,
   },
@@ -93,7 +93,7 @@ builderPluginStylus({
 Whether to generate Source Map, enabled by default in the development environment.
 
 ```ts
-builderPluginStylus({
+pluginStylus({
   sourceMap: false,
 });
 ```

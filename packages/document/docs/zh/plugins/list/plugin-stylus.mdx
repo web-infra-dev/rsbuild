@@ -17,10 +17,10 @@ import { PackageManagerTabs } from '@theme';
 你可以在 `rsbuild.config.ts` 文件中注册插件：
 
 ```ts title="rsbuild.config.ts"
-import { builderPluginStylus } from '@rsbuild/plugin-stylus';
+import { pluginStylus } from '@rsbuild/plugin-stylus';
 
 export default {
-  plugins: [builderPluginStylus()],
+  plugins: [pluginStylus()],
 };
 ```
 
@@ -78,7 +78,7 @@ type StylusOptions = {
 传递给 Stylus 的选项，请查阅 [Stylus 文档](https://stylus-lang.com/docs/js.html) 来了解具体用法。
 
 ```ts
-builderPluginStylus({
+pluginStylus({
   stylusOptions: {
     lineNumbers: false,
   },
@@ -93,7 +93,7 @@ builderPluginStylus({
 是否生成 Source Map，默认在开发环境下启用。
 
 ```ts
-builderPluginStylus({
+pluginStylus({
   sourceMap: false,
 });
 ```

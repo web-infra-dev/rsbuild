@@ -12,7 +12,7 @@ Rsbuild 底层支持 webpack 和 Rspack 等 bundler，并提供统一的 Node.js
 
 ## 开发插件
 
-插件提供类似 `(options?: PluginOptions) => BuilderPlugin` 的函数作为入口，建议将插件函数命名为 `builderPluginXXX`。
+插件提供类似 `(options?: PluginOptions) => BuilderPlugin` 的函数作为入口，建议将插件函数命名为 `pluginXXX`。
 
 ```ts
 import type { BuilderPlugin } from '@rsbuild/webpack-provider';
@@ -21,9 +21,7 @@ export interface PluginFooOptions {
   message?: string;
 }
 
-export const builderPluginFoo = (
-  options?: PluginFooOptions,
-): BuilderPlugin => ({
+export const pluginFoo = (options?: PluginFooOptions): BuilderPlugin => ({
   name: 'plugin-foo',
   setup(api) {
     api.onExit(() => {
@@ -33,7 +31,7 @@ export const builderPluginFoo = (
   },
 });
 
-builder.addPlugins([builderPluginFoo({ message: 'some other message.' })]);
+builder.addPlugins([pluginFoo({ message: 'some other message.' })]);
 ```
 
 函数形式的插件可以 **接受选项对象** 并 **返回插件实例**，并通过闭包机制管理内部状态。
@@ -44,7 +42,7 @@ builder.addPlugins([builderPluginFoo({ message: 'some other message.' })]);
 - `setup` 作为插件逻辑的主入口
 - `api` 对象包含了各类钩子和工具函数
 
-为了便于识别，插件名称需要包含约定的 `builder-plugin` 前缀，例如 `builder-plugin-foo` `@scope/builder-plugin-bar` 等。
+为了便于识别，插件名称需要包含约定的 `builder-plugin` 前缀，例如 `plugin-foo` `@scope/plugin-bar` 等。
 
 ## 生命周期钩子
 
@@ -67,7 +65,7 @@ Rsbuild 不会接管底层 Bundler 的生命周期，相关生命周期钩子的
 整套流程可以通过这个简单的插件体现：
 
 ```ts
-export const builderPluginUploadDist = (): BuilderPlugin => ({
+export const pluginUploadDist = (): BuilderPlugin => ({
   name: 'plugin-upload-dist',
   setup(api) {
     api.modifyBuilderConfig((config) => {
@@ -151,7 +149,7 @@ Loader 可以读取和处理不同类型的文件模块，具体参考 [concepts
 ```ts
 import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 
-export const builderPluginTypeScriptExt = (): BuilderPlugin => ({
+export const pluginTypeScriptExt = (): BuilderPlugin => ({
   name: 'builder-typescript-ext',
   setup(api) {
     api.modifyWebpackChain(async (chain) => {
@@ -167,7 +165,7 @@ export const builderPluginTypeScriptExt = (): BuilderPlugin => ({
 ```ts
 import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 
-export const builderPluginAdminPanel = (): BuilderPlugin => ({
+export const pluginAdminPanel = (): BuilderPlugin => ({
   name: 'builder-admin-panel',
   setup(api) {
     api.modifyWebpackChain(async (chain) => {
@@ -185,8 +183,8 @@ export const builderPluginAdminPanel = (): BuilderPlugin => ({
 import type { BuilderPlugin } from '@rsbuild/webpack-provider';
 import type { Options } from '@modern-js/inspector-webpack-plugin';
 
-export const builderPluginInspector = (options?: Options): BuilderPlugin => ({
-  name: 'builder-plugin-inspector',
+export const pluginInspector = (options?: Options): BuilderPlugin => ({
+  name: 'plugin-inspector',
   setup(api) {
     api.modifyWebpackChain(async (chain) => {
       // 仅在需要的时候动态加载模块，避免不必要的性能消耗
