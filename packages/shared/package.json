@@ -171,6 +171,9 @@
     "types": "./dist/index.d.ts",
     "exports": {
       ".": "./dist/index.js",
+      "./chalk": "./dist/re-exports/chalk.js",
+      "./deepmerge": "./dist/re-exports/deepmerge.js",
+      "./fs-extra": "./dist/re-exports/fs-extra.js",
       "./open": "./compiled/open/index.js",
       "./babel-loader": "./compiled/babel-loader/index.js",
       "./webpack-dev-middleware": "./compiled/webpack-dev-middleware/index.js",
