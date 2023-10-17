@@ -22,10 +22,10 @@ import { PackageManagerTabs } from '@theme';
 你可以在 `rsbuild.config.ts` 文件中注册插件：
 
 ```ts title="rsbuild.config.ts"
-import { builderPluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
+import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
 
 export default {
-  plugins: [builderPluginNodePolyfill()],
+  plugins: [pluginNodePolyfill()],
 };
 ```
 

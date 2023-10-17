@@ -28,9 +28,9 @@ type BuilderPlugin<API = BuilderPluginAPI> = {
 import type { BuilderPlugin } from '@rsbuild/core';
 
 export default (): BuilderPlugin => ({
-  name: 'builder-plugin-foo',
+  name: 'plugin-foo',
 
-  pre: ['builder-plugin-bar'],
+  pre: ['plugin-bar'],
 
   setup: api => {
     api.onAfterBuild(() => {
@@ -47,13 +47,13 @@ export default (): BuilderPlugin => ({
 比如有下面两个插件：
 
 ```ts
-const builderPluginFoo = {
-  name: 'builder-plugin-foo',
+const pluginFoo = {
+  name: 'plugin-foo',
 };
 
-const builderPluginBar = {
-  name: 'builder-plugin-bar',
-  pre: ['builder-plugin-foo'],
+const pluginBar = {
+  name: 'plugin-bar',
+  pre: ['plugin-foo'],
 };
 ```
 
@@ -64,13 +64,13 @@ Bar 插件在 `pre` 字段中配置了 Foo 插件，因此 Foo 插件一定会�
 同样的，通过 `post` 字段可以声明后置执行的插件。
 
 ```ts
-const builderPluginFoo = {
-  name: 'builder-plugin-foo',
+const pluginFoo = {
+  name: 'plugin-foo',
 };
 
-const builderPluginBar = {
-  name: 'builder-plugin-bar',
-  post: ['builder-plugin-foo'],
+const pluginBar = {
+  name: 'plugin-bar',
+  post: ['plugin-foo'],
 };
 ```
 
@@ -81,13 +81,13 @@ Bar 插件在 `post` 字段中配置了 Foo 插件，因此 Foo 插件一定会�
 通过 `remove` 字段可以在一个插件中移除其他插件。
 
 ```ts
-const builderPluginFoo = {
-  name: 'builder-plugin-foo',
+const pluginFoo = {
+  name: 'plugin-foo',
 };
 
-const builderPluginBar = {
-  name: 'builder-plugin-bar',
-  remove: ['builder-plugin-foo'],
+const pluginBar = {
+  name: 'plugin-bar',
+  remove: ['plugin-foo'],
 };
 ```
 
@@ -110,7 +110,7 @@ import type { BuilderPlugin } from '@rsbuild/core';
 import type { BuilderPluginAPI } from '@rsbuild/webpack-provider';
 
 export default (): BuilderPlugin<BuilderPluginAPI> => ({
-  name: 'builder-plugin-foo',
+  name: 'plugin-foo',
 
   setup: api => {
     api.modifyWebpackConfig(config => {
@@ -129,7 +129,7 @@ import type { BuilderPlugin } from '@rsbuild/core';
 import type { BuilderPluginAPI } from '@rsbuild/rspack-provider';
 
 export default (): BuilderPlugin<BuilderPluginAPI> => ({
-  name: 'builder-plugin-foo',
+  name: 'plugin-foo',
 
   setup: api => {
     api.modifyRspackConfig(config => {
@@ -152,7 +152,7 @@ import type { BuilderPlugin } from '@rsbuild/core';
 import type { DefaultBuilderPlugin } from '@rsbuild/shared';
 
 export default (): BuilderPlugin<DefaultBuilderPlugin> => ({
-  name: 'builder-plugin-foo',
+  name: 'plugin-foo',
 
   setup: api => {
     api.modifyBundlerChain(chain => {
@@ -171,7 +171,7 @@ export default (): BuilderPlugin<DefaultBuilderPlugin> => ({
 - **Example**
 
 ```ts
-const builderPluginFoo = () => ({
+const pluginFoo = () => ({
   setup(api) {
     console.log(api.context.distPath);
   },
@@ -187,7 +187,7 @@ import GetBuilderConfig from '@zh/shared/getBuilderConfig.md';
 - **Example**
 
 ```ts
-const builderPluginFoo = () => ({
+const pluginFoo = () => ({
   setup(api) {
     const config = api.getBuilderConfig();
     console.log(config.html?.title);
@@ -204,7 +204,7 @@ import GetNormalizedConfig from '@zh/shared/getNormalizedConfig.md';
 - **Example**
 
 ```ts
-const builderPluginFoo = () => ({
+const pluginFoo = () => ({
   setup(api) {
     const config = api.getNormalizedConfig();
     console.log(config.html.title);
@@ -223,7 +223,7 @@ import IsPluginExists from '@zh/shared/isPluginExists.md';
 ```ts
 export default () => ({
   setup: api => {
-    console.log(api.isPluginExists('builder-plugin-foo'));
+    console.log(api.isPluginExists('plugin-foo'));
   },
 });
 ```
@@ -237,7 +237,7 @@ import GetHTMLPaths from '@zh/shared/getHTMLPaths.md';
 - **Example**
 
 ```ts
-const builderPluginFoo = () => ({
+const pluginFoo = () => ({
   setup(api) {
     api.modifyWebpackChain(() => {
       const htmlPaths = api.getHTMLPaths();

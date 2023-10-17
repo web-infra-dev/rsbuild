@@ -17,10 +17,10 @@ import { PackageManagerTabs } from '@theme';
 You can register the plugin in the `rsbuild.config.ts` file:
 
 ```ts title="rsbuild.config.ts"
-import { builderPluginVue2 } from '@rsbuild/plugin-vue2';
+import { pluginVue2 } from '@rsbuild/plugin-vue2';
 
 export default {
-  plugins: [builderPluginVue2()],
+  plugins: [pluginVue2()],
 };
 ```
 
@@ -48,7 +48,7 @@ const defaultOptions = {
 Options passed to `vue-loader`, please refer to the [vue-loader documentation](https://vue-loader.vuejs.org/) for detailed usage.
 
 ```ts
-builderPluginVue2({
+pluginVue2({
   vueLoaderOptions: {
     hotReload: false,
   },
@@ -84,7 +84,7 @@ const defaultOptions = {
 Options passed to `@vue/babel-preset-jsx`, please refer to the [@vue/babel-preset-jsx documentation](https://github.com/vuejs/jsx-vue2) for detailed usage.
 
 ```ts
-builderPluginVue2({
+pluginVue2({
   vueJsxOptions: {
     injectH: false,
   },

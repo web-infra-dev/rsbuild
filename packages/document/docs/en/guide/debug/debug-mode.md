@@ -32,13 +32,13 @@ In addition, the following logs will be output in the Shell, indicating that the
 ```bash
 Inspect config succeeds, open following files to view the content:
 
-   - Rsbuild Config: /Project/demo/dist/builder.config.js
+   - Rsbuild Config: /Project/demo/dist/rsbuild.config.js
    - Webpack Config (web): /Project/demo/dist/webpack.config.web.js
 ```
 
 ## Rsbuild Config File
 
-In debug mode, Rsbuild will automatically generate `dist/builder.config.js` file, which contains the final generated Rsbuild config. In this file, you can know the final result of the Rsbuild config you passed in after being processed by the framework and Rsbuild.
+In debug mode, Rsbuild will automatically generate `dist/rsbuild.config.js` file, which contains the final generated Rsbuild config. In this file, you can know the final result of the Rsbuild config you passed in after being processed by the framework and Rsbuild.
 
 The structure of the file is as follows:
 

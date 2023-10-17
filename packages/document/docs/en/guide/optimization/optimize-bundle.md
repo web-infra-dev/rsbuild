@@ -80,11 +80,12 @@ Please read the [Browser Compatibility](/guide/advanced/browser-compatibility.ht
 
 In general front-end projects, the size of image often accounts for a large proportion of the total bundle size of the project.So if the image size can be reduced as much as possible, it will have a significant optimization effect on the project bundle size. You can enable image compression by registering a plugin in the Rsbuild:
 
-```js
-import { builderPluginImageCompress } from '@rsbuild/plugin-image-compress';
+```ts title="rsbuild.config.ts"
+import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
 
-// Add the plugin to the Rsbuild
-builder.addPlugins([builderPluginImageCompress()]);
+export default {
+  plugins: [pluginImageCompress()],
+};
 ```
 
 See details in [plugin-image-compress](/plugins/list/plugin-image-compress).

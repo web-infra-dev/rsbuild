@@ -91,7 +91,7 @@ Rsbuild 默认提供了移除 console 的配置项，请查看 [performance.remo
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /root/my-project/dist/builder.config.js
+  - Rsbuild Config: /root/my-project/dist/rsbuild.config.js
   - Rspack Config (web): /root/my-project/dist/rspack.config.web.js
 ```
 
@@ -109,7 +109,7 @@ debug   add default plugins done [1938.57 ms]
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /root/my-project/dist/builder.config.js
+  - Rsbuild Config: /root/my-project/dist/rsbuild.config.js
   - Rspack Config (web): /root/my-project/dist/rspack.config.web.js
 ```
 

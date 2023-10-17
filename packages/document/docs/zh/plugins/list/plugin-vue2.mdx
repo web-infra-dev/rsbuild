@@ -17,10 +17,10 @@ import { PackageManagerTabs } from '@theme';
 你可以在 `rsbuild.config.ts` 文件中注册插件：
 
 ```ts title="rsbuild.config.ts"
-import { builderPluginVue2 } from '@rsbuild/plugin-vue2';
+import { pluginVue2 } from '@rsbuild/plugin-vue2';
 
 export default {
-  plugins: [builderPluginVue2()],
+  plugins: [pluginVue2()],
 };
 ```
 
@@ -48,7 +48,7 @@ const defaultOptions = {
 传递给 `vue-loader` 的选项，请查阅 [vue-loader 文档](https://vue-loader.vuejs.org/) 来了解具体用法。
 
 ```ts
-builderPluginVue2({
+pluginVue2({
   vueLoaderOptions: {
     hotReload: false,
   },
@@ -84,7 +84,7 @@ const defaultOptions = {
 传递给 `@vue/babel-preset-jsx` 的选项，请查阅 [@vue/babel-preset-jsx 文档](https://github.com/vuejs/jsx-vue2) 来了解具体用法。
 
 ```ts
-builderPluginVue2({
+pluginVue2({
   vueJsxOptions: {
     injectH: false,
   },

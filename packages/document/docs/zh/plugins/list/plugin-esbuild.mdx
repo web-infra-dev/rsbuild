@@ -26,10 +26,10 @@ import { PackageManagerTabs } from '@theme';
 你可以在 `rsbuild.config.ts` 文件中注册插件：
 
 ```ts title="rsbuild.config.ts"
-import { builderPluginEsbuild } from '@rsbuild/plugin-esbuild';
+import { pluginEsbuild } from '@rsbuild/plugin-esbuild';
 
 export default {
-  plugins: [builderPluginEsbuild()],
+  plugins: [pluginEsbuild()],
 };
 ```
 
@@ -92,7 +92,7 @@ target 支持设置为以下环境：
 - safari
 
 ```ts
-builderPluginEsbuild({
+pluginEsbuild({
   loader: {
     target: 'chrome61',
   },
@@ -104,7 +104,7 @@ builderPluginEsbuild({
 将 `loader` 设置为 `false` 来关闭 esbuild 代码转译，此时 Rsbuild 会继续使用 Babel 来进行代码转译。
 
 ```ts
-builderPluginEsbuild({
+pluginEsbuild({
   loader: false,
 });
 ```
@@ -136,7 +136,7 @@ const defaultOptions = {
 通过 `target` 选项来修改代码压缩的目标环境。
 
 ```ts
-builderPluginEsbuild({
+pluginEsbuild({
   minimize: {
     target: 'chrome61',
   },
@@ -148,7 +148,7 @@ builderPluginEsbuild({
 将 `minimize` 设置为 `false` 来关闭 esbuild 代码压缩，此时 Rsbuild 会继续使用 Terser 进行代码压缩。
 
 ```ts
-builderPluginEsbuild({
+pluginEsbuild({
   minimize: false,
 });
 ```
@@ -164,7 +164,7 @@ builderPluginEsbuild({
 你可以通过如下的配置指定目标语法版本:
 
 ```ts
-builderPluginEsbuild({
+pluginEsbuild({
   loader: {
     target: 'es2015',
   },
@@ -180,7 +180,7 @@ builderPluginEsbuild({
 你可以通过如下的配置指定目标语法版本:
 
 ```ts
-builderPluginEsbuild({
+pluginEsbuild({
   minimize: {
     target: 'es2015',
   },

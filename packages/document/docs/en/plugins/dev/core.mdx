@@ -30,9 +30,9 @@ You can import this type from `@rsbuild/core`:
 import type { BuilderPlugin } from '@rsbuild/core';
 
 export default (): BuilderPlugin => ({
-  name: 'builder-plugin-foo',
+  name: 'plugin-foo',
 
-  pre: ['builder-plugin-bar'],
+  pre: ['plugin-bar'],
 
   setup: api => {
     api.onAfterBuild(() => {
@@ -49,13 +49,13 @@ By default, plugins are executed in the order they are added. You can declare pr
 For example, consider the following two plugins:
 
 ```ts
-const builderPluginFoo = {
-  name: 'builder-plugin-foo',
+const pluginFoo = {
+  name: 'plugin-foo',
 };
 
-const builderPluginBar = {
-  name: 'builder-plugin-bar',
-  pre: ['builder-plugin-foo'],
+const pluginBar = {
+  name: 'plugin-bar',
+  pre: ['plugin-foo'],
 };
 ```
 
@@ -66,13 +66,13 @@ The Bar plugin is configured with the Foo plugin in its `pre` field, so the Foo 
 Similarly, you can declare post-execution plugins using the `post` field.
 
 ```ts
-const builderPluginFoo = {
-  name: 'builder-plugin-foo',
+const pluginFoo = {
+  name: 'plugin-foo',
 };
 
-const builderPluginBar = {
-  name: 'builder-plugin-bar',
-  post: ['builder-plugin-foo'],
+const pluginBar = {
+  name: 'plugin-bar',
+  post: ['plugin-foo'],
 };
 ```
 
@@ -83,13 +83,13 @@ The Bar plugin is configured with the Foo plugin in its `post` field, so the Foo
 You can remove other plugins within a plugin using the `remove` field.
 
 ```ts
-const builderPluginFoo = {
-  name: 'builder-plugin-foo',
+const pluginFoo = {
+  name: 'plugin-foo',
 };
 
-const builderPluginBar = {
-  name: 'builder-plugin-bar',
-  remove: ['builder-plugin-foo'],
+const pluginBar = {
+  name: 'plugin-bar',
+  remove: ['plugin-foo'],
 };
 ```
 
@@ -112,7 +112,7 @@ import type { BuilderPlugin } from '@rsbuild/core';
 import type { BuilderPluginAPI } from '@rsbuild/webpack-provider';
 
 export default (): BuilderPlugin<BuilderPluginAPI> => ({
-  name: 'builder-plugin-foo',
+  name: 'plugin-foo',
 
   setup: api => {
     api.modifyWebpackConfig(config => {
@@ -131,7 +131,7 @@ import type { BuilderPlugin } from '@rsbuild/core';
 import type { BuilderPluginAPI } from '@rsbuild/rspack-provider';
 
 export default (): BuilderPlugin<BuilderPluginAPI> => ({
-  name: 'builder-plugin-foo',
+  name: 'plugin-foo',
 
   setup: api => {
     api.modifyRspackConfig(config => {
@@ -154,7 +154,7 @@ import type { BuilderPlugin } from '@rsbuild/core';
 import type { DefaultBuilderPlugin } from '@rsbuild/shared';
 
 export default (): BuilderPlugin<DefaultBuilderPlugin> => ({
-  name: 'builder-plugin-foo',
+  name: 'plugin-foo',
 
   setup: api => {
     api.modifyBundlerChain(chain => {
@@ -173,7 +173,7 @@ The content of `api.context` is exactly the same as `builder.context`, please re
 - **Example**
 
 ```ts
-const builderPluginFoo = () => ({
+const pluginFoo = () => ({
   setup(api) {
     console.log(api.context.distPath);
   },
@@ -189,7 +189,7 @@ import GetBuilderConfig from '@en/shared/getBuilderConfig.md';
 - **Example**
 
 ```ts
-const builderPluginFoo = () => ({
+const pluginFoo = () => ({
   setup(api) {
     const config = api.getBuilderConfig();
     console.log(config.html?.title);
@@ -206,7 +206,7 @@ import GetNormalizedConfig from '@en/shared/getNormalizedConfig.md';
 - **Example**
 
 ```ts
-const builderPluginFoo = () => ({
+const pluginFoo = () => ({
   setup(api) {
     const config = api.getNormalizedConfig();
     console.log(config.html.title);
@@ -225,7 +225,7 @@ import IsPluginExists from '@en/shared/isPluginExists.md';
 ```ts
 export default () => ({
   setup: api => {
-    console.log(api.isPluginExists('builder-plugin-foo'));
+    console.log(api.isPluginExists('plugin-foo'));
   },
 });
 ```
@@ -239,7 +239,7 @@ import GetHTMLPaths from '@en/shared/getHTMLPaths.md';
 - **Example**
 
 ```ts
-const builderPluginFoo = () => ({
+const pluginFoo = () => ({
   setup(api) {
     api.modifyWebpackChain(() => {
       const htmlPaths = api.getHTMLPaths();
