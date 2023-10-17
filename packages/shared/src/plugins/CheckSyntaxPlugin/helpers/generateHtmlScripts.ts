@@ -1,4 +1,4 @@
-import { fs } from '../../../re-exports';
+import fs from 'fs-extra';
 import { Parser } from 'htmlparser2';
 
 export async function generateHtmlScripts(filepath: string) {

@@ -1,8 +1,6 @@
-import type Buffer from 'buffer';
 import * as path from 'path';
-import { logger } from '@modern-js/builder-shared';
-import { chalk } from '@modern-js/utils';
-import type { Logger } from '@modern-js/utils';
+import { logger, type Logger } from '@rsbuild/shared';
+import { chalk } from '@rsbuild/shared/chalk';
 import type { Compiler, NormalModule } from 'webpack';
 
 const JS_DATA_URI_PREFIX = `data:text/javascript`;

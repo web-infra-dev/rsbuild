@@ -1,5 +1,5 @@
-import { logger } from 'rslog';
-import { chalk } from './re-exports';
+import { logger, type Logger } from 'rslog';
+import chalk from 'chalk';
 
 export const isDebug = () => process.env.DEBUG === 'builder';
 
@@ -13,3 +13,4 @@ export const debug = (message: string | (() => string)) => {
 };
 
 export { logger };
+export type { Logger };

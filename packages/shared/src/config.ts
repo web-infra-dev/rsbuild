@@ -34,10 +34,11 @@ import type {
   SharedNormalizedConfig,
 } from './types';
 import { pick } from './pick';
-import { logger } from './logger';
+import { logger } from 'rslog';
 import { join } from 'path';
+import chalk from 'chalk';
 import type { minify } from 'terser';
-import { chalk, fs } from './re-exports';
+import fs from 'fs-extra';
 
 import _ from '@modern-js/utils/lodash';
 import { DEFAULT_DEV_HOST } from '@modern-js/utils';

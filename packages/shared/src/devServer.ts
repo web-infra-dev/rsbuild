@@ -8,7 +8,7 @@ import type {
   CompilerTapFn,
 } from './types';
 import type { ModernDevServerOptions, Server } from '@modern-js/server';
-import { deepmerge } from './re-exports';
+import deepmerge from 'deepmerge';
 import { logger as defaultLogger, debug } from './logger';
 import { DEFAULT_PORT } from './constants';
 import { createAsyncHook } from './createHook';
@@ -46,7 +46,7 @@ export const getDevServerOptions = async ({
       https: builderConfig.dev?.https,
     },
     // merge devServerOptions from serverOptions
-    serverOptions.dev as Exclude<typeof serverOptions.dev, boolean> || {},
+    (serverOptions.dev as Exclude<typeof serverOptions.dev, boolean>) || {},
   );
 
   const devConfig = applyOptionsChain(
@@ -141,7 +141,7 @@ export async function startDevServer<
   debug('listen dev server');
   await server.init();
 
-  return new Promise<StartServerResult>(resolve => {
+  return new Promise<StartServerResult>((resolve) => {
     server.listen(
       {
         host,
@@ -175,7 +175,7 @@ export async function startDevServer<
         await options.context.hooks.onAfterStartDevServerHook.call({ port });
         resolve({
           port,
-          urls: urls.map(item => item.url),
+          urls: urls.map((item) => item.url),
           server,
         });
       },

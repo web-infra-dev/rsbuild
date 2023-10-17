@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "@modern-js/builder-shared": "2.36.0",
-    "@swc/helpers": "0.5.1",
     "node-libs-browser": "2.2.1"
   },
   "devDependencies": {

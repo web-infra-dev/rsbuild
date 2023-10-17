@@ -27,7 +27,6 @@
   "dependencies": {
     "@modern-js/utils": "2.36.0",
     "@napi-rs/image": "^1.7.0",
-    "@swc/helpers": "0.5.1",
     "svgo": "^3.0.2"
   },
   "devDependencies": {

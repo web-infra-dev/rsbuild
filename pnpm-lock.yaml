@@ -188,9 +188,6 @@ importers:
       '@modern-js/builder-shared':
         specifier: 2.36.0
         version: 2.36.0(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
-      '@swc/helpers':
-        specifier: 0.5.1
-        version: 0.5.1
       esbuild:
         specifier: 0.17.19
         version: 0.17.19
@@ -216,9 +213,6 @@ importers:
       '@napi-rs/image':
         specifier: ^1.7.0
         version: 1.7.0
-      '@swc/helpers':
-        specifier: 0.5.1
-        version: 0.5.1
       svgo:
         specifier: ^3.0.2
         version: 3.0.2
@@ -241,9 +235,6 @@ importers:
       '@modern-js/builder-shared':
         specifier: 2.36.0
         version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
-      '@swc/helpers':
-        specifier: 0.5.1
-        version: 0.5.1
       node-libs-browser:
         specifier: 2.2.1
         version: 2.2.1
@@ -272,9 +263,6 @@ importers:
       '@modern-js/builder-webpack-provider':
         specifier: 2.36.0
         version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
-      '@swc/helpers':
-        specifier: 0.5.1
-        version: 0.5.1
       stylus:
         specifier: 0.59.0
         version: 0.59.0
@@ -321,6 +309,9 @@ importers:
       '@modern-js/utils':
         specifier: 2.36.0
         version: 2.36.0
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@swc/helpers':
         specifier: 0.5.1
         version: 0.5.1
@@ -371,9 +362,6 @@ importers:
       '@modern-js/builder-shared':
         specifier: 2.36.0
         version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
-      '@swc/helpers':
-        specifier: 0.5.1
-        version: 0.5.1
       '@vue/babel-plugin-jsx':
         specifier: 1.1.1
         version: 1.1.1(@babel/core@7.23.0)
@@ -408,9 +396,6 @@ importers:
       '@modern-js/builder-shared':
         specifier: 2.36.0
         version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
-      '@swc/helpers':
-        specifier: 0.5.1
-        version: 0.5.1
       '@vue/babel-preset-jsx':
         specifier: ^1.4.0
         version: 1.4.0(@babel/core@7.23.0)
@@ -454,15 +439,15 @@ importers:
       '@modern-js/utils':
         specifier: 2.36.0
         version: 2.36.0
-      '@swc/helpers':
-        specifier: 0.5.1
-        version: 0.5.1
       '@types/fs-extra':
         specifier: ^11.0.2
         version: 11.0.2
       acorn:
         specifier: ^8.10.0
         version: 8.10.0
+      browserslist:
+        specifier: ^4.22.1
+        version: 4.22.1
       caniuse-lite:
         specifier: ^1.0.30001520
         version: 1.0.30001547
@@ -3847,7 +3832,7 @@ packages:
       react-refresh: 0.14.0
       schema-utils: 3.3.0
       source-map: 0.7.4
-      webpack: 5.89.0(esbuild@0.17.19)
+      webpack: 5.89.0
 
   /@polka/url@0.5.0:
     resolution: {integrity: sha512-oZLYFEAzUKyi3SKnXvj32ZCEGH6RDnao7COuCVhDydMS9NrCSVXhM79VaKyP5+Zc33m0QXEd2DN3UkU7OsHcfw==}
@@ -9642,7 +9627,7 @@ packages:
       webpack: ^5.0.0
     dependencies:
       schema-utils: 4.2.0
-      webpack: 5.89.0(esbuild@0.17.19)
+      webpack: 5.89.0
 
   /minimalistic-assert@1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
@@ -12258,7 +12243,7 @@ packages:
     peerDependencies:
       webpack: ^5.0.0
     dependencies:
-      webpack: 5.89.0(esbuild@0.17.19)
+      webpack: 5.89.0
 
   /style-to-object@0.4.2:
     resolution: {integrity: sha512-1JGpfPB3lo42ZX8cuPrheZbfQ6kqPPnPHlKMyeRYtfKD+0jG+QsXgXN57O/dvJlzlB2elI6dGmrPnl5VPQFPaA==}
@@ -12641,7 +12626,7 @@ packages:
       micromatch: 4.0.5
       semver: 7.5.4
       typescript: 5.2.2
-      webpack: 5.89.0(esbuild@0.17.19)
+      webpack: 5.89.0
 
   /tsconfck@2.1.2(typescript@5.2.2):
     resolution: {integrity: sha512-ghqN1b0puy3MhhviwO2kGF8SeMDNhEbnKxjK7h6+fvY9JAxqvXi8y5NAHSQv687OVboS2uZIByzGd45/YxrRHg==}
@@ -13310,7 +13295,7 @@ packages:
     dependencies:
       html-webpack-plugin: 5.5.3(webpack@5.89.0)
       typed-assert: 1.0.9
-      webpack: 5.89.0(esbuild@0.17.19)
+      webpack: 5.89.0
 
   /webpack@5.89.0:
     resolution: {integrity: sha512-qyfIC10pOr70V+jkmud8tMfajraGCZMBWJtrmuBymQKCrLTRejBI8STDp1MCyZu/QTdZSeacCQYpYNQVOzX5kw==}

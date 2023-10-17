@@ -1,4 +1,4 @@
-import browserslist from '@modern-js/utils/browserslist';
+import browserslist from 'browserslist';
 
 const CSS_FEATURES_BROWSER = {
   customProperties: {
@@ -76,7 +76,7 @@ const getCssFeatureBrowsers = (feature: CssFeatures) => {
 const isFeatureSupported = (
   projectBrowsers: string[],
   featureBrowsers: string[],
-) => projectBrowsers.every(item => featureBrowsers.includes(item));
+) => projectBrowsers.every((item) => featureBrowsers.includes(item));
 
 export function getCssSupport(projectBrowserslist: string[]) {
   const projectBrowsers = browserslist(projectBrowserslist);

@@ -8,6 +8,7 @@
     "envinfo",
     "icss",
     "longpaths",
+    "napi",
     "oxlint",
     "pluggable",
     "rebranded",
