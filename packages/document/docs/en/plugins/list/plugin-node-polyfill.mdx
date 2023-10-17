@@ -8,40 +8,27 @@ By using the Node Polyfill plugin, Node core libs polyfills are automatically in
 
 ## Quick Start
 
-### Used in Modern.js framework
+### Install Plugin
 
-The Modern.js framework integrates the Rsbuild's Node Polyfill plugin by default, so you don't need to manually install and register the plugin, just set the [output.disableNodePolyfill](https://modernjs.dev/configure/app/output/disable-node-polyfill.html) config to `false`:
-
-```js
-export default defineConfig({
-  output: {
-    disableNodePolyfill: false,
-  },
-});
-```
-
-### Use via the Node API
-
-If you use the Rsbuild's Node API, you need to manually install and register the esbuild plugin.
-
-#### Install
-
-You can install the plugin with the following command:
+You can install the plugin using the following command:
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-node-polyfill -D" />
 
-#### Register
+### Register Plugin
 
-Register node polyfill plugin through the `addPlugins` method:
+You can register the plugin in the `rsbuild.config.ts` file:
 
-```js
+```ts title="rsbuild.config.ts"
 import { builderPluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
 
-// add the plugin to the builder instance
-builder.addPlugins([builderPluginNodePolyfill()]);
+export default {
+  plugins: [builderPluginNodePolyfill()],
+};
 ```
+
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/builder-instance.html#builderaddplugins) method.
 
 ## Node Polyfills
 

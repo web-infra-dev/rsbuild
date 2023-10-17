@@ -14,24 +14,17 @@ import { PackageManagerTabs } from '@theme';
 
 ### 注册插件
 
-在 Modern.js 等上层框架中，你可以通过 `builderPlugins` 配置项来注册 Stylus 插件：
+你可以在 `rsbuild.config.ts` 文件中注册插件：
 
-```ts
+```ts title="rsbuild.config.ts"
 import { builderPluginStylus } from '@rsbuild/plugin-stylus';
 
 export default {
-  builderPlugins: [builderPluginStylus()],
+  plugins: [builderPluginStylus()],
 };
 ```
 
-当你直接调用 Rsbuild 的 Node API 时，可以通过 `addPlugins` 方法来注册 Stylus 插件：
-
-```js
-import { builderPluginStylus } from '@rsbuild/plugin-stylus';
-
-// 往 builder 实例上添加插件
-builder.addPlugins([builderPluginStylus()]);
-```
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/builder-instance.html#builderaddplugins) 方法来注册插件。
 
 ## 示例
 

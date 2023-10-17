@@ -13,30 +13,7 @@ import Esbuild from '@zh/shared/esbuild.md';
 
 ## 快速开始
 
-### 在 Modern.js 框架中使用
-
-Modern.js 框架默认集成了 Rsbuild 的 esbuild 插件，因此，你不需要手动安装和注册插件，只需要使用 [tools.esbuild](https://modernjs.dev/configure/app/tools/esbuild.html) 配置项即可：
-
-```js
-export default defineConfig({
-  tools: {
-    esbuild: {
-      loader: {
-        target: 'chrome61',
-      },
-      minimize: {
-        target: 'chrome61',
-      },
-    },
-  },
-});
-```
-
-### 通过 Node API 使用
-
-如果你直接使用了 Rsbuild 的 Node API，那么需要手动安装和注册 esbuild 插件。
-
-#### 安装插件
+### 安装插件
 
 你可以通过如下的命令安装插件:
 
@@ -44,16 +21,19 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-esbuild -D" />
 
-#### 注册插件
+### 注册插件
 
-通过 `addPlugins` 方法来注册 esbuild 插件：
+你可以在 `rsbuild.config.ts` 文件中注册插件：
 
-```js
+```ts title="rsbuild.config.ts"
 import { builderPluginEsbuild } from '@rsbuild/plugin-esbuild';
 
-// 往 builder 实例上添加插件
-builder.addPlugins([builderPluginEsbuild()]);
+export default {
+  plugins: [builderPluginEsbuild()],
+};
 ```
+
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/builder-instance.html#builderaddplugins) 方法来注册插件。
 
 ## 配置
 
