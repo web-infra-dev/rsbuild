@@ -57,7 +57,7 @@ const builder = await createRsbuild(provider, {
 ```ts
 type RsbuildEntry = Record<string, string | string[]>;
 
-type RsbuildTarget = 'web' | 'node' | 'modern-web' | 'web-worker';
+type RsbuildTarget = 'web' | 'node' | 'web-worker';
 
 type CreateRsbuildOptions = {
   cwd?: string;

@@ -89,7 +89,7 @@ export default {
 
 #### target
 
-- **Type:** `'web' | 'node' | 'modern-web' | 'web-worker'`
+- **Type:** `'web' | 'node' | 'web-worker'`
 
 The `target` parameter can be used to determine the current target. For example:
 

@@ -87,7 +87,7 @@ export default {
 
 #### target
 
-- **类型：** `'web' | 'node' | 'modern-web' | 'web-worker'`
+- **类型：** `'web' | 'node' | 'web-worker'`
 
 通过 target 参数可以判断当前构建的目标运行时环境。比如：
 

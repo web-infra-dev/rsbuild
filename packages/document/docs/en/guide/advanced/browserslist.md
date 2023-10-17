@@ -170,12 +170,14 @@ Rsbuild will set different default values of Browserslist according to [build ta
 The default values of web target are as follows:
 
 ```yaml
-> 0.01%
-not dead
-not op_mini all
+chrome >= 61
+edge >= 16
+firefox >= 60
+safari >= 11
+ios_saf >= 11
 ```
 
-Under this browser range, JavaScript code will be compiled to ES5 syntax.
+Under this browser range, JavaScript code will be compatible with browsers that support [native ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
 
 ### Node Target
 
@@ -188,16 +190,6 @@ node >= 14
 ### Web Worker Target
 
 The default Browserslist of the Web Worker target is consistent with the Web target.
-
-```yaml
-> 0.01%
-not dead
-not op_mini all
-```
-
-### Modern Web Target
-
-Modern Web target will be compatible with browsers that support [native ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) by default.
 
 ```yaml
 chrome >= 61
