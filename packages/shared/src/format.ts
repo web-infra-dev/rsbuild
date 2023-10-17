@@ -1,4 +1,4 @@
-import chalk from '@modern-js/utils/chalk';
+import { chalk } from './re-exports';
 import type { Stats, MultiStats } from './types';
 import { formatWebpackMessages } from '@modern-js/utils/universal/format-webpack';
 

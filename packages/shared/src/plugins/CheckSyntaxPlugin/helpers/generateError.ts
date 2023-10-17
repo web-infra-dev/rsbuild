@@ -1,6 +1,6 @@
 import { AcornParseError, CheckSyntaxExclude, SyntaxError } from './type';
 import { SourceMapConsumer } from 'source-map';
-import { chalk, fs } from '@modern-js/utils';
+import { chalk, fs } from '../../../re-exports';
 import { checkIsExcludeSource } from './utils';
 
 export function displayCodePointer(code: string, pos: number) {
