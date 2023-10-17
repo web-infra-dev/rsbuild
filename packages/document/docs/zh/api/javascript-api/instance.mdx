@@ -308,7 +308,7 @@ await rsbuild.startDevServer({
 
 ### 自定义日志输出对象
 
-默认情况下，Rsbuild 会使用 `@modern-js/utils/logger` 来输出日志，你可以通过 `logger` 参数来自定义日志输出对象。
+默认情况下，Rsbuild 会使用 [rslog](https://github.com/rspack-contrib/rslog) 来输出日志，你可以通过 `logger` 参数来自定义日志输出对象。
 
 ```ts
 const customLogger = {

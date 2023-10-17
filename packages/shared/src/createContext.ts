@@ -1,5 +1,6 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
+import { logger } from 'rslog';
 import {
   BuilderContext,
   CreateBuilderOptions,
@@ -7,7 +8,6 @@ import {
   BundlerType,
 } from './types';
 import { getAbsoluteDistPath } from './fs';
-import { logger } from '@modern-js/utils/logger';
 
 /**
  * Create context by config.
