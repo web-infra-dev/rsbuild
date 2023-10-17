@@ -168,26 +168,7 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public",
     "provenance": true,
-    "types": "./dist/index.d.ts",
-    "exports": {
-      ".": "./dist/index.js",
-      "./open": "./compiled/open/index.js",
-      "./babel-loader": "./compiled/babel-loader/index.js",
-      "./webpack-dev-middleware": "./compiled/webpack-dev-middleware/index.js",
-      "./webpack-bundle-analyzer": "./compiled/webpack-bundle-analyzer/index.js",
-      "./test-stub": "./dist/test-stub/index.js",
-      "./zod": "./dist/exports/zod.js",
-      "./fork-ts-checker-webpack-plugin": "./dist/exports/fork-ts-checker-webpack-plugin.js",
-      "./pug": "./compiled/pug/index.js",
-      "./css-modules-typescript-loader": "./dist/loaders/css-modules-typescript-loader.js",
-      "./ignore-css-loader": "./dist/loaders/ignore-css-loader.js",
-      "./icss-utils": "./compiled/icss-utils/index.js",
-      "./postcss-modules-extract-imports": "./compiled/postcss-modules-extract-imports/index.js",
-      "./postcss-modules-local-by-default": "./compiled/postcss-modules-local-by-default/index.js",
-      "./postcss-modules-scope": "./compiled/postcss-modules-scope/index.js",
-      "./postcss-modules-values": "./compiled/postcss-modules-values/index.js",
-      "./webpack-merge": "./compiled/webpack-merge/index.js"
-    }
+    "types": "./dist/index.d.ts"
   },
   "scripts": {
     "dev": "modern build --watch",
