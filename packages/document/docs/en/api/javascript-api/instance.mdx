@@ -6,35 +6,35 @@ extractApiHeaders: [2]
 
 This section describes all the properties and methods on the Rsbuild instance object.
 
-## builder.context
+## rsbuild.context
 
-`builder.context` is a read-only object that provides some context infos.
+`rsbuild.context` is a read-only object that provides some context infos.
 
-### builder.context.entry
+### rsbuild.context.entry
 
 The entry object, corresponding to the `entry` option of `createRsbuild` method.
 
 - **Type**
 
 ```ts
-type BuilderEntry = Record<string, string | string[]>;
+type RsbuildEntry = Record<string, string | string[]>;
 ```
 
-### builder.context.target
+### rsbuild.context.target
 
 Build target type, corresponding to the `target` option of `createRsbuild` method.
 
 - **Type**
 
 ```ts
-type BuilderTarget = 'web' | 'node' | 'modern-web' | 'web-worker';
+type RsbuildTarget = 'web' | 'node' | 'modern-web' | 'web-worker';
 
 type Context = {
-  target: BuilderTarget | BuilderTarget[];
+  target: RsbuildTarget | RsbuildTarget[];
 };
 ```
 
-### builder.context.rootPath
+### rsbuild.context.rootPath
 
 The root path of current build, corresponding to the `cwd` option of `createRsbuild` method.
 
@@ -44,7 +44,7 @@ The root path of current build, corresponding to the `cwd` option of `createRsbu
 type RootPath = string;
 ```
 
-### builder.context.srcPath
+### rsbuild.context.srcPath
 
 The absolute path to the src directory.
 
@@ -54,9 +54,9 @@ The absolute path to the src directory.
 type SrcPath = string;
 ```
 
-### builder.context.distPath
+### rsbuild.context.distPath
 
-The absolute path of the output directory, corresponding to the `output.distPath.root` config in `BuilderConfig`.
+The absolute path of the output directory, corresponding to the `output.distPath.root` config in `RsbuildConfig`.
 
 - **Type**
 
@@ -64,7 +64,7 @@ The absolute path of the output directory, corresponding to the `output.distPath
 type DistPath = string;
 ```
 
-### builder.context.cachePath
+### rsbuild.context.cachePath
 
 The absolute path of the build cache files.
 
@@ -74,7 +74,7 @@ The absolute path of the build cache files.
 type CachePath = string;
 ```
 
-### builder.context.configPath
+### rsbuild.context.configPath
 
 The absolute path to the framework config file, corresponding to the `configPath` option of `createRsbuild` method.
 
@@ -84,7 +84,7 @@ The absolute path to the framework config file, corresponding to the `configPath
 type ConfigPath = string | undefined;
 ```
 
-### builder.context.tsconfigPath
+### rsbuild.context.tsconfigPath
 
 The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json file does not exist in current project.
 
@@ -94,7 +94,7 @@ The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json
 type TsconfigPath = string | undefined;
 ```
 
-### builder.context.framework
+### rsbuild.context.framework
 
 The name of the framework, a unique identifier, the default value is `'modern.js'`.
 
@@ -104,7 +104,7 @@ The name of the framework, a unique identifier, the default value is `'modern.js
 type Framework = string | undefined;
 ```
 
-### builder.context.devServer
+### rsbuild.context.devServer
 
 Dev Server information, including the current Dev Server hostname and port number.
 
@@ -117,7 +117,7 @@ type DevServer = {
 };
 ```
 
-### builder.context.bundlerType
+### rsbuild.context.bundlerType
 
 The bundler type of current build.
 
@@ -127,7 +127,7 @@ The bundler type of current build.
 type bundlerType = 'webpack' | 'rspack';
 ```
 
-## builder.build
+## rsbuild.build
 
 Perform a production build.
 
@@ -147,7 +147,7 @@ function Build(options?: BuildOptions): Promise<void>;
 - **Example**
 
 ```ts
-await builder.build();
+await rsbuild.build();
 ```
 
 ### Development environment build
@@ -155,7 +155,7 @@ await builder.build();
 If you need to perform a development build, you can set the `mode` option to `'development'`.
 
 ```ts
-await builder.build({
+await rsbuild.build({
   mode: 'development',
 });
 ```
@@ -165,7 +165,7 @@ await builder.build({
 If you need to watch file changes and re-build, you can set the `watch` option to `true`.
 
 ```ts
-await builder.build({
+await rsbuild.build({
   watch: true,
 });
 ```
@@ -178,12 +178,12 @@ In some cases, you may want to use a custom compiler:
 const compiler = webpack({
   // ...
 });
-await builder.build({
+await rsbuild.build({
   compiler,
 });
 ```
 
-## builder.startDevServer
+## rsbuild.startDevServer
 
 Start the local Dev Server, based on the Modern.js Dev Server.
 
@@ -221,7 +221,7 @@ function StartDevServer(
 Start Dev Server:
 
 ```ts
-await builder.startDevServer();
+await rsbuild.startDevServer();
 ```
 
 After successfully starting Dev Server, you can see the following logs:
@@ -240,7 +240,7 @@ info    Starting dev server...
 - `server`: Server instance object.
 
 ```ts
-const { urls, port, server } = await builder.startDevServer();
+const { urls, port, server } = await rsbuild.startDevServer();
 console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
 console.log(port); // 8080
 
@@ -253,7 +253,7 @@ await server.close();
 Setting `printURLs` to `false` to disable the default URL output, so you can custom the logs.
 
 ```ts
-await builder.startDevServer({
+await rsbuild.startDevServer({
   printURLs: false,
 });
 ```
@@ -261,7 +261,7 @@ await builder.startDevServer({
 You can also directly configure `printURLs` as a function to modify URLs, such as adding a subpath to each URL:
 
 ```ts
-await builder.startDevServer({
+await rsbuild.startDevServer({
   printURLs: urls => {
     return urls.map(({ label, url }) => ({
       label,
@@ -278,7 +278,7 @@ When a port is occupied, Rsbuild will automatically increment the port number un
 Set `strictPort` to `true` and Rsbuild will throw an exception when the port is occupied.
 
 ```ts
-await builder.startDevServer({
+await rsbuild.startDevServer({
   strictPort: true,
 });
 ```
@@ -291,7 +291,7 @@ In some cases, you may want to use a custom compiler:
 const compiler = webpack({
   // ...
 });
-await builder.startDevServer({
+await rsbuild.startDevServer({
   compiler,
 });
 ```
@@ -301,7 +301,7 @@ await builder.startDevServer({
 In some cases, the default startup port number is already occupied. In this situation, Rsbuild will automatically increment the port number until it finds an available one. This process will output a prompt log. If you do not want this log, you can set `getPortSliently` to `true`.
 
 ```ts
-await builder.startDevServer({
+await rsbuild.startDevServer({
   getPortSliently: true,
 });
 ```
@@ -335,16 +335,16 @@ const customLogger = {
   };
 }
 
-await builder.startDevServer({
+await rsbuild.startDevServer({
   logger: customLogger,
 });
 ```
 
 Then Rsbuild will use the custom logger to output logs.
 
-## builder.serve
+## rsbuild.serve
 
-Start a server to preview the production build locally. This method should be executed after `builder.build`.
+Start a server to preview the production build locally. This method should be executed after `rsbuild.build`.
 
 - **Type**
 
@@ -363,7 +363,7 @@ function server(): Promise<StartServerResult>;
 Start the server：
 
 ```ts
-await builder.serve();
+await rsbuild.serve();
 ```
 
 `serve` returns the following parameters:
@@ -373,7 +373,7 @@ await builder.serve();
 - `server`: Server instance object.
 
 ```ts
-const { urls, port, server } = await builder.serve();
+const { urls, port, server } = await rsbuild.serve();
 console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
 console.log(port); // 8080
 
@@ -381,7 +381,7 @@ console.log(port); // 8080
 await server.close();
 ```
 
-## builder.createCompiler
+## rsbuild.createCompiler
 
 Create a Compiler object.
 
@@ -396,12 +396,12 @@ function CreateCompiler(): Promise<Compiler | MultiCompiler>;
 - **Example**
 
 ```ts
-const compiler = await builder.createCompiler();
+const compiler = await rsbuild.createCompiler();
 ```
 
 > In most scenarios, you do not need to use this API unless you need to custom the Dev Server or other advanced scenarios.
 
-## builder.addPlugins
+## rsbuild.addPlugins
 
 Register one or more Rsbuild plugins, which can be called multiple times.
 
@@ -413,7 +413,7 @@ This method needs to be called before compiling. If it is called after compiling
 type AddPluginsOptions = { before?: string } | { after?: string };
 
 function AddPlugins(
-  plugins: BuilderPlugins[],
+  plugins: RsbuildPlugins[],
   options?: AddPluginsOptions,
 ): Promise<void>;
 ```
@@ -421,16 +421,16 @@ function AddPlugins(
 - **Example**
 
 ```ts
-builder.addPlugins([pluginFoo(), pluginBar()]);
+rsbuild.addPlugins([pluginFoo(), pluginBar()]);
 
 // Insert before the bar plugin
-builder.addPlugins([pluginFoo()], { before: 'bar' });
+rsbuild.addPlugins([pluginFoo()], { before: 'bar' });
 
 // Insert after the bar plugin
-builder.addPlugins([pluginFoo()], { after: 'bar' });
+rsbuild.addPlugins([pluginFoo()], { after: 'bar' });
 ```
 
-## builder.removePlugins
+## rsbuild.removePlugins
 
 Removes one or more Rsbuild plugins, which can be called multiple times.
 
@@ -447,13 +447,13 @@ function RemovePlugins(pluginNames: string[]): void;
 ```ts
 // add plugin
 const pluginFoo = pluginFoo();
-builder.addPlugins(pluginFoo);
+rsbuild.addPlugins(pluginFoo);
 
 // remove plugin
-builder.removePlugins([pluginFoo.name]);
+rsbuild.removePlugins([pluginFoo.name]);
 ```
 
-## builder.isPluginExists
+## rsbuild.isPluginExists
 
 import IsPluginExists from '@en/shared/isPluginExists.md';
 
@@ -462,12 +462,12 @@ import IsPluginExists from '@en/shared/isPluginExists.md';
 - **Example**
 
 ```ts
-builder.addPlugins([pluginFoo()]);
+rsbuild.addPlugins([pluginFoo()]);
 
-builder.isPluginExists(pluginFoo().name); // true
+rsbuild.isPluginExists(pluginFoo().name); // true
 ```
 
-## builder.inspectConfig
+## rsbuild.inspectConfig
 
 Inspect the final generated builder config and bundler config.
 
@@ -482,7 +482,7 @@ When you need to view the complete builder and bundler configurations during the
 ```ts
 type InspectConfigOptions = {
   // View the config in the specified environment, the default is "development", can be set to "production"
-  env?: BuilderMode;
+  env?: RsbuildMode;
   // Whether to enable verbose mode, display the complete content of the function in the config, the default is `false`
   verbose?: boolean;
   // Specify the output path, defaults to the value configured by `output.distPath.root`
@@ -495,7 +495,7 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
   builderConfig: string;
   bundlerConfigs: string[];
   origin: {
-    builderConfig: BuilderConfig;
+    builderConfig: RsbuildConfig;
     bundlerConfigs: BundlerConfigs[];
   };
 }>;
@@ -506,7 +506,7 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
 Get the config content in string format:
 
 ```ts
-const { builderConfig, bundlerConfigs } = await builder.inspectConfig();
+const { builderConfig, bundlerConfigs } = await rsbuild.inspectConfig();
 
 console.log(builderConfig, bundlerConfigs);
 ```
@@ -514,12 +514,12 @@ console.log(builderConfig, bundlerConfigs);
 Write the config content to disk:
 
 ```ts
-await builder.inspectConfig({
+await rsbuild.inspectConfig({
   writeToDisk: true,
 });
 ```
 
-## builder.onBeforeCreateCompiler
+## rsbuild.onBeforeCreateCompiler
 
 import OnBeforeCreateCompiler from '@en/shared/onBeforeCreateCompiler.md';
 
@@ -528,12 +528,12 @@ import OnBeforeCreateCompiler from '@en/shared/onBeforeCreateCompiler.md';
 - **Example**
 
 ```ts
-builder.onBeforeCreateCompiler(({ bundlerConfigs }) => {
+rsbuild.onBeforeCreateCompiler(({ bundlerConfigs }) => {
   console.log('the bundler config is ', bundlerConfigs);
 });
 ```
 
-## builder.onAfterCreateCompiler
+## rsbuild.onAfterCreateCompiler
 
 import OnAfterCreateCompiler from '@en/shared/onAfterCreateCompiler.md';
 
@@ -542,12 +542,12 @@ import OnAfterCreateCompiler from '@en/shared/onAfterCreateCompiler.md';
 - **Example**
 
 ```ts
-builder.onAfterCreateCompiler(({ compiler }) => {
+rsbuild.onAfterCreateCompiler(({ compiler }) => {
   console.log('the compiler is ', compiler);
 });
 ```
 
-## builder.onBeforeBuild
+## rsbuild.onBeforeBuild
 
 import OnBeforeBuild from '@en/shared/onBeforeBuild.md';
 
@@ -556,12 +556,12 @@ import OnBeforeBuild from '@en/shared/onBeforeBuild.md';
 - **Example**
 
 ```ts
-builder.onBeforeBuild(({ bundlerConfigs }) => {
+rsbuild.onBeforeBuild(({ bundlerConfigs }) => {
   console.log('the bundler config is ', bundlerConfigs);
 });
 ```
 
-## builder.onAfterBuild
+## rsbuild.onAfterBuild
 
 import OnAfterBuild from '@en/shared/onAfterBuild.md';
 
@@ -570,12 +570,12 @@ import OnAfterBuild from '@en/shared/onAfterBuild.md';
 - **Example**
 
 ```ts
-builder.onAfterBuild(({ stats }) => {
+rsbuild.onAfterBuild(({ stats }) => {
   console.log(stats?.toJson());
 });
 ```
 
-## builder.onBeforeStartDevServer
+## rsbuild.onBeforeStartDevServer
 
 import OnBeforeStartDevServer from '@en/shared/onBeforeStartDevServer.md';
 
@@ -584,12 +584,12 @@ import OnBeforeStartDevServer from '@en/shared/onBeforeStartDevServer.md';
 - **Example**
 
 ```ts
-builder.onBeforeStartDevServer(() => {
+rsbuild.onBeforeStartDevServer(() => {
   console.log('before start!');
 });
 ```
 
-## builder.onAfterStartDevServer
+## rsbuild.onAfterStartDevServer
 
 import OnAfterStartDevServer from '@en/shared/onAfterStartDevServer.md';
 
@@ -598,12 +598,12 @@ import OnAfterStartDevServer from '@en/shared/onAfterStartDevServer.md';
 - **Example**
 
 ```ts
-builder.onAfterStartDevServer(({ port }) => {
+rsbuild.onAfterStartDevServer(({ port }) => {
   console.log('this port is: ', port);
 });
 ```
 
-## builder.onDevCompileDone
+## rsbuild.onDevCompileDone
 
 import OnDevCompileDone from '@en/shared/onDevCompileDone.md';
 
@@ -612,7 +612,7 @@ import OnDevCompileDone from '@en/shared/onDevCompileDone.md';
 - **Example**
 
 ```ts
-builder.onDevCompileDone(({ isFirstCompile }) => {
+rsbuild.onDevCompileDone(({ isFirstCompile }) => {
   if (isFirstCompile) {
     console.log('first compile!');
   } else {
@@ -621,7 +621,7 @@ builder.onDevCompileDone(({ isFirstCompile }) => {
 });
 ```
 
-## builder.onExit
+## rsbuild.onExit
 
 import OnExit from '@en/shared/onExit.md';
 
@@ -630,27 +630,27 @@ import OnExit from '@en/shared/onExit.md';
 - **Example**
 
 ```ts
-builder.onExit(() => {
+rsbuild.onExit(() => {
   console.log('exit!');
 });
 ```
 
-## builder.getBuilderConfig
+## rsbuild.getRsbuildConfig
 
-import GetBuilderConfig from '@en/shared/getBuilderConfig.md';
+import GetRsbuildConfig from '@en/shared/getRsbuildConfig.md';
 
-<GetBuilderConfig />
+<GetRsbuildConfig />
 
 - **Example**
 
 ```ts
-builder.onBeforeBuild(() => {
-  const config = builder.getBuilderConfig();
+rsbuild.onBeforeBuild(() => {
+  const config = rsbuild.getRsbuildConfig();
   console.log(config.html?.title);
 });
 ```
 
-## builder.getNormalizedConfig
+## rsbuild.getNormalizedConfig
 
 import GetNormalizedConfig from '@en/shared/getNormalizedConfig.md';
 
@@ -659,13 +659,13 @@ import GetNormalizedConfig from '@en/shared/getNormalizedConfig.md';
 - **Example**
 
 ```ts
-builder.onBeforeBuild(() => {
+rsbuild.onBeforeBuild(() => {
   const config = api.getNormalizedConfig();
   console.log(config.html.title);
 });
 ```
 
-## builder.getHTMLPaths
+## rsbuild.getHTMLPaths
 
 import GetHTMLPaths from '@en/shared/getHTMLPaths.md';
 
@@ -674,7 +674,7 @@ import GetHTMLPaths from '@en/shared/getHTMLPaths.md';
 - **Example**
 
 ```ts
-builder.onBeforeBuild(() => {
+rsbuild.onBeforeBuild(() => {
   const htmlPaths = api.getHTMLPaths();
   console.log(htmlPaths); // { main: 'html/main/index.html' };
 });

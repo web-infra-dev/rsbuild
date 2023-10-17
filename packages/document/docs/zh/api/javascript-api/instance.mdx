@@ -6,35 +6,35 @@ extractApiHeaders: [2]
 
 本章节描述了 Rsbuild 实例对象上所有的属性和方法。
 
-## builder.context
+## rsbuild.context
 
-`builder.context` 是一个只读对象，提供一些上下文信息。
+`rsbuild.context` 是一个只读对象，提供一些上下文信息。
 
-### builder.context.entry
+### rsbuild.context.entry
 
 构建入口对象，对应调用 `createRsbuild` 时传入的 `entry` 选项。
 
 - **类型**
 
 ```ts
-type BuilderEntry = Record<string, string | string[]>;
+type RsbuildEntry = Record<string, string | string[]>;
 ```
 
-### builder.context.target
+### rsbuild.context.target
 
 构建产物类型，对应调用 `createRsbuild` 时传入的 `target` 选项。
 
 - **类型**
 
 ```ts
-type BuilderTarget = 'web' | 'node' | 'modern-web' | 'web-worker';
+type RsbuildTarget = 'web' | 'node' | 'modern-web' | 'web-worker';
 
 type Context = {
-  target: BuilderTarget | BuilderTarget[];
+  target: RsbuildTarget | RsbuildTarget[];
 };
 ```
 
-### builder.context.rootPath
+### rsbuild.context.rootPath
 
 当前执行构建的根路径，对应调用 `createRsbuild` 时传入的 `cwd` 选项。
 
@@ -44,7 +44,7 @@ type Context = {
 type RootPath = string;
 ```
 
-### builder.context.srcPath
+### rsbuild.context.srcPath
 
 src 目录的绝对路径。
 
@@ -54,9 +54,9 @@ src 目录的绝对路径。
 type SrcPath = string;
 ```
 
-### builder.context.distPath
+### rsbuild.context.distPath
 
-构建产物输出目录的绝对路径，对应 `BuilderConfig` 中的 `output.distPath.root` 配置项。
+构建产物输出目录的绝对路径，对应 `RsbuildConfig` 中的 `output.distPath.root` 配置项。
 
 - **类型**
 
@@ -64,7 +64,7 @@ type SrcPath = string;
 type DistPath = string;
 ```
 
-### builder.context.cachePath
+### rsbuild.context.cachePath
 
 构建过程中生成的缓存文件所在的绝对路径。
 
@@ -74,7 +74,7 @@ type DistPath = string;
 type CachePath = string;
 ```
 
-### builder.context.configPath
+### rsbuild.context.configPath
 
 框架配置文件的绝对路径，对应调用 `createRsbuild` 时传入的 `configPath` 选项。
 
@@ -84,7 +84,7 @@ type CachePath = string;
 type ConfigPath = string | undefined;
 ```
 
-### builder.context.tsconfigPath
+### rsbuild.context.tsconfigPath
 
 tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件，则为 `undefined`。
 
@@ -94,7 +94,7 @@ tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件
 type TsconfigPath = string | undefined;
 ```
 
-### builder.context.framework
+### rsbuild.context.framework
 
 框架的英文名称，唯一标识符，默认值为 `'modern.js'`。
 
@@ -104,7 +104,7 @@ type TsconfigPath = string | undefined;
 type Framework = string | undefined;
 ```
 
-### builder.context.devServer
+### rsbuild.context.devServer
 
 Dev Server 相关信息，包含了当前 Dev Server 的 hostname 和端口号。
 
@@ -117,7 +117,7 @@ type DevServer = {
 };
 ```
 
-### builder.context.bundlerType
+### rsbuild.context.bundlerType
 
 当前执行构建的构建工具类型。
 
@@ -127,7 +127,7 @@ type DevServer = {
 type bundlerType = 'webpack' | 'rspack';
 ```
 
-## builder.build
+## rsbuild.build
 
 调用 build 方法时，会执行一次生产环境构建。
 
@@ -147,7 +147,7 @@ function Build(options?: BuildOptions): Promise<void>;
 - **Example**
 
 ```ts
-await builder.build();
+await rsbuild.build();
 ```
 
 ### 开发环境构建
@@ -155,7 +155,7 @@ await builder.build();
 如果需要执行一次开发环境构建，可以将 `mode` 参数设置为 `'development'`。
 
 ```ts
-await builder.build({
+await rsbuild.build({
   mode: 'development',
 });
 ```
@@ -165,7 +165,7 @@ await builder.build({
 如果需要自动监听文件变化并重新执行构建，可以将 `watch` 参数设置为 `true`。
 
 ```ts
-await builder.build({
+await rsbuild.build({
   watch: true,
 });
 ```
@@ -178,12 +178,12 @@ await builder.build({
 const compiler = webpack({
   // ...
 });
-await builder.build({
+await rsbuild.build({
   compiler,
 });
 ```
 
-## builder.startDevServer
+## rsbuild.startDevServer
 
 启动本地 Dev Server，基于 Modern.js Dev Server 实现。
 
@@ -221,7 +221,7 @@ function StartDevServer(
 启动 Dev Server：
 
 ```ts
-await builder.startDevServer();
+await rsbuild.startDevServer();
 ```
 
 成功启动 Dev Server 后，可以看到以下日志信息：
@@ -240,7 +240,7 @@ info    Starting dev server...
 - `server`：Server 实例对象
 
 ```ts
-const { urls, port, server } = await builder.startDevServer();
+const { urls, port, server } = await rsbuild.startDevServer();
 console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
 console.log(port); // 8080
 
@@ -253,7 +253,7 @@ await server.close();
 将 `printURLs` 设置为 `false` 可以禁用默认的 URL 输出，此时你可以输出自定义的日志内容。
 
 ```ts
-await builder.startDevServer({
+await rsbuild.startDevServer({
   printURLs: false,
 });
 ```
@@ -261,7 +261,7 @@ await builder.startDevServer({
 你也可以直接将 `printURLs` 配置为一个函数来修改 URL，比如给每个 URL 增加一个子路径：
 
 ```ts
-await builder.startDevServer({
+await rsbuild.startDevServer({
   printURLs: urls => {
     return urls.map(({ label, url }) => ({
       label,
@@ -278,7 +278,7 @@ await builder.startDevServer({
 如果你希望在端口被占用时抛出异常，可以将 `strictPort` 设置为 `true`。
 
 ```ts
-await builder.startDevServer({
+await rsbuild.startDevServer({
   strictPort: true,
 });
 ```
@@ -291,7 +291,7 @@ await builder.startDevServer({
 const compiler = webpack({
   // ...
 });
-await builder.startDevServer({
+await rsbuild.startDevServer({
   compiler,
 });
 ```
@@ -301,7 +301,7 @@ await builder.startDevServer({
 某些情况下，默认启动的端口号已经被占用，此时 Rsbuild 会自动递增端口号，直至找到一个可用端口。这个过程会输出提示日志，如果你不希望这段日志，可以将 `getPortSliently` 设置为 `true`。
 
 ```ts
-await builder.startDevServer({
+await rsbuild.startDevServer({
   getPortSliently: true,
 });
 ```
@@ -335,16 +335,16 @@ const customLogger = {
   };
 }
 
-await builder.startDevServer({
+await rsbuild.startDevServer({
   logger: customLogger,
 });
 ```
 
 这样，Rsbuild 会使用你自定义的日志输出对象来输出日志。
 
-## builder.serve
+## rsbuild.serve
 
-在本地启动 Server 来预览生产环境构建的产物，需要在 `builder.build` 方法之后执行。
+在本地启动 Server 来预览生产环境构建的产物，需要在 `rsbuild.build` 方法之后执行。
 
 - **类型**
 
@@ -363,7 +363,7 @@ function server(): Promise<StartServerResult>;
 启动 Server：
 
 ```ts
-await builder.serve();
+await rsbuild.serve();
 ```
 
 `serve` 会返回以下参数：
@@ -373,7 +373,7 @@ await builder.serve();
 - `server`：Server 实例对象
 
 ```ts
-const { urls, port, server } = await builder.serve();
+const { urls, port, server } = await rsbuild.serve();
 console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
 console.log(port); // 8080
 
@@ -381,7 +381,7 @@ console.log(port); // 8080
 await server.close();
 ```
 
-## builder.createCompiler
+## rsbuild.createCompiler
 
 创建一个 compiler 对象。
 
@@ -396,12 +396,12 @@ function CreateCompiler(): Promise<Compiler | MultiCompiler>;
 - **Example**
 
 ```ts
-const compiler = await builder.createCompiler();
+const compiler = await rsbuild.createCompiler();
 ```
 
 > 大部分场景下，不需要使用该 API，除非需要进行自定义 Dev Server 等高级操作。
 
-## builder.addPlugins
+## rsbuild.addPlugins
 
 注册一个或多个 builder 插件，可以被多次调用。
 
@@ -413,7 +413,7 @@ const compiler = await builder.createCompiler();
 type AddPluginsOptions = { before?: string } | { after?: string };
 
 function AddPlugins(
-  plugins: BuilderPlugins[],
+  plugins: RsbuildPlugins[],
   options?: AddPluginsOptions,
 ): Promise<void>;
 ```
@@ -421,16 +421,16 @@ function AddPlugins(
 - **Example**
 
 ```ts
-builder.addPlugins([pluginFoo(), pluginBar()]);
+rsbuild.addPlugins([pluginFoo(), pluginBar()]);
 
 // 在 bar 插件之前插入
-builder.addPlugins([pluginFoo()], { before: 'bar' });
+rsbuild.addPlugins([pluginFoo()], { before: 'bar' });
 
 // 在 bar 插件之后插入
-builder.addPlugins([pluginFoo()], { after: 'bar' });
+rsbuild.addPlugins([pluginFoo()], { after: 'bar' });
 ```
 
-## builder.removePlugins
+## rsbuild.removePlugins
 
 移除一个或多个 builder 插件，可以被多次调用。
 
@@ -447,13 +447,13 @@ function RemovePlugins(pluginNames: string[]): void;
 ```ts
 // 添加插件
 const pluginFoo = pluginFoo();
-builder.addPlugins(pluginFoo);
+rsbuild.addPlugins(pluginFoo);
 
 // 移除插件
-builder.removePlugins([pluginFoo.name]);
+rsbuild.removePlugins([pluginFoo.name]);
 ```
 
-## builder.isPluginExists
+## rsbuild.isPluginExists
 
 import IsPluginExists from '@zh/shared/isPluginExists.md';
 
@@ -462,12 +462,12 @@ import IsPluginExists from '@zh/shared/isPluginExists.md';
 - **Example**
 
 ```ts
-builder.addPlugins([pluginFoo()]);
+rsbuild.addPlugins([pluginFoo()]);
 
-builder.isPluginExists(pluginFoo().name); // true
+rsbuild.isPluginExists(pluginFoo().name); // true
 ```
 
-## builder.inspectConfig
+## rsbuild.inspectConfig
 
 查看 Rsbuild 内部最终生成的 builder 配置和 bundler 配置。
 
@@ -482,7 +482,7 @@ builder.isPluginExists(pluginFoo().name); // true
 ```ts
 type InspectConfigOptions = {
   // 查看指定环境下的配置，默认为 "development"，可以设置为 "production"
-  env?: BuilderMode;
+  env?: RsbuildMode;
   // 是否开启冗余模式，展示配置中函数的完整内容，默认为 `false`
   verbose?: boolean;
   // 指定输出路径，默认为 `output.distPath.root` 配置的值
@@ -495,7 +495,7 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
   builderConfig: string;
   bundlerConfigs: string[];
   origin: {
-    builderConfig: BuilderConfig;
+    builderConfig: RsbuildConfig;
     bundlerConfigs: BundlerConfigs[];
   };
 }>;
@@ -506,7 +506,7 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
 拿到字符串格式的 Config 内容：
 
 ```ts
-const { builderConfig, bundlerConfigs } = await builder.inspectConfig();
+const { builderConfig, bundlerConfigs } = await rsbuild.inspectConfig();
 
 console.log(builderConfig, bundlerConfigs);
 ```
@@ -514,12 +514,12 @@ console.log(builderConfig, bundlerConfigs);
 直接将配置内容写入到磁盘上：
 
 ```ts
-await builder.inspectConfig({
+await rsbuild.inspectConfig({
   writeToDisk: true,
 });
 ```
 
-## builder.onBeforeCreateCompiler
+## rsbuild.onBeforeCreateCompiler
 
 import OnBeforeCreateCompiler from '@zh/shared/onBeforeCreateCompiler.md';
 
@@ -528,12 +528,12 @@ import OnBeforeCreateCompiler from '@zh/shared/onBeforeCreateCompiler.md';
 - **Example**
 
 ```ts
-builder.onBeforeCreateCompiler(({ bundlerConfigs }) => {
+rsbuild.onBeforeCreateCompiler(({ bundlerConfigs }) => {
   console.log('the bundler config is ', bundlerConfigs);
 });
 ```
 
-## builder.onAfterCreateCompiler
+## rsbuild.onAfterCreateCompiler
 
 import OnAfterCreateCompiler from '@zh/shared/onAfterCreateCompiler.md';
 
@@ -542,12 +542,12 @@ import OnAfterCreateCompiler from '@zh/shared/onAfterCreateCompiler.md';
 - **Example**
 
 ```ts
-builder.onAfterCreateCompiler(({ compiler }) => {
+rsbuild.onAfterCreateCompiler(({ compiler }) => {
   console.log('the compiler is ', compiler);
 });
 ```
 
-## builder.onBeforeBuild
+## rsbuild.onBeforeBuild
 
 import OnBeforeBuild from '@zh/shared/onBeforeBuild.md';
 
@@ -556,12 +556,12 @@ import OnBeforeBuild from '@zh/shared/onBeforeBuild.md';
 - **Example**
 
 ```ts
-builder.onBeforeBuild(({ bundlerConfigs }) => {
+rsbuild.onBeforeBuild(({ bundlerConfigs }) => {
   console.log('the bundler config is ', bundlerConfigs);
 });
 ```
 
-## builder.onAfterBuild
+## rsbuild.onAfterBuild
 
 import OnAfterBuild from '@zh/shared/onAfterBuild.md';
 
@@ -570,12 +570,12 @@ import OnAfterBuild from '@zh/shared/onAfterBuild.md';
 - **Example**
 
 ```ts
-builder.onAfterBuild(({ stats }) => {
+rsbuild.onAfterBuild(({ stats }) => {
   console.log(stats?.toJson());
 });
 ```
 
-## builder.onBeforeStartDevServer
+## rsbuild.onBeforeStartDevServer
 
 import OnBeforeStartDevServer from '@zh/shared/onBeforeStartDevServer.md';
 
@@ -584,12 +584,12 @@ import OnBeforeStartDevServer from '@zh/shared/onBeforeStartDevServer.md';
 - **Example**
 
 ```ts
-builder.onBeforeStartDevServer(() => {
+rsbuild.onBeforeStartDevServer(() => {
   console.log('before start!');
 });
 ```
 
-## builder.onAfterStartDevServer
+## rsbuild.onAfterStartDevServer
 
 import OnAfterStartDevServer from '@zh/shared/onAfterStartDevServer.md';
 
@@ -598,12 +598,12 @@ import OnAfterStartDevServer from '@zh/shared/onAfterStartDevServer.md';
 - **Example**
 
 ```ts
-builder.onAfterStartDevServer(({ port }) => {
+rsbuild.onAfterStartDevServer(({ port }) => {
   console.log('this port is: ', port);
 });
 ```
 
-## builder.onDevCompileDone
+## rsbuild.onDevCompileDone
 
 import OnDevCompileDone from '@zh/shared/onDevCompileDone.md';
 
@@ -612,7 +612,7 @@ import OnDevCompileDone from '@zh/shared/onDevCompileDone.md';
 - **Example**
 
 ```ts
-builder.onDevCompileDone(({ isFirstCompile }) => {
+rsbuild.onDevCompileDone(({ isFirstCompile }) => {
   if (isFirstCompile) {
     console.log('first compile!');
   } else {
@@ -621,7 +621,7 @@ builder.onDevCompileDone(({ isFirstCompile }) => {
 });
 ```
 
-## builder.onExit
+## rsbuild.onExit
 
 import OnExit from '@zh/shared/onExit.md';
 
@@ -630,27 +630,27 @@ import OnExit from '@zh/shared/onExit.md';
 - **Example**
 
 ```ts
-builder.onExit(() => {
+rsbuild.onExit(() => {
   console.log('exit!');
 });
 ```
 
-## builder.getBuilderConfig
+## rsbuild.getRsbuildConfig
 
-import GetBuilderConfig from '@zh/shared/getBuilderConfig.md';
+import GetRsbuildConfig from '@zh/shared/getRsbuildConfig.md';
 
-<GetBuilderConfig />
+<GetRsbuildConfig />
 
 - **Example**
 
 ```ts
-builder.onBeforeBuild(() => {
-  const config = api.getBuilderConfig();
+rsbuild.onBeforeBuild(() => {
+  const config = api.getRsbuildConfig();
   console.log(config.html?.title);
 });
 ```
 
-## builder.getNormalizedConfig
+## rsbuild.getNormalizedConfig
 
 import GetNormalizedConfig from '@zh/shared/getNormalizedConfig.md';
 
@@ -659,13 +659,13 @@ import GetNormalizedConfig from '@zh/shared/getNormalizedConfig.md';
 - **Example**
 
 ```ts
-builder.onBeforeBuild(() => {
+rsbuild.onBeforeBuild(() => {
   const config = api.getNormalizedConfig();
   console.log(config.html.title);
 });
 ```
 
-## builder.getHTMLPaths
+## rsbuild.getHTMLPaths
 
 import GetHTMLPaths from '@zh/shared/getHTMLPaths.md';
 
@@ -674,7 +674,7 @@ import GetHTMLPaths from '@zh/shared/getHTMLPaths.md';
 - **Example**
 
 ```ts
-builder.onBeforeBuild(() => {
+rsbuild.onBeforeBuild(() => {
   const htmlPaths = api.getHTMLPaths();
   console.log(htmlPaths); // { main: 'html/main/index.html' };
 });

@@ -148,7 +148,7 @@ Get the path to the builder built-in dependencies, such as:
 - file-loader
 - ...
 
-This method is usually used when you need to reuse the same dependency with the builder.
+This method is usually used when you need to reuse the same dependency with the rsbuild.
 
 :::tip
 Rsbuild built-in dependencies are subject to change with version iterations, e.g. generate large version break changes. Please avoid using this API if it is not necessary.

@@ -1,0 +1,74 @@
+---
+extractApiHeaders: [2]
+---
+
+# Rsbuild Types
+
+This section describes some of the type definitions provided by the Rsbuild.
+
+## RsbuildInstance
+
+The type of the Rsbuild instance.
+
+```ts
+import type { RsbuildInstance } from '@rsbuild/core';
+
+let builder: RsbuildInstance;
+```
+
+You can pass in the Provider type through generics to make the type definition of the Rsbuild instance more accurate:
+
+```ts
+import type { createRsbuild, type RsbuildInstance } from '@rsbuild/core';
+import type { RsbuildWebpackProvider } from '@rsbuild/webpack-provider';
+
+let builder: RsbuildInstance<RsbuildWebpackProvider>;
+```
+
+## RsbuildContext
+
+The type of the context property in the Rsbuild instance.
+
+```ts
+import type { RsbuildContext } from '@rsbuild/core';
+
+const context: RsbuildContext = rsbuild.context;
+```
+
+## RsbuildPlugin
+
+The type of Rsbuild plugin, should be used with the `RsbuildPluginAPI` type exported from the provider.
+
+```ts
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPluginAPI } from '@rsbuild/webpack-provider';
+
+const myPlugin: RsbuildPlugin<RsbuildPluginAPI> = {
+  name: 'my-plugin',
+  setup() {},
+};
+```
+
+## RsbuildTarget
+
+The type of build target.
+
+```ts
+import type { RsbuildTarget } from '@rsbuild/core';
+```
+
+## RsbuildEntry
+
+The type of the `entry` option to the `createRsbuild` method.
+
+```ts
+import type { RsbuildEntry } from '@rsbuild/core';
+```
+
+## CreateRsbuildOptions
+
+The param type of `createRsbuild` method.
+
+```ts
+import type { CreateRsbuildOptions } from '@rsbuild/core';
+```

@@ -89,16 +89,16 @@ const builder = await createRsbuild(provider, {
 });
 ```
 
-除了上述示例中的 `entry` 选项，`createRsbuild` 方法也提供了一些其他的选项，你可以在 [API - createRsbuild](/api/javascript-api/builder-core.html#createbuilder) 中进一步了解。
+除了上述示例中的 `entry` 选项，`createRsbuild` 方法也提供了一些其他的选项，你可以在 [API - createRsbuild](/api/javascript-api/core.html#createbuilder) 中进一步了解。
 
 ### 3. 调用 Rsbuild 实例方法
 
 Rsbuild 实例提供了与构建相关的各个方法，你可以根据实际场景来进行使用。
 
-在本地开发场景，建议使用 [builder.startDevServer](/api/javascript-api/builder-instance.html#builder-startdevserver) 方法，调用后会启动本地 Dev Server。
+在本地开发场景，建议使用 [rsbuild.startDevServer](/api/javascript-api/instance.html#builder-startdevserver) 方法，调用后会启动本地 Dev Server。
 
 ```ts
-await builder.startDevServer();
+await rsbuild.startDevServer();
 ```
 
 成功启动 Dev Server 后，可以看到以下日志信息：
@@ -110,13 +110,13 @@ info    Starting dev server...
   > Network:  http://192.168.0.1:8081
 ```
 
-在生产环境部署场景，建议使用 [builder.build](/api/javascript-api/builder-instance.html#builder-build) 方法，调用后会构建出生产环境产物。
+在生产环境部署场景，建议使用 [rsbuild.build](/api/javascript-api/instance.html#rsbuild-build) 方法，调用后会构建出生产环境产物。
 
 ```ts
-await builder.build();
+await rsbuild.build();
 ```
 
-> 关于 Rsbuild 实例方法的更多介绍，请阅读 [Rsbuild Instance](/api/javascript-api/builder-instance.html) 章节。
+> 关于 Rsbuild 实例方法的更多介绍，请阅读 [Rsbuild Instance](/api/javascript-api/instance.html) 章节。
 
 通过以上三个步骤，你已经了解了 Rsbuild 基本的使用方法。接下来你可以通过 Rsbuild 插件和 Rsbuild 配置来对构建流程进行定制。
 

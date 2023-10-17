@@ -49,7 +49,7 @@ console.log(APP_CONTEXT);
 ```ts
 type GlobalVarsFn = (
   obj: Record<string, JSONValue>,
-  utils: { env: NodeEnv; target: BuilderTarget },
+  utils: { env: NodeEnv; target: RsbuildTarget },
 ) => Record<string, JSONValue> | void;
 ```
 

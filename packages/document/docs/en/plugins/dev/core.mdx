@@ -2,7 +2,7 @@
 
 This section describes the core plugin types and APIs.
 
-## BuilderPlugin
+## RsbuildPlugin
 
 The type of the plugin object. The plugin object contains the following properties:
 
@@ -15,7 +15,7 @@ The type of the plugin object. The plugin object contains the following properti
 The type of the plugin object, which contains the following properties:
 
 ```ts
-export type BuilderPlugin<API = BuilderPluginAPI> = {
+export type RsbuildPlugin<API = RsbuildPluginAPI> = {
   name: string;
   pre?: string[];
   post?: string[];
@@ -27,9 +27,9 @@ export type BuilderPlugin<API = BuilderPluginAPI> = {
 You can import this type from `@rsbuild/core`:
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
-export default (): BuilderPlugin => ({
+export default (): RsbuildPlugin => ({
   name: 'plugin-foo',
 
   pre: ['plugin-bar'],
@@ -95,23 +95,23 @@ const pluginBar = {
 
 For example, if you register both the Foo and Bar plugins mentioned above, the Foo plugin will not take effect because the Bar plugin declares the removal of the Foo plugin.
 
-## BuilderPluginAPI
+## RsbuildPluginAPI
 
 The type of plugin API. The plugin API provides the context info, utility functions and lifecycle hooks.
 
 For a complete introduction to lifecycle hooks, please read the [Plugin Hooks](/plugins/dev/hooks.html) chapter.
 
-When using webpack-provider or rspack-provider, the type definition of `BuilderPluginAPI` is somewhat different, and you can introduce the corresponding type according to the usage scenario of the plugin.
+When using webpack-provider or rspack-provider, the type definition of `RsbuildPluginAPI` is somewhat different, and you can introduce the corresponding type according to the usage scenario of the plugin.
 
 ### Plugin for webpack-provider
 
-When developing plugins for webpack-provider, please import `BuilderPluginAPI` from `@rsbuild/webpack-provider`.
+When developing plugins for webpack-provider, please import `RsbuildPluginAPI` from `@rsbuild/webpack-provider`.
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/core';
-import type { BuilderPluginAPI } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPluginAPI } from '@rsbuild/webpack-provider';
 
-export default (): BuilderPlugin<BuilderPluginAPI> => ({
+export default (): RsbuildPlugin<RsbuildPluginAPI> => ({
   name: 'plugin-foo',
 
   setup: api => {
@@ -124,13 +124,13 @@ export default (): BuilderPlugin<BuilderPluginAPI> => ({
 
 ### Plugins for rspack-provider
 
-When developing plugins for rspack-provider, please import `BuilderPluginAPI` from `@rsbuild/rspack-provider`.
+When developing plugins for rspack-provider, please import `RsbuildPluginAPI` from `@rsbuild/rspack-provider`.
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/core';
-import type { BuilderPluginAPI } from '@rsbuild/rspack-provider';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPluginAPI } from '@rsbuild/rspack-provider';
 
-export default (): BuilderPlugin<BuilderPluginAPI> => ({
+export default (): RsbuildPlugin<RsbuildPluginAPI> => ({
   name: 'plugin-foo',
 
   setup: api => {
@@ -143,17 +143,17 @@ export default (): BuilderPlugin<BuilderPluginAPI> => ({
 
 ### Plugins for both webpack-provider and rspack-provider
 
-When developing plugins for both webpack-provider and rspack-provider, please import `DefaultBuilderPlugin` from `@rsbuild/shared`.
+When developing plugins for both webpack-provider and rspack-provider, please import `DefaultRsbuildPlugin` from `@rsbuild/shared`.
 
 Note that developing plugins that can support both webpack and Rspack at the same time means that you cannot use any APIs with webpack / Rspack identifiers, such as `modifyWebpackConfig` or `modifyRspackConfig`.
 
 You can use [modifyBundlerChain](/plugins/dev/hooks.html#modifybundlerchain-experimental) to modify the configuration that applies to both webpack and Rspack.
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/core';
-import type { DefaultBuilderPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
-export default (): BuilderPlugin<DefaultBuilderPlugin> => ({
+export default (): RsbuildPlugin<DefaultRsbuildPlugin> => ({
   name: 'plugin-foo',
 
   setup: api => {
@@ -168,7 +168,7 @@ export default (): BuilderPlugin<DefaultBuilderPlugin> => ({
 
 `api.context` is a read-only object that provides some context information.
 
-The content of `api.context` is exactly the same as `builder.context`, please refer to [builder.context](/api/javascript-api/builder-instance.html#builder-context).
+The content of `api.context` is exactly the same as `rsbuild.context`, please refer to [rsbuild.context](/api/javascript-api/instance.html#rsbuild-context).
 
 - **Example**
 
@@ -180,18 +180,18 @@ const pluginFoo = () => ({
 });
 ```
 
-## api.getBuilderConfig
+## api.getRsbuildConfig
 
-import GetBuilderConfig from '@en/shared/getBuilderConfig.md';
+import GetRsbuildConfig from '@en/shared/getRsbuildConfig.md';
 
-<GetBuilderConfig />
+<GetRsbuildConfig />
 
 - **Example**
 
 ```ts
 const pluginFoo = () => ({
   setup(api) {
-    const config = api.getBuilderConfig();
+    const config = api.getRsbuildConfig();
     console.log(config.html?.title);
   },
 });

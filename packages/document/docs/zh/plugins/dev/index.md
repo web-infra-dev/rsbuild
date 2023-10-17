@@ -12,16 +12,16 @@ Rsbuild 底层支持 webpack 和 Rspack 等 bundler，并提供统一的 Node.js
 
 ## 开发插件
 
-插件提供类似 `(options?: PluginOptions) => BuilderPlugin` 的函数作为入口，建议将插件函数命名为 `pluginXXX`。
+插件提供类似 `(options?: PluginOptions) => RsbuildPlugin` 的函数作为入口，建议将插件函数命名为 `pluginXXX`。
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/webpack-provider';
 
 export interface PluginFooOptions {
   message?: string;
 }
 
-export const pluginFoo = (options?: PluginFooOptions): BuilderPlugin => ({
+export const pluginFoo = (options?: PluginFooOptions): RsbuildPlugin => ({
   name: 'plugin-foo',
   setup(api) {
     api.onExit(() => {
@@ -31,7 +31,7 @@ export const pluginFoo = (options?: PluginFooOptions): BuilderPlugin => ({
   },
 });
 
-builder.addPlugins([pluginFoo({ message: 'some other message.' })]);
+rsbuild.addPlugins([pluginFoo({ message: 'some other message.' })]);
 ```
 
 函数形式的插件可以 **接受选项对象** 并 **返回插件实例**，并通过闭包机制管理内部状态。
@@ -42,7 +42,7 @@ builder.addPlugins([pluginFoo({ message: 'some other message.' })]);
 - `setup` 作为插件逻辑的主入口
 - `api` 对象包含了各类钩子和工具函数
 
-为了便于识别，插件名称需要包含约定的 `builder-plugin` 前缀，例如 `plugin-foo` `@scope/plugin-bar` 等。
+为了便于识别，插件名称需要包含约定的 `plugin-` 前缀，例如 `plugin-foo` `@scope/plugin-bar` 等。
 
 ## 生命周期钩子
 
@@ -59,16 +59,16 @@ Rsbuild 不会接管底层 Bundler 的生命周期，相关生命周期钩子的
 但某些情况下插件可能需要读取 / 修改 Rsbuild 公用的配置项，这时就需要了解 Rsbuild 内部对配置项的生产和消费流程：
 
 - 读取、解析配置并合并默认值
-- 插件通过 `api.modifyBuilderConfig(...)` 回调修改配置项
+- 插件通过 `api.modifyRsbuildConfig(...)` 回调修改配置项
 - 归一化配置项并提供给插件后续消费，此后无法再修改配置项
 
 整套流程可以通过这个简单的插件体现：
 
 ```ts
-export const pluginUploadDist = (): BuilderPlugin => ({
+export const pluginUploadDist = (): RsbuildPlugin => ({
   name: 'plugin-upload-dist',
   setup(api) {
-    api.modifyBuilderConfig((config) => {
+    api.modifyRsbuildConfig((config) => {
       // 尝试关闭代码压缩，需要自己填充默认值
       config.output ||= {};
       config.output.disableMinimize = true;
@@ -95,16 +95,16 @@ export const pluginUploadDist = (): BuilderPlugin => ({
 
 插件中有三种方式使用配置项对象：
 
-- `api.modifyBuilderConfig(config => {})` 在回调中修改配置
-- `api.getBuilderConfig()` 获取配置项
+- `api.modifyRsbuildConfig(config => {})` 在回调中修改配置
+- `api.getRsbuildConfig()` 获取配置项
 - `api.getNormalizedConfig()` 获取归一化后的配置项
 
 归一化的配置项会再次合并默认值并移除大部分可选类型，对于 `PluginUploadDist` 的例子其部分类型定义为：
 
 ```ts
-api.modifyBuilderConfig((config: BuilderConfig) => {});
-api.getBuilderConfig() as BuilderConfig;
-type BuilderConfig = {
+api.modifyRsbuildConfig((config: RsbuildConfig) => {});
+api.getRsbuildConfig() as RsbuildConfig;
+type RsbuildConfig = {
   output?: {
     disableMinimize?: boolean;
     distPath?: { root?: string };
@@ -120,12 +120,12 @@ type NormalizedConfig = {
 };
 ```
 
-`getNormalizedConfig()` 的返回值类型与 `BuilderConfig` 的略有不同、相比文档其它地方描述的类型进行了收窄，
+`getNormalizedConfig()` 的返回值类型与 `RsbuildConfig` 的略有不同、相比文档其它地方描述的类型进行了收窄，
 在使用时无需自行判空、填充默认值。
 
 因此使用配置项的最佳方式应该是：
 
-- 通过 `api.modifyBuilderConfig(config => {})` 来**修改配置**
+- 通过 `api.modifyRsbuildConfig(config => {})` 来**修改配置**
 - 在其后的生命周期中读取 `api.getNormalizedConfig()` 作为插件**实际使用的配置**
 
 ## 修改 webpack 配置
@@ -147,10 +147,10 @@ Rsbuild 使用的是兼容 webpack5 的修改版本：[sorrycc/webpack-chain](ht
 Loader 可以读取和处理不同类型的文件模块，具体参考 [concepts](https://webpack.js.org/concepts/loaders) 和 [loaders](https://webpack.js.org/loaders/)。
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/webpack-provider';
 
-export const pluginTypeScriptExt = (): BuilderPlugin => ({
-  name: 'builder-typescript-ext',
+export const pluginTypeScriptExt = (): RsbuildPlugin => ({
+  name: 'plugin-typescript-ext',
   setup(api) {
     api.modifyWebpackChain(async (chain) => {
       // 设置 ts-loader 将更多的文件识别为 typescript 模块
@@ -163,10 +163,10 @@ export const pluginTypeScriptExt = (): BuilderPlugin => ({
 ### 添加模块入口
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/webpack-provider';
 
-export const pluginAdminPanel = (): BuilderPlugin => ({
-  name: 'builder-admin-panel',
+export const pluginAdminPanel = (): RsbuildPlugin => ({
+  name: 'plugin-admin-panel',
   setup(api) {
     api.modifyWebpackChain(async (chain) => {
       config.entry('admin-panel').add('src/admin/panel.js');
@@ -180,10 +180,10 @@ export const pluginAdminPanel = (): BuilderPlugin => ({
 开发者可以在 Rsbuild 插件中接入已有的 webpack 插件来平缓迁移项目：
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/webpack-provider';
 import type { Options } from '@modern-js/inspector-webpack-plugin';
 
-export const pluginInspector = (options?: Options): BuilderPlugin => ({
+export const pluginInspector = (options?: Options): RsbuildPlugin => ({
   name: 'plugin-inspector',
   setup(api) {
     api.modifyWebpackChain(async (chain) => {

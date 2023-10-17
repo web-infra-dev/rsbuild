@@ -1,4 +1,4 @@
-- **类型：** `string | Record<BuilderTarget, string>`
+- **类型：** `string | Record<RsbuildTarget, string>`
 - **默认值：** `undefined`
 
 用于为 [resolve.extensions](https://webpack.js.org/configuration/resolve/#resolveextensions) 添加统一的前缀。

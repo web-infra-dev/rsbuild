@@ -3,7 +3,7 @@
 ```ts
 type Fields = (string | string[])[];
 
-type ResolveMainFields = Fields | Record<BuilderTarget, Fields>;
+type ResolveMainFields = Fields | Record<RsbuildTarget, Fields>;
 ```
 
 - **默认值：** `undefined`

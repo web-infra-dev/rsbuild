@@ -89,16 +89,16 @@ const builder = await createRsbuild(provider, {
 });
 ```
 
-Except the `entry` option, the `createRsbuild` method also provides some other options, which you can learn more about in [API - createRsbuild](/api/javascript-api/builder-core.html#createbuilder).
+Except the `entry` option, the `createRsbuild` method also provides some other options, which you can learn more about in [API - createRsbuild](/api/javascript-api/core.html#createbuilder).
 
 ### 3. Call Rsbuild Instance Method
 
 The Rsbuild instance provides some methods, which you can use it according to the usage scenarios.
 
-To start local development, it is recommended to use the [builder.startDevServer](/api/javascript-api/builder-instance.html#builder-startdevserver) method, which will start a local Dev Server.
+To start local development, it is recommended to use the [rsbuild.startDevServer](/api/javascript-api/instance.html#rsbuild-startdevserver) method, which will start a local Dev Server.
 
 ```ts
-await builder.startDevServer();
+await rsbuild.startDevServer();
 ```
 
 After successfully starting Dev Server, you can see the following logs:
@@ -110,13 +110,13 @@ info    Starting dev server...
   > Network:  http://192.168.0.1:8081
 ```
 
-To deploy the App to production environment, it is recommended to use the [builder.build](/api/javascript-api/builder-instance.html#builder-build) method, which will build the production outputs.
+To deploy the App to production environment, it is recommended to use the [rsbuild.build](/api/javascript-api/instance.html#rsbuild-build) method, which will build the production outputs.
 
 ```ts
-await builder.build();
+await rsbuild.build();
 ```
 
-> For more introduction of Rsbuild instance methods, please read the [Rsbuild Instance](/api/javascript-api/builder-instance.html) chapter.
+> For more introduction of Rsbuild instance methods, please read the [Rsbuild Instance](/api/javascript-api/instance.html) chapter.
 
 After completing the above three steps, you have learned the basic usage of Rsbuild. Next, you can customize the build process through the Rsbuild plugin and Rsbuild configs.
 

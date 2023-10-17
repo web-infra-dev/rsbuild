@@ -55,14 +55,14 @@ const builder = await createRsbuild(provider, {
 `createRsbuild` 的第二个参数是一个配置对象，你可以传入以下选项：
 
 ```ts
-type BuilderEntry = Record<string, string | string[]>;
+type RsbuildEntry = Record<string, string | string[]>;
 
-type BuilderTarget = 'web' | 'node' | 'modern-web' | 'web-worker';
+type RsbuildTarget = 'web' | 'node' | 'modern-web' | 'web-worker';
 
-type CreateBuilderOptions = {
+type CreateRsbuildOptions = {
   cwd?: string;
-  entry?: BuilderEntry;
-  target?: BuilderTarget | BuilderTarget[];
+  entry?: RsbuildEntry;
+  target?: RsbuildTarget | RsbuildTarget[];
   framework?: string;
   configPath?: string | null;
 };
@@ -76,20 +76,20 @@ type CreateBuilderOptions = {
 - `framework`: 框架的英文名称，唯一标识符，默认值为 `'modern.js'`
 - `configPath`: 框架配置文件的路径（绝对路径），该参数影响构建缓存更新
 
-## mergeBuilderConfig
+## mergeRsbuildConfig
 
 合并多份 Rsbuild 配置对象，并返回一个合并后的新对象。
 
 - **类型**
 
 ```ts
-function mergeBuilderConfig(...configs: BuilderConfig[]): BuilderConfig;
+function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
 ```
 
 - **Example**
 
 ```ts
-import { mergeBuilderConfig } from '@rsbuild/core';
+import { mergeRsbuildConfig } from '@rsbuild/core';
 
 const config1 = {
   dev: {
@@ -102,7 +102,7 @@ const config2 = {
   },
 };
 
-const mergedConfig = mergeBuilderConfig(config1, config2);
+const mergedConfig = mergeRsbuildConfig(config1, config2);
 
 console.log(mergedConfig); // { dev: { https: true } }
 ```

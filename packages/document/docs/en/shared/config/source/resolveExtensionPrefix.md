@@ -1,4 +1,4 @@
-- **Type:** `string | Record<BuilderTarget, string>`
+- **Type:** `string | Record<RsbuildTarget, string>`
 - **Default:** `undefined`
 
 Add a prefix to [resolve.extensions](https://webpack.js.org/configuration/resolve/#resolveextensions).
