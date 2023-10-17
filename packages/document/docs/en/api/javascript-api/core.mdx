@@ -55,14 +55,14 @@ const builder = await createRsbuild(provider, {
 The second parameter of `createRsbuild` is a options object, you can pass in the following options:
 
 ```ts
-type BuilderEntry = Record<string, string | string[]>;
+type RsbuildEntry = Record<string, string | string[]>;
 
-type BuilderTarget = 'web' | 'node' | 'modern-web' | 'web-worker';
+type RsbuildTarget = 'web' | 'node' | 'modern-web' | 'web-worker';
 
-type CreateBuilderOptions = {
+type CreateRsbuildOptions = {
   cwd?: string;
-  entry?: BuilderEntry;
-  target?: BuilderTarget | BuilderTarget[];
+  entry?: RsbuildEntry;
+  target?: RsbuildTarget | RsbuildTarget[];
   framework?: string;
   configPath?: string | null;
 };
@@ -76,20 +76,20 @@ Description:
 - `framework`: The name of the framework, a unique identifier, the default value is `'modern.js'`.
 - `configPath`: The path to the framework config file (absolute path), this parameter affects the build cache update.
 
-## mergeBuilderConfig
+## mergeRsbuildConfig
 
 Merges multiple Rsbuild config objects and returns a new merged object.
 
 - **Type**
 
 ```ts
-function mergeBuilderConfig(...configs: BuilderConfig[]): BuilderConfig;
+function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
 ```
 
 - **Example**
 
 ```ts
-import { mergeBuilderConfig } from '@rsbuild/core';
+import { mergeRsbuildConfig } from '@rsbuild/core';
 
 const config1 = {
   dev: {
@@ -102,7 +102,7 @@ const config2 = {
   },
 };
 
-const mergedConfig = mergeBuilderConfig(config1, config2);
+const mergedConfig = mergeRsbuildConfig(config1, config2);
 
 console.log(mergedConfig); // { dev: { https: true } }
 ```

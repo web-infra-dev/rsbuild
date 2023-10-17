@@ -1,4 +1,4 @@
-`onBeforeCreateCompiler` 是在创建底层 Compiler 实例前触发的回调函数，当你执行 `builder.startDevServer`、`builder.build` 或 `builder.createCompiler` 时，都会调用此钩子。
+`onBeforeCreateCompiler` 是在创建底层 Compiler 实例前触发的回调函数，当你执行 `rsbuild.startDevServer`、`rsbuild.build` 或 `rsbuild.createCompiler` 时，都会调用此钩子。
 
 你可以通过 `bundlerConfigs` 参数获取到底层打包工具的最终配置数组：
 

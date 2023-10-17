@@ -1,4 +1,4 @@
-`onBeforeCreateCompiler` is a callback function that is triggered after the Compiler instance has been created, but before the build process begins. This hook is called when you run `builder.startDevServer`, `builder.build`, or `builder.createCompiler`.
+`onBeforeCreateCompiler` is a callback function that is triggered after the Compiler instance has been created, but before the build process begins. This hook is called when you run `rsbuild.startDevServer`, `rsbuild.build`, or `rsbuild.createCompiler`.
 
 You can access the Compiler instance object through the `compiler` parameter:
 

@@ -2,7 +2,7 @@
 
 本章节描述了 Rsbuild 插件核心的类型定义和 API。
 
-## BuilderPlugin
+## RsbuildPlugin
 
 插件对象的类型，插件对象包含以下属性：
 
@@ -13,7 +13,7 @@
 - `remove`：指定需要移除的插件，可以传入插件 name 的数组。
 
 ```ts
-type BuilderPlugin<API = BuilderPluginAPI> = {
+type RsbuildPlugin<API = RsbuildPluginAPI> = {
   name: string;
   pre?: string[];
   post?: string[];
@@ -25,9 +25,9 @@ type BuilderPlugin<API = BuilderPluginAPI> = {
 你可以从 `@rsbuild/core` 中导入该类型：
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
-export default (): BuilderPlugin => ({
+export default (): RsbuildPlugin => ({
   name: 'plugin-foo',
 
   pre: ['plugin-bar'],
@@ -93,23 +93,23 @@ const pluginBar = {
 
 比如同时注册上述的 Foo 和 Bar 插件，由于 Bar 插件声明 remove 了 Foo 插件，因此 Foo 插件不会生效。
 
-## BuilderPluginAPI
+## RsbuildPluginAPI
 
 插件 API 对象的类型。插件 API 对象上挂载了提供给插件使用的上下文数据、工具函数和注册生命周期钩子的函数。
 
 关于生命周期钩子的完整介绍，请阅读 [Plugin Hooks](/plugins/dev/hooks.html) 章节。
 
-在使用 webpack-provider 或 rspack-provider 时，`BuilderPluginAPI` 的类型定义有一定不同，你可以根据插件的使用场景来引入对应的类型。
+在使用 webpack-provider 或 rspack-provider 时，`RsbuildPluginAPI` 的类型定义有一定不同，你可以根据插件的使用场景来引入对应的类型。
 
 ### 适用于 webpack-provider 的插件
 
-开发适用于 webpack-provider 的插件时，请从 `@rsbuild/webpack-provider` 中引入 `BuilderPluginAPI`。
+开发适用于 webpack-provider 的插件时，请从 `@rsbuild/webpack-provider` 中引入 `RsbuildPluginAPI`。
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/core';
-import type { BuilderPluginAPI } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPluginAPI } from '@rsbuild/webpack-provider';
 
-export default (): BuilderPlugin<BuilderPluginAPI> => ({
+export default (): RsbuildPlugin<RsbuildPluginAPI> => ({
   name: 'plugin-foo',
 
   setup: api => {
@@ -122,13 +122,13 @@ export default (): BuilderPlugin<BuilderPluginAPI> => ({
 
 ### 适用于 rspack-provider 的插件
 
-开发适用于 rspack-provider 的插件时，请从 `@rsbuild/rspack-provider` 中引入 `BuilderPluginAPI`。
+开发适用于 rspack-provider 的插件时，请从 `@rsbuild/rspack-provider` 中引入 `RsbuildPluginAPI`。
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/core';
-import type { BuilderPluginAPI } from '@rsbuild/rspack-provider';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPluginAPI } from '@rsbuild/rspack-provider';
 
-export default (): BuilderPlugin<BuilderPluginAPI> => ({
+export default (): RsbuildPlugin<RsbuildPluginAPI> => ({
   name: 'plugin-foo',
 
   setup: api => {
@@ -141,17 +141,17 @@ export default (): BuilderPlugin<BuilderPluginAPI> => ({
 
 ### 同时适用于 webpack-provider 和 rspack-provider 的插件
 
-想要开发同时适用于 webpack-provider 和 rspack-provider 的插件时，请从 `@rsbuild/shared` 中引入 `DefaultBuilderPlugin`。
+想要开发同时适用于 webpack-provider 和 rspack-provider 的插件时，请从 `@rsbuild/shared` 中引入 `DefaultRsbuildPlugin`。
 
 需要注意的是，开发 webpack 和 Rspack 同时支持的插件，意味着不能使用任何带有 webpack 或 Rspack 标识的 api，如 `modifyWebpackConfig` 或 `modifyRspackConfig`。
 
 可通过 [modifyBundlerChain](/plugins/dev/hooks.html#modifybundlerchain-experimental) 修改同时适用于 webpack 和 Rspack 的配置。
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/core';
-import type { DefaultBuilderPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
-export default (): BuilderPlugin<DefaultBuilderPlugin> => ({
+export default (): RsbuildPlugin<DefaultRsbuildPlugin> => ({
   name: 'plugin-foo',
 
   setup: api => {
@@ -166,7 +166,7 @@ export default (): BuilderPlugin<DefaultBuilderPlugin> => ({
 
 `api.context` 是一个只读对象，提供一些上下文信息。
 
-`api.context` 的内容与 `builder.context` 完全一致，请参考 [builder.context](/api/javascript-api/builder-instance.html#builder-context)。
+`api.context` 的内容与 `rsbuild.context` 完全一致，请参考 [rsbuild.context](/api/javascript-api/instance.html#rsbuild-context)。
 
 - **Example**
 
@@ -178,18 +178,18 @@ const pluginFoo = () => ({
 });
 ```
 
-## api.getBuilderConfig
+## api.getRsbuildConfig
 
-import GetBuilderConfig from '@zh/shared/getBuilderConfig.md';
+import GetRsbuildConfig from '@zh/shared/getRsbuildConfig.md';
 
-<GetBuilderConfig />
+<GetRsbuildConfig />
 
 - **Example**
 
 ```ts
 const pluginFoo = () => ({
   setup(api) {
-    const config = api.getBuilderConfig();
+    const config = api.getRsbuildConfig();
     console.log(config.html?.title);
   },
 });

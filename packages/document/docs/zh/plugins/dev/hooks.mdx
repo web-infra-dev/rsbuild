@@ -6,7 +6,7 @@
 
 **通用钩子**
 
-- `modifyBuilderConfig`：修改传递给 Rsbuild 的配置项。
+- `modifyRsbuildConfig`：修改传递给 Rsbuild 的配置项。
 - `modifyBundlerChain` (实验性)：通过 chain api 修改 webpack / Rspack 配置。
 - `modifyWebpackChain`：修改 webpack chain 配置。
 - `modifyWebpackConfig`：修改最终的 webpack 配置对象。
@@ -31,7 +31,7 @@
 
 ## 通用钩子
 
-### modifyBuilderConfig
+### modifyRsbuildConfig
 
 修改传递给 Rsbuild 的配置项，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
 
@@ -39,14 +39,14 @@
 
 ```ts
 type ModifyWebpackChainUtils = {
-  mergeBuilderConfig: typeof mergeBuilderConfig;
+  mergeRsbuildConfig: typeof mergeRsbuildConfig;
 };
 
-function ModifyBuilderConfig(
+function ModifyRsbuildConfig(
   callback: (
-    config: BuilderConfig,
+    config: RsbuildConfig,
     utils: ModifyWebpackChainUtils,
-  ) => PromiseOrNot<BuilderConfig | void>,
+  ) => PromiseOrNot<RsbuildConfig | void>,
 ): void;
 ```
 
@@ -55,10 +55,10 @@ function ModifyBuilderConfig(
 ```ts
 export default () => ({
   setup: api => {
-    api.modifyBuilderConfig((config, { mergeBuilderConfig }) => {
+    api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
       config.html = config.html || {};
       config.html.title = 'Hello World!';
-      return mergeBuilderConfig(config, {
+      return mergeRsbuildConfig(config, {
         source: { preEntry: 'foo.js' },
       });
     });
@@ -83,7 +83,7 @@ import BundlerChain from '@zh/shared/bundlerChain.md';
 type ModifyBundlerChainUtils = {
   env: NodeEnv;
   isProd: boolean;
-  target: BuilderTarget;
+  target: RsbuildTarget;
   isServer: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
@@ -131,7 +131,7 @@ export default () => ({
 type ModifyWebpackChainUtils = {
   env: NodeEnv;
   isProd: boolean;
-  target: BuilderTarget;
+  target: RsbuildTarget;
   webpack: typeof import('webpack');
   isServer: boolean;
   isWebWorker: boolean;
@@ -174,7 +174,7 @@ export default () => ({
 type ModifyWebpackConfigUtils = {
   env: NodeEnv;
   isProd: boolean;
-  target: BuilderTarget;
+  target: RsbuildTarget;
   webpack: typeof import('webpack');
   isServer: boolean;
   isWebWorker: boolean;
@@ -223,7 +223,7 @@ export default () => ({
 type ModifyRspackConfigUtils = {
   env: NodeEnv;
   isProd: boolean;
-  target: BuilderTarget;
+  target: RsbuildTarget;
   isServer: boolean;
   isWebWorker: boolean;
   getCompiledPath: (name: string) => string;

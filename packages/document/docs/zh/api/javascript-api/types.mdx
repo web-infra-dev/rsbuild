@@ -1,0 +1,74 @@
+---
+extractApiHeaders: [2]
+---
+
+# Rsbuild Types
+
+本章节描述了 Rsbuild 提供的一些类型定义。
+
+## RsbuildInstance
+
+Rsbuild 实例的类型。
+
+```ts
+import type { RsbuildInstance } from '@rsbuild/core';
+
+let builder: RsbuildInstance;
+```
+
+你可以通过泛型来传入 Provider 的类型，使 Rsbuild 实例获得更准确的类型定义：
+
+```ts
+import type { createRsbuild, type RsbuildInstance } from '@rsbuild/core';
+import type { RsbuildWebpackProvider } from '@rsbuild/webpack-provider';
+
+let builder: RsbuildInstance<RsbuildWebpackProvider>;
+```
+
+## RsbuildContext
+
+Rsbuild 实例中 context 属性的类型定义。
+
+```ts
+import type { RsbuildContext } from '@rsbuild/core';
+
+const context: RsbuildContext = rsbuild.context;
+```
+
+## RsbuildPlugin
+
+Rsbuild 插件的类型，需要配合 provider 中提供的 `RsbuildPluginAPI` 类型来使用。
+
+```ts
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPluginAPI } from '@rsbuild/webpack-provider';
+
+const myPlugin: RsbuildPlugin<RsbuildPluginAPI> = {
+  name: 'my-plugin',
+  setup() {},
+};
+```
+
+## RsbuildTarget
+
+Rsbuild 构建产物的类型。
+
+```ts
+import type { RsbuildTarget } from '@rsbuild/core';
+```
+
+## RsbuildEntry
+
+对应 `createRsbuild` 方法的 `entry` 选项的类型。
+
+```ts
+import type { RsbuildEntry } from '@rsbuild/core';
+```
+
+## CreateRsbuildOptions
+
+对应 `createRsbuild` 方法的入参类型。
+
+```ts
+import type { CreateRsbuildOptions } from '@rsbuild/core';
+```

@@ -6,7 +6,7 @@ This section describes the lifetime hooks provided by Rsbuild plugin.
 
 **Common Hooks**
 
-- `modifyBuilderConfig`: Modify raw config of Rsbuild.
+- `modifyRsbuildConfig`: Modify raw config of Rsbuild.
 - `modifyBundlerChain` (experimental): Modify config of webpack or Rspack via the bundler chain api.
 - `modifyWebpackChain`: Modify webpack-chain.
 - `modifyWebpackConfig`: Modify raw config of webpack.
@@ -31,7 +31,7 @@ This section describes the lifetime hooks provided by Rsbuild plugin.
 
 ## Common Hooks
 
-### modifyBuilderConfig
+### modifyRsbuildConfig
 
 Modify the config passed to the Rsbuild, you can directly modify the config object, or return a new object to replace the previous object.
 
@@ -39,14 +39,14 @@ Modify the config passed to the Rsbuild, you can directly modify the config obje
 
 ```ts
 type ModifyWebpackChainUtils = {
-  mergeBuilderConfig: typeof mergeBuilderConfig;
+  mergeRsbuildConfig: typeof mergeRsbuildConfig;
 };
 
-function ModifyBuilderConfig(
+function ModifyRsbuildConfig(
   callback: (
-    config: BuilderConfig,
+    config: RsbuildConfig,
     utils: ModifyWebpackChainUtils,
-  ) => PromiseOrNot<BuilderConfig | void>,
+  ) => PromiseOrNot<RsbuildConfig | void>,
 ): void;
 ```
 
@@ -55,10 +55,10 @@ function ModifyBuilderConfig(
 ```ts
 export default () => ({
   setup: api => {
-    api.modifyBuilderConfig((config, { mergeBuilderConfig }) => {
+    api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
       config.html = config.html || {};
       config.html.title = 'Hello World!';
-      return mergeBuilderConfig(config, {
+      return mergeRsbuildConfig(config, {
         source: { preEntry: 'foo.js' },
       });
     });
@@ -80,7 +80,7 @@ This hook only supports modifying the configuration of the non-differentiated pa
 type ModifyBundlerChainUtils = {
   env: NodeEnv;
   isProd: boolean;
-  target: BuilderTarget;
+  target: RsbuildTarget;
   isServer: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
@@ -128,7 +128,7 @@ Modify the webpack config through the webpack chain. This method is only called 
 type ModifyWebpackChainUtils = {
   env: NodeEnv;
   isProd: boolean;
-  target: BuilderTarget;
+  target: RsbuildTarget;
   webpack: typeof import('webpack');
   isServer: boolean;
   isWebWorker: boolean;
@@ -171,7 +171,7 @@ This method is called later than the `modifyWebpackChain` hook.
 type ModifyWebpackConfigUtils = {
   env: NodeEnv;
   isProd: boolean;
-  target: BuilderTarget;
+  target: RsbuildTarget;
   webpack: typeof import('webpack');
   isServer: boolean;
   isWebWorker: boolean;
@@ -220,7 +220,7 @@ To modify the final Rspack config object, you can directly modify the config obj
 type ModifyRspackConfigUtils = {
   env: NodeEnv;
   isProd: boolean;
-  target: BuilderTarget;
+  target: RsbuildTarget;
   isServer: boolean;
   isWebWorker: boolean;
   getCompiledPath: (name: string) => string;

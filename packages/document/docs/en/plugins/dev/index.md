@@ -12,16 +12,16 @@ Rsbuild can use webpack or Rspack as the bundler, expose unified Node.js API, an
 
 ## Write a plugin
 
-Plugin module should export an entry function just like `(options?: PluginOptions) => BuilderPlugin`, It is recommended to name plugin functions `pluginXXX`.
+Plugin module should export an entry function just like `(options?: PluginOptions) => RsbuildPlugin`, It is recommended to name plugin functions `pluginXXX`.
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/webpack-provider';
 
 export interface PluginFooOptions {
   message?: string;
 }
 
-export const pluginFoo = (options?: PluginFooOptions): BuilderPlugin => ({
+export const pluginFoo = (options?: PluginFooOptions): RsbuildPlugin => ({
   name: 'plugin-foo',
   setup(api) {
     api.onExit(() => {
@@ -31,7 +31,7 @@ export const pluginFoo = (options?: PluginFooOptions): BuilderPlugin => ({
   },
 });
 
-builder.addPlugins([pluginFoo('some other message.')]);
+rsbuild.addPlugins([pluginFoo('some other message.')]);
 ```
 
 The function usually **takes an options object** and **returns the plugin instance**, which manages state through closures.
@@ -42,7 +42,7 @@ Let's look at each part:
 - `setup` as the main entry point of plugins
 - `api` provides context object, lifetime hooks and utils.
 
-The package name of the plugin needs to contain the conventional `builder-plugin` prefix for identification, just like `plugin-foo`, `@scope/plugin-bar`, etc.
+The package name of the plugin needs to contain the conventional `plugin-` prefix for identification, just like `plugin-foo`, `@scope/plugin-bar`, etc.
 
 ## Lifetime Hooks
 
@@ -60,16 +60,16 @@ just define and use it at your pleasure.
 But sometimes you may need to read and change the public config of the Rsbuild. To begin with, you should understand how the Rsbuild generates and uses its config:
 
 - Read, parse config and merge with default values.
-- Plugins modify the config by `api.modifyBuilderConfig(...)`.
+- Plugins modify the config by `api.modifyRsbuildConfig(...)`.
 - Normalize the config and provide it to consume, then the config can no longer be modified.
 
 Refer to this tiny example:
 
 ```ts
-export const pluginUploadDist = (): BuilderPlugin => ({
+export const pluginUploadDist = (): RsbuildPlugin => ({
   name: 'plugin-upload-dist',
   setup(api) {
-    api.modifyBuilderConfig((config) => {
+    api.modifyRsbuildConfig((config) => {
       // try to disable minimize.
       // should deal with optional value by self.
       config.output ||= {};
@@ -97,8 +97,8 @@ export const pluginUploadDist = (): BuilderPlugin => ({
 
 There are 3 ways to use Rsbuild config:
 
-- register callback with `api.modifyBuilderConfig(config => {})` to modify config.
-- use `api.getBuilderConfig()` to get Rsbuild config.
+- register callback with `api.modifyRsbuildConfig(config => {})` to modify config.
+- use `api.getRsbuildConfig()` to get Rsbuild config.
 - use `api.getNormalizedConfig()` to get finally normalized config.
 
 When normalized, it will again merge the config object with the default values
@@ -106,9 +106,9 @@ and make sure the optional properties exist.
 So for PluginUploadDist, part of its type looks like:
 
 ```ts
-api.modifyBuilderConfig((config: BuilderConfig) => {});
-api.getBuilderConfig() as BuilderConfig;
-type BuilderConfig = {
+api.modifyRsbuildConfig((config: RsbuildConfig) => {});
+api.getRsbuildConfig() as RsbuildConfig;
+type RsbuildConfig = {
   output?: {
     disableMinimize?: boolean;
     distPath?: { root?: string };
@@ -124,12 +124,12 @@ type NormalizedConfig = {
 };
 ```
 
-The return value type of `getNormalizedConfig()` is slightly different from that of `BuilderConfig` and is narrowed compared to the types described elsewhere in the documentation.
+The return value type of `getNormalizedConfig()` is slightly different from that of `RsbuildConfig` and is narrowed compared to the types described elsewhere in the documentation.
 You don't need to fill in the defaults when you use it.
 
 Therefore, the best way to use configuration options is to
 
-- **Modify the config** with `api.modifyBuilderConfig(config => {})`
+- **Modify the config** with `api.modifyRsbuildConfig(config => {})`
 - Read `api.getNormalizedConfig()` as the **actual config used by the plugin** in the further lifetime.
 
 ## Modify webpack Config
@@ -153,10 +153,10 @@ which can be found in [sorrycc/webpack-chain](https://github.com/sorrycc/webpack
 The webpack loaders can be used to load and transform various file types. For more information, see [concepts](https://webpack.js.org/concepts/loaders) and [loaders](https://webpack.js.org/loaders/).
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/webpack-provider';
 
-export const pluginTypeScriptExt = (): BuilderPlugin => ({
-  name: 'builder-typescript-ext',
+export const pluginTypeScriptExt = (): RsbuildPlugin => ({
+  name: 'plugin-typescript-ext',
   setup(api) {
     api.modifyWebpackChain(async (chain) => {
       // set ts-loader to recognize more files as typescript modules.
@@ -169,10 +169,10 @@ export const pluginTypeScriptExt = (): BuilderPlugin => ({
 ### Add Entry Points
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/webpack-provider';
 
-export const pluginAdminPanel = (): BuilderPlugin => ({
-  name: 'builder-admin-panel',
+export const pluginAdminPanel = (): RsbuildPlugin => ({
+  name: 'plugin-admin-panel',
   setup(api) {
     api.modifyWebpackChain(async (chain) => {
       config.entry('admin-panel').add('src/admin/panel.js');
@@ -186,10 +186,10 @@ export const pluginAdminPanel = (): BuilderPlugin => ({
 Integrate existing webpack plugins to migrate your applications:
 
 ```ts
-import type { BuilderPlugin } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/webpack-provider';
 import type { Options } from '@modern-js/inspector-webpack-plugin';
 
-export const pluginInspector = (options?: Options): BuilderPlugin => ({
+export const pluginInspector = (options?: Options): RsbuildPlugin => ({
   name: 'plugin-inspector',
   setup(api) {
     api.modifyWebpackChain(async (chain) => {
