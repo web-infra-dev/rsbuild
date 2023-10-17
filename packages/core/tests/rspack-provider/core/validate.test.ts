@@ -25,13 +25,13 @@ describe('validateBuilderConfig', () => {
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
       "Builder config validation error:
-      * Invalid enum value. Expected 'entry' | 'ua' | 'off', received 'usage' at \\"output.polyfill\\""
+      * Invalid enum value. Expected 'entry' | 'ua' | 'off', received 'usage' at "output.polyfill""
     `);
 
     await expect(validateBuilderConfig(config)).rejects
       .toThrowErrorMatchingInlineSnapshot(`
       "Builder config validation error:
-      * Expected object, received array at \\"html.faviconByEntries\\""
+      * Expected object, received array at "html.faviconByEntries""
     `);
   });
   it('should accept correct chained config', async () => {

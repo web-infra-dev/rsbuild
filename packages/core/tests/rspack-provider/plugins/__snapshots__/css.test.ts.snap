@@ -24,7 +24,7 @@ exports[`plugins/css > should apply custom css-modules-typescript-loader when en
             "type": "css/module",
             "use": [
               {
-                "loader": "<ROOT>/src/rspackLoader/css-modules-typescript-pre-loader",
+                "loader": "<ROOT>/packages/core/src/rspack-provider/rspackLoader/css-modules-typescript-pre-loader",
                 "options": {
                   "modules": {
                     "auto": true,
@@ -33,7 +33,7 @@ exports[`plugins/css > should apply custom css-modules-typescript-loader when en
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -77,7 +77,7 @@ exports[`plugins/css > should apply custom css-modules-typescript-loader when en
             "type": "css",
             "use": [
               {
-                "loader": "<ROOT>/src/rspackLoader/css-modules-typescript-pre-loader",
+                "loader": "<ROOT>/packages/core/src/rspack-provider/rspackLoader/css-modules-typescript-pre-loader",
                 "options": {
                   "modules": {
                     "auto": true,
@@ -86,7 +86,7 @@ exports[`plugins/css > should apply custom css-modules-typescript-loader when en
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -154,7 +154,7 @@ exports[`plugins/css > should override browserslist of autoprefixer when using o
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -190,7 +190,7 @@ exports[`plugins/css > should override browserslist of autoprefixer when using o
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -250,7 +250,7 @@ exports[`plugins/css > should use custom cssModules rule when using output.cssMo
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -294,7 +294,7 @@ exports[`plugins/css > should use custom cssModules rule when using output.cssMo
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -356,7 +356,7 @@ exports[`plugins/css disableCssExtract > should apply ignoreCssLoader when disab
             "loader": "@rsbuild/shared/ignore-css-loader",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -390,13 +390,13 @@ exports[`plugins/css disableCssExtract > should use css-loader + style-loader wh
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/style-loader/dist/cjs.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/style-loader/dist/cjs.js",
             "options": {
               "esModule": false,
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -408,7 +408,7 @@ exports[`plugins/css disableCssExtract > should use css-loader + style-loader wh
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "plugins": [
@@ -464,7 +464,7 @@ exports[`plugins/less > should add less-loader 1`] = `
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -499,9 +499,9 @@ exports[`plugins/less > should add less-loader 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
@@ -518,7 +518,7 @@ exports[`plugins/less > should add less-loader 1`] = `
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -553,9 +553,9 @@ exports[`plugins/less > should add less-loader 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
@@ -584,13 +584,13 @@ exports[`plugins/less > should add less-loader and css-loader when disableCssExt
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/style-loader/dist/cjs.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/style-loader/dist/cjs.js",
             "options": {
               "esModule": false,
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -602,7 +602,7 @@ exports[`plugins/less > should add less-loader and css-loader when disableCssExt
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "plugins": [
@@ -637,9 +637,9 @@ exports[`plugins/less > should add less-loader and css-loader when disableCssExt
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+            "loader": "<ROOT>/packages/shared/compiled/less-loader",
             "options": {
-              "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+              "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
               },
@@ -671,7 +671,7 @@ exports[`plugins/less > should add less-loader with excludes 1`] = `
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -706,9 +706,9 @@ exports[`plugins/less > should add less-loader with excludes 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
@@ -728,7 +728,7 @@ exports[`plugins/less > should add less-loader with excludes 1`] = `
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -763,9 +763,9 @@ exports[`plugins/less > should add less-loader with excludes 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
@@ -797,7 +797,7 @@ exports[`plugins/less > should add less-loader with tools.less 1`] = `
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -832,9 +832,9 @@ exports[`plugins/less > should add less-loader with tools.less 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": false,
                   },
@@ -851,7 +851,7 @@ exports[`plugins/less > should add less-loader with tools.less 1`] = `
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -886,9 +886,9 @@ exports[`plugins/less > should add less-loader with tools.less 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": false,
                   },
@@ -920,7 +920,7 @@ exports[`plugins/sass > should add sass-loader 1`] = `
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -955,16 +955,16 @@ exports[`plugins/sass > should add sass-loader 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
                 "options": {
                   "join": [Function],
                   "sourceMap": false,
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
                   "sourceMap": true,
                 },
               },
@@ -978,7 +978,7 @@ exports[`plugins/sass > should add sass-loader 1`] = `
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -1013,16 +1013,16 @@ exports[`plugins/sass > should add sass-loader 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
                 "options": {
                   "join": [Function],
                   "sourceMap": false,
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
                   "sourceMap": true,
                 },
               },
@@ -1048,13 +1048,13 @@ exports[`plugins/sass > should add sass-loader and css-loader when disableCssExt
         "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/style-loader/dist/cjs.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/style-loader/dist/cjs.js",
             "options": {
               "esModule": false,
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 3,
               "modules": {
@@ -1066,7 +1066,7 @@ exports[`plugins/sass > should add sass-loader and css-loader when disableCssExt
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "plugins": [
@@ -1101,16 +1101,16 @@ exports[`plugins/sass > should add sass-loader and css-loader when disableCssExt
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
             "options": {
               "join": [Function],
               "sourceMap": false,
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
             "options": {
-              "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+              "implementation": "<ROOT>/packages/shared/compiled/sass",
               "sourceMap": true,
             },
           },
@@ -1139,7 +1139,7 @@ exports[`plugins/sass > should add sass-loader with excludes 1`] = `
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -1174,16 +1174,16 @@ exports[`plugins/sass > should add sass-loader with excludes 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
                 "options": {
                   "join": [Function],
                   "sourceMap": false,
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
                   "sourceMap": true,
                 },
               },
@@ -1200,7 +1200,7 @@ exports[`plugins/sass > should add sass-loader with excludes 1`] = `
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -1235,16 +1235,16 @@ exports[`plugins/sass > should add sass-loader with excludes 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
                 "options": {
                   "join": [Function],
                   "sourceMap": false,
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
                   "sourceMap": true,
                 },
               },

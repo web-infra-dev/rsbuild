@@ -4,7 +4,7 @@ import { builderPluginEntry } from '@src/plugins/entry';
 import { createBuilder } from '../helper';
 import { builderPluginSwc } from '@/plugins/swc';
 import { BuilderConfig } from '@/types';
-import { builderPluginAntd } from '~/../builder/src/plugins/antd';
+import { builderPluginAntd } from '@src/plugins/antd';
 
 describe('plugins/swc', () => {
   it('should disable preset_env in target other than web', async () => {

@@ -14,24 +14,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "emitMetadata": true,
       "legacy": true,
     },
-    "pluginImport": [
-      {
-        "libraryDirectory": "es",
-        "libraryName": "antd",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "es",
-        "libraryName": "@arco-design/web-react",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "react-icon",
-        "libraryName": "@arco-design/web-react/icon",
-      },
-    ],
     "presetEnv": {
       "coreJs": "3.32",
       "mode": "entry",
@@ -43,7 +25,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
     "provide": {
       "$ReactRefreshRuntime$": [
-        "<WORKSPACE>/node_modules/<PNPM_INNER>/@rspack/dev-client/src/reactRefresh.js",
+        "<ROOT>/node_modules/<PNPM_INNER>/@rspack/dev-client/src/reactRefresh.js",
       ],
     },
     "react": {
@@ -210,7 +192,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "javascript/auto",
             "use": [
               {
-                "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
                 "options": {
                   "svgo": true,
                   "svgoConfig": {
@@ -229,7 +211,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/url-loader",
                 "options": {
                   "limit": 10000,
                   "name": "static/svg/[name].[contenthash:8].svg",
@@ -259,7 +241,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -303,7 +285,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -353,7 +335,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -388,9 +370,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
@@ -407,7 +389,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -442,9 +424,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
@@ -467,7 +449,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -502,16 +484,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
                 "options": {
                   "join": [Function],
                   "sourceMap": false,
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
                   "sourceMap": true,
                 },
               },
@@ -525,7 +507,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -560,16 +542,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
                 "options": {
                   "join": [Function],
                   "sourceMap": false,
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
                   "sourceMap": true,
                 },
               },
@@ -583,7 +565,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/toml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
           },
         ],
       },
@@ -592,7 +574,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/yaml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },
@@ -606,18 +588,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
     "splitChunks": {
       "cacheGroups": {
-        "lib-antd": {
-          "name": "lib-antd",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-arco": {
-          "name": "lib-arco",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
-        },
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
@@ -665,33 +635,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "plugins": [
-    ForkTsCheckerWebpackPlugin {
-      "options": {
-        "issue": {
-          "exclude": [
-            {
-              "file": "**/*.(spec|test).ts",
-            },
-            {
-              "file": "**/node_modules/**/*",
-            },
-          ],
-        },
-        "logger": {
-          "error": [Function],
-          "log": [Function],
-        },
-        "typescript": {
-          "configFile": "<ROOT>/tsconfig.json",
-          "memoryLimit": 8192,
-          "typescriptPath": "<WORKSPACE>/node_modules/<PNPM_INNER>/typescript/lib/typescript.js",
-        },
-      },
-    },
     Plugin {
       "_options": {
-        "process.env.ASSET_PREFIX": "\\"\\"",
-        "process.env.NODE_ENV": "\\"development\\"",
+        "process.env.ASSET_PREFIX": """",
+        "process.env.NODE_ENV": ""development"",
       },
       "name": "DefinePlugin",
     },
@@ -704,17 +651,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   ],
   "resolve": {
     "alias": {
-      "core-js": "<WORKSPACE>/node_modules/<PNPM_INNER>/core-js",
+      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
-      ".ts",
-      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/tsconfig.json",
   },
   "target": [
     "web",
@@ -737,24 +681,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "emitMetadata": true,
       "legacy": true,
     },
-    "pluginImport": [
-      {
-        "libraryDirectory": "es",
-        "libraryName": "antd",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "es",
-        "libraryName": "@arco-design/web-react",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "react-icon",
-        "libraryName": "@arco-design/web-react/icon",
-      },
-    ],
     "presetEnv": {
       "coreJs": "3.32",
       "mode": "entry",
@@ -766,7 +692,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     "provide": {
       "$ReactRefreshRuntime$": [
-        "<WORKSPACE>/node_modules/<PNPM_INNER>/@rspack/dev-client/src/reactRefresh.js",
+        "<ROOT>/node_modules/<PNPM_INNER>/@rspack/dev-client/src/reactRefresh.js",
       ],
     },
     "react": {
@@ -933,7 +859,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "javascript/auto",
             "use": [
               {
-                "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
                 "options": {
                   "svgo": true,
                   "svgoConfig": {
@@ -952,7 +878,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/url-loader",
                 "options": {
                   "limit": 10000,
                   "name": "static/svg/[name].[contenthash:8].svg",
@@ -982,7 +908,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -1026,7 +952,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -1076,7 +1002,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -1111,9 +1037,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
@@ -1130,7 +1056,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -1165,9 +1091,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
@@ -1190,7 +1116,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -1225,16 +1151,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
                 "options": {
                   "join": [Function],
                   "sourceMap": false,
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
                   "sourceMap": true,
                 },
               },
@@ -1248,7 +1174,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -1283,16 +1209,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
                 "options": {
                   "join": [Function],
                   "sourceMap": false,
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
                   "sourceMap": true,
                 },
               },
@@ -1306,7 +1232,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/toml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
           },
         ],
       },
@@ -1315,7 +1241,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/yaml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },
@@ -1368,18 +1294,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     "splitChunks": {
       "cacheGroups": {
-        "lib-antd": {
-          "name": "lib-antd",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-arco": {
-          "name": "lib-arco",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
-        },
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
@@ -1427,33 +1341,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "plugins": [
-    ForkTsCheckerWebpackPlugin {
-      "options": {
-        "issue": {
-          "exclude": [
-            {
-              "file": "**/*.(spec|test).ts",
-            },
-            {
-              "file": "**/node_modules/**/*",
-            },
-          ],
-        },
-        "logger": {
-          "error": [Function],
-          "log": [Function],
-        },
-        "typescript": {
-          "configFile": "<ROOT>/tsconfig.json",
-          "memoryLimit": 8192,
-          "typescriptPath": "<WORKSPACE>/node_modules/<PNPM_INNER>/typescript/lib/typescript.js",
-        },
-      },
-    },
     Plugin {
       "_options": {
-        "process.env.ASSET_PREFIX": "\\"\\"",
-        "process.env.NODE_ENV": "\\"production\\"",
+        "process.env.ASSET_PREFIX": """",
+        "process.env.NODE_ENV": ""production"",
       },
       "name": "DefinePlugin",
     },
@@ -1483,17 +1374,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   ],
   "resolve": {
     "alias": {
-      "core-js": "<WORKSPACE>/node_modules/<PNPM_INNER>/core-js",
+      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
-      ".ts",
-      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/tsconfig.json",
   },
   "target": [
     "web",
@@ -1516,24 +1404,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
       "emitMetadata": true,
       "legacy": true,
     },
-    "pluginImport": [
-      {
-        "libraryDirectory": "lib",
-        "libraryName": "antd",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "lib",
-        "libraryName": "@arco-design/web-react",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "react-icon-cjs",
-        "libraryName": "@arco-design/web-react/icon",
-      },
-    ],
     "presetEnv": {
       "targets": [
         "node >= 14",
@@ -1541,7 +1411,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
     },
     "provide": {
       "$ReactRefreshRuntime$": [
-        "<WORKSPACE>/node_modules/<PNPM_INNER>/@rspack/dev-client/src/reactRefresh.js",
+        "<ROOT>/node_modules/<PNPM_INNER>/@rspack/dev-client/src/reactRefresh.js",
       ],
     },
     "react": {
@@ -1708,7 +1578,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
             "type": "javascript/auto",
             "use": [
               {
-                "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
                 "options": {
                   "svgo": true,
                   "svgoConfig": {
@@ -1727,7 +1597,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/url-loader",
                 "options": {
                   "limit": 10000,
                   "name": "static/svg/[name].[contenthash:8].svg",
@@ -1750,7 +1620,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/node-loader",
+            "loader": "<ROOT>/packages/shared/compiled/node-loader",
             "options": {
               "name": [Function],
             },
@@ -1788,9 +1658,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
@@ -1807,9 +1677,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
@@ -1832,16 +1702,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
                 "options": {
                   "join": [Function],
                   "sourceMap": false,
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
                   "sourceMap": true,
                 },
               },
@@ -1855,16 +1725,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
                 "options": {
                   "join": [Function],
                   "sourceMap": false,
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
                   "sourceMap": true,
                 },
               },
@@ -1878,7 +1748,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/toml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
           },
         ],
       },
@@ -1887,7 +1757,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/yaml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },
@@ -1911,33 +1781,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "plugins": [
-    ForkTsCheckerWebpackPlugin {
-      "options": {
-        "issue": {
-          "exclude": [
-            {
-              "file": "**/*.(spec|test).ts",
-            },
-            {
-              "file": "**/node_modules/**/*",
-            },
-          ],
-        },
-        "logger": {
-          "error": [Function],
-          "log": [Function],
-        },
-        "typescript": {
-          "configFile": "<ROOT>/tsconfig.json",
-          "memoryLimit": 8192,
-          "typescriptPath": "<WORKSPACE>/node_modules/<PNPM_INNER>/typescript/lib/typescript.js",
-        },
-      },
-    },
     Plugin {
       "_options": {
-        "process.env.ASSET_PREFIX": "\\"\\"",
-        "process.env.NODE_ENV": "\\"test\\"",
+        "process.env.ASSET_PREFIX": """",
+        "process.env.NODE_ENV": ""test"",
       },
       "name": "DefinePlugin",
     },
@@ -1954,14 +1801,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
       "node",
     ],
     "extensions": [
-      ".ts",
-      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/tsconfig.json",
   },
   "target": "node",
 }
@@ -1981,24 +1825,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "emitMetadata": true,
       "legacy": true,
     },
-    "pluginImport": [
-      {
-        "libraryDirectory": "es",
-        "libraryName": "antd",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "es",
-        "libraryName": "@arco-design/web-react",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "react-icon",
-        "libraryName": "@arco-design/web-react/icon",
-      },
-    ],
     "presetEnv": {
       "coreJs": "3.32",
       "mode": "entry",
@@ -2010,7 +1836,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     },
     "provide": {
       "$ReactRefreshRuntime$": [
-        "<WORKSPACE>/node_modules/<PNPM_INNER>/@rspack/dev-client/src/reactRefresh.js",
+        "<ROOT>/node_modules/<PNPM_INNER>/@rspack/dev-client/src/reactRefresh.js",
       ],
     },
     "react": {
@@ -2185,7 +2011,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "javascript/auto",
             "use": [
               {
-                "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
                 "options": {
                   "svgo": true,
                   "svgoConfig": {
@@ -2204,7 +2030,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/url-loader",
                 "options": {
                   "limit": 10000,
                   "name": "static/svg/[name].[contenthash:8].svg",
@@ -2234,7 +2060,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -2278,7 +2104,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -2328,7 +2154,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -2363,9 +2189,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
@@ -2382,7 +2208,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -2417,9 +2243,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
@@ -2442,7 +2268,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "css/module",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -2477,16 +2303,16 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
                 "options": {
                   "join": [Function],
                   "sourceMap": false,
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
                   "sourceMap": true,
                 },
               },
@@ -2500,7 +2326,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "css",
             "use": [
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
                     "plugins": [
@@ -2535,16 +2361,16 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
                 "options": {
                   "join": [Function],
                   "sourceMap": false,
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
-                  "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
                   "sourceMap": true,
                 },
               },
@@ -2558,7 +2384,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/toml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
           },
         ],
       },
@@ -2567,7 +2393,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/yaml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },
@@ -2581,18 +2407,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
     },
     "splitChunks": {
       "cacheGroups": {
-        "lib-antd": {
-          "name": "lib-antd",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-arco": {
-          "name": "lib-arco",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
-        },
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
@@ -2643,33 +2457,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
     TestPlugin {
       "name": "TestPlugin",
     },
-    ForkTsCheckerWebpackPlugin {
-      "options": {
-        "issue": {
-          "exclude": [
-            {
-              "file": "**/*.(spec|test).ts",
-            },
-            {
-              "file": "**/node_modules/**/*",
-            },
-          ],
-        },
-        "logger": {
-          "error": [Function],
-          "log": [Function],
-        },
-        "typescript": {
-          "configFile": "<ROOT>/tsconfig.json",
-          "memoryLimit": 8192,
-          "typescriptPath": "<WORKSPACE>/node_modules/<PNPM_INNER>/typescript/lib/typescript.js",
-        },
-      },
-    },
     Plugin {
       "_options": {
-        "process.env.ASSET_PREFIX": "\\"\\"",
-        "process.env.NODE_ENV": "\\"development\\"",
+        "process.env.ASSET_PREFIX": """",
+        "process.env.NODE_ENV": ""development"",
       },
       "name": "DefinePlugin",
     },
@@ -2682,17 +2473,14 @@ exports[`tools.rspack > should match snapshot 1`] = `
   ],
   "resolve": {
     "alias": {
-      "core-js": "<WORKSPACE>/node_modules/<PNPM_INNER>/core-js",
+      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
-      ".ts",
-      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/tsconfig.json",
   },
   "target": [
     "web",
