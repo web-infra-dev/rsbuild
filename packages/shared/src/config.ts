@@ -125,7 +125,7 @@ export const getDefaultOutputConfig = (): NormalizedSharedOutputConfig => ({
     js: false,
     css: undefined,
   },
-  disableTsChecker: false,
+  // disableTsChecker: false,
   disableFilenameHash: false,
   disableCssModuleExtension: false,
   disableInlineRuntimeChunk: false,
@@ -184,14 +184,14 @@ export async function outputInspectConfigFiles({
   ];
 
   await Promise.all(
-    files.map(item =>
+    files.map((item) =>
       fs.outputFile(item.path, `module.exports = ${item.content}`),
     ),
   );
 
   const fileInfos = files
     .map(
-      item =>
+      (item) =>
         `  - ${chalk.bold.yellow(item.label)}: ${chalk.underline(item.path)}`,
     )
     .join('\n');

@@ -38,10 +38,17 @@
     "build": "modern build"
   },
   "dependencies": {
-    "@modern-js/utils": "2.26.0",
+    "@modern-js/utils": "2.36.0",
+    "@modern-js/server": "2.36.0",
+    "@modern-js/types": "2.36.0",
+    "@rspack/core": "0.3.6",
+    "@rspack/dev-client": "0.3.6",
+    "@rspack/plugin-html": "0.3.6",
     "@rsbuild/shared": "workspace:*",
-    "webpack": "^5.88.1",
-    "@svgr/webpack": "8.0.1"
+    "@svgr/webpack": "8.0.1",
+    "postcss": "8.4.31",
+    "rspack-manifest-plugin": "5.0.0-alpha0",
+    "webpack": "^5.88.1"
   },
   "devDependencies": {
     "@types/node": "^16",

@@ -36,6 +36,7 @@
     "@modern-js/monorepo-tools": "2.35.1",
     "@modern-js/tsconfig": "^2.35.1",
     "@rsbuild/vitest-helper": "workspace:*",
+    "vite-tsconfig-paths": "4.2.1",
     "husky": "^8.0.3",
     "nano-staged": "^0.8.0",
     "oxlint": "^0.0.13",
