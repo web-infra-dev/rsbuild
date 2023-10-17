@@ -8,7 +8,7 @@
     "directory": "packages/plugin-image-compress"
   },
   "license": "MIT",
-  "version": "2.36.0",
+  "version": "0.0.7",
   "types": "./src/index.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -25,13 +25,13 @@
     "dist"
   ],
   "dependencies": {
-    "@modern-js/utils": "2.36.0",
+    "@modern-js/utils": "^2.36.0",
     "@napi-rs/image": "^1.7.0",
     "svgo": "^3.0.2"
   },
   "devDependencies": {
-    "@modern-js/builder-webpack-provider": "2.36.0",
-    "@types/node": "^14",
+    "@modern-js/builder-webpack-provider": "^2.36.0",
+    "@types/node": "^16",
     "typescript": "^5",
     "webpack": "^5.88.1"
   },

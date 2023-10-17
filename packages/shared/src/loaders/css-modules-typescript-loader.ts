@@ -60,7 +60,7 @@ export function wrapQuotes(key: string) {
 const cssModuleToInterface = (cssModuleKeys: string[]) => {
   const interfaceFields = cssModuleKeys
     .sort()
-    .map(key => `  ${wrapQuotes(key)}: string;`)
+    .map((key) => `  ${wrapQuotes(key)}: string;`)
     .join('\n');
 
   return `interface CssExports {\n${interfaceFields}\n}`;
@@ -118,7 +118,6 @@ const getCssModuleKeys = (content: string) => {
 
   const localExports = extractLocalExports(content);
 
-  // eslint-disable-next-line no-cond-assign
   while ((match = keyRegex.exec(localExports))) {
     if (cssModuleKeys.indexOf(match[1]) < 0) {
       cssModuleKeys.push(match[1]);
@@ -127,7 +126,6 @@ const getCssModuleKeys = (content: string) => {
   return cssModuleKeys;
 };
 
-// eslint-disable-next-line consistent-return
 export default function (
   this: LoaderContext<{
     mode: string;
@@ -188,7 +186,7 @@ export default function (
   } else {
     read((_, fileContents) => {
       if (!compareText(cssModuleDefinition, fileContents)) {
-        write(cssModuleDefinition, err => {
+        write(cssModuleDefinition, (err) => {
           if (err) {
             failed(err);
           } else {

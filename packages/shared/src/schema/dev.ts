@@ -29,5 +29,4 @@ export const sharedDevConfigSchema = z.partialObj({
   progressBar: z.union([z.boolean(), ProgressBarConfigSchema]),
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _schema: z.ZodType<SharedDevConfig> = sharedDevConfigSchema;

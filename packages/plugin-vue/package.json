@@ -8,7 +8,7 @@
     "directory": "packages/plugin-vue"
   },
   "license": "MIT",
-  "version": "2.36.0",
+  "version": "0.0.7",
   "types": "./src/index.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -25,16 +25,15 @@
     "build": "modern build"
   },
   "dependencies": {
-    "@modern-js/builder-shared": "2.36.0",
+    "@rsbuild/shared": "workspace:*",
     "@vue/babel-plugin-jsx": "1.1.1",
     "vue-loader": "^17.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.22.15",
-    "@modern-js/builder": "2.36.0",
-    "@modern-js/builder-webpack-provider": "2.36.0",
-    "@modern-js/builder-rspack-provider": "2.36.0",
-    "@modern-js/utils": "2.36.0",
+    "@rsbuild/core": "workspace:*",
+    "@modern-js/builder-webpack-provider": "^2.36.0",
+    "@modern-js/builder-rspack-provider": "^2.36.0",
     "typescript": "^5",
     "webpack": "^5.88.1"
   },

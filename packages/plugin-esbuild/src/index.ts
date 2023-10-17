@@ -1,5 +1,5 @@
 import { JS_REGEX, TS_REGEX, applyScriptCondition } from '@rsbuild/shared';
-import type { BuilderPlugin } from '@modern-js/builder';
+import type { BuilderPlugin } from '@rsbuild/core';
 import type { BuilderPluginAPI } from '@modern-js/builder-webpack-provider';
 import type {
   LoaderOptions,

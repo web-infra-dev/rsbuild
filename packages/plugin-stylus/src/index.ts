@@ -1,4 +1,4 @@
-import type { BuilderPlugin } from '@modern-js/builder';
+import type { BuilderPlugin } from '@rsbuild/core';
 import { isUseCssSourceMap, STYLUS_REGEX } from '@rsbuild/shared';
 import type { BuilderPluginAPI } from '@modern-js/builder-webpack-provider';
 

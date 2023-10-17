@@ -1,6 +1,6 @@
-import { merge as deepMerge } from '@modern-js/utils/lodash';
+import { deepmerge } from '@rsbuild/shared/deepmerge';
 import { VueLoaderPlugin } from 'vue-loader';
-import type { BuilderPlugin } from '@modern-js/builder';
+import type { BuilderPlugin } from '@rsbuild/core';
 import type { BuilderPluginAPI } from '@modern-js/builder-webpack-provider';
 import type { VueLoaderOptions } from 'vue-loader';
 import type { VueJSXPluginOptions } from '@vue/babel-plugin-jsx';
@@ -53,7 +53,7 @@ export function builderPluginVue(
       api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
         chain.resolve.extensions.add('.vue');
 
-        const vueLoaderOptions = deepMerge(
+        const vueLoaderOptions = deepmerge(
           {
             compilerOptions: {
               preserveWhitespace: false,
@@ -61,7 +61,7 @@ export function builderPluginVue(
             experimentalInlineMatchResource:
               api.context.bundlerType === 'rspack',
           },
-          options.vueLoaderOptions,
+          options.vueLoaderOptions ?? {},
         );
 
         chain.module

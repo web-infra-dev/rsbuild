@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import {
   DEFAULT_PORT,
   ROOT_DIST_DIR,

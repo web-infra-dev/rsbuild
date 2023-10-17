@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import { isAbsolute, join } from 'path';
+import { fs } from '@rsbuild/shared/fs-extra';
 import {
   BuildCacheOptions,
   BuilderContext,
@@ -11,7 +12,6 @@ async function validateCache(
   cacheDirectory: string,
   buildDependencies: Record<string, string[]>,
 ) {
-  const { fs } = await import('@modern-js/utils');
   const configFile = join(cacheDirectory, 'buildDependencies.json');
 
   if (await isFileExists(configFile)) {

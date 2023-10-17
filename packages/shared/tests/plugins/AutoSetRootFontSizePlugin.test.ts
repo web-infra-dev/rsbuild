@@ -56,7 +56,6 @@ describe('test runtime', () => {
   });
 
   const runRootPixelCode = (code: string) => {
-    // eslint-disable-next-line no-eval
     eval(code);
   };
 
@@ -79,8 +78,7 @@ describe('test runtime', () => {
     addEventListener.mockClear();
     listenerCbs = [];
 
-    ['document', 'window', 'location', 'screen'].forEach(key => {
-      // @ts-expect-error
+    ['document', 'window', 'location', 'screen'].forEach((key) => {
       delete global[key];
     });
   });
@@ -90,7 +88,6 @@ describe('test runtime', () => {
     runRootPixelCode(code);
     expect(listenerCbs.length).toBe(1);
 
-    // @ts-expect-error
     expect(window[DEFAULT_OPTIONS.rootFontSizeVariableName]).toBe(
       DEFAULT_OPTIONS.maxRootFontSize,
     );
@@ -111,10 +108,10 @@ describe('test runtime', () => {
     document.documentElement.clientWidth = 555;
 
     // trigger resize
-    listenerCbs.forEach(cb => cb());
+    listenerCbs.forEach((cb) => cb());
 
     // wait
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     expect(document.documentElement.style.fontSize).toBe(
       `${(555 * 5) / 750}px`,

@@ -4,11 +4,11 @@
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/web-infra-dev/modern.js",
+    "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/plugin-esbuild"
   },
   "license": "MIT",
-  "version": "2.36.0",
+  "version": "0.0.7",
   "types": "./src/index.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -30,9 +30,9 @@
     "esbuild": "0.17.19"
   },
   "devDependencies": {
-    "@modern-js/builder": "2.36.0",
-    "@modern-js/builder-webpack-provider": "2.36.0",
-    "@modern-js/utils": "2.36.0",
+    "@rsbuild/core": "workspace:*",
+    "@modern-js/builder-webpack-provider": "^2.36.0",
+    "@modern-js/utils": "^2.36.0",
     "typescript": "^5"
   },
   "sideEffects": false,

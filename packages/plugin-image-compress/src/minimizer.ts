@@ -11,7 +11,6 @@ export interface MinimizedResult {
 }
 
 export class ModernJsImageMinimizerPlugin {
-  // eslint-disable-next-line @typescript-eslint/typedef
   name = MODERN_JS_IMAGE_MINIMIZER_PLUGIN_NAME;
 
   options: FinalOptions;

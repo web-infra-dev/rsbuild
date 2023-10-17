@@ -1,5 +1,5 @@
 import { setConfig } from '@rsbuild/shared';
-import type { BuilderPlugin } from '@modern-js/builder';
+import type { BuilderPlugin } from '@rsbuild/core';
 import type { BuilderPluginAPI as WebpackBuilderPluginAPI } from '@modern-js/builder-webpack-provider';
 import type { BuilderPluginAPI as RspackBuilderPluginAPI } from '@modern-js/builder-rspack-provider';
 

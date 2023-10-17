@@ -200,9 +200,7 @@ export async function applyPluginConfig(
     };
   }
 
-  const extensions: Extensions | OuterExtensions =
-    // eslint-disable-next-line no-multi-assign
-    (swc.extensions ??= {});
+  const extensions: Extensions | OuterExtensions = (swc.extensions ??= {});
 
   if (builderConfig.source?.transformImport) {
     extensions.pluginImport ??= [];

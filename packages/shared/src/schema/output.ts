@@ -116,5 +116,4 @@ export const sharedOutputConfigSchema = z.partialObj({
   svgDefaultExport: SvgDefaultExportSchema,
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _schema: z.ZodType<SharedOutputConfig> = sharedOutputConfigSchema;

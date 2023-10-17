@@ -20,7 +20,6 @@ const TYPES = Object.keys(TAG_TYPE);
 
 function findCurrentDomain(url: string, domainList: string[]) {
   let domain = '';
-  // eslint-disable-next-line @typescript-eslint/prefer-for-of
   for (let i = 0; i < domainList.length; i++) {
     if (url.indexOf(domainList[i]) !== -1) {
       domain = domainList[i];
@@ -76,7 +75,6 @@ function validateTargetInfo(
   return { target, tagName, url };
 }
 
-// eslint-disable-next-line consistent-return
 function createElement(
   origin: HTMLElement,
   attributes: ScriptElementAttributes,
@@ -258,7 +256,7 @@ function resourceMonitor(
   if (typeof window !== 'undefined' && typeof window.document !== 'undefined') {
     document.addEventListener(
       'error',
-      e => {
+      (e) => {
         if (e && e.target instanceof Element) {
           error(e);
         }
@@ -268,7 +266,7 @@ function resourceMonitor(
 
     document.addEventListener(
       'load',
-      e => {
+      (e) => {
         if (e && e.target instanceof Element) {
           success(e);
         }
@@ -278,9 +276,7 @@ function resourceMonitor(
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function init(options: AssetsRetryOptions) {
-  // eslint-disable-next-line prefer-object-spread
   const config = Object.assign({}, defaultConfig, options);
   // Normalize config
   if (!Array.isArray(config.type) || config.type.length === 0) {

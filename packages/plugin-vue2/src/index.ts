@@ -1,6 +1,6 @@
-import { merge as deepMerge } from '@modern-js/utils/lodash';
+import { deepmerge } from '@rsbuild/shared/deepmerge';
 import { VueLoaderPlugin } from 'vue-loader';
-import type { BuilderPlugin } from '@modern-js/builder';
+import type { BuilderPlugin } from '@rsbuild/core';
 import type { BuilderPluginAPI } from '@modern-js/builder-webpack-provider';
 import type { SharedBuilderConfig } from '@rsbuild/shared';
 import type { VueLoaderOptions } from 'vue-loader';
@@ -66,13 +66,13 @@ export function builderPluginVue2(
       api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
         chain.resolve.extensions.add('.vue');
 
-        const vueLoaderOptions = deepMerge(
+        const vueLoaderOptions = deepmerge(
           {
             compilerOptions: {
               preserveWhitespace: false,
             },
           },
-          options.vueLoaderOptions,
+          options.vueLoaderOptions ?? {},
         );
 
         chain.module
