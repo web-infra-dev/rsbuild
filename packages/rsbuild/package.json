@@ -1,0 +1,50 @@
+{
+  "name": "@rsbuild/core",
+  "description": "Unleash the power of Rspack with the out-of-the-box build tool.",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/rsbuild"
+  },
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "license": "MIT",
+  "version": "0.0.7",
+  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true,
+    "types": "./dist/index.d.ts"
+  },
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
+  "dependencies": {
+    "@modern-js/utils": "2.26.0",
+    "@rsbuild/shared": "workspace:*",
+    "webpack": "^5.88.1",
+    "@svgr/webpack": "8.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16",
+    "typescript": "^5"
+  }
+}

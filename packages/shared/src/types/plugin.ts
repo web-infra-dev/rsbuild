@@ -56,14 +56,12 @@ export type Plugins = {
   html: PluginsFn;
   antd: PluginsFn;
   arco: PluginsFn;
-  tsChecker: PluginsFn;
   checkSyntax: PluginsFn;
   rem: PluginsFn;
   wasm: PluginsFn;
   moment: PluginsFn;
   nodeAddons: PluginsFn;
   externals: PluginsFn;
-  sourceBuild: PluginsFn;
   networkPerformance: PluginsFn;
   preloadOrPrefetch: PluginsFn;
   performance: PluginsFn;
