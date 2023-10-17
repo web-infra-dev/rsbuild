@@ -54,8 +54,3 @@ export const builderPluginImageCompress: IPluginImageCompress = (
     });
   },
 });
-
-/**
- * @deprecated Using builderPluginImageCompress instead.
- */
-export const PluginImageCompress = builderPluginImageCompress;

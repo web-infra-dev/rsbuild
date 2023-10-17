@@ -154,8 +154,3 @@ export function getDefaultSwcConfig(): TransformConfig {
     inlineSourcesContent: true,
   };
 }
-
-/**
- * @deprecated Using builderPluginSwc instead.
- */
-export const PluginSwc = builderPluginSwc;

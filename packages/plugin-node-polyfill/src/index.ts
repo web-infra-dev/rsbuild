@@ -83,8 +83,3 @@ export function builderPluginNodePolyfill(): BuilderPlugin<
     },
   };
 }
-
-/**
- * @deprecated Using builderPluginNodePolyfill instead.
- */
-export const PluginNodePolyfill = builderPluginNodePolyfill;

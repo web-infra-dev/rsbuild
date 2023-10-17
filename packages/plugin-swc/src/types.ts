@@ -14,16 +14,7 @@ export type {
   TerserCompressOptions,
 } from '@modern-js/swc-plugins';
 
-export type OuterExtensions = Omit<
-  Extensions,
-  'ssrLoaderId' | 'configRoutes'
-> & {
-  /**
-   * @deprecated
-   */
-  // for backwards compatibility
-  modernjsSsrLoaderId?: boolean;
-};
+export type OuterExtensions = Omit<Extensions, 'ssrLoaderId' | 'configRoutes'>;
 
 export interface ObjPluginSwcOptions<T extends 'inner' | 'outer' = 'inner'>
   extends TransformConfig {

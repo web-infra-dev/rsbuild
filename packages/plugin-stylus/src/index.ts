@@ -77,8 +77,3 @@ export function builderPluginStylus(
     },
   };
 }
-
-/**
- * @deprecated Using builderPluginStylus instead.
- */
-export const PluginStylus = builderPluginStylus;

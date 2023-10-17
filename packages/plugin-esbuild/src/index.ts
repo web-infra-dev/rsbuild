@@ -104,8 +104,3 @@ export function builderPluginEsbuild(
     },
   };
 }
-
-/**
- * @deprecated Using builderPluginEsbuild instead.
- */
-export const PluginEsbuild = builderPluginEsbuild;
