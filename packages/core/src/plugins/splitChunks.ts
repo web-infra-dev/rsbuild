@@ -71,7 +71,9 @@ const DEPENDENCY_MATCH_TEMPL = /[\\/]node_modules[\\/](<SOURCES>)[\\/]/.source;
 export const createDependenciesRegExp = (
   ...dependencies: (string | RegExp)[]
 ) => {
-  const sources = dependencies.map(d => (typeof d === 'string' ? d : d.source));
+  const sources = dependencies.map((d) =>
+    typeof d === 'string' ? d : d.source,
+  );
   const expr = DEPENDENCY_MATCH_TEMPL.replace('<SOURCES>', sources.join('|'));
   return new RegExp(expr);
 };

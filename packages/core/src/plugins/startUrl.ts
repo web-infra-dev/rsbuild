@@ -12,7 +12,7 @@ export function builderPluginStartUrl(): DefaultBuilderPlugin {
     async setup(api) {
       let port: number;
 
-      api.onAfterStartDevServer(async params => {
+      api.onAfterStartDevServer(async (params) => {
         ({ port } = params);
       });
 
@@ -36,7 +36,7 @@ export function builderPluginStartUrl(): DefaultBuilderPlugin {
           urls.push(`${protocol}://localhost:${port}`);
         } else {
           urls.push(
-            ..._.castArray(startUrl).map(item =>
+            ..._.castArray(startUrl).map((item) =>
               replacePlaceholder(item, port),
             ),
           );
@@ -59,7 +59,7 @@ export function builderPluginStartUrl(): DefaultBuilderPlugin {
         };
 
         if (beforeStartUrl) {
-          Promise.all(ensureArray(beforeStartUrl).map(fn => fn())).then(
+          Promise.all(ensureArray(beforeStartUrl).map((fn) => fn())).then(
             openUrls,
           );
         } else {

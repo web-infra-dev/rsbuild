@@ -88,6 +88,28 @@ importers:
         specifier: ^5
         version: 5.2.2
 
+  packages/core:
+    dependencies:
+      '@modern-js/utils':
+        specifier: 2.26.0
+        version: 2.26.0(react-dom@18.2.0)(react@18.2.0)
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@svgr/webpack':
+        specifier: 8.0.1
+        version: 8.0.1(typescript@5.2.2)
+      webpack:
+        specifier: ^5.88.1
+        version: 5.89.0
+    devDependencies:
+      '@types/node':
+        specifier: ^16
+        version: 16.18.58
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
   packages/document:
     devDependencies:
       '@modern-js/tsconfig':
@@ -129,28 +151,6 @@ importers:
       p-map:
         specifier: ^4.0.0
         version: 4.0.0
-    devDependencies:
-      '@types/node':
-        specifier: ^16
-        version: 16.18.58
-      typescript:
-        specifier: ^5
-        version: 5.2.2
-
-  packages/rsbuild:
-    dependencies:
-      '@modern-js/utils':
-        specifier: 2.26.0
-        version: 2.26.0(react-dom@18.2.0)(react@18.2.0)
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
-      '@svgr/webpack':
-        specifier: 8.0.1
-        version: 8.0.1(typescript@5.2.2)
-      webpack:
-        specifier: ^5.88.1
-        version: 5.89.0
     devDependencies:
       '@types/node':
         specifier: ^16

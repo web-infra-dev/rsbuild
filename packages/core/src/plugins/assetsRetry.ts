@@ -16,9 +16,7 @@ export function builderPluginAssetsRetry(): DefaultBuilderPlugin {
             return;
           }
 
-          const { AssetsRetryPlugin } = await import(
-            '@rsbuild/shared'
-          );
+          const { AssetsRetryPlugin } = await import('@rsbuild/shared');
           const distDir = getDistPath(config.output, 'js');
 
           const { assetsRetry = {} } = config.output;

@@ -74,7 +74,7 @@ export const builderPluginSvg = (): DefaultBuilderPlugin => {
             svgoConfig: getSvgoDefaultConfig(),
           })
           .end()
-          .when(defaultExport === 'url', c =>
+          .when(defaultExport === 'url', (c) =>
             c
               .use(CHAIN_ID.USE.URL)
               .loader(getSharedPkgCompiledPath('url-loader'))

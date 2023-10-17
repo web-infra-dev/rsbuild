@@ -1,21 +1,18 @@
 import { getAntdMajorVersion } from '@modern-js/utils';
-import type {
-  BuilderTarget,
-  DefaultBuilderPlugin,
-} from '@rsbuild/shared';
+import type { BuilderTarget, DefaultBuilderPlugin } from '@rsbuild/shared';
 
 // TODO: rename as pluginAntd
 export const builderPluginAntd = (): DefaultBuilderPlugin => ({
   name: `builder-plugin-antd`,
 
   setup(api) {
-    api.modifyBuilderConfig(builderConfig => {
+    api.modifyBuilderConfig((builderConfig) => {
       builderConfig.source ??= {};
 
       if (
         builderConfig.source.transformImport === false ||
         builderConfig.source.transformImport?.some(
-          item => item.libraryName === 'antd',
+          (item) => item.libraryName === 'antd',
         )
       ) {
         return;
@@ -40,7 +37,7 @@ export const builderPluginAntd = (): DefaultBuilderPlugin => ({
 });
 
 export function useSSR(target: BuilderTarget | BuilderTarget[]) {
-  return (Array.isArray(target) ? target : [target]).some(item =>
+  return (Array.isArray(target) ? target : [target]).some((item) =>
     ['node', 'service-worker'].includes(item),
   );
 }

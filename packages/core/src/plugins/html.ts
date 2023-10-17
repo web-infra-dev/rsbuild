@@ -81,7 +81,7 @@ export const applyInjectTags = (api: SharedBuilderPluginAPI) => {
   api.modifyBundlerChain(async (chain, { HtmlPlugin, CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
     const tags = _.castArray(config.html.tags).filter(Boolean);
-    const tagsByEntries = _.mapValues(config.html.tagsByEntries, tags =>
+    const tagsByEntries = _.mapValues(config.html.tagsByEntries, (tags) =>
       _.castArray(tags).filter(Boolean),
     );
     const shouldByEntries = _.some(tagsByEntries, 'length');
@@ -209,9 +209,7 @@ export const builderPluginHtml = (): DefaultBuilderPlugin => ({
           const { nonce } = config.security;
 
           if (nonce) {
-            const { HtmlNoncePlugin } = await import(
-              '@rsbuild/shared'
-            );
+            const { HtmlNoncePlugin } = await import('@rsbuild/shared');
 
             chain
               .plugin(CHAIN_ID.PLUGIN.HTML_NONCE)
@@ -223,9 +221,7 @@ export const builderPluginHtml = (): DefaultBuilderPlugin => ({
           const { appIcon, crossorigin } = config.html;
 
           if (crossorigin) {
-            const { HtmlCrossOriginPlugin } = await import(
-              '@rsbuild/shared'
-            );
+            const { HtmlCrossOriginPlugin } = await import('@rsbuild/shared');
 
             const formattedCrossorigin =
               crossorigin === true ? 'anonymous' : crossorigin;
@@ -240,9 +236,7 @@ export const builderPluginHtml = (): DefaultBuilderPlugin => ({
           }
 
           if (faviconUrls.length) {
-            const { HtmlFaviconUrlPlugin } = await import(
-              '@rsbuild/shared'
-            );
+            const { HtmlFaviconUrlPlugin } = await import('@rsbuild/shared');
 
             chain
               .plugin(CHAIN_ID.PLUGIN.FAVICON_URL)
@@ -250,9 +244,7 @@ export const builderPluginHtml = (): DefaultBuilderPlugin => ({
           }
 
           if (appIcon) {
-            const { HtmlAppIconPlugin } = await import(
-              '@rsbuild/shared'
-            );
+            const { HtmlAppIconPlugin } = await import('@rsbuild/shared');
 
             const distDir = getDistPath(config.output, 'image');
             const iconPath = path.isAbsolute(appIcon)

@@ -20,9 +20,7 @@ export const builderPluginInlineChunk = (): DefaultBuilderPlugin => ({
           return;
         }
 
-        const { InlineChunkHtmlPlugin } = await import(
-          '@rsbuild/shared'
-        );
+        const { InlineChunkHtmlPlugin } = await import('@rsbuild/shared');
 
         const {
           disableInlineRuntimeChunk,

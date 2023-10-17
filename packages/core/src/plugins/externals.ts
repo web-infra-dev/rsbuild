@@ -4,7 +4,7 @@ export function builderPluginExternals(): DefaultBuilderPlugin {
   return {
     name: 'builder-plugin-externals',
     setup(api) {
-      api.modifyBundlerChain(chain => {
+      api.modifyBundlerChain((chain) => {
         const { externals } = api.getNormalizedConfig().output;
         if (externals) {
           chain.externals(externals);
@@ -12,7 +12,7 @@ export function builderPluginExternals(): DefaultBuilderPlugin {
       });
 
       api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
-        (bundlerConfigs as BundlerConfig[]).forEach(config => {
+        (bundlerConfigs as BundlerConfig[]).forEach((config) => {
           const isWebWorker = Array.isArray(config.target)
             ? config.target.includes('webworker')
             : config.target === 'webworker';

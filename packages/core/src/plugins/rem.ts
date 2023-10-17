@@ -61,7 +61,7 @@ export const builderPluginRem = (): DefaultBuilderPlugin => ({
             ..._.cloneDeep(userOptions.pxtorem || {}),
           });
         // Deep copy options to prevent unexpected behavior.
-        applyRules.forEach(name => {
+        applyRules.forEach((name) => {
           chain.module.rules.has(name) &&
             chain.module
               .rule(name)

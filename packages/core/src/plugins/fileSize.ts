@@ -4,12 +4,7 @@
  */
 import path from 'path';
 import chalk from '@modern-js/utils/chalk';
-import {
-  logger,
-  Stats,
-  MultiStats,
-  StatsAsset,
-} from '@rsbuild/shared';
+import { logger, Stats, MultiStats, StatsAsset } from '@rsbuild/shared';
 import type { DefaultBuilderPlugin } from '@rsbuild/shared';
 
 /** Filter source map and license files */
@@ -68,7 +63,7 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
 
   const multiStats = 'stats' in stats ? stats.stats : [stats];
   const assets = multiStats
-    .map(stats => {
+    .map((stats) => {
       const origin = stats.toJson({
         all: false,
         assets: true,
@@ -80,7 +75,7 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
         groupAssetsByEmitStatus: false,
       });
 
-      const filteredAssets = origin.assets!.filter(asset =>
+      const filteredAssets = origin.assets!.filter((asset) =>
         filterAsset(asset.name),
       );
 
@@ -95,10 +90,10 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
   assets.sort((a, b) => b.size - a.size);
 
   const longestLabelLength = Math.max(
-    ...assets.map(a => stripAnsi(a.sizeLabel).length),
+    ...assets.map((a) => stripAnsi(a.sizeLabel).length),
   );
   const longestFileLength = Math.max(
-    ...assets.map(a => stripAnsi(a.folder + path.sep + a.name).length),
+    ...assets.map((a) => stripAnsi(a.folder + path.sep + a.name).length),
   );
 
   logger.info(`Production file sizes:\n`);
@@ -108,7 +103,7 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
   let totalSize = 0;
   let totalGzipSize = 0;
 
-  assets.forEach(asset => {
+  assets.forEach((asset) => {
     let { sizeLabel } = asset;
     const { name, folder, gzipSizeLabel } = asset;
     const fileNameLength = stripAnsi(folder + path.sep + name).length;

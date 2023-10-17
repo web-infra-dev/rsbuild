@@ -80,7 +80,7 @@ async function getBuildDependencies(context: Readonly<BuilderContext>) {
   }
 
   const tailwindExts = ['ts', 'js', 'cjs', 'mjs'];
-  const configs = tailwindExts.map(ext =>
+  const configs = tailwindExts.map((ext) =>
     join(context.rootPath, `tailwind.config.${ext}`),
   );
   const tailwindConfig = findExists(configs);

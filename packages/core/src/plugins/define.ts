@@ -1,8 +1,5 @@
 import { mapValues } from '@modern-js/utils/lodash';
-import type {
-  GlobalVars,
-  DefaultBuilderPlugin,
-} from '@rsbuild/shared';
+import type { GlobalVars, DefaultBuilderPlugin } from '@rsbuild/shared';
 
 export const builderPluginDefine = (): DefaultBuilderPlugin => ({
   name: 'builder-plugin-define',
@@ -33,7 +30,7 @@ export const builderPluginDefine = (): DefaultBuilderPlugin => ({
 
         const serializedVars = mapValues(
           globalVars,
-          value => JSON.stringify(value) ?? 'undefined',
+          (value) => JSON.stringify(value) ?? 'undefined',
         );
         // Macro defines.
         // @ts-expect-error

@@ -26,7 +26,7 @@ export const builderPluginPerformance = (): DefaultBuilderPlugin => ({
   name: 'builder-plugin-performance',
 
   setup(api) {
-    api.modifyBuilderConfig(builderConfig => {
+    api.modifyBuilderConfig((builderConfig) => {
       if (builderConfig.performance?.profile) {
         // generate stats.json
         if (!builderConfig.performance?.bundleAnalyze) {
@@ -43,7 +43,7 @@ export const builderPluginPerformance = (): DefaultBuilderPlugin => ({
         }
       }
     });
-    api.modifyBundlerChain(chain => {
+    api.modifyBundlerChain((chain) => {
       const config = api.getNormalizedConfig();
 
       applyProfile({ chain, config });
