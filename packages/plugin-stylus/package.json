@@ -25,7 +25,7 @@
     "build": "modern build"
   },
   "dependencies": {
-    "@modern-js/builder-shared": "2.36.0",
+    "@rsbuild/shared": "workspace:*",
     "@modern-js/builder-webpack-provider": "2.36.0",
     "stylus": "0.59.0",
     "stylus-loader": "7.1.0"

@@ -26,7 +26,7 @@
     "build": "modern build"
   },
   "dependencies": {
-    "@modern-js/builder-shared": "2.36.0",
+    "@rsbuild/shared": "workspace:*",
     "esbuild": "0.17.19"
   },
   "devDependencies": {

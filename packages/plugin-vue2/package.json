@@ -25,7 +25,7 @@
     "build": "modern build"
   },
   "dependencies": {
-    "@modern-js/builder-shared": "2.36.0",
+    "@rsbuild/shared": "workspace:*",
     "@vue/babel-preset-jsx": "^1.4.0",
     "vue-loader": "^15.10.1"
   },

@@ -11,7 +11,7 @@ import {
   getBrowserslistWithDefault,
   getDefaultStyledComponentsConfig,
   isUsingHMR,
-} from '@modern-js/builder-shared';
+} from '@rsbuild/shared';
 import { Extensions } from '@modern-js/swc-plugins';
 import { getDefaultSwcConfig } from './plugin';
 import {

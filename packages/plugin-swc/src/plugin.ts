@@ -3,7 +3,7 @@ import type {
   BuilderPluginAPI,
   BuilderPlugin,
 } from '@modern-js/builder-webpack-provider';
-import { JS_REGEX, TS_REGEX, mergeRegex } from '@modern-js/builder-shared';
+import { JS_REGEX, TS_REGEX, mergeRegex } from '@rsbuild/shared';
 import type { PluginSwcOptions, TransformConfig } from './types';
 import {
   applyPluginConfig,
@@ -11,7 +11,7 @@ import {
   isDebugMode,
   removeUselessOptions,
 } from './utils';
-import { SwcMinimizerPlugin } from './minizer';
+import { SwcMinimizerPlugin } from './minimizer';
 
 const PLUGIN_NAME = 'builder-plugin-swc';
 

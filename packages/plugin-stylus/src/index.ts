@@ -1,5 +1,5 @@
 import type { BuilderPlugin } from '@modern-js/builder';
-import { isUseCssSourceMap } from '@modern-js/builder-shared';
+import { isUseCssSourceMap, STYLUS_REGEX } from '@rsbuild/shared';
 import type { BuilderPluginAPI } from '@modern-js/builder-webpack-provider';
 
 type StylusOptions = {
@@ -28,7 +28,6 @@ export function builderPluginStylus(
       const { bundlerType } = api.context;
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
-        const { STYLUS_REGEX } = await import('@modern-js/builder-shared');
         const { applyOptionsChain } = await import('@modern-js/utils');
 
         const { merge: deepMerge } = await import('@modern-js/utils/lodash');
@@ -68,7 +67,6 @@ export function builderPluginStylus(
           const { applyCSSModuleRule } = await import(
             '@modern-js/builder-rspack-provider/plugins/css'
           );
-          const { STYLUS_REGEX } = await import('@modern-js/builder-shared');
 
           const config = api.getNormalizedConfig();
 

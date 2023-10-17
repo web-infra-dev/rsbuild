@@ -2,7 +2,7 @@ import { merge as deepMerge } from '@modern-js/utils/lodash';
 import { VueLoaderPlugin } from 'vue-loader';
 import type { BuilderPlugin } from '@modern-js/builder';
 import type { BuilderPluginAPI } from '@modern-js/builder-webpack-provider';
-import type { SharedBuilderConfig } from '@modern-js/builder-shared';
+import type { SharedBuilderConfig } from '@rsbuild/shared';
 import type { VueLoaderOptions } from 'vue-loader';
 
 type VueJSXPresetOptions = {
