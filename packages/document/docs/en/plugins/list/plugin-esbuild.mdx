@@ -13,47 +13,27 @@ Therefore, we recommend that you use SWC instead of esbuild, please refer to [SW
 
 ## Quick Start
 
-### Used in Modern.js framework
+### Install Plugin
 
-The Modern.js framework integrates the Rsbuild's esbuild plugin by default, so you don't need to manually install and register the plugin, just use the [tools.esbuild](https://modernjs.dev/en/configure/app/tools/esbuild.html) configuration:
-
-```js
-export default defineConfig({
-  tools: {
-    esbuild: {
-      loader: {
-        target: 'chrome61',
-      },
-      minimize: {
-        target: 'chrome61',
-      },
-    },
-  },
-});
-```
-
-### Use via the Node API
-
-If you use the Rsbuild's Node API, you need to manually install and register the esbuild plugin.
-
-#### Install
-
-You can install the plugin with the following command:
+You can install the plugin using the following command:
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-esbuild -D" />
 
-#### Register
+### Register Plugin
 
-Register esbuild plugin through the `addPlugins` method:
+You can register the plugin in the `rsbuild.config.ts` file:
 
-```js
+```ts title="rsbuild.config.ts"
 import { builderPluginEsbuild } from '@rsbuild/plugin-esbuild';
 
-// add the plugin to the builder instance
-builder.addPlugins([builderPluginEsbuild()]);
+export default {
+  plugins: [builderPluginEsbuild()],
+};
 ```
+
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/builder-instance.html#builderaddplugins) method.
 
 ## Config
 

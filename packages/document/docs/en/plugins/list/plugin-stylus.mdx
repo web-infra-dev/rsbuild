@@ -4,34 +4,27 @@ Stylus is an Expressive, dynamic and robust CSS preprocessor. This chapter intro
 
 ## Quick Start
 
-### Install
+### Install Plugin
 
-You can install the plugin with the following command:
+You can install the plugin using the following command:
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-stylus -D" />
 
-### Register
+### Register Plugin
 
-In upper-level frameworks such as Modern.js, you can register Stylus plugin through the `builderPlugins` config:
+You can register the plugin in the `rsbuild.config.ts` file:
 
-```ts
+```ts title="rsbuild.config.ts"
 import { builderPluginStylus } from '@rsbuild/plugin-stylus';
 
 export default {
-  builderPlugins: [builderPluginStylus()],
+  plugins: [builderPluginStylus()],
 };
 ```
 
-When you call the Rsbuild's Node API directly, you can register Stylus plugin with the `addPlugins` method:
-
-```js
-import { builderPluginStylus } from '@rsbuild/plugin-stylus';
-
-// add the plugin to the builder instance
-builder.addPlugins([builderPluginStylus()]);
-```
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/builder-instance.html#builderaddplugins) method.
 
 ## Example
 

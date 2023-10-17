@@ -14,15 +14,19 @@ import { PackageManagerTabs } from '@theme';
 
 ### 注册插件
 
-你可以通过 `addPlugins` 方法来注册 Vue 插件：
+你可以在 `rsbuild.config.ts` 文件中注册插件：
 
-```js
+```ts title="rsbuild.config.ts"
 import { builderPluginVue } from '@rsbuild/plugin-vue';
 
-builder.addPlugins([builderPluginVue()]);
+export default {
+  plugins: [builderPluginVue()],
+};
 ```
 
-安装完插件后，你可以直接在代码中引入 `*.vue` 文件，也可以使用 Vue 的 [JSX 语法](https://github.com/vuejs/babel-plugin-jsx)，无须添加其他配置。
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/builder-instance.html#builderaddplugins) 方法来注册插件。
+
+注册完插件后，你可以直接在代码中引入 `*.vue` 文件，也可以使用 Vue 的 [JSX 语法](https://github.com/vuejs/babel-plugin-jsx)，无须添加其他配置。
 
 ## 配置
 

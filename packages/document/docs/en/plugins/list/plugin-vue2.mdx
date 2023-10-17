@@ -4,25 +4,29 @@ The Vue 2 plugin provides support for building Vue 2 applications. The plugin in
 
 ## Quick Start
 
-### Install
+### Install Plugin
 
-You can install the plugin with the following command:
+You can install the plugin using the following command:
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-vue2 -D" />
 
-### Register
+### Register Plugin
 
-You can register Vue 2 plugin with the `addPlugins` method:
+You can register the plugin in the `rsbuild.config.ts` file:
 
-```js
+```ts title="rsbuild.config.ts"
 import { builderPluginVue2 } from '@rsbuild/plugin-vue2';
 
-builder.addPlugins([builderPluginVue2()]);
+export default {
+  plugins: [builderPluginVue2()],
+};
 ```
 
-After installing the plugin, you can directly import `*.vue` files in your code or use Vue's [JSX syntax](https://github.com/vuejs/jsx-vue2) without the need for additional configuration.
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/builder-instance.html#builderaddplugins) method.
+
+After registering the plugin, you can directly import `*.vue` files in your code or use Vue's [JSX syntax](https://github.com/vuejs/jsx-vue2) without the need for additional configuration.
 
 ## Config
 

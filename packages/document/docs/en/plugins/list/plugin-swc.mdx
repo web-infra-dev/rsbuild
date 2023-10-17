@@ -38,36 +38,27 @@ For a detailed comparison between minifiers, see [minification-benchmarks](https
 
 ## Quick Start
 
-### Used in Modern.js framework
+### Install Plugin
 
-The Modern.js framework integrates the Rsbuild's SWC plugin, and you can use it in the following ways:
-
-import EnableSWC from '@en/shared/enableSwc.md';
-
-<EnableSWC />
-
-### Use via the Node API
-
-If you use the Rsbuild's Node API, you need to manually install and register the SWC plugin of Rsbuild.
-
-#### Install
-
-You can install the plugin with the following command:
+You can install the plugin using the following command:
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-swc -D" />
 
-#### Register
+### Register Plugin
 
-Register SWC plugin through the `addPlugins` method:
+You can register the plugin in the `rsbuild.config.ts` file:
 
-```js
+```ts title="rsbuild.config.ts"
 import { builderPluginSwc } from '@rsbuild/plugin-swc';
 
-// add the plugin to the builder instance
-builder.addPlugins([builderPluginSwc()]);
+export default {
+  plugins: [builderPluginSwc()],
+};
 ```
+
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/builder-instance.html#builderaddplugins) method.
 
 That's it! Now you can use SWC transformation and minification in your project.
 

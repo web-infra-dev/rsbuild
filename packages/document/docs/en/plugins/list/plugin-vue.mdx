@@ -4,25 +4,29 @@ The Vue plugin provides support for building Vue 3 applications. The plugin inte
 
 ## Quick Start
 
-### Install
+### Install Plugin
 
-You can install the plugin with the following command:
+You can install the plugin using the following command:
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-vue -D" />
 
-### Register
+### Register Plugin
 
-You can register Vue plugin with the `addPlugins` method:
+You can register the plugin in the `rsbuild.config.ts` file:
 
-```js
+```ts title="rsbuild.config.ts"
 import { builderPluginVue } from '@rsbuild/plugin-vue';
 
-builder.addPlugins([builderPluginVue()]);
+export default {
+  plugins: [builderPluginVue()],
+};
 ```
 
-After installing the plugin, you can directly import `*.vue` files in your code or use Vue's [JSX syntax](https://github.com/vuejs/babel-plugin-jsx) without the need for additional configuration.
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/builder-instance.html#builderaddplugins) method.
+
+After registering the plugin, you can directly import `*.vue` files in your code or use Vue's [JSX syntax](https://github.com/vuejs/babel-plugin-jsx) without the need for additional configuration.
 
 ## Config
 

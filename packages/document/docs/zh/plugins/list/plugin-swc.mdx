@@ -38,19 +38,7 @@ import SWC from '@zh/shared/swc.md';
 
 ## 快速开始
 
-### 在 Modern.js 框架中使用
-
-Modern.js 框架对 Rsbuild 的 SWC 插件进行了封装，你可以通过以下方式来使用：
-
-import EnableSWC from '@zh/shared/enableSwc.md';
-
-<EnableSWC />
-
-### 通过 Node API 使用
-
-如果你直接使用了 Rsbuild 的 Node API，那么需要手动安装和注册 Rsbuild 的 SWC 插件。
-
-#### 安装插件
+### 安装插件
 
 你可以通过如下的命令安装插件:
 
@@ -58,16 +46,19 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-swc -D" />
 
-#### 注册插件
+### 注册插件
 
-通过 `addPlugins` 方法来注册 SWC 插件：
+你可以在 `rsbuild.config.ts` 文件中注册插件：
 
-```js
+```ts title="rsbuild.config.ts"
 import { builderPluginSwc } from '@rsbuild/plugin-swc';
 
-// 往 builder 实例上添加插件
-builder.addPlugins([builderPluginSwc()]);
+export default {
+  plugins: [builderPluginSwc()],
+};
 ```
+
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/builder-instance.html#builderaddplugins) 方法来注册插件。
 
 That's it! 现在你可以在项目中无缝使用 SWC 的转译和压缩能力了。
 
@@ -333,7 +324,7 @@ PluginSWC({
 import Btn from 'foo/es/MyButton';
 ```
 
-可以看出配置 `customName: "foo/es/{{ member }}"` 的效果等同于配置 `` customName: (member) => `foo/es/${member}`  ``，但是不会有 Node-API 的调用开销。
+可以看出配置 `customName: "foo/es/{{ member }}"` 的效果等同于配置 ``customName: (member) => `foo/es/${member}` ``，但是不会有 Node-API 的调用开销。
 
 这里使用到的模版是 [handlebars](https://handlebarsjs.com)，模版配置中还内置了一些有用的辅助工具，还是以上面的导入语句为例，配置成：
 

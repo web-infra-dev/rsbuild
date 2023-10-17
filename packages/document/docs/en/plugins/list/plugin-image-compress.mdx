@@ -4,34 +4,27 @@ With the image compression plugin, image resources used in the project can be co
 
 ## Quick Start
 
-### Install
+### Install Plugin
 
-You can install the plugin with the following command:
+You can install the plugin using the following command:
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-image-compress -D" />
 
-### Register
+### Register Plugin
 
-In upper-level frameworks such as Modern.js, you can register image compress plugin through the `builderPlugins` config:
+You can register the plugin in the `rsbuild.config.ts` file:
 
-```ts
+```ts title="rsbuild.config.ts"
 import { builderPluginImageCompress } from '@rsbuild/plugin-image-compress';
 
 export default {
-  builderPlugins: [builderPluginImageCompress()],
+  plugins: [builderPluginImageCompress()],
 };
 ```
 
-If you are using the Rsbuild's Node API, you can register image compress plugin through the `addPlugins` method:
-
-```js
-import { builderPluginImageCompress } from '@rsbuild/plugin-image-compress';
-
-// add the plugin to the builder instance
-builder.addPlugins([builderPluginImageCompress()]);
-```
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/builder-instance.html#builderaddplugins) method.
 
 ## Config
 
