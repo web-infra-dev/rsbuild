@@ -33,19 +33,15 @@
     "@babel/core": "^7.22.15",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@modern-js/builder-rspack-provider": "^2.36.0",
     "typescript": "^5",
     "webpack": "^5.88.1"
   },
   "peerDependencies": {
-    "@rsbuild/webpack": "workspace:*",
-    "@modern-js/builder-rspack-provider": "^2.36.0"
+    "@rsbuild/core": "workspace:^0.0.7",
+    "@rsbuild/webpack": "workspace:^0.0.7"
   },
   "peerDependenciesMeta": {
     "@rsbuild/webpack": {
-      "optional": true
-    },
-    "@modern-js/builder-rspack-provider": {
       "optional": true
     }
   },

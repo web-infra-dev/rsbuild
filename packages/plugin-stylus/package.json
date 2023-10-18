@@ -26,23 +26,21 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rsbuild/webpack": "workspace:*",
     "stylus": "0.59.0",
     "stylus-loader": "7.1.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@modern-js/builder-rspack-provider": "^2.36.0",
     "@modern-js/utils": "^2.36.0",
     "typescript": "^5",
     "webpack": "^5.88.1"
   },
   "peerDependencies": {
-    "@modern-js/builder-rspack-provider": "^2.36.0"
+    "@rsbuild/core": "workspace:^0.0.7"
   },
   "peerDependenciesMeta": {
-    "@modern-js/builder-rspack-provider": {
+    "@rsbuild/core": {
       "optional": true
     }
   },

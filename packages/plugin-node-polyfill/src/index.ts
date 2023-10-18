@@ -1,7 +1,7 @@
 import { setConfig } from '@rsbuild/shared';
 import type { BuilderPlugin } from '@rsbuild/core';
 import type { BuilderPluginAPI as WebpackBuilderPluginAPI } from '@rsbuild/webpack';
-import type { BuilderPluginAPI as RspackBuilderPluginAPI } from '@modern-js/builder-rspack-provider';
+import type { BuilderPluginAPI as RspackBuilderPluginAPI } from '@rsbuild/core';
 
 const getResolveFallback = (nodeLibs: Record<string, any>) =>
   Object.keys(nodeLibs).reduce<Record<string, string | false>>(
