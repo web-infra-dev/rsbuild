@@ -3,7 +3,12 @@ import type {
   BuilderPluginAPI,
   BuilderPlugin,
 } from '@modern-js/builder-webpack-provider';
-import { JS_REGEX, TS_REGEX, mergeRegex } from '@rsbuild/shared';
+import {
+  JS_REGEX,
+  TS_REGEX,
+  mergeRegex,
+  DEFAULT_BROWSERSLIST,
+} from '@rsbuild/shared';
 import type { PluginSwcOptions, TransformConfig } from './types';
 import {
   applyPluginConfig,
@@ -148,7 +153,7 @@ export function getDefaultSwcConfig(): TransformConfig {
     minify: false, // for loader, we don't need to minify, we do minification using plugin
     sourceMaps: true,
     env: {
-      targets: '> 0.01%, not dead, not op_mini all',
+      targets: DEFAULT_BROWSERSLIST.web.join(', '),
     },
     exclude: [],
     inlineSourcesContent: true,
