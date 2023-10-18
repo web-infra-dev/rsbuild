@@ -25,8 +25,6 @@ export const builderPluginTarget = (): DefaultBuilderPlugin => ({
 
       if (browserslist) {
         chain.merge({ target: ['web', 'browserslist'] });
-      } else if (target === 'modern-web') {
-        chain.merge({ target: ['web', 'es2015'] });
       } else {
         chain.merge({ target: ['web', 'es5'] });
       }

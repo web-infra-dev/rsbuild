@@ -11,11 +11,11 @@ describe('getBrowserslistWithDefault', () => {
       DEFAULT_BROWSERSLIST.node,
     );
     expect(
-      await getBrowserslistWithDefault(__dirname, {}, 'modern-web'),
-    ).toEqual(DEFAULT_BROWSERSLIST['modern-web']);
-    expect(
       await getBrowserslistWithDefault(__dirname, {}, 'web-worker'),
     ).toEqual(DEFAULT_BROWSERSLIST['web-worker']);
+    expect(
+      await getBrowserslistWithDefault(__dirname, {}, 'service-worker'),
+    ).toEqual(DEFAULT_BROWSERSLIST['service-worker']);
   });
 
   it('should override browserslist when using overrideBrowserslist config', async () => {
@@ -67,18 +67,6 @@ describe('getBrowserslistWithDefault', () => {
         'service-worker',
       ),
     ).toEqual(DEFAULT_BROWSERSLIST['service-worker']);
-
-    expect(
-      await getBrowserslistWithDefault(
-        __dirname,
-        {
-          output: {
-            overrideBrowserslist: override,
-          },
-        },
-        'modern-web',
-      ),
-    ).toEqual(DEFAULT_BROWSERSLIST['modern-web']);
   });
 
   it('should allow to override browserslist according to target', async () => {

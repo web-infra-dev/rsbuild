@@ -1,12 +1,12 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@modern-js/builder-webpack-provider/stub';
+import { createStubBuilder } from '@rsbuild/webpack/stub';
 import { builderPluginSwc } from '../src';
-import { builderPluginBabel } from '@modern-js/builder-webpack-provider/plugins/babel';
+import { builderPluginBabel } from '@rsbuild/webpack/plugins/babel';
 import { applyPluginConfig } from '../src/utils';
 import type {
   ModifyWebpackChainUtils,
   NormalizedConfig,
-} from '@modern-js/builder-webpack-provider';
+} from '@rsbuild/webpack';
 
 const TEST_BUILDER_CONFIG = {
   output: {},
@@ -152,7 +152,7 @@ describe('plugins/swc', () => {
 
     const builder = await createStubBuilder({
       plugins: [builderPluginSwc()],
-      target: ['modern-web', 'node', 'service-worker', 'web', 'web-worker'],
+      target: ['node', 'service-worker', 'web', 'web-worker'],
     });
     const configs = await builder.unwrapWebpackConfigs();
 

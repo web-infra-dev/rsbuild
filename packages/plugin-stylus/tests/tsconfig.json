@@ -1,13 +1,11 @@
 {
-  "extends": "@modern-js/tsconfig/base",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "noEmit": true,
-    "declaration": false,
-    "jsx": "preserve",
     "baseUrl": "./",
-    "isolatedModules": true,
+    "types": ["vitest/globals"],
     "paths": {
       "@rspack-builder/tests/*": ["../../builder-rspack-provider/tests/*"]
     }
-  }
+  },
+  "include": ["./**/*.ts"]
 }

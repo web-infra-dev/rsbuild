@@ -1,6 +1,9 @@
 export { createBuilder } from './createBuilder';
 export { mergeBuilderConfig } from '@rsbuild/shared';
 
+export { defineConfig } from './cli';
+
+export type { BuilderPluginAPI } from './rspack-provider';
 export type {
   BuilderMode,
   BuilderEntry,

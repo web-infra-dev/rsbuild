@@ -1,26 +1,26 @@
 import type { BuilderTarget } from './types';
 
 // PACKAGES
-export const RSPACK_PROVIDER = '@modern-js/builder-rspack-provider';
-export const WEBPACK_PROVIDER = '@modern-js/builder-webpack-provider';
+export const WEBPACK_PROVIDER = '@rsbuild/webpack';
 
 // Defaults
 export const DEFAULT_PORT = 8080;
 export const DEFAULT_DATA_URL_SIZE = 10000;
 export const DEFAULT_MOUNT_ID = 'root';
 
+const DEFAULT_WEB_BROWSERSLIST = [
+  'chrome >= 61',
+  'edge >= 16',
+  'firefox >= 60',
+  'safari >= 11',
+  'ios_saf >= 11',
+];
+
 export const DEFAULT_BROWSERSLIST = {
-  web: ['> 0.01%', 'not dead', 'not op_mini all'],
+  web: DEFAULT_WEB_BROWSERSLIST,
+  'web-worker': DEFAULT_WEB_BROWSERSLIST,
+  'service-worker': DEFAULT_WEB_BROWSERSLIST,
   node: ['node >= 14'],
-  'web-worker': ['> 0.01%', 'not dead', 'not op_mini all'],
-  'service-worker': ['> 0.01%', 'not dead', 'not op_mini all'],
-  'modern-web': [
-    'chrome >= 61',
-    'edge >= 16',
-    'firefox >= 60',
-    'safari >= 11',
-    'ios_saf >= 11',
-  ],
 };
 
 // Paths
@@ -85,6 +85,5 @@ export const TARGET_ID_MAP: Record<BuilderTarget, string> = {
   web: 'Client',
   node: 'Server',
   'service-worker': 'Server Worker',
-  'modern-web': 'Modern',
   'web-worker': 'Web Worker',
 };

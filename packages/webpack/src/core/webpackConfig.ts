@@ -78,7 +78,6 @@ async function getChainUtils(
   const nameMap = {
     web: 'client',
     node: 'server',
-    'modern-web': 'modern',
     'web-worker': 'web-worker',
     'service-worker': 'service-worker',
   };

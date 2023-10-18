@@ -5,8 +5,8 @@ import { ZodType } from '../zod';
 export const BuilderTargetSchema: ZodType<BuilderTarget> = z.enum([
   'web',
   'node',
-  'modern-web',
   'web-worker',
+  'service-worker',
 ]);
 
 export const MainFieldsSchema: ZodType<MainFields> = z.array(

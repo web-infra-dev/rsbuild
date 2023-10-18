@@ -1,0 +1,12 @@
+{
+  "name": "@examples/basic",
+  "private": true,
+  "scripts": {
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "serve": "rsbuild serve"
+  },
+  "dependencies": {
+    "@rsbuild/core": "workspace:*"
+  }
+}

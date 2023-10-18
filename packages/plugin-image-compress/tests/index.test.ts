@@ -1,5 +1,5 @@
 import { it, expect, describe } from 'vitest';
-import { createStubBuilder } from '@modern-js/builder-webpack-provider/stub';
+import { createStubBuilder } from '@rsbuild/webpack/stub';
 import { builderAssetPlugin } from '@builder/plugins/asset';
 import { builderPluginImageCompress } from '../src';
 

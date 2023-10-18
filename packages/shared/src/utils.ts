@@ -68,7 +68,7 @@ export const isURL = (str: string) =>
 export * as z from './zod';
 
 export function isWebTarget(target: BuilderTarget | BuilderTarget[]) {
-  return ['modern-web', 'web', 'web-worker'].some((t) =>
+  return ['web', 'web-worker'].some((t) =>
     (Array.isArray(target) ? target : [target]).includes(t as BuilderTarget),
   );
 }

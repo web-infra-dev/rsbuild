@@ -68,7 +68,7 @@ exports[`plugins/vue > should allow to configure jsx babel plugin options 1`] = 
               "configFile": false,
               "plugins": [
                 [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@modern-js/builder-webpack-provider/compiled/babel-plugin-lodash",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@rsbuild/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
@@ -174,7 +174,7 @@ exports[`plugins/vue > should allow to configure jsx babel plugin options 1`] = 
               "configFile": false,
               "plugins": [
                 [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@modern-js/builder-webpack-provider/compiled/babel-plugin-lodash",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@rsbuild/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
@@ -346,7 +346,7 @@ exports[`plugins/vue > should apply jsx babel plugin correctly 1`] = `
               "configFile": false,
               "plugins": [
                 [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@modern-js/builder-webpack-provider/compiled/babel-plugin-lodash",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@rsbuild/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
@@ -452,7 +452,7 @@ exports[`plugins/vue > should apply jsx babel plugin correctly 1`] = `
               "configFile": false,
               "plugins": [
                 [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@modern-js/builder-webpack-provider/compiled/babel-plugin-lodash",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@rsbuild/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [

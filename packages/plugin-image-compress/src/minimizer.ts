@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer';
-import type { webpack } from '@modern-js/builder-webpack-provider/types';
+import type { webpack } from '@rsbuild/webpack';
 import Codecs from './shared/codecs';
 import type { FinalOptions } from './types';
 

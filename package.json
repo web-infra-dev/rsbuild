@@ -6,6 +6,7 @@
     "ut:watch": "vitest",
     "e2e": "echo 'e2e'",
     "new": "modern new",
+    "test": "pnpm run ut",
     "bump": "modern bump",
     "lint": "oxlint .",
     "build": "pnpm --filter \"./packages/**\" run build",
@@ -34,7 +35,6 @@
   "devDependencies": {
     "@modern-js/module-tools": "^2.36.0",
     "@modern-js/monorepo-tools": "2.36.0",
-    "@modern-js/tsconfig": "^2.36.0",
     "@rsbuild/vitest-helper": "workspace:*",
     "vite-tsconfig-paths": "4.2.1",
     "husky": "^8.0.3",

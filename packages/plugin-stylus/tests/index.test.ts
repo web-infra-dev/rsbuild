@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@modern-js/builder-webpack-provider/stub';
+import { createStubBuilder } from '@rsbuild/webpack/stub';
 import { builderPluginStylus } from '../src';
 
 describe('plugins/stylus', () => {
