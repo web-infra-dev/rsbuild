@@ -18,9 +18,17 @@
 
 [English](./README.md) | 简体中文
 
-Rsbuild 是一个基于 Rspack 的 web 构建工具，它的目标是为 Rspack 用户提供开箱即用的构建能力，使开发者能够在零配置的情况下启动 web 项目。
+Rsbuild 是一个基于 Rspack 的 web 构建工具。
 
-Rsbuild 由 Modern.js Builder 演进而来，它已经与 Modern.js 解耦，以提供更好的灵活性和满足社区用户的需求。
+## 为什么选择 Rsbuild？
+
+Rsbuild 的目标是为 Rspack 用户提供开箱即用的构建能力，使开发者能够在零配置的情况下启动一个 web 项目。
+
+Rsbuild 还为上层的解决方案（如 Rspress 和 Modern.js）提供通用的构建能力。实际上，Rsbuild 是由 Modern.js Builder 演进而来，它已经与 Modern.js 解耦，以提供更好的灵活性，并满足社区用户的多样化需求。
+
+下图说明了 Rsbuild 与生态中其他工具之间的关系：
+
+![Rspack Ecosystem](https://github.com/web-infra-dev/rsbuild/assets/7237365/1ec93ad6-b8b1-475b-963f-cba1e7d79dec)
 
 ## 特性
 
@@ -33,7 +41,7 @@ Rsbuild 由 Modern.js Builder 演进而来，它已经与 Modern.js 解耦，以
 
 ## 快速上手
 
-Rsbuild 项目正在积极开发中，预计将于 2023 年 11 月可用。
+**Rsbuild 项目正在积极开发中，预计将于 2023 年 11 月的下旬可用。**
 
 ## 生态
 
