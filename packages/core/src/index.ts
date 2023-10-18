@@ -1,6 +1,8 @@
 export { createBuilder } from './createBuilder';
 export { mergeBuilderConfig } from '@rsbuild/shared';
 
+export { defineConfig } from './cli';
+
 export type {
   BuilderMode,
   BuilderEntry,
