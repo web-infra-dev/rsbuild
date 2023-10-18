@@ -1,4 +1,4 @@
-import type { BuilderPlugin } from '@modern-js/builder-webpack-provider/types';
+import type { BuilderPlugin } from '@rsbuild/webpack';
 import assert from 'assert';
 import { ModernJsImageMinimizerPlugin } from './minimizer';
 import { withDefaultOptions } from './shared/utils';

@@ -31,7 +31,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@modern-js/builder-rspack-provider": "^2.36.0",
-    "@modern-js/builder-webpack-provider": "^2.36.0",
+    "@rsbuild/webpack": "workspace:*",
     "@modern-js/utils": "^2.36.0",
     "typescript": "^5"
   },

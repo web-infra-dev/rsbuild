@@ -1,6 +1,6 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@modern-js/builder-webpack-provider/stub';
-import { builderPluginBabel } from '@modern-js/builder-webpack-provider/plugins/babel';
+import { createStubBuilder } from '@rsbuild/webpack/stub';
+import { builderPluginBabel } from '@rsbuild/webpack/plugins/babel';
 import { builderPluginVue2 } from '../src';
 
 describe('plugins/vue', () => {

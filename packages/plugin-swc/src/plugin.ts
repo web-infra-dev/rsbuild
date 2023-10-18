@@ -1,8 +1,5 @@
 import * as path from 'path';
-import type {
-  BuilderPluginAPI,
-  BuilderPlugin,
-} from '@modern-js/builder-webpack-provider';
+import type { BuilderPluginAPI, BuilderPlugin } from '@rsbuild/webpack';
 import {
   JS_REGEX,
   TS_REGEX,

@@ -4,7 +4,7 @@ import { findExists } from '@modern-js/utils';
 import { existsSync } from '@modern-js/utils/fs-extra';
 import type { BuilderEntry, BuilderPlugin } from '@rsbuild/shared';
 // TODO webpack config type
-// import type { BuilderConfig as WebpackBuilderConfig } from '@modern-js/builder-webpack-provider';
+// import type { BuilderConfig as WebpackBuilderConfig } from '@rsbuild/webpack';
 import type { BuilderConfig as RspackBuilderConfig } from '../rspack-provider';
 
 export type BuilderConfig<Bundler extends 'rspack' | 'webpack' = 'webpack'> =

@@ -26,13 +26,13 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@modern-js/builder-webpack-provider": "^2.36.0",
+    "@rsbuild/webpack": "workspace:*",
     "stylus": "0.59.0",
     "stylus-loader": "7.1.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@modern-js/builder-webpack-provider": "^2.36.0",
+    "@rsbuild/webpack": "workspace:*",
     "@modern-js/builder-rspack-provider": "^2.36.0",
     "@modern-js/utils": "^2.36.0",
     "typescript": "^5",
