@@ -1,7 +1,12 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "types": ["vitest/globals"]
+    "baseUrl": "./",
+    "types": ["vitest/globals"],
+    "paths": {
+      "@src/*": ["../src/*"],
+      "@/*": ["../src/rspack-provider/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["./**/*.ts"]
 }

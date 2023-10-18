@@ -1,11 +1,13 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "./",
     "types": ["vitest/globals"],
     "paths": {
       "@/*": ["../src/*"],
       "~/*": ["../*"],
       "@builder/*": ["../../builder/src/*"]
     }
-  }
+  },
+  "include": ["./**/*.ts"]
 }
