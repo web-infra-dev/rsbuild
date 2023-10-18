@@ -1,3 +1,95 @@
-# API 介绍
+# JavaScript API
 
-面向框架开发者的 API 文档。
+Rsbuild 提供了一整套 JavaScript API，以便于开发者基于 Rsbuild 开发上层的解决方案。
+
+## 接入示例
+
+下面是接入 Rsbuild JavaScript API 的基本示例。
+
+### 1. 安装 Rsbuild
+
+你需要安装两个包，其中：
+
+- `@rsbuild/core` 为 Rsbuild 的核心包，导出了 Rsbuild 的核心 API。
+- `@rsbuild/rspack-provider`，它提供基于 Rspack 的构建能力。
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/rspack-provider -D" />
+
+如果你想使用 webpack 而不是 Rspack，可以将 `@rsbuild/rspack-provider` 替换为 `@rsbuild/webpack-provider`：
+
+> 在进行版本升级时，请确保你安装的 builder 和 provider 为同一个版本。
+
+### 2. 创建 Rsbuild 实例
+
+创建 Rsbuild 实例的过程分两步：
+
+首先你需要初始化 Rsbuild Provider，并传入 `builderConfig` 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制。此时你还不需要了解配置项的具体内容，传入一个空对象即可。你可以在 [配置](/config/) 中找到所有可用的配置项。
+
+- 初始化 webpack Provider：
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+import { builderWebpackProvider } from '@rsbuild/webpack-provider';
+
+const provider = builderWebpackProvider({
+  builderConfig: {
+    // some configs
+  },
+});
+```
+
+- 初始化 Rspack Provider：
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+import { builderRspackProvider } from '@rsbuild/rspack-provider';
+
+const provider = builderRspackProvider({
+  builderConfig: {
+    // some configs
+  },
+});
+```
+
+拿到 provider 实例后，你可以调用 `createRsbuild` 方法来创建一个 Rsbuild 实例对象：
+
+```ts
+const builder = await createRsbuild(provider, {
+  entry: {
+    index: './src/index.ts',
+  },
+});
+```
+
+除了上述示例中的 `entry` 选项，`createRsbuild` 方法也提供了一些其他的选项，你可以在 [API - createRsbuild](/api/javascript-api/core.html#createbuilder) 中进一步了解。
+
+### 3. 调用 Rsbuild 实例方法
+
+Rsbuild 实例提供了与构建相关的各个方法，你可以根据实际场景来进行使用。
+
+在本地开发场景，建议使用 [rsbuild.startDevServer](/api/javascript-api/instance.html#builder-startdevserver) 方法，调用后会启动本地 Dev Server。
+
+```ts
+await rsbuild.startDevServer();
+```
+
+成功启动 Dev Server 后，可以看到以下日志信息：
+
+```bash
+info    Starting dev server...
+
+  > Local:    http://localhost:8081
+  > Network:  http://192.168.0.1:8081
+```
+
+在生产环境部署场景，建议使用 [rsbuild.build](/api/javascript-api/instance.html#rsbuild-build) 方法，调用后会构建出生产环境产物。
+
+```ts
+await rsbuild.build();
+```
+
+> 关于 Rsbuild 实例方法的更多介绍，请阅读 [Rsbuild Instance](/api/javascript-api/instance.html) 章节。
+
+通过以上三个步骤，你已经了解了 Rsbuild 基本的使用方法。接下来你可以通过 Rsbuild 插件和 Rsbuild 配置来对构建流程进行定制。
