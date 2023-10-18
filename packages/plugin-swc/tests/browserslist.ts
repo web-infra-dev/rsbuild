@@ -33,7 +33,7 @@ export async function lookForBrowserslist() {
     } else {
       const expected = fs.readFileSync(expectedPath).toString();
       expect(finalCode, `test base: ${dir}`).toEqual(
-        expected.replace(new RegExp('\r\n', 'g'), '\n'),
+        expected.replace(new RegExp('\\r\\n', 'g'), '\n'),
       );
     }
   });
