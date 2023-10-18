@@ -32,17 +32,17 @@
   "devDependencies": {
     "@babel/core": "^7.22.15",
     "@rsbuild/core": "workspace:*",
-    "@modern-js/builder-webpack-provider": "^2.36.0",
+    "@rsbuild/webpack": "workspace:*",
     "@modern-js/builder-rspack-provider": "^2.36.0",
     "typescript": "^5",
     "webpack": "^5.88.1"
   },
   "peerDependencies": {
-    "@modern-js/builder-webpack-provider": "^2.36.0",
+    "@rsbuild/webpack": "workspace:*",
     "@modern-js/builder-rspack-provider": "^2.36.0"
   },
   "peerDependenciesMeta": {
-    "@modern-js/builder-webpack-provider": {
+    "@rsbuild/webpack": {
       "optional": true
     },
     "@modern-js/builder-rspack-provider": {

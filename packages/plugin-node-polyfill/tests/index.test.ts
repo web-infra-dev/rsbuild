@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@modern-js/builder-webpack-provider/stub';
+import { createStubBuilder } from '@rsbuild/webpack/stub';
 import { builderPluginNodePolyfill } from '../src';
 
 describe('plugins/node-polyfill', () => {

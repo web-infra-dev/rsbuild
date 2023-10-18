@@ -5,7 +5,7 @@ import {
   logger,
   lodash as _,
 } from '@modern-js/utils';
-import { NormalizedConfig } from '@modern-js/builder-webpack-provider';
+import { NormalizedConfig } from '@rsbuild/webpack';
 import {
   ModifyChainUtils,
   getBrowserslistWithDefault,
@@ -23,7 +23,7 @@ import {
 import { CORE_JS_DIR_PATH, SWC_HELPERS_DIR_PATH } from './constants';
 
 /**
- * Determin react runtime mode based on react version
+ * Determine react runtime mode based on react version
  */
 export function determinePresetReact(
   root: string,

@@ -1,6 +1,6 @@
 import type { BuilderPlugin } from '@rsbuild/core';
 import { isUseCssSourceMap, STYLUS_REGEX } from '@rsbuild/shared';
-import type { BuilderPluginAPI } from '@modern-js/builder-webpack-provider';
+import type { BuilderPluginAPI } from '@rsbuild/webpack';
 
 type StylusOptions = {
   use?: string[];

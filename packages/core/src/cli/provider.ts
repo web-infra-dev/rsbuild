@@ -34,7 +34,7 @@ export async function loadProvider() {
   // const providerType = getProviderType();
 
   // const { builderWebpackProvider } = await import(
-  //   '@modern-js/builder-webpack-provider'
+  //   '@rsbuild/webpack'
   // );
   // return builderWebpackProvider;
 }

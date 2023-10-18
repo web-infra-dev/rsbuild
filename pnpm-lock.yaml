@@ -204,15 +204,15 @@ importers:
         specifier: 0.17.19
         version: 0.17.19
     devDependencies:
-      '@modern-js/builder-webpack-provider':
-        specifier: ^2.36.0
-        version: 2.36.0(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@modern-js/utils':
         specifier: ^2.36.0
         version: 2.36.0
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -229,9 +229,9 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
     devDependencies:
-      '@modern-js/builder-webpack-provider':
-        specifier: ^2.36.0
-        version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
       '@types/node':
         specifier: ^16
         version: 16.18.58
@@ -254,27 +254,27 @@ importers:
       '@modern-js/builder-rspack-provider':
         specifier: ^2.36.0
         version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
-      '@modern-js/builder-webpack-provider':
-        specifier: ^2.36.0
-        version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@modern-js/utils':
         specifier: ^2.36.0
         version: 2.36.0
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
       typescript:
         specifier: ^5
         version: 5.2.2
 
   packages/plugin-stylus:
     dependencies:
-      '@modern-js/builder-webpack-provider':
-        specifier: ^2.36.0
-        version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
       stylus:
         specifier: 0.59.0
         version: 0.59.0
@@ -328,9 +328,9 @@ importers:
         specifier: ~3.32.1
         version: 3.32.2
     devDependencies:
-      '@modern-js/builder-webpack-provider':
-        specifier: ^2.36.0
-        version: 2.36.0(@swc/core@1.3.42)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
       '@swc/core':
         specifier: 1.3.42
         version: 1.3.42
@@ -384,12 +384,12 @@ importers:
       '@modern-js/builder-rspack-provider':
         specifier: ^2.36.0
         version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
-      '@modern-js/builder-webpack-provider':
-        specifier: ^2.36.0
-        version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -415,12 +415,12 @@ importers:
       '@modern-js/builder-rspack-provider':
         specifier: ^2.36.0
         version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
-      '@modern-js/builder-webpack-provider':
-        specifier: ^2.36.0
-        version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -3010,19 +3010,6 @@ packages:
       reselect: 4.1.8
       resolve: 1.22.8
 
-  /@modern-js/babel-preset-app@2.36.0:
-    resolution: {integrity: sha512-LOXs0jp1S+SKJc66d8Jx2n1rW380SyQHGNvZS3xTiaMtsS70tbEqfvWQ7/s1pIb/1C+gxLQ3UwvObldX1dJX+A==}
-    dependencies:
-      '@babel/core': 7.23.0
-      '@babel/runtime': 7.23.1
-      '@babel/types': 7.23.0
-      '@modern-js/babel-preset-base': 2.36.0
-      '@modern-js/utils': 2.36.0
-      '@swc/helpers': 0.5.1
-      core-js: 3.32.2
-    transitivePeerDependencies:
-      - supports-color
-
   /@modern-js/babel-preset-base@2.36.0:
     resolution: {integrity: sha512-+WKsFk/PLdqKjI0odDFGO0EOCyoN93ydOEABsTU8eidms0WO2ddQFzBrsomSe+Jex32uXCUrCZJChAuxvKwOpg==}
     dependencies:
@@ -3095,104 +3082,6 @@ packages:
       - webpack-plugin-serve
     dev: true
 
-  /@modern-js/builder-shared@2.36.0(@swc/core@1.3.42)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-SS/uq2m+HTJkoIxnGreHUWZYVVAZQ63IYsXZBEhrNQYmKz6z9x5U8S5CIUUn6xcM6c6CjZr9zF5vdhZXEcujXw==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@babel/core': 7.23.0
-      '@babel/parser': 7.23.0
-      '@babel/types': 7.23.0
-      '@modern-js/prod-server': 2.36.0(react-dom@18.2.0)(react@18.2.0)
-      '@modern-js/server': 2.36.0(react-dom@18.2.0)(react@18.2.0)
-      '@modern-js/types': 2.36.0
-      '@modern-js/utils': 2.36.0
-      '@swc/helpers': 0.5.1
-      acorn: 8.10.0
-      caniuse-lite: 1.0.30001547
-      css-minimizer-webpack-plugin: 5.0.1(webpack@5.89.0)
-      cssnano: 6.0.1(postcss@8.4.31)
-      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.2.2)(webpack@5.89.0)
-      htmlparser2: 9.0.0
-      line-diff: 2.1.1
-      postcss: 8.4.31
-      source-map: 0.7.4
-      webpack: 5.89.0(@swc/core@1.3.42)
-      webpack-sources: 3.2.3
-      zod: 3.22.4
-      zod-validation-error: 1.2.0(zod@3.22.4)
-    transitivePeerDependencies:
-      - '@babel/traverse'
-      - '@parcel/css'
-      - '@swc/core'
-      - '@swc/css'
-      - '@types/express'
-      - bufferutil
-      - clean-css
-      - csso
-      - debug
-      - devcert
-      - esbuild
-      - lightningcss
-      - react
-      - react-dom
-      - supports-color
-      - ts-node
-      - tsconfig-paths
-      - typescript
-      - uglify-js
-      - utf-8-validate
-      - webpack-cli
-    dev: true
-
-  /@modern-js/builder-shared@2.36.0(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-SS/uq2m+HTJkoIxnGreHUWZYVVAZQ63IYsXZBEhrNQYmKz6z9x5U8S5CIUUn6xcM6c6CjZr9zF5vdhZXEcujXw==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@babel/core': 7.23.0
-      '@babel/parser': 7.23.0
-      '@babel/types': 7.23.0
-      '@modern-js/prod-server': 2.36.0(react-dom@18.2.0)(react@18.2.0)
-      '@modern-js/server': 2.36.0(react-dom@18.2.0)(react@18.2.0)
-      '@modern-js/types': 2.36.0
-      '@modern-js/utils': 2.36.0
-      '@swc/helpers': 0.5.1
-      acorn: 8.10.0
-      caniuse-lite: 1.0.30001547
-      css-minimizer-webpack-plugin: 5.0.1(esbuild@0.17.19)(webpack@5.89.0)
-      cssnano: 6.0.1(postcss@8.4.31)
-      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.2.2)(webpack@5.89.0)
-      htmlparser2: 9.0.0
-      line-diff: 2.1.1
-      postcss: 8.4.31
-      source-map: 0.7.4
-      webpack: 5.89.0(esbuild@0.17.19)
-      webpack-sources: 3.2.3
-      zod: 3.22.4
-      zod-validation-error: 1.2.0(zod@3.22.4)
-    transitivePeerDependencies:
-      - '@babel/traverse'
-      - '@parcel/css'
-      - '@swc/core'
-      - '@swc/css'
-      - '@types/express'
-      - bufferutil
-      - clean-css
-      - csso
-      - debug
-      - devcert
-      - esbuild
-      - lightningcss
-      - react
-      - react-dom
-      - supports-color
-      - ts-node
-      - tsconfig-paths
-      - typescript
-      - uglify-js
-      - utf-8-validate
-      - webpack-cli
-    dev: true
-
   /@modern-js/builder-shared@2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-SS/uq2m+HTJkoIxnGreHUWZYVVAZQ63IYsXZBEhrNQYmKz6z9x5U8S5CIUUn6xcM6c6CjZr9zF5vdhZXEcujXw==}
     engines: {node: '>=14.0.0'}
@@ -3240,173 +3129,7 @@ packages:
       - uglify-js
       - utf-8-validate
       - webpack-cli
-
-  /@modern-js/builder-webpack-provider@2.36.0(@swc/core@1.3.42)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-XNoFy6KVPjUFxv+KPuDmPfJ3YKM2QwE65zHMRgAafh0a95ghi+ugav8hE1LGxeNkrb0M9K7jex4nfiDwPv5zDA==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@babel/core': 7.23.0
-      '@babel/preset-react': 7.22.15(@babel/core@7.23.0)
-      '@modern-js/babel-preset-app': 2.36.0
-      '@modern-js/babel-preset-base': 2.36.0
-      '@modern-js/builder-shared': 2.36.0(@swc/core@1.3.42)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
-      '@modern-js/inspector-webpack-plugin': 1.0.6
-      '@modern-js/server': 2.36.0(react-dom@18.2.0)(react@18.2.0)
-      '@modern-js/types': 2.36.0
-      '@modern-js/utils': 2.36.0
-      '@pmmmwh/react-refresh-webpack-plugin': 0.5.10(react-refresh@0.14.0)(webpack@5.89.0)
-      '@swc/helpers': 0.5.1
-      caniuse-lite: 1.0.30001547
-      html-webpack-plugin: 5.5.3(webpack@5.89.0)
-      mini-css-extract-plugin: 2.7.6(webpack@5.89.0)
-      postcss: 8.4.31
-      react-refresh: 0.14.0
-      style-loader: 3.3.3(webpack@5.89.0)
-      terser-webpack-plugin: 5.3.9(@swc/core@1.3.42)(webpack@5.89.0)
-      ts-loader: 9.4.4(typescript@5.2.2)(webpack@5.89.0)
-      tsconfig-paths-webpack-plugin: 4.1.0
-      webpack: 5.89.0(@swc/core@1.3.42)
-      webpack-subresource-integrity: 5.1.0(html-webpack-plugin@5.5.3)(webpack@5.89.0)
-    transitivePeerDependencies:
-      - '@babel/traverse'
-      - '@parcel/css'
-      - '@swc/core'
-      - '@swc/css'
-      - '@types/express'
-      - '@types/webpack'
-      - bufferutil
-      - clean-css
-      - csso
-      - debug
-      - devcert
-      - esbuild
-      - lightningcss
-      - react
-      - react-dom
-      - sockjs-client
-      - supports-color
-      - ts-node
-      - tsconfig-paths
-      - type-fest
-      - typescript
-      - uglify-js
-      - utf-8-validate
-      - webpack-cli
-      - webpack-dev-server
-      - webpack-hot-middleware
-      - webpack-plugin-serve
     dev: true
-
-  /@modern-js/builder-webpack-provider@2.36.0(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-XNoFy6KVPjUFxv+KPuDmPfJ3YKM2QwE65zHMRgAafh0a95ghi+ugav8hE1LGxeNkrb0M9K7jex4nfiDwPv5zDA==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@babel/core': 7.23.0
-      '@babel/preset-react': 7.22.15(@babel/core@7.23.0)
-      '@modern-js/babel-preset-app': 2.36.0
-      '@modern-js/babel-preset-base': 2.36.0
-      '@modern-js/builder-shared': 2.36.0(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
-      '@modern-js/inspector-webpack-plugin': 1.0.6
-      '@modern-js/server': 2.36.0(react-dom@18.2.0)(react@18.2.0)
-      '@modern-js/types': 2.36.0
-      '@modern-js/utils': 2.36.0
-      '@pmmmwh/react-refresh-webpack-plugin': 0.5.10(react-refresh@0.14.0)(webpack@5.89.0)
-      '@swc/helpers': 0.5.1
-      caniuse-lite: 1.0.30001547
-      html-webpack-plugin: 5.5.3(webpack@5.89.0)
-      mini-css-extract-plugin: 2.7.6(webpack@5.89.0)
-      postcss: 8.4.31
-      react-refresh: 0.14.0
-      style-loader: 3.3.3(webpack@5.89.0)
-      terser-webpack-plugin: 5.3.9(esbuild@0.17.19)(webpack@5.89.0)
-      ts-loader: 9.4.4(typescript@5.2.2)(webpack@5.89.0)
-      tsconfig-paths-webpack-plugin: 4.1.0
-      webpack: 5.89.0(esbuild@0.17.19)
-      webpack-subresource-integrity: 5.1.0(html-webpack-plugin@5.5.3)(webpack@5.89.0)
-    transitivePeerDependencies:
-      - '@babel/traverse'
-      - '@parcel/css'
-      - '@swc/core'
-      - '@swc/css'
-      - '@types/express'
-      - '@types/webpack'
-      - bufferutil
-      - clean-css
-      - csso
-      - debug
-      - devcert
-      - esbuild
-      - lightningcss
-      - react
-      - react-dom
-      - sockjs-client
-      - supports-color
-      - ts-node
-      - tsconfig-paths
-      - type-fest
-      - typescript
-      - uglify-js
-      - utf-8-validate
-      - webpack-cli
-      - webpack-dev-server
-      - webpack-hot-middleware
-      - webpack-plugin-serve
-    dev: true
-
-  /@modern-js/builder-webpack-provider@2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-XNoFy6KVPjUFxv+KPuDmPfJ3YKM2QwE65zHMRgAafh0a95ghi+ugav8hE1LGxeNkrb0M9K7jex4nfiDwPv5zDA==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@babel/core': 7.23.0
-      '@babel/preset-react': 7.22.15(@babel/core@7.23.0)
-      '@modern-js/babel-preset-app': 2.36.0
-      '@modern-js/babel-preset-base': 2.36.0
-      '@modern-js/builder-shared': 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
-      '@modern-js/inspector-webpack-plugin': 1.0.6
-      '@modern-js/server': 2.36.0(react-dom@18.2.0)(react@18.2.0)
-      '@modern-js/types': 2.36.0
-      '@modern-js/utils': 2.36.0
-      '@pmmmwh/react-refresh-webpack-plugin': 0.5.10(react-refresh@0.14.0)(webpack@5.89.0)
-      '@swc/helpers': 0.5.1
-      caniuse-lite: 1.0.30001547
-      html-webpack-plugin: 5.5.3(webpack@5.89.0)
-      mini-css-extract-plugin: 2.7.6(webpack@5.89.0)
-      postcss: 8.4.31
-      react-refresh: 0.14.0
-      style-loader: 3.3.3(webpack@5.89.0)
-      terser-webpack-plugin: 5.3.9(webpack@5.89.0)
-      ts-loader: 9.4.4(typescript@5.2.2)(webpack@5.89.0)
-      tsconfig-paths-webpack-plugin: 4.1.0
-      webpack: 5.89.0
-      webpack-subresource-integrity: 5.1.0(html-webpack-plugin@5.5.3)(webpack@5.89.0)
-    transitivePeerDependencies:
-      - '@babel/traverse'
-      - '@parcel/css'
-      - '@swc/core'
-      - '@swc/css'
-      - '@types/express'
-      - '@types/webpack'
-      - bufferutil
-      - clean-css
-      - csso
-      - debug
-      - devcert
-      - esbuild
-      - lightningcss
-      - react
-      - react-dom
-      - sockjs-client
-      - supports-color
-      - ts-node
-      - tsconfig-paths
-      - type-fest
-      - typescript
-      - uglify-js
-      - utf-8-validate
-      - webpack-cli
-      - webpack-dev-server
-      - webpack-hot-middleware
-      - webpack-plugin-serve
 
   /@modern-js/builder@2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-wF+Q7PdUYrH8v8jiK4ySl53wnbShTsprub0+e1o0+pzgtt7IslSlVKEHLV3uuON0TvFucWJviMZHobxwlKChig==}
@@ -3499,9 +3222,6 @@ packages:
       - '@modern-js/codesmith'
       - typescript
     dev: true
-
-  /@modern-js/inspector-webpack-plugin@1.0.6:
-    resolution: {integrity: sha512-QAiW00QKoSfj0Dn/J8rnXh3vq1cA1tHsTbhEOkzgtGdKlV70SZ+54aPDFjygAOrY/GurmuLLoUgPpcPKLbHAmQ==}
 
   /@modern-js/module-tools@2.36.0(typescript@5.2.2):
     resolution: {integrity: sha512-gsNF/sgJ0+RsY1A6ByvqISpQuBvCuYzeWb/40EaJ6VWs/TRDTfJ69LpnQ+Z+lHVa/R7CmryBHq9/KObSunxuMw==}
@@ -6822,41 +6542,6 @@ packages:
       webpack: 5.89.0
     dev: false
 
-  /css-minimizer-webpack-plugin@5.0.1(esbuild@0.17.19)(webpack@5.89.0):
-    resolution: {integrity: sha512-3caImjKFQkS+ws1TGcFn0V1HyDJFq1Euy589JlD6/3rV2kj+w7r5G9WDMgSHvpvXHNZ2calVypZWuEDQd9wfLg==}
-    engines: {node: '>= 14.15.0'}
-    peerDependencies:
-      '@parcel/css': '*'
-      '@swc/css': '*'
-      clean-css: '*'
-      csso: '*'
-      esbuild: '*'
-      lightningcss: '*'
-      webpack: ^5.0.0
-    peerDependenciesMeta:
-      '@parcel/css':
-        optional: true
-      '@swc/css':
-        optional: true
-      clean-css:
-        optional: true
-      csso:
-        optional: true
-      esbuild:
-        optional: true
-      lightningcss:
-        optional: true
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.19
-      cssnano: 6.0.1(postcss@8.4.31)
-      esbuild: 0.17.19
-      jest-worker: 29.7.0
-      postcss: 8.4.31
-      schema-utils: 4.2.0
-      serialize-javascript: 6.0.1
-      webpack: 5.89.0(esbuild@0.17.19)
-    dev: true
-
   /css-minimizer-webpack-plugin@5.0.1(webpack@5.89.0):
     resolution: {integrity: sha512-3caImjKFQkS+ws1TGcFn0V1HyDJFq1Euy589JlD6/3rV2kj+w7r5G9WDMgSHvpvXHNZ2calVypZWuEDQd9wfLg==}
     engines: {node: '>= 14.15.0'}
@@ -9855,6 +9540,7 @@ packages:
     dependencies:
       schema-utils: 4.2.0
       webpack: 5.89.0
+    dev: false
 
   /minimalistic-assert@1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
@@ -12705,31 +12391,6 @@ packages:
       webpack: 5.89.0(@swc/core@1.3.42)
     dev: true
 
-  /terser-webpack-plugin@5.3.9(esbuild@0.17.19)(webpack@5.89.0):
-    resolution: {integrity: sha512-ZuXsqE07EcggTWQjXUj+Aot/OMcD0bMKGgF63f7UxYcu5/AJF53aIpK1YoP5xR9l6s/Hy2b+t1AM0bLNPRuhwA==}
-    engines: {node: '>= 10.13.0'}
-    peerDependencies:
-      '@swc/core': '*'
-      esbuild: '*'
-      uglify-js: '*'
-      webpack: ^5.1.0
-    peerDependenciesMeta:
-      '@swc/core':
-        optional: true
-      esbuild:
-        optional: true
-      uglify-js:
-        optional: true
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.19
-      esbuild: 0.17.19
-      jest-worker: 27.5.1
-      schema-utils: 3.3.0
-      serialize-javascript: 6.0.1
-      terser: 5.19.2
-      webpack: 5.89.0(esbuild@0.17.19)
-    dev: true
-
   /terser-webpack-plugin@5.3.9(webpack@5.89.0):
     resolution: {integrity: sha512-ZuXsqE07EcggTWQjXUj+Aot/OMcD0bMKGgF63f7UxYcu5/AJF53aIpK1YoP5xR9l6s/Hy2b+t1AM0bLNPRuhwA==}
     engines: {node: '>= 10.13.0'}
@@ -12894,6 +12555,7 @@ packages:
       semver: 7.5.4
       typescript: 5.2.2
       webpack: 5.89.0
+    dev: false
 
   /tsconfck@2.1.2(typescript@5.2.2):
     resolution: {integrity: sha512-ghqN1b0puy3MhhviwO2kGF8SeMDNhEbnKxjK7h6+fvY9JAxqvXi8y5NAHSQv687OVboS2uZIByzGd45/YxrRHg==}
@@ -13009,6 +12671,7 @@ packages:
 
   /typed-assert@1.0.9:
     resolution: {integrity: sha512-KNNZtayBCtmnNmbo5mG47p1XsCyrx6iVqomjcZnec/1Y5GGARaxPs6r49RnSPeUP3YjNYiU9sQHAtY4BBvnZwg==}
+    dev: false
 
   /typescript@5.2.2:
     resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
@@ -13563,6 +13226,7 @@ packages:
       html-webpack-plugin: 5.5.3(webpack@5.89.0)
       typed-assert: 1.0.9
       webpack: 5.89.0
+    dev: false
 
   /webpack@5.89.0:
     resolution: {integrity: sha512-qyfIC10pOr70V+jkmud8tMfajraGCZMBWJtrmuBymQKCrLTRejBI8STDp1MCyZu/QTdZSeacCQYpYNQVOzX5kw==}
@@ -13635,46 +13299,6 @@ packages:
       schema-utils: 3.3.0
       tapable: 2.2.1
       terser-webpack-plugin: 5.3.9(@swc/core@1.3.42)(webpack@5.89.0)
-      watchpack: 2.4.0
-      webpack-sources: 3.2.3
-    transitivePeerDependencies:
-      - '@swc/core'
-      - esbuild
-      - uglify-js
-    dev: true
-
-  /webpack@5.89.0(esbuild@0.17.19):
-    resolution: {integrity: sha512-qyfIC10pOr70V+jkmud8tMfajraGCZMBWJtrmuBymQKCrLTRejBI8STDp1MCyZu/QTdZSeacCQYpYNQVOzX5kw==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-    peerDependencies:
-      webpack-cli: '*'
-    peerDependenciesMeta:
-      webpack-cli:
-        optional: true
-    dependencies:
-      '@types/eslint-scope': 3.7.5
-      '@types/estree': 1.0.2
-      '@webassemblyjs/ast': 1.11.6
-      '@webassemblyjs/wasm-edit': 1.11.6
-      '@webassemblyjs/wasm-parser': 1.11.6
-      acorn: 8.10.0
-      acorn-import-assertions: 1.9.0(acorn@8.10.0)
-      browserslist: 4.22.1
-      chrome-trace-event: 1.0.3
-      enhanced-resolve: 5.15.0
-      es-module-lexer: 1.3.1
-      eslint-scope: 5.1.1
-      events: 3.3.0
-      glob-to-regexp: 0.4.1
-      graceful-fs: 4.2.11
-      json-parse-even-better-errors: 2.3.1
-      loader-runner: 4.3.0
-      mime-types: 2.1.35
-      neo-async: 2.6.2
-      schema-utils: 3.3.0
-      tapable: 2.2.1
-      terser-webpack-plugin: 5.3.9(esbuild@0.17.19)(webpack@5.89.0)
       watchpack: 2.4.0
       webpack-sources: 3.2.3
     transitivePeerDependencies:

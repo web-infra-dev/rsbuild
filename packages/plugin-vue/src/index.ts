@@ -1,7 +1,7 @@
 import { deepmerge } from '@rsbuild/shared/deepmerge';
 import { VueLoaderPlugin } from 'vue-loader';
 import type { BuilderPlugin } from '@rsbuild/core';
-import type { BuilderPluginAPI } from '@modern-js/builder-webpack-provider';
+import type { BuilderPluginAPI } from '@rsbuild/webpack';
 import type { VueLoaderOptions } from 'vue-loader';
 import type { VueJSXPluginOptions } from '@vue/babel-plugin-jsx';
 

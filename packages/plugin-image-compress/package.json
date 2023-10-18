@@ -30,7 +30,7 @@
     "svgo": "^3.0.2"
   },
   "devDependencies": {
-    "@modern-js/builder-webpack-provider": "^2.36.0",
+    "@rsbuild/webpack": "workspace:*",
     "@types/node": "^16",
     "typescript": "^5",
     "webpack": "^5.88.1"

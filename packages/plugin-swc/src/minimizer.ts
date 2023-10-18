@@ -1,4 +1,4 @@
-import { BuilderConfig, webpack } from '@modern-js/builder-webpack-provider';
+import { BuilderConfig, webpack } from '@rsbuild/webpack';
 import { merge } from '@modern-js/utils/lodash';
 import { chalk } from '@rsbuild/shared/chalk';
 import { logger } from '@rsbuild/shared';

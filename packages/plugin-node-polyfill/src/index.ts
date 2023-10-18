@@ -1,6 +1,6 @@
 import { setConfig } from '@rsbuild/shared';
 import type { BuilderPlugin } from '@rsbuild/core';
-import type { BuilderPluginAPI as WebpackBuilderPluginAPI } from '@modern-js/builder-webpack-provider';
+import type { BuilderPluginAPI as WebpackBuilderPluginAPI } from '@rsbuild/webpack';
 import type { BuilderPluginAPI as RspackBuilderPluginAPI } from '@modern-js/builder-rspack-provider';
 
 const getResolveFallback = (nodeLibs: Record<string, any>) =>
