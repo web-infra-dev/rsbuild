@@ -11,7 +11,7 @@
 
 ```bash
 /dist
- └── main.html
+ └── [name].html
 ```
 
 使用 `html.disableHtmlFolder` 配置:
@@ -26,7 +26,7 @@ export default {
 
 ```bash
 /dist
- └── main
+ └── [name]
      └── index.html
 ```
 
