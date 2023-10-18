@@ -23,7 +23,10 @@ export async function loadConfig(): Promise<BuilderConfig> {
   const configFile = join(process.cwd(), 'rsbuild.config.ts');
 
   if (existsSync(configFile)) {
-    const loadConfig = jiti(__filename, { interopDefault: true });
+    const loadConfig = jiti(__filename, {
+      esmResolve: true,
+      interopDefault: true,
+    });
     return loadConfig(configFile);
   }
 
