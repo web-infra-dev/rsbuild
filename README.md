@@ -41,7 +41,7 @@ The following diagram illustrates the relationship between Rsbuild and other too
 
 ## Getting Started
 
-This project is new and under active development. It will be available in November 2023.
+**This project is new and under active development. It will be available in late November 2023.**
 
 ## Ecosystem
 
