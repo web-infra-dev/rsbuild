@@ -9,8 +9,6 @@ export type Context = BuilderContext & {
   hooks: Readonly<Hooks>;
   /** Current builder config. */
   config: Readonly<BuilderConfig>;
-  /** The async task to validate schema of config. */
-  configValidatingTask: Promise<void>;
   /** The original builder config passed from the createBuilder method. */
   originalConfig: Readonly<BuilderConfig>;
   /** The normalized builder config. */

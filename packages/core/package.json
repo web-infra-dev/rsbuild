@@ -25,12 +25,19 @@
     "./plugins/*": {
       "types": "./dist/plugins/*.d.ts",
       "default": "./dist/plugins/*.js"
+    },
+    "./base/*": {
+      "types": "./dist/base/*.d.ts",
+      "default": "./dist/base/*.js"
     }
   },
   "typesVersions": {
     "*": {
       "plugins/*": [
         "./dist/plugins/*.d.ts"
+      ],
+      "base/*": [
+        "./dist/base/*.d.ts"
       ]
     }
   },

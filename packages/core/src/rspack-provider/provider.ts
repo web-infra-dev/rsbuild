@@ -5,7 +5,7 @@ import {
   type BuilderProvider,
 } from '@rsbuild/shared';
 import { chalk } from '@rsbuild/shared/chalk';
-import { createContext } from './core/createContext';
+import { createContext } from '../base/createContext';
 import { initConfigs } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
 import { applyDefaultPlugins } from './shared/plugin';
@@ -19,7 +19,12 @@ import type {
   BuilderConfig,
   NormalizedConfig,
   MultiCompiler,
+  Context,
 } from './types';
+import { initHooks } from './core/initHooks';
+import { validateBuilderConfig } from './config/validate';
+
+import { withDefaultConfig } from './config/defaults';
 
 export type BuilderRspackProvider = BuilderProvider<
   BuilderConfig,
@@ -34,6 +39,7 @@ export function builderRspackProvider({
   builderConfig: BuilderConfig;
 }): BuilderRspackProvider {
   const builderConfig = pickBuilderConfig(originalBuilderConfig);
+  const bundlerType = 'rspack';
 
   return async ({ pluginStore, builderOptions, plugins }) => {
     if (!(await isSatisfyRspackMinimumVersion())) {
@@ -44,13 +50,21 @@ export function builderRspackProvider({
       );
     }
 
-    const context = await createContext(builderOptions, builderConfig);
+    const context = await createContext<Context>({
+      builderOptions,
+      userBuilderConfig: builderConfig,
+      initBuilderConfig: () => withDefaultConfig(builderConfig),
+      validateBuilderConfig,
+      initHooks,
+      bundlerType,
+    });
+
     const pluginAPI = getPluginAPI({ context, pluginStore });
 
     context.pluginAPI = pluginAPI;
 
     return {
-      bundler: 'rspack',
+      bundler: bundlerType,
 
       pluginAPI,
 

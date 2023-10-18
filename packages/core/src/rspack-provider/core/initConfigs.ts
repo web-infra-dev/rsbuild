@@ -36,7 +36,6 @@ export async function initConfigs({
 }: InitConfigsOptions) {
   const { ensureArray } = await import('@modern-js/utils');
 
-  await context.configValidatingTask;
   await initPlugins({
     pluginAPI: context.pluginAPI,
     pluginStore,

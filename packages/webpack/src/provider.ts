@@ -4,12 +4,20 @@ import {
   createPublicContext,
   type BuilderProvider,
 } from '@rsbuild/shared';
-import { createContext } from './core/createContext';
+import { createContext } from '@rsbuild/core/base/createContext';
 import { applyDefaultPlugins } from './shared/plugin';
-import { BuilderConfig, NormalizedConfig, WebpackConfig } from './types';
+import {
+  Context,
+  BuilderConfig,
+  NormalizedConfig,
+  WebpackConfig,
+} from './types';
 import { initConfigs } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
 import type { Compiler, MultiCompiler } from 'webpack';
+import { initHooks } from './core/initHooks';
+import { validateBuilderConfig } from './config/validate';
+import { withDefaultConfig } from './config/defaults';
 
 export type BuilderWebpackProvider = BuilderProvider<
   BuilderConfig,
@@ -24,15 +32,24 @@ export function builderWebpackProvider({
   builderConfig: BuilderConfig;
 }): BuilderWebpackProvider {
   const builderConfig = pickBuilderConfig(originalBuilderConfig);
+  const bundlerType = 'webpack';
 
   return async ({ pluginStore, builderOptions, plugins }) => {
-    const context = await createContext(builderOptions, builderConfig);
+    const context = await createContext<Context>({
+      builderOptions,
+      userBuilderConfig: builderConfig,
+      initBuilderConfig: () => withDefaultConfig(builderConfig),
+      validateBuilderConfig,
+      initHooks,
+      bundlerType,
+    });
+
     const pluginAPI = getPluginAPI({ context, pluginStore });
 
     context.pluginAPI = pluginAPI;
 
     return {
-      bundler: 'webpack',
+      bundler: bundlerType,
 
       pluginAPI,
 
