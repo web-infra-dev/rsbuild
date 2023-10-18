@@ -175,6 +175,7 @@ describe('webpackConfig', () => {
           },
         },
       },
+      plugins: [],
     });
 
     const config = await builder.unwrapWebpackConfig();
@@ -195,6 +196,7 @@ describe('webpackConfig', () => {
           },
         },
       },
+      plugins: [],
     });
 
     const config = await builder.unwrapWebpackConfig();

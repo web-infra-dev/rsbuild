@@ -591,6 +591,15 @@ importers:
       '@types/node':
         specifier: ^16
         version: 16.18.58
+      antd:
+        specifier: '4'
+        version: 4.24.14(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: ^18
+        version: 18.2.0
+      react-dom:
+        specifier: ^18
+        version: 18.2.0(react@18.2.0)
       typescript:
         specifier: ^5
         version: 5.2.2
