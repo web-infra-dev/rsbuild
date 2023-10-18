@@ -3,16 +3,36 @@ import {
   createPublicContext,
   getHTMLPathByEntry,
   type PluginStore,
+  BuilderContext,
+  NormalizedSharedOutputConfig,
+  SharedHtmlConfig,
+  AsyncHook,
+  OnExitFn,
 } from '@rsbuild/shared';
-import type { Context, BuilderPluginAPI } from '../types';
 
-export function getPluginAPI({
+export function getPluginAPI<
+  Context extends BuilderContext & {
+    hooks: {
+      onExitHook: AsyncHook<OnExitFn>;
+    };
+    config: unknown;
+    normalizedConfig?: {
+      output: NormalizedSharedOutputConfig;
+      html: SharedHtmlConfig;
+    };
+  },
+  PluginHooks extends {
+    [key: string]: unknown;
+  },
+>({
   context,
   pluginStore,
+  pluginHooks,
 }: {
   context: Context;
   pluginStore: PluginStore;
-}): BuilderPluginAPI {
+  pluginHooks: PluginHooks;
+}) {
   const { hooks } = context;
   const publicContext = createPublicContext(context);
 
@@ -22,7 +42,7 @@ export function getPluginAPI({
         'Cannot access builder config until modifyBuilderConfig is called.',
       );
     }
-    return context.config;
+    return context.config as Context['config'];
   };
 
   const getNormalizedConfig = () => {
@@ -31,7 +51,7 @@ export function getPluginAPI({
         'Cannot access normalized config until modifyBuilderConfig is called.',
       );
     }
-    return context.normalizedConfig;
+    return context.normalizedConfig as NonNullable<Context['normalizedConfig']>;
   };
 
   const getHTMLPaths = () => {
@@ -56,16 +76,6 @@ export function getPluginAPI({
     isPluginExists: pluginStore.isPluginExists,
 
     // Hooks
-    onExit: hooks.onExitHook.tap,
-    onAfterBuild: hooks.onAfterBuildHook.tap,
-    onBeforeBuild: hooks.onBeforeBuildHook.tap,
-    onDevCompileDone: hooks.onDevCompileDoneHook.tap,
-    modifyRspackConfig: hooks.modifyRspackConfigHook.tap,
-    modifyBuilderConfig: hooks.modifyBuilderConfigHook.tap,
-    modifyBundlerChain: hooks.modifyBundlerChainHook.tap,
-    onAfterCreateCompiler: hooks.onAfterCreateCompilerHook.tap,
-    onBeforeCreateCompiler: hooks.onBeforeCreateCompilerHook.tap,
-    onAfterStartDevServer: hooks.onAfterStartDevServerHook.tap,
-    onBeforeStartDevServer: hooks.onBeforeStartDevServerHook.tap,
+    ...(pluginHooks as PluginHooks),
   };
 }

@@ -4,20 +4,11 @@ import {
   createPublicContext,
   type BuilderProvider,
 } from '@rsbuild/shared';
-import { createContext } from '@rsbuild/core/base/createContext';
+import { createContext, getPluginAPI } from './core/extends';
 import { applyDefaultPlugins } from './shared/plugin';
-import {
-  Context,
-  BuilderConfig,
-  NormalizedConfig,
-  WebpackConfig,
-} from './types';
+import { BuilderConfig, NormalizedConfig, WebpackConfig } from './types';
 import { initConfigs } from './core/initConfigs';
-import { getPluginAPI } from './core/initPlugins';
 import type { Compiler, MultiCompiler } from 'webpack';
-import { initHooks } from './core/initHooks';
-import { validateBuilderConfig } from './config/validate';
-import { withDefaultConfig } from './config/defaults';
 
 export type BuilderWebpackProvider = BuilderProvider<
   BuilderConfig,
@@ -32,24 +23,15 @@ export function builderWebpackProvider({
   builderConfig: BuilderConfig;
 }): BuilderWebpackProvider {
   const builderConfig = pickBuilderConfig(originalBuilderConfig);
-  const bundlerType = 'webpack';
 
   return async ({ pluginStore, builderOptions, plugins }) => {
-    const context = await createContext<Context>({
-      builderOptions,
-      userBuilderConfig: builderConfig,
-      initBuilderConfig: () => withDefaultConfig(builderConfig),
-      validateBuilderConfig,
-      initHooks,
-      bundlerType,
-    });
-
+    const context = await createContext(builderOptions, builderConfig);
     const pluginAPI = getPluginAPI({ context, pluginStore });
 
     context.pluginAPI = pluginAPI;
 
     return {
-      bundler: bundlerType,
+      bundler: 'webpack',
 
       pluginAPI,
 
@@ -100,22 +82,12 @@ export function builderWebpackProvider({
       },
 
       async inspectConfig(inspectOptions) {
-        const { inspectConfig } = await import(
-          '@rsbuild/core/base/inspectConfig'
-        );
+        const { inspectConfig } = await import('./core/extends');
         return inspectConfig({
-          initConfigs: async () =>
-            (
-              await initConfigs({
-                context,
-                pluginStore,
-                builderOptions,
-              })
-            ).webpackConfigs,
           context,
+          pluginStore,
           builderOptions,
           inspectOptions,
-          bundlerType,
         });
       },
     };
