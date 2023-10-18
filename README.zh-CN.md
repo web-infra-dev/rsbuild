@@ -20,7 +20,7 @@
 
 Rsbuild 是一个基于 Rspack 的 web 构建工具。
 
-## 为什么选择 Rsbuild？
+## 为什么需要 Rsbuild？
 
 Rsbuild 的目标是为 Rspack 用户提供开箱即用的构建能力，使开发者能够在零配置的情况下启动一个 web 项目。
 

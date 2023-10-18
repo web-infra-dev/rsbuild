@@ -25,11 +25,11 @@ export function replaceCorejsAndSwcHelps(source: string) {
   return replace(source, [
     {
       mark: '"<SWC_HELPER>',
-      match: /\".*helpers(?!@)/,
+      match: /".*helpers(?!@)/,
     },
     {
       mark: '"<CORE_JS>',
-      match: /\".*core-js(?!@)/,
+      match: /".*core-js(?!@)/,
     },
   ]);
 }
@@ -154,7 +154,7 @@ export async function fsSnapshot(
     const expected = fs.readFileSync(expectedPath).toString();
 
     expect(finalCode, `Test base: ${base}`).toEqual(
-      expected.replace(new RegExp('\r\n', 'g'), '\n'),
+      expected.replace(new RegExp('\\r\\n', 'g'), '\n'),
     );
   }
 }

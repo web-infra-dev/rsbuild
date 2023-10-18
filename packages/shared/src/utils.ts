@@ -25,6 +25,7 @@ export const awaitableGetter = <T>(
 ): AwaitableGetter<T> => {
   const then: PromiseLike<T[]>['then'] = (...args) =>
     Promise.all(promises).then(...args);
+  // eslint-disable-next-line no-thenable
   return { then, promises };
 };
 
@@ -67,7 +68,7 @@ export const isURL = (str: string) =>
 export * as z from './zod';
 
 export function isWebTarget(target: BuilderTarget | BuilderTarget[]) {
-  return ['modern-web', 'web', 'web-worker'].some(t =>
+  return ['modern-web', 'web', 'web-worker'].some((t) =>
     (Array.isArray(target) ? target : [target]).includes(t as BuilderTarget),
   );
 }
