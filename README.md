@@ -51,6 +51,13 @@ Please read the [Contributing Guide](https://github.com/web-infra-dev/rsbuild/bl
 
 This repo has adopted the ByteDance Open Source Code of Conduct. Please check [Code of Conduct](./CODE_OF_CONDUCT.md) for more details.
 
+## Credits
+
+Some implementations of Rsbuild are referenced from the following projects. We would like to express our gratitude to them:
+
+- `plugin-module-scope` and `plugin-file-size`: referenced from [create-react-app](https://github.com/facebook/create-react-app)
+- `generateMetaTags` util: referenced from [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
+
 ## License
 
 Rsbuild is licensed under the [MIT License](./LICENSE).

@@ -4,9 +4,7 @@ import {
   experimental_registerGlobalTrace as registerGlobalTrace,
   experimental_cleanupGlobalTrace as cleanupGlobalTrace,
 } from '@rspack/core';
-// eslint-disable-next-line node/no-unsupported-features/node-builtins
 import inspector from 'inspector';
-// eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import { fs } from '@modern-js/utils';
 import { logger } from '@rsbuild/shared';
 

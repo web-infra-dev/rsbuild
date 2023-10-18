@@ -1,0 +1,1 @@
+import '<CORE_JS>';

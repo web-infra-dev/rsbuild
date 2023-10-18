@@ -1,7 +1,7 @@
 import path from 'path';
+import { logger } from 'rslog';
 // @ts-expect-error
 import { RawSource } from 'webpack-sources';
-import { logger } from '../logger';
 import { withPublicPath } from '../url';
 import {
   generateScriptTag,
@@ -110,7 +110,7 @@ export class AutoSetRootFontSizePlugin implements WebpackPluginInstance {
               name: this.name,
               stage: COMPILATION_PROCESS_STAGE.PROCESS_ASSETS_STAGE_PRE_PROCESS,
             },
-            async assets => {
+            async (assets) => {
               const scriptPath = await this.getScriptPath();
               assets[scriptPath] = new RawSource(await getRuntimeCode(), false);
             },
@@ -119,10 +119,10 @@ export class AutoSetRootFontSizePlugin implements WebpackPluginInstance {
       );
     }
 
-    compiler.hooks.compilation.tap(this.name, compilation => {
+    compiler.hooks.compilation.tap(this.name, (compilation) => {
       this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapPromise(
         this.name,
-        async data => {
+        async (data) => {
           const isExclude = this.options.excludeEntries.find((item: string) => {
             if (!this.webpackEntries.includes(item)) {
               logger.error(`convertToRem: can't find the entryName: ${item}`);

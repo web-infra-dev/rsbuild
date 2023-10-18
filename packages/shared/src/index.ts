@@ -1,4 +1,4 @@
-import { fs } from './re-exports/fs-extra';
+import fs from 'fs-extra';
 
 export const getCoreJsVersion = (corejsPkgPath: string) => {
   try {

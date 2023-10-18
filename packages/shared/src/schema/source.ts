@@ -31,5 +31,4 @@ export const sharedSourceConfigSchema = z.partialObj({
   ]),
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _schema: z.ZodType<SharedSourceConfig> = sharedSourceConfigSchema;

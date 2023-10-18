@@ -32,9 +32,9 @@
     ]
   },
   "devDependencies": {
-    "@modern-js/module-tools": "^2.35.1",
-    "@modern-js/monorepo-tools": "2.35.1",
-    "@modern-js/tsconfig": "^2.35.1",
+    "@modern-js/module-tools": "^2.36.0",
+    "@modern-js/monorepo-tools": "2.36.0",
+    "@modern-js/tsconfig": "^2.36.0",
     "@rsbuild/vitest-helper": "workspace:*",
     "vite-tsconfig-paths": "4.2.1",
     "husky": "^8.0.3",
@@ -42,5 +42,10 @@
     "oxlint": "^0.0.13",
     "prettier": "^3.0.3",
     "vitest": "1.0.0-beta.1"
+  },
+  "pnpm": {
+    "allowedDeprecatedVersions": {
+      "consolidate": "0.15.1"
+    }
   }
 }

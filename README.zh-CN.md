@@ -51,6 +51,13 @@ Rsbuild 项目正在积极开发中，预计将于 2023 年 11 月可用。
 
 本仓库采纳了字节跳动的开源项目行为准则。请点击 [行为准则](./CODE_OF_CONDUCT.md) 查看更多的信息。
 
+## 致谢
+
+Rsbuild 的一些实现参考了以下项目，感谢他们：
+
+- `plugin-module-scope` 和 `plugin-file-size`：参考自 [create-react-app](https://github.com/facebook/create-react-app)
+- `generateMetaTags` 工具函数：参考自 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)。
+
 ## License
 
 Rsbuild 项目基于 [MIT 协议](https://github.com/web-infra-dev/modern.js/blob/main/LICENSE)，请自由地享受和参与开源。

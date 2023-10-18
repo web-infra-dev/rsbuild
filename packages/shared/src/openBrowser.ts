@@ -8,8 +8,8 @@
  */
 import { execSync } from 'child_process';
 import { join } from 'path';
+import { logger } from 'rslog';
 import open from '../compiled/open';
-import { logger } from './logger';
 
 const supportedChromiumBrowsers = [
   'Google Chrome Canary',
@@ -28,7 +28,7 @@ const getTargetBrowser = () => {
   // If user setting not found or not support, use opening browser first
   if (!targetBrowser || !supportedChromiumBrowsers.includes(targetBrowser)) {
     const ps = execSync('ps cax').toString();
-    targetBrowser = supportedChromiumBrowsers.find(b => ps.includes(b));
+    targetBrowser = supportedChromiumBrowsers.find((b) => ps.includes(b));
   }
   return targetBrowser;
 };

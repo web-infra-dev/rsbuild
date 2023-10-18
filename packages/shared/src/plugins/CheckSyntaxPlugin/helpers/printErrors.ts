@@ -1,7 +1,6 @@
-import { SyntaxError } from './type';
-import { chalk } from '../../../re-exports';
-
-import { logger } from '../../../logger';
+import chalk from 'chalk';
+import { logger } from 'rslog';
+import type { SyntaxError } from './type';
 
 type Error = {
   source: string;
@@ -16,7 +15,7 @@ export function printErrors(errors: SyntaxError[]) {
     return;
   }
 
-  const errs: Error[] = errors.map(error => ({
+  const errs: Error[] = errors.map((error) => ({
     source: `${error.source.path}:${error.source.line}:${error.source.column}`,
     output: error.output
       ? `${error.output.path}:${error.output.line}:${error.output.column}`
@@ -25,7 +24,7 @@ export function printErrors(errors: SyntaxError[]) {
     code: error.source.code,
   }));
 
-  const longest = Math.max(...Object.keys(errs[0]).map(err => err.length));
+  const longest = Math.max(...Object.keys(errs[0]).map((err) => err.length));
   logger.error(
     '[Syntax Checker] Find some syntax errors after production build:\n',
   );

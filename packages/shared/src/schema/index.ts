@@ -1,5 +1,5 @@
+import chalk from 'chalk';
 import { fromZodError, z, ZodError, ZodIssueCode } from '../zod';
-import { chalk } from '../re-exports';
 
 export * from './source';
 export * from './dev';

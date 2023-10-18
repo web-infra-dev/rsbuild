@@ -40,5 +40,4 @@ export const sharedToolsConfigSchema = z.partialObj({
   bundlerChain: z.arrayOrNot(z.function()),
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _schema: z.ZodType<SharedToolsConfig> = sharedToolsConfigSchema;

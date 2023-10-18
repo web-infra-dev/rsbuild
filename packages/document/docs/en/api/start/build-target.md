@@ -16,7 +16,6 @@ the Rsbuild will read the [Browserslist config](https://github.com/browserslist/
 
 - `'node'`: Build for Node.js environment, usually used in SSR and other scenarios.
 - `'web-worker'`: Build for Web Worker environment.
-- `'modern-web'`: Build for modern browsers.
 
 For example, to build for the Node.js environment:
 
@@ -68,25 +67,3 @@ When `target` is set to `'web-worker'`, Rsbuild will:
 - CSS code will not be bundled or extracted, but the id information of CSS Modules will be included in the bundle.
 - The default code split strategy will be disabled, and **dynamic import can not work**, because the Web Worker only runs a single JavaScript file.
 - Disable the HMR.
-
-## Modern Web Target
-
-Refers to the build target running in the modern browsers.
-
-:::tip What are modern browsers?
-Modern browsers are one of our conventions to refer to browsers that support [native ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
-:::
-
-When `target` is set to `'modern-web'`, Rsbuild will:
-
-- Adjust the default value of Browserslist to:
-
-```js
-const browserslist = [
-  'chrome >= 61',
-  'edge >= 16',
-  'firefox >= 60',
-  'safari >= 11',
-  'ios_saf >= 11',
-];
-```

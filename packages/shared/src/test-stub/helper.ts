@@ -1,6 +1,5 @@
 import { Plugins } from '../types';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 const setup = () => {};
 
 const genMockPlugin = (name: string) => () =>

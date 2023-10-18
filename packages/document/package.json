@@ -25,7 +25,7 @@
     "provenance": true
   },
   "devDependencies": {
-    "@modern-js/tsconfig": "^2.35.1",
+    "@modern-js/tsconfig": "^2.36.0",
     "@rspress/shared": "1.0.2",
     "@types/node": "^16",
     "rspress": "1.0.2",

@@ -1,5 +1,5 @@
 import path from 'path';
-import { fs } from '../re-exports';
+import fs from 'fs-extra';
 import type { Compiler } from 'webpack';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
 import { addTrailingSlash } from '../utils';

@@ -1,5 +1,5 @@
+import chalk from 'chalk';
 import basePrettyTime from '../compiled/pretty-time';
-import { chalk } from './re-exports';
 
 const TIME_REGEXP = /([\d.]+)([a-zA-Z]+)/;
 

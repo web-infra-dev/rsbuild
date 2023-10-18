@@ -1,4 +1,4 @@
-import { browserslist } from '@modern-js/utils';
+import browserslist from 'browserslist';
 import { features, feature as featureUnpack } from 'caniuse-lite';
 
 /**
@@ -13,6 +13,6 @@ function checkIsSupportBrowser(feature: string, targets: string[]) {
   const data = featureUnpack(features[feature]);
 
   return browserslist(targets, { ignoreUnknownVersions: true })
-    .map(browser => browser.split(' '))
-    .every(browser => data.stats[browser[0]]?.[browser[1]]?.startsWith('y'));
+    .map((browser) => browser.split(' '))
+    .every((browser) => data.stats[browser[0]]?.[browser[1]]?.startsWith('y'));
 }

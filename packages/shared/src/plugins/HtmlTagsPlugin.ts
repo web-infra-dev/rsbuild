@@ -18,7 +18,6 @@ export interface HtmlTagsPluginOptions {
 }
 
 export interface AdditionalContext {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   HtmlPlugin: Extract<HtmlTagsPluginOptions['HtmlPlugin'], Function>;
 }
 
@@ -78,10 +77,10 @@ export class HtmlTagsPlugin {
   }
 
   apply(compiler: Compiler) {
-    compiler.hooks.compilation.tap(this.name, compilation => {
+    compiler.hooks.compilation.tap(this.name, (compilation) => {
       const compilationHash = compilation.hash || '';
       const hooks = this.ctx.HtmlPlugin.getHooks(compilation);
-      hooks.alterAssetTagGroups.tap(this.name, params => {
+      hooks.alterAssetTagGroups.tap(this.name, (params) => {
         // skip unmatched file and empty tag list.
         const includesCurrentFile =
           !this.ctx.includes || this.ctx.includes.includes(params.outputName);
@@ -163,7 +162,7 @@ export class HtmlTagsPlugin {
           ...records,
         ];
         // apply tag handler callbacks.
-        tags = _.sortBy(tags, tag => {
+        tags = _.sortBy(tags, (tag) => {
           let priority = 0;
           const head = tag.head ?? HEAD_TAGS.includes(tag.tag);
           const append = tag.append ?? this.ctx.append;
@@ -184,7 +183,7 @@ export class HtmlTagsPlugin {
         // apply to html-webpack-plugin.
         const [headTags, bodyTags] = _.partition(
           tags,
-          tag => tag.head ?? HEAD_TAGS.includes(tag.tag),
+          (tag) => tag.head ?? HEAD_TAGS.includes(tag.tag),
         );
         params.headTags = fromInjectTags(headTags);
         params.bodyTags = fromInjectTags(bodyTags);

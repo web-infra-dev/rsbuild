@@ -72,5 +72,4 @@ export const sharedHtmlConfigSchema = z.partialObj({
   scriptLoading: ScriptLoadingSchema,
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _schema: z.ZodType<SharedHtmlConfig> = sharedHtmlConfigSchema;
