@@ -10,6 +10,9 @@
   "bugs": {
     "url": "https://github.com/web-infra-dev/rsbuild/issues"
   },
+  "bin": {
+    "rsbuild": "./bin/rsbuild.js"
+  },
   "engines": {
     "node": ">=14.0.0"
   },
@@ -22,6 +25,10 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./cli": {
+      "types": "./dist/cli/index.d.ts",
+      "default": "./dist/cli/index.js"
+    },
     "./plugins/*": {
       "types": "./dist/plugins/*.d.ts",
       "default": "./dist/plugins/*.js"
@@ -29,6 +36,9 @@
   },
   "typesVersions": {
     "*": {
+      "cli": [
+        "./dist/cki/index.d.ts"
+      ],
       "plugins/*": [
         "./dist/plugins/*.d.ts"
       ]
@@ -57,6 +67,8 @@
     "@rspack/plugin-html": "0.3.6",
     "@rsbuild/shared": "workspace:*",
     "@svgr/webpack": "8.0.1",
+    "commander": "^10.0.1",
+    "jiti": "^1.20.0",
     "postcss": "8.4.31",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     "webpack": "^5.88.1"

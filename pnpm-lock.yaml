@@ -39,6 +39,12 @@ importers:
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1
 
+  examples/basic:
+    dependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+
   packages/babel-preset:
     dependencies:
       '@babel/core':
@@ -117,6 +123,12 @@ importers:
       '@svgr/webpack':
         specifier: 8.0.1
         version: 8.0.1(typescript@5.2.2)
+      commander:
+        specifier: ^10.0.1
+        version: 10.0.1
+      jiti:
+        specifier: ^1.20.0
+        version: 1.20.0
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -6402,6 +6414,11 @@ packages:
     resolution: {integrity: sha512-Fu4hJdvzeylCfQPp9SGWidpzrMs7tTrlu6Vb8XGaRGck8QSNZJJp538Wrb60Lax4fPwR64ViY468OIUTbRlGZg==}
     dev: true
 
+  /commander@10.0.1:
+    resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
+    engines: {node: '>=14'}
+    dev: false
+
   /commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
 
@@ -8813,7 +8830,6 @@ packages:
   /jiti@1.20.0:
     resolution: {integrity: sha512-3TV69ZbrvV6U5DfQimop50jE9Dl6J8O1ja1dvBbMba/sZ3YBEQqJ2VZRoQPVnhlzjNtU1vaXRZVrVjU4qtm8yA==}
     hasBin: true
-    dev: true
 
   /jju@1.4.0:
     resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
