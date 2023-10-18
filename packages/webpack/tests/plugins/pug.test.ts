@@ -1,6 +1,6 @@
 import { expect, describe, it } from 'vitest';
 import { builderPluginPug } from '@/plugins/pug';
-import { createStubBuilder } from '@/stub/builder';
+import { createStubBuilder } from '../helper';
 
 describe('plugins/pug', () => {
   it('should add pug rules correctly when tools.pug is used', async () => {

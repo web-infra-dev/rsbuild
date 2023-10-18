@@ -1,6 +1,6 @@
 import { expect, describe, it } from 'vitest';
 import { builderPluginOutput } from '@/plugins/output';
-import { createStubBuilder } from '@/stub/builder';
+import { createStubBuilder } from '../helper';
 
 describe('plugins/output', () => {
   it('should set output correctly', async () => {

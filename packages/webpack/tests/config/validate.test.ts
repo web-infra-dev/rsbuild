@@ -21,7 +21,7 @@ describe('validateBuilderConfig', () => {
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       `
       "Builder config validation error:
-      * Expected object, received array at \\"html.faviconByEntries\\""
+      * Expected object, received array at "html.faviconByEntries""
     `,
     );
   });
@@ -40,7 +40,6 @@ describe('validateBuilderConfig', () => {
           "babel": [Function],
           "htmlPlugin": false,
           "terser": [],
-          "tsChecker": [Function],
         },
       }
     `);

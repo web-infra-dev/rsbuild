@@ -1,7 +1,7 @@
 import { expect, describe, it } from 'vitest';
 import { builderPluginSplitChunks } from '@rsbuild/core/plugins/splitChunks';
 import { builderPluginLazyCompilation } from '@/plugins/lazyCompilation';
-import { createStubBuilder } from '@/stub/builder';
+import { createStubBuilder } from '../helper';
 
 describe('plugins/lazyCompilation', () => {
   it('should allow to use lazy compilation', async () => {

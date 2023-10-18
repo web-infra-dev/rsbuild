@@ -7,9 +7,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "packageJson": [
         "<ROOT>/package.json",
       ],
-      "tsconfig": [
-        "<ROOT>/tsconfig.json",
-      ],
     },
     "cacheDirectory": "<ROOT>/node_modules/.cache/webpack",
     "name": "web-development",
@@ -94,7 +91,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "javascript/auto",
             "use": [
               {
-                "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
                 "options": {
                   "svgo": true,
                   "svgoConfig": {
@@ -113,7 +110,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/url-loader",
                 "options": {
                   "limit": 10000,
                   "name": "static/svg/[name].[contenthash:8].svg",
@@ -221,10 +218,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -236,7 +233,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "plugins": [
@@ -280,10 +277,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 3,
               "modules": {
@@ -295,7 +292,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "plugins": [
@@ -330,16 +327,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
             "options": {
               "join": [Function],
               "sourceMap": false,
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
             "options": {
-              "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+              "implementation": "<ROOT>/packages/shared/compiled/sass",
               "sourceMap": true,
             },
           },
@@ -353,10 +350,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 2,
               "modules": {
@@ -368,7 +365,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "plugins": [
@@ -403,9 +400,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+            "loader": "<ROOT>/packages/shared/compiled/less-loader",
             "options": {
-              "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+              "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
               },
@@ -419,7 +416,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/toml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
           },
         ],
       },
@@ -428,7 +425,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/yaml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },
@@ -444,36 +441,36 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         },
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/babel-loader",
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
             "options": {
               "babelrc": false,
               "compact": false,
               "configFile": false,
               "plugins": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                   {
                     "version": "legacy",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
                   {
                     "proposal": "minimal",
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.2",
+                    "version": "7.23.1",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@rsbuild/babel-preset/dist/pluginLockCorejsVersion",
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
                   {
                     "libraryDirectory": "es",
                     "libraryName": "antd",
@@ -482,32 +479,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "antd",
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "es",
-                    "libraryName": "@arco-design/web-react",
-                    "style": true,
-                  },
-                  "@arco-design/web-react",
-                ],
-                [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "react-icon",
-                    "libraryName": "@arco-design/web-react/icon",
-                  },
-                  "@arco-design/web-react/icon",
-                ],
-                [
-                  "<ROOT>/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
               ],
               "presets": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
                   {
                     "bugfixes": true,
                     "corejs": {
@@ -527,7 +505,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                   {
                     "allExtensions": true,
                     "allowDeclareFields": true,
@@ -537,10 +515,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
                   {
                     "development": true,
-                    "runtime": "automatic",
+                    "runtime": "classic",
                     "useBuiltIns": true,
                     "useSpread": false,
                   },
@@ -564,36 +542,36 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/babel-loader",
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
             "options": {
               "babelrc": false,
               "compact": false,
               "configFile": false,
               "plugins": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                   {
                     "version": "legacy",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
                   {
                     "proposal": "minimal",
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.2",
+                    "version": "7.23.1",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@rsbuild/babel-preset/dist/pluginLockCorejsVersion",
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
                   {
                     "libraryDirectory": "es",
                     "libraryName": "antd",
@@ -602,30 +580,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "antd",
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "es",
-                    "libraryName": "@arco-design/web-react",
-                    "style": true,
-                  },
-                  "@arco-design/web-react",
-                ],
-                [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "react-icon",
-                    "libraryName": "@arco-design/web-react/icon",
-                  },
-                  "@arco-design/web-react/icon",
-                ],
-                [
-                  "<ROOT>/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
                   {
                     "displayName": true,
                     "pure": false,
@@ -634,7 +593,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/react-refresh/babel.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/react-refresh/babel.js",
                   {
                     "skipEnvCheck": true,
                   },
@@ -642,7 +601,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               ],
               "presets": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
                   {
                     "bugfixes": true,
                     "corejs": {
@@ -662,7 +621,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                   {
                     "allExtensions": true,
                     "allowDeclareFields": true,
@@ -672,10 +631,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
                   {
                     "development": true,
-                    "runtime": "automatic",
+                    "runtime": "classic",
                     "useBuiltIns": true,
                     "useSpread": false,
                   },
@@ -700,12 +659,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           "priority": 0,
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-arco": {
-          "name": "lib-arco",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
         },
         "lib-axios": {
           "name": "lib-axios",
@@ -759,31 +712,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "plugins": [
     DefinePlugin {
       "definitions": {
-        "process.env.ASSET_PREFIX": "\\"\\"",
-        "process.env.NODE_ENV": "\\"development\\"",
-      },
-    },
-    ForkTsCheckerWebpackPlugin {
-      "options": {
-        "issue": {
-          "exclude": [
-            {
-              "file": "**/*.(spec|test).ts",
-            },
-            {
-              "file": "**/node_modules/**/*",
-            },
-          ],
-        },
-        "logger": {
-          "error": [Function],
-          "log": [Function],
-        },
-        "typescript": {
-          "configFile": "<ROOT>/tsconfig.json",
-          "memoryLimit": 8192,
-          "typescriptPath": "<WORKSPACE>/node_modules/<PNPM_INNER>/typescript/lib/typescript.js",
-        },
+        "process.env.ASSET_PREFIX": """",
+        "process.env.NODE_ENV": ""development"",
       },
     },
     MiniCssExtractPlugin {
@@ -832,36 +762,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   ],
   "resolve": {
     "extensions": [
-      ".ts",
-      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
       ".json",
-    ],
-    "plugins": [
-      TsconfigPathsPlugin {
-        "absoluteBaseUrl": "<ROOT>",
-        "baseUrl": "./",
-        "extensions": [
-          ".ts",
-          ".tsx",
-          ".js",
-          ".jsx",
-          ".mjs",
-          ".json",
-        ],
-        "log": {
-          "log": [Function],
-          "logError": [Function],
-          "logInfo": [Function],
-          "logWarning": [Function],
-        },
-        "matchPath": [Function],
-        "referenceMatchMap": {},
-        "source": "described-resolve",
-        "target": "resolve",
-      },
     ],
   },
   "target": [
@@ -877,9 +781,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "buildDependencies": {
       "packageJson": [
         "<ROOT>/package.json",
-      ],
-      "tsconfig": [
-        "<ROOT>/tsconfig.json",
       ],
     },
     "cacheDirectory": "<ROOT>/node_modules/.cache/webpack",
@@ -965,7 +866,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "javascript/auto",
             "use": [
               {
-                "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
                 "options": {
                   "svgo": true,
                   "svgoConfig": {
@@ -984,7 +885,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/url-loader",
                 "options": {
                   "limit": 10000,
                   "name": "static/svg/[name].[contenthash:8].svg",
@@ -1092,10 +993,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -1107,7 +1008,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "plugins": [
@@ -1151,10 +1052,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 3,
               "modules": {
@@ -1166,7 +1067,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "plugins": [
@@ -1201,16 +1102,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
             "options": {
               "join": [Function],
               "sourceMap": false,
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
             "options": {
-              "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+              "implementation": "<ROOT>/packages/shared/compiled/sass",
               "sourceMap": true,
             },
           },
@@ -1224,10 +1125,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 2,
               "modules": {
@@ -1239,7 +1140,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "plugins": [
@@ -1274,9 +1175,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+            "loader": "<ROOT>/packages/shared/compiled/less-loader",
             "options": {
-              "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+              "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
               },
@@ -1290,7 +1191,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/toml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
           },
         ],
       },
@@ -1299,7 +1200,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/yaml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },
@@ -1315,36 +1216,36 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         },
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/babel-loader",
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
             "options": {
               "babelrc": false,
               "compact": true,
               "configFile": false,
               "plugins": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                   {
                     "version": "legacy",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
                   {
                     "proposal": "minimal",
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.2",
+                    "version": "7.23.1",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@rsbuild/babel-preset/dist/pluginLockCorejsVersion",
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
                   {
                     "libraryDirectory": "es",
                     "libraryName": "antd",
@@ -1353,30 +1254,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   "antd",
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "es",
-                    "libraryName": "@arco-design/web-react",
-                    "style": true,
-                  },
-                  "@arco-design/web-react",
-                ],
-                [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "react-icon",
-                    "libraryName": "@arco-design/web-react/icon",
-                  },
-                  "@arco-design/web-react/icon",
-                ],
-                [
-                  "<ROOT>/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
-                  "<ROOT>/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
                   {
                     "removeImport": true,
                   },
@@ -1384,7 +1266,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               ],
               "presets": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
                   {
                     "bugfixes": true,
                     "corejs": {
@@ -1404,7 +1286,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                   {
                     "allExtensions": true,
                     "allowDeclareFields": true,
@@ -1414,10 +1296,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
                   {
                     "development": false,
-                    "runtime": "automatic",
+                    "runtime": "classic",
                     "useBuiltIns": true,
                     "useSpread": false,
                   },
@@ -1441,36 +1323,36 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/babel-loader",
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
             "options": {
               "babelrc": false,
               "compact": true,
               "configFile": false,
               "plugins": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                   {
                     "version": "legacy",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
                   {
                     "proposal": "minimal",
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.2",
+                    "version": "7.23.1",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@rsbuild/babel-preset/dist/pluginLockCorejsVersion",
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
                   {
                     "libraryDirectory": "es",
                     "libraryName": "antd",
@@ -1479,36 +1361,17 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   "antd",
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "es",
-                    "libraryName": "@arco-design/web-react",
-                    "style": true,
-                  },
-                  "@arco-design/web-react",
-                ],
-                [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "react-icon",
-                    "libraryName": "@arco-design/web-react/icon",
-                  },
-                  "@arco-design/web-react/icon",
-                ],
-                [
-                  "<ROOT>/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
-                  "<ROOT>/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
                   {
                     "removeImport": true,
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
                   {
                     "displayName": true,
                     "pure": true,
@@ -1519,7 +1382,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               ],
               "presets": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
                   {
                     "bugfixes": true,
                     "corejs": {
@@ -1539,7 +1402,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                   {
                     "allExtensions": true,
                     "allowDeclareFields": true,
@@ -1549,10 +1412,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
                   {
                     "development": false,
-                    "runtime": "automatic",
+                    "runtime": "classic",
                     "useBuiltIns": true,
                     "useSpread": false,
                   },
@@ -1620,12 +1483,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
         },
-        "lib-arco": {
-          "name": "lib-arco",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
-        },
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
@@ -1677,31 +1534,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   "plugins": [
     DefinePlugin {
       "definitions": {
-        "process.env.ASSET_PREFIX": "\\"\\"",
-        "process.env.NODE_ENV": "\\"production\\"",
-      },
-    },
-    ForkTsCheckerWebpackPlugin {
-      "options": {
-        "issue": {
-          "exclude": [
-            {
-              "file": "**/*.(spec|test).ts",
-            },
-            {
-              "file": "**/node_modules/**/*",
-            },
-          ],
-        },
-        "logger": {
-          "error": [Function],
-          "log": [Function],
-        },
-        "typescript": {
-          "configFile": "<ROOT>/tsconfig.json",
-          "memoryLimit": 8192,
-          "typescriptPath": "<WORKSPACE>/node_modules/<PNPM_INNER>/typescript/lib/typescript.js",
-        },
+        "process.env.ASSET_PREFIX": """",
+        "process.env.NODE_ENV": ""production"",
       },
     },
     InlineChunkHtmlPlugin {
@@ -1751,36 +1585,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   ],
   "resolve": {
     "extensions": [
-      ".ts",
-      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
       ".json",
-    ],
-    "plugins": [
-      TsconfigPathsPlugin {
-        "absoluteBaseUrl": "<ROOT>",
-        "baseUrl": "./",
-        "extensions": [
-          ".ts",
-          ".tsx",
-          ".js",
-          ".jsx",
-          ".mjs",
-          ".json",
-        ],
-        "log": {
-          "log": [Function],
-          "logError": [Function],
-          "logInfo": [Function],
-          "logWarning": [Function],
-        },
-        "matchPath": [Function],
-        "referenceMatchMap": {},
-        "source": "described-resolve",
-        "target": "resolve",
-      },
     ],
   },
   "target": [
@@ -1796,9 +1604,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "buildDependencies": {
       "packageJson": [
         "<ROOT>/package.json",
-      ],
-      "tsconfig": [
-        "<ROOT>/tsconfig.json",
       ],
     },
     "cacheDirectory": "<ROOT>/node_modules/.cache/webpack",
@@ -1884,7 +1689,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "javascript/auto",
             "use": [
               {
-                "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
                 "options": {
                   "svgo": true,
                   "svgoConfig": {
@@ -1903,7 +1708,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/url-loader",
                 "options": {
                   "limit": 10000,
                   "name": "static/svg/[name].[contenthash:8].svg",
@@ -2007,7 +1812,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/node-loader",
+            "loader": "<ROOT>/packages/shared/compiled/node-loader",
             "options": {
               "name": [Function],
             },
@@ -2025,7 +1830,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "loader": "@rsbuild/shared/ignore-css-loader",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -2050,7 +1855,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "loader": "@rsbuild/shared/ignore-css-loader",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 3,
               "modules": {
@@ -2063,16 +1868,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
             "options": {
               "join": [Function],
               "sourceMap": false,
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
             "options": {
-              "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+              "implementation": "<ROOT>/packages/shared/compiled/sass",
               "sourceMap": true,
             },
           },
@@ -2089,7 +1894,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "loader": "@rsbuild/shared/ignore-css-loader",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 2,
               "modules": {
@@ -2102,9 +1907,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+            "loader": "<ROOT>/packages/shared/compiled/less-loader",
             "options": {
-              "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+              "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
               },
@@ -2118,7 +1923,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/toml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
           },
         ],
       },
@@ -2127,7 +1932,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/yaml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },
@@ -2143,23 +1948,23 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         },
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/babel-loader",
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
             "options": {
               "babelrc": false,
               "compact": true,
               "configFile": false,
               "plugins": [
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
                   {
                     "proposal": "minimal",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-dynamic-import-node/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-dynamic-import-node/lib/index.js",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
                   {
                     "libraryDirectory": "lib",
                     "libraryName": "antd",
@@ -2168,30 +1973,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "antd",
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "lib",
-                    "libraryName": "@arco-design/web-react",
-                    "style": true,
-                  },
-                  "@arco-design/web-react",
-                ],
-                [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "react-icon-cjs",
-                    "libraryName": "@arco-design/web-react/icon",
-                  },
-                  "@arco-design/web-react/icon",
-                ],
-                [
-                  "<ROOT>/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
-                  "<ROOT>/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
                   {
                     "removeImport": true,
                   },
@@ -2199,7 +1985,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               ],
               "presets": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
                   {
                     "exclude": [
                       "transform-typeof-symbol",
@@ -2211,7 +1997,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                   {
                     "allExtensions": true,
                     "allowDeclareFields": true,
@@ -2221,10 +2007,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
                   {
                     "development": false,
-                    "runtime": "automatic",
+                    "runtime": "classic",
                     "useBuiltIns": true,
                     "useSpread": false,
                   },
@@ -2248,23 +2034,23 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/babel-loader",
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
             "options": {
               "babelrc": false,
               "compact": true,
               "configFile": false,
               "plugins": [
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
                   {
                     "proposal": "minimal",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-dynamic-import-node/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-dynamic-import-node/lib/index.js",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
                   {
                     "libraryDirectory": "lib",
                     "libraryName": "antd",
@@ -2273,36 +2059,17 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "antd",
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "lib",
-                    "libraryName": "@arco-design/web-react",
-                    "style": true,
-                  },
-                  "@arco-design/web-react",
-                ],
-                [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "react-icon-cjs",
-                    "libraryName": "@arco-design/web-react/icon",
-                  },
-                  "@arco-design/web-react/icon",
-                ],
-                [
-                  "<ROOT>/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
-                  "<ROOT>/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
                   {
                     "removeImport": true,
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
                   {
                     "displayName": true,
                     "pure": true,
@@ -2313,7 +2080,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               ],
               "presets": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
                   {
                     "exclude": [
                       "transform-typeof-symbol",
@@ -2325,7 +2092,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                   {
                     "allExtensions": true,
                     "allowDeclareFields": true,
@@ -2335,10 +2102,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
                   {
                     "development": false,
-                    "runtime": "automatic",
+                    "runtime": "classic",
                     "useBuiltIns": true,
                     "useSpread": false,
                   },
@@ -2414,31 +2181,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "plugins": [
     DefinePlugin {
       "definitions": {
-        "process.env.ASSET_PREFIX": "\\"\\"",
-        "process.env.NODE_ENV": "\\"production\\"",
-      },
-    },
-    ForkTsCheckerWebpackPlugin {
-      "options": {
-        "issue": {
-          "exclude": [
-            {
-              "file": "**/*.(spec|test).ts",
-            },
-            {
-              "file": "**/node_modules/**/*",
-            },
-          ],
-        },
-        "logger": {
-          "error": [Function],
-          "log": [Function],
-        },
-        "typescript": {
-          "configFile": "<ROOT>/tsconfig.json",
-          "memoryLimit": 8192,
-          "typescriptPath": "<WORKSPACE>/node_modules/<PNPM_INNER>/typescript/lib/typescript.js",
-        },
+        "process.env.ASSET_PREFIX": """",
+        "process.env.NODE_ENV": ""production"",
       },
     },
     ProgressPlugin {
@@ -2460,36 +2204,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   ],
   "resolve": {
     "extensions": [
-      ".ts",
-      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
       ".json",
-    ],
-    "plugins": [
-      TsconfigPathsPlugin {
-        "absoluteBaseUrl": "<ROOT>",
-        "baseUrl": "./",
-        "extensions": [
-          ".ts",
-          ".tsx",
-          ".js",
-          ".jsx",
-          ".mjs",
-          ".json",
-        ],
-        "log": {
-          "log": [Function],
-          "logError": [Function],
-          "logInfo": [Function],
-          "logWarning": [Function],
-        },
-        "matchPath": [Function],
-        "referenceMatchMap": {},
-        "source": "described-resolve",
-        "target": "resolve",
-      },
     ],
   },
   "target": "node",
@@ -2502,9 +2220,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "buildDependencies": {
       "packageJson": [
         "<ROOT>/package.json",
-      ],
-      "tsconfig": [
-        "<ROOT>/tsconfig.json",
       ],
     },
     "cacheDirectory": "<ROOT>/node_modules/.cache/webpack",
@@ -2591,7 +2306,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "javascript/auto",
             "use": [
               {
-                "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
                 "options": {
                   "svgo": true,
                   "svgoConfig": {
@@ -2610,7 +2325,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 },
               },
               {
-                "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/url-loader",
+                "loader": "<ROOT>/packages/shared/compiled/url-loader",
                 "options": {
                   "limit": 10000,
                   "name": "static/svg/[name].[contenthash:8].svg",
@@ -2721,7 +2436,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "loader": "@rsbuild/shared/ignore-css-loader",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -2746,7 +2461,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "loader": "@rsbuild/shared/ignore-css-loader",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 3,
               "modules": {
@@ -2759,16 +2474,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
             "options": {
               "join": [Function],
               "sourceMap": false,
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass-loader",
+            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
             "options": {
-              "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/sass",
+              "implementation": "<ROOT>/packages/shared/compiled/sass",
               "sourceMap": true,
             },
           },
@@ -2785,7 +2500,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "loader": "@rsbuild/shared/ignore-css-loader",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 2,
               "modules": {
@@ -2798,9 +2513,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/less-loader",
+            "loader": "<ROOT>/packages/shared/compiled/less-loader",
             "options": {
-              "implementation": "<WORKSPACE>/packages/builder/builder-shared/compiled/less",
+              "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
               },
@@ -2814,7 +2529,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/toml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
           },
         ],
       },
@@ -2823,7 +2538,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/yaml-loader",
+            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },
@@ -2839,36 +2554,36 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         },
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/babel-loader",
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
             "options": {
               "babelrc": false,
               "compact": true,
               "configFile": false,
               "plugins": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                   {
                     "version": "legacy",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
                   {
                     "proposal": "minimal",
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.2",
+                    "version": "7.23.1",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@rsbuild/babel-preset/dist/pluginLockCorejsVersion",
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
                   {
                     "libraryDirectory": "es",
                     "libraryName": "antd",
@@ -2877,30 +2592,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "antd",
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "es",
-                    "libraryName": "@arco-design/web-react",
-                    "style": true,
-                  },
-                  "@arco-design/web-react",
-                ],
-                [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "react-icon",
-                    "libraryName": "@arco-design/web-react/icon",
-                  },
-                  "@arco-design/web-react/icon",
-                ],
-                [
-                  "<ROOT>/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
-                  "<ROOT>/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
                   {
                     "removeImport": true,
                   },
@@ -2908,7 +2604,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               ],
               "presets": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
                   {
                     "bugfixes": true,
                     "corejs": {
@@ -2928,7 +2624,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                   {
                     "allExtensions": true,
                     "allowDeclareFields": true,
@@ -2938,10 +2634,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
                   {
                     "development": false,
-                    "runtime": "automatic",
+                    "runtime": "classic",
                     "useBuiltIns": true,
                     "useSpread": false,
                   },
@@ -2965,36 +2661,36 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/babel-loader",
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
             "options": {
               "babelrc": false,
               "compact": true,
               "configFile": false,
               "plugins": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                   {
                     "version": "legacy",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
                   {
                     "proposal": "minimal",
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.2",
+                    "version": "7.23.1",
                   },
                 ],
-                "<WORKSPACE>/node_modules/<PNPM_INNER>/@rsbuild/babel-preset/dist/pluginLockCorejsVersion",
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
                   {
                     "libraryDirectory": "es",
                     "libraryName": "antd",
@@ -3003,36 +2699,17 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "antd",
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "es",
-                    "libraryName": "@arco-design/web-react",
-                    "style": true,
-                  },
-                  "@arco-design/web-react",
-                ],
-                [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-                  {
-                    "camel2DashComponentName": false,
-                    "libraryDirectory": "react-icon",
-                    "libraryName": "@arco-design/web-react/icon",
-                  },
-                  "@arco-design/web-react/icon",
-                ],
-                [
-                  "<ROOT>/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
-                  "<ROOT>/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
                   {
                     "removeImport": true,
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
                   {
                     "displayName": true,
                     "pure": true,
@@ -3043,7 +2720,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               ],
               "presets": [
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
                   {
                     "bugfixes": true,
                     "corejs": {
@@ -3063,7 +2740,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                   {
                     "allExtensions": true,
                     "allowDeclareFields": true,
@@ -3073,10 +2750,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   },
                 ],
                 [
-                  "<WORKSPACE>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
                   {
                     "development": false,
-                    "runtime": "automatic",
+                    "runtime": "classic",
                     "useBuiltIns": true,
                     "useSpread": false,
                   },
@@ -3151,31 +2828,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "plugins": [
     DefinePlugin {
       "definitions": {
-        "process.env.ASSET_PREFIX": "\\"\\"",
-        "process.env.NODE_ENV": "\\"production\\"",
-      },
-    },
-    ForkTsCheckerWebpackPlugin {
-      "options": {
-        "issue": {
-          "exclude": [
-            {
-              "file": "**/*.(spec|test).ts",
-            },
-            {
-              "file": "**/node_modules/**/*",
-            },
-          ],
-        },
-        "logger": {
-          "error": [Function],
-          "log": [Function],
-        },
-        "typescript": {
-          "configFile": "<ROOT>/tsconfig.json",
-          "memoryLimit": 8192,
-          "typescriptPath": "<WORKSPACE>/node_modules/<PNPM_INNER>/typescript/lib/typescript.js",
-        },
+        "process.env.ASSET_PREFIX": """",
+        "process.env.NODE_ENV": ""production"",
       },
     },
     ProgressPlugin {
@@ -3197,36 +2851,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   ],
   "resolve": {
     "extensions": [
-      ".ts",
-      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
       ".json",
-    ],
-    "plugins": [
-      TsconfigPathsPlugin {
-        "absoluteBaseUrl": "<ROOT>",
-        "baseUrl": "./",
-        "extensions": [
-          ".ts",
-          ".tsx",
-          ".js",
-          ".jsx",
-          ".mjs",
-          ".json",
-        ],
-        "log": {
-          "log": [Function],
-          "logError": [Function],
-          "logInfo": [Function],
-          "logWarning": [Function],
-        },
-        "matchPath": [Function],
-        "referenceMatchMap": {},
-        "source": "described-resolve",
-        "target": "resolve",
-      },
     ],
   },
   "target": [

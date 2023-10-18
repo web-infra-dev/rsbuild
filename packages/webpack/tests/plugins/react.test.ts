@@ -2,7 +2,7 @@ import { expect, describe, it } from 'vitest';
 import { builderPluginReact } from '@/plugins/react';
 import { builderPluginBabel } from '@/plugins/babel';
 import { builderPluginTsLoader } from '@/plugins/tsLoader';
-import { createStubBuilder } from '@/stub/builder';
+import { createStubBuilder } from '../helper';
 
 describe('plugins/react', () => {
   it('should work with babel-loader', async () => {

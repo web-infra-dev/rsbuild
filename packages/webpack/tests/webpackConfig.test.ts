@@ -1,8 +1,8 @@
 import { expect, describe, it } from 'vitest';
 import { builderPluginBasic } from '@/plugins/basic';
-import { createStubBuilder } from '../helper';
+import { createStubBuilder } from './helper';
 import { builderPluginBabel } from '@/plugins/babel';
-import { builderPluginAntd } from '~/../builder/src/plugins/antd';
+import { builderPluginAntd } from '@rsbuild/core/plugins/antd';
 
 describe('webpackConfig', () => {
   it('should allow tools.webpack to return config', async () => {

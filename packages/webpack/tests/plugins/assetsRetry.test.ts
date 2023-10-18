@@ -1,6 +1,6 @@
 import { expect, describe, it } from 'vitest';
 import { builderPluginAssetsRetry } from '@rsbuild/core/plugins/assetsRetry';
-import { createStubBuilder } from '@/stub/builder';
+import { createStubBuilder } from '../helper';
 
 describe('plugins/assetsRetry', () => {
   it('should add assets retry plugin', async () => {

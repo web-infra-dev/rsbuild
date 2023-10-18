@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { applyDefaultBuilderOptions } from '@rsbuild/shared';
 import { createStubBuilder, createStubContext } from '@/stub';
 import { createCompiler } from '@/core/createCompiler';
-import { StubBuilderOptions } from '@/stub/builder';
+import { StubBuilderOptions } from '../helper';
 
 describe('build hooks', () => {
   test('should call onBeforeBuild hook before build', async () => {

@@ -15,7 +15,7 @@ exports[`plugins/css > should not apply postcss-loader when target is node 1`] =
             "loader": "@rsbuild/shared/ignore-css-loader",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -46,10 +46,10 @@ exports[`plugins/css > should override browserslist of autoprefixer when using o
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -61,7 +61,7 @@ exports[`plugins/css > should override browserslist of autoprefixer when using o
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "plugins": [
@@ -106,10 +106,10 @@ exports[`plugins/css > should remove some postcss plugins based on browserslist 
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<WORKSPACE>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -121,7 +121,7 @@ exports[`plugins/css > should remove some postcss plugins based on browserslist 
             },
           },
           {
-            "loader": "<WORKSPACE>/packages/builder/builder-shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "plugins": [
