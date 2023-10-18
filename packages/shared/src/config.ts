@@ -65,7 +65,7 @@ export const getDefaultHtmlConfig = (): NormalizedSharedHtmlConfig => ({
   inject: 'head',
   mountId: DEFAULT_MOUNT_ID,
   crossorigin: false,
-  disableHtmlFolder: false,
+  disableHtmlFolder: true,
   scriptLoading: 'defer',
 });
 

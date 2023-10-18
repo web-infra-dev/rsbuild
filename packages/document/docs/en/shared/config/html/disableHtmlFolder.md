@@ -1,7 +1,7 @@
 - **Type:** `boolean`
-- **Default:** `false`
+- **Default:** `true`
 
-Remove the folder of the HTML files. When this option is enabled, the generated HTML file path will change from `[name]/index.html` to `[name].html`.
+Remove the folder of the HTML files. When this option is `false`, the generated HTML file path will change from `[name].html` to `[name]/index.html`.
 
 ### Example
 
@@ -9,17 +9,15 @@ By default, the structure of HTML files in the `dist` directory is:
 
 ```bash
 /dist
-└── html
-    └── main
-        └── index.html
+ └── [name].html
 ```
 
-Enable the `html.disableHtmlFolder` config:
+Use the `html.disableHtmlFolder` config:
 
 ```js
 export default {
   html: {
-    disableHtmlFolder: true,
+    disableHtmlFolder: false,
   },
 };
 ```
@@ -28,8 +26,8 @@ After recompiling, the directory structure of the HTML files in dist is:
 
 ```bash
 /dist
-└── html
-    └── main.html
+ └── [name]
+     └── index.html
 ```
 
 > If you want to set the path of the HTML files, use the `output.distPath.html` config.
