@@ -11,20 +11,9 @@ export function getProviderType() {
   // };
 
   // // Judging based on package.json, this is more accurate
-  // if (deps[RSPACK_PROVIDER]) {
-  //   return 'rspack';
-  // }
   // if (deps[WEBPACK_PROVIDER]) {
   //   return 'webpack';
   // }
-
-  // if (isPackageInstalled(RSPACK_PROVIDER, root)) {
-  //   return 'rspack';
-  // }
-
-  // throw new Error(
-  //   `Failed to load builder provider, please check if you have "${RSPACK_PROVIDER}" or "${WEBPACK_PROVIDER}" installed`,
-  // );
 }
 
 export async function loadProvider() {

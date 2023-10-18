@@ -1,7 +1,6 @@
 import type { BuilderTarget } from './types';
 
 // PACKAGES
-export const RSPACK_PROVIDER = '@modern-js/builder-rspack-provider';
 export const WEBPACK_PROVIDER = '@rsbuild/webpack';
 
 // Defaults

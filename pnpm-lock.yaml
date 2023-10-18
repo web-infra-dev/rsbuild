@@ -245,9 +245,6 @@ importers:
         specifier: 2.2.1
         version: 2.2.1
     devDependencies:
-      '@modern-js/builder-rspack-provider':
-        specifier: ^2.36.0
-        version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@modern-js/utils':
         specifier: ^2.36.0
         version: 2.36.0
@@ -266,9 +263,6 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../webpack
       stylus:
         specifier: 0.59.0
         version: 0.59.0
@@ -276,15 +270,15 @@ importers:
         specifier: 7.1.0
         version: 7.1.0(stylus@0.59.0)(webpack@5.89.0)
     devDependencies:
-      '@modern-js/builder-rspack-provider':
-        specifier: ^2.36.0
-        version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@modern-js/utils':
         specifier: ^2.36.0
         version: 2.36.0
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -375,9 +369,6 @@ importers:
       '@babel/core':
         specifier: ^7.22.15
         version: 7.23.0
-      '@modern-js/builder-rspack-provider':
-        specifier: ^2.36.0
-        version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
@@ -401,14 +392,11 @@ importers:
         version: 1.4.0(@babel/core@7.23.0)
       vue-loader:
         specifier: ^15.10.1
-        version: 15.10.2(css-loader@6.8.1)(prettier@3.0.3)(react-dom@18.2.0)(react@18.2.0)(webpack@5.89.0)
+        version: 15.10.2(css-loader@6.8.1)(prettier@3.0.3)(webpack@5.89.0)
     devDependencies:
       '@babel/core':
         specifier: ^7.22.15
         version: 7.23.0
-      '@modern-js/builder-rspack-provider':
-        specifier: ^2.36.0
-        version: 2.36.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
@@ -5077,10 +5065,10 @@ packages:
       camelcase: 5.3.1
     dev: false
 
-  /@vue/component-compiler-utils@3.3.0(react-dom@18.2.0)(react@18.2.0):
+  /@vue/component-compiler-utils@3.3.0:
     resolution: {integrity: sha512-97sfH2mYNU+2PzGrmK2haqffDpVASuib9/w2/noxiFi31Z54hW+q3izKQXXQZSNhtiUpAI36uSuYepeBe4wpHQ==}
     dependencies:
-      consolidate: 0.15.1(react-dom@18.2.0)(react@18.2.0)
+      consolidate: 0.15.1
       hash-sum: 1.0.2
       lru-cache: 4.1.5
       merge-source-map: 1.1.0
@@ -6205,7 +6193,7 @@ packages:
     resolution: {integrity: sha512-ZMkYO/LkF17QvCPqM0gxw8yUzigAOZOSWSHg91FH6orS7vcEj5dVZTidN2fQ14yBSdg97RqhSNwLUXInd52OTA==}
     dev: false
 
-  /consolidate@0.15.1(react-dom@18.2.0)(react@18.2.0):
+  /consolidate@0.15.1:
     resolution: {integrity: sha512-DW46nrsMJgy9kqAbPt5rKaCr7uFtpo4mSUvLHIUbJEjm0vo+aY5QLwBUq3FK4tRnJr/X0Psc0C4jf/h+HtXSMw==}
     engines: {node: '>= 0.10.0'}
     deprecated: Please upgrade to consolidate v1.0.0+ as it has been modernized with several long-awaited fixes implemented. Maintenance is supported by Forward Email at https://forwardemail.net ; follow/watch https://github.com/ladjs/consolidate for updates and release changelog
@@ -6372,8 +6360,6 @@ packages:
         optional: true
     dependencies:
       bluebird: 3.7.2
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /constants-browserify@1.0.0:
@@ -13050,7 +13036,7 @@ packages:
     resolution: {integrity: sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==}
     dev: false
 
-  /vue-loader@15.10.2(css-loader@6.8.1)(prettier@3.0.3)(react-dom@18.2.0)(react@18.2.0)(webpack@5.89.0):
+  /vue-loader@15.10.2(css-loader@6.8.1)(prettier@3.0.3)(webpack@5.89.0):
     resolution: {integrity: sha512-ndeSe/8KQc/nlA7TJ+OBhv2qalmj1s+uBs7yHDRFaAXscFTApBzY9F1jES3bautmgWjDlDct0fw8rPuySDLwxw==}
     peerDependencies:
       '@vue/compiler-sfc': ^3.0.8
@@ -13069,7 +13055,7 @@ packages:
       vue-template-compiler:
         optional: true
     dependencies:
-      '@vue/component-compiler-utils': 3.3.0(react-dom@18.2.0)(react@18.2.0)
+      '@vue/component-compiler-utils': 3.3.0
       css-loader: 6.8.1(webpack@5.89.0)
       hash-sum: 1.0.2
       loader-utils: 1.4.2
