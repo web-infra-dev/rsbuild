@@ -7,10 +7,10 @@ hero:
   actions:
     - theme: brand
       text: 介绍
-      link: /guide/start/
+      link: /zh/guide/start/
     - theme: alt
       text: 快速上手
-      link: /guide/start/quick-start
+      link: /zh/guide/start/quick-start
   image:
     src: https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/home-logo-1200.png
     alt: Rsbuild Logo
