@@ -100,12 +100,22 @@ export function builderWebpackProvider({
       },
 
       async inspectConfig(inspectOptions) {
-        const { inspectConfig } = await import('./core/inspectConfig');
-        return await inspectConfig({
+        const { inspectConfig } = await import(
+          '@rsbuild/core/base/inspectConfig'
+        );
+        return inspectConfig({
+          initConfigs: async () =>
+            (
+              await initConfigs({
+                context,
+                pluginStore,
+                builderOptions,
+              })
+            ).webpackConfigs,
           context,
-          pluginStore,
           builderOptions,
           inspectOptions,
+          bundlerType,
         });
       },
     };

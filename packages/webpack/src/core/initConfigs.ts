@@ -7,7 +7,7 @@ import {
   type InspectConfigOptions,
   type CreateBuilderOptions,
 } from '@rsbuild/shared';
-import { inspectConfig } from './inspectConfig';
+import { inspectConfig } from '@rsbuild/core/base/inspectConfig';
 import { generateWebpackConfig } from './webpackConfig';
 import { normalizeConfig } from '../config/normalize';
 import type { Context } from '../types';
@@ -57,9 +57,10 @@ export async function initConfigs({
       };
       inspectConfig({
         context,
-        pluginStore,
         inspectOptions,
         builderOptions,
+        bundlerType: 'webpack',
+        initConfigs: () => Promise.resolve(webpackConfigs),
         bundlerConfigs: webpackConfigs,
       });
     };

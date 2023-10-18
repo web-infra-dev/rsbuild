@@ -120,12 +120,20 @@ export function builderRspackProvider({
       },
 
       async inspectConfig(inspectOptions) {
-        const { inspectConfig } = await import('./core/inspectConfig');
+        const { inspectConfig } = await import('../base/inspectConfig');
         return inspectConfig({
+          initConfigs: async () =>
+            (
+              await initConfigs({
+                context,
+                pluginStore,
+                builderOptions,
+              })
+            ).rspackConfigs,
           context,
-          pluginStore,
           builderOptions,
           inspectOptions,
+          bundlerType,
         });
       },
     };

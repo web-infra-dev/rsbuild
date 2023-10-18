@@ -1,21 +1,32 @@
 import { join, isAbsolute } from 'path';
-import { initConfigs, InitConfigsOptions } from './initConfigs';
 import {
+  BundlerType,
   InspectConfigOptions,
   outputInspectConfigFiles,
   stringifyConfig,
+  BuilderContext,
+  CreateBuilderOptions,
 } from '@rsbuild/shared';
-import type { WebpackConfig } from '../types';
 
-export async function inspectConfig({
+export async function inspectConfig<
+  BundlerConfig,
+  Context extends BuilderContext & {
+    config: unknown;
+  },
+>({
   context,
-  pluginStore,
   builderOptions,
   bundlerConfigs,
   inspectOptions = {},
-}: InitConfigsOptions & {
+  bundlerType,
+  initConfigs,
+}: {
+  builderOptions: Required<CreateBuilderOptions>;
+  context: Context;
+  initConfigs: () => Promise<BundlerConfig[]>;
   inspectOptions?: InspectConfigOptions;
-  bundlerConfigs?: WebpackConfig[];
+  bundlerConfigs?: BundlerConfig[];
+  bundlerType: BundlerType;
 }) {
   if (inspectOptions.env) {
     process.env.NODE_ENV = inspectOptions.env;
@@ -23,22 +34,14 @@ export async function inspectConfig({
     process.env.NODE_ENV = 'development';
   }
 
-  const webpackConfigs =
-    bundlerConfigs ||
-    (
-      await initConfigs({
-        context,
-        pluginStore,
-        builderOptions,
-      })
-    ).webpackConfigs;
+  const originBundlerConfigs = bundlerConfigs || (await initConfigs());
 
   const rawBuilderConfig = await stringifyConfig(
     context.config,
     inspectOptions.verbose,
   );
   const rawBundlerConfigs = await Promise.all(
-    webpackConfigs.map((config) =>
+    originBundlerConfigs.map((config) =>
       stringifyConfig(config, inspectOptions.verbose),
     ),
   );
@@ -57,7 +60,7 @@ export async function inspectConfig({
         outputPath,
       },
       builderOptions,
-      configType: 'webpack',
+      configType: bundlerType,
     });
   }
 
@@ -65,8 +68,8 @@ export async function inspectConfig({
     builderConfig: rawBuilderConfig,
     bundlerConfigs: rawBundlerConfigs,
     origin: {
-      builderConfig: context.config,
-      bundlerConfigs: webpackConfigs,
+      builderConfig: context.config as Context['config'],
+      bundlerConfigs: originBundlerConfigs,
     },
   };
 }
