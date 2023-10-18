@@ -23,7 +23,8 @@
     }
   },
   "files": [
-    "bin",
+    "static",
+    "compiled",
     "dist"
   ],
   "publishConfig": {
