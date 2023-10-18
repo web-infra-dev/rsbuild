@@ -23,7 +23,7 @@ dist
 
 最常见的产物是 HTML 文件、JS 文件和 CSS 文件：
 
-- HTML 文件：默认输出到根目录。
+- HTML 文件：默认输出到 `dist` 目录的根部。
 - JS 文件：默认输出到 `static/js` 目录，
 - CSS 文件：默认输出到 `static/css` 目录。
 

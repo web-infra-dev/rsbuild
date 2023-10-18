@@ -23,7 +23,7 @@ dist
 
 The most common output files are HTML files, JS files, and CSS files:
 
-- HTML files: default output to the root directory.
+- HTML files: default output to the root of dist directory.
 - JS files: default output to `static/js` directory,
 - CSS files: default output to the `static/css` directory.
 
