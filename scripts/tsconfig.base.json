@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "lib": ["DOM", "ESNext"],
+    "allowJs": true,
+    "module": "commonjs",
+    "strict": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "declaration": false,
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "moduleResolution": "node"
+  },
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Base"
+}

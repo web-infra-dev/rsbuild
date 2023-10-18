@@ -1,11 +1,12 @@
 {
-  "extends": "@modern-js/tsconfig/base",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "./",
     "types": ["vitest/globals"],
     "paths": {
       "@src/*": ["../src/*"],
-      "@/*": ["../src/rspack-provider/*"],
+      "@/*": ["../src/rspack-provider/*"]
     }
   },
-  "include": ["./**/*.test.ts", "./**/*.ts"]
+  "include": ["./**/*.ts"]
 }
