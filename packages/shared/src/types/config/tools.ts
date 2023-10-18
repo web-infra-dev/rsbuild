@@ -110,13 +110,6 @@ export interface SharedToolsConfig {
    * Modify the options of [style-loader](https://github.com/webpack-contrib/style-loader).
    */
   styleLoader?: ToolsStyleLoaderConfig;
-
-  /**
-   * Modify the options of [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin).
-   */
-  tsChecker?: ToolsTSCheckerConfig;
 }
 
-export interface NormalizedSharedToolsConfig extends SharedToolsConfig {
-  tsChecker: ToolsTSCheckerConfig;
-}
+export type NormalizedSharedToolsConfig = SharedToolsConfig;

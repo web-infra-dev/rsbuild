@@ -74,9 +74,7 @@ export const getDefaultSecurityConfig = (): NormalizedSharedSecurityConfig => ({
   checkSyntax: false,
 });
 
-export const getDefaultToolsConfig = (): NormalizedSharedToolsConfig => ({
-  tsChecker: {},
-});
+export const getDefaultToolsConfig = (): NormalizedSharedToolsConfig => ({});
 
 export const getDefaultPerformanceConfig =
   (): NormalizedSharedPerformanceConfig => ({
