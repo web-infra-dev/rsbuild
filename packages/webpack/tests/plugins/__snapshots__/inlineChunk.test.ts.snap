@@ -13,7 +13,7 @@ exports[`plugins/inlineChunk > should add InlineChunkHtmlPlugin properly by defa
         "chunks": [
           "main",
         ],
-        "filename": "html/main/index.html",
+        "filename": "main.html",
         "inject": "head",
         "minify": {
           "collapseWhitespace": true,
@@ -71,7 +71,7 @@ exports[`plugins/inlineChunk > should use proper plugin options when disableInli
         "chunks": [
           "main",
         ],
-        "filename": "html/main/index.html",
+        "filename": "main.html",
         "inject": "head",
         "minify": {
           "collapseWhitespace": true,
@@ -127,7 +127,7 @@ exports[`plugins/inlineChunk > should use proper plugin options when enableInlin
         "chunks": [
           "main",
         ],
-        "filename": "html/main/index.html",
+        "filename": "main.html",
         "inject": "head",
         "minify": {
           "collapseWhitespace": true,
@@ -186,7 +186,7 @@ exports[`plugins/inlineChunk > should use proper plugin options when enableInlin
         "chunks": [
           "main",
         ],
-        "filename": "html/main/index.html",
+        "filename": "main.html",
         "inject": "head",
         "minify": {
           "collapseWhitespace": true,

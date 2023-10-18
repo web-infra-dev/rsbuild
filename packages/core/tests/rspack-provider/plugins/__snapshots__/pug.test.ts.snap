@@ -17,7 +17,7 @@ exports[`plugins/pug > should add pug correctly when tools.pug is used 1`] = `
         "chunks": [
           "main",
         ],
-        "filename": "html/main/index.html",
+        "filename": "main.html",
         "inject": "head",
         "minify": false,
         "scriptLoading": "defer",
@@ -34,7 +34,7 @@ exports[`plugins/pug > should add pug correctly when tools.pug is used 1`] = `
         "chunks": [
           "foo",
         ],
-        "filename": "html/foo/index.html",
+        "filename": "foo.html",
         "inject": "head",
         "minify": false,
         "scriptLoading": "defer",
