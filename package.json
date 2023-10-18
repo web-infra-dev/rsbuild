@@ -6,6 +6,7 @@
     "ut:watch": "vitest",
     "e2e": "echo 'e2e'",
     "new": "modern new",
+    "test": "pnpm run ut",
     "bump": "modern bump",
     "lint": "oxlint .",
     "build": "pnpm --filter \"./packages/**\" run build",
