@@ -104,7 +104,7 @@ jobs:
 
       - name: Install Dependencies
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        run: pnpm install && cd ./e2e && npx playwright install --with-deps
+        run: pnpm install && cd ./e2e && npx playwright install
 
       - name: E2E Test
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
