@@ -1,13 +1,13 @@
 declare namespace cliTruncate {
-  interface Options {
-    /**
+	interface Options {
+		/**
 		Position to truncate the string.
 
 		@default 'end'
 		*/
-    readonly position?: 'start' | 'middle' | 'end';
+		readonly position?: 'start' | 'middle' | 'end';
 
-    /**
+		/**
 		Add a space between the text and the ellipsis.
 
 		@default false
@@ -27,9 +27,9 @@ declare namespace cliTruncate {
 		//=> 'uni … s'
 		```
 		*/
-    readonly space?: boolean;
+		readonly space?: boolean;
 
-    /**
+		/**
 		Truncate the string from a whitespace if it is within 3 characters from the actual breaking point.
 
 		@default false
@@ -46,8 +46,8 @@ declare namespace cliTruncate {
 		//=> 'unico…'
 		````
 		*/
-    readonly preferTruncationOnSpace?: boolean;
-  }
+		readonly preferTruncationOnSpace?: boolean;
+	}
 }
 
 /**
@@ -88,9 +88,9 @@ cliTruncate(paragraph, process.stdout.columns));
 ```
 */
 declare function cliTruncate(
-  text: string,
-  columns: number,
-  options?: cliTruncate.Options,
+	text: string,
+	columns: number,
+	options?: cliTruncate.Options
 ): string;
 
 export = cliTruncate;
