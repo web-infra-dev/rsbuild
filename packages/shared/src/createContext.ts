@@ -17,7 +17,7 @@ export function createContextByConfig(
   outputConfig: NormalizedSharedOutputConfig,
   bundlerType: BundlerType,
 ): BuilderContext {
-  const { cwd, target, configPath, framework } = options;
+  const { cwd, target, configPath } = options;
   const rootPath = cwd;
   const srcPath = join(rootPath, 'src');
 
@@ -31,7 +31,6 @@ export function createContextByConfig(
     rootPath,
     distPath,
     cachePath,
-    framework,
     bundlerType,
   };
 
@@ -52,7 +51,6 @@ export function createPublicContext(
     'rootPath',
     'distPath',
     'devServer',
-    'framework',
     'cachePath',
     'configPath',
     'tsconfigPath',

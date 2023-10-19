@@ -6,7 +6,7 @@ Rsbuild provides some configs to set the HTML template. Through this chapter, yo
 
 ## Set Template
 
-HTML templates are usually predefined by the upper framework.
+HTML templates are usually predefined by the higher level solutions.
 
 For example, in the Modern.js framework, the HTML template is preset by default, and users can also customize the content of the template. You can read the ["Modern.js - HTML Template"](https://modernjs.dev/en/guides/basic-features/html.html) chapter to learn about it.
 
