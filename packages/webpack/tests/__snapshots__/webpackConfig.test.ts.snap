@@ -242,7 +242,7 @@ exports[`webpackConfig > should not have any pluginImport in Babel 1`] = `
               "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
               {
                 "useESModules": true,
-                "version": "7.23.1",
+                "version": "7.23.2",
               },
             ],
             "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -330,7 +330,7 @@ exports[`webpackConfig > should not have any pluginImport in Babel 1`] = `
               "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
               {
                 "useESModules": true,
-                "version": "7.23.1",
+                "version": "7.23.2",
               },
             ],
             "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -419,7 +419,7 @@ exports[`webpackConfig > should not set default pluginImport for Babel 1`] = `
               "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
               {
                 "useESModules": true,
-                "version": "7.23.1",
+                "version": "7.23.2",
               },
             ],
             "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -516,7 +516,7 @@ exports[`webpackConfig > should not set default pluginImport for Babel 1`] = `
               "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
               {
                 "useESModules": true,
-                "version": "7.23.1",
+                "version": "7.23.2",
               },
             ],
             "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -637,7 +637,7 @@ exports[`webpackConfig > should set proper pluginImport option in Babel 1`] = `
               "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
               {
                 "useESModules": true,
-                "version": "7.23.1",
+                "version": "7.23.2",
               },
             ],
             "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -733,7 +733,7 @@ exports[`webpackConfig > should set proper pluginImport option in Babel 1`] = `
               "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
               {
                 "useESModules": true,
-                "version": "7.23.1",
+                "version": "7.23.2",
               },
             ],
             "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
