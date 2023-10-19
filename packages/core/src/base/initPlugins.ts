@@ -1,6 +1,5 @@
 import {
   onExitProcess,
-  createPublicContext,
   getHTMLPathByEntry,
   type PluginStore,
   BuilderContext,
@@ -9,6 +8,7 @@ import {
   AsyncHook,
   OnExitFn,
 } from '@rsbuild/shared';
+import { createPublicContext } from './createContext';
 
 export function getPluginAPI<
   Context extends BuilderContext & {

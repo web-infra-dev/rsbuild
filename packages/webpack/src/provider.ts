@@ -1,10 +1,13 @@
 import {
   startProdServer,
   pickBuilderConfig,
-  createPublicContext,
   type BuilderProvider,
 } from '@rsbuild/shared';
-import { createContext, getPluginAPI } from './core/extends';
+import {
+  createContext,
+  createPublicContext,
+  getPluginAPI,
+} from './core/extends';
 import { applyDefaultPlugins } from './shared/plugin';
 import { BuilderConfig, NormalizedConfig, WebpackConfig } from './types';
 import { initConfigs } from './core/initConfigs';

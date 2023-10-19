@@ -11,12 +11,17 @@ import type {
 } from '../types';
 import { getPluginAPI as getBasePluginAPI } from '../../base/initPlugins';
 import { inspectConfig as inspectBaseConfig } from '../../base/inspectConfig';
-import { createContext as createBaseContext } from '../../base/createContext';
+import {
+  createContext as createBaseContext,
+  createPublicContext,
+} from '../../base/createContext';
 import { bundlerType } from '../shared';
 import { initHooks } from './initHooks';
 import { validateBuilderConfig } from '../config/validate';
 import { withDefaultConfig } from '../config/defaults';
 import { initConfigs, InitConfigsOptions } from './initConfigs';
+
+export { createPublicContext };
 
 export async function inspectConfig({
   context,

@@ -1,12 +1,15 @@
 import {
   startProdServer,
   pickBuilderConfig,
-  createPublicContext,
   type BuilderProvider,
 } from '@rsbuild/shared';
 import { chalk } from '@rsbuild/shared/chalk';
 import { initConfigs } from './core/initConfigs';
-import { getPluginAPI, createContext } from './core/extends';
+import {
+  getPluginAPI,
+  createContext,
+  createPublicContext,
+} from './core/extends';
 import { applyDefaultPlugins } from './shared/plugin';
 import {
   bundlerType,

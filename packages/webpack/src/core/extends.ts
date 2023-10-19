@@ -11,11 +11,16 @@ import type {
 } from '@rsbuild/shared';
 import { getPluginAPI as getBasePluginAPI } from '@rsbuild/core/base/initPlugins';
 import { inspectConfig as inspectBaseConfig } from '@rsbuild/core/base/inspectConfig';
-import { createContext as createBaseContext } from '@rsbuild/core/base/createContext';
+import {
+  createContext as createBaseContext,
+  createPublicContext,
+} from '@rsbuild/core/base/createContext';
 import { initConfigs, InitConfigsOptions } from './initConfigs';
 import { initHooks } from './initHooks';
 import { validateBuilderConfig } from '../config/validate';
 import { withDefaultConfig } from '../config/defaults';
+
+export { createPublicContext };
 
 export async function createContext(
   options: Required<CreateBuilderOptions>,
