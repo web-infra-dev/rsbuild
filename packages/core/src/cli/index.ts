@@ -12,14 +12,11 @@ type RunCliOptions = {
 export async function runCli(options: RunCliOptions = {}) {
   const provider = await loadProvider();
   const config = await loadConfig();
-  const builder = await createBuilder(
-    provider({
-      builderConfig: config as Record<string, unknown>,
-    }),
-    {
-      entry: config.source?.entries || getDefaultEntries(),
-    },
-  );
+  const builder = await createBuilder({
+    provider,
+    builderConfig: config as Parameters<typeof provider>[0]['builderConfig'],
+    entry: config.source?.entries || getDefaultEntries(),
+  });
 
   if (options.defaultPlugins) {
     builder.addPlugins(options.defaultPlugins);
