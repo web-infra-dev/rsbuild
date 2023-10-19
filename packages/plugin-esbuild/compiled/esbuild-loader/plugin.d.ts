@@ -1,4 +1,4 @@
 declare class ESBuildPlugin {
-  apply(): void;
+    apply(): void;
 }
 export default ESBuildPlugin;

@@ -1,0 +1,4 @@
+# Ignore artifacts:
+dist
+compiled
+doc_build
