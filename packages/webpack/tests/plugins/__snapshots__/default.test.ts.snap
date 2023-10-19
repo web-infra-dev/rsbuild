@@ -462,7 +462,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -583,7 +583,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -1280,7 +1280,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -1407,7 +1407,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -2702,7 +2702,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -2829,7 +2829,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",

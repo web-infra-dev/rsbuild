@@ -51,7 +51,7 @@ exports[`plugins/babel > should add rule to compile Data URI when enable source.
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -139,7 +139,7 @@ exports[`plugins/babel > should add rule to compile Data URI when enable source.
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -372,7 +372,7 @@ exports[`plugins/babel > should apply exclude condition when using source.exclud
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -460,7 +460,7 @@ exports[`plugins/babel > should apply exclude condition when using source.exclud
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -561,7 +561,7 @@ exports[`plugins/babel > should override targets of babel-preset-env when using 
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -646,7 +646,7 @@ exports[`plugins/babel > should override targets of babel-preset-env when using 
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -736,7 +736,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -824,7 +824,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -917,7 +917,7 @@ exports[`plugins/babel > should set include/exclude 1`] = `
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
@@ -1005,7 +1005,7 @@ exports[`plugins/babel > should set include/exclude 1`] = `
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
                   {
                     "useESModules": true,
-                    "version": "7.23.1",
+                    "version": "7.23.2",
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
