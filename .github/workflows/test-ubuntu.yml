@@ -6,6 +6,13 @@ on:
   pull_request:
     branches: [main]
 
+  push:
+    branches: [main]
+    paths-ignore:
+      - "packages/document/**"
+      - "*.md"
+      - "*.mdx"
+
   merge_group:
 
   # Allows you to run this workflow manually from the Actions tab
