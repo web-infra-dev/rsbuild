@@ -1,4 +1,4 @@
-import { BuilderConfig, webpack } from '@rsbuild/webpack';
+import { RsbuildConfig, webpack } from '@rsbuild/webpack';
 import { merge } from '@modern-js/utils/lodash';
 import { chalk } from '@rsbuild/shared/chalk';
 import { logger } from '@rsbuild/shared';
@@ -38,7 +38,7 @@ export class SwcMinimizerPlugin {
     options: {
       jsMinify?: boolean | JsMinifyOptions;
       cssMinify?: boolean | CssMinifyOptions;
-      builderConfig?: BuilderConfig;
+      builderConfig?: RsbuildConfig;
     } = {},
   ) {
     this.minifyOptions = {
@@ -50,7 +50,7 @@ export class SwcMinimizerPlugin {
     };
   }
 
-  getDefaultJsMinifyOptions(builderConfig?: BuilderConfig): JsMinifyOptions {
+  getDefaultJsMinifyOptions(builderConfig?: RsbuildConfig): JsMinifyOptions {
     const compressOptions: TerserCompressOptions = {};
     const { removeConsole } = builderConfig?.performance || {};
 

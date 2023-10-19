@@ -6,7 +6,7 @@ import path from 'path';
 import { chalk } from '@rsbuild/shared/chalk';
 import { fs } from '@rsbuild/shared/fs-extra';
 import { logger, Stats, MultiStats, StatsAsset } from '@rsbuild/shared';
-import type { DefaultBuilderPlugin } from '@rsbuild/shared';
+import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
 /** Filter source map and license files */
 export const filterAsset = (asset: string) =>
@@ -138,7 +138,7 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
   logger.log(`\n  ${totalSizeLabel}\n  ${gzippedSizeLabel}\n`);
 }
 
-export const pluginFileSize = (): DefaultBuilderPlugin => ({
+export const pluginFileSize = (): DefaultRsbuildPlugin => ({
   name: 'plugin-file-size',
 
   setup(api) {

@@ -20,7 +20,7 @@ Rsbuild 支持多种构建产物类型，分别适用于不同的目标运行环
 比如构建出适用于 Node.js 环境的产物：
 
 ```ts
-const builder = await createRsbuild(provider, {
+const rsbuild = await createRsbuild(provider, {
   target: 'node',
 });
 ```
@@ -32,7 +32,7 @@ const builder = await createRsbuild(provider, {
 比如同时构建浏览器产物和 SSR 产物：
 
 ```ts
-const builder = await createRsbuild(provider, {
+const rsbuild = await createRsbuild(provider, {
   target: ['web', 'node'],
 });
 ```

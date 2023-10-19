@@ -1,26 +1,26 @@
-import type { BuilderContext } from './context';
+import type { Context } from './context';
 import type { PluginStore } from './plugin';
-import type { BuilderProvider, ProviderInstance } from './provider';
+import type { RsbuildProvider, ProviderInstance } from './provider';
 
-export type BuilderTarget = 'web' | 'node' | 'web-worker' | 'service-worker';
+export type RsbuildTarget = 'web' | 'node' | 'web-worker' | 'service-worker';
 
-export type BuilderEntry = Record<string, string | string[]>;
+export type RsbuildEntry = Record<string, string | string[]>;
 
-export type BuilderMode = 'development' | 'production';
+export type RsbuildMode = 'development' | 'production';
 
-export type CreateBuilderOptions = {
+export type CreateRsbuildOptions = {
   /** The root path of current project. */
   cwd?: string;
   /** The entry points object. */
-  entry?: BuilderEntry;
+  entry?: RsbuildEntry;
   /** Type of build target. */
-  target?: BuilderTarget | BuilderTarget[];
+  target?: RsbuildTarget | RsbuildTarget[];
   /** Absolute path to the config file of higher-level solutions. */
   configPath?: string | null;
 };
 
-export type BuilderInstance<P extends BuilderProvider = BuilderProvider> = {
-  context: BuilderContext;
+export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {
+  context: Context;
 
   addPlugins: PluginStore['addPlugins'];
   removePlugins: PluginStore['removePlugins'];
@@ -34,7 +34,7 @@ export type BuilderInstance<P extends BuilderProvider = BuilderProvider> = {
   startDevServer: ProviderInstance['startDevServer'];
 
   getHTMLPaths: Awaited<ReturnType<P>>['pluginAPI']['getHTMLPaths'];
-  getBuilderConfig: Awaited<ReturnType<P>>['pluginAPI']['getBuilderConfig'];
+  getRsbuildConfig: Awaited<ReturnType<P>>['pluginAPI']['getRsbuildConfig'];
   getNormalizedConfig: Awaited<
     ReturnType<P>
   >['pluginAPI']['getNormalizedConfig'];

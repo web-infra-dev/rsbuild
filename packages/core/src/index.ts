@@ -1,17 +1,17 @@
-export { createBuilder } from './createBuilder';
-export { mergeBuilderConfig } from '@rsbuild/shared';
+export { createRsbuild } from './createRsbuild';
+export { mergeRsbuildConfig } from '@rsbuild/shared';
 
 export { defineConfig } from './cli';
 
-export type { BuilderPluginAPI, BuilderConfig } from './rspack-provider';
+export type { RsbuildPluginAPI, RsbuildConfig } from './rspack-provider';
 export type {
-  BuilderMode,
-  BuilderEntry,
-  BuilderTarget,
-  BuilderPlugin,
-  BuilderContext,
-  BuilderInstance,
-  CreateBuilderOptions,
+  RsbuildMode,
+  RsbuildEntry,
+  RsbuildTarget,
+  RsbuildPlugin,
+  Context,
+  RsbuildInstance,
+  CreateRsbuildOptions,
   InspectConfigOptions,
 
   // Hook Callback Types
@@ -23,5 +23,5 @@ export type {
   OnBeforeStartDevServerFn,
   OnBeforeCreateCompilerFn,
   OnDevCompileDoneFn,
-  ModifyBuilderConfigFn,
+  ModifyRsbuildConfigFn,
 } from '@rsbuild/shared';

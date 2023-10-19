@@ -1,13 +1,13 @@
 import { expect, describe, it } from 'vitest';
 import { pluginResolve } from '@/plugins/resolve';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/resolve', () => {
   it('should apply default extensions correctly', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.resolve?.extensions).toEqual([
       '.js',
       '.jsx',
@@ -17,7 +17,7 @@ describe('plugins/resolve', () => {
   });
 
   it('should allow to use source.alias to config webpack alias', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       builderConfig: {
         source: {
@@ -27,7 +27,7 @@ describe('plugins/resolve', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config.resolve?.alias).toEqual({
       foo: 'bar',
@@ -35,7 +35,7 @@ describe('plugins/resolve', () => {
   });
 
   it('should support source.alias to be a function', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       builderConfig: {
         source: {
@@ -47,7 +47,7 @@ describe('plugins/resolve', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config.resolve?.alias).toEqual({
       foo: 'bar',
@@ -55,7 +55,7 @@ describe('plugins/resolve', () => {
   });
 
   it('should disable resolve.fullySpecified by default', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       builderConfig: {
         source: {
@@ -63,7 +63,7 @@ describe('plugins/resolve', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -71,7 +71,7 @@ describe('plugins/resolve', () => {
   it('should support custom webpack resolve.mainFields', async () => {
     const mainFieldsOption = ['main', 'test', 'browser', ['module', 'exports']];
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       builderConfig: {
         source: {
@@ -79,7 +79,7 @@ describe('plugins/resolve', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     const mainFieldsResult = ['main', 'test', 'browser', 'module', 'exports'];
     expect(config.resolve?.mainFields).toEqual(mainFieldsResult);
@@ -91,7 +91,7 @@ describe('plugins/resolve', () => {
       node: ['main', 'node'],
     };
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       builderConfig: {
         source: {
@@ -99,7 +99,7 @@ describe('plugins/resolve', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config.resolve?.mainFields).toEqual(mainFieldsOption.web);
   });

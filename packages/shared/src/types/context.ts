@@ -1,13 +1,13 @@
-import type { BuilderEntry, BuilderTarget } from './builder';
+import type { RsbuildEntry, RsbuildTarget } from './builder';
 
 export type BundlerType = 'webpack' | 'rspack';
 
 /** The public context */
-export type BuilderContext = {
+export type Context = {
   /** The entry points object. */
-  entry: BuilderEntry;
+  entry: RsbuildEntry;
   /** The build target type. */
-  target: BuilderTarget | BuilderTarget[];
+  target: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
   rootPath: string;
   /** Absolute path of source files. */

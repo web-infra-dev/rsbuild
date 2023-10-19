@@ -38,10 +38,10 @@ webpackOnlyTest(
     fs.emptyDirSync(cacheDirectory);
 
     // first build no cache
-    let builder = await build(buildConfig);
+    let rsbuild = await build(buildConfig);
 
     expect(
-      (await builder.getIndexFile()).content.includes('222222'),
+      (await rsbuild.getIndexFile()).content.includes('222222'),
     ).toBeTruthy();
 
     const buildDependencies = await fs.readJSON(configFile);
@@ -50,10 +50,10 @@ webpackOnlyTest(
     process.env.TEST_ENV = 'a';
 
     // hit cache => unfortunately, extension '.a.js' not work
-    builder = await build(buildConfig);
+    rsbuild = await build(buildConfig);
 
     expect(
-      (await builder.getIndexFile()).content.includes('222222'),
+      (await rsbuild.getIndexFile()).content.includes('222222'),
     ).toBeTruthy();
   },
 );
@@ -91,10 +91,10 @@ webpackOnlyTest('cacheDigest should work', async () => {
   fs.emptyDirSync(cacheDirectory);
 
   // first build no cache
-  let builder = await build(getBuildConfig());
+  let rsbuild = await build(getBuildConfig());
 
   expect(
-    (await builder.getIndexFile()).content.includes('222222'),
+    (await rsbuild.getIndexFile()).content.includes('222222'),
   ).toBeTruthy();
 
   const buildDependencies = await fs.readJSON(configFile);
@@ -102,10 +102,10 @@ webpackOnlyTest('cacheDigest should work', async () => {
 
   process.env.TEST_ENV = 'a';
 
-  builder = await build(getBuildConfig());
+  rsbuild = await build(getBuildConfig());
 
   // extension '.a.js' should work
   expect(
-    (await builder.getIndexFile()).content.includes('111111'),
+    (await rsbuild.getIndexFile()).content.includes('111111'),
   ).toBeTruthy();
 });

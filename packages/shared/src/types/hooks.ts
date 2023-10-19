@@ -1,9 +1,9 @@
 import type { ChainIdentifier } from '@modern-js/utils/chain-id';
 import type { Stats, MultiStats } from './stats';
 import { NodeEnv, PromiseOrNot } from './utils';
-import { BuilderTarget } from './builder';
+import { RsbuildTarget } from './builder';
 import { BundlerChain } from './bundlerConfig';
-import { mergeBuilderConfig } from '../mergeBuilderConfig';
+import { mergeRsbuildConfig } from '../mergeRsbuildConfig';
 import type { WebpackPluginInstance } from 'webpack';
 
 export type OnBeforeBuildFn<BundlerConfig = unknown> = (params: {
@@ -34,20 +34,20 @@ export type OnAfterCreateCompilerFn<Compiler = unknown> = (params: {
 
 export type OnExitFn = () => void;
 
-export type ModifyBuilderConfigUtils = {
+export type ModifyRsbuildConfigUtils = {
   /** Merge multiple builder config objects into one. */
-  mergeBuilderConfig: typeof mergeBuilderConfig;
+  mergeRsbuildConfig: typeof mergeRsbuildConfig;
 };
 
-export type ModifyBuilderConfigFn<BuilderConfig> = (
-  config: BuilderConfig,
-  utils: ModifyBuilderConfigUtils,
-) => PromiseOrNot<BuilderConfig | void>;
+export type ModifyRsbuildConfigFn<RsbuildConfig> = (
+  config: RsbuildConfig,
+  utils: ModifyRsbuildConfigUtils,
+) => PromiseOrNot<RsbuildConfig | void>;
 
 export type ModifyChainUtils = {
   env: NodeEnv;
   isProd: boolean;
-  target: BuilderTarget;
+  target: RsbuildTarget;
   isServer: boolean;
   isServiceWorker: boolean;
   isWebWorker: boolean;

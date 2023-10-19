@@ -13,7 +13,7 @@ The type of the Rsbuild instance.
 ```ts
 import type { RsbuildInstance } from '@rsbuild/core';
 
-let builder: RsbuildInstance;
+let rsbuild: RsbuildInstance;
 ```
 
 You can pass in the Provider type through generics to make the type definition of the Rsbuild instance more accurate:
@@ -22,17 +22,17 @@ You can pass in the Provider type through generics to make the type definition o
 import type { createRsbuild, type RsbuildInstance } from '@rsbuild/core';
 import type { RsbuildWebpackProvider } from '@rsbuild/webpack-provider';
 
-let builder: RsbuildInstance<RsbuildWebpackProvider>;
+let rsbuild: RsbuildInstance<RsbuildWebpackProvider>;
 ```
 
-## RsbuildContext
+## Context
 
 The type of the context property in the Rsbuild instance.
 
 ```ts
-import type { RsbuildContext } from '@rsbuild/core';
+import type { Context } from '@rsbuild/core';
 
-const context: RsbuildContext = rsbuild.context;
+const context: Context = rsbuild.context;
 ```
 
 ## RsbuildPlugin

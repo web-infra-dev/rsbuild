@@ -1,6 +1,6 @@
-import { DefaultBuilderPlugin } from '@rsbuild/shared';
+import { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
-export const pluginMoment = (): DefaultBuilderPlugin => ({
+export const pluginMoment = (): DefaultRsbuildPlugin => ({
   name: 'plugin-moment',
 
   setup(api) {

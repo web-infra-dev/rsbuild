@@ -1,15 +1,15 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@rsbuild/vitest-helper';
-import { BuilderPlugin } from '@/types';
+import { createStubRsbuild } from '@rsbuild/vitest-helper';
+import { RsbuildPlugin } from '@/types';
 import { BUILTIN_LOADER } from '@/shared';
 
 describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctly', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'development';
-    const builder = await createStubBuilder({});
+    const rsbuild = await createStubRsbuild({});
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
 
     process.env.NODE_ENV = NODE_ENV;
@@ -19,9 +19,9 @@ describe('applyDefaultPlugins', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({});
+    const rsbuild = await createStubRsbuild({});
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
 
     process.env.NODE_ENV = NODE_ENV;
@@ -30,11 +30,11 @@ describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctyly when target = node', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'test';
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       target: 'node',
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
     process.env.NODE_ENV = NODE_ENV;
@@ -52,7 +52,7 @@ describe('tools.rspack', () => {
       apply() {}
     }
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       builderConfig: {
         tools: {
           rspack: (config, { addRules, prependPlugins }) => {
@@ -69,7 +69,7 @@ describe('tools.rspack', () => {
         },
       },
     });
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
 
@@ -79,7 +79,7 @@ describe('tools.rspack', () => {
 
 describe('bundlerApi', () => {
   it('test modifyBundlerChain and api order', async () => {
-    const testPlugin: BuilderPlugin = {
+    const testPlugin: RsbuildPlugin = {
       name: 'plugin-devtool',
       setup: (api) => {
         api.modifyBundlerChain((chain) => {
@@ -93,11 +93,11 @@ describe('bundlerApi', () => {
       },
     };
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [testPlugin],
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchInlineSnapshot(`
       {
         "devtool": "hidden-source-map",
@@ -107,7 +107,7 @@ describe('bundlerApi', () => {
   });
 
   it('test modifyBundlerChain rule format correctly', async () => {
-    const testPlugin: BuilderPlugin = {
+    const testPlugin: RsbuildPlugin = {
       name: 'plugin-devtool',
       setup: (api) => {
         api.modifyBundlerChain((chain) => {
@@ -121,11 +121,11 @@ describe('bundlerApi', () => {
       },
     };
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [testPlugin],
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchInlineSnapshot(`
       {
         "module": {
@@ -146,7 +146,7 @@ describe('bundlerApi', () => {
   });
 
   it('test modifyBundlerChain use builtinLoader', async () => {
-    const testPlugin: BuilderPlugin = {
+    const testPlugin: RsbuildPlugin = {
       name: 'plugin-test',
       setup: (api) => {
         api.modifyBundlerChain((chain) => {
@@ -160,11 +160,11 @@ describe('bundlerApi', () => {
       },
     };
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [testPlugin],
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchInlineSnapshot(`
       {
         "module": {

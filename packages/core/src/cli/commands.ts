@@ -1,9 +1,9 @@
 import { join } from 'path';
 import { fs } from '@rsbuild/shared/fs-extra';
 import { program } from 'commander';
-import type { BuilderInstance } from '..';
+import type { RsbuildInstance } from '..';
 
-export function setupProgram(rsbuild: BuilderInstance) {
+export function setupProgram(rsbuild: RsbuildInstance) {
   const pkgJson = join(__dirname, '../../package.json');
   const { version } = fs.readJSONSync(pkgJson);
 

@@ -1,6 +1,6 @@
 import { z } from '@rsbuild/shared/zod';
-import { BuilderConfig } from '../../types';
-import { validateBuilderConfig as validateConfig } from '@rsbuild/shared';
+import { RsbuildConfig } from '../../types';
+import { validateRsbuildConfig as validateConfig } from '@rsbuild/shared';
 
 import { devConfigSchema } from './dev';
 import { experimentsConfigSchema } from './experiments';
@@ -11,7 +11,7 @@ import { securityConfigSchema } from './security';
 import { sourceConfigSchema } from './source';
 import { toolsConfigSchema } from './tools';
 
-export const configSchema: z.ZodType<BuilderConfig> = z.partialObj({
+export const configSchema: z.ZodType<RsbuildConfig> = z.partialObj({
   source: sourceConfigSchema,
   dev: devConfigSchema,
   html: htmlConfigSchema,
@@ -22,6 +22,6 @@ export const configSchema: z.ZodType<BuilderConfig> = z.partialObj({
   tools: toolsConfigSchema,
 });
 
-export const validateBuilderConfig = async (data: unknown) => {
+export const validateRsbuildConfig = async (data: unknown) => {
   return validateConfig(configSchema, data);
 };

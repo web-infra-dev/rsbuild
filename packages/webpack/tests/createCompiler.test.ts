@@ -2,15 +2,15 @@ import { join } from 'path';
 import { pluginEntry } from '@rsbuild/core/plugins/entry';
 import { pluginBasic } from '@/plugins/basic';
 import { describe, expect, test, vi } from 'vitest';
-import { applyDefaultBuilderOptions } from '@rsbuild/shared';
-import { createStubBuilder, fixturesDir } from './helper';
+import { applyDefaultRsbuildOptions } from '@rsbuild/shared';
+import { createStubRsbuild, fixturesDir } from './helper';
 import { createCompiler } from '@/core/createCompiler';
 import { createPrimaryContext } from '@/core/createContext';
 
 describe('build hooks', () => {
   test('should call onBeforeBuild hook before build', async () => {
     const fn = vi.fn();
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       cwd: fixturesDir,
       entry: {
         main: join(fixturesDir, 'src/index.js'),
@@ -27,13 +27,13 @@ describe('build hooks', () => {
       ],
     });
 
-    await builder.build();
+    await rsbuild.build();
 
     expect(fn).toHaveBeenCalledTimes(1);
   });
   test('should call onBeforeBuild hook before build in watch mode', async () => {
     const fn = vi.fn();
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         pluginEntry(),
         pluginBasic(),
@@ -45,13 +45,13 @@ describe('build hooks', () => {
         },
       ],
     });
-    await builder.build({
+    await rsbuild.build({
       watch: true,
     });
     expect(fn).toHaveBeenCalledTimes(1);
   });
   const createDefaultContext = () =>
-    createPrimaryContext(applyDefaultBuilderOptions({}), {});
+    createPrimaryContext(applyDefaultRsbuildOptions({}), {});
   test('should return Compiler when passing single webpack config', async () => {
     const compiler = await createCompiler({
       context: createDefaultContext(),

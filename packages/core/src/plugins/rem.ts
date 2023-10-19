@@ -3,7 +3,7 @@ import {
   getDistPath,
   AutoSetRootFontSizePlugin,
   getSharedPkgCompiledPath,
-  type DefaultBuilderPlugin,
+  type DefaultRsbuildPlugin,
   type RemOptions,
   type PxToRemOptions,
 } from '@rsbuild/shared';
@@ -13,7 +13,7 @@ const defaultOptions: RemOptions = {
   rootFontSize: 50,
 };
 
-export const pluginRem = (): DefaultBuilderPlugin => ({
+export const pluginRem = (): DefaultRsbuildPlugin => ({
   name: 'plugin-rem',
 
   pre: ['plugin-css', 'plugin-less', 'plugin-sass', 'plugin-stylus'],

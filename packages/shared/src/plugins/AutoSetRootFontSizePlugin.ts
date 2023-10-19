@@ -5,7 +5,7 @@ import { RawSource } from 'webpack-sources';
 import { withPublicPath } from '../url';
 import {
   generateScriptTag,
-  getBuilderVersion,
+  getRsbuildVersion,
   getPublicPathFromCompiler,
   COMPILATION_PROCESS_STAGE,
 } from './util';
@@ -83,7 +83,7 @@ export class AutoSetRootFontSizePlugin implements WebpackPluginInstance {
 
   async getScriptPath() {
     if (!this.scriptPath) {
-      const version = await getBuilderVersion();
+      const version = await getRsbuildVersion();
       this.scriptPath = path.join(this.distDir, `convert-rem.${version}.js`);
     }
 

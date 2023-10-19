@@ -47,7 +47,7 @@ test('enableCssModuleTSDeclaration', async () => {
 });
 
 test('disableCssExtract', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/index.ts'),
@@ -60,10 +60,10 @@ test('disableCssExtract', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   // disableCssExtract worked
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
 
   expect(cssFiles.length).toBe(0);
@@ -76,5 +76,5 @@ test('disableCssExtract', async ({ page }) => {
   const title = page.locator('#title');
   await expect(title).toHaveCSS('font-size', '20px');
 
-  builder.close();
+  rsbuild.close();
 });

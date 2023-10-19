@@ -26,7 +26,7 @@ async function validateSourceMap(
 }
 
 test('source-map', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/index.js'),
@@ -43,7 +43,7 @@ test('source-map', async () => {
     },
   });
 
-  const files = await builder.unwrapOutputJSON(false);
+  const files = await rsbuild.unwrapOutputJSON(false);
   const [, jsMapContent] = Object.entries(files).find(
     ([name]) => name.includes('static/js/') && name.endsWith('.js.map'),
   )!;
@@ -52,7 +52,7 @@ test('source-map', async () => {
     ([name]) => name.includes('static/js/') && name.endsWith('.js'),
   )!;
 
-  const AppContentIndex = jsContent.indexOf('Hello Builder!');
+  const AppContentIndex = jsContent.indexOf('Hello Rsbuild!');
   const indexContentIndex = jsContent.indexOf('window.aa');
 
   const originalPositions = (

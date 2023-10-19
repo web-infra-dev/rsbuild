@@ -1,12 +1,12 @@
 import { expect, describe, it } from 'vitest';
 import { pluginBasic } from '@/plugins/basic';
-import { createStubBuilder } from './helper';
+import { createStubRsbuild } from './helper';
 import { pluginBabel } from '@/plugins/babel';
 import { pluginAntd } from '@rsbuild/core/plugins/antd';
 
 describe('webpackConfig', () => {
   it('should allow tools.webpack to return config', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
       builderConfig: {
         tools: {
@@ -20,12 +20,12 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
   });
 
   it('should allow tools.webpack to modify config object', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
       builderConfig: {
         tools: {
@@ -36,12 +36,12 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
   });
 
   it('should allow tools.webpack to be an object', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
       builderConfig: {
         tools: {
@@ -52,12 +52,12 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
   });
 
   it('should allow tools.webpack to be an array', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
       builderConfig: {
         tools: {
@@ -73,12 +73,12 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
   });
 
   it('should provide mergeConfig util in tools.webpack function', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
       builderConfig: {
         tools: {
@@ -91,12 +91,12 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
   });
 
   it('should allow to use tools.webpackChain to modify config', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
       builderConfig: {
         tools: {
@@ -107,12 +107,12 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
   });
 
   it('should allow tools.webpackChain to be an array', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
       builderConfig: {
         tools: {
@@ -128,12 +128,12 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
   });
 
   it('should export HtmlWebpackPlugin instance', async () => {
-    await createStubBuilder({
+    await createStubRsbuild({
       builderConfig: {
         tools: {
           webpack(config, utils) {
@@ -145,7 +145,7 @@ describe('webpackConfig', () => {
   });
 
   it('should allow to append and prepend plugins', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       builderConfig: {
         tools: {
           webpack(config, utils) {
@@ -158,12 +158,12 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.plugins).toMatchSnapshot();
   });
 
   it('should allow to remove plugins', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       builderConfig: {
         tools: {
           webpack(config, utils) {
@@ -178,7 +178,7 @@ describe('webpackConfig', () => {
       plugins: [],
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.plugins).toEqual([]);
   });
 
@@ -188,7 +188,7 @@ describe('webpackConfig', () => {
       loader: 'foo-loader',
     };
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       builderConfig: {
         tools: {
           webpack(config, utils) {
@@ -199,13 +199,13 @@ describe('webpackConfig', () => {
       plugins: [],
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.module?.rules).toEqual([newRule]);
   });
 
   it('should set proper pluginImport option in Babel', async () => {
     // camelToDashComponentName
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
       builderConfig: {
         source: {
@@ -218,7 +218,7 @@ describe('webpackConfig', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     const babelRules = config.module!.rules?.filter((item) => {
       // @ts-expect-error item has use
@@ -230,10 +230,10 @@ describe('webpackConfig', () => {
 
   it('should not set default pluginImport for Babel', async () => {
     // camelToDashComponentName
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginAntd()],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     const babelRules = config.module!.rules?.filter((item) => {
       // @ts-expect-error item has use
@@ -245,7 +245,7 @@ describe('webpackConfig', () => {
 
   it('should not have any pluginImport in Babel', async () => {
     // camelToDashComponentName
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginAntd()],
       builderConfig: {
         source: {
@@ -253,7 +253,7 @@ describe('webpackConfig', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     const babelRules = config.module!.rules?.filter((item) => {
       // @ts-expect-error item has use

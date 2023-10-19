@@ -5,7 +5,7 @@ import { dev, getHrefByEntryName } from '@scripts/shared';
 const fixtures = __dirname;
 
 test('writeToDisk default', async ({ page }) => {
-  const builder = await dev({
+  const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     entry: {
       main: join(fixtures, 'basic', 'src/index.ts'),
@@ -22,16 +22,16 @@ test('writeToDisk default', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const locator = page.locator('#test');
-  await expect(locator).toHaveText('Hello Builder!');
+  await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await builder.server.close();
+  await rsbuild.server.close();
 });
 
 test('writeToDisk false', async ({ page }) => {
-  const builder = await dev({
+  const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     entry: {
       main: join(fixtures, 'basic', 'src/index.ts'),
@@ -47,16 +47,16 @@ test('writeToDisk false', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const locator = page.locator('#test');
-  await expect(locator).toHaveText('Hello Builder!');
+  await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await builder.server.close();
+  await rsbuild.server.close();
 });
 
 test('writeToDisk true', async ({ page }) => {
-  const builder = await dev({
+  const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     entry: {
       main: join(fixtures, 'basic', 'src/index.ts'),
@@ -72,10 +72,10 @@ test('writeToDisk true', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const test = page.locator('#test');
-  await expect(test).toHaveText('Hello Builder!');
+  await expect(test).toHaveText('Hello Rsbuild!');
 
-  await builder.server.close();
+  await rsbuild.server.close();
 });

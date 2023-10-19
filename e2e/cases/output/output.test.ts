@@ -8,7 +8,7 @@ const fixtures = __dirname;
 test.describe('output configure multi', () => {
   const distFilePath = join(fixtures, 'rem/dist-1/test.json');
 
-  let builder: Awaited<ReturnType<typeof build>>;
+  let rsbuild: Awaited<ReturnType<typeof build>>;
 
   test.beforeAll(async () => {
     await fs.mkdir(dirname(distFilePath), { recursive: true });
@@ -19,7 +19,7 @@ test.describe('output configure multi', () => {
     }`,
     );
 
-    builder = await build({
+    rsbuild = await build({
       cwd: join(fixtures, 'rem'),
       entry: {
         main: join(fixtures, 'rem/src/index.ts'),
@@ -37,8 +37,8 @@ test.describe('output configure multi', () => {
   });
 
   test.afterAll(async () => {
-    builder.close();
-    await builder.clean();
+    rsbuild.close();
+    await rsbuild.clean();
   });
 
   test('cleanDistPath default (enable)', async () => {
@@ -56,7 +56,7 @@ test.describe('output configure multi', () => {
   });
 
   test('sourcemap', async () => {
-    const files = await builder.unwrapOutputJSON(false);
+    const files = await rsbuild.unwrapOutputJSON(false);
 
     const jsMapFiles = Object.keys(files).filter((files) =>
       files.endsWith('.js.map'),
@@ -80,7 +80,7 @@ test('cleanDistPath disable', async () => {
   }`,
   );
 
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'rem'),
     entry: {
       main: join(fixtures, 'rem/src/index.ts'),
@@ -97,12 +97,12 @@ test('cleanDistPath disable', async () => {
 
   expect(fs.existsSync(distFilePath)).toBeTruthy();
 
-  builder.close();
-  builder.clean();
+  rsbuild.close();
+  rsbuild.clean();
 });
 
 test('disableSourcemap', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'rem'),
     entry: {
       main: join(fixtures, 'rem/src/index.ts'),
@@ -117,7 +117,7 @@ test('disableSourcemap', async () => {
     },
   });
 
-  const files = await builder.unwrapOutputJSON(false);
+  const files = await rsbuild.unwrapOutputJSON(false);
 
   const jsMapFiles = Object.keys(files).filter((files) =>
     files.endsWith('.js.map'),

@@ -1,4 +1,4 @@
-import type { BuilderPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 import path from 'path';
 import {
   experimental_registerGlobalTrace as registerGlobalTrace,
@@ -26,7 +26,7 @@ export const stopProfiler = (
 
 // Reference rspack-cli
 // https://github.com/modern-js-dev/rspack/blob/509abcfc523bc20125459f5d428dc1645751700c/packages/rspack-cli/src/utils/profile.ts
-export const pluginRspackProfile = (): BuilderPlugin => ({
+export const pluginRspackProfile = (): RsbuildPlugin => ({
   name: 'plugin-rspack-profile',
 
   setup(api) {

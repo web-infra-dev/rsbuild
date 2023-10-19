@@ -1,7 +1,7 @@
-import type { BuilderPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 import { isUsingHMR } from '@rsbuild/shared';
 
-export const pluginHMR = (): BuilderPlugin => ({
+export const pluginHMR = (): RsbuildPlugin => ({
   name: 'plugin-hmr',
 
   setup(api) {

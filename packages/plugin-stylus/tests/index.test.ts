@@ -1,19 +1,19 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@rsbuild/webpack/stub';
+import { createStubRsbuild } from '@rsbuild/webpack/stub';
 import { pluginStylus } from '../src';
 
 describe('plugins/stylus', () => {
   it('should add stylus loader config correctly', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginStylus()],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should allow to configure stylus options', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         pluginStylus({
           stylusOptions: {
@@ -22,7 +22,7 @@ describe('plugins/stylus', () => {
         }),
       ],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });

@@ -21,10 +21,10 @@ import type { SharedToolsConfig } from './tools';
 import type { DeepReadonly } from '../utils';
 
 /**
- * The shared Builder Config.
+ * The shared Rsbuild config.
  * Can be used with webpack-provider or rspack-provider.
  * */
-export interface SharedBuilderConfig {
+export interface SharedRsbuildConfig {
   dev?: SharedDevConfig;
   html?: SharedHtmlConfig;
   source?: SharedSourceConfig;

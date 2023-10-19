@@ -1,57 +1,57 @@
 import { describe, expect, it } from 'vitest';
 import { pluginEntry } from '@rsbuild/core/plugins/entry';
 import { pluginHtml } from '@rsbuild/core/plugins/html';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/html', () => {
   it('should register html plugin correctly', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
-    expect(await builder.matchWebpackPlugin('HtmlWebpackPlugin')).toBeTruthy();
+    expect(await rsbuild.matchWebpackPlugin('HtmlWebpackPlugin')).toBeTruthy();
     expect(config).toMatchSnapshot();
   });
 
   it('should not register html plugin when target is node', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       target: 'node',
       entry: {
         main: './src/main.ts',
       },
     });
-    expect(await builder.matchWebpackPlugin('HtmlWebpackPlugin')).toBeFalsy();
+    expect(await rsbuild.matchWebpackPlugin('HtmlWebpackPlugin')).toBeFalsy();
   });
 
   it('should not register html plugin when target is web-worker', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       target: 'web-worker',
       entry: {
         main: './src/main.ts',
       },
     });
-    expect(await builder.matchWebpackPlugin('HtmlWebpackPlugin')).toBeFalsy();
+    expect(await rsbuild.matchWebpackPlugin('HtmlWebpackPlugin')).toBeFalsy();
   });
 
   it('should not register html plugin when target is service-worker', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       target: 'service-worker',
       entry: {
         main: './src/main.ts',
       },
     });
-    expect(await builder.matchWebpackPlugin('HtmlWebpackPlugin')).toBeFalsy();
+    expect(await rsbuild.matchWebpackPlugin('HtmlWebpackPlugin')).toBeFalsy();
   });
 
   it('should register nonce plugin when using security.nonce', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -63,11 +63,11 @@ describe('plugins/html', () => {
       },
     });
 
-    expect(await builder.matchWebpackPlugin('HtmlNoncePlugin')).toBeTruthy();
+    expect(await rsbuild.matchWebpackPlugin('HtmlNoncePlugin')).toBeTruthy();
   });
 
   it('should register crossorigin plugin when using html.crossorigin', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -79,15 +79,15 @@ describe('plugins/html', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(
-      await builder.matchWebpackPlugin('HtmlCrossOriginPlugin'),
+      await rsbuild.matchWebpackPlugin('HtmlCrossOriginPlugin'),
     ).toBeTruthy();
     expect(config.output?.crossOriginLoading).toEqual('anonymous');
   });
 
   it('should register appIcon plugin when using html.appIcon', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -99,11 +99,11 @@ describe('plugins/html', () => {
       },
     });
 
-    expect(await builder.matchWebpackPlugin('HtmlAppIconPlugin')).toBeTruthy();
+    expect(await rsbuild.matchWebpackPlugin('HtmlAppIconPlugin')).toBeTruthy();
   });
 
   it('should allow to set favicon by html.favicon option', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -114,13 +114,13 @@ describe('plugins/html', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should register faviconUrl plugin when html.favicon is a URL', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -133,12 +133,12 @@ describe('plugins/html', () => {
     });
 
     expect(
-      await builder.matchWebpackPlugin('HtmlFaviconUrlPlugin'),
+      await rsbuild.matchWebpackPlugin('HtmlFaviconUrlPlugin'),
     ).toBeTruthy();
   });
 
   it('should allow to set inject by html.inject option', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -149,7 +149,7 @@ describe('plugins/html', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -158,13 +158,13 @@ describe('plugins/html', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
 
@@ -172,7 +172,7 @@ describe('plugins/html', () => {
   });
 
   it('should allow to modify plugin options by tools.htmlPlugin', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -188,13 +188,13 @@ describe('plugins/html', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should allow to disable html plugin', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -206,11 +206,11 @@ describe('plugins/html', () => {
       },
     });
 
-    expect(await builder.matchWebpackPlugin('HtmlWebpackPlugin')).toBeFalsy();
+    expect(await rsbuild.matchWebpackPlugin('HtmlWebpackPlugin')).toBeFalsy();
   });
 
   it('should disable html plugin when htmlPlugin is an array and contains false', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -222,11 +222,11 @@ describe('plugins/html', () => {
       },
     });
 
-    expect(await builder.matchWebpackPlugin('HtmlWebpackPlugin')).toBeFalsy();
+    expect(await rsbuild.matchWebpackPlugin('HtmlWebpackPlugin')).toBeFalsy();
   });
 
   it('should support multi entry', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -239,13 +239,13 @@ describe('plugins/html', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should add one tags plugin instance', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -258,14 +258,14 @@ describe('plugins/html', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     const plugins = config.plugins?.filter((p) => p.name === 'HtmlTagsPlugin');
     expect(plugins?.length).toBe(1);
     expect(config).toMatchSnapshot();
   });
 
   it('should add tags plugin instances for each entries', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -280,7 +280,7 @@ describe('plugins/html', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     const plugins = config.plugins?.filter((p) => p.name === 'HtmlTagsPlugin');
     expect(plugins?.length).toBe(2);
     expect(config).toMatchSnapshot();

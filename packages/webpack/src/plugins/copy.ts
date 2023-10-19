@@ -1,7 +1,7 @@
 import { fs } from '@rsbuild/shared/fs-extra';
-import type { CopyPluginOptions, BuilderPlugin } from '../types';
+import type { CopyPluginOptions, RsbuildPlugin } from '../types';
 
-export const pluginCopy = (): BuilderPlugin => ({
+export const pluginCopy = (): RsbuildPlugin => ({
   name: 'plugin-copy',
 
   setup(api) {

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 
 test('babel', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
@@ -18,8 +18,8 @@ test('babel', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
   expect(await page.evaluate('window.b')).toBe(10);
 
-  builder.close();
+  rsbuild.close();
 });

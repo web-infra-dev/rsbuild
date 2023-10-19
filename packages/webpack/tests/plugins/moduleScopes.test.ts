@@ -4,11 +4,11 @@ import {
   isPrimitiveScope,
   applyScopeChain,
 } from '@/plugins/moduleScopes';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/moduleScopes', () => {
   it('should set entry correctly', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginModuleScopes()],
       builderConfig: {
         source: {
@@ -16,7 +16,7 @@ describe('plugins/moduleScopes', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });

@@ -1,9 +1,9 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
-import type { SharedBuilderConfig } from '@rsbuild/shared';
+import type { SharedRsbuildConfig } from '@rsbuild/shared';
 
-function getCommonBuildConfig(cwd: string): SharedBuilderConfig {
+function getCommonBuildConfig(cwd: string): SharedRsbuildConfig {
   return {
     source: {
       exclude: [path.resolve(cwd, './src/test.js')],

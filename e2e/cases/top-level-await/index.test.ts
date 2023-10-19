@@ -4,7 +4,7 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 import { webpackOnlyTest } from '../../scripts/helper';
 
 webpackOnlyTest('should run top level await correctly', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.ts'),
@@ -12,9 +12,9 @@ webpackOnlyTest('should run top level await correctly', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   expect(await page.evaluate('window.foo')).toEqual('hello');
 
-  builder.close();
+  rsbuild.close();
 });

@@ -1,8 +1,8 @@
-import { BuilderPlugin } from '../types';
+import { RsbuildPlugin } from '../types';
 import { awaitableGetter, Plugins } from '@rsbuild/shared';
 
 export const applyMinimalPlugins = (plugins: Plugins) =>
-  awaitableGetter<BuilderPlugin>([
+  awaitableGetter<RsbuildPlugin>([
     import('../plugins/basic').then((m) => m.pluginBasic()),
     plugins.entry?.(),
     plugins.cache?.(),
@@ -13,7 +13,7 @@ export const applyMinimalPlugins = (plugins: Plugins) =>
   ]);
 
 export const applyBasicPlugins = (plugins: Plugins) =>
-  awaitableGetter<BuilderPlugin>([
+  awaitableGetter<RsbuildPlugin>([
     ...applyMinimalPlugins(plugins).promises,
     import('../plugins/copy').then((m) => m.pluginCopy()),
     plugins.html(),
@@ -28,7 +28,7 @@ export const applyBasicPlugins = (plugins: Plugins) =>
   ]);
 
 export const applyDefaultPlugins = (plugins: Plugins) =>
-  awaitableGetter<BuilderPlugin>([
+  awaitableGetter<RsbuildPlugin>([
     ...applyMinimalPlugins(plugins).promises,
     plugins.fileSize?.(),
     plugins.cleanOutput?.(),

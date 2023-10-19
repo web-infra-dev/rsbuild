@@ -1,19 +1,19 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/vitest-helper';
 import { pluginStylus } from '../src';
 
 describe('plugins/stylus', () => {
   it('should add stylus loader config correctly', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginStylus() as any],
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should allow to configure stylus options', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         pluginStylus({
           stylusOptions: {
@@ -22,7 +22,7 @@ describe('plugins/stylus', () => {
         }) as any,
       ],
     });
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 });

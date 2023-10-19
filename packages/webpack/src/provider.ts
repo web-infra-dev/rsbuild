@@ -1,29 +1,29 @@
 import {
   startProdServer,
-  pickBuilderConfig,
+  pickRsbuildConfig,
   createPublicContext,
-  type BuilderProvider,
+  type RsbuildProvider,
 } from '@rsbuild/shared';
 import { createContext } from './core/createContext';
 import { applyDefaultPlugins } from './shared/plugin';
-import { BuilderConfig, NormalizedConfig, WebpackConfig } from './types';
+import { RsbuildConfig, NormalizedConfig, WebpackConfig } from './types';
 import { initConfigs } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
 import type { Compiler, MultiCompiler } from 'webpack';
 
-export type WebpackProvider = BuilderProvider<
-  BuilderConfig,
+export type WebpackProvider = RsbuildProvider<
+  RsbuildConfig,
   WebpackConfig,
   NormalizedConfig,
   Compiler | MultiCompiler
 >;
 
 export function webpackProvider({
-  builderConfig: originalBuilderConfig,
+  builderConfig: originalRsbuildConfig,
 }: {
-  builderConfig: BuilderConfig;
+  builderConfig: RsbuildConfig;
 }): WebpackProvider {
-  const builderConfig = pickBuilderConfig(originalBuilderConfig);
+  const builderConfig = pickRsbuildConfig(originalRsbuildConfig);
 
   return async ({ pluginStore, builderOptions, plugins }) => {
     const context = await createContext(builderOptions, builderConfig);

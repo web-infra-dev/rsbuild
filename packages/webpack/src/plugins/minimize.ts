@@ -4,7 +4,7 @@ import {
   BundlerChain,
   getJSMinifyOptions,
 } from '@rsbuild/shared';
-import type { BuilderPlugin, NormalizedConfig } from '../types';
+import type { RsbuildPlugin, NormalizedConfig } from '../types';
 
 async function applyJSMinimizer(chain: BundlerChain, config: NormalizedConfig) {
   const { default: TerserPlugin } = await import('terser-webpack-plugin');
@@ -21,7 +21,7 @@ async function applyJSMinimizer(chain: BundlerChain, config: NormalizedConfig) {
     .end();
 }
 
-export const pluginMinimize = (): BuilderPlugin => ({
+export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'plugin-minimize',
 
   setup(api) {

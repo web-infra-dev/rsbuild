@@ -7,15 +7,15 @@ const fixtures = __dirname;
 
 // TODO: needs builtin:swc-loader
 webpackOnlyTest('should remove prop-types by default', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/index.js'),
     },
     runServer: true,
   });
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   expect(await page.evaluate('window.testAppPropTypes')).toBeUndefined();
-  builder.close();
+  rsbuild.close();
 });

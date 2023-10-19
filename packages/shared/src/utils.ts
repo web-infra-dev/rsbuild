@@ -1,6 +1,6 @@
 import type {
   SharedNormalizedConfig,
-  BuilderTarget,
+  RsbuildTarget,
   SharedCompiledPkgNames,
 } from './types';
 import { join } from 'path';
@@ -84,9 +84,9 @@ export const isURL = (str: string) =>
 
 export * as z from './zod';
 
-export function isWebTarget(target: BuilderTarget | BuilderTarget[]) {
+export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
   return ['web', 'web-worker'].some((t) =>
-    (Array.isArray(target) ? target : [target]).includes(t as BuilderTarget),
+    (Array.isArray(target) ? target : [target]).includes(t as RsbuildTarget),
   );
 }
 

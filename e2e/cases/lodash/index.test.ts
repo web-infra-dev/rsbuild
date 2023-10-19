@@ -5,7 +5,7 @@ import { build } from '@scripts/shared';
 
 // TODO: needs builtin:swc-loader
 webpackOnlyTest('should optimize lodash bundle size by default', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.ts'),
@@ -20,13 +20,13 @@ webpackOnlyTest('should optimize lodash bundle size by default', async () => {
     runServer: false,
   });
 
-  const { content, size } = await builder.getIndexFile();
+  const { content, size } = await rsbuild.getIndexFile();
   expect(content.includes('debounce')).toBeFalsy();
   expect(size < 10).toBeTruthy();
 });
 
 test('should not optimize lodash bundle size when transformLodash is false', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.ts'),
@@ -42,7 +42,7 @@ test('should not optimize lodash bundle size when transformLodash is false', asy
     runServer: false,
   });
 
-  const { content, size } = await builder.getIndexFile();
+  const { content, size } = await rsbuild.getIndexFile();
   expect(content.includes('debounce')).toBeTruthy();
   expect(size > 30).toBeTruthy();
 });

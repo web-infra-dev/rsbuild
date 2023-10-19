@@ -2,8 +2,8 @@ import { existsSync } from 'fs';
 import { join } from 'path';
 import { logger } from 'rslog';
 import {
-  BuilderContext,
-  CreateBuilderOptions,
+  Context,
+  CreateRsbuildOptions,
   NormalizedSharedOutputConfig,
   BundlerType,
 } from './types';
@@ -13,10 +13,10 @@ import { getAbsoluteDistPath } from './fs';
  * Create context by config.
  */
 export function createContextByConfig(
-  options: Required<CreateBuilderOptions>,
+  options: Required<CreateRsbuildOptions>,
   outputConfig: NormalizedSharedOutputConfig,
   bundlerType: BundlerType,
-): BuilderContext {
+): Context {
   const { cwd, target, configPath } = options;
   const rootPath = cwd;
   const srcPath = join(rootPath, 'src');
@@ -24,7 +24,7 @@ export function createContextByConfig(
   const distPath = getAbsoluteDistPath(cwd, outputConfig);
   const cachePath = join(rootPath, 'node_modules', '.cache');
 
-  const context: BuilderContext = {
+  const context: Context = {
     entry: options.entry,
     target,
     srcPath,
@@ -41,9 +41,7 @@ export function createContextByConfig(
   return context;
 }
 
-export function createPublicContext(
-  context: BuilderContext,
-): Readonly<BuilderContext> {
+export function createPublicContext(context: Context): Readonly<Context> {
   const exposedKeys = [
     'entry',
     'target',
@@ -59,13 +57,13 @@ export function createPublicContext(
 
   // Using Proxy to get the current value of context.
   return new Proxy(context, {
-    get(target, prop: keyof BuilderContext) {
+    get(target, prop: keyof Context) {
       if (exposedKeys.includes(prop)) {
         return target[prop];
       }
       return undefined;
     },
-    set(target, prop: keyof BuilderContext) {
+    set(target, prop: keyof Context) {
       logger.error(
         `Context is readonly, you can not assign to the "context.${prop}" prop.`,
       );

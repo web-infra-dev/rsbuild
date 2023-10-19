@@ -4,7 +4,7 @@ import { RawSource } from 'webpack-sources';
 import { getSharedPkgCompiledPath } from '../utils';
 import {
   generateScriptTag,
-  getBuilderVersion,
+  getRsbuildVersion,
   getPublicPathFromCompiler,
   COMPILATION_PROCESS_STAGE,
 } from './util';
@@ -60,7 +60,7 @@ export class AssetsRetryPlugin implements WebpackPluginInstance {
 
   async getScriptPath() {
     if (!this.scriptPath) {
-      const version = await getBuilderVersion();
+      const version = await getRsbuildVersion();
       this.scriptPath = path.join(this.distDir, `assets-retry.${version}.js`);
     }
     return this.scriptPath;

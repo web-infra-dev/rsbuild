@@ -2,7 +2,7 @@ import _ from '@modern-js/utils/lodash';
 import { isFunction, isUndefined } from './utils';
 import { isOverriddenConfigKey } from '@modern-js/utils';
 
-export const mergeBuilderConfig = <T>(...configs: T[]): T =>
+export const mergeRsbuildConfig = <T>(...configs: T[]): T =>
   _.mergeWith(
     {},
     ...configs,

@@ -1,21 +1,21 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@rsbuild/webpack/stub';
+import { createStubRsbuild } from '@rsbuild/webpack/stub';
 import { pluginBabel } from '@rsbuild/webpack/plugins/babel';
 import { pluginDefine } from '@modern-js/builder/plugins/define';
 import { pluginVue } from '../src';
 
 describe('plugins/vue', () => {
   it('should add vue-loader and VueLoaderPlugin correctly', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginVue()],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should allow to configure vueLoader options', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         pluginVue({
           vueLoaderOptions: {
@@ -24,22 +24,22 @@ describe('plugins/vue', () => {
         }),
       ],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should apply jsx babel plugin correctly', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginVue(), pluginBabel()],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should allow to configure jsx babel plugin options', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         pluginVue({
           vueJsxOptions: {
@@ -49,16 +49,16 @@ describe('plugins/vue', () => {
         pluginBabel(),
       ],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should define feature flags correctly', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginVue(), pluginDefine()],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
   });
 });

@@ -1,7 +1,7 @@
 import { getBrowserslist } from '@rsbuild/shared';
-import type { DefaultBuilderPlugin } from '@rsbuild/shared';
+import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
-export const pluginTarget = (): DefaultBuilderPlugin => ({
+export const pluginTarget = (): DefaultRsbuildPlugin => ({
   name: 'plugin-target',
 
   setup(api) {

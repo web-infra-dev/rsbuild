@@ -1,12 +1,12 @@
 import _ from '@modern-js/utils/lodash';
-import type { DefaultBuilderPlugin } from '@rsbuild/shared';
+import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
 export const replacePlaceholder = (url: string, port: number) =>
   url.replace(/<port>/g, String(port));
 
 const openedURLs: string[] = [];
 
-export function pluginStartUrl(): DefaultBuilderPlugin {
+export function pluginStartUrl(): DefaultRsbuildPlugin {
   return {
     name: 'plugin-start-url',
     async setup(api) {

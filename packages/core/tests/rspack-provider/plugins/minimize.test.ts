@@ -1,16 +1,16 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/vitest-helper';
 import { pluginMinimize } from '@/plugins/minimize';
 
 describe('plugins/minimize', () => {
   it('should not apply minimizer in development', async () => {
     process.env.NODE_ENV = 'development';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0].optimization?.minimize).toEqual(false);
     expect(bundlerConfigs[0].optimization?.minimizer).toBeUndefined();
@@ -21,11 +21,11 @@ describe('plugins/minimize', () => {
   it('should apply minimizer in production', async () => {
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0].optimization?.minimize).toEqual(true);
 
@@ -78,7 +78,7 @@ describe('plugins/minimize', () => {
   it('should not apply minimizer when output.disableMinimize is true', async () => {
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
       builderConfig: {
         output: {
@@ -87,7 +87,7 @@ describe('plugins/minimize', () => {
       },
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0].optimization?.minimize).toEqual(false);
 
@@ -97,7 +97,7 @@ describe('plugins/minimize', () => {
   it('should dropConsole when performance.removeConsole is true', async () => {
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
       builderConfig: {
         performance: {
@@ -106,7 +106,7 @@ describe('plugins/minimize', () => {
       },
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0].optimization?.minimizer).toMatchInlineSnapshot(
       `
@@ -157,7 +157,7 @@ describe('plugins/minimize', () => {
   it('should remove specific console when performance.removeConsole is array', async () => {
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
       builderConfig: {
         performance: {
@@ -166,7 +166,7 @@ describe('plugins/minimize', () => {
       },
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0].optimization?.minimizer).toMatchInlineSnapshot(
       `
@@ -220,7 +220,7 @@ describe('plugins/minimize', () => {
   it('should set asciiOnly false when output.charset is utf8', async () => {
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
       builderConfig: {
         output: {
@@ -229,7 +229,7 @@ describe('plugins/minimize', () => {
       },
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0].optimization?.minimizer).toMatchInlineSnapshot(
       `

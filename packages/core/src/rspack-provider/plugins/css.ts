@@ -12,13 +12,13 @@ import {
   getCssModuleLocalIdentName,
   resolvePackage,
   type BundlerChain,
-  type BuilderContext,
+  type Context,
   type StyleLoaderOptions,
   type ModifyBundlerChainUtils,
 } from '@rsbuild/shared';
 import path from 'path';
 import type {
-  BuilderPlugin,
+  RsbuildPlugin,
   NormalizedConfig,
   RspackRule,
   RuleSetRule,
@@ -37,7 +37,7 @@ export async function applyBaseCSSRule({
 }: {
   rule: ReturnType<BundlerChain['module']['rule']>;
   config: NormalizedConfig;
-  context: BuilderContext;
+  context: Context;
   utils: ModifyBundlerChainUtils;
   importLoaders?: number;
 }) {
@@ -216,7 +216,7 @@ export const applyCSSModuleRule = (
   };
 };
 
-export const pluginCss = (): BuilderPlugin => {
+export const pluginCss = (): RsbuildPlugin => {
   return {
     name: 'plugin-css',
     setup(api) {

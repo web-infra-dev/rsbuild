@@ -1,6 +1,6 @@
-import type { DefaultBuilderPlugin } from '@rsbuild/shared';
+import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
-export const pluginCleanOutput = (): DefaultBuilderPlugin => ({
+export const pluginCleanOutput = (): DefaultRsbuildPlugin => ({
   name: 'plugin-clean-output',
 
   setup(api) {

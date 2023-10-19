@@ -12,7 +12,7 @@ import {
 } from '../types';
 import { z } from '../utils';
 import { ZodType } from '../zod';
-import { BuilderTargetSchema } from './source';
+import { RsbuildTargetSchema } from './source';
 
 export const DistPathConfigSchema: ZodType<DistPathConfig> = z.partialObj({
   root: z.string(),
@@ -111,7 +111,7 @@ export const sharedOutputConfigSchema = z.partialObj({
   externals: z.any(),
   overrideBrowserslist: z.union([
     z.array(z.string()),
-    z.record(BuilderTargetSchema, z.array(z.string())),
+    z.record(RsbuildTargetSchema, z.array(z.string())),
   ]),
   svgDefaultExport: SvgDefaultExportSchema,
 });

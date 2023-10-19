@@ -8,7 +8,7 @@ const fixtures = __dirname;
 // hmr test will timeout in CI
 test.skip('default & hmr (default true)', async ({ page }) => {
   await fs.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src'));
-  const builder = await dev({
+  const rsbuild = await dev({
     cwd: join(fixtures, 'hmr'),
     entry: {
       main: join(fixtures, 'hmr', 'test-src/index.ts'),
@@ -25,17 +25,17 @@ test.skip('default & hmr (default true)', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const locator = page.locator('#test');
-  await expect(locator).toHaveText('Hello Builder!');
+  await expect(locator).toHaveText('Hello Rsbuild!');
   await expect(locator).toHaveCSS('color', 'rgb(255, 0, 0)');
 
   const appPath = join(fixtures, 'hmr', 'test-src/App.tsx');
 
   await fs.writeFile(
     appPath,
-    fs.readFileSync(appPath, 'utf-8').replace('Hello Builder', 'Hello Test'),
+    fs.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
   );
 
   // wait for hmr take effect
@@ -60,7 +60,7 @@ test.skip('default & hmr (default true)', async ({ page }) => {
   // restore
   await fs.writeFile(
     appPath,
-    fs.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Builder'),
+    fs.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
   );
 
   await fs.writeFile(
@@ -70,11 +70,11 @@ test.skip('default & hmr (default true)', async ({ page }) => {
 }`,
   );
 
-  await builder.server.close();
+  await rsbuild.server.close();
 });
 
 test('dev.port & output.distPath', async ({ page }) => {
-  const builder = await dev({
+  const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     entry: {
       main: join(fixtures, 'basic', 'src/index.ts'),
@@ -92,18 +92,18 @@ test('dev.port & output.distPath', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
-  expect(builder.port).toBe(3000);
+  expect(rsbuild.port).toBe(3000);
 
   expect(fs.existsSync(join(fixtures, 'basic/dist-1/main.html'))).toBeTruthy();
 
   expect(fs.existsSync(join(fixtures, 'basic/dist-1/aa/js'))).toBeTruthy();
 
   const locator = page.locator('#test');
-  await expect(locator).toHaveText('Hello Builder!');
+  await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await builder.server.close();
+  await rsbuild.server.close();
 
   await fs.remove(join(fixtures, 'basic/dist-1'));
 });
@@ -113,7 +113,7 @@ test.skip('hmr should work when setting dev.port & serverOptions.dev.client', as
 }) => {
   await fs.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src-1'));
   const cwd = join(fixtures, 'hmr');
-  const builder = await dev({
+  const rsbuild = await dev({
     cwd,
     entry: {
       main: join(cwd, 'test-src-1/index.ts'),
@@ -132,17 +132,17 @@ test.skip('hmr should work when setting dev.port & serverOptions.dev.client', as
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
-  expect(builder.port).toBe(3001);
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  expect(rsbuild.port).toBe(3001);
 
   const appPath = join(fixtures, 'hmr', 'test-src-1/App.tsx');
 
   const locator = page.locator('#test');
-  await expect(locator).toHaveText('Hello Builder!');
+  await expect(locator).toHaveText('Hello Rsbuild!');
 
   await fs.writeFile(
     appPath,
-    fs.readFileSync(appPath, 'utf-8').replace('Hello Builder', 'Hello Test'),
+    fs.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
   );
 
   // wait for hmr take effect
@@ -152,15 +152,15 @@ test.skip('hmr should work when setting dev.port & serverOptions.dev.client', as
   // restore
   await fs.writeFile(
     appPath,
-    fs.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Builder'),
+    fs.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
   );
 
-  await builder.server.close();
+  await rsbuild.server.close();
 });
 
 // need devcert
 test.skip('dev.https', async () => {
-  const builder = await dev({
+  const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     entry: {
       main: join(join(fixtures, 'basic'), 'src/index.ts'),
@@ -172,9 +172,9 @@ test.skip('dev.https', async () => {
     },
   });
 
-  expect(builder.urls[0].startsWith('https')).toBeTruthy();
+  expect(rsbuild.urls[0].startsWith('https')).toBeTruthy();
 
-  await builder.server.close();
+  await rsbuild.server.close();
 });
 
 // hmr will timeout in CI
@@ -183,7 +183,7 @@ test.skip('tools.devServer', async ({ page }) => {
   let reloadFn: undefined | (() => void);
 
   // Only tested to see if it works, not all configurations.
-  const builder = await dev({
+  const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     entry: {
       main: join(join(fixtures, 'basic'), 'src/index.ts'),
@@ -207,10 +207,10 @@ test.skip('tools.devServer', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const locator = page.locator('#test');
-  await expect(locator).toHaveText('Hello Builder!');
+  await expect(locator).toHaveText('Hello Rsbuild!');
 
   expect(i).toBeGreaterThanOrEqual(1);
   expect(reloadFn).toBeDefined();
@@ -223,5 +223,5 @@ test.skip('tools.devServer', async ({ page }) => {
 
   expect(i).toBeGreaterThanOrEqual(1);
 
-  await builder.server.close();
+  await rsbuild.server.close();
 });

@@ -1,8 +1,8 @@
 import browserslist from 'browserslist';
 import { DEFAULT_BROWSERSLIST } from './constants';
 import type {
-  BuilderTarget,
-  SharedBuilderConfig,
+  RsbuildTarget,
+  SharedRsbuildConfig,
   SharedNormalizedConfig,
 } from './types';
 
@@ -26,8 +26,8 @@ export async function getBrowserslist(path: string) {
 
 export async function getBrowserslistWithDefault(
   path: string,
-  config: SharedBuilderConfig | SharedNormalizedConfig,
-  target: BuilderTarget,
+  config: SharedRsbuildConfig | SharedNormalizedConfig,
+  target: RsbuildTarget,
 ): Promise<string[]> {
   const { overrideBrowserslist: overrides = {} } = config?.output || {};
 

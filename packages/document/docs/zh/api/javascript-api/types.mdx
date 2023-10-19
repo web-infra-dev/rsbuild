@@ -13,7 +13,7 @@ Rsbuild 实例的类型。
 ```ts
 import type { RsbuildInstance } from '@rsbuild/core';
 
-let builder: RsbuildInstance;
+let rsbuild: RsbuildInstance;
 ```
 
 你可以通过泛型来传入 Provider 的类型，使 Rsbuild 实例获得更准确的类型定义：
@@ -22,17 +22,17 @@ let builder: RsbuildInstance;
 import type { createRsbuild, type RsbuildInstance } from '@rsbuild/core';
 import type { RsbuildWebpackProvider } from '@rsbuild/webpack-provider';
 
-let builder: RsbuildInstance<RsbuildWebpackProvider>;
+let rsbuild: RsbuildInstance<RsbuildWebpackProvider>;
 ```
 
-## RsbuildContext
+## Context
 
 Rsbuild 实例中 context 属性的类型定义。
 
 ```ts
-import type { RsbuildContext } from '@rsbuild/core';
+import type { Context } from '@rsbuild/core';
 
-const context: RsbuildContext = rsbuild.context;
+const context: Context = rsbuild.context;
 ```
 
 ## RsbuildPlugin

@@ -6,7 +6,7 @@ const isHtmlMatch = (html: string, pattern: RegExp): boolean =>
   Boolean(html.match(pattern));
 
 test('should inject tags', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.ts') },
     builderConfig: {
@@ -22,7 +22,7 @@ test('should inject tags', async () => {
     },
   });
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const indexHtml = files[path.resolve(__dirname, './dist/index.html')];
 

@@ -6,7 +6,7 @@ import { pluginSwc } from '@rsbuild/plugin-swc';
 test('should run top level await correctly when using SWC', async ({
   page,
 }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.ts'),
@@ -15,9 +15,9 @@ test('should run top level await correctly when using SWC', async ({
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   expect(await page.evaluate('window.foo')).toEqual('hello');
 
-  builder.close();
+  rsbuild.close();
 });

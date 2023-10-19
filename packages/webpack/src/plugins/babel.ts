@@ -13,7 +13,7 @@ import {
 import { getCompiledPath } from '../shared';
 
 import type {
-  BuilderPlugin,
+  RsbuildPlugin,
   NormalizedConfig,
   TransformImport,
 } from '../types';
@@ -27,7 +27,7 @@ export const getUseBuiltIns = (config: NormalizedConfig) => {
   return polyfill;
 };
 
-export const pluginBabel = (): BuilderPlugin => ({
+export const pluginBabel = (): RsbuildPlugin => ({
   name: 'plugin-babel',
   setup(api) {
     api.modifyWebpackChain(

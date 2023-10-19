@@ -1,19 +1,19 @@
 import { logger, debug } from './logger';
 import type {
   PluginStore,
-  BuilderPlugin,
-  DefaultBuilderPluginAPI,
+  RsbuildPlugin,
+  DefaultRsbuildPluginAPI,
 } from './types';
 
 export function createPluginStore(): PluginStore {
-  let plugins: BuilderPlugin[] = [];
+  let plugins: RsbuildPlugin[] = [];
 
   const addPlugins = (
-    newPlugins: BuilderPlugin[],
+    newPlugins: RsbuildPlugin[],
     options?: { before?: string },
   ) => {
     const { before } = options || {};
-    newPlugins.forEach(newPlugin => {
+    newPlugins.forEach((newPlugin) => {
       if (typeof newPlugin !== 'object' || newPlugin === null) {
         throw new Error(
           `expect plugin instance is object, but got ${typeof newPlugin}.`,
@@ -23,10 +23,10 @@ export function createPluginStore(): PluginStore {
           `expect plugin.setup is function, but got ${typeof newPlugin}.`,
         );
       }
-      if (plugins.find(item => item.name === newPlugin.name)) {
+      if (plugins.find((item) => item.name === newPlugin.name)) {
         logger.warn(`Plugin "${newPlugin.name}" already exists.`);
       } else if (before) {
-        const index = plugins.findIndex(item => item.name === before);
+        const index = plugins.findIndex((item) => item.name === before);
         if (index === -1) {
           logger.warn(`Plugin "${before}" does not exist.`);
           plugins.push(newPlugin);
@@ -40,11 +40,11 @@ export function createPluginStore(): PluginStore {
   };
 
   const removePlugins = (pluginNames: string[]) => {
-    plugins = plugins.filter(plugin => !pluginNames.includes(plugin.name));
+    plugins = plugins.filter((plugin) => !pluginNames.includes(plugin.name));
   };
 
   const isPluginExists = (pluginName: string) =>
-    Boolean(plugins.find(plugin => plugin.name === pluginName));
+    Boolean(plugins.find((plugin) => plugin.name === pluginName));
 
   return {
     get plugins() {
@@ -60,7 +60,7 @@ export async function initPlugins({
   pluginAPI,
   pluginStore,
 }: {
-  pluginAPI?: DefaultBuilderPluginAPI;
+  pluginAPI?: DefaultRsbuildPluginAPI;
   pluginStore: PluginStore;
 }) {
   debug('init plugins');

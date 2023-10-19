@@ -4,15 +4,15 @@ import {
   getDistPath,
   getFilename,
   isUseCssExtract,
-  applyBuilderOutputPlugin,
+  applyOutputPlugin,
 } from '@rsbuild/shared';
-import type { BuilderPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginOutput = (): BuilderPlugin => ({
+export const pluginOutput = (): RsbuildPlugin => ({
   name: 'plugin-output',
 
   setup(api) {
-    applyBuilderOutputPlugin(api);
+    applyOutputPlugin(api);
 
     api.modifyWebpackChain(async (chain, { isProd, target, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();

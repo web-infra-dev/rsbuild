@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
 test('should emit multiple css files correctly', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       entry1: path.resolve(__dirname, './src/entry1/index.js'),
@@ -12,7 +12,7 @@ test('should emit multiple css files correctly', async () => {
     },
   });
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
   const entry1CSS = Object.keys(files).find(
     (file) => file.includes('entry1') && file.endsWith('.css'),
   )!;

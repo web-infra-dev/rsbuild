@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import {
   getTemplatePath,
-  SharedBuilderConfig,
+  SharedRsbuildConfig,
   SharedNormalizedConfig,
 } from '../../src';
 
 describe('apply/html', () => {
-  it.each<[string, string, SharedBuilderConfig['html']]>([
+  it.each<[string, string, SharedRsbuildConfig['html']]>([
     ['main', 'foo', { template: 'foo' }],
     ['main', 'foo', { templateByEntries: { main: 'foo' } }],
     ['other', 'bar', { template: 'bar', templateByEntries: { main: 'foo' } }],

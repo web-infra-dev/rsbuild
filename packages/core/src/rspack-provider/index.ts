@@ -4,14 +4,14 @@ export type { RspackProvider } from './provider';
 
 export type {
   // Config Types
-  BuilderConfig,
+  RsbuildConfig,
   NormalizedConfig,
 
   // Hook Callback Types
   ModifyRspackConfigFn,
 
   // Plugin Types
-  BuilderPluginAPI,
+  RsbuildPluginAPI,
 
   // Rspack
   Rspack,

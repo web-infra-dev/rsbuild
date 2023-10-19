@@ -5,7 +5,7 @@ import { build } from '@scripts/shared';
 const fixtures = __dirname;
 
 test('enableAssetManifest', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/index.jsx'),
@@ -23,7 +23,7 @@ test('enableAssetManifest', async () => {
     },
   });
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const manifestContent =
     files[
@@ -38,5 +38,5 @@ test('enableAssetManifest', async () => {
   expect(Object.keys(manifest.files).length).toBe(3);
   expect(manifest.entrypoints.length).toBe(1);
 
-  builder.close();
+  rsbuild.close();
 });

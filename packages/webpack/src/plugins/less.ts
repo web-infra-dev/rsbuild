@@ -4,13 +4,13 @@ import {
   FileFilterUtil,
   getLessLoaderOptions,
 } from '@rsbuild/shared';
-import type { BuilderPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 
 export type LessLoaderUtils = {
   addExcludes: FileFilterUtil;
 };
 
-export function pluginLess(): BuilderPlugin {
+export function pluginLess(): RsbuildPlugin {
   return {
     name: 'plugin-less',
     setup(api) {

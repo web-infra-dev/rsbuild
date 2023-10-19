@@ -1,7 +1,7 @@
 import { CHAIN_ID } from '@modern-js/utils/chain-id';
 import { applyCSSMinimizer, BundlerChain } from '@rsbuild/shared';
 import type {
-  BuilderPlugin,
+  RsbuildPlugin,
   NormalizedConfig,
   RspackBuiltinsConfig,
 } from '../types';
@@ -46,7 +46,7 @@ export async function applyJSMinimizer(
     .end();
 }
 
-export const pluginMinimize = (): BuilderPlugin => ({
+export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'plugin-minimize',
 
   setup(api) {

@@ -12,7 +12,7 @@ function App() {
     <div>
       <div id="test-buffer">{bufferData}</div>
       <div id="test-querystring">{qsRes}</div>
-      <div id="test">Hello Builder!</div>
+      <div id="test">Hello Rsbuild!</div>
     </div>
   );
 }

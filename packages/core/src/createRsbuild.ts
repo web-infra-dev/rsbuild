@@ -2,15 +2,15 @@ import {
   pick,
   debug,
   createPluginStore,
-  applyDefaultBuilderOptions,
-  type BuilderInstance,
-  type BuilderProvider,
-  type CreateBuilderOptions,
+  applyDefaultRsbuildOptions,
+  type RsbuildInstance,
+  type RsbuildProvider,
+  type CreateRsbuildOptions,
 } from '@rsbuild/shared';
 import { plugins } from './plugins';
-import type { BuilderConfig } from './rspack-provider';
+import type { RsbuildConfig } from './rspack-provider';
 
-const getRspackProvider = async (builderConfig: BuilderConfig) => {
+const getRspackProvider = async (builderConfig: RsbuildConfig) => {
   const { rspackProvider } = await import('./rspack-provider');
 
   return rspackProvider({
@@ -18,22 +18,22 @@ const getRspackProvider = async (builderConfig: BuilderConfig) => {
   });
 };
 
-export async function createBuilder<
-  P extends ({ builderConfig }: { builderConfig: T }) => BuilderProvider,
-  T = BuilderConfig,
+export async function createRsbuild<
+  P extends ({ builderConfig }: { builderConfig: T }) => RsbuildProvider,
+  T = RsbuildConfig,
 >(
-  options: CreateBuilderOptions & {
+  options: CreateRsbuildOptions & {
     builderConfig: T;
     provider?: P;
   },
-): Promise<BuilderInstance<ReturnType<P>>> {
+): Promise<RsbuildInstance<ReturnType<P>>> {
   const { builderConfig } = options;
 
   const provider = options.provider
     ? options.provider({ builderConfig })
-    : await getRspackProvider(builderConfig as BuilderConfig);
+    : await getRspackProvider(builderConfig as RsbuildConfig);
 
-  const builderOptions = applyDefaultBuilderOptions(options);
+  const builderOptions = applyDefaultRsbuildOptions(options);
   const pluginStore = createPluginStore();
   const {
     build,
@@ -67,7 +67,7 @@ export async function createBuilder<
       'onDevCompileDone',
       'onExit',
       'getHTMLPaths',
-      'getBuilderConfig',
+      'getRsbuildConfig',
       'getNormalizedConfig',
     ]),
     serve,

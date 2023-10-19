@@ -5,7 +5,7 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 const fixtures = __dirname;
 
 test('svg (default)', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'svg'),
     entry: {
       main: join(fixtures, 'svg', 'src/index.js'),
@@ -13,7 +13,7 @@ test('svg (default)', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   // test svgr（namedExport）
   await expect(
@@ -34,11 +34,11 @@ test('svg (default)', async ({ page }) => {
     ),
   ).resolves.toBeTruthy();
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('svg (defaultExport component)', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'svg-default-export-component'),
     entry: {
       main: join(fixtures, 'svg-default-export-component', 'src/index.js'),
@@ -51,17 +51,17 @@ test('svg (defaultExport component)', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   await expect(
     page.evaluate(`document.getElementById('test-svg').tagName === 'svg'`),
   ).resolves.toBeTruthy();
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('svg (url)', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'svg-url'),
     entry: {
       main: join(fixtures, 'svg-url', 'src/index.js'),
@@ -69,7 +69,7 @@ test('svg (url)', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   // test svg asset
   await expect(
@@ -85,12 +85,12 @@ test('svg (url)', async ({ page }) => {
     ),
   ).resolves.toBeTruthy();
 
-  builder.close();
+  rsbuild.close();
 });
 
 // It's an old bug when use svgr in css and external react.
 test('svg (external react)', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'svg-external-react'),
     entry: {
       main: join(fixtures, 'svg-external-react', 'src/index.js'),
@@ -109,7 +109,7 @@ test('svg (external react)', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   // test svgr（namedExport）
   await expect(
@@ -130,11 +130,11 @@ test('svg (external react)', async ({ page }) => {
     ),
   ).resolves.toBeTruthy();
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('svg (disableSvgr)', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'svg-assets'),
     entry: {
       main: join(fixtures, 'svg-assets', 'src/index.js'),
@@ -147,7 +147,7 @@ test('svg (disableSvgr)', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   // test svg asset
   await expect(
@@ -163,5 +163,5 @@ test('svg (disableSvgr)', async ({ page }) => {
     ),
   ).resolves.toBeTruthy();
 
-  builder.close();
+  rsbuild.close();
 });

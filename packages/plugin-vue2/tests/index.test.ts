@@ -1,20 +1,20 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@rsbuild/webpack/stub';
+import { createStubRsbuild } from '@rsbuild/webpack/stub';
 import { pluginBabel } from '@rsbuild/webpack/plugins/babel';
 import { pluginVue2 } from '../src';
 
 describe('plugins/vue', () => {
   it('should add vue-loader and VueLoaderPlugin correctly', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginVue2()],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should allow to configure vueLoader options', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         pluginVue2({
           vueLoaderOptions: {
@@ -23,22 +23,22 @@ describe('plugins/vue', () => {
         }),
       ],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should apply jsx babel plugin correctly', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginVue2(), pluginBabel()],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should allow to configure jsx babel plugin options', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         pluginVue2({
           vueJsxOptions: {
@@ -48,7 +48,7 @@ describe('plugins/vue', () => {
         pluginBabel(),
       ],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });

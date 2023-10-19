@@ -3,14 +3,14 @@ import {
   debug,
   isFileExists,
   TS_CONFIG_FILE,
-  type CreateBuilderOptions,
+  type CreateRsbuildOptions,
   createContextByConfig,
   NormalizedSharedOutputConfig,
 } from '@rsbuild/shared';
 import { initHooks } from './initHooks';
-import { validateBuilderConfig } from '../config/validate';
+import { validateRsbuildConfig } from '../config/validate';
 import { withDefaultConfig } from '../config/defaults';
-import type { Context, BuilderConfig } from '../types';
+import type { Context, RsbuildConfig } from '../types';
 
 /**
  * Create primary context.
@@ -18,10 +18,10 @@ import type { Context, BuilderConfig } from '../types';
  * Usually it would be a pure function
  */
 export function createPrimaryContext(
-  options: Required<CreateBuilderOptions>,
-  userBuilderConfig: BuilderConfig,
+  options: Required<CreateRsbuildOptions>,
+  userRsbuildConfig: RsbuildConfig,
 ): Context {
-  const builderConfig = withDefaultConfig(userBuilderConfig);
+  const builderConfig = withDefaultConfig(userRsbuildConfig);
   const context = createContextByConfig(
     options,
     builderConfig.output as NormalizedSharedOutputConfig,
@@ -34,7 +34,7 @@ export function createPrimaryContext(
     hooks: initHooks(),
     configValidatingTask,
     config: { ...builderConfig },
-    originalConfig: userBuilderConfig,
+    originalConfig: userRsbuildConfig,
   };
 }
 
@@ -43,12 +43,12 @@ export function createPrimaryContext(
  * which can have a lot of overhead and take some side effects.
  */
 export async function createContext(
-  options: Required<CreateBuilderOptions>,
-  builderConfig: BuilderConfig,
+  options: Required<CreateRsbuildOptions>,
+  builderConfig: RsbuildConfig,
 ): Promise<Context> {
   debug('create context');
 
-  await validateBuilderConfig(builderConfig);
+  await validateRsbuildConfig(builderConfig);
   const ctx = createPrimaryContext(options, builderConfig);
 
   const tsconfigPath = join(ctx.rootPath, TS_CONFIG_FILE);

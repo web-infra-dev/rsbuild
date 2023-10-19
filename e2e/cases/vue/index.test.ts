@@ -6,7 +6,7 @@ import { pluginVue } from '@rsbuild/plugin-vue';
 test('should build basic Vue sfc correctly', async ({ page }) => {
   const root = join(__dirname, 'sfc-basic');
 
-  const builder = await build({
+  const rsbuild = await build({
     cwd: root,
     entry: {
       main: join(root, 'src/index.js'),
@@ -15,7 +15,7 @@ test('should build basic Vue sfc correctly', async ({ page }) => {
     plugins: [pluginVue()],
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const button1 = page.locator('#button1');
   const button2 = page.locator('#button2');
@@ -23,13 +23,13 @@ test('should build basic Vue sfc correctly', async ({ page }) => {
   await expect(button1).toHaveText('A: 0');
   await expect(button2).toHaveText('B: 0');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('should build Vue sfc style correctly', async ({ page }) => {
   const root = join(__dirname, 'sfc-style');
 
-  const builder = await build({
+  const rsbuild = await build({
     cwd: root,
     entry: {
       main: join(root, 'src/index.js'),
@@ -38,7 +38,7 @@ test('should build Vue sfc style correctly', async ({ page }) => {
     plugins: [pluginVue()],
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const button = page.locator('#button');
   await expect(button).toHaveCSS('color', 'rgb(255, 0, 0)');
@@ -46,13 +46,13 @@ test('should build Vue sfc style correctly', async ({ page }) => {
   const body = page.locator('body');
   await expect(body).toHaveCSS('background-color', 'rgb(0, 0, 255)');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('should build basic Vue jsx correctly', async ({ page }) => {
   const root = join(__dirname, 'jsx-basic');
 
-  const builder = await build({
+  const rsbuild = await build({
     cwd: root,
     entry: {
       main: join(root, 'src/index.js'),
@@ -61,18 +61,18 @@ test('should build basic Vue jsx correctly', async ({ page }) => {
     plugins: [pluginVue()],
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const button1 = page.locator('#button1');
   await expect(button1).toHaveText('A: 0');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('should build Vue sfc with lang="ts" correctly', async ({ page }) => {
   const root = join(__dirname, 'sfc-lang-ts');
 
-  const builder = await build({
+  const rsbuild = await build({
     cwd: root,
     entry: {
       main: join(root, 'src/index.js'),
@@ -81,18 +81,18 @@ test('should build Vue sfc with lang="ts" correctly', async ({ page }) => {
     plugins: [pluginVue()],
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const button = page.locator('#button');
   await expect(button).toHaveText('count: 0 foo: bar');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('should build Vue sfc with lang="jsx" correctly', async ({ page }) => {
   const root = join(__dirname, 'sfc-lang-jsx');
 
-  const builder = await build({
+  const rsbuild = await build({
     cwd: root,
     entry: {
       main: join(root, 'src/index.js'),
@@ -101,7 +101,7 @@ test('should build Vue sfc with lang="jsx" correctly', async ({ page }) => {
     plugins: [pluginVue()],
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const button = page.locator('#button');
   await expect(button).toHaveText('0');
@@ -109,13 +109,13 @@ test('should build Vue sfc with lang="jsx" correctly', async ({ page }) => {
   const foo = page.locator('#foo');
   await expect(foo).toHaveText('Foo');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('should build Vue sfc with lang="tsx" correctly', async ({ page }) => {
   const root = join(__dirname, 'sfc-lang-tsx');
 
-  const builder = await build({
+  const rsbuild = await build({
     cwd: root,
     entry: {
       main: join(root, 'src/index.js'),
@@ -124,7 +124,7 @@ test('should build Vue sfc with lang="tsx" correctly', async ({ page }) => {
     plugins: [pluginVue()],
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const button = page.locator('#button');
   await expect(button).toHaveText('0');
@@ -132,5 +132,5 @@ test('should build Vue sfc with lang="tsx" correctly', async ({ page }) => {
   const foo = page.locator('#foo');
   await expect(foo).toHaveText('Foo');
 
-  builder.close();
+  rsbuild.close();
 });

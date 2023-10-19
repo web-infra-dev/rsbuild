@@ -1,7 +1,7 @@
 import { setConfig } from '@rsbuild/shared';
-import type { BuilderPlugin } from '@rsbuild/core';
-import type { BuilderPluginAPI as WebpackBuilderPluginAPI } from '@rsbuild/webpack';
-import type { BuilderPluginAPI as RspackBuilderPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPluginAPI as WebpackRsbuildPluginAPI } from '@rsbuild/webpack';
+import type { RsbuildPluginAPI as RspackRsbuildPluginAPI } from '@rsbuild/core';
 
 const getResolveFallback = (nodeLibs: Record<string, any>) =>
   Object.keys(nodeLibs).reduce<Record<string, string | false>>(
@@ -32,10 +32,10 @@ const getProvideLibs = async () => {
  *
  *   const { pluginNodePolyfill } = await import('@rsbuild/plugin-node-polyfill');
  *
- *   builder.addPlugins([ pluginNodePolyfill() ]);
+ *   rsbuild.addPlugins([ pluginNodePolyfill() ]);
  */
-export function pluginNodePolyfill(): BuilderPlugin<
-  WebpackBuilderPluginAPI | RspackBuilderPluginAPI
+export function pluginNodePolyfill(): RsbuildPlugin<
+  WebpackRsbuildPluginAPI | RspackRsbuildPluginAPI
 > {
   return {
     name: 'plugin-node-polyfill',
@@ -57,7 +57,7 @@ export function pluginNodePolyfill(): BuilderPlugin<
       });
 
       if (api.context.bundlerType === 'rspack') {
-        (api as RspackBuilderPluginAPI).modifyRspackConfig(
+        (api as RspackRsbuildPluginAPI).modifyRspackConfig(
           async (config, { isServer }) => {
             if (isServer) {
               return;
@@ -69,7 +69,7 @@ export function pluginNodePolyfill(): BuilderPlugin<
           },
         );
       } else {
-        (api as WebpackBuilderPluginAPI).modifyWebpackChain(
+        (api as WebpackRsbuildPluginAPI).modifyWebpackChain(
           async (chain, { CHAIN_ID, isServer, webpack }) => {
             if (isServer) {
               return;

@@ -1,11 +1,11 @@
 import {
   isWebTarget,
   TS_CONFIG_FILE,
-  applyBuilderResolvePlugin,
-  type BuilderTarget,
+  applyResolvePlugin,
+  type RsbuildTarget,
 } from '@rsbuild/shared';
 import type { ChainIdentifier } from '@modern-js/utils/chain-id';
-import type { BuilderPlugin, WebpackChain } from '../types';
+import type { RsbuildPlugin, WebpackChain } from '../types';
 import path from 'path';
 
 async function applyTsConfigPathsPlugin({
@@ -35,7 +35,7 @@ async function applyTsConfigPathsPlugin({
     ]);
 }
 
-const getMainFields = (chain: WebpackChain, target: BuilderTarget) => {
+const getMainFields = (chain: WebpackChain, target: RsbuildTarget) => {
   const mainFields = chain.resolve.mainFields.values();
 
   if (mainFields.length) {
@@ -49,11 +49,11 @@ const getMainFields = (chain: WebpackChain, target: BuilderTarget) => {
   return ['module', 'main'];
 };
 
-export const pluginResolve = (): BuilderPlugin => ({
+export const pluginResolve = (): RsbuildPlugin => ({
   name: 'plugin-resolve',
 
   setup(api) {
-    applyBuilderResolvePlugin(api);
+    applyResolvePlugin(api);
 
     api.modifyWebpackChain(async (chain, { CHAIN_ID, target }) => {
       const config = api.getNormalizedConfig();

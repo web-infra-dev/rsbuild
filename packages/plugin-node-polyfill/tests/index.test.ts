@@ -1,25 +1,25 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/vitest-helper';
 import { webpackProvider } from '@rsbuild/webpack';
 import { pluginNodePolyfill } from '../src';
 
 describe('plugins/node-polyfill', () => {
   it('should add node-polyfill config', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginNodePolyfill()],
     });
-    const configs = await builder.initConfigs();
+    const configs = await rsbuild.initConfigs();
 
     expect(configs[0]).toMatchSnapshot();
   });
 
   it('should add node-polyfill config when use webpack', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginNodePolyfill()],
       provider: webpackProvider,
       builderConfig: {},
     });
-    const configs = await builder.initConfigs();
+    const configs = await rsbuild.initConfigs();
 
     expect(configs[0]).toMatchSnapshot();
   });

@@ -16,14 +16,14 @@ test('resolve-extension-prefix', async ({ page }) => {
   };
 
   // ex.js take effect when not set resolveExtensionPrefix
-  let builder = await build(buildOpts);
-  await page.goto(getHrefByEntryName('main', builder.port));
+  let rsbuild = await build(buildOpts);
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
   await expect(page.innerHTML('#test-el')).resolves.toBe('aaaaa');
 
-  builder.close();
+  rsbuild.close();
 
   // ex.web.js take effect when set resolveExtensionPrefix
-  builder = await build({
+  rsbuild = await build({
     ...buildOpts,
     builderConfig: {
       source: {
@@ -32,8 +32,8 @@ test('resolve-extension-prefix', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
   await expect(page.innerHTML('#test-el')).resolves.toBe('web');
 
-  builder.close();
+  rsbuild.close();
 });

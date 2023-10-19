@@ -4,9 +4,9 @@ import {
   getFilename,
   resourceRuleFallback,
 } from '@rsbuild/shared';
-import type { BuilderPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginFallback = (): BuilderPlugin => ({
+export const pluginFallback = (): RsbuildPlugin => ({
   name: 'plugin-fallback',
 
   setup(api) {

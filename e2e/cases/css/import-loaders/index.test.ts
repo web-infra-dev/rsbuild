@@ -6,7 +6,7 @@ import { webpackOnlyTest } from '../../../scripts/helper';
 webpackOnlyTest(
   'should compile CSS modules which depends on importLoaders correctly',
   async () => {
-    const builder = await build({
+    const rsbuild = await build({
       cwd: __dirname,
       entry: { index: path.resolve(__dirname, './src/index.js') },
       builderConfig: {
@@ -15,7 +15,7 @@ webpackOnlyTest(
         },
       },
     });
-    const files = await builder.unwrapOutputJSON();
+    const files = await rsbuild.unwrapOutputJSON();
 
     const content =
       files[Object.keys(files).find((file) => file.endsWith('.css'))!];

@@ -1,5 +1,5 @@
 import { it, expect, describe } from 'vitest';
-import { createStubBuilder } from '@rsbuild/webpack/stub';
+import { createStubRsbuild } from '@rsbuild/webpack/stub';
 import { builderAssetPlugin } from '@builder/plugins/asset';
 import { pluginImageCompress } from '../src';
 
@@ -20,20 +20,20 @@ const ASSET_EXTS = [
 
 describe('plugin/image-compress', () => {
   it('should generate correct options', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [builderAssetPlugin('image', ASSET_EXTS), pluginImageCompress()],
     });
-    expect(await builder.unwrapWebpackConfig()).toMatchSnapshot();
+    expect(await rsbuild.unwrapWebpackConfig()).toMatchSnapshot();
   });
 
   it('should accept `...options: Options[]` as parameter', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         builderAssetPlugin('image', ASSET_EXTS),
         pluginImageCompress('jpeg', { use: 'png' }),
       ],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.optimization?.minimizer).toMatchInlineSnapshot(`
       [
         ModernJsImageMinimizerPlugin {
@@ -55,13 +55,13 @@ describe('plugin/image-compress', () => {
   });
 
   it('should accept `options: Options[]` as parameter', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         builderAssetPlugin('image', ASSET_EXTS),
         pluginImageCompress(['jpeg', { use: 'png' }]),
       ],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.optimization?.minimizer).toMatchInlineSnapshot(`
       [
         ModernJsImageMinimizerPlugin {

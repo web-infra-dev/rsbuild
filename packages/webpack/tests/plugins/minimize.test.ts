@@ -1,16 +1,16 @@
 import { expect, describe, it } from 'vitest';
 import { pluginMinimize } from '@/plugins/minimize';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/minimize', () => {
   it('should not apply minimizer in development', async () => {
     process.env.NODE_ENV = 'development';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.optimization?.minimize).toEqual(false);
 
     process.env.NODE_ENV = 'test';
@@ -19,11 +19,11 @@ describe('plugins/minimize', () => {
   it('should apply minimizer in production', async () => {
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.optimization).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
@@ -32,7 +32,7 @@ describe('plugins/minimize', () => {
   it('should not apply minimizer when output.disableMinimize is true', async () => {
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
       builderConfig: {
         output: {
@@ -41,7 +41,7 @@ describe('plugins/minimize', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.optimization?.minimize).toEqual(false);
 
     process.env.NODE_ENV = 'test';
@@ -50,7 +50,7 @@ describe('plugins/minimize', () => {
   it('should not extractComments when output.legalComments is inline', async () => {
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
       builderConfig: {
         output: {
@@ -59,7 +59,7 @@ describe('plugins/minimize', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(JSON.stringify(config.optimization)).toContain(
       '"extractComments":false',
     );
@@ -73,7 +73,7 @@ describe('plugins/minimize', () => {
   it('should remove all comments when output.legalComments is none', async () => {
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
       builderConfig: {
         output: {
@@ -82,7 +82,7 @@ describe('plugins/minimize', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(JSON.stringify(config.optimization)).toContain(
       '"extractComments":false',
     );
@@ -94,7 +94,7 @@ describe('plugins/minimize', () => {
   it('should not enable ascii_only when output.charset is utf8', async () => {
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
       builderConfig: {
         output: {
@@ -103,7 +103,7 @@ describe('plugins/minimize', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(JSON.stringify(config.optimization)).toContain('"ascii_only":false');
 
     process.env.NODE_ENV = 'test';

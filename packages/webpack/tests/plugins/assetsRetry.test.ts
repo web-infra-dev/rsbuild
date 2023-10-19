@@ -1,10 +1,10 @@
 import { expect, describe, it } from 'vitest';
 import { pluginAssetsRetry } from '@rsbuild/core/plugins/assetsRetry';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/assetsRetry', () => {
   it('should add assets retry plugin', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginAssetsRetry()],
       builderConfig: {
         output: {
@@ -12,20 +12,20 @@ describe('plugins/assetsRetry', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it("should't add assets retry plugin when target is set to 'node'", async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginAssetsRetry()],
       target: 'node',
       builderConfig: {
         output: {},
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });

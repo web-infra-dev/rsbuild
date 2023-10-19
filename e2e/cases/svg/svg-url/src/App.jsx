@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   return (
     <div>
-      <div id="test">Hello Builder!</div>
+      <div id="test">Hello Rsbuild!</div>
       <Logo id="test-svg" />
       <img id="test-img" src={svgImg} />
       <div id="test-css" />

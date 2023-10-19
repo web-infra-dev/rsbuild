@@ -1,15 +1,15 @@
 import type {
-  DefaultBuilderPluginAPI,
-  BuilderPlugin as BaseBuilderPlugin,
+  DefaultRsbuildPluginAPI,
+  RsbuildPlugin as BaseRsbuildPlugin,
 } from '@rsbuild/shared';
 import type { Compiler, MultiCompiler } from 'webpack';
-import type { BuilderConfig, NormalizedConfig } from './config';
+import type { RsbuildConfig, NormalizedConfig } from './config';
 import type { WebpackConfig } from './thirdParty';
 import type { ModifyWebpackChainFn, ModifyWebpackConfigFn } from './hooks';
 
-export interface BuilderPluginAPI
-  extends DefaultBuilderPluginAPI<
-    BuilderConfig,
+export interface RsbuildPluginAPI
+  extends DefaultRsbuildPluginAPI<
+    RsbuildConfig,
     NormalizedConfig,
     WebpackConfig,
     Compiler | MultiCompiler
@@ -19,4 +19,4 @@ export interface BuilderPluginAPI
   modifyWebpackConfig: (fn: ModifyWebpackConfigFn) => void;
 }
 
-export type BuilderPlugin = BaseBuilderPlugin<BuilderPluginAPI>;
+export type RsbuildPlugin = BaseRsbuildPlugin<RsbuildPluginAPI>;

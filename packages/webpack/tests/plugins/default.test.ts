@@ -1,14 +1,14 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '../helper';
-import type { BuilderPlugin } from '@/types';
+import { createStubRsbuild } from '../helper';
+import type { RsbuildPlugin } from '@/types';
 
 describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctly', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'development';
-    const builder = await createStubBuilder({});
+    const rsbuild = await createStubRsbuild({});
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
 
@@ -18,9 +18,9 @@ describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctly when production', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
-    const builder = await createStubBuilder({});
+    const rsbuild = await createStubRsbuild({});
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
 
@@ -30,11 +30,11 @@ describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctly when target web worker', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       target: ['web-worker'],
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
 
@@ -44,11 +44,11 @@ describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctly when target node', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       target: ['node'],
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
 
@@ -58,7 +58,7 @@ describe('applyDefaultPlugins', () => {
 
 describe('bundlerApi', () => {
   it('test modifyBundlerChain and api order', async () => {
-    const testPlugin: BuilderPlugin = {
+    const testPlugin: RsbuildPlugin = {
       name: 'plugin-devtool',
       setup: (api) => {
         api.modifyBundlerChain((chain) => {
@@ -72,11 +72,11 @@ describe('bundlerApi', () => {
       },
     };
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [testPlugin],
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchInlineSnapshot(`
       {

@@ -5,7 +5,7 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 const fixtures = resolve(__dirname, '../');
 
 test('externals', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/index.js'),
@@ -23,10 +23,10 @@ test('externals', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const test = page.locator('#test');
-  await expect(test).toHaveText('Hello Builder!');
+  await expect(test).toHaveText('Hello Rsbuild!');
 
   const testExternal = page.locator('#test-external');
   await expect(testExternal).toHaveText('1');
@@ -35,12 +35,12 @@ test('externals', async ({ page }) => {
 
   expect(externalVar).toBeDefined();
 
-  builder.clean();
-  builder.close();
+  rsbuild.clean();
+  rsbuild.close();
 });
 
 test('should not external dependencies when target is web worker', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     target: 'web-worker',
     entry: { index: resolve(fixtures, './src/index.js') },
@@ -52,11 +52,11 @@ test('should not external dependencies when target is web worker', async () => {
       },
     },
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.js'))!];
   expect(content.includes('MyReact')).toBeFalsy();
 
-  builder.clean();
+  rsbuild.clean();
 });

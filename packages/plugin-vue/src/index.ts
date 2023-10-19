@@ -1,7 +1,7 @@
 import { deepmerge } from '@rsbuild/shared/deepmerge';
 import { VueLoaderPlugin } from 'vue-loader';
-import type { BuilderPlugin } from '@rsbuild/core';
-import type { BuilderPluginAPI } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 import type { VueLoaderOptions } from 'vue-loader';
 import type { VueJSXPluginOptions } from '@vue/babel-plugin-jsx';
 
@@ -12,7 +12,7 @@ export type PluginVueOptions = {
 
 export function pluginVue(
   options: PluginVueOptions = {},
-): BuilderPlugin<BuilderPluginAPI> {
+): RsbuildPlugin<RsbuildPluginAPI> {
   return {
     name: 'plugin-vue',
 
@@ -21,8 +21,8 @@ export function pluginVue(
     remove: ['plugin-react', 'plugin-antd', 'plugin-arco'],
 
     async setup(api) {
-      api.modifyBuilderConfig((config, { mergeBuilderConfig }) => {
-        return mergeBuilderConfig(config, {
+      api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+        return mergeRsbuildConfig(config, {
           output: {
             disableSvgr: true,
           },

@@ -2,11 +2,11 @@ import { expect, describe, it } from 'vitest';
 import { pluginReact } from '@/plugins/react';
 import { pluginBabel } from '@/plugins/babel';
 import { pluginTsLoader } from '@/plugins/tsLoader';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/react', () => {
   it('should work with babel-loader', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginReact()],
       builderConfig: {
         output: {
@@ -14,13 +14,13 @@ describe('plugins/react', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should work with ts-loader', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginTsLoader(), pluginReact()],
       builderConfig: {
         tools: {
@@ -28,13 +28,13 @@ describe('plugins/react', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should not apply react refresh when dev.hmr is false', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginReact()],
       builderConfig: {
         dev: {
@@ -43,24 +43,24 @@ describe('plugins/react', () => {
       },
     });
 
-    expect(await builder.matchWebpackPlugin('ReactRefreshPlugin')).toBeFalsy();
+    expect(await rsbuild.matchWebpackPlugin('ReactRefreshPlugin')).toBeFalsy();
   });
 
   it('should not apply react refresh when target is node', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginReact()],
       target: 'node',
     });
 
-    expect(await builder.matchWebpackPlugin('ReactRefreshPlugin')).toBeFalsy();
+    expect(await rsbuild.matchWebpackPlugin('ReactRefreshPlugin')).toBeFalsy();
   });
 
   it('should not apply react refresh when target is web-worker', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginReact()],
       target: 'web-worker',
     });
 
-    expect(await builder.matchWebpackPlugin('ReactRefreshPlugin')).toBeFalsy();
+    expect(await rsbuild.matchWebpackPlugin('ReactRefreshPlugin')).toBeFalsy();
   });
 });

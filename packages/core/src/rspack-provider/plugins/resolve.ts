@@ -1,11 +1,11 @@
-import type { BuilderPlugin } from '../types';
-import { setConfig, applyBuilderResolvePlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
+import { setConfig, applyResolvePlugin } from '@rsbuild/shared';
 
-export const pluginResolve = (): BuilderPlugin => ({
+export const pluginResolve = (): RsbuildPlugin => ({
   name: 'plugin-resolve',
 
   setup(api) {
-    applyBuilderResolvePlugin(api);
+    applyResolvePlugin(api);
 
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       const config = api.getNormalizedConfig();

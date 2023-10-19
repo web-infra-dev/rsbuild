@@ -8,7 +8,7 @@ exports[`initHooks > should init hooks correctly 1`] = `
   "onDevCompileDoneHook",
   "modifyWebpackChainHook",
   "modifyWebpackConfigHook",
-  "modifyBuilderConfigHook",
+  "modifyRsbuildConfigHook",
   "onAfterCreateCompilerHook",
   "onBeforeCreateCompilerHook",
   "onAfterStartDevServerHook",

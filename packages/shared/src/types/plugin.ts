@@ -7,23 +7,23 @@ import type {
   OnBeforeStartDevServerFn,
   OnAfterCreateCompilerFn,
   OnBeforeCreateCompilerFn,
-  ModifyBuilderConfigFn,
+  ModifyRsbuildConfigFn,
   ModifyBundlerChainFn,
 } from './hooks';
-import { BuilderContext } from './context';
-import { SharedBuilderConfig, SharedNormalizedConfig } from './config';
+import { Context } from './context';
+import { SharedRsbuildConfig, SharedNormalizedConfig } from './config';
 import { PromiseOrNot } from './utils';
 
 export type PluginStore = {
-  readonly plugins: BuilderPlugin[];
-  addPlugins: (plugins: BuilderPlugin[], options?: { before?: string }) => void;
+  readonly plugins: RsbuildPlugin[];
+  addPlugins: (plugins: RsbuildPlugin[], options?: { before?: string }) => void;
   removePlugins: (pluginNames: string[]) => void;
   isPluginExists: (pluginName: string) => boolean;
   /** The plugin API. */
-  pluginAPI?: DefaultBuilderPluginAPI;
+  pluginAPI?: DefaultRsbuildPluginAPI;
 };
 
-export type BuilderPlugin<API = any> = {
+export type RsbuildPlugin<API = any> = {
   name: string;
   setup: (api: API) => PromiseOrNot<void>;
   pre?: string[];
@@ -32,8 +32,8 @@ export type BuilderPlugin<API = any> = {
 };
 
 type PluginsFn<T = void> = T extends void
-  ? () => Promise<BuilderPlugin>
-  : (arg: T) => Promise<BuilderPlugin>;
+  ? () => Promise<RsbuildPlugin>
+  : (arg: T) => Promise<RsbuildPlugin>;
 
 export type Plugins = {
   cleanOutput: PluginsFn;
@@ -71,13 +71,13 @@ export type Plugins = {
 /**
  * Define a generic builder plugin API that provider can extend as needed.
  */
-export type DefaultBuilderPluginAPI<
+export type DefaultRsbuildPluginAPI<
   Config extends Record<string, any> = Record<string, any>,
   NormalizedConfig extends Record<string, any> = Record<string, any>,
   BundlerConfig = unknown,
   Compiler = unknown,
 > = {
-  context: Readonly<BuilderContext>;
+  context: Readonly<Context>;
   isPluginExists: PluginStore['isPluginExists'];
 
   onExit: (fn: OnExitFn) => void;
@@ -94,16 +94,16 @@ export type DefaultBuilderPluginAPI<
    * The key is entry name and the value is path.
    */
   getHTMLPaths: () => Record<string, string>;
-  getBuilderConfig: () => Readonly<Config>;
+  getRsbuildConfig: () => Readonly<Config>;
   getNormalizedConfig: () => NormalizedConfig;
 
-  modifyBuilderConfig: (fn: ModifyBuilderConfigFn<Config>) => void;
+  modifyRsbuildConfig: (fn: ModifyRsbuildConfigFn<Config>) => void;
   modifyBundlerChain: (fn: ModifyBundlerChainFn) => void;
 };
 
-export type SharedBuilderPluginAPI = DefaultBuilderPluginAPI<
-  SharedBuilderConfig,
+export type SharedRsbuildPluginAPI = DefaultRsbuildPluginAPI<
+  SharedRsbuildConfig,
   SharedNormalizedConfig
 >;
 
-export type DefaultBuilderPlugin = BuilderPlugin<SharedBuilderPluginAPI>;
+export type DefaultRsbuildPlugin = RsbuildPlugin<SharedRsbuildPluginAPI>;

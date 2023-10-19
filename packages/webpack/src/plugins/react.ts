@@ -1,14 +1,14 @@
-import type { BuilderConfig, BuilderPlugin } from '../types';
+import type { RsbuildConfig, RsbuildPlugin } from '../types';
 import { isProd, isUsingHMR } from '@rsbuild/shared';
 
-export const pluginReact = (): BuilderPlugin => ({
+export const pluginReact = (): RsbuildPlugin => ({
   name: 'plugin-react',
 
   setup(api) {
-    api.modifyBuilderConfig(async (config, { mergeBuilderConfig }) => {
+    api.modifyRsbuildConfig(async (config, { mergeRsbuildConfig }) => {
       const { isBeyondReact17 } = await import('@modern-js/utils');
 
-      const babelConfig: BuilderConfig = {
+      const babelConfig: RsbuildConfig = {
         tools: {
           babel(_, { addPresets, addPlugins }) {
             const isNewJsx = isBeyondReact17(api.context.rootPath);
@@ -38,7 +38,7 @@ export const pluginReact = (): BuilderPlugin => ({
         },
       };
 
-      return mergeBuilderConfig(babelConfig, config);
+      return mergeRsbuildConfig(babelConfig, config);
     });
 
     api.modifyWebpackChain(async (chain, utils) => {

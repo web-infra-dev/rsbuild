@@ -9,9 +9,9 @@ import {
   getSvgoDefaultConfig,
   getSharedPkgCompiledPath,
 } from '@rsbuild/shared';
-import type { DefaultBuilderPlugin } from '@rsbuild/shared';
+import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
-export const pluginSvg = (): DefaultBuilderPlugin => {
+export const pluginSvg = (): DefaultRsbuildPlugin => {
   return {
     name: 'plugin-svg',
     setup(api) {

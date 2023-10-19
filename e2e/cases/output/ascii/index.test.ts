@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 
 test('output.charset default (ascii)', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
@@ -11,10 +11,10 @@ test('output.charset default (ascii)', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
   expect(await page.evaluate('window.a')).toBe('你好 world!');
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const [, content] = Object.entries(files).find(
     ([name]) => name.endsWith('.js') && name.includes('static/js/index'),
@@ -25,11 +25,11 @@ test('output.charset default (ascii)', async ({ page }) => {
     content.toLocaleLowerCase().includes('\\u4f60\\u597d world!'),
   ).toBeTruthy();
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('output.charset (utf8)', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
@@ -42,10 +42,10 @@ test('output.charset (utf8)', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
   expect(await page.evaluate('window.a')).toBe('你好 world!');
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const [, content] = Object.entries(files).find(
     ([name]) => name.endsWith('.js') && name.includes('static/js/index'),
@@ -53,5 +53,5 @@ test('output.charset (utf8)', async ({ page }) => {
 
   expect(content.includes('你好 world!')).toBeTruthy();
 
-  builder.close();
+  rsbuild.close();
 });

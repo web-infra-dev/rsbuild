@@ -2,7 +2,7 @@ import * as path from 'path';
 
 import { getCoreJsVersion } from '@rsbuild/shared';
 import {
-  BuilderTarget,
+  RsbuildTarget,
   getBrowserslistWithDefault,
   logger,
   setConfig,
@@ -10,8 +10,8 @@ import {
   addCoreJsEntry,
 } from '@rsbuild/shared';
 import type {
-  BuilderPlugin,
-  BuilderPluginAPI,
+  RsbuildPlugin,
+  RsbuildPluginAPI,
   NormalizedConfig,
   RspackConfig,
 } from '../types';
@@ -20,7 +20,7 @@ import { Builtins } from '@rspack/core';
 /**
  * Provide some swc configs of rspack
  */
-export const pluginSwc = (): BuilderPlugin => ({
+export const pluginSwc = (): RsbuildPlugin => ({
   name: 'plugin-swc',
 
   setup(api) {
@@ -47,8 +47,8 @@ export const pluginSwc = (): BuilderPlugin => ({
 async function applyDefaultConfig(
   rspackConfig: RspackConfig,
   builderConfig: NormalizedConfig,
-  api: BuilderPluginAPI,
-  target: BuilderTarget,
+  api: RsbuildPluginAPI,
+  target: RsbuildTarget,
 ) {
   const legacy = !builderConfig.output.enableLatestDecorators;
   /**
@@ -99,7 +99,7 @@ async function applyDefaultConfig(
 async function setBrowserslist(
   rootPath: string,
   builderConfig: NormalizedConfig,
-  target: BuilderTarget,
+  target: RsbuildTarget,
   rspackConfig: RspackConfig,
 ) {
   const browserslist = await getBrowserslistWithDefault(

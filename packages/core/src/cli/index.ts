@@ -1,28 +1,28 @@
-import { BuilderPlugin, createBuilder } from '..';
+import { RsbuildPlugin, createRsbuild } from '..';
 import { setupProgram } from './commands';
 import { getDefaultEntries, loadConfig } from './config';
 
 export { defineConfig } from './config';
 
 type RunCliOptions = {
-  defaultPlugins?: BuilderPlugin[];
+  defaultPlugins?: RsbuildPlugin[];
 };
 
 export async function runCli(options: RunCliOptions = {}) {
   const { provider, ...config } = await loadConfig();
-  const builder = await createBuilder({
+  const rsbuild = await createRsbuild({
     provider,
     builderConfig: config,
     entry: config.source?.entries || getDefaultEntries(),
   });
 
   if (options.defaultPlugins) {
-    builder.addPlugins(options.defaultPlugins);
+    rsbuild.addPlugins(options.defaultPlugins);
   }
 
   if (config.builderPlugins) {
-    builder.addPlugins(config.builderPlugins);
+    rsbuild.addPlugins(config.builderPlugins);
   }
 
-  setupProgram(builder);
+  setupProgram(rsbuild);
 }

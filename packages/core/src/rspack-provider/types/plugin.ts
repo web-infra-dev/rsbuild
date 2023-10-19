@@ -1,14 +1,14 @@
 import type {
-  DefaultBuilderPluginAPI,
-  BuilderPlugin as BaseBuilderPlugin,
+  DefaultRsbuildPluginAPI,
+  RsbuildPlugin as BaseRsbuildPlugin,
 } from '@rsbuild/shared';
-import type { BuilderConfig, NormalizedConfig } from './config';
+import type { RsbuildConfig, NormalizedConfig } from './config';
 import type { ModifyRspackConfigFn } from './hooks';
 import type { Compiler, MultiCompiler, RspackConfig } from './rspack';
 
-export interface BuilderPluginAPI
-  extends DefaultBuilderPluginAPI<
-    BuilderConfig,
+export interface RsbuildPluginAPI
+  extends DefaultRsbuildPluginAPI<
+    RsbuildConfig,
     NormalizedConfig,
     RspackConfig,
     Compiler | MultiCompiler
@@ -16,4 +16,4 @@ export interface BuilderPluginAPI
   modifyRspackConfig: (fn: ModifyRspackConfigFn) => void;
 }
 
-export type BuilderPlugin = BaseBuilderPlugin<BuilderPluginAPI>;
+export type RsbuildPlugin = BaseRsbuildPlugin<RsbuildPluginAPI>;

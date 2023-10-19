@@ -2,21 +2,21 @@ import {
   debug,
   isDebug,
   initPlugins,
-  mergeBuilderConfig,
+  mergeRsbuildConfig,
   type PluginStore,
   type InspectConfigOptions,
-  type CreateBuilderOptions,
+  type CreateRsbuildOptions,
 } from '@rsbuild/shared';
 import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
 import { normalizeConfig } from '../config/normalize';
 import type { Context } from '../types';
 
-async function modifyBuilderConfig(context: Context) {
+async function modifyRsbuildConfig(context: Context) {
   debug('modify builder config');
-  const [modified] = await context.hooks.modifyBuilderConfigHook.call(
+  const [modified] = await context.hooks.modifyRsbuildConfigHook.call(
     context.config,
-    { mergeBuilderConfig },
+    { mergeRsbuildConfig },
   );
   context.config = modified;
 
@@ -26,7 +26,7 @@ async function modifyBuilderConfig(context: Context) {
 export type InitConfigsOptions = {
   context: Context;
   pluginStore: PluginStore;
-  builderOptions: Required<CreateBuilderOptions>;
+  builderOptions: Required<CreateRsbuildOptions>;
 };
 
 export async function initConfigs({
@@ -42,7 +42,7 @@ export async function initConfigs({
     pluginStore,
   });
 
-  await modifyBuilderConfig(context);
+  await modifyRsbuildConfig(context);
   context.normalizedConfig = normalizeConfig(context.config);
 
   const targets = ensureArray(builderOptions.target);

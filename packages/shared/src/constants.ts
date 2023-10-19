@@ -1,4 +1,4 @@
-import type { BuilderTarget } from './types';
+import type { RsbuildTarget } from './types';
 
 // PACKAGES
 export const WEBPACK_PROVIDER = '@rsbuild/webpack';
@@ -83,7 +83,7 @@ export const TS_CONFIG_FILE = 'tsconfig.json';
 
 export const ROUTE_SPEC_FILE = 'route.json';
 
-export const TARGET_ID_MAP: Record<BuilderTarget, string> = {
+export const TARGET_ID_MAP: Record<RsbuildTarget, string> = {
   web: 'Client',
   node: 'Server',
   'service-worker': 'Server Worker',

@@ -12,9 +12,9 @@ test('should preserve viewBox after svgo minification', async () => {
     },
   };
 
-  const builder = await build(buildOpts);
+  const rsbuild = await build(buildOpts);
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
   const mainJs = Object.keys(files).find(
     (file) => file.includes('/main.') && file.endsWith('.js'),
   );
@@ -34,9 +34,9 @@ test('should add id prefix after svgo minification', async () => {
     },
   };
 
-  const builder = await build(buildOpts);
+  const rsbuild = await build(buildOpts);
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
   const mainJs = Object.keys(files).find(
     (file) => file.includes('/main.') && file.endsWith('.js'),
   );

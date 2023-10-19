@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@rsbuild/webpack/stub';
+import { createStubRsbuild } from '@rsbuild/webpack/stub';
 import { pluginSwc } from '../src';
 import { pluginBabel } from '@rsbuild/webpack/plugins/babel';
 import { applyPluginConfig } from '../src/utils';
@@ -17,22 +17,22 @@ const UTILS = { target: 'web', isProd: true } as ModifyWebpackChainUtils;
 
 describe('plugins/swc', () => {
   it('should set swc-loader', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginSwc()],
       builderConfig: {},
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should set swc minimizer in production', async () => {
     process.env.NODE_ENV = 'production';
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginSwc()],
       builderConfig: {},
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.optimization).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
@@ -40,7 +40,7 @@ describe('plugins/swc', () => {
 
   it('should set correct swc minimizer options in production', async () => {
     process.env.NODE_ENV = 'production';
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         pluginBabel(),
         pluginSwc({
@@ -51,7 +51,7 @@ describe('plugins/swc', () => {
         }),
       ],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.optimization).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
@@ -59,7 +59,7 @@ describe('plugins/swc', () => {
 
   it('should set correct swc minimizer options using raw swc config', async () => {
     process.env.NODE_ENV = 'production';
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         pluginBabel(),
         pluginSwc({
@@ -72,7 +72,7 @@ describe('plugins/swc', () => {
         }),
       ],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.optimization).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
@@ -80,7 +80,7 @@ describe('plugins/swc', () => {
 
   it('should disable swc minify', async () => {
     process.env.NODE_ENV = 'production';
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         pluginBabel(),
         pluginSwc({
@@ -89,14 +89,14 @@ describe('plugins/swc', () => {
         }),
       ],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.optimization).toBeFalsy();
     process.env.NODE_ENV = 'test';
   });
 
   it('should disable swc minify when raw swc config', async () => {
     process.env.NODE_ENV = 'production';
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         pluginBabel(),
         pluginSwc({
@@ -109,7 +109,7 @@ describe('plugins/swc', () => {
         }),
       ],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.optimization).toBeFalsy();
     process.env.NODE_ENV = 'test';
   });
@@ -117,7 +117,7 @@ describe('plugins/swc', () => {
   it('should apply source.include and source.exclude correctly', async () => {
     process.env.NODE_ENV = 'development';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginSwc()],
       builderConfig: {
         source: {
@@ -126,14 +126,14 @@ describe('plugins/swc', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should disable react refresh when dev.hmr is false', async () => {
     process.env.NODE_ENV = 'development';
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
       builderConfig: {
         dev: {
@@ -141,7 +141,7 @@ describe('plugins/swc', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.module).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
@@ -150,11 +150,11 @@ describe('plugins/swc', () => {
   it('should disable react refresh when target is not web', async () => {
     process.env.NODE_ENV = 'development';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
       target: ['node', 'service-worker', 'web', 'web-worker'],
     });
-    const configs = await builder.unwrapWebpackConfigs();
+    const configs = await rsbuild.unwrapWebpackConfigs();
 
     for (const config of configs) {
       expect(config.module).toMatchSnapshot();
@@ -262,7 +262,7 @@ describe('plugins/swc', () => {
   });
 
   it('should set multiple swc-loader', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         pluginBabel(),
         pluginSwc({
@@ -285,7 +285,7 @@ describe('plugins/swc', () => {
       ],
       builderConfig: {},
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config.module!.rules).toMatchSnapshot();
   });

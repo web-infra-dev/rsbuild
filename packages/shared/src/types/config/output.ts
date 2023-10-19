@@ -1,5 +1,5 @@
 import type { InlineChunkTest } from '../../plugins/InlineChunkHtmlPlugin';
-import type { BuilderTarget } from '../builder';
+import type { RsbuildTarget } from '../builder';
 import type { CrossOrigin } from './html';
 import type { Externals } from 'webpack';
 
@@ -155,7 +155,7 @@ export interface SharedOutputConfig {
   externals?: Externals;
   /**
    * Set the directory of the dist files.
-   * Builder will output files to the corresponding subdirectory according to the file type.
+   * Rsbuild will output files to the corresponding subdirectory according to the file type.
    */
   distPath?: DistPathConfig;
   /**
@@ -163,7 +163,7 @@ export interface SharedOutputConfig {
    */
   filename?: FilenameConfig;
   /**
-   * By default, Builder's output is ASCII-only and will escape all non-ASCII characters.
+   * By default, Rsbuild's output is ASCII-only and will escape all non-ASCII characters.
    * If you want to output the original characters without using escape sequences,
    * you can set `output.charset` to `utf8`.
    */
@@ -273,7 +273,7 @@ export interface SharedOutputConfig {
    * [autoprefixer](https://github.com/postcss/autoprefixer) to identify the JavaScript syntax that
    * need to be transformed and the CSS browser prefixes that need to be added.
    */
-  overrideBrowserslist?: string[] | Partial<Record<BuilderTarget, string[]>>;
+  overrideBrowserslist?: string[] | Partial<Record<RsbuildTarget, string[]>>;
   /**
    * Configure the default export type of SVG files.
    */

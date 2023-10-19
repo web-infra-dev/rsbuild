@@ -6,7 +6,7 @@ import { webpackOnlyTest } from '@scripts/helper';
 const fixtures = __dirname;
 
 test('should minify template js & css', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/index.ts'),
@@ -22,16 +22,16 @@ test('should minify template js & css', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const test = page.locator('#test');
 
   await expect(test).toHaveCSS('text-align', 'center');
   await expect(test).toHaveCSS('font-size', '146px');
-  await expect(test).toHaveText('Hello Builder!');
+  await expect(test).toHaveText('Hello Rsbuild!');
   await expect(page.evaluate(`window.b`)).resolves.toBe(2);
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.html'))!];
@@ -49,13 +49,13 @@ test('should minify template js & css', async ({ page }) => {
   // keep html comments
   expect(content.includes('<!-- HTML COMMENT-->')).toBeTruthy();
 
-  builder.close();
+  rsbuild.close();
 });
 
 webpackOnlyTest(
   'should minify template success when enableInlineScripts & enableInlineStyles',
   async ({ page }) => {
-    const builder = await build({
+    const rsbuild = await build({
       cwd: fixtures,
       entry: {
         main: join(fixtures, 'src/index.ts'),
@@ -74,16 +74,16 @@ webpackOnlyTest(
       },
     });
 
-    await page.goto(getHrefByEntryName('main', builder.port));
+    await page.goto(getHrefByEntryName('main', rsbuild.port));
 
     const test = page.locator('#test');
 
     await expect(test).toHaveCSS('text-align', 'center');
     await expect(test).toHaveCSS('font-size', '146px');
-    await expect(test).toHaveText('Hello Builder!');
+    await expect(test).toHaveText('Hello Rsbuild!');
     await expect(page.evaluate(`window.b`)).resolves.toBe(2);
 
-    const files = await builder.unwrapOutputJSON();
+    const files = await rsbuild.unwrapOutputJSON();
 
     const content =
       files[Object.keys(files).find((file) => file.endsWith('.html'))!];
@@ -93,6 +93,6 @@ webpackOnlyTest(
     ).toBeTruthy();
     expect(content.includes('window.a=1,window.b=2')).toBeTruthy();
 
-    builder.close();
+    rsbuild.close();
   },
 );

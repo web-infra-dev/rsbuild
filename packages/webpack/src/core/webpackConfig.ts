@@ -2,7 +2,7 @@ import {
   debug,
   modifyBundlerChain,
   type NodeEnv,
-  type BuilderTarget,
+  type RsbuildTarget,
 } from '@rsbuild/shared';
 import { castArray } from '@modern-js/utils/lodash';
 import { getCompiledPath } from '../shared';
@@ -68,7 +68,7 @@ async function modifyWebpackConfig(
 }
 
 async function getChainUtils(
-  target: BuilderTarget,
+  target: RsbuildTarget,
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
   const { default: HtmlWebpackPlugin } = await import('html-webpack-plugin');
@@ -150,7 +150,7 @@ export async function generateWebpackConfig({
   target,
   context,
 }: {
-  target: BuilderTarget;
+  target: RsbuildTarget;
   context: Context;
 }) {
   const chainUtils = await getChainUtils(target);

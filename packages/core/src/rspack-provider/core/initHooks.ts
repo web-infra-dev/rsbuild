@@ -4,7 +4,7 @@ import {
   OnAfterBuildFn,
   OnBeforeBuildFn,
   OnDevCompileDoneFn,
-  ModifyBuilderConfigFn,
+  ModifyRsbuildConfigFn,
   OnAfterStartDevServerFn,
   OnBeforeStartDevServerFn,
   OnAfterCreateCompilerFn,
@@ -15,7 +15,7 @@ import type {
   Compiler,
   MultiCompiler,
   RspackConfig,
-  BuilderConfig,
+  RsbuildConfig,
   ModifyRspackConfigFn,
 } from '../types';
 
@@ -31,8 +31,8 @@ export function initHooks() {
     onAfterBuildHook: createAsyncHook<OnAfterBuildFn>(),
     onBeforeBuildHook: createAsyncHook<OnBeforeBuildFn<RspackConfig>>(),
     modifyRspackConfigHook: createAsyncHook<ModifyRspackConfigFn>(),
-    modifyBuilderConfigHook:
-      createAsyncHook<ModifyBuilderConfigFn<BuilderConfig>>(),
+    modifyRsbuildConfigHook:
+      createAsyncHook<ModifyRsbuildConfigFn<RsbuildConfig>>(),
     onAfterCreateCompilerHook:
       createAsyncHook<OnAfterCreateCompilerFn<Compiler | MultiCompiler>>(),
     onBeforeCreateCompilerHook:

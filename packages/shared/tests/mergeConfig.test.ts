@@ -1,10 +1,10 @@
 import { describe, expect, test, it } from 'vitest';
-import { mergeBuilderConfig } from '../src/mergeBuilderConfig';
+import { mergeRsbuildConfig } from '../src/mergeRsbuildConfig';
 
-describe('mergeBuilderConfig', () => {
+describe('mergeRsbuildConfig', () => {
   it('should pick `false` to replace empty object', () => {
     expect(
-      mergeBuilderConfig(
+      mergeRsbuildConfig(
         { tools: { tsLoader: {} } },
         { tools: { tsLoader: false } },
       ),
@@ -15,7 +15,7 @@ describe('mergeBuilderConfig', () => {
 
   test(`should set value when target value is not undefined `, () => {
     expect(
-      mergeBuilderConfig(
+      mergeRsbuildConfig(
         { source: { alias: {} } },
         { output: { disableMinimize: true } },
       ),
@@ -31,7 +31,7 @@ describe('mergeBuilderConfig', () => {
 
   test(`should ignore undefined property`, () => {
     const noop = () => ({});
-    const config = mergeBuilderConfig(
+    const config = mergeRsbuildConfig(
       { source: { alias: {} } },
       { source: { alias: undefined } },
       { tools: { webpack: noop } },
@@ -48,7 +48,7 @@ describe('mergeBuilderConfig', () => {
   });
 
   test(`should keep single function value`, () => {
-    const config = mergeBuilderConfig(
+    const config = mergeRsbuildConfig(
       { tools: { webpack: undefined } },
       { tools: { webpack: () => ({}) } },
     );
@@ -57,7 +57,7 @@ describe('mergeBuilderConfig', () => {
 
   test('should merge string and string[] correctly', async () => {
     expect(
-      mergeBuilderConfig(
+      mergeRsbuildConfig(
         {
           source: {
             preEntry: './a.js',
@@ -78,7 +78,7 @@ describe('mergeBuilderConfig', () => {
 
   test('should deep merge object correctly', async () => {
     expect(
-      mergeBuilderConfig(
+      mergeRsbuildConfig(
         {
           output: {
             distPath: {
@@ -113,7 +113,7 @@ describe('mergeBuilderConfig', () => {
     };
 
     expect(
-      mergeBuilderConfig(
+      mergeRsbuildConfig(
         {
           tools: {
             webpack: {
@@ -137,7 +137,7 @@ describe('mergeBuilderConfig', () => {
     const other = { a: [3], b: [4], c: { test: [2] }, d: { test: [1] } };
     const other1 = { a: [4], b: [5], c: { test: [3] }, d: { test: [2] } };
 
-    const res = mergeBuilderConfig<Record<string, any>>(obj, other, other1);
+    const res = mergeRsbuildConfig<Record<string, any>>(obj, other, other1);
 
     expect(res).toEqual({
       a: [1, 3, 4],

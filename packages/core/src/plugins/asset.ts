@@ -5,12 +5,12 @@ import {
   getFilename,
   chainStaticAssetRule,
 } from '@rsbuild/shared';
-import type { DefaultBuilderPlugin } from '@rsbuild/shared';
+import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
 export const builderAssetPlugin = (
   assetType: 'image' | 'media' | 'font',
   exts: string[],
-): DefaultBuilderPlugin => ({
+): DefaultRsbuildPlugin => ({
   name: `plugin-${assetType}`,
 
   setup(api) {

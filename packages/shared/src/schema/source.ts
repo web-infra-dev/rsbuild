@@ -1,8 +1,8 @@
-import { BuilderTarget, MainFields, SharedSourceConfig } from '../types';
+import { RsbuildTarget, MainFields, SharedSourceConfig } from '../types';
 import { z } from '../utils';
 import { ZodType } from '../zod';
 
-export const BuilderTargetSchema: ZodType<BuilderTarget> = z.enum([
+export const RsbuildTargetSchema: ZodType<RsbuildTarget> = z.enum([
   'web',
   'node',
   'web-worker',
@@ -23,11 +23,11 @@ export const sharedSourceConfigSchema = z.partialObj({
   compileJsDataURI: z.boolean(),
   resolveMainFields: z.union([
     MainFieldsSchema,
-    z.record(BuilderTargetSchema, MainFieldsSchema),
+    z.record(RsbuildTargetSchema, MainFieldsSchema),
   ]),
   resolveExtensionPrefix: z.union([
     z.string(),
-    z.record(BuilderTargetSchema, z.string()),
+    z.record(RsbuildTargetSchema, z.string()),
   ]),
 });
 

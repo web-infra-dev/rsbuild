@@ -10,7 +10,7 @@ import { getCssSupport } from './getCssSupport';
 import { getSharedPkgCompiledPath as getCompiledPath } from './utils';
 import type {
   CssModules,
-  BuilderTarget,
+  RsbuildTarget,
   CSSLoaderOptions,
   SharedNormalizedConfig,
 } from './types';
@@ -243,7 +243,7 @@ export const getCssLoaderOptions = async ({
 
 export const isUseCssExtract = (
   config: SharedNormalizedConfig,
-  target: BuilderTarget,
+  target: RsbuildTarget,
 ) =>
   !config.output.disableCssExtract &&
   target !== 'node' &&

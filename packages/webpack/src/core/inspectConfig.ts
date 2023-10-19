@@ -33,7 +33,7 @@ export async function inspectConfig({
       })
     ).webpackConfigs;
 
-  const rawBuilderConfig = await stringifyConfig(
+  const rawRsbuildConfig = await stringifyConfig(
     context.config,
     inspectOptions.verbose,
   );
@@ -50,7 +50,7 @@ export async function inspectConfig({
 
   if (inspectOptions.writeToDisk) {
     await outputInspectConfigFiles({
-      builderConfig: rawBuilderConfig,
+      builderConfig: rawRsbuildConfig,
       bundlerConfigs: rawBundlerConfigs,
       inspectOptions: {
         ...inspectOptions,
@@ -62,7 +62,7 @@ export async function inspectConfig({
   }
 
   return {
-    builderConfig: rawBuilderConfig,
+    builderConfig: rawRsbuildConfig,
     bundlerConfigs: rawBundlerConfigs,
     origin: {
       builderConfig: context.config,

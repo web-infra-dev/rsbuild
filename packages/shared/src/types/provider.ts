@@ -1,7 +1,7 @@
-import type { PluginStore, Plugins, DefaultBuilderPluginAPI } from './plugin';
-import type { BuilderContext } from './context';
+import type { PluginStore, Plugins, DefaultRsbuildPluginAPI } from './plugin';
+import type { Context } from './context';
 import type { Compiler, MultiCompiler } from 'webpack';
-import type { BuilderMode, CreateBuilderOptions } from './builder';
+import type { RsbuildMode, CreateRsbuildOptions } from './builder';
 import type { Server, ModernDevServerOptions } from '@modern-js/server';
 import type { AddressUrl } from '@modern-js/utils';
 import { Logger } from '@modern-js/prod-server';
@@ -22,13 +22,13 @@ export type StartDevServerOptions = {
 };
 
 export type BuildOptions = {
-  mode?: BuilderMode;
+  mode?: RsbuildMode;
   watch?: boolean;
   compiler?: Compiler | MultiCompiler;
 };
 
 export type InspectConfigOptions = {
-  env?: BuilderMode;
+  env?: RsbuildMode;
   verbose?: boolean;
   outputPath?: string;
   writeToDisk?: boolean;
@@ -40,31 +40,31 @@ export type StartServerResult = {
   server: Server;
 };
 
-export type BuilderProvider<
-  BuilderConfig extends Record<string, any> = Record<string, any>,
+export type RsbuildProvider<
+  RsbuildConfig extends Record<string, any> = Record<string, any>,
   BundlerConfig extends Record<string, any> = Record<string, any>,
   NormalizedConfig extends Record<string, any> = Record<string, any>,
   Compiler extends Record<string, any> = Record<string, any>,
 > = (options: {
   pluginStore: PluginStore;
-  builderOptions: Required<CreateBuilderOptions>;
+  builderOptions: Required<CreateRsbuildOptions>;
   plugins: Plugins;
 }) => Promise<
-  ProviderInstance<BuilderConfig, BundlerConfig, NormalizedConfig, Compiler>
+  ProviderInstance<RsbuildConfig, BundlerConfig, NormalizedConfig, Compiler>
 >;
 
 export type ProviderInstance<
-  BuilderConfig extends Record<string, any> = Record<string, any>,
+  RsbuildConfig extends Record<string, any> = Record<string, any>,
   BundlerConfig extends Record<string, any> = Record<string, any>,
   NormalizedConfig extends Record<string, any> = Record<string, any>,
   CommonCompiler extends Record<string, any> = Record<string, any>,
 > = {
   readonly bundler: Bundler;
 
-  readonly publicContext: Readonly<BuilderContext>;
+  readonly publicContext: Readonly<Context>;
 
-  pluginAPI: DefaultBuilderPluginAPI<
-    BuilderConfig,
+  pluginAPI: DefaultRsbuildPluginAPI<
+    RsbuildConfig,
     NormalizedConfig,
     BundlerConfig,
     CommonCompiler
@@ -91,7 +91,7 @@ export type ProviderInstance<
     builderConfig: string;
     bundlerConfigs: string[];
     origin: {
-      builderConfig: BuilderConfig;
+      builderConfig: RsbuildConfig;
       bundlerConfigs: BundlerConfig[];
     };
   }>;

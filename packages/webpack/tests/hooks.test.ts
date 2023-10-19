@@ -1,6 +1,6 @@
 import { vi, describe, expect, test } from 'vitest';
 import { initHooks } from '@/core/initHooks';
-import { createStubBuilder } from './helper';
+import { createStubRsbuild } from './helper';
 
 describe('initHooks', () => {
   test('should init hooks correctly', async () => {
@@ -21,7 +21,7 @@ describe('onExit hook', () => {
     });
 
     const onExit = vi.fn();
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [
         {
           name: 'foo',
@@ -31,7 +31,7 @@ describe('onExit hook', () => {
         },
       ],
     });
-    await builder.unwrapWebpackConfig();
+    await rsbuild.unwrapWebpackConfig();
 
     exitCbs.forEach((cb) => cb());
 

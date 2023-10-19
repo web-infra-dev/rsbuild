@@ -1,19 +1,19 @@
 import { expect, describe, it } from 'vitest';
-import { createStubBuilder } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/vitest-helper';
 import { pluginOutput } from '@/plugins/output';
 
 describe('plugins/output', () => {
   it('should set output correctly', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should allow to custom server directory with distPath.server', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       target: ['node'],
       builderConfig: {
@@ -25,12 +25,12 @@ describe('plugins/output', () => {
       },
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should allow to set distPath.js and distPath.css to empty string', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       builderConfig: {
         output: {
@@ -42,12 +42,12 @@ describe('plugins/output', () => {
       },
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should allow to use filename.js to modify filename', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       builderConfig: {
         output: {
@@ -59,12 +59,12 @@ describe('plugins/output', () => {
       },
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should allow to use copy plugin', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       builderConfig: {
         output: {
@@ -79,12 +79,12 @@ describe('plugins/output', () => {
       },
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should allow to use copy plugin with multiply config', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       builderConfig: {
         output: {
@@ -107,7 +107,7 @@ describe('plugins/output', () => {
       },
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 });

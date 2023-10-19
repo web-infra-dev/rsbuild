@@ -52,7 +52,7 @@ export interface SharedPerformanceConfig {
    */
   transformLodash?: boolean;
   /**
-   * Controls the Builder's caching behavior during the build process.
+   * Controls the Rsbuild's caching behavior during the build process.
    */
   buildCache?: BuildCacheOptions | boolean;
   /**
@@ -62,7 +62,7 @@ export interface SharedPerformanceConfig {
   /**
    * Configure the chunk splitting strategy.
    */
-  chunkSplit?: BuilderChunkSplit;
+  chunkSplit?: RsbuildChunkSplit;
 
   /**
    * Analyze the size of output files.
@@ -108,7 +108,7 @@ export interface NormalizedSharedPerformanceConfig
   extends SharedPerformanceConfig {
   printFileSize: boolean;
   buildCache: BuildCacheOptions | boolean;
-  chunkSplit: BuilderChunkSplit;
+  chunkSplit: RsbuildChunkSplit;
 }
 
 export type SplitChunks = webpack.Configuration extends {
@@ -159,4 +159,4 @@ export interface SplitCustom extends BaseSplitRules {
   splitChunks?: SplitChunks;
 }
 
-export type BuilderChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;
+export type RsbuildChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;

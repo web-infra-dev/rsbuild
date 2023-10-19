@@ -20,7 +20,7 @@ the Rsbuild will read the [Browserslist config](https://github.com/browserslist/
 For example, to build for the Node.js environment:
 
 ```ts
-const builder = await createRsbuild(provider, {
+const rsbuild = await createRsbuild(provider, {
   target: 'node',
 });
 ```
@@ -32,7 +32,7 @@ When target is an array containing multiple values, Rsbuild will perform multipl
 For example, we can build a browser target and an node target at the same time:
 
 ```ts
-const builder = await createRsbuild(provider, {
+const rsbuild = await createRsbuild(provider, {
   target: ['web', 'node'],
 });
 ```

@@ -2,7 +2,7 @@ import { expect, describe, it, beforeEach, afterEach } from 'vitest';
 import { pluginEntry } from '@rsbuild/core/plugins/entry';
 import { pluginHtml } from '@rsbuild/core/plugins/html';
 import { pluginInlineChunk } from '@rsbuild/core/plugins/inlineChunk';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/inlineChunk', () => {
   beforeEach(() => {
@@ -14,19 +14,19 @@ describe('plugins/inlineChunk', () => {
   });
 
   it('should add InlineChunkHtmlPlugin properly by default', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
       entry: {
         main: './src/main.ts',
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should use proper plugin options when enableInlineScripts is true', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
       entry: {
         main: './src/main.ts',
@@ -37,13 +37,13 @@ describe('plugins/inlineChunk', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should use proper plugin options when enableInlineStyles is true', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
       entry: {
         main: './src/main.ts',
@@ -54,13 +54,13 @@ describe('plugins/inlineChunk', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should use proper plugin options when disableInlineRuntimeChunk is true', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
       entry: {
         main: './src/main.ts',
@@ -71,13 +71,13 @@ describe('plugins/inlineChunk', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should not apply InlineChunkHtmlPlugin when target is node', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
       entry: {
         main: './src/main.ts',
@@ -86,12 +86,12 @@ describe('plugins/inlineChunk', () => {
     });
 
     expect(
-      await builder.matchWebpackPlugin('InlineChunkHtmlPlugin'),
+      await rsbuild.matchWebpackPlugin('InlineChunkHtmlPlugin'),
     ).toBeFalsy();
   });
 
   it('should not apply InlineChunkHtmlPlugin when target is web-worker', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
       entry: {
         main: './src/main.ts',
@@ -100,13 +100,13 @@ describe('plugins/inlineChunk', () => {
     });
 
     expect(
-      await builder.matchWebpackPlugin('InlineChunkHtmlPlugin'),
+      await rsbuild.matchWebpackPlugin('InlineChunkHtmlPlugin'),
     ).toBeFalsy();
   });
 
   it('should not apply InlineChunkHtmlPlugin in development mode', async () => {
     process.env.NODE_ENV = 'development';
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
       entry: {
         main: './src/main.ts',
@@ -114,7 +114,7 @@ describe('plugins/inlineChunk', () => {
     });
 
     expect(
-      await builder.matchWebpackPlugin('InlineChunkHtmlPlugin'),
+      await rsbuild.matchWebpackPlugin('InlineChunkHtmlPlugin'),
     ).toBeFalsy();
   });
 });

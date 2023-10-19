@@ -1,8 +1,8 @@
 import type {
-  SharedBuilderConfig,
+  SharedRsbuildConfig,
   StartDevServerOptions,
   StartServerResult,
-  BuilderContext,
+  Context,
   OnAfterStartDevServerFn,
   OnBeforeStartDevServerFn,
   CompilerTapFn,
@@ -23,7 +23,7 @@ export const getDevServerOptions = async ({
   serverOptions,
   port,
 }: {
-  builderConfig: SharedBuilderConfig;
+  builderConfig: SharedRsbuildConfig;
   serverOptions: ServerOptions;
   port: number;
 }): Promise<{
@@ -66,7 +66,7 @@ export const getDevServerOptions = async ({
 };
 
 /** The context used by startDevServer. */
-export type Context = BuilderContext & {
+export type DevServerContext = Context & {
   hooks: {
     onBeforeStartDevServerHook: ReturnType<
       typeof createAsyncHook<OnBeforeStartDevServerFn>
@@ -75,12 +75,12 @@ export type Context = BuilderContext & {
       typeof createAsyncHook<OnAfterStartDevServerFn>
     >;
   };
-  config: Readonly<SharedBuilderConfig>;
+  config: Readonly<SharedRsbuildConfig>;
 };
 
 export async function startDevServer<
   Options extends {
-    context: Context;
+    context: DevServerContext;
   },
 >(
   options: Options,

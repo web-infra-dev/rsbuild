@@ -6,7 +6,7 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 import { pluginSwc } from '@rsbuild/plugin-swc';
 
 test('should run SWC compilation correctly', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/main.ts'),
@@ -15,7 +15,7 @@ test('should run SWC compilation correctly', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   expect(await page.evaluate('window.student')).toEqual({
     name: 'xxx',
@@ -24,11 +24,11 @@ test('should run SWC compilation correctly', async ({ page }) => {
     school: 'yyy',
   });
 
-  await builder.close();
+  await rsbuild.close();
 });
 
 test('should optimize lodash bundle size', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/main.ts'),
@@ -42,9 +42,9 @@ test('should optimize lodash bundle size', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
   const lodashBundle = Object.keys(files).find((file) =>
     file.includes('lib-lodash'),
   );
@@ -55,11 +55,11 @@ test('should optimize lodash bundle size', async ({ page }) => {
 
   expect(bundleSize < 10).toBeTruthy();
 
-  await builder.close();
+  await rsbuild.close();
 });
 
 test('should use define for class', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/main.ts'),
@@ -91,7 +91,7 @@ test('should use define for class', async () => {
     runServer: true,
   });
 
-  const { content: file } = await builder.getIndexFile();
+  const { content: file } = await rsbuild.getIndexFile();
 
   // this is because setting useDefineForClassFields to false
   expect(file.includes('this.bar = 1')).toBe(true);
@@ -101,11 +101,11 @@ test('should use define for class', async () => {
     file.includes('_define_property(_assert_this_initialized(_this), "id", 1)'),
   ).toBe(true);
 
-  await builder.close();
+  await rsbuild.close();
 });
 
 test('core-js-entry', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/core-js-entry.ts'),
@@ -126,11 +126,11 @@ test('core-js-entry', async () => {
     runServer: true,
   });
 
-  await builder.close();
+  await rsbuild.close();
 });
 
 test('core-js-usage', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/core-js-usage.ts'),
@@ -151,5 +151,5 @@ test('core-js-usage', async () => {
     runServer: true,
   });
 
-  await builder.close();
+  await rsbuild.close();
 });

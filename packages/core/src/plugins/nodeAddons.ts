@@ -1,11 +1,11 @@
 import {
   getDistPath,
   getSharedPkgCompiledPath,
-  type DefaultBuilderPlugin,
+  type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
 import { chalk } from '@rsbuild/shared/chalk';
 
-export const pluginNodeAddons = (): DefaultBuilderPlugin => ({
+export const pluginNodeAddons = (): DefaultRsbuildPlugin => ({
   name: 'plugin-node-addons',
 
   setup(api) {

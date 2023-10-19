@@ -5,7 +5,7 @@ import { build, getHrefByEntryName } from '../scripts/shared';
 const fixtures = __dirname;
 
 test('webpackChain - register plugin', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'source/global-vars'),
     entry: {
       main: join(fixtures, 'source/global-vars/src/index.ts'),
@@ -24,10 +24,10 @@ test('webpackChain - register plugin', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const testEl = page.locator('#test-el');
   await expect(testEl).toHaveText('aaaaa');
 
-  builder.close();
+  rsbuild.close();
 });

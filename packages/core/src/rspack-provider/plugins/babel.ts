@@ -5,7 +5,7 @@ import {
   TS_REGEX,
 } from '@rsbuild/shared';
 import { cloneDeep, isEqual } from '@modern-js/utils/lodash';
-import { BuilderPlugin, NormalizedConfig } from '../types';
+import { RsbuildPlugin, NormalizedConfig } from '../types';
 import type { BabelOptions } from '@modern-js/types';
 
 /**
@@ -21,7 +21,7 @@ export const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
   isTSX: true,
 };
 
-export const pluginBabel = (): BuilderPlugin => ({
+export const pluginBabel = (): RsbuildPlugin => ({
   name: 'plugin-babel',
   setup(api) {
     api.modifyBundlerChain(

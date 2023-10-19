@@ -1,4 +1,4 @@
-export * from './applyDefaultBuilderOptions';
+export * from './applyDefaultRsbuildOptions';
 export * from './constants';
 export * from './createHook';
 export * from './pluginStore';
@@ -9,7 +9,7 @@ export * from './generateMetaTags';
 export * from './getBrowserslist';
 export * from './getCssSupport';
 export * from './logger';
-export * from './mergeBuilderConfig';
+export * from './mergeRsbuildConfig';
 export * from './onExitProcess';
 export * from './pick';
 export * from './regexp';
