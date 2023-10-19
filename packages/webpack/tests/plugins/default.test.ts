@@ -6,9 +6,7 @@ describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctly', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'development';
-    const builder = await createStubBuilder({
-      plugins: 'default',
-    });
+    const builder = await createStubBuilder({});
 
     const config = await builder.unwrapWebpackConfig();
 
@@ -20,9 +18,7 @@ describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctly when production', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
-    const builder = await createStubBuilder({
-      plugins: 'default',
-    });
+    const builder = await createStubBuilder({});
 
     const config = await builder.unwrapWebpackConfig();
 
@@ -35,7 +31,6 @@ describe('applyDefaultPlugins', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
     const builder = await createStubBuilder({
-      plugins: 'default',
       target: ['web-worker'],
     });
 
@@ -50,7 +45,6 @@ describe('applyDefaultPlugins', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
     const builder = await createStubBuilder({
-      plugins: 'default',
       target: ['node'],
     });
 

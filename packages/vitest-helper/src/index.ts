@@ -46,3 +46,5 @@ export function createSnapshotSerializer(options?: SnapshotSerializerOptions) {
     },
   };
 }
+
+export * from './builder';

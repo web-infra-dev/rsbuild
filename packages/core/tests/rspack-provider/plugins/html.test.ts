@@ -1,26 +1,24 @@
 import { expect, describe, it } from 'vitest';
 import { pluginEntry } from '@src/plugins/entry';
 import { pluginHtml } from '@src/plugins/html';
-import { createBuilder, matchPlugin } from '../helper';
+import { createStubBuilder, matchPlugin } from '@rsbuild/vitest-helper';
 
 describe('plugins/html', () => {
   it('should register html plugin correctly', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should register nonce plugin when using security.nonce', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -32,15 +30,13 @@ describe('plugins/html', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(matchPlugin(bundlerConfigs[0], 'HtmlNoncePlugin')).toBeDefined();
   });
 
   it('should register crossorigin plugin when using html.crossorigin', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -52,9 +48,7 @@ describe('plugins/html', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(
       matchPlugin(bundlerConfigs[0], 'HtmlCrossOriginPlugin'),
@@ -62,7 +56,7 @@ describe('plugins/html', () => {
   });
 
   it('should register appIcon plugin when using html.appIcon', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -74,15 +68,13 @@ describe('plugins/html', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(matchPlugin(bundlerConfigs[0], 'HtmlAppIconPlugin')).toBeDefined();
   });
 
   it('should allow to set favicon by html.favicon option', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -93,15 +85,13 @@ describe('plugins/html', () => {
         },
       },
     });
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should register faviconUrl plugin when html.favicon is a URL', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -113,9 +103,7 @@ describe('plugins/html', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(
       matchPlugin(bundlerConfigs[0], 'HtmlFaviconUrlPlugin'),
@@ -123,7 +111,7 @@ describe('plugins/html', () => {
   });
 
   it('should allow to set inject by html.inject option', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -134,9 +122,7 @@ describe('plugins/html', () => {
         },
       },
     });
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
@@ -145,15 +131,13 @@ describe('plugins/html', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
 
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
     });
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
 
@@ -161,7 +145,7 @@ describe('plugins/html', () => {
   });
 
   it('should allow to modify plugin options by tools.htmlPlugin', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -177,15 +161,13 @@ describe('plugins/html', () => {
         },
       },
     });
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should support multi entry', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -198,16 +180,14 @@ describe('plugins/html', () => {
         },
       },
     });
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
     expect(matchPlugin(bundlerConfigs[0], 'HtmlRspackPlugin')).toBeDefined();
   });
 
   it('should allow to disable html plugin', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -219,15 +199,13 @@ describe('plugins/html', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(matchPlugin(bundlerConfigs[0], 'HtmlRspackPlugin')).toBeNull();
   });
 
   it('should disable html plugin when htmlPlugin is an array and contains false', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
@@ -239,9 +217,7 @@ describe('plugins/html', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(matchPlugin(bundlerConfigs[0], 'HtmlRspackPlugin')).toBeNull();
   });

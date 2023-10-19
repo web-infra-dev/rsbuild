@@ -31,6 +31,8 @@
     "types": "./dist/index.d.ts"
   },
   "dependencies": {
+    "@rsbuild/shared": "workspace:*",
+    "@rsbuild/core": "workspace:*",
     "@types/node": "^16",
     "@types/lodash": "^4.14.195",
     "lodash": "^4.17.21",

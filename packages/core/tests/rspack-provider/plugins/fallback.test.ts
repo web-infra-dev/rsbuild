@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { createBuilder } from '../helper';
+import { createStubBuilder } from '@rsbuild/vitest-helper';
 import { pluginFallback } from '@/plugins/fallback';
 import { BuilderPlugin } from '@/types';
 
@@ -34,7 +34,7 @@ describe('plugins/fallback', () => {
   };
 
   it('should convert fallback rule correctly', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [testPlugin, pluginFallback()],
       builderConfig: {
         output: {
@@ -42,20 +42,16 @@ describe('plugins/fallback', () => {
         },
       },
     });
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should not convert fallback rule when output.enableAssetFallback is not enabled', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [testPlugin, pluginFallback()],
     });
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });

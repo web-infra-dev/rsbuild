@@ -323,6 +323,9 @@ importers:
         specifier: ^5.88.1
         version: 5.89.0
     devDependencies:
+      '@rsbuild/vitest-helper':
+        specifier: workspace:*
+        version: link:../vitest-helper
       '@types/node':
         specifier: ^16
         version: 16.18.58
@@ -463,6 +466,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/vitest-helper':
+        specifier: workspace:*
+        version: link:../vitest-helper
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
@@ -690,6 +696,12 @@ importers:
 
   packages/vitest-helper:
     dependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@types/lodash':
         specifier: ^4.14.195
         version: 4.14.199
@@ -769,6 +781,9 @@ importers:
         specifier: 5.1.0
         version: 5.1.0(html-webpack-plugin@5.5.3)(webpack@5.89.0)
     devDependencies:
+      '@rsbuild/vitest-helper':
+        specifier: workspace:*
+        version: link:../vitest-helper
       '@types/node':
         specifier: ^16
         version: 16.18.58
