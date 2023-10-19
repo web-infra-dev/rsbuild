@@ -1,5 +1,6 @@
 import * as path from 'path';
 
+import { getCoreJsVersion } from '@rsbuild/shared';
 import {
   BuilderTarget,
   getBrowserslistWithDefault,
@@ -88,7 +89,7 @@ async function applyDefaultConfig(
     } else {
       rspackConfig.builtins.presetEnv.mode = polyfillMode;
       /* Apply core-js version and path alias */
-      await applyCoreJs(rspackConfig);
+      applyCoreJs(rspackConfig);
     }
   }
 
@@ -112,8 +113,7 @@ async function setBrowserslist(
   }
 }
 
-async function applyCoreJs(rspackConfig: RspackConfig) {
-  const { getCoreJsVersion } = await import('@modern-js/utils');
+function applyCoreJs(rspackConfig: RspackConfig) {
   const coreJsPath = require.resolve('core-js/package.json');
   const version = getCoreJsVersion(coreJsPath);
 

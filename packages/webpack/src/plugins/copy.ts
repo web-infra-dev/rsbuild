@@ -1,3 +1,4 @@
+import { fs } from '@rsbuild/shared/fs-extra';
 import type { CopyPluginOptions, BuilderPlugin } from '../types';
 
 export const builderPluginCopy = (): BuilderPlugin => ({
@@ -29,8 +30,6 @@ export const builderPluginCopy = (): BuilderPlugin => ({
       ) as unknown as CopyPluginOptions;
 
       if (copyPlugin) {
-        const { fs } = await import('@modern-js/utils');
-
         // If the pattern.context directory not exists, we should remove CopyPlugin.
         // Otherwise the CopyPlugin will cause the webpack to re-compile.
         const isContextNotExists = copyPlugin.patterns.every(

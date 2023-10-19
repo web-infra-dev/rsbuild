@@ -1,6 +1,5 @@
 import webpack from 'webpack';
-import { logger } from '@modern-js/utils/logger';
-import { prettyTime } from '@rsbuild/shared';
+import { logger, prettyTime } from '@rsbuild/shared';
 import { bus, createFriendlyPercentage } from './helpers';
 import { createNonTTYLogger } from './helpers/nonTty';
 import type { Props } from './helpers/type';
@@ -39,7 +38,6 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
       dependenciesCount: 10000,
       percentBy: null,
       handler: (percentage, message) => {
-        // eslint-disable-next-line no-param-reassign
         percentage = friendlyPercentage(percentage);
         const done = percentage === 1;
 

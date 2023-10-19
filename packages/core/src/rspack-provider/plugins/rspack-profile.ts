@@ -5,7 +5,7 @@ import {
   experimental_cleanupGlobalTrace as cleanupGlobalTrace,
 } from '@rspack/core';
 import inspector from 'inspector';
-import { fs } from '@modern-js/utils';
+import { fs } from '@rsbuild/shared/fs-extra';
 import { logger } from '@rsbuild/shared';
 
 export const stopProfiler = (

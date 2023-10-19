@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import { getBrowserslist } from '@modern-js/utils';
+import { getBrowserslist } from '@rsbuild/shared';
 import { expect } from 'vitest';
 import { transformSync } from '../src/binding';
 import {

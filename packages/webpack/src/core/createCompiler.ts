@@ -1,4 +1,4 @@
-import { logger, debug, formatStats, type Stats } from '@rsbuild/shared';
+import { isDev, logger, debug, formatStats, type Stats } from '@rsbuild/shared';
 import type { Context, WebpackConfig } from '../types';
 
 export async function createCompiler({
@@ -14,7 +14,6 @@ export async function createCompiler({
   });
 
   const { default: webpack } = await import('webpack');
-  const { isDev } = await import('@modern-js/utils');
 
   const compiler =
     webpackConfigs.length === 1

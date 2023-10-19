@@ -1,13 +1,13 @@
 import jiti from 'jiti';
 import { join } from 'path';
 import { findExists } from '@modern-js/utils';
-import { existsSync } from '@modern-js/utils/fs-extra';
 import type {
   BuilderEntry,
   BuilderPlugin,
   BuilderProvider,
   SharedBuilderConfig,
 } from '@rsbuild/shared';
+import { fs } from '@rsbuild/shared/fs-extra';
 import type { BuilderConfig as RspackBuilderConfig } from '../rspack-provider';
 
 export type BuilderConfig<Config> = Config & {
@@ -27,7 +27,7 @@ export const defineConfig = <
 export async function loadConfig(): Promise<ReturnType<typeof defineConfig>> {
   const configFile = join(process.cwd(), 'rsbuild.config.ts');
 
-  if (existsSync(configFile)) {
+  if (fs.existsSync(configFile)) {
     const loadConfig = jiti(__filename, {
       esmResolve: true,
       interopDefault: true,

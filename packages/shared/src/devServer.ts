@@ -7,10 +7,11 @@ import type {
   OnBeforeStartDevServerFn,
   CompilerTapFn,
 } from './types';
+import { isFunction } from './utils';
 import type { ModernDevServerOptions, Server } from '@modern-js/server';
 import deepmerge from 'deepmerge';
 import { logger as defaultLogger, debug } from './logger';
-import { DEFAULT_PORT } from './constants';
+import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import { createAsyncHook } from './createHook';
 import { getServerOptions, printServerURLs } from './prodServer';
 import type { Compiler } from 'webpack';
@@ -108,9 +109,7 @@ export async function startDevServer<
     process.env.NODE_ENV = 'development';
   }
 
-  const { getPort, isFunction, DEFAULT_DEV_HOST } = await import(
-    '@modern-js/utils'
-  );
+  const { getPort } = await import('@modern-js/utils');
   const builderConfig = options.context.config;
 
   const port = await getPort(builderConfig.dev?.port || DEFAULT_PORT, {

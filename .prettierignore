@@ -2,3 +2,6 @@
 dist
 compiled
 doc_build
+
+# Avoid CSS syntax error
+**/less-inline-js/**/*.less

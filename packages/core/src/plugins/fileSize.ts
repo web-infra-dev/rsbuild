@@ -4,6 +4,7 @@
  */
 import path from 'path';
 import { chalk } from '@rsbuild/shared/chalk';
+import { fs } from '@rsbuild/shared/fs-extra';
 import { logger, Stats, MultiStats, StatsAsset } from '@rsbuild/shared';
 import type { DefaultBuilderPlugin } from '@rsbuild/shared';
 
@@ -40,9 +41,7 @@ async function printHeader(
 }
 
 async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
-  const { fs, filesize, gzipSize, stripAnsi } = await import(
-    '@modern-js/utils'
-  );
+  const { filesize, gzipSize, stripAnsi } = await import('@modern-js/utils');
 
   const formatAsset = (asset: StatsAsset) => {
     const contents = fs.readFileSync(path.join(distPath, asset.name));

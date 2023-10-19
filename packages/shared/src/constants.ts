@@ -7,6 +7,7 @@ export const WEBPACK_PROVIDER = '@rsbuild/webpack';
 export const DEFAULT_PORT = 8080;
 export const DEFAULT_DATA_URL_SIZE = 10000;
 export const DEFAULT_MOUNT_ID = 'root';
+export const DEFAULT_DEV_HOST = '0.0.0.0';
 
 const DEFAULT_WEB_BROWSERSLIST = [
   'chrome >= 87',
@@ -79,6 +80,8 @@ export const MODULE_PATH_REGEX =
 
 export const RUNTIME_CHUNK_NAME = 'builder-runtime';
 export const TS_CONFIG_FILE = 'tsconfig.json';
+
+export const ROUTE_SPEC_FILE = 'route.json';
 
 export const TARGET_ID_MAP: Record<BuilderTarget, string> = {
   web: 'Client',

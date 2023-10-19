@@ -1,4 +1,3 @@
-// eslint-disable-next-line node/prefer-global/console
 import { Console } from 'console';
 import patchConsole from '../../../../compiled/patch-console';
 import cliTruncate from '../../../../compiled/cli-truncate';
