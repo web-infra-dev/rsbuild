@@ -20,6 +20,17 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "libraryName": "antd",
         "style": true,
       },
+      {
+        "camelToDashComponentName": false,
+        "libraryDirectory": "es",
+        "libraryName": "@arco-design/web-react",
+        "style": true,
+      },
+      {
+        "camelToDashComponentName": false,
+        "libraryDirectory": "react-icon",
+        "libraryName": "@arco-design/web-react/icon",
+      },
     ],
     "presetEnv": {
       "coreJs": "3.32",
@@ -595,6 +606,12 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
           "priority": 0,
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
+        },
+        "lib-arco": {
+          "name": "lib-arco",
+          "priority": 0,
+          "reuseExistingChunk": true,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
         },
         "lib-axios": {
           "name": "lib-axios",

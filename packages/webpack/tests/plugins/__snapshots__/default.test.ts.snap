@@ -476,6 +476,25 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "antd",
                 ],
                 [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "es",
+                    "libraryName": "@arco-design/web-react",
+                    "style": true,
+                  },
+                  "@arco-design/web-react",
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "react-icon",
+                    "libraryName": "@arco-design/web-react/icon",
+                  },
+                  "@arco-design/web-react/icon",
+                ],
+                [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
@@ -578,6 +597,25 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "antd",
                 ],
                 [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "es",
+                    "libraryName": "@arco-design/web-react",
+                    "style": true,
+                  },
+                  "@arco-design/web-react",
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "react-icon",
+                    "libraryName": "@arco-design/web-react/icon",
+                  },
+                  "@arco-design/web-react/icon",
+                ],
+                [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
@@ -658,6 +696,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           "priority": 0,
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
+        },
+        "lib-arco": {
+          "name": "lib-arco",
+          "priority": 0,
+          "reuseExistingChunk": true,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
         },
         "lib-axios": {
           "name": "lib-axios",
@@ -1250,6 +1294,25 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   "antd",
                 ],
                 [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "es",
+                    "libraryName": "@arco-design/web-react",
+                    "style": true,
+                  },
+                  "@arco-design/web-react",
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "react-icon",
+                    "libraryName": "@arco-design/web-react/icon",
+                  },
+                  "@arco-design/web-react/icon",
+                ],
+                [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
@@ -1356,6 +1419,25 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                     "style": true,
                   },
                   "antd",
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "es",
+                    "libraryName": "@arco-design/web-react",
+                    "style": true,
+                  },
+                  "@arco-design/web-react",
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "react-icon",
+                    "libraryName": "@arco-design/web-react/icon",
+                  },
+                  "@arco-design/web-react/icon",
                 ],
                 [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
@@ -1480,6 +1562,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           "priority": 0,
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
+        },
+        "lib-arco": {
+          "name": "lib-arco",
+          "priority": 0,
+          "reuseExistingChunk": true,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
         },
         "lib-axios": {
           "name": "lib-axios",
@@ -1971,6 +2059,25 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "antd",
                 ],
                 [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "lib",
+                    "libraryName": "@arco-design/web-react",
+                    "style": true,
+                  },
+                  "@arco-design/web-react",
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "react-icon-cjs",
+                    "libraryName": "@arco-design/web-react/icon",
+                  },
+                  "@arco-design/web-react/icon",
+                ],
+                [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
@@ -2055,6 +2162,25 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                     "style": true,
                   },
                   "antd",
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "lib",
+                    "libraryName": "@arco-design/web-react",
+                    "style": true,
+                  },
+                  "@arco-design/web-react",
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "react-icon-cjs",
+                    "libraryName": "@arco-design/web-react/icon",
+                  },
+                  "@arco-design/web-react/icon",
                 ],
                 [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
@@ -2590,6 +2716,25 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "antd",
                 ],
                 [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "es",
+                    "libraryName": "@arco-design/web-react",
+                    "style": true,
+                  },
+                  "@arco-design/web-react",
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "react-icon",
+                    "libraryName": "@arco-design/web-react/icon",
+                  },
+                  "@arco-design/web-react/icon",
+                ],
+                [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
@@ -2696,6 +2841,25 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                     "style": true,
                   },
                   "antd",
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "es",
+                    "libraryName": "@arco-design/web-react",
+                    "style": true,
+                  },
+                  "@arco-design/web-react",
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
+                  {
+                    "camel2DashComponentName": false,
+                    "libraryDirectory": "react-icon",
+                    "libraryName": "@arco-design/web-react/icon",
+                  },
+                  "@arco-design/web-react/icon",
                 ],
                 [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
