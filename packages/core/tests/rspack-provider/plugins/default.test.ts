@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { createBuilder } from '../helper';
+import { createStubBuilder } from '@rsbuild/vitest-helper';
 import { BuilderPlugin } from '@/types';
 import { BUILTIN_LOADER } from '@/shared';
 
@@ -7,11 +7,9 @@ describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctly', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'development';
-    const builder = await createBuilder({});
+    const builder = await createStubBuilder({});
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
 
     process.env.NODE_ENV = NODE_ENV;
@@ -21,11 +19,9 @@ describe('applyDefaultPlugins', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
 
-    const builder = await createBuilder({});
+    const builder = await createStubBuilder({});
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
 
     process.env.NODE_ENV = NODE_ENV;
@@ -34,13 +30,11 @@ describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctyly when target = node', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'test';
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       target: 'node',
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
     process.env.NODE_ENV = NODE_ENV;
@@ -58,7 +52,7 @@ describe('tools.rspack', () => {
       apply() {}
     }
 
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       builderConfig: {
         tools: {
           rspack: (config, { addRules, prependPlugins }) => {
@@ -75,9 +69,7 @@ describe('tools.rspack', () => {
         },
       },
     });
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
 
@@ -101,13 +93,11 @@ describe('bundlerApi', () => {
       },
     };
 
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [testPlugin],
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
     expect(bundlerConfigs[0]).toMatchInlineSnapshot(`
       {
         "devtool": "hidden-source-map",
@@ -131,13 +121,11 @@ describe('bundlerApi', () => {
       },
     };
 
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [testPlugin],
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
     expect(bundlerConfigs[0]).toMatchInlineSnapshot(`
       {
         "module": {
@@ -172,13 +160,11 @@ describe('bundlerApi', () => {
       },
     };
 
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [testPlugin],
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
     expect(bundlerConfigs[0]).toMatchInlineSnapshot(`
       {
         "module": {

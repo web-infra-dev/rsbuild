@@ -1,118 +1,37 @@
-import {
-  pick,
-  createPluginStore,
-  applyDefaultBuilderOptions,
-  type CreateBuilderOptions,
-} from '@rsbuild/shared';
-import type { BuilderPlugin, BuilderConfig, WebpackConfig } from '@/types';
+import { type CreateBuilderOptions } from '@rsbuild/shared';
+import type { BuilderPlugin, BuilderConfig } from '@/types';
 import assert from 'assert';
 import { webpackProvider } from '@/provider';
-import type webpack from 'webpack';
+import { join } from 'path';
+import {
+  createStubBuilder as createBaseBuilder,
+  matchLoader,
+  matchPlugin,
+} from '@rsbuild/vitest-helper';
 
-/**
- * Check if a file handled by specific loader.
- * @author yangxingyuan
- * @param {Configuration} config - The webpack config.
- * @param {string} loader - The name of loader.
- * @param {string}  testFile - The name of test file that will be handled by webpack.
- * @returns {boolean} The result of the match.
- */
-export function matchLoader({
-  config,
-  loader,
-  testFile,
-}: {
-  config: webpack.Configuration;
-  loader: string;
-  testFile: string;
-}): boolean {
-  if (!config.module?.rules) {
-    return false;
-  }
-  return config.module.rules.some((rule) => {
-    if (
-      rule &&
-      typeof rule === 'object' &&
-      rule.test &&
-      rule.test instanceof RegExp &&
-      rule.test.test(testFile)
-    ) {
-      return (
-        Array.isArray(rule.use) &&
-        rule.use.some((useOptions) => {
-          if (typeof useOptions === 'object' && useOptions !== null) {
-            return useOptions.loader?.includes(loader);
-          } else if (typeof useOptions === 'string') {
-            return useOptions.includes(loader);
-          }
-          return false;
-        })
-      );
-    }
-    return false;
-  });
-}
-
-export const getBuilderPlugins = async () => {
-  const { plugins } = await import('@rsbuild/core/plugins/index');
-
-  return plugins;
-};
-
-/** Match plugin by constructor name. */
-export const matchPlugin = (config: WebpackConfig, pluginName: string) => {
-  const result = config.plugins?.filter(
-    (item) => item?.constructor.name === pluginName,
-  );
-
-  if (Array.isArray(result)) {
-    return result[0] || null;
-  } else {
-    return result || null;
-  }
-};
+export const fixturesDir = join(__dirname, 'fixtures');
 
 /**
  * different with builder.createBuilder. support add custom plugins instead of applyDefaultPlugins.
  */
-export async function createBuilder({
+export async function createStubBuilder({
   builderConfig = {},
   plugins,
   ...options
 }: CreateBuilderOptions & {
   builderConfig?: BuilderConfig;
-  plugins?: BuilderPlugin[] | string;
+  plugins?: BuilderPlugin[];
 }) {
-  const builderOptions = applyDefaultBuilderOptions(options);
-
-  const provider = webpackProvider({
+  const builder = await createBaseBuilder({
+    provider: webpackProvider,
     builderConfig,
+    plugins,
+    ...options,
   });
-
-  const pluginStore = createPluginStore();
-  const {
-    build,
-    initConfigs,
-    publicContext,
-    inspectConfig,
-    createCompiler,
-    startDevServer,
-    applyDefaultPlugins,
-  } = await provider({
-    pluginStore,
-    builderOptions,
-    plugins: await getBuilderPlugins(),
-  });
-
-  if (plugins && typeof plugins !== 'string') {
-    pluginStore.addPlugins(plugins);
-  } else {
-    await applyDefaultPlugins(pluginStore);
-  }
 
   /** Unwrap webpack configs. */
   const unwrapWebpackConfigs = async () => {
-    const webpackConfigs = await initConfigs();
+    const webpackConfigs = await builder.initConfigs();
     return webpackConfigs;
   };
 
@@ -126,15 +45,8 @@ export async function createBuilder({
   /** Match webpack plugin by constructor name. */
   const matchWebpackPlugin = async (pluginName: string) => {
     const config = await unwrapWebpackConfig();
-    const result = config.plugins?.filter(
-      (item) => item?.constructor.name === pluginName,
-    );
-    if (Array.isArray(result)) {
-      assert(result.length <= 1);
-      return result[0] || null;
-    } else {
-      return result || null;
-    }
+
+    return matchPlugin(config, pluginName);
   };
 
   /** Check if a file handled by specific loader. */
@@ -142,17 +54,10 @@ export async function createBuilder({
     matchLoader({ config: await unwrapWebpackConfig(), loader, testFile });
 
   return {
-    ...pick(pluginStore, ['addPlugins', 'removePlugins', 'isPluginExists']),
-    build,
-    createCompiler,
-    inspectConfig,
-    startDevServer,
+    ...builder,
     unwrapWebpackConfig,
     unwrapWebpackConfigs,
     matchWebpackPlugin,
     matchWebpackLoader,
-    context: publicContext,
   };
 }
-
-export const createStubBuilder = createBuilder;

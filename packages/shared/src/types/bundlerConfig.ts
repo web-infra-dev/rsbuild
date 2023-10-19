@@ -1,7 +1,7 @@
 import { Configuration } from 'webpack';
 import type { WebpackChain } from '@modern-js/utils';
 
-interface BundlerPluginInstance {
+export interface BundlerPluginInstance {
   [index: string]: any;
 
   apply: (compiler: {

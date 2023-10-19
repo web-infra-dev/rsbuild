@@ -11,9 +11,7 @@ describe('should use rspack as default bundler', () => {
 
     expect(builder.context.bundlerType).toBe('rspack');
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
 

@@ -1,8 +1,10 @@
 import { expect, describe, it, vi, SpyInstance } from 'vitest';
 import { isFileExists } from '@rsbuild/shared';
 import { pluginResolve } from '@/plugins/resolve';
-import { createBuilder } from '../helper';
+import { createStubBuilder } from '@rsbuild/vitest-helper';
+import { rspackProvider } from '@/index';
 
+// vitest doesn't support mock require(), to avoid load @rsbuild/shared by require, we should pass rspackProvider as param
 vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();
   return {
@@ -16,13 +18,12 @@ describe('plugins/resolve', () => {
     (isFileExists as unknown as SpyInstance).mockImplementationOnce(() =>
       Promise.resolve(false),
     );
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginResolve()],
+      provider: rspackProvider,
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0].resolve?.extensions).toEqual([
       '.js',
@@ -38,13 +39,12 @@ describe('plugins/resolve', () => {
       Promise.resolve(true),
     );
 
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginResolve()],
+      provider: rspackProvider,
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0].resolve?.extensions).toEqual([
       '.ts',
@@ -62,8 +62,9 @@ describe('plugins/resolve', () => {
       Promise.resolve(true),
     );
 
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginResolve()],
+      provider: rspackProvider,
       builderConfig: {
         source: {
           aliasStrategy: 'prefer-alias',
@@ -71,16 +72,15 @@ describe('plugins/resolve', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0].resolve?.tsConfigPath).toBeUndefined();
   });
 
   it('should allow to use source.alias to config alias', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginResolve()],
+      provider: rspackProvider,
       builderConfig: {
         source: {
           alias: {
@@ -89,9 +89,7 @@ describe('plugins/resolve', () => {
         },
       },
     });
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0].resolve?.alias).toEqual({
       foo: 'bar',
@@ -99,8 +97,9 @@ describe('plugins/resolve', () => {
   });
 
   it('should support source.alias to be a function', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginResolve()],
+      provider: rspackProvider,
       builderConfig: {
         source: {
           alias() {
@@ -111,9 +110,7 @@ describe('plugins/resolve', () => {
         },
       },
     });
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0].resolve?.alias).toEqual({
       foo: 'bar',
@@ -123,7 +120,7 @@ describe('plugins/resolve', () => {
   it('should support custom resolve.mainFields', async () => {
     const mainFieldsOption = ['main', 'test', 'browser', ['module', 'exports']];
 
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginResolve()],
       builderConfig: {
         source: {
@@ -131,9 +128,7 @@ describe('plugins/resolve', () => {
         },
       },
     });
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0].resolve?.mainFields).toEqual([
       'main',
@@ -150,7 +145,7 @@ describe('plugins/resolve', () => {
       node: ['main', 'node'],
     };
 
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginResolve()],
       builderConfig: {
         source: {
@@ -158,9 +153,7 @@ describe('plugins/resolve', () => {
         },
       },
     });
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0].resolve?.mainFields).toEqual(mainFieldsOption.web);
   });

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { BuilderTarget } from '@rsbuild/shared';
 import { pluginEntry } from '@src/plugins/entry';
-import { createBuilder } from '../helper';
+import { createStubBuilder } from '@rsbuild/vitest-helper';
 import { pluginSwc } from '@/plugins/swc';
 import { BuilderConfig } from '@/types';
 import { pluginAntd } from '@src/plugins/antd';
@@ -93,7 +93,7 @@ describe('plugins/swc', () => {
   });
 
   it('should disable all pluginImport', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       target: 'web',
       entry: {
         main: './src/index.js',
@@ -106,9 +106,7 @@ describe('plugins/swc', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     bundlerConfigs.forEach((bundlerConfig) => {
       expect(bundlerConfig).toMatchSnapshot();
@@ -116,7 +114,7 @@ describe('plugins/swc', () => {
   });
 
   it('should add antd pluginImport', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       target: 'web',
       entry: {
         main: './src/index.js',
@@ -124,9 +122,7 @@ describe('plugins/swc', () => {
       plugins: [pluginSwc(), pluginEntry(), pluginAntd()],
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     bundlerConfigs.forEach((bundlerConfig) => {
       expect(bundlerConfig).toMatchSnapshot();
@@ -138,7 +134,7 @@ async function matchConfigSnapshot(
   target: BuilderTarget | BuilderTarget[],
   builderConfig: BuilderConfig,
 ) {
-  const builder = await createBuilder({
+  const builder = await createStubBuilder({
     target,
     entry: {
       main: './src/index.js',

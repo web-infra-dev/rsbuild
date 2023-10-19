@@ -1,25 +1,23 @@
 import { describe, expect, it } from 'vitest';
 import { pluginRem } from '@src/plugins/rem';
-import { createBuilder, matchPlugin } from '../helper';
+import { createStubBuilder, matchPlugin } from '@rsbuild/vitest-helper';
 import { pluginCss } from '@/plugins/css';
 import { pluginLess } from '@/plugins/less';
 import { pluginSass } from '@/plugins/sass';
 
 describe('plugins/rem', () => {
   it('should not run rem plugin without config', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginCss(), pluginRem()],
       builderConfig: {},
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should not run rem plugin when false', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
@@ -28,14 +26,12 @@ describe('plugins/rem', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should run rem plugin with default config', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginCss(), pluginLess(), pluginSass(), pluginRem()],
       builderConfig: {
         output: {
@@ -44,15 +40,13 @@ describe('plugins/rem', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should order plugins and run rem plugin with default config', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginRem(), pluginCss(), pluginLess(), pluginSass()],
       builderConfig: {
         output: {
@@ -61,15 +55,13 @@ describe('plugins/rem', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should not run htmlPlugin with enableRuntime is false', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
@@ -80,16 +72,14 @@ describe('plugins/rem', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(bundlerConfigs[0].plugins?.length || 0).toBe(0);
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should run rem plugin with custom config', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
@@ -103,14 +93,12 @@ describe('plugins/rem', () => {
       },
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
   it('should not run rem plugin when target is node', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
@@ -120,9 +108,7 @@ describe('plugins/rem', () => {
       target: ['node'],
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(
       matchPlugin(bundlerConfigs[0], 'AutoSetRootFontSizePlugin'),
@@ -130,7 +116,7 @@ describe('plugins/rem', () => {
   });
 
   it('should not run rem plugin when target is web-worker', async () => {
-    const builder = await createBuilder({
+    const builder = await createStubBuilder({
       plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
@@ -140,9 +126,7 @@ describe('plugins/rem', () => {
       target: ['web-worker'],
     });
 
-    const {
-      origin: { bundlerConfigs },
-    } = await builder.inspectConfig();
+    const bundlerConfigs = await builder.initConfigs();
 
     expect(
       matchPlugin(bundlerConfigs[0], 'AutoSetRootFontSizePlugin'),

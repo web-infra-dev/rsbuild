@@ -5,13 +5,13 @@ import { pluginLess } from '@/plugins/less';
 import { createStubBuilder } from '../helper';
 
 describe('plugins/css', () => {
-  // skipped because this case time out in CI env
-  it.skip('should set css config with style-loader', async () => {
+  // need check（skipped before because this case time out in CI env)
+  it('should set css config with style-loader', async () => {
     const builder = await createStubBuilder({
       plugins: [pluginCss()],
       builderConfig: {
-        tools: {
-          styleLoader: {},
+        output: {
+          disableCssExtract: true,
         },
       },
     });
@@ -23,8 +23,8 @@ describe('plugins/css', () => {
     expect(includeStyleLoader).toBe(true);
   });
 
-  // skipped because this case time out in CI env
-  it.skip('should set css config with mini-css-extract-plugin', async () => {
+  // need check（skipped before because this case time out in CI env)
+  it('should set css config with mini-css-extract-plugin', async () => {
     const builder = await createStubBuilder({
       plugins: [pluginCss()],
       builderConfig: {},
@@ -123,6 +123,9 @@ describe('plugins/css', () => {
       target: ['node'],
       plugins: [pluginCss()],
       builderConfig: {
+        output: {
+          disableCssExtract: true,
+        },
         tools: {
           styleLoader: {},
         },
@@ -142,6 +145,9 @@ describe('plugins/css', () => {
       target: ['web-worker'],
       plugins: [pluginCss()],
       builderConfig: {
+        output: {
+          disableCssExtract: true,
+        },
         tools: {
           styleLoader: {},
         },

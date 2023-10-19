@@ -34,8 +34,12 @@
       "default": "./dist/plugins/*.js"
     },
     "./rspack-css-plugin": {
-      "types": "./dist/rspack-provider/plugins/css.js",
-      "default": "./dist/rspack-provider/plugins/css.d.ts"
+      "types": "./dist/rspack-provider/plugins/css.d.ts",
+      "default": "./dist/rspack-provider/plugins/css.js"
+    },
+    "./rspack-provider": {
+      "types": "./dist/rspack-provider/index.d.ts",
+      "default": "./dist/rspack-provider/index.js"
     }
   },
   "typesVersions": {
@@ -48,6 +52,9 @@
       ],
       "rspack-css-plugin": [
         "./dist/rspack-provider/plugins/css.d.ts"
+      ],
+      "rspack-provider": [
+        "./dist/rspack-provider/index.d.ts"
       ]
     }
   },
@@ -82,6 +89,7 @@
   },
   "devDependencies": {
     "@types/node": "^16",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@rsbuild/vitest-helper": "workspace:*"
   }
 }
