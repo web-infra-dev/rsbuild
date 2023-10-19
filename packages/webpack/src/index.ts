@@ -1,5 +1,5 @@
-export { builderWebpackProvider } from './provider';
-export type { BuilderWebpackProvider } from './provider';
+export { webpackProvider } from './provider';
+export type { WebpackProvider } from './provider';
 export { webpackBuild } from './core/build';
 export type { WebpackBuildError } from './core/build';
 export { createDefaultConfig } from './config/defaults';

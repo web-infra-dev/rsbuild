@@ -1,0 +1,13 @@
+{
+  "name": "@examples/basic-webpack",
+  "private": true,
+  "scripts": {
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "serve": "rsbuild serve"
+  },
+  "dependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/webpack": "workspace:*"
+  }
+}

@@ -1,6 +1,6 @@
 export { getRspackVersion } from './shared/rspackVersion';
-export { builderRspackProvider } from './provider';
-export type { BuilderRspackProvider } from './provider';
+export { rspackProvider } from './provider';
+export type { RspackProvider } from './provider';
 
 export type {
   // Config Types

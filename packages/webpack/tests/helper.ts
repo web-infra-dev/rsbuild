@@ -6,7 +6,7 @@ import {
 } from '@rsbuild/shared';
 import type { BuilderPlugin, BuilderConfig, WebpackConfig } from '@/types';
 import assert from 'assert';
-import { builderWebpackProvider } from '@/provider';
+import { webpackProvider } from '@/provider';
 import type webpack from 'webpack';
 
 /**
@@ -85,7 +85,7 @@ export async function createBuilder({
 }) {
   const builderOptions = applyDefaultBuilderOptions(options);
 
-  const provider = builderWebpackProvider({
+  const provider = webpackProvider({
     builderConfig,
   });
 

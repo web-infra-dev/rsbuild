@@ -220,6 +220,15 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
 
+  examples/basic-webpack:
+    dependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../../packages/webpack
+
   packages/babel-preset:
     dependencies:
       '@babel/core':
