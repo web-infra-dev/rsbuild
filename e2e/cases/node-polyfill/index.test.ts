@@ -6,16 +6,16 @@ import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
 test('should add node-polyfill when add node-polyfill plugin', async ({
   page,
 }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     plugins: [pluginNodePolyfill()],
     runServer: true,
   });
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const test = page.locator('#test');
-  await expect(test).toHaveText('Hello Builder!');
+  await expect(test).toHaveText('Hello Rsbuild!');
 
   const testBuffer = page.locator('#test-buffer');
   await expect(testBuffer).toHaveText('120120120120');
@@ -23,5 +23,5 @@ test('should add node-polyfill when add node-polyfill plugin', async ({
   const testQueryString = page.locator('#test-querystring');
   await expect(testQueryString).toHaveText('foo=bar');
 
-  builder.close();
+  rsbuild.close();
 });

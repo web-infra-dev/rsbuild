@@ -1,11 +1,11 @@
 import { expect, describe, it } from 'vitest';
 import { pluginSplitChunks } from '@rsbuild/core/plugins/splitChunks';
 import { pluginLazyCompilation } from '@/plugins/lazyCompilation';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/lazyCompilation', () => {
   it('should allow to use lazy compilation', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginLazyCompilation()],
       builderConfig: {
         experiments: {
@@ -17,7 +17,7 @@ describe('plugins/lazyCompilation', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toEqual({
       experiments: {
         lazyCompilation: {
@@ -32,7 +32,7 @@ describe('plugins/lazyCompilation', () => {
   });
 
   it('should disable split chunks', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks(), pluginLazyCompilation()],
       builderConfig: {
         experiments: {
@@ -41,7 +41,7 @@ describe('plugins/lazyCompilation', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.optimization?.splitChunks).toEqual(false);
   });
 
@@ -49,7 +49,7 @@ describe('plugins/lazyCompilation', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginLazyCompilation()],
       builderConfig: {
         experiments: {
@@ -58,14 +58,14 @@ describe('plugins/lazyCompilation', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toEqual({});
 
     process.env.NODE_ENV = NODE_ENV;
   });
 
   it('should not apply lazy compilation for node target', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       target: 'node',
       plugins: [pluginLazyCompilation()],
       builderConfig: {
@@ -75,7 +75,7 @@ describe('plugins/lazyCompilation', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toEqual({});
   });
 });

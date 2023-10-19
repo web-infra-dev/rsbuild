@@ -4,7 +4,7 @@ import { webpackOnlyTest } from '@scripts/helper';
 import { build } from '@scripts/shared';
 
 webpackOnlyTest('should compile const enum correctly', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.ts') },
     builderConfig: {
@@ -13,7 +13,7 @@ webpackOnlyTest('should compile const enum correctly', async () => {
       },
     },
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const content =
     files[Object.keys(files).find((file) => /index\.\w+\.js/.test(file))!];

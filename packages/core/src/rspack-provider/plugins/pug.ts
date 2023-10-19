@@ -1,4 +1,4 @@
-import type { BuilderPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 import type { PugOptions } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
 
@@ -20,7 +20,7 @@ const getPugTemplateCompiler = (userOptions: PugOptions) => ({
   },
 });
 
-export const pluginPug = (): BuilderPlugin => ({
+export const pluginPug = (): RsbuildPlugin => ({
   name: 'plugin-pug',
 
   setup(api) {

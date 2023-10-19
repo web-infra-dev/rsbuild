@@ -5,10 +5,10 @@ import {
 } from '@rsbuild/shared';
 import _ from '@modern-js/utils/lodash';
 import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
-import { BuilderPlugin } from '../types';
+import { RsbuildPlugin } from '../types';
 import { getUseBuiltIns } from './babel';
 
-export const pluginTsLoader = (): BuilderPlugin => {
+export const pluginTsLoader = (): RsbuildPlugin => {
   return {
     name: 'plugin-ts-loader',
     setup(api) {

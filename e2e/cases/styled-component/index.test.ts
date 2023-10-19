@@ -31,8 +31,8 @@ const noStyledConfig = {
 
 // TODO: needs builtin:swc-loader
 webpackOnlyTest('should allow to disable styled-components', async () => {
-  const builder = await build(noStyledConfig);
-  const files = await builder.unwrapOutputJSON();
+  const rsbuild = await build(noStyledConfig);
+  const files = await rsbuild.unwrapOutputJSON();
 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.js'))!];
@@ -41,8 +41,8 @@ webpackOnlyTest('should allow to disable styled-components', async () => {
 
 // TODO: needs builtin:swc-loader
 webpackOnlyTest('should transform styled-components by default', async () => {
-  const builder = await build(commonConfig);
-  const files = await builder.unwrapOutputJSON();
+  const rsbuild = await build(commonConfig);
+  const files = await rsbuild.unwrapOutputJSON();
 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.js'))!];

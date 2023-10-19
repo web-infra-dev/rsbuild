@@ -1,11 +1,11 @@
-import type { BuilderPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 import {
   isUseCssSourceMap,
   LESS_REGEX,
   getLessLoaderOptions,
 } from '@rsbuild/shared';
 
-export function pluginLess(): BuilderPlugin {
+export function pluginLess(): RsbuildPlugin {
   return {
     name: 'plugin-less',
     setup(api) {

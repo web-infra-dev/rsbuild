@@ -5,10 +5,10 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 const fixtures = __dirname;
 
 test.describe('source configure multi', () => {
-  let builder: Awaited<ReturnType<typeof build>>;
+  let rsbuild: Awaited<ReturnType<typeof build>>;
 
   test.beforeAll(async () => {
-    builder = await build({
+    rsbuild = await build({
       cwd: join(fixtures, 'basic'),
       entry: {
         main: join(fixtures, 'basic/src/index.js'),
@@ -26,16 +26,16 @@ test.describe('source configure multi', () => {
   });
 
   test.afterAll(() => {
-    builder.close();
+    rsbuild.close();
   });
 
   test('alias', async ({ page }) => {
-    await page.goto(getHrefByEntryName('main', builder.port));
-    await expect(page.innerHTML('#test')).resolves.toBe('Hello Builder! 1');
+    await page.goto(getHrefByEntryName('main', rsbuild.port));
+    await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
   });
 
   test('pre-entry', async ({ page }) => {
-    await page.goto(getHrefByEntryName('main', builder.port));
+    await page.goto(getHrefByEntryName('main', rsbuild.port));
     await expect(page.innerHTML('#test-el')).resolves.toBe('aaaaa');
 
     // test order
@@ -63,19 +63,19 @@ test.skip('module-scopes', async ({ page }) => {
     }),
   ).rejects.toThrowError('webpack build failed!');
 
-  let builder = await build({
+  let rsbuild = await build({
     ...buildOpts,
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
-  await expect(page.innerHTML('#test')).resolves.toBe('Hello Builder! 1');
+  await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
 
-  builder.close();
+  rsbuild.close();
 
   // should not throw
-  builder = await build({
+  rsbuild = await build({
     ...buildOpts,
     builderConfig: {
       source: {
@@ -84,11 +84,11 @@ test.skip('module-scopes', async ({ page }) => {
     },
   });
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('global-vars', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'global-vars'),
     entry: {
       main: join(fixtures, 'global-vars/src/index.ts'),
@@ -103,16 +103,16 @@ test('global-vars', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const testEl = page.locator('#test-el');
   await expect(testEl).toHaveText('aaaaa');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('define', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'global-vars'),
     entry: {
       main: join(fixtures, 'global-vars/src/index.ts'),
@@ -127,19 +127,19 @@ test('define', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const testEl = page.locator('#test-el');
   await expect(testEl).toHaveText('aaaaa');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('tsconfig paths should work and override the alias config', async ({
   page,
 }) => {
   const cwd = join(fixtures, 'tsconfig-paths');
-  const builder = await build({
+  const rsbuild = await build({
     cwd,
     entry: {
       main: join(cwd, 'src/index.ts'),
@@ -154,19 +154,19 @@ test('tsconfig paths should work and override the alias config', async ({
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const foo = page.locator('#foo');
   await expect(foo).toHaveText('tsconfig paths worked');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('tsconfig paths should not work when aliasStrategy is "prefer-alias"', async ({
   page,
 }) => {
   const cwd = join(fixtures, 'tsconfig-paths');
-  const builder = await build({
+  const rsbuild = await build({
     cwd,
     entry: {
       main: join(cwd, 'src/index.ts'),
@@ -182,10 +182,10 @@ test('tsconfig paths should not work when aliasStrategy is "prefer-alias"', asyn
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const foo = page.locator('#foo');
   await expect(foo).toHaveText('source.alias worked');
 
-  builder.close();
+  rsbuild.close();
 });

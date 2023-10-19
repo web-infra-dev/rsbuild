@@ -2,7 +2,7 @@ import {
   sharedPerformanceConfigSchema,
   z,
   BaseChunkSplit,
-  BuilderChunkSplit,
+  RsbuildChunkSplit,
   BaseSplitRulesSchema,
   SplitBySizeSchema,
   SplitCustomSchema,
@@ -22,7 +22,7 @@ const BaseChunkSplitSchema: z.ZodType<BaseChunkSplit> =
     override: z.any().optional(),
   });
 
-const BuilderChunkSplitSchema: z.ZodType<BuilderChunkSplit> = z.union([
+const RsbuildChunkSplitSchema: z.ZodType<RsbuildChunkSplit> = z.union([
   BaseChunkSplitSchema,
   SplitBySizeSchema,
   SplitCustomSchema,
@@ -32,6 +32,6 @@ export const performanceConfigSchema: z.ZodType<PerformanceConfig> =
   sharedPerformanceConfigSchema
     .extend({
       bundleAnalyze: z.any(),
-      chunkSplit: BuilderChunkSplitSchema,
+      chunkSplit: RsbuildChunkSplitSchema,
     })
     .partial();

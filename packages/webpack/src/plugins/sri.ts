@@ -1,7 +1,7 @@
-import type { BuilderPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
 
-export const pluginSRI = (): BuilderPlugin => ({
+export const pluginSRI = (): RsbuildPlugin => ({
   name: 'plugin-sri',
 
   setup(api) {

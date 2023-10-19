@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { pluginSRI } from '@/plugins/sri';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/sri', () => {
   it('should apply default sri plugin', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginSRI()],
       builderConfig: {
         security: {
@@ -13,12 +13,12 @@ describe('plugins/sri', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.output?.crossOriginLoading).toBe('anonymous');
   });
 
   it('should apply sri plugin', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginSRI()],
       builderConfig: {
         security: {
@@ -30,17 +30,17 @@ describe('plugins/sri', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.output?.crossOriginLoading).toBe('anonymous');
   });
 
   it("should't apply sri plugin", async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginSRI()],
       builderConfig: {},
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.output?.crossOriginLoading).toBeUndefined();
   });
 });

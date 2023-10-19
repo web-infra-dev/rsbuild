@@ -1,10 +1,10 @@
 import {
   getDistPath,
   isHtmlDisabled,
-  DefaultBuilderPlugin,
+  DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
 
-export function pluginAssetsRetry(): DefaultBuilderPlugin {
+export function pluginAssetsRetry(): DefaultRsbuildPlugin {
   return {
     name: 'plugin-assets-retry',
     setup(api) {

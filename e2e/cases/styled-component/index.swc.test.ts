@@ -34,11 +34,11 @@ const noStyledConfig = {
 };
 
 test('should allow to disable styled-components when use swc plugin', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     ...noStyledConfig,
     plugins: [pluginSwc()],
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const content =
     files[
@@ -51,11 +51,11 @@ test('should allow to disable styled-components when use swc plugin', async () =
 });
 
 test('should transform styled-components by default when use swc plugin', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     ...commonConfig,
     plugins: [pluginSwc()],
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const content =
     files[

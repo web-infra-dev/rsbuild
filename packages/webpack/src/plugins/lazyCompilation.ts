@@ -1,6 +1,6 @@
-import type { BuilderPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginLazyCompilation = (): BuilderPlugin => ({
+export const pluginLazyCompilation = (): RsbuildPlugin => ({
   name: 'plugin-lazy-compilation',
 
   setup(api) {

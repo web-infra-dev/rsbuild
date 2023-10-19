@@ -3,7 +3,7 @@ import type {
   WebpackChainRule,
   BundlerChainRule,
   SharedNormalizedConfig,
-  BuilderContext,
+  Context,
 } from '../types';
 
 export function applyScriptCondition({
@@ -15,7 +15,7 @@ export function applyScriptCondition({
 }: {
   rule: BundlerChainRule | WebpackChainRule;
   config: SharedNormalizedConfig;
-  context: BuilderContext;
+  context: Context;
   includes: (string | RegExp)[];
   excludes: (string | RegExp)[];
 }) {
@@ -24,11 +24,11 @@ export function applyScriptCondition({
     and: [context.rootPath, { not: NODE_MODULES_REGEX }],
   });
 
-  [...includes, ...(config.source.include || [])].forEach(condition => {
+  [...includes, ...(config.source.include || [])].forEach((condition) => {
     rule.include.add(condition);
   });
 
-  [...excludes, ...(config.source.exclude || [])].forEach(condition => {
+  [...excludes, ...(config.source.exclude || [])].forEach((condition) => {
     rule.exclude.add(condition);
   });
 }

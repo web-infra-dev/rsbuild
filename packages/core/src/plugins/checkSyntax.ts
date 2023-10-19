@@ -1,14 +1,14 @@
 import {
-  BuilderContext,
-  BuilderTarget,
+  Context,
+  RsbuildTarget,
   DEFAULT_BROWSERSLIST,
   getBrowserslistWithDefault,
-  DefaultBuilderPlugin,
+  DefaultRsbuildPlugin,
   SharedNormalizedConfig,
   CheckSyntaxOptions,
 } from '@rsbuild/shared';
 
-export function pluginCheckSyntax(): DefaultBuilderPlugin {
+export function pluginCheckSyntax(): DefaultRsbuildPlugin {
   return {
     name: 'plugin-check-syntax',
 
@@ -46,9 +46,9 @@ export function pluginCheckSyntax(): DefaultBuilderPlugin {
 }
 
 async function getCheckTargets(
-  builderContext: BuilderContext,
+  builderContext: Context,
   builderConfig: SharedNormalizedConfig,
-  builderTarget: BuilderTarget,
+  builderTarget: RsbuildTarget,
   checkSyntax: CheckSyntaxOptions | true,
 ) {
   const browserslist =

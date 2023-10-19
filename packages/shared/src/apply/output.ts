@@ -1,7 +1,7 @@
 import { posix } from 'path';
 import type {
-  BuilderContext,
-  SharedBuilderPluginAPI,
+  Context,
+  SharedRsbuildPluginAPI,
   SharedNormalizedConfig,
 } from '../types';
 import { getDistPath, getFilename } from '../fs';
@@ -12,7 +12,7 @@ import {
 } from '../constants';
 import { addTrailingSlash } from '../utils';
 
-export function applyBuilderOutputPlugin(api: SharedBuilderPluginAPI) {
+export function applyOutputPlugin(api: SharedRsbuildPluginAPI) {
   api.modifyBundlerChain(
     async (chain, { isProd, isServer, isServiceWorker }) => {
       const config = api.getNormalizedConfig();
@@ -70,7 +70,7 @@ function getPublicPath({
 }: {
   config: SharedNormalizedConfig;
   isProd: boolean;
-  context: BuilderContext;
+  context: Context;
 }) {
   const { dev, output } = config;
 

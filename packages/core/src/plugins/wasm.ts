@@ -1,7 +1,7 @@
 import { join } from 'path';
-import { getDistPath, type DefaultBuilderPlugin } from '@rsbuild/shared';
+import { getDistPath, type DefaultRsbuildPlugin } from '@rsbuild/shared';
 
-export const pluginWasm = (): DefaultBuilderPlugin => ({
+export const pluginWasm = (): DefaultRsbuildPlugin => ({
   name: 'plugin-wasm',
 
   setup(api) {

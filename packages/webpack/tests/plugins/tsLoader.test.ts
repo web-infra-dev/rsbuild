@@ -1,10 +1,10 @@
 import { expect, describe, it } from 'vitest';
 import { pluginTsLoader } from '@/plugins/tsLoader';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/tsLoader', () => {
   it('should set ts-loader', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginTsLoader()],
       builderConfig: {
         tools: {
@@ -12,13 +12,13 @@ describe('plugins/tsLoader', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should set include/exclude', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginTsLoader()],
       builderConfig: {
         tools: {
@@ -30,7 +30,7 @@ describe('plugins/tsLoader', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });

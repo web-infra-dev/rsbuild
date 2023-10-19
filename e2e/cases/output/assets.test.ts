@@ -59,7 +59,7 @@ const cases = [
 
 cases.forEach((_case) => {
   test(_case.name, async ({ page }) => {
-    const builder = await build({
+    const rsbuild = await build({
       cwd: _case.cwd,
       entry: {
         main: join(_case.cwd, 'src/index.js'),
@@ -68,7 +68,7 @@ cases.forEach((_case) => {
       builderConfig: _case.config || {},
     });
 
-    await page.goto(getHrefByEntryName('main', builder.port));
+    await page.goto(getHrefByEntryName('main', rsbuild.port));
 
     if (_case.expected === 'url') {
       await expect(
@@ -84,6 +84,6 @@ cases.forEach((_case) => {
       ).resolves.toBeTruthy();
     }
 
-    builder.close();
+    rsbuild.close();
   });
 });

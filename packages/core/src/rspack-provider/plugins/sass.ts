@@ -4,9 +4,9 @@ import {
   patchCompilerGlobalLocation,
   getResolveUrlJoinFn,
 } from '@rsbuild/shared';
-import type { BuilderPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 
-export function pluginSass(): BuilderPlugin {
+export function pluginSass(): RsbuildPlugin {
   return {
     name: 'plugin-sass',
     async setup(api) {

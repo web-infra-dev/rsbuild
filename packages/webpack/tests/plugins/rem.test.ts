@@ -3,21 +3,21 @@ import { pluginRem } from '@rsbuild/core/plugins/rem';
 import { pluginCss } from '@/plugins/css';
 import { pluginLess } from '@/plugins/less';
 import { pluginSass } from '@/plugins/sass';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/rem', () => {
   it('should not run rem plugin without config', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
       builderConfig: {},
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
   });
 
   it('should not run rem plugin when false', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
@@ -26,12 +26,12 @@ describe('plugins/rem', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
   });
 
   it('should run rem plugin with default config', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginLess(), pluginSass(), pluginRem()],
       builderConfig: {
         output: {
@@ -40,14 +40,14 @@ describe('plugins/rem', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     // should add AutoSetRootFontSizePlugin and postcss-rem plugin
     expect(config).toMatchSnapshot();
   });
 
   it('should order plugins and run rem plugin with default config', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginRem(), pluginCss(), pluginLess(), pluginSass()],
       builderConfig: {
         output: {
@@ -56,14 +56,14 @@ describe('plugins/rem', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     // should add AutoSetRootFontSizePlugin and postcss-rem plugin
     expect(config).toMatchSnapshot();
   });
 
   it('should not run htmlPlugin with enableRuntime is false', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
@@ -74,14 +74,14 @@ describe('plugins/rem', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config.plugins?.length || 0).toBe(0);
     expect(config).toMatchSnapshot();
   });
 
   it('should run rem plugin with custom config', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
@@ -95,12 +95,12 @@ describe('plugins/rem', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
   });
 
   it('should not run rem plugin when target is node', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
@@ -111,12 +111,12 @@ describe('plugins/rem', () => {
     });
 
     expect(
-      await builder.matchWebpackPlugin('AutoSetRootFontSizePlugin'),
+      await rsbuild.matchWebpackPlugin('AutoSetRootFontSizePlugin'),
     ).toBeFalsy();
   });
 
   it('should not run rem plugin when target is web-worker', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
@@ -127,7 +127,7 @@ describe('plugins/rem', () => {
     });
 
     expect(
-      await builder.matchWebpackPlugin('AutoSetRootFontSizePlugin'),
+      await rsbuild.matchWebpackPlugin('AutoSetRootFontSizePlugin'),
     ).toBeFalsy();
   });
 });

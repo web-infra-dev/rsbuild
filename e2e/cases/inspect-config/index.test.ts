@@ -1,9 +1,9 @@
 import path from 'path';
 import { fs } from '@rsbuild/shared/fs-extra';
 import { expect, test } from '@playwright/test';
-import { createBuilder } from '@scripts/shared';
+import { createRsbuild } from '@scripts/shared';
 
-const builderConfig = path.resolve(__dirname, './dist/builder.config.js');
+const builderConfig = path.resolve(__dirname, './dist/rsbuild.config.js');
 const bundlerConfig = path.resolve(
   __dirname,
   `./dist/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.js`,
@@ -14,7 +14,7 @@ const bundlerNodeConfig = path.resolve(
 );
 
 test('should generate config files when writeToDisk is true', async () => {
-  const builder = await createBuilder(
+  const rsbuild = await createRsbuild(
     {
       cwd: __dirname,
       entry: {
@@ -23,7 +23,7 @@ test('should generate config files when writeToDisk is true', async () => {
     },
     {},
   );
-  await builder.inspectConfig({
+  await rsbuild.inspectConfig({
     writeToDisk: true,
   });
 
@@ -35,7 +35,7 @@ test('should generate config files when writeToDisk is true', async () => {
 });
 
 test('should generate bundler config for node when target contains node', async () => {
-  const builder = await createBuilder(
+  const rsbuild = await createRsbuild(
     {
       cwd: __dirname,
       target: ['web', 'node'],
@@ -45,7 +45,7 @@ test('should generate bundler config for node when target contains node', async 
     },
     {},
   );
-  await builder.inspectConfig({
+  await rsbuild.inspectConfig({
     writeToDisk: true,
   });
 
@@ -59,7 +59,7 @@ test('should generate bundler config for node when target contains node', async 
 });
 
 test('should not generate config files when writeToDisk is false', async () => {
-  const builder = await createBuilder(
+  const rsbuild = await createRsbuild(
     {
       cwd: __dirname,
       entry: {
@@ -68,7 +68,7 @@ test('should not generate config files when writeToDisk is false', async () => {
     },
     {},
   );
-  await builder.inspectConfig({
+  await rsbuild.inspectConfig({
     writeToDisk: false,
   });
 

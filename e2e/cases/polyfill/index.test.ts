@@ -31,7 +31,7 @@ const getPolyfillContent = (files: Record<string, string>) => {
 test('should add polyfill when set polyfill entry (default)', async ({
   page,
 }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     builderConfig: {
@@ -42,13 +42,13 @@ test('should add polyfill when set polyfill entry (default)', async ({
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
 
-  builder.close();
+  rsbuild.close();
 
-  const files = await builder.unwrapOutputJSON(false);
+  const files = await rsbuild.unwrapOutputJSON(false);
 
   const content = getPolyfillContent(files);
 
@@ -60,7 +60,7 @@ test('should add polyfill when set polyfill entry (default)', async ({
 webpackOnlyTest(
   'should add polyfill when set polyfill usage',
   async ({ page }) => {
-    const builder = await build({
+    const rsbuild = await build({
       cwd: __dirname,
       entry: { index: path.resolve(__dirname, './src/index.js') },
       builderConfig: {
@@ -71,13 +71,13 @@ webpackOnlyTest(
       runServer: true,
     });
 
-    await page.goto(getHrefByEntryName('index', builder.port));
+    await page.goto(getHrefByEntryName('index', rsbuild.port));
 
     expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
 
-    builder.close();
+    rsbuild.close();
 
-    const files = await builder.unwrapOutputJSON(false);
+    const files = await rsbuild.unwrapOutputJSON(false);
 
     const content = getPolyfillContent(files);
 

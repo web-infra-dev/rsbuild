@@ -6,10 +6,10 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 const fixtures = __dirname;
 
 test.describe('html configure multi', () => {
-  let builder: Awaited<ReturnType<typeof build>>;
+  let rsbuild: Awaited<ReturnType<typeof build>>;
 
   test.beforeAll(async () => {
-    builder = await build({
+    rsbuild = await build({
       cwd: join(fixtures, 'mount-id'),
       entry: {
         main: join(join(fixtures, 'mount-id'), 'src/index.ts'),
@@ -24,24 +24,24 @@ test.describe('html configure multi', () => {
   });
 
   test.afterAll(() => {
-    builder.close();
+    rsbuild.close();
   });
 
   test('mountId', async ({ page }) => {
-    await page.goto(getHrefByEntryName('main', builder.port));
+    await page.goto(getHrefByEntryName('main', rsbuild.port));
 
     const test = page.locator('#test');
-    await expect(test).toHaveText('Hello Builder!');
+    await expect(test).toHaveText('Hello Rsbuild!');
   });
 
   test('title default', async ({ page }) => {
-    await page.goto(getHrefByEntryName('main', builder.port));
+    await page.goto(getHrefByEntryName('main', rsbuild.port));
 
     await expect(page.evaluate(`document.title`)).resolves.toBe('');
   });
 
   test('inject default (head)', async () => {
-    const pagePath = join(builder.distPath, 'main.html');
+    const pagePath = join(rsbuild.distPath, 'main.html');
     const content = await fs.readFile(pagePath, 'utf-8');
 
     expect(
@@ -54,12 +54,12 @@ test.describe('html configure multi', () => {
 });
 
 test.describe('html element set', () => {
-  let builder: Awaited<ReturnType<typeof build>>;
+  let rsbuild: Awaited<ReturnType<typeof build>>;
   let mainContent: string;
   let fooContent: string;
 
   test.beforeAll(async () => {
-    builder = await build({
+    rsbuild = await build({
       cwd: join(fixtures, 'template'),
       entry: {
         main: join(join(fixtures, 'template'), 'src/index.ts'),
@@ -80,14 +80,14 @@ test.describe('html element set', () => {
     });
 
     mainContent = await fs.readFile(
-      join(builder.distPath, 'main.html'),
+      join(rsbuild.distPath, 'main.html'),
       'utf-8',
     );
-    fooContent = await fs.readFile(join(builder.distPath, 'foo.html'), 'utf-8');
+    fooContent = await fs.readFile(join(rsbuild.distPath, 'foo.html'), 'utf-8');
   });
 
   test.afterAll(() => {
-    builder.close();
+    rsbuild.close();
   });
 
   test('appicon', async () => {
@@ -96,7 +96,7 @@ test.describe('html element set', () => {
 
     expect(iconRelativePath).toBeDefined();
 
-    const iconPath = join(builder.distPath, iconRelativePath);
+    const iconPath = join(rsbuild.distPath, iconRelativePath);
     expect(fs.existsSync(iconPath)).toBeTruthy();
 
     // should work on all page
@@ -111,7 +111,7 @@ test.describe('html element set', () => {
 
     expect(iconRelativePath).toBeDefined();
 
-    const iconPath = join(builder.distPath, iconRelativePath);
+    const iconPath = join(rsbuild.distPath, iconRelativePath);
     expect(fs.existsSync(iconPath)).toBeTruthy();
 
     // should work on all page
@@ -145,7 +145,7 @@ test.describe('html element set', () => {
 });
 
 test('custom title', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'template'),
     entry: {
       main: join(join(fixtures, 'template'), 'src/index.ts'),
@@ -158,15 +158,15 @@ test('custom title', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   await expect(page.evaluate(`document.title`)).resolves.toBe('custom title');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('template & templateParameters', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'template'),
     entry: {
       main: join(join(fixtures, 'template'), 'src/index.ts'),
@@ -182,7 +182,7 @@ test('template & templateParameters', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   await expect(page.evaluate(`document.title`)).resolves.toBe(
     'custom template',
@@ -192,15 +192,15 @@ test('template & templateParameters', async ({ page }) => {
   await expect(testTemplate).toHaveText('xxx');
 
   const testEl = page.locator('#test');
-  await expect(testEl).toHaveText('Hello Builder!');
+  await expect(testEl).toHaveText('Hello Rsbuild!');
 
   await expect(page.evaluate(`window.foo`)).resolves.toBe('bar');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('templateByEntries & templateParametersByEntries', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'template'),
     entry: {
       main: join(fixtures, 'template/src/index.ts'),
@@ -226,23 +226,23 @@ test('templateByEntries & templateParametersByEntries', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('foo', builder.port));
+  await page.goto(getHrefByEntryName('foo', rsbuild.port));
 
   const testTemplate = page.locator('#test-template');
   await expect(testTemplate).toHaveText('foo');
   await expect(page.evaluate(`window.type`)).resolves.toBe('foo');
 
-  await page.goto(getHrefByEntryName('bar', builder.port));
+  await page.goto(getHrefByEntryName('bar', rsbuild.port));
 
   await expect(testTemplate).toHaveText('bar');
   await expect(page.evaluate(`window.type`)).resolves.toBe('bar');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('title & titleByEntries & templateByEntries', async ({ page }) => {
   // priority: template title > titleByEntries > title
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'template'),
     entry: {
       main: join(fixtures, 'template/src/index.ts'),
@@ -266,22 +266,22 @@ test('title & titleByEntries & templateByEntries', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
   await expect(page.evaluate(`document.title`)).resolves.toBe('custom title');
 
-  await page.goto(getHrefByEntryName('foo', builder.port));
+  await page.goto(getHrefByEntryName('foo', rsbuild.port));
   await expect(page.evaluate(`document.title`)).resolves.toBe('Tiktok');
 
-  await page.goto(getHrefByEntryName('bar', builder.port));
+  await page.goto(getHrefByEntryName('bar', rsbuild.port));
   await expect(page.evaluate(`document.title`)).resolves.toBe(
     'custom template',
   );
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('html.outputStructure', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'template'),
     entry: {
       main: join(join(fixtures, 'template'), 'src/index.ts'),
@@ -294,17 +294,17 @@ test('html.outputStructure', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
-  const pagePath = join(builder.distPath, 'main/index.html');
+  const pagePath = join(rsbuild.distPath, 'main/index.html');
 
   expect(fs.existsSync(pagePath)).toBeTruthy();
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('tools.htmlPlugin', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'template'),
     entry: {
       main: join(join(fixtures, 'template'), 'src/index.ts'),
@@ -321,9 +321,9 @@ test('tools.htmlPlugin', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
-  const pagePath = join(builder.distPath, 'main.html');
+  const pagePath = join(rsbuild.distPath, 'main.html');
   const content = await fs.readFile(pagePath, 'utf-8');
 
   const allScripts = /(<script [\s\S]*?>)/g.exec(content);
@@ -332,5 +332,5 @@ test('tools.htmlPlugin', async ({ page }) => {
     allScripts?.every((data) => data.includes('type="module"')),
   ).toBeTruthy();
 
-  builder.close();
+  rsbuild.close();
 });

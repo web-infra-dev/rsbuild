@@ -1,9 +1,9 @@
 import {
-  DefaultBuilderPlugin,
+  DefaultRsbuildPlugin,
   getSharedPkgCompiledPath,
 } from '@rsbuild/shared';
 
-export const pluginYaml = (): DefaultBuilderPlugin => ({
+export const pluginYaml = (): DefaultRsbuildPlugin => ({
   name: 'plugin-yaml',
 
   setup(api) {

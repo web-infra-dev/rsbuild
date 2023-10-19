@@ -1,5 +1,5 @@
 import type {
-  DefaultBuilderPlugin,
+  DefaultRsbuildPlugin,
   BundlerChain,
   SharedNormalizedConfig,
 } from '@rsbuild/shared';
@@ -22,11 +22,11 @@ function applyProfile({
 /**
  * Apply some configs of builder performance
  */
-export const pluginPerformance = (): DefaultBuilderPlugin => ({
+export const pluginPerformance = (): DefaultRsbuildPlugin => ({
   name: 'plugin-performance',
 
   setup(api) {
-    api.modifyBuilderConfig((builderConfig) => {
+    api.modifyRsbuildConfig((builderConfig) => {
       if (builderConfig.performance?.profile) {
         // generate stats.json
         if (!builderConfig.performance?.bundleAnalyze) {

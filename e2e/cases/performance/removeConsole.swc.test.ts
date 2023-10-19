@@ -6,10 +6,10 @@ import { pluginSwc } from '@rsbuild/plugin-swc';
 const cwd = join(__dirname, 'removeConsole');
 
 const expectConsoleType = async (
-  builder: Awaited<ReturnType<typeof build>>,
+  rsbuild: Awaited<ReturnType<typeof build>>,
   consoleType: Record<string, boolean>,
 ) => {
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
   const mainFile = Object.keys(files).find(
     (name) => name.includes('main.') && name.endsWith('.js'),
   )!;
@@ -21,7 +21,7 @@ const expectConsoleType = async (
 };
 
 test('should remove specified console correctly when using SWC plugin', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd,
     entry: {
       main: join(cwd, 'src/index.js'),
@@ -34,7 +34,7 @@ test('should remove specified console correctly when using SWC plugin', async ()
     },
   });
 
-  await expectConsoleType(builder, {
+  await expectConsoleType(rsbuild, {
     log: false,
     warn: false,
     debug: true,
@@ -43,7 +43,7 @@ test('should remove specified console correctly when using SWC plugin', async ()
 });
 
 test('should remove all console correctly when using SWC plugin', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd,
     entry: {
       main: join(cwd, 'src/index.js'),
@@ -56,7 +56,7 @@ test('should remove all console correctly when using SWC plugin', async () => {
     },
   });
 
-  await expectConsoleType(builder, {
+  await expectConsoleType(rsbuild, {
     log: false,
     warn: false,
     debug: false,

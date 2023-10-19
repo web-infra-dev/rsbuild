@@ -3,7 +3,7 @@ import { build } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { fs } from '@rsbuild/shared/fs-extra';
 import type { SharedTransformImport } from '@rsbuild/shared';
-import { BuilderConfig } from '@rsbuild/webpack';
+import { RsbuildConfig } from '@rsbuild/webpack';
 
 export const cases: Parameters<typeof shareTest>[] = [
   [
@@ -70,7 +70,7 @@ export function shareTest(
       index: entry,
     },
   };
-  const config: BuilderConfig = {
+  const config: RsbuildConfig = {
     source: {
       transformImport: [transformImport],
     },
@@ -82,12 +82,12 @@ export function shareTest(
   };
 
   test(msg, async () => {
-    const builder = await build({
+    const rsbuild = await build({
       ...setupConfig,
       ...otherConfigs,
       builderConfig: { ...config },
     });
-    const files = await builder.unwrapOutputJSON(false);
+    const files = await rsbuild.unwrapOutputJSON(false);
     expect(files[findEntry(files)]).toContain('transformImport test succeed');
   });
 }

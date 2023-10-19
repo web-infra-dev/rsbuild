@@ -1,17 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { createStubBuilder } from '../helper';
-import { BuilderConfig, BuilderPluginAPI } from '@/types';
+import { createStubRsbuild } from '../helper';
+import { RsbuildConfig, RsbuildPluginAPI } from '@/types';
 
-describe('modifyBuilderConfig', () => {
+describe('modifyRsbuildConfig', () => {
   it.skip('should not allow to modify builder config', async () => {
-    const builder = await createStubBuilder({});
-    let config: BuilderConfig;
+    const rsbuild = await createStubRsbuild({});
+    let config: RsbuildConfig;
 
-    builder.addPlugins([
+    rsbuild.addPlugins([
       {
         name: 'foo',
-        setup(api: BuilderPluginAPI) {
-          api.modifyBuilderConfig((_config, utils) => {
+        setup(api: RsbuildPluginAPI) {
+          api.modifyRsbuildConfig((_config, utils) => {
             config = _config;
             config.dev = { port: 8080 };
           });
@@ -25,13 +25,13 @@ describe('modifyBuilderConfig', () => {
 
     const {
       origin: { builderConfig },
-    } = await builder.inspectConfig();
+    } = await rsbuild.inspectConfig();
 
     expect(builderConfig.dev.port).toBe(8080);
   });
 
   it('should modify config by utils', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       entry: {
         main: 'src/index.ts',
       },
@@ -42,12 +42,12 @@ describe('modifyBuilderConfig', () => {
       },
     });
 
-    builder.addPlugins([
+    rsbuild.addPlugins([
       {
         name: 'foo',
-        setup(api: BuilderPluginAPI) {
-          api.modifyBuilderConfig((config, utils) => {
-            return utils.mergeBuilderConfig(config, {
+        setup(api: RsbuildPluginAPI) {
+          api.modifyRsbuildConfig((config, utils) => {
+            return utils.mergeRsbuildConfig(config, {
               output: {
                 charset: 'ascii',
               },
@@ -60,7 +60,7 @@ describe('modifyBuilderConfig', () => {
       },
     ]);
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.entry).toEqual({
       main: [
         'data:text/javascript,import "core-js";',

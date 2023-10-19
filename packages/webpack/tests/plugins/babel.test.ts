@@ -1,11 +1,11 @@
 import { expect, describe, it } from 'vitest';
 import { pluginEntry } from '@rsbuild/core/plugins/entry';
 import { pluginBabel } from '@/plugins/babel';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/babel', () => {
   it('should set babel-loader', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
       builderConfig: {
         output: {
@@ -16,13 +16,13 @@ describe('plugins/babel', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should set include/exclude', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
       builderConfig: {
         tools: {
@@ -34,13 +34,13 @@ describe('plugins/babel', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should apply exclude condition when using source.exclude', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
       builderConfig: {
         source: {
@@ -48,13 +48,13 @@ describe('plugins/babel', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should add core-js-entry when output.polyfill is entry', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginBabel()],
       builderConfig: {
         output: {
@@ -65,12 +65,12 @@ describe('plugins/babel', () => {
         main: './index.js',
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.entry).toMatchSnapshot();
   });
 
   it('should not add core-js-entry when output.polyfill is usage', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginBabel()],
       builderConfig: {
         output: {
@@ -81,12 +81,12 @@ describe('plugins/babel', () => {
         main: './index.js',
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config.entry).toMatchSnapshot();
   });
 
   it('should override targets of babel-preset-env when using output.overrideBrowserslist config', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
       builderConfig: {
         output: {
@@ -94,13 +94,13 @@ describe('plugins/babel', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should add rule to compile Data URI when enable source.compileJsDataURI', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
       builderConfig: {
         source: {
@@ -108,13 +108,13 @@ describe('plugins/babel', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should adjust jsescOption config when charset is utf8', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
       builderConfig: {
         output: {
@@ -122,7 +122,7 @@ describe('plugins/babel', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(JSON.stringify(config)).toContain(
       '"generatorOpts":{"jsescOption":{"minimal":true}}',
@@ -130,11 +130,11 @@ describe('plugins/babel', () => {
   });
 
   it('should adjust browserslist when target is node', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
       target: 'node',
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });

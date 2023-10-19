@@ -4,7 +4,7 @@ import {
   getExtensions,
   stringifyConfig,
   getMetaTags,
-  pickBuilderConfig,
+  pickRsbuildConfig,
 } from '../src/config';
 
 it('should get default extensions correctly', async () => {
@@ -119,7 +119,7 @@ describe('stringifyConfig', () => {
   });
 });
 
-describe('pickBuilderConfig', () => {
+describe('pickRsbuildConfig', () => {
   it('should pick correct keys from builder config', () => {
     const builderConfig = {
       dev: {},
@@ -133,7 +133,7 @@ describe('pickBuilderConfig', () => {
       extraKey: 'extraValue',
     };
 
-    const result = pickBuilderConfig(builderConfig);
+    const result = pickRsbuildConfig(builderConfig);
 
     expect(result).toEqual({
       dev: {},
@@ -149,7 +149,7 @@ describe('pickBuilderConfig', () => {
 
   it('should return empty object when builder config is empty', () => {
     const builderConfig = {};
-    const result = pickBuilderConfig(builderConfig);
+    const result = pickRsbuildConfig(builderConfig);
     expect(result).toEqual({});
   });
 });

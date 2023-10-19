@@ -1,15 +1,15 @@
 import { performance } from 'perf_hooks';
 import { describe, expect, it } from 'vitest';
 import { createDefaultConfig } from '@/config/defaults';
-import { validateBuilderConfig } from '@/config/validate';
-import { BuilderConfig } from '@/types';
+import { validateRsbuildConfig } from '@/config/validate';
+import { RsbuildConfig } from '@/types';
 
-describe('validateBuilderConfig', () => {
+describe('validateRsbuildConfig', () => {
   it('should accept empty object', async () => {
-    await expect(validateBuilderConfig({})).resolves.toEqual({});
+    await expect(validateRsbuildConfig({})).resolves.toEqual({});
   });
   it('should remove unknown properties', async () => {
-    await expect(validateBuilderConfig({ foo: 123 })).resolves.toEqual({});
+    await expect(validateRsbuildConfig({ foo: 123 })).resolves.toEqual({});
   });
 
   it('should throw error when shape wrong', async () => {
@@ -18,30 +18,30 @@ describe('validateBuilderConfig', () => {
       html: { faviconByEntries: [] },
     };
     await expect(
-      validateBuilderConfig({
+      validateRsbuildConfig({
         output: {
           polyfill: 'usage',
         },
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
-      "Builder config validation error:
+      "Rsbuild config validation error:
       * Invalid enum value. Expected 'entry' | 'ua' | 'off', received 'usage' at "output.polyfill""
     `);
 
-    await expect(validateBuilderConfig(config)).rejects
+    await expect(validateRsbuildConfig(config)).rejects
       .toThrowErrorMatchingInlineSnapshot(`
-      "Builder config validation error:
+      "Rsbuild config validation error:
       * Expected object, received array at "html.faviconByEntries""
     `);
   });
   it('should accept correct chained config', async () => {
-    const config: BuilderConfig = {
+    const config: RsbuildConfig = {
       tools: {
         htmlPlugin: false,
         rspack: (_: any) => ({}),
       },
     };
-    await expect(validateBuilderConfig(config)).resolves.toMatchInlineSnapshot(`
+    await expect(validateRsbuildConfig(config)).resolves.toMatchInlineSnapshot(`
       {
         "tools": {
           "htmlPlugin": false,
@@ -53,7 +53,7 @@ describe('validateBuilderConfig', () => {
   it('should validate config and cost less than 100ms', async () => {
     const config = createDefaultConfig();
     const startedAt = performance.now();
-    await validateBuilderConfig(config);
+    await validateRsbuildConfig(config);
     const endedAt = performance.now();
     const cost = endedAt - startedAt;
     console.log(`config validator cost: ${cost.toFixed(2)}ms`);

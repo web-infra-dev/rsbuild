@@ -1,11 +1,11 @@
 import { getAntdMajorVersion } from '@modern-js/utils';
-import type { BuilderTarget, DefaultBuilderPlugin } from '@rsbuild/shared';
+import type { RsbuildTarget, DefaultRsbuildPlugin } from '@rsbuild/shared';
 
-export const pluginAntd = (): DefaultBuilderPlugin => ({
+export const pluginAntd = (): DefaultRsbuildPlugin => ({
   name: `plugin-antd`,
 
   setup(api) {
-    api.modifyBuilderConfig((builderConfig) => {
+    api.modifyRsbuildConfig((builderConfig) => {
       builderConfig.source ??= {};
 
       if (
@@ -35,7 +35,7 @@ export const pluginAntd = (): DefaultBuilderPlugin => ({
   },
 });
 
-export function useSSR(target: BuilderTarget | BuilderTarget[]) {
+export function useSSR(target: RsbuildTarget | RsbuildTarget[]) {
   return (Array.isArray(target) ? target : [target]).some((item) =>
     ['node', 'service-worker'].includes(item),
   );

@@ -24,11 +24,11 @@ const toolsConfig = {
 };
 
 test.describe('disableInlineRuntimeChunk', () => {
-  let builder: Awaited<ReturnType<typeof build>>;
+  let rsbuild: Awaited<ReturnType<typeof build>>;
   let files: Record<string, string>;
 
   test.beforeAll(async () => {
-    builder = await build({
+    rsbuild = await build({
       cwd: __dirname,
       entry: { index: path.resolve(__dirname, './src/index.js') },
       runServer: true,
@@ -40,16 +40,16 @@ test.describe('disableInlineRuntimeChunk', () => {
       },
     });
 
-    files = await builder.unwrapOutputJSON(false);
+    files = await rsbuild.unwrapOutputJSON(false);
   });
 
   test.afterAll(async () => {
-    builder.close();
+    rsbuild.close();
   });
 
   test('should emit builder runtime', async ({ page }) => {
     // test runtime
-    await page.goto(getHrefByEntryName('index', builder.port));
+    await page.goto(getHrefByEntryName('index', rsbuild.port));
 
     expect(await page.evaluate(`window.test`)).toBe('aaaa');
 
@@ -64,7 +64,7 @@ test.describe('disableInlineRuntimeChunk', () => {
 });
 
 test('inline runtime chunk by default', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     runServer: true,
@@ -74,11 +74,11 @@ test('inline runtime chunk by default', async ({ page }) => {
   });
 
   // test runtime
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   expect(await page.evaluate(`window.test`)).toBe('aaaa');
 
-  const files = await builder.unwrapOutputJSON(false);
+  const files = await rsbuild.unwrapOutputJSON(false);
 
   // no builder-runtime file in output
   expect(
@@ -93,11 +93,11 @@ test('inline runtime chunk by default', async ({ page }) => {
 
   expect(isRuntimeChunkInHtml(indexHtml)).toBeTruthy();
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('inline runtime chunk and remove source map when devtool is "hidden-source-map"', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     builderConfig: {
@@ -109,7 +109,7 @@ test('inline runtime chunk and remove source map when devtool is "hidden-source-
     },
   });
 
-  const files = await builder.unwrapOutputJSON(false);
+  const files = await rsbuild.unwrapOutputJSON(false);
 
   // should not emit source map of builder runtime
   expect(
@@ -121,7 +121,7 @@ test('inline runtime chunk and remove source map when devtool is "hidden-source-
 });
 
 test('inline runtime chunk by default with multiple entries', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
@@ -131,7 +131,7 @@ test('inline runtime chunk by default with multiple entries', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await builder.unwrapOutputJSON(false);
+  const files = await rsbuild.unwrapOutputJSON(false);
 
   // no builder-runtime file in output
   expect(
@@ -152,7 +152,7 @@ test('inline runtime chunk by default with multiple entries', async () => {
 webpackOnlyTest(
   'inline all scripts should work and emit all source maps',
   async ({ page }) => {
-    const builder = await build({
+    const rsbuild = await build({
       cwd: __dirname,
       entry: {
         index: path.resolve(__dirname, './src/index.js'),
@@ -167,12 +167,12 @@ webpackOnlyTest(
       },
     });
 
-    await page.goto(getHrefByEntryName('index', builder.port));
+    await page.goto(getHrefByEntryName('index', rsbuild.port));
 
     // test runtime
     expect(await page.evaluate(`window.test`)).toBe('aaaa');
 
-    const files = await builder.unwrapOutputJSON(false);
+    const files = await rsbuild.unwrapOutputJSON(false);
 
     // no entry chunks or runtime chunks in output
     expect(
@@ -187,12 +187,12 @@ webpackOnlyTest(
         .length,
     ).toEqual(4);
 
-    builder.close();
+    rsbuild.close();
   },
 );
 
 test('using RegExp to inline scripts', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
@@ -204,7 +204,7 @@ test('using RegExp to inline scripts', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await builder.unwrapOutputJSON(false);
+  const files = await rsbuild.unwrapOutputJSON(false);
 
   // no index.js in output
   expect(
@@ -221,7 +221,7 @@ test('using RegExp to inline scripts', async () => {
 });
 
 test('inline scripts by filename and file size', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
@@ -235,7 +235,7 @@ test('inline scripts by filename and file size', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await builder.unwrapOutputJSON(false);
+  const files = await rsbuild.unwrapOutputJSON(false);
 
   // no index.js in output
   expect(
@@ -252,7 +252,7 @@ test('inline scripts by filename and file size', async () => {
 });
 
 test('using RegExp to inline styles', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
@@ -264,7 +264,7 @@ test('using RegExp to inline styles', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await builder.unwrapOutputJSON(false);
+  const files = await rsbuild.unwrapOutputJSON(false);
 
   // no index.css in output
   expect(
@@ -275,7 +275,7 @@ test('using RegExp to inline styles', async () => {
 });
 
 test('inline styles by filename and file size', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
@@ -289,7 +289,7 @@ test('inline styles by filename and file size', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await builder.unwrapOutputJSON(false);
+  const files = await rsbuild.unwrapOutputJSON(false);
 
   // no index.css in output
   expect(

@@ -3,9 +3,9 @@ import { isAbsolute, join } from 'path';
 import { fs } from '@rsbuild/shared/fs-extra';
 import {
   BuildCacheOptions,
-  BuilderContext,
+  Context,
   isFileExists,
-  DefaultBuilderPlugin,
+  DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
 
 async function validateCache(
@@ -42,7 +42,7 @@ function getDigestHash(digest: Array<string | undefined>) {
 
 function getCacheDirectory(
   { cacheDirectory }: BuildCacheOptions,
-  context: BuilderContext,
+  context: Context,
 ) {
   if (cacheDirectory) {
     return isAbsolute(cacheDirectory)
@@ -56,7 +56,7 @@ function getCacheDirectory(
  * webpack can't detect the changes of framework config, tsconfig, tailwind config and browserslist config.
  * but they will affect the compilation result, so they need to be added to buildDependencies.
  */
-async function getBuildDependencies(context: Readonly<BuilderContext>) {
+async function getBuildDependencies(context: Readonly<Context>) {
   const { findExists } = await import('@modern-js/utils');
   const rootPackageJson = join(context.rootPath, 'package.json');
   const browserslistConfig = join(context.rootPath, '.browserslistrc');
@@ -92,7 +92,7 @@ async function getBuildDependencies(context: Readonly<BuilderContext>) {
   return buildDependencies;
 }
 
-export const pluginCache = (): DefaultBuilderPlugin => ({
+export const pluginCache = (): DefaultRsbuildPlugin => ({
   name: 'plugin-cache',
 
   setup(api) {

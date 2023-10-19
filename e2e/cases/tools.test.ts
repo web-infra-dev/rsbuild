@@ -6,7 +6,7 @@ import { build, getHrefByEntryName } from '../scripts/shared';
 const fixtures = __dirname;
 
 test('postcss plugins overwrite', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'output/rem'),
     entry: {
       main: join(fixtures, 'output/rem/src/index.ts'),
@@ -23,16 +23,16 @@ test('postcss plugins overwrite', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const title = page.locator('#title');
   await expect(title).toHaveText('title');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('bundlerChain - set alias config', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'source/basic'),
     entry: {
       main: join(fixtures, 'source/basic/src/index.js'),
@@ -49,15 +49,15 @@ test('bundlerChain - set alias config', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
-  await expect(page.innerHTML('#test')).resolves.toBe('Hello Builder! 1');
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
 
-  builder.close();
+  rsbuild.close();
 });
 
 // Rspack do not support publicPath function yet
 webpackOnlyTest('bundlerChain - custom publicPath function', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'output/rem'),
     entry: {
       main: join(fixtures, 'output/rem/src/index.ts'),
@@ -74,7 +74,7 @@ webpackOnlyTest('bundlerChain - custom publicPath function', async () => {
     },
   });
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const htmlFile = Object.keys(files).find((file) => file.endsWith('.html'));
   expect(htmlFile).toBeTruthy();

@@ -56,7 +56,7 @@ const provider = builderRspackProvider({
 拿到 provider 实例后，你可以调用 `createRsbuild` 方法来创建一个 Rsbuild 实例对象：
 
 ```ts
-const builder = await createRsbuild(provider, {
+const rsbuild = await createRsbuild(provider, {
   entry: {
     index: './src/index.ts',
   },

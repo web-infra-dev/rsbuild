@@ -1,6 +1,6 @@
 const App = () => (
   <>
-    <div id="test">Hello Builder!</div>
+    <div id="test">Hello Rsbuild!</div>
   </>
 );
 

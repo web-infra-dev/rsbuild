@@ -1,9 +1,9 @@
 import {
   HTMLPreloadOrPrefetchPlugin,
-  type DefaultBuilderPlugin,
+  type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
 
-export const pluginPreloadOrPrefetch = (): DefaultBuilderPlugin => ({
+export const pluginPreloadOrPrefetch = (): DefaultRsbuildPlugin => ({
   name: `plugin-preload-or-prefetch`,
 
   setup(api) {

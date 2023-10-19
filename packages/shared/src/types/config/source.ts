@@ -1,5 +1,5 @@
 import type { Alias } from '@modern-js/utils';
-import type { BuilderTarget } from '../builder';
+import type { RsbuildTarget } from '../builder';
 import type { ModifyChainUtils } from '../hooks';
 import type { ChainedConfig, JSONValue } from '../utils';
 
@@ -29,7 +29,7 @@ export interface SharedSourceConfig {
   aliasStrategy?: AliasStrategy;
   /**
    * Specify directories or modules that need additional compilation.
-   * In order to maintain faster compilation speed, Builder will not compile files under node_modules through
+   * In order to maintain faster compilation speed, Rsbuild will not compile files under node_modules through
    * `babel-loader` or `ts-loader` by default, as will as the files outside the current project directory.
    */
   include?: (string | RegExp)[];
@@ -55,11 +55,11 @@ export interface SharedSourceConfig {
    * This configuration will determine which field of `package.json` you use to import the `npm` module.
    * Same as the [resolve.mainFields](https://webpack.js.org/configuration/resolve/#resolvemainfields) config of webpack.
    */
-  resolveMainFields?: MainFields | Partial<Record<BuilderTarget, MainFields>>;
+  resolveMainFields?: MainFields | Partial<Record<RsbuildTarget, MainFields>>;
   /**
    * Add a prefix to [resolve.extensions](https://webpack.js.org/configuration/resolve/#resolveextensions).
    */
-  resolveExtensionPrefix?: string | Partial<Record<BuilderTarget, string>>;
+  resolveExtensionPrefix?: string | Partial<Record<RsbuildTarget, string>>;
   /**
    * Simple transformImport configuration
    */

@@ -1,15 +1,15 @@
 import { isPackageInstalled } from '@modern-js/utils';
 import { useSSR } from './antd';
-import type { DefaultBuilderPlugin } from '@rsbuild/shared';
+import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
-export const pluginArco = (): DefaultBuilderPlugin => ({
+export const pluginArco = (): DefaultRsbuildPlugin => ({
   name: `plugin-arco`,
 
   setup(api) {
     const ARCO_NAME = '@arco-design/web-react';
     const ARCO_ICON = `${ARCO_NAME}/icon`;
 
-    api.modifyBuilderConfig((builderConfig) => {
+    api.modifyRsbuildConfig((builderConfig) => {
       const { transformImport = [] } = builderConfig.source || {};
 
       if (

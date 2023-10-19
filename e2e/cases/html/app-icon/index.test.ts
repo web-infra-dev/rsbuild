@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
 test('should emit app icon to dist path', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     builderConfig: {
@@ -12,7 +12,7 @@ test('should emit app icon to dist path', async () => {
       },
     },
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   expect(
     Object.keys(files).some((file) => file.endsWith('static/image/icon.png')),
@@ -27,7 +27,7 @@ test('should emit app icon to dist path', async () => {
 });
 
 test('should apply asset prefix to app icon URL', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     builderConfig: {
@@ -39,11 +39,11 @@ test('should apply asset prefix to app icon URL', async () => {
       },
     },
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const {
     origin: { bundlerConfigs },
-  } = await builder.instance.inspectConfig();
+  } = await rsbuild.instance.inspectConfig();
 
   expect(bundlerConfigs[0].output.publicPath).toBe('https://www.example.com/');
 

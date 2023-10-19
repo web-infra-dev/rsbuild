@@ -1,6 +1,6 @@
-import { DefaultBuilderPlugin } from '@rsbuild/shared';
+import { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
-export function pluginBundleAnalyzer(): DefaultBuilderPlugin {
+export function pluginBundleAnalyzer(): DefaultRsbuildPlugin {
   return {
     name: 'plugin-bundle-analyzer',
     setup(api) {

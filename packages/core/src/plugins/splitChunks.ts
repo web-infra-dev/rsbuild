@@ -7,8 +7,8 @@ import {
   type CacheGroup,
   type SplitChunks,
   type ForceSplitting,
-  type BuilderChunkSplit,
-  type DefaultBuilderPlugin,
+  type RsbuildChunkSplit,
+  type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
 
 // We expose the three-layer to specify webpack chunk-split ability:
@@ -33,7 +33,7 @@ interface SplitChunksContext {
   /**
    * User builder `chunkSplit` config
    */
-  builderConfig: BuilderChunkSplit;
+  builderConfig: RsbuildChunkSplit;
   /**
    * The root path of current project
    */
@@ -258,7 +258,7 @@ const SPLIT_STRATEGY_DISPATCHER: Record<
   'single-vendor': singleVendor,
 };
 
-export function pluginSplitChunks(): DefaultBuilderPlugin {
+export function pluginSplitChunks(): DefaultRsbuildPlugin {
   return {
     name: 'plugin-split-chunks',
     setup(api) {

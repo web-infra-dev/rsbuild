@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
 test('should inline assets retry runtime code to html by default', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     builderConfig: {
@@ -21,7 +21,7 @@ test('should inline assets retry runtime code to html by default', async () => {
       },
     },
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
   const htmlFile = Object.keys(files).find((file) => file.endsWith('.html'));
 
   expect(htmlFile).toBeTruthy();
@@ -29,7 +29,7 @@ test('should inline assets retry runtime code to html by default', async () => {
 });
 
 test('should extract assets retry runtime code when inlineScript is false', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     builderConfig: {
@@ -40,7 +40,7 @@ test('should extract assets retry runtime code when inlineScript is false', asyn
       },
     },
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const htmlFile = Object.keys(files).find((file) => file.endsWith('.html'));
   const retryFile = Object.keys(files).find(

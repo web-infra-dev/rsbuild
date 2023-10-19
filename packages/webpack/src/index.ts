@@ -11,8 +11,8 @@ export type {
   StyleLoaderOptions,
 } from '@rsbuild/shared';
 export type {
-  BuilderPlugin,
-  BuilderPluginAPI,
+  RsbuildPlugin,
+  RsbuildPluginAPI,
 
   // Config Types
   DevConfig,
@@ -20,7 +20,7 @@ export type {
   ToolsConfig,
   OutputConfig,
   SourceConfig,
-  BuilderConfig,
+  RsbuildConfig,
   SecurityConfig,
   NormalizedConfig,
   PerformanceConfig,

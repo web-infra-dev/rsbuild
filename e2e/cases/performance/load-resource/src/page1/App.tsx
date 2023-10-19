@@ -4,7 +4,7 @@ import Png from './icon.png?url';
 const App = () => (
   <>
     <img src={Png} />
-    <div id="test">Hello Builder!</div>
+    <div id="test">Hello Rsbuild!</div>
   </>
 );
 

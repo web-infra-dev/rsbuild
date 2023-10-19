@@ -1,5 +1,5 @@
 import path from 'path';
-import { BuilderTarget, SharedNormalizedConfig } from '../types';
+import { RsbuildTarget, SharedNormalizedConfig } from '../types';
 
 export function getTemplatePath(
   entryName: string,
@@ -15,7 +15,7 @@ export function getTemplatePath(
 
 export const isHtmlDisabled = (
   config: SharedNormalizedConfig,
-  target: BuilderTarget,
+  target: RsbuildTarget,
 ) => {
   const { htmlPlugin } = config.tools as {
     htmlPlugin: boolean | Array<unknown>;

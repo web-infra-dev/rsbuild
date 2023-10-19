@@ -2,12 +2,12 @@ import { expect, describe, it } from 'vitest';
 import { pluginCss } from '@/plugins/css';
 import { pluginSass } from '@/plugins/sass';
 import { pluginLess } from '@/plugins/less';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/css', () => {
   // need check（skipped before because this case time out in CI env)
   it('should set css config with style-loader', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       builderConfig: {
         output: {
@@ -15,7 +15,7 @@ describe('plugins/css', () => {
         },
       },
     });
-    const includeStyleLoader = await builder.matchWebpackLoader(
+    const includeStyleLoader = await rsbuild.matchWebpackLoader(
       'style-loader',
       'index.css',
     );
@@ -25,12 +25,12 @@ describe('plugins/css', () => {
 
   // need check（skipped before because this case time out in CI env)
   it('should set css config with mini-css-extract-plugin', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       builderConfig: {},
     });
 
-    const includeMiniCssExtractLoader = await builder.matchWebpackLoader(
+    const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
       'mini-css-extract-plugin',
       'index.css',
     );
@@ -39,7 +39,7 @@ describe('plugins/css', () => {
   });
 
   it('should add sass-loader', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginSass()],
       builderConfig: {
         tools: {
@@ -48,7 +48,7 @@ describe('plugins/css', () => {
       },
     });
 
-    const includeSassLoader = await builder.matchWebpackLoader(
+    const includeSassLoader = await rsbuild.matchWebpackLoader(
       'sass-loader',
       'index.scss',
     );
@@ -57,7 +57,7 @@ describe('plugins/css', () => {
   });
 
   it('should add less-loader', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginLess()],
       builderConfig: {
         tools: {
@@ -66,7 +66,7 @@ describe('plugins/css', () => {
       },
     });
 
-    const includeLessLoader = await builder.matchWebpackLoader(
+    const includeLessLoader = await rsbuild.matchWebpackLoader(
       'less-loader',
       'index.less',
     );
@@ -75,7 +75,7 @@ describe('plugins/css', () => {
   });
 
   it('should override browserslist of autoprefixer when using output.overrideBrowserslist config', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       builderConfig: {
         output: {
@@ -83,19 +83,19 @@ describe('plugins/css', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should not apply mini-css-extract-plugin when target is node', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       target: ['node'],
       plugins: [pluginCss()],
       builderConfig: {},
     });
 
-    const includeMiniCssExtractLoader = await builder.matchWebpackLoader(
+    const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
       'mini-css-extract-plugin',
       'index.css',
     );
@@ -104,13 +104,13 @@ describe('plugins/css', () => {
   });
 
   it('should not apply mini-css-extract-plugin when target is web-worker', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       target: ['web-worker'],
       plugins: [pluginCss()],
       builderConfig: {},
     });
 
-    const includeMiniCssExtractLoader = await builder.matchWebpackLoader(
+    const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
       'mini-css-extract-plugin',
       'index.css',
     );
@@ -119,7 +119,7 @@ describe('plugins/css', () => {
   });
 
   it('should not apply style-loader when target is node', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       target: ['node'],
       plugins: [pluginCss()],
       builderConfig: {
@@ -132,7 +132,7 @@ describe('plugins/css', () => {
       },
     });
 
-    const includeStyleLoader = await builder.matchWebpackLoader(
+    const includeStyleLoader = await rsbuild.matchWebpackLoader(
       'style-loader',
       'index.css',
     );
@@ -141,7 +141,7 @@ describe('plugins/css', () => {
   });
 
   it('should not apply style-loader when target is web-worker', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       target: ['web-worker'],
       plugins: [pluginCss()],
       builderConfig: {
@@ -154,7 +154,7 @@ describe('plugins/css', () => {
       },
     });
 
-    const includeStyleLoader = await builder.matchWebpackLoader(
+    const includeStyleLoader = await rsbuild.matchWebpackLoader(
       'style-loader',
       'index.css',
     );
@@ -163,7 +163,7 @@ describe('plugins/css', () => {
   });
 
   it('should allow to disable extract css plugin', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       builderConfig: {
         output: {
@@ -172,7 +172,7 @@ describe('plugins/css', () => {
       },
     });
 
-    const includeMiniCssExtractLoader = await builder.matchWebpackLoader(
+    const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
       'mini-css-extract-plugin',
       'index.css',
     );
@@ -181,18 +181,18 @@ describe('plugins/css', () => {
   });
 
   it('should not apply postcss-loader when target is node', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       target: 'node',
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should disable source map when output.disableSourceMap is true', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       builderConfig: {
         output: {
@@ -201,13 +201,13 @@ describe('plugins/css', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(JSON.stringify(config)).toContain('"sourceMap":false');
   });
 
   it('should disable source map when output.disableSourceMap is css: true', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       builderConfig: {
         output: {
@@ -218,7 +218,7 @@ describe('plugins/css', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(JSON.stringify(config)).toContain('"sourceMap":false');
   });
@@ -227,11 +227,11 @@ describe('plugins/css', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
 
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(JSON.stringify(config)).toContain('"sourceMap":false');
 
@@ -239,7 +239,7 @@ describe('plugins/css', () => {
   });
 
   it('should allow to custom cssModuleLocalIdentName', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       builderConfig: {
         output: {
@@ -248,7 +248,7 @@ describe('plugins/css', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(JSON.stringify(config)).toContain(
       '"localIdentName":"[hash:base64]"',
@@ -256,7 +256,7 @@ describe('plugins/css', () => {
   });
 
   it('should remove some postcss plugins based on browserslist', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       builderConfig: {
         output: {
@@ -264,7 +264,7 @@ describe('plugins/css', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });

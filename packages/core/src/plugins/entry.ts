@@ -1,7 +1,7 @@
-import { DefaultBuilderPlugin } from '@rsbuild/shared';
+import { DefaultRsbuildPlugin } from '@rsbuild/shared';
 import _ from '@modern-js/utils/lodash';
 
-export const pluginEntry = (): DefaultBuilderPlugin => ({
+export const pluginEntry = (): DefaultRsbuildPlugin => ({
   name: 'plugin-entry',
 
   setup(api) {

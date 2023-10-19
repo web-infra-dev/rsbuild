@@ -5,7 +5,7 @@ import { build, getHrefByEntryName } from '../scripts/shared';
 const fixtures = __dirname;
 
 test('tools.rspack', async ({ page }) => {
-  const builder = await build<'rspack'>({
+  const rsbuild = await build<'rspack'>({
     cwd: join(fixtures, 'source/global-vars'),
     entry: {
       main: join(fixtures, 'source/global-vars/src/index.ts'),
@@ -23,10 +23,10 @@ test('tools.rspack', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const testEl = page.locator('#test-el');
   await expect(testEl).toHaveText('aaaaa');
 
-  builder.close();
+  rsbuild.close();
 });

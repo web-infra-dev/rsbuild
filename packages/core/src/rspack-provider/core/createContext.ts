@@ -3,23 +3,23 @@ import {
   isFileExists,
   TS_CONFIG_FILE,
   createContextByConfig,
-  type CreateBuilderOptions,
+  type CreateRsbuildOptions,
   NormalizedSharedOutputConfig,
 } from '@rsbuild/shared';
 import { initHooks } from './initHooks';
-import { validateBuilderConfig } from '../config/validate';
+import { validateRsbuildConfig } from '../config/validate';
 import { withDefaultConfig } from '../config/defaults';
-import type { Context, BuilderConfig } from '../types';
+import type { Context, RsbuildConfig } from '../types';
 
 /**
  * Generate the actual context used in the build,
  * which can have a lot of overhead and take some side effects.
  */
 export async function createContext(
-  options: Required<CreateBuilderOptions>,
-  userBuilderConfig: BuilderConfig,
+  options: Required<CreateRsbuildOptions>,
+  userRsbuildConfig: RsbuildConfig,
 ): Promise<Context> {
-  const builderConfig = withDefaultConfig(userBuilderConfig);
+  const builderConfig = withDefaultConfig(userRsbuildConfig);
   const context = createContextByConfig(
     options,
     builderConfig.output as NormalizedSharedOutputConfig,
@@ -27,7 +27,7 @@ export async function createContext(
   );
   const configValidatingTask = Promise.resolve();
 
-  await validateBuilderConfig(builderConfig);
+  await validateRsbuildConfig(builderConfig);
 
   const tsconfigPath = join(context.rootPath, TS_CONFIG_FILE);
 
@@ -36,7 +36,7 @@ export async function createContext(
     hooks: initHooks(),
     configValidatingTask,
     config: { ...builderConfig },
-    originalConfig: userBuilderConfig,
+    originalConfig: userRsbuildConfig,
     tsconfigPath: (await isFileExists(tsconfigPath)) ? tsconfigPath : undefined,
   };
 }

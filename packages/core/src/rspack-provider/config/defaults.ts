@@ -1,5 +1,5 @@
 import {
-  mergeBuilderConfig,
+  mergeRsbuildConfig,
   getDefaultDevConfig,
   getDefaultHtmlConfig,
   getDefaultToolsConfig,
@@ -8,9 +8,9 @@ import {
   getDefaultSecurityConfig,
   getDefaultPerformanceConfig,
 } from '@rsbuild/shared';
-import type { BuilderConfig } from '../types';
+import type { RsbuildConfig } from '../types';
 
-export const createDefaultConfig = (): BuilderConfig => ({
+export const createDefaultConfig = (): RsbuildConfig => ({
   dev: getDefaultDevConfig(),
   html: getDefaultHtmlConfig(),
   source: {
@@ -23,5 +23,5 @@ export const createDefaultConfig = (): BuilderConfig => ({
   performance: getDefaultPerformanceConfig(),
 });
 
-export const withDefaultConfig = (config: BuilderConfig) =>
-  mergeBuilderConfig<BuilderConfig>(createDefaultConfig(), config);
+export const withDefaultConfig = (config: RsbuildConfig) =>
+  mergeRsbuildConfig<RsbuildConfig>(createDefaultConfig(), config);

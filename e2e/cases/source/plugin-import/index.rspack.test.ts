@@ -6,7 +6,7 @@ import { cases, shareTest, copyPkgToNodeModules, findEntry } from './helper';
 test('should import with template config', async () => {
   copyPkgToNodeModules();
 
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     builderConfig: {
@@ -25,7 +25,7 @@ test('should import with template config', async () => {
       },
     },
   });
-  const files = await builder.unwrapOutputJSON(false);
+  const files = await rsbuild.unwrapOutputJSON(false);
   const entry = findEntry(files);
   expect(files[entry]).toContain('transformImport test succeed');
 });

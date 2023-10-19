@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { BuilderTarget } from '@rsbuild/shared';
+import { RsbuildTarget } from '@rsbuild/shared';
 import { pluginEntry } from '@src/plugins/entry';
-import { createStubBuilder } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/vitest-helper';
 import { pluginSwc } from '@/plugins/swc';
-import { BuilderConfig } from '@/types';
+import { RsbuildConfig } from '@/types';
 import { pluginAntd } from '@src/plugins/antd';
 
 describe('plugins/swc', () => {
@@ -93,7 +93,7 @@ describe('plugins/swc', () => {
   });
 
   it('should disable all pluginImport', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       target: 'web',
       entry: {
         main: './src/index.js',
@@ -106,7 +106,7 @@ describe('plugins/swc', () => {
       },
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
 
     bundlerConfigs.forEach((bundlerConfig) => {
       expect(bundlerConfig).toMatchSnapshot();
@@ -114,7 +114,7 @@ describe('plugins/swc', () => {
   });
 
   it('should add antd pluginImport', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       target: 'web',
       entry: {
         main: './src/index.js',
@@ -122,7 +122,7 @@ describe('plugins/swc', () => {
       plugins: [pluginSwc(), pluginEntry(), pluginAntd()],
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
 
     bundlerConfigs.forEach((bundlerConfig) => {
       expect(bundlerConfig).toMatchSnapshot();
@@ -131,10 +131,10 @@ describe('plugins/swc', () => {
 });
 
 async function matchConfigSnapshot(
-  target: BuilderTarget | BuilderTarget[],
-  builderConfig: BuilderConfig,
+  target: RsbuildTarget | RsbuildTarget[],
+  builderConfig: RsbuildConfig,
 ) {
-  const builder = await createStubBuilder({
+  const rsbuild = await createStubRsbuild({
     target,
     entry: {
       main: './src/index.js',
@@ -145,7 +145,7 @@ async function matchConfigSnapshot(
 
   const {
     origin: { bundlerConfigs },
-  } = await builder.inspectConfig();
+  } = await rsbuild.inspectConfig();
 
   bundlerConfigs.forEach((bundlerConfig) => {
     expect(bundlerConfig).toMatchSnapshot();

@@ -7,7 +7,7 @@ const fixtures = __dirname;
 test('should inline style when disableCssExtract is false', async ({
   page,
 }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/index.ts'),
@@ -20,10 +20,10 @@ test('should inline style when disableCssExtract is false', async ({
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   // disableCssExtract worked
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
   expect(cssFiles.length).toBe(0);
 
@@ -43,5 +43,5 @@ test('should inline style when disableCssExtract is false', async ({
   const title = page.locator('#header');
   await expect(title).toHaveCSS('font-size', '20px');
 
-  builder.close();
+  rsbuild.close();
 });

@@ -1,6 +1,6 @@
-import type { BuilderPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { isUseCssSourceMap, STYLUS_REGEX } from '@rsbuild/shared';
-import type { BuilderPluginAPI } from '@rsbuild/webpack';
+import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 
 type StylusOptions = {
   use?: string[];
@@ -20,7 +20,7 @@ export type PluginStylusOptions = StylusLoaderOptions;
 
 export function pluginStylus(
   options?: PluginStylusOptions,
-): BuilderPlugin<BuilderPluginAPI> {
+): RsbuildPlugin<RsbuildPluginAPI> {
   return {
     name: 'plugin-stylus',
 

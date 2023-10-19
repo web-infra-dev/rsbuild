@@ -4,7 +4,7 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 import { webpackOnlyTest } from '@scripts/helper';
 
 webpackOnlyTest('security.sri', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     runServer: true,
@@ -15,7 +15,7 @@ webpackOnlyTest('security.sri', async ({ page }) => {
     },
   });
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
   const htmlFileName = Object.keys(files).find((f) => f.endsWith('.html'))!;
 
   const regex = /integrity=/g;
@@ -25,10 +25,10 @@ webpackOnlyTest('security.sri', async ({ page }) => {
   // at least 1 js file and 1 css file
   expect(matches?.length).toBeGreaterThanOrEqual(2);
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const test = page.locator('#test');
-  await expect(test).toHaveText('Hello Builder!');
+  await expect(test).toHaveText('Hello Rsbuild!');
 
-  builder.close();
+  rsbuild.close();
 });

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
 test('should compile CSS modules correctly', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     builderConfig: {
@@ -12,12 +12,12 @@ test('should compile CSS modules correctly', async () => {
       },
     },
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
-  if (builder.providerType === 'rspack') {
+  if (rsbuild.providerType === 'rspack') {
     expect(content).toEqual(
       '.the-a-class{color:red}.the-b-class-_6773e{color:blue}.the-c-class-c855fd{color:#ff0}.the-d-class{color:green}',
     );
@@ -29,7 +29,7 @@ test('should compile CSS modules correctly', async () => {
 });
 
 test('should treat normal CSS as CSS modules when disableCssModuleExtension is true', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     builderConfig: {
@@ -39,12 +39,12 @@ test('should treat normal CSS as CSS modules when disableCssModuleExtension is t
       },
     },
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
-  if (builder.providerType === 'rspack') {
+  if (rsbuild.providerType === 'rspack') {
     expect(content).toEqual(
       '.the-a-class-_932a3{color:red}.the-b-class-_6773e{color:blue}.the-c-class-c855fd{color:#ff0}.the-d-class{color:green}',
     );
@@ -56,7 +56,7 @@ test('should treat normal CSS as CSS modules when disableCssModuleExtension is t
 });
 
 test('should compile CSS modules follow by output.cssModules', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     builderConfig: {
@@ -70,12 +70,12 @@ test('should compile CSS modules follow by output.cssModules', async () => {
       },
     },
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
-  if (builder.providerType === 'rspack') {
+  if (rsbuild.providerType === 'rspack') {
     expect(content).toEqual(
       '.the-a-class{color:red}.the-b-class-_6773e{color:blue}.the-c-class{color:#ff0}.the-d-class{color:green}',
     );

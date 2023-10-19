@@ -14,7 +14,7 @@ test('should import with function customName', async () => {
   };
 
   {
-    const builder = await build({
+    const rsbuild = await build({
       ...setupConfig,
       builderConfig: {
         source: {
@@ -27,12 +27,12 @@ test('should import with function customName', async () => {
         },
       },
     });
-    const files = await builder.unwrapOutputJSON(false);
+    const files = await rsbuild.unwrapOutputJSON(false);
     const entry = findEntry(files);
     expect(files[entry]).toContain('transformImport test succeed');
   }
 
-  const builder = await build({
+  const rsbuild = await build({
     ...setupConfig,
     plugins: [pluginSwc()],
     builderConfig: {
@@ -52,7 +52,7 @@ test('should import with function customName', async () => {
       },
     },
   });
-  const files = await builder.unwrapOutputJSON(false);
+  const files = await rsbuild.unwrapOutputJSON(false);
   const entry = findEntry(files);
   expect(files[entry]).toContain('transformImport test succeed');
 });
@@ -67,7 +67,7 @@ test('should import with template config with SWC', async () => {
   };
 
   {
-    const builder = await build({
+    const rsbuild = await build({
       ...setupConfig,
       builderConfig: {
         source: {
@@ -80,13 +80,13 @@ test('should import with template config with SWC', async () => {
         },
       },
     });
-    const files = await builder.unwrapOutputJSON(false);
+    const files = await rsbuild.unwrapOutputJSON(false);
     const entry = findEntry(files);
     expect(files[entry]).toContain('transformImport test succeed');
   }
 
   {
-    const builder = await build({
+    const rsbuild = await build({
       ...setupConfig,
       builderConfig: {
         source: {
@@ -99,7 +99,7 @@ test('should import with template config with SWC', async () => {
         },
       },
     });
-    const files = await builder.unwrapOutputJSON(false);
+    const files = await rsbuild.unwrapOutputJSON(false);
     const entry = findEntry(files);
     expect(files[entry]).toContain('transformImport test succeed');
   }

@@ -1,17 +1,17 @@
 import { expect, describe, it } from 'vitest';
-import { createBuilder } from '../src';
+import { createRsbuild } from '../src';
 
 describe('should use rspack as default bundler', () => {
   it('apply rspack correctly', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'development';
-    const builder = await createBuilder({
+    const rsbuild = await createRsbuild({
       builderConfig: {},
     });
 
-    expect(builder.context.bundlerType).toBe('rspack');
+    expect(rsbuild.context.bundlerType).toBe('rspack');
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
 

@@ -1,4 +1,4 @@
-import type { BuilderPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/webpack';
 import assert from 'assert';
 import { ModernJsImageMinimizerPlugin } from './minimizer';
 import { withDefaultOptions } from './shared/utils';
@@ -8,8 +8,8 @@ export type PluginImageCompressOptions = Options[];
 export const DEFAULT_OPTIONS: Codecs[] = ['jpeg', 'png', 'ico'];
 
 export interface IPluginImageCompress {
-  (...options: Options[]): BuilderPlugin;
-  (options: Options[]): BuilderPlugin;
+  (...options: Options[]): RsbuildPlugin;
+  (options: Options[]): RsbuildPlugin;
 }
 
 const castOptions = (args: (Options | Options[])[]): Options[] => {
@@ -36,7 +36,7 @@ const normalizeOptions = (options: Options[]) => {
 /** Options enable by default: {@link DEFAULT_OPTIONS} */
 export const pluginImageCompress: IPluginImageCompress = (
   ...args
-): BuilderPlugin => ({
+): RsbuildPlugin => ({
   name: 'plugin-image-compress',
   setup(api) {
     const opts = normalizeOptions(castOptions(args));

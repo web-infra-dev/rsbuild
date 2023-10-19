@@ -16,9 +16,9 @@ import {
 } from '@rsbuild/shared';
 import { fs } from '@rsbuild/shared/fs-extra';
 import type {
-  DefaultBuilderPlugin,
+  DefaultRsbuildPlugin,
   SharedNormalizedConfig,
-  SharedBuilderPluginAPI,
+  SharedRsbuildPluginAPI,
   HtmlTagsPluginOptions,
   HTMLPluginOptions,
 } from '@rsbuild/shared';
@@ -79,7 +79,7 @@ async function getChunks(entryName: string, entryValue: string | string[]) {
   return [...dependOn, entryName];
 }
 
-export const applyInjectTags = (api: SharedBuilderPluginAPI) => {
+export const applyInjectTags = (api: SharedRsbuildPluginAPI) => {
   api.modifyBundlerChain(async (chain, { HtmlPlugin, CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
     const tags = _.castArray(config.html.tags).filter(Boolean);
@@ -121,7 +121,7 @@ export const applyInjectTags = (api: SharedBuilderPluginAPI) => {
   });
 };
 
-export const pluginHtml = (): DefaultBuilderPlugin => ({
+export const pluginHtml = (): DefaultRsbuildPlugin => ({
   name: 'plugin-html',
 
   setup(api) {

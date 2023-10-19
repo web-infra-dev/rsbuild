@@ -1,20 +1,20 @@
 import { describe, it, expect } from 'vitest';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 import { pluginProgress } from '@/plugins/progress';
 import { createFriendlyPercentage } from '@/webpackPlugins/ProgressPlugin/helpers';
 
 describe('plugins/progress', () => {
   it('should register webpackbar by default', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginProgress()],
     });
 
-    const matched = await builder.matchWebpackPlugin('ProgressPlugin');
+    const matched = await rsbuild.matchWebpackPlugin('ProgressPlugin');
     expect(matched).toBeTruthy();
   });
 
   it('should not register webpackbar if dev.progressBar is false', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginProgress()],
       builderConfig: {
         dev: {
@@ -23,7 +23,7 @@ describe('plugins/progress', () => {
       },
     });
 
-    const matched = await builder.matchWebpackPlugin('ProgressPlugin');
+    const matched = await rsbuild.matchWebpackPlugin('ProgressPlugin');
     expect(matched).toBeFalsy();
   });
 });

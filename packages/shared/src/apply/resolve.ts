@@ -2,14 +2,14 @@ import { getExtensions } from '../config';
 import _ from '@modern-js/utils/lodash';
 import type { ChainIdentifier } from '@modern-js/utils/chain-id';
 import {
-  BuilderTarget,
+  RsbuildTarget,
   BundlerChain,
   ChainedConfig,
-  SharedBuilderPluginAPI,
+  SharedRsbuildPluginAPI,
   SharedNormalizedConfig,
 } from '../types';
 
-export function applyBuilderResolvePlugin(api: SharedBuilderPluginAPI) {
+export function applyResolvePlugin(api: SharedRsbuildPluginAPI) {
   api.modifyBundlerChain(async (chain, { target, CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
     const isTsProject = Boolean(api.context.tsconfigPath);
@@ -60,7 +60,7 @@ function applyExtensions({
 }: {
   chain: BundlerChain;
   config: SharedNormalizedConfig;
-  target: BuilderTarget;
+  target: RsbuildTarget;
   isTsProject: boolean;
 }) {
   const extensions = getExtensions({
@@ -99,9 +99,9 @@ async function applyAlias({
    * - Relative paths need to be turned into absolute paths.
    * - Absolute paths or a package name are not processed.
    */
-  Object.keys(mergedAlias).forEach(name => {
+  Object.keys(mergedAlias).forEach((name) => {
     const values = _.castArray(mergedAlias[name]);
-    const formattedValues = values.map(value => {
+    const formattedValues = values.map((value) => {
       if (typeof value === 'string' && value.startsWith('.')) {
         return ensureAbsolutePath(rootPath, value);
       }
@@ -122,7 +122,7 @@ function applyMainFields({
 }: {
   chain: BundlerChain;
   config: SharedNormalizedConfig;
-  target: BuilderTarget;
+  target: RsbuildTarget;
 }) {
   const { resolveMainFields } = config.source;
   if (!resolveMainFields) {
@@ -143,7 +143,7 @@ function applyMainFields({
         }
         return result;
       }, [] as string[])
-      .forEach(field => {
+      .forEach((field) => {
         chain.resolve.mainFields.add(field);
       });
   }

@@ -6,7 +6,7 @@ import { webpackOnlyTest } from '@scripts/helper';
 const fixtures = __dirname;
 
 test('should generate prefetch link when prefetch is defined', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/page1/index.ts'),
@@ -21,7 +21,7 @@ test('should generate prefetch link when prefetch is defined', async () => {
     },
   });
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const asyncFileName = Object.keys(files).find((file) =>
     file.includes('/static/js/async/'),
@@ -43,7 +43,7 @@ test('should generate prefetch link when prefetch is defined', async () => {
 });
 
 test('should generate prefetch link correctly when assetPrefix do not have a protocol', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/page1/index.ts'),
@@ -58,7 +58,7 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
     },
   });
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const asyncFileName = Object.keys(files).find((file) =>
     file.includes('/static/js/async/'),
@@ -77,7 +77,7 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
 });
 
 test('should generate prefetch link with filter', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/page1/index.ts'),
@@ -91,7 +91,7 @@ test('should generate prefetch link with filter', async () => {
     },
   });
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const asyncFileName = Object.keys(files).find((file) =>
     file.includes('/static/image/test'),
@@ -115,7 +115,7 @@ test('should generate prefetch link with filter', async () => {
 webpackOnlyTest(
   'should generate prefetch link by config (distinguish html)',
   async () => {
-    const builder = await build({
+    const rsbuild = await build({
       cwd: fixtures,
       entry: {
         page1: join(fixtures, 'src/page1/index.ts'),
@@ -130,7 +130,7 @@ webpackOnlyTest(
       },
     });
 
-    const files = await builder.unwrapOutputJSON();
+    const files = await rsbuild.unwrapOutputJSON();
 
     const [, content] = Object.entries(files).find(([name]) =>
       name.endsWith('page1.html'),
@@ -161,7 +161,7 @@ webpackOnlyTest(
 );
 
 test('should generate preload link when preload is defined', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/page1/index.ts'),
@@ -173,7 +173,7 @@ test('should generate preload link when preload is defined', async () => {
     },
   });
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const asyncFileName = Object.keys(files).find((file) =>
     file.includes('/static/js/async/'),

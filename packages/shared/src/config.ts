@@ -17,12 +17,12 @@ import {
 } from './constants';
 import { generateMetaTags } from './generateMetaTags';
 import type {
-  BuilderTarget,
+  RsbuildTarget,
   BundlerChainRule,
   SharedHtmlConfig,
-  SharedBuilderConfig,
+  SharedRsbuildConfig,
   InspectConfigOptions,
-  CreateBuilderOptions,
+  CreateRsbuildOptions,
   NormalizedSharedDevConfig,
   NormalizedSharedHtmlConfig,
   NormalizedSharedOutputConfig,
@@ -151,7 +151,7 @@ export async function outputInspectConfigFiles({
   inspectOptions: InspectConfigOptions & {
     outputPath: string;
   };
-  builderOptions: Required<CreateBuilderOptions>;
+  builderOptions: Required<CreateRsbuildOptions>;
 }) {
   const { outputPath } = inspectOptions;
 
@@ -224,7 +224,7 @@ export function getExtensions({
   resolveExtensionPrefix,
   isTsProject,
 }: {
-  target?: BuilderTarget;
+  target?: RsbuildTarget;
   resolveExtensionPrefix?: NormalizedSharedSourceConfig['resolveExtensionPrefix'];
   isTsProject?: boolean;
 } = {}) {
@@ -404,10 +404,10 @@ export const getDefaultStyledComponentsConfig = (
 /**
  * Omit unused keys from builder config passed by user
  */
-export const pickBuilderConfig = (
-  builderConfig: SharedBuilderConfig,
-): SharedBuilderConfig => {
-  const keys: Array<keyof SharedBuilderConfig> = [
+export const pickRsbuildConfig = (
+  builderConfig: SharedRsbuildConfig,
+): SharedRsbuildConfig => {
+  const keys: Array<keyof SharedRsbuildConfig> = [
     'dev',
     'html',
     'tools',

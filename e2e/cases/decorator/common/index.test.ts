@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 
 test('decorator legacy(default)', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
@@ -12,15 +12,15 @@ test('decorator legacy(default)', async ({ page }) => {
     builderConfig: {},
   });
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
   expect(await page.evaluate('window.aaa')).toBe('hello!');
   expect(await page.evaluate('window.bbb')).toBe('world');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('decorator latest', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
@@ -33,9 +33,9 @@ test('decorator latest', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
   expect(await page.evaluate('window.aaa')).toBe('hello!');
   expect(await page.evaluate('window.bbb')).toBe('world');
 
-  builder.close();
+  rsbuild.close();
 });

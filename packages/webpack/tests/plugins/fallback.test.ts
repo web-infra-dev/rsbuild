@@ -1,10 +1,10 @@
 import { expect, describe, it } from 'vitest';
 import { pluginFallback } from '@/plugins/fallback';
-import { BuilderPlugin } from '@/types';
-import { createStubBuilder } from '../helper';
+import { RsbuildPlugin } from '@/types';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/fallback', () => {
-  const testPlugin: BuilderPlugin = {
+  const testPlugin: RsbuildPlugin = {
     name: 'test-plugin',
     setup(api) {
       api.modifyWebpackChain((chain) => {
@@ -34,7 +34,7 @@ describe('plugins/fallback', () => {
   };
 
   it('should convert fallback rule correctly', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [testPlugin, pluginFallback()],
       builderConfig: {
         output: {
@@ -42,16 +42,16 @@ describe('plugins/fallback', () => {
         },
       },
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });
 
   it('should not convert fallback rule when output.enableAssetFallback is not enabled', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [testPlugin, pluginFallback()],
     });
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
   });

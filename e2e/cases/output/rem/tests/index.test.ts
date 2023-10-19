@@ -5,14 +5,14 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 const fixtures = resolve(__dirname, '../');
 
 test('rem default (disable)', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/index.ts'),
     },
     runServer: true,
   });
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const title = page.locator('#title');
   await expect(title).toHaveCSS('font-size', '20px');
@@ -20,12 +20,12 @@ test('rem default (disable)', async ({ page }) => {
   const description = page.locator('#description');
   await expect(description).toHaveCSS('font-size', '16px');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('rem enable', async ({ page }) => {
   // convert to rem
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: {
       main: join(fixtures, 'src/index.ts'),
@@ -38,7 +38,7 @@ test('rem enable', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', builder.port));
+  await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const root = page.locator('html');
   await expect(root).toHaveCSS('font-size', '64px');
@@ -55,11 +55,11 @@ test('rem enable', async ({ page }) => {
   const description = page.locator('#description');
   await expect(description).toHaveCSS('font-size', '20.48px');
 
-  builder.close();
+  rsbuild.close();
 });
 
 test('should inline runtime code to html by default', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: { index: join(fixtures, 'src/index.ts') },
     builderConfig: {
@@ -68,7 +68,7 @@ test('should inline runtime code to html by default', async () => {
       },
     },
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
   const htmlFile = Object.keys(files).find((file) => file.endsWith('.html'));
 
   expect(htmlFile).toBeTruthy();
@@ -76,7 +76,7 @@ test('should inline runtime code to html by default', async () => {
 });
 
 test('should extract runtime code when inlineRuntime is false', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: fixtures,
     entry: { index: join(fixtures, 'src/index.ts') },
     builderConfig: {
@@ -87,7 +87,7 @@ test('should extract runtime code when inlineRuntime is false', async () => {
       },
     },
   });
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const htmlFile = Object.keys(files).find((file) => file.endsWith('.html'));
   const retryFile = Object.keys(files).find(

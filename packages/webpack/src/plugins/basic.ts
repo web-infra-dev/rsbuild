@@ -1,15 +1,15 @@
 import path from 'path';
-import type { BuilderPlugin } from '../types';
-import { applyBuilderBasicPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
+import { applyBasicPlugin } from '@rsbuild/shared';
 
 /**
  * Provide some basic configs of webpack
  */
-export const pluginBasic = (): BuilderPlugin => ({
+export const pluginBasic = (): RsbuildPlugin => ({
   name: 'plugin-basic',
 
   setup(api) {
-    applyBuilderBasicPlugin(api);
+    applyBasicPlugin(api);
 
     api.modifyWebpackChain(async (chain, { env, isServer, isWebWorker }) => {
       /**

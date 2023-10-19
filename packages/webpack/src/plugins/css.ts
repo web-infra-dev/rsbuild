@@ -8,12 +8,12 @@ import {
   getCssLoaderOptions,
   getBrowserslistWithDefault,
   getCssModuleLocalIdentName,
-  type BuilderContext,
+  type Context,
   type BundlerChainRule,
   type StyleLoaderOptions,
 } from '@rsbuild/shared';
 import type {
-  BuilderPlugin,
+  RsbuildPlugin,
   CSSExtractOptions,
   NormalizedConfig,
 } from '../types';
@@ -27,7 +27,7 @@ export async function applyBaseCSSRule({
 }: {
   rule: BundlerChainRule;
   config: NormalizedConfig;
-  context: BuilderContext;
+  context: Context;
   utils: ModifyChainUtils;
   importLoaders?: number;
 }) {
@@ -139,7 +139,7 @@ export async function applyBaseCSSRule({
   rule.resolve.preferRelative(true);
 }
 
-export const pluginCss = (): BuilderPlugin => {
+export const pluginCss = (): RsbuildPlugin => {
   return {
     name: 'plugin-css',
     setup(api) {

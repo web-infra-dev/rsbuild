@@ -9,7 +9,7 @@ test.describe('performance configure multi', () => {
   const basicFixtures = resolve(__dirname, 'basic');
 
   test.beforeAll(async () => {
-    const builder = await build({
+    const rsbuild = await build({
       cwd: basicFixtures,
       entry: {
         main: join(basicFixtures, 'src/index.ts'),
@@ -24,7 +24,7 @@ test.describe('performance configure multi', () => {
       },
     });
 
-    files = await builder.unwrapOutputJSON();
+    files = await rsbuild.unwrapOutputJSON();
   });
 
   test('bundleAnalyze', async () => {
@@ -44,7 +44,7 @@ test.describe('performance configure multi', () => {
 });
 
 test('should generate vendor chunk when chunkSplit is "single-vendor"', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'basic'),
     entry: {
       main: join(fixtures, 'basic/src/index.ts'),
@@ -58,7 +58,7 @@ test('should generate vendor chunk when chunkSplit is "single-vendor"', async ()
     },
   });
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const [vendorFile] = Object.entries(files).find(
     ([name, content]) => name.includes('vendor') && content.includes('React'),
@@ -68,7 +68,7 @@ test('should generate vendor chunk when chunkSplit is "single-vendor"', async ()
 });
 
 test('should generate preconnect link when preconnect is defined', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'basic'),
     entry: {
       main: join(fixtures, 'basic/src/index.ts'),
@@ -88,7 +88,7 @@ test('should generate preconnect link when preconnect is defined', async () => {
     },
   });
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const [, content] = Object.entries(files).find(([name]) =>
     name.endsWith('.html'),
@@ -106,7 +106,7 @@ test('should generate preconnect link when preconnect is defined', async () => {
 });
 
 test('should generate dnsPrefetch link when dnsPrefetch is defined', async () => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: join(fixtures, 'basic'),
     entry: {
       main: join(fixtures, 'basic/src/index.ts'),
@@ -118,7 +118,7 @@ test('should generate dnsPrefetch link when dnsPrefetch is defined', async () =>
     },
   });
 
-  const files = await builder.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
   const [, content] = Object.entries(files).find(([name]) =>
     name.endsWith('.html'),

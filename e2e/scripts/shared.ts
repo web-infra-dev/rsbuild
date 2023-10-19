@@ -4,10 +4,10 @@ import { join } from 'path';
 import { fs } from '@rsbuild/shared/fs-extra';
 import { globContentJSON, runStaticServer } from '@scripts/helper';
 import type {
-  CreateBuilderOptions,
-  BuilderConfig as RspackBuilderConfig,
+  CreateRsbuildOptions,
+  RsbuildConfig as RspackRsbuildConfig,
 } from '@rsbuild/core';
-import type { BuilderConfig as WebpackBuilderConfig } from '@rsbuild/webpack';
+import type { RsbuildConfig as WebpackRsbuildConfig } from '@rsbuild/webpack';
 import { StartDevServerOptions } from '@rsbuild/shared';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
@@ -21,23 +21,23 @@ export const getHrefByEntryName = (entryName: string, port: number) => {
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
 
-export const createBuilder = async (
-  builderOptions: CreateBuilderOptions,
-  builderConfig: WebpackBuilderConfig | RspackBuilderConfig = {},
+export const createRsbuild = async (
+  builderOptions: CreateRsbuildOptions,
+  builderConfig: WebpackRsbuildConfig | RspackRsbuildConfig = {},
 ) => {
-  const { createBuilder } = await import('@rsbuild/core');
+  const { createRsbuild } = await import('@rsbuild/core');
 
   if (process.env.PROVIDE_TYPE === 'rspack') {
-    return createBuilder({
+    return createRsbuild({
       ...builderOptions,
       builderConfig,
     });
   }
 
   const { webpackProvider } = await import('@rsbuild/webpack');
-  return createBuilder({
+  return createRsbuild({
     ...builderOptions,
-    builderConfig: builderConfig as WebpackBuilderConfig,
+    builderConfig: builderConfig as WebpackRsbuildConfig,
     provider: webpackProvider,
   });
 };
@@ -56,10 +56,10 @@ function getRandomPort(defaultPort = Math.ceil(Math.random() * 10000) + 10000) {
   }
 }
 
-const updateConfigForTest = <BuilderType>(
-  config: BuilderType extends 'webpack'
-    ? WebpackBuilderConfig
-    : RspackBuilderConfig,
+const updateConfigForTest = <BundlerType>(
+  config: BundlerType extends 'webpack'
+    ? WebpackRsbuildConfig
+    : RspackRsbuildConfig,
 ) => {
   // make devPort random to avoid port conflict
   config.dev = {
@@ -85,55 +85,55 @@ const updateConfigForTest = <BuilderType>(
   }
 };
 
-export async function dev<BuilderType = 'rspack'>({
+export async function dev<BundlerType = 'rspack'>({
   serverOptions,
   builderConfig = {},
   ...options
-}: CreateBuilderOptions & {
-  builderConfig?: BuilderType extends 'webpack'
-    ? WebpackBuilderConfig
-    : RspackBuilderConfig;
+}: CreateRsbuildOptions & {
+  builderConfig?: BundlerType extends 'webpack'
+    ? WebpackRsbuildConfig
+    : RspackRsbuildConfig;
   serverOptions?: StartDevServerOptions['serverOptions'];
 }) {
   process.env.NODE_ENV = 'development';
 
   updateConfigForTest(builderConfig);
 
-  const builder = await createBuilder(options, builderConfig);
-  return builder.startDevServer({
+  const rsbuild = await createRsbuild(options, builderConfig);
+  return rsbuild.startDevServer({
     printURLs: false,
     serverOptions,
   });
 }
 
-export async function build<BuilderType = 'rspack'>({
+export async function build<BundlerType = 'rspack'>({
   plugins,
   runServer = false,
   builderConfig = {},
   ...options
-}: CreateBuilderOptions & {
+}: CreateRsbuildOptions & {
   plugins?: any[];
   runServer?: boolean;
-  builderConfig?: BuilderType extends 'webpack'
-    ? WebpackBuilderConfig
-    : RspackBuilderConfig;
+  builderConfig?: BundlerType extends 'webpack'
+    ? WebpackRsbuildConfig
+    : RspackRsbuildConfig;
 }) {
   process.env.NODE_ENV = 'production';
 
   updateConfigForTest(builderConfig);
 
   // todo: support test swc (add swc plugin) use providerType 'webpack-swc'?
-  const builder = await createBuilder(options, builderConfig);
+  const rsbuild = await createRsbuild(options, builderConfig);
 
-  builder.removePlugins(['plugin-file-size']);
+  rsbuild.removePlugins(['plugin-file-size']);
 
   if (plugins) {
-    builder.addPlugins(plugins);
+    rsbuild.addPlugins(plugins);
   }
 
-  await builder.build();
+  await rsbuild.build();
 
-  const { distPath } = builder.context;
+  const { distPath } = rsbuild.context;
 
   const { port, close } = runServer
     ? await runStaticServer(distPath, {
@@ -173,6 +173,6 @@ export async function build<BuilderType = 'rspack'>({
     unwrapOutputJSON,
     getIndexFile,
     providerType: process.env.PROVIDE_TYPE || 'rspack',
-    instance: builder,
+    instance: rsbuild,
   };
 }

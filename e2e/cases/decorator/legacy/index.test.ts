@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 
 test('decorator legacy(default)', async ({ page }) => {
-  const builder = await build({
+  const rsbuild = await build({
     cwd: __dirname,
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
@@ -12,14 +12,14 @@ test('decorator legacy(default)', async ({ page }) => {
     builderConfig: {},
   });
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
   expect(await page.evaluate('window.aaa')).toBe('hello world');
 
-  if (builder.providerType !== 'rspack') {
+  if (rsbuild.providerType !== 'rspack') {
     expect(await page.evaluate('window.ccc')).toContain(
       "Cannot assign to read only property 'message' of object",
     );
   }
 
-  builder.close();
+  rsbuild.close();
 });

@@ -1,7 +1,7 @@
 import { mapValues } from '@modern-js/utils/lodash';
-import type { GlobalVars, DefaultBuilderPlugin } from '@rsbuild/shared';
+import type { GlobalVars, DefaultRsbuildPlugin } from '@rsbuild/shared';
 
-export const pluginDefine = (): DefaultBuilderPlugin => ({
+export const pluginDefine = (): DefaultRsbuildPlugin => ({
   name: 'plugin-define',
 
   async setup(api) {

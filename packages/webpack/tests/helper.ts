@@ -1,10 +1,10 @@
-import { type CreateBuilderOptions } from '@rsbuild/shared';
-import type { BuilderPlugin, BuilderConfig } from '@/types';
+import { type CreateRsbuildOptions } from '@rsbuild/shared';
+import type { RsbuildPlugin, RsbuildConfig } from '@/types';
 import assert from 'assert';
 import { webpackProvider } from '@/provider';
 import { join } from 'path';
 import {
-  createStubBuilder as createBaseBuilder,
+  createStubRsbuild as createBaseRsbuild,
   matchLoader,
   matchPlugin,
 } from '@rsbuild/vitest-helper';
@@ -12,17 +12,17 @@ import {
 export const fixturesDir = join(__dirname, 'fixtures');
 
 /**
- * different with builder.createBuilder. support add custom plugins instead of applyDefaultPlugins.
+ * different with rsbuild.createRsbuild. support add custom plugins instead of applyDefaultPlugins.
  */
-export async function createStubBuilder({
+export async function createStubRsbuild({
   builderConfig = {},
   plugins,
   ...options
-}: CreateBuilderOptions & {
-  builderConfig?: BuilderConfig;
-  plugins?: BuilderPlugin[];
+}: CreateRsbuildOptions & {
+  builderConfig?: RsbuildConfig;
+  plugins?: RsbuildPlugin[];
 }) {
-  const builder = await createBaseBuilder({
+  const rsbuild = await createBaseRsbuild({
     provider: webpackProvider,
     builderConfig,
     plugins,
@@ -31,7 +31,7 @@ export async function createStubBuilder({
 
   /** Unwrap webpack configs. */
   const unwrapWebpackConfigs = async () => {
-    const webpackConfigs = await builder.initConfigs();
+    const webpackConfigs = await rsbuild.initConfigs();
     return webpackConfigs;
   };
 
@@ -54,7 +54,7 @@ export async function createStubBuilder({
     matchLoader({ config: await unwrapWebpackConfig(), loader, testFile });
 
   return {
-    ...builder,
+    ...rsbuild,
     unwrapWebpackConfig,
     unwrapWebpackConfigs,
     matchWebpackPlugin,

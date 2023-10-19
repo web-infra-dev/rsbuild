@@ -2,26 +2,26 @@ import jiti from 'jiti';
 import { join } from 'path';
 import { findExists } from '@modern-js/utils';
 import type {
-  BuilderEntry,
-  BuilderPlugin,
-  BuilderProvider,
-  SharedBuilderConfig,
+  RsbuildEntry,
+  RsbuildPlugin,
+  RsbuildProvider,
+  SharedRsbuildConfig,
 } from '@rsbuild/shared';
 import { fs } from '@rsbuild/shared/fs-extra';
-import type { BuilderConfig as RspackBuilderConfig } from '../rspack-provider';
+import type { RsbuildConfig as RspackRsbuildConfig } from '../rspack-provider';
 
-export type BuilderConfig<Config> = Config & {
+export type RsbuildConfig<Config> = Config & {
   source?: {
-    entries?: BuilderEntry;
+    entries?: RsbuildEntry;
   };
-  builderPlugins?: BuilderPlugin[];
-  provider?: ({ builderConfig }: { builderConfig: Config }) => BuilderProvider;
+  builderPlugins?: RsbuildPlugin[];
+  provider?: ({ builderConfig }: { builderConfig: Config }) => RsbuildProvider;
 };
 
 export const defineConfig = <
-  T extends SharedBuilderConfig = RspackBuilderConfig,
+  T extends SharedRsbuildConfig = RspackRsbuildConfig,
 >(
-  config: BuilderConfig<T>,
+  config: RsbuildConfig<T>,
 ) => config;
 
 export async function loadConfig(): Promise<ReturnType<typeof defineConfig>> {

@@ -1,20 +1,20 @@
-import type { BuilderContext } from '@rsbuild/shared';
+import type { Context as BaseContext } from '@rsbuild/shared';
 import type { Hooks } from '../core/initHooks';
-import type { BuilderConfig, NormalizedConfig } from './config';
-import type { BuilderPluginAPI } from './plugin';
+import type { RsbuildConfig, NormalizedConfig } from './config';
+import type { RsbuildPluginAPI } from './plugin';
 
 /** The inner context. */
-export type Context = BuilderContext & {
+export type Context = BaseContext & {
   /** All hooks. */
   hooks: Readonly<Hooks>;
   /** Current builder config. */
-  config: Readonly<BuilderConfig>;
+  config: Readonly<RsbuildConfig>;
   /** The async task to validate schema of config. */
   configValidatingTask: Promise<void>;
-  /** The original builder config passed from the createBuilder method. */
-  originalConfig: Readonly<BuilderConfig>;
+  /** The original builder config passed from the createRsbuild method. */
+  originalConfig: Readonly<RsbuildConfig>;
   /** The normalized builder config. */
   normalizedConfig?: NormalizedConfig;
   /** The plugin API. */
-  pluginAPI?: BuilderPluginAPI;
+  pluginAPI?: RsbuildPluginAPI;
 };

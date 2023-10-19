@@ -4,7 +4,7 @@ import {
   getHTMLPathByEntry,
   type PluginStore,
 } from '@rsbuild/shared';
-import type { Context, BuilderPluginAPI } from '../types';
+import type { Context, RsbuildPluginAPI } from '../types';
 
 export function getPluginAPI({
   context,
@@ -12,14 +12,14 @@ export function getPluginAPI({
 }: {
   context: Context;
   pluginStore: PluginStore;
-}): BuilderPluginAPI {
+}): RsbuildPluginAPI {
   const { hooks } = context;
   const publicContext = createPublicContext(context);
 
-  const getBuilderConfig = () => {
+  const getRsbuildConfig = () => {
     if (!context.normalizedConfig) {
       throw new Error(
-        'Cannot access builder config until modifyBuilderConfig is called.',
+        'Cannot access builder config until modifyRsbuildConfig is called.',
       );
     }
     return context.config;
@@ -28,7 +28,7 @@ export function getPluginAPI({
   const getNormalizedConfig = () => {
     if (!context.normalizedConfig) {
       throw new Error(
-        'Cannot access normalized config until modifyBuilderConfig is called.',
+        'Cannot access normalized config until modifyRsbuildConfig is called.',
       );
     }
     return context.normalizedConfig;
@@ -51,7 +51,7 @@ export function getPluginAPI({
   return {
     context: publicContext,
     getHTMLPaths,
-    getBuilderConfig,
+    getRsbuildConfig,
     getNormalizedConfig,
     isPluginExists: pluginStore.isPluginExists,
 
@@ -61,7 +61,7 @@ export function getPluginAPI({
     onBeforeBuild: hooks.onBeforeBuildHook.tap,
     onDevCompileDone: hooks.onDevCompileDoneHook.tap,
     modifyRspackConfig: hooks.modifyRspackConfigHook.tap,
-    modifyBuilderConfig: hooks.modifyBuilderConfigHook.tap,
+    modifyRsbuildConfig: hooks.modifyRsbuildConfigHook.tap,
     modifyBundlerChain: hooks.modifyBundlerChainHook.tap,
     onAfterCreateCompiler: hooks.onAfterCreateCompilerHook.tap,
     onBeforeCreateCompiler: hooks.onBeforeCreateCompilerHook.tap,

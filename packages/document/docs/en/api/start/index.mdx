@@ -56,7 +56,7 @@ const provider = builderRspackProvider({
 After getting the provider instance, you can call the `createRsbuild` method to create a Rsbuild instance object:
 
 ```ts
-const builder = await createRsbuild(provider, {
+const rsbuild = await createRsbuild(provider, {
   entry: {
     index: './src/index.ts',
   },

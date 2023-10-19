@@ -1,10 +1,10 @@
 import { expect, describe, it } from 'vitest';
 import { pluginPug } from '@/plugins/pug';
-import { createStubBuilder } from '../helper';
+import { createStubRsbuild } from '../helper';
 
 describe('plugins/pug', () => {
   it('should add pug rules correctly when tools.pug is used', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginPug()],
       builderConfig: {
         tools: {
@@ -15,16 +15,16 @@ describe('plugins/pug', () => {
       },
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
   });
 
   it('should not add pug rules correctly when tools.pug is not used', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginPug()],
     });
 
-    const config = await builder.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toEqual({});
   });
 });

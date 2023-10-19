@@ -1,8 +1,8 @@
 import { deepmerge } from '@rsbuild/shared/deepmerge';
 import { VueLoaderPlugin } from 'vue-loader';
-import type { BuilderPlugin } from '@rsbuild/core';
-import type { BuilderPluginAPI } from '@rsbuild/webpack';
-import type { SharedBuilderConfig } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPluginAPI } from '@rsbuild/webpack';
+import type { SharedRsbuildConfig } from '@rsbuild/shared';
 import type { VueLoaderOptions } from 'vue-loader';
 
 type VueJSXPresetOptions = {
@@ -20,7 +20,7 @@ export type PluginVueOptions = {
 
 export function pluginVue2(
   options: PluginVueOptions = {},
-): BuilderPlugin<BuilderPluginAPI> {
+): RsbuildPlugin<RsbuildPluginAPI> {
   return {
     name: 'plugin-vue2',
 
@@ -29,8 +29,8 @@ export function pluginVue2(
     remove: ['plugin-react', 'plugin-antd', 'plugin-arco'],
 
     async setup(api) {
-      api.modifyBuilderConfig((config, { mergeBuilderConfig }) => {
-        const builderConfig: SharedBuilderConfig = {
+      api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+        const builderConfig: SharedRsbuildConfig = {
           output: {
             disableSvgr: true,
           },
@@ -56,7 +56,7 @@ export function pluginVue2(
           builderConfig.output!.disableCssExtract = true;
         }
 
-        return mergeBuilderConfig(config, builderConfig);
+        return mergeRsbuildConfig(config, builderConfig);
       });
 
       api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {

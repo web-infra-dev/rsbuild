@@ -1,16 +1,12 @@
 import { posix } from 'path';
-import {
-  getDistPath,
-  getFilename,
-  applyBuilderOutputPlugin,
-} from '@rsbuild/shared';
-import type { BuilderPlugin } from '../types';
+import { getDistPath, getFilename, applyOutputPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginOutput = (): BuilderPlugin => ({
+export const pluginOutput = (): RsbuildPlugin => ({
   name: 'plugin-output',
 
   setup(api) {
-    applyBuilderOutputPlugin(api);
+    applyOutputPlugin(api);
 
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       const config = api.getNormalizedConfig();

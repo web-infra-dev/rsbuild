@@ -1,6 +1,6 @@
 import path from 'path';
 import type { ChainedConfig, ModuleScopes } from '@rsbuild/shared';
-import type { BuilderPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 
 export const isPrimitiveScope = (
   items: unknown[],
@@ -24,7 +24,7 @@ export const applyScopeChain = (
   return options(defaults) || defaults;
 };
 
-export const pluginModuleScopes = (): BuilderPlugin => ({
+export const pluginModuleScopes = (): RsbuildPlugin => ({
   name: 'plugin-module-scopes',
 
   setup(api) {

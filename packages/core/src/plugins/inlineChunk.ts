@@ -4,11 +4,11 @@ import {
   CSS_REGEX,
   RUNTIME_CHUNK_NAME,
   isHtmlDisabled,
-  DefaultBuilderPlugin,
+  DefaultRsbuildPlugin,
   type InlineChunkTest,
 } from '@rsbuild/shared';
 
-export const pluginInlineChunk = (): DefaultBuilderPlugin => ({
+export const pluginInlineChunk = (): DefaultRsbuildPlugin => ({
   name: 'plugin-inline-chunk',
 
   setup(api) {

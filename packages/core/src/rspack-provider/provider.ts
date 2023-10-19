@@ -1,8 +1,8 @@
 import {
   startProdServer,
-  pickBuilderConfig,
+  pickRsbuildConfig,
   createPublicContext,
-  type BuilderProvider,
+  type RsbuildProvider,
 } from '@rsbuild/shared';
 import { chalk } from '@rsbuild/shared/chalk';
 import { createContext } from './core/createContext';
@@ -16,24 +16,24 @@ import {
 import type {
   Compiler,
   RspackConfig,
-  BuilderConfig,
+  RsbuildConfig,
   NormalizedConfig,
   MultiCompiler,
 } from './types';
 
-export type RspackProvider = BuilderProvider<
-  BuilderConfig,
+export type RspackProvider = RsbuildProvider<
+  RsbuildConfig,
   RspackConfig,
   NormalizedConfig,
   Compiler | MultiCompiler
 >;
 
 export function rspackProvider({
-  builderConfig: originalBuilderConfig,
+  builderConfig: originalRsbuildConfig,
 }: {
-  builderConfig: BuilderConfig;
+  builderConfig: RsbuildConfig;
 }): RspackProvider {
-  const builderConfig = pickBuilderConfig(originalBuilderConfig);
+  const builderConfig = pickRsbuildConfig(originalRsbuildConfig);
 
   return async ({ pluginStore, builderOptions, plugins }) => {
     if (!(await isSatisfyRspackMinimumVersion())) {

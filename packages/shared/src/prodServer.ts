@@ -5,14 +5,10 @@ import prodServer, {
 import chalk from 'chalk';
 import { logger as defaultLogger } from './logger';
 import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
-import type {
-  BuilderContext,
-  StartServerResult,
-  SharedBuilderConfig,
-} from './types';
+import type { Context, StartServerResult, SharedRsbuildConfig } from './types';
 
 export const getServerOptions = (
-  builderConfig: SharedBuilderConfig,
+  builderConfig: SharedRsbuildConfig,
 ): ModernServerOptions['config'] => {
   return {
     output: {
@@ -51,8 +47,8 @@ export async function printServerURLs(
 }
 
 export async function startProdServer(
-  context: BuilderContext,
-  builderConfig: SharedBuilderConfig,
+  context: Context,
+  builderConfig: SharedRsbuildConfig,
 ) {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'production';

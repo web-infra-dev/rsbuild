@@ -13,12 +13,12 @@ export * from './tools';
 export const formatZodError = (error: ZodError<unknown>) => {
   return fromZodError(error, {
     issueSeparator: '\n* ',
-    prefix: `${chalk.red('Builder config validation error')}:`,
+    prefix: `${chalk.red('Rsbuild config validation error')}:`,
     prefixSeparator: '\n* ',
   });
 };
 
-export const validateBuilderConfig = async (
+export const validateRsbuildConfig = async (
   configSchema: z.ZodType<unknown>,
   data: unknown,
 ) => {

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import type { BuilderPluginAPI, BuilderPlugin } from '@rsbuild/webpack';
+import type { RsbuildPluginAPI, RsbuildPlugin } from '@rsbuild/webpack';
 import {
   JS_REGEX,
   TS_REGEX,
@@ -24,10 +24,10 @@ const PLUGIN_NAME = 'plugin-swc';
  * - Remove JS minifier
  * - Add swc minifier plugin
  */
-export const pluginSwc = (options: PluginSwcOptions = {}): BuilderPlugin => ({
+export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_NAME,
 
-  setup(api: BuilderPluginAPI) {
+  setup(api: RsbuildPluginAPI) {
     if (api.context.bundlerType === 'rspack') {
       return;
     }

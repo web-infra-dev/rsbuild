@@ -1,7 +1,7 @@
 import path from 'path';
-import type { BuilderPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginPug = (): BuilderPlugin => ({
+export const pluginPug = (): RsbuildPlugin => ({
   name: 'plugin-pug',
 
   setup(api) {

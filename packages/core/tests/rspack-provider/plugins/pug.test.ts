@@ -1,12 +1,12 @@
 import { expect, describe, it } from 'vitest';
 import { pluginEntry } from '@src/plugins/entry';
 import { pluginHtml } from '@src/plugins/html';
-import { createStubBuilder } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/vitest-helper';
 import { pluginPug } from '@/plugins/pug';
 
 describe('plugins/pug', () => {
   it('should add pug correctly when tools.pug is used', async () => {
-    const builder = await createStubBuilder({
+    const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginPug()],
       entry: {
         main: './src/main.ts',
@@ -25,7 +25,7 @@ describe('plugins/pug', () => {
       },
     });
 
-    const bundlerConfigs = await builder.initConfigs();
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 });
