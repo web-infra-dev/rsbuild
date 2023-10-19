@@ -1,0 +1,33 @@
+- **Type:** `'flat' | 'nested'`
+- **Default:** `'flat'`
+
+用于定义 HTML 产物文件的目录结构。
+
+### 示例
+
+默认情况下，HTML 产物在 `dist` 目录下的结构为 `flat`：
+
+```bash
+/dist
+ └── [name].html
+```
+
+你可以将 `html.outputStructure` 配置为 `nested`:
+
+```js
+export default {
+  html: {
+    outputStructure: 'nested',
+  },
+};
+```
+
+重新构建后，HTML 产物的目录结构如下：
+
+```bash
+/dist
+ └── [name]
+     └── index.html
+```
+
+> 如果你需要设置 HTML 文件在 dist 目录中的父级路径，请使用 `output.distPath.html` 配置。

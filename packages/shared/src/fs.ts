@@ -59,9 +59,10 @@ export function getHTMLPathByEntry(
   },
 ) {
   const htmlPath = getDistPath(config.output, 'html');
-  const filename = config.html.disableHtmlFolder
-    ? `${entryName}.html`
-    : `${entryName}/index.html`;
+  const filename =
+    config.html.outputStructure === 'flat'
+      ? `${entryName}.html`
+      : `${entryName}/index.html`;
 
   return removeLeadingSlash(`${htmlPath}/${filename}`);
 }

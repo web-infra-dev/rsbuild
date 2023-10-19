@@ -6,6 +6,7 @@ import {
   ScriptLoading,
   ScriptInject,
   SharedHtmlConfig,
+  OutputStructure,
 } from '../types';
 import { z } from '../utils';
 import { ZodType } from '../zod';
@@ -22,6 +23,11 @@ export const ScriptLoadingSchema: ZodType<ScriptLoading> = z.enum([
   'defer',
   'module',
   'blocking',
+]);
+
+export const OutputStructureSchema: ZodType<OutputStructure> = z.enum([
+  'flat',
+  'nested',
 ]);
 
 export const ScriptInjectSchema: ZodType<ScriptInject> = z.union([
@@ -64,7 +70,7 @@ export const sharedHtmlConfigSchema = z.partialObj({
   appIcon: z.string(),
   mountId: z.string(),
   crossorigin: z.union([z.boolean(), CrossOriginSchema]),
-  disableHtmlFolder: z.boolean(),
+  outputStructure: OutputStructureSchema,
   template: z.string(),
   templateByEntries: z.record(z.string()),
   templateParameters: z.chained(z.record(z.unknown())),

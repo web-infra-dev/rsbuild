@@ -42,7 +42,7 @@ Rsbuild provides some configs to modify the directory or filename, you can:
 - Modify the output path of through [output.distPath](/config/options/output.html#outputdistpath).
 - Modify the license file through [output.legalComments](/config/options/output.html#outputlegalcomments).
 - Remove Source Map file through [output.disableSourceMap](/config/options/output.html#outputdisablesourcemap).
-- Remove the folder corresponding to the HTML files through [html.disableHtmlFolder](/config/options/html.html#htmldisablehtmlfolder).
+- Modify the output structure of the HTML files through [html.outputStructure](/config/options/html.html#outputstructure).
 
 ## Static Assets
 
