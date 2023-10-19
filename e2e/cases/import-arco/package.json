@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "name": "@rsbuild/e2e-webpack-import-arco",
+  "version": "1.0.0",
+  "dependencies": {
+    "@arco-design/web-react": "^2.46.0",
+    "react": "^18",
+    "react-dom": "^18"
+  }
+}

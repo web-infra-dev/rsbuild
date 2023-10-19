@@ -1,0 +1,14 @@
+{
+  "extends": "../scripts/tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@shared/*": ["./shared/*"],
+      "@scripts/*": ["./scripts/*"]
+    }
+  },
+  "include": ["src", "scripts", "cases"]
+}

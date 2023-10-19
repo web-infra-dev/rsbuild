@@ -1,0 +1,36 @@
+{
+  "private": true,
+  "name": "@rsbuild/e2e",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "pnpm run test:webpack && pnpm run test:rspack",
+    "test:webpack": "playwright test",
+    "test:rspack": "PROVIDE_TYPE=rspack playwright test",
+    "test:webpack-swc": "playwright test swc"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-router-dom": "^6.8.1",
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/plugin-image-compress": "workspace:*",
+    "@rsbuild/plugin-node-polyfill": "workspace:*",
+    "@rsbuild/plugin-stylus": "workspace:*",
+    "@rsbuild/plugin-swc": "workspace:*",
+    "@rsbuild/plugin-vue": "workspace:*",
+    "@rsbuild/plugin-vue2": "workspace:*",
+    "@rsbuild/shared": "workspace:*",
+    "@rsbuild/webpack": "workspace:*",
+    "@modern-js/utils": "^2.36.0",
+    "@types/node": "^16",
+    "@types/lodash": "^4.14.195",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@playwright/test": "1.33.0",
+    "typescript": "^5"
+  }
+}

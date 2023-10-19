@@ -3,6 +3,7 @@
 node_modules/
 
 dist/
+dist-*
 coverage/
 doc_build/
 playwright-report/
