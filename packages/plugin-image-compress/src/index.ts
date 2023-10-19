@@ -34,10 +34,10 @@ const normalizeOptions = (options: Options[]) => {
 };
 
 /** Options enable by default: {@link DEFAULT_OPTIONS} */
-export const builderPluginImageCompress: IPluginImageCompress = (
+export const pluginImageCompress: IPluginImageCompress = (
   ...args
 ): BuilderPlugin => ({
-  name: 'builder-plugin-image-compress',
+  name: 'plugin-image-compress',
   setup(api) {
     const opts = normalizeOptions(castOptions(args));
 

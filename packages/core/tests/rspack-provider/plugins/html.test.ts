@@ -1,12 +1,12 @@
 import { expect, describe, it } from 'vitest';
-import { builderPluginEntry } from '@src/plugins/entry';
-import { builderPluginHtml } from '@src/plugins/html';
+import { pluginEntry } from '@src/plugins/entry';
+import { pluginHtml } from '@src/plugins/html';
 import { createBuilder, matchPlugin } from '../helper';
 
 describe('plugins/html', () => {
   it('should register html plugin correctly', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml()],
+      plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
@@ -21,7 +21,7 @@ describe('plugins/html', () => {
 
   it('should register nonce plugin when using security.nonce', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml()],
+      plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
@@ -41,7 +41,7 @@ describe('plugins/html', () => {
 
   it('should register crossorigin plugin when using html.crossorigin', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml()],
+      plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
@@ -63,7 +63,7 @@ describe('plugins/html', () => {
 
   it('should register appIcon plugin when using html.appIcon', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml()],
+      plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
@@ -83,7 +83,7 @@ describe('plugins/html', () => {
 
   it('should allow to set favicon by html.favicon option', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml()],
+      plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
@@ -102,7 +102,7 @@ describe('plugins/html', () => {
 
   it('should register faviconUrl plugin when html.favicon is a URL', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml()],
+      plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
@@ -124,7 +124,7 @@ describe('plugins/html', () => {
 
   it('should allow to set inject by html.inject option', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml()],
+      plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
@@ -146,7 +146,7 @@ describe('plugins/html', () => {
     process.env.NODE_ENV = 'production';
 
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml()],
+      plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
@@ -162,7 +162,7 @@ describe('plugins/html', () => {
 
   it('should allow to modify plugin options by tools.htmlPlugin', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml()],
+      plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
@@ -186,7 +186,7 @@ describe('plugins/html', () => {
 
   it('should support multi entry', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml()],
+      plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
         foo: './src/foo.ts',
@@ -208,7 +208,7 @@ describe('plugins/html', () => {
 
   it('should allow to disable html plugin', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml()],
+      plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },
@@ -228,7 +228,7 @@ describe('plugins/html', () => {
 
   it('should disable html plugin when htmlPlugin is an array and contains false', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml()],
+      plugins: [pluginEntry(), pluginHtml()],
       entry: {
         main: './src/main.ts',
       },

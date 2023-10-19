@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { builderPluginMinimize } from '@/plugins/minimize';
+import { pluginMinimize } from '@/plugins/minimize';
 import { createStubBuilder } from '../helper';
 
 describe('plugins/minimize', () => {
@@ -7,7 +7,7 @@ describe('plugins/minimize', () => {
     process.env.NODE_ENV = 'development';
 
     const builder = await createStubBuilder({
-      plugins: [builderPluginMinimize()],
+      plugins: [pluginMinimize()],
     });
 
     const config = await builder.unwrapWebpackConfig();
@@ -20,7 +20,7 @@ describe('plugins/minimize', () => {
     process.env.NODE_ENV = 'production';
 
     const builder = await createStubBuilder({
-      plugins: [builderPluginMinimize()],
+      plugins: [pluginMinimize()],
     });
 
     const config = await builder.unwrapWebpackConfig();
@@ -33,7 +33,7 @@ describe('plugins/minimize', () => {
     process.env.NODE_ENV = 'production';
 
     const builder = await createStubBuilder({
-      plugins: [builderPluginMinimize()],
+      plugins: [pluginMinimize()],
       builderConfig: {
         output: {
           disableMinimize: true,
@@ -51,7 +51,7 @@ describe('plugins/minimize', () => {
     process.env.NODE_ENV = 'production';
 
     const builder = await createStubBuilder({
-      plugins: [builderPluginMinimize()],
+      plugins: [pluginMinimize()],
       builderConfig: {
         output: {
           legalComments: 'inline',
@@ -74,7 +74,7 @@ describe('plugins/minimize', () => {
     process.env.NODE_ENV = 'production';
 
     const builder = await createStubBuilder({
-      plugins: [builderPluginMinimize()],
+      plugins: [pluginMinimize()],
       builderConfig: {
         output: {
           legalComments: 'none',
@@ -95,7 +95,7 @@ describe('plugins/minimize', () => {
     process.env.NODE_ENV = 'production';
 
     const builder = await createStubBuilder({
-      plugins: [builderPluginMinimize()],
+      plugins: [pluginMinimize()],
       builderConfig: {
         output: {
           charset: 'utf8',

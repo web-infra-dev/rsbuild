@@ -6,8 +6,8 @@ import {
 } from '@rsbuild/shared';
 import type { BuilderPlugin } from '../types';
 
-export const builderPluginFallback = (): BuilderPlugin => ({
-  name: 'builder-plugin-fallback',
+export const pluginFallback = (): BuilderPlugin => ({
+  name: 'plugin-fallback',
 
   setup(api) {
     api.modifyWebpackChain((chain, { isProd }) => {

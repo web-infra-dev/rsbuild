@@ -216,9 +216,9 @@ export const applyCSSModuleRule = (
   };
 };
 
-export const builderPluginCss = (): BuilderPlugin => {
+export const pluginCss = (): BuilderPlugin => {
   return {
-    name: 'builder-plugin-css',
+    name: 'plugin-css',
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();

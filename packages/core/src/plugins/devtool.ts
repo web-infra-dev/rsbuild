@@ -1,7 +1,7 @@
 import { isUseJsSourceMap, DefaultBuilderPlugin } from '@rsbuild/shared';
 
-export const builderPluginDevtool = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-devtool',
+export const pluginDevtool = (): DefaultBuilderPlugin => ({
+  name: 'plugin-devtool',
 
   setup(api) {
     api.modifyBundlerChain((chain, { isProd, isServer }) => {

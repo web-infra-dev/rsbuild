@@ -1,8 +1,8 @@
 import { fs } from '@rsbuild/shared/fs-extra';
 import type { CopyPluginOptions, BuilderPlugin } from '../types';
 
-export const builderPluginCopy = (): BuilderPlugin => ({
-  name: 'builder-plugin-copy',
+export const pluginCopy = (): BuilderPlugin => ({
+  name: 'plugin-copy',
 
   setup(api) {
     api.modifyWebpackChain(async (chain, { CHAIN_ID }) => {

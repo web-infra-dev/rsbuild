@@ -1,7 +1,7 @@
 import { expect, describe, it } from 'vitest';
 import { createStubBuilder } from '@rsbuild/webpack/stub';
-import { builderPluginSwc } from '../src';
-import { builderPluginBabel } from '@rsbuild/webpack/plugins/babel';
+import { pluginSwc } from '../src';
+import { pluginBabel } from '@rsbuild/webpack/plugins/babel';
 import { applyPluginConfig } from '../src/utils';
 import type {
   ModifyWebpackChainUtils,
@@ -18,7 +18,7 @@ const UTILS = { target: 'web', isProd: true } as ModifyWebpackChainUtils;
 describe('plugins/swc', () => {
   it('should set swc-loader', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginBabel(), builderPluginSwc()],
+      plugins: [pluginBabel(), pluginSwc()],
       builderConfig: {},
     });
     const config = await builder.unwrapWebpackConfig();
@@ -29,7 +29,7 @@ describe('plugins/swc', () => {
   it('should set swc minimizer in production', async () => {
     process.env.NODE_ENV = 'production';
     const builder = await createStubBuilder({
-      plugins: [builderPluginBabel(), builderPluginSwc()],
+      plugins: [pluginBabel(), pluginSwc()],
       builderConfig: {},
     });
     const config = await builder.unwrapWebpackConfig();
@@ -42,8 +42,8 @@ describe('plugins/swc', () => {
     process.env.NODE_ENV = 'production';
     const builder = await createStubBuilder({
       plugins: [
-        builderPluginBabel(),
-        builderPluginSwc({
+        pluginBabel(),
+        pluginSwc({
           jsMinify: {
             compress: false,
             mangle: false,
@@ -61,8 +61,8 @@ describe('plugins/swc', () => {
     process.env.NODE_ENV = 'production';
     const builder = await createStubBuilder({
       plugins: [
-        builderPluginBabel(),
-        builderPluginSwc({
+        pluginBabel(),
+        pluginSwc({
           jsc: {
             minify: {
               compress: false,
@@ -82,8 +82,8 @@ describe('plugins/swc', () => {
     process.env.NODE_ENV = 'production';
     const builder = await createStubBuilder({
       plugins: [
-        builderPluginBabel(),
-        builderPluginSwc({
+        pluginBabel(),
+        pluginSwc({
           jsMinify: false,
           cssMinify: false,
         }),
@@ -98,8 +98,8 @@ describe('plugins/swc', () => {
     process.env.NODE_ENV = 'production';
     const builder = await createStubBuilder({
       plugins: [
-        builderPluginBabel(),
-        builderPluginSwc({
+        pluginBabel(),
+        pluginSwc({
           jsMinify: false,
           cssMinify: false,
           jsc: {
@@ -118,7 +118,7 @@ describe('plugins/swc', () => {
     process.env.NODE_ENV = 'development';
 
     const builder = await createStubBuilder({
-      plugins: [builderPluginBabel(), builderPluginSwc()],
+      plugins: [pluginBabel(), pluginSwc()],
       builderConfig: {
         source: {
           include: [/foo/],
@@ -134,7 +134,7 @@ describe('plugins/swc', () => {
   it('should disable react refresh when dev.hmr is false', async () => {
     process.env.NODE_ENV = 'development';
     const builder = await createStubBuilder({
-      plugins: [builderPluginSwc()],
+      plugins: [pluginSwc()],
       builderConfig: {
         dev: {
           hmr: false,
@@ -151,7 +151,7 @@ describe('plugins/swc', () => {
     process.env.NODE_ENV = 'development';
 
     const builder = await createStubBuilder({
-      plugins: [builderPluginSwc()],
+      plugins: [pluginSwc()],
       target: ['node', 'service-worker', 'web', 'web-worker'],
     });
     const configs = await builder.unwrapWebpackConfigs();
@@ -264,8 +264,8 @@ describe('plugins/swc', () => {
   it('should set multiple swc-loader', async () => {
     const builder = await createStubBuilder({
       plugins: [
-        builderPluginBabel(),
-        builderPluginSwc({
+        pluginBabel(),
+        pluginSwc({
           overrides: [
             {
               test: /override.ts/,

@@ -138,8 +138,8 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
   logger.log(`\n  ${totalSizeLabel}\n  ${gzippedSizeLabel}\n`);
 }
 
-export const builderPluginFileSize = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-file-size',
+export const pluginFileSize = (): DefaultBuilderPlugin => ({
+  name: 'plugin-file-size',
 
   setup(api) {
     api.onAfterBuild(async ({ stats }) => {

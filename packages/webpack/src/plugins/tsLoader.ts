@@ -8,9 +8,9 @@ import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
 import { BuilderPlugin } from '../types';
 import { getUseBuiltIns } from './babel';
 
-export const builderPluginTsLoader = (): BuilderPlugin => {
+export const pluginTsLoader = (): BuilderPlugin => {
   return {
-    name: 'builder-plugin-ts-loader',
+    name: 'plugin-ts-loader',
     setup(api) {
       api.modifyWebpackChain(
         async (chain, { target, CHAIN_ID, getCompiledPath }) => {

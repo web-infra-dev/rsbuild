@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { builderPluginRem } from '@src/plugins/rem';
+import { pluginRem } from '@src/plugins/rem';
 import { createBuilder, matchPlugin } from '../helper';
-import { builderPluginCss } from '@/plugins/css';
-import { builderPluginLess } from '@/plugins/less';
-import { builderPluginSass } from '@/plugins/sass';
+import { pluginCss } from '@/plugins/css';
+import { pluginLess } from '@/plugins/less';
+import { pluginSass } from '@/plugins/sass';
 
 describe('plugins/rem', () => {
   it('should not run rem plugin without config', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginCss(), builderPluginRem()],
+      plugins: [pluginCss(), pluginRem()],
       builderConfig: {},
     });
 
@@ -20,7 +20,7 @@ describe('plugins/rem', () => {
 
   it('should not run rem plugin when false', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginCss(), builderPluginRem()],
+      plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
           convertToRem: false,
@@ -36,12 +36,7 @@ describe('plugins/rem', () => {
 
   it('should run rem plugin with default config', async () => {
     const builder = await createBuilder({
-      plugins: [
-        builderPluginCss(),
-        builderPluginLess(),
-        builderPluginSass(),
-        builderPluginRem(),
-      ],
+      plugins: [pluginCss(), pluginLess(), pluginSass(), pluginRem()],
       builderConfig: {
         output: {
           convertToRem: true,
@@ -58,12 +53,7 @@ describe('plugins/rem', () => {
 
   it('should order plugins and run rem plugin with default config', async () => {
     const builder = await createBuilder({
-      plugins: [
-        builderPluginRem(),
-        builderPluginCss(),
-        builderPluginLess(),
-        builderPluginSass(),
-      ],
+      plugins: [pluginRem(), pluginCss(), pluginLess(), pluginSass()],
       builderConfig: {
         output: {
           convertToRem: true,
@@ -80,7 +70,7 @@ describe('plugins/rem', () => {
 
   it('should not run htmlPlugin with enableRuntime is false', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginCss(), builderPluginRem()],
+      plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
           convertToRem: {
@@ -100,7 +90,7 @@ describe('plugins/rem', () => {
 
   it('should run rem plugin with custom config', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginCss(), builderPluginRem()],
+      plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
           convertToRem: {
@@ -121,7 +111,7 @@ describe('plugins/rem', () => {
 
   it('should not run rem plugin when target is node', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginCss(), builderPluginRem()],
+      plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
           convertToRem: true,
@@ -141,7 +131,7 @@ describe('plugins/rem', () => {
 
   it('should not run rem plugin when target is web-worker', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginCss(), builderPluginRem()],
+      plugins: [pluginCss(), pluginRem()],
       builderConfig: {
         output: {
           convertToRem: true,

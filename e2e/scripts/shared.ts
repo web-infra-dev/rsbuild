@@ -148,7 +148,7 @@ export async function build<BuilderType = 'webpack'>({
   // todo: support test swc (add swc plugin) use providerType 'webpack-swc'?
   const builder = await createBuilder(options, builderConfig);
 
-  builder.removePlugins(['builder-plugin-file-size']);
+  builder.removePlugins(['plugin-file-size']);
 
   if (plugins) {
     builder.addPlugins(plugins);

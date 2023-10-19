@@ -1,8 +1,8 @@
 import { join } from 'path';
 import { getDistPath, type DefaultBuilderPlugin } from '@rsbuild/shared';
 
-export const builderPluginWasm = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-wasm',
+export const pluginWasm = (): DefaultBuilderPlugin => ({
+  name: 'plugin-wasm',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {

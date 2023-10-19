@@ -11,7 +11,7 @@ export const builderAssetPlugin = (
   assetType: 'image' | 'media' | 'font',
   exts: string[],
 ): DefaultBuilderPlugin => ({
-  name: `builder-plugin-${assetType}`,
+  name: `plugin-${assetType}`,
 
   setup(api) {
     api.modifyBundlerChain((chain, { isProd }) => {

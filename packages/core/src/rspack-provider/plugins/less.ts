@@ -5,9 +5,9 @@ import {
   getLessLoaderOptions,
 } from '@rsbuild/shared';
 
-export function builderPluginLess(): BuilderPlugin {
+export function pluginLess(): BuilderPlugin {
   return {
-    name: 'builder-plugin-less',
+    name: 'plugin-less',
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();

@@ -6,8 +6,8 @@ import {
 } from '@rsbuild/shared';
 import type { BuilderPlugin } from '../types';
 
-export const builderPluginOutput = (): BuilderPlugin => ({
-  name: 'builder-plugin-output',
+export const pluginOutput = (): BuilderPlugin => ({
+  name: 'plugin-output',
 
   setup(api) {
     applyBuilderOutputPlugin(api);

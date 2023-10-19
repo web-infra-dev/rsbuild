@@ -1,8 +1,8 @@
 import type { BuilderPlugin } from '../types';
 import { setConfig, isUsingHMR } from '@rsbuild/shared';
 
-export const builderPluginReact = (): BuilderPlugin => ({
-  name: 'builder-plugin-react',
+export const pluginReact = (): BuilderPlugin => ({
+  name: 'plugin-react',
 
   setup(api) {
     api.modifyRspackConfig(async (rspackConfig, utils) => {

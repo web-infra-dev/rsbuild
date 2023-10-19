@@ -24,8 +24,8 @@ export const applyScopeChain = (
   return options(defaults) || defaults;
 };
 
-export const builderPluginModuleScopes = (): BuilderPlugin => ({
-  name: 'builder-plugin-module-scopes',
+export const pluginModuleScopes = (): BuilderPlugin => ({
+  name: 'plugin-module-scopes',
 
   setup(api) {
     api.modifyWebpackChain(async (chain, { CHAIN_ID }) => {

@@ -1,9 +1,8 @@
 import { getAntdMajorVersion } from '@modern-js/utils';
 import type { BuilderTarget, DefaultBuilderPlugin } from '@rsbuild/shared';
 
-// TODO: rename as pluginAntd
-export const builderPluginAntd = (): DefaultBuilderPlugin => ({
-  name: `builder-plugin-antd`,
+export const pluginAntd = (): DefaultBuilderPlugin => ({
+  name: `plugin-antd`,
 
   setup(api) {
     api.modifyBuilderConfig((builderConfig) => {

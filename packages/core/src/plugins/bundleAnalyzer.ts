@@ -1,8 +1,8 @@
 import { DefaultBuilderPlugin } from '@rsbuild/shared';
 
-export function builderPluginBundleAnalyzer(): DefaultBuilderPlugin {
+export function pluginBundleAnalyzer(): DefaultBuilderPlugin {
   return {
-    name: 'builder-plugin-bundle-analyzer',
+    name: 'plugin-bundle-analyzer',
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
         const config = api.getNormalizedConfig();

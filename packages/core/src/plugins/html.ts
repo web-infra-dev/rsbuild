@@ -121,8 +121,8 @@ export const applyInjectTags = (api: SharedBuilderPluginAPI) => {
   });
 };
 
-export const builderPluginHtml = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-html',
+export const pluginHtml = (): DefaultBuilderPlugin => ({
+  name: 'plugin-html',
 
   setup(api) {
     const routesInfo: RoutesInfo[] = [];

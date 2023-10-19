@@ -4,8 +4,8 @@ import { applyBuilderBasicPlugin } from '@rsbuild/shared';
 /**
  * Provide some basic configs of rspack
  */
-export const builderPluginBasic = (): BuilderPlugin => ({
-  name: 'builder-plugin-basic',
+export const pluginBasic = (): BuilderPlugin => ({
+  name: 'plugin-basic',
 
   setup(api) {
     applyBuilderBasicPlugin(api);

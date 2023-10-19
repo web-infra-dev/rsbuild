@@ -1,6 +1,6 @@
 import { expect, describe, it, vi, SpyInstance } from 'vitest';
 import { isFileExists } from '@rsbuild/shared';
-import { builderPluginResolve } from '@/plugins/resolve';
+import { pluginResolve } from '@/plugins/resolve';
 import { createBuilder } from '../helper';
 
 vi.mock('@rsbuild/shared', async (importOriginal) => {
@@ -17,7 +17,7 @@ describe('plugins/resolve', () => {
       Promise.resolve(false),
     );
     const builder = await createBuilder({
-      plugins: [builderPluginResolve()],
+      plugins: [pluginResolve()],
     });
 
     const {
@@ -39,7 +39,7 @@ describe('plugins/resolve', () => {
     );
 
     const builder = await createBuilder({
-      plugins: [builderPluginResolve()],
+      plugins: [pluginResolve()],
     });
 
     const {
@@ -63,7 +63,7 @@ describe('plugins/resolve', () => {
     );
 
     const builder = await createBuilder({
-      plugins: [builderPluginResolve()],
+      plugins: [pluginResolve()],
       builderConfig: {
         source: {
           aliasStrategy: 'prefer-alias',
@@ -80,7 +80,7 @@ describe('plugins/resolve', () => {
 
   it('should allow to use source.alias to config alias', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginResolve()],
+      plugins: [pluginResolve()],
       builderConfig: {
         source: {
           alias: {
@@ -100,7 +100,7 @@ describe('plugins/resolve', () => {
 
   it('should support source.alias to be a function', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginResolve()],
+      plugins: [pluginResolve()],
       builderConfig: {
         source: {
           alias() {
@@ -124,7 +124,7 @@ describe('plugins/resolve', () => {
     const mainFieldsOption = ['main', 'test', 'browser', ['module', 'exports']];
 
     const builder = await createBuilder({
-      plugins: [builderPluginResolve()],
+      plugins: [pluginResolve()],
       builderConfig: {
         source: {
           resolveMainFields: mainFieldsOption,
@@ -151,7 +151,7 @@ describe('plugins/resolve', () => {
     };
 
     const builder = await createBuilder({
-      plugins: [builderPluginResolve()],
+      plugins: [pluginResolve()],
       builderConfig: {
         source: {
           resolveMainFields: mainFieldsOption,

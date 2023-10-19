@@ -30,15 +30,15 @@ const getProvideLibs = async () => {
 /**
  * Usage:
  *
- *   const { builderPluginNodePolyfill } = await import('@rsbuild/plugin-node-polyfill');
+ *   const { pluginNodePolyfill } = await import('@rsbuild/plugin-node-polyfill');
  *
- *   builder.addPlugins([ builderPluginNodePolyfill() ]);
+ *   builder.addPlugins([ pluginNodePolyfill() ]);
  */
-export function builderPluginNodePolyfill(): BuilderPlugin<
+export function pluginNodePolyfill(): BuilderPlugin<
   WebpackBuilderPluginAPI | RspackBuilderPluginAPI
 > {
   return {
-    name: 'builder-plugin-node-polyfill',
+    name: 'plugin-node-polyfill',
 
     async setup(api) {
       api.modifyBundlerChain(async (chain, { isServer }) => {
