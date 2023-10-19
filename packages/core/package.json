@@ -41,7 +41,7 @@
   "typesVersions": {
     "*": {
       "cli": [
-        "./dist/cki/index.d.ts"
+        "./dist/cli/index.d.ts"
       ],
       "plugins/*": [
         "./dist/plugins/*.d.ts"
