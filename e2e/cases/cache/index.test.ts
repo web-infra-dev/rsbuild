@@ -1,8 +1,8 @@
 import path from 'path';
-import { expect } from '@modern-js/e2e/playwright';
+import { expect } from '@playwright/test';
 import { webpackOnlyTest } from '@scripts/helper';
 import { build } from '@scripts/shared';
-import { fs } from '@modern-js/utils';
+import { fs } from '@rsbuild/shared/fs-extra';
 
 webpackOnlyTest(
   'should save the buildDependencies to cache directory and hit cache',

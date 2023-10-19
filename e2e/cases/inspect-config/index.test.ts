@@ -1,6 +1,6 @@
 import path from 'path';
-import { fs } from '@modern-js/utils';
-import { expect, test } from '@modern-js/e2e/playwright';
+import { fs } from '@rsbuild/shared/fs-extra';
+import { expect, test } from '@playwright/test';
 import { createBuilder } from '@scripts/shared';
 
 const builderConfig = path.resolve(__dirname, './dist/builder.config.js');

@@ -1,6 +1,6 @@
 import path from 'path';
 import { build } from '@scripts/shared';
-import { expect, test } from '@modern-js/e2e/playwright';
+import { expect, test } from '@playwright/test';
 import { ensureDirSync, copySync } from 'fs-extra';
 import { SharedTransformImport } from '@modern-js/builder-shared';
 import { BuilderConfig } from '@modern-js/builder-webpack-provider';

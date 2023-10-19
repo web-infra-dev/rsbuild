@@ -1,7 +1,7 @@
 import path from 'path';
 import { execSync } from 'child_process';
-import { expect } from '@modern-js/e2e/playwright';
-import { globContentJSON } from '@modern-js/e2e';
+import { expect } from '@playwright/test';
+import { globContentJSON } from '@scripts/helper';
 import { rspackOnlyTest } from '../../../scripts/helper';
 
 rspackOnlyTest('should build Vue sfc correctly', async () => {

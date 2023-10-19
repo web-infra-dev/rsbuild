@@ -3,9 +3,9 @@
   "name": "@rsbuild/e2e-cli-vue",
   "version": "1.0.0",
   "scripts": {
-    "dev": "builder dev",
-    "build": "builder build",
-    "serve": "builder serve"
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "serve": "rsbuild serve"
   },
   "devDependencies": {
     "vue": "^3.3.4"

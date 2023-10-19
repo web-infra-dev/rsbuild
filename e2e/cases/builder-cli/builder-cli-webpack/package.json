@@ -3,8 +3,8 @@
   "name": "@rsbuild/e2e-cli-webpack",
   "version": "1.0.0",
   "scripts": {
-    "dev": "builder dev",
-    "build": "builder build",
-    "serve": "builder serve"
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "serve": "rsbuild serve"
   }
 }
