@@ -147,7 +147,7 @@ export const builderPluginBabel = (): BuilderPlugin => ({
 
         /**
          * If a script is imported with data URI, it can be compiled by babel too.
-         * This is used by some frameworks to create virtual entry.
+         * This is used by some higher-level solutions to create virtual entry.
          * https://webpack.js.org/api/module-methods/#import
          * @example: import x from 'data:text/javascript,export default 1;';
          */

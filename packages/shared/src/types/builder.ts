@@ -15,9 +15,7 @@ export type CreateBuilderOptions = {
   entry?: BuilderEntry;
   /** Type of build target. */
   target?: BuilderTarget | BuilderTarget[];
-  /** Framework name, such as 'modern.js' */
-  framework?: string;
-  /** Absolute path of framework config file. */
+  /** Absolute path to the config file of higher-level solutions. */
   configPath?: string | null;
 };
 

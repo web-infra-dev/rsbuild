@@ -14,11 +14,9 @@ export type BuilderContext = {
   srcPath: string;
   /** Absolute path of output files. */
   distPath: string;
-  /** The name of framework, such as `modern-js`. */
-  framework: string;
   /** Absolute path of cache files. */
   cachePath: string;
-  /** Absolute path of framework config file. */
+  /** Absolute path to the config file of hight-level solutions. */
   configPath?: string;
   /** Absolute path of tsconfig.json. */
   tsconfigPath?: string;
