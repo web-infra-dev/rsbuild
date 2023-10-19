@@ -3,10 +3,12 @@ import assert from 'assert';
 import { join } from 'path';
 import { fs } from '@rsbuild/shared/fs-extra';
 import { globContentJSON, runStaticServer } from '@scripts/helper';
-import type { CreateBuilderOptions } from '@modern-js/builder';
-import type { BuilderConfig } from '@modern-js/builder-webpack-provider';
-import type { BuilderConfig as RspackBuilderConfig } from '@modern-js/builder-rspack-provider';
-import { StartDevServerOptions } from '@modern-js/builder-shared';
+import type {
+  CreateBuilderOptions,
+  BuilderConfig as RspackBuilderConfig,
+} from '@rsbuild/core';
+import type { BuilderConfig } from '@rsbuild/webpack';
+import { StartDevServerOptions } from '@rsbuild/shared';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
   const baseUrl = new URL(`http://localhost:${port}`);
@@ -17,9 +19,7 @@ export const getHrefByEntryName = (entryName: string, port: number) => {
 };
 
 async function getWebpackBuilderProvider(builderConfig: BuilderConfig) {
-  const { builderWebpackProvider } = await import(
-    '@modern-js/builder-webpack-provider'
-  );
+  const { builderWebpackProvider } = await import('@rsbuild/webpack');
 
   const builderProvider = builderWebpackProvider({
     builderConfig,
@@ -29,9 +29,7 @@ async function getWebpackBuilderProvider(builderConfig: BuilderConfig) {
 }
 
 async function getRspackBuilderProvider(builderConfig: RspackBuilderConfig) {
-  const { builderRspackProvider } = await import(
-    '@modern-js/builder-rspack-provider'
-  );
+  const { builderRspackProvider } = await import('@rsbuild/core');
 
   const builderProvider = builderRspackProvider({
     builderConfig,
@@ -47,7 +45,7 @@ export const createBuilder = async (
   builderOptions: CreateBuilderOptions,
   builderConfig: BuilderConfig | RspackBuilderConfig = {},
 ) => {
-  const { createBuilder } = await import('@modern-js/builder');
+  const { createBuilder } = await import('@rsbuild/core');
 
   const builderProvider =
     process.env.PROVIDE_TYPE === 'rspack'
@@ -88,14 +86,6 @@ const updateConfigForTest = <BuilderType>(
     config.performance = {
       ...(config.performance || {}),
       buildCache: false,
-    };
-  }
-
-  // disable ts checker to make the tests faster
-  if (config.output?.disableTsChecker !== false) {
-    config.output = {
-      ...(config.output || {}),
-      disableTsChecker: true,
     };
   }
 

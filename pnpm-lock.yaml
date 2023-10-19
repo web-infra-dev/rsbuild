@@ -14,6 +14,9 @@ importers:
       '@modern-js/monorepo-tools':
         specifier: 2.36.0
         version: 2.36.0(typescript@5.2.2)
+      '@rsbuild/tsconfig':
+        specifier: workspace:*
+        version: link:scripts/tsconfig
       '@rsbuild/vitest-helper':
         specifier: workspace:*
         version: link:packages/vitest-helper
@@ -772,6 +775,8 @@ importers:
       typescript:
         specifier: ^5
         version: 5.2.2
+
+  scripts/tsconfig: {}
 
 packages:
 
