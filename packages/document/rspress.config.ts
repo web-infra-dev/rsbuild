@@ -6,7 +6,7 @@ export default defineConfig({
   lang: 'en',
   base: '/',
   title: 'Rsbuild',
-  icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/favicon-200x200.png',
+  icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/favicon-128x128.png',
   logo: {
     light:
       'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/navbar-logo-10164.png',
