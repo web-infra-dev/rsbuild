@@ -12,8 +12,6 @@ on:
       - "packages/document/**"
       - "*.md"
       - "*.mdx"
-    branches:
-      - '**'
 
   merge_group:
 
