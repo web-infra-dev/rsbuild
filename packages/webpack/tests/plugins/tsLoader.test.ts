@@ -1,11 +1,11 @@
 import { expect, describe, it } from 'vitest';
-import { builderPluginTsLoader } from '@/plugins/tsLoader';
+import { pluginTsLoader } from '@/plugins/tsLoader';
 import { createStubBuilder } from '../helper';
 
 describe('plugins/tsLoader', () => {
   it('should set ts-loader', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginTsLoader()],
+      plugins: [pluginTsLoader()],
       builderConfig: {
         tools: {
           tsLoader: {},
@@ -19,7 +19,7 @@ describe('plugins/tsLoader', () => {
 
   it('should set include/exclude', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginTsLoader()],
+      plugins: [pluginTsLoader()],
       builderConfig: {
         tools: {
           tsLoader(options, { addIncludes, addExcludes }) {

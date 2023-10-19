@@ -15,7 +15,7 @@ import {
 } from './utils';
 import { SwcMinimizerPlugin } from './minimizer';
 
-const PLUGIN_NAME = 'builder-plugin-swc';
+const PLUGIN_NAME = 'plugin-swc';
 
 /**
  * In this plugin, we do:
@@ -24,9 +24,7 @@ const PLUGIN_NAME = 'builder-plugin-swc';
  * - Remove JS minifier
  * - Add swc minifier plugin
  */
-export const builderPluginSwc = (
-  options: PluginSwcOptions = {},
-): BuilderPlugin => ({
+export const pluginSwc = (options: PluginSwcOptions = {}): BuilderPlugin => ({
   name: PLUGIN_NAME,
 
   setup(api: BuilderPluginAPI) {

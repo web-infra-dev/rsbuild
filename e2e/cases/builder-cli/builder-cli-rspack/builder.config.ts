@@ -1,7 +1,3 @@
-import { defineConfig } from '@modern-js/builder-cli';
+import { defineConfig } from '@rsbuild/core';
 
-export default defineConfig<'rspack'>({
-  output: {
-    disableTsChecker: true,
-  },
-});
+export default defineConfig();

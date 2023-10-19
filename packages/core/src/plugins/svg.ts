@@ -11,9 +11,9 @@ import {
 } from '@rsbuild/shared';
 import type { DefaultBuilderPlugin } from '@rsbuild/shared';
 
-export const builderPluginSvg = (): DefaultBuilderPlugin => {
+export const pluginSvg = (): DefaultBuilderPlugin => {
   return {
-    name: 'builder-plugin-svg',
+    name: 'plugin-svg',
     setup(api) {
       api.modifyBundlerChain(async (chain, { isProd, CHAIN_ID }) => {
         const config = api.getNormalizedConfig();

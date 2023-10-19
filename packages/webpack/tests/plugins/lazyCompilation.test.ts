@@ -1,12 +1,12 @@
 import { expect, describe, it } from 'vitest';
-import { builderPluginSplitChunks } from '@rsbuild/core/plugins/splitChunks';
-import { builderPluginLazyCompilation } from '@/plugins/lazyCompilation';
+import { pluginSplitChunks } from '@rsbuild/core/plugins/splitChunks';
+import { pluginLazyCompilation } from '@/plugins/lazyCompilation';
 import { createStubBuilder } from '../helper';
 
 describe('plugins/lazyCompilation', () => {
   it('should allow to use lazy compilation', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginLazyCompilation()],
+      plugins: [pluginLazyCompilation()],
       builderConfig: {
         experiments: {
           lazyCompilation: {
@@ -33,7 +33,7 @@ describe('plugins/lazyCompilation', () => {
 
   it('should disable split chunks', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginSplitChunks(), builderPluginLazyCompilation()],
+      plugins: [pluginSplitChunks(), pluginLazyCompilation()],
       builderConfig: {
         experiments: {
           lazyCompilation: true,
@@ -50,7 +50,7 @@ describe('plugins/lazyCompilation', () => {
     process.env.NODE_ENV = 'production';
 
     const builder = await createStubBuilder({
-      plugins: [builderPluginLazyCompilation()],
+      plugins: [pluginLazyCompilation()],
       builderConfig: {
         experiments: {
           lazyCompilation: true,
@@ -67,7 +67,7 @@ describe('plugins/lazyCompilation', () => {
   it('should not apply lazy compilation for node target', async () => {
     const builder = await createStubBuilder({
       target: 'node',
-      plugins: [builderPluginLazyCompilation()],
+      plugins: [pluginLazyCompilation()],
       builderConfig: {
         experiments: {
           lazyCompilation: true,

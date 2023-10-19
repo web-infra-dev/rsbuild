@@ -6,9 +6,9 @@ import {
 } from '@rsbuild/shared';
 import type { BuilderPlugin } from '../types';
 
-export function builderPluginSass(): BuilderPlugin {
+export function pluginSass(): BuilderPlugin {
   return {
-    name: 'builder-plugin-sass',
+    name: 'plugin-sass',
     async setup(api) {
       api.onAfterCreateCompiler(({ compiler }) => {
         patchCompilerGlobalLocation(compiler);

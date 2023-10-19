@@ -46,8 +46,8 @@ export async function applyJSMinimizer(
     .end();
 }
 
-export const builderPluginMinimize = (): BuilderPlugin => ({
-  name: 'builder-plugin-minimize',
+export const pluginMinimize = (): BuilderPlugin => ({
+  name: 'plugin-minimize',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { isProd }) => {

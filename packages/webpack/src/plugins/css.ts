@@ -139,9 +139,9 @@ export async function applyBaseCSSRule({
   rule.resolve.preferRelative(true);
 }
 
-export const builderPluginCss = (): BuilderPlugin => {
+export const pluginCss = (): BuilderPlugin => {
   return {
-    name: 'builder-plugin-css',
+    name: 'plugin-css',
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);

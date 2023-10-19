@@ -1,22 +1,22 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
-import { builderPluginImageCompress } from '@modern-js/builder-plugin-image-compress';
+import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
 import { providerType } from '@scripts/helper';
 import { build } from '@scripts/shared';
-import { SharedBuilderPluginAPI } from '@modern-js/builder-shared';
+import { SharedpluginAPI } from '@modern-js/builder-shared';
 
-test('should compress image with use builder-plugin-image-compress', async () => {
+test('should compress image with use plugin-image-compress', async () => {
   let assets: any[];
   await expect(
     build({
       cwd: __dirname,
       entry: { index: path.resolve(__dirname, './src/index.js') },
       plugins: [
-        builderPluginImageCompress(),
+        pluginImageCompress(),
         {
-          name: 'builder-plugin-file-size',
+          name: 'plugin-file-size',
 
-          setup(api: SharedBuilderPluginAPI) {
+          setup(api: SharedpluginAPI) {
             api.onAfterBuild(async ({ stats }) => {
               const res = stats?.toJson({
                 all: false,

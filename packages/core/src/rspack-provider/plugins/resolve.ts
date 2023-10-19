@@ -1,8 +1,8 @@
 import type { BuilderPlugin } from '../types';
 import { setConfig, applyBuilderResolvePlugin } from '@rsbuild/shared';
 
-export const builderPluginResolve = (): BuilderPlugin => ({
-  name: 'builder-plugin-resolve',
+export const pluginResolve = (): BuilderPlugin => ({
+  name: 'plugin-resolve',
 
   setup(api) {
     applyBuilderResolvePlugin(api);

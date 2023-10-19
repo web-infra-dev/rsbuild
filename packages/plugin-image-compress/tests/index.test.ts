@@ -1,7 +1,7 @@
 import { it, expect, describe } from 'vitest';
 import { createStubBuilder } from '@rsbuild/webpack/stub';
 import { builderAssetPlugin } from '@builder/plugins/asset';
-import { builderPluginImageCompress } from '../src';
+import { pluginImageCompress } from '../src';
 
 process.env.NODE_ENV = 'production';
 
@@ -21,10 +21,7 @@ const ASSET_EXTS = [
 describe('plugin/image-compress', () => {
   it('should generate correct options', async () => {
     const builder = await createStubBuilder({
-      plugins: [
-        builderAssetPlugin('image', ASSET_EXTS),
-        builderPluginImageCompress(),
-      ],
+      plugins: [builderAssetPlugin('image', ASSET_EXTS), pluginImageCompress()],
     });
     expect(await builder.unwrapWebpackConfig()).toMatchSnapshot();
   });
@@ -33,7 +30,7 @@ describe('plugin/image-compress', () => {
     const builder = await createStubBuilder({
       plugins: [
         builderAssetPlugin('image', ASSET_EXTS),
-        builderPluginImageCompress('jpeg', { use: 'png' }),
+        pluginImageCompress('jpeg', { use: 'png' }),
       ],
     });
     const config = await builder.unwrapWebpackConfig();
@@ -61,7 +58,7 @@ describe('plugin/image-compress', () => {
     const builder = await createStubBuilder({
       plugins: [
         builderAssetPlugin('image', ASSET_EXTS),
-        builderPluginImageCompress(['jpeg', { use: 'png' }]),
+        pluginImageCompress(['jpeg', { use: 'png' }]),
       ],
     });
     const config = await builder.unwrapWebpackConfig();

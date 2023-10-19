@@ -6,9 +6,9 @@ export const replacePlaceholder = (url: string, port: number) =>
 
 const openedURLs: string[] = [];
 
-export function builderPluginStartUrl(): DefaultBuilderPlugin {
+export function pluginStartUrl(): DefaultBuilderPlugin {
   return {
-    name: 'builder-plugin-start-url',
+    name: 'plugin-start-url',
     async setup(api) {
       let port: number;
 

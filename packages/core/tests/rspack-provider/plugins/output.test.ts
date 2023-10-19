@@ -1,11 +1,11 @@
 import { expect, describe, it } from 'vitest';
 import { createBuilder } from '../helper';
-import { builderPluginOutput } from '@/plugins/output';
+import { pluginOutput } from '@/plugins/output';
 
 describe('plugins/output', () => {
   it('should set output correctly', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginOutput()],
+      plugins: [pluginOutput()],
     });
 
     const {
@@ -16,7 +16,7 @@ describe('plugins/output', () => {
 
   it('should allow to custom server directory with distPath.server', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginOutput()],
+      plugins: [pluginOutput()],
       target: ['node'],
       builderConfig: {
         output: {
@@ -35,7 +35,7 @@ describe('plugins/output', () => {
 
   it('should allow to set distPath.js and distPath.css to empty string', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginOutput()],
+      plugins: [pluginOutput()],
       builderConfig: {
         output: {
           distPath: {
@@ -54,7 +54,7 @@ describe('plugins/output', () => {
 
   it('should allow to use filename.js to modify filename', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginOutput()],
+      plugins: [pluginOutput()],
       builderConfig: {
         output: {
           filename: {
@@ -73,7 +73,7 @@ describe('plugins/output', () => {
 
   it('should allow to use copy plugin', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginOutput()],
+      plugins: [pluginOutput()],
       builderConfig: {
         output: {
           copy: {
@@ -95,7 +95,7 @@ describe('plugins/output', () => {
 
   it('should allow to use copy plugin with multiply config', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginOutput()],
+      plugins: [pluginOutput()],
       builderConfig: {
         output: {
           copy: [
@@ -107,7 +107,7 @@ describe('plugins/output', () => {
         },
         tools: {
           bundlerChain: (chain, { CHAIN_ID }) => {
-            chain.plugin(CHAIN_ID.PLUGIN.COPY).tap(args => [
+            chain.plugin(CHAIN_ID.PLUGIN.COPY).tap((args) => [
               {
                 patterns: [...(args[0]?.patterns || []), 'tests/'],
               },

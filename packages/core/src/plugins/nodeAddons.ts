@@ -5,8 +5,8 @@ import {
 } from '@rsbuild/shared';
 import { chalk } from '@rsbuild/shared/chalk';
 
-export const builderPluginNodeAddons = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-node-addons',
+export const pluginNodeAddons = (): DefaultBuilderPlugin => ({
+  name: 'plugin-node-addons',
 
   setup(api) {
     api.modifyBundlerChain(

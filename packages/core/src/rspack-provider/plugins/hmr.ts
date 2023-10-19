@@ -2,8 +2,8 @@ import type { BuilderPlugin } from '../types';
 
 import { setConfig, isUsingHMR } from '@rsbuild/shared';
 
-export const builderPluginHMR = (): BuilderPlugin => ({
-  name: 'builder-plugin-hmr',
+export const pluginHMR = (): BuilderPlugin => ({
+  name: 'plugin-hmr',
 
   setup(api) {
     api.modifyRspackConfig((rspackConfig, utils) => {

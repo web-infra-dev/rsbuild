@@ -1,8 +1,8 @@
 import { getBrowserslist } from '@rsbuild/shared';
 import type { DefaultBuilderPlugin } from '@rsbuild/shared';
 
-export const builderPluginTarget = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-target',
+export const pluginTarget = (): DefaultBuilderPlugin => ({
+  name: 'plugin-target',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { target }) => {

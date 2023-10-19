@@ -49,8 +49,8 @@ const getMainFields = (chain: WebpackChain, target: BuilderTarget) => {
   return ['module', 'main'];
 };
 
-export const builderPluginResolve = (): BuilderPlugin => ({
-  name: 'builder-plugin-resolve',
+export const pluginResolve = (): BuilderPlugin => ({
+  name: 'plugin-resolve',
 
   setup(api) {
     applyBuilderResolvePlugin(api);

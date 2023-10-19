@@ -1,7 +1,7 @@
 import type { BuilderPlugin } from '../types';
 
-export const builderPluginLazyCompilation = (): BuilderPlugin => ({
-  name: 'builder-plugin-lazy-compilation',
+export const pluginLazyCompilation = (): BuilderPlugin => ({
+  name: 'plugin-lazy-compilation',
 
   setup(api) {
     api.modifyWebpackChain((chain, { isProd, isServer, isWebWorker }) => {

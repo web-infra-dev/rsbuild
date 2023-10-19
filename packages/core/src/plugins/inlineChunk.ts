@@ -8,8 +8,8 @@ import {
   type InlineChunkTest,
 } from '@rsbuild/shared';
 
-export const builderPluginInlineChunk = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-inline-chunk',
+export const pluginInlineChunk = (): DefaultBuilderPlugin => ({
+  name: 'plugin-inline-chunk',
 
   setup(api) {
     api.modifyBundlerChain(

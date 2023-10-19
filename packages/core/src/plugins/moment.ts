@@ -1,7 +1,7 @@
 import { DefaultBuilderPlugin } from '@rsbuild/shared';
 
-export const builderPluginMoment = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-moment',
+export const pluginMoment = (): DefaultBuilderPlugin => ({
+  name: 'plugin-moment',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { webpack }) => {

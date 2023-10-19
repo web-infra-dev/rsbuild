@@ -1,8 +1,8 @@
 import { DefaultBuilderPlugin } from '@rsbuild/shared';
 import _ from '@modern-js/utils/lodash';
 
-export const builderPluginEntry = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-entry',
+export const pluginEntry = (): DefaultBuilderPlugin => ({
+  name: 'plugin-entry',
 
   setup(api) {
     api.modifyBundlerChain(async (chain) => {

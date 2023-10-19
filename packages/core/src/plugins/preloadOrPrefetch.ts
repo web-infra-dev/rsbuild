@@ -3,8 +3,8 @@ import {
   type DefaultBuilderPlugin,
 } from '@rsbuild/shared';
 
-export const builderPluginPreloadOrPrefetch = (): DefaultBuilderPlugin => ({
-  name: `builder-plugin-preload-or-prefetch`,
+export const pluginPreloadOrPrefetch = (): DefaultBuilderPlugin => ({
+  name: `plugin-preload-or-prefetch`,
 
   setup(api) {
     api.modifyBundlerChain(

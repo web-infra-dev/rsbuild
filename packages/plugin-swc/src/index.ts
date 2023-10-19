@@ -1,4 +1,4 @@
 export { default as SwcLoader } from './loader';
-export { builderPluginSwc } from './plugin';
+export { pluginSwc } from './plugin';
 export * from './binding';
 export * from './types';

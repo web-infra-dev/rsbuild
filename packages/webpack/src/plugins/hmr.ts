@@ -1,8 +1,8 @@
 import type { BuilderPlugin } from '../types';
 import { isUsingHMR } from '@rsbuild/shared';
 
-export const builderPluginHMR = (): BuilderPlugin => ({
-  name: 'builder-plugin-hmr',
+export const pluginHMR = (): BuilderPlugin => ({
+  name: 'plugin-hmr',
 
   setup(api) {
     api.modifyWebpackChain((chain, utils) => {

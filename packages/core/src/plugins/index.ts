@@ -6,24 +6,21 @@ import {
 } from '@rsbuild/shared';
 
 export const plugins: Plugins = {
-  html: () => import('./html').then((m) => m.builderPluginHtml()),
-  cleanOutput: () =>
-    import('./cleanOutput').then((m) => m.builderPluginCleanOutput()),
-  startUrl: () => import('./startUrl').then((m) => m.builderPluginStartUrl()),
-  fileSize: () => import('./fileSize').then((m) => m.builderPluginFileSize()),
-  devtool: () => import('./devtool').then((m) => m.builderPluginDevtool()),
-  target: () => import('./target').then((m) => m.builderPluginTarget()),
-  entry: () => import('./entry').then((m) => m.builderPluginEntry()),
-  cache: () => import('./cache').then((m) => m.builderPluginCache()),
-  yaml: () => import('./yaml').then((m) => m.builderPluginYaml()),
-  toml: () => import('./toml').then((m) => m.builderPluginToml()),
-  svg: () => import('./svg').then((m) => m.builderPluginSvg()),
-  splitChunks: () =>
-    import('./splitChunks').then((m) => m.builderPluginSplitChunks()),
-  inlineChunk: () =>
-    import('./inlineChunk').then((m) => m.builderPluginInlineChunk()),
+  html: () => import('./html').then((m) => m.pluginHtml()),
+  cleanOutput: () => import('./cleanOutput').then((m) => m.pluginCleanOutput()),
+  startUrl: () => import('./startUrl').then((m) => m.pluginStartUrl()),
+  fileSize: () => import('./fileSize').then((m) => m.pluginFileSize()),
+  devtool: () => import('./devtool').then((m) => m.pluginDevtool()),
+  target: () => import('./target').then((m) => m.pluginTarget()),
+  entry: () => import('./entry').then((m) => m.pluginEntry()),
+  cache: () => import('./cache').then((m) => m.pluginCache()),
+  yaml: () => import('./yaml').then((m) => m.pluginYaml()),
+  toml: () => import('./toml').then((m) => m.pluginToml()),
+  svg: () => import('./svg').then((m) => m.pluginSvg()),
+  splitChunks: () => import('./splitChunks').then((m) => m.pluginSplitChunks()),
+  inlineChunk: () => import('./inlineChunk').then((m) => m.pluginInlineChunk()),
   bundleAnalyzer: () =>
-    import('./bundleAnalyzer').then((m) => m.builderPluginBundleAnalyzer()),
+    import('./bundleAnalyzer').then((m) => m.pluginBundleAnalyzer()),
   font: () =>
     import('./asset').then((m) =>
       m.builderAssetPlugin('font', FONT_EXTENSIONS),
@@ -36,28 +33,19 @@ export const plugins: Plugins = {
     import('./asset').then((m) =>
       m.builderAssetPlugin('media', MEDIA_EXTENSIONS),
     ),
-  assetsRetry: () =>
-    import('./assetsRetry').then((m) => m.builderPluginAssetsRetry()),
-  antd: () => import('./antd').then((m) => m.builderPluginAntd()),
-  arco: () => import('./arco').then((m) => m.builderPluginArco()),
-  checkSyntax: () =>
-    import('./checkSyntax').then((m) => m.builderPluginCheckSyntax()),
-  rem: () => import('./rem').then((m) => m.builderPluginRem()),
-  wasm: () => import('./wasm').then((m) => m.builderPluginWasm()),
-  moment: () => import('./moment').then((m) => m.builderPluginMoment()),
-  nodeAddons: () =>
-    import('./nodeAddons').then((m) => m.builderPluginNodeAddons()),
-  externals: () =>
-    import('./externals').then((m) => m.builderPluginExternals()),
+  assetsRetry: () => import('./assetsRetry').then((m) => m.pluginAssetsRetry()),
+  antd: () => import('./antd').then((m) => m.pluginAntd()),
+  arco: () => import('./arco').then((m) => m.pluginArco()),
+  checkSyntax: () => import('./checkSyntax').then((m) => m.pluginCheckSyntax()),
+  rem: () => import('./rem').then((m) => m.pluginRem()),
+  wasm: () => import('./wasm').then((m) => m.pluginWasm()),
+  moment: () => import('./moment').then((m) => m.pluginMoment()),
+  nodeAddons: () => import('./nodeAddons').then((m) => m.pluginNodeAddons()),
+  externals: () => import('./externals').then((m) => m.pluginExternals()),
   networkPerformance: () =>
-    import('./networkPerformance').then((m) =>
-      m.builderPluginNetworkPerformance(),
-    ),
+    import('./networkPerformance').then((m) => m.pluginNetworkPerformance()),
   preloadOrPrefetch: () =>
-    import('./preloadOrPrefetch').then((m) =>
-      m.builderPluginPreloadOrPrefetch(),
-    ),
-  performance: () =>
-    import('./performance').then((m) => m.builderPluginPerformance()),
-  define: () => import('./define').then((m) => m.builderPluginDefine()),
+    import('./preloadOrPrefetch').then((m) => m.pluginPreloadOrPrefetch()),
+  performance: () => import('./performance').then((m) => m.pluginPerformance()),
+  define: () => import('./define').then((m) => m.pluginDefine()),
 };

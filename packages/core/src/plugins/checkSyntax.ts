@@ -8,9 +8,9 @@ import {
   CheckSyntaxOptions,
 } from '@rsbuild/shared';
 
-export function builderPluginCheckSyntax(): DefaultBuilderPlugin {
+export function pluginCheckSyntax(): DefaultBuilderPlugin {
   return {
-    name: 'builder-plugin-check-syntax',
+    name: 'plugin-check-syntax',
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { isProd, target }) => {

@@ -1,8 +1,8 @@
 import type { BuilderPlugin } from '../types';
 import { generateManifest } from '@rsbuild/shared';
 
-export const builderPluginManifest = (): BuilderPlugin => ({
-  name: 'builder-plugin-manifest',
+export const pluginManifest = (): BuilderPlugin => ({
+  name: 'plugin-manifest',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {

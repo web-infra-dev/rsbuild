@@ -1,8 +1,8 @@
 import { TARGET_ID_MAP } from '@rsbuild/shared';
 import type { BuilderPlugin } from '../types';
 
-export const builderPluginProgress = (): BuilderPlugin => ({
-  name: 'builder-plugin-progress',
+export const pluginProgress = (): BuilderPlugin => ({
+  name: 'plugin-progress',
   setup(api) {
     api.modifyWebpackChain(async (chain, { target, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();

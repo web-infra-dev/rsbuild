@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { createBuilder } from '../helper';
-import { builderPluginBabel } from '@/plugins/babel';
+import { pluginBabel } from '@/plugins/babel';
 
 describe('plugins/babel', () => {
   it('should set babel-loader', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginBabel()],
+      plugins: [pluginBabel()],
       builderConfig: {
         tools: {
           babel(config: any) {
@@ -31,7 +31,7 @@ describe('plugins/babel', () => {
 
   it('should not set babel-loader when babel config is return null', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginBabel()],
+      plugins: [pluginBabel()],
       builderConfig: {
         tools: {
           babel: () => {
@@ -50,7 +50,7 @@ describe('plugins/babel', () => {
 
   it('should not set babel-loader when babel config is null', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginBabel()],
+      plugins: [pluginBabel()],
       builderConfig: {
         tools: {
           babel: {},
@@ -67,7 +67,7 @@ describe('plugins/babel', () => {
 
   it('should not set babel-loader', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginBabel()],
+      plugins: [pluginBabel()],
       builderConfig: {
         tools: {},
       },

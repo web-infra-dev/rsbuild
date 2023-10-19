@@ -18,11 +18,11 @@ type StylusLoaderOptions = {
 
 export type PluginStylusOptions = StylusLoaderOptions;
 
-export function builderPluginStylus(
+export function pluginStylus(
   options?: PluginStylusOptions,
 ): BuilderPlugin<BuilderPluginAPI> {
   return {
-    name: 'builder-plugin-stylus',
+    name: 'plugin-stylus',
 
     async setup(api) {
       const { bundlerType } = api.context;

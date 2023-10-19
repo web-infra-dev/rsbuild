@@ -1,13 +1,13 @@
 import { expect, describe, it } from 'vitest';
-import { builderPluginEntry } from '@src/plugins/entry';
-import { builderPluginHtml } from '@src/plugins/html';
+import { pluginEntry } from '@src/plugins/entry';
+import { pluginHtml } from '@src/plugins/html';
 import { createBuilder } from '../helper';
-import { builderPluginPug } from '@/plugins/pug';
+import { pluginPug } from '@/plugins/pug';
 
 describe('plugins/pug', () => {
   it('should add pug correctly when tools.pug is used', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginEntry(), builderPluginHtml(), builderPluginPug()],
+      plugins: [pluginEntry(), pluginHtml(), pluginPug()],
       entry: {
         main: './src/main.ts',
         foo: './src/foo.ts',

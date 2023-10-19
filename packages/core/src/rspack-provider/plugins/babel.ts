@@ -21,8 +21,8 @@ export const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
   isTSX: true,
 };
 
-export const builderPluginBabel = (): BuilderPlugin => ({
-  name: 'builder-plugin-babel',
+export const pluginBabel = (): BuilderPlugin => ({
+  name: 'plugin-babel',
   setup(api) {
     api.modifyBundlerChain(
       async (chain, { CHAIN_ID, isProd, getCompiledPath }) => {

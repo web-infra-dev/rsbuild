@@ -3,8 +3,8 @@ import {
   getSharedPkgCompiledPath,
 } from '@rsbuild/shared';
 
-export const builderPluginYaml = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-yaml',
+export const pluginYaml = (): DefaultBuilderPlugin => ({
+  name: 'plugin-yaml',
 
   setup(api) {
     api.modifyBundlerChain((chain, { CHAIN_ID }) => {

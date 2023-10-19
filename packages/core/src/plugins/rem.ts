@@ -13,15 +13,10 @@ const defaultOptions: RemOptions = {
   rootFontSize: 50,
 };
 
-export const builderPluginRem = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-rem',
+export const pluginRem = (): DefaultBuilderPlugin => ({
+  name: 'plugin-rem',
 
-  pre: [
-    'builder-plugin-css',
-    'builder-plugin-less',
-    'builder-plugin-sass',
-    'builder-plugin-stylus',
-  ],
+  pre: ['plugin-css', 'plugin-less', 'plugin-sass', 'plugin-stylus'],
 
   setup(api) {
     api.modifyBundlerChain(

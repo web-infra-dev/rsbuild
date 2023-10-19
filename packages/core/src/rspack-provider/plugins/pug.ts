@@ -20,8 +20,8 @@ const getPugTemplateCompiler = (userOptions: PugOptions) => ({
   },
 });
 
-export const builderPluginPug = (): BuilderPlugin => ({
-  name: 'builder-plugin-pug',
+export const pluginPug = (): BuilderPlugin => ({
+  name: 'plugin-pug',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
