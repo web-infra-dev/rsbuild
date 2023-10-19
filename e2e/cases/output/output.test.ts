@@ -50,9 +50,7 @@ test.describe('output configure multi', () => {
   });
 
   test('distPath', async () => {
-    expect(
-      fs.existsSync(join(fixtures, 'rem/dist-1/html/main/index.html')),
-    ).toBeTruthy();
+    expect(fs.existsSync(join(fixtures, 'rem/dist-1/main.html'))).toBeTruthy();
 
     expect(fs.existsSync(join(fixtures, 'rem/dist-1/aa/js'))).toBeTruthy();
   });

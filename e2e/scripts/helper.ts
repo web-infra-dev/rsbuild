@@ -3,9 +3,11 @@ import { test } from '@playwright/test';
 import { fs } from '@rsbuild/shared/fs-extra';
 import glob, { Options as GlobOptions } from 'fast-glob';
 
-export const providerType = process.env.PROVIDE_TYPE || 'webpack';
+export const providerType = process.env.PROVIDE_TYPE || 'rspack';
 
-export const getProviderTest = (supportType: string[] = ['webpack']) => {
+process.env.PROVIDE_TYPE = providerType;
+
+export const getProviderTest = (supportType: string[] = ['rspack']) => {
   if (supportType.includes(providerType)) {
     return test;
   }

@@ -5,6 +5,14 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 
 const POLYFILL_RE = /\/lib-polyfill/;
 
+const EXPECT_VALUE = {
+  '1': [
+    { type: '1', value: 1 },
+    { type: '1', value: 2 },
+  ],
+  '2': [{ type: '2', value: 3 }],
+};
+
 const getPolyfillContent = (files: Record<string, string>) => {
   const polyfillFileName = Object.keys(files).find(
     (file) => POLYFILL_RE.test(file) && file.endsWith('.js.map'),
@@ -36,7 +44,7 @@ test('should add polyfill when set polyfill entry (default)', async ({
 
   await page.goto(getHrefByEntryName('index', builder.port));
 
-  expect(await page.evaluate('window.a')).toEqual([1, 2, 3, 4, 5, 6, [7, 8]]);
+  expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
 
   builder.close();
 
@@ -45,7 +53,7 @@ test('should add polyfill when set polyfill entry (default)', async ({
   const content = getPolyfillContent(files);
 
   // should polyfill all api
-  expect(content.includes('es.array.flat.js')).toBeTruthy();
+  expect(content.includes('object.group-by.js')).toBeTruthy();
 });
 
 // TODO: needs builtin:swc-loader
@@ -65,7 +73,7 @@ webpackOnlyTest(
 
     await page.goto(getHrefByEntryName('index', builder.port));
 
-    expect(await page.evaluate('window.a')).toEqual([1, 2, 3, 4, 5, 6, [7, 8]]);
+    expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
 
     builder.close();
 
@@ -74,7 +82,7 @@ webpackOnlyTest(
     const content = getPolyfillContent(files);
 
     // should only polyfill some usage api
-    expect(content.includes('es.array.flat.js')).toBeTruthy();
+    expect(content.includes('object.group-by.js')).toBeTruthy();
     expect(content.includes('String.prototype.trimEnd')).toBeFalsy();
   },
 );

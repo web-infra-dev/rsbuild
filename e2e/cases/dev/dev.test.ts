@@ -96,9 +96,7 @@ test('dev.port & output.distPath', async ({ page }) => {
 
   expect(builder.port).toBe(3000);
 
-  expect(
-    fs.existsSync(join(fixtures, 'basic/dist-1/html/main/index.html')),
-  ).toBeTruthy();
+  expect(fs.existsSync(join(fixtures, 'basic/dist-1/main.html'))).toBeTruthy();
 
   expect(fs.existsSync(join(fixtures, 'basic/dist-1/aa/js'))).toBeTruthy();
 
