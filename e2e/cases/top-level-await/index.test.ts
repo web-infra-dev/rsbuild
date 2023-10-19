@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { expect } from '@modern-js/e2e/playwright';
+import { expect } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { webpackOnlyTest } from '../../scripts/helper';
 

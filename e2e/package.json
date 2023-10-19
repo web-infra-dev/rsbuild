@@ -16,6 +16,7 @@
     "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@playwright/test": "1.33.0",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-image-compress": "workspace:*",
     "@rsbuild/plugin-node-polyfill": "workspace:*",
@@ -25,12 +26,17 @@
     "@rsbuild/plugin-vue2": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@modern-js/utils": "^2.36.0",
-    "@types/node": "^16",
+    "@types/connect": "^3.4.37",
     "@types/lodash": "^4.14.195",
+    "@types/node": "^16",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@playwright/test": "1.33.0",
+    "@types/serve-static": "^1.15.4",
+    "connect": "^3.7.0",
+    "fast-glob": "^3.3.1",
+    "get-port": "^5.0.0",
+    "playwright": "1.33.0",
+    "serve-static": "^1.15.0",
     "typescript": "^5"
   }
 }

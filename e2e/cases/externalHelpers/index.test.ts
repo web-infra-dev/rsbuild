@@ -1,7 +1,7 @@
 import path from 'path';
 import { build } from '@scripts/shared';
 import { providerType } from '@scripts/helper';
-import { expect, test } from '@modern-js/e2e/playwright';
+import { expect, test } from '@playwright/test';
 import { builderPluginSwc } from '@modern-js/builder-plugin-swc';
 
 test('should externalHelpers by default', async () => {

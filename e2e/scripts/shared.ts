@@ -1,7 +1,8 @@
 import { URL } from 'url';
 import assert from 'assert';
 import { join } from 'path';
-import fs from '@modern-js/utils/fs-extra';
+import { fs } from '@rsbuild/shared/fs-extra';
+import { globContentJSON, runStaticServer } from '@scripts/helper';
 import type { CreateBuilderOptions } from '@modern-js/builder';
 import type { BuilderConfig } from '@modern-js/builder-webpack-provider';
 import type { BuilderConfig as RspackBuilderConfig } from '@modern-js/builder-rspack-provider';
@@ -153,10 +154,7 @@ export async function build<BuilderType = 'webpack'>({
     builder.addPlugins(plugins);
   }
 
-  const [{ runStaticServer, globContentJSON }] = await Promise.all([
-    import('@modern-js/e2e'),
-    builder.build(),
-  ]);
+  await builder.build();
 
   const { distPath } = builder.context;
 

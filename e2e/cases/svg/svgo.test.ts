@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { readFileSync } from 'fs';
-import { expect, test } from '@modern-js/e2e/playwright';
+import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
 test('should preserve viewBox after svgo minification', async () => {

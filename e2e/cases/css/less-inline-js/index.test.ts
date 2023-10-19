@@ -1,5 +1,5 @@
 import path from 'path';
-import { test, expect } from '@modern-js/e2e/playwright';
+import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
 test('should compile less inline js correctly', async () => {

@@ -1,6 +1,6 @@
 import { join, resolve } from 'path';
-import { fs } from '@modern-js/utils';
-import { expect, test } from '@modern-js/e2e/playwright';
+import { fs } from '@rsbuild/shared/fs-extra';
+import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
 const fixtures = __dirname;

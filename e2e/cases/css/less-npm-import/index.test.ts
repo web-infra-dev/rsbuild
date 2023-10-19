@@ -1,7 +1,7 @@
 import path from 'path';
-import { test, expect } from '@modern-js/e2e/playwright';
+import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
-import { fs } from '@modern-js/utils';
+import { fs } from '@rsbuild/shared/fs-extra';
 
 test('should compile less npm import correctly', async () => {
   fs.copySync(

@@ -1,7 +1,7 @@
 import path from 'path';
 import { build } from '@scripts/shared';
 import { webpackOnlyTest } from '@scripts/helper';
-import { expect } from '@modern-js/e2e/playwright';
+import { expect } from '@playwright/test';
 
 const commonConfig = {
   cwd: __dirname,

@@ -30,7 +30,7 @@ pnpm run test:rspack css
 Test cases added using the `test` method will run in webpack and Rspack.
 
 ```ts
-import { expect, test } from '@modern-js/e2e/playwright';
+import { expect, test } from '@playwright/test';
 // will passed in webpack, and rspack
 test('test 1 + 1', () => {
   expect(1 + 1).toBe(2);

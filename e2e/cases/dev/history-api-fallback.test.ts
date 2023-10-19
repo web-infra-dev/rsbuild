@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { expect, test } from '@modern-js/e2e/playwright';
+import { expect, test } from '@playwright/test';
 import { dev } from '@scripts/shared';
 
 const cwd = join(__dirname, 'history-api-fallback');

@@ -1,5 +1,5 @@
 import path from 'path';
-import { expect, test } from '@modern-js/e2e/playwright';
+import { expect, test } from '@playwright/test';
 import { builderPluginImageCompress } from '@modern-js/builder-plugin-image-compress';
 import { providerType } from '@scripts/helper';
 import { build } from '@scripts/shared';

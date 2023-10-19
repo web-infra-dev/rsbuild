@@ -1,6 +1,6 @@
 import path from 'path';
 import { build } from '@scripts/shared';
-import { expect, test } from '@modern-js/e2e/playwright';
+import { expect, test } from '@playwright/test';
 import { builderPluginSwc } from '@modern-js/builder-plugin-swc';
 import { findEntry, copyPkgToNodeModules, cases, shareTest } from './helper';
 

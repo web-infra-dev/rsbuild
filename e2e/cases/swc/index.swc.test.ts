@@ -1,7 +1,7 @@
 import assert from 'assert';
 import * as path from 'path';
 import { readFileSync } from 'fs';
-import { expect, test } from '@modern-js/e2e/playwright';
+import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { builderPluginSwc } from '@modern-js/builder-plugin-swc';
 

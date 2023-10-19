@@ -1,6 +1,6 @@
 import { join } from 'path';
-import { fs } from '@modern-js/utils';
-import { expect, test } from '@modern-js/e2e/playwright';
+import { fs } from '@rsbuild/shared/fs-extra';
+import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 
 test('should serve dist files correctly', async ({ page }) => {
