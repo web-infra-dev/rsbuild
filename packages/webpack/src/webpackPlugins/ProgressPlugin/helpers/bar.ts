@@ -1,7 +1,7 @@
 import cliTruncate from '../../../../compiled/cli-truncate';
 import type { Props } from './type';
 import { clamp } from './utils';
-import chalk from '@modern-js/utils/chalk';
+import { chalk } from '@rsbuild/shared/chalk';
 
 const defaultOption: Props = {
   total: 100,

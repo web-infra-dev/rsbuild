@@ -1,4 +1,4 @@
-import { logger } from '@modern-js/utils';
+import { logger } from '@rsbuild/shared';
 
 export function createNonTTYLogger() {
   let prevPercentage = 0;

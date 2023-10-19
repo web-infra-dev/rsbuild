@@ -1,3 +1,4 @@
+import browserslist from 'browserslist';
 import { DEFAULT_BROWSERSLIST } from './constants';
 import type {
   BuilderTarget,
@@ -13,9 +14,6 @@ export async function getBrowserslist(path: string) {
     return browsersListCache.get(path)!;
   }
 
-  const { default: browserslist } = await import(
-    '@modern-js/utils/browserslist'
-  );
   const result = browserslist.loadConfig({ path });
 
   if (result) {

@@ -4,7 +4,7 @@ import prodServer, {
 } from '@modern-js/prod-server';
 import chalk from 'chalk';
 import { logger as defaultLogger } from './logger';
-import { DEFAULT_PORT } from './constants';
+import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import type {
   BuilderContext,
   StartServerResult,
@@ -58,7 +58,7 @@ export async function startProdServer(
     process.env.NODE_ENV = 'production';
   }
 
-  const { getPort, DEFAULT_DEV_HOST } = await import('@modern-js/utils');
+  const { getPort } = await import('@modern-js/utils');
 
   const port = await getPort(builderConfig.dev?.port || DEFAULT_PORT);
   const server = await prodServer({

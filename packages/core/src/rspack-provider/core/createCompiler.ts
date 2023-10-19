@@ -1,4 +1,5 @@
 import {
+  isDev,
   debug,
   logger,
   prettyTime,
@@ -20,7 +21,6 @@ export async function createCompiler({
   });
 
   const { rspack } = await import('@rspack/core');
-  const { isDev } = await import('@modern-js/utils');
 
   const compiler = rspack(rspackConfigs);
 

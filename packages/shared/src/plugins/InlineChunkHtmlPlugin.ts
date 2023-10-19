@@ -6,8 +6,7 @@
  * modified from https://github.com/facebook/create-react-app/blob/master/packages/react-dev-utils/InlineChunkHtmlPlugin.js
  */
 import { join } from 'path';
-import { isFunction, isString } from '@modern-js/utils';
-import { addTrailingSlash } from '../utils';
+import { isFunction, addTrailingSlash } from '../utils';
 import type { Compiler, Compilation } from 'webpack';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
@@ -91,7 +90,7 @@ export class InlineChunkHtmlPlugin {
   }
 
   matchTests(name: string, source: string, tests: InlineChunkTest[]) {
-    return tests.some(test => {
+    return tests.some((test) => {
       if (isFunction(test)) {
         const size = source.length;
         return test({ name, size });
@@ -108,7 +107,7 @@ export class InlineChunkHtmlPlugin {
     const { assets } = compilation;
 
     // No need to inline scripts with src attribute
-    if (!(tag?.attributes.src && isString(tag.attributes.src))) {
+    if (!(tag?.attributes.src && typeof tag.attributes.src === 'string')) {
       return tag;
     }
 
@@ -155,7 +154,7 @@ export class InlineChunkHtmlPlugin {
     const { assets } = compilation;
 
     // No need to inline styles with href attribute
-    if (!(tag.attributes.href && isString(tag.attributes.href))) {
+    if (!(tag.attributes.href && typeof tag.attributes.href === 'string')) {
       return tag;
     }
 
@@ -229,7 +228,7 @@ export class InlineChunkHtmlPlugin {
 
       const hooks = this.htmlPlugin.getHooks(compilation);
 
-      hooks.alterAssetTagGroups.tap(this.name, assets => {
+      hooks.alterAssetTagGroups.tap(this.name, (assets) => {
         assets.headTags = assets.headTags.map(tagFunction);
         assets.bodyTags = assets.bodyTags.map(tagFunction);
         return assets;
@@ -247,7 +246,7 @@ export class InlineChunkHtmlPlugin {
         () => {
           const { devtool } = compiler.options;
 
-          this.inlinedAssets.forEach(name => {
+          this.inlinedAssets.forEach((name) => {
             // If the source map reference is removed,
             // we do not need to preserve the source map of inlined files
             if (devtool === 'hidden-source-map') {

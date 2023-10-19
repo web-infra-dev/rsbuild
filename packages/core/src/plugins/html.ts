@@ -2,6 +2,7 @@ import path from 'path';
 import {
   isURL,
   isFileExists,
+  isPlainObject,
   isHtmlDisabled,
   getDistPath,
   getMinify,
@@ -10,8 +11,10 @@ import {
   getFavicon,
   getMetaTags,
   getTemplatePath,
+  ROUTE_SPEC_FILE,
   type FaviconUrls,
 } from '@rsbuild/shared';
+import { fs } from '@rsbuild/shared/fs-extra';
 import type {
   DefaultBuilderPlugin,
   SharedNormalizedConfig,
@@ -66,7 +69,6 @@ async function getTemplateParameters(
 }
 
 async function getChunks(entryName: string, entryValue: string | string[]) {
-  const { isPlainObject } = await import('@modern-js/utils');
   const dependOn = [];
 
   if (isPlainObject(entryValue)) {
@@ -260,7 +262,6 @@ export const builderPluginHtml = (): DefaultBuilderPlugin => ({
     );
 
     const emitRouteJson = async () => {
-      const { fs, ROUTE_SPEC_FILE } = await import('@modern-js/utils');
       const routeFilePath = path.join(api.context.distPath, ROUTE_SPEC_FILE);
 
       // generate a basic route.json for modern.js server

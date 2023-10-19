@@ -37,7 +37,6 @@ export type NormalizedConfig = DeepReadonly<{
   experiments: NormalizedExperimentsConfig;
 }>;
 
-/* eslint-disable @typescript-eslint/no-restricted-imports */
 export * from './dev';
 export * from './experiments';
 export * from './html';
@@ -46,4 +45,3 @@ export * from './performance';
 export * from './security';
 export * from './source';
 export * from './tools';
-/* eslint-enable @typescript-eslint/no-restricted-imports */

@@ -4,6 +4,23 @@ import type {
   SharedCompiledPkgNames,
 } from './types';
 import { join } from 'path';
+import fs from 'fs-extra';
+
+export const isDev = (): boolean => process.env.NODE_ENV === 'development';
+export const isProd = (): boolean => process.env.NODE_ENV === 'production';
+export const isTest = () => process.env.NODE_ENV === 'test';
+export const isString = (str: unknown): str is string =>
+  typeof str === 'string';
+export const isUndefined = (obj: unknown): obj is undefined =>
+  typeof obj === 'undefined';
+export const isFunction = (func: unknown): func is (...args: any[]) => any =>
+  typeof func === 'function';
+export const isObject = (obj: unknown): obj is Record<string, any> =>
+  obj !== null && typeof obj === 'object';
+export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
+  isObject(obj) && Object.prototype.toString.call(obj) === '[object Object]';
+export const isRegExp = (obj: any): obj is RegExp =>
+  Object.prototype.toString.call(obj) === '[object RegExp]';
 
 export const createVirtualModule = (content: string) =>
   `data:text/javascript,${content}`;
@@ -79,3 +96,13 @@ export function resolvePackage(loader: string, dirname: string) {
     ? loader
     : require.resolve(loader, { paths: [dirname] });
 }
+
+export const getCoreJsVersion = (corejsPkgPath: string) => {
+  try {
+    const { version } = fs.readJSONSync(corejsPkgPath);
+    const [major, minor] = version.split('.');
+    return `${major}.${minor}`;
+  } catch (err) {
+    return '3';
+  }
+};

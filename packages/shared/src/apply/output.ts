@@ -5,9 +5,12 @@ import type {
   SharedNormalizedConfig,
 } from '../types';
 import { getDistPath, getFilename } from '../fs';
-import { DEFAULT_PORT, DEFAULT_ASSET_PREFIX } from '../constants';
+import {
+  DEFAULT_PORT,
+  DEFAULT_DEV_HOST,
+  DEFAULT_ASSET_PREFIX,
+} from '../constants';
 import { addTrailingSlash } from '../utils';
-import { DEFAULT_DEV_HOST } from '@modern-js/utils';
 
 export function applyBuilderOutputPlugin(api: SharedBuilderPluginAPI) {
   api.modifyBundlerChain(

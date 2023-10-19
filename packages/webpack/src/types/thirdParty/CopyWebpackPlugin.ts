@@ -1,7 +1,6 @@
 /**
  * Ref: https://github.com/webpack-contrib/copy-webpack-plugin/blob/master/types/index.d.ts
  */
-import type Buffer from 'buffer';
 
 export type CopyPluginOptions = {
   patterns: Pattern[];
@@ -67,7 +66,7 @@ type Info =
 
 type ObjectPattern = {
   from: string;
-  globOptions?: import('@modern-js/utils/globby').GlobbyOptions | undefined;
+  globOptions?: Record<string, any>;
   context?: string | undefined;
   to?: To | undefined;
   toType?: ToType | undefined;
