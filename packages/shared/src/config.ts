@@ -40,7 +40,7 @@ import type { minify } from 'terser';
 import fs from 'fs-extra';
 
 import _ from '@modern-js/utils/lodash';
-import { DEFAULT_DEV_HOST } from '@modern-js/utils';
+import { DEFAULT_DEV_HOST } from './constants';
 import { getJSMinifyOptions } from './minimize';
 
 export const getDefaultDevConfig = (): NormalizedSharedDevConfig => ({

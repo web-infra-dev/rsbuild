@@ -1,11 +1,9 @@
 import { join } from 'path';
-
 import {
   getSharedPkgCompiledPath,
   SharedCompiledPkgNames,
 } from '@rsbuild/shared';
-// eslint-disable-next-line @typescript-eslint/no-restricted-imports
-import { fs } from '@modern-js/utils';
+import { fs } from '@rsbuild/shared/fs-extra';
 
 export const getCompiledPath = (packageName: string) => {
   const providerCompilerPath = join(__dirname, '../../compiled', packageName);

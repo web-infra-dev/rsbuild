@@ -1,15 +1,3 @@
-import fs from 'fs-extra';
-
-export const getCoreJsVersion = (corejsPkgPath: string) => {
-  try {
-    const { version } = fs.readJSONSync(corejsPkgPath);
-    const [major, minor] = version.split('.');
-    return `${major}.${minor}`;
-  } catch (err) {
-    return '3';
-  }
-};
-
 export * from './applyDefaultBuilderOptions';
 export * from './constants';
 export * from './createHook';

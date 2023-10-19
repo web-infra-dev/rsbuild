@@ -1,7 +1,7 @@
 import jiti from 'jiti';
 import { join } from 'path';
 import { findExists } from '@modern-js/utils';
-import { existsSync } from '@modern-js/utils/fs-extra';
+import { fs } from '@rsbuild/shared/fs-extra';
 import type { BuilderEntry, BuilderPlugin } from '@rsbuild/shared';
 // TODO webpack config type
 // import type { BuilderConfig as WebpackBuilderConfig } from '@rsbuild/webpack';
@@ -22,7 +22,7 @@ export const defineConfig = <Bundler extends 'rspack' | 'webpack' = 'webpack'>(
 export async function loadConfig(): Promise<BuilderConfig> {
   const configFile = join(process.cwd(), 'rsbuild.config.ts');
 
-  if (existsSync(configFile)) {
+  if (fs.existsSync(configFile)) {
     const loadConfig = jiti(__filename, {
       esmResolve: true,
       interopDefault: true,

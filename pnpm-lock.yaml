@@ -213,12 +213,12 @@ importers:
 
   packages/plugin-image-compress:
     dependencies:
-      '@modern-js/utils':
-        specifier: ^2.36.0
-        version: 2.36.0
       '@napi-rs/image':
         specifier: ^1.7.0
         version: 1.7.0
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
       svgo:
         specifier: ^3.0.2
         version: 3.0.2

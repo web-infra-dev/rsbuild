@@ -25,7 +25,7 @@
     "dist"
   ],
   "dependencies": {
-    "@modern-js/utils": "^2.36.0",
+    "@rsbuild/shared": "workspace:*",
     "@napi-rs/image": "^1.7.0",
     "svgo": "^3.0.2"
   },

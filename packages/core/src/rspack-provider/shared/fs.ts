@@ -3,7 +3,7 @@ import {
   getSharedPkgCompiledPath,
   SharedCompiledPkgNames,
 } from '@rsbuild/shared';
-import { fs } from '@modern-js/utils';
+import { fs } from '@rsbuild/shared/fs-extra';
 
 export const getCompiledPath = (packageName: string) => {
   const providerCompilerPath = join(__dirname, '../../compiled', packageName);
