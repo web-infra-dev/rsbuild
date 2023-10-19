@@ -11,18 +11,18 @@ import { initConfigs } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
 import type { Compiler, MultiCompiler } from 'webpack';
 
-export type BuilderWebpackProvider = BuilderProvider<
+export type WebpackProvider = BuilderProvider<
   BuilderConfig,
   WebpackConfig,
   NormalizedConfig,
   Compiler | MultiCompiler
 >;
 
-export function builderWebpackProvider({
+export function webpackProvider({
   builderConfig: originalBuilderConfig,
 }: {
   builderConfig: BuilderConfig;
-}): BuilderWebpackProvider {
+}): WebpackProvider {
   const builderConfig = pickBuilderConfig(originalBuilderConfig);
 
   return async ({ pluginStore, builderOptions, plugins }) => {
