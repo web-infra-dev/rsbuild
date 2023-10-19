@@ -11,9 +11,9 @@ import { plugins } from './plugins';
 import type { BuilderConfig } from './rspack-provider';
 
 const getRspackProvider = async (builderConfig: BuilderConfig) => {
-  const { builderRspackProvider } = await import('./rspack-provider');
+  const { rspackProvider } = await import('./rspack-provider');
 
-  return builderRspackProvider({
+  return rspackProvider({
     builderConfig,
   });
 };

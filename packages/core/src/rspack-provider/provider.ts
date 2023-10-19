@@ -21,18 +21,18 @@ import type {
   MultiCompiler,
 } from './types';
 
-export type BuilderRspackProvider = BuilderProvider<
+export type RspackProvider = BuilderProvider<
   BuilderConfig,
   RspackConfig,
   NormalizedConfig,
   Compiler | MultiCompiler
 >;
 
-export function builderRspackProvider({
+export function rspackProvider({
   builderConfig: originalBuilderConfig,
 }: {
   builderConfig: BuilderConfig;
-}): BuilderRspackProvider {
+}): RspackProvider {
   const builderConfig = pickBuilderConfig(originalBuilderConfig);
 
   return async ({ pluginStore, builderOptions, plugins }) => {
