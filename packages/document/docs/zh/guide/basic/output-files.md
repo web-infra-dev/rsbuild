@@ -18,14 +18,12 @@ dist
 │       ├── [name].[hash].js.LICENSE.txt
 │       └── [name].[hash].js.map
 │
-└── html
-    └── [name]
-        └── index.html
+└── [name].html
 ```
 
 最常见的产物是 HTML 文件、JS 文件和 CSS 文件：
 
-- HTML 文件：默认输出到 `html` 目录。
+- HTML 文件：默认输出到 `dist` 目录的根部。
 - JS 文件：默认输出到 `static/js` 目录，
 - CSS 文件：默认输出到 `static/css` 目录。
 
@@ -101,7 +99,7 @@ dist
 ├── bundles
 │   └── [name].js
 ├── static
-└── html
+└── [name].html
 ```
 
 Node.js 产物通常只包含 JS 文件，不包含 HTML、CSS 等文件。此外，Node 产物的 JS 文件名称也不会自动生成哈希值。
@@ -132,11 +130,7 @@ export default {
     distPath: {
       js: '',
       css: '',
-      html: '',
     },
-  },
-  html: {
-    disableHtmlFolder: true,
   },
 };
 ```

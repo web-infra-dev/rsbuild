@@ -9,11 +9,10 @@ export const DEFAULT_DATA_URL_SIZE = 10000;
 export const DEFAULT_MOUNT_ID = 'root';
 
 const DEFAULT_WEB_BROWSERSLIST = [
-  'chrome >= 61',
-  'edge >= 16',
-  'firefox >= 60',
-  'safari >= 11',
-  'ios_saf >= 11',
+  'chrome >= 87',
+  'edge >= 88',
+  'firefox >= 78',
+  'safari >= 14',
 ];
 
 export const DEFAULT_BROWSERSLIST = {
@@ -25,7 +24,7 @@ export const DEFAULT_BROWSERSLIST = {
 
 // Paths
 export const ROOT_DIST_DIR = 'dist';
-export const HTML_DIST_DIR = 'html';
+export const HTML_DIST_DIR = '/';
 export const SERVER_DIST_DIR = 'bundles';
 export const SERVER_WORKER_DIST_DIR = 'worker';
 export const JS_DIST_DIR = 'static/js';

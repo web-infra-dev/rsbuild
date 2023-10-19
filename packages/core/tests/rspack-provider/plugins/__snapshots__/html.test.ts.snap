@@ -33,7 +33,7 @@ exports[`plugins/html > should allow to set favicon by html.favicon option 1`] =
           "main",
         ],
         "favicon": "src/favicon.ico",
-        "filename": "html/main/index.html",
+        "filename": "main.html",
         "inject": "head",
         "minify": false,
         "scriptLoading": "defer",
@@ -59,7 +59,7 @@ exports[`plugins/html > should allow to set inject by html.inject option 1`] = `
         "chunks": [
           "main",
         ],
-        "filename": "html/main/index.html",
+        "filename": "main.html",
         "inject": "body",
         "minify": false,
         "scriptLoading": "defer",
@@ -85,7 +85,7 @@ exports[`plugins/html > should enable minify in production 1`] = `
         "chunks": [
           "main",
         ],
-        "filename": "html/main/index.html",
+        "filename": "main.html",
         "inject": "head",
         "minify": {
           "collapseWhitespace": true,
@@ -130,7 +130,7 @@ exports[`plugins/html > should register html plugin correctly 1`] = `
         "chunks": [
           "main",
         ],
-        "filename": "html/main/index.html",
+        "filename": "main.html",
         "inject": "head",
         "minify": false,
         "scriptLoading": "defer",
@@ -159,7 +159,7 @@ exports[`plugins/html > should support multi entry 1`] = `
         "chunks": [
           "main",
         ],
-        "filename": "html/main/index.html",
+        "filename": "main.html",
         "inject": "head",
         "minify": false,
         "scriptLoading": "defer",
@@ -173,7 +173,7 @@ exports[`plugins/html > should support multi entry 1`] = `
         "chunks": [
           "foo",
         ],
-        "filename": "html/foo/index.html",
+        "filename": "foo.html",
         "inject": "head",
         "minify": false,
         "scriptLoading": "defer",

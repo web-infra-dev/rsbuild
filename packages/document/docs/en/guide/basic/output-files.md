@@ -18,14 +18,12 @@ dist
 │       ├── [name].[hash].js.LICENSE.txt
 │       └── [name].[hash].js.map
 │
-└── html
-    └── [name]
-        └── index.html
+└── [name].html
 ```
 
 The most common output files are HTML files, JS files, and CSS files:
 
-- HTML files: default output to the `html` directory.
+- HTML files: default output to the root of dist directory.
 - JS files: default output to `static/js` directory,
 - CSS files: default output to the `static/css` directory.
 
@@ -101,7 +99,7 @@ dist
 ├── bundles
 │   └── [name].js
 ├── static
-└── html
+└── [name].html
 ```
 
 Node.js files usually only contain JS files, no HTML or CSS. Also, JS file names will not contain hash.
@@ -132,11 +130,7 @@ export default {
     distPath: {
       js: '',
       css: '',
-      html: '',
     },
-  },
-  html: {
-    disableHtmlFolder: true,
   },
 };
 ```
