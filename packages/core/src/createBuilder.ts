@@ -8,7 +8,7 @@ import {
   type CreateBuilderOptions,
 } from '@rsbuild/shared';
 import { plugins } from './plugins';
-import { BuilderConfig } from './rspack-provider';
+import type { BuilderConfig } from './rspack-provider';
 
 const getRspackProvider = async (builderConfig: BuilderConfig) => {
   const { builderRspackProvider } = await import('./rspack-provider');
