@@ -14,13 +14,7 @@ In most cases, it is recommended to use the `.browserslistrc` file rather than t
 If there is no `browserslist` configs defined in the project, nor `overrideBrowserslist` defined, then Rsbuild will set the default browserslist to:
 
 ```js
-[
-  'chrome >= 61',
-  'edge >= 16',
-  'firefox >= 60',
-  'safari >= 11',
-  'ios_saf >= 11',
-];
+['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
 ```
 
 ### Example

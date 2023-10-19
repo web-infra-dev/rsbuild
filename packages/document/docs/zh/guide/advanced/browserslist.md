@@ -118,11 +118,10 @@ IE 11
 - 设置为支持原生 ES Modules 的浏览器（推荐）：
 
 ```yaml
-chrome >= 61
-edge >= 16
-firefox >= 60
-safari >= 11
-ios_saf >= 11
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
 ```
 
 - 设置为支持 ES6 的浏览器：
@@ -192,11 +191,10 @@ node >= 14
 Web Worker 产物默认的浏览器范围与 Web 一致。
 
 ```yaml
-chrome >= 61
-edge >= 16
-firefox >= 60
-safari >= 11
-ios_saf >= 11
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
 ```
 
 ## 查询浏览器支持情况

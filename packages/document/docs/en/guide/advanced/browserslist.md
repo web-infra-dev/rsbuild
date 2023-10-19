@@ -118,11 +118,10 @@ If you don't need to be compatible with IE 11 browsers, you can adjust Browsersl
 - Set to browsers that supports native ES Modules (recommended):
 
 ```yaml
-chrome >= 61
-edge >= 16
-firefox >= 60
-safari >= 11
-ios_saf >= 11
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
 ```
 
 - Set to browsers that support ES6:
@@ -170,11 +169,10 @@ Rsbuild will set different default values of Browserslist according to [build ta
 The default values of web target are as follows:
 
 ```yaml
-chrome >= 61
-edge >= 16
-firefox >= 60
-safari >= 11
-ios_saf >= 11
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
 ```
 
 Under this browser range, JavaScript code will be compatible with browsers that support [native ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
@@ -192,11 +190,10 @@ node >= 14
 The default Browserslist of the Web Worker target is consistent with the Web target.
 
 ```yaml
-chrome >= 61
-edge >= 16
-firefox >= 60
-safari >= 11
-ios_saf >= 11
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
 ```
 
 ## Query browser support

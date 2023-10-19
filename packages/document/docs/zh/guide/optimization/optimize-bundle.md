@@ -45,13 +45,7 @@ Rsbuild 会根据项目的 Browserslist 配置范围进行代码编译，并注�
 Rsbuild 默认的 Browserslist 配置为：
 
 ```js
-[
-  'chrome >= 61',
-  'edge >= 16',
-  'firefox >= 60',
-  'safari >= 11',
-  'ios_saf >= 11',
-];
+['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
 ```
 
 比如只兼容 Chrome 100 以上的浏览器，可以改成：

@@ -9,11 +9,10 @@ export const DEFAULT_DATA_URL_SIZE = 10000;
 export const DEFAULT_MOUNT_ID = 'root';
 
 const DEFAULT_WEB_BROWSERSLIST = [
-  'chrome >= 61',
-  'edge >= 16',
-  'firefox >= 60',
-  'safari >= 11',
-  'ios_saf >= 11',
+  'chrome >= 87',
+  'edge >= 88',
+  'firefox >= 78',
+  'safari >= 14',
 ];
 
 export const DEFAULT_BROWSERSLIST = {
