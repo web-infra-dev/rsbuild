@@ -41,7 +41,7 @@ test.describe('html configure multi', () => {
   });
 
   test('inject default (head)', async () => {
-    const pagePath = join(builder.distPath, 'html/main/index.html');
+    const pagePath = join(builder.distPath, 'main.html');
     const content = await fs.readFile(pagePath, 'utf-8');
 
     expect(
@@ -80,13 +80,10 @@ test.describe('html element set', () => {
     });
 
     mainContent = await fs.readFile(
-      join(builder.distPath, 'html/main/index.html'),
+      join(builder.distPath, 'main.html'),
       'utf-8',
     );
-    fooContent = await fs.readFile(
-      join(builder.distPath, 'html/foo/index.html'),
-      'utf-8',
-    );
+    fooContent = await fs.readFile(join(builder.distPath, 'foo.html'), 'utf-8');
   });
 
   test.afterAll(() => {
@@ -283,7 +280,7 @@ test('title & titleByEntries & templateByEntries', async ({ page }) => {
   builder.close();
 });
 
-test('disableHtmlFolder', async ({ page }) => {
+test('html.outputStructure', async ({ page }) => {
   const builder = await build({
     cwd: join(fixtures, 'template'),
     entry: {
@@ -292,14 +289,14 @@ test('disableHtmlFolder', async ({ page }) => {
     runServer: true,
     builderConfig: {
       html: {
-        disableHtmlFolder: true,
+        outputStructure: 'nested',
       },
     },
   });
 
   await page.goto(getHrefByEntryName('main', builder.port));
 
-  const pagePath = join(builder.distPath, 'html/main.html');
+  const pagePath = join(builder.distPath, 'main/index.html');
 
   expect(fs.existsSync(pagePath)).toBeTruthy();
 
@@ -326,7 +323,7 @@ test('tools.htmlPlugin', async ({ page }) => {
 
   await page.goto(getHrefByEntryName('main', builder.port));
 
-  const pagePath = join(builder.distPath, 'html/main/index.html');
+  const pagePath = join(builder.distPath, 'main.html');
   const content = await fs.readFile(pagePath, 'utf-8');
 
   const allScripts = /(<script [\s\S]*?>)/g.exec(content);

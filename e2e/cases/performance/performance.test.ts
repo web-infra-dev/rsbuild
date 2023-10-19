@@ -91,7 +91,7 @@ test('should generate preconnect link when preconnect is defined', async () => {
   const files = await builder.unwrapOutputJSON();
 
   const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('index.html'),
+    name.endsWith('.html'),
   )!;
 
   expect(
@@ -121,7 +121,7 @@ test('should generate dnsPrefetch link when dnsPrefetch is defined', async () =>
   const files = await builder.unwrapOutputJSON();
 
   const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('index.html'),
+    name.endsWith('.html'),
   )!;
 
   expect(

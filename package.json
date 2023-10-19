@@ -4,7 +4,7 @@
   "scripts": {
     "ut": "vitest run",
     "ut:watch": "vitest",
-    "e2e": "echo 'e2e'",
+    "e2e": "cd ./e2e && pnpm test",
     "new": "modern new",
     "test": "pnpm run ut",
     "bump": "modern bump",

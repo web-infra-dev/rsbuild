@@ -1,7 +1,7 @@
 import path from 'path';
 import { build } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
-import { ensureDirSync, copySync } from 'fs-extra';
+import { fs } from '@rsbuild/shared/fs-extra';
 import type { SharedTransformImport } from '@rsbuild/shared';
 import { BuilderConfig } from '@rsbuild/webpack';
 
@@ -52,8 +52,8 @@ export function findEntry(
 export function copyPkgToNodeModules() {
   const nodeModules = path.resolve(__dirname, 'node_modules');
 
-  ensureDirSync(nodeModules);
-  copySync(path.resolve(__dirname, 'foo'), path.resolve(nodeModules, 'foo'));
+  fs.ensureDirSync(nodeModules);
+  fs.copySync(path.resolve(__dirname, 'foo'), path.resolve(nodeModules, 'foo'));
 }
 
 export function shareTest(
