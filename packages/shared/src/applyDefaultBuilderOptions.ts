@@ -6,7 +6,6 @@ export function applyDefaultBuilderOptions(options?: CreateBuilderOptions) {
     entry: {},
     target: ['web'],
     configPath: null,
-    framework: 'modern-js',
     ...options,
   } as Required<CreateBuilderOptions>;
 }

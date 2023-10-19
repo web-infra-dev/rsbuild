@@ -76,7 +76,7 @@ type CachePath = string;
 
 ### rsbuild.context.configPath
 
-The absolute path to the framework config file, corresponding to the `configPath` option of `createRsbuild` method.
+The absolute path to the config file of higher-level solution, corresponding to the `configPath` option of `createRsbuild` method.
 
 - **Type**
 
@@ -92,16 +92,6 @@ The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json
 
 ```ts
 type TsconfigPath = string | undefined;
-```
-
-### rsbuild.context.framework
-
-The name of the framework, a unique identifier, the default value is `'modern.js'`.
-
-- **Type**
-
-```ts
-type Framework = string | undefined;
 ```
 
 ### rsbuild.context.devServer
