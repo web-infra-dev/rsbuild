@@ -1,7 +1,7 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
-import type { SharedBuilderConfig } from '@modern-js/builder-shared';
+import type { SharedBuilderConfig } from '@rsbuild/shared';
 
 function getCommonBuildConfig(cwd: string): SharedBuilderConfig {
   return {

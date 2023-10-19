@@ -2,8 +2,8 @@ import path from 'path';
 import { build } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { ensureDirSync, copySync } from 'fs-extra';
-import { SharedTransformImport } from '@modern-js/builder-shared';
-import { BuilderConfig } from '@modern-js/builder-webpack-provider';
+import type { SharedTransformImport } from '@rsbuild/shared';
+import { BuilderConfig } from '@rsbuild/webpack';
 
 export const cases: Parameters<typeof shareTest>[] = [
   [

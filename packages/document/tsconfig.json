@@ -1,5 +1,5 @@
 {
-  "extends": "../../scripts/tsconfig.base.json",
+  "extends": "@rsbuild/tsconfig/base",
   "compilerOptions": {
     "outDir": "./dist",
     "baseUrl": "./"
