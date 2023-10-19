@@ -6,11 +6,11 @@ import { createBuilder } from '@scripts/shared';
 const builderConfig = path.resolve(__dirname, './dist/builder.config.js');
 const bundlerConfig = path.resolve(
   __dirname,
-  `./dist/${process.env.PROVIDE_TYPE || 'webpack'}.config.web.js`,
+  `./dist/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.js`,
 );
 const bundlerNodeConfig = path.resolve(
   __dirname,
-  `./dist/${process.env.PROVIDE_TYPE || 'webpack'}.config.node.js`,
+  `./dist/${process.env.PROVIDE_TYPE || 'rspack'}.config.node.js`,
 );
 
 test('should generate config files when writeToDisk is true', async () => {

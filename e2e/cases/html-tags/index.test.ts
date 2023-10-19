@@ -24,8 +24,7 @@ test('should inject tags', async () => {
 
   const files = await builder.unwrapOutputJSON();
 
-  const indexHtml =
-    files[path.resolve(__dirname, './dist/html/index/index.html')];
+  const indexHtml = files[path.resolve(__dirname, './dist/index.html')];
 
   expect(isHtmlMatch(indexHtml, /foo\.js/)).toBeTruthy();
   expect(

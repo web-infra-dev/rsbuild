@@ -7,54 +7,39 @@ import type {
   CreateBuilderOptions,
   BuilderConfig as RspackBuilderConfig,
 } from '@rsbuild/core';
-import type { BuilderConfig } from '@rsbuild/webpack';
+import type { BuilderConfig as WebpackBuilderConfig } from '@rsbuild/webpack';
 import { StartDevServerOptions } from '@rsbuild/shared';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
   const baseUrl = new URL(`http://localhost:${port}`);
-  const htmlRoot = new URL('html/', baseUrl);
-  const homeUrl = new URL(`${entryName}/index.html`, htmlRoot);
+  const htmlRoot = new URL('/', baseUrl);
+  const homeUrl = new URL(`${entryName}.html`, htmlRoot);
 
   return homeUrl.href;
 };
-
-async function getWebpackBuilderProvider(builderConfig: BuilderConfig) {
-  const { builderWebpackProvider } = await import('@rsbuild/webpack');
-
-  const builderProvider = builderWebpackProvider({
-    builderConfig,
-  });
-
-  return builderProvider;
-}
-
-async function getRspackBuilderProvider(builderConfig: RspackBuilderConfig) {
-  const { builderRspackProvider } = await import('@rsbuild/core');
-
-  const builderProvider = builderRspackProvider({
-    builderConfig,
-  });
-
-  return builderProvider;
-}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
 
 export const createBuilder = async (
   builderOptions: CreateBuilderOptions,
-  builderConfig: BuilderConfig | RspackBuilderConfig = {},
+  builderConfig: WebpackBuilderConfig | RspackBuilderConfig = {},
 ) => {
   const { createBuilder } = await import('@rsbuild/core');
 
-  const builderProvider =
-    process.env.PROVIDE_TYPE === 'rspack'
-      ? await getRspackBuilderProvider(builderConfig as RspackBuilderConfig)
-      : await getWebpackBuilderProvider(builderConfig as BuilderConfig);
+  if (process.env.PROVIDE_TYPE === 'rspack') {
+    return createBuilder({
+      ...builderOptions,
+      builderConfig,
+    });
+  }
 
-  const builder = await createBuilder(builderProvider, builderOptions);
-
-  return builder;
+  const { webpackProvider } = await import('@rsbuild/webpack');
+  return createBuilder({
+    ...builderOptions,
+    builderConfig: builderConfig as WebpackBuilderConfig,
+    provider: webpackProvider,
+  });
 };
 
 const portMap = new Map();
@@ -72,7 +57,9 @@ function getRandomPort(defaultPort = Math.ceil(Math.random() * 10000) + 10000) {
 }
 
 const updateConfigForTest = <BuilderType>(
-  config: BuilderType extends 'webpack' ? BuilderConfig : RspackBuilderConfig,
+  config: BuilderType extends 'webpack'
+    ? WebpackBuilderConfig
+    : RspackBuilderConfig,
 ) => {
   // make devPort random to avoid port conflict
   config.dev = {
@@ -98,13 +85,13 @@ const updateConfigForTest = <BuilderType>(
   }
 };
 
-export async function dev<BuilderType = 'webpack'>({
+export async function dev<BuilderType = 'rspack'>({
   serverOptions,
   builderConfig = {},
   ...options
 }: CreateBuilderOptions & {
   builderConfig?: BuilderType extends 'webpack'
-    ? BuilderConfig
+    ? WebpackBuilderConfig
     : RspackBuilderConfig;
   serverOptions?: StartDevServerOptions['serverOptions'];
 }) {
@@ -119,7 +106,7 @@ export async function dev<BuilderType = 'webpack'>({
   });
 }
 
-export async function build<BuilderType = 'webpack'>({
+export async function build<BuilderType = 'rspack'>({
   plugins,
   runServer = false,
   builderConfig = {},
@@ -128,7 +115,7 @@ export async function build<BuilderType = 'webpack'>({
   plugins?: any[];
   runServer?: boolean;
   builderConfig?: BuilderType extends 'webpack'
-    ? BuilderConfig
+    ? WebpackBuilderConfig
     : RspackBuilderConfig;
 }) {
   process.env.NODE_ENV = 'production';
@@ -156,10 +143,9 @@ export async function build<BuilderType = 'webpack'>({
 
   const clean = async () => await fs.remove(distPath);
 
-  const unwrapOutputJSON = async (ignoreMap = true, maxSize = 4096) => {
+  const unwrapOutputJSON = async (ignoreMap = true) => {
     return globContentJSON(distPath, {
       absolute: true,
-      maxSize,
       ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
     });
   };
@@ -186,7 +172,7 @@ export async function build<BuilderType = 'webpack'>({
     close,
     unwrapOutputJSON,
     getIndexFile,
-    providerType: process.env.PROVIDE_TYPE || 'webpack',
+    providerType: process.env.PROVIDE_TYPE || 'rspack',
     instance: builder,
   };
 }

@@ -3,7 +3,7 @@ export { mergeBuilderConfig } from '@rsbuild/shared';
 
 export { defineConfig } from './cli';
 
-export type { BuilderPluginAPI } from './rspack-provider';
+export type { BuilderPluginAPI, BuilderConfig } from './rspack-provider';
 export type {
   BuilderMode,
   BuilderEntry,

@@ -1,2 +1,7 @@
-// eslint-disable-next-line no-undef
-window.a = [1, 2, 3, 4, [5, 6, [7, 8]]].flat();
+const list = [
+  { type: '1', value: 1 },
+  { type: '1', value: 2 },
+  { type: '2', value: 3 },
+];
+
+window.a = Object.groupBy(list, ({ type }) => type);

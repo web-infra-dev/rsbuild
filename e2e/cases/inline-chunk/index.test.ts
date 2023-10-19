@@ -89,8 +89,7 @@ test('inline runtime chunk by default', async ({ page }) => {
   ).toBe(false);
 
   // found builder-runtime file in html
-  const indexHtml =
-    files[path.resolve(__dirname, './dist/html/index/index.html')];
+  const indexHtml = files[path.resolve(__dirname, './dist/index.html')];
 
   expect(isRuntimeChunkInHtml(indexHtml)).toBeTruthy();
 
@@ -143,10 +142,8 @@ test('inline runtime chunk by default with multiple entries', async () => {
   ).toBe(false);
 
   // found builder-runtime file in html
-  const indexHtml =
-    files[path.resolve(__dirname, './dist/html/index/index.html')];
-  const anotherHtml =
-    files[path.resolve(__dirname, './dist/html/another/index.html')];
+  const indexHtml = files[path.resolve(__dirname, './dist/index.html')];
+  const anotherHtml = files[path.resolve(__dirname, './dist/another.html')];
 
   expect(isRuntimeChunkInHtml(indexHtml)).toBeTruthy();
   expect(isRuntimeChunkInHtml(anotherHtml)).toBeTruthy();

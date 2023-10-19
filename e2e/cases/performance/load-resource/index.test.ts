@@ -27,7 +27,7 @@ test('should generate prefetch link when prefetch is defined', async () => {
     file.includes('/static/js/async/'),
   )!;
   const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('index.html'),
+    name.endsWith('.html'),
   )!;
 
   // test.js、test.css、test.png
@@ -64,7 +64,7 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
     file.includes('/static/js/async/'),
   )!;
   const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('index.html'),
+    name.endsWith('.html'),
   )!;
 
   expect(
@@ -97,7 +97,7 @@ test('should generate prefetch link with filter', async () => {
     file.includes('/static/image/test'),
   )!;
   const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('index.html'),
+    name.endsWith('.html'),
   )!;
 
   // test.js、test.css、test.png
@@ -133,7 +133,7 @@ webpackOnlyTest(
     const files = await builder.unwrapOutputJSON();
 
     const [, content] = Object.entries(files).find(([name]) =>
-      name.endsWith('page1/index.html'),
+      name.endsWith('page1.html'),
     )!;
 
     // icon.png、test.js、test.css、test.png
@@ -152,7 +152,7 @@ webpackOnlyTest(
     ).toBeTruthy();
 
     const [, content2] = Object.entries(files).find(([name]) =>
-      name.endsWith('page2/index.html'),
+      name.endsWith('page2.html'),
     )!;
 
     // test.js、test.css、test.png
@@ -179,7 +179,7 @@ test('should generate preload link when preload is defined', async () => {
     file.includes('/static/js/async/'),
   )!;
   const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('index.html'),
+    name.endsWith('.html'),
   )!;
 
   // test.js、test.css、test.png
