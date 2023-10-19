@@ -10,19 +10,15 @@ export type PluginVueOptions = {
   vueLoaderOptions?: VueLoaderOptions;
 };
 
-export function builderPluginVue(
+export function pluginVue(
   options: PluginVueOptions = {},
 ): BuilderPlugin<BuilderPluginAPI> {
   return {
-    name: 'builder-plugin-vue',
+    name: 'plugin-vue',
 
     // Remove built-in react plugins.
     // These plugins should be moved to a separate package in the next major version.
-    remove: [
-      'builder-plugin-react',
-      'builder-plugin-antd',
-      'builder-plugin-arco',
-    ],
+    remove: ['plugin-react', 'plugin-antd', 'plugin-arco'],
 
     async setup(api) {
       api.modifyBuilderConfig((config, { mergeBuilderConfig }) => {

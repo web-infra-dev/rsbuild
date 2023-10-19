@@ -1,8 +1,8 @@
 import { DefaultBuilderPlugin, BundlerConfig } from '@rsbuild/shared';
 
-export function builderPluginExternals(): DefaultBuilderPlugin {
+export function pluginExternals(): DefaultBuilderPlugin {
   return {
-    name: 'builder-plugin-externals',
+    name: 'plugin-externals',
     setup(api) {
       api.modifyBundlerChain((chain) => {
         const { externals } = api.getNormalizedConfig().output;

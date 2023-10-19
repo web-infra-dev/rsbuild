@@ -1,11 +1,11 @@
 import { expect, describe, it } from 'vitest';
 import { createBuilder } from '@rspack-builder/tests/helper';
-import { builderPluginStylus } from '../src';
+import { pluginStylus } from '../src';
 
 describe('plugins/stylus', () => {
   it('should add stylus loader config correctly', async () => {
     const builder = await createBuilder({
-      plugins: [builderPluginStylus() as any],
+      plugins: [pluginStylus() as any],
     });
 
     const {
@@ -17,7 +17,7 @@ describe('plugins/stylus', () => {
   it('should allow to configure stylus options', async () => {
     const builder = await createBuilder({
       plugins: [
-        builderPluginStylus({
+        pluginStylus({
           stylusOptions: {
             lineNumbers: false,
           },

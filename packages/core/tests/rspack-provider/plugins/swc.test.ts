@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { BuilderTarget } from '@rsbuild/shared';
-import { builderPluginEntry } from '@src/plugins/entry';
+import { pluginEntry } from '@src/plugins/entry';
 import { createBuilder } from '../helper';
-import { builderPluginSwc } from '@/plugins/swc';
+import { pluginSwc } from '@/plugins/swc';
 import { BuilderConfig } from '@/types';
-import { builderPluginAntd } from '@src/plugins/antd';
+import { pluginAntd } from '@src/plugins/antd';
 
 describe('plugins/swc', () => {
   it('should disable preset_env in target other than web', async () => {
@@ -98,7 +98,7 @@ describe('plugins/swc', () => {
       entry: {
         main: './src/index.js',
       },
-      plugins: [builderPluginSwc(), builderPluginEntry(), builderPluginAntd()],
+      plugins: [pluginSwc(), pluginEntry(), pluginAntd()],
       builderConfig: {
         source: {
           transformImport: false,
@@ -121,7 +121,7 @@ describe('plugins/swc', () => {
       entry: {
         main: './src/index.js',
       },
-      plugins: [builderPluginSwc(), builderPluginEntry(), builderPluginAntd()],
+      plugins: [pluginSwc(), pluginEntry(), pluginAntd()],
     });
 
     const {
@@ -143,7 +143,7 @@ async function matchConfigSnapshot(
     entry: {
       main: './src/index.js',
     },
-    plugins: [builderPluginSwc(), builderPluginEntry()],
+    plugins: [pluginSwc(), pluginEntry()],
     builderConfig,
   });
 

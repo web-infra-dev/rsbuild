@@ -1,7 +1,7 @@
 import type { DefaultBuilderPlugin } from '@rsbuild/shared';
 
-export const builderPluginCleanOutput = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-clean-output',
+export const pluginCleanOutput = (): DefaultBuilderPlugin => ({
+  name: 'plugin-clean-output',
 
   setup(api) {
     const clean = async () => {

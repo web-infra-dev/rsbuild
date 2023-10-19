@@ -3,8 +3,8 @@ import {
   type DefaultBuilderPlugin,
 } from '@rsbuild/shared';
 
-export const builderPluginNetworkPerformance = (): DefaultBuilderPlugin => ({
-  name: `builder-plugin-network-performance`,
+export const pluginNetworkPerformance = (): DefaultBuilderPlugin => ({
+  name: `plugin-network-performance`,
 
   setup(api) {
     api.modifyBundlerChain(

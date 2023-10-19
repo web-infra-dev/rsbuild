@@ -1,8 +1,8 @@
 import type { BuilderConfig, BuilderPlugin } from '../types';
 import { isProd, isUsingHMR } from '@rsbuild/shared';
 
-export const builderPluginReact = (): BuilderPlugin => ({
-  name: 'builder-plugin-react',
+export const pluginReact = (): BuilderPlugin => ({
+  name: 'plugin-react',
 
   setup(api) {
     api.modifyBuilderConfig(async (config, { mergeBuilderConfig }) => {

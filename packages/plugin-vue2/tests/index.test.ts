@@ -1,12 +1,12 @@
 import { expect, describe, it } from 'vitest';
 import { createStubBuilder } from '@rsbuild/webpack/stub';
-import { builderPluginBabel } from '@rsbuild/webpack/plugins/babel';
-import { builderPluginVue2 } from '../src';
+import { pluginBabel } from '@rsbuild/webpack/plugins/babel';
+import { pluginVue2 } from '../src';
 
 describe('plugins/vue', () => {
   it('should add vue-loader and VueLoaderPlugin correctly', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginVue2()],
+      plugins: [pluginVue2()],
     });
     const config = await builder.unwrapWebpackConfig();
 
@@ -16,7 +16,7 @@ describe('plugins/vue', () => {
   it('should allow to configure vueLoader options', async () => {
     const builder = await createStubBuilder({
       plugins: [
-        builderPluginVue2({
+        pluginVue2({
           vueLoaderOptions: {
             hotReload: false,
           },
@@ -30,7 +30,7 @@ describe('plugins/vue', () => {
 
   it('should apply jsx babel plugin correctly', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginVue2(), builderPluginBabel()],
+      plugins: [pluginVue2(), pluginBabel()],
     });
     const config = await builder.unwrapWebpackConfig();
 
@@ -40,12 +40,12 @@ describe('plugins/vue', () => {
   it('should allow to configure jsx babel plugin options', async () => {
     const builder = await createStubBuilder({
       plugins: [
-        builderPluginVue2({
+        pluginVue2({
           vueJsxOptions: {
             injectH: false,
           },
         }),
-        builderPluginBabel(),
+        pluginBabel(),
       ],
     });
     const config = await builder.unwrapWebpackConfig();

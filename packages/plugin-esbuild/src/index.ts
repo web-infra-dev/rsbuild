@@ -11,11 +11,11 @@ export interface PluginEsbuildOptions {
   minimize?: false | MinifyPluginOptions;
 }
 
-export function builderPluginEsbuild(
+export function pluginEsbuild(
   userOptions: PluginEsbuildOptions = {},
 ): BuilderPlugin<BuilderPluginAPI> {
   return {
-    name: 'builder-plugin-esbuild',
+    name: 'plugin-esbuild',
 
     setup(api) {
       api.modifyWebpackChain(async (chain, { CHAIN_ID, isProd, target }) => {

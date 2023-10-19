@@ -65,7 +65,7 @@ describe('applyDefaultPlugins', () => {
 describe('bundlerApi', () => {
   it('test modifyBundlerChain and api order', async () => {
     const testPlugin: BuilderPlugin = {
-      name: 'builder-plugin-devtool',
+      name: 'plugin-devtool',
       setup: (api) => {
         api.modifyBundlerChain((chain) => {
           chain.target('node');

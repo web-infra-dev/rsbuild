@@ -1,8 +1,8 @@
 import path from 'path';
 import type { BuilderPlugin } from '../types';
 
-export const builderPluginPug = (): BuilderPlugin => ({
-  name: 'builder-plugin-pug',
+export const pluginPug = (): BuilderPlugin => ({
+  name: 'plugin-pug',
 
   setup(api) {
     api.modifyWebpackChain(async (chain, { CHAIN_ID }) => {

@@ -27,8 +27,8 @@ export const getUseBuiltIns = (config: NormalizedConfig) => {
   return polyfill;
 };
 
-export const builderPluginBabel = (): BuilderPlugin => ({
-  name: 'builder-plugin-babel',
+export const pluginBabel = (): BuilderPlugin => ({
+  name: 'plugin-babel',
   setup(api) {
     api.modifyWebpackChain(
       async (

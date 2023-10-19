@@ -1,11 +1,11 @@
 import { expect, describe, it } from 'vitest';
-import { builderPluginPug } from '@/plugins/pug';
+import { pluginPug } from '@/plugins/pug';
 import { createStubBuilder } from '../helper';
 
 describe('plugins/pug', () => {
   it('should add pug rules correctly when tools.pug is used', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginPug()],
+      plugins: [pluginPug()],
       builderConfig: {
         tools: {
           pug: {
@@ -21,7 +21,7 @@ describe('plugins/pug', () => {
 
   it('should not add pug rules correctly when tools.pug is not used', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginPug()],
+      plugins: [pluginPug()],
     });
 
     const config = await builder.unwrapWebpackConfig();

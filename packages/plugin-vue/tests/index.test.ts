@@ -1,13 +1,13 @@
 import { expect, describe, it } from 'vitest';
 import { createStubBuilder } from '@rsbuild/webpack/stub';
-import { builderPluginBabel } from '@rsbuild/webpack/plugins/babel';
-import { builderPluginDefine } from '@modern-js/builder/plugins/define';
-import { builderPluginVue } from '../src';
+import { pluginBabel } from '@rsbuild/webpack/plugins/babel';
+import { pluginDefine } from '@modern-js/builder/plugins/define';
+import { pluginVue } from '../src';
 
 describe('plugins/vue', () => {
   it('should add vue-loader and VueLoaderPlugin correctly', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginVue()],
+      plugins: [pluginVue()],
     });
     const config = await builder.unwrapWebpackConfig();
 
@@ -17,7 +17,7 @@ describe('plugins/vue', () => {
   it('should allow to configure vueLoader options', async () => {
     const builder = await createStubBuilder({
       plugins: [
-        builderPluginVue({
+        pluginVue({
           vueLoaderOptions: {
             hotReload: false,
           },
@@ -31,7 +31,7 @@ describe('plugins/vue', () => {
 
   it('should apply jsx babel plugin correctly', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginVue(), builderPluginBabel()],
+      plugins: [pluginVue(), pluginBabel()],
     });
     const config = await builder.unwrapWebpackConfig();
 
@@ -41,12 +41,12 @@ describe('plugins/vue', () => {
   it('should allow to configure jsx babel plugin options', async () => {
     const builder = await createStubBuilder({
       plugins: [
-        builderPluginVue({
+        pluginVue({
           vueJsxOptions: {
             transformOn: false,
           },
         }),
-        builderPluginBabel(),
+        pluginBabel(),
       ],
     });
     const config = await builder.unwrapWebpackConfig();
@@ -56,7 +56,7 @@ describe('plugins/vue', () => {
 
   it('should define feature flags correctly', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginVue(), builderPluginDefine()],
+      plugins: [pluginVue(), pluginDefine()],
     });
     const config = await builder.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();

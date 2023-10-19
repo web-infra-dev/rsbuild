@@ -88,7 +88,7 @@ describe('tools.rspack', () => {
 describe('bundlerApi', () => {
   it('test modifyBundlerChain and api order', async () => {
     const testPlugin: BuilderPlugin = {
-      name: 'builder-plugin-devtool',
+      name: 'plugin-devtool',
       setup: (api) => {
         api.modifyBundlerChain((chain) => {
           chain.target('node');
@@ -118,7 +118,7 @@ describe('bundlerApi', () => {
 
   it('test modifyBundlerChain rule format correctly', async () => {
     const testPlugin: BuilderPlugin = {
-      name: 'builder-plugin-devtool',
+      name: 'plugin-devtool',
       setup: (api) => {
         api.modifyBundlerChain((chain) => {
           chain.module
@@ -159,7 +159,7 @@ describe('bundlerApi', () => {
 
   it('test modifyBundlerChain use builtinLoader', async () => {
     const testPlugin: BuilderPlugin = {
-      name: 'builder-plugin-test',
+      name: 'plugin-test',
       setup: (api) => {
         api.modifyBundlerChain((chain) => {
           chain.module

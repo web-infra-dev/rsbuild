@@ -16,7 +16,7 @@ export type BuilderConfig<Bundler extends 'rspack' | 'webpack' = 'webpack'> =
   };
 
 export const defineConfig = <Bundler extends 'rspack' | 'webpack' = 'webpack'>(
-  config: BuilderConfig<Bundler>,
+  config?: BuilderConfig<Bundler>,
 ) => config;
 
 export async function loadConfig(): Promise<BuilderConfig> {

@@ -1,8 +1,8 @@
 import { mapValues } from '@modern-js/utils/lodash';
 import type { GlobalVars, DefaultBuilderPlugin } from '@rsbuild/shared';
 
-export const builderPluginDefine = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-define',
+export const pluginDefine = (): DefaultBuilderPlugin => ({
+  name: 'plugin-define',
 
   async setup(api) {
     api.modifyBundlerChain(

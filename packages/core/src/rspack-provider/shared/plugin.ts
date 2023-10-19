@@ -3,16 +3,16 @@ import { awaitableGetter, Plugins } from '@rsbuild/shared';
 
 export const applyDefaultPlugins = (plugins: Plugins) =>
   awaitableGetter<BuilderPlugin>([
-    import('../plugins/transition').then((m) => m.builderPluginTransition()),
-    import('../plugins/basic').then((m) => m.builderPluginBasic()),
+    import('../plugins/transition').then((m) => m.pluginTransition()),
+    import('../plugins/basic').then((m) => m.pluginBasic()),
     plugins.antd(),
     plugins.arco(),
     plugins.entry(),
     // plugins.cache(),
     plugins.target(),
-    import('../plugins/output').then((m) => m.builderPluginOutput()),
+    import('../plugins/output').then((m) => m.pluginOutput()),
     plugins.devtool(),
-    import('../plugins/resolve').then((m) => m.builderPluginResolve()),
+    import('../plugins/resolve').then((m) => m.pluginResolve()),
     plugins.fileSize(),
     // cleanOutput plugin should before the html plugin
     plugins.cleanOutput(),
@@ -26,19 +26,19 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.moment(),
     plugins.nodeAddons(),
     // pug plugin should after html plugin
-    import('../plugins/pug').then((m) => m.builderPluginPug()),
-    import('../plugins/babel').then((m) => m.builderPluginBabel()),
+    import('../plugins/pug').then((m) => m.pluginPug()),
+    import('../plugins/babel').then((m) => m.pluginBabel()),
     plugins.define(),
-    import('../plugins/css').then((m) => m.builderPluginCss()),
-    import('../plugins/less').then((m) => m.builderPluginLess()),
-    import('../plugins/sass').then((m) => m.builderPluginSass()),
-    import('../plugins/minimize').then((m) => m.builderPluginMinimize()),
-    import('../plugins/manifest').then((m) => m.builderPluginManifest()),
+    import('../plugins/css').then((m) => m.pluginCss()),
+    import('../plugins/less').then((m) => m.pluginLess()),
+    import('../plugins/sass').then((m) => m.pluginSass()),
+    import('../plugins/minimize').then((m) => m.pluginMinimize()),
+    import('../plugins/manifest').then((m) => m.pluginManifest()),
     plugins.rem(),
-    import('../plugins/hmr').then((m) => m.builderPluginHMR()),
-    import('../plugins/progress').then((m) => m.builderPluginProgress()),
-    import('../plugins/react').then((m) => m.builderPluginReact()),
-    import('../plugins/swc').then((m) => m.builderPluginSwc()),
+    import('../plugins/hmr').then((m) => m.pluginHMR()),
+    import('../plugins/progress').then((m) => m.pluginProgress()),
+    import('../plugins/react').then((m) => m.pluginReact()),
+    import('../plugins/swc').then((m) => m.pluginSwc()),
     plugins.externals(),
     plugins.toml(),
     plugins.yaml(),
@@ -51,8 +51,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.networkPerformance(),
     plugins.preloadOrPrefetch(),
     plugins.performance(),
-    import('../plugins/rspack-profile').then((m) =>
-      m.builderPluginRspackProfile(),
-    ),
-    import('../plugins/fallback').then((m) => m.builderPluginFallback()), // fallback should be the last plugin
+    import('../plugins/rspack-profile').then((m) => m.pluginRspackProfile()),
+    import('../plugins/fallback').then((m) => m.pluginFallback()), // fallback should be the last plugin
   ]);

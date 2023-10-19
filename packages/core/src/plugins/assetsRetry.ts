@@ -4,9 +4,9 @@ import {
   DefaultBuilderPlugin,
 } from '@rsbuild/shared';
 
-export function builderPluginAssetsRetry(): DefaultBuilderPlugin {
+export function pluginAssetsRetry(): DefaultBuilderPlugin {
   return {
-    name: 'builder-plugin-assets-retry',
+    name: 'plugin-assets-retry',
     setup(api) {
       api.modifyBundlerChain(
         async (chain, { CHAIN_ID, target, HtmlPlugin }) => {

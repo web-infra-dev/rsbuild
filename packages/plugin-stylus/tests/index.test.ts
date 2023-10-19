@@ -1,11 +1,11 @@
 import { expect, describe, it } from 'vitest';
 import { createStubBuilder } from '@rsbuild/webpack/stub';
-import { builderPluginStylus } from '../src';
+import { pluginStylus } from '../src';
 
 describe('plugins/stylus', () => {
   it('should add stylus loader config correctly', async () => {
     const builder = await createStubBuilder({
-      plugins: [builderPluginStylus()],
+      plugins: [pluginStylus()],
     });
     const config = await builder.unwrapWebpackConfig();
 
@@ -15,7 +15,7 @@ describe('plugins/stylus', () => {
   it('should allow to configure stylus options', async () => {
     const builder = await createStubBuilder({
       plugins: [
-        builderPluginStylus({
+        pluginStylus({
           stylusOptions: {
             lineNumbers: false,
           },

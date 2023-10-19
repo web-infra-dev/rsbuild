@@ -2,8 +2,8 @@ import { isPackageInstalled } from '@modern-js/utils';
 import { useSSR } from './antd';
 import type { DefaultBuilderPlugin } from '@rsbuild/shared';
 
-export const builderPluginArco = (): DefaultBuilderPlugin => ({
-  name: `builder-plugin-arco`,
+export const pluginArco = (): DefaultBuilderPlugin => ({
+  name: `plugin-arco`,
 
   setup(api) {
     const ARCO_NAME = '@arco-design/web-react';

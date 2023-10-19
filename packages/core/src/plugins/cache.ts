@@ -92,8 +92,8 @@ async function getBuildDependencies(context: Readonly<BuilderContext>) {
   return buildDependencies;
 }
 
-export const builderPluginCache = (): DefaultBuilderPlugin => ({
-  name: 'builder-plugin-cache',
+export const pluginCache = (): DefaultBuilderPlugin => ({
+  name: 'plugin-cache',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { target, env }) => {

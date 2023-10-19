@@ -1,13 +1,13 @@
 import { expect, describe, it } from 'vitest';
 import { createBuilder } from '../helper';
-import { builderPluginMinimize } from '@/plugins/minimize';
+import { pluginMinimize } from '@/plugins/minimize';
 
 describe('plugins/minimize', () => {
   it('should not apply minimizer in development', async () => {
     process.env.NODE_ENV = 'development';
 
     const builder = await createBuilder({
-      plugins: [builderPluginMinimize()],
+      plugins: [pluginMinimize()],
     });
 
     const {
@@ -24,7 +24,7 @@ describe('plugins/minimize', () => {
     process.env.NODE_ENV = 'production';
 
     const builder = await createBuilder({
-      plugins: [builderPluginMinimize()],
+      plugins: [pluginMinimize()],
     });
 
     const {
@@ -83,7 +83,7 @@ describe('plugins/minimize', () => {
     process.env.NODE_ENV = 'production';
 
     const builder = await createBuilder({
-      plugins: [builderPluginMinimize()],
+      plugins: [pluginMinimize()],
       builderConfig: {
         output: {
           disableMinimize: true,
@@ -104,7 +104,7 @@ describe('plugins/minimize', () => {
     process.env.NODE_ENV = 'production';
 
     const builder = await createBuilder({
-      plugins: [builderPluginMinimize()],
+      plugins: [pluginMinimize()],
       builderConfig: {
         performance: {
           removeConsole: true,
@@ -166,7 +166,7 @@ describe('plugins/minimize', () => {
     process.env.NODE_ENV = 'production';
 
     const builder = await createBuilder({
-      plugins: [builderPluginMinimize()],
+      plugins: [pluginMinimize()],
       builderConfig: {
         performance: {
           removeConsole: ['log', 'warn'],
@@ -231,7 +231,7 @@ describe('plugins/minimize', () => {
     process.env.NODE_ENV = 'production';
 
     const builder = await createBuilder({
-      plugins: [builderPluginMinimize()],
+      plugins: [pluginMinimize()],
       builderConfig: {
         output: {
           charset: 'utf8',
