@@ -14,13 +14,7 @@
 如果项目中没有定义任何 `browserslist` 相关的配置，也没有定义 `overrideBrowserslist`，那么 Rsbuild 会设置默认值为：
 
 ```js
-[
-  'chrome >= 61',
-  'edge >= 16',
-  'firefox >= 60',
-  'safari >= 11',
-  'ios_saf >= 11',
-];
+['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
 ```
 
 ### 示例

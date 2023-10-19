@@ -45,13 +45,7 @@ The Rsbuild will compile the code according to the project's Browserslist config
 Rsbuild's default Browserslist config is:
 
 ```js
-[
-  'chrome >= 61',
-  'edge >= 16',
-  'firefox >= 60',
-  'safari >= 11',
-  'ios_saf >= 11',
-];
+['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
 ```
 
 For example, if you only need to be compatible with browsers above Chrome 100, you can change it to:
