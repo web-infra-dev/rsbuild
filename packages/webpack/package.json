@@ -38,9 +38,9 @@
     "build": "modern build"
   },
   "dependencies": {
-    "@modern-js/utils": "^2.36.0",
-    "@modern-js/server": "^2.36.0",
-    "@modern-js/types": "^2.36.0",
+    "@modern-js/utils": "^2.37.1",
+    "@modern-js/server": "^2.37.1",
+    "@modern-js/types": "^2.37.1",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.10",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/babel-preset": "workspace:*",

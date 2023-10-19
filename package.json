@@ -33,8 +33,8 @@
     ]
   },
   "devDependencies": {
-    "@modern-js/module-tools": "^2.36.0",
-    "@modern-js/monorepo-tools": "2.36.0",
+    "@modern-js/module-tools": "^2.37.1",
+    "@modern-js/monorepo-tools": "^2.37.1",
     "@rsbuild/tsconfig": "workspace:*",
     "@rsbuild/vitest-helper": "workspace:*",
     "vite-tsconfig-paths": "4.2.1",
