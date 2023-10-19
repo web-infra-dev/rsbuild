@@ -9,9 +9,10 @@ import { initConfigs } from './core/initConfigs';
 import { getPluginAPI, createContext } from './core/extends';
 import { applyDefaultPlugins } from './shared/plugin';
 import {
+  bundlerType,
   isSatisfyRspackMinimumVersion,
   supportedRspackMinimumVersion,
-} from './shared/rspackVersion';
+} from './shared';
 import type {
   Compiler,
   RspackConfig,
@@ -33,7 +34,6 @@ export function builderRspackProvider({
   builderConfig: BuilderConfig;
 }): BuilderRspackProvider {
   const builderConfig = pickBuilderConfig(originalBuilderConfig);
-  const bundlerType = 'rspack';
 
   return async ({ pluginStore, builderOptions, plugins }) => {
     if (!(await isSatisfyRspackMinimumVersion())) {

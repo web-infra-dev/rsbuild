@@ -1,16 +1,22 @@
-import { type PluginStore } from '@rsbuild/shared';
-import type { Context, BuilderConfig, BuilderPluginAPI } from '../types';
+import type {
+  PluginStore,
+  CreateBuilderOptions,
+  InspectConfigOptions,
+} from '@rsbuild/shared';
+import type {
+  Context,
+  BuilderConfig,
+  BuilderPluginAPI,
+  RspackConfig,
+} from '../types';
 import { getPluginAPI as getBasePluginAPI } from '../../base/initPlugins';
 import { inspectConfig as inspectBaseConfig } from '../../base/inspectConfig';
-import { type CreateBuilderOptions } from '@rsbuild/shared';
+import { createContext as createBaseContext } from '../../base/createContext';
+import { bundlerType } from '../shared';
 import { initHooks } from './initHooks';
 import { validateBuilderConfig } from '../config/validate';
 import { withDefaultConfig } from '../config/defaults';
-import { createContext as createBaseContext } from '../../base/createContext';
-
 import { initConfigs, InitConfigsOptions } from './initConfigs';
-import { InspectConfigOptions } from '@rsbuild/shared';
-import type { RspackConfig } from '../types';
 
 export async function inspectConfig({
   context,
@@ -35,25 +41,21 @@ export async function inspectConfig({
     bundlerConfigs,
     builderOptions,
     inspectOptions,
-    bundlerType: 'rspack',
+    bundlerType,
   });
 }
 
-/**
- * Generate the actual context used in the build,
- * which can have a lot of overhead and take some side effects.
- */
 export async function createContext(
   options: Required<CreateBuilderOptions>,
   userBuilderConfig: BuilderConfig,
-): Promise<Context> {
+) {
   return createBaseContext<Context>({
     builderOptions: options,
     userBuilderConfig: userBuilderConfig,
     initBuilderConfig: () => withDefaultConfig(userBuilderConfig),
     validateBuilderConfig,
     initHooks,
-    bundlerType: 'rspack',
+    bundlerType,
   });
 }
 

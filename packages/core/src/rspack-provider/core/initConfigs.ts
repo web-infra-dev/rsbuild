@@ -11,6 +11,7 @@ import { inspectConfig } from '../../base/inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
 import { normalizeConfig } from '../config/normalize';
 import type { Context } from '../types';
+import { bundlerType } from '../shared';
 
 async function modifyBuilderConfig(context: Context) {
   debug('modify builder config');
@@ -60,7 +61,7 @@ export async function initConfigs({
         context,
         inspectOptions,
         builderOptions,
-        bundlerType: 'rspack',
+        bundlerType,
         initConfigs: () => Promise.resolve(rspackConfigs),
         bundlerConfigs: rspackConfigs,
       });

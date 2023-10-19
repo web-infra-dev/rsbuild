@@ -7,7 +7,7 @@ import {
   NormalizedSharedOutputConfig,
   SharedBuilderConfig,
   BundlerType,
-  BuilderContext as BaseContext,
+  BuilderContext,
 } from '@rsbuild/shared';
 
 /**
@@ -15,7 +15,7 @@ import {
  * which can have a lot of overhead and take some side effects.
  */
 export async function createContext<
-  Context extends BaseContext & {
+  Context extends BuilderContext & {
     hooks: Hooks;
     config: Config;
     originalConfig: Config;

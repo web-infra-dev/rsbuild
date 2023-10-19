@@ -21,9 +21,7 @@ export function getPluginAPI<
       html: SharedHtmlConfig;
     };
   },
-  PluginHooks extends {
-    [key: string]: unknown;
-  },
+  PluginHooks extends Record<string, unknown>,
 >({
   context,
   pluginStore,
@@ -74,7 +72,6 @@ export function getPluginAPI<
     getBuilderConfig,
     getNormalizedConfig,
     isPluginExists: pluginStore.isPluginExists,
-
     // Hooks
     ...(pluginHooks as PluginHooks),
   };

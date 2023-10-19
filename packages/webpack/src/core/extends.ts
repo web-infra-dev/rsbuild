@@ -1,20 +1,22 @@
-import { type PluginStore } from '@rsbuild/shared';
-import type { Context, BuilderPluginAPI, BuilderConfig } from '../types';
+import type {
+  WebpackConfig,
+  Context,
+  BuilderPluginAPI,
+  BuilderConfig,
+} from '../types';
+import type {
+  CreateBuilderOptions,
+  InspectConfigOptions,
+  PluginStore,
+} from '@rsbuild/shared';
 import { getPluginAPI as getBasePluginAPI } from '@rsbuild/core/base/initPlugins';
 import { inspectConfig as inspectBaseConfig } from '@rsbuild/core/base/inspectConfig';
 import { createContext as createBaseContext } from '@rsbuild/core/base/createContext';
 import { initConfigs, InitConfigsOptions } from './initConfigs';
-import { InspectConfigOptions } from '@rsbuild/shared';
-import type { WebpackConfig } from '../types';
-import { type CreateBuilderOptions } from '@rsbuild/shared';
 import { initHooks } from './initHooks';
 import { validateBuilderConfig } from '../config/validate';
 import { withDefaultConfig } from '../config/defaults';
 
-/**
- * Generate the actual context used in the build,
- * which can have a lot of overhead and take some side effects.
- */
 export async function createContext(
   options: Required<CreateBuilderOptions>,
   builderConfig: BuilderConfig,
