@@ -153,14 +153,13 @@ export async function outputInspectConfigFiles({
   };
   builderOptions: Required<CreateBuilderOptions>;
 }) {
-  const { nanoid } = await import('@modern-js/utils');
   const { outputPath } = inspectOptions;
 
   const { target } = builderOptions;
   const files = [
     {
-      path: join(outputPath, 'builder.config.js'),
-      label: 'Builder Config',
+      path: join(outputPath, 'rsbuild.config.js'),
+      label: 'Rsbuild Config',
       content: builderConfig,
     },
     ...bundlerConfigs.map((content, index) => {
@@ -170,7 +169,7 @@ export async function outputInspectConfigFiles({
 
       // if filename is conflict, add a random id to the filename.
       if (fs.existsSync(outputFilePath)) {
-        outputFilePath = outputFilePath.replace(/\.js$/, `.${nanoid(4)}.js`);
+        outputFilePath = outputFilePath.replace(/\.js$/, `.${Date.now()}.js`);
       }
 
       return {
