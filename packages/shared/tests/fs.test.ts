@@ -61,7 +61,7 @@ describe('getHTMLPathByEntry', () => {
         },
       } as NormalizedSharedOutputConfig,
       html: {
-        disableHtmlFolder: false,
+        outputStructure: 'nested',
       },
     });
 
@@ -76,7 +76,7 @@ describe('getHTMLPathByEntry', () => {
         },
       } as NormalizedSharedOutputConfig,
       html: {
-        disableHtmlFolder: true,
+        outputStructure: 'flat',
       },
     });
 

@@ -7,6 +7,8 @@ export type ScriptInject = boolean | 'body' | 'head';
 
 export type ScriptLoading = 'defer' | 'module' | 'blocking';
 
+export type OutputStructure = 'flat' | 'nested';
+
 export interface HtmlInjectTag {
   tag: string;
   attrs?: Record<string, string | boolean | null | undefined>;
@@ -95,10 +97,9 @@ export interface SharedHtmlConfig {
    */
   crossorigin?: boolean | CrossOrigin;
   /**
-   * Remove the folder of the HTML files.
-   * When this option is enabled, the generated HTML file path will change from `[name]/index.html` to `[name].html`.
+   * Define the directory structure of the HTML output files.
    */
-  disableHtmlFolder?: boolean;
+  outputStructure?: OutputStructure;
   /**
    * Define the path to the HTML template,
    * corresponding to the `template` config of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
@@ -134,6 +135,6 @@ export type NormalizedSharedHtmlConfig = SharedHtmlConfig & {
   mountId: string;
   inject: ScriptInject;
   crossorigin: boolean | CrossOrigin;
-  disableHtmlFolder: boolean;
+  outputStructure: OutputStructure;
   scriptLoading: ScriptLoading;
 };
