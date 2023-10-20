@@ -1,7 +1,7 @@
 import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/webpack/stub';
 import { pluginSwc } from '../src';
-import { pluginBabel } from '@rsbuild/webpack/plugins/babel';
+import { pluginBabel } from '@rsbuild/webpack/plugin-babel';
 import { applyPluginConfig } from '../src/utils';
 import type {
   ModifyWebpackChainUtils,

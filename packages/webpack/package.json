@@ -21,15 +21,22 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./plugins/*": {
-      "types": "./dist/plugins/*.d.ts",
-      "default": "./dist/plugins/*.js"
+    "./plugin-css": {
+      "types": "./dist/plugins/css.d.ts",
+      "default": "./dist/plugins/css.js"
+    },
+    "./plugin-babel": {
+      "types": "./dist/plugins/babel.d.ts",
+      "default": "./dist/plugins/babel.js"
     }
   },
   "typesVersions": {
     "*": {
-      "plugins/*": [
-        "./dist/plugins/*.d.ts"
+      "plugin-babel": [
+        "./dist/plugins/babel.d.ts"
+      ],
+      "plugin-css": [
+        "./dist/plugins/css.d.ts"
       ]
     }
   },
