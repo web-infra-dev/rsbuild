@@ -11,9 +11,9 @@
   "version": "0.0.7",
   "types": "./src/index.ts",
   "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
@@ -45,7 +45,6 @@
       "optional": true
     }
   },
-  "sideEffects": false,
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",

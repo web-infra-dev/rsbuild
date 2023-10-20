@@ -159,7 +159,7 @@
   },
   "scripts": {
     "dev": "modern build --watch",
-    "build": "modern build",
+    "build": "modern build && node scripts/postCompile.js",
     "test": "vitest run",
     "test:watch": "vitest dev --no-coverage",
     "test:ui": "vitest --ui"
@@ -190,6 +190,9 @@
     "zod-validation-error": "1.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
+    "@babel/preset-typescript": "^7.23.2",
     "@types/caniuse-lite": "^1.0.1",
     "@types/node": "^16",
     "html-webpack-plugin": "5.5.3",
