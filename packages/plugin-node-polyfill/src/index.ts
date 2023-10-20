@@ -56,30 +56,14 @@ export function pluginNodePolyfill(): RsbuildPlugin<
         chain.resolve.fallback.merge(getResolveFallback(nodeLibs));
       });
 
-      if (api.context.bundlerType === 'rspack') {
-        (api as RspackRsbuildPluginAPI).modifyRspackConfig(
-          async (config, { isServer }) => {
-            if (isServer) {
-              return;
-            }
-            setConfig(config, 'builtins.provide', {
-              ...(config.builtins?.provide ?? {}),
-              ...(await getProvideLibs()),
-            });
-          },
-        );
-      } else {
-        (api as WebpackRsbuildPluginAPI).modifyWebpackChain(
-          async (chain, { CHAIN_ID, isServer, webpack }) => {
-            if (isServer) {
-              return;
-            }
-            chain
-              .plugin(CHAIN_ID.PLUGIN.NODE_POLYFILL_PROVIDE)
-              .use(webpack.ProvidePlugin, [await getProvideLibs()]);
-          },
-        );
-      }
+      api.modifyBundlerChain(async (chain, { CHAIN_ID, isServer, bundler }) => {
+        if (isServer) {
+          return;
+        }
+        chain
+          .plugin(CHAIN_ID.PLUGIN.NODE_POLYFILL_PROVIDE)
+          .use(bundler.ProvidePlugin, [await getProvideLibs()]);
+      });
     },
   };
 }

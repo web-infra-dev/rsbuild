@@ -2,17 +2,20 @@
 
 exports[`plugins/node-polyfill > should add node-polyfill config 1`] = `
 {
-  "builtins": {
-    "provide": {
-      "Buffer": [
-        "<ROOT>/node_modules/<PNPM_INNER>/buffer/index.js",
-        "Buffer",
-      ],
-      "process": [
-        "<ROOT>/node_modules/<PNPM_INNER>/process/browser.js",
-      ],
+  "plugins": [
+    Plugin {
+      "_options": {
+        "Buffer": [
+          "<ROOT>/node_modules/<PNPM_INNER>/buffer/index.js",
+          "Buffer",
+        ],
+        "process": [
+          "<ROOT>/node_modules/<PNPM_INNER>/process/browser.js",
+        ],
+      },
+      "name": "ProvidePlugin",
     },
-  },
+  ],
   "resolve": {
     "fallback": {
       "_stream_duplex": "<ROOT>/node_modules/<PNPM_INNER>/readable-stream/duplex.js",
