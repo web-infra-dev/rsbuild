@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { createStubRsbuild } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import { RsbuildPlugin } from '@/types';
 import { BUILTIN_LOADER } from '@/shared';
 

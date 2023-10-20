@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { RsbuildTarget } from '@rsbuild/shared';
 import { pluginEntry } from '@src/plugins/entry';
-import { createStubRsbuild } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginSwc } from '@/plugins/swc';
 import { RsbuildConfig } from '@/types';
 import { pluginAntd } from '@src/plugins/antd';

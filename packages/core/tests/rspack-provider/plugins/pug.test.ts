@@ -1,7 +1,7 @@
 import { expect, describe, it } from 'vitest';
 import { pluginEntry } from '@src/plugins/entry';
 import { pluginHtml } from '@src/plugins/html';
-import { createStubRsbuild } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginPug } from '@/plugins/pug';
 
 describe('plugins/pug', () => {

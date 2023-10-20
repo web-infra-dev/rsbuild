@@ -1,5 +1,5 @@
 import { it, expect, describe } from 'vitest';
-import { createStubRsbuild } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import { webpackProvider } from '@rsbuild/webpack';
 import { pluginAsset } from '@rsbuild/core/plugins/asset';
 import { pluginImageCompress } from '../src';

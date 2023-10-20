@@ -6,7 +6,7 @@
     "paths": {
       "@src/*": ["../src/*"],
       "@/*": ["../src/rspack-provider/*"],
-      "@rsbuild/vitest-helper": ["../../vitest-helper/*"]
+      "@rsbuild/test-helper": ["../../vitest-helper/*"]
     }
   },
   "include": ["./**/*.ts"]

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { pluginRem } from '@src/plugins/rem';
-import { createStubRsbuild, matchPlugin } from '@rsbuild/vitest-helper';
+import { createStubRsbuild, matchPlugin } from '@rsbuild/test-helper';
 import { pluginCss } from '@/plugins/css';
 import { pluginLess } from '@/plugins/less';
 import { pluginSass } from '@/plugins/sass';
