@@ -19,7 +19,10 @@ export default defineWorkspace([
       restoreMocks: true,
       include: ['packages/**/*.test.ts'],
       // TODO fix test cases of plugins
-      exclude: ['packages/plugin-*/**/*.test.ts', '**/node_modules/**'],
+      exclude: [
+        'packages/plugin-{swc,stylus,esbuild,image-compress}/**/*.test.ts',
+        '**/node_modules/**',
+      ],
       setupFiles: ['./scripts/vitest.setup.ts'],
     },
   },

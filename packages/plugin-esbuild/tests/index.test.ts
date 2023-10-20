@@ -1,5 +1,6 @@
 import { expect, describe, it } from 'vitest';
-import { createStubRsbuild } from '@rsbuild/webpack/stub';
+import { createStubRsbuild } from '@rsbuild/vitest-helper';
+import { webpackProvider } from '@rsbuild/webpack';
 import { pluginEsbuild } from '../src';
 
 describe('plugins/esbuild', () => {
@@ -7,8 +8,9 @@ describe('plugins/esbuild', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEsbuild()],
       rsbuildConfig: {},
+      provider: webpackProvider,
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -18,8 +20,9 @@ describe('plugins/esbuild', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEsbuild()],
       rsbuildConfig: {},
+      provider: webpackProvider,
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
@@ -31,8 +34,9 @@ describe('plugins/esbuild', () => {
       plugins: [pluginEsbuild()],
       rsbuildConfig: {},
       target: 'node',
+      provider: webpackProvider,
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';

@@ -30,6 +30,8 @@
     "svgo": "^3.0.2"
   },
   "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/vitest-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@types/node": "^16",
     "typescript": "^5",

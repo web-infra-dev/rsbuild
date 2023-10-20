@@ -96,7 +96,9 @@ export async function createStubRsbuild<
     | 'removePlugins'
     | 'isPluginExists'
     | 'initConfigs'
-  >
+  > & {
+    unwrapConfig: () => Promise<Record<string, any>>;
+  }
 > {
   const { pick, createPluginStore, applyDefaultRsbuildOptions } = await import(
     '@rsbuild/shared'
@@ -128,6 +130,11 @@ export async function createStubRsbuild<
     await applyDefaultPlugins(pluginStore);
   }
 
+  const unwrapConfig = async () => {
+    const configs = await initConfigs();
+    return configs[0];
+  };
+
   return {
     ...pick(pluginStore, ['addPlugins', 'removePlugins', 'isPluginExists']),
     build,
@@ -136,5 +143,6 @@ export async function createStubRsbuild<
     startDevServer,
     context: publicContext,
     initConfigs,
+    unwrapConfig,
   };
 }

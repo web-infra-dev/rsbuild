@@ -18,8 +18,7 @@
     }
   },
   "files": [
-    "dist",
-    "compiled"
+    "dist"
   ],
   "scripts": {
     "dev": "modern build --watch",
@@ -27,11 +26,13 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "esbuild": "0.17.19"
+    "esbuild": "0.17.19",
+    "esbuild-loader": "2.21.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
+    "@rsbuild/vitest-helper": "workspace:*",
     "@modern-js/utils": "^2.37.1",
     "typescript": "^5"
   },
