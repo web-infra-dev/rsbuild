@@ -78,6 +78,9 @@ importers:
       '@rsbuild/plugin-vue':
         specifier: workspace:*
         version: link:../packages/plugin-vue
+      '@rsbuild/plugin-vue-jsx':
+        specifier: workspace:*
+        version: link:../packages/plugin-vue-jsx
       '@rsbuild/plugin-vue2':
         specifier: workspace:*
         version: link:../packages/plugin-vue2
@@ -553,12 +556,28 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
-      '@vue/babel-plugin-jsx':
-        specifier: 1.1.1
-        version: 1.1.1(@babel/core@7.23.2)
       vue-loader:
         specifier: ^17.2.2
         version: 17.3.0(webpack@5.89.0)
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+      webpack:
+        specifier: ^5.88.1
+        version: 5.89.0
+
+  packages/plugin-vue-jsx:
+    dependencies:
+      '@vue/babel-plugin-jsx':
+        specifier: 1.1.1
+        version: 1.1.1(@babel/core@7.23.2)
     devDependencies:
       '@babel/core':
         specifier: ^7.23.2
@@ -575,9 +594,6 @@ importers:
       typescript:
         specifier: ^5
         version: 5.2.2
-      webpack:
-        specifier: ^5.88.1
-        version: 5.89.0
 
   packages/plugin-vue2:
     dependencies:
