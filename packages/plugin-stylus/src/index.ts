@@ -46,7 +46,9 @@ export function pluginStylus(
           .test(STYLUS_REGEX);
 
         const { applyBaseCSSRule } = await import(
-          bundlerType === 'webpack' ? '@rsbuild/webpack' : '@rsbuild/core'
+          bundlerType === 'webpack'
+            ? '@rsbuild/webpack/plugin-css'
+            : '@rsbuild/core/rspack-plugin-css'
         );
         await applyBaseCSSRule({
           rule,
@@ -65,7 +67,7 @@ export function pluginStylus(
       bundlerType === 'rspack' &&
         (api as any).modifyRspackConfig(async (rspackConfig: any) => {
           const { applyCSSModuleRule } = await import(
-            '@rsbuild/core/rspack-css-plugin'
+            '@rsbuild/core/rspack-plugin-css'
           );
 
           const config = api.getNormalizedConfig();
