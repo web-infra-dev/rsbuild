@@ -7,7 +7,7 @@ import {
   createStubRsbuild as createBaseRsbuild,
   matchLoader,
   matchPlugin,
-} from '@rsbuild/vitest-helper';
+} from '@rsbuild/test-helper';
 
 export const fixturesDir = join(__dirname, 'fixtures');
 

@@ -71,7 +71,7 @@
     "webpack-subresource-integrity": "5.1.0"
   },
   "devDependencies": {
-    "@rsbuild/vitest-helper": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
     "@types/node": "^16",
     "typescript": "^5",
     "antd": "4",

@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { createStubRsbuild } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginFallback } from '@/plugins/fallback';
 import { RsbuildPlugin } from '@/types';
 

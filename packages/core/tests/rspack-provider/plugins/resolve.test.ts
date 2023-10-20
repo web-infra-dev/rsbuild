@@ -1,7 +1,7 @@
 import { expect, describe, it, vi, SpyInstance } from 'vitest';
 import { isFileExists } from '@rsbuild/shared';
 import { pluginResolve } from '@/plugins/resolve';
-import { createStubRsbuild } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import { rspackProvider } from '@/index';
 
 // vitest doesn't support mock require(), to avoid load @rsbuild/shared by require, we should pass rspackProvider as param

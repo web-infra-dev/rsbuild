@@ -33,7 +33,7 @@
     "@babel/core": "^7.23.2",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@rsbuild/vitest-helper": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
     "typescript": "^5",
     "webpack": "^5.88.1"
   },

@@ -14,12 +14,12 @@ importers:
       '@modern-js/monorepo-tools':
         specifier: ^2.37.1
         version: 2.37.1(typescript@5.2.2)
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:packages/test-helper
       '@rsbuild/tsconfig':
         specifier: workspace:*
         version: link:scripts/tsconfig
-      '@rsbuild/vitest-helper':
-        specifier: workspace:*
-        version: link:packages/vitest-helper
       husky:
         specifier: ^8.0.3
         version: 8.0.3
@@ -380,9 +380,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rsbuild/vitest-helper':
+      '@rsbuild/test-helper':
         specifier: workspace:*
-        version: link:../vitest-helper
+        version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
@@ -405,9 +405,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rsbuild/vitest-helper':
+      '@rsbuild/test-helper':
         specifier: workspace:*
-        version: link:../vitest-helper
+        version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
@@ -461,9 +461,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rsbuild/vitest-helper':
+      '@rsbuild/test-helper':
         specifier: workspace:*
-        version: link:../vitest-helper
+        version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
@@ -560,9 +560,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rsbuild/vitest-helper':
+      '@rsbuild/test-helper':
         specifier: workspace:*
-        version: link:../vitest-helper
+        version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
@@ -591,9 +591,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rsbuild/vitest-helper':
+      '@rsbuild/test-helper':
         specifier: workspace:*
-        version: link:../vitest-helper
+        version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
@@ -704,7 +704,7 @@ importers:
         specifier: ^5
         version: 5.2.2
 
-  packages/vitest-helper:
+  packages/test-helper:
     dependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -791,9 +791,9 @@ importers:
         specifier: 5.1.0
         version: 5.1.0(html-webpack-plugin@5.5.3)(webpack@5.89.0)
     devDependencies:
-      '@rsbuild/vitest-helper':
+      '@rsbuild/test-helper':
         specifier: workspace:*
-        version: link:../vitest-helper
+        version: link:../test-helper
       '@types/node':
         specifier: ^16
         version: 16.18.59
