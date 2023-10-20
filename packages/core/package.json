@@ -50,7 +50,7 @@
       "plugins/*": [
         "./dist/plugins/*.d.ts"
       ],
-      "/rspack-plugin-css": [
+      "rspack-plugin-css": [
         "./dist/rspack-provider/plugins/css.d.ts"
       ],
       "rspack-provider": [
