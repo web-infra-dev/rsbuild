@@ -15,6 +15,7 @@
   },
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./loader": {
@@ -48,10 +49,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.22.15",
-    "@babel/preset-env": "^7.22.15",
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
     "@babel/preset-react": "^7.22.15",
-    "@babel/preset-typescript": "^7.22.15",
+    "@babel/preset-typescript": "^7.23.2",
     "@modern-js/swc-plugins": "0.6.4",
     "@modern-js/utils": "^2.37.1",
     "@rsbuild/shared": "workspace:*",

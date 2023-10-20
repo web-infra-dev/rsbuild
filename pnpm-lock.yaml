@@ -124,20 +124,6 @@ importers:
         specifier: ^5
         version: 5.2.2
 
-  e2e/cases/builder-cli/builder-cli-rspack:
-    devDependencies:
-      typescript:
-        specifier: ^5
-        version: 5.2.2
-
-  e2e/cases/builder-cli/builder-cli-vue:
-    devDependencies:
-      vue:
-        specifier: ^3.3.4
-        version: 3.3.4
-
-  e2e/cases/builder-cli/builder-cli-webpack: {}
-
   e2e/cases/import-antd-v4:
     dependencies:
       antd:
@@ -232,10 +218,10 @@ importers:
   packages/babel-preset:
     dependencies:
       '@babel/core':
-        specifier: ^7.23.0
+        specifier: ^7.23.2
         version: 7.23.2
       '@babel/plugin-proposal-decorators':
-        specifier: ^7.23.0
+        specifier: ^7.23.2
         version: 7.23.2(@babel/core@7.23.2)
       '@babel/plugin-proposal-export-default-from':
         specifier: ^7.22.17
@@ -247,16 +233,16 @@ importers:
         specifier: ^7.22.15
         version: 7.22.15(@babel/core@7.23.2)
       '@babel/plugin-transform-runtime':
-        specifier: ^7.22.15
+        specifier: ^7.23.2
         version: 7.23.2(@babel/core@7.23.2)
       '@babel/preset-env':
-        specifier: ^7.22.20
+        specifier: ^7.23.2
         version: 7.23.2(@babel/core@7.23.2)
       '@babel/preset-typescript':
-        specifier: ^7.23.0
+        specifier: ^7.23.2
         version: 7.23.2(@babel/core@7.23.2)
       '@babel/runtime':
-        specifier: ^7.23.1
+        specifier: ^7.23.2
         version: 7.23.2
       '@babel/types':
         specifier: ^7.23.0
@@ -265,7 +251,7 @@ importers:
         specifier: workspace:*
         version: link:../shared
       '@types/babel__core':
-        specifier: ^7.20.2
+        specifier: ^7.20.3
         version: 7.20.3
       babel-plugin-dynamic-import-node:
         specifier: 2.3.3
@@ -479,16 +465,16 @@ importers:
   packages/plugin-swc:
     dependencies:
       '@babel/core':
-        specifier: ^7.22.15
+        specifier: ^7.23.2
         version: 7.23.2
       '@babel/preset-env':
-        specifier: ^7.22.15
+        specifier: ^7.23.2
         version: 7.23.2(@babel/core@7.23.2)
       '@babel/preset-react':
         specifier: ^7.22.15
         version: 7.22.15(@babel/core@7.23.2)
       '@babel/preset-typescript':
-        specifier: ^7.22.15
+        specifier: ^7.23.2
         version: 7.23.2(@babel/core@7.23.2)
       '@modern-js/swc-plugins':
         specifier: 0.6.4
@@ -557,7 +543,7 @@ importers:
         version: 17.3.0(webpack@5.89.0)
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.15
+        specifier: ^7.23.2
         version: 7.23.2
       '@rsbuild/core':
         specifier: workspace:*
@@ -585,7 +571,7 @@ importers:
         version: 15.11.1(css-loader@6.8.1)(prettier@3.0.3)(webpack@5.89.0)
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.15
+        specifier: ^7.23.2
         version: 7.23.2
       '@rsbuild/core':
         specifier: workspace:*
@@ -672,6 +658,15 @@ importers:
         specifier: 1.2.0
         version: 1.2.0(zod@3.22.4)
     devDependencies:
+      '@babel/core':
+        specifier: ^7.23.2
+        version: 7.23.2
+      '@babel/preset-env':
+        specifier: ^7.23.2
+        version: 7.23.2(@babel/core@7.23.2)
+      '@babel/preset-typescript':
+        specifier: ^7.23.2
+        version: 7.23.2(@babel/core@7.23.2)
       '@types/caniuse-lite':
         specifier: ^1.0.1
         version: 1.0.3
@@ -5386,12 +5381,14 @@ packages:
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
       source-map-js: 1.0.2
+    dev: false
 
   /@vue/compiler-dom@3.3.4:
     resolution: {integrity: sha512-wyM+OjOVpuUukIq6p5+nwHYtj9cFroz9cwkfmP9O1nzH68BenTTv0u7/ndggT8cIQlnBeOo6sUT/gvHcIkLA5w==}
     dependencies:
       '@vue/compiler-core': 3.3.4
       '@vue/shared': 3.3.4
+    dev: false
 
   /@vue/compiler-sfc@2.7.14:
     resolution: {integrity: sha512-aNmNHyLPsw+sVvlQFQ2/8sjNuLtK54TC6cuKnVzAY93ks4ZBrvwQSnkkIh7bsbNhum5hJBS00wSDipQ937f5DA==}
@@ -5414,12 +5411,14 @@ packages:
       magic-string: 0.30.5
       postcss: 8.4.31
       source-map-js: 1.0.2
+    dev: false
 
   /@vue/compiler-ssr@3.3.4:
     resolution: {integrity: sha512-m0v6oKpup2nMSehwA6Uuu+j+wEwcy7QmwMkVNVfrV9P2qE5KshC6RwOCq8fjGS/Eak/uNb8AaWekfiXxbBB6gQ==}
     dependencies:
       '@vue/compiler-dom': 3.3.4
       '@vue/shared': 3.3.4
+    dev: false
 
   /@vue/component-compiler-utils@3.3.0:
     resolution: {integrity: sha512-97sfH2mYNU+2PzGrmK2haqffDpVASuib9/w2/noxiFi31Z54hW+q3izKQXXQZSNhtiUpAI36uSuYepeBe4wpHQ==}
@@ -5498,17 +5497,20 @@ packages:
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
       magic-string: 0.30.5
+    dev: false
 
   /@vue/reactivity@3.3.4:
     resolution: {integrity: sha512-kLTDLwd0B1jG08NBF3R5rqULtv/f8x3rOFByTDz4J53ttIQEDmALqKqXY0J+XQeN0aV2FBxY8nJDf88yvOPAqQ==}
     dependencies:
       '@vue/shared': 3.3.4
+    dev: false
 
   /@vue/runtime-core@3.3.4:
     resolution: {integrity: sha512-R+bqxMN6pWO7zGI4OMlmvePOdP2c93GsHFM/siJI7O2nxFRzj55pLwkpCedEY+bTMgp5miZ8CxfIZo3S+gFqvA==}
     dependencies:
       '@vue/reactivity': 3.3.4
       '@vue/shared': 3.3.4
+    dev: false
 
   /@vue/runtime-dom@3.3.4:
     resolution: {integrity: sha512-Aj5bTJ3u5sFsUckRghsNjVTtxZQ1OyMWCr5dZRAPijF/0Vy4xEoRCwLyHXcj4D0UFbJ4lbx3gPTgg06K/GnPnQ==}
@@ -5516,6 +5518,7 @@ packages:
       '@vue/runtime-core': 3.3.4
       '@vue/shared': 3.3.4
       csstype: 3.1.2
+    dev: false
 
   /@vue/server-renderer@3.3.4(vue@3.3.4):
     resolution: {integrity: sha512-Q6jDDzR23ViIb67v+vM1Dqntu+HUexQcsWKhhQa4ARVzxOY2HbC7QRW/ggkDBd5BU+uM1sV6XOAP0b216o34JQ==}
@@ -5525,9 +5528,11 @@ packages:
       '@vue/compiler-ssr': 3.3.4
       '@vue/shared': 3.3.4
       vue: 3.3.4
+    dev: false
 
   /@vue/shared@3.3.4:
     resolution: {integrity: sha512-7OjdcV8vQ74eiz1TZLzZP4JwqM5fA94K6yntPS5Z25r9HDuGNzaGdgvwKYq6S+MxwF0TFRwe50fIR/MYnakdkQ==}
+    dev: false
 
   /@webassemblyjs/ast@1.11.6:
     resolution: {integrity: sha512-IN1xI7PwOvLPgjcf180gC1bqn3q/QaOCwYUahIOhbYUu8KA/3tw2RT/T0Gidi1l7Hhj5D/INhJxiICObqpMu4Q==}
@@ -14352,6 +14357,7 @@ packages:
       '@vue/runtime-dom': 3.3.4
       '@vue/server-renderer': 3.3.4(vue@3.3.4)
       '@vue/shared': 3.3.4
+    dev: false
 
   /w3c-xmlserializer@4.0.0:
     resolution: {integrity: sha512-d+BFHzbiCx6zGfz0HyQ6Rg69w9k19nviJspaj4yNscGjrHu94sVP+aRm75yEbCh+r2/yR+7q6hux9LVtbuTGBw==}
