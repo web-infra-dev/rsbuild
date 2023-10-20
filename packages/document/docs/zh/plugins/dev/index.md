@@ -175,26 +175,24 @@ export const pluginAdminPanel = (): RsbuildPlugin => ({
 });
 ```
 
-### 接入 webpack 插件
+### 注册 Rspack 或 Webpack 插件
 
-开发者可以在 Rsbuild 插件中接入已有的 webpack 插件来平缓迁移项目：
+你可以在 Rsbuild 插件中注册 Rspack 或 Webpack 插件，比如注册 `eslint-webpack-plugin`：
 
 ```ts
-import type { RsbuildPlugin } from '@rsbuild/webpack';
-import type { Options } from '@modern-js/inspector-webpack-plugin';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import ESLintPlugin from 'eslint-webpack-plugin';
 
-export const pluginInspector = (options?: Options): RsbuildPlugin => ({
-  name: 'plugin-inspector',
+export const pluginEslint = (options?: Options): RsbuildPlugin => ({
+  name: 'plugin-eslint',
   setup(api) {
-    api.modifyWebpackChain(async (chain) => {
-      // 仅在需要的时候动态加载模块，避免不必要的性能消耗
-      const { InspectorWebpackPlugin } = await import(
-        '@modern-js/inspector-webpack-plugin'
-      );
-      // 修改 webpack chain 接入插件
-      chain
-        .plugin('inspector-webpack-plugin')
-        .use(InspectorWebpackPlugin, [inspectorOptions]);
+    // Use bundler-chain to register a bundler plugin.
+    api.modifyBundlerChain(async (chain) => {
+      chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [
+        {
+          // plugins options
+        },
+      ]);
     });
   },
 });
