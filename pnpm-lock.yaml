@@ -323,9 +323,6 @@ importers:
         specifier: ^5.88.1
         version: 5.89.0
     devDependencies:
-      '@rsbuild/vitest-helper':
-        specifier: workspace:*
-        version: link:../vitest-helper
       '@types/node':
         specifier: ^16
         version: 16.18.59
