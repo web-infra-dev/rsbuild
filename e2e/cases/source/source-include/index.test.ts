@@ -15,6 +15,9 @@ webpackOnlyTest(
           security: {
             checkSyntax: true,
           },
+          output: {
+            overrideBrowserslist: ['ie 11'],
+          },
         },
       }),
     ).rejects.toThrowError('[Syntax Checker]');

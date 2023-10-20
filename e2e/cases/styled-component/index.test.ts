@@ -5,7 +5,7 @@ import { expect } from '@playwright/test';
 
 const commonConfig = {
   cwd: __dirname,
-  entry: { index: path.resolve(__dirname, './src/main.ts') },
+  entry: { index: path.resolve(__dirname, './src/main.js') },
   rsbuildConfig: {
     tools: {
       bundlerChain: (chain: any) => {
@@ -36,7 +36,7 @@ webpackOnlyTest('should allow to disable styled-components', async () => {
 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.js'))!];
-  expect(content).toContain('div(');
+  expect(content).toContain('div`');
 });
 
 // TODO: needs builtin:swc-loader

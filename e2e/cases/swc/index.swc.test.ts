@@ -24,7 +24,7 @@ test('should run SWC compilation correctly', async ({ page }) => {
     school: 'yyy',
   });
 
-  await rsbuild.close();
+  rsbuild.close();
 });
 
 test('should optimize lodash bundle size', async ({ page }) => {
@@ -55,7 +55,7 @@ test('should optimize lodash bundle size', async ({ page }) => {
 
   expect(bundleSize < 10).toBeTruthy();
 
-  await rsbuild.close();
+  rsbuild.close();
 });
 
 test('should use define for class', async () => {
@@ -86,6 +86,7 @@ test('should use define for class', async () => {
     rsbuildConfig: {
       output: {
         disableMinimize: true,
+        overrideBrowserslist: ['ie 11'],
       },
     },
     runServer: true,
@@ -101,7 +102,7 @@ test('should use define for class', async () => {
     file.includes('_define_property(_assert_this_initialized(_this), "id", 1)'),
   ).toBe(true);
 
-  await rsbuild.close();
+  rsbuild.close();
 });
 
 test('core-js-entry', async () => {
@@ -126,7 +127,7 @@ test('core-js-entry', async () => {
     runServer: true,
   });
 
-  await rsbuild.close();
+  rsbuild.close();
 });
 
 test('core-js-usage', async () => {
@@ -151,5 +152,5 @@ test('core-js-usage', async () => {
     runServer: true,
   });
 
-  await rsbuild.close();
+  rsbuild.close();
 });

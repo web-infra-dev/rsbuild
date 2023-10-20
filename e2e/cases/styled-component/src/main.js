@@ -4,4 +4,4 @@ const div = styled.div`
   color: red;
 `;
 
-console.log(div);
+console.log('fofofofo', div);

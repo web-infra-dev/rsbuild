@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createStubRsbuild } from '@rsbuild/vitest-helper';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginBabel } from '@/plugins/babel';
 
 describe('plugins/babel', () => {
