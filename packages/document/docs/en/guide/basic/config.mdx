@@ -13,6 +13,7 @@ Rsbuild Configs are divided into the following categories:
 - [Output](/config/options/output.html): Config related to output.
 - [Security](/config/options/security.html): Config related to security.
 - [Performance](/config/options/performance.html): Config related to performance.
+- [Experiments](/config/options/experiments.html): Config in experimental stage.
 
 You can find detailed descriptions of all configs on the [Config](/config/) page.
 
@@ -56,12 +57,6 @@ const provider = webpackProvider({
 
 Please refer to [API - createRsbuild](/api/javascript-api/core.html#creatersbuild) for details.
 
-## Relationship with Framework Config
-
-Generally speaking, the Rsbuild config is a subset of the framework config.
-
-**Rsbuild config only deals with build-related behaviors**, while framework config covers a wider range, including runtime, server, deployment, etc., so framework config is extended from Rsbuild config.
-
 ## Debug the config
 
 You can enable Rsbuild's debug mode by adding the `DEBUG=rsbuild` environment variable when executing a build.
@@ -76,7 +71,7 @@ In debug mode, Rsbuild will write the Rsbuild config to the dist directory, whic
 Inspect config succeed, open the following files to view the content:
 
    - Rsbuild Config: /Project/demo/dist/rsbuild.config.js
-   - Webpack Config (web): /Project/demo/dist/webpack.config.web.js
+   - Rspack Config (web): /Project/demo/dist/rspack.config.web.js
 ```
 
 Open the generated `/dist/rsbuild.config.js` file to see the complete content of the Rsbuild config.

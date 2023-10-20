@@ -33,7 +33,7 @@ In addition, the following logs will be output in the Shell, indicating that the
 Inspect config succeeds, open following files to view the content:
 
    - Rsbuild Config: /Project/demo/dist/rsbuild.config.js
-   - Webpack Config (web): /Project/demo/dist/webpack.config.web.js
+   - Rspack Config (web): /Project/demo/dist/rspack.config.web.js
 ```
 
 ## Rsbuild Config File
@@ -55,6 +55,29 @@ module.exports = {
 ```
 
 For a complete introduction to Rsbuild config, please see the [Rsbuild Config](/guide/basic/config.html) chapter.
+
+## Rspack Config File
+
+If the current project is built using Rspack, then in debug mode, Rsbuild will also automatically generate `dist/rspack.config.web.js` file, which contains the final generated Rspack config. In this file, you can see what is included in the config that Rsbuild finally passes to Rspack.
+
+The structure of the file is as follows:
+
+```js
+module.exports = {
+  resolve: {
+    // some resolve configs...
+  },
+  module: {
+    // some Rspack loaders...
+  },
+  plugins: [
+    // some Rspack plugins...
+  ],
+  // other configs...
+};
+```
+
+For a complete introduction to Rspack configs, please see [Rspack official documentation](https://rspack.dev/config/).
 
 ## Webpack Config File
 
@@ -80,26 +103,3 @@ module.exports = {
 In addition, if the project configures additional build targets, such as enabling the SSR capability of the framework (corresponding to additional Node.js build target), an additional `webpack.config.node.js` file will be generated in the `dist` directory, corresponding to the webpack config for SSR bundles.
 
 For a complete introduction to webpack configs, please see [webpack official documentation](https://webpack.js.org/concepts/config/).
-
-## Rspack Config File
-
-If the current project is built using Rspack, then in debug mode, Rsbuild will also automatically generate `dist/rspack.config.web.js` file, which contains the final generated Rspack config. In this file, you can see what is included in the config that Rsbuild finally passes to Rspack.
-
-The structure of the file is as follows:
-
-```js
-module.exports = {
-  resolve: {
-    // some resolve configs...
-  },
-  module: {
-    // some Rspack loaders...
-  },
-  plugins: [
-    // some Rspack plugins...
-  ],
-  // other configs...
-};
-```
-
-For a complete introduction to Rspack configs, please see [Rspack official documentation](https://rspack.dev/config/).
