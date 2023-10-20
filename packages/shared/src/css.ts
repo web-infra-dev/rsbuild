@@ -20,6 +20,7 @@ export const getCssModuleLocalIdentName = (
   isProd: boolean,
 ) =>
   config.output.cssModules.localIdentName ||
+  // compatible with the deprecated config
   config.output.cssModuleLocalIdentName ||
   // Using shorter classname in production to reduce bundle size
   (isProd
