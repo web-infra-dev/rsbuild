@@ -1,0 +1,18 @@
+{
+  "name": "@scripts/check-changeset",
+  "version": "0.0.7",
+  "private": true,
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "start": "tsx ./src/index.ts"
+  },
+  "dependencies": {
+    "@changesets/read": "^0.5.9",
+    "@manypkg/get-packages": "^1.1.3"
+  },
+  "devDependencies": {
+    "tsx": "^3.12.7",
+    "@types/node": "^16"
+  }
+}
