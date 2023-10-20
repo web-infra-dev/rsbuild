@@ -1,0 +1,44 @@
+name: Update Modern.js
+
+on:
+  workflow_dispatch:
+
+jobs:
+  modern:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Install Pnpm
+        run: corepack enable
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --ignore-scripts
+
+      - name: Update Modern
+        run: pnpm run update-modern
+
+      - name: Install Dependencies
+        run: pnpm install --ignore-scripts --no-frozen-lockfile
+
+      - name: Create commits
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit -am "feat: update modern version"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: 'feat-update-modern-version'
+          title: 'feat: update modern version'
+          body: 'feat: update modern version'

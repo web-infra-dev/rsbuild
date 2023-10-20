@@ -14,7 +14,9 @@
     "release": "modern release",
     "prepare": "pnpm run build && husky install",
     "gen-release-note": "modern gen-release-note",
-    "check-changeset": "cd ./scripts/check-changeset && pnpm start"
+    "check-changeset": "cd ./scripts/check-changeset && pnpm start",
+    "update-modern": "cd ./scripts/update-packages && pnpm start:modern",
+    "update-rspress": "cd ./scripts/update-packages && pnpm start:rspress"
   },
   "engines": {
     "node": ">=16.18.1",
