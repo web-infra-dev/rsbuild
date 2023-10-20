@@ -15,7 +15,7 @@ Rsbuild can use webpack or Rspack as the bundler, expose unified Node.js API, an
 Plugin module should export an entry function just like `(options?: PluginOptions) => RsbuildPlugin`, It is recommended to name plugin functions `pluginXXX`.
 
 ```ts
-import type { RsbuildPlugin } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/webpack';
 
 export interface PluginFooOptions {
   message?: string;
@@ -153,7 +153,7 @@ which can be found in [sorrycc/webpack-chain](https://github.com/sorrycc/webpack
 The webpack loaders can be used to load and transform various file types. For more information, see [concepts](https://webpack.js.org/concepts/loaders) and [loaders](https://webpack.js.org/loaders/).
 
 ```ts
-import type { RsbuildPlugin } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/webpack';
 
 export const pluginTypeScriptExt = (): RsbuildPlugin => ({
   name: 'plugin-typescript-ext',
@@ -169,7 +169,7 @@ export const pluginTypeScriptExt = (): RsbuildPlugin => ({
 ### Add Entry Points
 
 ```ts
-import type { RsbuildPlugin } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/webpack';
 
 export const pluginAdminPanel = (): RsbuildPlugin => ({
   name: 'plugin-admin-panel',
@@ -186,7 +186,7 @@ export const pluginAdminPanel = (): RsbuildPlugin => ({
 Integrate existing webpack plugins to migrate your applications:
 
 ```ts
-import type { RsbuildPlugin } from '@rsbuild/webpack-provider';
+import type { RsbuildPlugin } from '@rsbuild/webpack';
 import type { Options } from '@modern-js/inspector-webpack-plugin';
 
 export const pluginInspector = (options?: Options): RsbuildPlugin => ({

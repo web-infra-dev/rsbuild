@@ -14,7 +14,7 @@ import type { NormalizedSecurityConfig, SecurityConfig } from './security';
 import type { NormalizedSourceConfig, SourceConfig } from './source';
 import type { NormalizedToolsConfig, ToolsConfig } from './tools';
 
-/** The Rsbuild config when using webpack-provider */
+/** The Rsbuild config when using Webpack as the bundler */
 export interface RsbuildConfig {
   dev?: DevConfig;
   html?: HtmlConfig;

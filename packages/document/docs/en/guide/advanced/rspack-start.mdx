@@ -14,7 +14,7 @@ Modern.js framework uses webpack as the default bundler. If you want to use Rspa
 
 ### Use Rsbuild in a front-end framework
 
-Integrating rspack-provider into a frontend framework is similar to integrating webpack-provider. You only need to change the dependency from `@rsbuild/webpack-provider` to `@rsbuild/rspack-provider`.
+Integrating rspack-provider into a frontend framework is similar to integrating webpack-provider. You only need to change the dependency from `@rsbuild/webpack` to `@rsbuild/rspack-provider`.
 
 ```ts title=modern.config.ts
 import { createRsbuild } from '@rsbuild/core';
@@ -30,7 +30,7 @@ const provider = rspackProvider({
 ```diff title=package.json
 {
   "devDependencies": {
--    "@rsbuild/webpack-provider": "2.8.0",
+-    "@rsbuild/webpack": "2.8.0",
 +    "@rsbuild/rspack-provider": "2.8.0"
   }
 }

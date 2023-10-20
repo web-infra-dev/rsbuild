@@ -22,7 +22,7 @@ import type { DeepReadonly } from '../utils';
 
 /**
  * The shared Rsbuild config.
- * Can be used with webpack-provider or rspack-provider.
+ * Can be used with both Rspack and Webpack.
  * */
 export interface SharedRsbuildConfig {
   dev?: SharedDevConfig;

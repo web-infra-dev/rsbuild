@@ -103,11 +103,11 @@ const pluginBar = {
 
 ### 适用于 webpack-provider 的插件
 
-开发适用于 webpack-provider 的插件时，请从 `@rsbuild/webpack-provider` 中引入 `RsbuildPluginAPI`。
+开发适用于 webpack-provider 的插件时，请从 `@rsbuild/webpack` 中引入 `RsbuildPluginAPI`。
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { RsbuildPluginAPI } from '@rsbuild/webpack-provider';
+import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 
 export default (): RsbuildPlugin<RsbuildPluginAPI> => ({
   name: 'plugin-foo',
