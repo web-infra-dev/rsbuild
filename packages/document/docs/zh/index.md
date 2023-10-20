@@ -4,6 +4,7 @@ pageType: home
 hero:
   name: Rsbuild
   text: 基于 Rspack 的 Web 构建工具
+  tagline: 加速你的 webpack 应用
   actions:
     - theme: brand
       text: 介绍

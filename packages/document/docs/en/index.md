@@ -4,6 +4,7 @@ pageType: home
 hero:
   name: Rsbuild
   text: The Rspack-based Build Tool
+  tagline: Speed up your webpack application
   actions:
     - theme: brand
       text: Introduction

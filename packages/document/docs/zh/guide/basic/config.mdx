@@ -13,6 +13,7 @@ Rsbuild 中的配置可以分为以下几类：
 - [Output](/config/options/output.html)：与构建产物有关的配置。
 - [Security](/config/options/security.html)：与安全有关的配置。
 - [Performance](/config/options/performance.html)：与编译性能、产物性能有关的配置。
+- [Experiments](/config/options/experiments.html)：处于实验阶段的配置。
 
 你可以在 [配置](/config/) 页面找到所有配置项的详细说明。
 
@@ -56,12 +57,6 @@ const provider = webpackProvider({
 
 关于 Node API 的完整用法，请参考 [API - createRsbuild](/api/javascript-api/core.html#creatersbuild)。
 
-## 与框架配置的关系
-
-通常来说，Rsbuild 配置是框架配置的子集。
-
-**Rsbuild 配置只处理构建相关行为**，而框架配置涵盖的范围更大，还包括运行时、服务端、部署等方面，因此框架是在 Rsbuild 配置的基础上扩展出来的。
-
 ## 调试配置
 
 在执行构建时，你可以添加 `DEBUG=rsbuild` 环境变量来开启 Rsbuild 的调试模式。
@@ -76,7 +71,7 @@ DEBUG=rsbuild pnpm dev
 Inspect config succeed, open following files to view the content:
 
   - Rsbuild Config: /Project/demo/dist/rsbuild.config.js
-  - Webpack Config (web): /Project/demo/dist/webpack.config.web.js
+  - Rspack Config (web): /Project/demo/dist/rspack.config.web.js
 ```
 
 打开生成的 `/dist/rsbuild.config.js` 文件，即可查看 Rsbuild 配置的完整内容。
