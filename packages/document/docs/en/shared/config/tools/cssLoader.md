@@ -8,7 +8,7 @@ The config of [css-loader](https://github.com/webpack-contrib/css-loader) can be
   modules: {
     auto: true,
     exportLocalsConvention: 'camelCase',
-    localIdentName: config.output.cssModuleLocalIdentName,
+    localIdentName: config.output.cssModules.localIdentName,
     // isServer indicates node (SSR) build
     // isWebWorker indicates web worker build
     exportOnlyLocals: isServer || isWebWorker,

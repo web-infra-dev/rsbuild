@@ -1,6 +1,7 @@
 import {
   AssetsRetryOptions,
   Charset,
+  CssModules,
   DataUriLimit,
   DisableSourceMapOption,
   DistPathConfig,
@@ -83,18 +84,24 @@ const inlineSchema = z.union([
   z.anyFunction(),
 ]);
 
+export const CssModulesSchema: ZodType<CssModules> = z.partialObj({
+  auto: z.any(),
+  localIdentName: z.string(),
+  exportLocalsConvention: z.any(),
+});
+
 export const sharedOutputConfigSchema = z.partialObj({
   distPath: DistPathConfigSchema,
   filename: FilenameConfigSchema,
   charset: CharsetSchema,
   polyfill: PolyfillSchema,
+  cssModules: CssModulesSchema,
   assetsRetry: AssetsRetryOptionsSchema,
   assetPrefix: z.string(),
   dataUriLimit: z.union([z.number(), DataUriLimitSchema]),
   legalComments: LegalCommentsSchema,
   cleanDistPath: z.boolean(),
   convertToRem: z.union([z.boolean(), z.instanceof(Object)]),
-  cssModuleLocalIdentName: z.string(),
   disableCssExtract: z.boolean(),
   disableMinimize: z.boolean(),
   disableSourceMap: DisableSourceMapOptionSchema,

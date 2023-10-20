@@ -256,13 +256,14 @@ export const pluginCss = (): RsbuildPlugin => {
           }
 
           let localIdentName =
+            config.output.cssModules.localIdentName ||
             config.output.cssModuleLocalIdentName ||
             // Using shorter classname in production to reduce bundle size
             (isProd ? '[local]-[hash:6]' : '[path][name]__[local]-[hash:6]');
 
           if (localIdentName.includes(':base64')) {
             logger.warn(
-              `Custom hashDigest in output.cssModuleLocalIdentName is currently not supported when using Rspack, the 'base64' will be ignored.`,
+              `Custom hashDigest in output.cssModules.localIdentName is currently not supported when using Rspack, the 'base64' will be ignored.`,
             );
             localIdentName = localIdentName.replace(':base64', '');
           }

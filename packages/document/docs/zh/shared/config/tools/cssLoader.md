@@ -8,7 +8,7 @@
   modules: {
     auto: true,
     exportLocalsConvention: 'camelCase',
-    localIdentName: config.output.cssModuleLocalIdentName,
+    localIdentName: config.output.cssModules.localIdentName,
     // isServer 表示 node (SSR) 构建
     // isWebWorker 表示 web worker 构建
     exportOnlyLocals: isServer || isWebWorker,
