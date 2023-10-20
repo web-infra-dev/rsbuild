@@ -6,7 +6,6 @@
     "outDir": "./dist",
     "paths": {
       "@/*": ["./src/*"],
-      "@shared/*": ["./shared/*"],
       "@scripts/*": ["./scripts/*"]
     }
   },

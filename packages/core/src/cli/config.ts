@@ -21,7 +21,7 @@ export type RsbuildConfig<Config> = Config & {
 export const defineConfig = <
   T extends SharedRsbuildConfig = RspackRsbuildConfig,
 >(
-  config: RsbuildConfig<T>,
+  config?: RsbuildConfig<T>,
 ) => config;
 
 export async function loadConfig(): Promise<ReturnType<typeof defineConfig>> {

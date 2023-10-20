@@ -6,7 +6,6 @@
     "outDir": "./dist",
     "paths": {
       "@/*": ["wasm-basic/src/*"],
-      "@shared/*": ["./shared/*"],
       "@scripts/*": ["../../scripts/*"]
     }
   },
