@@ -28,7 +28,9 @@ test('should inline style when disableCssExtract is false', async ({
   expect(cssFiles.length).toBe(0);
 
   // should inline minified css
-  const mainJsFile = Object.keys(files).find((file) => file.includes('main.'))!;
+  const mainJsFile = Object.keys(files).find(
+    (file) => file.includes('main.') && file.endsWith('.js'),
+  )!;
   expect(
     files[mainJsFile].includes(
       'body,html{margin:0;padding:0}*{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;box-sizing:border-box}',

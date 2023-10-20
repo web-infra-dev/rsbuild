@@ -68,7 +68,7 @@ test('source-map', async () => {
     ])
   ).map((o) => ({
     ...o,
-    source: o.source!.split('webpack-builder-source-map/')[1] || o.source,
+    source: o.source!.split('@rsbuild/e2e-webpack-source-map/')[1] || o.source,
   }));
 
   expect(originalPositions[0]).toEqual({
