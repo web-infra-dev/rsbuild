@@ -89,7 +89,6 @@
   },
   "devDependencies": {
     "@types/node": "^16",
-    "typescript": "^5",
-    "@rsbuild/vitest-helper": "workspace:*"
+    "typescript": "^5"
   }
 }
