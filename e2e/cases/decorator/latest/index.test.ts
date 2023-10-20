@@ -9,7 +9,7 @@ test('decorator latest', async ({ page }) => {
       index: path.resolve(__dirname, './src/index.js'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         enableLatestDecorators: true,
       },

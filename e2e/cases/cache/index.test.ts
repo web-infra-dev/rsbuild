@@ -17,7 +17,7 @@ webpackOnlyTest(
     const buildConfig = {
       cwd: __dirname,
       entry: { index: path.resolve(__dirname, './src/index.js') },
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           bundlerChain: (chain: any) => {
             if (process.env.TEST_ENV === 'a') {
@@ -69,7 +69,7 @@ webpackOnlyTest('cacheDigest should work', async () => {
   const getBuildConfig = () => ({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         bundlerChain: (chain: any) => {
           if (process.env.TEST_ENV === 'a') {

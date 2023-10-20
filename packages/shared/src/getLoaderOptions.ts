@@ -9,14 +9,14 @@ import { getSharedPkgCompiledPath } from './utils';
 import _ from '@modern-js/utils/lodash';
 
 export const getSassLoaderOptions = async (
-  builderSassConfig: ToolsSassConfig | undefined,
+  rsbuildSassConfig: ToolsSassConfig | undefined,
   isUseCssSourceMap: boolean,
 ) => {
   const { applyOptionsChain } = await import('@modern-js/utils');
 
   const excludes: (RegExp | string)[] = [];
 
-  const addExcludes: FileFilterUtil = items => {
+  const addExcludes: FileFilterUtil = (items) => {
     excludes.push(..._.castArray(items));
   };
 
@@ -28,7 +28,7 @@ export const getSassLoaderOptions = async (
       sourceMap: isUseCssSourceMap,
       implementation: getSharedPkgCompiledPath('sass'),
     },
-    builderSassConfig,
+    rsbuildSassConfig,
     { addExcludes },
     (defaults: SassLoaderOptions, userOptions: SassLoaderOptions) => {
       return {
@@ -46,14 +46,14 @@ export const getSassLoaderOptions = async (
 };
 
 export const getLessLoaderOptions = async (
-  builderLessConfig: ToolsLessConfig | undefined,
+  rsbuildLessConfig: ToolsLessConfig | undefined,
   isUseCssSourceMap: boolean,
 ) => {
   const { applyOptionsChain } = await import('@modern-js/utils');
 
   const excludes: (RegExp | string)[] = [];
 
-  const addExcludes: FileFilterUtil = items => {
+  const addExcludes: FileFilterUtil = (items) => {
     excludes.push(..._.castArray(items));
   };
 
@@ -66,7 +66,7 @@ export const getLessLoaderOptions = async (
   };
   const mergedOptions = applyOptionsChain(
     defaultLessLoaderOptions,
-    builderLessConfig,
+    rsbuildLessConfig,
     { addExcludes },
     (
       defaults: LessLoaderOptions,

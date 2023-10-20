@@ -6,7 +6,7 @@ describe('plugins/tsLoader', () => {
   it('should set ts-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginTsLoader()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           tsLoader: {},
         },
@@ -20,7 +20,7 @@ describe('plugins/tsLoader', () => {
   it('should set include/exclude', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginTsLoader()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           tsLoader(options, { addIncludes, addExcludes }) {
             addIncludes(['src/**/*.ts']);

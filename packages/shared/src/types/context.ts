@@ -1,4 +1,4 @@
-import type { RsbuildEntry, RsbuildTarget } from './builder';
+import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
 
 export type BundlerType = 'webpack' | 'rspack';
 

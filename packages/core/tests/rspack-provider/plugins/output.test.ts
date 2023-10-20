@@ -16,7 +16,7 @@ describe('plugins/output', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       target: ['node'],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           distPath: {
             server: 'server',
@@ -32,7 +32,7 @@ describe('plugins/output', () => {
   it('should allow to set distPath.js and distPath.css to empty string', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           distPath: {
             js: '',
@@ -49,7 +49,7 @@ describe('plugins/output', () => {
   it('should allow to use filename.js to modify filename', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           filename: {
             js: 'foo.js',
@@ -66,7 +66,7 @@ describe('plugins/output', () => {
   it('should allow to use copy plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           copy: {
             patterns: [
@@ -86,7 +86,7 @@ describe('plugins/output', () => {
   it('should allow to use copy plugin with multiply config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           copy: [
             {

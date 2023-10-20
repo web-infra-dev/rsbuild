@@ -6,7 +6,7 @@ describe('should use rspack as default bundler', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
-      builderConfig: {},
+      rsbuildConfig: {},
     });
 
     expect(rsbuild.context.bundlerType).toBe('rspack');

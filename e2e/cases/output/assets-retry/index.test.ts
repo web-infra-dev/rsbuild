@@ -6,7 +6,7 @@ test('should inline assets retry runtime code to html by default', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         assetsRetry: {},
       },
@@ -32,7 +32,7 @@ test('should extract assets retry runtime code when inlineScript is false', asyn
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         assetsRetry: {
           inlineScript: false,

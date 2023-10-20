@@ -53,7 +53,7 @@ describe('tools.rspack', () => {
     }
 
     const rsbuild = await createStubRsbuild({
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           rspack: (config, { addRules, prependPlugins }) => {
             addRules({

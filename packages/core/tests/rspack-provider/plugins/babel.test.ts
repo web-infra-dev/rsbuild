@@ -6,7 +6,7 @@ describe('plugins/babel', () => {
   it('should set babel-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           babel(config: any) {
             config.plugins.push([
@@ -30,7 +30,7 @@ describe('plugins/babel', () => {
   it('should not set babel-loader when babel config is return null', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           babel: () => {
             // do nothing
@@ -47,7 +47,7 @@ describe('plugins/babel', () => {
   it('should not set babel-loader when babel config is null', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           babel: {},
         } as any,
@@ -62,7 +62,7 @@ describe('plugins/babel', () => {
   it('should not set babel-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {},
       },
     });

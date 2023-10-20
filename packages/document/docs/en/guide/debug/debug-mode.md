@@ -1,13 +1,13 @@
 # Debug Mode
 
-Rsbuild provides a debug mode to troubleshoot problems, you can add the `DEBUG=builder` environment variable when executing a build to enable Rsbuild's debug mode.
+Rsbuild provides a debug mode to troubleshoot problems, you can add the `DEBUG=rsbuild` environment variable when executing a build to enable Rsbuild's debug mode.
 
 ```bash
 # Debug development environment
-DEBUG=builder pnpm dev
+DEBUG=rsbuild pnpm dev
 
 # Debug production environment
-DEBUG=builder pnpm build
+DEBUG=rsbuild pnpm build
 ```
 
 In debug mode, Rsbuild will output some additional log information, and write the Rsbuild config and webpack config to the dist directory, which is convenient for developers to view and debug.
@@ -17,7 +17,7 @@ In debug mode, Rsbuild will output some additional log information, and write th
 In debug mode, you will see some additional information output from the shell, among which are some process logs starting with `debug`, indicating what operations are performed inside the Rsbuild.
 
 ```bash
-$ DEBUG=builder pnpm dev
+$ DEBUG=rsbuild pnpm dev
 
 debug create context [1842.90 ms]
 debug add default plugins [1874.45 ms]

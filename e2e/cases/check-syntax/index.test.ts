@@ -24,7 +24,7 @@ test('should throw error when exist syntax errors', async () => {
     build({
       cwd,
       entry: { index: path.resolve(cwd, './src/index.js') },
-      builderConfig: {
+      rsbuildConfig: {
         ...getCommonBuildConfig(cwd),
         security: {
           checkSyntax: true,
@@ -40,7 +40,7 @@ test('should not throw error when the file is excluded', async () => {
     build({
       cwd,
       entry: { index: path.resolve(cwd, './src/index.js') },
-      builderConfig: {
+      rsbuildConfig: {
         ...getCommonBuildConfig(cwd),
         security: {
           checkSyntax: {
@@ -59,7 +59,7 @@ test('should not throw error when the targets are support es6', async () => {
     build({
       cwd,
       entry: { index: path.resolve(cwd, './src/index.js') },
-      builderConfig: {
+      rsbuildConfig: {
         ...getCommonBuildConfig(cwd),
         security: {
           checkSyntax: {
@@ -78,7 +78,7 @@ test('should throw error when using optional chaining and target is es6 browsers
     build({
       cwd,
       entry: { index: path.resolve(cwd, './src/index.js') },
-      builderConfig: {
+      rsbuildConfig: {
         ...getCommonBuildConfig(cwd),
         security: {
           checkSyntax: {
@@ -97,7 +97,7 @@ test('should not throw error when using optional chaining and ecmaVersion is 202
     build({
       cwd,
       entry: { index: path.resolve(cwd, './src/index.js') },
-      builderConfig: {
+      rsbuildConfig: {
         ...getCommonBuildConfig(cwd),
         security: {
           checkSyntax: {

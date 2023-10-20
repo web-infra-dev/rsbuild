@@ -20,25 +20,25 @@ function applyProfile({
 }
 
 /**
- * Apply some configs of builder performance
+ * Apply some configs of Rsbuild performance
  */
 export const pluginPerformance = (): DefaultRsbuildPlugin => ({
   name: 'plugin-performance',
 
   setup(api) {
-    api.modifyRsbuildConfig((builderConfig) => {
-      if (builderConfig.performance?.profile) {
+    api.modifyRsbuildConfig((rsbuildConfig) => {
+      if (rsbuildConfig.performance?.profile) {
         // generate stats.json
-        if (!builderConfig.performance?.bundleAnalyze) {
-          builderConfig.performance ??= {};
-          builderConfig.performance.bundleAnalyze = {
+        if (!rsbuildConfig.performance?.bundleAnalyze) {
+          rsbuildConfig.performance ??= {};
+          rsbuildConfig.performance.bundleAnalyze = {
             analyzerMode: 'disabled',
             generateStatsFile: true,
           };
         } else {
-          builderConfig.performance.bundleAnalyze = {
+          rsbuildConfig.performance.bundleAnalyze = {
             generateStatsFile: true,
-            ...(builderConfig.performance.bundleAnalyze || {}),
+            ...(rsbuildConfig.performance.bundleAnalyze || {}),
           };
         }
       }

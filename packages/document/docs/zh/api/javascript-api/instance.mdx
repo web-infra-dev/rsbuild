@@ -393,7 +393,7 @@ const compiler = await rsbuild.createCompiler();
 
 ## rsbuild.addPlugins
 
-注册一个或多个 builder 插件，可以被多次调用。
+注册一个或多个 Rsbuild 插件，可以被多次调用。
 
 该方法需要在开始编译前调用，如果在开始编译之后调用，则不会影响编译结果。
 
@@ -422,7 +422,7 @@ rsbuild.addPlugins([pluginFoo()], { after: 'bar' });
 
 ## rsbuild.removePlugins
 
-移除一个或多个 builder 插件，可以被多次调用。
+移除一个或多个 Rsbuild 插件，可以被多次调用。
 
 该方法需要在开始编译前调用，如果在开始编译之后调用，则不会影响编译结果。
 
@@ -459,12 +459,12 @@ rsbuild.isPluginExists(pluginFoo().name); // true
 
 ## rsbuild.inspectConfig
 
-查看 Rsbuild 内部最终生成的 builder 配置和 bundler 配置。
+查看 Rsbuild 内部最终生成的 Rsbuild 配置和 bundler 配置。
 
 :::tip
 `inspectConfig` 方法不支持与 `startDevServer` / `build` 方法同时使用。
 
-当你需要在构建过程中查看完整的 builder 和 bundler 配置时，可以使用 [调试模式](/guide/debug/debug-mode.html)，也可以通过 `onBeforeBuild`、`onBeforeCreateCompile` 等钩子函数来获取。
+当你需要在构建过程中查看完整的 Rsbuild 和 bundler 配置时，可以使用 [调试模式](/guide/debug/debug-mode.html)，也可以通过 `onBeforeBuild`、`onBeforeCreateCompile` 等钩子函数来获取。
 :::
 
 - **类型**
@@ -482,10 +482,10 @@ type InspectConfigOptions = {
 };
 
 async function InspectConfig(options?: InspectConfigOptions): Promise<{
-  builderConfig: string;
+  rsbuildConfig: string;
   bundlerConfigs: string[];
   origin: {
-    builderConfig: RsbuildConfig;
+    rsbuildConfig: RsbuildConfig;
     bundlerConfigs: BundlerConfigs[];
   };
 }>;
@@ -496,9 +496,9 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
 拿到字符串格式的 Config 内容：
 
 ```ts
-const { builderConfig, bundlerConfigs } = await rsbuild.inspectConfig();
+const { rsbuildConfig, bundlerConfigs } = await rsbuild.inspectConfig();
 
-console.log(builderConfig, bundlerConfigs);
+console.log(rsbuildConfig, bundlerConfigs);
 ```
 
 直接将配置内容写入到磁盘上：

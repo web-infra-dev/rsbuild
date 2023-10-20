@@ -13,26 +13,26 @@ import { normalizeConfig } from '../config/normalize';
 import type { Context } from '../types';
 
 async function modifyRsbuildConfig(context: Context) {
-  debug('modify builder config');
+  debug('modify Rsbuild config');
   const [modified] = await context.hooks.modifyRsbuildConfigHook.call(
     context.config,
     { mergeRsbuildConfig },
   );
   context.config = modified;
 
-  debug('modify builder config done');
+  debug('modify Rsbuild config done');
 }
 
 export type InitConfigsOptions = {
   context: Context;
   pluginStore: PluginStore;
-  builderOptions: Required<CreateRsbuildOptions>;
+  rsbuildOptions: Required<CreateRsbuildOptions>;
 };
 
 export async function initConfigs({
   context,
   pluginStore,
-  builderOptions,
+  rsbuildOptions,
 }: InitConfigsOptions) {
   const { ensureArray } = await import('@modern-js/utils');
 
@@ -45,12 +45,12 @@ export async function initConfigs({
   await modifyRsbuildConfig(context);
   context.normalizedConfig = normalizeConfig(context.config);
 
-  const targets = ensureArray(builderOptions.target);
+  const targets = ensureArray(rsbuildOptions.target);
   const rspackConfigs = await Promise.all(
     targets.map((target) => generateRspackConfig({ target, context })),
   );
 
-  // write builder config and Rspack config to disk in debug mode
+  // write Rsbuild config and Rspack config to disk in debug mode
   if (isDebug()) {
     const inspect = () => {
       const inspectOptions: InspectConfigOptions = {
@@ -61,7 +61,7 @@ export async function initConfigs({
         context,
         pluginStore,
         inspectOptions,
-        builderOptions,
+        rsbuildOptions,
         bundlerConfigs: rspackConfigs,
       });
     };

@@ -15,7 +15,7 @@ test.describe('html configure multi', () => {
         main: join(join(fixtures, 'mount-id'), 'src/index.ts'),
       },
       runServer: true,
-      builderConfig: {
+      rsbuildConfig: {
         html: {
           mountId: 'app',
         },
@@ -66,7 +66,7 @@ test.describe('html element set', () => {
         foo: join(fixtures, 'template/src/index.ts'),
       },
       runServer: true,
-      builderConfig: {
+      rsbuildConfig: {
         html: {
           meta: {
             description: 'a description of the page',
@@ -151,7 +151,7 @@ test('custom title', async ({ page }) => {
       main: join(join(fixtures, 'template'), 'src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         title: 'custom title',
       },
@@ -172,7 +172,7 @@ test('template & templateParameters', async ({ page }) => {
       main: join(join(fixtures, 'template'), 'src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         template: './static/index.html',
         templateParameters: {
@@ -208,7 +208,7 @@ test('templateByEntries & templateParametersByEntries', async ({ page }) => {
       bar: join(fixtures, 'template/src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         templateByEntries: {
           foo: './static/foo.html',
@@ -250,7 +250,7 @@ test('title & titleByEntries & templateByEntries', async ({ page }) => {
       bar: join(fixtures, 'template/src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         title: 'custom title',
         titleByEntries: {
@@ -287,7 +287,7 @@ test('html.outputStructure', async ({ page }) => {
       main: join(join(fixtures, 'template'), 'src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         outputStructure: 'nested',
       },
@@ -310,7 +310,7 @@ test('tools.htmlPlugin', async ({ page }) => {
       main: join(join(fixtures, 'template'), 'src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         htmlPlugin(config, { entryName }) {
           if (entryName === 'main') {

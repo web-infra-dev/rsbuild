@@ -2,7 +2,7 @@
 - **Default:** `undefined`
 - **Bundler:** `only support webpack`
 
-`ts-loader` is not enabled by default in the project. When `tools.tsLoader` is not undefined, builder will use ts-loader instead of babel-loader to compile TypeScript code.
+`ts-loader` is not enabled by default in the project. When `tools.tsLoader` is not undefined, Rsbuild will use ts-loader instead of babel-loader to compile TypeScript code.
 
 ### Object Type
 

@@ -8,7 +8,7 @@ describe('webpackConfig', () => {
   it('should allow tools.webpack to return config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           webpack(config) {
             return {
@@ -27,7 +27,7 @@ describe('webpackConfig', () => {
   it('should allow tools.webpack to modify config object', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           webpack(config) {
             config.devtool = 'eval';
@@ -43,7 +43,7 @@ describe('webpackConfig', () => {
   it('should allow tools.webpack to be an object', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           webpack: {
             devtool: 'eval',
@@ -59,7 +59,7 @@ describe('webpackConfig', () => {
   it('should allow tools.webpack to be an array', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           webpack: [
             {
@@ -80,7 +80,7 @@ describe('webpackConfig', () => {
   it('should provide mergeConfig util in tools.webpack function', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           webpack: (config, { mergeConfig }) => {
             return mergeConfig(config, {
@@ -98,7 +98,7 @@ describe('webpackConfig', () => {
   it('should allow to use tools.webpackChain to modify config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           webpackChain(chain) {
             chain.devtool('eval');
@@ -114,7 +114,7 @@ describe('webpackConfig', () => {
   it('should allow tools.webpackChain to be an array', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           webpackChain: [
             (chain) => {
@@ -134,7 +134,7 @@ describe('webpackConfig', () => {
 
   it('should export HtmlWebpackPlugin instance', async () => {
     await createStubRsbuild({
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           webpack(config, utils) {
             expect(utils.HtmlWebpackPlugin.version).toEqual(5);
@@ -146,7 +146,7 @@ describe('webpackConfig', () => {
 
   it('should allow to append and prepend plugins', async () => {
     const rsbuild = await createStubRsbuild({
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           webpack(config, utils) {
             utils.appendPlugins([new utils.webpack.DefinePlugin({ foo: '1' })]);
@@ -164,7 +164,7 @@ describe('webpackConfig', () => {
 
   it('should allow to remove plugins', async () => {
     const rsbuild = await createStubRsbuild({
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           webpack(config, utils) {
             utils.appendPlugins([new utils.webpack.DefinePlugin({ foo: '1' })]);
@@ -189,7 +189,7 @@ describe('webpackConfig', () => {
     };
 
     const rsbuild = await createStubRsbuild({
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           webpack(config, utils) {
             utils.addRules(newRule);
@@ -207,7 +207,7 @@ describe('webpackConfig', () => {
     // camelToDashComponentName
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           transformImport: [
             {
@@ -247,7 +247,7 @@ describe('webpackConfig', () => {
     // camelToDashComponentName
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginAntd()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           transformImport: false,
         },

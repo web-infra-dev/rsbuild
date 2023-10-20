@@ -9,7 +9,7 @@ describe('plugins/rem', () => {
   it('should not run rem plugin without config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
-      builderConfig: {},
+      rsbuildConfig: {},
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
@@ -19,7 +19,7 @@ describe('plugins/rem', () => {
   it('should not run rem plugin when false', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           convertToRem: false,
         },
@@ -33,7 +33,7 @@ describe('plugins/rem', () => {
   it('should run rem plugin with default config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginLess(), pluginSass(), pluginRem()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           convertToRem: true,
         },
@@ -48,7 +48,7 @@ describe('plugins/rem', () => {
   it('should order plugins and run rem plugin with default config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginRem(), pluginCss(), pluginLess(), pluginSass()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           convertToRem: true,
         },
@@ -63,7 +63,7 @@ describe('plugins/rem', () => {
   it('should not run htmlPlugin with enableRuntime is false', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           convertToRem: {
             enableRuntime: false,
@@ -81,7 +81,7 @@ describe('plugins/rem', () => {
   it('should run rem plugin with custom config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           convertToRem: {
             rootFontSize: 30,
@@ -100,7 +100,7 @@ describe('plugins/rem', () => {
   it('should not run rem plugin when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           convertToRem: true,
         },
@@ -118,7 +118,7 @@ describe('plugins/rem', () => {
   it('should not run rem plugin when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           convertToRem: true,
         },

@@ -10,7 +10,7 @@ webpackOnlyTest('should optimize lodash bundle size by default', async () => {
     entry: {
       index: path.resolve(__dirname, './src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         chunkSplit: {
           strategy: 'all-in-one',
@@ -31,7 +31,7 @@ test('should not optimize lodash bundle size when transformLodash is false', asy
     entry: {
       index: path.resolve(__dirname, './src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         transformLodash: false,
         chunkSplit: {

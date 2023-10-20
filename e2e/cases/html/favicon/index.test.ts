@@ -6,7 +6,7 @@ test('should emit local favicon to dist path', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         favicon: './src/icon.png',
       },
@@ -28,7 +28,7 @@ test('should apply asset prefix to favicon URL', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         favicon: './src/icon.png',
       },
@@ -51,7 +51,7 @@ test('should allow favicon to be a CDN URL', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         favicon: 'https://foo.com/icon.png',
       },

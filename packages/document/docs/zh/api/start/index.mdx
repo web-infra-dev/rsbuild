@@ -19,22 +19,22 @@ import { PackageManagerTabs } from '@theme';
 
 如果你想使用 webpack 而不是 Rspack，可以将 `@rsbuild/rspack-provider` 替换为 `@rsbuild/webpack-provider`：
 
-> 在进行版本升级时，请确保你安装的 builder 和 provider 为同一个版本。
+> 在进行版本升级时，请确保你安装的 rsbuild 和 provider 为同一个版本。
 
 ### 2. 创建 Rsbuild 实例
 
 创建 Rsbuild 实例的过程分两步：
 
-首先你需要初始化 Rsbuild Provider，并传入 `builderConfig` 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制。此时你还不需要了解配置项的具体内容，传入一个空对象即可。你可以在 [配置](/config/) 中找到所有可用的配置项。
+首先你需要初始化 Rsbuild Provider，并传入 `rsbuildConfig` 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制。此时你还不需要了解配置项的具体内容，传入一个空对象即可。你可以在 [配置](/config/) 中找到所有可用的配置项。
 
 - 初始化 webpack Provider：
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
-import { builderWebpackProvider } from '@rsbuild/webpack-provider';
+import { webpackProvider } from '@rsbuild/webpack-provider';
 
-const provider = builderWebpackProvider({
-  builderConfig: {
+const provider = webpackProvider({
+  rsbuildConfig: {
     // some configs
   },
 });
@@ -44,10 +44,10 @@ const provider = builderWebpackProvider({
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
-import { builderRspackProvider } from '@rsbuild/rspack-provider';
+import { rspackProvider } from '@rsbuild/rspack-provider';
 
-const provider = builderRspackProvider({
-  builderConfig: {
+const provider = rspackProvider({
+  rsbuildConfig: {
     // some configs
   },
 });
@@ -63,13 +63,13 @@ const rsbuild = await createRsbuild(provider, {
 });
 ```
 
-除了上述示例中的 `entry` 选项，`createRsbuild` 方法也提供了一些其他的选项，你可以在 [API - createRsbuild](/api/javascript-api/core.html#createbuilder) 中进一步了解。
+除了上述示例中的 `entry` 选项，`createRsbuild` 方法也提供了一些其他的选项，你可以在 [API - createRsbuild](/api/javascript-api/core.html#creatersbuild) 中进一步了解。
 
 ### 3. 调用 Rsbuild 实例方法
 
 Rsbuild 实例提供了与构建相关的各个方法，你可以根据实际场景来进行使用。
 
-在本地开发场景，建议使用 [rsbuild.startDevServer](/api/javascript-api/instance.html#builder-startdevserver) 方法，调用后会启动本地 Dev Server。
+在本地开发场景，建议使用 [rsbuild.startDevServer](/api/javascript-api/instance.html#rsbuild-startdevserver) 方法，调用后会启动本地 Dev Server。
 
 ```ts
 await rsbuild.startDevServer();

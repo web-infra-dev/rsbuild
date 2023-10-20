@@ -99,7 +99,7 @@ describe('plugins/swc', () => {
         main: './src/index.js',
       },
       plugins: [pluginSwc(), pluginEntry(), pluginAntd()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           transformImport: false,
         },
@@ -132,7 +132,7 @@ describe('plugins/swc', () => {
 
 async function matchConfigSnapshot(
   target: RsbuildTarget | RsbuildTarget[],
-  builderConfig: RsbuildConfig,
+  rsbuildConfig: RsbuildConfig,
 ) {
   const rsbuild = await createStubRsbuild({
     target,
@@ -140,7 +140,7 @@ async function matchConfigSnapshot(
       main: './src/index.js',
     },
     plugins: [pluginSwc(), pluginEntry()],
-    builderConfig,
+    rsbuildConfig,
   });
 
   const {

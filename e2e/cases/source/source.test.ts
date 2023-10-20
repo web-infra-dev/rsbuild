@@ -14,7 +14,7 @@ test.describe('source configure multi', () => {
         main: join(fixtures, 'basic/src/index.js'),
       },
       runServer: true,
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           alias: {
             '@common': './src/common',
@@ -55,7 +55,7 @@ test.skip('module-scopes', async ({ page }) => {
   await expect(
     build({
       ...buildOpts,
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           moduleScopes: ['./src'],
         },
@@ -77,7 +77,7 @@ test.skip('module-scopes', async ({ page }) => {
   // should not throw
   rsbuild = await build({
     ...buildOpts,
-    builderConfig: {
+    rsbuildConfig: {
       source: {
         moduleScopes: ['./src', './common'],
       },
@@ -94,7 +94,7 @@ test('global-vars', async ({ page }) => {
       main: join(fixtures, 'global-vars/src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       source: {
         globalVars: {
           ENABLE_TEST: true,
@@ -118,7 +118,7 @@ test('define', async ({ page }) => {
       main: join(fixtures, 'global-vars/src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       source: {
         define: {
           ENABLE_TEST: JSON.stringify(true),
@@ -145,7 +145,7 @@ test('tsconfig paths should work and override the alias config', async ({
       main: join(cwd, 'src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       source: {
         alias: {
           '@common': './src/common2',
@@ -172,7 +172,7 @@ test('tsconfig paths should not work when aliasStrategy is "prefer-alias"', asyn
       main: join(cwd, 'src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       source: {
         alias: {
           '@/common': './src/common2',

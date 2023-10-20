@@ -34,7 +34,7 @@ describe('plugins/minimize', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableMinimize: true,
         },
@@ -52,7 +52,7 @@ describe('plugins/minimize', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           legalComments: 'inline',
         },
@@ -75,7 +75,7 @@ describe('plugins/minimize', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           legalComments: 'none',
         },
@@ -96,7 +96,7 @@ describe('plugins/minimize', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           charset: 'utf8',
         },

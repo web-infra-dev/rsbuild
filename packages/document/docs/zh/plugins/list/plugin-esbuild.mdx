@@ -33,7 +33,7 @@ export default {
 };
 ```
 
-如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#builderaddplugins) 方法来注册插件。
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
 
 ## 配置
 
@@ -52,7 +52,7 @@ type LoaderOptions = EsbuildLoaderOptions | false | undefined;
 ```ts
 const defaultOptions = {
   target: 'es2015',
-  charset: builderConfig.output.charset,
+  charset: rsbuildConfig.output.charset,
 };
 ```
 
@@ -123,7 +123,7 @@ type MinimizeOptions = EsbuildMinifyOptions | false | undefined;
 const defaultOptions = {
   css: true,
   target: 'es2015',
-  format: builderTarget === 'web' ? 'iife' : undefined,
+  format: rsbuildTarget === 'web' ? 'iife' : undefined,
 };
 ```
 

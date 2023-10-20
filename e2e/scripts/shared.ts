@@ -22,22 +22,22 @@ export const getHrefByEntryName = (entryName: string, port: number) => {
 const noop = () => {};
 
 export const createRsbuild = async (
-  builderOptions: CreateRsbuildOptions,
-  builderConfig: WebpackRsbuildConfig | RspackRsbuildConfig = {},
+  rsbuildOptions: CreateRsbuildOptions,
+  rsbuildConfig: WebpackRsbuildConfig | RspackRsbuildConfig = {},
 ) => {
   const { createRsbuild } = await import('@rsbuild/core');
 
   if (process.env.PROVIDE_TYPE === 'rspack') {
     return createRsbuild({
-      ...builderOptions,
-      builderConfig,
+      ...rsbuildOptions,
+      rsbuildConfig,
     });
   }
 
   const { webpackProvider } = await import('@rsbuild/webpack');
   return createRsbuild({
-    ...builderOptions,
-    builderConfig: builderConfig as WebpackRsbuildConfig,
+    ...rsbuildOptions,
+    rsbuildConfig: rsbuildConfig as WebpackRsbuildConfig,
     provider: webpackProvider,
   });
 };
@@ -87,19 +87,19 @@ const updateConfigForTest = <BundlerType>(
 
 export async function dev<BundlerType = 'rspack'>({
   serverOptions,
-  builderConfig = {},
+  rsbuildConfig = {},
   ...options
 }: CreateRsbuildOptions & {
-  builderConfig?: BundlerType extends 'webpack'
+  rsbuildConfig?: BundlerType extends 'webpack'
     ? WebpackRsbuildConfig
     : RspackRsbuildConfig;
   serverOptions?: StartDevServerOptions['serverOptions'];
 }) {
   process.env.NODE_ENV = 'development';
 
-  updateConfigForTest(builderConfig);
+  updateConfigForTest(rsbuildConfig);
 
-  const rsbuild = await createRsbuild(options, builderConfig);
+  const rsbuild = await createRsbuild(options, rsbuildConfig);
   return rsbuild.startDevServer({
     printURLs: false,
     serverOptions,
@@ -109,21 +109,21 @@ export async function dev<BundlerType = 'rspack'>({
 export async function build<BundlerType = 'rspack'>({
   plugins,
   runServer = false,
-  builderConfig = {},
+  rsbuildConfig = {},
   ...options
 }: CreateRsbuildOptions & {
   plugins?: any[];
   runServer?: boolean;
-  builderConfig?: BundlerType extends 'webpack'
+  rsbuildConfig?: BundlerType extends 'webpack'
     ? WebpackRsbuildConfig
     : RspackRsbuildConfig;
 }) {
   process.env.NODE_ENV = 'production';
 
-  updateConfigForTest(builderConfig);
+  updateConfigForTest(rsbuildConfig);
 
   // todo: support test swc (add swc plugin) use providerType 'webpack-swc'?
-  const rsbuild = await createRsbuild(options, builderConfig);
+  const rsbuild = await createRsbuild(options, rsbuildConfig);
 
   rsbuild.removePlugins(['plugin-file-size']);
 
@@ -137,7 +137,7 @@ export async function build<BundlerType = 'rspack'>({
 
   const { port, close } = runServer
     ? await runStaticServer(distPath, {
-        port: builderConfig.dev!.port,
+        port: rsbuildConfig.dev!.port,
       })
     : { port: 0, close: noop };
 

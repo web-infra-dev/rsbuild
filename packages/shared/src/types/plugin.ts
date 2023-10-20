@@ -69,7 +69,7 @@ export type Plugins = {
 };
 
 /**
- * Define a generic builder plugin API that provider can extend as needed.
+ * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
 export type DefaultRsbuildPluginAPI<
   Config extends Record<string, any> = Record<string, any>,

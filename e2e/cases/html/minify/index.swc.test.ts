@@ -15,7 +15,7 @@ test('should minify template js & css correctly when use swc-plugin', async ({
     },
     runServer: true,
     plugins: [pluginSwc()],
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         template: './static/index.html',
       },

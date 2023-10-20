@@ -25,16 +25,16 @@ if you want to use webpack instead of Rspack, you can replace the `@rsbuild/rspa
 
 There are two steps to creating a Rsbuild instance:
 
-First you need to initialize the Rsbuild Provider and pass in the `builderConfig` config object. Rsbuild provides a lot of configs that allow you to customize the build behavior. At this point, you don't need to know the specific content of the config, just pass in an empty object. You can find all available configs in [Config](/config/).
+First you need to initialize the Rsbuild Provider and pass in the `rsbuildConfig` config object. Rsbuild provides a lot of configs that allow you to customize the build behavior. At this point, you don't need to know the specific content of the config, just pass in an empty object. You can find all available configs in [Config](/config/).
 
 - Initialize the Rspack Provider:
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
-import { builderWebpackProvider } from '@rsbuild/webpack-provider';
+import { webpackProvider } from '@rsbuild/webpack-provider';
 
-const provider = builderWebpackProvider({
-  builderConfig: {
+const provider = webpackProvider({
+  rsbuildConfig: {
     // some configs
   },
 });
@@ -44,10 +44,10 @@ const provider = builderWebpackProvider({
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
-import { builderRspackProvider } from '@rsbuild/rspack-provider';
+import { rspackProvider } from '@rsbuild/rspack-provider';
 
-const provider = builderRspackProvider({
-  builderConfig: {
+const provider = rspackProvider({
+  rsbuildConfig: {
     // some configs
   },
 });
@@ -63,7 +63,7 @@ const rsbuild = await createRsbuild(provider, {
 });
 ```
 
-Except the `entry` option, the `createRsbuild` method also provides some other options, which you can learn more about in [API - createRsbuild](/api/javascript-api/core.html#createbuilder).
+Except the `entry` option, the `createRsbuild` method also provides some other options, which you can learn more about in [API - createRsbuild](/api/javascript-api/core.html#creatersbuild).
 
 ### 3. Call Rsbuild Instance Method
 

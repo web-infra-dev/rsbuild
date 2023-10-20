@@ -14,8 +14,8 @@ export type RsbuildConfig<Config> = Config & {
   source?: {
     entries?: RsbuildEntry;
   };
-  builderPlugins?: RsbuildPlugin[];
-  provider?: ({ builderConfig }: { builderConfig: Config }) => RsbuildProvider;
+  plugins?: RsbuildPlugin[];
+  provider?: ({ rsbuildConfig }: { rsbuildConfig: Config }) => RsbuildProvider;
 };
 
 export const defineConfig = <

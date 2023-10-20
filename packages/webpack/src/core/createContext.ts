@@ -21,10 +21,10 @@ export function createPrimaryContext(
   options: Required<CreateRsbuildOptions>,
   userRsbuildConfig: RsbuildConfig,
 ): Context {
-  const builderConfig = withDefaultConfig(userRsbuildConfig);
+  const rsbuildConfig = withDefaultConfig(userRsbuildConfig);
   const context = createContextByConfig(
     options,
-    builderConfig.output as NormalizedSharedOutputConfig,
+    rsbuildConfig.output as NormalizedSharedOutputConfig,
     'webpack',
   );
   const configValidatingTask = Promise.resolve();
@@ -33,7 +33,7 @@ export function createPrimaryContext(
     ...context,
     hooks: initHooks(),
     configValidatingTask,
-    config: { ...builderConfig },
+    config: { ...rsbuildConfig },
     originalConfig: userRsbuildConfig,
   };
 }
@@ -44,12 +44,12 @@ export function createPrimaryContext(
  */
 export async function createContext(
   options: Required<CreateRsbuildOptions>,
-  builderConfig: RsbuildConfig,
+  rsbuildConfig: RsbuildConfig,
 ): Promise<Context> {
   debug('create context');
 
-  await validateRsbuildConfig(builderConfig);
-  const ctx = createPrimaryContext(options, builderConfig);
+  await validateRsbuildConfig(rsbuildConfig);
+  const ctx = createPrimaryContext(options, rsbuildConfig);
 
   const tsconfigPath = join(ctx.rootPath, TS_CONFIG_FILE);
   if (await isFileExists(tsconfigPath)) {

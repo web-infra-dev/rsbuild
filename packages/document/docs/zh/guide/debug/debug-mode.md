@@ -1,13 +1,13 @@
 # 开启调试模式
 
-为了便于排查问题，Rsbuild 提供了调试模式，你可以在执行构建时添加 `DEBUG=builder` 环境变量来开启 Rsbuild 的调试模式。
+为了便于排查问题，Rsbuild 提供了调试模式，你可以在执行构建时添加 `DEBUG=rsbuild` 环境变量来开启 Rsbuild 的调试模式。
 
 ```bash
 # 调试开发环境
-DEBUG=builder pnpm dev
+DEBUG=rsbuild pnpm dev
 
 # 调试生产环境
-DEBUG=builder pnpm build
+DEBUG=rsbuild pnpm build
 ```
 
 在调试模式下，Rsbuild 会输出一些额外的日志信息，并将内部最终生成的 Rsbuild 配置和 webpack 配置写入到产物目录下，便于开发者查看和调试。
@@ -17,7 +17,7 @@ DEBUG=builder pnpm build
 在调试模式下，你会看到 Shell 中输出了一些额外的信息，其中以 `debug` 开头的是一些流程日志，表明 Rsbuild 内部执行了哪些操作。
 
 ```bash
-$ DEBUG=builder pnpm dev
+$ DEBUG=rsbuild pnpm dev
 
 debug   create context [1842.90 ms]
 debug   add default plugins [1874.45 ms]

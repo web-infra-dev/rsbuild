@@ -19,7 +19,7 @@ export function pluginEsbuild(
 
     setup(api) {
       api.modifyWebpackChain(async (chain, { CHAIN_ID, isProd, target }) => {
-        const builderConfig = api.getNormalizedConfig();
+        const rsbuildConfig = api.getNormalizedConfig();
         const compiledEsbuildLoaderPath = require.resolve(
           '../compiled/esbuild-loader',
         );
@@ -27,7 +27,7 @@ export function pluginEsbuild(
         const options: PluginEsbuildOptions = {
           loader: {
             target: 'es2015',
-            charset: builderConfig.output.charset,
+            charset: rsbuildConfig.output.charset,
           },
           minimize: {
             css: true,
@@ -67,7 +67,7 @@ export function pluginEsbuild(
             });
           applyScriptCondition({
             rule,
-            config: builderConfig,
+            config: rsbuildConfig,
             context: api.context,
             includes: [],
             excludes: [],
@@ -93,7 +93,7 @@ export function pluginEsbuild(
                   // other legalComments such as linked is not supported yet
                   // https://github.com/privatenumber/esbuild-loader/issues/263
                   legalComments:
-                    builderConfig.output?.legalComments === 'none'
+                    rsbuildConfig.output?.legalComments === 'none'
                       ? 'none'
                       : 'inline',
                   ...options?.minimize,

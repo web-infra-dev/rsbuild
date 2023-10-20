@@ -18,10 +18,10 @@ Modern.js 框架默认使用 webpack 作为打包工具。如果希望启用 Rsp
 
 ```ts title=modern.config.ts
 import { createRsbuild } from '@rsbuild/core';
-import { builderRspackProvider } from '@rsbuild/rspack-provider';
+import { rspackProvider } from '@rsbuild/rspack-provider';
 
-const provider = builderRspackProvider({
-  builderConfig: {
+const provider = rspackProvider({
+  rsbuildConfig: {
     // some configs
   },
 });

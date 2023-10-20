@@ -14,7 +14,7 @@ test('enableCssModuleTSDeclaration', async () => {
     entry: {
       main: join(fixtures, 'src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         enableCssModuleTSDeclaration: true,
       },
@@ -53,7 +53,7 @@ test('disableCssExtract', async ({ page }) => {
       main: join(fixtures, 'src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         disableCssExtract: true,
       },

@@ -39,7 +39,7 @@ h1 {
 }
 ```
 
-By default, builder converts all CSS properties from px to rem. If you want to convert only the `font-size` property, you can setting pxtorem.propList is `['font-size']`.
+By default, Rsbuild converts all CSS properties from px to rem. If you want to convert only the `font-size` property, you can setting pxtorem.propList is `['font-size']`.
 
 ```ts
 export default {

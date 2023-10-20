@@ -110,7 +110,7 @@ async function getChainUtils(target: RsbuildTarget): Promise<ModifyChainUtils> {
  *
  * The type is not strictly compatible with rspack, such as devtool (string or const).
  *
- * There is no need to consider it in builder, and it is handed over to rspack for verification
+ * There is no need to consider it in Rsbuild, and it is handed over to rspack for verification
  */
 const convertToRspackConfig = (config: BundlerConfig): RspackConfig => {
   return config as unknown as RspackConfig;

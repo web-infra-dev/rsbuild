@@ -7,13 +7,13 @@ import type { RsbuildPluginAPI } from './plugin';
 export type Context = BaseContext & {
   /** All hooks. */
   hooks: Readonly<Hooks>;
-  /** Current builder config. */
+  /** Current Rsbuild config. */
   config: Readonly<RsbuildConfig>;
   /** The async task to validate schema of config. */
   configValidatingTask: Promise<void>;
-  /** The original builder config passed from the createRsbuild method. */
+  /** The original Rsbuild config passed from the createRsbuild method. */
   originalConfig: Readonly<RsbuildConfig>;
-  /** The normalized builder config. */
+  /** The normalized Rsbuild config. */
   normalizedConfig?: NormalizedConfig;
   /** The plugin API. */
   pluginAPI?: RsbuildPluginAPI;

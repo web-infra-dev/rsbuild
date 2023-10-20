@@ -2,11 +2,11 @@ import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
-test('builder injection script order should be as expected', async () => {
+test('Rsbuild injection script order should be as expected', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         inject: false,
         template: './static/index.html',

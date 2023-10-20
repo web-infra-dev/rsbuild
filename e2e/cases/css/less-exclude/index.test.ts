@@ -6,7 +6,7 @@ test('should exclude specified less file', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         less: (opts, { addExcludes }) => {
           addExcludes([/b\.less$/]);

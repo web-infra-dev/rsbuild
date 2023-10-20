@@ -19,15 +19,15 @@ export async function createContext(
   options: Required<CreateRsbuildOptions>,
   userRsbuildConfig: RsbuildConfig,
 ): Promise<Context> {
-  const builderConfig = withDefaultConfig(userRsbuildConfig);
+  const rsbuildConfig = withDefaultConfig(userRsbuildConfig);
   const context = createContextByConfig(
     options,
-    builderConfig.output as NormalizedSharedOutputConfig,
+    rsbuildConfig.output as NormalizedSharedOutputConfig,
     'rspack',
   );
   const configValidatingTask = Promise.resolve();
 
-  await validateRsbuildConfig(builderConfig);
+  await validateRsbuildConfig(rsbuildConfig);
 
   const tsconfigPath = join(context.rootPath, TS_CONFIG_FILE);
 
@@ -35,7 +35,7 @@ export async function createContext(
     ...context,
     hooks: initHooks(),
     configValidatingTask,
-    config: { ...builderConfig },
+    config: { ...rsbuildConfig },
     originalConfig: userRsbuildConfig,
     tsconfigPath: (await isFileExists(tsconfigPath)) ? tsconfigPath : undefined,
   };

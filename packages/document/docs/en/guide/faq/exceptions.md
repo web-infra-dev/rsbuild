@@ -425,7 +425,7 @@ The writing of division in Less can also be modified through configuration optio
 
 ### Compile error ‘TypeError: Cannot delete property 'xxx' of #\<Object\>’
 
-This error indicates that a read-only configuration option was deleted during the compilation process. Normally, we do not want any operation to directly modify the incoming configuration when compiling, but it is difficult to restrict the behavior of underlying plugins (such as postcss-loader, etc). If this error occurs, please contact the builder developer and we will need to do something special with that configuration.
+This error indicates that a read-only configuration option was deleted during the compilation process. Normally, we do not want any operation to directly modify the incoming configuration when compiling, but it is difficult to restrict the behavior of underlying plugins (such as postcss-loader, etc). If this error occurs, please contact the Rsbuild developer and we will need to do something special with that configuration.
 
 The same type of error is also reported:
 

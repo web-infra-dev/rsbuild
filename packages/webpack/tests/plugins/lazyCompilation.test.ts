@@ -7,7 +7,7 @@ describe('plugins/lazyCompilation', () => {
   it('should allow to use lazy compilation', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginLazyCompilation()],
-      builderConfig: {
+      rsbuildConfig: {
         experiments: {
           lazyCompilation: {
             entries: false,
@@ -34,7 +34,7 @@ describe('plugins/lazyCompilation', () => {
   it('should disable split chunks', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks(), pluginLazyCompilation()],
-      builderConfig: {
+      rsbuildConfig: {
         experiments: {
           lazyCompilation: true,
         },
@@ -51,7 +51,7 @@ describe('plugins/lazyCompilation', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginLazyCompilation()],
-      builderConfig: {
+      rsbuildConfig: {
         experiments: {
           lazyCompilation: true,
         },
@@ -68,7 +68,7 @@ describe('plugins/lazyCompilation', () => {
     const rsbuild = await createStubRsbuild({
       target: 'node',
       plugins: [pluginLazyCompilation()],
-      builderConfig: {
+      rsbuildConfig: {
         experiments: {
           lazyCompilation: true,
         },

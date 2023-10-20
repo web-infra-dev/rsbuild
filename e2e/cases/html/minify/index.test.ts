@@ -12,7 +12,7 @@ test('should minify template js & css', async ({ page }) => {
       main: join(fixtures, 'src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         template: './static/index.html',
       },
@@ -61,7 +61,7 @@ webpackOnlyTest(
         main: join(fixtures, 'src/index.ts'),
       },
       runServer: true,
-      builderConfig: {
+      rsbuildConfig: {
         html: {
           template: './static/index.html',
           // avoid Minified React error #200;

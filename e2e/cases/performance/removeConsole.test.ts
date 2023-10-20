@@ -25,7 +25,7 @@ test('should remove specified console correctly', async () => {
     entry: {
       main: join(cwd, 'src/index.js'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         removeConsole: ['log', 'warn'],
       },
@@ -46,7 +46,7 @@ test('should remove all console correctly', async () => {
     entry: {
       main: join(cwd, 'src/index.js'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         removeConsole: true,
       },

@@ -19,7 +19,7 @@ export function getPluginAPI({
   const getRsbuildConfig = () => {
     if (!context.normalizedConfig) {
       throw new Error(
-        'Cannot access builder config until modifyRsbuildConfig is called.',
+        'Cannot access Rsbuild config until modifyRsbuildConfig is called.',
       );
     }
     return context.config;

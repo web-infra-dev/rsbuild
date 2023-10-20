@@ -32,7 +32,7 @@ test.describe('disableInlineRuntimeChunk', () => {
       cwd: __dirname,
       entry: { index: path.resolve(__dirname, './src/index.js') },
       runServer: true,
-      builderConfig: {
+      rsbuildConfig: {
         tools: toolsConfig,
         output: {
           disableInlineRuntimeChunk: true,
@@ -68,7 +68,7 @@ test('inline runtime chunk by default', async ({ page }) => {
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       tools: toolsConfig,
     },
   });
@@ -100,7 +100,7 @@ test('inline runtime chunk and remove source map when devtool is "hidden-source-
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         bundlerChain(chain) {
           chain.devtool('hidden-source-map');
@@ -127,7 +127,7 @@ test('inline runtime chunk by default with multiple entries', async () => {
       index: path.resolve(__dirname, './src/index.js'),
       another: path.resolve(__dirname, './src/another.js'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       tools: toolsConfig,
     },
   });
@@ -159,7 +159,7 @@ webpackOnlyTest(
         another: path.resolve(__dirname, './src/another.js'),
       },
       runServer: true,
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           enableInlineScripts: true,
         },
@@ -197,7 +197,7 @@ test('using RegExp to inline scripts', async () => {
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         enableInlineScripts: /\/index\.\w+\.js$/,
       },
@@ -226,7 +226,7 @@ test('inline scripts by filename and file size', async () => {
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         enableInlineScripts({ size, name }) {
           return name.includes('index') && size < 1000;
@@ -257,7 +257,7 @@ test('using RegExp to inline styles', async () => {
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         enableInlineStyles: /\/index\.\w+\.css$/,
       },
@@ -280,7 +280,7 @@ test('inline styles by filename and file size', async () => {
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         enableInlineStyles({ size, name }) {
           return name.includes('index') && size < 1000;

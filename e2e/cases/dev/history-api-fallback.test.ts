@@ -10,7 +10,7 @@ test('should provide history api fallback correctly', async ({ page }) => {
     entry: {
       main: join(cwd, 'src/index.tsx'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         devServer: {
           historyApiFallback: true,

@@ -11,7 +11,7 @@ test('webpackChain - register plugin', async ({ page }) => {
       main: join(fixtures, 'source/global-vars/src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         webpackChain: (chain, { webpack }) => {
           chain.plugin('define').use(webpack.DefinePlugin, [

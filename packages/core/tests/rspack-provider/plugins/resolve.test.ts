@@ -65,7 +65,7 @@ describe('plugins/resolve', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       provider: rspackProvider,
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           aliasStrategy: 'prefer-alias',
         },
@@ -81,7 +81,7 @@ describe('plugins/resolve', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       provider: rspackProvider,
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           alias: {
             foo: 'bar',
@@ -100,7 +100,7 @@ describe('plugins/resolve', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       provider: rspackProvider,
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           alias() {
             return {
@@ -122,7 +122,7 @@ describe('plugins/resolve', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           resolveMainFields: mainFieldsOption,
         },
@@ -147,7 +147,7 @@ describe('plugins/resolve', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           resolveMainFields: mainFieldsOption,
         },

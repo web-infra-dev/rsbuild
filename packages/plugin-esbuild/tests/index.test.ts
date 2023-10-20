@@ -6,7 +6,7 @@ describe('plugins/esbuild', () => {
   it('should set esbuild-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEsbuild()],
-      builderConfig: {},
+      rsbuildConfig: {},
     });
     const config = await rsbuild.unwrapWebpackConfig();
 
@@ -17,7 +17,7 @@ describe('plugins/esbuild', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEsbuild()],
-      builderConfig: {},
+      rsbuildConfig: {},
     });
     const config = await rsbuild.unwrapWebpackConfig();
     expect(config).toMatchSnapshot();
@@ -29,7 +29,7 @@ describe('plugins/esbuild', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEsbuild()],
-      builderConfig: {},
+      rsbuildConfig: {},
       target: 'node',
     });
     const config = await rsbuild.unwrapWebpackConfig();

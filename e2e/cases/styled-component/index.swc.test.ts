@@ -6,7 +6,7 @@ import { pluginSwc } from '@rsbuild/plugin-swc';
 const commonConfig = {
   cwd: __dirname,
   entry: { index: path.resolve(__dirname, './src/main.ts') },
-  builderConfig: {
+  rsbuildConfig: {
     tools: {
       webpack: {
         externals: ['styled-components'],
@@ -24,10 +24,10 @@ const commonConfig = {
 
 const noStyledConfig = {
   ...commonConfig,
-  builderConfig: {
-    ...commonConfig.builderConfig,
+  rsbuildConfig: {
+    ...commonConfig.rsbuildConfig,
     tools: {
-      ...commonConfig.builderConfig.tools,
+      ...commonConfig.rsbuildConfig.tools,
       styledComponents: false as const,
     },
   },

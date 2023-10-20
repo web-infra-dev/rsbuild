@@ -31,7 +31,7 @@ describe('plugins/inlineChunk', () => {
       entry: {
         main: './src/main.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           enableInlineScripts: true,
         },
@@ -48,7 +48,7 @@ describe('plugins/inlineChunk', () => {
       entry: {
         main: './src/main.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           enableInlineStyles: true,
         },
@@ -65,7 +65,7 @@ describe('plugins/inlineChunk', () => {
       entry: {
         main: './src/main.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableInlineRuntimeChunk: true,
         },

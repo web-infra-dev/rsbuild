@@ -19,14 +19,14 @@ export type WebpackProvider = RsbuildProvider<
 >;
 
 export function webpackProvider({
-  builderConfig: originalRsbuildConfig,
+  rsbuildConfig: originalRsbuildConfig,
 }: {
-  builderConfig: RsbuildConfig;
+  rsbuildConfig: RsbuildConfig;
 }): WebpackProvider {
-  const builderConfig = pickRsbuildConfig(originalRsbuildConfig);
+  const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
 
-  return async ({ pluginStore, builderOptions, plugins }) => {
-    const context = await createContext(builderOptions, builderConfig);
+  return async ({ pluginStore, rsbuildOptions, plugins }) => {
+    const context = await createContext(rsbuildOptions, rsbuildConfig);
     const pluginAPI = getPluginAPI({ context, pluginStore });
 
     context.pluginAPI = pluginAPI;
@@ -46,7 +46,7 @@ export function webpackProvider({
         const { webpackConfigs } = await initConfigs({
           context,
           pluginStore,
-          builderOptions,
+          rsbuildOptions,
         });
         return webpackConfigs;
       },
@@ -56,7 +56,7 @@ export function webpackProvider({
         const { webpackConfigs } = await initConfigs({
           context,
           pluginStore,
-          builderOptions,
+          rsbuildOptions,
         });
         return createCompiler({ context, webpackConfigs });
       },
@@ -64,7 +64,7 @@ export function webpackProvider({
       async startDevServer(options) {
         const { startDevServer } = await import('./core/startDevServer');
         return startDevServer(
-          { context, pluginStore, builderOptions },
+          { context, pluginStore, rsbuildOptions },
           options,
         );
       },
@@ -76,7 +76,7 @@ export function webpackProvider({
       async build(options) {
         const { build: buildImpl, webpackBuild } = await import('./core/build');
         return buildImpl(
-          { context, pluginStore, builderOptions },
+          { context, pluginStore, rsbuildOptions },
           options,
           webpackBuild,
         );
@@ -87,7 +87,7 @@ export function webpackProvider({
         return await inspectConfig({
           context,
           pluginStore,
-          builderOptions,
+          rsbuildOptions,
           inspectOptions,
         });
       },

@@ -6,7 +6,7 @@ describe('plugins/assetsRetry', () => {
   it('should add assets retry plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginAssetsRetry()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           assetsRetry: {},
         },
@@ -21,7 +21,7 @@ describe('plugins/assetsRetry', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginAssetsRetry()],
       target: 'node',
-      builderConfig: {
+      rsbuildConfig: {
         output: {},
       },
     });

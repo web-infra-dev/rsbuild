@@ -10,7 +10,7 @@ describe('plugins/moduleScopes', () => {
   it('should set entry correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginModuleScopes()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           moduleScopes: ['./src/foo.ts', './src/bar.ts'],
         },

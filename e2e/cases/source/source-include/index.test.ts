@@ -11,7 +11,7 @@ webpackOnlyTest(
       build({
         cwd: __dirname,
         entry: { index: path.resolve(__dirname, './src/index.js') },
-        builderConfig: {
+        rsbuildConfig: {
           security: {
             checkSyntax: true,
           },
@@ -26,7 +26,7 @@ test('should compile specified file when source.include', async () => {
     build({
       cwd: __dirname,
       entry: { index: path.resolve(__dirname, './src/index.js') },
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           include: [path.resolve(__dirname, '../test.js')],
         },

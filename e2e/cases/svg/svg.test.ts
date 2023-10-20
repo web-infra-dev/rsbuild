@@ -44,7 +44,7 @@ test('svg (defaultExport component)', async ({ page }) => {
       main: join(fixtures, 'svg-default-export-component', 'src/index.js'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         svgDefaultExport: 'component',
       },
@@ -96,7 +96,7 @@ test('svg (external react)', async ({ page }) => {
       main: join(fixtures, 'svg-external-react', 'src/index.js'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         externals: {
           react: 'React',
@@ -140,7 +140,7 @@ test('svg (disableSvgr)', async ({ page }) => {
       main: join(fixtures, 'svg-assets', 'src/index.js'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         disableSvgr: true,
       },

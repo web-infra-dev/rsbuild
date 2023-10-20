@@ -8,13 +8,13 @@ import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import type { Context, StartServerResult, SharedRsbuildConfig } from './types';
 
 export const getServerOptions = (
-  builderConfig: SharedRsbuildConfig,
+  rsbuildConfig: SharedRsbuildConfig,
 ): ModernServerOptions['config'] => {
   return {
     output: {
-      path: builderConfig.output?.distPath?.root,
-      assetPrefix: builderConfig.output?.assetPrefix,
-      distPath: builderConfig.output?.distPath,
+      path: rsbuildConfig.output?.distPath?.root,
+      assetPrefix: rsbuildConfig.output?.assetPrefix,
+      distPath: rsbuildConfig.output?.distPath,
     },
     source: {
       alias: {},
@@ -48,7 +48,7 @@ export async function printServerURLs(
 
 export async function startProdServer(
   context: Context,
-  builderConfig: SharedRsbuildConfig,
+  rsbuildConfig: SharedRsbuildConfig,
 ) {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'production';
@@ -56,10 +56,10 @@ export async function startProdServer(
 
   const { getPort } = await import('@modern-js/utils');
 
-  const port = await getPort(builderConfig.dev?.port || DEFAULT_PORT);
+  const port = await getPort(rsbuildConfig.dev?.port || DEFAULT_PORT);
   const server = await prodServer({
     pwd: context.rootPath,
-    config: getServerOptions(builderConfig),
+    config: getServerOptions(rsbuildConfig),
   });
 
   await server.init();

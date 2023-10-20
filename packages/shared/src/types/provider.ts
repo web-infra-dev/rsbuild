@@ -1,7 +1,7 @@
 import type { PluginStore, Plugins, DefaultRsbuildPluginAPI } from './plugin';
 import type { Context } from './context';
 import type { Compiler, MultiCompiler } from 'webpack';
-import type { RsbuildMode, CreateRsbuildOptions } from './builder';
+import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
 import type { Server, ModernDevServerOptions } from '@modern-js/server';
 import type { AddressUrl } from '@modern-js/utils';
 import { Logger } from '@modern-js/prod-server';
@@ -47,7 +47,7 @@ export type RsbuildProvider<
   Compiler extends Record<string, any> = Record<string, any>,
 > = (options: {
   pluginStore: PluginStore;
-  builderOptions: Required<CreateRsbuildOptions>;
+  rsbuildOptions: Required<CreateRsbuildOptions>;
   plugins: Plugins;
 }) => Promise<
   ProviderInstance<RsbuildConfig, BundlerConfig, NormalizedConfig, Compiler>
@@ -88,10 +88,10 @@ export type ProviderInstance<
   initConfigs: () => Promise<BundlerConfig[]>;
 
   inspectConfig: (options?: InspectConfigOptions) => Promise<{
-    builderConfig: string;
+    rsbuildConfig: string;
     bundlerConfigs: string[];
     origin: {
-      builderConfig: RsbuildConfig;
+      rsbuildConfig: RsbuildConfig;
       bundlerConfigs: BundlerConfig[];
     };
   }>;

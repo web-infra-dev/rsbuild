@@ -17,7 +17,7 @@ describe('plugins/node-polyfill', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginNodePolyfill()],
       provider: webpackProvider,
-      builderConfig: {},
+      rsbuildConfig: {},
     });
     const configs = await rsbuild.initConfigs();
 

@@ -16,7 +16,7 @@ describe('plugins/manifest', () => {
   it('should register manifest plugin when output.enableAssetManifest is enabled', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginManifest()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           enableAssetManifest: true,
         },

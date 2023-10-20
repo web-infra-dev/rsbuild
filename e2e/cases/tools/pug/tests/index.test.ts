@@ -11,7 +11,7 @@ test('pug', async ({ page }) => {
       main: join(fixtures, 'src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         template: './static/index.pug',
       },

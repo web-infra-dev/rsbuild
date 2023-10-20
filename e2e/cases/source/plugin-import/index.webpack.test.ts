@@ -16,7 +16,7 @@ test('should import with function customName', async () => {
   {
     const rsbuild = await build({
       ...setupConfig,
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           transformImport: [
             {
@@ -35,7 +35,7 @@ test('should import with function customName', async () => {
   const rsbuild = await build({
     ...setupConfig,
     plugins: [pluginSwc()],
-    builderConfig: {
+    rsbuildConfig: {
       source: {
         transformImport: [
           {
@@ -69,7 +69,7 @@ test('should import with template config with SWC', async () => {
   {
     const rsbuild = await build({
       ...setupConfig,
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           transformImport: [
             {
@@ -88,7 +88,7 @@ test('should import with template config with SWC', async () => {
   {
     const rsbuild = await build({
       ...setupConfig,
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           transformImport: [
             {

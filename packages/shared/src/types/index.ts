@@ -1,4 +1,4 @@
-export * from './builder';
+export * from './rsbuild';
 export * from './context';
 export * from './utils';
 export * from './plugin';

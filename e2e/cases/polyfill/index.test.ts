@@ -34,7 +34,7 @@ test('should add polyfill when set polyfill entry (default)', async ({
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         polyfill: 'entry',
       },
@@ -63,7 +63,7 @@ webpackOnlyTest(
     const rsbuild = await build({
       cwd: __dirname,
       entry: { index: path.resolve(__dirname, './src/index.js') },
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           polyfill: 'usage',
         },

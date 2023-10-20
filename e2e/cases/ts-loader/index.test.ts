@@ -7,7 +7,7 @@ webpackOnlyTest('build pass with default ts-loader options', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.ts') },
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         tsLoader: {},
       },

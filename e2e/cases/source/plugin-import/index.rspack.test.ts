@@ -9,7 +9,7 @@ test('should import with template config', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       source: {
         transformImport: [
           {

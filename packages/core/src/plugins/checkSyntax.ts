@@ -46,17 +46,17 @@ export function pluginCheckSyntax(): DefaultRsbuildPlugin {
 }
 
 async function getCheckTargets(
-  builderContext: Context,
-  builderConfig: SharedNormalizedConfig,
-  builderTarget: RsbuildTarget,
+  rsbuildContext: Context,
+  rsbuildConfig: SharedNormalizedConfig,
+  rsbuildTarget: RsbuildTarget,
   checkSyntax: CheckSyntaxOptions | true,
 ) {
   const browserslist =
     (await getBrowserslistWithDefault(
-      builderContext.rootPath,
-      builderConfig,
-      builderTarget,
-    )) ?? DEFAULT_BROWSERSLIST[builderTarget];
+      rsbuildContext.rootPath,
+      rsbuildConfig,
+      rsbuildTarget,
+    )) ?? DEFAULT_BROWSERSLIST[rsbuildTarget];
   if (checkSyntax === true) {
     return browserslist;
   }

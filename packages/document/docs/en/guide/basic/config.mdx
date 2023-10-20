@@ -42,19 +42,19 @@ export default {
 
 ### Using the Node API
 
-When you call the Rsbuild through the Node API, you can pass in the Rsbuild config through the Provider's `builderConfig` option:
+When you call the Rsbuild through the Node API, you can pass in the Rsbuild config through the Provider's `rsbuildConfig` option:
 
 ```ts
-import { builderWebpackProvider } from '@rsbuild/webpack-provider';
+import { webpackProvider } from '@rsbuild/webpack-provider';
 
-const provider = builderWebpackProvider({
-  builderConfig: {
+const provider = webpackProvider({
+  rsbuildConfig: {
     // some configs
   },
 });
 ```
 
-Please refer to [API - createRsbuild](/api/javascript-api/core.html#createbuilder) for details.
+Please refer to [API - createRsbuild](/api/javascript-api/core.html#creatersbuild) for details.
 
 ## Relationship with Framework Config
 
@@ -64,10 +64,10 @@ Generally speaking, the Rsbuild config is a subset of the framework config.
 
 ## Debug the config
 
-You can enable Rsbuild's debug mode by adding the `DEBUG=builder` environment variable when executing a build.
+You can enable Rsbuild's debug mode by adding the `DEBUG=rsbuild` environment variable when executing a build.
 
 ```bash
-DEBUG=builder pnpm dev
+DEBUG=rsbuild pnpm dev
 ```
 
 In debug mode, Rsbuild will write the Rsbuild config to the dist directory, which is convenient for developers to view and debug.

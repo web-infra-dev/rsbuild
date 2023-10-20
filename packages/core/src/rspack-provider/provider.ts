@@ -29,13 +29,13 @@ export type RspackProvider = RsbuildProvider<
 >;
 
 export function rspackProvider({
-  builderConfig: originalRsbuildConfig,
+  rsbuildConfig: originalRsbuildConfig,
 }: {
-  builderConfig: RsbuildConfig;
+  rsbuildConfig: RsbuildConfig;
 }): RspackProvider {
-  const builderConfig = pickRsbuildConfig(originalRsbuildConfig);
+  const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
 
-  return async ({ pluginStore, builderOptions, plugins }) => {
+  return async ({ pluginStore, rsbuildOptions, plugins }) => {
     if (!(await isSatisfyRspackMinimumVersion())) {
       throw new Error(
         `The current Rspack version does not meet the requirements, the minimum supported version of Rspack is ${chalk.green(
@@ -44,7 +44,7 @@ export function rspackProvider({
       );
     }
 
-    const context = await createContext(builderOptions, builderConfig);
+    const context = await createContext(rsbuildOptions, rsbuildConfig);
     const pluginAPI = getPluginAPI({ context, pluginStore });
 
     context.pluginAPI = pluginAPI;
@@ -65,7 +65,7 @@ export function rspackProvider({
         const { rspackConfigs } = await initConfigs({
           context,
           pluginStore,
-          builderOptions,
+          rsbuildOptions,
         });
 
         // todo: compiler 类型定义
@@ -78,7 +78,7 @@ export function rspackProvider({
       async startDevServer(options) {
         const { startDevServer } = await import('./core/startDevServer');
         return startDevServer(
-          { context, pluginStore, builderOptions },
+          { context, pluginStore, rsbuildOptions },
           options,
         );
       },
@@ -90,7 +90,7 @@ export function rspackProvider({
       async build(options) {
         const { build: buildImpl, rspackBuild } = await import('./core/build');
         return buildImpl(
-          { context, pluginStore, builderOptions },
+          { context, pluginStore, rsbuildOptions },
           options,
           rspackBuild,
         );
@@ -100,7 +100,7 @@ export function rspackProvider({
         const { rspackConfigs } = await initConfigs({
           context,
           pluginStore,
-          builderOptions,
+          rsbuildOptions,
         });
         return rspackConfigs;
       },
@@ -110,7 +110,7 @@ export function rspackProvider({
         return inspectConfig({
           context,
           pluginStore,
-          builderOptions,
+          rsbuildOptions,
           inspectOptions,
         });
       },

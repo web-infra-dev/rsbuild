@@ -31,9 +31,9 @@ interface SplitChunksContext {
    */
   override: SplitChunks;
   /**
-   * User builder `chunkSplit` config
+   * User Rsbuild `chunkSplit` config
    */
-  builderConfig: RsbuildChunkSplit;
+  rsbuildConfig: RsbuildChunkSplit;
   /**
    * The root path of current project
    */
@@ -179,15 +179,15 @@ function splitByModule(ctx: SplitChunksContext): SplitChunks {
 }
 
 function splitBySize(ctx: SplitChunksContext): SplitChunks {
-  const { override, userDefinedCacheGroups, defaultConfig, builderConfig } =
+  const { override, userDefinedCacheGroups, defaultConfig, rsbuildConfig } =
     ctx;
   assert(defaultConfig !== false);
   assert(override !== false);
-  assert(builderConfig.strategy === 'split-by-size');
+  assert(rsbuildConfig.strategy === 'split-by-size');
   return {
     ...defaultConfig,
-    minSize: builderConfig.minSize ?? 0,
-    maxSize: builderConfig.maxSize ?? Infinity,
+    minSize: rsbuildConfig.minSize ?? 0,
+    maxSize: rsbuildConfig.maxSize ?? Infinity,
     ...override,
     cacheGroups: {
       ...defaultConfig.cacheGroups,
@@ -309,7 +309,7 @@ export function pluginSplitChunks(): DefaultRsbuildPlugin {
             defaultConfig,
             override: override || {},
             userDefinedCacheGroups,
-            builderConfig: chunkSplit,
+            rsbuildConfig: chunkSplit,
             rootPath: api.context.rootPath,
             polyfill: config.output.polyfill,
           });

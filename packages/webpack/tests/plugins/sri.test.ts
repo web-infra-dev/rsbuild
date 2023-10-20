@@ -6,7 +6,7 @@ describe('plugins/sri', () => {
   it('should apply default sri plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSRI()],
-      builderConfig: {
+      rsbuildConfig: {
         security: {
           sri: true,
         },
@@ -20,7 +20,7 @@ describe('plugins/sri', () => {
   it('should apply sri plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSRI()],
-      builderConfig: {
+      rsbuildConfig: {
         security: {
           sri: {
             hashFuncNames: ['sha384'],
@@ -37,7 +37,7 @@ describe('plugins/sri', () => {
   it("should't apply sri plugin", async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSRI()],
-      builderConfig: {},
+      rsbuildConfig: {},
     });
 
     const config = await rsbuild.unwrapWebpackConfig();

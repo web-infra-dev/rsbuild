@@ -9,7 +9,7 @@ describe('plugins/css', () => {
   it('should set css config with style-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableCssExtract: true,
         },
@@ -27,7 +27,7 @@ describe('plugins/css', () => {
   it('should set css config with mini-css-extract-plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {},
+      rsbuildConfig: {},
     });
 
     const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
@@ -41,7 +41,7 @@ describe('plugins/css', () => {
   it('should add sass-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSass()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           sass: {},
         },
@@ -59,7 +59,7 @@ describe('plugins/css', () => {
   it('should add less-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginLess()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           less: {},
         },
@@ -77,7 +77,7 @@ describe('plugins/css', () => {
   it('should override browserslist of autoprefixer when using output.overrideBrowserslist config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           overrideBrowserslist: ['Chrome 80'],
         },
@@ -92,7 +92,7 @@ describe('plugins/css', () => {
     const rsbuild = await createStubRsbuild({
       target: ['node'],
       plugins: [pluginCss()],
-      builderConfig: {},
+      rsbuildConfig: {},
     });
 
     const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
@@ -107,7 +107,7 @@ describe('plugins/css', () => {
     const rsbuild = await createStubRsbuild({
       target: ['web-worker'],
       plugins: [pluginCss()],
-      builderConfig: {},
+      rsbuildConfig: {},
     });
 
     const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
@@ -122,7 +122,7 @@ describe('plugins/css', () => {
     const rsbuild = await createStubRsbuild({
       target: ['node'],
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableCssExtract: true,
         },
@@ -144,7 +144,7 @@ describe('plugins/css', () => {
     const rsbuild = await createStubRsbuild({
       target: ['web-worker'],
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableCssExtract: true,
         },
@@ -165,7 +165,7 @@ describe('plugins/css', () => {
   it('should allow to disable extract css plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableCssExtract: true,
         },
@@ -194,7 +194,7 @@ describe('plugins/css', () => {
   it('should disable source map when output.disableSourceMap is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableSourceMap: true,
         },
@@ -209,7 +209,7 @@ describe('plugins/css', () => {
   it('should disable source map when output.disableSourceMap is css: true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableSourceMap: {
             css: true,
@@ -241,7 +241,7 @@ describe('plugins/css', () => {
   it('should allow to custom cssModuleLocalIdentName', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           cssModuleLocalIdentName: '[hash:base64]',
         },
@@ -258,7 +258,7 @@ describe('plugins/css', () => {
   it('should remove some postcss plugins based on browserslist', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           overrideBrowserslist: ['Chrome 100'],
         },

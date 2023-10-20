@@ -2,7 +2,7 @@
 
 Rsbuild supports build multiple target types for running in different target environments. After setting the correct target type, Rsbuild will optimize the build results for the environment, and enable some plugins or configs for the target environment during the build process.
 
-You can set the type through the `target` parameter of the [createRsbuild](/api/javascript-api/core.html#createbuilder) method.
+You can set the type through the `target` parameter of the [createRsbuild](/api/javascript-api/core.html#creatersbuild) method.
 
 ## Default Target
 

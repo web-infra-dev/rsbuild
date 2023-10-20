@@ -9,7 +9,7 @@ test('should compile stylus and rem correctly', async () => {
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     plugins: [pluginStylus()],
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         convertToRem: true,
       },

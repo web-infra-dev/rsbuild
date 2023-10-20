@@ -11,7 +11,7 @@ test('legalComments linked (default)', async ({ page }) => {
       main: join(fixtures, 'src/index.jsx'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         chunkSplit: {
           strategy: 'all-in-one',
@@ -57,7 +57,7 @@ test('legalComments none', async ({ page }) => {
       main: join(fixtures, 'src/index.jsx'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         chunkSplit: {
           strategy: 'all-in-one',
@@ -100,7 +100,7 @@ test('legalComments inline', async ({ page }) => {
       main: join(fixtures, 'src/index.jsx'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         chunkSplit: {
           strategy: 'all-in-one',

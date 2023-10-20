@@ -12,7 +12,7 @@ describe('plugins/pug', () => {
         main: './src/main.ts',
         foo: './src/foo.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         html: {
           template: 'bar.html',
           templateByEntries: { main: 'foo.pug' },

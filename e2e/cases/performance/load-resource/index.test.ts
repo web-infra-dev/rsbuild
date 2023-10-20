@@ -11,7 +11,7 @@ test('should generate prefetch link when prefetch is defined', async () => {
     entry: {
       main: join(fixtures, 'src/page1/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         assetPrefix: 'https://www.foo.com',
       },
@@ -48,7 +48,7 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
     entry: {
       main: join(fixtures, 'src/page1/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         assetPrefix: '//www.foo.com',
       },
@@ -82,7 +82,7 @@ test('should generate prefetch link with filter', async () => {
     entry: {
       main: join(fixtures, 'src/page1/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         prefetch: {
           include: [/.*\.png$/],
@@ -121,7 +121,7 @@ webpackOnlyTest(
         page1: join(fixtures, 'src/page1/index.ts'),
         page2: join(fixtures, 'src/page2/index.ts'),
       },
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           prefetch: {
             type: 'all-chunks',
@@ -166,7 +166,7 @@ test('should generate preload link when preload is defined', async () => {
     entry: {
       main: join(fixtures, 'src/page1/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         preload: true,
       },

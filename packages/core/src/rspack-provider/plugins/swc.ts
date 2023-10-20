@@ -36,21 +36,21 @@ export const pluginSwc = (): RsbuildPlugin => ({
     });
 
     api.modifyRspackConfig(async (rspackConfig, { target }) => {
-      const builderConfig = api.getNormalizedConfig();
+      const rsbuildConfig = api.getNormalizedConfig();
 
       // Apply decorator and presetEnv
-      await applyDefaultConfig(rspackConfig, builderConfig, api, target);
+      await applyDefaultConfig(rspackConfig, rsbuildConfig, api, target);
     });
   },
 });
 
 async function applyDefaultConfig(
   rspackConfig: RspackConfig,
-  builderConfig: NormalizedConfig,
+  rsbuildConfig: NormalizedConfig,
   api: RsbuildPluginAPI,
   target: RsbuildTarget,
 ) {
-  const legacy = !builderConfig.output.enableLatestDecorators;
+  const legacy = !rsbuildConfig.output.enableLatestDecorators;
   /**
    * Swc only enable latestDecorator for JS module, not TS module.
    */
@@ -64,7 +64,7 @@ async function applyDefaultConfig(
 
   await setBrowserslist(
     api.context.rootPath,
-    builderConfig,
+    rsbuildConfig,
     target,
     rspackConfig,
   );
@@ -73,7 +73,7 @@ async function applyDefaultConfig(
    * Enable preset-env polyfill: set rspackConfig.target === 'browserslist'
    */
   if (isWebTarget(target)) {
-    const polyfillMode = builderConfig.output.polyfill;
+    const polyfillMode = rsbuildConfig.output.polyfill;
 
     // TODO: remove this when Rspack support `usage` mode
     if (polyfillMode === 'usage') {
@@ -93,18 +93,18 @@ async function applyDefaultConfig(
     }
   }
 
-  applyTransformImport(rspackConfig, builderConfig.source.transformImport);
+  applyTransformImport(rspackConfig, rsbuildConfig.source.transformImport);
 }
 
 async function setBrowserslist(
   rootPath: string,
-  builderConfig: NormalizedConfig,
+  rsbuildConfig: NormalizedConfig,
   target: RsbuildTarget,
   rspackConfig: RspackConfig,
 ) {
   const browserslist = await getBrowserslistWithDefault(
     rootPath,
-    builderConfig,
+    rsbuildConfig,
     target,
   );
 

@@ -18,19 +18,19 @@ describe('test dev server', () => {
     });
 
     const isOnDoneRegistered = compiler.hooks.done.taps.some(
-      tap => tap.fn === onDoneFn,
+      (tap) => tap.fn === onDoneFn,
     );
 
     expect(isOnDoneRegistered).toBeTruthy();
 
     const isCompileHookRegistered = compiler.hooks.compile.taps.some(
-      tap => tap.fn === onInvalidFn,
+      (tap) => tap.fn === onInvalidFn,
     );
 
     expect(isCompileHookRegistered).toBeTruthy();
 
     const isInvalidHookRegistered = compiler.hooks.invalid.taps.some(
-      tap => tap.fn === onInvalidFn,
+      (tap) => tap.fn === onInvalidFn,
     );
 
     expect(isInvalidHookRegistered).toBeTruthy();
@@ -48,7 +48,7 @@ describe('test dev server', () => {
     });
 
     const isOnDoneRegistered = compiler.hooks.done.taps.some(
-      tap => tap.fn === onDoneFn,
+      (tap) => tap.fn === onDoneFn,
     );
 
     expect(isOnDoneRegistered).toBeFalsy();
@@ -85,7 +85,7 @@ describe('test dev server', () => {
   test('getDevServerOptions', async () => {
     await expect(
       getDevServerOptions({
-        builderConfig: {},
+        rsbuildConfig: {},
         serverOptions: {},
         port: 8080,
       }),
@@ -126,7 +126,7 @@ describe('test dev server', () => {
 
     await expect(
       getDevServerOptions({
-        builderConfig: {
+        rsbuildConfig: {
           dev: {
             hmr: false,
             https: true,
