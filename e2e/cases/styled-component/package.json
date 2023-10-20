@@ -2,6 +2,6 @@
   "name": "@rsbuild/e2e-styled-component",
   "private": true,
   "dependencies": {
-    "styled-components": "^5.0.0"
+    "styled-components": "^6.0.0"
   }
 }
