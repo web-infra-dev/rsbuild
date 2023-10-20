@@ -54,7 +54,7 @@ function ModifyRsbuildConfig(
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
       config.html = config.html || {};
       config.html.title = 'Hello World!';
@@ -89,7 +89,8 @@ type ModifyBundlerChainUtils = {
     // Depends on bundler type
     BannerPlugin: typeof webpack.BannerPlugin | typeof rspack.BannerPlugin;
     DefinePlugin: typeof webpack.DefinePlugin | typeof rspack.DefinePlugin;
-  }
+    ProvidePlugin: typeof webpack.ProvidePlugin | typeof rspack.ProvidePlugin;
+  };
 };
 
 function ModifyBundlerChain(
@@ -106,7 +107,7 @@ function ModifyBundlerChain(
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.modifyBundlerChain((chain, utils) => {
       if (utils.env === 'development') {
         chain.devtool('eval');
@@ -149,7 +150,7 @@ function ModifyWebpackChain(
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.modifyWebpackChain((chain, utils) => {
       if (utils.env === 'development') {
         chain.devtool('eval');
@@ -200,7 +201,7 @@ function ModifyWebpackConfig(
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.modifyWebpackConfig((config, utils) => {
       if (utils.env === 'development') {
         config.devtool = 'eval';
@@ -239,7 +240,7 @@ function ModifyRspackConfig(
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.modifyRspackConfig((config, utils) => {
       if (utils.env === 'development') {
         config.devtool = 'eval';
@@ -259,7 +260,7 @@ import OnBeforeCreateCompiler from '@en/shared/onBeforeCreateCompiler.md';
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
       console.log('the bundler config is ', bundlerConfigs);
     });
@@ -277,7 +278,7 @@ import OnAfterCreateCompiler from '@en/shared/onAfterCreateCompiler.md';
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.onAfterCreateCompiler(({ compiler }) => {
       console.log('the compiler is ', compiler);
     });
@@ -297,7 +298,7 @@ import OnBeforeBuild from '@en/shared/onBeforeBuild.md';
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.onBeforeBuild(({ bundlerConfigs }) => {
       console.log('the bundler config is ', bundlerConfigs);
     });
@@ -315,7 +316,7 @@ import OnAfterBuild from '@en/shared/onAfterBuild.md';
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.onAfterBuild(({ stats }) => {
       console.log(stats?.toJson());
     });
@@ -335,7 +336,7 @@ import OnBeforeStartDevServer from '@en/shared/onBeforeStartDevServer.md';
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.onBeforeStartDevServer(() => {
       console.log('before start!');
     });
@@ -353,7 +354,7 @@ import OnAfterStartDevServer from '@en/shared/onAfterStartDevServer.md';
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.onAfterStartDevServer(({ port }) => {
       console.log('this port is: ', port);
     });
@@ -371,7 +372,7 @@ import OnDevCompileDone from '@en/shared/onDevCompileDone.md';
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.onDevCompileDone(({ isFirstCompile }) => {
       if (isFirstCompile) {
         console.log('first compile!');
@@ -395,7 +396,7 @@ import OnExit from '@en/shared/onExit.md';
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     api.onExit(() => {
       console.log('exit!');
     });

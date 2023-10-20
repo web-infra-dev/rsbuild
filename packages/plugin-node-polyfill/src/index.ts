@@ -1,7 +1,4 @@
-import { setConfig } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '@rsbuild/core';
-import type { RsbuildPluginAPI as WebpackRsbuildPluginAPI } from '@rsbuild/webpack';
-import type { RsbuildPluginAPI as RspackRsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
 
 const getResolveFallback = (nodeLibs: Record<string, any>) =>
   Object.keys(nodeLibs).reduce<Record<string, string | false>>(
@@ -34,14 +31,12 @@ const getProvideLibs = async () => {
  *
  *   rsbuild.addPlugins([ pluginNodePolyfill() ]);
  */
-export function pluginNodePolyfill(): RsbuildPlugin<
-  WebpackRsbuildPluginAPI | RspackRsbuildPluginAPI
-> {
+export function pluginNodePolyfill(): RsbuildPlugin<RsbuildPluginAPI> {
   return {
     name: 'plugin-node-polyfill',
 
     async setup(api) {
-      api.modifyBundlerChain(async (chain, { isServer }) => {
+      api.modifyBundlerChain(async (chain, { CHAIN_ID, isServer, bundler }) => {
         // it had not need `node polyfill`, if the target is 'node'(server runtime).
         if (isServer) {
           return;
@@ -54,32 +49,11 @@ export function pluginNodePolyfill(): RsbuildPlugin<
 
         // module polyfill
         chain.resolve.fallback.merge(getResolveFallback(nodeLibs));
-      });
 
-      if (api.context.bundlerType === 'rspack') {
-        (api as RspackRsbuildPluginAPI).modifyRspackConfig(
-          async (config, { isServer }) => {
-            if (isServer) {
-              return;
-            }
-            setConfig(config, 'builtins.provide', {
-              ...(config.builtins?.provide ?? {}),
-              ...(await getProvideLibs()),
-            });
-          },
-        );
-      } else {
-        (api as WebpackRsbuildPluginAPI).modifyWebpackChain(
-          async (chain, { CHAIN_ID, isServer, webpack }) => {
-            if (isServer) {
-              return;
-            }
-            chain
-              .plugin(CHAIN_ID.PLUGIN.NODE_POLYFILL_PROVIDE)
-              .use(webpack.ProvidePlugin, [await getProvideLibs()]);
-          },
-        );
-      }
+        chain
+          .plugin(CHAIN_ID.PLUGIN.NODE_POLYFILL_PROVIDE)
+          .use(bundler.ProvidePlugin, [await getProvideLibs()]);
+      });
     },
   };
 }
