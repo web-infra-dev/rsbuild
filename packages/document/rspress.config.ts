@@ -72,7 +72,7 @@ export default defineConfig({
       replace: 'Modern.js',
     },
   ],
-  rsbuildConfig: {
+  builderConfig: {
     source: {
       alias: {
         '@components': path.join(__dirname, 'src/components'),
