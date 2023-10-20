@@ -15,6 +15,7 @@
     "prepare": "pnpm run build && husky install",
     "gen-release-note": "modern gen-release-note",
     "check-changeset": "cd ./scripts/check-changeset && pnpm start",
+    "check-dependency-version": "check-dependency-version-consistency . --ignore-dep vue-loader",
     "update-modern": "cd ./scripts/update-packages && pnpm start:modern",
     "update-rspress": "cd ./scripts/update-packages && pnpm start:rspress"
   },
@@ -38,13 +39,14 @@
   "devDependencies": {
     "@modern-js/module-tools": "^2.37.1",
     "@modern-js/monorepo-tools": "^2.37.1",
-    "@rsbuild/tsconfig": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
-    "vite-tsconfig-paths": "4.2.1",
+    "@rsbuild/tsconfig": "workspace:*",
+    "check-dependency-version-consistency": "^4.1.0",
     "husky": "^8.0.3",
     "nano-staged": "^0.8.0",
     "oxlint": "^0.0.13",
     "prettier": "^3.0.3",
+    "vite-tsconfig-paths": "4.2.1",
     "vitest": "1.0.0-beta.1"
   },
   "pnpm": {
