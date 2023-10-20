@@ -20,7 +20,7 @@ You can pass in the Provider type through generics to make the type definition o
 
 ```ts
 import type { createRsbuild, type RsbuildInstance } from '@rsbuild/core';
-import type { RsbuildWebpackProvider } from '@rsbuild/webpack-provider';
+import type { RsbuildWebpackProvider } from '@rsbuild/webpack';
 
 let rsbuild: RsbuildInstance<RsbuildWebpackProvider>;
 ```
@@ -41,7 +41,7 @@ The type of Rsbuild plugin, should be used with the `RsbuildPluginAPI` type expo
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { RsbuildPluginAPI } from '@rsbuild/webpack-provider';
+import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 
 const myPlugin: RsbuildPlugin<RsbuildPluginAPI> = {
   name: 'my-plugin',

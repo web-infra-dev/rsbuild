@@ -14,7 +14,7 @@ Modern.js 框架默认使用 webpack 作为打包工具。如果希望启用 Rsp
 
 ### 在前端框架中接入
 
-如果你基于 Rsbuild 开发了一个前端框架，接入 rspack-provider 和 [接入 webpack-provider](/guide/start/quick-start.html#在前端框架中接入) 的方式类似，只需要把依赖从 `@rsbuild/webpack-provider` 改为 `@rsbuild/rspack-provider` 即可。
+如果你基于 Rsbuild 开发了一个前端框架，接入 rspack-provider 和 [接入 webpack-provider](/guide/start/quick-start.html#在前端框架中接入) 的方式类似，只需要把依赖从 `@rsbuild/webpack` 改为 `@rsbuild/rspack-provider` 即可。
 
 ```ts title=modern.config.ts
 import { createRsbuild } from '@rsbuild/core';
@@ -30,7 +30,7 @@ const provider = rspackProvider({
 ```diff title=package.json
 {
   "devDependencies": {
--    "@rsbuild/webpack-provider": "2.8.0",
+-    "@rsbuild/webpack": "2.8.0",
 +    "@rsbuild/rspack-provider": "2.8.0"
   }
 }

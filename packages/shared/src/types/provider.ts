@@ -6,7 +6,7 @@ import type { Server, ModernDevServerOptions } from '@modern-js/server';
 import type { AddressUrl } from '@modern-js/utils';
 import { Logger } from '@modern-js/prod-server';
 
-export type Bundler = 'webpack' | 'rspack';
+export type Bundler = 'rspack' | 'webpack';
 
 export type CreateCompilerOptions = { watch?: boolean };
 

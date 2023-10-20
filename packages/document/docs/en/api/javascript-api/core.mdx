@@ -10,49 +10,17 @@ This section describes some of the core methods provided by Rsbuild.
 
 Create a Rsbuild instance object.
 
-When using this method, it needs to be used with the `@rsbuild/webpack-provider` or `@rsbuild/rspack-provider`. Providers implements corresponding build feature based on specific bundlers.
-
-### webpackProvider
-
-When `webpackProvider` is passed, the Rsbuild will use webpack as the bundler for building.
-
 ```ts
 import { createRsbuild } from '@rsbuild/core';
-import { webpackProvider } from '@rsbuild/webpack-provider';
 
-const provider = webpackProvider({
-  rsbuildConfig: {
-    // some configs
-  },
-});
-
-const rsbuild = await createRsbuild(provider, {
-  // some options
-});
-```
-
-### rspackProvider
-
-When `rspackProvider` is passed, the Rsbuild will use Rspack as the bundler for building.
-
-```ts
-import { createRsbuild } from '@rsbuild/core';
-import { rspackProvider } from '@rsbuild/rspack-provider';
-
-const provider = rspackProvider({
-  rsbuildConfig: {
-    // some configs
-  },
-});
-
-const rsbuild = await createRsbuild(provider, {
-  // some options
+const rsbuild = await createRsbuild({
+  // options
 });
 ```
 
 ### options
 
-The second parameter of `createRsbuild` is a options object, you can pass in the following options:
+The first parameter of `createRsbuild` is a options object, you can pass in the following options:
 
 ```ts
 type RsbuildEntry = Record<string, string | string[]>;
@@ -63,7 +31,9 @@ type CreateRsbuildOptions = {
   cwd?: string;
   entry?: RsbuildEntry;
   target?: RsbuildTarget | RsbuildTarget[];
+  provider?: RsbuildProvider;
   configPath?: string | null;
+  rsbuildConfig?: RsbuildConfig;
 };
 ```
 
@@ -73,6 +43,30 @@ Description:
 - `entry`: Build entry object.
 - `target`: Build target type, the default value is `['web']`, see chapter [Build Target](/api/start/build-target.html) for details.
 - `configPath`: The path to the config file of higher-level solution (absolute path), this parameter affects the build cache update.
+- `provider`: Used to switch the underlying bundler.
+- `rsbuildConfig`: Rsbuild configuration object. Rsbuild provides a rich set of configuration options that allow you to customize the build behavior flexibly. You can find all available configuration options in the [Configuration](/config/) section.
+
+### webpackProvider
+
+Rsbuild uses Rspack as the default bundler. You can switch to Webpack packaging by using the `provider` option.
+
+First, install the `@rsbuild/webpack` package:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/webpack -D" />
+
+Then, pass `webpackProvider` as the value to the `provider` option. This will automatically switch the underlying bundler of Rsbuild to Webpack.
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+import { webpackProvider } from '@rsbuild/webpack';
+
+const rsbuild = await createRsbuild({
+  provider: webpackProvider,
+  // other options
+});
+```
 
 ## mergeRsbuildConfig
 
@@ -114,7 +108,7 @@ A webpack object for consuming webpack builtin plugins or type definitions.
 - **Example**
 
 ```ts
-import webpack from '@rsbuild/webpack-provider/webpack';
+import webpack from '@rsbuild/webpack/webpack';
 
 new webpack.DefinePlugin();
 ```
@@ -128,7 +122,7 @@ HtmlWebpackPlugin object, usually used to implement custom plugins of HtmlWebpac
 - **Example**
 
 ```ts
-import HtmlWebpackPlugin from '@rsbuild/webpack-provider/html-webpack-plugin';
+import HtmlWebpackPlugin from '@rsbuild/webpack/html-webpack-plugin';
 ```
 
 > In most scenarios, it is recommended to import HtmlWebpackPlugin from Rsbuild instead of manually installing a "html-webpack-plugin" dependency, which can avoid multi-instance problems.

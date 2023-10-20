@@ -105,11 +105,11 @@ When using webpack-provider or rspack-provider, the type definition of `RsbuildP
 
 ### Plugin for webpack-provider
 
-When developing plugins for webpack-provider, please import `RsbuildPluginAPI` from `@rsbuild/webpack-provider`.
+When developing plugins for webpack-provider, please import `RsbuildPluginAPI` from `@rsbuild/webpack`.
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { RsbuildPluginAPI } from '@rsbuild/webpack-provider';
+import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 
 export default (): RsbuildPlugin<RsbuildPluginAPI> => ({
   name: 'plugin-foo',

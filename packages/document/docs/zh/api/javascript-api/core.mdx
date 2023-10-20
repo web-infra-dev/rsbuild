@@ -10,49 +10,17 @@ extractApiHeaders: [2]
 
 创建一个 Rsbuild 实例对象。
 
-使用该方法时，需要搭配 `@rsbuild/webpack-provider` 或 `@rsbuild/rspack-provider` 使用，Provider 基于特定 bundler 实现了对应的构建能力。
-
-### webpackProvider
-
-当传入 `webpackProvider` 时，Rsbuild 会使用 webpack 作为 bundler 进行构建。
-
 ```ts
 import { createRsbuild } from '@rsbuild/core';
-import { webpackProvider } from '@rsbuild/webpack-provider';
 
-const provider = webpackProvider({
-  rsbuildConfig: {
-    // some configs
-  },
-});
-
-const rsbuild = await createRsbuild(provider, {
-  // some options
-});
-```
-
-### rspackProvider
-
-当传入 `rspackProvider` 时，Rsbuild 会使用 Rspack 作为 bundler 进行构建。
-
-```ts
-import { createRsbuild } from '@rsbuild/core';
-import { rspackProvider } from '@rsbuild/rspack-provider';
-
-const provider = rspackProvider({
-  rsbuildConfig: {
-    // some configs
-  },
-});
-
-const rsbuild = await createRsbuild(provider, {
-  // some options
+const rsbuild = await createRsbuild({
+  // options
 });
 ```
 
 ### options
 
-`createRsbuild` 的第二个参数是一个配置对象，你可以传入以下选项：
+`createRsbuild` 的第一个参数是一个配置对象，你可以传入以下选项：
 
 ```ts
 type RsbuildEntry = Record<string, string | string[]>;
@@ -63,7 +31,9 @@ type CreateRsbuildOptions = {
   cwd?: string;
   entry?: RsbuildEntry;
   target?: RsbuildTarget | RsbuildTarget[];
+  provider?: RsbuildProvider;
   configPath?: string | null;
+  rsbuildConfig?: RsbuildConfig;
 };
 ```
 
@@ -73,6 +43,30 @@ type CreateRsbuildOptions = {
 - `entry`: 构建入口对象
 - `target`: 构建产物类型，默认值为 `['web']`，详见 [构建产物类型](/api/start/build-target.html) 章节。
 - `configPath`: 上层解决方案配置文件的路径（绝对路径），该参数影响构建缓存更新
+- `provider`: 用于切换底层的打包工具。
+- `rsbuildConfig`：Rsbuild 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制，你可以在 [配置](/config/) 中找到所有可用的配置项。
+
+### webpackProvider
+
+Rsbuild 默认使用 Rspack 作为打包工具，你可以通过 `provider` 选项来切换到 Webpack 打包。
+
+首先安装 `@rsbuild/webpack` 包：
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/webpack -D" />
+
+然后在 `provider` 选项中传入 `webpackProvider`，Rsbuild 底层的打包工具就自动切换为 Webpack 了。
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+import { webpackProvider } from '@rsbuild/webpack';
+
+const rsbuild = await createRsbuild({
+  provider: webpackProvider,
+  // other options
+});
+```
 
 ## mergeRsbuildConfig
 
@@ -114,7 +108,7 @@ webpack 对象，用于消费 webpack 内置插件或类型定义。
 - **Example**
 
 ```ts
-import webpack from '@rsbuild/webpack-provider/webpack';
+import webpack from '@rsbuild/webpack/webpack';
 
 new webpack.DefinePlugin();
 ```
@@ -128,7 +122,7 @@ HtmlWebpackPlugin 对象，通常用于实现 HtmlWebpackPlugin 的自定义插�
 - **Example**
 
 ```ts
-import HtmlWebpackPlugin from '@rsbuild/webpack-provider/html-webpack-plugin';
+import HtmlWebpackPlugin from '@rsbuild/webpack/html-webpack-plugin';
 ```
 
 > 大部分场景下，推荐从 Rsbuild 中引用 HtmlWebpackPlugin 对象，而不是手动安装一份 "html-webpack-plugin" 依赖，这样可以避免出现多实例问题。

@@ -1,6 +1,6 @@
 import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
 
-export type BundlerType = 'webpack' | 'rspack';
+export type BundlerType = 'rspack' | 'webpack';
 
 /** The public context */
 export type Context = {
