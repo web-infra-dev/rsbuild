@@ -86,8 +86,8 @@ describe('stringifyConfig', () => {
     expect(await stringifyConfig(webpackConfig, true)).toMatchSnapshot();
   });
 
-  it('should stringify builder config correctly', async () => {
-    const builderConfig = {
+  it('should stringify Rsbuild config correctly', async () => {
+    const rsbuildConfig = {
       tools: {
         webpackChain(chain: any) {
           chain.devtool('eval');
@@ -95,11 +95,11 @@ describe('stringifyConfig', () => {
       },
     };
 
-    expect(await stringifyConfig(builderConfig)).toMatchSnapshot();
+    expect(await stringifyConfig(rsbuildConfig)).toMatchSnapshot();
   });
 
   it('shold meta generate correctly', async () => {
-    const builderConfig = {
+    const rsbuildConfig = {
       html: {
         meta: { description: 'This is basic meta', bar: 'bar', foo: 'foo' },
         metaByEntries: {
@@ -111,17 +111,17 @@ describe('stringifyConfig', () => {
       output: {} as any,
     };
 
-    const defaultEntry = await getMetaTags('', builderConfig);
+    const defaultEntry = await getMetaTags('', rsbuildConfig);
     expect(defaultEntry).toMatchSnapshot();
 
-    const entry1 = await getMetaTags('entry1', builderConfig);
+    const entry1 = await getMetaTags('entry1', rsbuildConfig);
     expect(entry1).toMatchSnapshot();
   });
 });
 
 describe('pickRsbuildConfig', () => {
-  it('should pick correct keys from builder config', () => {
-    const builderConfig = {
+  it('should pick correct keys from Rsbuild config', () => {
+    const rsbuildConfig = {
       dev: {},
       html: {},
       tools: {},
@@ -133,7 +133,7 @@ describe('pickRsbuildConfig', () => {
       extraKey: 'extraValue',
     };
 
-    const result = pickRsbuildConfig(builderConfig);
+    const result = pickRsbuildConfig(rsbuildConfig);
 
     expect(result).toEqual({
       dev: {},
@@ -147,9 +147,9 @@ describe('pickRsbuildConfig', () => {
     });
   });
 
-  it('should return empty object when builder config is empty', () => {
-    const builderConfig = {};
-    const result = pickRsbuildConfig(builderConfig);
+  it('should return empty object when Rsbuild config is empty', () => {
+    const rsbuildConfig = {};
+    const result = pickRsbuildConfig(rsbuildConfig);
     expect(result).toEqual({});
   });
 });

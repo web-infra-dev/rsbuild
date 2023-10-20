@@ -27,7 +27,7 @@ test('should remove specified console correctly when using SWC plugin', async ()
       main: join(cwd, 'src/index.js'),
     },
     plugins: [pluginSwc()],
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         removeConsole: ['log', 'warn'],
       },
@@ -49,7 +49,7 @@ test('should remove all console correctly when using SWC plugin', async () => {
       main: join(cwd, 'src/index.js'),
     },
     plugins: [pluginSwc()],
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         removeConsole: true,
       },

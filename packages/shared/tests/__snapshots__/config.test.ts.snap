@@ -14,7 +14,7 @@ exports[`stringifyConfig > shold meta generate correctly 2`] = `
 <meta name="foo" content="foo">"
 `;
 
-exports[`stringifyConfig > should stringify builder config correctly 1`] = `
+exports[`stringifyConfig > should stringify Rsbuild config correctly 1`] = `
 "{
   tools: {
     webpackChain(chain) {

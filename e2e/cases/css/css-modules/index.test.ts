@@ -6,7 +6,7 @@ test('should compile CSS modules correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         disableSourceMap: true,
       },
@@ -32,7 +32,7 @@ test('should treat normal CSS as CSS modules when disableCssModuleExtension is t
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         disableSourceMap: true,
         disableCssModuleExtension: true,
@@ -59,7 +59,7 @@ test('should compile CSS modules follow by output.cssModules', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         cssModules: {
           auto: (resource) => {

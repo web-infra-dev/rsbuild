@@ -56,7 +56,7 @@ describe('plugins/html', () => {
       entry: {
         main: './src/main.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         security: {
           nonce: 'test-nonce',
         },
@@ -72,7 +72,7 @@ describe('plugins/html', () => {
       entry: {
         main: './src/main.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         html: {
           crossorigin: true,
         },
@@ -92,7 +92,7 @@ describe('plugins/html', () => {
       entry: {
         main: './src/main.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         html: {
           appIcon: './src/assets/icon.png',
         },
@@ -108,7 +108,7 @@ describe('plugins/html', () => {
       entry: {
         main: './src/main.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         html: {
           favicon: './src/favicon.ico',
         },
@@ -125,7 +125,7 @@ describe('plugins/html', () => {
       entry: {
         main: './src/main.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         html: {
           favicon: 'https://www.foo.com/favicon.ico',
         },
@@ -143,7 +143,7 @@ describe('plugins/html', () => {
       entry: {
         main: './src/main.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         html: {
           inject: 'body',
         },
@@ -177,7 +177,7 @@ describe('plugins/html', () => {
       entry: {
         main: './src/main.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           htmlPlugin(_config, utils) {
             expect(utils.entryName).toEqual('main');
@@ -199,7 +199,7 @@ describe('plugins/html', () => {
       entry: {
         main: './src/main.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           htmlPlugin: false,
         },
@@ -215,7 +215,7 @@ describe('plugins/html', () => {
       entry: {
         main: './src/main.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           htmlPlugin: [{}, false],
         },
@@ -232,7 +232,7 @@ describe('plugins/html', () => {
         main: './src/main.ts',
         foo: './src/foo.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         html: {
           template: 'bar',
           templateByEntries: { main: 'foo' },
@@ -251,7 +251,7 @@ describe('plugins/html', () => {
         main: './src/main.ts',
         foo: './src/foo.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         html: {
           tags: { tag: 'script', attrs: { src: 'jq.js' } },
           tagsByEntries: {},
@@ -271,7 +271,7 @@ describe('plugins/html', () => {
         main: './src/main.ts',
         foo: './src/foo.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         html: {
           tags: [{ tag: 'script', attrs: { src: 'jq.js' } }],
           tagsByEntries: {

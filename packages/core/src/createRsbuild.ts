@@ -10,30 +10,30 @@ import {
 import { plugins } from './plugins';
 import type { RsbuildConfig } from './rspack-provider';
 
-const getRspackProvider = async (builderConfig: RsbuildConfig) => {
+const getRspackProvider = async (rsbuildConfig: RsbuildConfig) => {
   const { rspackProvider } = await import('./rspack-provider');
 
   return rspackProvider({
-    builderConfig,
+    rsbuildConfig,
   });
 };
 
 export async function createRsbuild<
-  P extends ({ builderConfig }: { builderConfig: T }) => RsbuildProvider,
+  P extends ({ rsbuildConfig }: { rsbuildConfig: T }) => RsbuildProvider,
   T = RsbuildConfig,
 >(
   options: CreateRsbuildOptions & {
-    builderConfig: T;
+    rsbuildConfig: T;
     provider?: P;
   },
 ): Promise<RsbuildInstance<ReturnType<P>>> {
-  const { builderConfig } = options;
+  const { rsbuildConfig } = options;
 
   const provider = options.provider
-    ? options.provider({ builderConfig })
-    : await getRspackProvider(builderConfig as RsbuildConfig);
+    ? options.provider({ rsbuildConfig })
+    : await getRspackProvider(rsbuildConfig as RsbuildConfig);
 
-  const builderOptions = applyDefaultRsbuildOptions(options);
+  const rsbuildOptions = applyDefaultRsbuildOptions(options);
   const pluginStore = createPluginStore();
   const {
     build,
@@ -47,7 +47,7 @@ export async function createRsbuild<
     applyDefaultPlugins,
   } = await provider({
     pluginStore,
-    builderOptions,
+    rsbuildOptions,
     plugins,
   });
 

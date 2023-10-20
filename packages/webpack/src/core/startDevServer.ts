@@ -30,9 +30,9 @@ export async function createDevServer(
 
   debug('create dev server');
 
-  const builderConfig = options.context.config;
+  const rsbuildConfig = options.context.config;
   const { config, devConfig } = await getDevServerOptions({
-    builderConfig,
+    rsbuildConfig,
     serverOptions,
     port,
   });

@@ -6,7 +6,7 @@ test('should minimize CSS correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {},
+    rsbuildConfig: {},
   });
   const files = await rsbuild.unwrapOutputJSON();
 

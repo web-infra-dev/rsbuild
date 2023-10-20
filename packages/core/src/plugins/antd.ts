@@ -5,12 +5,12 @@ export const pluginAntd = (): DefaultRsbuildPlugin => ({
   name: `plugin-antd`,
 
   setup(api) {
-    api.modifyRsbuildConfig((builderConfig) => {
-      builderConfig.source ??= {};
+    api.modifyRsbuildConfig((rsbuildConfig) => {
+      rsbuildConfig.source ??= {};
 
       if (
-        builderConfig.source.transformImport === false ||
-        builderConfig.source.transformImport?.some(
+        rsbuildConfig.source.transformImport === false ||
+        rsbuildConfig.source.transformImport?.some(
           (item) => item.libraryName === 'antd',
         )
       ) {
@@ -21,9 +21,9 @@ export const pluginAntd = (): DefaultRsbuildPlugin => ({
       // antd >= v5 no longer need babel-plugin-import
       // see: https://ant.design/docs/react/migration-v5#remove-babel-plugin-import
       if (antdMajorVersion && antdMajorVersion < 5) {
-        builderConfig.source ??= {};
-        builderConfig.source.transformImport = [
-          ...(builderConfig.source.transformImport || []),
+        rsbuildConfig.source ??= {};
+        rsbuildConfig.source.transformImport = [
+          ...(rsbuildConfig.source.transformImport || []),
           {
             libraryName: 'antd',
             libraryDirectory: useSSR(api.context.target) ? 'lib' : 'es',

@@ -9,7 +9,7 @@ webpackOnlyTest(
     const rsbuild = await build({
       cwd: __dirname,
       entry: { index: path.resolve(__dirname, './src/index.js') },
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableSourceMap: true,
         },

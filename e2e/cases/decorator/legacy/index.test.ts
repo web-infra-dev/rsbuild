@@ -9,7 +9,7 @@ test('decorator legacy(default)', async ({ page }) => {
       index: path.resolve(__dirname, './src/index.js'),
     },
     runServer: true,
-    builderConfig: {},
+    rsbuildConfig: {},
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));

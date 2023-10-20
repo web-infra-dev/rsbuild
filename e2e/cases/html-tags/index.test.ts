@@ -9,7 +9,7 @@ test('should inject tags', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.ts') },
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         tags: [
           { tag: 'script', attrs: { src: 'foo.js' } },

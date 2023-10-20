@@ -78,7 +78,7 @@ export interface ToolsConfig extends SharedToolsConfig {
   terser?: ToolsTerserConfig;
   /**
    * Modify the options of [ts-loader](https://github.com/TypeStrong/ts-loader).
-   * When `tools.tsLoader` is not undefined, builder will use ts-loader instead of babel-loader to compile TypeScript code.
+   * When `tools.tsLoader` is not undefined, Rsbuild will use ts-loader instead of babel-loader to compile TypeScript code.
    */
   tsLoader?: ToolsTSLoaderConfig;
   /**

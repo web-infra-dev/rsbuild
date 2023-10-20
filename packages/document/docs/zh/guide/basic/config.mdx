@@ -42,19 +42,19 @@ export default {
 
 ### 通过 Node API 使用
 
-当你通过 Node API 调用 Rsbuild 时，你可以通过 Provider 的 `builderConfig` 配置项来传入 Rsbuild 配置：
+当你通过 Node API 调用 Rsbuild 时，你可以通过 Provider 的 `rsbuildConfig` 配置项来传入 Rsbuild 配置：
 
 ```ts
-import { builderWebpackProvider } from '@rsbuild/webpack-provider';
+import { webpackProvider } from '@rsbuild/webpack-provider';
 
-const provider = builderWebpackProvider({
-  builderConfig: {
+const provider = webpackProvider({
+  rsbuildConfig: {
     // some configs
   },
 });
 ```
 
-关于 Node API 的完整用法，请参考 [API - createRsbuild](/api/javascript-api/core.html#createbuilder)。
+关于 Node API 的完整用法，请参考 [API - createRsbuild](/api/javascript-api/core.html#creatersbuild)。
 
 ## 与框架配置的关系
 
@@ -64,10 +64,10 @@ const provider = builderWebpackProvider({
 
 ## 调试配置
 
-在执行构建时，你可以添加 `DEBUG=builder` 环境变量来开启 Rsbuild 的调试模式。
+在执行构建时，你可以添加 `DEBUG=rsbuild` 环境变量来开启 Rsbuild 的调试模式。
 
 ```bash
-DEBUG=builder pnpm dev
+DEBUG=rsbuild pnpm dev
 ```
 
 在调试模式下，Rsbuild 会将内部最终生成的 Rsbuild 配置写入到产物目录下，便于开发者查看和调试。

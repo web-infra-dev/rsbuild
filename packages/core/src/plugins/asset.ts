@@ -7,7 +7,7 @@ import {
 } from '@rsbuild/shared';
 import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
-export const builderAssetPlugin = (
+export const pluginAsset = (
   assetType: 'image' | 'media' | 'font',
   exts: string[],
 ): DefaultRsbuildPlugin => ({

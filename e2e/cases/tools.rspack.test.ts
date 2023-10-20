@@ -11,7 +11,7 @@ test('tools.rspack', async ({ page }) => {
       main: join(fixtures, 'source/global-vars/src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         rspack: (config) => {
           config.builtins!.define = {

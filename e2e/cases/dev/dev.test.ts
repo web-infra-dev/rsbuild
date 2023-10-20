@@ -13,7 +13,7 @@ test.skip('default & hmr (default true)', async ({ page }) => {
     entry: {
       main: join(fixtures, 'hmr', 'test-src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         devServer: {
           client: {
@@ -79,7 +79,7 @@ test('dev.port & output.distPath', async ({ page }) => {
     entry: {
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       dev: {
         port: 3000,
       },
@@ -118,7 +118,7 @@ test.skip('hmr should work when setting dev.port & serverOptions.dev.client', as
     entry: {
       main: join(cwd, 'test-src-1/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       dev: {
         port: 3001,
       },
@@ -165,7 +165,7 @@ test.skip('dev.https', async () => {
     entry: {
       main: join(join(fixtures, 'basic'), 'src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       dev: {
         https: true,
       },
@@ -188,7 +188,7 @@ test.skip('tools.devServer', async ({ page }) => {
     entry: {
       main: join(join(fixtures, 'basic'), 'src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         devServer: {
           setupMiddlewares: [

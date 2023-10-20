@@ -24,7 +24,7 @@ test.describe('output configure multi', () => {
       entry: {
         main: join(fixtures, 'rem/src/index.ts'),
       },
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           distPath: {
             root: 'dist-1',
@@ -85,7 +85,7 @@ test('cleanDistPath disable', async () => {
     entry: {
       main: join(fixtures, 'rem/src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         distPath: {
           root: 'dist-2',
@@ -107,7 +107,7 @@ test('disableSourcemap', async () => {
     entry: {
       main: join(fixtures, 'rem/src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         distPath: {
           root: 'dist-3',

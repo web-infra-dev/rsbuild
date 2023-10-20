@@ -7,7 +7,7 @@ describe('plugins/babel', () => {
   it('should set babel-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           polyfill: 'entry',
         },
@@ -24,7 +24,7 @@ describe('plugins/babel', () => {
   it('should set include/exclude', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           babel(options, { addIncludes, addExcludes }) {
             addIncludes(['src/**/*.ts']);
@@ -42,7 +42,7 @@ describe('plugins/babel', () => {
   it('should apply exclude condition when using source.exclude', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           exclude: ['src/foo/**/*.js'],
         },
@@ -56,7 +56,7 @@ describe('plugins/babel', () => {
   it('should add core-js-entry when output.polyfill is entry', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           polyfill: 'entry',
         },
@@ -72,7 +72,7 @@ describe('plugins/babel', () => {
   it('should not add core-js-entry when output.polyfill is usage', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           polyfill: 'usage',
         },
@@ -88,7 +88,7 @@ describe('plugins/babel', () => {
   it('should override targets of babel-preset-env when using output.overrideBrowserslist config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           overrideBrowserslist: ['Chrome 80'],
         },
@@ -102,7 +102,7 @@ describe('plugins/babel', () => {
   it('should add rule to compile Data URI when enable source.compileJsDataURI', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           compileJsDataURI: true,
         },
@@ -116,7 +116,7 @@ describe('plugins/babel', () => {
   it('should adjust jsescOption config when charset is utf8', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           charset: 'utf8',
         },

@@ -97,10 +97,10 @@ Inspect config succeed, open following files to view the content:
 
 #### Viewing with the Rsbuild debug mode
 
-By adding the `DEBUG=builder` environment variable when executing the build, the [debug mode](/guide/debug/debug-mode.html) of the Rsbuild can be enabled, and the final generated webpack or Rspack configuration will be output to the dist directory.
+By adding the `DEBUG=rsbuild` environment variable when executing the build, the [debug mode](/guide/debug/debug-mode.html) of the Rsbuild can be enabled, and the final generated webpack or Rspack configuration will be output to the dist directory.
 
 ```bash
-➜ DEBUG=builder pnpm dev
+➜ DEBUG=rsbuild pnpm dev
 
 debug   create context [1842.90 ms]
 debug   add default plugins [1874.45 ms]

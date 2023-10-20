@@ -65,7 +65,7 @@ cases.forEach((_case) => {
         main: join(_case.cwd, 'src/index.js'),
       },
       runServer: true,
-      builderConfig: _case.config || {},
+      rsbuildConfig: _case.config || {},
     });
 
     await page.goto(getHrefByEntryName('main', rsbuild.port));

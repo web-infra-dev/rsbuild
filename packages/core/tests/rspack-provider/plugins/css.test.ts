@@ -8,7 +8,7 @@ describe('plugins/css', () => {
   it('should override browserslist of autoprefixer when using output.overrideBrowserslist config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           overrideBrowserslist: ['Chrome 80'],
         },
@@ -21,7 +21,7 @@ describe('plugins/css', () => {
   it('should disable source map when output.disableSourceMap is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableSourceMap: true,
         },
@@ -36,7 +36,7 @@ describe('plugins/css', () => {
   it('should disable source map when output.disableSourceMap is css: true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableSourceMap: {
             css: true,
@@ -68,7 +68,7 @@ describe('plugins/css', () => {
   it('should allow to custom cssModuleLocalIdentName', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           cssModuleLocalIdentName: '[hash]',
         },
@@ -85,7 +85,7 @@ describe('plugins/css', () => {
   it('should ignore hashDigest when custom cssModuleLocalIdentName', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           cssModuleLocalIdentName: '[hash:base64:5]',
         },
@@ -102,7 +102,7 @@ describe('plugins/css', () => {
   it('should use custom cssModules rule when using output.cssModules config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           cssModules: {
             auto: (resourcePath) => resourcePath.includes('.module.'),
@@ -117,7 +117,7 @@ describe('plugins/css', () => {
   it('should apply custom css-modules-typescript-loader when enableCssModuleTSDeclarationg', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           enableCssModuleTSDeclaration: true,
         },
@@ -132,7 +132,7 @@ describe('plugins/css disableCssExtract', () => {
   it('should use css-loader + style-loader when disableCssExtract is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableCssExtract: true,
         },
@@ -148,7 +148,7 @@ describe('plugins/css disableCssExtract', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       target: 'node',
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableCssExtract: true,
         },
@@ -165,7 +165,7 @@ describe('plugins/less', () => {
   it('should add less-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginLess()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           less: {},
         },
@@ -179,7 +179,7 @@ describe('plugins/less', () => {
   it('should add less-loader and css-loader when disableCssExtract', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginLess()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableCssExtract: true,
         },
@@ -193,7 +193,7 @@ describe('plugins/less', () => {
   it('should add less-loader with tools.less', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginLess()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           less: {
             lessOptions: {
@@ -211,7 +211,7 @@ describe('plugins/less', () => {
   it('should add less-loader with excludes', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginLess()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           less(config, { addExcludes }) {
             addExcludes(/node_modules/);
@@ -229,7 +229,7 @@ describe('plugins/sass', () => {
   it('should add sass-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSass()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {},
       },
     });
@@ -241,7 +241,7 @@ describe('plugins/sass', () => {
   it('should add sass-loader and css-loader when disableCssExtract', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSass()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableCssExtract: true,
         },
@@ -255,7 +255,7 @@ describe('plugins/sass', () => {
   it('should add sass-loader with excludes', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSass()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           sass(config, { addExcludes }) {
             addExcludes(/node_modules/);

@@ -84,7 +84,7 @@ export function removeUselessOptions(
 
 export async function finalizeConfig(
   userConfig: PluginSwcOptions,
-  builderSetConfig: TransformConfig,
+  rsbuildSetConfig: TransformConfig,
 ): Promise<FinalizedConfig[]> {
   const isUsingFnOptions = typeof userConfig === 'function';
 
@@ -95,7 +95,7 @@ export async function finalizeConfig(
   let swcConfig: ObjPluginSwcOptions = _.merge(
     {},
     defaultConfig,
-    builderSetConfig,
+    rsbuildSetConfig,
     objConfig,
   );
 
@@ -131,7 +131,7 @@ export async function finalizeConfig(
 export async function applyPluginConfig(
   rawOptions: PluginSwcOptions,
   utils: ModifyChainUtils,
-  builderConfig: NormalizedConfig,
+  rsbuildConfig: NormalizedConfig,
   rootPath: string,
 ): Promise<FinalizedConfig[]> {
   const isUsingFnOptions = typeof rawOptions === 'function';
@@ -147,7 +147,7 @@ export async function applyPluginConfig(
     jsc: {
       transform: {
         react: {
-          refresh: isUsingHMR(builderConfig, utils),
+          refresh: isUsingHMR(rsbuildConfig, utils),
         },
       },
     },
@@ -163,7 +163,7 @@ export async function applyPluginConfig(
     };
   }
 
-  const { polyfill } = builderConfig.output;
+  const { polyfill } = rsbuildConfig.output;
   if (swc.env.mode === undefined && polyfill !== 'ua' && polyfill !== 'off') {
     swc.env.mode = polyfill;
   }
@@ -177,7 +177,7 @@ export async function applyPluginConfig(
   if (!swc.env.targets) {
     swc.env.targets = await getBrowserslistWithDefault(
       rootPath,
-      builderConfig,
+      rsbuildConfig,
       target,
     );
   }
@@ -185,12 +185,12 @@ export async function applyPluginConfig(
   const isSSR = target === 'node';
 
   if (
-    builderConfig.tools.styledComponents !== false &&
+    rsbuildConfig.tools.styledComponents !== false &&
     swc.extensions?.styledComponents !== false
   ) {
     const styledComponentsOptions = applyOptionsChain(
       getDefaultStyledComponentsConfig(isProd, isSSR),
-      builderConfig.tools.styledComponents,
+      rsbuildConfig.tools.styledComponents,
     );
     swc.extensions.styledComponents = {
       ...styledComponentsOptions,
@@ -202,12 +202,12 @@ export async function applyPluginConfig(
 
   const extensions: Extensions | OuterExtensions = (swc.extensions ??= {});
 
-  if (builderConfig.source?.transformImport) {
+  if (rsbuildConfig.source?.transformImport) {
     extensions.pluginImport ??= [];
-    extensions.pluginImport.push(...builderConfig.source.transformImport);
+    extensions.pluginImport.push(...rsbuildConfig.source.transformImport);
   }
 
-  if (builderConfig.performance?.transformLodash) {
+  if (rsbuildConfig.performance?.transformLodash) {
     extensions.lodash = {
       cwd: rootPath,
       ids: ['lodash', 'lodash-es'],
@@ -222,7 +222,7 @@ export async function applyPluginConfig(
   /**
    * SWC can't use latestDecorator in TypeScript file for now
    */
-  if (builderConfig.output.enableLatestDecorators) {
+  if (rsbuildConfig.output.enableLatestDecorators) {
     logger.warn('Cannot use latestDecorator in SWC compiler.');
   }
 

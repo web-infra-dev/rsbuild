@@ -6,7 +6,7 @@ describe('plugins/pug', () => {
   it('should add pug rules correctly when tools.pug is used', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginPug()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           pug: {
             pretty: true,

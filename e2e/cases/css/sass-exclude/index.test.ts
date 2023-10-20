@@ -6,7 +6,7 @@ test('should exclude specified scss file', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         sass: (opts, { addExcludes }) => {
           addExcludes([/b\.scss$/]);

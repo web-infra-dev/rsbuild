@@ -8,7 +8,7 @@ describe('plugins/react', () => {
   it('should work with babel-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginReact()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableTsChecker: true,
         },
@@ -22,7 +22,7 @@ describe('plugins/react', () => {
   it('should work with ts-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginTsLoader(), pluginReact()],
-      builderConfig: {
+      rsbuildConfig: {
         tools: {
           tsLoader: {},
         },
@@ -36,7 +36,7 @@ describe('plugins/react', () => {
   it('should not apply react refresh when dev.hmr is false', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginReact()],
-      builderConfig: {
+      rsbuildConfig: {
         dev: {
           hmr: false,
         },

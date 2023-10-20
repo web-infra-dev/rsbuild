@@ -35,7 +35,7 @@ test('should optimize lodash bundle size', async ({ page }) => {
     },
     plugins: [pluginSwc()],
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         polyfill: 'entry',
       },
@@ -83,7 +83,7 @@ test('should use define for class', async () => {
         },
       }),
     ],
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         disableMinimize: true,
       },
@@ -118,7 +118,7 @@ test('core-js-entry', async () => {
         },
       }),
     ],
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         disableMinimize: true,
       },
@@ -143,7 +143,7 @@ test('core-js-usage', async () => {
         },
       }),
     ],
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         disableMinimize: true,
       },

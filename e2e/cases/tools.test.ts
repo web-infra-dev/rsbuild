@@ -12,7 +12,7 @@ test('postcss plugins overwrite', async ({ page }) => {
       main: join(fixtures, 'output/rem/src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         postcss: {
           postcssOptions: {
@@ -38,7 +38,7 @@ test('bundlerChain - set alias config', async ({ page }) => {
       main: join(fixtures, 'source/basic/src/index.js'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         bundlerChain: (chain) => {
           chain.resolve.alias.merge({
@@ -62,7 +62,7 @@ webpackOnlyTest('bundlerChain - custom publicPath function', async () => {
     entry: {
       main: join(fixtures, 'output/rem/src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         disableFilenameHash: true,
       },

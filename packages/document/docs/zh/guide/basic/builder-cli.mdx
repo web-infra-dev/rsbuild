@@ -22,34 +22,34 @@ import { PackageManagerTabs } from '@theme';
 
 Rsbuild CLI 提供了以下命令，可以帮助你快速启动开发服务器、构建生产环境代码等。
 
-### builder dev
+### rsbuild dev
 
-`builder dev` 命令用于启动一个本地开发服务器，对源代码进行开发环境编译。
+`rsbuild dev` 命令用于启动一个本地开发服务器，对源代码进行开发环境编译。
 
 ```bash
-Usage: builder dev [options]
+Usage: rsbuild dev [options]
 
 Options:
   -h, --help            display help for command
 ```
 
-### builder build
+### rsbuild build
 
-`builder build` 命令默认会在 `dist/` 目录下构建出可用于生产环境的产物。
+`rsbuild build` 命令默认会在 `dist/` 目录下构建出可用于生产环境的产物。
 
 ```bash
-Usage: builder build [options]
+Usage: rsbuild build [options]
 
 Options:
   -h, --help            display help for command
 ```
 
-### builder serve
+### rsbuild serve
 
-`builder serve` 命令用于在本地预览生产环境构建的产物, 注意你需要提前执行 `builder build` 命令构建出对应产物。
+`rsbuild serve` 命令用于在本地预览生产环境构建的产物, 注意你需要提前执行 `rsbuild build` 命令构建出对应产物。
 
 ```bash
-Usage: builder serve [options]
+Usage: rsbuild serve [options]
 
 Options:
   -h, --help            display help for command

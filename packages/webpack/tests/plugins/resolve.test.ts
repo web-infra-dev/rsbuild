@@ -19,7 +19,7 @@ describe('plugins/resolve', () => {
   it('should allow to use source.alias to config webpack alias', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           alias: {
             foo: 'bar',
@@ -37,7 +37,7 @@ describe('plugins/resolve', () => {
   it('should support source.alias to be a function', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           alias() {
             return {
@@ -57,7 +57,7 @@ describe('plugins/resolve', () => {
   it('should disable resolve.fullySpecified by default', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           compileJsDataURI: true,
         },
@@ -73,7 +73,7 @@ describe('plugins/resolve', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           resolveMainFields: mainFieldsOption,
         },
@@ -93,7 +93,7 @@ describe('plugins/resolve', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           resolveMainFields: mainFieldsOption,
         },

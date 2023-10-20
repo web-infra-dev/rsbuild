@@ -85,7 +85,7 @@ export function shareTest(
     const rsbuild = await build({
       ...setupConfig,
       ...otherConfigs,
-      builderConfig: { ...config },
+      rsbuildConfig: { ...config },
     });
     const files = await rsbuild.unwrapOutputJSON(false);
     expect(files[findEntry(files)]).toContain('transformImport test succeed');

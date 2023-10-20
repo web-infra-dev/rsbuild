@@ -256,7 +256,7 @@ export default {
 
 - **Type:** `(name: string) => string`
 
-Get the path to the builder built-in dependencies, such as:
+Get the path to the Rsbuild built-in dependencies, such as:
 
 - sass
 - sass-loader

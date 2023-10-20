@@ -34,7 +34,7 @@ test('output.charset (utf8)', async ({ page }) => {
     entry: {
       index: path.resolve(__dirname, './src/index.js'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         charset: 'utf8',
       },

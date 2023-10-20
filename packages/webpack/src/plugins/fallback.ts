@@ -11,11 +11,11 @@ export const pluginFallback = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyWebpackChain((chain, { isProd }) => {
-      const builderConfig = api.getNormalizedConfig();
+      const rsbuildConfig = api.getNormalizedConfig();
 
-      if (builderConfig.output.enableAssetFallback) {
-        const distDir = getDistPath(builderConfig.output, 'media');
-        const filename = getFilename(builderConfig.output, 'media', isProd);
+      if (rsbuildConfig.output.enableAssetFallback) {
+        const distDir = getDistPath(rsbuildConfig.output, 'media');
+        const filename = getFilename(rsbuildConfig.output, 'media', isProd);
 
         chain.output.merge({
           assetModuleFilename: join(distDir, filename),
@@ -24,9 +24,9 @@ export const pluginFallback = (): RsbuildPlugin => ({
     });
 
     api.modifyWebpackConfig((config) => {
-      const builderConfig = api.getNormalizedConfig();
+      const rsbuildConfig = api.getNormalizedConfig();
 
-      if (!builderConfig.output.enableAssetFallback || !config.module) {
+      if (!rsbuildConfig.output.enableAssetFallback || !config.module) {
         return;
       }
 

@@ -22,17 +22,11 @@ export const plugins: Plugins = {
   bundleAnalyzer: () =>
     import('./bundleAnalyzer').then((m) => m.pluginBundleAnalyzer()),
   font: () =>
-    import('./asset').then((m) =>
-      m.builderAssetPlugin('font', FONT_EXTENSIONS),
-    ),
+    import('./asset').then((m) => m.pluginAsset('font', FONT_EXTENSIONS)),
   image: () =>
-    import('./asset').then((m) =>
-      m.builderAssetPlugin('image', IMAGE_EXTENSIONS),
-    ),
+    import('./asset').then((m) => m.pluginAsset('image', IMAGE_EXTENSIONS)),
   media: () =>
-    import('./asset').then((m) =>
-      m.builderAssetPlugin('media', MEDIA_EXTENSIONS),
-    ),
+    import('./asset').then((m) => m.pluginAsset('media', MEDIA_EXTENSIONS)),
   assetsRetry: () => import('./assetsRetry').then((m) => m.pluginAssetsRetry()),
   antd: () => import('./antd').then((m) => m.pluginAntd()),
   arco: () => import('./arco').then((m) => m.pluginArco()),

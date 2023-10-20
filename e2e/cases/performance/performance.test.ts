@@ -14,7 +14,7 @@ test.describe('performance configure multi', () => {
       entry: {
         main: join(basicFixtures, 'src/index.ts'),
       },
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           bundleAnalyze: {},
           chunkSplit: {
@@ -49,7 +49,7 @@ test('should generate vendor chunk when chunkSplit is "single-vendor"', async ()
     entry: {
       main: join(fixtures, 'basic/src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         chunkSplit: {
           strategy: 'single-vendor',
@@ -73,7 +73,7 @@ test('should generate preconnect link when preconnect is defined', async () => {
     entry: {
       main: join(fixtures, 'basic/src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         preconnect: [
           {
@@ -111,7 +111,7 @@ test('should generate dnsPrefetch link when dnsPrefetch is defined', async () =>
     entry: {
       main: join(fixtures, 'basic/src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       performance: {
         dnsPrefetch: ['http://aaaa.com'],
       },

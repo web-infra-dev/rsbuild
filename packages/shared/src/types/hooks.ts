@@ -1,7 +1,7 @@
 import type { ChainIdentifier } from '@modern-js/utils/chain-id';
 import type { Stats, MultiStats } from './stats';
 import { NodeEnv, PromiseOrNot } from './utils';
-import { RsbuildTarget } from './builder';
+import { RsbuildTarget } from './rsbuild';
 import { BundlerChain } from './bundlerConfig';
 import { mergeRsbuildConfig } from '../mergeRsbuildConfig';
 import type { WebpackPluginInstance } from 'webpack';
@@ -35,7 +35,7 @@ export type OnAfterCreateCompilerFn<Compiler = unknown> = (params: {
 export type OnExitFn = () => void;
 
 export type ModifyRsbuildConfigUtils = {
-  /** Merge multiple builder config objects into one. */
+  /** Merge multiple Rsbuild config objects into one. */
   mergeRsbuildConfig: typeof mergeRsbuildConfig;
 };
 
@@ -56,7 +56,7 @@ export type ModifyChainUtils = {
   // todo: html plugin type declare
   HtmlPlugin: any;
   /**
-   * @private should only used in builder
+   * @private should only used in Rsbuild
    */
   webpack: typeof import('webpack');
 };

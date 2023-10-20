@@ -12,16 +12,16 @@ Create a Rsbuild instance object.
 
 When using this method, it needs to be used with the `@rsbuild/webpack-provider` or `@rsbuild/rspack-provider`. Providers implements corresponding build feature based on specific bundlers.
 
-### builderWebpackProvider
+### webpackProvider
 
-When `builderWebpackProvider` is passed, the Rsbuild will use webpack as the bundler for building.
+When `webpackProvider` is passed, the Rsbuild will use webpack as the bundler for building.
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
-import { builderWebpackProvider } from '@rsbuild/webpack-provider';
+import { webpackProvider } from '@rsbuild/webpack-provider';
 
-const provider = builderWebpackProvider({
-  builderConfig: {
+const provider = webpackProvider({
+  rsbuildConfig: {
     // some configs
   },
 });
@@ -31,16 +31,16 @@ const rsbuild = await createRsbuild(provider, {
 });
 ```
 
-### builderRspackProvider
+### rspackProvider
 
-When `builderRspackProvider` is passed, the Rsbuild will use Rspack as the bundler for building.
+When `rspackProvider` is passed, the Rsbuild will use Rspack as the bundler for building.
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
-import { builderRspackProvider } from '@rsbuild/rspack-provider';
+import { rspackProvider } from '@rsbuild/rspack-provider';
 
-const provider = builderRspackProvider({
-  builderConfig: {
+const provider = rspackProvider({
+  rsbuildConfig: {
     // some configs
   },
 });
@@ -131,4 +131,4 @@ HtmlWebpackPlugin object, usually used to implement custom plugins of HtmlWebpac
 import HtmlWebpackPlugin from '@rsbuild/webpack-provider/html-webpack-plugin';
 ```
 
-> In most scenarios, it is recommended to import HtmlWebpackPlugin from builder instead of manually installing a "html-webpack-plugin" dependency, which can avoid multi-instance problems.
+> In most scenarios, it is recommended to import HtmlWebpackPlugin from Rsbuild instead of manually installing a "html-webpack-plugin" dependency, which can avoid multi-instance problems.

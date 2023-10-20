@@ -229,14 +229,14 @@ export default {
 
 After modifying the `babel-loader` configuration through `tools.babel`, you can view the final generated configuration in [Rsbuild debug mode](https://rsbuild.dev/guide/debug/debug-mode.html).
 
-First, enable debug mode by using the `DEBUG=builder` parameter:
+First, enable debug mode by using the `DEBUG=Rsbuild` option:
 
 ```bash
 # Debug development mode
-DEBUG=builder pnpm dev
+DEBUG=Rsbuild pnpm dev
 
 # Debug production mode
-DEBUG=builder pnpm build
+DEBUG=Rsbuild pnpm build
 ```
 
 Then open the generated `(webpack|rspack).config.web.js` file and search for the `babel-loader` keyword to see the complete `babel-loader` configuration.

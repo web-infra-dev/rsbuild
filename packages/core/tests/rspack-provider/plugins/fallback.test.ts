@@ -36,7 +36,7 @@ describe('plugins/fallback', () => {
   it('should convert fallback rule correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [testPlugin, pluginFallback()],
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           enableAssetFallback: true,
         },

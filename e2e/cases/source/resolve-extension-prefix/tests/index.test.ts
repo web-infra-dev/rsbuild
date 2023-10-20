@@ -25,7 +25,7 @@ test('resolve-extension-prefix', async ({ page }) => {
   // ex.web.js take effect when set resolveExtensionPrefix
   rsbuild = await build({
     ...buildOpts,
-    builderConfig: {
+    rsbuildConfig: {
       source: {
         resolveExtensionPrefix: '.web',
       },

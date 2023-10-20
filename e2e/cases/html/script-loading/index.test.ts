@@ -18,7 +18,7 @@ test('should remove defer when scriptLoading is "blocking"', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         scriptLoading: 'blocking',
       },
@@ -35,7 +35,7 @@ test('should allow to set scriptLoading to "module"', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         scriptLoading: 'module',
       },

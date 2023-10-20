@@ -1,4 +1,4 @@
-import { CreateRsbuildOptions } from './types/builder';
+import { CreateRsbuildOptions } from './types/rsbuild';
 
 export function applyDefaultRsbuildOptions(options?: CreateRsbuildOptions) {
   return {

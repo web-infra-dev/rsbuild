@@ -16,7 +16,7 @@ describe('plugins/progress', () => {
   it('should not register webpackbar if dev.progressBar is false', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginProgress()],
-      builderConfig: {
+      rsbuildConfig: {
         dev: {
           progressBar: false,
         },

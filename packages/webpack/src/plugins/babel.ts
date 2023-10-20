@@ -177,7 +177,7 @@ function applyPluginLodash(config: BabelConfig, transformLodash?: boolean) {
 
 async function applyPluginStyledComponents(
   babelConfig: BabelConfig,
-  builderConfig: NormalizedConfig,
+  rsbuildConfig: NormalizedConfig,
   isProd: boolean,
 ) {
   const { applyOptionsChain, isUseSSRBundle } = await import(
@@ -185,13 +185,13 @@ async function applyPluginStyledComponents(
   );
 
   const styledComponentsOptions =
-    builderConfig.tools.styledComponents !== false
+    rsbuildConfig.tools.styledComponents !== false
       ? applyOptionsChain(
           getDefaultStyledComponentsConfig(
             isProd,
-            isUseSSRBundle(builderConfig),
+            isUseSSRBundle(rsbuildConfig),
           ),
-          builderConfig.tools.styledComponents,
+          rsbuildConfig.tools.styledComponents,
         )
       : false;
 

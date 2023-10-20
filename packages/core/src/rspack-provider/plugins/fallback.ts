@@ -12,14 +12,14 @@ export const pluginFallback = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyRspackConfig((config, { isProd }) => {
-      const builderConfig = api.getNormalizedConfig();
+      const rsbuildConfig = api.getNormalizedConfig();
 
-      if (!builderConfig.output.enableAssetFallback) {
+      if (!rsbuildConfig.output.enableAssetFallback) {
         return;
       }
 
-      const distDir = getDistPath(builderConfig.output, 'media');
-      const filename = getFilename(builderConfig.output, 'media', isProd);
+      const distDir = getDistPath(rsbuildConfig.output, 'media');
+      const filename = getFilename(rsbuildConfig.output, 'media', isProd);
 
       setConfig(config, 'output.assetModuleFilename', join(distDir, filename));
 

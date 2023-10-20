@@ -1,5 +1,5 @@
 import type { InlineChunkTest } from '../../plugins/InlineChunkHtmlPlugin';
-import type { RsbuildTarget } from '../builder';
+import type { RsbuildTarget } from '../rsbuild';
 import type { CrossOrigin } from './html';
 import type { Externals } from 'webpack';
 

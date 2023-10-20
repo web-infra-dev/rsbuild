@@ -11,7 +11,7 @@ test('externals', async ({ page }) => {
       main: join(fixtures, 'src/index.js'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         externals: {
           './aaa': 'aa',
@@ -44,7 +44,7 @@ test('should not external dependencies when target is web worker', async () => {
     cwd: fixtures,
     target: 'web-worker',
     entry: { index: resolve(fixtures, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         externals: {
           react: 'MyReact',

@@ -10,7 +10,7 @@ test('writeToDisk default', async ({ page }) => {
     entry: {
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         devServer: {
           client: {
@@ -36,7 +36,7 @@ test('writeToDisk false', async ({ page }) => {
     entry: {
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         devServer: {
           devMiddleware: {
@@ -61,7 +61,7 @@ test('writeToDisk true', async ({ page }) => {
     entry: {
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       tools: {
         devServer: {
           devMiddleware: {

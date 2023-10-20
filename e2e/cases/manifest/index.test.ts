@@ -10,7 +10,7 @@ test('enableAssetManifest', async () => {
     entry: {
       main: join(fixtures, 'src/index.jsx'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         enableAssetManifest: true,
         legalComments: 'none',

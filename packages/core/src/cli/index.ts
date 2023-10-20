@@ -12,7 +12,7 @@ export async function runCli(options: RunCliOptions = {}) {
   const { provider, ...config } = await loadConfig();
   const rsbuild = await createRsbuild({
     provider,
-    builderConfig: config,
+    rsbuildConfig: config,
     entry: config.source?.entries || getDefaultEntries(),
   });
 
@@ -20,8 +20,8 @@ export async function runCli(options: RunCliOptions = {}) {
     rsbuild.addPlugins(options.defaultPlugins);
   }
 
-  if (config.builderPlugins) {
-    rsbuild.addPlugins(config.builderPlugins);
+  if (config.plugins) {
+    rsbuild.addPlugins(config.plugins);
   }
 
   setupProgram(rsbuild);

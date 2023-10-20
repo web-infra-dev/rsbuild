@@ -19,7 +19,7 @@ describe('plugins/swc', () => {
   it('should set swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginSwc()],
-      builderConfig: {},
+      rsbuildConfig: {},
     });
     const config = await rsbuild.unwrapWebpackConfig();
 
@@ -30,7 +30,7 @@ describe('plugins/swc', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginSwc()],
-      builderConfig: {},
+      rsbuildConfig: {},
     });
     const config = await rsbuild.unwrapWebpackConfig();
     expect(config.optimization).toMatchSnapshot();
@@ -119,7 +119,7 @@ describe('plugins/swc', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginSwc()],
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           include: [/foo/],
           exclude: [/bar/],
@@ -135,7 +135,7 @@ describe('plugins/swc', () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      builderConfig: {
+      rsbuildConfig: {
         dev: {
           hmr: false,
         },
@@ -283,7 +283,7 @@ describe('plugins/swc', () => {
           },
         }),
       ],
-      builderConfig: {},
+      rsbuildConfig: {},
     });
     const config = await rsbuild.unwrapWebpackConfig();
 

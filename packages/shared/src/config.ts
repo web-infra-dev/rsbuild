@@ -139,28 +139,28 @@ export const getDefaultOutputConfig = (): NormalizedSharedOutputConfig => ({
 });
 
 export async function outputInspectConfigFiles({
-  builderConfig,
+  rsbuildConfig,
   bundlerConfigs,
   inspectOptions,
-  builderOptions,
+  rsbuildOptions,
   configType,
 }: {
   configType: string;
-  builderConfig: string;
+  rsbuildConfig: string;
   bundlerConfigs: string[];
   inspectOptions: InspectConfigOptions & {
     outputPath: string;
   };
-  builderOptions: Required<CreateRsbuildOptions>;
+  rsbuildOptions: Required<CreateRsbuildOptions>;
 }) {
   const { outputPath } = inspectOptions;
 
-  const { target } = builderOptions;
+  const { target } = rsbuildOptions;
   const files = [
     {
       path: join(outputPath, 'rsbuild.config.js'),
       label: 'Rsbuild Config',
-      content: builderConfig,
+      content: rsbuildConfig,
     },
     ...bundlerConfigs.map((content, index) => {
       const suffix = Array.isArray(target) ? target[index] : target;
@@ -402,10 +402,10 @@ export const getDefaultStyledComponentsConfig = (
 };
 
 /**
- * Omit unused keys from builder config passed by user
+ * Omit unused keys from Rsbuild config passed by user
  */
 export const pickRsbuildConfig = (
-  builderConfig: SharedRsbuildConfig,
+  rsbuildConfig: SharedRsbuildConfig,
 ): SharedRsbuildConfig => {
   const keys: Array<keyof SharedRsbuildConfig> = [
     'dev',
@@ -417,5 +417,5 @@ export const pickRsbuildConfig = (
     'performance',
     'experiments',
   ];
-  return pick(builderConfig, keys);
+  return pick(rsbuildConfig, keys);
 };

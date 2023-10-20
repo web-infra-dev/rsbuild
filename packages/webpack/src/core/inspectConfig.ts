@@ -10,7 +10,7 @@ import type { WebpackConfig } from '../types';
 export async function inspectConfig({
   context,
   pluginStore,
-  builderOptions,
+  rsbuildOptions,
   bundlerConfigs,
   inspectOptions = {},
 }: InitConfigsOptions & {
@@ -29,7 +29,7 @@ export async function inspectConfig({
       await initConfigs({
         context,
         pluginStore,
-        builderOptions,
+        rsbuildOptions,
       })
     ).webpackConfigs;
 
@@ -50,22 +50,22 @@ export async function inspectConfig({
 
   if (inspectOptions.writeToDisk) {
     await outputInspectConfigFiles({
-      builderConfig: rawRsbuildConfig,
+      rsbuildConfig: rawRsbuildConfig,
       bundlerConfigs: rawBundlerConfigs,
       inspectOptions: {
         ...inspectOptions,
         outputPath,
       },
-      builderOptions,
+      rsbuildOptions,
       configType: 'webpack',
     });
   }
 
   return {
-    builderConfig: rawRsbuildConfig,
+    rsbuildConfig: rawRsbuildConfig,
     bundlerConfigs: rawBundlerConfigs,
     origin: {
-      builderConfig: context.config,
+      rsbuildConfig: context.config,
       bundlerConfigs: webpackConfigs,
     },
   };

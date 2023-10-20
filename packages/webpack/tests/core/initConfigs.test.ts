@@ -3,7 +3,7 @@ import { createStubRsbuild } from '../helper';
 import { RsbuildConfig, RsbuildPluginAPI } from '@/types';
 
 describe('modifyRsbuildConfig', () => {
-  it.skip('should not allow to modify builder config', async () => {
+  it.skip('should not allow to modify Rsbuild config', async () => {
     const rsbuild = await createStubRsbuild({});
     let config: RsbuildConfig;
 
@@ -24,10 +24,10 @@ describe('modifyRsbuildConfig', () => {
     ]);
 
     const {
-      origin: { builderConfig },
+      origin: { rsbuildConfig },
     } = await rsbuild.inspectConfig();
 
-    expect(builderConfig.dev.port).toBe(8080);
+    expect(rsbuildConfig.dev.port).toBe(8080);
   });
 
   it('should modify config by utils', async () => {
@@ -35,7 +35,7 @@ describe('modifyRsbuildConfig', () => {
       entry: {
         main: 'src/index.ts',
       },
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           preEntry: 'a.js',
         },

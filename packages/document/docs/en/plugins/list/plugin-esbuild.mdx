@@ -33,7 +33,7 @@ export default {
 };
 ```
 
-If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#builderaddplugins) method.
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
 
 ## Config
 
@@ -52,7 +52,7 @@ type LoaderOptions = EsbuildLoaderOptions | false | undefined;
 ```ts
 const defaultOptions = {
   target: 'es2015',
-  charset: builderConfig.output.charset,
+  charset: rsbuildConfig.output.charset,
 };
 ```
 
@@ -123,7 +123,7 @@ type MinimizeOptions = EsbuildMinifyOptions | false | undefined;
 const defaultOptions = {
   css: true,
   target: 'es2015',
-  format: builderTarget === 'web' ? 'iife' : undefined,
+  format: rsbuildTarget === 'web' ? 'iife' : undefined,
 };
 ```
 

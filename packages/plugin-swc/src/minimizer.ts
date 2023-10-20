@@ -38,21 +38,21 @@ export class SwcMinimizerPlugin {
     options: {
       jsMinify?: boolean | JsMinifyOptions;
       cssMinify?: boolean | CssMinifyOptions;
-      builderConfig?: RsbuildConfig;
+      rsbuildConfig?: RsbuildConfig;
     } = {},
   ) {
     this.minifyOptions = {
       jsMinify: merge(
-        this.getDefaultJsMinifyOptions(options.builderConfig),
+        this.getDefaultJsMinifyOptions(options.rsbuildConfig),
         normalize(options.jsMinify, {}),
       ),
       cssMinify: normalize(options.cssMinify, {}),
     };
   }
 
-  getDefaultJsMinifyOptions(builderConfig?: RsbuildConfig): JsMinifyOptions {
+  getDefaultJsMinifyOptions(rsbuildConfig?: RsbuildConfig): JsMinifyOptions {
     const compressOptions: TerserCompressOptions = {};
-    const { removeConsole } = builderConfig?.performance || {};
+    const { removeConsole } = rsbuildConfig?.performance || {};
 
     if (removeConsole === true) {
       compressOptions.drop_console = true;

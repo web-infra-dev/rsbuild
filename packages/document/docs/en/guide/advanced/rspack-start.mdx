@@ -18,10 +18,10 @@ Integrating rspack-provider into a frontend framework is similar to integrating 
 
 ```ts title=modern.config.ts
 import { createRsbuild } from '@rsbuild/core';
-import { builderRspackProvider } from '@rsbuild/rspack-provider';
+import { rspackProvider } from '@rsbuild/rspack-provider';
 
-const provider = builderRspackProvider({
-  builderConfig: {
+const provider = rspackProvider({
+  rsbuildConfig: {
     // some configs
   },
 });
@@ -310,7 +310,7 @@ When using component libraries such as [Arco Design](https://www.npmjs.com/packa
 
 ##### Large number of SVG files
 
-By default, builder supports using SVG resources as React components, which incurs some performance overhead.
+By default, Rsbuild supports using SVG resources as React components, which incurs some performance overhead.
 
 If you don't need this feature, you can set [output.disableSvgr](/config/options/output.html#outputdisablesvgr) to true to disable this behavior to improve build performance.
 

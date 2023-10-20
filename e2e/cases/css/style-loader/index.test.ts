@@ -13,7 +13,7 @@ test('should inline style when disableCssExtract is false', async ({
       main: join(fixtures, 'src/index.ts'),
     },
     runServer: true,
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         disableCssExtract: true,
       },

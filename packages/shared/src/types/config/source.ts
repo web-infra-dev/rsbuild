@@ -1,5 +1,5 @@
 import type { Alias } from '@modern-js/utils';
-import type { RsbuildTarget } from '../builder';
+import type { RsbuildTarget } from '../rsbuild';
 import type { ModifyChainUtils } from '../hooks';
 import type { ChainedConfig, JSONValue } from '../utils';
 

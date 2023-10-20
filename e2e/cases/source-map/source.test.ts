@@ -31,7 +31,7 @@ test('source-map', async () => {
     entry: {
       main: join(fixtures, 'src/index.js'),
     },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         legalComments: 'none',
       },

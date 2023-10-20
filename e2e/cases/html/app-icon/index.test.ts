@@ -6,7 +6,7 @@ test('should emit app icon to dist path', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         appIcon: './src/icon.png',
       },
@@ -30,7 +30,7 @@ test('should apply asset prefix to app icon URL', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       html: {
         appIcon: './src/icon.png',
       },

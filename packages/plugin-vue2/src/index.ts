@@ -30,7 +30,7 @@ export function pluginVue2(
 
     async setup(api) {
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
-        const builderConfig: SharedRsbuildConfig = {
+        const rsbuildConfig: SharedRsbuildConfig = {
           output: {
             disableSvgr: true,
           },
@@ -53,10 +53,10 @@ export function pluginVue2(
         // so we need to use style-loader to handle styles
         // ref: https://www.rspack.dev/guide/vue.html#vue2
         if (api.context.bundlerType === 'rspack') {
-          builderConfig.output!.disableCssExtract = true;
+          rsbuildConfig.output!.disableCssExtract = true;
         }
 
-        return mergeRsbuildConfig(config, builderConfig);
+        return mergeRsbuildConfig(config, rsbuildConfig);
       });
 
       api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {

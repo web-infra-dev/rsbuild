@@ -1,7 +1,10 @@
 import { logger, type Logger } from 'rslog';
 import chalk from 'chalk';
 
-export const isDebug = () => process.env.DEBUG === 'builder';
+export const isDebug = () =>
+  process.env.DEBUG === 'rsbuild' ||
+  // the legacy usage
+  process.env.DEBUG === 'builder';
 
 export const debug = (message: string | (() => string)) => {
   if (isDebug()) {

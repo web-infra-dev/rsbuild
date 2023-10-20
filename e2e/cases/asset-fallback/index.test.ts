@@ -6,7 +6,7 @@ test('should handle unknown modules with fallback rule', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    builderConfig: {
+    rsbuildConfig: {
       output: {
         enableAssetFallback: true,
       },

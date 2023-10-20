@@ -97,10 +97,10 @@ Inspect config succeed, open following files to view the content:
 
 #### 通过 Rsbuild 调试模式查看
 
-通过在执行构建时添加 `DEBUG=builder` 环境变量可开启 Rsbuild 的[调试模式](/guide/debug/debug-mode.html)，此时会输出最终生成的 webpack 或 Rspack 配置到 dist 目录下。
+通过在执行构建时添加 `DEBUG=rsbuild` 环境变量可开启 Rsbuild 的[调试模式](/guide/debug/debug-mode.html)，此时会输出最终生成的 webpack 或 Rspack 配置到 dist 目录下。
 
 ```bash
-➜ DEBUG=builder pnpm dev
+➜ DEBUG=rsbuild pnpm dev
 
 debug   create context [1842.90 ms]
 debug   add default plugins [1874.45 ms]

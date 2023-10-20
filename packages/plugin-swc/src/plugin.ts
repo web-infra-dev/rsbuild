@@ -34,13 +34,13 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
 
     api.modifyWebpackChain(async (chain, utils) => {
       const { CHAIN_ID, isProd } = utils;
-      const builderConfig = api.getNormalizedConfig();
+      const rsbuildConfig = api.getNormalizedConfig();
       const { rootPath } = api.context;
 
       const swcConfigs = await applyPluginConfig(
         options,
         utils,
-        builderConfig,
+        rsbuildConfig,
         rootPath,
       );
 
@@ -96,7 +96,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
           .use(new CheckPolyfillPlugin(mainConfig));
       }
 
-      if (checkUseMinify(mainConfig, builderConfig, isProd)) {
+      if (checkUseMinify(mainConfig, rsbuildConfig, isProd)) {
         // Insert swc minify plugin
         // @ts-expect-error webpack-chain missing minimizers type
         const minimizersChain = chain.optimization.minimizers;
@@ -116,7 +116,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
             {
               jsMinify: mainConfig.jsMinify ?? mainConfig.jsc?.minify,
               cssMinify: mainConfig.cssMinify,
-              builderConfig,
+              rsbuildConfig,
             },
           ]);
       }

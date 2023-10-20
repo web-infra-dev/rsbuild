@@ -9,8 +9,8 @@ export const pluginArco = (): DefaultRsbuildPlugin => ({
     const ARCO_NAME = '@arco-design/web-react';
     const ARCO_ICON = `${ARCO_NAME}/icon`;
 
-    api.modifyRsbuildConfig((builderConfig) => {
-      const { transformImport = [] } = builderConfig.source || {};
+    api.modifyRsbuildConfig((rsbuildConfig) => {
+      const { transformImport = [] } = rsbuildConfig.source || {};
 
       if (
         transformImport === false ||
@@ -38,8 +38,8 @@ export const pluginArco = (): DefaultRsbuildPlugin => ({
         });
       }
 
-      builderConfig.source ||= {};
-      builderConfig.source.transformImport = transformImport;
+      rsbuildConfig.source ||= {};
+      rsbuildConfig.source.transformImport = transformImport;
     });
   },
 });

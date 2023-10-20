@@ -15,16 +15,16 @@ export const fixturesDir = join(__dirname, 'fixtures');
  * different with rsbuild.createRsbuild. support add custom plugins instead of applyDefaultPlugins.
  */
 export async function createStubRsbuild({
-  builderConfig = {},
+  rsbuildConfig = {},
   plugins,
   ...options
 }: CreateRsbuildOptions & {
-  builderConfig?: RsbuildConfig;
+  rsbuildConfig?: RsbuildConfig;
   plugins?: RsbuildPlugin[];
 }) {
   const rsbuild = await createBaseRsbuild({
     provider: webpackProvider,
-    builderConfig,
+    rsbuildConfig,
     plugins,
     ...options,
   });

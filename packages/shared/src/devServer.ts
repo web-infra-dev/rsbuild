@@ -19,11 +19,11 @@ import type { Compiler } from 'webpack';
 type ServerOptions = Exclude<StartDevServerOptions['serverOptions'], undefined>;
 
 export const getDevServerOptions = async ({
-  builderConfig,
+  rsbuildConfig,
   serverOptions,
   port,
 }: {
-  builderConfig: SharedRsbuildConfig;
+  rsbuildConfig: SharedRsbuildConfig;
   serverOptions: ServerOptions;
   port: number;
 }): Promise<{
@@ -34,17 +34,17 @@ export const getDevServerOptions = async ({
 
   const defaultDevConfig = deepmerge(
     {
-      hot: builderConfig.dev?.hmr ?? true,
+      hot: rsbuildConfig.dev?.hmr ?? true,
       watch: true,
       client: {
         port: port.toString(),
       },
       port,
-      liveReload: builderConfig.dev?.hmr ?? true,
+      liveReload: rsbuildConfig.dev?.hmr ?? true,
       devMiddleware: {
         writeToDisk: (file: string) => !file.includes('.hot-update.'),
       },
-      https: builderConfig.dev?.https,
+      https: rsbuildConfig.dev?.https,
     },
     // merge devServerOptions from serverOptions
     (serverOptions.dev as Exclude<typeof serverOptions.dev, boolean>) || {},
@@ -52,12 +52,12 @@ export const getDevServerOptions = async ({
 
   const devConfig = applyOptionsChain(
     defaultDevConfig,
-    builderConfig.tools?.devServer,
+    rsbuildConfig.tools?.devServer,
     {},
     deepmerge,
   );
 
-  const defaultConfig = getServerOptions(builderConfig);
+  const defaultConfig = getServerOptions(rsbuildConfig);
   const config = serverOptions.config
     ? deepmerge(defaultConfig, serverOptions.config)
     : defaultConfig;
@@ -110,9 +110,9 @@ export async function startDevServer<
   }
 
   const { getPort } = await import('@modern-js/utils');
-  const builderConfig = options.context.config;
+  const rsbuildConfig = options.context.config;
 
-  const port = await getPort(builderConfig.dev?.port || DEFAULT_PORT, {
+  const port = await getPort(rsbuildConfig.dev?.port || DEFAULT_PORT, {
     strictPort,
     slient: getPortSilently,
   });
@@ -155,7 +155,7 @@ export async function startDevServer<
 
         const { getAddressUrls } = await import('@modern-js/utils');
         const protocol = https ? 'https' : 'http';
-        let urls = getAddressUrls(protocol, port, builderConfig.dev?.host);
+        let urls = getAddressUrls(protocol, port, rsbuildConfig.dev?.host);
 
         if (printURLs) {
           if (isFunction(printURLs)) {
