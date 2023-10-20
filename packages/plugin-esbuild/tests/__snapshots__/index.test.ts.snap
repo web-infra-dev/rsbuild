@@ -8,7 +8,7 @@ exports[`plugins/esbuild > should not set format iife when target is not web 1`]
         "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/plugin-esbuild/compiled/esbuild-loader/index.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/esbuild-loader/dist/index.js",
             "options": {
               "charset": "ascii",
               "loader": "jsx",
@@ -31,7 +31,7 @@ exports[`plugins/esbuild > should not set format iife when target is not web 1`]
         "test": /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/plugin-esbuild/compiled/esbuild-loader/index.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/esbuild-loader/dist/index.js",
             "options": {
               "charset": "ascii",
               "loader": "tsx",
@@ -67,7 +67,7 @@ exports[`plugins/esbuild > should set esbuild minimizer in production 1`] = `
         "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/plugin-esbuild/compiled/esbuild-loader/index.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/esbuild-loader/dist/index.js",
             "options": {
               "charset": "ascii",
               "loader": "jsx",
@@ -90,7 +90,7 @@ exports[`plugins/esbuild > should set esbuild minimizer in production 1`] = `
         "test": /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/plugin-esbuild/compiled/esbuild-loader/index.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/esbuild-loader/dist/index.js",
             "options": {
               "charset": "ascii",
               "loader": "tsx",
@@ -126,7 +126,7 @@ exports[`plugins/esbuild > should set esbuild-loader 1`] = `
         "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/plugin-esbuild/compiled/esbuild-loader/index.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/esbuild-loader/dist/index.js",
             "options": {
               "charset": "ascii",
               "loader": "jsx",
@@ -149,7 +149,7 @@ exports[`plugins/esbuild > should set esbuild-loader 1`] = `
         "test": /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/plugin-esbuild/compiled/esbuild-loader/index.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/esbuild-loader/dist/index.js",
             "options": {
               "charset": "ascii",
               "loader": "tsx",
