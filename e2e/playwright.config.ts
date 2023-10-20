@@ -2,7 +2,6 @@ import { defineConfig } from '@playwright/test';
 
 // TODO: fix these cases
 const ignoreFolder = [
-  'builder-cli',
   'check-syntax',
   'css',
   'inspect-config',

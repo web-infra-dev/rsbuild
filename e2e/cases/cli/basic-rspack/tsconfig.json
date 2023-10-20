@@ -4,9 +4,8 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"],
-      "@shared/*": ["./shared/*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "shared", "config"]
+  "include": ["src"]
 }
