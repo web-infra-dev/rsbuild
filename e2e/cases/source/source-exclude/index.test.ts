@@ -15,6 +15,9 @@ webpackOnlyTest(
           source: {
             exclude: [path.resolve(__dirname, './src/test.js')],
           },
+          output: {
+            overrideBrowserslist: ['ie 11'],
+          },
           security: {
             checkSyntax: true,
           },
