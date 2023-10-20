@@ -143,8 +143,12 @@ export type CssModuleLocalsConvention =
   | 'dashesOnly';
 
 export type CssModules = {
-  exportLocalsConvention?: CssModuleLocalsConvention;
   auto?: boolean | RegExp | ((resourcePath: string) => boolean);
+  /**
+   * Set the local ident name of CSS modules.
+   */
+  localIdentName?: string;
+  exportLocalsConvention?: CssModuleLocalsConvention;
 };
 
 export interface SharedOutputConfig {
@@ -200,20 +204,17 @@ export interface SharedOutputConfig {
    */
   cleanDistPath?: boolean;
   /**
-   * Set the local ident name of CSS modules.
+   * @deprecated use output.cssModules.localIdentName instead
    */
   cssModuleLocalIdentName?: string;
-
   /**
-   * Allows to enable/disable CSS Modules or setup configuration.
+   * Allow to custom CSS Modules options.
    */
   cssModules?: CssModules;
-
   /**
    * Convert px to rem in CSS.
    */
   convertToRem?: boolean | RemOptions;
-
   /**
    * Disable css extract and inline CSS files into the JS bundle.
    */
@@ -305,9 +306,9 @@ export interface NormalizedSharedOutputConfig extends SharedOutputConfig {
   enableInlineStyles: boolean | InlineChunkTest;
   svgDefaultExport: SvgDefaultExport;
   cssModules: {
+    localIdentName?: string;
     exportLocalsConvention: CssModuleLocalsConvention;
     auto?: CssModules['auto'];
   };
   disableSvgr: boolean;
-  externals?: Externals;
 }

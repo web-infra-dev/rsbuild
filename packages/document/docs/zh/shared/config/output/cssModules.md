@@ -1,35 +1,20 @@
 - **类型：**
 
 ```ts
-type CssModuleLocalsConvention =
-  | 'asIs'
-  | 'camelCase'
-  | 'camelCaseOnly'
-  | 'dashes'
-  | 'dashesOnly';
-
 type CssModules = {
   auto?: boolean | RegExp | ((resourcePath: string) => boolean);
+  localIdentName?: string;
   exportLocalsConvention?: CssModuleLocalsConvention;
 };
 ```
 
-- **默认值：**
-
-```ts
-const defaultCssModules = {
-  exportLocalsConvention: 'camelCase',
-};
-```
-
-自定义 CSS 模块配置。
+用于自定义 CSS Modules 配置。
 
 ### cssModules.auto
 
 auto 配置项允许基于文件名自动启用 CSS 模块。
 
 - **类型：** `boolean | RegExp | ((resourcePath: string) => boolean)`
-
 - **默认值：** `undefined`
 
 类型说明：
@@ -56,7 +41,16 @@ export default {
 
 导出的类名称的样式。
 
-- **类型：** `'asIs' | 'camelCase' | 'camelCaseOnly' | 'dashes' | 'dashesOnly'`
+- **类型：**
+
+```ts
+type CssModuleLocalsConvention =
+  | 'asIs'
+  | 'camelCase'
+  | 'camelCaseOnly'
+  | 'dashes'
+  | 'dashesOnly';
+```
 
 - **默认值：** `'camelCase'`
 
@@ -73,6 +67,65 @@ export default {
   output: {
     cssModules: {
       exportLocalsConvention: 'camelCaseOnly',
+    },
+  },
+};
+```
+
+### cssModules.localIdentName
+
+- **类型：** `string`
+- **默认值：**
+
+```ts
+// isProd 表示生产环境构建
+const localIdentName = isProd
+  ? '[local]-[hash:base64:6]'
+  : '[path][name]__[local]-[hash:base64:6]';
+```
+
+设置 CSS Modules 编译后生成的 className 格式。
+
+#### 默认值
+
+`localIdentName` 在开发环境和生产环境有不同的默认值。
+
+在生产环境，Rsbuild 会生成更简短的类名，从而减少构建产物的体积。
+
+```ts
+import styles from './index.module.scss';
+
+// 在开发环境下，值为 `.src-index-module__header-xxxxxx`
+// 在生产环境下，值为 `.header-xxxxxx`
+console.log(styles.header);
+```
+
+#### 模板字符串
+
+在 `localIdentName` 中，你可以使用以下模板字符串：
+
+- `[name]` - 源文件名称。
+- `[local]` - 原始类名。
+- `[hash]` - 字符串的哈希值。
+- `[folder]` - 文件夹的相对路径。
+- `[path]` - 源文件的相对路径。
+- `[file]` - 文件名和路径。
+- `[ext]` - 文件后缀名，包含点号。
+- `[hash:<hashDigest>:<hashDigestLength>]` - 带有哈希设置的哈希。
+
+:::tip
+在使用 Rspack 作为打包工具时, 暂不支持配置 `<hashDigest>`。
+:::
+
+#### 示例
+
+将 `localIdentName` 设置为其他值：
+
+```ts
+export default {
+  output: {
+    cssModules: {
+      localIdentName: '[hash:base64:4]',
     },
   },
 };

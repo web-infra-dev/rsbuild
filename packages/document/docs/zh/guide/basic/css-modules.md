@@ -79,17 +79,19 @@ export default {
 
 ## 自定义类名
 
-自定义 CSS Modules 生成的类名也是我们比较常用的功能，你可以使用 [output.cssModuleLocalIdentName](/config/options/output.html#outputcssmodulelocalidentname) 来进行配置。
+自定义 CSS Modules 生成的类名也是我们比较常用的功能，你可以使用 [output.cssModules.localIdentName](/config/options/output.html#outputcssmoduleslocalidentname) 来进行配置。
 
 ```ts
 export default {
   output: {
-    cssModuleLocalIdentName: '[hash:base64:4]',
+    cssModules: {
+      localIdentName: '[hash:base64:4]',
+    },
   },
 };
 ```
 
-如果你需要自定义 CSS Modules 的其他配置，可以通过 [tools.cssLoader](/config/options/tools.html#css-loader) 进行设置。
+如果你需要自定义 CSS Modules 的其他配置，可以通过 [output.cssModules](/config/options/output.html#outputcssmodules) 进行设置。
 
 ## 添加类型声明
 

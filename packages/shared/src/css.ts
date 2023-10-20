@@ -19,6 +19,7 @@ export const getCssModuleLocalIdentName = (
   config: SharedNormalizedConfig,
   isProd: boolean,
 ) =>
+  config.output.cssModules.localIdentName ||
   config.output.cssModuleLocalIdentName ||
   // Using shorter classname in production to reduce bundle size
   (isProd

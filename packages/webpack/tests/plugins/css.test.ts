@@ -238,6 +238,25 @@ describe('plugins/css', () => {
     process.env.NODE_ENV = NODE_ENV;
   });
 
+  it('should allow to custom cssModules.localIdentName', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginCss()],
+      rsbuildConfig: {
+        output: {
+          cssModules: {
+            localIdentName: '[hash:base64]',
+          },
+        },
+      },
+    });
+
+    const config = await rsbuild.unwrapWebpackConfig();
+
+    expect(JSON.stringify(config)).toContain(
+      '"localIdentName":"[hash:base64]"',
+    );
+  });
+
   it('should allow to custom cssModuleLocalIdentName', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
