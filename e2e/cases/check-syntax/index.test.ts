@@ -8,6 +8,9 @@ function getCommonBuildConfig(cwd: string): SharedRsbuildConfig {
     source: {
       exclude: [path.resolve(cwd, './src/test.js')],
     },
+    output: {
+      overrideBrowserslist: ['ie 11'],
+    },
     tools: {
       // @ts-expect-error
       rspack: (config) => {

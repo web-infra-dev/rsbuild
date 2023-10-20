@@ -5,11 +5,11 @@ import { pluginSwc } from '@rsbuild/plugin-swc';
 
 const commonConfig = {
   cwd: __dirname,
-  entry: { index: path.resolve(__dirname, './src/main.ts') },
+  entry: { index: path.resolve(__dirname, './src/main.js') },
   rsbuildConfig: {
     tools: {
-      webpack: {
-        externals: ['styled-components'],
+      bundlerChain: (chain: any) => {
+        chain.externals(['styled-components']);
       },
     },
     output: {
@@ -47,7 +47,7 @@ test('should allow to disable styled-components when use swc plugin', async () =
       )!
     ];
 
-  expect(content).toContain('div(');
+  expect(content).toContain('div`');
 });
 
 test('should transform styled-components by default when use swc plugin', async () => {

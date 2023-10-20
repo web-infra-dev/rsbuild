@@ -1,20 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
 // TODO: fix these cases
-const ignoreFolder = [
-  'check-syntax',
-  'css',
-  'inspect-config',
-  'stylus',
-  'stylus-rem',
-  'vue',
-  'vue2',
-  'wasm',
-  'styled-component',
-  'swc',
-  'source-map',
-  'source',
-];
+const ignoreFolder = ['stylus', 'stylus-rem'];
 
 export default defineConfig({
   // exclude webpack / rspack self-feature test cases when run rspack / webpack test
