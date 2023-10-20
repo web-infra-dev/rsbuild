@@ -13,7 +13,8 @@
     "change": "modern change",
     "release": "modern release",
     "prepare": "pnpm run build && husky install",
-    "gen-release-note": "modern gen-release-note"
+    "gen-release-note": "modern gen-release-note",
+    "check-changeset": "cd ./scripts/check-changeset && pnpm start"
   },
   "engines": {
     "node": ">=16.18.1",
