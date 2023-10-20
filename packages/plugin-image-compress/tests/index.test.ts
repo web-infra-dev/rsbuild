@@ -1,6 +1,7 @@
 import { it, expect, describe } from 'vitest';
-import { createStubRsbuild } from '@rsbuild/webpack/stub';
-import { pluginAsset } from '@builder/plugins/asset';
+import { createStubRsbuild } from '@rsbuild/vitest-helper';
+import { webpackProvider } from '@rsbuild/webpack';
+import { pluginAsset } from '@rsbuild/core/plugins/asset';
 import { pluginImageCompress } from '../src';
 
 process.env.NODE_ENV = 'production';
@@ -21,19 +22,23 @@ const ASSET_EXTS = [
 describe('plugin/image-compress', () => {
   it('should generate correct options', async () => {
     const rsbuild = await createStubRsbuild({
+      provider: webpackProvider,
+      rsbuildConfig: {},
       plugins: [pluginAsset('image', ASSET_EXTS), pluginImageCompress()],
     });
-    expect(await rsbuild.unwrapWebpackConfig()).toMatchSnapshot();
+    expect(await rsbuild.unwrapConfig()).toMatchSnapshot();
   });
 
   it('should accept `...options: Options[]` as parameter', async () => {
     const rsbuild = await createStubRsbuild({
+      provider: webpackProvider,
+      rsbuildConfig: {},
       plugins: [
         pluginAsset('image', ASSET_EXTS),
         pluginImageCompress('jpeg', { use: 'png' }),
       ],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.optimization?.minimizer).toMatchInlineSnapshot(`
       [
         ModernJsImageMinimizerPlugin {
@@ -56,12 +61,14 @@ describe('plugin/image-compress', () => {
 
   it('should accept `options: Options[]` as parameter', async () => {
     const rsbuild = await createStubRsbuild({
+      provider: webpackProvider,
+      rsbuildConfig: {},
       plugins: [
         pluginAsset('image', ASSET_EXTS),
         pluginImageCompress(['jpeg', { use: 'png' }]),
       ],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.optimization?.minimizer).toMatchInlineSnapshot(`
       [
         ModernJsImageMinimizerPlugin {

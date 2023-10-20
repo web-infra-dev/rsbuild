@@ -10,9 +10,9 @@ describe('plugins/esbuild', () => {
       rsbuildConfig: {},
       provider: webpackProvider,
     });
-    const configs = await rsbuild.initConfigs();
+    const config = await rsbuild.unwrapConfig();
 
-    expect(configs[0]).toMatchSnapshot();
+    expect(config).toMatchSnapshot();
   });
 
   it('should set esbuild minimizer in production', async () => {
@@ -22,8 +22,8 @@ describe('plugins/esbuild', () => {
       rsbuildConfig: {},
       provider: webpackProvider,
     });
-    const configs = await rsbuild.initConfigs();
-    expect(configs[0]).toMatchSnapshot();
+    const config = await rsbuild.unwrapConfig();
+    expect(config).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
   });
@@ -36,8 +36,8 @@ describe('plugins/esbuild', () => {
       target: 'node',
       provider: webpackProvider,
     });
-    const configs = await rsbuild.initConfigs();
-    expect(configs[0]).toMatchSnapshot();
+    const config = await rsbuild.unwrapConfig();
+    expect(config).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
   });

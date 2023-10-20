@@ -20,6 +20,17 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./plugins/*": {
+      "types": "./dist/plugins/*.d.ts",
+      "default": "./dist/plugins/*.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "plugins/*": [
+        "./dist/plugins/*.d.ts"
+      ]
     }
   },
   "files": [
