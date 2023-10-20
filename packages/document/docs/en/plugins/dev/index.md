@@ -181,27 +181,24 @@ export const pluginAdminPanel = (): RsbuildPlugin => ({
 });
 ```
 
-### Integrate webpack Plugins
+### Register Rspack or Webpack Plugin
 
-Integrate existing webpack plugins to migrate your applications:
+You can register Rspack or Webpack plugins in the Rsbuild plugin. For example, to register the `eslint-webpack-plugin`:
 
 ```ts
-import type { RsbuildPlugin } from '@rsbuild/webpack';
-import type { Options } from '@modern-js/inspector-webpack-plugin';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import ESLintPlugin from 'eslint-webpack-plugin';
 
-export const pluginInspector = (options?: Options): RsbuildPlugin => ({
-  name: 'plugin-inspector',
+export const pluginEslint = (options?: Options): RsbuildPlugin => ({
+  name: 'plugin-eslint',
   setup(api) {
-    api.modifyWebpackChain(async (chain) => {
-      // load modules dynamically only when needed
-      // to avoid unnecessary performance cost.
-      const { InspectorWebpackPlugin } = await import(
-        '@modern-js/inspector-webpack-plugin'
-      );
-      // modify webpack-chain to setup webpack plugin.
-      chain
-        .plugin('inspector-webpack-plugin')
-        .use(InspectorWebpackPlugin, [inspectorOptions]);
+    // Use bundler-chain to register a bundler plugin.
+    api.modifyBundlerChain(async (chain) => {
+      chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [
+        {
+          // plugins options
+        },
+      ]);
     });
   },
 });
