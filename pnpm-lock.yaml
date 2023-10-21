@@ -87,6 +87,9 @@ importers:
       '@rsbuild/plugin-vue2':
         specifier: workspace:*
         version: link:../packages/plugin-vue2
+      '@rsbuild/plugin-vue2-jsx':
+        specifier: workspace:*
+        version: link:../packages/plugin-vue2-jsx
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../packages/shared
@@ -591,12 +594,31 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
-      '@vue/babel-preset-jsx':
-        specifier: ^1.4.0
-        version: 1.4.0(@babel/core@7.23.2)
       vue-loader:
         specifier: ^15.11.1
         version: 15.11.1(css-loader@6.8.1)(prettier@3.0.3)(webpack@5.89.0)
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+      webpack:
+        specifier: ^5.88.1
+        version: 5.89.0
+
+  packages/plugin-vue2-jsx:
+    dependencies:
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@vue/babel-preset-jsx':
+        specifier: ^1.4.0
+        version: 1.4.0(@babel/core@7.23.2)
     devDependencies:
       '@babel/core':
         specifier: ^7.23.2
@@ -613,9 +635,6 @@ importers:
       typescript:
         specifier: ^5
         version: 5.2.2
-      webpack:
-        specifier: ^5.88.1
-        version: 5.89.0
 
   packages/shared:
     dependencies:

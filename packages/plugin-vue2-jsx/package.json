@@ -1,11 +1,11 @@
 {
-  "name": "@rsbuild/plugin-vue2",
-  "description": "Vue 2 plugin of Rsbuild",
+  "name": "@rsbuild/plugin-vue2-jsx",
+  "description": "Vue 2 JSX plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
-    "directory": "packages/plugin-vue2"
+    "directory": "packages/plugin-vue2-jsx"
   },
   "license": "MIT",
   "version": "0.0.7",
@@ -26,13 +26,14 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "vue-loader": "^15.11.1"
+    "@vue/babel-preset-jsx": "^1.4.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.2",
     "@rsbuild/core": "workspace:*",
+    "@rsbuild/webpack": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
-    "typescript": "^5",
-    "webpack": "^5.88.1"
+    "typescript": "^5"
   },
   "peerDependencies": {
     "@rsbuild/core": "workspace:^0.0.7"
