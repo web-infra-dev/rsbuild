@@ -2,6 +2,7 @@ import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { pluginVue2 } from '@rsbuild/plugin-vue2';
+import { pluginVue2Jsx } from '@rsbuild/plugin-vue2-jsx';
 
 test('should build basic Vue sfc correctly', async ({ page }) => {
   const root = join(__dirname, 'sfc-basic');
@@ -58,7 +59,7 @@ test('should build basic Vue jsx correctly', async ({ page }) => {
       main: join(root, 'src/index.js'),
     },
     runServer: true,
-    plugins: [pluginVue2()],
+    plugins: [pluginVue2(), pluginVue2Jsx()],
   });
 
   await page.goto(getHrefByEntryName('main', rsbuild.port));
@@ -98,7 +99,7 @@ test('should build Vue sfc with lang="jsx" correctly', async ({ page }) => {
       main: join(root, 'src/index.js'),
     },
     runServer: true,
-    plugins: [pluginVue2()],
+    plugins: [pluginVue2(), pluginVue2Jsx()],
   });
 
   await page.goto(getHrefByEntryName('main', rsbuild.port));
@@ -121,7 +122,7 @@ test('should build Vue sfc with lang="tsx" correctly', async ({ page }) => {
       main: join(root, 'src/index.js'),
     },
     runServer: true,
-    plugins: [pluginVue2()],
+    plugins: [pluginVue2(), pluginVue2Jsx()],
   });
 
   await page.goto(getHrefByEntryName('main', rsbuild.port));

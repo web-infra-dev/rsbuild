@@ -25,6 +25,7 @@
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "workspace:*",
     "@rsbuild/plugin-vue2": "workspace:*",
+    "@rsbuild/plugin-vue2-jsx": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@types/connect": "^3.4.37",
