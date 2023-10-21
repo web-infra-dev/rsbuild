@@ -607,7 +607,7 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0(@babel/core@7.23.2)
       vue-loader:
-        specifier: ^15.10.1
+        specifier: ^15.11.1
         version: 15.11.1(css-loader@6.8.1)(prettier@3.0.3)(webpack@5.89.0)
     devDependencies:
       '@babel/core':

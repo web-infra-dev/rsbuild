@@ -13,6 +13,7 @@ exports[`plugins/vue > should add vue-loader and VueLoaderPlugin correctly 1`] =
               "compilerOptions": {
                 "preserveWhitespace": false,
               },
+              "experimentalInlineMatchResource": false,
             },
           },
         ],
@@ -43,6 +44,7 @@ exports[`plugins/vue > should allow to configure jsx babel plugin options 1`] = 
               "compilerOptions": {
                 "preserveWhitespace": false,
               },
+              "experimentalInlineMatchResource": false,
             },
           },
         ],
@@ -257,6 +259,7 @@ exports[`plugins/vue > should allow to configure vueLoader options 1`] = `
               "compilerOptions": {
                 "preserveWhitespace": false,
               },
+              "experimentalInlineMatchResource": false,
               "hotReload": false,
             },
           },
@@ -288,6 +291,7 @@ exports[`plugins/vue > should apply jsx babel plugin correctly 1`] = `
               "compilerOptions": {
                 "preserveWhitespace": false,
               },
+              "experimentalInlineMatchResource": false,
             },
           },
         ],
