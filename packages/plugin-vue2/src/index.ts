@@ -49,13 +49,6 @@ export function pluginVue2(
           },
         };
 
-        // When using Rspack with Vue2, css extract is not supported,
-        // so we need to use style-loader to handle styles
-        // ref: https://www.rspack.dev/guide/vue.html#vue2
-        if (api.context.bundlerType === 'rspack') {
-          rsbuildConfig.output!.disableCssExtract = true;
-        }
-
         return mergeRsbuildConfig(config, rsbuildConfig);
       });
 
@@ -67,6 +60,8 @@ export function pluginVue2(
             compilerOptions: {
               preserveWhitespace: false,
             },
+            experimentalInlineMatchResource:
+              api.context.bundlerType === 'rspack',
           },
           options.vueLoaderOptions ?? {},
         );
