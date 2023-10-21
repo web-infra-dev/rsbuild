@@ -1,6 +1,10 @@
 # Vue Plugin
 
-The Vue plugin provides support for building Vue 3 applications. The plugin internally integrates [vue-loader](https://vue-loader.vuejs.org/) and [@vue/babel-plugin-jsx](https://github.com/vuejs/babel-plugin-jsx).
+The Vue plugin provides support for Vue 3 SFC (Single File Components). The plugin internally integrates [vue-loader](https://vue-loader.vuejs.org/) v17.
+
+:::tip
+For Vue 3 JSX / TSX syntax, please use the [Vue JSX plugin](/plugins/list/plugin-vue-jsx).
+:::
 
 ## Quick Start
 
@@ -26,13 +30,15 @@ export default {
 
 If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
 
-After registering the plugin, you can directly import `*.vue` files in your code or use Vue's [JSX syntax](https://github.com/vuejs/babel-plugin-jsx) without the need for additional configuration.
+After registering the plugin, you can directly import `*.vue` SFC files in your code.
 
 ## Config
 
 If you need to customize the compilation behavior of Vue, you can use the following configs.
 
 ### vueLoaderOptions
+
+Options passed to `vue-loader`, please refer to the [vue-loader documentation](https://vue-loader.vuejs.org/) for detailed usage.
 
 - **Type:** `VueLoaderOptions`
 - **Default:**
@@ -46,45 +52,12 @@ const defaultOptions = {
 };
 ```
 
-Options passed to `vue-loader`, please refer to the [vue-loader documentation](https://vue-loader.vuejs.org/) for detailed usage.
+- **Example:**
 
 ```ts
 pluginVue({
   vueLoaderOptions: {
     hotReload: false,
-  },
-});
-```
-
-### vueJsxOptions
-
-- **Type:**
-
-```ts
-type VueJSXPluginOptions = {
-  /** transform `on: { click: xx }` to `onClick: xxx` */
-  transformOn?: boolean;
-  /** enable optimization or not. */
-  optimize?: boolean;
-  /** merge static and dynamic class / style attributes / onXXX handlers */
-  mergeProps?: boolean;
-  /** configuring custom elements */
-  isCustomElement?: (tag: string) => boolean;
-  /** enable object slots syntax */
-  enableObjectSlots?: boolean;
-  /** Replace the function used when compiling JSX expressions */
-  pragma?: string;
-};
-```
-
-- **Default:** `{}`
-
-Options passed to `@vue/babel-plugin-jsx`, please refer to the [@vue/babel-plugin-jsx documentation](https://github.com/vuejs/babel-plugin-jsx) for detailed usage.
-
-```ts
-pluginVue({
-  vueJsxOptions: {
-    transformOn: true,
   },
 });
 ```

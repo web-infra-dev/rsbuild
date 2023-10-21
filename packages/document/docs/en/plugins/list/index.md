@@ -4,8 +4,9 @@
 
 The following are universal plugins that can be used in Rspack mode and Webpack mode of Rsbuild:
 
-- [@rsbuild/plugin-vue](/plugins/list/plugin-vue.html): Used to build Vue 3 App.
-- [@rsbuild/plugin-vue2](/plugins/list/plugin-vue2.html): Used to build Vue 2 App.
+- [@rsbuild/plugin-vue](/plugins/list/plugin-vue.html): Used to compile Vue 3 SFC (Single File Components).
+- [@rsbuild/plugin-vue-jsx](/plugins/list/plugin-vue-jsx.html): Used to compile Vue 3 JSX / TSX syntax.
+- [@rsbuild/plugin-vue2](/plugins/list/plugin-vue2.html): Used to build Vue 2 SFC (Single File Components).
 - [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus.html): Use Stylus add CSS preprocessor.
 - [@rsbuild/plugin-node-polyfill](/plugins/list/plugin-node-polyfill.html): Inject Polyfills of Node core modules in the browser side.
 - [@rsbuild/plugin-image-compress](/plugins/list/plugin-image-compress.html): Compress the image resources used in the project.

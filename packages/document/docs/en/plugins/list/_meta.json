@@ -1,6 +1,7 @@
 [
   "index",
   "plugin-vue",
+  "plugin-vue-jsx",
   "plugin-vue2",
   "plugin-swc",
   "plugin-stylus",
