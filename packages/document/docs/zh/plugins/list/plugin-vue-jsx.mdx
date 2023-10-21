@@ -1,0 +1,72 @@
+# Vue JSX 插件
+
+Vue JSX 插件提供了对 Vue 3 JSX / TSX 语法的支持，插件内部集成了 [@vue/babel-plugin-jsx](https://github.com/vuejs/babel-plugin-jsx)。
+
+:::tip
+在使用 Rspack 打包时，使用 Vue JSX 插件将会显著降低构建性能。因为 Rspack 默认使用的是更快的 SWC 编译，而 Vue JSX 插件依赖更慢的 Babel 编译，产生了额外的编译开销。
+:::
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-vue-jsx -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
+
+export default {
+  plugins: [pluginVueJsx()],
+};
+```
+
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
+
+注册完插件后，你可以直接在代码中可以使用 Vue 的 [JSX / TSX 语法](https://github.com/vuejs/babel-plugin-jsx)。
+
+## 配置
+
+如果你需要自定义 Vue 的编译行为，可以使用以下配置项。
+
+### vueJsxOptions
+
+传递给 `@vue/babel-plugin-jsx` 的选项，请查阅 [@vue/babel-plugin-jsx 文档](https://github.com/vuejs/babel-plugin-jsx) 来了解具体用法。
+
+- **类型：**
+
+```ts
+type VueJSXPluginOptions = {
+  /** 将 `on: { click: xx }` 转换为 `onClick: xxx` */
+  transformOn?: boolean;
+  /** 是否启用优化。 */
+  optimize?: boolean;
+  /** 合并静态和动态 class / style 属性 / onXXX 事件处理函数 */
+  mergeProps?: boolean;
+  /** 配置自定义元素 */
+  isCustomElement?: (tag: string) => boolean;
+  /** 启用对象插槽语法 */
+  enableObjectSlots?: boolean;
+  /** 替换用于编译 JSX 表达式的函数 */
+  pragma?: string;
+};
+```
+
+- **默认值：** `{}`
+
+- **示例：**
+
+```ts
+pluginVueJsx({
+  vueJsxOptions: {
+    transformOn: true,
+  },
+});
+```

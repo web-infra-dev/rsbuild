@@ -1,0 +1,72 @@
+# Vue JSX Plugin
+
+The Vue plugin provides support for Vue 3 JSX / TSX syntax. The plugin internally integrates [@vue/babel-plugin-jsx](https://github.com/vuejs/babel-plugin-jsx).
+
+:::tip
+When using Rspack as the bundler, using the Vue JSX plugin will significantly slow down the build performance. This is because Rspack defaults to using the faster SWC compilation, while the Vue JSX plugin relies on slower Babel compilation, resulting in additional compilation overhead.
+:::
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-vue-jsx -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
+
+export default {
+  plugins: [pluginVueJsx()],
+};
+```
+
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
+
+After registering the plugin, you can use Vue's [JSX / TSX syntax](https://github.com/vuejs/babel-plugin-jsx) in your code.
+
+## Config
+
+If you need to customize the compilation behavior of Vue, you can use the following configs.
+
+### vueJsxOptions
+
+Options passed to `@vue/babel-plugin-jsx`, please refer to the [@vue/babel-plugin-jsx documentation](https://github.com/vuejs/babel-plugin-jsx) for detailed usage.
+
+- **Type:**
+
+```ts
+type VueJSXPluginOptions = {
+  /** transform `on: { click: xx }` to `onClick: xxx` */
+  transformOn?: boolean;
+  /** enable optimization or not. */
+  optimize?: boolean;
+  /** merge static and dynamic class / style attributes / onXXX handlers */
+  mergeProps?: boolean;
+  /** configuring custom elements */
+  isCustomElement?: (tag: string) => boolean;
+  /** enable object slots syntax */
+  enableObjectSlots?: boolean;
+  /** Replace the function used when compiling JSX expressions */
+  pragma?: string;
+};
+```
+
+- **Default:** `{}`
+
+- **Example:**
+
+```ts
+pluginVueJsx({
+  vueJsxOptions: {
+    transformOn: true,
+  },
+});
+```

@@ -4,8 +4,9 @@
 
 以下是 Rsbuild 的 Rspack 模式和 Webpack 模式下都可以使用的通用插件：
 
-- [@rsbuild/plugin-vue](/plugins/list/plugin-vue.html)：用于构建 Vue 3 应用。
-- [@rsbuild/plugin-vue2](/plugins/list/plugin-vue2.html)：用于构建 Vue 2 应用。
+- [@rsbuild/plugin-vue](/plugins/list/plugin-vue.html)：用于编译 Vue 3 SFC（单文件组件）。
+- [@rsbuild/plugin-vue-jsx](/plugins/list/plugin-vue-jsx.html)：用于编译 Vue 3 JSX / TSX 语法。
+- [@rsbuild/plugin-vue2](/plugins/list/plugin-vue2.html)：用于编译 Vue 3 SFC（单文件组件）。
 - [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus.html)：使用 Stylus 作为 CSS 预处理器。
 - [@rsbuild/plugin-node-polyfill](/plugins/list/plugin-node-polyfill.html)：注入 Node 核心模块在浏览器端的 Polyfills。
 - [@rsbuild/plugin-image-compress](/plugins/list/plugin-image-compress.html)：将项目中用到的图片资源进行压缩处理。
