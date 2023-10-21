@@ -14,24 +14,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "emitMetadata": true,
       "legacy": true,
     },
-    "pluginImport": [
-      {
-        "libraryDirectory": "es",
-        "libraryName": "antd",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "es",
-        "libraryName": "@arco-design/web-react",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "react-icon",
-        "libraryName": "@arco-design/web-react/icon",
-      },
-    ],
     "presetEnv": {
       "coreJs": "3.32",
       "mode": "entry",
@@ -601,18 +583,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
     "splitChunks": {
       "cacheGroups": {
-        "lib-antd": {
-          "name": "lib-antd",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-arco": {
-          "name": "lib-arco",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
-        },
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
@@ -706,24 +676,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "emitMetadata": true,
       "legacy": true,
     },
-    "pluginImport": [
-      {
-        "libraryDirectory": "es",
-        "libraryName": "antd",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "es",
-        "libraryName": "@arco-design/web-react",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "react-icon",
-        "libraryName": "@arco-design/web-react/icon",
-      },
-    ],
     "presetEnv": {
       "coreJs": "3.32",
       "mode": "entry",
@@ -1332,18 +1284,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     "splitChunks": {
       "cacheGroups": {
-        "lib-antd": {
-          "name": "lib-antd",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-arco": {
-          "name": "lib-arco",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
-        },
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
@@ -1454,24 +1394,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
       "emitMetadata": true,
       "legacy": true,
     },
-    "pluginImport": [
-      {
-        "libraryDirectory": "lib",
-        "libraryName": "antd",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "lib",
-        "libraryName": "@arco-design/web-react",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "react-icon-cjs",
-        "libraryName": "@arco-design/web-react/icon",
-      },
-    ],
     "presetEnv": {
       "targets": [
         "node >= 14",
@@ -1893,24 +1815,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "emitMetadata": true,
       "legacy": true,
     },
-    "pluginImport": [
-      {
-        "libraryDirectory": "es",
-        "libraryName": "antd",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "es",
-        "libraryName": "@arco-design/web-react",
-        "style": true,
-      },
-      {
-        "camelToDashComponentName": false,
-        "libraryDirectory": "react-icon",
-        "libraryName": "@arco-design/web-react/icon",
-      },
-    ],
     "presetEnv": {
       "coreJs": "3.32",
       "mode": "entry",
@@ -2488,18 +2392,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
     },
     "splitChunks": {
       "cacheGroups": {
-        "lib-antd": {
-          "name": "lib-antd",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-arco": {
-          "name": "lib-arco",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
-        },
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
