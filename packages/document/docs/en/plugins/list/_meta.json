@@ -3,6 +3,7 @@
   "plugin-vue",
   "plugin-vue-jsx",
   "plugin-vue2",
+  "plugin-vue2-jsx",
   "plugin-swc",
   "plugin-stylus",
   "plugin-esbuild",
