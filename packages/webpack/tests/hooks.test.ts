@@ -1,4 +1,3 @@
-import { vi, describe, expect, test } from 'vitest';
 import { initHooks } from '@/core/initHooks';
 import { createStubRsbuild } from './helper';
 

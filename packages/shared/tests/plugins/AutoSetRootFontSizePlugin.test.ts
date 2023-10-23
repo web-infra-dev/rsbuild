@@ -1,4 +1,3 @@
-import { describe, expect, test, vi, beforeEach, afterEach } from 'vitest';
 import {
   getRootPixelCode,
   genJSTemplate,

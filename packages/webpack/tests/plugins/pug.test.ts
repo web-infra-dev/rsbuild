@@ -1,8 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import { pluginPug } from '@/plugins/pug';
 import { createStubRsbuild } from '../helper';
 
-describe('plugins/pug', () => {
+describe('plugin-pug', () => {
   it('should add pug rules correctly when tools.pug is used', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginPug()],

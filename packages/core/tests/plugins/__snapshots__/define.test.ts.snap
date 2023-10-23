@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/define > 'globalVars & define' 1`] = `
+exports[`plugin-define > 'globalVars & define' 1`] = `
 {
   "plugins": [
     Plugin {
@@ -18,7 +18,7 @@ exports[`plugins/define > 'globalVars & define' 1`] = `
 }
 `;
 
-exports[`plugins/define > 'globalVars function' 1`] = `
+exports[`plugin-define > 'globalVars function' 1`] = `
 {
   "plugins": [
     Plugin {

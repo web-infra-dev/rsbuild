@@ -1,4 +1,3 @@
-import { describe, it } from 'vitest';
 import { LoaderContext, LoaderDefinitionFunction } from 'webpack';
 import { createLoader } from '../src/loader';
 

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/cache > 'should add cache config correctly' 1`] = `
+exports[`plugin-cache > 'should add cache config correctly' 1`] = `
 {
   "cache": {
     "buildDependencies": {
@@ -18,7 +18,7 @@ exports[`plugins/cache > 'should add cache config correctly' 1`] = `
 }
 `;
 
-exports[`plugins/cache > 'should apply cacheDigest' 1`] = `
+exports[`plugin-cache > 'should apply cacheDigest' 1`] = `
 {
   "cache": {
     "buildDependencies": {
@@ -36,7 +36,7 @@ exports[`plugins/cache > 'should apply cacheDigest' 1`] = `
 }
 `;
 
-exports[`plugins/cache > 'should custom cache directory by user' 1`] = `
+exports[`plugin-cache > 'should custom cache directory by user' 1`] = `
 {
   "cache": {
     "buildDependencies": {
@@ -54,13 +54,13 @@ exports[`plugins/cache > 'should custom cache directory by user' 1`] = `
 }
 `;
 
-exports[`plugins/cache > 'should disable cache' 1`] = `
+exports[`plugin-cache > 'should disable cache' 1`] = `
 {
   "cache": false,
 }
 `;
 
-exports[`plugins/cache > 'should not apply cacheDigest' 1`] = `
+exports[`plugin-cache > 'should not apply cacheDigest' 1`] = `
 {
   "cache": {
     "buildDependencies": {
@@ -78,7 +78,7 @@ exports[`plugins/cache > 'should not apply cacheDigest' 1`] = `
 }
 `;
 
-exports[`plugins/cache > 'should watch framework config change' 1`] = `
+exports[`plugin-cache > 'should watch framework config change' 1`] = `
 {
   "cache": {
     "buildDependencies": {
@@ -96,7 +96,7 @@ exports[`plugins/cache > 'should watch framework config change' 1`] = `
 }
 `;
 
-exports[`plugins/cache > 'should watch tsconfig change' 1`] = `
+exports[`plugin-cache > 'should watch tsconfig change' 1`] = `
 {
   "cache": {
     "buildDependencies": {

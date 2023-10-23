@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/esbuild > should not set format iife when target is not web 1`] = `
+exports[`plugin-esbuild > should not set format iife when target is not web 1`] = `
 {
   "module": {
     "rules": [
@@ -59,7 +59,7 @@ exports[`plugins/esbuild > should not set format iife when target is not web 1`]
 }
 `;
 
-exports[`plugins/esbuild > should set esbuild minimizer in production 1`] = `
+exports[`plugin-esbuild > should set esbuild minimizer in production 1`] = `
 {
   "module": {
     "rules": [
@@ -118,7 +118,7 @@ exports[`plugins/esbuild > should set esbuild minimizer in production 1`] = `
 }
 `;
 
-exports[`plugins/esbuild > should set esbuild-loader 1`] = `
+exports[`plugin-esbuild > should set esbuild-loader 1`] = `
 {
   "module": {
     "rules": [

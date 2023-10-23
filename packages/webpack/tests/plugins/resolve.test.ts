@@ -1,8 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import { pluginResolve } from '@/plugins/resolve';
 import { createStubRsbuild } from '../helper';
 
-describe('plugins/resolve', () => {
+describe('plugin-resolve', () => {
   it('should apply default extensions correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],

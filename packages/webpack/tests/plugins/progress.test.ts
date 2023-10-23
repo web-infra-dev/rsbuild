@@ -1,9 +1,8 @@
-import { describe, it, expect } from 'vitest';
 import { createStubRsbuild } from '../helper';
 import { pluginProgress } from '@/plugins/progress';
 import { createFriendlyPercentage } from '@/webpackPlugins/ProgressPlugin/helpers';
 
-describe('plugins/progress', () => {
+describe('plugin-progress', () => {
   it('should register webpackbar by default', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginProgress()],

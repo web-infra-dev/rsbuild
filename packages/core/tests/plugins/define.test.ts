@@ -1,8 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginDefine } from '@src/plugins/define';
 
-describe('plugins/define', () => {
+describe('plugin-define', () => {
   const cases = [
     {
       name: 'globalVars & define',

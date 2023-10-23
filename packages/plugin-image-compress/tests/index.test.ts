@@ -1,4 +1,3 @@
-import { it, expect, describe } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { webpackProvider } from '@rsbuild/webpack';
 import { pluginAsset } from '@rsbuild/core/plugins/asset';
@@ -19,7 +18,7 @@ const ASSET_EXTS = [
   'tiff',
 ];
 
-describe('plugin/image-compress', () => {
+describe('plugin-image-compress', () => {
   it('should generate correct options', async () => {
     const rsbuild = await createStubRsbuild({
       provider: webpackProvider,

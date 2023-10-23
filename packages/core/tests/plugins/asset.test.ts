@@ -1,9 +1,8 @@
-import { expect, describe, it } from 'vitest';
 import * as shared from '@rsbuild/shared';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginAsset } from '@src/plugins/asset';
 
-describe('plugins/asset(image)', () => {
+describe('plugin-asset(image)', () => {
   const cases = [
     {
       name: 'should add image rules correctly',

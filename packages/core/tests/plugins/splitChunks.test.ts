@@ -1,4 +1,3 @@
-import { expect, describe, it, test } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import {
   pluginSplitChunks,
@@ -17,7 +16,7 @@ test('createDependenciesRegExp', () => {
   }
 });
 
-describe('plugins/splitChunks', () => {
+describe('plugin-split-chunks', () => {
   const cases = [
     {
       name: 'should set split-by-experience config',

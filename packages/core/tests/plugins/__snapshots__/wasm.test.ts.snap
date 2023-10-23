@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/wasm > should add wasm rule properly 1`] = `
+exports[`plugin-wasm > should add wasm rule properly 1`] = `
 {
   "experiments": {
     "asyncWebAssembly": true,

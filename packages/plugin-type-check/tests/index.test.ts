@@ -1,7 +1,7 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginTypeCheck } from '../src';
 
-describe('plugins/type-check', () => {
+describe('plugin-type-check', () => {
   it('should apply fork-ts-checker-webpack-plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
       cwd: __dirname,

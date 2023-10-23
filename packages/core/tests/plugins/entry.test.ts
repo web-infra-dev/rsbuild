@@ -1,8 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginEntry } from '@src/plugins/entry';
 
-describe('plugins/entry', () => {
+describe('plugin-entry', () => {
   const cases = [
     {
       name: 'should set entry correctly',

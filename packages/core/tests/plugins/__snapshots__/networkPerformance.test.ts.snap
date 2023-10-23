@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/pluginNetworkPerformance > should add network performance plugin 1`] = `
+exports[`plugin-network-performance > should add network performance plugin 1`] = `
 {
   "plugins": [
     HtmlNetworkPerformancePlugin {

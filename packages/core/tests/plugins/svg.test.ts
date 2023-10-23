@@ -1,8 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginSvg } from '@src/plugins/svg';
 
-describe('plugins/svg', () => {
+describe('plugin-svg', () => {
   const cases = [
     {
       name: 'export default url',

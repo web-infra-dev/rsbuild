@@ -1,7 +1,6 @@
-import { expect, describe, it } from 'vitest';
 import { filterAsset } from '@src/plugins/fileSize';
 
-describe('plugins/fileSize', () => {
+describe('plugin-file-size', () => {
   it('#filterAsset - should filter asset correctly', () => {
     expect(filterAsset('dist/a.js')).toBeTruthy();
     expect(filterAsset('dist/a.css')).toBeTruthy();

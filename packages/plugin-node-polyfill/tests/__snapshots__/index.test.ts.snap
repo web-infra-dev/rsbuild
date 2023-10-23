@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/node-polyfill > should add node-polyfill config 1`] = `
+exports[`plugin-node-polyfill > should add node-polyfill config 1`] = `
 {
   "plugins": [
     Plugin {
@@ -61,7 +61,7 @@ exports[`plugins/node-polyfill > should add node-polyfill config 1`] = `
 }
 `;
 
-exports[`plugins/node-polyfill > should add node-polyfill config when use webpack 1`] = `
+exports[`plugin-node-polyfill > should add node-polyfill config when use webpack 1`] = `
 {
   "plugins": [
     ProvidePlugin {

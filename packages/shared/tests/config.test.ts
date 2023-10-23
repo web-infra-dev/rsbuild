@@ -1,4 +1,3 @@
-import { expect, it, describe } from 'vitest';
 import webpack from 'webpack';
 import {
   getExtensions,

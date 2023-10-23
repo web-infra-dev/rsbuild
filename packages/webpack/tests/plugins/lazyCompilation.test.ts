@@ -1,9 +1,8 @@
-import { expect, describe, it } from 'vitest';
 import { pluginSplitChunks } from '@rsbuild/core/plugins/splitChunks';
 import { pluginLazyCompilation } from '@/plugins/lazyCompilation';
 import { createStubRsbuild } from '../helper';
 
-describe('plugins/lazyCompilation', () => {
+describe('plugin-lazy-compilation', () => {
   it('should allow to use lazy compilation', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginLazyCompilation()],

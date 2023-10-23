@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/type-check > should allow to configure fork-ts-checker-webpack-plugin options 1`] = `
+exports[`plugin-type-check > should allow to configure fork-ts-checker-webpack-plugin options 1`] = `
 {
   "plugins": [
     ForkTsCheckerWebpackPlugin {
@@ -33,7 +33,7 @@ exports[`plugins/type-check > should allow to configure fork-ts-checker-webpack-
 }
 `;
 
-exports[`plugins/type-check > should apply fork-ts-checker-webpack-plugin correctly 1`] = `
+exports[`plugin-type-check > should apply fork-ts-checker-webpack-plugin correctly 1`] = `
 {
   "plugins": [
     ForkTsCheckerWebpackPlugin {
@@ -63,9 +63,9 @@ exports[`plugins/type-check > should apply fork-ts-checker-webpack-plugin correc
 }
 `;
 
-exports[`plugins/type-check > should disable type checker when enable is false 1`] = `{}`;
+exports[`plugin-type-check > should disable type checker when enable is false 1`] = `{}`;
 
-exports[`plugins/type-check > should only apply one ts-checker plugin when there is multiple targets 1`] = `
+exports[`plugin-type-check > should only apply one ts-checker plugin when there is multiple targets 1`] = `
 {
   "plugins": [
     ForkTsCheckerWebpackPlugin {

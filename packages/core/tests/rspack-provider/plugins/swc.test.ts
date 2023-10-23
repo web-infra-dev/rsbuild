@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { RsbuildTarget } from '@rsbuild/shared';
 import { pluginEntry } from '@src/plugins/entry';
 import { createStubRsbuild } from '@rsbuild/test-helper';
@@ -6,7 +5,7 @@ import { pluginSwc } from '@/plugins/swc';
 import { RsbuildConfig } from '@/types';
 import { pluginAntd } from '@src/plugins/antd';
 
-describe('plugins/swc', () => {
+describe('plugin-swc', () => {
   it('should disable preset_env in target other than web', async () => {
     await matchConfigSnapshot('node', {
       output: {

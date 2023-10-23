@@ -1,5 +1,4 @@
 import * as path from 'path';
-import { it, expect, describe } from 'vitest';
 import MagicString from 'magic-string';
 import { SourceMapConsumer } from 'source-map';
 

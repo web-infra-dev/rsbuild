@@ -1,8 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginVue2 } from '../src';
 
-describe('plugins/vue2', () => {
+describe('plugin-vue2', () => {
   it('should add vue-loader and VueLoaderPlugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginVue2()],

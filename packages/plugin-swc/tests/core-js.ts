@@ -1,5 +1,4 @@
 import { transformSync } from '../src/binding';
-import { describe } from 'vitest';
 
 describe('run code', () => {
   const { code } = transformSync(
