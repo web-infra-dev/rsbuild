@@ -31,7 +31,6 @@ describe('validateRsbuildConfig', () => {
         htmlPlugin: false,
         babel: () => undefined,
         terser: [],
-        tsChecker: (_: any) => ({}),
       },
     };
     await expect(validateRsbuildConfig(config)).resolves.toMatchInlineSnapshot(`

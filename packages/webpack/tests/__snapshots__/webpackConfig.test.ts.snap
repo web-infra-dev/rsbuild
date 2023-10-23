@@ -34,7 +34,6 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
   ProgressPlugin {
     "compileTime": null,
     "dependenciesCount": 10000,
-    "disableTsChecker": undefined,
     "handler": [Function],
     "hasCompileErrors": false,
     "id": "Client",

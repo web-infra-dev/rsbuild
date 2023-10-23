@@ -262,7 +262,6 @@ Rsbuild Rspack 构建模式对比 [Rspack CLI](https://www.rspack.dev/zh/guide/q
 | SourceMap 生成               | Rsbuild 默认根据环境生成不同的 SourceMap (Rspack CLI 中默认是 false)                                                                                                                           | <ul><li>[output.disableSourceMap](/config/options/output.html#outputdisablesourcemap)</li></ul>                                                       |
 | SVG 转 React 组件            | Rsbuild 默认支持在 React 组件中引用 SVG 作为组件                                                                                                                                               | <ul><li>[引用 SVG 资源](/guide/basic/svg-assets.html)</li><li>[output.disableSvgr](/config/options/output.html#outputdisablesvgr)</li></ul>           |
 | 按需引入常用组件库           | 当项目中安装了 [Ant Design](https://www.npmjs.com/package/antd) 或 [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) 组件库时，Rsbuild 会自动添加对应的按需引入能力          | <ul><li>[source.transformImport](/config/options/source#sourcetransformimport)</li></ul>                                                              |
-| 默认开启 TypeScript 类型检查 | Rsbuild 会默认通过 TS Checker 检查类型问题                                                                                                                                                     | <ul><li>[类型检查](/guide/basic/typescript.html#类型检查) </li><li>[output.disableTsChecker](/config/options/output#outputdisabletschecker)</li></ul> |
 | 默认集成 PostCSS             | Rsbuild 内默认开启 PostCSS 编译，并内置 autoprefixer 等多个插件                                                                                                                                | <ul><li>[使用 PostCSS](/guide/basic/css-usage.html#使用-postcss)</li></ul>                                                                        |
 | 使用 @rspack/html-plugin     | Rsbuild 内默认集成 @rspack/html-plugin 以支持更多 HTML 模版功能 (Rspack CLI 中默认使用 builtins.html)                                                                                          | <ul><li>[tools.htmlPlugin](/config/options/tools.html#toolshtmlplugin)</li></ul>                                                                      |
 | DevServer                    | Rsbuild 内基于 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) 实现 DevServer (Rspack CLI 使用 [@rspack/dev-server](https://www.rspack.dev/guide/dev-server.html)) | <ul><li>[tools.devServer](/config/options/tools.html#toolsdevserver)</li></ul>                                                                        |
@@ -288,12 +287,6 @@ Rsbuild Rspack 构建模式对比 [Rspack CLI](https://www.rspack.dev/zh/guide/q
 - ...
 
 你可以通过开启[调试模式](/guide/debug/debug-mode.html) 来查看最终生成的 Rspack 配置中是否存在 Babel 插件。
-
-##### 开启 TypeScript 类型检查
-
-Rsbuild 构建时会默认开启 TypeScript 类型检查。在大型项目中，类型检查的耗时可能远超过 Rspack 本身的构建耗时，因此在生产环境构建时，该行为会在一定程度上拖慢构建速度。
-
-此时，可通过 [output.disableTsChecker](/config/options/output.html#outputdisabletschecker) 关闭类型检查，以查看排除类型检查后 Rspack 性能是否符合预期。
 
 ##### 大量 Less 文件
 

@@ -117,8 +117,8 @@ Rsbuild CLI will read the `rsbuild.config.ts` configuration file located in the 
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  output: {
-    disableTsChecker: true,
+  dev: {
+    port: 8081,
   },
 });
 ```
