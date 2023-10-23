@@ -117,8 +117,8 @@ Rsbuild CLI 默认会读取项目根目录下的 `rsbuild.config.ts` 配置文�
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  output: {
-    disableTsChecker: true,
+  dev: {
+    port: 8081,
   },
 });
 ```

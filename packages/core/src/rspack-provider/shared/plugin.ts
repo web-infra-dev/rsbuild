@@ -21,7 +21,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.media(),
     plugins.svg(),
     plugins.html(),
-    // plugins.tsChecker(),
     plugins.wasm(),
     plugins.moment(),
     plugins.nodeAddons(),

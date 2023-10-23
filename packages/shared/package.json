@@ -28,9 +28,6 @@
       "types": "./dist/re-exports/fs-extra.d.ts",
       "default": "./dist/re-exports/fs-extra.js"
     },
-    "./fork-ts-checker-webpack-plugin": {
-      "default": "./dist/re-exports/fork-ts-checker-webpack-plugin.js"
-    },
     "./open": {
       "types": "./compiled/open/index.d.ts",
       "default": "./compiled/open/index.js"
@@ -101,9 +98,6 @@
       ],
       "open": [
         "./compiled/open/index.d.ts"
-      ],
-      "fork-ts-checker-webpack-plugin": [
-        "./dist/re-exports/fork-ts-checker-webpack-plugin.d.ts"
       ],
       "webpack-bundle-analyzer": [
         "./compiled/webpack-bundle-analyzer/index.d.ts"
@@ -177,7 +171,6 @@
     "css-minimizer-webpack-plugin": "5.0.1",
     "cssnano": "6.0.1",
     "deepmerge": "^4.3.1",
-    "fork-ts-checker-webpack-plugin": "8.0.0",
     "fs-extra": "^11.1.1",
     "htmlparser2": "9.0.0",
     "line-diff": "2.1.1",
