@@ -112,16 +112,20 @@ export const pluginBabel = (): RsbuildPlugin => ({
         // already set source.include / exclude in plugin-swc
         const rule = chain.module.rule(CHAIN_ID.RULE.JS);
 
+        includes.forEach((condition) => {
+          rule.include.add(condition);
+        });
+
+        excludes.forEach((condition) => {
+          rule.exclude.add(condition);
+        });
+
         rule
           .test(mergeRegex(JS_REGEX, TS_REGEX))
           .use(CHAIN_ID.USE.BABEL)
           .after(CHAIN_ID.USE.SWC)
           .loader(getCompiledPath('babel-loader'))
-          .options({
-            ...babelOptions,
-            only: includes,
-            ignore: excludes,
-          });
+          .options(babelOptions);
       },
     );
   },
