@@ -26,7 +26,7 @@ Use Stylus add CSS preprocessor.
 
 ### [@rsbuild/plugin-node-polyfill](/plugins/list/plugin-node-polyfill.html)
 
-Inject Polyfills of Node core modules in the browser side.
+Used to inject polyfills of Node core modules in the browser side.
 
 ### [@rsbuild/plugin-image-compress](/plugins/list/plugin-image-compress.html)
 
