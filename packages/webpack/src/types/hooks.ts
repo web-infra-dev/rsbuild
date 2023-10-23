@@ -4,10 +4,15 @@ import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import type { ChainIdentifier } from '@modern-js/utils/chain-id';
 
 export type ModifyWebpackChainUtils = ModifyChainUtils & {
-  /** @deprecated Use target instead. */
-  name: string;
   webpack: typeof import('webpack');
   CHAIN_ID: ChainIdentifier;
+  /**
+   * @deprecated Use target instead.
+   * */
+  name: string;
+  /**
+   * @deprecated Use HtmlPlugin instead.
+   */
   HtmlWebpackPlugin: typeof import('html-webpack-plugin');
 };
 

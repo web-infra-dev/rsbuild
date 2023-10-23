@@ -137,8 +137,8 @@ type ModifyWebpackChainUtils = {
   isServer: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
+  HtmlPlugin: typeof import('html-webpack-plugin');
   getCompiledPath: (name: string) => string;
-  HtmlWebpackPlugin: typeof import('html-webpack-plugin');
 };
 
 function ModifyWebpackChain(
@@ -180,8 +180,8 @@ type ModifyWebpackConfigUtils = {
   isServer: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
+  HtmlPlugin: typeof import('html-webpack-plugin');
   getCompiledPath: (name: string) => string;
-  HtmlWebpackPlugin: typeof import('html-webpack-plugin');
   addRules: (rules: RuleSetRule | RuleSetRule[]) => void;
   prependPlugins: (
     plugins: WebpackPluginInstance | WebpackPluginInstance[],

@@ -137,6 +137,7 @@ describe('webpackConfig', () => {
       rsbuildConfig: {
         tools: {
           webpack(config, utils) {
+            expect(utils.HtmlPlugin.version).toEqual(5);
             expect(utils.HtmlWebpackPlugin.version).toEqual(5);
           },
         },
