@@ -1,6 +1,8 @@
 # Rsbuild Config
 
-Rsbuild provides a wealth of configs to help users customize the build behavior.
+Rsbuild provides a wide range of configuration options and sets a common default value for each option, which can meet the requirements of most use cases. Therefore, in most cases, you don't need to declare any Rsbuild configurations and can use it out of the box.
+
+If you need to customize build behaviors, you can use these configuration options.
 
 ## Config Categories
 
@@ -17,45 +19,63 @@ Rsbuild Configs are divided into the following categories:
 
 You can find detailed descriptions of all configs on the [Config](/config/) page.
 
-## Default Values
+## Configuration Usage
 
-The Rsbuild presets a default value for each config, and the default value is suitable for most scenarios. At the same time, the upper-level framework will also override some of the default values based on the requirements of the vertical scene.
+When you use the CLI of Rsbuild, Rsbuild will automatically read the configuration file in the root directory of the current project and resolve it in the following order:
 
-In most cases, you don't need to define any Rsbuild config, just use it right out of the box.
+- rsbuild.config.ts
+- rsbuild.config.js
+- rsbuild.config.mjs
+- rsbuild.config.cjs
+- rsbuild.config.mts
+- rsbuild.config.cts
 
-## Use Config
+We recommend using the `.ts` format for the configuration file and importing the `defineConfig` utility function from `@rsbuild/core`. It provides friendly TypeScript type hints and autocompletion, which can help you avoid errors in the configuration.
 
-### In the Upper Framework
+For example, in `rsbuild.config.ts`, you can define the Rsbuild [source.alias](/config/options/source.html#sourcealias) configuration:
 
-When you use a Rsbuild-based upper-level framework, you can define the Rsbuild config directly through the framework's config file, and the upper-level framework will pass the config to the Rsbuild.
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
 
-For example, in the Modern.js framework, you can define the Rsbuild's [source.alias](/config/options/source.html#sourcealias) config in [modern.config.ts](https://modernjs.dev/en/configure/app/usage.html) file.
-
-```ts title="modern.config.ts"
-export default {
+export default defineConfig({
   source: {
     alias: {
       '@common': './src/common',
     },
   },
-};
-```
-
-### Using the Node API
-
-When you call the Rsbuild through the Node API, you can pass in the Rsbuild config through the Provider's `rsbuildConfig` option:
-
-```ts
-import { webpackProvider } from '@rsbuild/webpack';
-
-const provider = webpackProvider({
-  rsbuildConfig: {
-    // some configs
-  },
 });
 ```
 
-Please refer to [API - createRsbuild](/api/javascript-api/core.html#creatersbuild) for details.
+If you are developing a non-TypeScript project, you can use the `.js` format for the configuration file:
+
+```js
+module.exports = {
+  source: {
+    alias: (opts) => {
+      opts['@common'] = './src/common';
+    },
+  },
+};
+```
+
+## Using Environment Variables
+
+In the configuration file, you can use Node.js environment variables such as `process.env.NODE_ENV` to dynamically set different configurations:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  source: {
+    alias: {
+      '@request':
+        process.env.NODE_ENV === 'development'
+          ? './src/request.dev.js'
+          : './src/request.prod.js',
+    },
+  },
+});
+```
 
 ## Debug the config
 

@@ -1,6 +1,8 @@
 # Rsbuild 配置项
 
-Rsbuild 提供了丰富的配置项，以帮助使用者对构建行为进行定制。
+Rsbuild 提供了丰富的配置项，并为每个配置项预设了一个通用的默认值，它可以满足大部分使用场景。因此，在大多数情况下，你不需要声明任何 Rsbuild 配置，直接开箱使用即可。
+
+如果你需要定制一些构建行为，那么可以这些配置项。
 
 ## 配置分类
 
@@ -17,45 +19,63 @@ Rsbuild 中的配置可以分为以下几类：
 
 你可以在 [配置](/config/) 页面找到所有配置项的详细说明。
 
-## 配置默认值
-
-Rsbuild 为每个配置项预设了一个默认值，默认值可以满足大部分使用场景。同时，上层框架也会基于垂直场景的需求，覆盖一部分配置的默认值。
-
-因此，在大多数情况下，你不需要声明任何 Rsbuild 配置，直接开箱使用即可。
-
 ## 使用配置
 
-### 在上层框架中使用
+当你使用 Rsbuild 的 CLI 命令时，Rsbuild 会自动读取当前项目根目录下的配置文件，按照以下顺序进行解析：
 
-当你使用一个基于 Rsbuild 的上层框架时，你可以直接通过框架的配置文件来定义 Rsbuild 配置，上层框架会自动将相关配置透传给 Rsbuild。
+- rsbuild.config.ts
+- rsbuild.config.js
+- rsbuild.config.mjs
+- rsbuild.config.cjs
+- rsbuild.config.mts
+- rsbuild.config.cts
 
-比如在 Modern.js 框架中，你可以直接在 [modern.config.ts](https://modernjs.dev/configure/app/usage.html) 文件里定义 Rsbuild 的 [source.alias](/config/options/source.html#sourcealias) 配置：
+我们推荐使用 `.ts` 格式的配置文件，并从 `@rsbuild/core` 中导入 `defineConfig` 工具函数, 它提供了友好的 TypeScript 类型推导和自动补全，可以帮助你避免配置中的错误。
 
-```ts title="modern.config.ts"
-export default {
+比如在 `rsbuild.config.ts` 中，你可以定义 Rsbuild 的 [source.alias](/config/options/source.html#sourcealias) 配置：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   source: {
     alias: {
       '@common': './src/common',
     },
   },
-};
-```
-
-### 通过 Node API 使用
-
-当你通过 Node API 调用 Rsbuild 时，你可以通过 Provider 的 `rsbuildConfig` 配置项来传入 Rsbuild 配置：
-
-```ts
-import { webpackProvider } from '@rsbuild/webpack';
-
-const provider = webpackProvider({
-  rsbuildConfig: {
-    // some configs
-  },
 });
 ```
 
-关于 Node API 的完整用法，请参考 [API - createRsbuild](/api/javascript-api/core.html#creatersbuild)。
+如果你在开发一个非 TypeScript 项目，可以使用 `.js` 格式的配置文件：
+
+```js
+module.exports = {
+  source: {
+    alias: (opts) => {
+      opts['@common'] = './src/common';
+    },
+  },
+};
+```
+
+## 使用环境变量
+
+在配置文件重，你可以使用 `process.env.NODE_ENV` 等 Node.js 环境变量，来动态写入不同的配置：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  source: {
+    alias: {
+      '@request':
+        process.env.NODE_ENV === 'development'
+          ? './src/request.dev.js'
+          : './src/request.prod.js',
+    },
+  },
+});
+```
 
 ## 调试配置
 
