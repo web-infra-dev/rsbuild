@@ -77,6 +77,24 @@ export default defineConfig({
 });
 ```
 
+## Merge Configurations
+
+You can use the [mergeRsbuildConfig](/api/javascript-api/core.html#mergersbuildconfig) function exported by `@rspack/core` to merge multiple configurations.
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, mergeRsbuildConfig } from '@rsbuild/core';
+
+const config1 = defineConfig({
+  dev: { port: '8080' },
+});
+const config2 = defineConfig({
+  dev: { port: '8081' },
+});
+
+// { dev: { port: '8081' }
+export default mergeRsbuildConfig(config1, config2);
+```
+
 ## Debug the config
 
 You can enable Rsbuild's debug mode by adding the `DEBUG=rsbuild` environment variable when executing a build.

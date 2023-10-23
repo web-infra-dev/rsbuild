@@ -70,7 +70,9 @@ const rsbuild = await createRsbuild({
 
 ## mergeRsbuildConfig
 
-合并多份 Rsbuild 配置对象，并返回一个合并后的新对象。
+用于合并多份 Rsbuild 配置对象。
+
+`mergeRsbuildConfig` 函数接收多个配置对象作为参数，它会将每一个配置对象进行深层合并，自动将多个函数项合并为顺序执行的函数数组，返回一个合并后的配置对象。
 
 - **类型**
 
@@ -99,7 +101,7 @@ const mergedConfig = mergeRsbuildConfig(config1, config2);
 console.log(mergedConfig); // { dev: { https: true } }
 ```
 
-> 该方法不会修改传入的 config 对象。
+> 该方法不会修改入参中的 config 对象。
 
 ## webpack
 

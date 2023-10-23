@@ -70,7 +70,9 @@ const rsbuild = await createRsbuild({
 
 ## mergeRsbuildConfig
 
-Merges multiple Rsbuild config objects and returns a new merged object.
+Used to merge multiple Rsbuild configuration objects.
+
+The `mergeRsbuildConfig` function takes multiple configuration objects as parameters. It deep merges each configuration object, automatically combining multiple function values into an array of sequentially executed functions, and returns a merged configuration object.
 
 - **Type**
 
@@ -99,7 +101,7 @@ const mergedConfig = mergeRsbuildConfig(config1, config2);
 console.log(mergedConfig); // { dev: { https: true } }
 ```
 
-> This method does not modify the original config object.
+> This method will not modify the config object in the input parameter.
 
 ## webpack
 

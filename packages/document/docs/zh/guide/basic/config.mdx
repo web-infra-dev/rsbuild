@@ -77,6 +77,24 @@ export default defineConfig({
 });
 ```
 
+## 合并配置
+
+你可以使用 `@rspack/core` 导出的 [mergeRsbuildConfig](/api/javascript-api/core.html#mergersbuildconfig) 函数来合并多个配置。
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, mergeRsbuildConfig } from '@rsbuild/core';
+
+const config1 = defineConfig({
+  dev: { port: '8080' },
+});
+const config2 = defineConfig({
+  dev: { port: '8081' },
+});
+
+// { dev: { port: '8081' }
+export default mergeRsbuildConfig(config1, config2);
+```
+
 ## 调试配置
 
 在执行构建时，你可以添加 `DEBUG=rsbuild` 环境变量来开启 Rsbuild 的调试模式。
