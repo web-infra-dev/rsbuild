@@ -9,7 +9,6 @@ import type {
   SassLoaderOptions,
   LessLoaderOptions,
   PugOptions,
-  ForkTSCheckerOptions,
   PostCSSLoaderOptions,
   PostCSSPlugin,
   CSSLoaderOptions,
@@ -46,8 +45,6 @@ export type ToolsBabelConfig = ChainedConfig<
 >;
 
 export type ToolsPugConfig = true | ChainedConfig<PugOptions>;
-
-export type ToolsTSCheckerConfig = ChainedConfig<ForkTSCheckerOptions>;
 
 export type ToolsPostCSSLoaderConfig = ChainedConfig<
   PostCSSLoaderOptions,

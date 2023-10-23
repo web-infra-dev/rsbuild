@@ -545,6 +545,28 @@ importers:
 
   packages/plugin-swc/tests/fixtures/browserslist/ie11: {}
 
+  packages/plugin-type-checker:
+    dependencies:
+      '@modern-js/utils':
+        specifier: ^2.37.1
+        version: 2.37.1
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+      fork-ts-checker-webpack-plugin:
+        specifier: 9.0.0
+        version: 9.0.0(typescript@5.2.2)(webpack@5.89.0)
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
   packages/plugin-vue:
     dependencies:
       '@rsbuild/shared':
@@ -674,9 +696,6 @@ importers:
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
-      fork-ts-checker-webpack-plugin:
-        specifier: 8.0.0
-        version: 8.0.0(typescript@5.2.2)(webpack@5.89.0)
       fs-extra:
         specifier: ^11.1.1
         version: 11.1.1
@@ -8063,6 +8082,30 @@ packages:
       tapable: 2.2.1
       typescript: 5.2.2
       webpack: 5.89.0
+    dev: true
+
+  /fork-ts-checker-webpack-plugin@9.0.0(typescript@5.2.2)(webpack@5.89.0):
+    resolution: {integrity: sha512-Kw3JjsfGs0piB0V2Em8gCuo51O3p4KyCOK0Tn8X57oq2mSNBrMmONALRBw5frcmWsOVU7iELXXsJ+FVxJeQuhA==}
+    engines: {node: '>=12.13.0', yarn: '>=1.0.0'}
+    peerDependencies:
+      typescript: '>3.6.0'
+      webpack: ^5.11.0
+    dependencies:
+      '@babel/code-frame': 7.22.13
+      chalk: 4.1.2
+      chokidar: 3.5.3
+      cosmiconfig: 7.1.0
+      deepmerge: 4.3.1
+      fs-extra: 10.1.0
+      memfs: 3.5.3
+      minimatch: 3.1.2
+      node-abort-controller: 3.1.1
+      schema-utils: 3.3.0
+      semver: 7.5.4
+      tapable: 2.2.1
+      typescript: 5.2.2
+      webpack: 5.89.0
+    dev: false
 
   /form-data@4.0.0:
     resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
