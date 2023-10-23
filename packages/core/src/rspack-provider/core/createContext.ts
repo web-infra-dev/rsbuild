@@ -31,12 +31,6 @@ export async function createContext(
 
   const tsconfigPath = join(context.rootPath, TS_CONFIG_FILE);
 
-  console.log(
-    'await isFileExists(tsconfigPath)',
-    tsconfigPath,
-    await isFileExists(tsconfigPath),
-  );
-
   return {
     ...context,
     hooks: initHooks(),

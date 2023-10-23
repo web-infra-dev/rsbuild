@@ -557,9 +557,6 @@ importers:
         specifier: 9.0.0
         version: 9.0.0(typescript@5.2.2)(webpack@5.89.0)
     devDependencies:
-      '@babel/core':
-        specifier: ^7.23.2
-        version: 7.23.2
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
