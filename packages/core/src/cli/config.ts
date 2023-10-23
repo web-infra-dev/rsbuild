@@ -24,10 +24,33 @@ export const defineConfig = <
   config: RsbuildConfig<T>,
 ) => config;
 
-export async function loadConfig(): Promise<ReturnType<typeof defineConfig>> {
-  const configFile = join(process.cwd(), 'rsbuild.config.ts');
+const resolveConfigPath = () => {
+  const CONFIG_FILES = [
+    'rsbuild.config.ts',
+    'rsbuild.config.js',
+    'rsbuild.config.mjs',
+    'rsbuild.config.cjs',
+    'rsbuild.config.mts',
+    'rsbuild.config.cts',
+  ];
 
-  if (fs.existsSync(configFile)) {
+  const root = process.cwd();
+
+  for (const file of CONFIG_FILES) {
+    const configFile = join(root, file);
+
+    if (fs.existsSync(configFile)) {
+      return configFile;
+    }
+  }
+
+  return null;
+};
+
+export async function loadConfig(): Promise<ReturnType<typeof defineConfig>> {
+  const configFile = resolveConfigPath();
+
+  if (configFile) {
     const loadConfig = jiti(__filename, {
       esmResolve: true,
       interopDefault: true,

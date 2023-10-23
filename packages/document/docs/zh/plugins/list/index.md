@@ -26,7 +26,7 @@
 
 ### [@rsbuild/plugin-node-polyfill](/plugins/list/plugin-node-polyfill.html)
 
-注入 Node 核心模块在浏览器端的 Polyfills。
+用于注入 Node 核心模块在浏览器端的 polyfills。
 
 ### [@rsbuild/plugin-image-compress](/plugins/list/plugin-image-compress.html)
 
