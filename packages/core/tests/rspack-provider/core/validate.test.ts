@@ -20,7 +20,7 @@ describe('validateRsbuildConfig', () => {
     await expect(
       validateRsbuildConfig({
         output: {
-          polyfill: 'usage',
+          polyfill: 'xxx',
         },
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`

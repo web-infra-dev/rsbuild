@@ -1,8 +1,9 @@
 import path from 'path';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
+import { webpackOnlyTest } from '@scripts/helper';
 
-test('decorator latest', async ({ page }) => {
+webpackOnlyTest('decorator latest', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: {
