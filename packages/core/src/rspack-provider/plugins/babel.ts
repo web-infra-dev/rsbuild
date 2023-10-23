@@ -21,7 +21,7 @@ export const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
   isTSX: true,
 };
 
-export const builderPluginBabel = (): RsbuildPlugin => ({
+export const pluginBabel = (): RsbuildPlugin => ({
   name: 'plugin-babel',
 
   pre: ['plugin-swc'],

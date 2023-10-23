@@ -41,7 +41,7 @@ test('babel exclude', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', builder.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
   expect(await page.evaluate('window.b')).toBe(10);
   expect(await page.evaluate('window.bb')).toBeUndefined();
 

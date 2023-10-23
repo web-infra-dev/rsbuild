@@ -25,7 +25,7 @@ describe('validateRsbuildConfig', () => {
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
       "Rsbuild config validation error:
-      * Invalid enum value. Expected 'entry' | 'ua' | 'off', received 'usage' at "output.polyfill""
+      * Invalid enum value. Expected 'usage' | 'entry' | 'ua' | 'off', received 'xxx' at "output.polyfill""
     `);
 
     await expect(validateRsbuildConfig(config)).rejects
