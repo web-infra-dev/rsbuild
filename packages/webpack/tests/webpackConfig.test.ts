@@ -1,4 +1,3 @@
-import { expect, describe, it } from 'vitest';
 import { pluginBasic } from '@/plugins/basic';
 import { createStubRsbuild } from './helper';
 import { pluginBabel } from '@/plugins/babel';

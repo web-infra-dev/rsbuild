@@ -1,4 +1,3 @@
-import { expect, describe, it } from 'vitest';
 import {
   pluginModuleScopes,
   isPrimitiveScope,
@@ -6,7 +5,7 @@ import {
 } from '@/plugins/moduleScopes';
 import { createStubRsbuild } from '../helper';
 
-describe('plugins/moduleScopes', () => {
+describe('plugin-module-scopes', () => {
   it('should set entry correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginModuleScopes()],

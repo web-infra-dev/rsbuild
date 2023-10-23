@@ -1,12 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/babel > should not set babel-loader 1`] = `{}`;
+exports[`plugin-babel > should not set babel-loader 1`] = `{}`;
 
-exports[`plugins/babel > should not set babel-loader when babel config is null 1`] = `{}`;
+exports[`plugin-babel > should not set babel-loader when babel config is null 1`] = `{}`;
 
-exports[`plugins/babel > should not set babel-loader when babel config is return null 1`] = `{}`;
+exports[`plugin-babel > should not set babel-loader when babel config is return null 1`] = `{}`;
 
-exports[`plugins/babel > should set babel-loader 1`] = `
+exports[`plugin-babel > should set babel-loader 1`] = `
 {
   "module": {
     "rules": [

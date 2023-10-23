@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/yaml > should add yaml rule properly 1`] = `
+exports[`plugin-yaml > should add yaml rule properly 1`] = `
 {
   "module": {
     "rules": [

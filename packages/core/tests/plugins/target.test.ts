@@ -1,4 +1,4 @@
-import { vi, test, expect, describe, SpyInstance } from 'vitest';
+import type { SpyInstance } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { getBrowserslist } from '@rsbuild/shared';
 import { pluginTarget } from '@src/plugins/target';
@@ -11,7 +11,7 @@ vi.mock('@rsbuild/shared', async (importOriginal) => {
   };
 });
 
-describe('plugins/target', () => {
+describe('plugin-target', () => {
   const cases = [
     {
       target: 'node',

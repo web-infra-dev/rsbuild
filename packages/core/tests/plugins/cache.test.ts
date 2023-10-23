@@ -1,4 +1,3 @@
-import { vi, expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginCache } from '@src/plugins/cache';
 
@@ -15,7 +14,7 @@ vi.mock('@modern-js/utils', async (importOriginal) => {
   };
 });
 
-describe('plugins/cache', () => {
+describe('plugin-cache', () => {
   const cases = [
     {
       name: 'should add cache config correctly',

@@ -2,7 +2,6 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { Script } from 'node:vm';
 import * as swc from '@swc/core';
-import { expect } from 'vitest';
 import { Output, TransformConfig } from '@modern-js/swc-plugins';
 import { merge } from '@modern-js/utils/lodash';
 import { getDefaultSwcConfig } from '../src/plugin';

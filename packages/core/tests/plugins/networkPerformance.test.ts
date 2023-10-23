@@ -1,8 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginNetworkPerformance } from '@src/plugins/networkPerformance';
 
-describe('plugins/pluginNetworkPerformance', () => {
+describe('plugin-network-performance', () => {
   it('should add network performance plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginNetworkPerformance()],

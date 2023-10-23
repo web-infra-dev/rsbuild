@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/vue2 > should add vue-loader and VueLoaderPlugin correctly 1`] = `
+exports[`plugin-vue2 > should add vue-loader and VueLoaderPlugin correctly 1`] = `
 {
   "module": {
     "rules": [
@@ -48,7 +48,7 @@ exports[`plugins/vue2 > should add vue-loader and VueLoaderPlugin correctly 1`] 
 }
 `;
 
-exports[`plugins/vue2 > should allow to configure vueLoader options 1`] = `
+exports[`plugin-vue2 > should allow to configure vueLoader options 1`] = `
 {
   "module": {
     "rules": [

@@ -1,4 +1,3 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginCheckSyntax } from '@src/plugins/checkSyntax';
 
@@ -11,7 +10,7 @@ beforeAll(() => {
   };
 });
 
-describe('plugins/check-syntax', () => {
+describe('plugin-check-syntax', () => {
   it('should add check-syntax plugin properly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCheckSyntax()],

@@ -1,8 +1,7 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
-import { expect, describe, it } from 'vitest';
 import { pluginWasm } from '@src/plugins/wasm';
 
-describe('plugins/wasm', () => {
+describe('plugin-wasm', () => {
   it('should add wasm rule properly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginWasm()],

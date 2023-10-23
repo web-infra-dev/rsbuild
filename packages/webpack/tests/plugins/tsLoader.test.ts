@@ -1,8 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import { pluginTsLoader } from '@/plugins/tsLoader';
 import { createStubRsbuild } from '../helper';
 
-describe('plugins/tsLoader', () => {
+describe('plugin-ts-loader', () => {
   it('should set ts-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginTsLoader()],

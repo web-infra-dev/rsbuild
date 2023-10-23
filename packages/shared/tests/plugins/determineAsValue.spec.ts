@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { determineAsValue } from '../../src/plugins/HtmlPreloadOrPrefetchPlugin/helpers/determineAsValue';
 
 describe('determineAsValue test', () => {

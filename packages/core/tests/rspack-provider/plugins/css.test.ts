@@ -1,10 +1,9 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginCss } from '@/plugins/css';
 import { pluginLess } from '@/plugins/less';
 import { pluginSass } from '@/plugins/sass';
 
-describe('plugins/css', () => {
+describe('plugin-css', () => {
   it('should override browserslist of autoprefixer when using output.overrideBrowserslist config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
@@ -147,7 +146,7 @@ describe('plugins/css', () => {
   });
 });
 
-describe('plugins/css disableCssExtract', () => {
+describe('plugin-css disableCssExtract', () => {
   it('should use css-loader + style-loader when disableCssExtract is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
@@ -180,7 +179,7 @@ describe('plugins/css disableCssExtract', () => {
   });
 });
 
-describe('plugins/less', () => {
+describe('plugin-less', () => {
   it('should add less-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginLess()],
@@ -244,7 +243,7 @@ describe('plugins/less', () => {
   });
 });
 
-describe('plugins/sass', () => {
+describe('plugin-sass', () => {
   it('should add sass-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSass()],

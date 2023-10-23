@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/moduleScopes > should set entry correctly 1`] = `
+exports[`plugin-module-scopes > should set entry correctly 1`] = `
 {
   "resolve": {
     "plugins": [

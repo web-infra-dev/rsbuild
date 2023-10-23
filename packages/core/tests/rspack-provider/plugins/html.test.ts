@@ -1,9 +1,8 @@
-import { expect, describe, it } from 'vitest';
 import { pluginEntry } from '@src/plugins/entry';
 import { pluginHtml } from '@src/plugins/html';
 import { createStubRsbuild, matchPlugin } from '@rsbuild/test-helper';
 
-describe('plugins/html', () => {
+describe('plugin-html', () => {
   it('should register html plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],

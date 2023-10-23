@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/css > should apply custom css-modules-typescript-loader when enableCssModuleTSDeclarationg 1`] = `
+exports[`plugin-css > should apply custom css-modules-typescript-loader when enableCssModuleTSDeclarationg 1`] = `
 {
   "builtins": {
     "css": {
@@ -128,7 +128,7 @@ exports[`plugins/css > should apply custom css-modules-typescript-loader when en
 }
 `;
 
-exports[`plugins/css > should override browserslist of autoprefixer when using output.overrideBrowserslist config 1`] = `
+exports[`plugin-css > should override browserslist of autoprefixer when using output.overrideBrowserslist config 1`] = `
 {
   "builtins": {
     "css": {
@@ -224,7 +224,7 @@ exports[`plugins/css > should override browserslist of autoprefixer when using o
 }
 `;
 
-exports[`plugins/css > should use custom cssModules rule when using output.cssModules config 1`] = `
+exports[`plugin-css > should use custom cssModules rule when using output.cssModules config 1`] = `
 {
   "builtins": {
     "css": {
@@ -334,7 +334,7 @@ exports[`plugins/css > should use custom cssModules rule when using output.cssMo
 }
 `;
 
-exports[`plugins/css disableCssExtract > should apply ignoreCssLoader when disableCssExtract is true and target is node 1`] = `
+exports[`plugin-css disableCssExtract > should apply ignoreCssLoader when disableCssExtract is true and target is node 1`] = `
 {
   "experiments": {
     "css": false,
@@ -371,7 +371,7 @@ exports[`plugins/css disableCssExtract > should apply ignoreCssLoader when disab
 }
 `;
 
-exports[`plugins/css disableCssExtract > should use css-loader + style-loader when disableCssExtract is true 1`] = `
+exports[`plugin-css disableCssExtract > should use css-loader + style-loader when disableCssExtract is true 1`] = `
 {
   "experiments": {
     "css": false,
@@ -444,7 +444,7 @@ exports[`plugins/css disableCssExtract > should use css-loader + style-loader wh
 }
 `;
 
-exports[`plugins/less > should add less-loader 1`] = `
+exports[`plugin-less > should add less-loader 1`] = `
 {
   "module": {
     "rules": [
@@ -565,7 +565,7 @@ exports[`plugins/less > should add less-loader 1`] = `
 }
 `;
 
-exports[`plugins/less > should add less-loader and css-loader when disableCssExtract 1`] = `
+exports[`plugin-less > should add less-loader and css-loader when disableCssExtract 1`] = `
 {
   "module": {
     "rules": [
@@ -645,7 +645,7 @@ exports[`plugins/less > should add less-loader and css-loader when disableCssExt
 }
 `;
 
-exports[`plugins/less > should add less-loader with excludes 1`] = `
+exports[`plugin-less > should add less-loader with excludes 1`] = `
 {
   "module": {
     "rules": [
@@ -772,7 +772,7 @@ exports[`plugins/less > should add less-loader with excludes 1`] = `
 }
 `;
 
-exports[`plugins/less > should add less-loader with tools.less 1`] = `
+exports[`plugin-less > should add less-loader with tools.less 1`] = `
 {
   "module": {
     "rules": [
@@ -893,7 +893,7 @@ exports[`plugins/less > should add less-loader with tools.less 1`] = `
 }
 `;
 
-exports[`plugins/sass > should add sass-loader 1`] = `
+exports[`plugin-sass > should add sass-loader 1`] = `
 {
   "module": {
     "rules": [
@@ -1022,7 +1022,7 @@ exports[`plugins/sass > should add sass-loader 1`] = `
 }
 `;
 
-exports[`plugins/sass > should add sass-loader and css-loader when disableCssExtract 1`] = `
+exports[`plugin-sass > should add sass-loader and css-loader when disableCssExtract 1`] = `
 {
   "module": {
     "rules": [
@@ -1106,7 +1106,7 @@ exports[`plugins/sass > should add sass-loader and css-loader when disableCssExt
 }
 `;
 
-exports[`plugins/sass > should add sass-loader with excludes 1`] = `
+exports[`plugin-sass > should add sass-loader with excludes 1`] = `
 {
   "module": {
     "rules": [

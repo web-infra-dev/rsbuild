@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/svg > 'disableSvgr' 1`] = `
+exports[`plugin-svg > 'disableSvgr' 1`] = `
 {
   "module": {
     "rules": [
@@ -36,7 +36,7 @@ exports[`plugins/svg > 'disableSvgr' 1`] = `
 }
 `;
 
-exports[`plugins/svg > 'export default Component' 1`] = `
+exports[`plugin-svg > 'export default Component' 1`] = `
 {
   "module": {
     "rules": [
@@ -125,7 +125,7 @@ exports[`plugins/svg > 'export default Component' 1`] = `
 }
 `;
 
-exports[`plugins/svg > 'export default url' 1`] = `
+exports[`plugin-svg > 'export default url' 1`] = `
 {
   "module": {
     "rules": [
@@ -221,7 +221,7 @@ exports[`plugins/svg > 'export default url' 1`] = `
 }
 `;
 
-exports[`plugins/svg > 'should allow to use distPath.svg to modify dist path' 1`] = `
+exports[`plugin-svg > 'should allow to use distPath.svg to modify dist path' 1`] = `
 {
   "module": {
     "rules": [
@@ -317,7 +317,7 @@ exports[`plugins/svg > 'should allow to use distPath.svg to modify dist path' 1`
 }
 `;
 
-exports[`plugins/svg > 'should allow to use filename.svg to modify filename' 1`] = `
+exports[`plugin-svg > 'should allow to use filename.svg to modify filename' 1`] = `
 {
   "module": {
     "rules": [
@@ -413,7 +413,7 @@ exports[`plugins/svg > 'should allow to use filename.svg to modify filename' 1`]
 }
 `;
 
-exports[`plugins/svg > 'should allow using output.dataUriLimit.svg to custom data uri limit' 1`] = `
+exports[`plugin-svg > 'should allow using output.dataUriLimit.svg to custom data uri limit' 1`] = `
 {
   "module": {
     "rules": [

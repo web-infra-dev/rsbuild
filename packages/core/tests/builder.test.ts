@@ -1,4 +1,3 @@
-import { expect, describe, it } from 'vitest';
 import { createRsbuild } from '../src';
 
 describe('should use rspack as default bundler', () => {

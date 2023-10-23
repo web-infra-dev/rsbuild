@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/bundleAnalyze > should add bundle analyze plugin 1`] = `
+exports[`plugin-bundle-analyze > should add bundle analyze plugin 1`] = `
 {
   "plugins": [
     BundleAnalyzerPlugin {

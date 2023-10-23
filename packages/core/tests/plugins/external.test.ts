@@ -1,8 +1,7 @@
-import { describe, it, expect } from 'vitest';
 import * as shared from '@rsbuild/shared';
 import { pluginExternals } from '@src/plugins/externals';
 
-describe('plugins/external', () => {
+describe('plugin-external', () => {
   it('should add external config', async () => {
     let modifyBundlerChainCb: any;
     let onBeforeCreateCompilerCb: any;

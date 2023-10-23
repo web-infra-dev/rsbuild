@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/inlineChunk > should add InlineChunkHtmlPlugin properly by default 1`] = `
+exports[`plugin-inline-chunk > should add InlineChunkHtmlPlugin properly by default 1`] = `
 {
   "entry": {
     "main": [
@@ -58,7 +58,7 @@ exports[`plugins/inlineChunk > should add InlineChunkHtmlPlugin properly by defa
 }
 `;
 
-exports[`plugins/inlineChunk > should use proper plugin options when disableInlineRuntimeChunk is true 1`] = `
+exports[`plugin-inline-chunk > should use proper plugin options when disableInlineRuntimeChunk is true 1`] = `
 {
   "entry": {
     "main": [
@@ -114,7 +114,7 @@ exports[`plugins/inlineChunk > should use proper plugin options when disableInli
 }
 `;
 
-exports[`plugins/inlineChunk > should use proper plugin options when enableInlineScripts is true 1`] = `
+exports[`plugin-inline-chunk > should use proper plugin options when enableInlineScripts is true 1`] = `
 {
   "entry": {
     "main": [
@@ -173,7 +173,7 @@ exports[`plugins/inlineChunk > should use proper plugin options when enableInlin
 }
 `;
 
-exports[`plugins/inlineChunk > should use proper plugin options when enableInlineStyles is true 1`] = `
+exports[`plugin-inline-chunk > should use proper plugin options when enableInlineStyles is true 1`] = `
 {
   "entry": {
     "main": [
