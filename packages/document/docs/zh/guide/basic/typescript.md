@@ -38,22 +38,6 @@ Babel 除了没有类型检查以外，对 TypeScript 语法支持已经非常�
 
 ## 类型检查
 
-目前生产可用的类型检查工具只有官方的 TSC，TSC 类型检查耗时在大项目中往往是很慢的过程，Rsbuild 中默认使用 tsChecker([fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)) 在构建过程中异步进行类型检查，不阻塞项目的启动。
+Rsbuild 提供了 Type Check 插件，用于在单独的进程中运行 TypeScript 类型检查，插件内部集成了 [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)。
 
-配置 tsChecker(使用默认配置):
-
-```ts
-export default {
-  tools: {
-    tsChecker: {},
-  },
-};
-```
-
-更多配置可见 [tsChecker 配置](/config/options/tools.html#toolstschecker)。
-
-如果开启 ts-loader 并且手动配置了 `compileOnly: false`，请关闭 tsChecker，避免重复类型检查。
-
-:::tip STC
-SWC 作者新开源的基于 Rust 的类型检查工具 [STC](https://github.com/dudykr/stc) 目前还不可用于生产，还在起步阶段，不推荐用于项目中，等待更成熟之后，我们会考虑集成到 Rsbuild 的 SWC 插件中作为实验功能，敬请期待。
-:::
+请参考 [Type Check 插件](/plugins/list/plugin-type-check.html) 了解用法。

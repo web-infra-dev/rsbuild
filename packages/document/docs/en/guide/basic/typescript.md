@@ -42,24 +42,8 @@ SWC plugin in Rsbuild supports TypeScript, TSX and legacy decorator, you can che
 
 Babel supports TypeScript well. It cannot check types, but we can check types in another process. Babel follows standards more when compiled to lower versions of JavaScript in certain situations. For example, Babel will initialize class members as undefined, and mark class methods as non-enumerable. If TSC is enabled, for better syntax downgrading and Polyfill, the TSC output will still be compiled by Babel, causing unnecessary performance costs.
 
-## Type checking
+## Type Checking
 
-Currently, the only stable TypeScript type checking tool is TSC, and it usually takes a while to check types in a large project, so Rsbuild by default using tsChecker([fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)) for asynchronous type checking, it won't block project setup.
+Rsbuild provides the Type Check plugin, which allows running TypeScript type checking in a separate process. The plugin internally integrates [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin).
 
-Set tsChecker(with default options):
-
-```ts
-export default {
-  tools: {
-    tsChecker: {},
-  },
-};
-```
-
-More configurations can be seen at [tsChecker configuration](/config/options/tools.html#toolstschecker).
-
-Note that if ts-loader is enabled and `compileOnly: false` is set, please disable tsChecker to avoid duplicate type-checking.
-
-:::tip STC
-The author of SWC has announced a new open-source type-checking tool based on Rust, which is called [STC](https://github.com/dudykr/stc), it's super fast but it cannot used for production now, really don't recommend you use that for now, when it's stabled we will use that in Rsbuild SWC plugin as experimental ability.
-:::
+Please refer to the [Type Check plugin](/plugins/list/plugin-type-check.html) for usage details.

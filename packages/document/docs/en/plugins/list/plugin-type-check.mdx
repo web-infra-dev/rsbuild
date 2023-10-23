@@ -1,0 +1,138 @@
+# Type Check Plugin
+
+The Type Check plugin provides the ability to run TypeScript type checks in a separate process. The plugin internally integrates with [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin).
+
+## Introduction
+
+The type checking logic of `fork-ts-checker-webpack-plugin` is similar to the native `tsc` command of TypeScript. It automatically reads the configuration options from `tsconfig.json` and can also be modified via the configuration options provided by the Type Check plugin.
+
+The behavior of the plugin differs in the development and production environments:
+
+- During development builds, type errors do not block the build process. They are only logged in the terminal.
+- During production builds, type errors cause the build to fail in order to ensure the stability of the production code.
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+```bash
+npm install @rsbuild/plugin-type-check -D
+```
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
+
+export default {
+  plugins: [pluginTypeCheck()],
+};
+```
+
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
+
+## Options
+
+### enable
+
+Whether to enable TypeScript type checking.
+
+- **Type:** `boolean`
+- **Default:** `true`
+- **Example:**
+
+Disable TypeScript type checking:
+
+```js
+pluginTypeCheck({
+  enable: false,
+});
+```
+
+Enable type checking only during production builds:
+
+```js
+pluginTypeCheck({
+  enable: process.env.NODE_ENV === 'production',
+});
+```
+
+Enable type checking only during development builds (it is not recommended to disable type checking during production builds, as it may reduce the stability of the production code):
+
+```js
+pluginTypeCheck({
+  enable: process.env.NODE_ENV === 'development',
+});
+```
+
+### forkTsCheckerOptions
+
+To modify the options of `fork-ts-checker-webpack-plugin`, please refer to [fork-ts-checker-webpack-plugin - README](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin #readme) to learn about available options.
+
+- **Type:** `Object | Function`
+- **Default:**
+
+```ts
+const defaultOptions = {
+  typescript: {
+    // avoid OOM issue
+    memoryLimit: 8192,
+    // use tsconfig of user project
+    configFile: tsconfigPath,
+    // use typescript of user project
+    typescriptPath: require.resolve('typescript'),
+  },
+  issue: {
+    exclude: [
+      { file: '**/*.(spec|test).ts' },
+      { file: '**/node_modules/**/*' },
+    ],
+  },
+  logger: {
+    log() {
+      // do nothing
+      // we only want to display error messages
+    },
+    error(message: string) {
+      console.error(message.replace(/ERROR/g, 'Type Error'));
+    },
+  },
+};
+```
+
+#### Object Type
+
+When the value of `forkTsCheckerOptions` is an object, it will be deeply merged with the default configuration.
+
+```ts
+pluginTypeCheck({
+  forkTsCheckerOptions: {
+    issue: {
+      exclude: [{ file: '**/some-folder/**/*.ts' }],
+    },
+  },
+});
+```
+
+#### Function Type
+
+When the value of `forkTsCheckerOptions` is a function, the default configuration will be passed as the first argument. You can directly modify the configuration object or return an object as the final configuration.
+
+```ts
+pluginTypeCheck({
+  forkTsCheckerOptions(options) {
+    options?.issue?.exclude.push({
+      file: '**/some-folder/**/*.ts',
+    });
+  },
+});
+```
+
+## Notes
+
+- `fork-ts-checker-webpack-plugin` does not support checking TypeScript code in `.vue` files.
+- If you have enabled `ts-loader` in your project and manually configured `compileOnly: false`, please disable the Type Check plugin to avoid duplicate type checking.
