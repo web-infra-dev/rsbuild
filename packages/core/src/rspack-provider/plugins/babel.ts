@@ -112,8 +112,6 @@ export const pluginBabel = (): RsbuildPlugin => ({
         // already set source.include / exclude in plugin-swc
         const rule = chain.module.rule(CHAIN_ID.RULE.JS);
 
-        const { rootPath } = api.context;
-
         rule
           .test(mergeRegex(JS_REGEX, TS_REGEX))
           .use(CHAIN_ID.USE.BABEL)
@@ -121,15 +119,8 @@ export const pluginBabel = (): RsbuildPlugin => ({
           .loader(getCompiledPath('babel-loader'))
           .options({
             ...babelOptions,
-            // TODO: should only apply babel include / exclude when abandoned legacyTransform
-            only: [
-              (pathName: string) =>
-                pathName.includes(rootPath) &&
-                !NODE_MODULES_REGEX.test(pathName),
-              ...includes,
-              ...(config.source.include || []),
-            ],
-            ignore: [...excludes, ...(config.source.exclude || [])],
+            only: includes,
+            ignore: excludes,
           });
       },
     );
