@@ -12,11 +12,11 @@ export type PluginTypeCheckerOptions = {
   forkTsCheckerOptions?: ChainedConfig<ForkTsCheckerOptions>;
 };
 
-export const pluginTypeChecker = (
+export const pluginTypeCheck = (
   options: PluginTypeCheckerOptions = {},
 ): RsbuildPlugin<RsbuildPluginAPI> => {
   return {
-    name: 'plugin-type-checker',
+    name: 'plugin-type-check',
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { target }) => {

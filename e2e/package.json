@@ -22,6 +22,7 @@
     "@rsbuild/plugin-node-polyfill": "workspace:*",
     "@rsbuild/plugin-stylus": "workspace:*",
     "@rsbuild/plugin-swc": "workspace:*",
+    "@rsbuild/plugin-type-check": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "workspace:*",
     "@rsbuild/plugin-vue2": "workspace:*",

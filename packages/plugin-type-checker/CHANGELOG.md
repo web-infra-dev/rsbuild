@@ -1,1 +1,0 @@
-# @rsbuild/plugin-type-checker
