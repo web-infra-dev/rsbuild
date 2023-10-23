@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugins/pluginNetworkPerformance > should add network performance plugin 1`] = `
+{
+  "plugins": [
+    HtmlNetworkPerformancePlugin {
+      "HtmlPlugin": [Function],
+      "options": [
+        "/http/aaa.com",
+      ],
+      "type": "dnsPrefetch",
+    },
+    HtmlNetworkPerformancePlugin {
+      "HtmlPlugin": [Function],
+      "options": [
+        {
+          "href": "/http/aaa.com",
+        },
+      ],
+      "type": "preconnect",
+    },
+  ],
+}
+`;

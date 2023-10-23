@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugins/toml > should add toml rule properly 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.toml\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
