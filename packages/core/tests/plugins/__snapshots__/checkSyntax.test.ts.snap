@@ -4,14 +4,15 @@ exports[`plugins/check-syntax > should add check-syntax plugin properly 1`] = `
 {
   "plugins": [
     CheckSyntaxPlugin {
-      "ecmaVersion": 5,
+      "ecmaVersion": 6,
       "errors": [],
       "exclude": undefined,
-      "rootPath": "<ROOT>/tests/plugins",
+      "rootPath": "<ROOT>",
       "targets": [
-        "> 0.01%",
-        "not dead",
-        "not op_mini all",
+        "chrome >= 87",
+        "edge >= 88",
+        "firefox >= 78",
+        "safari >= 14",
       ],
     },
   ],
@@ -29,7 +30,7 @@ exports[`plugins/check-syntax > should use default browserlist as targets when o
       "exclude": [
         /\\$\\.html/,
       ],
-      "rootPath": "<ROOT>/tests/plugins",
+      "rootPath": "<ROOT>",
       "targets": [
         "iOS 9",
         "Android 4.4",

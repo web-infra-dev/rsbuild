@@ -109,18 +109,6 @@ exports[`plugins/splitChunks > 'should set split-by-experience config correctly 
     },
     "splitChunks": {
       "cacheGroups": {
-        "lib-antd": {
-          "name": "lib-antd",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-arco": {
-          "name": "lib-arco",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
-        },
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
@@ -161,18 +149,6 @@ exports[`plugins/splitChunks > 'should set split-by-experience config' 1`] = `
     },
     "splitChunks": {
       "cacheGroups": {
-        "lib-antd": {
-          "name": "lib-antd",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-arco": {
-          "name": "lib-arco",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
-        },
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
@@ -206,29 +182,6 @@ exports[`plugins/splitChunks > 'should set split-by-experience config' 1`] = `
       },
       "chunks": "all",
       "enforceSizeThreshold": 50000,
-    },
-  },
-}
-`;
-
-exports[`plugins/splitChunks > 'should set split-by-module config' 1`] = `
-{
-  "optimization": {
-    "runtimeChunk": {
-      "name": "builder-runtime",
-    },
-    "splitChunks": {
-      "cacheGroups": {
-        "vendors": {
-          "name": [Function],
-          "priority": -10,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-        },
-      },
-      "chunks": "all",
-      "enforceSizeThreshold": 50000,
-      "maxInitialRequests": Infinity,
-      "minSize": 0,
     },
   },
 }

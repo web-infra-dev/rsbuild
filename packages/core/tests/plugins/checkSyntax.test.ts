@@ -1,77 +1,52 @@
 import { expect, describe, it } from 'vitest';
-import * as shared from '@modern-js/builder-shared';
-import { CHAIN_ID } from '@modern-js/utils';
-import { builderPluginCheckSyntax } from '@/plugins/checkSyntax';
+import { createStubRsbuild } from '@rsbuild/test-helper';
+import { pluginCheckSyntax } from '@src/plugins/checkSyntax';
+
+beforeAll(() => {
+  const { NODE_ENV } = process.env;
+  process.env.NODE_ENV = 'production';
+
+  return () => {
+    process.env.NODE_ENV = NODE_ENV;
+  };
+});
 
 describe('plugins/check-syntax', () => {
   it('should add check-syntax plugin properly', async () => {
-    let modifyBundlerChainCb: any;
-
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-      getNormalizedConfig: () => ({
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginCheckSyntax()],
+      rsbuildConfig: {
         security: {
           checkSyntax: true,
         },
-      }),
-      context: {
-        rootPath: __dirname,
       },
-    };
-
-    builderPluginCheckSyntax().setup(api);
-
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain, {
-      CHAIN_ID,
-      isProd: true,
-      target: 'web',
     });
 
-    expect(chain.toConfig()).toMatchSnapshot();
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config).toMatchSnapshot();
   });
 
   it('should not add check-syntax plugin when target node', async () => {
-    let modifyBundlerChainCb: any;
-
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-      getNormalizedConfig: () => ({
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginCheckSyntax()],
+      rsbuildConfig: {
         security: {
           checkSyntax: true,
         },
-      }),
-      context: {
-        rootPath: __dirname,
       },
-    };
-
-    builderPluginCheckSyntax().setup(api);
-
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain, {
-      CHAIN_ID,
-      isProd: true,
       target: 'node',
     });
 
-    expect(chain.toConfig()).toMatchSnapshot();
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config).toMatchSnapshot();
   });
 
   it('should use default browserlist as targets when only set checksyntax.exclude', async () => {
-    let modifyBundlerChainCb: any;
-
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-      getNormalizedConfig: () => ({
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginCheckSyntax()],
+      rsbuildConfig: {
         security: {
           checkSyntax: {
             exclude: [/$.html/],
@@ -86,22 +61,11 @@ describe('plugins/check-syntax', () => {
             'not dead',
           ],
         },
-      }),
-      context: {
-        rootPath: __dirname,
       },
-    };
-
-    builderPluginCheckSyntax().setup(api);
-
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain, {
-      CHAIN_ID,
-      isProd: true,
-      target: 'web',
     });
 
-    expect(chain.toConfig()).toMatchSnapshot();
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config).toMatchSnapshot();
   });
 });

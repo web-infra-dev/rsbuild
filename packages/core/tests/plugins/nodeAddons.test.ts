@@ -1,24 +1,17 @@
 import { expect, describe, it } from 'vitest';
-import * as shared from '@modern-js/builder-shared';
-import { CHAIN_ID } from '@modern-js/utils';
-import { builderPluginNodeAddons } from '@/plugins/nodeAddons';
+import { createStubRsbuild } from '@rsbuild/test-helper';
+import { pluginNodeAddons } from '@src/plugins/nodeAddons';
 
 describe('plugins/nodeAddons', () => {
   it('should add node addons rule properly', async () => {
-    let modifyBundlerChainCb: any;
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginNodeAddons()],
+      rsbuildConfig: {},
+      target: 'node',
+    });
 
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-    };
+    const config = await rsbuild.unwrapConfig();
 
-    builderPluginNodeAddons().setup(api);
-
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain, { isServer: true, CHAIN_ID });
-
-    expect(chain.toConfig()).toMatchSnapshot();
+    expect(config).toMatchSnapshot();
   });
 });

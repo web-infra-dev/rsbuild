@@ -1,9 +1,9 @@
 import { expect, describe, it, test } from 'vitest';
-import * as shared from '@modern-js/builder-shared';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import {
-  builderPluginSplitChunks,
+  pluginSplitChunks,
   createDependenciesRegExp,
-} from '@/plugins/splitChunks';
+} from '@src/plugins/splitChunks';
 
 test('createDependenciesRegExp', () => {
   const cases = {
@@ -21,7 +21,7 @@ describe('plugins/splitChunks', () => {
   const cases = [
     {
       name: 'should set split-by-experience config',
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           chunkSplit: {
             strategy: 'split-by-experience',
@@ -34,7 +34,7 @@ describe('plugins/splitChunks', () => {
     },
     {
       name: 'should set split-by-experience config correctly when polyfill is off',
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           chunkSplit: {
             strategy: 'split-by-experience',
@@ -45,22 +45,23 @@ describe('plugins/splitChunks', () => {
         },
       },
     },
-    {
-      name: 'should set split-by-module config',
-      builderConfig: {
-        performance: {
-          chunkSplit: {
-            strategy: 'split-by-module',
-          },
-        },
-        output: {
-          polyfill: 'entry',
-        },
-      },
-    },
+    // not support in rspack mode
+    // {
+    //   name: 'should set split-by-module config',
+    //   rsbuildConfig: {
+    //     performance: {
+    //       chunkSplit: {
+    //         strategy: 'split-by-module',
+    //       },
+    //     },
+    //     output: {
+    //       polyfill: 'entry',
+    //     },
+    //   },
+    // },
     {
       name: 'should set single-vendor config',
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           chunkSplit: {
             strategy: 'single-vendor',
@@ -73,7 +74,7 @@ describe('plugins/splitChunks', () => {
     },
     {
       name: 'should set single-size config',
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           chunkSplit: {
             strategy: 'split-by-size',
@@ -88,7 +89,7 @@ describe('plugins/splitChunks', () => {
     },
     {
       name: 'should set all-in-one config',
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           chunkSplit: {
             strategy: 'all-in-one',
@@ -101,7 +102,7 @@ describe('plugins/splitChunks', () => {
     },
     {
       name: 'should set custom config',
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           chunkSplit: {
             strategy: 'custom',
@@ -118,7 +119,7 @@ describe('plugins/splitChunks', () => {
     },
     {
       name: 'should allow forceSplitting to be an object',
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           chunkSplit: {
             strategy: 'custom',
@@ -142,37 +143,23 @@ describe('plugins/splitChunks', () => {
   ];
 
   it.each(cases)('$name', async (item) => {
-    let modifyBundlerChainCb: any;
-
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-      getNormalizedConfig: () =>
-        item.builderConfig || {
-          performance: {
-            chunkSplit: {
-              strategy: 'split-by-experience',
-            },
-          },
-          output: {
-            polyfill: 'entry',
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginSplitChunks()],
+      rsbuildConfig: item.rsbuildConfig || {
+        performance: {
+          chunkSplit: {
+            strategy: 'split-by-experience',
           },
         },
-      context: {
-        rootPath: __dirname,
+        output: {
+          polyfill: 'entry',
+        },
       },
-    };
-
-    builderPluginSplitChunks().setup(api);
-
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain, {
-      target: item.target || 'web',
-      isServer: item.target === 'node',
+      target: (item.target || 'web') as any,
     });
 
-    expect(chain.toConfig()).toMatchSnapshot();
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config).toMatchSnapshot();
   });
 });
