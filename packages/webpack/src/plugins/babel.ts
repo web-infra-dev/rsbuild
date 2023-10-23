@@ -102,7 +102,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
             config.tools.babel,
             {
               ...getBabelUtils(baseBabelConfig),
-              babelUtils,
+              ...babelUtils,
             },
           );
 
