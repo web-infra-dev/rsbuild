@@ -1,17 +1,16 @@
 import { expect, describe, it } from 'vitest';
-import * as shared from '@modern-js/builder-shared';
-import { CHAIN_ID } from '@modern-js/utils';
-import { builderPluginSvg } from '@/plugins/svg';
+import { createStubRsbuild } from '@rsbuild/test-helper';
+import { pluginSvg } from '@src/plugins/svg';
 
 describe('plugins/svg', () => {
   const cases = [
     {
       name: 'export default url',
-      builderConfig: {},
+      rsbuildConfig: {},
     },
     {
       name: 'export default Component',
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           svgDefaultExport: 'component',
         },
@@ -19,7 +18,7 @@ describe('plugins/svg', () => {
     },
     {
       name: 'should allow using output.dataUriLimit.svg to custom data uri limit',
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           dataUriLimit: {
             svg: 666,
@@ -29,7 +28,7 @@ describe('plugins/svg', () => {
     },
     {
       name: 'should allow to use distPath.svg to modify dist path',
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           distPath: {
             svg: 'foo',
@@ -39,7 +38,7 @@ describe('plugins/svg', () => {
     },
     {
       name: 'should allow to use filename.svg to modify filename',
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           filename: {
             svg: 'foo.svg',
@@ -49,7 +48,7 @@ describe('plugins/svg', () => {
     },
     {
       name: 'disableSvgr',
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           disableSvgr: true,
         },
@@ -58,32 +57,13 @@ describe('plugins/svg', () => {
   ];
 
   it.each(cases)('$name', async (item) => {
-    let modifyBundlerChainCb: any;
-
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-      getNormalizedConfig: () => ({
-        ...item.builderConfig,
-        output: {
-          ...shared.getDefaultOutputConfig(),
-          ...(item.builderConfig?.output || {}),
-        },
-      }),
-      context: {
-        rootPath: __dirname,
-      },
-    };
-
-    builderPluginSvg().setup(api);
-
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain, {
-      CHAIN_ID,
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginSvg()],
+      rsbuildConfig: item.rsbuildConfig,
     });
 
-    expect(chain.toConfig()).toMatchSnapshot();
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config).toMatchSnapshot();
   });
 });

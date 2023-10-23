@@ -1,13 +1,12 @@
 import { expect, describe, it } from 'vitest';
-import * as shared from '@modern-js/builder-shared';
-import { CHAIN_ID } from '@modern-js/utils';
-import { builderPluginDefine } from '@/plugins/define';
+import { createStubRsbuild } from '@rsbuild/test-helper';
+import { pluginDefine } from '@src/plugins/define';
 
 describe('plugins/define', () => {
   const cases = [
     {
       name: 'globalVars & define',
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           globalVars: {
             'process.env.foo': 'foo',
@@ -26,7 +25,7 @@ describe('plugins/define', () => {
     },
     {
       name: 'globalVars function',
-      builderConfig: {
+      rsbuildConfig: {
         source: {
           globalVars: (obj: any, { env, target }: any) => {
             obj.ENV = env;
@@ -38,44 +37,13 @@ describe('plugins/define', () => {
   ];
 
   it.each(cases)('$name', async (item) => {
-    let modifyBundlerChainCb: any;
-
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-      getNormalizedConfig: () => ({
-        ...item.builderConfig,
-        output: shared.getDefaultOutputConfig(),
-        source: {
-          ...shared.getDefaultSourceConfig(),
-          ...(item.builderConfig?.source || {}),
-        },
-      }),
-      context: {
-        rootPath: __dirname,
-      },
-    };
-
-    builderPluginDefine().setup(api);
-
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain, {
-      CHAIN_ID,
-      env: 'development',
-      target: 'web',
-      bundler: {
-        DefinePlugin: class {
-          params: any;
-
-          constructor(params: any) {
-            this.params = params;
-          }
-        },
-      },
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginDefine()],
+      rsbuildConfig: item.rsbuildConfig,
     });
 
-    expect(chain.toConfig()).toMatchSnapshot();
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config).toMatchSnapshot();
   });
 });

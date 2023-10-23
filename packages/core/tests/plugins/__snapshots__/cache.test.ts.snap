@@ -4,12 +4,15 @@ exports[`plugins/cache > 'should add cache config correctly' 1`] = `
 {
   "cache": {
     "buildDependencies": {
+      "packageJson": [
+        "<ROOT>/package.json",
+      ],
       "tailwindcss": [
         "/root/tailwind.config.ts",
       ],
     },
-    "cacheDirectory": "<ROOT>/tests/plugins/node_modules/.cache/webpack",
-    "name": "web-development",
+    "cacheDirectory": "<ROOT>/node_modules/.cache/rspack",
+    "name": "web-test",
     "type": "filesystem",
   },
 }
@@ -19,12 +22,15 @@ exports[`plugins/cache > 'should apply cacheDigest' 1`] = `
 {
   "cache": {
     "buildDependencies": {
+      "packageJson": [
+        "<ROOT>/package.json",
+      ],
       "tailwindcss": [
         "/root/tailwind.config.ts",
       ],
     },
-    "cacheDirectory": "<ROOT>/tests/plugins/node_modules/.cache/webpack",
-    "name": "web-development-c29a5747",
+    "cacheDirectory": "<ROOT>/node_modules/.cache/rspack",
+    "name": "web-test-c29a5747",
     "type": "filesystem",
   },
 }
@@ -34,12 +40,15 @@ exports[`plugins/cache > 'should custom cache directory by user' 1`] = `
 {
   "cache": {
     "buildDependencies": {
+      "packageJson": [
+        "<ROOT>/package.json",
+      ],
       "tailwindcss": [
         "/root/tailwind.config.ts",
       ],
     },
-    "cacheDirectory": "<ROOT>/tests/plugins/node_modules/.cache/tmp",
-    "name": "web-development",
+    "cacheDirectory": "<ROOT>/node_modules/.cache/tmp",
+    "name": "web-test",
     "type": "filesystem",
   },
 }
@@ -55,12 +64,15 @@ exports[`plugins/cache > 'should not apply cacheDigest' 1`] = `
 {
   "cache": {
     "buildDependencies": {
+      "packageJson": [
+        "<ROOT>/package.json",
+      ],
       "tailwindcss": [
         "/root/tailwind.config.ts",
       ],
     },
-    "cacheDirectory": "<ROOT>/tests/plugins/node_modules/.cache/webpack",
-    "name": "web-development",
+    "cacheDirectory": "<ROOT>/node_modules/.cache/rspack",
+    "name": "web-test",
     "type": "filesystem",
   },
 }
@@ -70,15 +82,15 @@ exports[`plugins/cache > 'should watch framework config change' 1`] = `
 {
   "cache": {
     "buildDependencies": {
-      "config": [
-        "/path/to/config.js",
+      "packageJson": [
+        "<ROOT>/package.json",
       ],
       "tailwindcss": [
         "/root/tailwind.config.ts",
       ],
     },
-    "cacheDirectory": "<ROOT>/tests/plugins/node_modules/.cache/webpack",
-    "name": "web-development",
+    "cacheDirectory": "<ROOT>/node_modules/.cache/rspack",
+    "name": "web-test",
     "type": "filesystem",
   },
 }
@@ -88,15 +100,15 @@ exports[`plugins/cache > 'should watch tsconfig change' 1`] = `
 {
   "cache": {
     "buildDependencies": {
+      "packageJson": [
+        "<ROOT>/package.json",
+      ],
       "tailwindcss": [
         "/root/tailwind.config.ts",
       ],
-      "tsconfig": [
-        "/path/to/tsconfig.json",
-      ],
     },
-    "cacheDirectory": "<ROOT>/tests/plugins/node_modules/.cache/webpack",
-    "name": "web-development",
+    "cacheDirectory": "<ROOT>/node_modules/.cache/rspack",
+    "name": "web-test",
     "type": "filesystem",
   },
 }

@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { filterAsset } from '@/plugins/fileSize';
+import { filterAsset } from '@src/plugins/fileSize';
 
 describe('plugins/fileSize', () => {
   it('#filterAsset - should filter asset correctly', () => {

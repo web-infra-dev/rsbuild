@@ -1,8 +1,9 @@
 import { vi, test, expect, describe, SpyInstance } from 'vitest';
-import { getBrowserslist, getBundlerChain } from '@modern-js/builder-shared';
-import { builderPluginTarget } from '@/plugins/target';
+import { createStubRsbuild } from '@rsbuild/test-helper';
+import { getBrowserslist } from '@rsbuild/shared';
+import { pluginTarget } from '@src/plugins/target';
 
-vi.mock('@modern-js/builder-shared', async (importOriginal) => {
+vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();
   return {
     ...mod,
@@ -18,14 +19,9 @@ describe('plugins/target', () => {
       expected: { target: 'node' },
     },
     {
-      target: 'modern-web',
+      target: 'web',
       browserslist: ['foo'],
       expected: { target: ['web', 'browserslist'] },
-    },
-    {
-      target: 'modern-web',
-      browserslist: null,
-      expected: { target: ['web', 'es2015'] },
     },
     {
       target: 'web',
@@ -44,21 +40,13 @@ describe('plugins/target', () => {
       item.browserslist,
     );
 
-    let modifyBundlerChainCb: any;
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginTarget()],
+      target: item.target as any,
+    });
 
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-      context: {},
-    };
+    const config = await rsbuild.unwrapConfig();
 
-    builderPluginTarget().setup(api);
-
-    const chain = await getBundlerChain();
-
-    await modifyBundlerChainCb(chain, { target: item.target });
-
-    expect(chain.toConfig()).toEqual(item.expected);
+    expect(config).toEqual(item.expected);
   });
 });

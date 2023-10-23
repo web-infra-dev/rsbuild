@@ -1,16 +1,17 @@
 import { expect, describe, it } from 'vitest';
 import * as shared from '@rsbuild/shared';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginAsset } from '@src/plugins/asset';
 
 describe('plugins/asset(image)', () => {
   const cases = [
     {
       name: 'should add image rules correctly',
-      builderConfig: {},
+      rsbuildConfig: {},
     },
     {
       name: 'should allow to use distPath.image to modify dist path',
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           distPath: {
             image: 'foo',
@@ -20,7 +21,7 @@ describe('plugins/asset(image)', () => {
     },
     {
       name: 'should allow to use distPath.image to be empty string',
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           distPath: {
             image: '',
@@ -30,7 +31,7 @@ describe('plugins/asset(image)', () => {
     },
     {
       name: 'should allow to use filename.image to modify filename',
-      builderConfig: {
+      rsbuildConfig: {
         output: {
           filename: {
             image: 'foo[ext]',
@@ -41,36 +42,13 @@ describe('plugins/asset(image)', () => {
   ];
 
   it.each(cases)('$name', async (item) => {
-    let modifyBundlerChainCb: any;
-
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-      getNormalizedConfig: () => ({
-        ...item.builderConfig,
-        output: {
-          ...shared.getDefaultOutputConfig(),
-          ...(item.builderConfig?.output || {}),
-        },
-      }),
-      context: {
-        rootPath: __dirname,
-      },
-    };
-
-    pluginAsset('image', shared.IMAGE_EXTENSIONS).setup(api);
-
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain, {
-      CHAIN_ID: {
-        RULE: {
-          IMAGE: 'image',
-        },
-      },
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginAsset('image', shared.IMAGE_EXTENSIONS)],
+      rsbuildConfig: item.rsbuildConfig,
     });
 
-    expect(chain.toConfig()).toMatchSnapshot();
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config).toMatchSnapshot();
   });
 });

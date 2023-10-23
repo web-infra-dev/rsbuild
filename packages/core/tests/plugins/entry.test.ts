@@ -1,6 +1,6 @@
 import { expect, describe, it } from 'vitest';
-import * as shared from '@modern-js/builder-shared';
-import { builderPluginEntry } from '@/plugins/entry';
+import { createStubRsbuild } from '@rsbuild/test-helper';
+import { pluginEntry } from '@src/plugins/entry';
 
 describe('plugins/entry', () => {
   const cases = [
@@ -47,28 +47,18 @@ describe('plugins/entry', () => {
   ];
 
   it.each(cases)('$name', async (item) => {
-    let modifyBundlerChainCb: any;
-
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-      getNormalizedConfig: () => ({
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginEntry()],
+      rsbuildConfig: {
         source: {
           preEntry: item.preEntry,
         },
-      }),
-      context: {
-        entry: item.entry,
       },
-    };
+      entry: item.entry as unknown as Record<string, string | string[]>,
+    });
 
-    builderPluginEntry().setup(api);
+    const config = await rsbuild.unwrapConfig();
 
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain);
-
-    expect(chain.toConfig()).toEqual(item.expected);
+    expect(config).toEqual(item.expected);
   });
 });

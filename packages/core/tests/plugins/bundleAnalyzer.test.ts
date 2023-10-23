@@ -1,37 +1,22 @@
 import { expect, describe, it } from 'vitest';
-import * as shared from '@modern-js/builder-shared';
-import { builderPluginBundleAnalyzer } from '@/plugins/bundleAnalyzer';
+import { createStubRsbuild } from '@rsbuild/test-helper';
+import { pluginBundleAnalyzer } from '@src/plugins/bundleAnalyzer';
 
 describe('plugins/bundleAnalyze', () => {
   it('should add bundle analyze plugin', async () => {
-    let modifyBundlerChainCb: any;
-
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-      getNormalizedConfig: () => ({
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginBundleAnalyzer()],
+      rsbuildConfig: {
         performance: {
           bundleAnalyze: {
             reportFilename: 'index$$.html',
           },
         },
-      }),
-      context: {},
-    };
-    builderPluginBundleAnalyzer().setup(api);
-
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain, {
-      CHAIN_ID: {
-        PLUGIN: {
-          BUNDLE_ANALYZER: 'bundle-analyze',
-        },
       },
-      target: 'web',
     });
 
-    expect(chain.toConfig()).toMatchSnapshot();
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config).toMatchSnapshot();
   });
 });

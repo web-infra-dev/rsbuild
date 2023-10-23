@@ -1,7 +1,6 @@
-import { join } from 'path';
 import { vi, expect, describe, it } from 'vitest';
-import * as shared from '@modern-js/builder-shared';
-import { builderPluginCache } from '@/plugins/cache';
+import { createStubRsbuild } from '@rsbuild/test-helper';
+import { pluginCache } from '@src/plugins/cache';
 
 vi.mock('@modern-js/utils', async (importOriginal) => {
   const mod = await importOriginal<any>();
@@ -35,7 +34,7 @@ describe('plugins/cache', () => {
     },
     {
       name: 'should custom cache directory by user',
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           buildCache: {
             cacheDirectory: './node_modules/.cache/tmp',
@@ -45,7 +44,7 @@ describe('plugins/cache', () => {
     },
     {
       name: 'should apply cacheDigest',
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           buildCache: {
             cacheDigest: ['a', 'b', 'c'],
@@ -55,7 +54,7 @@ describe('plugins/cache', () => {
     },
     {
       name: 'should not apply cacheDigest',
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           buildCache: {
             cacheDigest: [],
@@ -65,7 +64,7 @@ describe('plugins/cache', () => {
     },
     {
       name: 'should disable cache',
-      builderConfig: {
+      rsbuildConfig: {
         performance: {
           buildCache: false,
         },
@@ -74,36 +73,17 @@ describe('plugins/cache', () => {
   ];
 
   it.each(cases)('$name', async (item) => {
-    let modifyBundlerChainCb: any;
-
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-      getNormalizedConfig: () =>
-        item.builderConfig || {
-          performance: {
-            buildCache: true,
-          },
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginCache()],
+      rsbuildConfig: item.rsbuildConfig || {
+        performance: {
+          buildCache: true,
         },
-      context: {
-        rootPath: __dirname,
-        cachePath: join(__dirname, 'node_modules', '.cache'),
-        bundlerType: 'webpack',
-
-        ...(item.context || {}),
       },
-    };
-
-    builderPluginCache().setup(api);
-
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain, {
-      target: 'web',
-      env: 'development',
     });
 
-    expect(chain.toConfig()).toMatchSnapshot();
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config).toMatchSnapshot();
   });
 });

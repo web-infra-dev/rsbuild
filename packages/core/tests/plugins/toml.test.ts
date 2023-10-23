@@ -1,24 +1,16 @@
 import { expect, describe, it } from 'vitest';
-import * as shared from '@modern-js/builder-shared';
-import { CHAIN_ID } from '@modern-js/utils';
-import { builderPluginToml } from '@/plugins/toml';
+import { createStubRsbuild } from '@rsbuild/test-helper';
+import { pluginToml } from '@src/plugins/toml';
 
 describe('plugins/toml', () => {
   it('should add toml rule properly', async () => {
-    let modifyBundlerChainCb: any;
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginToml()],
+      rsbuildConfig: {},
+    });
 
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-    };
+    const config = await rsbuild.unwrapConfig();
 
-    builderPluginToml().setup(api);
-
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain, { CHAIN_ID });
-
-    expect(chain.toConfig()).toMatchSnapshot();
+    expect(config).toMatchSnapshot();
   });
 });

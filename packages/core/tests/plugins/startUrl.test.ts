@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { replacePlaceholder } from '@/plugins/startUrl';
+import { replacePlaceholder } from '@src/plugins/startUrl';
 
 describe('plugins/startUrl', () => {
   it('#replacePlaceholder - should replace port number correctly', () => {

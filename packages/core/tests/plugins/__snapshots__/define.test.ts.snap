@@ -3,15 +3,16 @@
 exports[`plugins/define > 'globalVars & define' 1`] = `
 {
   "plugins": [
-    DefinePlugin {
-      "params": {
-        "NAME": "\\"Jack\\"",
-        "import.meta.bar": "{\\"a\\":\\"bar\\",\\"b\\":false,\\"c\\":{\\"d\\":42}}",
-        "process.env.ASSET_PREFIX": "\\"\\"",
-        "process.env.NODE_ENV": "\\"test\\"",
-        "process.env.foo": "\\"foo\\"",
-        "window.baz": "[null,\\"baz\\"]",
+    Plugin {
+      "_options": {
+        "NAME": ""Jack"",
+        "import.meta.bar": "{"a":"bar","b":false,"c":{"d":42}}",
+        "process.env.ASSET_PREFIX": """",
+        "process.env.NODE_ENV": ""test"",
+        "process.env.foo": ""foo"",
+        "window.baz": "[null,"baz"]",
       },
+      "name": "DefinePlugin",
     },
   ],
 }
@@ -20,13 +21,14 @@ exports[`plugins/define > 'globalVars & define' 1`] = `
 exports[`plugins/define > 'globalVars function' 1`] = `
 {
   "plugins": [
-    DefinePlugin {
-      "params": {
-        "ENV": "\\"development\\"",
-        "TARGET": "\\"web\\"",
-        "process.env.ASSET_PREFIX": "\\"\\"",
-        "process.env.NODE_ENV": "\\"test\\"",
+    Plugin {
+      "_options": {
+        "ENV": ""test"",
+        "TARGET": ""web"",
+        "process.env.ASSET_PREFIX": """",
+        "process.env.NODE_ENV": ""test"",
       },
+      "name": "DefinePlugin",
     },
   ],
 }

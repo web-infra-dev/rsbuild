@@ -1,31 +1,22 @@
-import * as shared from '@modern-js/builder-shared';
-import { CHAIN_ID } from '@modern-js/utils';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import { expect, describe, it } from 'vitest';
-import { builderPluginWasm } from '@/plugins/wasm';
+import { pluginWasm } from '@src/plugins/wasm';
 
 describe('plugins/wasm', () => {
   it('should add wasm rule properly', async () => {
-    let modifyBundlerChainCb: any;
-
-    const api: any = {
-      modifyBundlerChain: (fn: any) => {
-        modifyBundlerChainCb = fn;
-      },
-      getNormalizedConfig: () => ({
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginWasm()],
+      rsbuildConfig: {
         output: {
           distPath: {
             wasm: 'static/wasm',
           },
         },
-      }),
-    };
+      },
+    });
 
-    builderPluginWasm().setup(api);
+    const config = await rsbuild.unwrapConfig();
 
-    const chain = await shared.getBundlerChain();
-
-    await modifyBundlerChainCb(chain, { CHAIN_ID });
-
-    expect(chain.toConfig()).toMatchSnapshot();
+    expect(config).toMatchSnapshot();
   });
 });

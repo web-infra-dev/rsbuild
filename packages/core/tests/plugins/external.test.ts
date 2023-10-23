@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import * as shared from '@modern-js/builder-shared';
-import { builderPluginExternals } from '@/plugins/externals';
+import * as shared from '@rsbuild/shared';
+import { pluginExternals } from '@src/plugins/externals';
 
 describe('plugins/external', () => {
   it('should add external config', async () => {
@@ -21,7 +21,7 @@ describe('plugins/external', () => {
       },
     };
 
-    builderPluginExternals().setup(api);
+    pluginExternals().setup(api);
 
     const chain = await shared.getBundlerChain();
 
