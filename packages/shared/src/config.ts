@@ -123,7 +123,6 @@ export const getDefaultOutputConfig = (): NormalizedSharedOutputConfig => ({
     js: false,
     css: undefined,
   },
-  // disableTsChecker: false,
   disableFilenameHash: false,
   disableCssModuleExtension: false,
   disableInlineRuntimeChunk: false,

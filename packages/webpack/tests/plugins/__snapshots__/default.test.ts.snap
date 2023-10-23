@@ -712,7 +712,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,
-      "disableTsChecker": undefined,
       "handler": [Function],
       "hasCompileErrors": false,
       "id": "Client",
@@ -1519,7 +1518,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,
-      "disableTsChecker": undefined,
       "handler": [Function],
       "hasCompileErrors": false,
       "id": "Client",
@@ -2120,7 +2118,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,
-      "disableTsChecker": undefined,
       "handler": [Function],
       "hasCompileErrors": false,
       "id": "Server",
@@ -2751,7 +2748,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,
-      "disableTsChecker": undefined,
       "handler": [Function],
       "hasCompileErrors": false,
       "id": "Web Worker",

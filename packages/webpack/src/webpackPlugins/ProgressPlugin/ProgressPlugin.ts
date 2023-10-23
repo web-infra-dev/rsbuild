@@ -8,7 +8,6 @@ export interface ProgressOptions
   extends Omit<Partial<Props>, 'message' | 'total' | 'current' | 'done'> {
   id?: string;
   clearOnDone?: boolean;
-  disableTsChecker?: boolean;
 }
 
 export class ProgressPlugin extends webpack.ProgressPlugin {
@@ -20,10 +19,8 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
 
   compileTime: string | null = null;
 
-  disableTsChecker?: boolean;
-
   constructor(options: ProgressOptions) {
-    const { id = 'Modern', clearOnDone = false, disableTsChecker } = options;
+    const { id = 'Modern', clearOnDone = false } = options;
 
     const nonTTYLogger = createNonTTYLogger();
     const friendlyPercentage = createFriendlyPercentage();
@@ -67,7 +64,6 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
     });
 
     this.id = id;
-    this.disableTsChecker = disableTsChecker;
   }
 
   apply(compiler: webpack.Compiler): void {

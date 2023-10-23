@@ -8,11 +8,6 @@ describe('plugins/react', () => {
   it('should work with babel-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginReact()],
-      rsbuildConfig: {
-        output: {
-          disableTsChecker: true,
-        },
-      },
     });
     const config = await rsbuild.unwrapWebpackConfig();
 
