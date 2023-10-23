@@ -1,11 +1,11 @@
 {
-  "name": "@rsbuild/plugin-type-checker",
+  "name": "@rsbuild/plugin-type-check",
   "description": "TS checker plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
-    "directory": "packages/plugin-type-checker"
+    "directory": "packages/plugin-type-check"
   },
   "license": "MIT",
   "version": "0.0.7",

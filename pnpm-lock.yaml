@@ -78,6 +78,9 @@ importers:
       '@rsbuild/plugin-swc':
         specifier: workspace:*
         version: link:../packages/plugin-swc
+      '@rsbuild/plugin-type-check':
+        specifier: workspace:*
+        version: link:../packages/plugin-type-check
       '@rsbuild/plugin-vue':
         specifier: workspace:*
         version: link:../packages/plugin-vue
@@ -545,7 +548,7 @@ importers:
 
   packages/plugin-swc/tests/fixtures/browserslist/ie11: {}
 
-  packages/plugin-type-checker:
+  packages/plugin-type-check:
     dependencies:
       '@modern-js/utils':
         specifier: ^2.37.1
