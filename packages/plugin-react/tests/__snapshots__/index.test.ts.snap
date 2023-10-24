@@ -715,18 +715,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       },
       "chunks": "all",
       "enforceSizeThreshold": 50000,
-      "lib-react": {
-        "name": "lib-react",
-        "priority": 0,
-        "reuseExistingChunk": true,
-        "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
-      },
-      "lib-router": {
-        "name": "lib-router",
-        "priority": 0,
-        "reuseExistingChunk": true,
-        "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
-      },
     },
   },
   "output": {
@@ -751,6 +739,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     Plugin {
       "_options": {
         "prefix": "Client",
+        "profile": false,
       },
       "name": "ProgressPlugin",
     },

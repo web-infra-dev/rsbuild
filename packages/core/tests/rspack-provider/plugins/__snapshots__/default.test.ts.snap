@@ -20,7 +20,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableTransformByDefault": true,
-      "newResolver": true,
     },
   },
   "infrastructureLogging": {
@@ -756,7 +755,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableTransformByDefault": true,
-      "newResolver": true,
     },
   },
   "infrastructureLogging": {
@@ -1548,7 +1546,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableTransformByDefault": true,
-      "newResolver": true,
     },
   },
   "infrastructureLogging": {
@@ -2035,7 +2032,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableTransformByDefault": true,
-      "newResolver": true,
     },
   },
   "infrastructureLogging": {
