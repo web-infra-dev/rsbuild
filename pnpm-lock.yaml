@@ -458,6 +458,31 @@ importers:
         specifier: ^5
         version: 5.2.2
 
+  packages/plugin-source-build:
+    dependencies:
+      '@rsbuild/monorepo-utils':
+        specifier: workspace:*
+        version: link:../monorepo-utils
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.23.2
+        version: 7.23.2
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
   packages/plugin-stylus:
     dependencies:
       '@rsbuild/shared':
