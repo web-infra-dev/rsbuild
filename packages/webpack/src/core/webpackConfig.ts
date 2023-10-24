@@ -1,5 +1,6 @@
 import {
   debug,
+  CHAIN_ID,
   modifyBundlerChain,
   type NodeEnv,
   type RsbuildTarget,
@@ -72,7 +73,6 @@ async function getChainUtils(
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
   const { default: HtmlWebpackPlugin } = await import('html-webpack-plugin');
-  const { CHAIN_ID } = await import('@modern-js/utils');
   const nodeEnv = process.env.NODE_ENV as NodeEnv;
 
   const nameMap = {
