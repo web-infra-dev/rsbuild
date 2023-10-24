@@ -1,4 +1,3 @@
-import { expect, it } from 'vitest';
 import { wrapQuotes } from '../../src/loaders/css-modules-typescript-loader';
 
 it('should wrap key correctly', () => {

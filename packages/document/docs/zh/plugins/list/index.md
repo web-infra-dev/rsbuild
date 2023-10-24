@@ -20,6 +20,10 @@
 
 提供对 Vue 2 JSX / TSX 语法的支持。
 
+### [@rsbuild/plugin-type-check](/plugins/list/plugin-type-check.html)
+
+用于在单独的进程中运行 TypeScript 类型检查。
+
 ### [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus.html)
 
 使用 Stylus 作为 CSS 预处理器。

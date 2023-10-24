@@ -1,9 +1,8 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { webpackProvider } from '@rsbuild/webpack';
 import { pluginEsbuild } from '../src';
 
-describe('plugins/esbuild', () => {
+describe('plugin-esbuild', () => {
   it('should set esbuild-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEsbuild()],

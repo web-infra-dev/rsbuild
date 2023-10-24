@@ -1,10 +1,9 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { webpackProvider } from '@rsbuild/webpack';
 import { pluginBabel } from '@rsbuild/webpack/plugin-babel';
 import { pluginVueJsx } from '../src';
 
-describe('plugins/vue-jsx', () => {
+describe('plugin-vue-jsx', () => {
   it('should apply jsx babel plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
       provider: webpackProvider,

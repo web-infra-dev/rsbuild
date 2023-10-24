@@ -1,4 +1,4 @@
-import { expect, describe, it, vi, SpyInstance } from 'vitest';
+import type { SpyInstance } from 'vitest';
 import { isFileExists } from '@rsbuild/shared';
 import { pluginResolve } from '@/plugins/resolve';
 import { createStubRsbuild } from '@rsbuild/test-helper';
@@ -13,7 +13,7 @@ vi.mock('@rsbuild/shared', async (importOriginal) => {
   };
 });
 
-describe('plugins/resolve', () => {
+describe('plugin-resolve', () => {
   it('should apply default extensions correctly', async () => {
     (isFileExists as unknown as SpyInstance).mockImplementationOnce(() =>
       Promise.resolve(false),

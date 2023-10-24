@@ -1,8 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginMinimize } from '@/plugins/minimize';
 
-describe('plugins/minimize', () => {
+describe('plugin-minimize', () => {
   it('should not apply minimizer in development', async () => {
     process.env.NODE_ENV = 'development';
 

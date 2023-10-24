@@ -1,4 +1,3 @@
-import { assert, describe, test } from 'vitest';
 import { Compiler } from '../src/binding';
 import type { TransformConfig } from '@modern-js/swc-plugins';
 

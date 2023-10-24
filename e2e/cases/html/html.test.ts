@@ -28,10 +28,15 @@ test.describe('html configure multi', () => {
   });
 
   test('mountId', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (err) => errors.push(err.message));
+
     await page.goto(getHrefByEntryName('main', rsbuild.port));
 
     const test = page.locator('#test');
     await expect(test).toHaveText('Hello Rsbuild!');
+
+    expect(errors).toEqual([]);
   });
 
   test('title default', async ({ page }) => {

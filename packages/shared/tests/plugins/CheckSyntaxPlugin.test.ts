@@ -1,4 +1,3 @@
-import { describe, expect, test } from 'vitest';
 import { getHtmlScripts } from '../../src/plugins/CheckSyntaxPlugin/helpers/generateHtmlScripts';
 import { getEcmaVersion } from '../../src/plugins/CheckSyntaxPlugin/helpers/getEcmaVersion';
 import {

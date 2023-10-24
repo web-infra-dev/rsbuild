@@ -1,18 +1,12 @@
-import { expect, describe, it } from 'vitest';
 import { pluginReact } from '@/plugins/react';
 import { pluginBabel } from '@/plugins/babel';
 import { pluginTsLoader } from '@/plugins/tsLoader';
 import { createStubRsbuild } from '../helper';
 
-describe('plugins/react', () => {
+describe('plugin-react', () => {
   it('should work with babel-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginReact()],
-      rsbuildConfig: {
-        output: {
-          disableTsChecker: true,
-        },
-      },
     });
     const config = await rsbuild.unwrapWebpackConfig();
 

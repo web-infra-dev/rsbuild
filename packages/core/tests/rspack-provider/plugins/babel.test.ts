@@ -1,8 +1,7 @@
-import { describe, it, expect } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginBabel } from '@/plugins/babel';
 
-describe('plugins/babel', () => {
+describe('plugin-babel', () => {
   it('should set babel-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
@@ -17,6 +16,24 @@ describe('plugins/babel', () => {
                 style: true,
               },
             ]);
+          },
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    expect(bundlerConfigs[0]).toMatchSnapshot();
+  });
+
+  it('babel-loader addIncludes & addExcludes should works', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginBabel()],
+      rsbuildConfig: {
+        tools: {
+          babel(_config: any, { addExcludes, addIncludes }: any) {
+            addIncludes(/\/node_modules\/query-string\//);
+            addExcludes('src/example');
           },
         },
       },

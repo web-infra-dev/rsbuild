@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/minimize > should apply minimizer in production 1`] = `
+exports[`plugin-minimize > should apply minimizer in production 1`] = `
 {
   "minimize": true,
   "minimizer": [

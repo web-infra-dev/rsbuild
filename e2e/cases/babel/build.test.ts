@@ -23,3 +23,27 @@ test('babel', async ({ page }) => {
 
   rsbuild.close();
 });
+
+test('babel exclude', async ({ page }) => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    entry: {
+      index: path.resolve(__dirname, './src/index.js'),
+    },
+    runServer: true,
+    rsbuildConfig: {
+      tools: {
+        babel(_, { addPlugins, addExcludes }) {
+          addPlugins([require('./plugins/myBabelPlugin')]);
+          addExcludes(/aa/);
+        },
+      },
+    },
+  });
+
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  expect(await page.evaluate('window.b')).toBe(10);
+  expect(await page.evaluate('window.bb')).toBeUndefined();
+
+  rsbuild.close();
+});

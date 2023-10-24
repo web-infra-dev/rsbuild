@@ -1,8 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginStylus } from '../src';
 
-describe('plugins/stylus', () => {
+describe('plugin-stylus', () => {
   it('should add stylus loader config correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginStylus() as any],

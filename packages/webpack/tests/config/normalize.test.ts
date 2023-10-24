@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { normalizeConfig } from '@/config/normalize';
 
 describe('normalizeConfig', () => {

@@ -1,7 +1,6 @@
 import assert from 'assert';
 import path from 'path';
 import { fs } from '@rsbuild/shared/fs-extra';
-import { describe, expect, it } from 'vitest';
 import codecs from '../../src/shared/codecs';
 
 describe('codecs', () => {

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/vue > should add vue-loader and VueLoaderPlugin correctly 1`] = `
+exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 1`] = `
 {
   "module": {
     "rules": [
@@ -31,7 +31,7 @@ exports[`plugins/vue > should add vue-loader and VueLoaderPlugin correctly 1`] =
 }
 `;
 
-exports[`plugins/vue > should allow to configure vueLoader options 1`] = `
+exports[`plugin-vue > should allow to configure vueLoader options 1`] = `
 {
   "module": {
     "rules": [
@@ -63,7 +63,7 @@ exports[`plugins/vue > should allow to configure vueLoader options 1`] = `
 }
 `;
 
-exports[`plugins/vue > should define feature flags correctly 1`] = `
+exports[`plugin-vue > should define feature flags correctly 1`] = `
 {
   "module": {
     "rules": [

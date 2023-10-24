@@ -1,4 +1,3 @@
-import { describe, expect, test, it } from 'vitest';
 import { mergeRsbuildConfig } from '../src/mergeRsbuildConfig';
 
 describe('mergeRsbuildConfig', () => {

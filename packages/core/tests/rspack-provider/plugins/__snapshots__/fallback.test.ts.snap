@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/fallback > should convert fallback rule correctly 1`] = `
+exports[`plugin-fallback > should convert fallback rule correctly 1`] = `
 {
   "module": {
     "rules": [
@@ -58,7 +58,7 @@ exports[`plugins/fallback > should convert fallback rule correctly 1`] = `
 }
 `;
 
-exports[`plugins/fallback > should not convert fallback rule when output.enableAssetFallback is not enabled 1`] = `
+exports[`plugin-fallback > should not convert fallback rule when output.enableAssetFallback is not enabled 1`] = `
 {
   "module": {
     "rules": [

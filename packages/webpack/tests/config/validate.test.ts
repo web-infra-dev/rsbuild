@@ -1,5 +1,4 @@
 import { performance } from 'perf_hooks';
-import { describe, expect, it } from 'vitest';
 import { createDefaultConfig } from '@/config/defaults';
 import { validateRsbuildConfig } from '@/config/validate';
 import { RsbuildConfig } from '@/types';
@@ -31,7 +30,6 @@ describe('validateRsbuildConfig', () => {
         htmlPlugin: false,
         babel: () => undefined,
         terser: [],
-        tsChecker: (_: any) => ({}),
       },
     };
     await expect(validateRsbuildConfig(config)).resolves.toMatchInlineSnapshot(`

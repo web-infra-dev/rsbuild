@@ -4,6 +4,7 @@
   "plugin-vue-jsx",
   "plugin-vue2",
   "plugin-vue2-jsx",
+  "plugin-type-check",
   "plugin-swc",
   "plugin-stylus",
   "plugin-esbuild",

@@ -1,9 +1,8 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { webpackProvider } from '@rsbuild/webpack';
 import { pluginNodePolyfill } from '../src';
 
-describe('plugins/node-polyfill', () => {
+describe('plugin-node-polyfill', () => {
   it('should add node-polyfill config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginNodePolyfill()],

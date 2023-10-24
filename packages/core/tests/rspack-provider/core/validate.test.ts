@@ -1,5 +1,4 @@
 import { performance } from 'perf_hooks';
-import { describe, expect, it } from 'vitest';
 import { createDefaultConfig } from '@/config/defaults';
 import { validateRsbuildConfig } from '@/config/validate';
 import { RsbuildConfig } from '@/types';
@@ -20,12 +19,12 @@ describe('validateRsbuildConfig', () => {
     await expect(
       validateRsbuildConfig({
         output: {
-          polyfill: 'usage',
+          polyfill: 'xxx',
         },
       }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`
       "Rsbuild config validation error:
-      * Invalid enum value. Expected 'entry' | 'ua' | 'off', received 'usage' at "output.polyfill""
+      * Invalid enum value. Expected 'usage' | 'entry' | 'ua' | 'off', received 'xxx' at "output.polyfill""
     `);
 
     await expect(validateRsbuildConfig(config)).rejects

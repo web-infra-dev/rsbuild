@@ -1,9 +1,8 @@
-import { expect, describe, it } from 'vitest';
 import { pluginFallback } from '@/plugins/fallback';
 import { RsbuildPlugin } from '@/types';
 import { createStubRsbuild } from '../helper';
 
-describe('plugins/fallback', () => {
+describe('plugin-fallback', () => {
   const testPlugin: RsbuildPlugin = {
     name: 'test-plugin',
     setup(api) {

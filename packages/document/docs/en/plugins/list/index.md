@@ -20,6 +20,10 @@ Provides support for Vue 2 SFC (Single File Components).
 
 Provides support for Vue 2 JSX / TSX syntax.
 
+### [@rsbuild/plugin-type-check](/plugins/list/plugin-type-check.html)
+
+Used to run TypeScript type checker on a separate process.
+
 ### [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus.html)
 
 Use Stylus add CSS preprocessor.

@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { RsbuildTarget } from '@rsbuild/shared';
 import { pluginEntry } from '@src/plugins/entry';
 import { createStubRsbuild } from '@rsbuild/test-helper';
@@ -6,7 +5,7 @@ import { pluginSwc } from '@/plugins/swc';
 import { RsbuildConfig } from '@/types';
 import { pluginAntd } from '@src/plugins/antd';
 
-describe('plugins/swc', () => {
+describe('plugin-swc', () => {
   it('should disable preset_env in target other than web', async () => {
     await matchConfigSnapshot('node', {
       output: {
@@ -23,8 +22,7 @@ describe('plugins/swc', () => {
     });
   });
 
-  // TODO: wait for Rspack usage mode polyfill
-  it.skip('should enable usage mode preset_env', async () => {
+  it('should enable usage mode preset_env', async () => {
     await matchConfigSnapshot('web', {
       output: {
         polyfill: 'usage',

@@ -1,8 +1,8 @@
 import {
   mergeRegex,
-  applyScriptCondition,
   JS_REGEX,
   TS_REGEX,
+  NODE_MODULES_REGEX,
 } from '@rsbuild/shared';
 import { cloneDeep, isEqual } from '@modern-js/utils/lodash';
 import { RsbuildPlugin, NormalizedConfig } from '../types';
@@ -23,6 +23,9 @@ export const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
 
 export const pluginBabel = (): RsbuildPlugin => ({
   name: 'plugin-babel',
+
+  pre: ['plugin-swc'],
+
   setup(api) {
     api.modifyBundlerChain(
       async (chain, { CHAIN_ID, isProd, getCompiledPath }) => {
@@ -59,6 +62,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
           const baseConfig = {
             plugins: [],
             presets: [
+              // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
               [
                 require.resolve('@babel/preset-typescript'),
                 DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS,
@@ -105,19 +109,21 @@ export const pluginBabel = (): RsbuildPlugin => ({
           return;
         }
 
+        // already set source.include / exclude in plugin-swc
         const rule = chain.module.rule(CHAIN_ID.RULE.JS);
 
-        applyScriptCondition({
-          rule,
-          config,
-          context: api.context,
-          includes,
-          excludes,
+        includes.forEach((condition) => {
+          rule.include.add(condition);
+        });
+
+        excludes.forEach((condition) => {
+          rule.exclude.add(condition);
         });
 
         rule
           .test(mergeRegex(JS_REGEX, TS_REGEX))
           .use(CHAIN_ID.USE.BABEL)
+          .after(CHAIN_ID.USE.SWC)
           .loader(getCompiledPath('babel-loader'))
           .options(babelOptions);
       },

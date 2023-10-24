@@ -1,6 +1,5 @@
 - **Type:** `Array<string | RegExp>`
 - **Default:** `[]`
-- **Bundler:** `only support webpack`
 
 In order to maintain faster compilation speed, Rsbuild will not compile JavaScript/TypeScript files under node_modules through `babel-loader` or `ts-loader` by default, as will as the JavaScript/TypeScript files outside the current project directory.
 
@@ -17,10 +16,6 @@ export default {
   },
 };
 ```
-
-:::tip
-When using Rspack as the bundler, **all files** will be compiled by default, and at the same time, exclusion through `source.exclude` is not supported.
-:::
 
 ### Compile Npm Packages
 

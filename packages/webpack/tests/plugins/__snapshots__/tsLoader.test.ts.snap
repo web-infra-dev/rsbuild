@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/tsLoader > should set include/exclude 1`] = `
+exports[`plugin-ts-loader > should set include/exclude 1`] = `
 {
   "module": {
     "rules": [
@@ -95,7 +95,7 @@ exports[`plugins/tsLoader > should set include/exclude 1`] = `
 }
 `;
 
-exports[`plugins/tsLoader > should set ts-loader 1`] = `
+exports[`plugin-ts-loader > should set ts-loader 1`] = `
 {
   "module": {
     "rules": [

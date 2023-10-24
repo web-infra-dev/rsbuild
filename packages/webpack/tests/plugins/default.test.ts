@@ -1,4 +1,3 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '../helper';
 import type { RsbuildPlugin } from '@/types';
 

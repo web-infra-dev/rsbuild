@@ -1,4 +1,3 @@
-import { expect, describe, it } from 'vitest';
 import { DEFAULT_BROWSERSLIST } from '../src';
 import { getBrowserslistWithDefault } from '../src/getBrowserslist';
 

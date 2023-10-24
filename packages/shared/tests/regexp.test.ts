@@ -1,4 +1,3 @@
-import { expect, describe, it } from 'vitest';
 import {
   JS_REGEX,
   TS_REGEX,
