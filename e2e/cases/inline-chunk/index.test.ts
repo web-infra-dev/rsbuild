@@ -4,12 +4,12 @@ import { webpackOnlyTest } from '@scripts/helper';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { BundlerChain, RUNTIME_CHUNK_NAME } from '@rsbuild/shared';
 
-// Rspack will not output builder runtime source map, but it not necessary
-// Identify whether the builder runtime chunk is included through some specific code snippets
+// Rspack will not output bundler-runtime source map, but it not necessary
+// Identify whether the bundler-runtime chunk is included through some specific code snippets
 const isRuntimeChunkInHtml = (html: string): boolean =>
-  Boolean(html.includes('builder-runtime') && html.includes('Loading chunk'));
+  Boolean(html.includes('bundler-runtime') && html.includes('Loading chunk'));
 
-// use source-map for easy to test. By default, builder use hidden-source-map
+// use source-map for easy to test. By default, Rsbuild use hidden-source-map
 const toolsConfig = {
   bundlerChain: (chain: BundlerChain) => {
     chain.devtool('source-map');
@@ -47,13 +47,13 @@ test.describe('disableInlineRuntimeChunk', () => {
     rsbuild.close();
   });
 
-  test('should emit builder runtime', async ({ page }) => {
+  test('should emit bundler-runtime', async ({ page }) => {
     // test runtime
     await page.goto(getHrefByEntryName('index', rsbuild.port));
 
     expect(await page.evaluate(`window.test`)).toBe('aaaa');
 
-    // builder-runtime file in output
+    // bundler-runtime file in output
     expect(
       Object.keys(files).some(
         (fileName) =>
@@ -80,7 +80,7 @@ test('inline runtime chunk by default', async ({ page }) => {
 
   const files = await rsbuild.unwrapOutputJSON(false);
 
-  // no builder-runtime file in output
+  // no bundler-runtime file in output
   expect(
     Object.keys(files).some(
       (fileName) =>
@@ -88,7 +88,7 @@ test('inline runtime chunk by default', async ({ page }) => {
     ),
   ).toBe(false);
 
-  // found builder-runtime file in html
+  // found bundler-runtime file in html
   const indexHtml = files[path.resolve(__dirname, './dist/index.html')];
 
   expect(isRuntimeChunkInHtml(indexHtml)).toBeTruthy();
@@ -111,7 +111,7 @@ test('inline runtime chunk and remove source map when devtool is "hidden-source-
 
   const files = await rsbuild.unwrapOutputJSON(false);
 
-  // should not emit source map of builder runtime
+  // should not emit source map of bundler-runtime
   expect(
     Object.keys(files).some(
       (fileName) =>
@@ -133,7 +133,7 @@ test('inline runtime chunk by default with multiple entries', async () => {
   });
   const files = await rsbuild.unwrapOutputJSON(false);
 
-  // no builder-runtime file in output
+  // no bundler-runtime file in output
   expect(
     Object.keys(files).some(
       (fileName) =>
@@ -141,7 +141,7 @@ test('inline runtime chunk by default with multiple entries', async () => {
     ),
   ).toBe(false);
 
-  // found builder-runtime file in html
+  // found bundler-runtime file in html
   const indexHtml = files[path.resolve(__dirname, './dist/index.html')];
   const anotherHtml = files[path.resolve(__dirname, './dist/another.html')];
 

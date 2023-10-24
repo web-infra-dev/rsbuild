@@ -83,9 +83,9 @@ function createElement(
     attributes.crossOrigin === true ? 'anonymous' : attributes.crossOrigin;
   const crossOriginAttr = crossOrigin ? `crossorigin="${crossOrigin}"` : '';
   const retryTimesAttr = attributes.times
-    ? `data-builder-retry-times="${attributes.times}"`
+    ? `data-rsbuild-retry-times="${attributes.times}"`
     : '';
-  const isAsyncAttr = attributes.isAsync ? 'data-builder-async' : '';
+  const isAsyncAttr = attributes.isAsync ? 'data-rsbuild-async' : '';
 
   if (origin instanceof HTMLScriptElement) {
     const script = document.createElement('script');
@@ -94,10 +94,10 @@ function createElement(
       script.crossOrigin = crossOrigin;
     }
     if (attributes.times) {
-      script.dataset.builderRetryTimes = String(attributes.times);
+      script.dataset.rsbuildRetryTimes = String(attributes.times);
     }
     if (attributes.isAsync) {
-      script.dataset.builderAsync = '';
+      script.dataset.rsbuildAsync = '';
     }
 
     return {
@@ -118,7 +118,7 @@ function createElement(
       link.crossOrigin = crossOrigin;
     }
     if (attributes.times) {
-      link.dataset.builderRetryTimes = String(attributes.times);
+      link.dataset.rsbuildRetryTimes = String(attributes.times);
     }
     return {
       element: link,
@@ -150,7 +150,7 @@ function reloadElementResource(
 
   if (origin instanceof HTMLImageElement) {
     origin.src = options.url;
-    origin.dataset.builderRetryTimes = String(options.times);
+    origin.dataset.rsbuildRetryTimes = String(options.times);
   }
 }
 
@@ -184,7 +184,7 @@ function retry(config: AssetsRetryOptions, e: Event) {
   }
 
   // If the retry times has exceeded the maximum, fail
-  const existRetryTimes = Number(target.dataset.builderRetryTimes) || 0;
+  const existRetryTimes = Number(target.dataset.rsbuildRetryTimes) || 0;
   if (existRetryTimes === config.max!) {
     if (typeof config.onFail === 'function') {
       const context: AssetsRetryHookContext = {
@@ -202,7 +202,7 @@ function retry(config: AssetsRetryOptions, e: Event) {
   const nextDomain = findNextDomain(domain, config.domain!);
 
   const isAsync =
-    Boolean(target.dataset.builderAsync) ||
+    Boolean(target.dataset.rsbuildAsync) ||
     (target as HTMLScriptElement).async ||
     (target as HTMLScriptElement).defer;
 
@@ -234,7 +234,7 @@ function load(config: AssetsRetryOptions, e: Event) {
   }
   const { target, tagName, url } = targetInfo;
   const domain = findCurrentDomain(url, config.domain!);
-  const retryTimes = Number(target.dataset.builderRetryTimes) || 0;
+  const retryTimes = Number(target.dataset.rsbuildRetryTimes) || 0;
   if (retryTimes === 0) {
     return;
   }
