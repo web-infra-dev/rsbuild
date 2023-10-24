@@ -299,6 +299,9 @@ importers:
       '@rspack/plugin-html':
         specifier: 0.3.6
         version: 0.3.6(@rspack/core@0.3.6)
+      '@rspack/plugin-react-refresh':
+        specifier: 0.3.6
+        version: 0.3.6(react-refresh@0.14.0)(webpack@5.89.0)
       '@svgr/webpack':
         specifier: 8.0.1
         version: 8.0.1(typescript@5.2.2)

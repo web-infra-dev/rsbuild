@@ -26,6 +26,24 @@ describe('plugin-babel', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
+  it('babel-loader addIncludes & addExcludes should works', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginBabel()],
+      rsbuildConfig: {
+        tools: {
+          babel(_config: any, { addExcludes, addIncludes }: any) {
+            addIncludes(/\/node_modules\/query-string\//);
+            addExcludes('src/example');
+          },
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    expect(bundlerConfigs[0]).toMatchSnapshot();
+  });
+
   it('should not set babel-loader when babel config is return null', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],

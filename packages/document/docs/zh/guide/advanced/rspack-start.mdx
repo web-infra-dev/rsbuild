@@ -56,8 +56,6 @@ Rsbuild 旨在消除不同打包工具之间的主要差异，帮助用户以较
 
 不支持的配置项及能力包括：
 
-- [source.include](/config/options/source.html#sourceinclude) ([issue 追踪](https://github.com/web-infra-dev/rspack/issues/3067))
-- [source.exclude](/config/options/source.html#sourceexclude) ([issue 追踪](https://github.com/web-infra-dev/rspack/issues/3067))
 - [source.moduleScopes](/config/options/source.html#sourcemodulescopes) ([issue 追踪](https://github.com/web-infra-dev/rspack/issues/3548))
 
 #### Html Config
@@ -87,7 +85,7 @@ Rsbuild 旨在消除不同打包工具之间的主要差异，帮助用户以较
 不支持的配置项及能力包括：
 
 - [output.enableInlineScripts](/config/options/output.html#outputenableinlinescripts)
-- [output.polyfill.usage](/config/options/output.html#usage) ([issue 追踪](https://github.com/web-infra-dev/rspack/issues/3067))
+- [output.enableLatestDecorators](/config/options/output.html#outputenablelatestdecorators)
 
 #### Experiments Config
 
@@ -184,7 +182,7 @@ Rspack 默认会使用 SWC 进行转译和压缩，因此，在启用 Rspack 构
 | @babel/preset-env                               | [builtins.presetEnv](https://www.rspack.dev/zh/config/builtins.html#builtinspresetenv)       | [设置浏览器范围](/guide/advanced/browserslist.html)、<br />[浏览器兼容性](/guide/advanced/browser-compatibility.html) |
 | @babel/preset-react                             | [builtins.react](https://www.rspack.dev/zh/config/builtins.html#builtinsreact)               | [模块热更新](/guide/advanced/hmr.html)                                                                                |
 | @emotion/babel-plugin                           | [builtins.emotion](https://www.rspack.dev/zh/config/builtins.html#builtinsemotion)           | 暂无                                                                                                                  |
-| babel-plugin-import                             | [builtins.pluginImport](https://www.rspack.dev/zh/config/builtins.html#builtinspluginimport) | [source.transformImport](/config/options/source.html#sourcetransformimport)                                               |
+| babel-plugin-import                             | [builtins.pluginImport](https://www.rspack.dev/zh/config/builtins.html#builtinspluginimport) | [source.transformImport](/config/options/source.html#sourcetransformimport)                                           |
 | babel-plugin-lodash                             | 暂无                                                                                         | 暂无                                                                                                                  |
 | babel-plugin-styled-components                  | 暂无                                                                                         | 暂无                                                                                                                  |
 | @babel/plugin-react-transform-remove-prop-types | 暂无                                                                                         | 暂无                                                                                                                  |
@@ -195,9 +193,23 @@ Rspack 默认会使用 SWC 进行转译和压缩，因此，在启用 Rspack 构
 
 ### 5. SWC 配置支持
 
-Rspack 中已内置了一部分的 swc 配置支持，如 builtins.react 等，可参考 [Builtins](https://www.rspack.dev/zh/config/builtins.html)。
+Rsbuild 使用 Rspack [builtin:swc-loader](https://www.rspack.dev/guide/loader.html#builtinswc-loader) 进行代码转译，如果对 builtin:swc-loader 有自定义配置的需求，可参考以下代码：
 
-暂不支持在 Rspack 中添加 swc 插件和更多自定义配置，相关需求可追踪对应 [issue 进度](https://github.com/web-infra-dev/rspack/issues/3067)。
+```ts
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module
+        .rule(CHAIN_ID.RULE.JS)
+        .use(CHAIN_ID.USE.SWC)
+        .tap((options) => {
+          options.xxx = '';
+          return options;
+        });
+    },
+  },
+};
+```
 
 ### 6. Webpack Plugin 插件迁移
 
@@ -256,15 +268,15 @@ $ RSPACK_PROFILE=ALL pnpm build
 
 Rsbuild Rspack 构建模式对比 [Rspack CLI](https://www.rspack.dev/zh/guide/quick-start.html#%E4%BD%BF%E7%94%A8-rspack-cli) 添加了很多开箱即用的能力，同时，这些能力的封装会带来一定程度上的性能开销和行为表现上的差异:
 
-| 功能                         | 描述                                                                                                                                                                                           | 相关链接                                                                                                                                          |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 浏览器兼容性                 | Rsbuild 会根据[构建产物类型](/api/start/build-target)来设置不同的 Browserslist 默认值                                                                                                        | <ul><li>[浏览器范围](/guide/advanced/browserslist.html)</li></ul>                                                                                 |
-| SourceMap 生成               | Rsbuild 默认根据环境生成不同的 SourceMap (Rspack CLI 中默认是 false)                                                                                                                           | <ul><li>[output.disableSourceMap](/config/options/output.html#outputdisablesourcemap)</li></ul>                                                       |
-| SVG 转 React 组件            | Rsbuild 默认支持在 React 组件中引用 SVG 作为组件                                                                                                                                               | <ul><li>[引用 SVG 资源](/guide/basic/svg-assets.html)</li><li>[output.disableSvgr](/config/options/output.html#outputdisablesvgr)</li></ul>           |
-| 按需引入常用组件库           | 当项目中安装了 [Ant Design](https://www.npmjs.com/package/antd) 或 [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) 组件库时，Rsbuild 会自动添加对应的按需引入能力          | <ul><li>[source.transformImport](/config/options/source#sourcetransformimport)</li></ul>                                                              |
-| 默认集成 PostCSS             | Rsbuild 内默认开启 PostCSS 编译，并内置 autoprefixer 等多个插件                                                                                                                                | <ul><li>[使用 PostCSS](/guide/basic/css-usage.html#使用-postcss)</li></ul>                                                                        |
-| 使用 @rspack/html-plugin     | Rsbuild 内默认集成 @rspack/html-plugin 以支持更多 HTML 模版功能 (Rspack CLI 中默认使用 builtins.html)                                                                                          | <ul><li>[tools.htmlPlugin](/config/options/tools.html#toolshtmlplugin)</li></ul>                                                                      |
-| DevServer                    | Rsbuild 内基于 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) 实现 DevServer (Rspack CLI 使用 [@rspack/dev-server](https://www.rspack.dev/guide/dev-server.html)) | <ul><li>[tools.devServer](/config/options/tools.html#toolsdevserver)</li></ul>                                                                        |
+| 功能                     | 描述                                                                                                                                                                                           | 相关链接                                                                                                                                    |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| 浏览器兼容性             | Rsbuild 会根据[构建产物类型](/api/start/build-target)来设置不同的 Browserslist 默认值                                                                                                          | <ul><li>[浏览器范围](/guide/advanced/browserslist.html)</li></ul>                                                                           |
+| SourceMap 生成           | Rsbuild 默认根据环境生成不同的 SourceMap (Rspack CLI 中默认是 false)                                                                                                                           | <ul><li>[output.disableSourceMap](/config/options/output.html#outputdisablesourcemap)</li></ul>                                             |
+| SVG 转 React 组件        | Rsbuild 默认支持在 React 组件中引用 SVG 作为组件                                                                                                                                               | <ul><li>[引用 SVG 资源](/guide/basic/svg-assets.html)</li><li>[output.disableSvgr](/config/options/output.html#outputdisablesvgr)</li></ul> |
+| 按需引入常用组件库       | 当项目中安装了 [Ant Design](https://www.npmjs.com/package/antd) 或 [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) 组件库时，Rsbuild 会自动添加对应的按需引入能力          | <ul><li>[source.transformImport](/config/options/source#sourcetransformimport)</li></ul>                                                    |
+| 默认集成 PostCSS         | Rsbuild 内默认开启 PostCSS 编译，并内置 autoprefixer 等多个插件                                                                                                                                | <ul><li>[使用 PostCSS](/guide/basic/css-usage.html#使用-postcss)</li></ul>                                                                  |
+| 使用 @rspack/html-plugin | Rsbuild 内默认集成 @rspack/html-plugin 以支持更多 HTML 模版功能 (Rspack CLI 中默认使用 builtins.html)                                                                                          | <ul><li>[tools.htmlPlugin](/config/options/tools.html#toolshtmlplugin)</li></ul>                                                            |
+| DevServer                | Rsbuild 内基于 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) 实现 DevServer (Rspack CLI 使用 [@rspack/dev-server](https://www.rspack.dev/guide/dev-server.html)) | <ul><li>[tools.devServer](/config/options/tools.html#toolsdevserver)</li></ul>                                                              |
 
 以上能力均提供可调整的配置选项，可以根据项目实际情况按需进行调整。
 

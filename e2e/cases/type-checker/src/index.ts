@@ -1,4 +1,6 @@
-const a = 1;
+const add = (a: number, b: number) => a + b;
 
 // this is a type error
-a = '2';
+const res = add(1, '2');
+
+console.log('res', res);
