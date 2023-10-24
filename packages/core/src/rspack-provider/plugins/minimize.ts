@@ -1,5 +1,4 @@
-import { CHAIN_ID } from '@modern-js/utils/chain-id';
-import { applyCSSMinimizer, BundlerChain } from '@rsbuild/shared';
+import { CHAIN_ID, applyCSSMinimizer, BundlerChain } from '@rsbuild/shared';
 import type {
   RsbuildPlugin,
   NormalizedConfig,

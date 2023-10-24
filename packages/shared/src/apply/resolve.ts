@@ -1,6 +1,6 @@
 import { getExtensions } from '../config';
 import _ from '@modern-js/utils/lodash';
-import type { ChainIdentifier } from '@modern-js/utils/chain-id';
+import type { ChainIdentifier } from '../chain';
 import {
   RsbuildTarget,
   BundlerChain,

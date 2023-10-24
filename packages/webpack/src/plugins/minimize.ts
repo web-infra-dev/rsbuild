@@ -1,5 +1,5 @@
-import { CHAIN_ID } from '@modern-js/utils/chain-id';
 import {
+  CHAIN_ID,
   applyCSSMinimizer,
   BundlerChain,
   getJSMinifyOptions,

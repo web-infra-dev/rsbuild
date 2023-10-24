@@ -6,9 +6,11 @@
   // words - list of words to be always considered correct
   "words": [
     "atrules",
+    "docgen",
     "envinfo",
     "flac",
     "icss",
+    "imagex",
     "longpaths",
     "jiti",
     "napi",

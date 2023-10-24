@@ -3,8 +3,8 @@ import {
   TS_CONFIG_FILE,
   applyResolvePlugin,
   type RsbuildTarget,
+  type ChainIdentifier,
 } from '@rsbuild/shared';
-import type { ChainIdentifier } from '@modern-js/utils/chain-id';
 import type { RsbuildPlugin, WebpackChain } from '../types';
 import path from 'path';
 

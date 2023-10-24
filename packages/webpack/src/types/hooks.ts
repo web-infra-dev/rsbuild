@@ -1,7 +1,6 @@
-import type { ModifyChainUtils } from '@rsbuild/shared';
+import type { ChainIdentifier, ModifyChainUtils } from '@rsbuild/shared';
 import type { WebpackChain, WebpackConfig } from './thirdParty';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
-import type { ChainIdentifier } from '@modern-js/utils/chain-id';
 
 export type ModifyWebpackChainUtils = ModifyChainUtils & {
   /** @deprecated Use target instead. */

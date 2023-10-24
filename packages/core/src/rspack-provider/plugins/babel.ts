@@ -1,9 +1,4 @@
-import {
-  mergeRegex,
-  JS_REGEX,
-  TS_REGEX,
-  NODE_MODULES_REGEX,
-} from '@rsbuild/shared';
+import { mergeRegex, JS_REGEX, TS_REGEX } from '@rsbuild/shared';
 import { cloneDeep, isEqual } from '@modern-js/utils/lodash';
 import { RsbuildPlugin, NormalizedConfig } from '../types';
 import type { BabelOptions } from '@modern-js/types';
