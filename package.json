@@ -5,6 +5,8 @@
     "ut": "vitest run",
     "ut:watch": "vitest",
     "e2e": "cd ./e2e && pnpm test",
+    "e2e:rspack": "cd ./e2e && pnpm test:rspack",
+    "e2e:webpack": "cd ./e2e && pnpm test:webpack",
     "new": "modern new",
     "test": "pnpm run ut",
     "bump": "modern bump",
