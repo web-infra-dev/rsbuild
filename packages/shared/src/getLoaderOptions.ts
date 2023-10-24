@@ -6,21 +6,20 @@ import {
   LessLoaderOptions,
 } from './types';
 import { getSharedPkgCompiledPath } from './utils';
+import { mergeChainedOptions } from './mergeChainedOptions';
 import _ from '@modern-js/utils/lodash';
 
 export const getSassLoaderOptions = async (
   rsbuildSassConfig: ToolsSassConfig | undefined,
   isUseCssSourceMap: boolean,
 ) => {
-  const { applyOptionsChain } = await import('@modern-js/utils');
-
   const excludes: (RegExp | string)[] = [];
 
   const addExcludes: FileFilterUtil = (items) => {
     excludes.push(..._.castArray(items));
   };
 
-  const mergedOptions = applyOptionsChain<
+  const mergedOptions = mergeChainedOptions<
     SassLoaderOptions,
     { addExcludes: FileFilterUtil }
   >(
@@ -49,8 +48,6 @@ export const getLessLoaderOptions = async (
   rsbuildLessConfig: ToolsLessConfig | undefined,
   isUseCssSourceMap: boolean,
 ) => {
-  const { applyOptionsChain } = await import('@modern-js/utils');
-
   const excludes: (RegExp | string)[] = [];
 
   const addExcludes: FileFilterUtil = (items) => {
@@ -64,7 +61,7 @@ export const getLessLoaderOptions = async (
     sourceMap: isUseCssSourceMap,
     implementation: getSharedPkgCompiledPath('less'),
   };
-  const mergedOptions = applyOptionsChain(
+  const mergedOptions = mergeChainedOptions(
     defaultLessLoaderOptions,
     rsbuildLessConfig,
     { addExcludes },

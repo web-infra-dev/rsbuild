@@ -1,5 +1,5 @@
 import { RsbuildConfig, webpack } from '@rsbuild/webpack';
-import { merge } from '@modern-js/utils/lodash';
+import { merge } from 'lodash';
 import { chalk } from '@rsbuild/shared/chalk';
 import { logger } from '@rsbuild/shared';
 import {

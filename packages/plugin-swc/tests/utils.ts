@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import { Script } from 'node:vm';
 import * as swc from '@swc/core';
 import { Output, TransformConfig } from '@modern-js/swc-plugins';
-import { merge } from '@modern-js/utils/lodash';
+import { merge } from 'lodash';
 import { getDefaultSwcConfig } from '../src/plugin';
 
 export function isInUpdate(): boolean {

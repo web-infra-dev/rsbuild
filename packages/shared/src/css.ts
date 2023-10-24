@@ -8,6 +8,7 @@ import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import deepmerge from 'deepmerge';
 import { getCssSupport } from './getCssSupport';
 import { getSharedPkgCompiledPath as getCompiledPath } from './utils';
+import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
   CssModules,
   RsbuildTarget,
@@ -105,8 +106,6 @@ export const getPostcssConfig = async ({
   browserslist: string[];
   config: SharedNormalizedConfig;
 }) => {
-  const { applyOptionsChain } = await import('@modern-js/utils');
-
   const extraPlugins: AcceptedPlugin[] = [];
 
   const utils = {
@@ -121,7 +120,7 @@ export const getPostcssConfig = async ({
 
   const cssSupport = getCssSupport(browserslist);
 
-  const mergedConfig = applyOptionsChain(
+  const mergedConfig = mergeChainedOptions(
     {
       postcssOptions: {
         plugins: [
@@ -137,7 +136,7 @@ export const getPostcssConfig = async ({
             require(getCompiledPath('postcss-media-minmax')),
           require(getCompiledPath('postcss-nesting')),
           require(getCompiledPath('autoprefixer'))(
-            applyOptionsChain(
+            mergeChainedOptions(
               {
                 flexbox: 'no-2009',
                 overrideBrowserslist: browserslist,
@@ -214,11 +213,9 @@ export const getCssLoaderOptions = async ({
   isWebWorker: boolean;
   localIdentName: string;
 }) => {
-  const { applyOptionsChain } = await import('@modern-js/utils');
-
   const { cssModules } = config.output;
 
-  const mergedCssLoaderOptions = applyOptionsChain<CSSLoaderOptions, null>(
+  const mergedCssLoaderOptions = mergeChainedOptions<CSSLoaderOptions, null>(
     {
       importLoaders,
       modules: {

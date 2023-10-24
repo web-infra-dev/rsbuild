@@ -1,7 +1,9 @@
 import {
   debug,
   CHAIN_ID,
+  ensureArray,
   modifyBundlerChain,
+  mergeChainedOptions,
   type NodeEnv,
   type RsbuildTarget,
 } from '@rsbuild/shared';
@@ -23,8 +25,6 @@ async function modifyWebpackChain(
   chain: WebpackChain,
 ) {
   debug('modify webpack chain');
-
-  const { ensureArray } = await import('@modern-js/utils');
 
   const [modifiedChain] = await context.hooks.modifyWebpackChainHook.call(
     chain,
@@ -48,15 +48,13 @@ async function modifyWebpackConfig(
   utils: ModifyWebpackConfigUtils,
 ) {
   debug('modify webpack config');
-  const { applyOptionsChain } = await import('@modern-js/utils');
-
   let [modifiedConfig] = await context.hooks.modifyWebpackConfigHook.call(
     webpackConfig,
     utils,
   );
 
   if (context.config.tools?.webpack) {
-    modifiedConfig = applyOptionsChain(
+    modifiedConfig = mergeChainedOptions(
       modifiedConfig,
       context.config.tools.webpack,
       utils,

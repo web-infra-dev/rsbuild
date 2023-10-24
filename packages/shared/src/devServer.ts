@@ -13,6 +13,7 @@ import deepmerge from 'deepmerge';
 import { logger as defaultLogger, debug } from './logger';
 import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import { createAsyncHook } from './createHook';
+import { mergeChainedOptions } from './mergeChainedOptions';
 import { getServerOptions, printServerURLs } from './prodServer';
 import type { Compiler } from 'webpack';
 
@@ -30,8 +31,6 @@ export const getDevServerOptions = async ({
   config: ModernDevServerOptions['config'];
   devConfig: ModernDevServerOptions['dev'];
 }> => {
-  const { applyOptionsChain } = await import('@modern-js/utils');
-
   const defaultDevConfig = deepmerge(
     {
       hot: rsbuildConfig.dev?.hmr ?? true,
@@ -50,7 +49,7 @@ export const getDevServerOptions = async ({
     (serverOptions.dev as Exclude<typeof serverOptions.dev, boolean>) || {},
   );
 
-  const devConfig = applyOptionsChain(
+  const devConfig = mergeChainedOptions(
     defaultDevConfig,
     rsbuildConfig.tools?.devServer,
     {},

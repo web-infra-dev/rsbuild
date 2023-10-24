@@ -3,7 +3,7 @@ import type {
   RsbuildTarget,
   SharedCompiledPkgNames,
 } from './types';
-import { join } from 'path';
+import path from 'path';
 import fs from 'fs-extra';
 
 export const isDev = (): boolean => process.env.NODE_ENV === 'development';
@@ -72,11 +72,8 @@ export const isUseCssSourceMap = (config: SharedNormalizedConfig) => {
   return !disableSourceMap.css;
 };
 
-export const getSharedPkgCompiledPath = (
-  packageName: SharedCompiledPkgNames,
-) => {
-  return join(__dirname, '../compiled', packageName);
-};
+export const getSharedPkgCompiledPath = (packageName: SharedCompiledPkgNames) =>
+  path.join(__dirname, '../compiled', packageName);
 
 // Determine if the string is a URL
 export const isURL = (str: string) =>
@@ -105,4 +102,20 @@ export const getCoreJsVersion = (corejsPkgPath: string) => {
   } catch (err) {
     return '3';
   }
+};
+
+/**
+ * ensure absolute file path.
+ * @param base - Base path to resolve relative from.
+ * @param filePath - Absolute or relative file path.
+ * @returns Resolved absolute file path.
+ */
+export const ensureAbsolutePath = (base: string, filePath: string): string =>
+  path.isAbsolute(filePath) ? filePath : path.resolve(base, filePath);
+
+export const ensureArray = <T>(params: T | T[]): T[] => {
+  if (Array.isArray(params)) {
+    return params;
+  }
+  return [params];
 };

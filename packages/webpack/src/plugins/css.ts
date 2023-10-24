@@ -5,6 +5,7 @@ import {
   getPostcssConfig,
   ModifyChainUtils,
   isUseCssSourceMap,
+  mergeChainedOptions,
   getCssLoaderOptions,
   getBrowserslistWithDefault,
   getCssModuleLocalIdentName,
@@ -31,7 +32,6 @@ export async function applyBaseCSSRule({
   utils: ModifyChainUtils;
   importLoaders?: number;
 }) {
-  const { applyOptionsChain } = await import('@modern-js/utils');
   const browserslist = await getBrowserslistWithDefault(
     context.rootPath,
     config,
@@ -52,7 +52,7 @@ export async function applyBaseCSSRule({
           loaderOptions: {},
           pluginOptions: {},
         };
-  const styleLoaderOptions = applyOptionsChain<StyleLoaderOptions, null>(
+  const styleLoaderOptions = mergeChainedOptions<StyleLoaderOptions, null>(
     {},
     config.tools.styleLoader,
   );

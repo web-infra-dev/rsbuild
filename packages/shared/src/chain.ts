@@ -1,4 +1,4 @@
-import { ensureArray } from '@modern-js/utils';
+import { ensureArray } from './utils';
 import { debug } from './logger';
 import {
   Context,

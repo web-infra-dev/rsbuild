@@ -1,5 +1,5 @@
 import type { RsbuildPlugin } from '../types';
-import type { PugOptions } from '@rsbuild/shared';
+import { mergeChainedOptions, type PugOptions } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
 
 const getPugTemplateCompiler = (userOptions: PugOptions) => ({
@@ -34,9 +34,7 @@ export const pluginPug = (): RsbuildPlugin => ({
       const entries = chain.entryPoints.entries() || {};
       const entryNames = Object.keys(entries);
 
-      const { applyOptionsChain } = await import('@modern-js/utils');
-
-      const pugOptions = applyOptionsChain({}, pug === true ? {} : pug);
+      const pugOptions = mergeChainedOptions({}, pug === true ? {} : pug);
       // not support childCompiler in Rspack html-plugin, use templateCompiler instead.
       const templateCompiler = getPugTemplateCompiler(pugOptions);
 

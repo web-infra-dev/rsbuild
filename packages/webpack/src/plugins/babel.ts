@@ -5,10 +5,11 @@ import {
   JS_REGEX,
   TS_REGEX,
   mergeRegex,
-  getBrowserslistWithDefault,
-  applyScriptCondition,
-  getDefaultStyledComponentsConfig,
   addCoreJsEntry,
+  mergeChainedOptions,
+  applyScriptCondition,
+  getBrowserslistWithDefault,
+  getDefaultStyledComponentsConfig,
 } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
 
@@ -17,7 +18,7 @@ import type {
   NormalizedConfig,
   TransformImport,
 } from '../types';
-import { getBabelUtils } from '@modern-js/utils';
+import { getBabelUtils, isUseSSRBundle } from '@modern-js/utils';
 
 export const getUseBuiltIns = (config: NormalizedConfig) => {
   const { polyfill } = config.output;
@@ -42,7 +43,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
           getCompiledPath,
         },
       ) => {
-        const { lodash, applyOptionsChain } = await import('@modern-js/utils');
+        const { lodash } = await import('@modern-js/utils');
 
         const config = api.getNormalizedConfig();
         const browserslist = await getBrowserslistWithDefault(
@@ -101,7 +102,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
           );
           applyPluginStyledComponents(baseBabelConfig, config, isProd);
 
-          const babelConfig = applyOptionsChain(
+          const babelConfig = mergeChainedOptions(
             baseBabelConfig,
             config.tools.babel,
             {
@@ -179,18 +180,14 @@ function applyPluginLodash(config: BabelConfig, transformLodash?: boolean) {
   }
 }
 
-async function applyPluginStyledComponents(
+function applyPluginStyledComponents(
   babelConfig: BabelConfig,
   rsbuildConfig: NormalizedConfig,
   isProd: boolean,
 ) {
-  const { applyOptionsChain, isUseSSRBundle } = await import(
-    '@modern-js/utils'
-  );
-
   const styledComponentsOptions =
     rsbuildConfig.tools.styledComponents !== false
-      ? applyOptionsChain(
+      ? mergeChainedOptions(
           getDefaultStyledComponentsConfig(
             isProd,
             isUseSSRBundle(rsbuildConfig),

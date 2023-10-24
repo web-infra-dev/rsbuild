@@ -4,7 +4,9 @@ import {
   BundlerChain,
   CssMinimizerPluginOptions,
 } from './types';
+import { CHAIN_ID } from './chain';
 import { getCssnanoDefaultOptions } from './css';
+import { mergeChainedOptions } from './mergeChainedOptions';
 
 function applyRemoveConsole(
   options: TerserPluginOptions,
@@ -26,7 +28,7 @@ function applyRemoveConsole(
       drop_console: true,
     };
   } else if (Array.isArray(removeConsole)) {
-    const pureFuncs = removeConsole.map(method => `console.${method}`);
+    const pureFuncs = removeConsole.map((method) => `console.${method}`);
     options.terserOptions.compress = {
       ...compressOptions,
       pure_funcs: pureFuncs,
@@ -37,8 +39,6 @@ function applyRemoveConsole(
 }
 
 export async function getJSMinifyOptions(config: SharedNormalizedConfig) {
-  const { applyOptionsChain } = await import('@modern-js/utils');
-
   const DEFAULT_OPTIONS: TerserPluginOptions = {
     terserOptions: {
       mangle: {
@@ -67,7 +67,7 @@ export async function getJSMinifyOptions(config: SharedNormalizedConfig) {
       break;
   }
 
-  const mergedOptions = applyOptionsChain(
+  const mergedOptions = mergeChainedOptions(
     DEFAULT_OPTIONS,
     // @ts-expect-error
     config.tools.terser,
@@ -82,12 +82,11 @@ export async function applyCSSMinimizer(
   chain: BundlerChain,
   config: SharedNormalizedConfig,
 ) {
-  const { CHAIN_ID, applyOptionsChain } = await import('@modern-js/utils');
   const { default: CssMinimizerPlugin } = await import(
     'css-minimizer-webpack-plugin'
   );
 
-  const mergedOptions: CssMinimizerPluginOptions = applyOptionsChain(
+  const mergedOptions: CssMinimizerPluginOptions = mergeChainedOptions(
     {
       minimizerOptions: getCssnanoDefaultOptions(),
     },

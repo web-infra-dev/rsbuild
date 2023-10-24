@@ -1,4 +1,4 @@
-import { getBrowserslist } from '@modern-js/utils';
+import { getBrowserslist } from '@rsbuild/shared';
 import type { LoaderContext, LoaderDefinitionFunction } from 'webpack';
 import { Options as SwcOptions } from '@modern-js/swc-plugins';
 import { Compiler } from './binding';

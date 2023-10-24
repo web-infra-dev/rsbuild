@@ -1,5 +1,6 @@
 import path from 'path';
 import type { RsbuildPlugin } from '../types';
+import { mergeChainedOptions } from '@rsbuild/shared';
 
 export const pluginPug = (): RsbuildPlugin => ({
   name: 'plugin-pug',
@@ -12,14 +13,12 @@ export const pluginPug = (): RsbuildPlugin => ({
         return;
       }
 
-      const { applyOptionsChain } = await import('@modern-js/utils');
-
       chain.module
         .rule(CHAIN_ID.RULE.PUG)
         .test(/\.pug$/)
         .use(CHAIN_ID.USE.PUG)
         .loader(path.resolve(__dirname, '../webpackLoaders/pugLoader'))
-        .options(applyOptionsChain({}, pug === true ? {} : pug));
+        .options(mergeChainedOptions({}, pug === true ? {} : pug));
     });
   },
 });

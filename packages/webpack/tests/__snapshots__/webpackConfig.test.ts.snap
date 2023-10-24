@@ -328,6 +328,15 @@ exports[`webpackConfig > should not have any pluginImport in Babel 1`] = `
               "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
               {},
             ],
+            [
+              "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+              {
+                "displayName": true,
+                "pure": false,
+                "ssr": false,
+                "transpileTemplateLiterals": true,
+              },
+            ],
           ],
           "presets": [
             [
@@ -504,6 +513,15 @@ exports[`webpackConfig > should not set default pluginImport for Babel 1`] = `
             [
               "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
               {},
+            ],
+            [
+              "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+              {
+                "displayName": true,
+                "pure": false,
+                "ssr": false,
+                "transpileTemplateLiterals": true,
+              },
             ],
           ],
           "presets": [
@@ -720,6 +738,15 @@ exports[`webpackConfig > should set proper pluginImport option in Babel 1`] = `
             [
               "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
               {},
+            ],
+            [
+              "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+              {
+                "displayName": true,
+                "pure": false,
+                "ssr": false,
+                "transpileTemplateLiterals": true,
+              },
             ],
           ],
           "presets": [
