@@ -577,11 +577,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": true,
-                    "refresh": true,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -624,11 +619,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": true,
-                    "refresh": true,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -724,12 +714,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "prefix": "Client",
       },
       "name": "ProgressPlugin",
-    },
-    ReactRefreshRspackPlugin {
-      "options": {
-        "exclude": /node_modules/i,
-        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
-      },
     },
   ],
   "resolve": {
@@ -1327,11 +1311,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": false,
-                    "refresh": false,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -1374,11 +1353,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": false,
-                    "refresh": false,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -1922,11 +1896,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": true,
-                    "refresh": false,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -1964,11 +1933,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": true,
-                    "refresh": false,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -2630,11 +2594,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": true,
-                    "refresh": true,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -2677,11 +2636,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": true,
-                    "refresh": true,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -2780,12 +2734,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "prefix": "Client",
       },
       "name": "ProgressPlugin",
-    },
-    ReactRefreshRspackPlugin {
-      "options": {
-        "exclude": /node_modules/i,
-        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
-      },
     },
   ],
   "resolve": {

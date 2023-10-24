@@ -1,17 +1,73 @@
 import type { RsbuildConfig } from '@rsbuild/core';
-import { isProd, isUsingHMR, DefaultRsbuildPlugin } from '@rsbuild/shared';
+import {
+  isProd,
+  isUsingHMR,
+  DefaultRsbuildPlugin,
+  SharedRsbuildPluginAPI,
+} from '@rsbuild/shared';
 import type { RsbuildPluginAPI } from '@rsbuild/webpack';
+
+const applyRspack = (api: SharedRsbuildPluginAPI) => {
+  api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
+    const config = api.getNormalizedConfig();
+    const usingHMR = isUsingHMR(config, { isProd, target });
+    const rule = chain.module.rule(CHAIN_ID.RULE.JS);
+
+    const reactOptions = {
+      development: !isProd,
+      refresh: usingHMR,
+      runtime: 'automatic',
+    };
+
+    rule.use(CHAIN_ID.USE.SWC).tap((options) => {
+      options.jsc.transform.react = {
+        ...reactOptions,
+      };
+      return options;
+    });
+
+    if (chain.module.rules.has(CHAIN_ID.RULE.JS_DATA_URI)) {
+      chain.module
+        .rule(CHAIN_ID.RULE.JS_DATA_URI)
+        .use(CHAIN_ID.USE.SWC)
+        .tap((options) => {
+          options.jsc.transform.react = {
+            ...reactOptions,
+          };
+          return options;
+        });
+    }
+
+    if (!usingHMR) {
+      return;
+    }
+
+    const { default: ReactRefreshRspackPlugin } = await import(
+      // @ts-expect-error
+      '@rspack/plugin-react-refresh'
+    );
+
+    chain
+      .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
+      .use(ReactRefreshRspackPlugin);
+  });
+};
 
 export const pluginReact = (): DefaultRsbuildPlugin => ({
   name: 'plugin-react',
+
+  pre: ['plugin-swc'],
 
   setup(api) {
     const { bundlerType } = api.context;
 
     if (bundlerType === 'rspack') {
+      applyRspack(api);
+
       return;
     }
 
+    // apply webpack
     api.modifyRsbuildConfig(async (config, { mergeRsbuildConfig }) => {
       const { isBeyondReact17 } = await import('@modern-js/utils');
 

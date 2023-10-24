@@ -36,7 +36,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.rem(),
     import('../plugins/hmr').then((m) => m.pluginHMR()),
     import('../plugins/progress').then((m) => m.pluginProgress()),
-    import('../plugins/react').then((m) => m.pluginReact()),
     import('../plugins/swc').then((m) => m.pluginSwc()),
     plugins.externals(),
     plugins.toml(),

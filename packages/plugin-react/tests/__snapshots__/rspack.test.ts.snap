@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
+exports[`plugins/react > should work with swc-loader 1`] = `
 {
   "builtins": {
     "css": {
@@ -577,6 +577,11 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "react": {
+                    "development": true,
+                    "refresh": true,
+                    "runtime": "automatic",
+                  },
                 },
               },
               "minify": false,
@@ -619,6 +624,11 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "react": {
+                    "development": true,
+                    "refresh": true,
+                    "runtime": "automatic",
+                  },
                 },
               },
               "minify": false,
@@ -705,7 +715,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     Plugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""development"",
+        "process.env.NODE_ENV": ""test"",
       },
       "name": "DefinePlugin",
     },
@@ -714,6 +724,12 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "prefix": "Client",
       },
       "name": "ProgressPlugin",
+    },
+    ReactRefreshRspackPlugin {
+      "options": {
+        "exclude": /node_modules/i,
+        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
+      },
     },
   ],
   "resolve": {
