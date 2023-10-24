@@ -1,16 +1,13 @@
-import {
-  applyOptionsChain,
-  getCoreJsVersion,
-  isBeyondReact17,
-  lodash as _,
-} from '@modern-js/utils';
+import { getCoreJsVersion, isBeyondReact17 } from '@modern-js/utils';
+import _ from 'lodash';
 import { NormalizedConfig } from '@rsbuild/webpack';
 import {
   logger,
+  isUsingHMR,
   ModifyChainUtils,
+  mergeChainedOptions,
   getBrowserslistWithDefault,
   getDefaultStyledComponentsConfig,
-  isUsingHMR,
 } from '@rsbuild/shared';
 import { Extensions } from '@modern-js/swc-plugins';
 import { getDefaultSwcConfig } from './plugin';
@@ -100,7 +97,6 @@ export async function finalizeConfig(
   );
 
   if (isUsingFnOptions) {
-    const { lodash: _ } = await import('@modern-js/utils');
     const ret = userConfig(swcConfig, {
       mergeConfig: _.merge,
       setConfig: _.set,
@@ -188,7 +184,7 @@ export async function applyPluginConfig(
     rsbuildConfig.tools.styledComponents !== false &&
     swc.extensions?.styledComponents !== false
   ) {
-    const styledComponentsOptions = applyOptionsChain(
+    const styledComponentsOptions = mergeChainedOptions(
       getDefaultStyledComponentsConfig(isProd, isSSR),
       rsbuildConfig.tools.styledComponents,
     );

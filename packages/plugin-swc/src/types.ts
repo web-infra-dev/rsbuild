@@ -5,7 +5,7 @@ import type {
   ReactConfig,
   TransformConfig,
 } from '@modern-js/swc-plugins';
-import type { lodash as _ } from '@modern-js/utils';
+import type _ from 'lodash';
 
 export type {
   Output,

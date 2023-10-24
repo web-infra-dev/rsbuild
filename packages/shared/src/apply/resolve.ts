@@ -1,6 +1,8 @@
 import { getExtensions } from '../config';
 import _ from '@modern-js/utils/lodash';
+import { ensureAbsolutePath } from '../utils';
 import type { ChainIdentifier } from '../chain';
+import { mergeChainedOptions } from '../mergeChainedOptions';
 import {
   RsbuildTarget,
   BundlerChain,
@@ -88,11 +90,8 @@ async function applyAlias({
   if (!alias) {
     return;
   }
-  const { applyOptionsChain, ensureAbsolutePath } = await import(
-    '@modern-js/utils'
-  );
 
-  const mergedAlias = applyOptionsChain({}, alias);
+  const mergedAlias = mergeChainedOptions({}, alias);
 
   /**
    * Format alias value:

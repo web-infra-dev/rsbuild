@@ -11,6 +11,7 @@ import {
   getPostcssConfig,
   getCssModuleLocalIdentName,
   resolvePackage,
+  mergeChainedOptions,
   type BundlerChain,
   type Context,
   type StyleLoaderOptions,
@@ -45,7 +46,6 @@ export async function applyBaseCSSRule({
   const enableExtractCSS = isUseCssExtract(config, target);
   const enableSourceMap = isUseCssSourceMap(config);
   const enableCSSModuleTS = Boolean(config.output.enableCssModuleTSDeclaration);
-  const { applyOptionsChain } = await import('@modern-js/utils');
 
   const browserslist = await getBrowserslistWithDefault(
     context.rootPath,
@@ -69,7 +69,7 @@ export async function applyBaseCSSRule({
     });
 
     if (!isServer && !isWebWorker) {
-      const styleLoaderOptions = applyOptionsChain<StyleLoaderOptions, null>(
+      const styleLoaderOptions = mergeChainedOptions<StyleLoaderOptions, null>(
         {
           // todo: hmr does not work while esModule is true
           // @ts-expect-error

@@ -2,6 +2,7 @@ import {
   debug,
   isDebug,
   initPlugins,
+  ensureArray,
   mergeRsbuildConfig,
   type PluginStore,
   type InspectConfigOptions,
@@ -34,8 +35,6 @@ export async function initConfigs({
   pluginStore,
   rsbuildOptions,
 }: InitConfigsOptions) {
-  const { ensureArray } = await import('@modern-js/utils');
-
   await context.configValidatingTask;
   await initPlugins({
     pluginAPI: context.pluginAPI,

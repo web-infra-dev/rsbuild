@@ -1,5 +1,9 @@
 import path from 'path';
-import type { ChainedConfig, ModuleScopes } from '@rsbuild/shared';
+import {
+  ensureAbsolutePath,
+  type ChainedConfig,
+  type ModuleScopes,
+} from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const isPrimitiveScope = (
@@ -36,7 +40,6 @@ export const pluginModuleScopes = (): RsbuildPlugin => ({
         return;
       }
 
-      const { ensureAbsolutePath } = await import('@modern-js/utils');
       const { ModuleScopePlugin } = await import(
         '../webpackPlugins/ModuleScopePlugin'
       );

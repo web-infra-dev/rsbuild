@@ -32,7 +32,7 @@
     "@rsbuild/shared": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@types/connect": "^3.4.37",
-    "@types/lodash": "^4.14.195",
+    "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "@types/react": "^18",
     "@types/react-dom": "^18",

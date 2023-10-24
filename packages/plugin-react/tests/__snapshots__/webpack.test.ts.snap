@@ -153,6 +153,15 @@ exports[`plugins/react > should work with babel-loader 1`] = `
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  {
+                    "displayName": true,
+                    "pure": false,
+                    "ssr": false,
+                    "transpileTemplateLiterals": true,
+                  },
+                ],
               ],
               "presets": [
                 [
@@ -685,6 +694,15 @@ exports[`plugins/react > should work with ts-loader 1`] = `
                 [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  {
+                    "displayName": true,
+                    "pure": false,
+                    "ssr": false,
+                    "transpileTemplateLiterals": true,
+                  },
                 ],
               ],
               "presets": [

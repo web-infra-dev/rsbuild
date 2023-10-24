@@ -1,5 +1,9 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { isUseCssSourceMap, STYLUS_REGEX } from '@rsbuild/shared';
+import {
+  STYLUS_REGEX,
+  isUseCssSourceMap,
+  mergeChainedOptions,
+} from '@rsbuild/shared';
 import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 
 type StylusOptions = {
@@ -28,11 +32,12 @@ export function pluginStylus(
       const { bundlerType } = api.context;
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
-        const { applyOptionsChain } = await import('@modern-js/utils');
-
         const { merge: deepMerge } = await import('@modern-js/utils/lodash');
 
-        const mergedOptions = applyOptionsChain<StylusLoaderOptions, undefined>(
+        const mergedOptions = mergeChainedOptions<
+          StylusLoaderOptions,
+          undefined
+        >(
           {
             sourceMap: isUseCssSourceMap(config),
           },

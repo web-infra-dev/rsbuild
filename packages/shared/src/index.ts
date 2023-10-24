@@ -9,6 +9,7 @@ export * from './generateMetaTags';
 export * from './getBrowserslist';
 export * from './getCssSupport';
 export * from './logger';
+export * from './mergeChainedOptions';
 export * from './mergeRsbuildConfig';
 export * from './onExitProcess';
 export * from './pick';

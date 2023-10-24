@@ -1,5 +1,6 @@
 import {
   TS_REGEX,
+  mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
 } from '@rsbuild/shared';
@@ -18,9 +19,7 @@ export const pluginTsLoader = (): RsbuildPlugin => {
           if (!config.tools.tsLoader) {
             return;
           }
-          const { getBabelUtils, applyOptionsChain } = await import(
-            '@modern-js/utils'
-          );
+          const { getBabelUtils } = await import('@modern-js/utils');
 
           const { rootPath } = api.context;
           const browserslist = await getBrowserslistWithDefault(
@@ -38,7 +37,7 @@ export const pluginTsLoader = (): RsbuildPlugin => {
 
           const babelUtils = getBabelUtils(baseBabelConfig);
 
-          const babelLoaderOptions = applyOptionsChain(
+          const babelLoaderOptions = mergeChainedOptions(
             baseBabelConfig,
             config.tools.babel,
             babelUtils,
@@ -56,7 +55,7 @@ export const pluginTsLoader = (): RsbuildPlugin => {
             },
           };
           // @ts-expect-error ts-loader has incorrect types for compilerOptions
-          const tsLoaderOptions = applyOptionsChain(
+          const tsLoaderOptions = mergeChainedOptions(
             {
               compilerOptions: {
                 target: 'esnext',

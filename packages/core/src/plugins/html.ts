@@ -12,6 +12,7 @@ import {
   getMetaTags,
   getTemplatePath,
   ROUTE_SPEC_FILE,
+  mergeChainedOptions,
   type FaviconUrls,
 } from '@rsbuild/shared';
 import { fs } from '@rsbuild/shared/fs-extra';
@@ -37,7 +38,6 @@ async function getTemplateParameters(
   config: SharedNormalizedConfig,
   assetPrefix: string,
 ): Promise<HTMLPluginOptions['templateParameters']> {
-  const { applyOptionsChain } = await import('@modern-js/utils');
   const { mountId, templateParameters, templateParametersByEntries } =
     config.html;
 
@@ -64,7 +64,7 @@ async function getTemplateParameters(
       },
       ...baseParameters,
     };
-    return applyOptionsChain(defaultOptions, templateParams);
+    return mergeChainedOptions(defaultOptions, templateParams);
   };
 }
 
@@ -136,9 +136,7 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
           return;
         }
 
-        const { removeTailSlash, applyOptionsChain } = await import(
-          '@modern-js/utils'
-        );
+        const { removeTailSlash } = await import('@modern-js/utils');
 
         const minify = await getMinify(isProd, config);
         const assetPrefix = removeTailSlash(
@@ -185,7 +183,7 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
               }
             }
 
-            const finalOptions = applyOptionsChain(
+            const finalOptions = mergeChainedOptions(
               pluginOptions,
               (config.tools as { htmlPlugin?: any }).htmlPlugin,
               {

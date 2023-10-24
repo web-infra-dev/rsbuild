@@ -147,6 +147,15 @@ exports[`plugin-babel > should add rule to compile Data URI when enable source.c
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  {
+                    "displayName": true,
+                    "pure": false,
+                    "ssr": false,
+                    "transpileTemplateLiterals": true,
+                  },
+                ],
               ],
               "presets": [
                 [
@@ -304,6 +313,15 @@ exports[`plugin-babel > should adjust browserslist when target is node 1`] = `
                 [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  {
+                    "displayName": true,
+                    "pure": false,
+                    "ssr": false,
+                    "transpileTemplateLiterals": true,
+                  },
                 ],
               ],
               "presets": [
@@ -479,6 +497,15 @@ exports[`plugin-babel > should apply exclude condition when using source.exclude
                 [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  {
+                    "displayName": true,
+                    "pure": false,
+                    "ssr": false,
+                    "transpileTemplateLiterals": true,
+                  },
                 ],
               ],
               "presets": [
@@ -666,6 +693,15 @@ exports[`plugin-babel > should override targets of babel-preset-env when using o
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  {
+                    "displayName": true,
+                    "pure": false,
+                    "ssr": false,
+                    "transpileTemplateLiterals": true,
+                  },
+                ],
               ],
               "presets": [
                 [
@@ -843,6 +879,15 @@ exports[`plugin-babel > should set babel-loader 1`] = `
                 [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  {
+                    "displayName": true,
+                    "pure": false,
+                    "ssr": false,
+                    "transpileTemplateLiterals": true,
+                  },
                 ],
               ],
               "presets": [
@@ -1028,6 +1073,15 @@ exports[`plugin-babel > should set include/exclude 1`] = `
                 [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  {
+                    "displayName": true,
+                    "pure": false,
+                    "ssr": false,
+                    "transpileTemplateLiterals": true,
+                  },
                 ],
               ],
               "presets": [

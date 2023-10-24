@@ -1,5 +1,5 @@
 import _ from '@modern-js/utils/lodash';
-import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
+import { ensureArray, type DefaultRsbuildPlugin } from '@rsbuild/shared';
 
 export const replacePlaceholder = (url: string, port: number) =>
   url.replace(/<port>/g, String(port));
@@ -42,7 +42,6 @@ export function pluginStartUrl(): DefaultRsbuildPlugin {
           );
         }
 
-        const { ensureArray } = await import('@modern-js/utils');
         const { openBrowser } = await import('@rsbuild/shared');
 
         const openUrls = () => {

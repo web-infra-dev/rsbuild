@@ -112,7 +112,7 @@ importers:
         specifier: ^3.4.37
         version: 3.4.37
       '@types/lodash':
-        specifier: ^4.14.195
+        specifier: ^4.14.200
         version: 4.14.200
       '@types/node':
         specifier: ^16
@@ -605,6 +605,9 @@ importers:
       core-js:
         specifier: ~3.32.2
         version: 3.32.2
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
     devDependencies:
       '@rsbuild/webpack':
         specifier: workspace:*
@@ -615,9 +618,9 @@ importers:
       '@types/babel__core':
         specifier: ^7.20.3
         version: 7.20.3
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+      '@types/lodash':
+        specifier: ^4.14.200
+        version: 4.14.200
       magic-string:
         specifier: 0.29.0
         version: 0.29.0
@@ -860,7 +863,7 @@ importers:
         specifier: workspace:*
         version: link:../shared
       '@types/lodash':
-        specifier: ^4.14.195
+        specifier: ^4.14.200
         version: 4.14.200
       '@types/node':
         specifier: ^16

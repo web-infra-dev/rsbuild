@@ -5,6 +5,7 @@ import {
   getFilename,
   isUseCssExtract,
   applyOutputPlugin,
+  mergeChainedOptions,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
@@ -24,8 +25,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
         const { default: MiniCssExtractPlugin } = await import(
           'mini-css-extract-plugin'
         );
-        const { applyOptionsChain } = await import('@modern-js/utils');
-        const extractPluginOptions = applyOptionsChain(
+        const extractPluginOptions = mergeChainedOptions(
           {},
           (config.tools.cssExtract as CSSExtractOptions)?.pluginOptions || {},
         );

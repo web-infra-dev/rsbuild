@@ -3,6 +3,7 @@ import {
   CHAIN_ID,
   BundlerConfig,
   modifyBundlerChain,
+  mergeChainedOptions,
   type NodeEnv,
   type RsbuildTarget,
   type ModifyChainUtils,
@@ -23,9 +24,7 @@ async function modifyRspackConfig(
   );
 
   if (context.config.tools?.rspack) {
-    const { applyOptionsChain } = await import('@modern-js/utils');
-
-    modifiedConfig = applyOptionsChain(
+    modifiedConfig = mergeChainedOptions(
       modifiedConfig,
       context.config.tools.rspack,
       utils,

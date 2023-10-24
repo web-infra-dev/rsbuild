@@ -1,5 +1,10 @@
 import { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
-import { logger, type ChainedConfig } from '@rsbuild/shared';
+import {
+  logger,
+  CHAIN_ID,
+  mergeChainedOptions,
+  type ChainedConfig,
+} from '@rsbuild/shared';
 import { deepmerge } from '@rsbuild/shared/deepmerge';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
@@ -38,9 +43,6 @@ export const pluginTypeCheck = (
         const { default: ForkTsCheckerWebpackPlugin } = await import(
           'fork-ts-checker-webpack-plugin'
         );
-        const { CHAIN_ID, applyOptionsChain } = await import(
-          '@modern-js/utils'
-        );
 
         // use typescript of user project
         let typescriptPath: string;
@@ -55,7 +57,7 @@ export const pluginTypeCheck = (
           return;
         }
 
-        const typeCheckerOptions = applyOptionsChain(
+        const typeCheckerOptions = mergeChainedOptions(
           {
             typescript: {
               // avoid OOM issue
