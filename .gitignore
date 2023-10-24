@@ -7,6 +7,7 @@ dist-*
 coverage/
 doc_build/
 playwright-report/
+tsconfig.tsbuildinfo
 
 .vscode/**/*
 !.vscode/settings.json
