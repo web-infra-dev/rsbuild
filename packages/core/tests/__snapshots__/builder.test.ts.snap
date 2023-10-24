@@ -20,6 +20,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableTransformByDefault": true,
+      "newResolver": true,
     },
   },
   "infrastructureLogging": {
