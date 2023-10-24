@@ -6,6 +6,5 @@
   "rem",
   "browserslist",
   "browser-compatibility",
-  "custom-webpack-config",
-  "source-build"
+  "custom-webpack-config"
 ]

@@ -4,47 +4,51 @@
 
 The following are universal plugins that can be used in Rspack mode and Webpack mode of Rsbuild:
 
-### [@rsbuild/plugin-vue](/plugins/list/plugin-vue.html)
+### [Vue Plugin](/plugins/list/plugin-vue.html)
 
 Provides support for Vue 3 SFC (Single File Components).
 
-### [@rsbuild/plugin-vue-jsx](/plugins/list/plugin-vue-jsx.html)
+### [Vue JSX Plugin](/plugins/list/plugin-vue-jsx.html)
 
 Provides support for Vue 3 JSX / TSX syntax.
 
-### [@rsbuild/plugin-vue2](/plugins/list/plugin-vue2.html)
+### [Vue2 Plugin](/plugins/list/plugin-vue2.html)
 
 Provides support for Vue 2 SFC (Single File Components).
 
-### [@rsbuild/plugin-vue2-jsx](/plugins/list/plugin-vue2-jsx.html)
+### [Vue2 JSX Plugin](/plugins/list/plugin-vue2-jsx.html)
 
 Provides support for Vue 2 JSX / TSX syntax.
 
-### [@rsbuild/plugin-type-check](/plugins/list/plugin-type-check.html)
+### [Type Check Plugin](/plugins/list/plugin-type-check.html)
 
 Used to run TypeScript type checker on a separate process.
 
-### [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus.html)
+### [Image Compress Plugin](/plugins/list/plugin-image-compress.html)
 
-Use Stylus add CSS preprocessor.
+Compress the image resources used in the project.
 
-### [@rsbuild/plugin-node-polyfill](/plugins/list/plugin-node-polyfill.html)
+### [Node Polyfill Plugin](/plugins/list/plugin-node-polyfill.html)
 
 Used to inject polyfills of Node core modules in the browser side.
 
-### [@rsbuild/plugin-image-compress](/plugins/list/plugin-image-compress.html)
+### [Source Build Plugin](/plugins/list/plugin-source-build.html)
 
-Compress the image resources used in the project.
+This plugin is designed for the monorepo scenario. It supports referencing source code from other subdirectories and performs build and hot update.
+
+### [Stylus Plugin](/plugins/list/plugin-stylus.html)
+
+Use Stylus add CSS preprocessor.
 
 ## Other Plugins
 
 The following are plugins that can only be used in the Webpack mode of Rsbuild, and are not required in Rspack mode.
 
-### [@rsbuild/plugin-swc](/plugins/list/plugin-swc.html)
+### [SWC Plugin](/plugins/list/plugin-swc.html)
 
 Use SWC as the transformer and minimizer to improve the build performance of Webpack mode.
 
-### [@rsbuild/plugin-esbuild](/plugins/list/plugin-esbuild.html)
+### [esbuild Plugin](/plugins/list/plugin-esbuild.html)
 
 Use esbuild as the transformer and minimizer to improve the build performance of Webpack mode.
 

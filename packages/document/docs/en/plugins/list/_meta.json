@@ -5,9 +5,10 @@
   "plugin-vue2",
   "plugin-vue2-jsx",
   "plugin-type-check",
-  "plugin-swc",
-  "plugin-stylus",
-  "plugin-esbuild",
+  "plugin-image-compress",
   "plugin-node-polyfill",
-  "plugin-image-compress"
+  "plugin-source-build",
+  "plugin-stylus",
+  "plugin-swc",
+  "plugin-esbuild"
 ]
