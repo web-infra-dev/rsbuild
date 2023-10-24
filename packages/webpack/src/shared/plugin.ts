@@ -32,8 +32,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.fileSize?.(),
     plugins.cleanOutput?.(),
     import('../plugins/hmr').then((m) => m.pluginHMR()),
-    plugins.antd(),
-    plugins.arco(),
     plugins.svg(),
     import('../plugins/pug').then((m) => m.pluginPug()),
     plugins.checkSyntax(),

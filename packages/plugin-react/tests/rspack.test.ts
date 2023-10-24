@@ -1,4 +1,4 @@
-import { expect, describe, it } from 'vitest';
+import { expect, describe, it, vi } from 'vitest';
 import { pluginReact } from '../src';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 

@@ -5,8 +5,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
   awaitableGetter<RsbuildPlugin>([
     import('../plugins/transition').then((m) => m.pluginTransition()),
     import('../plugins/basic').then((m) => m.pluginBasic()),
-    plugins.antd(),
-    plugins.arco(),
     plugins.entry(),
     // plugins.cache(),
     plugins.target(),
