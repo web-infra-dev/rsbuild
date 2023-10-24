@@ -1,4 +1,4 @@
-import _ from '@modern-js/utils/lodash';
+import _ from 'lodash';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler } from 'webpack';
 import { withPublicPath } from '../url';

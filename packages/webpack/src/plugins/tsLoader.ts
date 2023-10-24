@@ -4,7 +4,7 @@ import {
   applyScriptCondition,
   getBrowserslistWithDefault,
 } from '@rsbuild/shared';
-import _ from '@modern-js/utils/lodash';
+import _ from 'lodash';
 import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
 import { RsbuildPlugin } from '../types';
 import { getUseBuiltIns } from './babel';

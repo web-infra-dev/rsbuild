@@ -8,7 +8,7 @@ import {
   type RsbuildTarget,
   type ModifyChainUtils,
 } from '@rsbuild/shared';
-import { castArray } from '@modern-js/utils/lodash';
+import { castArray } from 'lodash';
 import { getCompiledPath } from '../shared';
 import type { Context, RspackConfig, ModifyRspackConfigUtils } from '../types';
 

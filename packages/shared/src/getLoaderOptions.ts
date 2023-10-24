@@ -7,7 +7,7 @@ import {
 } from './types';
 import { getSharedPkgCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
-import _ from '@modern-js/utils/lodash';
+import _ from 'lodash';
 
 export const getSassLoaderOptions = async (
   rsbuildSassConfig: ToolsSassConfig | undefined,

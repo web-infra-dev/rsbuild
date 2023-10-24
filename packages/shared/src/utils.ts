@@ -26,6 +26,7 @@ export const createVirtualModule = (content: string) =>
   `data:text/javascript,${content}`;
 
 export const removeLeadingSlash = (s: string): string => s.replace(/^\/+/, '');
+export const removeTailSlash = (s: string): string => s.replace(/\/+$/, '');
 
 export const addTrailingSlash = (s: string): string =>
   s.endsWith('/') ? s : `${s}/`;

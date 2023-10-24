@@ -12,6 +12,7 @@ import {
   getMetaTags,
   getTemplatePath,
   ROUTE_SPEC_FILE,
+  removeTailSlash,
   mergeChainedOptions,
   type FaviconUrls,
 } from '@rsbuild/shared';
@@ -23,7 +24,7 @@ import type {
   HtmlTagsPluginOptions,
   HTMLPluginOptions,
 } from '@rsbuild/shared';
-import _ from '@modern-js/utils/lodash';
+import _ from 'lodash';
 
 // This is a minimist subset of modern.js server routes
 type RoutesInfo = {
@@ -135,8 +136,6 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
         if (isHtmlDisabled(config, target)) {
           return;
         }
-
-        const { removeTailSlash } = await import('@modern-js/utils');
 
         const minify = await getMinify(isProd, config);
         const assetPrefix = removeTailSlash(

@@ -1,5 +1,5 @@
 import { getExtensions } from '../config';
-import _ from '@modern-js/utils/lodash';
+import _ from 'lodash';
 import { ensureAbsolutePath } from '../utils';
 import type { ChainIdentifier } from '../chain';
 import { mergeChainedOptions } from '../mergeChainedOptions';

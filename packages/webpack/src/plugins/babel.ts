@@ -1,3 +1,4 @@
+import lodash from 'lodash';
 import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
 import { getBabelConfigForNode } from '@rsbuild/babel-preset/node';
 import type { BabelConfig } from '@rsbuild/babel-preset';
@@ -43,8 +44,6 @@ export const pluginBabel = (): RsbuildPlugin => ({
           getCompiledPath,
         },
       ) => {
-        const { lodash } = await import('@modern-js/utils');
-
         const config = api.getNormalizedConfig();
         const browserslist = await getBrowserslistWithDefault(
           api.context.rootPath,

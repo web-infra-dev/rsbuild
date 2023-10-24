@@ -1,6 +1,6 @@
 import jiti from 'jiti';
 import { join } from 'path';
-import { findExists } from '@modern-js/utils';
+import { findExists } from '@rsbuild/shared';
 import type {
   RsbuildEntry,
   RsbuildPlugin,

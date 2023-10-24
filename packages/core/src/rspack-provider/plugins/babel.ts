@@ -1,5 +1,5 @@
 import { mergeRegex, JS_REGEX, TS_REGEX } from '@rsbuild/shared';
-import { cloneDeep, isEqual } from '@modern-js/utils/lodash';
+import { cloneDeep, isEqual } from 'lodash';
 import { RsbuildPlugin, NormalizedConfig } from '../types';
 import type { BabelOptions } from '@modern-js/types';
 

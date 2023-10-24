@@ -1,6 +1,7 @@
 import { isAbsolute, join } from 'path';
 import { MODULE_PATH_REGEX } from './constants';
 import { removeLeadingSlash } from './utils';
+import { promises, constants, existsSync, statSync } from 'fs';
 import {
   DistPathConfig,
   NormalizedSharedOutputConfig,
@@ -29,12 +30,25 @@ export const getDistPath = (
 };
 
 export async function isFileExists(file: string) {
-  const { promises, constants } = await import('fs');
   return promises
     .access(file, constants.F_OK)
     .then(() => true)
     .catch(() => false);
 }
+
+/**
+ * Find first already exists file.
+ * @param files - Absolute file paths with extension.
+ * @returns The file path if exists, or false if no file exists.
+ */
+export const findExists = (files: string[]): string | false => {
+  for (const file of files) {
+    if (existsSync(file) && statSync(file).isFile()) {
+      return file;
+    }
+  }
+  return false;
+};
 
 export function getPackageNameFromModulePath(modulePath: string) {
   const handleModuleContext = modulePath?.match(MODULE_PATH_REGEX);

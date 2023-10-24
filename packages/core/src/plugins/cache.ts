@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { isAbsolute, join } from 'path';
 import { fs } from '@rsbuild/shared/fs-extra';
 import {
+  findExists,
   BuildCacheOptions,
   Context,
   isFileExists,
@@ -57,7 +58,6 @@ function getCacheDirectory(
  * but they will affect the compilation result, so they need to be added to buildDependencies.
  */
 async function getBuildDependencies(context: Readonly<Context>) {
-  const { findExists } = await import('@modern-js/utils');
   const rootPackageJson = join(context.rootPath, 'package.json');
   const browserslistConfig = join(context.rootPath, '.browserslistrc');
 

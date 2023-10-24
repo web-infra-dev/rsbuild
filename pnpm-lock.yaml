@@ -339,6 +339,9 @@ importers:
       jiti:
         specifier: ^1.20.0
         version: 1.20.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -349,6 +352,9 @@ importers:
         specifier: ^5.88.1
         version: 5.89.0
     devDependencies:
+      '@types/lodash':
+        specifier: ^4.14.200
+        version: 4.14.200
       '@types/node':
         specifier: ^16
         version: 16.18.59
@@ -804,6 +810,9 @@ importers:
       line-diff:
         specifier: 2.1.1
         version: 2.1.1
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -838,6 +847,9 @@ importers:
       '@types/caniuse-lite':
         specifier: ^1.0.1
         version: 1.0.3
+      '@types/lodash':
+        specifier: ^4.14.200
+        version: 4.14.200
       '@types/node':
         specifier: ^16
         version: 16.18.59
@@ -913,6 +925,9 @@ importers:
       html-webpack-plugin:
         specifier: 5.5.3
         version: 5.5.3(webpack@5.89.0)
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       mini-css-extract-plugin:
         specifier: 2.7.6
         version: 2.7.6(webpack@5.89.0)
@@ -944,6 +959,9 @@ importers:
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
+      '@types/lodash':
+        specifier: ^4.14.200
+        version: 4.14.200
       '@types/node':
         specifier: ^16
         version: 16.18.59

@@ -39,7 +39,7 @@ import chalk from 'chalk';
 import type { minify } from 'terser';
 import fs from 'fs-extra';
 
-import _ from '@modern-js/utils/lodash';
+import _ from 'lodash';
 import { DEFAULT_DEV_HOST } from './constants';
 import { getJSMinifyOptions } from './minimize';
 

@@ -16,7 +16,7 @@
  */
 
 import type { Compiler, WebpackPluginInstance, Compilation } from 'webpack';
-import { upperFirst } from '@modern-js/utils/lodash';
+import { upperFirst } from 'lodash';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import { PreloadOrPreFetchOption } from '../../types';
 import {
@@ -48,9 +48,9 @@ function filterResourceHints(
   scripts: HtmlWebpackPlugin.HtmlTagObject[],
 ): HtmlWebpackPlugin.HtmlTagObject[] {
   return resourceHints.filter(
-    resourceHint =>
+    (resourceHint) =>
       !scripts.find(
-        script => script.attributes.src === resourceHint.attributes.href,
+        (script) => script.attributes.src === resourceHint.attributes.href,
       ),
   );
 }
@@ -72,7 +72,7 @@ function generateLinks(
     // Handle all chunks.
     options.type === 'all-assets' || HTMLCount === 1
       ? extractedChunks // Only handle chunks imported by this HtmlWebpackPlugin.
-      : extractedChunks.filter(chunk =>
+      : extractedChunks.filter((chunk) =>
           // TODO: Not yet supported in rspack, maybe we should implement it in another way
           // https://github.com/web-infra-dev/rspack/issues/3896
           doesChunkBelongToHtml({
@@ -96,20 +96,20 @@ function generateLinks(
   const uniqueFiles = new Set<string>(allFiles);
   const filteredFiles = [...uniqueFiles]
     // default exclude
-    .filter(file => [/.map$/].every(regex => !regex.test(file)))
+    .filter((file) => [/.map$/].every((regex) => !regex.test(file)))
     .filter(
-      file =>
+      (file) =>
         !options.include ||
         (typeof options.include === 'function'
           ? options.include(file)
-          : options.include.some(regex => new RegExp(regex).test(file))),
+          : options.include.some((regex) => new RegExp(regex).test(file))),
     )
     .filter(
-      file =>
+      (file) =>
         !options.exclude ||
         (typeof options.exclude === 'function'
           ? !options.exclude(file)
-          : options.exclude.every(regex => !new RegExp(regex).test(file))),
+          : options.exclude.every((regex) => !new RegExp(regex).test(file))),
     );
 
   // Sort to ensure the output is predictable.
@@ -178,10 +178,10 @@ export class HTMLPreloadOrPrefetchPlugin implements WebpackPluginInstance {
   }
 
   apply(compiler: Compiler): void {
-    compiler.hooks.compilation.tap(this.constructor.name, compilation => {
+    compiler.hooks.compilation.tap(this.constructor.name, (compilation) => {
       this.HtmlPlugin.getHooks(compilation).beforeAssetTagGeneration.tap(
         `HTML${upperFirst(this.type)}Plugin`,
-        htmlPluginData => {
+        (htmlPluginData) => {
           this.resourceHints = generateLinks(
             this.options,
             this.type,
@@ -196,7 +196,7 @@ export class HTMLPreloadOrPrefetchPlugin implements WebpackPluginInstance {
 
       this.HtmlPlugin.getHooks(compilation).alterAssetTags.tap(
         `HTML${upperFirst(this.type)}Plugin`,
-        htmlPluginData => {
+        (htmlPluginData) => {
           if (this.resourceHints) {
             htmlPluginData.assetTags.styles = [
               ...filterResourceHints(
