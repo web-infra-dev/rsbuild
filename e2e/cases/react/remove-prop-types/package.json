@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@rsbuild/e2e-remove-prop-types",
+  "name": "@e2e/remove-prop-types",
   "version": "1.0.0",
   "dependencies": {
     "prop-types": "^15"

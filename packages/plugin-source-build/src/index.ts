@@ -108,8 +108,7 @@ export function pluginSourceBuild(
               chain.resolve.plugin(TS_CONFIG_PATHS).tap((options) => {
                 const references = projects
                   .map((project) => path.join(project.dir, TS_CONFIG_FILE))
-                  .filter((filePath) => fs.existsSync(filePath))
-                  .map((filePath) => path.relative(projectRootPath, filePath));
+                  .filter((filePath) => fs.existsSync(filePath));
 
                 return options.map((option) => ({
                   ...option,

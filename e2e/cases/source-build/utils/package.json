@@ -1,0 +1,25 @@
+{
+  "name": "@e2e/source-build-utils",
+  "private": true,
+  "version": "1.0.0",
+  "source": "./src/index.ts",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts"
+    },
+    "./common": {
+      "source": "./src/common/index.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/types/index.d.ts"
+      ],
+      "common": [
+        "./dist/types/common/index.d.ts"
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@e2e/source-build-components",
+  "private": true,
+  "version": "1.0.0",
+  "source": "./src/index.tsx",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "default": "./dist/index.js"
+    },
+    "./card": {
+      "source": "./src/card/index.tsx",
+      "default": "./dist/card/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/types/index.d.ts"
+      ],
+      "card": [
+        "./dist/types/card/index.d.ts"
+      ]
+    }
+  },
+  "dependencies": {
+    "@e2e/source-build-utils": "workspace:*"
+  }
+}

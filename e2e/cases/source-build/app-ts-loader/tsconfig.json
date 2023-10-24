@@ -1,0 +1,17 @@
+{
+  "extends": "@rsbuild/tsconfig/base",
+  "compilerOptions": {
+    "declaration": false,
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [
+    {
+      "path": "../common/tsconfig.json"
+    }
+  ]
+}

@@ -75,6 +75,9 @@ importers:
       '@rsbuild/plugin-node-polyfill':
         specifier: workspace:*
         version: link:../packages/plugin-node-polyfill
+      '@rsbuild/plugin-source-build':
+        specifier: workspace:*
+        version: link:../packages/plugin-source-build
       '@rsbuild/plugin-stylus':
         specifier: workspace:*
         version: link:../packages/plugin-stylus
@@ -181,6 +184,28 @@ importers:
       '@types/prop-types':
         specifier: ^15
         version: 15.7.9
+
+  e2e/cases/source-build/app:
+    dependencies:
+      '@e2e/source-build-components':
+        specifier: workspace:*
+        version: link:../components
+
+  e2e/cases/source-build/app-ts-loader:
+    dependencies:
+      '@e2e/source-build-common':
+        specifier: workspace:*
+        version: link:../common
+
+  e2e/cases/source-build/common: {}
+
+  e2e/cases/source-build/components:
+    dependencies:
+      '@e2e/source-build-utils':
+        specifier: workspace:*
+        version: link:../utils
+
+  e2e/cases/source-build/utils: {}
 
   e2e/cases/source-map:
     dependencies:

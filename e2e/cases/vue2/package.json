@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@rsbuild/e2e-vue2",
+  "name": "@e2e/vue2",
   "version": "1.0.0",
   "dependencies": {
     "vue": "^2.7.14"
