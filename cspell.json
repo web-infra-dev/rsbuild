@@ -21,6 +21,7 @@
     "rspress",
     "stacktracey",
     "systemjs",
+    "tsbuildinfo",
     "vitest",
     "deepmerge"
   ]
