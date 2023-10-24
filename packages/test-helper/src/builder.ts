@@ -4,6 +4,7 @@ import type {
   BundlerConfig,
   RsbuildInstance,
   CreateRsbuildOptions,
+  BundlerPluginInstance,
 } from '@rsbuild/shared';
 import type { RsbuildConfig } from '@rsbuild/core/rspack-provider';
 
@@ -98,6 +99,7 @@ export async function createStubRsbuild<
     | 'initConfigs'
   > & {
     unwrapConfig: () => Promise<Record<string, any>>;
+    matchBundlerPlugin: (name: string) => Promise<BundlerPluginInstance | null>;
   }
 > {
   const { pick, createPluginStore, applyDefaultRsbuildOptions } = await import(
@@ -135,6 +137,13 @@ export async function createStubRsbuild<
     return configs[0];
   };
 
+  /** Match rspack/webpack plugin by constructor name. */
+  const matchBundlerPlugin = async (pluginName: string) => {
+    const config = await unwrapConfig();
+
+    return matchPlugin(config as BundlerConfig, pluginName);
+  };
+
   return {
     ...pick(pluginStore, ['addPlugins', 'removePlugins', 'isPluginExists']),
     build,
@@ -144,5 +153,6 @@ export async function createStubRsbuild<
     context: publicContext,
     initConfigs,
     unwrapConfig,
+    matchBundlerPlugin,
   };
 }

@@ -46,15 +46,6 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
     "showEntries": true,
     "showModules": true,
   },
-  ReactRefreshPlugin {
-    "options": {
-      "exclude": [
-        /node_modules/,
-      ],
-      "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
-      "overlay": false,
-    },
-  },
   DefinePlugin {
     "definitions": {
       "foo": "1",

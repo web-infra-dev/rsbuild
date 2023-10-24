@@ -1,7 +1,8 @@
-import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
-import { isProd, isUsingHMR } from '@rsbuild/shared';
+import type { RsbuildConfig } from '@rsbuild/core';
+import { isProd, isUsingHMR, DefaultRsbuildPlugin } from '@rsbuild/shared';
+import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 
-export const pluginReact = (): RsbuildPlugin => ({
+export const pluginReact = (): DefaultRsbuildPlugin => ({
   name: 'plugin-react',
 
   setup(api) {
@@ -47,8 +48,8 @@ export const pluginReact = (): RsbuildPlugin => ({
       return mergeRsbuildConfig(babelConfig, config);
     });
 
-    api.modifyWebpackChain(async (chain, utils) => {
-      const config = api.getNormalizedConfig();
+    (api as RsbuildPluginAPI).modifyWebpackChain(async (chain, utils) => {
+      const config = (api as RsbuildPluginAPI).getNormalizedConfig();
 
       if (!isUsingHMR(config, utils)) {
         return;

@@ -24,7 +24,6 @@ export const applyBasicPlugins = (plugins: Plugins) =>
     import('../plugins/css').then((m) => m.pluginCss()),
     import('../plugins/sass').then((m) => m.pluginSass()),
     import('../plugins/less').then((m) => m.pluginLess()),
-    import('../plugins/react').then((m) => m.pluginReact()),
   ]);
 
 export const applyDefaultPlugins = (plugins: Plugins) =>
@@ -57,7 +56,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     import('../plugins/sass').then((m) => m.pluginSass()),
     import('../plugins/less').then((m) => m.pluginLess()),
     plugins.rem(),
-    import('../plugins/react').then((m) => m.pluginReact()),
     plugins.bundleAnalyzer(),
     plugins.toml(),
     plugins.yaml(),

@@ -75,6 +75,9 @@ importers:
       '@rsbuild/plugin-node-polyfill':
         specifier: workspace:*
         version: link:../packages/plugin-node-polyfill
+      '@rsbuild/plugin-react':
+        specifier: workspace:*
+        version: link:../packages/plugin-react
       '@rsbuild/plugin-stylus':
         specifier: workspace:*
         version: link:../packages/plugin-stylus
@@ -479,6 +482,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
