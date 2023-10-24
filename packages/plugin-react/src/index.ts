@@ -6,6 +6,9 @@ import {
   SharedRsbuildPluginAPI,
 } from '@rsbuild/shared';
 import type { RsbuildPluginAPI } from '@rsbuild/webpack';
+import { applyAntdSupport } from './antd';
+import { applyArcoSupport } from './arco';
+import { applySplitChunksRule } from './splitChunks';
 
 const applyRspack = (api: SharedRsbuildPluginAPI) => {
   api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
@@ -59,6 +62,10 @@ export const pluginReact = (): DefaultRsbuildPlugin => ({
   pre: ['plugin-swc'],
 
   setup(api) {
+    applyAntdSupport(api);
+    applyArcoSupport(api);
+    applySplitChunksRule(api);
+
     const { bundlerType } = api.context;
 
     if (bundlerType === 'rspack') {
