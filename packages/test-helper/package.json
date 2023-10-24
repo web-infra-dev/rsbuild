@@ -34,7 +34,7 @@
     "@rsbuild/shared": "workspace:*",
     "@rsbuild/core": "workspace:*",
     "@types/node": "^16",
-    "@types/lodash": "^4.14.195",
+    "@types/lodash": "^4.14.200",
     "lodash": "^4.17.21",
     "upath": "2.0.1",
     "typescript": "^5"
