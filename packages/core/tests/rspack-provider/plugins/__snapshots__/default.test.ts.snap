@@ -20,6 +20,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableTransformByDefault": true,
+      "newResolver": true,
     },
   },
   "infrastructureLogging": {
@@ -673,18 +674,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
         },
-        "lib-react": {
-          "name": "lib-react",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-router": {
-          "name": "lib-router",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
-        },
       },
       "chunks": "all",
       "enforceSizeThreshold": 50000,
@@ -755,6 +744,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableTransformByDefault": true,
+      "newResolver": true,
     },
   },
   "infrastructureLogging": {
@@ -1447,18 +1437,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
         },
-        "lib-react": {
-          "name": "lib-react",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-router": {
-          "name": "lib-router",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
-        },
       },
       "chunks": "all",
       "enforceSizeThreshold": 50000,
@@ -1546,6 +1524,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableTransformByDefault": true,
+      "newResolver": true,
     },
   },
   "infrastructureLogging": {
@@ -2032,6 +2011,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableTransformByDefault": true,
+      "newResolver": true,
     },
   },
   "infrastructureLogging": {
@@ -2692,18 +2672,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
           "priority": 0,
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-react": {
-          "name": "lib-react",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-router": {
-          "name": "lib-router",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",

@@ -1,7 +1,6 @@
 import { pluginBasic } from '@/plugins/basic';
 import { createStubRsbuild } from './helper';
 import { pluginBabel } from '@/plugins/babel';
-import { pluginAntd } from '@rsbuild/core/plugins/antd';
 
 describe('webpackConfig', () => {
   it('should allow tools.webpack to return config', async () => {
@@ -230,7 +229,7 @@ describe('webpackConfig', () => {
   it('should not set default pluginImport for Babel', async () => {
     // camelToDashComponentName
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel(), pluginAntd()],
+      plugins: [pluginBabel()],
     });
     const config = await rsbuild.unwrapWebpackConfig();
 
@@ -245,7 +244,7 @@ describe('webpackConfig', () => {
   it('should not have any pluginImport in Babel', async () => {
     // camelToDashComponentName
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel(), pluginAntd()],
+      plugins: [pluginBabel()],
       rsbuildConfig: {
         source: {
           transformImport: false,
