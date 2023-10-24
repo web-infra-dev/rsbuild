@@ -1,10 +1,10 @@
-# 源码构建模式
+# Source Build 插件
 
-源码构建模式用于 monorepo 开发场景，它允许开发者直接引用 monorepo 中其他子项目的源码进行开发。
+Source Build 插件用于 monorepo 开发场景，它支持从当前项目引用其他子目录的源代码，并完成构建和热更新。
 
 ## 使用场景
 
-**monorepo 中项目互相引用主要有产物引用和源码引用两种方式**。我们以一个最简单的 monorepo 为例子，来介绍源码引用的使用场景。
+在 monorepo 中，子项目互相引用主要有两种方式 —— **产物引用和源码引用**。我们以一个最简单的 monorepo 为例子，来介绍源码引用的使用场景。
 
 比如 monorepo 中包含了一个 app 应用和一个 lib 包：
 
@@ -47,7 +47,7 @@ monorepo
 
 **源码引用指的是当前项目引用其他子项目的源码进行构建。**
 
-比如上述例子，当你开启了源码构建模式，并在 lib 中添加相关配置后，Rsbuild 会自动引用 lib 的 `src/index.ts` 源代码。这意味着，你不需要提前构建 lib 的代码，并且当 lib 的源代码更新时，也可以自动触发 app 的热更新。
+比如上述例子，当你注册了 Source Build 插件，并在 lib 中添加相关配置后，Rsbuild 会自动引用 lib 的 `src/index.ts` 源代码。这意味着，你不需要提前构建 lib 的代码，并且当 lib 的源代码更新时，也可以自动触发 app 的热更新。
 
 这种方式的优势在于：
 
@@ -57,26 +57,36 @@ monorepo
 
 劣势在于：
 
-- 当前项目需要支持子项目用到的语法特性，并且遵循相同的语法规范，比如使用一致的装饰器语法版本。如果当前项目和子项目需要使用不同的编译配置，则不适合使用源码构建。
+- 当前项目需要支持子项目用到的语法特性，并且遵循相同的语法规范，比如使用一致的装饰器语法版本。如果当前项目和子项目需要使用不同的编译配置，则不适合使用 Source Build 插件。
 - 当前项目需要编译更多的代码，因此构建时间可能会变长。
 
-## 使用源码构建
+## 快速上手
 
-### 开启配置
+### 安装插件
 
-你可以通过设置 [experiments.sourceBuild](/config/options/experiments.html#experimentssourcebuild) 为 `true` 来开启源码构建模式。
+你可以通过如下的命令安装插件:
 
-```ts
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-source-build -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginSourceBuild } from '@rsbuild/plugin-source-build';
+
 export default {
-  experiments: {
-    sourceBuild: true,
-  },
+  plugins: [pluginSourceBuild()],
 };
 ```
 
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
+
 ### 配置子项目
 
-当开启源码构建模式后，Rsbuild 在构建过程中，会优先读取子项目的 `source` 字段对应的文件。因此，你需要在子项目的 package.json 中配置 `source` 字段，并且指向源码文件路径。
+当注册 Source Build 插件后，Rsbuild 在构建过程中，会优先读取子项目的 `source` 字段对应的文件。因此，你需要在子项目的 package.json 中配置 `source` 字段，并且指向源码文件路径。
 
 比如以下例子，当 lib 包被引用时，会读取 `./src/index.ts` 文件进行构建：
 
@@ -145,7 +155,7 @@ Project reference 提供了以下能力：
 
 ## 注意事项
 
-在使用源码构建模式的时候，需要注意几点：
+在使用 Source Build 插件的时候，需要注意几点：
 
 1. 需要保证当前项目可以编译子项目里使用的语法或特性。比如子项目使用了 Stylus 来编写 CSS 样式，那就需要当前 app 支持 Stylus 编译。
 2. 需要保证当前项目与子项目使用的代码语法特性相同，例如装饰器的语法版本一致。
