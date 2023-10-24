@@ -1,3 +1,4 @@
+import { setConfig } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 /**
@@ -13,6 +14,10 @@ export const pluginTransition = (): RsbuildPlugin => ({
       if (isProd) {
         chain.optimization.chunkIds('deterministic');
       }
+    });
+
+    api.modifyRspackConfig((config) => {
+      setConfig(config, 'experiments.rspackFuture.newResolver', true);
     });
   },
 });
