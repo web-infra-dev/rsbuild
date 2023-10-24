@@ -722,6 +722,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     Plugin {
       "_options": {
         "prefix": "Client",
+        "profile": false,
       },
       "name": "ProgressPlugin",
     },
@@ -1515,6 +1516,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     Plugin {
       "_options": {
         "prefix": "Client",
+        "profile": false,
       },
       "name": "ProgressPlugin",
     },
@@ -2025,6 +2027,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
     Plugin {
       "_options": {
         "prefix": "Server",
+        "profile": false,
       },
       "name": "ProgressPlugin",
     },
@@ -2778,6 +2781,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     Plugin {
       "_options": {
         "prefix": "Client",
+        "profile": false,
       },
       "name": "ProgressPlugin",
     },
