@@ -4,7 +4,7 @@
 用于控制是否将打包工具的 runtime 代码内联到 HTML 中。
 
 :::tip 什么是 runtimeChunk
-当 Rsbuild 构建完成后，会在 dist 目录生成 `builder-runtime.js` 文件，该文件为 webpack 或 Rspack 的 runtime 代码，即 runtimeChunk。
+当 Rsbuild 构建完成后，会在 dist 目录生成 `bundler-runtime.js` 文件，该文件为 webpack 或 Rspack 的 runtime 代码，即 runtimeChunk。
 
 runtimeChunk 是一段运行时代码，它由 webpack 或 Rspack 提供，包含必要的模块处理逻辑，比如模块加载、模块解析等，具体可参考 [Runtime](https://webpack.js.org/concepts/manifest/#runtime)。
 
@@ -14,7 +14,7 @@ runtimeChunk 是一段运行时代码，它由 webpack 或 Rspack 提供，包�
 
 ### 禁用内联
 
-如果你不希望 runtimeChunk 文件被内联到 HTML 文件里，可以把 `disableInlineRuntimeChunk` 设置为 `true`，此时会生成一个独立的 `builder-runtime.js` 文件。
+如果你不希望 runtimeChunk 文件被内联到 HTML 文件里，可以把 `disableInlineRuntimeChunk` 设置为 `true`，此时会生成一个独立的 `bundler-runtime.js` 文件。
 
 ```js
 export default {

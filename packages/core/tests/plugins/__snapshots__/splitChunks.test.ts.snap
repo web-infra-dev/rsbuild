@@ -4,7 +4,7 @@ exports[`plugin-split-chunks > 'should allow forceSplitting to be an object' 1`]
 {
   "optimization": {
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {
@@ -42,7 +42,7 @@ exports[`plugin-split-chunks > 'should set custom config' 1`] = `
 {
   "optimization": {
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {
@@ -64,7 +64,7 @@ exports[`plugin-split-chunks > 'should set single-size config' 1`] = `
 {
   "optimization": {
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {},
@@ -81,7 +81,7 @@ exports[`plugin-split-chunks > 'should set single-vendor config' 1`] = `
 {
   "optimization": {
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {
@@ -105,7 +105,7 @@ exports[`plugin-split-chunks > 'should set split-by-experience config correctly 
 {
   "optimization": {
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {
@@ -145,7 +145,7 @@ exports[`plugin-split-chunks > 'should set split-by-experience config' 1`] = `
 {
   "optimization": {
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {

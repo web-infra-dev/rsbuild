@@ -661,7 +661,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   "optimization": {
     "minimize": false,
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {

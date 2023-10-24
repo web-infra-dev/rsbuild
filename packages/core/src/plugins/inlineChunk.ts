@@ -46,8 +46,8 @@ export const pluginInlineChunk = (): DefaultRsbuildPlugin => ({
 
         if (!disableInlineRuntimeChunk) {
           scriptTests.push(
-            // RegExp like /builder-runtime([.].+)?\.js$/
-            // matches builder-runtime.js and builder-runtime.123456.js
+            // RegExp like /bundler-runtime([.].+)?\.js$/
+            // matches bundler-runtime.js and bundler-runtime.123456.js
             new RegExp(`${RUNTIME_CHUNK_NAME}([.].+)?\\.js$`),
           );
         }

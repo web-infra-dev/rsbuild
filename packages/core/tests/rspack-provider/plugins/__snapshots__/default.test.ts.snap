@@ -661,7 +661,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "optimization": {
     "minimize": false,
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {
@@ -1450,7 +1450,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       },
     ],
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {
@@ -1527,7 +1527,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "inlinedAssets": Set {},
       "name": "InlineChunkHtmlPlugin",
       "scriptTests": [
-        /builder-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
+        /bundler-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
       ],
       "styleTests": [],
     },
@@ -2714,7 +2714,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "optimization": {
     "minimize": false,
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {
