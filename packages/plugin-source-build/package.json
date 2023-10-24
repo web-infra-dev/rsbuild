@@ -1,0 +1,47 @@
+{
+  "name": "@rsbuild/plugin-source-build",
+  "description": "Source build plugin of Rsbuild",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/plugin-source-build"
+  },
+  "license": "MIT",
+  "version": "0.0.7",
+  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
+  "dependencies": {
+    "@rsbuild/monorepo-utils": "workspace:*",
+    "@rsbuild/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/webpack": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": "workspace:^0.0.7"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true,
+    "types": "./dist/index.d.ts"
+  }
+}
