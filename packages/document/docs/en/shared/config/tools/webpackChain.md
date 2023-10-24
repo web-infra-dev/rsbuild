@@ -247,12 +247,10 @@ For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is regist
 | `PLUGIN.BANNER`                | correspond to `BannerPlugin`                                                                                   |
 | `PLUGIN.PROGRESS`              | correspond to `Webpackbar`                                                                                     |
 | `PLUGIN.APP_ICON`              | correspond to `AppIconPlugin`                                                                                  |
-| `PLUGIN.LOADABLE`              | correspond to `LoadableWebpackPlugin`                                                                          |
 | `PLUGIN.MANIFEST`              | correspond to `WebpackManifestPlugin`                                                                          |
 | `PLUGIN.TS_CHECKER`            | correspond to `ForkTsCheckerWebpackPlugin`                                                                     |
 | `PLUGIN.INLINE_HTML`           | correspond to `InlineChunkHtmlPlugin`                                                                          |
 | `PLUGIN.BUNDLE_ANALYZER`       | correspond to `WebpackBundleAnalyzer`                                                                          |
-| `PLUGIN.BOTTOM_TEMPLATE`       | correspond to `BottomTemplatePlugin`                                                                           |
 | `PLUGIN.MINI_CSS_EXTRACT`      | correspond to `MiniCssExtractPlugin`                                                                           |
 | `PLUGIN.VUE_LOADER_PLUGIN`     | correspond to `VueLoaderPlugin`                                                                                |
 | `PLUGIN.REACT_FAST_REFRESH`    | correspond to `ReactFastRefreshPlugin`                                                                         |

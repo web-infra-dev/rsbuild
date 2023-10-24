@@ -2,11 +2,11 @@ import {
   applyOptionsChain,
   getCoreJsVersion,
   isBeyondReact17,
-  logger,
   lodash as _,
 } from '@modern-js/utils';
 import { NormalizedConfig } from '@rsbuild/webpack';
 import {
+  logger,
   ModifyChainUtils,
   getBrowserslistWithDefault,
   getDefaultStyledComponentsConfig,
