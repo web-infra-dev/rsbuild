@@ -50,7 +50,7 @@ exports[`plugin-inline-chunk > should add InlineChunkHtmlPlugin properly by defa
       "inlinedAssets": Set {},
       "name": "InlineChunkHtmlPlugin",
       "scriptTests": [
-        /builder-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
+        /bundler-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
       ],
       "styleTests": [],
     },
@@ -165,7 +165,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
       "name": "InlineChunkHtmlPlugin",
       "scriptTests": [
         /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-        /builder-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
+        /bundler-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
       ],
       "styleTests": [],
     },
@@ -223,7 +223,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
       "inlinedAssets": Set {},
       "name": "InlineChunkHtmlPlugin",
       "scriptTests": [
-        /builder-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
+        /bundler-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
       ],
       "styleTests": [
         /\\\\\\.css\\$/,

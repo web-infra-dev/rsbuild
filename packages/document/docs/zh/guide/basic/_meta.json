@@ -9,5 +9,5 @@
   "html-template",
   "css-modules",
   "typescript",
-  "builder-cli"
+  "cli"
 ]

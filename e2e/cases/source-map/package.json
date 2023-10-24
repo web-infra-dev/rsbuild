@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@rsbuild/e2e-webpack-source-map",
+  "name": "@e2e/webpack-source-map",
   "version": "1.0.0",
   "dependencies": {
     "source-map": "0.7.4",

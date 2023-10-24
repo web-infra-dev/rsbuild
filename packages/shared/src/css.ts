@@ -264,7 +264,7 @@ export const getResolveUrlJoinFn = async () => {
     defaultJoinGenerator,
   } = await import('../compiled/resolve-url-loader');
 
-  const builderGenerator = asGenerator((item: any, ...rest: any[]) => {
+  const rsbuildGenerator = asGenerator((item: any, ...rest: any[]) => {
     // only handle relative path (not absolutely accurate, but can meet common scenarios)
     if (!item.uri.startsWith('.')) {
       return [null];
@@ -272,7 +272,7 @@ export const getResolveUrlJoinFn = async () => {
     return defaultJoinGenerator(item, ...rest);
   });
   return createJoinFunction(
-    'builder-resolve-join-fn',
-    createJoinImplementation(builderGenerator),
+    'rsbuild-resolve-join-fn',
+    createJoinImplementation(rsbuildGenerator),
   );
 };

@@ -1,0 +1,8 @@
+{
+  "name": "@e2e/source-build-app",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "@e2e/source-build-components": "workspace:*"
+  }
+}

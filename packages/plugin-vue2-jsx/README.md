@@ -6,14 +6,9 @@
 
 Unleash the power of Rspack with the out-of-the-box build tool.
 
-## Getting Started
-
-Please follow [Quick Start](https://rsbuild.dev/guides/get-started/quick-start) to get started with Rsbuild.
-
 ## Documentation
 
-- [English Documentation](https://rsbuild.dev/)
-- [中文文档](https://rsbuild.dev/zh)
+https://rsbuild.dev/
 
 ## Contributing
 

@@ -607,7 +607,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "optimization": {
     "minimize": false,
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {
@@ -1365,7 +1365,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       },
     ],
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {
@@ -1433,7 +1433,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       "inlinedAssets": Set {},
       "name": "InlineChunkHtmlPlugin",
       "scriptTests": [
-        /builder-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
+        /bundler-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
       ],
       "styleTests": [],
     },
@@ -1839,6 +1839,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "compact": true,
               "configFile": false,
               "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
                 "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
                 "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
                 [
@@ -1901,6 +1907,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "compact": true,
               "configFile": false,
               "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
                 "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
                 "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
                 [

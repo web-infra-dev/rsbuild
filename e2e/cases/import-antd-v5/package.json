@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@rsbuild/e2e-webpack-import-antd-v5",
+  "name": "@e2e/webpack-import-antd-v5",
   "version": "1.0.0",
   "dependencies": {
     "react": "^18",

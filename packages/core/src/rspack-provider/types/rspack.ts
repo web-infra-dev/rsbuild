@@ -105,13 +105,13 @@ export type BuiltinSwcLoaderOptions = {
 };
 
 export interface RspackConfig extends RspackOptions {
-  /** multi type is useless in builder and make get value difficult */
+  /** multi type is useless in Rsbuild and make get value difficult */
   entry?: Record<string, string | string[]>;
   /**
    * `builtins.react / pluginImport / decorator / presetEnv / emotion / relay` are no longer supported by Rspack,
-   * please migrate to [builtin:swc-loader options](https://modernjs.dev/builder/en/guide/advanced/rspack-start.html#5-swc-configuration-support)
+   * please migrate to [builtin:swc-loader options](https://rsbuild.dev/guide/advanced/rspack-start.html#5-swc-configuration-support)
    *
-   * `builtins.html` are no longer supported by Rspack, please use [tools.htmlPlugin](https://modernjs.dev/builder/en/api/config-tools.html#toolshtmlplugin) instead.
+   * `builtins.html` are no longer supported by Rspack, please use [tools.htmlPlugin](https://rsbuild.dev/api/config-tools.html#toolshtmlplugin) instead.
    */
   builtins?: Omit<BuiltinsOptions, 'html'>;
   /** rspack-dev-server is not used in modern.js */

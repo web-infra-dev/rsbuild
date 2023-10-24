@@ -661,7 +661,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
   "optimization": {
     "minimize": false,
     "runtimeChunk": {
-      "name": "builder-runtime",
+      "name": "bundler-runtime",
     },
     "splitChunks": {
       "cacheGroups": {

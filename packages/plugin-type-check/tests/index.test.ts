@@ -33,18 +33,18 @@ describe('plugin-type-check', () => {
   });
 
   it('should only apply one ts-checker plugin when there is multiple targets', async () => {
-    const builder = await createStubRsbuild({
+    const rsbuild = await createStubRsbuild({
       cwd: __dirname,
       plugins: [pluginTypeCheck()],
       target: ['web', 'node'],
     });
 
-    const configs = await builder.unwrapConfig();
+    const configs = await rsbuild.unwrapConfig();
     expect(configs).toMatchSnapshot();
   });
 
   it('should disable type checker when enable is false', async () => {
-    const builder = await createStubRsbuild({
+    const rsbuild = await createStubRsbuild({
       cwd: __dirname,
       plugins: [
         pluginTypeCheck({
@@ -53,7 +53,7 @@ describe('plugin-type-check', () => {
       ],
     });
 
-    const configs = await builder.unwrapConfig();
+    const configs = await rsbuild.unwrapConfig();
     expect(configs).toMatchSnapshot();
   });
 });

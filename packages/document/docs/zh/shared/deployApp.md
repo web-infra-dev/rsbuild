@@ -4,4 +4,4 @@
 
 请留意 Rsbuild 默认的产物结构并不适用于所有的平台，因为不同的平台对产物目录结构有不同的要求。你可以参考 [构建产物目录](/guide/basic/output-files) 章节对目录结构进行修改，以满足部署平台的要求。
 
-此外，如果你需要在本地预览待部署的产物，可以使用 Rsbuild CLI 提供的 [rsbuild serve](/guide/basic/builder-cli#rsbuild-serve) 命令。
+此外，如果你需要在本地预览待部署的产物，可以使用 Rsbuild CLI 提供的 [rsbuild serve](/guide/basic/cli#rsbuild-serve) 命令。

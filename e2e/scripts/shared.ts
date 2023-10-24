@@ -86,10 +86,12 @@ const updateConfigForTest = <BundlerType>(
 };
 
 export async function dev<BundlerType = 'rspack'>({
+  plugins,
   serverOptions,
   rsbuildConfig = {},
   ...options
 }: CreateRsbuildOptions & {
+  plugins?: any[];
   rsbuildConfig?: BundlerType extends 'webpack'
     ? WebpackRsbuildConfig
     : RspackRsbuildConfig;
@@ -107,6 +109,10 @@ export async function dev<BundlerType = 'rspack'>({
   ) {
     const { pluginReact } = await import('@rsbuild/plugin-react');
     rsbuild.addPlugins([pluginReact()]);
+  }
+
+  if (plugins) {
+    rsbuild.addPlugins(plugins);
   }
 
   return rsbuild.startDevServer({

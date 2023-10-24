@@ -9,7 +9,7 @@
     "test": "pnpm run ut",
     "bump": "modern bump",
     "lint": "oxlint .",
-    "build": "nx run-many -t build --exclude @examples/* @scripts/*",
+    "build": "nx run-many -t build --exclude @examples/* @scripts/* @e2e/*",
     "change": "modern change",
     "release": "modern release",
     "prepare": "pnpm run build && husky install",
