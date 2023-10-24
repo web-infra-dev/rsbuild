@@ -83,5 +83,25 @@ export default defineConfig({
     dev: {
       startUrl: 'http://localhost:<port>/',
     },
+    html: {
+      tags: [
+        // Configure Google Analytics
+        {
+          tag: 'script',
+          attrs: {
+            async: true,
+            src: 'https://www.googletagmanager.com/gtag/js?id=G-L6BZ6TKW4R',
+          },
+        },
+        {
+          tag: 'script',
+          children: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-L6BZ6TKW4R');`,
+        },
+      ],
+    },
   },
 });
