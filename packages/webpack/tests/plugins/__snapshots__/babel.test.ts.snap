@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/babel > should add core-js-entry when output.polyfill is entry 1`] = `
+exports[`plugin-babel > should add core-js-entry when output.polyfill is entry 1`] = `
 {
   "main": [
     "/datatext/javascript,import \\"core-js\\";",
@@ -9,7 +9,7 @@ exports[`plugins/babel > should add core-js-entry when output.polyfill is entry 
 }
 `;
 
-exports[`plugins/babel > should add rule to compile Data URI when enable source.compileJsDataURI 1`] = `
+exports[`plugin-babel > should add rule to compile Data URI when enable source.compileJsDataURI 1`] = `
 {
   "module": {
     "rules": [
@@ -190,7 +190,7 @@ exports[`plugins/babel > should add rule to compile Data URI when enable source.
 }
 `;
 
-exports[`plugins/babel > should adjust browserslist when target is node 1`] = `
+exports[`plugin-babel > should adjust browserslist when target is node 1`] = `
 {
   "module": {
     "rules": [
@@ -327,7 +327,7 @@ exports[`plugins/babel > should adjust browserslist when target is node 1`] = `
 }
 `;
 
-exports[`plugins/babel > should apply exclude condition when using source.exclude 1`] = `
+exports[`plugin-babel > should apply exclude condition when using source.exclude 1`] = `
 {
   "module": {
     "rules": [
@@ -511,7 +511,7 @@ exports[`plugins/babel > should apply exclude condition when using source.exclud
 }
 `;
 
-exports[`plugins/babel > should not add core-js-entry when output.polyfill is usage 1`] = `
+exports[`plugin-babel > should not add core-js-entry when output.polyfill is usage 1`] = `
 {
   "main": [
     "index.js",
@@ -519,7 +519,7 @@ exports[`plugins/babel > should not add core-js-entry when output.polyfill is us
 }
 `;
 
-exports[`plugins/babel > should override targets of babel-preset-env when using output.overrideBrowserslist config 1`] = `
+exports[`plugin-babel > should override targets of babel-preset-env when using output.overrideBrowserslist config 1`] = `
 {
   "module": {
     "rules": [
@@ -694,7 +694,7 @@ exports[`plugins/babel > should override targets of babel-preset-env when using 
 }
 `;
 
-exports[`plugins/babel > should set babel-loader 1`] = `
+exports[`plugin-babel > should set babel-loader 1`] = `
 {
   "module": {
     "rules": [
@@ -875,7 +875,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
 }
 `;
 
-exports[`plugins/babel > should set include/exclude 1`] = `
+exports[`plugin-babel > should set include/exclude 1`] = `
 {
   "module": {
     "rules": [

@@ -1,8 +1,7 @@
-import { describe, it, expect } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginBabel } from '@/plugins/babel';
 
-describe('plugins/babel', () => {
+describe('plugin-babel', () => {
   it('should set babel-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],

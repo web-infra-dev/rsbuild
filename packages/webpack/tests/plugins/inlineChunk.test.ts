@@ -1,10 +1,9 @@
-import { expect, describe, it, beforeEach, afterEach } from 'vitest';
 import { pluginEntry } from '@rsbuild/core/plugins/entry';
 import { pluginHtml } from '@rsbuild/core/plugins/html';
 import { pluginInlineChunk } from '@rsbuild/core/plugins/inlineChunk';
 import { createStubRsbuild } from '../helper';
 
-describe('plugins/inlineChunk', () => {
+describe('plugin-inline-chunk', () => {
   beforeEach(() => {
     process.env.NODE_ENV = 'production';
   });

@@ -1,4 +1,3 @@
-import { expect, describe, it } from 'vitest';
 import {
   normalizeCssLoaderOptions,
   isCssModules,
@@ -52,7 +51,7 @@ it('check isCssModules', () => {
 
   expect(
     isCssModules('src/index.module.css', {
-      auto: path => {
+      auto: (path) => {
         return path.includes('.module.');
       },
     }),
@@ -60,7 +59,7 @@ it('check isCssModules', () => {
 
   expect(
     isCssModules('src/index.css', {
-      auto: path => {
+      auto: (path) => {
         return path.includes('.module.');
       },
     }),

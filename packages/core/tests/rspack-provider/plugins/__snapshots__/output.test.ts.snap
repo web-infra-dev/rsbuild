@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/output > should allow to custom server directory with distPath.server 1`] = `
+exports[`plugin-output > should allow to custom server directory with distPath.server 1`] = `
 {
   "output": {
     "chunkFilename": "server/[name].js",
@@ -16,7 +16,7 @@ exports[`plugins/output > should allow to custom server directory with distPath.
 }
 `;
 
-exports[`plugins/output > should allow to set distPath.js and distPath.css to empty string 1`] = `
+exports[`plugin-output > should allow to set distPath.js and distPath.css to empty string 1`] = `
 {
   "output": {
     "chunkFilename": "async/[name].js",
@@ -31,7 +31,7 @@ exports[`plugins/output > should allow to set distPath.js and distPath.css to em
 }
 `;
 
-exports[`plugins/output > should allow to use copy plugin 1`] = `
+exports[`plugin-output > should allow to use copy plugin 1`] = `
 {
   "output": {
     "chunkFilename": "static/js/async/[name].js",
@@ -62,7 +62,7 @@ exports[`plugins/output > should allow to use copy plugin 1`] = `
 }
 `;
 
-exports[`plugins/output > should allow to use copy plugin with multiply config 1`] = `
+exports[`plugin-output > should allow to use copy plugin with multiply config 1`] = `
 {
   "output": {
     "chunkFilename": "static/js/async/[name].js",
@@ -107,7 +107,7 @@ exports[`plugins/output > should allow to use copy plugin with multiply config 1
 }
 `;
 
-exports[`plugins/output > should allow to use filename.js to modify filename 1`] = `
+exports[`plugin-output > should allow to use filename.js to modify filename 1`] = `
 {
   "output": {
     "chunkFilename": "static/js/async/foo.js",
@@ -122,7 +122,7 @@ exports[`plugins/output > should allow to use filename.js to modify filename 1`]
 }
 `;
 
-exports[`plugins/output > should set output correctly 1`] = `
+exports[`plugin-output > should set output correctly 1`] = `
 {
   "output": {
     "chunkFilename": "static/js/async/[name].js",

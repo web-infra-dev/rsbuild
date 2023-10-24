@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { withPublicPath } from '../src/url';
 
 const PUBLIC_PATH = 'https://www.example.com/static';

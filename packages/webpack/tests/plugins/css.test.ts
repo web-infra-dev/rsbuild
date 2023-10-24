@@ -1,10 +1,9 @@
-import { expect, describe, it } from 'vitest';
 import { pluginCss } from '@/plugins/css';
 import { pluginSass } from '@/plugins/sass';
 import { pluginLess } from '@/plugins/less';
 import { createStubRsbuild } from '../helper';
 
-describe('plugins/css', () => {
+describe('plugin-css', () => {
   // need check（skipped before because this case time out in CI env)
   it('should set css config with style-loader', async () => {
     const rsbuild = await createStubRsbuild({

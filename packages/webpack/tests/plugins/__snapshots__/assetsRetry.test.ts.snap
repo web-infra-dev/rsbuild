@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/assetsRetry > should add assets retry plugin 1`] = `
+exports[`plugin-assets-retry > should add assets retry plugin 1`] = `
 {
   "plugins": [
     AssetsRetryPlugin {
@@ -14,4 +14,4 @@ exports[`plugins/assetsRetry > should add assets retry plugin 1`] = `
 }
 `;
 
-exports[`plugins/assetsRetry > should't add assets retry plugin when target is set to 'node' 1`] = `{}`;
+exports[`plugin-assets-retry > should't add assets retry plugin when target is set to 'node' 1`] = `{}`;

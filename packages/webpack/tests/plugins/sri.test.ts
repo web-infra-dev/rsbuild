@@ -1,8 +1,7 @@
-import { describe, expect, it } from 'vitest';
 import { pluginSRI } from '@/plugins/sri';
 import { createStubRsbuild } from '../helper';
 
-describe('plugins/sri', () => {
+describe('plugin-sri', () => {
   it('should apply default sri plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSRI()],

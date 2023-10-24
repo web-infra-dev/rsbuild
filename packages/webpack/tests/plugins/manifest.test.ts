@@ -1,8 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import { pluginManifest } from '@/plugins/manifest';
 import { createStubRsbuild } from '../helper';
 
-describe('plugins/manifest', () => {
+describe('plugin-manifest', () => {
   it('should not register manifest plugin by default', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginManifest()],

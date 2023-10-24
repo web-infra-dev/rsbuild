@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/swc > should add antd pluginImport 1`] = `
+exports[`plugin-swc > should add antd pluginImport 1`] = `
 {
   "entry": {
     "main": [
@@ -117,7 +117,7 @@ exports[`plugins/swc > should add antd pluginImport 1`] = `
 }
 `;
 
-exports[`plugins/swc > should add browserslist 1`] = `
+exports[`plugin-swc > should add browserslist 1`] = `
 {
   "entry": {
     "main": [
@@ -228,7 +228,7 @@ exports[`plugins/swc > should add browserslist 1`] = `
 }
 `;
 
-exports[`plugins/swc > should add browserslist 2`] = `
+exports[`plugin-swc > should add browserslist 2`] = `
 {
   "entry": {
     "main": [
@@ -339,7 +339,7 @@ exports[`plugins/swc > should add browserslist 2`] = `
 }
 `;
 
-exports[`plugins/swc > should add pluginImport 1`] = `
+exports[`plugin-swc > should add pluginImport 1`] = `
 {
   "entry": {
     "main": [
@@ -470,7 +470,7 @@ exports[`plugins/swc > should add pluginImport 1`] = `
 }
 `;
 
-exports[`plugins/swc > should disable all pluginImport 1`] = `
+exports[`plugin-swc > should disable all pluginImport 1`] = `
 {
   "entry": {
     "main": [
@@ -587,7 +587,7 @@ exports[`plugins/swc > should disable all pluginImport 1`] = `
 }
 `;
 
-exports[`plugins/swc > should disable preset_env in target other than web 1`] = `
+exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
 {
   "entry": {
     "main": [
@@ -686,7 +686,7 @@ exports[`plugins/swc > should disable preset_env in target other than web 1`] = 
 }
 `;
 
-exports[`plugins/swc > should disable preset_env mode 1`] = `
+exports[`plugin-swc > should disable preset_env mode 1`] = `
 {
   "entry": {
     "main": [
@@ -793,7 +793,7 @@ exports[`plugins/swc > should disable preset_env mode 1`] = `
 }
 `;
 
-exports[`plugins/swc > should enable entry mode preset_env 1`] = `
+exports[`plugin-swc > should enable entry mode preset_env 1`] = `
 {
   "entry": {
     "main": [
@@ -910,7 +910,7 @@ exports[`plugins/swc > should enable entry mode preset_env 1`] = `
 }
 `;
 
-exports[`plugins/swc > should enable usage mode preset_env 1`] = `
+exports[`plugin-swc > should enable usage mode preset_env 1`] = `
 {
   "entry": {
     "main": [
@@ -1027,7 +1027,7 @@ exports[`plugins/swc > should enable usage mode preset_env 1`] = `
 }
 `;
 
-exports[`plugins/swc > should has correct core-js 1`] = `
+exports[`plugin-swc > should has correct core-js 1`] = `
 {
   "entry": {
     "main": [
@@ -1144,7 +1144,7 @@ exports[`plugins/swc > should has correct core-js 1`] = `
 }
 `;
 
-exports[`plugins/swc > should has correct core-js 2`] = `
+exports[`plugin-swc > should has correct core-js 2`] = `
 {
   "entry": {
     "main": [
@@ -1261,7 +1261,7 @@ exports[`plugins/swc > should has correct core-js 2`] = `
 }
 `;
 
-exports[`plugins/swc > should has correct core-js 3`] = `
+exports[`plugin-swc > should has correct core-js 3`] = `
 {
   "entry": {
     "main": [
@@ -1360,7 +1360,7 @@ exports[`plugins/swc > should has correct core-js 3`] = `
 }
 `;
 
-exports[`plugins/swc > should'n override browserslist when target platform is not web 1`] = `
+exports[`plugin-swc > should'n override browserslist when target platform is not web 1`] = `
 {
   "entry": {
     "main": [

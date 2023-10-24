@@ -1,11 +1,10 @@
-import { describe, expect, it } from 'vitest';
 import { pluginRem } from '@rsbuild/core/plugins/rem';
 import { pluginCss } from '@/plugins/css';
 import { pluginLess } from '@/plugins/less';
 import { pluginSass } from '@/plugins/sass';
 import { createStubRsbuild } from '../helper';
 
-describe('plugins/rem', () => {
+describe('plugin-rem', () => {
   it('should not run rem plugin without config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],

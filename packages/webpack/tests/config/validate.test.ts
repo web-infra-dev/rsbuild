@@ -1,5 +1,4 @@
 import { performance } from 'perf_hooks';
-import { describe, expect, it } from 'vitest';
 import { createDefaultConfig } from '@/config/defaults';
 import { validateRsbuildConfig } from '@/config/validate';
 import { RsbuildConfig } from '@/types';

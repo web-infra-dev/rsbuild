@@ -1,8 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginOutput } from '@/plugins/output';
 
-describe('plugins/output', () => {
+describe('plugin-output', () => {
   it('should set output correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],

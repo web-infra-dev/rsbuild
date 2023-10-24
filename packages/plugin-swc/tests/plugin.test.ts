@@ -1,4 +1,3 @@
-import { expect, describe, it } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/webpack/stub';
 import { pluginSwc } from '../src';
 import { pluginBabel } from '@rsbuild/webpack/plugin-babel';
@@ -15,7 +14,7 @@ const TEST_BUILDER_CONFIG = {
 
 const UTILS = { target: 'web', isProd: true } as ModifyWebpackChainUtils;
 
-describe('plugins/swc', () => {
+describe('plugin-swc', () => {
   it('should set swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginSwc()],

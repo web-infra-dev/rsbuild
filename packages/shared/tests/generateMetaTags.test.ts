@@ -1,4 +1,3 @@
-import { expect, describe, it } from 'vitest';
 import { generateMetaTags } from '../src/generateMetaTags';
 
 describe('generateMetaTags', () => {

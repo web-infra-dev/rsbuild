@@ -1,7 +1,6 @@
 import { join } from 'path';
 import { pluginEntry } from '@rsbuild/core/plugins/entry';
 import { pluginBasic } from '@/plugins/basic';
-import { describe, expect, test, vi } from 'vitest';
 import { applyDefaultRsbuildOptions } from '@rsbuild/shared';
 import { createStubRsbuild, fixturesDir } from './helper';
 import { createCompiler } from '@/core/createCompiler';
