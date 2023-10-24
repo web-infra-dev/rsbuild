@@ -49,4 +49,22 @@ describe('plugins/react', () => {
 
     expect(await rsbuild.matchBundlerPlugin('ReactRefreshPlugin')).toBeFalsy();
   });
+
+  it('should not apply splitChunks rule when strategy is not split-by-experience', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        performance: {
+          chunkSplit: {
+            strategy: 'single-vendor',
+          },
+        },
+      },
+    });
+
+    rsbuild.addPlugins([pluginReact()]);
+
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config.optimization.splitChunks).toMatchSnapshot();
+  });
 });
