@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": [
+        "{projectRoot}/src/**/*",
+        "{projectRoot}/tsconfig.json",
+        "{projectRoot}/package.json",
+        "{projectRoot}/modern.config.*",
+        "{projectRoot}/scripts/**/*"
+      ]
+    }
+  },
+  "affected": {
+    "defaultBase": "main"
+  }
+}

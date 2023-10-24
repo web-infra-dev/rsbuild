@@ -12,3 +12,4 @@ playwright-report/
 !.vscode/settings.json
 !.vscode/extensions.json
 .idea/
+.nx/
