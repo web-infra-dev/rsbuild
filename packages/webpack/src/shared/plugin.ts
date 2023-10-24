@@ -24,7 +24,6 @@ export const applyBasicPlugins = (plugins: Plugins) =>
     import('../plugins/css').then((m) => m.pluginCss()),
     import('../plugins/sass').then((m) => m.pluginSass()),
     import('../plugins/less').then((m) => m.pluginLess()),
-    import('../plugins/react').then((m) => m.pluginReact()),
   ]);
 
 export const applyDefaultPlugins = (plugins: Plugins) =>
@@ -33,8 +32,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.fileSize?.(),
     plugins.cleanOutput?.(),
     import('../plugins/hmr').then((m) => m.pluginHMR()),
-    plugins.antd(),
-    plugins.arco(),
     plugins.svg(),
     import('../plugins/pug').then((m) => m.pluginPug()),
     plugins.checkSyntax(),
@@ -57,7 +54,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     import('../plugins/sass').then((m) => m.pluginSass()),
     import('../plugins/less').then((m) => m.pluginLess()),
     plugins.rem(),
-    import('../plugins/react').then((m) => m.pluginReact()),
     plugins.bundleAnalyzer(),
     plugins.toml(),
     plugins.yaml(),

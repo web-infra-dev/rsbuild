@@ -4,6 +4,10 @@
 
 The following are universal plugins that can be used in Rspack mode and Webpack mode of Rsbuild:
 
+### [React Plugin](/plugins/list/plugin-react.html)
+
+Provides support for React.
+
 ### [Vue Plugin](/plugins/list/plugin-vue.html)
 
 Provides support for Vue 3 SFC (Single File Components).

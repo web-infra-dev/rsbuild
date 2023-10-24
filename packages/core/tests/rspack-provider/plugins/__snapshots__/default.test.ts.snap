@@ -578,11 +578,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": true,
-                    "refresh": true,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -625,11 +620,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": true,
-                    "refresh": true,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -684,18 +674,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
         },
-        "lib-react": {
-          "name": "lib-react",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-router": {
-          "name": "lib-router",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
-        },
       },
       "chunks": "all",
       "enforceSizeThreshold": 50000,
@@ -726,12 +704,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "profile": false,
       },
       "name": "ProgressPlugin",
-    },
-    ReactRefreshRspackPlugin {
-      "options": {
-        "exclude": /node_modules/i,
-        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
-      },
     },
   ],
   "resolve": {
@@ -1330,11 +1302,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": false,
-                    "refresh": false,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -1377,11 +1344,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": false,
-                    "refresh": false,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -1474,18 +1436,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           "priority": 0,
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-react": {
-          "name": "lib-react",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-router": {
-          "name": "lib-router",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
@@ -1927,11 +1877,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": true,
-                    "refresh": false,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -1969,11 +1914,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctyly when targ
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": true,
-                    "refresh": false,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -2637,11 +2577,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": true,
-                    "refresh": true,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -2684,11 +2619,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "react": {
-                    "development": true,
-                    "refresh": true,
-                    "runtime": "automatic",
-                  },
                 },
               },
               "minify": false,
@@ -2743,18 +2673,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
         },
-        "lib-react": {
-          "name": "lib-react",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-router": {
-          "name": "lib-router",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
-        },
       },
       "chunks": "all",
       "enforceSizeThreshold": 50000,
@@ -2788,12 +2706,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "profile": false,
       },
       "name": "ProgressPlugin",
-    },
-    ReactRefreshRspackPlugin {
-      "options": {
-        "exclude": /node_modules/i,
-        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
-      },
     },
   ],
   "resolve": {

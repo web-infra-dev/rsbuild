@@ -1,0 +1,1056 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugins/react > should work with babel-loader 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "include": [
+          {
+            "and": [
+              "<ROOT>",
+              {
+                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "options": {
+              "babelrc": false,
+              "compact": false,
+              "configFile": false,
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  {
+                    "proposal": "minimal",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  {
+                    "useESModules": true,
+                    "version": "7.23.2",
+                  },
+                ],
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
+                [
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  {
+                    "displayName": true,
+                    "pure": false,
+                    "ssr": false,
+                    "transpileTemplateLiterals": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/react-refresh/babel.js",
+                  {
+                    "skipEnvCheck": true,
+                  },
+                ],
+              ],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  {
+                    "bugfixes": true,
+                    "corejs": {
+                      "proposals": true,
+                      "version": "3.32",
+                    },
+                    "exclude": [
+                      "transform-typeof-symbol",
+                    ],
+                    "modules": "commonjs",
+                    "targets": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "useBuiltIns": "entry",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": true,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+      {
+        "mimetype": {
+          "or": [
+            "text/javascript",
+            "application/javascript",
+          ],
+        },
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "options": {
+              "babelrc": false,
+              "compact": false,
+              "configFile": false,
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  {
+                    "proposal": "minimal",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  {
+                    "useESModules": true,
+                    "version": "7.23.2",
+                  },
+                ],
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
+                [
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  {},
+                ],
+              ],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  {
+                    "bugfixes": true,
+                    "corejs": {
+                      "proposals": true,
+                      "version": "3.32",
+                    },
+                    "exclude": [
+                      "transform-typeof-symbol",
+                    ],
+                    "modules": "commonjs",
+                    "targets": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "useBuiltIns": "entry",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": true,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "plugins": [
+    ReactRefreshPlugin {
+      "options": {
+        "exclude": [
+          /node_modules/,
+        ],
+        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
+        "overlay": false,
+      },
+    },
+  ],
+}
+`;
+
+exports[`plugins/react > should work with ts-loader 1`] = `
+{
+  "cache": {
+    "buildDependencies": {
+      "packageJson": [
+        "<ROOT>/package.json",
+      ],
+    },
+    "cacheDirectory": "<ROOT>/node_modules/.cache/webpack",
+    "name": "web-test",
+    "type": "filesystem",
+  },
+  "context": "<ROOT>",
+  "devtool": "cheap-module-source-map",
+  "experiments": {
+    "asyncWebAssembly": true,
+  },
+  "infrastructureLogging": {
+    "level": "error",
+  },
+  "mode": "development",
+  "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
+    "rules": [
+      {
+        "resolve": {
+          "fullySpecified": false,
+        },
+        "test": /\\\\\\.m\\?js/,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
+              "filename": "static/svg/[name].[contenthash:8].svg",
+            },
+            "issuer": {
+              "not": [
+                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
+                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+              ],
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "issuer": {
+              "not": [
+                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
+                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+              ],
+            },
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/svg/[name].[contenthash:8].svg",
+            },
+            "issuer": {
+              "not": [
+                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
+                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+              ],
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/svg/[name].[contenthash:8].svg",
+            },
+            "resourceQuery": /url/,
+            "type": "asset/resource",
+          },
+          {
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
+                "options": {
+                  "svgo": true,
+                  "svgoConfig": {
+                    "plugins": [
+                      {
+                        "name": "preset-default",
+                        "params": {
+                          "overrides": {
+                            "removeViewBox": false,
+                          },
+                        },
+                      },
+                      "prefixIds",
+                    ],
+                  },
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/url-loader",
+                "options": {
+                  "limit": 10000,
+                  "name": "static/svg/[name].[contenthash:8].svg",
+                },
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.svg\\$/,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
+              "filename": "static/font/[name].[contenthash:8][ext]",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/font/[name].[contenthash:8][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
+              "filename": "static/image/[name].[contenthash:8][ext]",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/image/[name].[contenthash:8][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.\\(png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
+              "filename": "static/media/[name].[contenthash:8][ext]",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/media/[name].[contenthash:8][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.\\(mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+      },
+      {
+        "dependency": "url",
+        "generator": {
+          "filename": "static/wasm/[hash].module.wasm",
+        },
+        "test": /\\\\\\.wasm\\$/,
+        "type": "asset/resource",
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "options": {
+              "importLoaders": 1,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+              },
+              "sourceMap": true,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "options": {
+              "postcssOptions": {
+                "plugins": [
+                  [Function],
+                  [Function],
+                  [Function],
+                  [Function],
+                  {
+                    "browsers": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "info": [Function],
+                    "options": {
+                      "flexbox": "no-2009",
+                      "overrideBrowserslist": [
+                        "chrome >= 87",
+                        "edge >= 88",
+                        "firefox >= 78",
+                        "safari >= 14",
+                      ],
+                    },
+                    "postcssPlugin": "autoprefixer",
+                    "prepare": [Function],
+                  },
+                ],
+              },
+              "sourceMap": true,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "options": {
+              "importLoaders": 3,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+              },
+              "sourceMap": true,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "options": {
+              "postcssOptions": {
+                "plugins": [
+                  [Function],
+                  [Function],
+                  [Function],
+                  [Function],
+                  {
+                    "browsers": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "info": [Function],
+                    "options": {
+                      "flexbox": "no-2009",
+                      "overrideBrowserslist": [
+                        "chrome >= 87",
+                        "edge >= 88",
+                        "firefox >= 78",
+                        "safari >= 14",
+                      ],
+                    },
+                    "postcssPlugin": "autoprefixer",
+                    "prepare": [Function],
+                  },
+                ],
+              },
+              "sourceMap": true,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+            "options": {
+              "join": [Function],
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/sass",
+              "sourceMap": true,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.less\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+              },
+              "sourceMap": true,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "options": {
+              "postcssOptions": {
+                "plugins": [
+                  [Function],
+                  [Function],
+                  [Function],
+                  [Function],
+                  {
+                    "browsers": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "info": [Function],
+                    "options": {
+                      "flexbox": "no-2009",
+                      "overrideBrowserslist": [
+                        "chrome >= 87",
+                        "edge >= 88",
+                        "firefox >= 78",
+                        "safari >= 14",
+                      ],
+                    },
+                    "postcssPlugin": "autoprefixer",
+                    "prepare": [Function],
+                  },
+                ],
+              },
+              "sourceMap": true,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/less-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/less",
+              "lessOptions": {
+                "javascriptEnabled": true,
+              },
+              "sourceMap": true,
+            },
+          },
+        ],
+      },
+      {
+        "test": /\\\\\\.toml\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
+          },
+        ],
+      },
+      {
+        "test": /\\\\\\.ya\\?ml\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
+          },
+        ],
+      },
+      {
+        "mimetype": {
+          "or": [
+            "text/javascript",
+            "application/javascript",
+          ],
+        },
+        "resolve": {
+          "fullySpecified": false,
+        },
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "options": {
+              "babelrc": false,
+              "compact": false,
+              "configFile": false,
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  {
+                    "proposal": "minimal",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  {
+                    "useESModules": true,
+                    "version": "7.23.2",
+                  },
+                ],
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
+                [
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  {},
+                ],
+              ],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  {
+                    "bugfixes": true,
+                    "corejs": {
+                      "proposals": true,
+                      "version": "3.32",
+                    },
+                    "exclude": [
+                      "transform-typeof-symbol",
+                    ],
+                    "modules": "commonjs",
+                    "targets": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "useBuiltIns": "entry",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": true,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+      {
+        "include": [
+          {
+            "and": [
+              "<ROOT>",
+              {
+                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "options": {
+              "plugins": [
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  {
+                    "proposal": "minimal",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  {
+                    "useESModules": true,
+                    "version": "7.23.2",
+                  },
+                ],
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/react-refresh/babel.js",
+                  {
+                    "skipEnvCheck": true,
+                  },
+                ],
+              ],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  {
+                    "bugfixes": true,
+                    "corejs": {
+                      "proposals": true,
+                      "version": "3.32",
+                    },
+                    "exclude": [
+                      "transform-typeof-symbol",
+                    ],
+                    "modules": "commonjs",
+                    "targets": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "useBuiltIns": "entry",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": true,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
+                  },
+                ],
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/ts-loader/index.js",
+            "options": {
+              "allowTsInNodeModules": true,
+              "compilerOptions": {
+                "module": "esnext",
+                "target": "esnext",
+              },
+              "transpileOnly": true,
+            },
+          },
+        ],
+      },
+      {
+        "include": [
+          {
+            "and": [
+              "<ROOT>",
+              {
+                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "options": {
+              "babelrc": false,
+              "compact": false,
+              "configFile": false,
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  {
+                    "proposal": "minimal",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  {
+                    "useESModules": true,
+                    "version": "7.23.2",
+                  },
+                ],
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
+                [
+                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  {
+                    "displayName": true,
+                    "pure": false,
+                    "ssr": false,
+                    "transpileTemplateLiterals": true,
+                  },
+                ],
+              ],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  {
+                    "bugfixes": true,
+                    "corejs": {
+                      "proposals": true,
+                      "version": "3.32",
+                    },
+                    "exclude": [
+                      "transform-typeof-symbol",
+                    ],
+                    "modules": "commonjs",
+                    "targets": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "useBuiltIns": "entry",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": true,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "name": "Client",
+  "optimization": {
+    "minimize": false,
+    "runtimeChunk": {
+      "name": "bundler-runtime",
+    },
+    "splitChunks": {
+      "cacheGroups": {
+        "lib-axios": {
+          "name": "lib-axios",
+          "priority": 0,
+          "reuseExistingChunk": true,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
+        },
+        "lib-lodash": {
+          "name": "lib-lodash",
+          "priority": 0,
+          "reuseExistingChunk": true,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
+        },
+        "lib-polyfill": {
+          "name": "lib-polyfill",
+          "priority": 0,
+          "reuseExistingChunk": true,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+        },
+        "lib-react": {
+          "name": "lib-react",
+          "priority": 0,
+          "reuseExistingChunk": true,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
+        },
+        "lib-router": {
+          "name": "lib-router",
+          "priority": 0,
+          "reuseExistingChunk": true,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
+        },
+      },
+      "chunks": "all",
+      "enforceSizeThreshold": 50000,
+    },
+  },
+  "output": {
+    "chunkFilename": "static/js/async/[name].js",
+    "filename": "static/js/[name].js",
+    "hashFunction": "xxhash64",
+    "path": "<ROOT>/dist",
+    "pathinfo": false,
+    "publicPath": "/",
+    "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+  },
+  "performance": {
+    "maxAssetSize": 3000000,
+    "maxEntrypointSize": 3000000,
+  },
+  "plugins": [
+    DefinePlugin {
+      "definitions": {
+        "process.env.ASSET_PREFIX": """",
+        "process.env.NODE_ENV": ""test"",
+      },
+    },
+    MiniCssExtractPlugin {
+      "_sortedModulesCache": WeakMap {},
+      "options": {
+        "chunkFilename": "static/css/async/[name].css",
+        "experimentalUseImportModule": undefined,
+        "filename": "static/css/[name].css",
+        "ignoreOrder": true,
+        "runtime": true,
+      },
+      "runtimeOptions": {
+        "attributes": undefined,
+        "insert": undefined,
+        "linkType": "text/css",
+      },
+    },
+    HotModuleReplacementPlugin {
+      "options": {},
+    },
+    ProgressPlugin {
+      "compileTime": null,
+      "dependenciesCount": 10000,
+      "handler": [Function],
+      "hasCompileErrors": false,
+      "id": "Client",
+      "modulesCount": 5000,
+      "name": "ProgressPlugin",
+      "percentBy": null,
+      "profile": false,
+      "showActiveModules": false,
+      "showDependencies": true,
+      "showEntries": true,
+      "showModules": true,
+    },
+    ReactRefreshPlugin {
+      "options": {
+        "exclude": [
+          /node_modules/,
+        ],
+        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
+        "overlay": false,
+      },
+    },
+  ],
+  "resolve": {
+    "extensions": [
+      ".js",
+      ".jsx",
+      ".mjs",
+      ".json",
+    ],
+  },
+  "target": [
+    "web",
+    "es5",
+  ],
+}
+`;

@@ -75,6 +75,9 @@ importers:
       '@rsbuild/plugin-node-polyfill':
         specifier: workspace:*
         version: link:../packages/plugin-node-polyfill
+      '@rsbuild/plugin-react':
+        specifier: workspace:*
+        version: link:../packages/plugin-react
       '@rsbuild/plugin-source-build':
         specifier: workspace:*
         version: link:../packages/plugin-source-build
@@ -327,9 +330,6 @@ importers:
       '@rspack/plugin-html':
         specifier: 0.3.8
         version: 0.3.8(@rspack/core@0.3.8)
-      '@rspack/plugin-react-refresh':
-        specifier: 0.3.8
-        version: 0.3.8(react-refresh@0.14.0)(webpack@5.89.0)
       '@svgr/webpack':
         specifier: 8.0.1
         version: 8.0.1(typescript@5.2.2)
@@ -479,6 +479,43 @@ importers:
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
+  packages/plugin-react:
+    dependencies:
+      '@babel/preset-react':
+        specifier: ^7.22.15
+        version: 7.22.15(@babel/core@7.23.2)
+      '@modern-js/utils':
+        specifier: ^2.37.1
+        version: 2.37.1
+      '@pmmmwh/react-refresh-webpack-plugin':
+        specifier: 0.5.10
+        version: 0.5.10(react-refresh@0.14.0)(webpack@5.89.0)
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@rspack/plugin-react-refresh':
+        specifier: 0.3.8
+        version: 0.3.8(react-refresh@0.14.0)(webpack@5.89.0)
+      babel-plugin-transform-react-remove-prop-types:
+        specifier: 0.4.24
+        version: 0.4.24
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
+      '@types/node':
+        specifier: ^16
+        version: 16.18.59
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -6426,6 +6463,10 @@ packages:
 
   /babel-plugin-syntax-jsx@6.18.0:
     resolution: {integrity: sha512-qrPaCSo9c8RHNRHIotaufGbuOBN8rtdC4QrrFFc43vyWCCz7Kl7GL1PGaXtMGQZUXrkCjNEgxDfmAuAabr/rlw==}
+    dev: false
+
+  /babel-plugin-transform-react-remove-prop-types@0.4.24:
+    resolution: {integrity: sha512-eqj0hVcJUR57/Ug2zE1Yswsw4LhuqqHhD+8v120T1cl3kjg76QwtyBrdIk4WVwK+lAhBJVYCd/v+4nc4y+8JsA==}
     dev: false
 
   /babel-plugin-transform-typescript-metadata@0.3.2(@babel/core@7.23.2):

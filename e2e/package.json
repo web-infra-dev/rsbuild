@@ -20,6 +20,7 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-image-compress": "workspace:*",
     "@rsbuild/plugin-node-polyfill": "workspace:*",
+    "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-stylus": "workspace:*",
     "@rsbuild/plugin-source-build": "workspace:*",
     "@rsbuild/plugin-swc": "workspace:*",

@@ -1,6 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
+exports[`plugins/react > should not apply splitChunks rule when strategy is not split-by-experience 1`] = `
+{
+  "cacheGroups": {
+    "singleVendor": {
+      "chunks": "all",
+      "enforce": true,
+      "name": "vendor",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+    },
+  },
+  "chunks": "all",
+  "enforceSizeThreshold": 50000,
+}
+`;
+
+exports[`plugins/react > should work with swc-loader 1`] = `
 {
   "builtins": {
     "css": {
@@ -578,6 +595,11 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "react": {
+                    "development": true,
+                    "refresh": true,
+                    "runtime": "automatic",
+                  },
                 },
               },
               "minify": false,
@@ -620,6 +642,11 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "react": {
+                    "development": true,
+                    "refresh": true,
+                    "runtime": "automatic",
+                  },
                 },
               },
               "minify": false,
@@ -674,6 +701,18 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
         },
+        "lib-react": {
+          "name": "lib-react",
+          "priority": 0,
+          "reuseExistingChunk": true,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
+        },
+        "lib-router": {
+          "name": "lib-router",
+          "priority": 0,
+          "reuseExistingChunk": true,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
+        },
       },
       "chunks": "all",
       "enforceSizeThreshold": 50000,
@@ -694,7 +733,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     Plugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""development"",
+        "process.env.NODE_ENV": ""test"",
       },
       "name": "DefinePlugin",
     },
@@ -704,6 +743,12 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "profile": false,
       },
       "name": "ProgressPlugin",
+    },
+    ReactRefreshRspackPlugin {
+      "options": {
+        "exclude": /node_modules/i,
+        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
+      },
     },
   ],
   "resolve": {

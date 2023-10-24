@@ -503,15 +503,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                     "optimizeConstEnums": true,
                   },
                 ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
-                  {
-                    "development": true,
-                    "runtime": "classic",
-                    "useBuiltIns": true,
-                    "useSpread": false,
-                  },
-                ],
               ],
             },
           },
@@ -572,12 +563,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                     "transpileTemplateLiterals": true,
                   },
                 ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/react-refresh/babel.js",
-                  {
-                    "skipEnvCheck": true,
-                  },
-                ],
               ],
               "presets": [
                 [
@@ -609,15 +594,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
-                  {
-                    "development": true,
-                    "runtime": "classic",
-                    "useBuiltIns": true,
-                    "useSpread": false,
                   },
                 ],
               ],
@@ -652,18 +628,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           "priority": 0,
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-react": {
-          "name": "lib-react",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-router": {
-          "name": "lib-router",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
@@ -723,15 +687,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "showDependencies": true,
       "showEntries": true,
       "showModules": true,
-    },
-    ReactRefreshPlugin {
-      "options": {
-        "exclude": [
-          /node_modules/,
-        ],
-        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
-        "overlay": false,
-      },
     },
   ],
   "resolve": {
@@ -1219,12 +1174,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
-                [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
-                  {
-                    "removeImport": true,
-                  },
-                ],
               ],
               "presets": [
                 [
@@ -1256,15 +1205,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
-                  {
-                    "development": false,
-                    "runtime": "classic",
-                    "useBuiltIns": true,
-                    "useSpread": false,
                   },
                 ],
               ],
@@ -1319,12 +1259,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   {},
                 ],
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
-                  {
-                    "removeImport": true,
-                  },
-                ],
-                [
                   "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
                   {
                     "displayName": true,
@@ -1364,15 +1298,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
-                  {
-                    "development": false,
-                    "runtime": "classic",
-                    "useBuiltIns": true,
-                    "useSpread": false,
                   },
                 ],
               ],
@@ -1449,18 +1374,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           "priority": 0,
           "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-react": {
-          "name": "lib-react",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-router": {
-          "name": "lib-router",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
@@ -1921,12 +1834,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
-                [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
-                  {
-                    "removeImport": true,
-                  },
-                ],
               ],
               "presets": [
                 [
@@ -1949,15 +1856,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
-                  {
-                    "development": false,
-                    "runtime": "classic",
-                    "useBuiltIns": true,
-                    "useSpread": false,
                   },
                 ],
               ],
@@ -2005,12 +1903,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   {},
                 ],
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
-                  {
-                    "removeImport": true,
-                  },
-                ],
-                [
                   "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
                   {
                     "displayName": true,
@@ -2041,15 +1933,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
-                  {
-                    "development": false,
-                    "runtime": "classic",
-                    "useBuiltIns": true,
-                    "useSpread": false,
                   },
                 ],
               ],
@@ -2527,12 +2410,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
-                [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
-                  {
-                    "removeImport": true,
-                  },
-                ],
               ],
               "presets": [
                 [
@@ -2564,15 +2441,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
-                  {
-                    "development": false,
-                    "runtime": "classic",
-                    "useBuiltIns": true,
-                    "useSpread": false,
                   },
                 ],
               ],
@@ -2627,12 +2495,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   {},
                 ],
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-transform-react-remove-prop-types/index.js",
-                  {
-                    "removeImport": true,
-                  },
-                ],
-                [
                   "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
                   {
                     "displayName": true,
@@ -2672,15 +2534,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
-                  {
-                    "development": false,
-                    "runtime": "classic",
-                    "useBuiltIns": true,
-                    "useSpread": false,
                   },
                 ],
               ],

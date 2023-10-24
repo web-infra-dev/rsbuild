@@ -3,7 +3,6 @@ import { pluginEntry } from '@src/plugins/entry';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginSwc } from '@/plugins/swc';
 import { RsbuildConfig } from '@/types';
-import { pluginAntd } from '@src/plugins/antd';
 
 describe('plugin-swc', () => {
   it('should disable preset_env in target other than web', async () => {
@@ -96,7 +95,7 @@ describe('plugin-swc', () => {
       entry: {
         main: './src/index.js',
       },
-      plugins: [pluginSwc(), pluginEntry(), pluginAntd()],
+      plugins: [pluginSwc(), pluginEntry()],
       rsbuildConfig: {
         source: {
           transformImport: false,
@@ -117,7 +116,7 @@ describe('plugin-swc', () => {
       entry: {
         main: './src/index.js',
       },
-      plugins: [pluginSwc(), pluginEntry(), pluginAntd()],
+      plugins: [pluginSwc(), pluginEntry()],
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();

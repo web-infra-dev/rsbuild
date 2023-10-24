@@ -5,8 +5,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
   awaitableGetter<RsbuildPlugin>([
     import('../plugins/transition').then((m) => m.pluginTransition()),
     import('../plugins/basic').then((m) => m.pluginBasic()),
-    plugins.antd(),
-    plugins.arco(),
     plugins.entry(),
     // plugins.cache(),
     plugins.target(),
@@ -36,7 +34,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.rem(),
     import('../plugins/hmr').then((m) => m.pluginHMR()),
     import('../plugins/progress').then((m) => m.pluginProgress()),
-    import('../plugins/react').then((m) => m.pluginReact()),
     import('../plugins/swc').then((m) => m.pluginSwc()),
     plugins.externals(),
     plugins.toml(),

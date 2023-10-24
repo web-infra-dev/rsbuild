@@ -79,7 +79,6 @@
     "@rspack/core": "0.3.8",
     "@rspack/dev-client": "0.3.8",
     "@rspack/plugin-html": "0.3.8",
-    "@rspack/plugin-react-refresh": "0.3.8",
     "@rsbuild/shared": "workspace:*",
     "@svgr/webpack": "8.0.1",
     "commander": "^10.0.1",

@@ -78,45 +78,15 @@ export const createDependenciesRegExp = (
   return new RegExp(expr);
 };
 
-async function splitByExperience(
-  ctx: SplitChunksContext,
-): Promise<SplitChunks> {
-  const { isPackageInstalled } = await import('@modern-js/utils');
-
-  const {
-    override,
-    polyfill,
-    rootPath,
-    defaultConfig,
-    userDefinedCacheGroups,
-  } = ctx;
+function splitByExperience(ctx: SplitChunksContext): SplitChunks {
+  const { override, polyfill, defaultConfig, userDefinedCacheGroups } = ctx;
   const experienceCacheGroup: CacheGroup = {};
 
   const packageRegExps: Record<string, RegExp> = {
-    react: createDependenciesRegExp('react', 'react-dom', 'scheduler'),
-    router: createDependenciesRegExp(
-      'react-router',
-      'react-router-dom',
-      '@remix-run/router',
-      'history',
-    ),
     lodash: createDependenciesRegExp('lodash', 'lodash-es'),
     axios: createDependenciesRegExp('axios', /axios-.+/),
   };
 
-  // Detect if the package is installed in current project
-  // If installed, add the package to cache group
-  if (isPackageInstalled('antd', rootPath)) {
-    packageRegExps.antd = createDependenciesRegExp('antd');
-  }
-  if (isPackageInstalled('@arco-design/web-react', rootPath)) {
-    packageRegExps.arco = createDependenciesRegExp(/@?arco-design/);
-  }
-  if (isPackageInstalled('@douyinfe/semi-ui', rootPath)) {
-    packageRegExps.semi = createDependenciesRegExp(
-      /@(ies|douyinfe)[\\/]semi-.*/,
-    );
-  }
   if (polyfill === 'entry' || polyfill === 'usage') {
     packageRegExps.polyfill = createDependenciesRegExp(
       'tslib',
