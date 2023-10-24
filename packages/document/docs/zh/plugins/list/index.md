@@ -4,6 +4,10 @@
 
 以下是 Rsbuild 的 Rspack 模式和 Webpack 模式下都可以使用的通用插件：
 
+### [@rsbuild/plugin-react](/plugins/list/plugin-react.html)
+
+提供对 React 的支持。
+
 ### [@rsbuild/plugin-vue](/plugins/list/plugin-vue.html)
 
 提供对 Vue 3 SFC（单文件组件）的支持。
