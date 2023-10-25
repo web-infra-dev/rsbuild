@@ -80,7 +80,6 @@
     "@rspack/dev-client": "0.3.8",
     "@rspack/plugin-html": "0.3.8",
     "@rsbuild/shared": "workspace:*",
-    "@svgr/webpack": "8.0.1",
     "commander": "^10.0.1",
     "jiti": "^1.20.0",
     "lodash": "^4.17.21",
