@@ -83,11 +83,13 @@
     "@svgr/webpack": "8.0.1",
     "commander": "^10.0.1",
     "jiti": "^1.20.0",
+    "lodash": "^4.17.21",
     "postcss": "8.4.31",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     "webpack": "^5.88.1"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "typescript": "^5"
   }

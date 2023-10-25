@@ -1,5 +1,6 @@
-import { mapValues } from '@modern-js/utils/lodash';
+import { mapValues } from 'lodash';
 import {
+  removeTailSlash,
   mergeChainedOptions,
   type GlobalVars,
   type DefaultRsbuildPlugin,
@@ -11,9 +12,6 @@ export const pluginDefine = (): DefaultRsbuildPlugin => ({
   async setup(api) {
     api.modifyBundlerChain(
       async (chain, { env, target, CHAIN_ID, bundler }) => {
-        const { getNodeEnv, removeTailSlash } = await import(
-          '@modern-js/utils'
-        );
         const config = api.getNormalizedConfig();
         const publicPath = chain.output.get('publicPath');
         const assetPrefix =
@@ -22,7 +20,7 @@ export const pluginDefine = (): DefaultRsbuildPlugin => ({
             : config.output.assetPrefix;
 
         const builtinVars: GlobalVars = {
-          'process.env.NODE_ENV': getNodeEnv(),
+          'process.env.NODE_ENV': process.env.NODE_ENV,
           'process.env.ASSET_PREFIX': removeTailSlash(assetPrefix),
         };
         // Serialize global vars. User can customize value of `builtinVars`.

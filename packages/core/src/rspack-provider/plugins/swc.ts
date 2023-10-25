@@ -13,7 +13,7 @@ import {
   logger,
   isUseJsSourceMap,
 } from '@rsbuild/shared';
-import { cloneDeep } from '@modern-js/utils/lodash';
+import { cloneDeep } from 'lodash';
 import * as path from 'path';
 import type {
   RsbuildPlugin,

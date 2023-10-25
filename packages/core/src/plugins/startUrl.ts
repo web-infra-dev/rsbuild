@@ -1,4 +1,4 @@
-import _ from '@modern-js/utils/lodash';
+import _ from 'lodash';
 import { ensureArray, type DefaultRsbuildPlugin } from '@rsbuild/shared';
 
 export const replacePlaceholder = (url: string, port: number) =>

@@ -1,5 +1,5 @@
 import type { Compiler, Compilation, WebpackPluginInstance } from 'webpack';
-import { kebabCase, upperFirst } from '@modern-js/utils/lodash';
+import { kebabCase, upperFirst } from 'lodash';
 import {
   PreconnectOption,
   DnsPrefetchOption,
@@ -14,7 +14,7 @@ function generateLinks(
   options: PreconnectOption[] | DnsPrefetchOption[],
   type: NetworkPerformanceType,
 ): Array<HtmlWebpackPlugin.HtmlTagObject> {
-  return options.map(option => ({
+  return options.map((option) => ({
     tagName: 'link',
     attributes: {
       rel: kebabCase(type),
@@ -48,11 +48,11 @@ export class HtmlNetworkPerformancePlugin implements WebpackPluginInstance {
       (compilation: Compilation) => {
         this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapPromise(
           `HTML${upperFirst(this.type)}Plugin`,
-          async htmlPluginData => {
+          async (htmlPluginData) => {
             const { headTags } = htmlPluginData;
 
             const options: PreconnectOption[] | DnsPrefetchOption[] =
-              this.options.map(option =>
+              this.options.map((option) =>
                 typeof option === 'string'
                   ? {
                       href: option,

@@ -1,4 +1,4 @@
-import _ from '@modern-js/utils/lodash';
+import _ from 'lodash';
 import { isFunction, isUndefined } from './utils';
 import { isOverriddenConfigKey } from '@modern-js/utils';
 

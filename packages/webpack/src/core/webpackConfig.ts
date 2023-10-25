@@ -7,7 +7,7 @@ import {
   type NodeEnv,
   type RsbuildTarget,
 } from '@rsbuild/shared';
-import { castArray } from '@modern-js/utils/lodash';
+import { castArray } from 'lodash';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import type { WebpackChain } from '@modern-js/utils';

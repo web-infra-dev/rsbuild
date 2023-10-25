@@ -67,6 +67,7 @@
     "babel-plugin-styled-components": "1.13.3",
     "caniuse-lite": "^1.0.30001520",
     "html-webpack-plugin": "5.5.3",
+    "lodash": "^4.17.21",
     "mini-css-extract-plugin": "2.7.6",
     "postcss": "8.4.31",
     "react-refresh": "0.14.0",
@@ -79,6 +80,7 @@
   },
   "devDependencies": {
     "@rsbuild/test-helper": "workspace:*",
+    "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "typescript": "^5",
     "react": "^18",

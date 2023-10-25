@@ -19,7 +19,7 @@ import { ChunkGroup } from './extractChunks';
 import { Chunk, Compilation } from 'webpack';
 import { PreloadOrPreFetchOption } from '../../../types';
 import { BeforeAssetTagGenerationHtmlPluginData } from './type';
-import { uniq } from '@modern-js/utils/lodash';
+import { uniq } from 'lodash';
 
 interface DoesChunkBelongToHtmlOptions {
   chunk: Chunk;
@@ -36,7 +36,9 @@ function recursiveChunkGroup(
     // EntryPoint
     return [chunkGroup.name];
   } else {
-    return parents.map(chunkParent => recursiveChunkGroup(chunkParent)).flat();
+    return parents
+      .map((chunkParent) => recursiveChunkGroup(chunkParent))
+      .flat();
   }
 }
 
@@ -47,7 +49,7 @@ function recursiveChunkEntryNames(chunk: Chunk): string[] {
   const [...chunkGroups] = chunk.groupsIterable;
   return uniq(
     chunkGroups
-      .map(chunkGroup => recursiveChunkGroup(chunkGroup))
+      .map((chunkGroup) => recursiveChunkGroup(chunkGroup))
       .flat()
       .filter(isChunkName),
   );
@@ -80,7 +82,7 @@ export function doesChunkBelongToHtml({
   // find the chunk belongs
   const chunkNames = recursiveChunkEntryNames(chunk);
 
-  return chunkNames.some(chunkName =>
+  return chunkNames.some((chunkName) =>
     isChunksFiltered(chunkName, options?.chunks, options?.excludeChunks),
   );
 }
