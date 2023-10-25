@@ -1,6 +1,5 @@
 import type { ArrayOrNot, ChainedConfig, FileFilterUtil } from '../utils';
 import { BabelConfigUtils, BabelTransformOptions } from '../../babel';
-import type { DevServerOptions } from '@modern-js/types';
 import type {
   AutoprefixerOptions,
   SassLoaderOptions,
@@ -12,11 +11,53 @@ import type {
   StyleLoaderOptions,
   CssMinimizerPluginOptions,
 } from '../thirdParty';
-import { BundlerChain } from '../bundlerConfig';
-import { ModifyBundlerChainUtils } from '../hooks';
+import type { BundlerChain } from '../bundlerConfig';
+import type { ModifyBundlerChainUtils } from '../hooks';
+import type { DevServerHttpsOptions } from './dev';
 
 /** html-rspack-plugin is compatible with html-webpack-plugin */
 export type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+
+export type DevServerOptions = {
+  /** config of hmr client. */
+  client?: {
+    path?: string;
+    port?: string;
+    host?: string;
+    protocol?: string;
+  };
+  /** Whether to enable gzip compression */
+  compress?: boolean;
+  devMiddleware?: {
+    writeToDisk?: boolean | ((filename: string) => boolean);
+    outputFileSystem?: Record<string, any>;
+  };
+  headers?: Record<string, string | string[]>;
+  /** Provides the ability to execute a custom function and apply custom middlewares */
+  /** Whether to watch files change. */
+  watch?: boolean;
+  /** Whether to enable hot reload. */
+  hot?: boolean | string;
+  /** Whether to enable page reload. */
+  liveReload?: boolean;
+  /** Whether to enable https. */
+  https?: DevServerHttpsOptions;
+  /** see https://github.com/bripkens/connect-history-api-fallback */
+  historyApiFallback?:
+    | boolean
+    | {
+        index?: string;
+        verbose?: boolean;
+        logger?: typeof console.log;
+        htmlAcceptHeaders?: string[];
+        disableDotRule?: true;
+        rewrites?: Array<{
+          from: RegExp;
+          to: string | RegExp | Function;
+        }>;
+      };
+  [propName: string]: any;
+};
 
 export type ToolsDevServerConfig = ChainedConfig<DevServerOptions>;
 

@@ -1,5 +1,6 @@
-import type { DevServerHttpsOptions } from '@modern-js/types';
 import type { ArrayOrNot } from '../utils';
+
+export type DevServerHttpsOptions = boolean | { key: string; cert: string };
 
 export type ProgressBarConfig = {
   id?: string;
