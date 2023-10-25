@@ -98,7 +98,6 @@ export const pluginBabel = (): RsbuildPlugin => ({
             baseBabelConfig,
             config.performance.transformLodash,
           );
-          applyPluginStyledComponents(baseBabelConfig, config, isProd);
 
           const babelConfig = mergeChainedOptions(
             baseBabelConfig,

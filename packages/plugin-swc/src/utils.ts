@@ -177,11 +177,13 @@ export async function applyPluginConfig(
   const isSSR = target === 'node';
 
   if (
+    // @ts-expect-error
     rsbuildConfig.tools.styledComponents !== false &&
     swc.extensions?.styledComponents !== false
   ) {
     const styledComponentsOptions = mergeChainedOptions(
       getDefaultStyledComponentsConfig(isProd, isSSR),
+      // @ts-expect-error
       rsbuildConfig.tools.styledComponents,
     );
     swc.extensions.styledComponents = {
