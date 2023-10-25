@@ -4,6 +4,7 @@ import {
   isUseCssSourceMap,
   mergeChainedOptions,
 } from '@rsbuild/shared';
+import { deepmerge } from '@rsbuild/shared/deepmerge';
 import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 
 type StylusOptions = {
@@ -32,7 +33,6 @@ export function pluginStylus(
       const { bundlerType } = api.context;
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
-        const { merge: deepMerge } = await import('@modern-js/utils/lodash');
 
         const mergedOptions = mergeChainedOptions<
           StylusLoaderOptions,
@@ -43,7 +43,7 @@ export function pluginStylus(
           },
           options,
           undefined,
-          deepMerge,
+          deepmerge,
         );
 
         const rule = chain.module

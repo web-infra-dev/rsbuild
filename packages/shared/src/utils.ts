@@ -5,6 +5,8 @@ import type {
 } from './types';
 import path from 'path';
 import fs from 'fs-extra';
+import pkgUp from 'pkg-up';
+import semver from 'semver';
 
 export const isDev = (): boolean => process.env.NODE_ENV === 'development';
 export const isProd = (): boolean => process.env.NODE_ENV === 'production';
@@ -119,4 +121,39 @@ export const ensureArray = <T>(params: T | T[]): T[] => {
     return params;
   }
   return [params];
+};
+
+/**
+ * Try to resolve npm package, return true if package is installed.
+ */
+export const isPackageInstalled = (
+  name: string,
+  resolvePaths: string | string[],
+) => {
+  try {
+    require.resolve(name, { paths: ensureArray(resolvePaths) });
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
+export const isBeyondReact17 = (cwd: string) => {
+  const pkgPath = pkgUp.sync({ cwd });
+
+  if (!pkgPath) {
+    return false;
+  }
+
+  const pkgInfo = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+  const deps = {
+    ...pkgInfo.devDependencies,
+    ...pkgInfo.dependencies,
+  };
+
+  if (typeof deps.react !== 'string') {
+    return false;
+  }
+
+  return semver.satisfies(semver.minVersion(deps.react)!, '>=17.0.0');
 };

@@ -3,7 +3,7 @@ import type { Context } from './context';
 import type { Compiler, MultiCompiler } from 'webpack';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
 import type { Server, ModernDevServerOptions } from '@modern-js/server';
-import type { AddressUrl } from '@modern-js/utils';
+import type { AddressUrl } from '../url';
 import { Logger } from '@modern-js/prod-server';
 
 export type Bundler = 'rspack' | 'webpack';

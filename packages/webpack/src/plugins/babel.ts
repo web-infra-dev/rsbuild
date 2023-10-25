@@ -6,11 +6,13 @@ import {
   JS_REGEX,
   TS_REGEX,
   mergeRegex,
+  getBabelUtils,
   addCoreJsEntry,
   mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
   getDefaultStyledComponentsConfig,
+  type RsbuildTarget,
 } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
 
@@ -19,7 +21,6 @@ import type {
   NormalizedConfig,
   TransformImport,
 } from '../types';
-import { getBabelUtils, isUseSSRBundle } from '@modern-js/utils';
 
 export const getUseBuiltIns = (config: NormalizedConfig) => {
   const { polyfill } = config.output;
@@ -99,7 +100,12 @@ export const pluginBabel = (): RsbuildPlugin => ({
             baseBabelConfig,
             config.performance.transformLodash,
           );
-          applyPluginStyledComponents(baseBabelConfig, config, isProd);
+          applyPluginStyledComponents(
+            baseBabelConfig,
+            config,
+            isProd,
+            api.context.target,
+          );
 
           const babelConfig = mergeChainedOptions(
             baseBabelConfig,
@@ -183,14 +189,15 @@ function applyPluginStyledComponents(
   babelConfig: BabelConfig,
   rsbuildConfig: NormalizedConfig,
   isProd: boolean,
+  target: RsbuildTarget | RsbuildTarget[],
 ) {
+  const enableSSROption =
+    target === 'node' || (Array.isArray(target) && target.includes('node'));
+
   const styledComponentsOptions =
     rsbuildConfig.tools.styledComponents !== false
       ? mergeChainedOptions(
-          getDefaultStyledComponentsConfig(
-            isProd,
-            isUseSSRBundle(rsbuildConfig),
-          ),
+          getDefaultStyledComponentsConfig(isProd, enableSSROption),
           rsbuildConfig.tools.styledComponents,
         )
       : false;

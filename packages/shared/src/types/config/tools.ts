@@ -1,9 +1,6 @@
 import type { ArrayOrNot, ChainedConfig, FileFilterUtil } from '../utils';
-import type {
-  DevServerOptions,
-  BabelTransformOptions,
-  BabelConfigUtils,
-} from '@modern-js/types';
+import { BabelConfigUtils, BabelTransformOptions } from '../../babel';
+import type { DevServerOptions } from '@modern-js/types';
 import type {
   AutoprefixerOptions,
   SassLoaderOptions,

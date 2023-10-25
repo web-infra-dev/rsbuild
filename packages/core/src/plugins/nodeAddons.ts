@@ -15,7 +15,7 @@ export const pluginNodeAddons = (): DefaultRsbuildPlugin => ({
           return;
         }
 
-        const { pkgUp } = await import('@modern-js/utils');
+        const pkgUp = await import('pkg-up');
 
         const getDistName = (resource: string) => {
           const pkgJSON = pkgUp.sync({ cwd: resource });

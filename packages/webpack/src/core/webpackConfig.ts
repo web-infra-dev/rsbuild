@@ -5,12 +5,12 @@ import {
   modifyBundlerChain,
   mergeChainedOptions,
   type NodeEnv,
+  type WebpackChain,
   type RsbuildTarget,
 } from '@rsbuild/shared';
 import { castArray } from 'lodash';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
-import type { WebpackChain } from '@modern-js/utils';
 
 import type {
   Context,

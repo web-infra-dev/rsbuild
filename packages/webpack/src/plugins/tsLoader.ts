@@ -1,13 +1,14 @@
 import {
   TS_REGEX,
+  getBabelUtils,
   mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
 } from '@rsbuild/shared';
 import _ from 'lodash';
 import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
-import { RsbuildPlugin } from '../types';
 import { getUseBuiltIns } from './babel';
+import type { RsbuildPlugin } from '../types';
 
 export const pluginTsLoader = (): RsbuildPlugin => {
   return {
@@ -19,7 +20,6 @@ export const pluginTsLoader = (): RsbuildPlugin => {
           if (!config.tools.tsLoader) {
             return;
           }
-          const { getBabelUtils } = await import('@modern-js/utils');
 
           const { rootPath } = api.context;
           const browserslist = await getBrowserslistWithDefault(

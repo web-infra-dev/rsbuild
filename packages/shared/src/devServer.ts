@@ -7,7 +7,9 @@ import type {
   OnBeforeStartDevServerFn,
   CompilerTapFn,
 } from './types';
+import { getAddressUrls } from './url';
 import { isFunction } from './utils';
+import { getPort } from './port';
 import type { ModernDevServerOptions, Server } from '@modern-js/server';
 import deepmerge from 'deepmerge';
 import { logger as defaultLogger, debug } from './logger';
@@ -108,12 +110,11 @@ export async function startDevServer<
     process.env.NODE_ENV = 'development';
   }
 
-  const { getPort } = await import('@modern-js/utils');
   const rsbuildConfig = options.context.config;
 
   const port = await getPort(rsbuildConfig.dev?.port || DEFAULT_PORT, {
     strictPort,
-    slient: getPortSilently,
+    silent: getPortSilently,
   });
 
   const host =
@@ -152,7 +153,6 @@ export async function startDevServer<
 
         debug('listen dev server done');
 
-        const { getAddressUrls } = await import('@modern-js/utils');
         const protocol = https ? 'https' : 'http';
         let urls = getAddressUrls(protocol, port, rsbuildConfig.dev?.host);
 
