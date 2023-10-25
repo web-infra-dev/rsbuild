@@ -1,7 +1,6 @@
 export { webpackProvider } from './provider';
 export type { WebpackProvider } from './provider';
 export { webpackBuild } from './core/build';
-export type { WebpackBuildError } from './core/build';
 export { createDefaultConfig } from './config/defaults';
 export type {
   LessLoaderOptions,
