@@ -1,7 +1,7 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginCache } from '@src/plugins/cache';
 
-vi.mock('@modern-js/utils', async (importOriginal) => {
+vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();
   return {
     ...mod,
