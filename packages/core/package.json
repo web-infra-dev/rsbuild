@@ -84,13 +84,16 @@
     "commander": "^10.0.1",
     "jiti": "^1.20.0",
     "lodash": "^4.17.21",
+    "pkg-up": "^3.1.0",
     "postcss": "8.4.31",
     "rspack-manifest-plugin": "5.0.0-alpha0",
+    "semver": "^7.5.4",
     "webpack": "^5.88.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
+    "@types/semver": "^7.5.4",
     "typescript": "^5"
   }
 }

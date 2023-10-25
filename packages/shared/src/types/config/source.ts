@@ -1,7 +1,8 @@
-import type { Alias } from '@modern-js/utils';
 import type { RsbuildTarget } from '../rsbuild';
 import type { ModifyChainUtils } from '../hooks';
 import type { ChainedConfig, JSONValue } from '../utils';
+
+export type Alias = Record<string, string | string[]>;
 
 export type ModuleScopes = Array<string | RegExp>;
 

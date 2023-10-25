@@ -1,6 +1,11 @@
 import _ from 'lodash';
 import { isFunction, isUndefined } from './utils';
-import { isOverriddenConfigKey } from '@modern-js/utils';
+
+/**
+ * When merging config, some properties prefer `override` rather than `merge to array`
+ */
+export const isOverriddenConfigKey = (key: string) =>
+  ['removeConsole', 'enableInlineScripts', 'enableInlineStyles'].includes(key);
 
 export const mergeRsbuildConfig = <T>(...configs: T[]): T =>
   _.mergeWith(

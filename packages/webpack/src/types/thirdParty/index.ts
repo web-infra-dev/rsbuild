@@ -1,4 +1,4 @@
-import type WebpackChain from '@modern-js/utils/webpack-chain';
+import type { WebpackChain } from '@rsbuild/shared';
 import type webpack from 'webpack';
 import type { Configuration as WebpackConfig } from 'webpack';
 import type { Options as RawTSLoaderOptions } from 'ts-loader';

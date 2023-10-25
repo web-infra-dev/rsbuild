@@ -1,8 +1,11 @@
 import { createDependenciesRegExp } from '@rsbuild/core/plugins/splitChunks';
-import { type SharedRsbuildPluginAPI, type CacheGroup } from '@rsbuild/shared';
+import {
+  isPackageInstalled,
+  type CacheGroup,
+  type SharedRsbuildPluginAPI,
+} from '@rsbuild/shared';
 
 export async function splitByExperience(rootPath: string): Promise<CacheGroup> {
-  const { isPackageInstalled } = await import('@modern-js/utils');
   const experienceCacheGroup: CacheGroup = {};
 
   const packageRegExps: Record<string, RegExp> = {

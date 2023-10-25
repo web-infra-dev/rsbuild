@@ -1,4 +1,4 @@
-import type WebpackChain from '@modern-js/utils/webpack-chain';
+import type WebpackChain from 'webpack-chain';
 import { SharedNormalizedConfig, BundlerChain } from './types';
 import { createVirtualModule } from './utils';
 

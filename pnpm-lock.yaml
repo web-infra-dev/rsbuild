@@ -342,12 +342,18 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      pkg-up:
+        specifier: ^3.1.0
+        version: 3.1.0
       postcss:
         specifier: 8.4.31
         version: 8.4.31
       rspack-manifest-plugin:
         specifier: 5.0.0-alpha0
         version: 5.0.0-alpha0(webpack@5.89.0)
+      semver:
+        specifier: ^7.5.4
+        version: 7.5.4
       webpack:
         specifier: ^5.88.1
         version: 5.89.0
@@ -358,6 +364,9 @@ importers:
       '@types/node':
         specifier: ^16
         version: 16.18.59
+      '@types/semver':
+        specifier: ^7.5.4
+        version: 7.5.4
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -813,18 +822,30 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      pkg-up:
+        specifier: ^3.1.0
+        version: 3.1.0
       postcss:
         specifier: 8.4.31
         version: 8.4.31
       rslog:
         specifier: ^1.1.0
         version: 1.1.0
+      semver:
+        specifier: ^7.5.4
+        version: 7.5.4
       source-map:
         specifier: ^0.7.4
         version: 0.7.4
+      url-join:
+        specifier: ^4.0.1
+        version: 4.0.1
       webpack:
         specifier: ^5.88.1
         version: 5.89.0
+      webpack-chain:
+        specifier: npm:webpack-5-chain@8.0.1
+        version: /webpack-5-chain@8.0.1
       webpack-sources:
         specifier: ^3.2.3
         version: 3.2.3
@@ -853,6 +874,12 @@ importers:
       '@types/node':
         specifier: ^16
         version: 16.18.59
+      '@types/semver':
+        specifier: ^7.5.4
+        version: 7.5.4
+      '@types/url-join':
+        specifier: ^4.0.2
+        version: 4.0.2
       html-webpack-plugin:
         specifier: 5.5.3
         version: 5.5.3(webpack@5.89.0)
@@ -5689,6 +5716,10 @@ packages:
     resolution: {integrity: sha512-zC0iXxAv1C1ERURduJueYzkzZ2zaGyc+P2c95hgkikHPr3z8EdUZOlgEQ5X0DRmwDZn+hekycQnoeiiRVrmilQ==}
     dev: true
 
+  /@types/url-join@4.0.2:
+    resolution: {integrity: sha512-uv54MkAtQ4B5Qm20LmMN7tAdczqRenu1K6Sf7PHCygqylVJlRwjpUE5OGofqxdXGH3QJUu+qvDZzPadz5EOjxA==}
+    dev: true
+
   /@types/yargs-parser@21.0.2:
     resolution: {integrity: sha512-5qcvofLPbfjmBfKaLfj/+f+Sbd6pN4zl7w7VSVI5uz7m9QZTuB2aZAa2uo1wHFBNN2x6g/SoTkXmd8mQnQF2Cw==}
 
@@ -7629,6 +7660,11 @@ packages:
     dependencies:
       type-detect: 4.0.8
     dev: true
+
+  /deepmerge@1.5.2:
+    resolution: {integrity: sha512-95k0GDqvBjZavkuvzx/YqVLv/6YYa17fz6ILMSf7neqQITCPbnfEnQvEgMPNjH4kgobe7+WIL0yJEHku+H3qtQ==}
+    engines: {node: '>=0.10.0'}
+    dev: false
 
   /deepmerge@4.3.1:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
@@ -9640,6 +9676,10 @@ packages:
   /iterate-object@1.3.4:
     resolution: {integrity: sha512-4dG1D1x/7g8PwHS9aK6QV5V94+ZvyP4+d19qDv43EzImmrndysIl4prmJ1hWWIGCqrZHyaHBm6BSEWHOLnpoNw==}
     dev: true
+
+  /javascript-stringify@2.1.0:
+    resolution: {integrity: sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==}
+    dev: false
 
   /jest-diff@29.7.0:
     resolution: {integrity: sha512-LMIgiIrhigmPrs03JHpxUh2yISK3vLFPkAodPeo0+BuF7wA2FoQbkEg1u8gBYBThncu7e1oEDUfIXVuTqLRUjw==}
@@ -13664,6 +13704,10 @@ packages:
     dependencies:
       punycode: 2.3.0
 
+  /url-join@4.0.1:
+    resolution: {integrity: sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==}
+    dev: false
+
   /url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
     dependencies:
@@ -14076,6 +14120,14 @@ packages:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
     engines: {node: '>=12'}
     dev: true
+
+  /webpack-5-chain@8.0.1:
+    resolution: {integrity: sha512-Tu1w80WA2Z+X6e7KzGy+cc0A0z+npVJA/fh55q2azMJ030gqz343Kx+yNAstDCeugsepmtDWY2J2IBRW/O+DEA==}
+    engines: {node: '>=10'}
+    dependencies:
+      deepmerge: 1.5.2
+      javascript-stringify: 2.1.0
+    dev: false
 
   /webpack-sources@1.4.3:
     resolution: {integrity: sha512-lgTS3Xhv1lCOKo7SA5TjKXMjpSM4sBjNV5+q2bqesbSPs5FjGmU6jjtBSkX9b4qW87vDIsCIlUPOEhbZrMdjeQ==}

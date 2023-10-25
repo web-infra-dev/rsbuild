@@ -1,5 +1,10 @@
 import type { RsbuildConfig } from '@rsbuild/core';
-import { isProd, isUsingHMR, SharedRsbuildPluginAPI } from '@rsbuild/shared';
+import {
+  isProd,
+  isUsingHMR,
+  isBeyondReact17,
+  type SharedRsbuildPluginAPI,
+} from '@rsbuild/shared';
 import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 
 const applyRspack = (api: SharedRsbuildPluginAPI) => {
@@ -50,8 +55,6 @@ const applyRspack = (api: SharedRsbuildPluginAPI) => {
 
 const applyWebpack = (api: SharedRsbuildPluginAPI) => {
   api.modifyRsbuildConfig(async (config, { mergeRsbuildConfig }) => {
-    const { isBeyondReact17 } = await import('@modern-js/utils');
-
     const babelConfig: RsbuildConfig = {
       tools: {
         babel(_, { addPresets, addPlugins }) {
