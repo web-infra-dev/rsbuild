@@ -1,5 +1,12 @@
-import React from 'react';
-import { render } from 'react-dom';
-import App from './App';
+import { content } from '@/common/test';
 
-render(React.createElement(App), document.getElementById('root'));
+const testAliasEl = document.createElement('div');
+testAliasEl.id = 'foo';
+testAliasEl.innerHTML = content;
+document.body.appendChild(testAliasEl);
+
+const testEl = document.createElement('div');
+testEl.id = 'test';
+testEl.innerHTML = `Hello Rsbuild!`;
+
+document.body.appendChild(testEl);

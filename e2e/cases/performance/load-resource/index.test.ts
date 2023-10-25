@@ -2,6 +2,7 @@ import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 import { webpackOnlyTest } from '@scripts/helper';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
@@ -11,6 +12,7 @@ test('should generate prefetch link when prefetch is defined', async () => {
     entry: {
       main: join(fixtures, 'src/page1/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         assetPrefix: 'https://www.foo.com',
@@ -48,6 +50,7 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
     entry: {
       main: join(fixtures, 'src/page1/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         assetPrefix: '//www.foo.com',
@@ -82,6 +85,7 @@ test('should generate prefetch link with filter', async () => {
     entry: {
       main: join(fixtures, 'src/page1/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
         prefetch: {
@@ -121,6 +125,7 @@ webpackOnlyTest(
         page1: join(fixtures, 'src/page1/index.ts'),
         page2: join(fixtures, 'src/page2/index.ts'),
       },
+      plugins: [pluginReact()],
       rsbuildConfig: {
         performance: {
           prefetch: {
@@ -166,6 +171,7 @@ test('should generate preload link when preload is defined', async () => {
     entry: {
       main: join(fixtures, 'src/page1/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
         preload: true,

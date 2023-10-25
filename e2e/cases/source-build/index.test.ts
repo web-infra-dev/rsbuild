@@ -3,6 +3,7 @@ import { expect } from '@playwright/test';
 import { webpackOnlyTest } from '@scripts/helper';
 import { dev, getHrefByEntryName } from '@scripts/shared';
 import { pluginSourceBuild } from '@rsbuild/plugin-source-build';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixture = join(__dirname, 'app');
 
@@ -14,7 +15,7 @@ webpackOnlyTest(
       entry: {
         index: join(fixture, 'src/index.tsx'),
       },
-      plugins: [pluginSourceBuild()],
+      plugins: [pluginSourceBuild(), pluginReact()],
     });
 
     await page.goto(getHrefByEntryName('index', rsbuild.port));

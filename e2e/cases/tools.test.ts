@@ -64,6 +64,7 @@ webpackOnlyTest('bundlerChain - custom publicPath function', async () => {
     entry: {
       main: join(fixtures, 'output/rem/src/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         disableFilenameHash: true,
