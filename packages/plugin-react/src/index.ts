@@ -12,7 +12,7 @@ export type PluginReactOptions = {
 
 const defaultOptions: Required<PluginReactOptions> = {
   disableSvgr: false,
-  svgDefaultExport: 'component',
+  svgDefaultExport: 'url',
 };
 
 export const pluginReact = (

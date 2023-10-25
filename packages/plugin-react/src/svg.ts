@@ -76,13 +76,10 @@ export const applySvgr = (
       })
       .end()
       .when(defaultExport === 'url', (c) =>
-        c
-          .use(CHAIN_ID.USE.URL)
-          .loader(getSharedPkgCompiledPath('url-loader'))
-          .options({
-            limit: config.output.dataUriLimit.svg,
-            name: outputName,
-          }),
+        c.use(CHAIN_ID.USE.URL).loader(require.resolve('url-loader')).options({
+          limit: config.output.dataUriLimit.svg,
+          name: outputName,
+        }),
       );
   });
 };
