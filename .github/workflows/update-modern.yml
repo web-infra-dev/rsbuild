@@ -39,6 +39,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
+          token: ${{ secrets.REPO_SCOPED_TOKEN }}
           branch: 'feat-update-modern-version'
           title: 'feat: update modern version'
           body: 'feat: update modern version'
