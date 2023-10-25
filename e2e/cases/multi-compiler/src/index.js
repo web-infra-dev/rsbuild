@@ -1,6 +1,5 @@
-import React from 'react';
-import { render } from 'react-dom';
-import App from './App';
+const testEl = document.createElement('div');
+testEl.id = 'test';
+testEl.innerHTML = 'Hello Rsbuild!';
 
-// eslint-disable-next-line no-undef
-render(React.createElement(App), document.getElementById('root'));
+document.body.appendChild(testEl);

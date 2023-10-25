@@ -2,6 +2,7 @@ import { join } from 'path';
 import { fs } from '@rsbuild/shared/fs-extra';
 import { expect, test } from '@playwright/test';
 import { dev, getHrefByEntryName } from '@scripts/shared';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
@@ -13,6 +14,7 @@ test('default & hmr (default true)', async ({ page }) => {
     entry: {
       main: join(fixtures, 'hmr', 'test-src/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       tools: {
         devServer: {
@@ -82,6 +84,7 @@ test('dev.port & output.distPath', async ({ page }) => {
     entry: {
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       dev: {
         port: 3000,
@@ -123,6 +126,7 @@ test.skip('hmr should work when setting dev.port & serverOptions.dev.client', as
     entry: {
       main: join(cwd, 'test-src-1/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       dev: {
         port: 3001,

@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
@@ -65,6 +66,7 @@ cases.forEach((_case) => {
         main: join(_case.cwd, 'src/index.js'),
       },
       runServer: true,
+      plugins: [pluginReact()],
       rsbuildConfig: _case.config || {},
     });
 
