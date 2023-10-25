@@ -10,6 +10,8 @@ export type Props = {
   char: string;
   width: number;
   buildIcon: string;
+  errorIcon: string;
+  errorInfo: string;
   message: string;
   done: boolean;
   messageWidth: number;
