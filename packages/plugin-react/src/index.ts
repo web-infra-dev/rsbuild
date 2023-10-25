@@ -6,7 +6,13 @@ import { applyBasicReactSupport } from './react';
 import { applySvgr, SvgDefaultExport } from './svg';
 
 export type PluginReactOptions = {
+  /**
+   * Whether to transform SVGs into React components. If true, will treat all .svg files as assets.
+   */
   disableSvgr?: boolean;
+  /**
+   * Configure the default export type of SVG files.
+   */
   svgDefaultExport?: SvgDefaultExport;
 };
 
