@@ -1742,7 +1742,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   {
                     "displayName": true,
                     "pure": true,
-                    "ssr": false,
+                    "ssr": true,
                     "transpileTemplateLiterals": true,
                   },
                 ],
@@ -1817,7 +1817,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   {
                     "displayName": true,
                     "pure": true,
-                    "ssr": false,
+                    "ssr": true,
                     "transpileTemplateLiterals": true,
                   },
                 ],

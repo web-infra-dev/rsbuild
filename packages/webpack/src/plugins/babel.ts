@@ -6,12 +6,13 @@ import {
   JS_REGEX,
   TS_REGEX,
   mergeRegex,
+  getBabelUtils,
   addCoreJsEntry,
   mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
   getDefaultStyledComponentsConfig,
-  RsbuildTarget,
+  type RsbuildTarget,
 } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
 
@@ -20,7 +21,6 @@ import type {
   NormalizedConfig,
   TransformImport,
 } from '../types';
-import { getBabelUtils } from '@modern-js/utils';
 
 export const getUseBuiltIns = (config: NormalizedConfig) => {
   const { polyfill } = config.output;
