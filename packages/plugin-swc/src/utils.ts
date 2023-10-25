@@ -32,11 +32,6 @@ export function determinePresetReact(
   presetReact.runtime ??= isBeyondReact17(root) ? 'automatic' : 'classic';
 }
 
-const BUILDER_SWC_DEBUG_MODE = 'BUILDER_SWC_DEBUG_MODE';
-export function isDebugMode(): boolean {
-  return process.env[BUILDER_SWC_DEBUG_MODE] !== undefined;
-}
-
 export function checkUseMinify(
   options: ObjPluginSwcOptions,
   config: NormalizedConfig,

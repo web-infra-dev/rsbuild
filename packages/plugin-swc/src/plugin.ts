@@ -10,7 +10,6 @@ import type { PluginSwcOptions, TransformConfig } from './types';
 import {
   applyPluginConfig,
   checkUseMinify,
-  isDebugMode,
   removeUselessOptions,
 } from './utils';
 import { SwcMinimizerPlugin } from './minimizer';
@@ -86,14 +85,6 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
           .use(CHAIN_ID.USE.SWC)
           .loader(path.resolve(__dirname, './loader'))
           .options(removeUselessOptions(mainConfig) satisfies TransformConfig);
-      }
-
-      if (isDebugMode()) {
-        const { CheckPolyfillPlugin } = await import('./checkPolyfillPlugin');
-
-        chain
-          .plugin(CHAIN_ID.PLUGIN.SWC_POLYFILL_CHECKER)
-          .use(new CheckPolyfillPlugin(mainConfig));
       }
 
       if (checkUseMinify(mainConfig, rsbuildConfig, isProd)) {
