@@ -25,7 +25,8 @@
   "license": "MIT",
   "dependencies": {
     "@modern-js/utils": "^2.37.1",
-    "@rsbuild/shared": "workspace:*"
+    "@rsbuild/shared": "workspace:*",
+    "babel-plugin-styled-components": "1.13.3"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

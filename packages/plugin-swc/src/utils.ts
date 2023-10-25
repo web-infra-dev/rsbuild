@@ -7,6 +7,7 @@ import {
   ModifyChainUtils,
   mergeChainedOptions,
   getBrowserslistWithDefault,
+  // TODO: move into plugin-styled-components
   getDefaultStyledComponentsConfig,
 } from '@rsbuild/shared';
 import { Extensions } from '@modern-js/swc-plugins';
