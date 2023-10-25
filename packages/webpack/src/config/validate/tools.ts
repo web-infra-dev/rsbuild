@@ -24,7 +24,6 @@ export const toolsConfigSchema: z.ZodType<ToolsConfig> = sharedToolsConfigSchema
       z.any(),
       z.object({ entryName: z.string(), entryValue: z.any() }),
     ),
-    styledComponents: z.chained(z.any()),
     cssLoader: z.chained(z.any(), z.object({ addPlugins: z.function() })),
     styleLoader: z.chained(z.any()),
     cssExtract: z.partialObj({

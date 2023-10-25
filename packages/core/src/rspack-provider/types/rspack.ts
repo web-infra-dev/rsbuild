@@ -101,6 +101,18 @@ export type BuiltinSwcLoaderOptions = {
     'react' | 'decorator' | 'presetEnv' | 'emotion' | 'relay'
   > & {
     import?: BuiltinsOptions['pluginImport'];
+    styledComponents?: {
+      displayName?: boolean;
+      ssr?: boolean;
+      fileName?: boolean;
+      meaninglessFileNames?: string[];
+      namespace?: string;
+      topLevelImportPaths?: string[];
+      transpileTemplateLiterals?: boolean;
+      minify?: boolean;
+      pure?: boolean;
+      cssProps?: boolean;
+    };
   };
 };
 

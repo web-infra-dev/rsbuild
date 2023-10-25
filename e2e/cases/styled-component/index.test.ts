@@ -1,7 +1,7 @@
 import path from 'path';
 import { build } from '@scripts/shared';
-import { webpackOnlyTest } from '@scripts/helper';
-import { expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
 
 const commonConfig = {
   cwd: __dirname,
@@ -18,20 +18,8 @@ const commonConfig = {
   },
 };
 
-const noStyledConfig = {
-  ...commonConfig,
-  rsbuildConfig: {
-    ...commonConfig.rsbuildConfig,
-    tools: {
-      ...commonConfig.rsbuildConfig.tools,
-      styledComponents: false as const,
-    },
-  },
-};
-
-// TODO: needs builtin:swc-loader
-webpackOnlyTest('should allow to disable styled-components', async () => {
-  const rsbuild = await build(noStyledConfig);
+test('should not compiled styled-components by default', async () => {
+  const rsbuild = await build(commonConfig);
   const files = await rsbuild.unwrapOutputJSON();
 
   const content =
@@ -39,9 +27,11 @@ webpackOnlyTest('should allow to disable styled-components', async () => {
   expect(content).toContain('div`');
 });
 
-// TODO: needs builtin:swc-loader
-webpackOnlyTest('should transform styled-components by default', async () => {
-  const rsbuild = await build(commonConfig);
+test('should transform styled-components', async () => {
+  const rsbuild = await build({
+    ...commonConfig,
+    plugins: [pluginStyledComponents()],
+  });
   const files = await rsbuild.unwrapOutputJSON();
 
   const content =

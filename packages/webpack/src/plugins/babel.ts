@@ -10,7 +10,6 @@ import {
   mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
-  getDefaultStyledComponentsConfig,
 } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
 
@@ -176,30 +175,6 @@ export const pluginBabel = (): RsbuildPlugin => ({
 function applyPluginLodash(config: BabelConfig, transformLodash?: boolean) {
   if (transformLodash) {
     config.plugins?.push([getCompiledPath('babel-plugin-lodash'), {}]);
-  }
-}
-
-function applyPluginStyledComponents(
-  babelConfig: BabelConfig,
-  rsbuildConfig: NormalizedConfig,
-  isProd: boolean,
-) {
-  const styledComponentsOptions =
-    rsbuildConfig.tools.styledComponents !== false
-      ? mergeChainedOptions(
-          getDefaultStyledComponentsConfig(
-            isProd,
-            isUseSSRBundle(rsbuildConfig),
-          ),
-          rsbuildConfig.tools.styledComponents,
-        )
-      : false;
-
-  if (styledComponentsOptions) {
-    babelConfig.plugins?.push([
-      require.resolve('babel-plugin-styled-components'),
-      styledComponentsOptions,
-    ]);
   }
 }
 

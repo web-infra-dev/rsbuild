@@ -224,6 +224,9 @@ importers:
 
   e2e/cases/styled-component:
     dependencies:
+      '@rsbuild/plugin-styled-components':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-styled-components
       styled-components:
         specifier: ^6.0.0
         version: 6.1.0(react-dom@18.2.0)(react@18.2.0)
@@ -547,6 +550,31 @@ importers:
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
+  packages/plugin-styled-components:
+    dependencies:
+      '@modern-js/utils':
+        specifier: ^2.37.1
+        version: 2.37.1
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
+      '@types/node':
+        specifier: ^16
+        version: 16.18.59
       typescript:
         specifier: ^5
         version: 5.2.2
