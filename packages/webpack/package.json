@@ -57,7 +57,6 @@
   },
   "dependencies": {
     "@modern-js/server": "^2.37.1",
-    "@modern-js/types": "^2.37.1",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.10",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/babel-preset": "workspace:*",

@@ -161,7 +161,6 @@
   "dependencies": {
     "@modern-js/prod-server": "^2.37.1",
     "@modern-js/server": "^2.37.1",
-    "@modern-js/types": "^2.37.1",
     "@types/babel__core": "^7.20.3",
     "@types/fs-extra": "^11.0.2",
     "acorn": "^8.10.0",

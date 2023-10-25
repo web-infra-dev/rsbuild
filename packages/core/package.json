@@ -74,7 +74,6 @@
   },
   "dependencies": {
     "@modern-js/server": "^2.37.1",
-    "@modern-js/types": "^2.37.1",
     "@rspack/core": "0.3.8",
     "@rspack/dev-client": "0.3.8",
     "@rspack/plugin-html": "0.3.8",

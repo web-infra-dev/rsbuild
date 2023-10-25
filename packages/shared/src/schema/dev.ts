@@ -1,5 +1,8 @@
-import { DevServerHttpsOptions } from '@modern-js/types/server';
-import { ProgressBarConfig, SharedDevConfig } from '../types';
+import type {
+  SharedDevConfig,
+  ProgressBarConfig,
+  DevServerHttpsOptions,
+} from '../types';
 import { z } from '../utils';
 import { ZodType } from '../zod';
 
