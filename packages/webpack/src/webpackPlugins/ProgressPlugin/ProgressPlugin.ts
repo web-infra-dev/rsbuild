@@ -7,7 +7,6 @@ import type { Props } from './helpers/type';
 export interface ProgressOptions
   extends Omit<Partial<Props>, 'message' | 'total' | 'current' | 'done'> {
   id?: string;
-  clearOnDone?: boolean;
 }
 
 export class ProgressPlugin extends webpack.ProgressPlugin {
@@ -20,7 +19,7 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
   compileTime: string | null = null;
 
   constructor(options: ProgressOptions) {
-    const { id = 'Modern', clearOnDone = false } = options;
+    const { id = 'Rsbuild' } = options;
 
     const nonTTYLogger = createNonTTYLogger();
     const friendlyPercentage = createFriendlyPercentage();
@@ -47,10 +46,6 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
             hasErrors: this.hasCompileErrors,
           });
           bus.render();
-
-          if (percentage === 1 && clearOnDone) {
-            bus.clear();
-          }
         } else {
           nonTTYLogger.log({
             id,
