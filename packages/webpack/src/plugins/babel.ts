@@ -32,7 +32,7 @@ export const getUseBuiltIns = (config: NormalizedConfig) => {
 export const pluginBabel = (): RsbuildPlugin => ({
   name: 'plugin-babel',
   setup(api) {
-    api.modifyWebpackChain(
+    api.modifyBundlerChain(
       async (
         chain,
         {
