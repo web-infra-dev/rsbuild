@@ -2,4 +2,4 @@
 '@rsbuild/plugin-svgr': patch
 ---
 
-feat: extract svgr as a standalone package
+feat(plugin-svgr): extract svgr as a standalone package
