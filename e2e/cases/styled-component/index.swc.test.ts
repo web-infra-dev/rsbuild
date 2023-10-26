@@ -2,6 +2,7 @@ import path from 'path';
 import { build } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { pluginSwc } from '@rsbuild/plugin-swc';
+import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
 
 const commonConfig = {
   cwd: __dirname,
@@ -33,7 +34,7 @@ const noStyledConfig = {
   },
 };
 
-test('should allow to disable styled-components when use swc plugin', async () => {
+test('should not compiled styled-components by default when use swc plugin', async () => {
   const rsbuild = await build({
     ...noStyledConfig,
     plugins: [pluginSwc()],
@@ -53,7 +54,7 @@ test('should allow to disable styled-components when use swc plugin', async () =
 test('should transform styled-components by default when use swc plugin', async () => {
   const rsbuild = await build({
     ...commonConfig,
-    plugins: [pluginSwc()],
+    plugins: [pluginSwc(), pluginStyledComponents()],
   });
   const files = await rsbuild.unwrapOutputJSON();
 

@@ -41,42 +41,29 @@ export const pluginStyledComponents = (
         return;
       }
 
-      if (bundlerType === 'rspack') {
-        const rule = chain.module.rule(CHAIN_ID.RULE.JS);
-
-        rule.use(CHAIN_ID.USE.SWC).tap((options) => {
-          options.rspackExperiments ??= {};
-          options.rspackExperiments.styledComponents = styledComponentsOptions;
-          return options;
-        });
-
-        if (chain.module.rules.has(CHAIN_ID.RULE.JS_DATA_URI)) {
-          chain.module
-            .rule(CHAIN_ID.RULE.JS_DATA_URI)
-            .use(CHAIN_ID.USE.SWC)
-            .tap((options) => {
-              options.rspackExperiments ??= {};
-              options.rspackExperiments.styledComponents =
-                styledComponentsOptions;
-              return options;
-            });
-        }
-      } else {
-        const rule = chain.module.rule(CHAIN_ID.RULE.JS);
-        rule.use(CHAIN_ID.USE.BABEL).tap((babelConfig) => {
-          babelConfig.plugins ??= [];
-          babelConfig.plugins.push([
-            require.resolve('babel-plugin-styled-components'),
-            styledComponentsOptions,
-          ]);
-          return babelConfig;
-        });
-
-        if (chain.module.rules.has(CHAIN_ID.RULE.JS_DATA_URI)) {
-          chain.module
-            .rule(CHAIN_ID.RULE.JS_DATA_URI)
-            .use(CHAIN_ID.USE.BABEL)
-            .tap((babelConfig) => {
+      [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI].forEach((ruleId) => {
+        if (chain.module.rules.has(ruleId)) {
+          const rule = chain.module.rule(ruleId);
+          // apply swc
+          if (rule.uses.has(CHAIN_ID.USE.SWC)) {
+            // apply rspack builtin:swc-loader
+            if (bundlerType === 'rspack') {
+              rule.use(CHAIN_ID.USE.SWC).tap((options) => {
+                options.rspackExperiments ??= {};
+                options.rspackExperiments.styledComponents =
+                  styledComponentsOptions;
+                return options;
+              });
+            } else {
+              // apply webpack swc-plugin
+              rule.use(CHAIN_ID.USE.SWC).tap((swc) => {
+                swc.extensions.styledComponents = styledComponentsOptions;
+                return swc;
+              });
+            }
+          } else if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
+            // apply babel
+            rule.use(CHAIN_ID.USE.BABEL).tap((babelConfig) => {
               babelConfig.plugins ??= [];
               babelConfig.plugins.push([
                 require.resolve('babel-plugin-styled-components'),
@@ -84,8 +71,9 @@ export const pluginStyledComponents = (
               ]);
               return babelConfig;
             });
+          }
         }
-      }
+      });
     });
   },
 });

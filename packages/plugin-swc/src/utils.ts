@@ -5,10 +5,7 @@ import {
   logger,
   isUsingHMR,
   ModifyChainUtils,
-  mergeChainedOptions,
   getBrowserslistWithDefault,
-  // TODO: move into plugin-styled-components
-  getDefaultStyledComponentsConfig,
 } from '@rsbuild/shared';
 import { Extensions } from '@modern-js/swc-plugins';
 import { getDefaultSwcConfig } from './plugin';
@@ -172,26 +169,6 @@ export async function applyPluginConfig(
       rsbuildConfig,
       target,
     );
-  }
-
-  const isSSR = target === 'node';
-
-  if (
-    // @ts-expect-error
-    rsbuildConfig.tools.styledComponents !== false &&
-    swc.extensions?.styledComponents !== false
-  ) {
-    const styledComponentsOptions = mergeChainedOptions(
-      getDefaultStyledComponentsConfig(isProd, isSSR),
-      // @ts-expect-error
-      rsbuildConfig.tools.styledComponents,
-    );
-    swc.extensions.styledComponents = {
-      ...styledComponentsOptions,
-      ...(typeof swc.extensions.styledComponents === 'object'
-        ? swc.extensions?.styledComponents
-        : {}),
-    };
   }
 
   const extensions: Extensions | OuterExtensions = (swc.extensions ??= {});

@@ -556,16 +556,19 @@ importers:
 
   packages/plugin-styled-components:
     dependencies:
-      '@modern-js/utils':
-        specifier: ^2.37.1
-        version: 2.37.1
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      babel-plugin-styled-components:
+        specifier: 1.13.3
+        version: 1.13.3(styled-components@6.1.0)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/plugin-swc':
+        specifier: workspace:*
+        version: link:../plugin-swc
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
@@ -944,9 +947,6 @@ importers:
       babel-plugin-import:
         specifier: 1.13.5
         version: 1.13.5
-      babel-plugin-styled-components:
-        specifier: 1.13.3
-        version: 1.13.3(styled-components@6.1.0)
       caniuse-lite:
         specifier: ^1.0.30001520
         version: 1.0.30001551

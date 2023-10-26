@@ -1,4 +1,4 @@
-import { createStubRsbuild } from '@rsbuild/webpack/stub';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginSwc } from '../src';
 import { pluginBabel } from '@rsbuild/webpack/plugin-babel';
 import { applyPluginConfig } from '../src/utils';
@@ -20,7 +20,7 @@ describe('plugin-swc', () => {
       plugins: [pluginBabel(), pluginSwc()],
       rsbuildConfig: {},
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -31,7 +31,7 @@ describe('plugin-swc', () => {
       plugins: [pluginBabel(), pluginSwc()],
       rsbuildConfig: {},
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.optimization).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
@@ -50,7 +50,7 @@ describe('plugin-swc', () => {
         }),
       ],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.optimization).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
@@ -71,7 +71,7 @@ describe('plugin-swc', () => {
         }),
       ],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.optimization).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
@@ -88,7 +88,7 @@ describe('plugin-swc', () => {
         }),
       ],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.optimization).toBeFalsy();
     process.env.NODE_ENV = 'test';
   });
@@ -108,7 +108,7 @@ describe('plugin-swc', () => {
         }),
       ],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.optimization).toBeFalsy();
     process.env.NODE_ENV = 'test';
   });
@@ -125,7 +125,7 @@ describe('plugin-swc', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -140,7 +140,7 @@ describe('plugin-swc', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.module).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
@@ -153,7 +153,7 @@ describe('plugin-swc', () => {
       plugins: [pluginSwc()],
       target: ['node', 'service-worker', 'web', 'web-worker'],
     });
-    const configs = await rsbuild.unwrapWebpackConfigs();
+    const configs = await rsbuild.initConfigs();
 
     for (const config of configs) {
       expect(config.module).toMatchSnapshot();
@@ -284,7 +284,7 @@ describe('plugin-swc', () => {
       ],
       rsbuildConfig: {},
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config.module!.rules).toMatchSnapshot();
   });
