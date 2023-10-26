@@ -33,7 +33,6 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
-    "@modern-js/utils": "^2.37.1",
     "typescript": "^5"
   },
   "publishConfig": {

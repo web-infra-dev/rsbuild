@@ -1,5 +1,20 @@
 # Plugin List
 
+## Using Plugins
+
+You can register Rsbuild plugins using the `plugins` option in `rsbuild.config.ts`.
+
+For example, to register a Vue plugin:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginVue } from '@rsbuild/plugin-vue';
+
+export default defineConfig({
+  plugins: [pluginVue()],
+});
+```
+
 ## Universal Plugins
 
 The following are universal plugins that can be used in Rspack mode and Webpack mode of Rsbuild:

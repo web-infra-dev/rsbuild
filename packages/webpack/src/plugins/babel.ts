@@ -6,6 +6,7 @@ import {
   JS_REGEX,
   TS_REGEX,
   mergeRegex,
+  getBabelUtils,
   addCoreJsEntry,
   mergeChainedOptions,
   applyScriptCondition,
@@ -18,7 +19,6 @@ import type {
   NormalizedConfig,
   TransformImport,
 } from '../types';
-import { getBabelUtils, isUseSSRBundle } from '@modern-js/utils';
 
 export const getUseBuiltIns = (config: NormalizedConfig) => {
   const { polyfill } = config.output;

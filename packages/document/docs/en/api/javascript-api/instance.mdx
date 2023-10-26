@@ -332,7 +332,7 @@ await rsbuild.startDevServer({
 
 Then Rsbuild will use the custom logger to output logs.
 
-## rsbuild.serve
+## rsbuild.preview
 
 Start a server to preview the production build locally. This method should be executed after `rsbuild.build`.
 
@@ -353,17 +353,17 @@ function server(): Promise<StartServerResult>;
 Start the server：
 
 ```ts
-await rsbuild.serve();
+await rsbuild.preview();
 ```
 
-`serve` returns the following parameters:
+`preview` returns the following parameters:
 
 - `urls`: URLs to access server.
 - `port`: The actual listening port number.
 - `server`: Server instance object.
 
 ```ts
-const { urls, port, server } = await rsbuild.serve();
+const { urls, port, server } = await rsbuild.preview();
 console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
 console.log(port); // 8080
 

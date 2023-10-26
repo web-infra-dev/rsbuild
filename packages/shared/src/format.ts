@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import type { Stats, MultiStats } from './types';
-import { formatWebpackMessages } from '@modern-js/utils/universal/format-webpack';
+import { formatWebpackMessages } from './formatWebpack';
 
 export function formatStats(stats: Stats | MultiStats, showWarnings = true) {
   const statsData = stats.toJson({

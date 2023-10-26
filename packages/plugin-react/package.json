@@ -26,7 +26,6 @@
   "dependencies": {
     "@rspack/plugin-react-refresh": "0.3.8",
     "@babel/preset-react": "^7.22.15",
-    "@modern-js/utils": "^2.37.1",
     "@rsbuild/shared": "workspace:*",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.10",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24"

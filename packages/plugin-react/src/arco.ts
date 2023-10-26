@@ -1,6 +1,8 @@
-import { isPackageInstalled } from '@modern-js/utils';
 import { useSSR } from './antd';
-import { SharedRsbuildPluginAPI } from '@rsbuild/shared';
+import {
+  isPackageInstalled,
+  type SharedRsbuildPluginAPI,
+} from '@rsbuild/shared';
 
 export const applyArcoSupport = (api: SharedRsbuildPluginAPI) => {
   const ARCO_NAME = '@arco-design/web-react';

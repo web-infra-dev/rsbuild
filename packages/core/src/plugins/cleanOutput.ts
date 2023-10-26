@@ -1,4 +1,11 @@
 import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
+import { fs } from '@rsbuild/shared/fs-extra';
+
+const emptyDir = async (dir: string) => {
+  if (await fs.pathExists(dir)) {
+    await fs.emptyDir(dir);
+  }
+};
 
 export const pluginCleanOutput = (): DefaultRsbuildPlugin => ({
   name: 'plugin-clean-output',
@@ -8,7 +15,6 @@ export const pluginCleanOutput = (): DefaultRsbuildPlugin => ({
       const config = api.getNormalizedConfig();
 
       if (config.output.cleanDistPath) {
-        const { emptyDir } = await import('@modern-js/utils');
         const { distPath } = api.context;
         await emptyDir(distPath);
       }

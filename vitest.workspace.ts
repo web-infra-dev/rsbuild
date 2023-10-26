@@ -1,6 +1,7 @@
 import { defineWorkspace } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { Console } from 'console';
+import isCI from 'is-ci';
 
 // Disable chalk in test
 process.env.FORCE_COLOR = '0';
@@ -18,11 +19,13 @@ export default defineWorkspace([
       testTimeout: 30000,
       restoreMocks: true,
       include: ['packages/**/*.test.ts'],
-      // TODO fix test cases of plugins
-      exclude: [
-        'packages/plugin-{swc,image-compress}/**/*.test.ts',
-        '**/node_modules/**',
-      ],
+      exclude: isCI
+        ? [
+            // TODO: failed in Ubuntu
+            'packages/plugin-{swc,image-compress}/**/*.test.ts',
+            '**/node_modules/**',
+          ]
+        : ['**/node_modules/**'],
       setupFiles: ['./scripts/vitest.setup.ts'],
     },
   },

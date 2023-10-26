@@ -2,7 +2,7 @@ import { expect, describe, it, vi } from 'vitest';
 import { pluginReact } from '../src';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 
-vi.mock('@modern-js/utils', async (importOriginal) => {
+vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();
   return {
     ...mod,

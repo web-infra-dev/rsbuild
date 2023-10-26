@@ -26,8 +26,8 @@ export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {
   removePlugins: PluginStore['removePlugins'];
   isPluginExists: PluginStore['isPluginExists'];
 
-  serve: ProviderInstance['serve'];
   build: ProviderInstance['build'];
+  preview: ProviderInstance['preview'];
   initConfigs: ProviderInstance['initConfigs'];
   inspectConfig: ProviderInstance['inspectConfig'];
   createCompiler: ProviderInstance['createCompiler'];

@@ -1,11 +1,12 @@
-import { getCoreJsVersion, isBeyondReact17 } from '@modern-js/utils';
 import _ from 'lodash';
 import { NormalizedConfig } from '@rsbuild/webpack';
 import {
   logger,
   isUsingHMR,
-  ModifyChainUtils,
+  isBeyondReact17,
+  getCoreJsVersion,
   getBrowserslistWithDefault,
+  type ModifyChainUtils,
 } from '@rsbuild/shared';
 import { Extensions } from '@modern-js/swc-plugins';
 import { getDefaultSwcConfig } from './plugin';

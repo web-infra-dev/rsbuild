@@ -8,8 +8,8 @@ import { getPackageVersion } from '@modern-js/generator-utils';
 
 async function run() {
   const modernVersion = process.env.MODERN_VERSION || 'latest';
-  const cwd = process.cwd();
-  const pkgPath = path.join(cwd, 'package.json');
+  const root = path.join(__dirname, '../../..');
+  const pkgPath = path.join(root, 'package.json');
   const pkgObj = fs.readJSONSync(pkgPath, 'utf-8');
 
   pkgObj.devDependencies = await updateModernVersion(
@@ -19,7 +19,8 @@ async function run() {
 
   fs.writeJSONSync(pkgPath, pkgObj, { spaces: 2 });
 
-  const packages = await getPackages(cwd);
+  const packages = await getPackages(root);
+
   for (const pkg of packages.packages) {
     const { packageJson, dir } = pkg;
     const { dependencies, devDependencies, peerDependencies } = packageJson;

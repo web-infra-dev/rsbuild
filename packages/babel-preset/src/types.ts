@@ -1,3 +1,9 @@
+import type {
+  PresetEnvOptions,
+  PresetEnvTargets,
+  PresetEnvBuiltIns,
+} from '@rsbuild/shared';
+
 export type { TransformOptions as BabelConfig } from '@babel/core';
 
 type DecoratorsVersion =
@@ -11,27 +17,6 @@ type DecoratorsVersion =
 export type PluginDecoratorsOptions = {
   version: DecoratorsVersion;
   decoratorsBeforeExport?: boolean;
-};
-
-type PresetEnvTargets = string | string[] | Record<string, string>;
-type PresetEnvBuiltIns = 'usage' | 'entry' | false;
-
-export type PresetEnvOptions = {
-  targets?: PresetEnvTargets;
-  bugfixes?: boolean;
-  spec?: boolean;
-  loose?: boolean;
-  modules?: 'amd' | 'umd' | 'systemjs' | 'commonjs' | 'cjs' | 'auto' | false;
-  debug?: boolean;
-  include?: string[];
-  exclude?: string[];
-  useBuiltIns?: PresetEnvBuiltIns;
-  corejs?: string | { version: string; proposals: boolean };
-  forceAllTransforms?: boolean;
-  configPath?: string;
-  ignoreBrowserslistConfig?: boolean;
-  browserslistEnv?: string;
-  shippedProposals?: boolean;
 };
 
 export type BasePresetOptions = {
