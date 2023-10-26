@@ -1,4 +1,4 @@
-# Rsbuild Vue 3
+# Rsbuild Project
 
 ## Setup
 

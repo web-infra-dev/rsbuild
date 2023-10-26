@@ -61,8 +61,10 @@ async function main() {
   checkCancel(language);
 
   const srcFolder = path.join(cwd, `template-${framework}-${language}`);
+  const commonFolder = path.join(cwd, `template-common`);
   const distFolder = path.join(cwd, targetDir);
 
+  copyFolder(commonFolder, distFolder);
   copyFolder(srcFolder, distFolder);
 
   const nextSteps = [`cd ${targetDir}`, 'npm i', 'npm dev'];
@@ -71,7 +73,7 @@ async function main() {
 }
 
 function copyFolder(src: string, dist: string) {
-  const renameFiles = {
+  const renameFiles: Record<string, string> = {
     gitignore: '.gitignore',
   };
 
