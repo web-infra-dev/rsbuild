@@ -207,7 +207,10 @@ export interface BundlerChain
       keyof WebpackChain['infrastructureLogging']
     >
   >;
-  module: PickAndModifyThis<WebpackChain['module'], 'rules' | 'rule'>;
+  module: PickAndModifyThis<
+    WebpackChain['module'],
+    'rules' | 'rule' | 'delete'
+  >;
 }
 
 export type WebpackChainRule = WebpackChain.Rule;

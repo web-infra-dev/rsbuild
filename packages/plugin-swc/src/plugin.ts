@@ -31,7 +31,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
       return;
     }
 
-    api.modifyWebpackChain(async (chain, utils) => {
+    api.modifyBundlerChain(async (chain, utils) => {
       const { CHAIN_ID, isProd } = utils;
       const rsbuildConfig = api.getNormalizedConfig();
       const { rootPath } = api.context;

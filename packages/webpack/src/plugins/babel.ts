@@ -11,8 +11,6 @@ import {
   mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
-  getDefaultStyledComponentsConfig,
-  type RsbuildTarget,
 } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
 
@@ -100,12 +98,6 @@ export const pluginBabel = (): RsbuildPlugin => ({
             baseBabelConfig,
             config.performance.transformLodash,
           );
-          applyPluginStyledComponents(
-            baseBabelConfig,
-            config,
-            isProd,
-            api.context.target,
-          );
 
           const babelConfig = mergeChainedOptions(
             baseBabelConfig,
@@ -182,31 +174,6 @@ export const pluginBabel = (): RsbuildPlugin => ({
 function applyPluginLodash(config: BabelConfig, transformLodash?: boolean) {
   if (transformLodash) {
     config.plugins?.push([getCompiledPath('babel-plugin-lodash'), {}]);
-  }
-}
-
-function applyPluginStyledComponents(
-  babelConfig: BabelConfig,
-  rsbuildConfig: NormalizedConfig,
-  isProd: boolean,
-  target: RsbuildTarget | RsbuildTarget[],
-) {
-  const enableSSROption =
-    target === 'node' || (Array.isArray(target) && target.includes('node'));
-
-  const styledComponentsOptions =
-    rsbuildConfig.tools.styledComponents !== false
-      ? mergeChainedOptions(
-          getDefaultStyledComponentsConfig(isProd, enableSSROption),
-          rsbuildConfig.tools.styledComponents,
-        )
-      : false;
-
-  if (styledComponentsOptions) {
-    babelConfig.plugins?.push([
-      require.resolve('babel-plugin-styled-components'),
-      styledComponentsOptions,
-    ]);
   }
 }
 

@@ -27,20 +27,6 @@ export type ToolsTSLoaderConfig = ChainedConfig<
   { addIncludes: FileFilterUtil; addExcludes: FileFilterUtil }
 >;
 
-export interface StyledComponentOptions {
-  pure?: boolean;
-  displayName?: boolean;
-  ssr?: boolean;
-  fileName?: boolean;
-  meaninglessFileNames?: string[];
-  minify?: boolean;
-  transpileTemplateLiterals?: boolean;
-  namespace?: string;
-  topLevelImportPaths?: string[];
-}
-
-export type ToolsStyledComponentConfig = ChainedConfig<StyledComponentOptions>;
-
 export type ToolsCssExtractConfig =
   | CSSExtractOptions
   | ((options: CSSExtractOptions) => CSSExtractOptions | void);
@@ -85,10 +71,6 @@ export interface ToolsConfig extends SharedToolsConfig {
    * Modify the options of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
    */
   htmlPlugin?: false | ToolsHtmlPluginConfig;
-  /**
-   * Modify the options of [babel-plugin-styled-components](https://github.com/styled-components/babel-plugin-styled-components).
-   */
-  styledComponents?: false | ToolsStyledComponentConfig;
   /**
    * Modify the options of [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin).
    */

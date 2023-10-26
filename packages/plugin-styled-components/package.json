@@ -1,0 +1,44 @@
+{
+  "name": "@rsbuild/plugin-styled-components",
+  "version": "0.0.7",
+  "description": "styled-components plugin for Rsbuild",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/plugin-styled-components"
+  },
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@rsbuild/shared": "workspace:*",
+    "babel-plugin-styled-components": "1.13.3"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/plugin-swc": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
+    "@rsbuild/webpack": "workspace:*",
+    "@types/node": "^16",
+    "typescript": "^5"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true,
+    "types": "./dist/index.d.ts"
+  }
+}

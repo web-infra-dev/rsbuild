@@ -256,15 +256,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
-                  {
-                    "displayName": true,
-                    "pure": false,
-                    "ssr": false,
-                    "transpileTemplateLiterals": true,
-                  },
-                ],
               ],
               "presets": [
                 [
@@ -346,15 +337,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
-                  {
-                    "displayName": true,
-                    "pure": false,
-                    "ssr": false,
-                    "transpileTemplateLiterals": true,
-                  },
                 ],
               ],
               "presets": [
@@ -969,15 +951,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
-                  {
-                    "displayName": true,
-                    "pure": true,
-                    "ssr": false,
-                    "transpileTemplateLiterals": true,
-                  },
-                ],
               ],
               "presets": [
                 [
@@ -1059,15 +1032,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                 [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
-                  {
-                    "displayName": true,
-                    "pure": true,
-                    "ssr": false,
-                    "transpileTemplateLiterals": true,
-                  },
                 ],
               ],
               "presets": [
@@ -1737,15 +1701,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
-                  {
-                    "displayName": true,
-                    "pure": true,
-                    "ssr": true,
-                    "transpileTemplateLiterals": true,
-                  },
-                ],
               ],
               "presets": [
                 [
@@ -1811,15 +1766,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
-                  {
-                    "displayName": true,
-                    "pure": true,
-                    "ssr": true,
-                    "transpileTemplateLiterals": true,
-                  },
                 ],
               ],
               "presets": [
@@ -2322,15 +2268,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
-                  {
-                    "displayName": true,
-                    "pure": true,
-                    "ssr": false,
-                    "transpileTemplateLiterals": true,
-                  },
-                ],
               ],
               "presets": [
                 [
@@ -2412,15 +2349,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 [
                   "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
                   {},
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
-                  {
-                    "displayName": true,
-                    "pure": true,
-                    "ssr": false,
-                    "transpileTemplateLiterals": true,
-                  },
                 ],
               ],
               "presets": [

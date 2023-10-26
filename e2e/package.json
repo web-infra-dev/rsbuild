@@ -6,7 +6,7 @@
     "test": "pnpm run test:rspack && pnpm run test:webpack",
     "test:webpack": "PROVIDE_TYPE=webpack playwright test",
     "test:rspack": "playwright test",
-    "test:webpack-swc": "playwright test swc"
+    "test:webpack-swc": "PROVIDE_TYPE=webpack playwright test swc"
   },
   "dependencies": {
     "lodash": "^4.17.21",

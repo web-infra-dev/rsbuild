@@ -1,4 +1,4 @@
-import type { RsbuildTarget, SharedRsbuildPluginAPI } from '@rsbuild/shared';
+import { useSSR, type SharedRsbuildPluginAPI } from '@rsbuild/shared';
 
 const getAntdMajorVersion = (appDirectory: string) => {
   try {
@@ -41,9 +41,3 @@ export const applyAntdSupport = (api: SharedRsbuildPluginAPI) => {
     }
   });
 };
-
-export function useSSR(target: RsbuildTarget | RsbuildTarget[]) {
-  return (Array.isArray(target) ? target : [target]).some((item) =>
-    ['node', 'service-worker'].includes(item),
-  );
-}

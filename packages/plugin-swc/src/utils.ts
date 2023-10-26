@@ -5,10 +5,9 @@ import {
   isUsingHMR,
   isBeyondReact17,
   getCoreJsVersion,
-  mergeChainedOptions,
   getBrowserslistWithDefault,
-  getDefaultStyledComponentsConfig,
   type ModifyChainUtils,
+  getDefaultStyledComponentsConfig,
 } from '@rsbuild/shared';
 import { Extensions } from '@modern-js/swc-plugins';
 import { getDefaultSwcConfig } from './plugin';
@@ -176,16 +175,10 @@ export async function applyPluginConfig(
 
   const isSSR = target === 'node';
 
-  if (
-    rsbuildConfig.tools.styledComponents !== false &&
-    swc.extensions?.styledComponents !== false
-  ) {
-    const styledComponentsOptions = mergeChainedOptions(
-      getDefaultStyledComponentsConfig(isProd, isSSR),
-      rsbuildConfig.tools.styledComponents,
-    );
+  // compat builder-plugin-swc extensions.styledComponents params
+  if (swc.extensions?.styledComponents) {
     swc.extensions.styledComponents = {
-      ...styledComponentsOptions,
+      ...getDefaultStyledComponentsConfig(isProd, isSSR),
       ...(typeof swc.extensions.styledComponents === 'object'
         ? swc.extensions?.styledComponents
         : {}),

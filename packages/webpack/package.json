@@ -62,7 +62,6 @@
     "@rsbuild/babel-preset": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "babel-plugin-import": "1.13.5",
-    "babel-plugin-styled-components": "1.13.3",
     "caniuse-lite": "^1.0.30001520",
     "html-webpack-plugin": "5.5.3",
     "lodash": "^4.17.21",
