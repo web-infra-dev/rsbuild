@@ -7,6 +7,7 @@ import {
   getCoreJsVersion,
   getBrowserslistWithDefault,
   type ModifyChainUtils,
+  getDefaultStyledComponentsConfig,
 } from '@rsbuild/shared';
 import { Extensions } from '@modern-js/swc-plugins';
 import { getDefaultSwcConfig } from './plugin';
@@ -170,6 +171,18 @@ export async function applyPluginConfig(
       rsbuildConfig,
       target,
     );
+  }
+
+  const isSSR = target === 'node';
+
+  // compat builder-plugin-swc extensions.styledComponents params
+  if (swc.extensions?.styledComponents) {
+    swc.extensions.styledComponents = {
+      ...getDefaultStyledComponentsConfig(isProd, isSSR),
+      ...(typeof swc.extensions.styledComponents === 'object'
+        ? swc.extensions?.styledComponents
+        : {}),
+    };
   }
 
   const extensions: Extensions | OuterExtensions = (swc.extensions ??= {});
