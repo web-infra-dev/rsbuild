@@ -19,7 +19,8 @@
     "check-changeset": "cd ./scripts/check-changeset && pnpm start",
     "check-dependency-version": "check-dependency-version-consistency . --ignore-dep vue-loader",
     "update-modern": "cd ./scripts/update-packages && pnpm start:modern",
-    "update-rspress": "cd ./scripts/update-packages && pnpm start:rspress"
+    "update-rspress": "cd ./scripts/update-packages && pnpm start:rspress",
+    "update-rspack": "cd ./scripts/update-packages && pnpm start:rspack"
   },
   "engines": {
     "node": ">=16.18.1",
