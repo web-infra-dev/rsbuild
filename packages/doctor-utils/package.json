@@ -1,0 +1,76 @@
+{
+  "name": "@rsbuild/doctor-utils",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/type/common/index.d.ts",
+      "require": "./dist/cjs/common/index.js",
+      "import": "./dist/esm/common/index.js"
+    },
+    "./common": {
+      "types": "./dist/type/common/index.d.ts",
+      "require": "./dist/cjs/common/index.js",
+      "import": "./dist/esm/common/index.js"
+    },
+    "./build": {
+      "types": "./dist/type/build/index.d.ts",
+      "require": "./dist/cjs/build/index.js",
+      "import": "./dist/esm/build/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "common": [
+        "./dist/type/common/index.d.ts"
+      ],
+      "build": [
+        "./dist/type/build/index.d.ts"
+      ]
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "dev": "npm run start",
+    "start": "concurrently 'npm run build:cjs -- -w' 'npm run build:esm -- -w'",
+    "test": "vitest run",
+    "build:cjs": "modern build",
+    "build:esm": "modern build -c ./modern.config.esm.ts",
+    "build": "npm run build:cjs && npm run build:esm"
+  },
+  "dependencies": {
+    "bytes": "3.1.2",
+    "connect": "3.7.0",
+    "envinfo": "7.8.1",
+    "fs-extra": "^11.1.1",
+    "get-port": "5.1.1",
+    "json-stream-stringify": "3.0.1",
+    "lodash": "^4.17.21"
+  },
+  "peerDependencies": {},
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.2",
+    "@types/node": "^16",
+    "@types/bytes": "3.1.1",
+    "@rsbuild/doctor-types": "workspace:*",
+    "@types/connect": "3.4.35",
+    "@types/envinfo": "7.8.1",
+    "@types/lodash": "^4.14.200",
+    "tslib": "2.4.1",
+    "concurrently": "7.6.0",
+    "typescript": "^5"
+  },
+  "resolutions": {
+    "@types/node": "^16"
+  },
+  "sideEffects": [],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  }
+}

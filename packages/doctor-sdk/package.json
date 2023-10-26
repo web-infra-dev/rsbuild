@@ -1,0 +1,39 @@
+{
+  "name": "@rsbuild/doctor-sdk",
+  "version": "0.0.1",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/type/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "npm run start",
+    "start": "concurrently 'npm run build:cjs -- -w' 'npm run build:esm -- -w'",
+    "build:cjs": "modern build",
+    "build:esm": "modern build -c ./modern.config.esm.ts",
+    "build": "npm run build:cjs && npm run build:esm",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.200",
+    "@types/node": "^16",
+    "concurrently": "7.6.0",
+    "@types/estree": "1.0.0",
+    "tslib": "2.4.1",
+    "@rsbuild/doctor-types": "workspace:*",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "source-map": "^0.7.4",
+    "@rsbuild/doctor-utils": "workspace:*"
+  },
+  "license": "MIT",
+  "sideEffects": [],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@rsbuild/doctor-types",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "npm run start",
+    "start": "npm run build -- -w",
+    "build": "tsc -p tsconfig.json"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@types/connect": "3.4.35",
+    "@types/estree": "1.0.0",
+    "@types/tapable": "2.2.2",
+    "@types/webpack": "5.28.0",
+    "source-map": "^0.7.4",
+    "@rspack/core": "0.3.8"
+  },
+  "peerDependencies": {},
+  "devDependencies": {
+    "@types/node": "^16",
+    "tslib": "2.4.1",
+    "@types/react": "~18.0.26",
+    "typescript": "^5"
+  },
+  "sideEffects": [],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  }
+}
