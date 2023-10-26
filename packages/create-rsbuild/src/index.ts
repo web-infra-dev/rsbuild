@@ -3,7 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import { logger } from 'rslog';
-import { text, select, isCancel, cancel, note } from '@clack/prompts';
+import { text, select, isCancel, cancel, note, outro } from '@clack/prompts';
 
 function checkCancel(value: unknown) {
   if (isCancel(value)) {
@@ -69,7 +69,9 @@ async function main() {
 
   const nextSteps = [`cd ${targetDir}`, 'npm i', 'npm dev'];
 
-  note(nextSteps.join('\n'), 'Done. Next steps:');
+  note(nextSteps.join('\n'), 'Next steps');
+
+  outro('Done.');
 }
 
 function copyFolder(src: string, dist: string) {
