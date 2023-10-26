@@ -64,9 +64,6 @@
     "concurrently": "7.6.0",
     "typescript": "^5"
   },
-  "resolutions": {
-    "@types/node": "^16"
-  },
   "sideEffects": [],
   "publishConfig": {
     "access": "public",
