@@ -6,26 +6,27 @@
   // words - list of words to be always considered correct
   "words": [
     "atrules",
+    "deepmerge",
     "docgen",
     "envinfo",
     "flac",
     "icss",
     "imagex",
-    "longpaths",
     "jiti",
+    "longpaths",
+    "manypkg",
     "napi",
     "oxlint",
     "pluggable",
     "rebranded",
     "rsbuild",
-    "transpiling",
     "rslog",
     "rspack",
     "rspress",
     "stacktracey",
     "systemjs",
+    "transpiling",
     "tsbuildinfo",
-    "vitest",
-    "deepmerge"
+    "vitest"
   ]
 }
