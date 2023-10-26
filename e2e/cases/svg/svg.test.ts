@@ -75,11 +75,7 @@ test('svgr (defaultExport component)', async ({ page }) => {
     },
     runServer: true,
     rsbuildConfig: {},
-    plugins: [
-      pluginReact({
-        svgDefaultExport: 'component',
-      }),
-    ],
+    plugins: [pluginReact()],
   });
 
   await page.goto(getHrefByEntryName('main', rsbuild.port));
@@ -173,11 +169,7 @@ test('svgr (disableSvgr)', async ({ page }) => {
       main: join(fixtures, 'svg-assets', 'src/index.js'),
     },
     runServer: true,
-    plugins: [
-      pluginReact({
-        disableSvgr: true,
-      }),
-    ],
+    plugins: [pluginReact()],
   });
 
   await page.goto(getHrefByEntryName('main', rsbuild.port));

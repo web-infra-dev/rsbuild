@@ -6,7 +6,8 @@
     "dev": "tsc --watch",
     "build": "tsc",
     "start:modern": "tsx ./src/modern.ts",
-    "start:rspress": "tsx ./src/rspress.ts"
+    "start:rspress": "tsx ./src/rspress.ts",
+    "start:rspack": "tsx ./src/rspack.ts"
   },
   "dependencies": {
     "fs-extra": "^10.1.0",
