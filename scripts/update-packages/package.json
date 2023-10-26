@@ -11,7 +11,7 @@
   "dependencies": {
     "fs-extra": "^10.1.0",
     "@manypkg/get-packages": "^1.1.3",
-    "@modern-js/generator-utils": "^3.2.5"
+    "@modern-js/generator-utils": "^3.2.7"
   },
   "devDependencies": {
     "tsx": "^3.12.7",
