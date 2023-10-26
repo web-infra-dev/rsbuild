@@ -385,6 +385,9 @@ importers:
       '@clack/prompts':
         specifier: ^0.7.0
         version: 0.7.0
+      rslog:
+        specifier: ^1.1.0
+        version: 1.1.0
     devDependencies:
       typescript:
         specifier: ^5
