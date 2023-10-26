@@ -6,6 +6,11 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/doctor-types"
+  },
   "scripts": {
     "dev": "npm run start",
     "start": "npm run build -- -w",
