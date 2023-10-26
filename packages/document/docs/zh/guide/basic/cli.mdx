@@ -1,21 +1,8 @@
-# 使用 Rsbuild CLI
+# 命令行工具
 
-Rsbuild 提供了一个轻量的 CLI 工具，包含 dev、build 等基础命令，它主要用于构建非 React 项目。
-
-- 对于 React 项目，我们建议直接使用 Modern.js 框架，参考 [Modern.js - 快速上手](https://modernjs.dev/guides/get-started/quick-start.html)。
-- 对于非 React 项目，比如开发一个 Vue 项目，那么你可以使用 Rsbuild CLI 工具来构建你的项目。
-
-## 安装
-
-你需要安装 `@rsbuild/core` 包：
-
-import { PackageManagerTabs } from '@theme';
-
-<PackageManagerTabs command="add @rsbuild/core -D" />
+Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令。
 
 ## 命令
-
-Rsbuild CLI 提供了以下命令，可以帮助你快速启动开发服务器、构建生产环境代码等。
 
 ### rsbuild dev
 
@@ -107,75 +94,4 @@ Inspect config succeed, open following files to view the content:
   - Rsbuild Config: /project/dist/rsbuild.config.js
   - Rspack Config (web): /project/dist/rspack.config.web.js
   - Rspack Config (node): /project/dist/rspack.config.node.js
-```
-
-## 配置
-
-Rsbuild CLI 默认会读取项目根目录下的 `rsbuild.config.ts` 配置文件，你可以在配置文件中使用 Rsbuild 提供的[所有配置项](/config/index)。
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
-  dev: {
-    port: 8081,
-  },
-});
-```
-
-当你使用 Rspack 作为打包工具时，由于 webpack 和 Rspack 的配置类型存在一些差异，需要为 defineConfig 指定 `<'rspack'>` 泛型：
-
-```diff title="rsbuild.config.ts"
-- export default defineConfig({
-+ export default defineConfig<'rspack'>({
-  // ...
-});
-```
-
-## 构建入口
-
-Rsbuild CLI 默认会使用 `src/index.(js|ts|jsx|tsx)` 作为构建入口，你可以使用 `source.entries` 配置项来修改构建入口。
-
-- **类型：**
-
-```ts
-type Entries = Record<string, string>;
-```
-
-- **默认值：**
-
-```ts
-const defaultEntry = {
-  index: 'src/index.(js|ts|jsx|tsx)',
-};
-```
-
-- **示例：**
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
-  source: {
-    entries: {
-      foo: './src/pages/foo/index.ts',
-      bar: './src/pages/bar/index.ts',
-    },
-  },
-});
-```
-
-## 注册插件
-
-你可以在 `rsbuild.config.ts` 中使用 `plugins` 选项来注册 Rsbuild 插件。
-
-比如注册 Vue 插件：
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginVue } from '@rsbuild/plugin-vue';
-
-export default defineConfig({
-  plugins: [pluginVue()],
-});
 ```

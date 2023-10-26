@@ -6,13 +6,69 @@ import NodeVersion from '@en/shared/nodeVersion.md';
 
 <NodeVersion />
 
-## Use the Rsbuild CLI Tool
+## Creating an Rsbuild Project
 
-Rsbuild provides a lightweight CLI tool that includes basic commands such as `dev` and `build`. It is primarily used for building non-React projects.
+You can use the `create-rsbuild` to create a new Rsbuild project. Just execute the following command:
 
-If your project is not based on the React, for example, if you are developing a Vue project, you can use the Rsbuild CLI tool to build your project.
+```bash
+import { PackageManagerTabs } from '@theme';
 
-Please refer to [Use Rsbuild CLI](/guide/basic/cli) for more information on how to use it.
+<PackageManagerTabs command="create rsbuild@latest" />
+```
+
+Then follow the prompts to complete the operation.
+
+## Command Line Interface
+
+Rsbuild comes with a lightweight CLI that includes commands such as `dev` and `build`.
+
+```json
+{
+  "scripts": {
+    // starting the dev server
+    "dev": "rsbuild dev",
+    // build the app for production
+    "build": "rsbuild build",
+    // preview the production build locally
+    "preview": "rsbuild preview"
+  }
+}
+```
+
+Refer to the [CLI Tool](/guide/basic/cli) to learn about all available commands and options.
+
+## Build Entry
+
+By default, Rsbuild CLI uses `src/index.(js|ts|jsx|tsx)` as the build entry. You can modify the build entry using the `source.entries` configuration option.
+
+- **Type:**
+
+```ts
+type Entries = Record<string, string>;
+```
+
+- **Default:**
+
+```ts
+const defaultEntry = {
+  index: 'src/index.(js|ts|jsx|tsx)',
+};
+```
+
+- **Example:**
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  source: {
+    entries: {
+      foo: './src/pages/foo/index.ts',
+      bar: './src/pages/bar/index.ts',
+    },
+  },
+});
+```
 
 ## Next Step
 
@@ -23,18 +79,18 @@ import Step from '@components/Step';
 
 <NextSteps>
   <Step
-    href="/guide/start/glossary.html"
-    title="Glossary"
-    description="Learn about Rsbuild related concepts"
-  />
-  <Step
     href="/guide/start/features.html"
     title="All Features"
     description="Learn all features of Rsbuild"
   />
   <Step
-    href="/config/index.html"
+    href="/guide/basic/config.html"
     title="Config"
-    description="View detailed config documentation"
+    description="Learn how to configure Rsbuild"
+  />
+  <Step
+    href="/guide/start/glossary.html"
+    title="Glossary"
+    description="Learn about Rsbuild related concepts"
   />
 </NextSteps>
