@@ -69,7 +69,7 @@ async function main() {
 
   const nextSteps = [`cd ${targetDir}`, 'npm i', 'npm dev'];
 
-  note(nextSteps.join('\n'), 'Next steps:');
+  note(nextSteps.join('\n'), 'Next steps');
 
   outro('Done.');
 }
