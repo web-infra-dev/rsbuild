@@ -72,7 +72,7 @@ async function main() {
 
 function copyFolder(src: string, dist: string) {
   const renameFiles = {
-    _gitignore: '.gitignore',
+    gitignore: '.gitignore',
   };
 
   fs.mkdirSync(dist, { recursive: true });
