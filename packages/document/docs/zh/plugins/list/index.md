@@ -1,5 +1,20 @@
 # 总览
 
+## 使用插件
+
+你可以在 `rsbuild.config.ts` 中使用 `plugins` 选项来注册 Rsbuild 插件。
+
+比如注册 Vue 插件：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginVue } from '@rsbuild/plugin-vue';
+
+export default defineConfig({
+  plugins: [pluginVue()],
+});
+```
+
 ## 通用插件
 
 以下是 Rsbuild 的 Rspack 模式和 Webpack 模式下都可以使用的通用插件：

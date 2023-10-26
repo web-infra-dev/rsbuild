@@ -1,21 +1,8 @@
-# Use Rsbuild CLI
+# CLI
 
-Rsbuild provides a lightweight CLI tool that includes basic commands such as `dev` and `build`. It is primarily used for building non-React projects.
-
-- For React projects, we recommend using the Modern.js framework directly. Please refer to [Modern.js - Quick Start](https://modernjs.dev/en/guides/get-started/quick-start.html) for more information.
-- For non-React projects, such as developing a Vue project, you can use the Rsbuild CLI tool to build your project.
-
-## Install
-
-You need to install the `@rsbuild/core` package:
-
-import { PackageManagerTabs } from '@theme';
-
-<PackageManagerTabs command="add @rsbuild/core -D" />
+Rsbuild comes with a lightweight CLI that includes commands such as `dev` and `build`.
 
 ## Commands
-
-Rsbuild CLI provides the following commands to help you quickly start a development server, build production-ready code, and more.
 
 ### rsbuild dev
 
@@ -107,75 +94,4 @@ Inspect config succeed, open following files to view the content:
   - Rsbuild Config: /project/dist/rsbuild.config.js
   - Rspack Config (web): /project/dist/rspack.config.web.js
   - Rspack Config (node): /project/dist/rspack.config.node.js
-```
-
-## Configuration
-
-Rsbuild CLI will read the `rsbuild.config.ts` configuration file located in the root directory of your project by default. You can use [all the configuration options](/config/index) provided by Rsbuild in the configuration file.
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
-  dev: {
-    port: 8081,
-  },
-});
-```
-
-When you use Rspack as the bundler, there are some differences in configuration types between webpack and Rspack. Therefore, you need to specify the `'rspack'` generic for `defineConfig`:
-
-```diff title="rsbuild.config.ts"
-- export default defineConfig({
-+ export default defineConfig<'rspack'>({
-  // ...
-});
-```
-
-## Build Entry
-
-By default, Rsbuild CLI uses `src/index.(js|ts|jsx|tsx)` as the build entry. You can modify the build entry using the `source.entries` configuration option.
-
-- **Type:**
-
-```ts
-type Entries = Record<string, string>;
-```
-
-- **Default:**
-
-```ts
-const defaultEntry = {
-  index: 'src/index.(js|ts|jsx|tsx)',
-};
-```
-
-- **Example:**
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
-  source: {
-    entries: {
-      foo: './src/pages/foo/index.ts',
-      bar: './src/pages/bar/index.ts',
-    },
-  },
-});
-```
-
-## Registering Plugins
-
-You can register Rsbuild plugins using the `plugins` option in `rsbuild.config.ts`.
-
-For example, to register a Vue plugin:
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginVue } from '@rsbuild/plugin-vue';
-
-export default defineConfig({
-  plugins: [pluginVue()],
-});
 ```
