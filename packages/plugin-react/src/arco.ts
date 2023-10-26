@@ -1,6 +1,6 @@
-import { useSSR } from './antd';
 import {
   isPackageInstalled,
+  useSSR,
   type SharedRsbuildPluginAPI,
 } from '@rsbuild/shared';
 

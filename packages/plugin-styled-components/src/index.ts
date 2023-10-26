@@ -3,6 +3,7 @@ import {
   getDefaultStyledComponentsConfig,
   mergeChainedOptions,
   ChainedConfig,
+  useSSR,
 } from '@rsbuild/shared';
 
 /**
@@ -30,7 +31,7 @@ export const pluginStyledComponents = (
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
       const { bundlerType } = api.context;
 
-      const isSSR = target === 'node';
+      const isSSR = useSSR(api.context.target);
 
       const styledComponentsOptions = mergeChainedOptions<
         StyledComponentsOptions,

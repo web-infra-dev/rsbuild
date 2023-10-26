@@ -157,3 +157,9 @@ export const isBeyondReact17 = (cwd: string) => {
 
   return semver.satisfies(semver.minVersion(deps.react)!, '>=17.0.0');
 };
+
+export function useSSR(target: RsbuildTarget | RsbuildTarget[]) {
+  return (Array.isArray(target) ? target : [target]).some((item) =>
+    ['node', 'service-worker'].includes(item),
+  );
+}
