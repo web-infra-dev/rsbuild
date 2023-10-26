@@ -69,7 +69,7 @@ export function webpackProvider({
         );
       },
 
-      async serve() {
+      async preview() {
         return startProdServer(context, context.config);
       },
 
