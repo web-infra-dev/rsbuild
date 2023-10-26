@@ -1,5 +1,5 @@
 /**
- * In this script, we will find all the Modern.js dependencies and update the version.
+ * In this script, we will find all the Rspack dependencies and update the version.
  */
 import path from 'path';
 import fs from 'fs-extra';
@@ -7,14 +7,14 @@ import { getPackages } from '@manypkg/get-packages';
 import { getPackageVersion } from '@modern-js/generator-utils';
 
 async function run() {
-  const modernVersion = process.env.MODERN_VERSION || 'latest';
+  const rspackVersion = process.env.RSPACK_VERSION || 'latest';
   const root = path.join(__dirname, '../../..');
   const pkgPath = path.join(root, 'package.json');
   const pkgObj = fs.readJSONSync(pkgPath, 'utf-8');
 
-  pkgObj.devDependencies = await updateModernVersion(
+  pkgObj.devDependencies = await updateRspackVersion(
     pkgObj.devDependencies,
-    modernVersion,
+    rspackVersion,
   );
 
   fs.writeJSONSync(pkgPath, pkgObj, { spaces: 2 });
@@ -24,17 +24,17 @@ async function run() {
   for (const pkg of packages.packages) {
     const { packageJson, dir } = pkg;
     const { dependencies, devDependencies, peerDependencies } = packageJson;
-    packageJson.dependencies = await updateModernVersion(
+    packageJson.dependencies = await updateRspackVersion(
       dependencies,
-      modernVersion,
+      rspackVersion,
     );
-    packageJson.devDependencies = await updateModernVersion(
+    packageJson.devDependencies = await updateRspackVersion(
       devDependencies,
-      modernVersion,
+      rspackVersion,
     );
-    packageJson.peerDependencies = await updateModernVersion(
+    packageJson.peerDependencies = await updateRspackVersion(
       peerDependencies,
-      modernVersion,
+      rspackVersion,
     );
     fs.writeJSONSync(path.join(dir, 'package.json'), packageJson, {
       spaces: 2,
@@ -44,20 +44,20 @@ async function run() {
 
 const versionMap = new Map();
 
-const updateModernVersion = async (
+const updateRspackVersion = async (
   dependencies?: Record<string, string>,
-  modernVersion?: string,
+  rspackVersion?: string,
 ) => {
   if (!dependencies) {
     return dependencies;
   }
   for (const dep of Object.keys(dependencies)) {
-    if (dep.startsWith('@modern-js') && dep !== '@modern-js/swc-plugins') {
+    if (dep.startsWith('@rspack/')) {
       if (versionMap.get(dep)) {
-        dependencies[dep] = `^${versionMap.get(dep)}`;
+        dependencies[dep] = `${versionMap.get(dep)}`;
       } else {
-        const version = await getPackageVersion(`${dep}@${modernVersion}`);
-        dependencies[dep] = `^${version}`;
+        const version = await getPackageVersion(`${dep}@${rspackVersion}`);
+        dependencies[dep] = `${version}`;
         versionMap.set(dep, version);
       }
     }

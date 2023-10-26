@@ -2,6 +2,7 @@ import { join, dirname } from 'path';
 import { expect, test } from '@playwright/test';
 import { fs } from '@rsbuild/shared/fs-extra';
 import { build } from '@scripts/shared';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
@@ -24,6 +25,7 @@ test.describe('output configure multi', () => {
       entry: {
         main: join(fixtures, 'rem/src/index.ts'),
       },
+      plugins: [pluginReact()],
       rsbuildConfig: {
         output: {
           distPath: {
@@ -85,6 +87,7 @@ test('cleanDistPath disable', async () => {
     entry: {
       main: join(fixtures, 'rem/src/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         distPath: {
@@ -107,6 +110,7 @@ test('disableSourcemap', async () => {
     entry: {
       main: join(fixtures, 'rem/src/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         distPath: {

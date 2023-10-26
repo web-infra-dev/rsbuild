@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: '18'
           cache: 'pnpm'
 
       - name: Install Dependencies
@@ -34,12 +34,12 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git commit -am "feat: update rspress version"
+          git commit -am "chore(deps): bump Rspress version"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.REPO_SCOPED_TOKEN }}
-          branch: 'feat-update-rspress-version'
-          title: 'feat: update rspress version'
-          body: 'feat: update rspress version'
+          branch: 'chore-bump-rspress-version'
+          title: 'chore(deps): bump Rspress version'
+          body: 'chore(deps): bump Rspress version'

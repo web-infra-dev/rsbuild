@@ -2,6 +2,7 @@ import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should add node-polyfill when add node-polyfill plugin', async ({
   page,
@@ -9,7 +10,7 @@ test('should add node-polyfill when add node-polyfill plugin', async ({
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    plugins: [pluginNodePolyfill()],
+    plugins: [pluginNodePolyfill(), pluginReact()],
     runServer: true,
   });
   await page.goto(getHrefByEntryName('index', rsbuild.port));
