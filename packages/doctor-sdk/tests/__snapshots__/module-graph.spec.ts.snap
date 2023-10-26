@@ -1,0 +1,1253 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`module graph > ModuleGraph toCodeMap 1`] = `
+{
+  "1": {
+    "parsedSource": "source-1",
+    "source": "source-1",
+    "transformed": "source-1",
+  },
+  "2": {
+    "parsedSource": "source-2",
+    "source": "source-2",
+    "transformed": "source-2",
+  },
+  "3": {
+    "parsedSource": "source-3",
+    "source": "source-3",
+    "transformed": "source-3",
+  },
+  "4": {
+    "parsedSource": "source-4",
+    "source": "source-4",
+    "transformed": "source-4",
+  },
+  "5": {
+    "parsedSource": "source-5",
+    "source": "source-5",
+    "transformed": "source-5",
+  },
+  "6": {
+    "parsedSource": "source-6",
+    "source": "source-6",
+    "transformed": "source-6",
+  },
+  "7": {
+    "parsedSource": "source-7",
+    "source": "source-7",
+    "transformed": "source-7",
+  },
+  "8": {
+    "parsedSource": "source-8",
+    "source": "source-8",
+    "transformed": "source-8",
+  },
+  "9": {
+    "parsedSource": "source-9",
+    "source": "source-9",
+    "transformed": "source-9",
+  },
+}
+`;
+
+exports[`module graph > from data basic 1`] = `
+{
+  "dependencies": [
+    {
+      "dependency": 2,
+      "id": 1,
+      "package": 1,
+      "refDependency": 84,
+    },
+    {
+      "dependency": 5,
+      "id": 2,
+      "package": 1,
+      "refDependency": 85,
+    },
+    {
+      "dependency": 6,
+      "id": 3,
+      "package": 1,
+      "refDependency": 86,
+    },
+    {
+      "dependency": 2,
+      "id": 4,
+      "package": 1,
+      "refDependency": 10,
+    },
+    {
+      "dependency": 5,
+      "id": 5,
+      "package": 1,
+      "refDependency": 15,
+    },
+    {
+      "dependency": 6,
+      "id": 6,
+      "package": 1,
+      "refDependency": 16,
+    },
+    {
+      "dependency": 3,
+      "id": 7,
+      "package": 2,
+      "refDependency": 11,
+    },
+    {
+      "dependency": 4,
+      "id": 8,
+      "package": 2,
+      "refDependency": 12,
+    },
+    {
+      "dependency": 7,
+      "id": 9,
+      "package": 3,
+      "refDependency": 17,
+    },
+    {
+      "dependency": 8,
+      "id": 10,
+      "package": 5,
+      "refDependency": 18,
+    },
+    {
+      "dependency": 9,
+      "id": 11,
+      "package": 5,
+      "refDependency": 19,
+    },
+    {
+      "dependency": 10,
+      "id": 12,
+      "package": 5,
+      "refDependency": 20,
+    },
+    {
+      "dependency": 11,
+      "id": 13,
+      "package": 6,
+      "refDependency": 32,
+    },
+    {
+      "dependency": 12,
+      "id": 14,
+      "package": 6,
+      "refDependency": 37,
+    },
+    {
+      "dependency": 13,
+      "id": 15,
+      "package": 6,
+      "refDependency": 40,
+    },
+    {
+      "dependency": 14,
+      "id": 16,
+      "package": 10,
+      "refDependency": 46,
+    },
+    {
+      "dependency": 15,
+      "id": 17,
+      "package": 10,
+      "refDependency": 47,
+    },
+    {
+      "dependency": 16,
+      "id": 18,
+      "package": 10,
+      "refDependency": 48,
+    },
+    {
+      "dependency": 17,
+      "id": 19,
+      "package": 6,
+      "refDependency": 51,
+    },
+    {
+      "dependency": 17,
+      "id": 20,
+      "package": 6,
+      "refDependency": 52,
+    },
+    {
+      "dependency": 12,
+      "id": 21,
+      "package": 11,
+      "refDependency": 34,
+    },
+    {
+      "dependency": 11,
+      "id": 22,
+      "package": 6,
+      "refDependency": 31,
+    },
+    {
+      "dependency": 13,
+      "id": 23,
+      "package": 6,
+      "refDependency": 39,
+    },
+    {
+      "dependency": 11,
+      "id": 24,
+      "package": 13,
+      "refDependency": 26,
+    },
+    {
+      "dependency": 18,
+      "id": 25,
+      "package": 7,
+      "refDependency": 64,
+    },
+    {
+      "dependency": 19,
+      "id": 26,
+      "package": 15,
+      "refDependency": 65,
+    },
+    {
+      "dependency": 12,
+      "id": 27,
+      "package": 11,
+      "refDependency": 35,
+    },
+    {
+      "dependency": 11,
+      "id": 28,
+      "package": 13,
+      "refDependency": 29,
+    },
+    {
+      "dependency": 12,
+      "id": 29,
+      "package": 13,
+      "refDependency": 36,
+    },
+    {
+      "dependency": 20,
+      "id": 30,
+      "package": 13,
+      "refDependency": 68,
+    },
+    {
+      "dependency": 11,
+      "id": 31,
+      "package": 13,
+      "refDependency": 30,
+    },
+    {
+      "dependency": 11,
+      "id": 32,
+      "package": 13,
+      "refDependency": 28,
+    },
+    {
+      "dependency": 11,
+      "id": 33,
+      "package": 13,
+      "refDependency": 27,
+    },
+    {
+      "dependency": 11,
+      "id": 34,
+      "package": 13,
+      "refDependency": 25,
+    },
+    {
+      "dependency": 12,
+      "id": 35,
+      "package": 20,
+      "refDependency": 33,
+    },
+    {
+      "dependency": 21,
+      "id": 36,
+      "package": 20,
+      "refDependency": 72,
+    },
+    {
+      "dependency": 22,
+      "id": 37,
+      "package": 19,
+      "refDependency": 74,
+    },
+  ],
+  "packages": [
+    {
+      "id": 1,
+      "modules": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+      ],
+      "name": "",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 841,
+        "transformedSize": 0,
+      },
+      "version": "",
+    },
+    {
+      "id": 2,
+      "modules": [
+        9,
+        12,
+        13,
+      ],
+      "name": "chalk",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 10477,
+        "transformedSize": 0,
+      },
+      "version": "4.1.2",
+    },
+    {
+      "id": 3,
+      "modules": [
+        10,
+      ],
+      "name": "ansi-styles",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 4139,
+        "transformedSize": 0,
+      },
+      "version": "4.3.0",
+    },
+    {
+      "id": 4,
+      "modules": [
+        11,
+      ],
+      "name": "supports-color",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 67,
+        "transformedSize": 0,
+      },
+      "version": "7.2.0",
+    },
+    {
+      "id": 5,
+      "modules": [
+        14,
+      ],
+      "name": "@babel/highlight",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 2719,
+        "transformedSize": 0,
+      },
+      "version": "",
+    },
+    {
+      "id": 6,
+      "modules": [
+        15,
+        20,
+        21,
+        24,
+      ],
+      "name": "htmlparser2",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 53921,
+        "transformedSize": 0,
+      },
+      "version": "7.2.0",
+    },
+    {
+      "id": 7,
+      "modules": [
+        16,
+        26,
+        27,
+      ],
+      "name": "color-convert",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 21005,
+        "transformedSize": 0,
+      },
+      "version": "2.0.1",
+    },
+    {
+      "id": 8,
+      "modules": [
+        17,
+      ],
+      "name": "js-tokens",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 1448,
+        "transformedSize": 0,
+      },
+      "version": "4.0.0",
+    },
+    {
+      "id": 9,
+      "modules": [
+        18,
+        28,
+        29,
+      ],
+      "name": "@babel/helper-validator-identifier",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 15147,
+        "transformedSize": 0,
+      },
+      "version": "",
+    },
+    {
+      "id": 10,
+      "modules": [
+        19,
+        33,
+      ],
+      "name": "chalk",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 9572,
+        "transformedSize": 0,
+      },
+      "version": "2.4.2",
+    },
+    {
+      "id": 11,
+      "modules": [
+        22,
+        36,
+      ],
+      "name": "domhandler",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 21324,
+        "transformedSize": 0,
+      },
+      "version": "4.3.1",
+    },
+    {
+      "id": 12,
+      "modules": [
+        23,
+      ],
+      "name": "domelementtype",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 1978,
+        "transformedSize": 0,
+      },
+      "version": "2.3.0",
+    },
+    {
+      "id": 13,
+      "modules": [
+        25,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+      ],
+      "name": "domutils",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 31488,
+        "transformedSize": 0,
+      },
+      "version": "2.8.0",
+    },
+    {
+      "id": 14,
+      "modules": [
+        30,
+      ],
+      "name": "escape-string-regexp",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 226,
+        "transformedSize": 0,
+      },
+      "version": "1.0.5",
+    },
+    {
+      "id": 15,
+      "modules": [
+        31,
+      ],
+      "name": "ansi-styles",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 3574,
+        "transformedSize": 0,
+      },
+      "version": "3.2.1",
+    },
+    {
+      "id": 16,
+      "modules": [
+        32,
+      ],
+      "name": "supports-color",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 67,
+        "transformedSize": 0,
+      },
+      "version": "5.5.0",
+    },
+    {
+      "id": 17,
+      "modules": [
+        34,
+        35,
+        46,
+        47,
+      ],
+      "name": "entities",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 106903,
+        "transformedSize": 0,
+      },
+      "version": "3.0.1",
+    },
+    {
+      "id": 18,
+      "modules": [
+        44,
+      ],
+      "name": "color-name",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 4617,
+        "transformedSize": 0,
+      },
+      "version": "1.1.4",
+    },
+    {
+      "id": 19,
+      "modules": [
+        45,
+        49,
+        50,
+      ],
+      "name": "color-convert",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 20802,
+        "transformedSize": 0,
+      },
+      "version": "1.9.3",
+    },
+    {
+      "id": 20,
+      "modules": [
+        48,
+        52,
+      ],
+      "name": "dom-serializer",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 10115,
+        "transformedSize": 0,
+      },
+      "version": "1.4.1",
+    },
+    {
+      "id": 21,
+      "modules": [
+        51,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+      ],
+      "name": "entities",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 46808,
+        "transformedSize": 0,
+      },
+      "version": "2.2.0",
+    },
+    {
+      "id": 22,
+      "modules": [
+        53,
+      ],
+      "name": "color-name",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 4617,
+        "transformedSize": 0,
+      },
+      "version": "1.1.3",
+    },
+  ],
+}
+`;
+
+exports[`module graph ModuleGraph toCodeMap 1`] = `
+{
+  "1": {
+    "parsedSource": "source-1",
+    "source": "source-1",
+    "transformed": "source-1",
+  },
+  "2": {
+    "parsedSource": "source-2",
+    "source": "source-2",
+    "transformed": "source-2",
+  },
+  "3": {
+    "parsedSource": "source-3",
+    "source": "source-3",
+    "transformed": "source-3",
+  },
+  "4": {
+    "parsedSource": "source-4",
+    "source": "source-4",
+    "transformed": "source-4",
+  },
+  "5": {
+    "parsedSource": "source-5",
+    "source": "source-5",
+    "transformed": "source-5",
+  },
+  "6": {
+    "parsedSource": "source-6",
+    "source": "source-6",
+    "transformed": "source-6",
+  },
+  "7": {
+    "parsedSource": "source-7",
+    "source": "source-7",
+    "transformed": "source-7",
+  },
+  "8": {
+    "parsedSource": "source-8",
+    "source": "source-8",
+    "transformed": "source-8",
+  },
+  "9": {
+    "parsedSource": "source-9",
+    "source": "source-9",
+    "transformed": "source-9",
+  },
+}
+`;
+
+exports[`module graph from data basic 1`] = `
+{
+  "dependencies": [
+    {
+      "dependency": 2,
+      "id": 1,
+      "package": 1,
+      "refDependency": 84,
+    },
+    {
+      "dependency": 5,
+      "id": 2,
+      "package": 1,
+      "refDependency": 85,
+    },
+    {
+      "dependency": 6,
+      "id": 3,
+      "package": 1,
+      "refDependency": 86,
+    },
+    {
+      "dependency": 2,
+      "id": 4,
+      "package": 1,
+      "refDependency": 10,
+    },
+    {
+      "dependency": 5,
+      "id": 5,
+      "package": 1,
+      "refDependency": 15,
+    },
+    {
+      "dependency": 6,
+      "id": 6,
+      "package": 1,
+      "refDependency": 16,
+    },
+    {
+      "dependency": 3,
+      "id": 7,
+      "package": 2,
+      "refDependency": 11,
+    },
+    {
+      "dependency": 4,
+      "id": 8,
+      "package": 2,
+      "refDependency": 12,
+    },
+    {
+      "dependency": 7,
+      "id": 9,
+      "package": 3,
+      "refDependency": 17,
+    },
+    {
+      "dependency": 8,
+      "id": 10,
+      "package": 5,
+      "refDependency": 18,
+    },
+    {
+      "dependency": 9,
+      "id": 11,
+      "package": 5,
+      "refDependency": 19,
+    },
+    {
+      "dependency": 10,
+      "id": 12,
+      "package": 5,
+      "refDependency": 20,
+    },
+    {
+      "dependency": 11,
+      "id": 13,
+      "package": 6,
+      "refDependency": 32,
+    },
+    {
+      "dependency": 12,
+      "id": 14,
+      "package": 6,
+      "refDependency": 37,
+    },
+    {
+      "dependency": 13,
+      "id": 15,
+      "package": 6,
+      "refDependency": 40,
+    },
+    {
+      "dependency": 14,
+      "id": 16,
+      "package": 10,
+      "refDependency": 46,
+    },
+    {
+      "dependency": 15,
+      "id": 17,
+      "package": 10,
+      "refDependency": 47,
+    },
+    {
+      "dependency": 16,
+      "id": 18,
+      "package": 10,
+      "refDependency": 48,
+    },
+    {
+      "dependency": 17,
+      "id": 19,
+      "package": 6,
+      "refDependency": 51,
+    },
+    {
+      "dependency": 17,
+      "id": 20,
+      "package": 6,
+      "refDependency": 52,
+    },
+    {
+      "dependency": 12,
+      "id": 21,
+      "package": 11,
+      "refDependency": 34,
+    },
+    {
+      "dependency": 11,
+      "id": 22,
+      "package": 6,
+      "refDependency": 31,
+    },
+    {
+      "dependency": 13,
+      "id": 23,
+      "package": 6,
+      "refDependency": 39,
+    },
+    {
+      "dependency": 11,
+      "id": 24,
+      "package": 13,
+      "refDependency": 26,
+    },
+    {
+      "dependency": 18,
+      "id": 25,
+      "package": 7,
+      "refDependency": 64,
+    },
+    {
+      "dependency": 19,
+      "id": 26,
+      "package": 15,
+      "refDependency": 65,
+    },
+    {
+      "dependency": 12,
+      "id": 27,
+      "package": 11,
+      "refDependency": 35,
+    },
+    {
+      "dependency": 11,
+      "id": 28,
+      "package": 13,
+      "refDependency": 29,
+    },
+    {
+      "dependency": 12,
+      "id": 29,
+      "package": 13,
+      "refDependency": 36,
+    },
+    {
+      "dependency": 20,
+      "id": 30,
+      "package": 13,
+      "refDependency": 68,
+    },
+    {
+      "dependency": 11,
+      "id": 31,
+      "package": 13,
+      "refDependency": 30,
+    },
+    {
+      "dependency": 11,
+      "id": 32,
+      "package": 13,
+      "refDependency": 28,
+    },
+    {
+      "dependency": 11,
+      "id": 33,
+      "package": 13,
+      "refDependency": 27,
+    },
+    {
+      "dependency": 11,
+      "id": 34,
+      "package": 13,
+      "refDependency": 25,
+    },
+    {
+      "dependency": 12,
+      "id": 35,
+      "package": 20,
+      "refDependency": 33,
+    },
+    {
+      "dependency": 21,
+      "id": 36,
+      "package": 20,
+      "refDependency": 72,
+    },
+    {
+      "dependency": 22,
+      "id": 37,
+      "package": 19,
+      "refDependency": 74,
+    },
+  ],
+  "packages": [
+    {
+      "id": 1,
+      "modules": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+      ],
+      "name": "",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 841,
+        "transformedSize": 0,
+      },
+      "version": "",
+    },
+    {
+      "id": 2,
+      "modules": [
+        9,
+        12,
+        13,
+      ],
+      "name": "chalk",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 10477,
+        "transformedSize": 0,
+      },
+      "version": "4.1.2",
+    },
+    {
+      "id": 3,
+      "modules": [
+        10,
+      ],
+      "name": "ansi-styles",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 4139,
+        "transformedSize": 0,
+      },
+      "version": "4.3.0",
+    },
+    {
+      "id": 4,
+      "modules": [
+        11,
+      ],
+      "name": "supports-color",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 67,
+        "transformedSize": 0,
+      },
+      "version": "7.2.0",
+    },
+    {
+      "id": 5,
+      "modules": [
+        14,
+      ],
+      "name": "@babel/highlight",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 2719,
+        "transformedSize": 0,
+      },
+      "version": "",
+    },
+    {
+      "id": 6,
+      "modules": [
+        15,
+        20,
+        21,
+        24,
+      ],
+      "name": "htmlparser2",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 53921,
+        "transformedSize": 0,
+      },
+      "version": "7.2.0",
+    },
+    {
+      "id": 7,
+      "modules": [
+        16,
+        26,
+        27,
+      ],
+      "name": "color-convert",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 21005,
+        "transformedSize": 0,
+      },
+      "version": "2.0.1",
+    },
+    {
+      "id": 8,
+      "modules": [
+        17,
+      ],
+      "name": "js-tokens",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 1448,
+        "transformedSize": 0,
+      },
+      "version": "4.0.0",
+    },
+    {
+      "id": 9,
+      "modules": [
+        18,
+        28,
+        29,
+      ],
+      "name": "@babel/helper-validator-identifier",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 15147,
+        "transformedSize": 0,
+      },
+      "version": "",
+    },
+    {
+      "id": 10,
+      "modules": [
+        19,
+        33,
+      ],
+      "name": "chalk",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 9572,
+        "transformedSize": 0,
+      },
+      "version": "2.4.2",
+    },
+    {
+      "id": 11,
+      "modules": [
+        22,
+        36,
+      ],
+      "name": "domhandler",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 21324,
+        "transformedSize": 0,
+      },
+      "version": "4.3.1",
+    },
+    {
+      "id": 12,
+      "modules": [
+        23,
+      ],
+      "name": "domelementtype",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 1978,
+        "transformedSize": 0,
+      },
+      "version": "2.3.0",
+    },
+    {
+      "id": 13,
+      "modules": [
+        25,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+      ],
+      "name": "domutils",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 31488,
+        "transformedSize": 0,
+      },
+      "version": "2.8.0",
+    },
+    {
+      "id": 14,
+      "modules": [
+        30,
+      ],
+      "name": "escape-string-regexp",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 226,
+        "transformedSize": 0,
+      },
+      "version": "1.0.5",
+    },
+    {
+      "id": 15,
+      "modules": [
+        31,
+      ],
+      "name": "ansi-styles",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 3574,
+        "transformedSize": 0,
+      },
+      "version": "3.2.1",
+    },
+    {
+      "id": 16,
+      "modules": [
+        32,
+      ],
+      "name": "supports-color",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 67,
+        "transformedSize": 0,
+      },
+      "version": "5.5.0",
+    },
+    {
+      "id": 17,
+      "modules": [
+        34,
+        35,
+        46,
+        47,
+      ],
+      "name": "entities",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 106903,
+        "transformedSize": 0,
+      },
+      "version": "3.0.1",
+    },
+    {
+      "id": 18,
+      "modules": [
+        44,
+      ],
+      "name": "color-name",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 4617,
+        "transformedSize": 0,
+      },
+      "version": "1.1.4",
+    },
+    {
+      "id": 19,
+      "modules": [
+        45,
+        49,
+        50,
+      ],
+      "name": "color-convert",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 20802,
+        "transformedSize": 0,
+      },
+      "version": "1.9.3",
+    },
+    {
+      "id": 20,
+      "modules": [
+        48,
+        52,
+      ],
+      "name": "dom-serializer",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 10115,
+        "transformedSize": 0,
+      },
+      "version": "1.4.1",
+    },
+    {
+      "id": 21,
+      "modules": [
+        51,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+      ],
+      "name": "entities",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 46808,
+        "transformedSize": 0,
+      },
+      "version": "2.2.0",
+    },
+    {
+      "id": 22,
+      "modules": [
+        53,
+      ],
+      "name": "color-name",
+      "root": "",
+      "size": {
+        "parsedSize": 0,
+        "sourceSize": 4617,
+        "transformedSize": 0,
+      },
+      "version": "1.1.3",
+    },
+  ],
+}
+`;
