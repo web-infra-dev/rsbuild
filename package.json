@@ -39,12 +39,13 @@
     ]
   },
   "devDependencies": {
-    "@modern-js/module-tools": "^2.37.1",
-    "@modern-js/monorepo-tools": "^2.37.1",
+    "@modern-js/module-tools": "^2.38.0",
+    "@modern-js/monorepo-tools": "^2.38.0",
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/tsconfig": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
     "husky": "^8.0.3",
+    "is-ci": "^3.0.1",
     "nano-staged": "^0.8.0",
     "nx": "^17.0.1",
     "oxlint": "^0.0.13",

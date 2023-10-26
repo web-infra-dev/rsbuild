@@ -1,7 +1,12 @@
-import { mergeRegex, JS_REGEX, TS_REGEX } from '@rsbuild/shared';
+import {
+  JS_REGEX,
+  TS_REGEX,
+  mergeRegex,
+  BabelConfig,
+  applyUserBabelConfig,
+} from '@rsbuild/shared';
 import { cloneDeep, isEqual } from 'lodash';
 import { RsbuildPlugin, NormalizedConfig } from '../types';
-import type { BabelOptions } from '@modern-js/types';
 
 /**
  * The `@babel/preset-typescript` default options.
@@ -29,8 +34,6 @@ export const pluginBabel = (): RsbuildPlugin => ({
           // we would not use babel loader in rspack, unless user need to use.
           return;
         }
-
-        const { applyUserBabelConfig } = await import('@modern-js/utils');
 
         const getBabelOptions = (config: NormalizedConfig) => {
           // 1. Create babel utils function about include/exclude,
@@ -80,7 +83,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
             return {};
           }
 
-          const babelOptions: BabelOptions = {
+          const babelOptions: BabelConfig = {
             babelrc: false,
             configFile: false,
             compact: isProd,

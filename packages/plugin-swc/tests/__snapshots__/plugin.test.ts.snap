@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/swc > should apply source.include and source.exclude correctly 1`] = `
+exports[`plugin-swc > should apply source.include and source.exclude correctly 1`] = `
 {
   "module": {
     "rules": [
@@ -29,9 +29,10 @@ exports[`plugins/swc > should apply source.include and source.exclude correctly 
                 "coreJs": "3.32",
                 "mode": "entry",
                 "targets": [
-                  "> 0.01%",
-                  "not dead",
-                  "not op_mini all",
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
                 ],
               },
               "extensions": {
@@ -91,9 +92,10 @@ exports[`plugins/swc > should apply source.include and source.exclude correctly 
                 "coreJs": "3.32",
                 "mode": "entry",
                 "targets": [
-                  "> 0.01%",
-                  "not dead",
-                  "not op_mini all",
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
                 ],
               },
               "extensions": {
@@ -142,7 +144,7 @@ exports[`plugins/swc > should apply source.include and source.exclude correctly 
 }
 `;
 
-exports[`plugins/swc > should disable react refresh when dev.hmr is false 1`] = `
+exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
 {
   "rules": [
     {
@@ -156,9 +158,10 @@ exports[`plugins/swc > should disable react refresh when dev.hmr is false 1`] = 
               "coreJs": "3.32",
               "mode": "entry",
               "targets": [
-                "> 0.01%",
-                "not dead",
-                "not op_mini all",
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
               ],
             },
             "extensions": {
@@ -206,73 +209,7 @@ exports[`plugins/swc > should disable react refresh when dev.hmr is false 1`] = 
 }
 `;
 
-exports[`plugins/swc > should disable react refresh when target is not web 1`] = `
-{
-  "rules": [
-    {
-      "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-      "use": [
-        {
-          "loader": "<ROOT>/packages/plugin-swc/src/loader",
-          "options": {
-            "cwd": "<ROOT>",
-            "env": {
-              "coreJs": "3.32",
-              "mode": "entry",
-              "targets": [
-                "chrome >= 61",
-                "edge >= 16",
-                "firefox >= 60",
-                "safari >= 11",
-                "ios_saf >= 11",
-              ],
-            },
-            "extensions": {
-              "lockCorejsVersion": {
-                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-              },
-              "lodash": {
-                "cwd": "<ROOT>",
-                "ids": [
-                  "lodash",
-                  "lodash-es",
-                ],
-              },
-              "styledComponents": {
-                "displayName": true,
-                "pure": false,
-                "ssr": false,
-                "transpileTemplateLiterals": true,
-              },
-            },
-            "inlineSourcesContent": true,
-            "jsc": {
-              "externalHelpers": true,
-              "parser": {
-                "decorators": true,
-                "syntax": "typescript",
-                "tsx": true,
-              },
-              "preserveAllComments": true,
-              "transform": {
-                "react": {
-                  "refresh": true,
-                  "runtime": "classic",
-                },
-              },
-            },
-            "minify": false,
-            "sourceMaps": true,
-          },
-        },
-      ],
-    },
-  ],
-}
-`;
-
-exports[`plugins/swc > should disable react refresh when target is not web 2`] = `
+exports[`plugin-swc > should disable react refresh when target is not web 1`] = `
 {
   "rules": [
     {
@@ -334,7 +271,7 @@ exports[`plugins/swc > should disable react refresh when target is not web 2`] =
 }
 `;
 
-exports[`plugins/swc > should disable react refresh when target is not web 3`] = `
+exports[`plugin-swc > should disable react refresh when target is not web 2`] = `
 {
   "rules": [
     {
@@ -348,9 +285,10 @@ exports[`plugins/swc > should disable react refresh when target is not web 3`] =
               "coreJs": "3.32",
               "mode": "entry",
               "targets": [
-                "> 0.01%",
-                "not dead",
-                "not op_mini all",
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
               ],
             },
             "extensions": {
@@ -398,7 +336,7 @@ exports[`plugins/swc > should disable react refresh when target is not web 3`] =
 }
 `;
 
-exports[`plugins/swc > should disable react refresh when target is not web 4`] = `
+exports[`plugin-swc > should disable react refresh when target is not web 3`] = `
 {
   "rules": [
     {
@@ -412,9 +350,10 @@ exports[`plugins/swc > should disable react refresh when target is not web 4`] =
               "coreJs": "3.32",
               "mode": "entry",
               "targets": [
-                "> 0.01%",
-                "not dead",
-                "not op_mini all",
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
               ],
             },
             "extensions": {
@@ -462,7 +401,7 @@ exports[`plugins/swc > should disable react refresh when target is not web 4`] =
 }
 `;
 
-exports[`plugins/swc > should disable react refresh when target is not web 5`] = `
+exports[`plugin-swc > should disable react refresh when target is not web 4`] = `
 {
   "rules": [
     {
@@ -476,9 +415,10 @@ exports[`plugins/swc > should disable react refresh when target is not web 5`] =
               "coreJs": "3.32",
               "mode": "entry",
               "targets": [
-                "> 0.01%",
-                "not dead",
-                "not op_mini all",
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
               ],
             },
             "extensions": {
@@ -526,7 +466,7 @@ exports[`plugins/swc > should disable react refresh when target is not web 5`] =
 }
 `;
 
-exports[`plugins/swc > should set correct swc minimizer options in production 1`] = `
+exports[`plugin-swc > should set correct swc minimizer options in production 1`] = `
 {
   "minimizer": [
     SwcMinimizerPlugin {
@@ -543,7 +483,7 @@ exports[`plugins/swc > should set correct swc minimizer options in production 1`
 }
 `;
 
-exports[`plugins/swc > should set correct swc minimizer options using raw swc config 1`] = `
+exports[`plugin-swc > should set correct swc minimizer options using raw swc config 1`] = `
 {
   "minimizer": [
     SwcMinimizerPlugin {
@@ -560,7 +500,7 @@ exports[`plugins/swc > should set correct swc minimizer options using raw swc co
 }
 `;
 
-exports[`plugins/swc > should set multiple swc-loader 1`] = `
+exports[`plugin-swc > should set multiple swc-loader 1`] = `
 [
   {
     "include": [
@@ -583,9 +523,10 @@ exports[`plugins/swc > should set multiple swc-loader 1`] = `
             "coreJs": "3.32",
             "mode": "entry",
             "targets": [
-              "> 0.01%",
-              "not dead",
-              "not op_mini all",
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
             ],
           },
           "extensions": {
@@ -646,9 +587,10 @@ exports[`plugins/swc > should set multiple swc-loader 1`] = `
             "coreJs": "3.32",
             "mode": "entry",
             "targets": [
-              "> 0.01%",
-              "not dead",
-              "not op_mini all",
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
             ],
           },
           "extensions": {
@@ -704,9 +646,10 @@ exports[`plugins/swc > should set multiple swc-loader 1`] = `
             "coreJs": "3.32",
             "mode": "entry",
             "targets": [
-              "> 0.01%",
-              "not dead",
-              "not op_mini all",
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
             ],
           },
           "extensions": {
@@ -754,7 +697,7 @@ exports[`plugins/swc > should set multiple swc-loader 1`] = `
 ]
 `;
 
-exports[`plugins/swc > should set swc minimizer in production 1`] = `
+exports[`plugin-swc > should set swc minimizer in production 1`] = `
 {
   "minimizer": [
     SwcMinimizerPlugin {
@@ -771,7 +714,7 @@ exports[`plugins/swc > should set swc minimizer in production 1`] = `
 }
 `;
 
-exports[`plugins/swc > should set swc-loader 1`] = `
+exports[`plugin-swc > should set swc-loader 1`] = `
 {
   "module": {
     "rules": [
@@ -796,9 +739,10 @@ exports[`plugins/swc > should set swc-loader 1`] = `
                 "coreJs": "3.32",
                 "mode": "entry",
                 "targets": [
-                  "> 0.01%",
-                  "not dead",
-                  "not op_mini all",
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
                 ],
               },
               "extensions": {
@@ -858,9 +802,10 @@ exports[`plugins/swc > should set swc-loader 1`] = `
                 "coreJs": "3.32",
                 "mode": "entry",
                 "targets": [
-                  "> 0.01%",
-                  "not dead",
-                  "not op_mini all",
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
                 ],
               },
               "extensions": {

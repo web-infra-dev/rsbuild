@@ -18,7 +18,7 @@ export const supportedRspackMinimumVersion = '0.3.6';
 
 export const isSatisfyRspackMinimumVersion = async (customVersion?: string) => {
   let version = customVersion || (await getRspackVersion());
-  const { semver } = await import('@modern-js/utils');
+  const semver = await import('semver');
 
   // The nightly version of rspack is to append `-canary-xxx` to the current version
   if (version.includes('-canary')) {

@@ -1,17 +1,18 @@
 import {
+  logger,
   JS_REGEX,
   TS_REGEX,
   mergeRegex,
-  applyScriptCondition,
-  getBrowserslistWithDefault,
-  RsbuildTarget,
   setConfig,
   isWebTarget,
   BundlerChain,
   addCoreJsEntry,
   BundlerChainRule,
-  logger,
   isUseJsSourceMap,
+  getCoreJsVersion,
+  applyScriptCondition,
+  getBrowserslistWithDefault,
+  type RsbuildTarget,
 } from '@rsbuild/shared';
 import { cloneDeep } from 'lodash';
 import * as path from 'path';
@@ -148,7 +149,6 @@ async function applyCoreJs(
   chain: BundlerChain,
   rule: BundlerChainRule,
 ) {
-  const { getCoreJsVersion } = await import('@modern-js/utils');
   const coreJsPath = require.resolve('core-js/package.json');
   const version = getCoreJsVersion(coreJsPath);
   const coreJsDir = path.dirname(coreJsPath);

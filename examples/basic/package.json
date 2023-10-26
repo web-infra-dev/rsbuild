@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "rsbuild dev",
     "build": "rsbuild build",
-    "serve": "rsbuild serve"
+    "preview": "rsbuild preview"
   },
   "dependencies": {
     "@rsbuild/core": "workspace:*"

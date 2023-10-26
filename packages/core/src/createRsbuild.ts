@@ -37,7 +37,7 @@ export async function createRsbuild<
   const pluginStore = createPluginStore();
   const {
     build,
-    serve,
+    preview,
     pluginAPI,
     publicContext,
     initConfigs,
@@ -70,8 +70,8 @@ export async function createRsbuild<
       'getRsbuildConfig',
       'getNormalizedConfig',
     ]),
-    serve,
     build,
+    preview,
     createCompiler,
     initConfigs,
     inspectConfig,

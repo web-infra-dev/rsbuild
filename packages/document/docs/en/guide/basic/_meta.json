@@ -1,4 +1,5 @@
 [
+  "cli",
   "config",
   "output-files",
   "css-usage",
@@ -8,6 +9,5 @@
   "wasm-assets",
   "html-template",
   "css-modules",
-  "typescript",
-  "cli"
+  "typescript"
 ]

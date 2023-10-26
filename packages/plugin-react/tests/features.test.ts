@@ -3,7 +3,7 @@ import { pluginReact } from '../src';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { SVG_REGEX, mergeRegex, JS_REGEX, TS_REGEX } from '@rsbuild/shared';
 
-vi.mock('@modern-js/utils', async (importOriginal) => {
+vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();
   return {
     ...mod,

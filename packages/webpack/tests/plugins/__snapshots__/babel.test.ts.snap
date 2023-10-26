@@ -247,7 +247,7 @@ exports[`plugin-babel > should adjust browserslist when target is node 1`] = `
                   {
                     "displayName": true,
                     "pure": false,
-                    "ssr": false,
+                    "ssr": true,
                     "transpileTemplateLiterals": true,
                   },
                 ],
@@ -319,7 +319,7 @@ exports[`plugin-babel > should adjust browserslist when target is node 1`] = `
                   {
                     "displayName": true,
                     "pure": false,
-                    "ssr": false,
+                    "ssr": true,
                     "transpileTemplateLiterals": true,
                   },
                 ],

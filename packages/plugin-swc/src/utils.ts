@@ -1,13 +1,14 @@
-import { getCoreJsVersion, isBeyondReact17 } from '@modern-js/utils';
 import _ from 'lodash';
 import { NormalizedConfig } from '@rsbuild/webpack';
 import {
   logger,
   isUsingHMR,
-  ModifyChainUtils,
+  isBeyondReact17,
+  getCoreJsVersion,
   mergeChainedOptions,
   getBrowserslistWithDefault,
   getDefaultStyledComponentsConfig,
+  type ModifyChainUtils,
 } from '@rsbuild/shared';
 import { Extensions } from '@modern-js/swc-plugins';
 import { getDefaultSwcConfig } from './plugin';
@@ -30,11 +31,6 @@ export function determinePresetReact(
     pluginConfig.presetReact || (pluginConfig.presetReact = {});
 
   presetReact.runtime ??= isBeyondReact17(root) ? 'automatic' : 'classic';
-}
-
-const BUILDER_SWC_DEBUG_MODE = 'BUILDER_SWC_DEBUG_MODE';
-export function isDebugMode(): boolean {
-  return process.env[BUILDER_SWC_DEBUG_MODE] !== undefined;
 }
 
 export function checkUseMinify(

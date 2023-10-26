@@ -3,6 +3,8 @@ import prodServer, {
   type ModernServerOptions,
 } from '@modern-js/prod-server';
 import chalk from 'chalk';
+import { getPort } from './port';
+import { getAddressUrls } from './url';
 import { logger as defaultLogger } from './logger';
 import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import type { Context, StartServerResult, SharedRsbuildConfig } from './types';
@@ -54,8 +56,6 @@ export async function startProdServer(
     process.env.NODE_ENV = 'production';
   }
 
-  const { getPort } = await import('@modern-js/utils');
-
   const port = await getPort(rsbuildConfig.dev?.port || DEFAULT_PORT);
   const server = await prodServer({
     pwd: context.rootPath,
@@ -75,7 +75,6 @@ export async function startProdServer(
           throw err;
         }
 
-        const { getAddressUrls } = await import('@modern-js/utils');
         const urls = getAddressUrls('http', port);
 
         await printServerURLs(urls);

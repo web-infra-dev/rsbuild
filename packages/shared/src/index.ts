@@ -1,4 +1,5 @@
 export * from './applyDefaultRsbuildOptions';
+export * from './babel';
 export * from './constants';
 export * from './createHook';
 export * from './pluginStore';

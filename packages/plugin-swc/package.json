@@ -54,7 +54,6 @@
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.23.2",
     "@modern-js/swc-plugins": "0.6.4",
-    "@modern-js/utils": "^2.37.1",
     "@rsbuild/shared": "workspace:*",
     "@swc/helpers": "0.5.1",
     "core-js": "~3.32.2",
@@ -62,7 +61,6 @@
   },
   "devDependencies": {
     "@rsbuild/webpack": "workspace:*",
-    "@modern-js/utils": "^2.37.1",
     "@swc/core": "1.3.42",
     "@types/lodash": "^4.14.200",
     "@types/babel__core": "^7.20.3",
