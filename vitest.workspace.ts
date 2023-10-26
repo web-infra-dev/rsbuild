@@ -20,7 +20,7 @@ export default defineWorkspace([
       include: ['packages/**/*.test.ts'],
       // TODO fix test cases of plugins
       exclude: [
-        'packages/plugin-{swc,image-compress}/**/*.test.ts',
+        'packages/plugin-{image-compress}/**/*.test.ts',
         '**/node_modules/**',
       ],
       setupFiles: ['./scripts/vitest.setup.ts'],
