@@ -1,5 +1,5 @@
 - **Type:** `'url' | 'component'`
-- **Default:** `'url'`
+- **Default:** `'component'`
 
 `output.svgDefaultExport` is used to configure the default export type of SVG files.
 
