@@ -73,7 +73,7 @@
     "build": "modern build"
   },
   "dependencies": {
-    "@modern-js/server": "^2.37.1",
+    "@modern-js/server": "^2.38.0",
     "@rspack/core": "0.3.8",
     "@rspack/dev-client": "0.3.8",
     "@rspack/plugin-html": "0.3.8",
