@@ -1,0 +1,18 @@
+{
+  "name": "rsbuild-vue2-ts",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "vue": "^2.7.14"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "nightly",
+    "@rsbuild/plugin-vue2": "nightly",
+    "typescript": "^5.0.0"
+  }
+}
