@@ -7,6 +7,12 @@
   "files": [
     "dist"
   ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/doctor-sdk"
+  },
   "scripts": {
     "dev": "npm run start",
     "start": "concurrently 'npm run build:cjs -- -w' 'npm run build:esm -- -w'",
@@ -14,6 +20,11 @@
     "build:esm": "modern build -c ./modern.config.esm.ts",
     "build": "npm run build:cjs && npm run build:esm",
     "test": "vitest run"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "source-map": "^0.7.4",
+    "@rsbuild/doctor-utils": "workspace:*"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.200",
@@ -24,13 +35,6 @@
     "@rsbuild/doctor-types": "workspace:*",
     "typescript": "^5"
   },
-  "dependencies": {
-    "lodash": "^4.17.21",
-    "source-map": "^0.7.4",
-    "@rsbuild/doctor-utils": "workspace:*"
-  },
-  "license": "MIT",
-  "sideEffects": [],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/",
