@@ -1,7 +1,7 @@
 import { expect, describe, it, vi } from 'vitest';
 import { pluginReact } from '../src';
 import { createStubRsbuild } from '@rsbuild/test-helper';
-import { SVG_REGEX, mergeRegex, JS_REGEX, TS_REGEX } from '@rsbuild/shared';
+import { mergeRegex, JS_REGEX, TS_REGEX } from '@rsbuild/shared';
 
 vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();
@@ -79,41 +79,6 @@ describe('transformImport', () => {
       config.module.rules.find(
         (r) => r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
       ),
-    ).toMatchSnapshot();
-  });
-});
-
-describe('svgr', () => {
-  const cases = [
-    {
-      name: 'export default url',
-      pluginConfig: {},
-    },
-    {
-      name: 'export default Component',
-      pluginConfig: {
-        svgDefaultExport: 'component' as const,
-      },
-    },
-    {
-      name: 'disableSvgr',
-      pluginConfig: {
-        disableSvgr: true,
-      },
-    },
-  ];
-
-  it.each(cases)('$name', async (item) => {
-    const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
-    });
-
-    rsbuild.addPlugins([pluginReact(item.pluginConfig)]);
-
-    const config = await rsbuild.unwrapConfig();
-
-    expect(
-      config.module.rules.find((r) => r.test === SVG_REGEX),
     ).toMatchSnapshot();
   });
 });

@@ -1,11 +1,11 @@
 {
-  "name": "@rsbuild/plugin-react",
+  "name": "@rsbuild/plugin-svgr",
   "version": "0.0.7",
-  "description": "React plugin for Rsbuild",
+  "description": "svgr plugin for Rsbuild",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
-    "directory": "packages/plugin-react"
+    "directory": "packages/plugin-svgr"
   },
   "main": "./dist/index.js",
   "types": "./src/index.ts",
@@ -24,11 +24,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@babel/preset-react": "^7.22.15",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.5.10",
-    "@rspack/plugin-react-refresh": "0.3.8",
     "@rsbuild/shared": "workspace:*",
-    "babel-plugin-transform-react-remove-prop-types": "0.4.24"
+    "@svgr/webpack": "8.0.1",
+    "url-loader": "4.1.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
