@@ -5,7 +5,7 @@
 # Rsbuild
 
 <p>
-  <a href="https://discord.gg/79ZZ66GH9E">
+  <a href="https://discord.gg/dfJnVWaG">
     <img src="https://img.shields.io/discord/977448667919286283?logo=discord&label=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
   </a>
   <a href="https://www.npmjs.com/package/@rsbuild/shared?activeTab=readme">
@@ -54,6 +54,10 @@ Rsbuild 还为上层的解决方案（如 Rspress 和 Modern.js）提供通用�
 > 欢迎参与 Rsbuild 贡献！
 
 请阅读 [贡献指南](https://github.com/web-infra-dev/rsbuild/blob/main/CONTRIBUTING.md) 来共同参与 Rsbuild 的建设。
+
+## 社区
+
+欢迎加入我们的 [Discord](https://discord.gg/dfJnVWaG) 交流频道！Rspack / Rsbuild 团队和用户都在那里活跃，并且我们一直期待着各种贡献。
 
 ### 行为准则
 
