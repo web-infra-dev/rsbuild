@@ -2,7 +2,7 @@
   "name": "@rsbuild/doctor-utils",
   "version": "0.0.1",
   "main": "dist/index.js",
-  "types": "dist/index.ts",
+  "types": "dist/type/index.d.ts",
   "files": [
     "dist"
   ],
@@ -51,7 +51,6 @@
     "json-stream-stringify": "3.0.1",
     "lodash": "^4.17.21"
   },
-  "peerDependencies": {},
   "devDependencies": {
     "@types/fs-extra": "^11.0.2",
     "@types/node": "^16",
@@ -64,7 +63,6 @@
     "concurrently": "7.6.0",
     "typescript": "^5"
   },
-  "sideEffects": [],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/",

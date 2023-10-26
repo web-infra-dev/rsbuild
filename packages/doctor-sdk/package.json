@@ -30,7 +30,6 @@
     "@rsbuild/doctor-utils": "workspace:*"
   },
   "license": "MIT",
-  "sideEffects": [],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/",

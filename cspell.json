@@ -5,10 +5,12 @@
   "language": "en",
   // words - list of words to be always considered correct
   "words": [
+    "antd",
     "atrules",
     "deepmerge",
     "docgen",
     "envinfo",
+    "estree",
     "flac",
     "icss",
     "imagex",
@@ -24,12 +26,10 @@
     "rspack",
     "rspress",
     "stacktracey",
+    "svgr",
     "systemjs",
     "transpiling",
     "tsbuildinfo",
-    "vitest",
-    "deepmerge",
-    "antd",
-    "svgr"
+    "vitest"
   ]
 }
