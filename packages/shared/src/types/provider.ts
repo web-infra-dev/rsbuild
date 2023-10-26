@@ -81,7 +81,7 @@ export type ProviderInstance<
     options?: StartDevServerOptions,
   ) => Promise<StartServerResult>;
 
-  serve: () => Promise<StartServerResult>;
+  preview: () => Promise<StartServerResult>;
 
   build: (options?: BuildOptions) => Promise<void>;
 

@@ -30,10 +30,10 @@ export function setupProgram(rsbuild: RsbuildInstance) {
     });
 
   program
-    .command('serve')
+    .command('preview')
     .description('preview the production build locally')
     .action(async () => {
-      await rsbuild.serve();
+      await rsbuild.preview();
     });
 
   program

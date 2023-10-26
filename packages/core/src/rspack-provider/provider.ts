@@ -83,7 +83,7 @@ export function rspackProvider({
         );
       },
 
-      async serve() {
+      async preview() {
         return startProdServer(context, context.config);
       },
 

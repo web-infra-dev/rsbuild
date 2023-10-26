@@ -332,7 +332,7 @@ await rsbuild.startDevServer({
 
 这样，Rsbuild 会使用你自定义的日志输出对象来输出日志。
 
-## rsbuild.serve
+## rsbuild.preview
 
 在本地启动 Server 来预览生产环境构建的产物，需要在 `rsbuild.build` 方法之后执行。
 
@@ -353,17 +353,17 @@ function server(): Promise<StartServerResult>;
 启动 Server：
 
 ```ts
-await rsbuild.serve();
+await rsbuild.preview();
 ```
 
-`serve` 会返回以下参数：
+`preview` 会返回以下参数：
 
 - `urls`：访问 Server 的 URLs
 - `port` 实际监听的端口号
 - `server`：Server 实例对象
 
 ```ts
-const { urls, port, server } = await rsbuild.serve();
+const { urls, port, server } = await rsbuild.preview();
 console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
 console.log(port); // 8080
 
