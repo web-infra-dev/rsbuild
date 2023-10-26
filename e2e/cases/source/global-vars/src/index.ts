@@ -1,5 +1,12 @@
-import React from 'react';
-import { render } from 'react-dom';
-import App from './App';
+if (ENABLE_TEST === true) {
+  const test = document.createElement('div');
+  test.id = 'test-el';
+  test.innerHTML = 'aaaaa';
+  document.body.appendChild(test);
+}
 
-render(React.createElement(App), document.getElementById('root'));
+const testEl = document.createElement('div');
+testEl.id = 'test';
+testEl.innerHTML = `Hello Rsbuild!`;
+
+document.body.appendChild(testEl);

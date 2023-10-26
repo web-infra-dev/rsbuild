@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
@@ -13,6 +14,7 @@ test('should inline style when disableCssExtract is false', async ({
       main: join(fixtures, 'src/index.ts'),
     },
     runServer: true,
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         disableCssExtract: true,

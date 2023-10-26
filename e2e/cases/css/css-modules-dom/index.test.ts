@@ -2,6 +2,7 @@ import { join, resolve } from 'path';
 import { fs } from '@rsbuild/shared/fs-extra';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = resolve(__dirname);
 
@@ -14,6 +15,7 @@ test('enableCssModuleTSDeclaration', async () => {
     entry: {
       main: join(fixtures, 'src/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         enableCssModuleTSDeclaration: true,
@@ -53,6 +55,7 @@ test('disableCssExtract', async ({ page }) => {
       main: join(fixtures, 'src/index.ts'),
     },
     runServer: true,
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         disableCssExtract: true,

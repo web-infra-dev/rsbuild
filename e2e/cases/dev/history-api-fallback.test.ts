@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { dev } from '@scripts/shared';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const cwd = join(__dirname, 'history-api-fallback');
 
@@ -10,6 +11,7 @@ test('should provide history api fallback correctly', async ({ page }) => {
     entry: {
       main: join(cwd, 'src/index.tsx'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       tools: {
         devServer: {
