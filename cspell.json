@@ -18,6 +18,7 @@
     "pluggable",
     "rebranded",
     "rsbuild",
+    "transpiling",
     "rslog",
     "rspack",
     "rspress",

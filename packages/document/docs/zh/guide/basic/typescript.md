@@ -1,42 +1,34 @@
 # 使用 TypeScript
 
-Rsbuild 对 TypeScript 的转译和类型检查做了默认支持，无需任何配置即可在项目中使用 `.ts` 和 `.tsx` 文件。
+Rsbuild 默认支持 TypeScript，你可以直接在项目中使用 `.ts` 和 `.tsx` 文件。
 
 ## TypeScript 转译
 
-Rsbuild 有三种可选方式处理 TypeScript 文件。
+Rsbuild 默认使用 SWC 来转译 TypeScript 代码，也支持切换到 Babel 进行转译。
 
-**Babel**
+与 TypeScript 原生编译器不同，像 SWC 和 Babel 这样的工具会将每个文件单独编译，它无法确定导入的名称是一个类型还是一个值。因此，当你在 Rsbuild 中使用 TypeScript 时，需要启用 `tsconfig.json` 中的 [isolatedModules](https://www.typescriptlang.org/tsconfig/#isolatedModules) 选项：
 
-在默认配置下，源码中所有的 TypeScript 文件会经过 Babel 转译。
-可能你在查阅较老旧的资料时会发现，Babel 无法处理 `const enum` 以及 `namespace alias` 语法，但是其实在 [7.15](https://babeljs.io/blog/2021/07/26/7.15.0) 版本已经得到了支持。Babel 无需手动开启，直接在项目中使用 TypeScript 文件即可。
-
-**ts-loader**
-
-ts-loader 使用 TypeScript 官方的 TSC 转译。当开启 ts-loader 后 TypeScript 文件不会再经过 Babel 编译处理，但处理后的 JavaScript 产物仍然会由 Babel 进行语法降级以及 Polyfill 注入。
-
-开启 ts-loader(使用默认配置):
-
-```ts
-export default {
-  tools: {
-    tsLoader: {},
-  },
-};
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "isolatedModules": true
+  }
+}
 ```
 
-更详细配置可见 [tools.tsLoader](/config/options/tools.html#toolstsloader)。
-如果开启 ts-loader，默认不会启用类型检查，只会进行转译。
+该选项可以帮助你避免使用一些 SWC 和 Babel 无法正确编译的写法，比如跨文件的类型引用问题，它会引导你更正对应的用法：
 
-**SWC**
+```ts
+// 错误
+export { SomeType } from './types';
 
-如果想要更快的项目构建速度，并且项目没有依赖某些自定义的 Babel 插件，那么也可以选择 SWC 来对 JavaScript 和 TypeScript 进行转译和压缩。Rsbuild 的 SWC 插件默认支持 TypeScript, TSX, Decorator，使用方式可见 [SWC 插件](/plugins/list/plugin-swc.html)。
-
-### 为什么默认使用 Babel
-
-Babel 除了没有类型检查以外，对 TypeScript 语法支持已经非常完善，而类型检查可以借助另外的工具更好地进行。转译到低版本的 JavaScript 时，某些语法 Babel 会处理得更符合标准，例如 Babel 会将类成员初始化为 undefined，将类方法标记不可枚举等行为。如果启用 ts-loader，为了更精确的语法降级和 Polyfill，最后还是会将处理后的产物再次经过 Babel 处理，产生不必要的性能开销。
+// 正确
+export type { SomeType } from './types';
+```
 
 ## 类型检查
+
+在进行 TypeScript 转译时，SWC 和 Babel 等工具不会执行类型检查。
 
 Rsbuild 提供了 Type Check 插件，用于在单独的进程中运行 TypeScript 类型检查，插件内部集成了 [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)。
 
