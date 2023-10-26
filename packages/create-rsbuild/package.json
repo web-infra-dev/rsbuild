@@ -12,7 +12,7 @@
   "types": "./src/index.ts",
   "main": "./dist/index.js",
   "bin": {
-    "create-rspack": "./dist/index.js"
+    "create-rsbuild": "./dist/index.js"
   },
   "exports": {
     ".": {
