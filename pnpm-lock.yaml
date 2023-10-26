@@ -393,6 +393,35 @@ importers:
         specifier: ^5
         version: 5.2.2
 
+  packages/create-rsbuild/template-vue2-js:
+    dependencies:
+      vue:
+        specifier: ^2.7.14
+        version: 2.7.14
+    devDependencies:
+      '@rsbuild/core':
+        specifier: nightly
+        version: link:../../core
+      '@rsbuild/plugin-vue2':
+        specifier: nightly
+        version: link:../../plugin-vue2
+
+  packages/create-rsbuild/template-vue2-ts:
+    dependencies:
+      vue:
+        specifier: ^2.7.14
+        version: 2.7.14
+    devDependencies:
+      '@rsbuild/core':
+        specifier: nightly
+        version: link:../../core
+      '@rsbuild/plugin-vue2':
+        specifier: nightly
+        version: link:../../plugin-vue2
+      typescript:
+        specifier: ^5.0.0
+        version: 5.2.2
+
   packages/create-rsbuild/template-vue3-js:
     dependencies:
       vue:
