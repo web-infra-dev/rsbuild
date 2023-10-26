@@ -2,6 +2,7 @@ import { join } from 'path';
 import { expect } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { webpackOnlyTest } from '@scripts/helper';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
@@ -13,6 +14,7 @@ webpackOnlyTest('should remove prop-types by default', async ({ page }) => {
       main: join(fixtures, 'src/index.js'),
     },
     runServer: true,
+    plugins: [pluginReact()],
   });
   await page.goto(getHrefByEntryName('main', rsbuild.port));
 

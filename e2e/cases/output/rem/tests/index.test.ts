@@ -1,6 +1,7 @@
 import { join, resolve } from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = resolve(__dirname, '../');
 
@@ -10,6 +11,7 @@ test('rem default (disable)', async ({ page }) => {
     entry: {
       main: join(fixtures, 'src/index.ts'),
     },
+    plugins: [pluginReact()],
     runServer: true,
   });
   await page.goto(getHrefByEntryName('main', rsbuild.port));
@@ -31,6 +33,7 @@ test('rem enable', async ({ page }) => {
       main: join(fixtures, 'src/index.ts'),
     },
     runServer: true,
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         convertToRem: true,
@@ -62,6 +65,7 @@ test('should inline runtime code to html by default', async () => {
   const rsbuild = await build({
     cwd: fixtures,
     entry: { index: join(fixtures, 'src/index.ts') },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         convertToRem: {},
@@ -79,6 +83,7 @@ test('should extract runtime code when inlineRuntime is false', async () => {
   const rsbuild = await build({
     cwd: fixtures,
     entry: { index: join(fixtures, 'src/index.ts') },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         convertToRem: {

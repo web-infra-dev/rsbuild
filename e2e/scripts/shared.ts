@@ -103,14 +103,6 @@ export async function dev<BundlerType = 'rspack'>({
 
   const rsbuild = await createRsbuild(options, rsbuildConfig);
 
-  // apply react as default framework
-  if (
-    ['plugin-vue', 'plugin-vue2'].every((name) => !rsbuild.isPluginExists(name))
-  ) {
-    const { pluginReact } = await import('@rsbuild/plugin-react');
-    rsbuild.addPlugins([pluginReact()]);
-  }
-
   if (plugins) {
     rsbuild.addPlugins(plugins);
   }
@@ -138,14 +130,6 @@ export async function build<BundlerType = 'rspack'>({
   updateConfigForTest(rsbuildConfig);
 
   const rsbuild = await createRsbuild(options, rsbuildConfig);
-
-  // apply react as default framework
-  if (
-    ['plugin-vue', 'plugin-vue2'].every((name) => !rsbuild.isPluginExists(name))
-  ) {
-    const { pluginReact } = await import('@rsbuild/plugin-react');
-    rsbuild.addPlugins([pluginReact()]);
-  }
 
   rsbuild.removePlugins(['plugin-file-size']);
 

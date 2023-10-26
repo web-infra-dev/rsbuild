@@ -2,6 +2,7 @@ import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { webpackOnlyTest } from '@scripts/helper';
 import { build, getHrefByEntryName } from '../scripts/shared';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
@@ -12,6 +13,7 @@ test('postcss plugins overwrite', async ({ page }) => {
       main: join(fixtures, 'output/rem/src/index.ts'),
     },
     runServer: true,
+    plugins: [pluginReact()],
     rsbuildConfig: {
       tools: {
         postcss: {
@@ -62,6 +64,7 @@ webpackOnlyTest('bundlerChain - custom publicPath function', async () => {
     entry: {
       main: join(fixtures, 'output/rem/src/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         disableFilenameHash: true,

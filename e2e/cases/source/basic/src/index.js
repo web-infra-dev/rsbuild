@@ -1,8 +1,9 @@
-/* eslint-disable no-undef */
-import React from 'react';
-import { render } from 'react-dom';
-import App from './App';
+import { test } from '@common/test';
+
+const testEl = document.createElement('div');
+testEl.id = 'test';
+testEl.innerHTML = `Hello Rsbuild! ${test}`;
+
+document.body.appendChild(testEl);
 
 window.aa = 2;
-
-render(React.createElement(App), document.getElementById('root'));

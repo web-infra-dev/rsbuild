@@ -1,6 +1,8 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
+import { pluginReact } from '@rsbuild/plugin-react';
+
 import sourceMap from 'source-map';
 
 const fixtures = __dirname;
@@ -31,6 +33,7 @@ test('source-map', async () => {
     entry: {
       main: join(fixtures, 'src/index.js'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
         legalComments: 'none',

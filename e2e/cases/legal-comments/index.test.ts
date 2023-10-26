@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
@@ -11,6 +12,7 @@ test('legalComments linked (default)', async ({ page }) => {
       main: join(fixtures, 'src/index.jsx'),
     },
     runServer: true,
+    plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
         chunkSplit: {
@@ -57,6 +59,7 @@ test('legalComments none', async ({ page }) => {
       main: join(fixtures, 'src/index.jsx'),
     },
     runServer: true,
+    plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
         chunkSplit: {
@@ -100,6 +103,7 @@ test('legalComments inline', async ({ page }) => {
       main: join(fixtures, 'src/index.jsx'),
     },
     runServer: true,
+    plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
         chunkSplit: {

@@ -1,6 +1,7 @@
 import { join, resolve } from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = resolve(__dirname, '../');
 
@@ -11,6 +12,7 @@ test('pug', async ({ page }) => {
       main: join(fixtures, 'src/index.ts'),
     },
     runServer: true,
+    plugins: [pluginReact()],
     rsbuildConfig: {
       html: {
         template: './static/index.pug',

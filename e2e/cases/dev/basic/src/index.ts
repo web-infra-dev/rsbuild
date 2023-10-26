@@ -1,5 +1,5 @@
-import React from 'react';
-import { render } from 'react-dom';
-import App from './App';
+const testEl = document.createElement('div');
+testEl.id = 'test';
+testEl.innerHTML = 'Hello Rsbuild!';
 
-render(React.createElement(App), document.getElementById('root'));
+document.body.appendChild(testEl);

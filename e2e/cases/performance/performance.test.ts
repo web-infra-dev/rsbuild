@@ -1,6 +1,7 @@
 import { join, resolve } from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
@@ -14,6 +15,7 @@ test.describe('performance configure multi', () => {
       entry: {
         main: join(basicFixtures, 'src/index.ts'),
       },
+      plugins: [pluginReact()],
       rsbuildConfig: {
         performance: {
           bundleAnalyze: {},
@@ -49,6 +51,7 @@ test('should generate vendor chunk when chunkSplit is "single-vendor"', async ()
     entry: {
       main: join(fixtures, 'basic/src/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
         chunkSplit: {
@@ -73,6 +76,7 @@ test('should generate preconnect link when preconnect is defined', async () => {
     entry: {
       main: join(fixtures, 'basic/src/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
         preconnect: [
@@ -111,6 +115,7 @@ test('should generate dnsPrefetch link when dnsPrefetch is defined', async () =>
     entry: {
       main: join(fixtures, 'basic/src/index.ts'),
     },
+    plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
         dnsPrefetch: ['http://aaaa.com'],

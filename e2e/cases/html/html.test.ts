@@ -2,6 +2,7 @@ import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { fs } from '@rsbuild/shared/fs-extra';
 import { build, getHrefByEntryName } from '@scripts/shared';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
@@ -15,6 +16,7 @@ test.describe('html configure multi', () => {
         main: join(join(fixtures, 'mount-id'), 'src/index.ts'),
       },
       runServer: true,
+      plugins: [pluginReact()],
       rsbuildConfig: {
         html: {
           mountId: 'app',

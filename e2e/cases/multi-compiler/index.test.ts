@@ -13,7 +13,7 @@ test('multi compiler build', async ({ page }) => {
   await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const test = page.locator('#test');
-  await expect(test).toHaveText('Hello Builder!');
+  await expect(test).toHaveText('Hello Rsbuild!');
 
   rsbuild.close();
 });
@@ -28,7 +28,7 @@ test('multi compiler dev', async ({ page }) => {
   await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const test = page.locator('#test');
-  await expect(test).toHaveText('Hello Builder!');
+  await expect(test).toHaveText('Hello Rsbuild!');
 
   await rsbuild.server.close();
 });

@@ -2,6 +2,7 @@ import { join } from 'path';
 import { readFileSync } from 'fs';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should preserve viewBox after svgo minification', async () => {
   const fixture = join(__dirname, 'svgo-minify-view-box');
@@ -10,6 +11,7 @@ test('should preserve viewBox after svgo minification', async () => {
     entry: {
       main: join(fixture, 'src/index.jsx'),
     },
+    plugins: [pluginReact()],
   };
 
   const rsbuild = await build(buildOpts);
@@ -32,6 +34,7 @@ test('should add id prefix after svgo minification', async () => {
     entry: {
       main: join(fixture, 'src/index.jsx'),
     },
+    plugins: [pluginReact()],
   };
 
   const rsbuild = await build(buildOpts);

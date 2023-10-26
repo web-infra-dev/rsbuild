@@ -19,6 +19,11 @@ test('should minify template js & css correctly when use swc-plugin', async ({
       html: {
         template: './static/index.html',
       },
+      output: {
+        distPath: {
+          root: 'dist-1',
+        },
+      },
     },
   });
 
