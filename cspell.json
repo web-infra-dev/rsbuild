@@ -18,6 +18,7 @@
     "longpaths",
     "manypkg",
     "napi",
+    "outro",
     "oxlint",
     "pluggable",
     "rebranded",
