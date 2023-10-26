@@ -1,226 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-svg > 'disableSvgr' 1`] = `
-{
-  "module": {
-    "rules": [
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.svg\\$/,
-      },
-    ],
-  },
-}
-`;
-
-exports[`plugin-svg > 'export default Component' 1`] = `
-{
-  "module": {
-    "rules": [
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
-            },
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
-              },
-            },
-            "type": "asset",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "resourceQuery": /url/,
-            "type": "asset/resource",
-          },
-          {
-            "type": "javascript/auto",
-            "use": [
-              {
-                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
-                "options": {
-                  "svgo": true,
-                  "svgoConfig": {
-                    "plugins": [
-                      {
-                        "name": "preset-default",
-                        "params": {
-                          "overrides": {
-                            "removeViewBox": false,
-                          },
-                        },
-                      },
-                      "prefixIds",
-                    ],
-                  },
-                },
-              },
-            ],
-          },
-        ],
-        "test": /\\\\\\.svg\\$/,
-      },
-    ],
-  },
-}
-`;
-
-exports[`plugin-svg > 'export default url' 1`] = `
-{
-  "module": {
-    "rules": [
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
-            },
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
-              },
-            },
-            "type": "asset",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "resourceQuery": /url/,
-            "type": "asset/resource",
-          },
-          {
-            "type": "javascript/auto",
-            "use": [
-              {
-                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
-                "options": {
-                  "svgo": true,
-                  "svgoConfig": {
-                    "plugins": [
-                      {
-                        "name": "preset-default",
-                        "params": {
-                          "overrides": {
-                            "removeViewBox": false,
-                          },
-                        },
-                      },
-                      "prefixIds",
-                    ],
-                  },
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/url-loader",
-                "options": {
-                  "limit": 10000,
-                  "name": "static/svg/[name].[contenthash:8].svg",
-                },
-              },
-            ],
-          },
-        ],
-        "test": /\\\\\\.svg\\$/,
-      },
-    ],
-  },
-}
-`;
-
 exports[`plugin-svg > 'should allow to use distPath.svg to modify dist path' 1`] = `
 {
   "module": {
@@ -231,34 +10,16 @@ exports[`plugin-svg > 'should allow to use distPath.svg to modify dist path' 1`]
             "generator": {
               "filename": "foo/[name].[contenthash:8].svg",
             },
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
-            },
             "resourceQuery": /\\(__inline=false\\|url\\)/,
             "type": "asset/resource",
           },
           {
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
-            },
             "resourceQuery": /inline/,
             "type": "asset/inline",
           },
           {
             "generator": {
               "filename": "foo/[name].[contenthash:8].svg",
-            },
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
             },
             "parser": {
               "dataUrlCondition": {
@@ -266,48 +27,6 @@ exports[`plugin-svg > 'should allow to use distPath.svg to modify dist path' 1`]
               },
             },
             "type": "asset",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "foo/[name].[contenthash:8].svg",
-            },
-            "resourceQuery": /url/,
-            "type": "asset/resource",
-          },
-          {
-            "type": "javascript/auto",
-            "use": [
-              {
-                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
-                "options": {
-                  "svgo": true,
-                  "svgoConfig": {
-                    "plugins": [
-                      {
-                        "name": "preset-default",
-                        "params": {
-                          "overrides": {
-                            "removeViewBox": false,
-                          },
-                        },
-                      },
-                      "prefixIds",
-                    ],
-                  },
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/url-loader",
-                "options": {
-                  "limit": 10000,
-                  "name": "foo/[name].[contenthash:8].svg",
-                },
-              },
-            ],
           },
         ],
         "test": /\\\\\\.svg\\$/,
@@ -327,34 +46,16 @@ exports[`plugin-svg > 'should allow to use filename.svg to modify filename' 1`] 
             "generator": {
               "filename": "static/svg/foo.svg",
             },
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
-            },
             "resourceQuery": /\\(__inline=false\\|url\\)/,
             "type": "asset/resource",
           },
           {
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
-            },
             "resourceQuery": /inline/,
             "type": "asset/inline",
           },
           {
             "generator": {
               "filename": "static/svg/foo.svg",
-            },
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
             },
             "parser": {
               "dataUrlCondition": {
@@ -362,48 +63,6 @@ exports[`plugin-svg > 'should allow to use filename.svg to modify filename' 1`] 
               },
             },
             "type": "asset",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/foo.svg",
-            },
-            "resourceQuery": /url/,
-            "type": "asset/resource",
-          },
-          {
-            "type": "javascript/auto",
-            "use": [
-              {
-                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
-                "options": {
-                  "svgo": true,
-                  "svgoConfig": {
-                    "plugins": [
-                      {
-                        "name": "preset-default",
-                        "params": {
-                          "overrides": {
-                            "removeViewBox": false,
-                          },
-                        },
-                      },
-                      "prefixIds",
-                    ],
-                  },
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/url-loader",
-                "options": {
-                  "limit": 10000,
-                  "name": "static/svg/foo.svg",
-                },
-              },
-            ],
           },
         ],
         "test": /\\\\\\.svg\\$/,
@@ -423,34 +82,16 @@ exports[`plugin-svg > 'should allow using output.dataUriLimit.svg to custom data
             "generator": {
               "filename": "static/svg/[name].[contenthash:8].svg",
             },
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
-            },
             "resourceQuery": /\\(__inline=false\\|url\\)/,
             "type": "asset/resource",
           },
           {
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
-            },
             "resourceQuery": /inline/,
             "type": "asset/inline",
           },
           {
             "generator": {
               "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "issuer": {
-              "not": [
-                /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-                /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-              ],
             },
             "parser": {
               "dataUrlCondition": {
@@ -458,48 +99,6 @@ exports[`plugin-svg > 'should allow using output.dataUriLimit.svg to custom data
               },
             },
             "type": "asset",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "resourceQuery": /url/,
-            "type": "asset/resource",
-          },
-          {
-            "type": "javascript/auto",
-            "use": [
-              {
-                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
-                "options": {
-                  "svgo": true,
-                  "svgoConfig": {
-                    "plugins": [
-                      {
-                        "name": "preset-default",
-                        "params": {
-                          "overrides": {
-                            "removeViewBox": false,
-                          },
-                        },
-                      },
-                      "prefixIds",
-                    ],
-                  },
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/url-loader",
-                "options": {
-                  "limit": 666,
-                  "name": "static/svg/[name].[contenthash:8].svg",
-                },
-              },
-            ],
           },
         ],
         "test": /\\\\\\.svg\\$/,

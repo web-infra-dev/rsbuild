@@ -45,7 +45,6 @@ export type SharedCompiledPkgNames =
   | 'node-loader'
   | 'babel-loader'
   | 'file-loader'
-  | 'url-loader'
   | 'toml-loader'
   | 'yaml-loader'
   | 'assetsRetry.js'

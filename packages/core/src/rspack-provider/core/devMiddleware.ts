@@ -11,6 +11,7 @@ export function getHotRuntimeEntries(compiler: Compiler) {
   const refresh = compiler.options.builtins?.react?.refresh ?? true;
 
   if (hot && refresh) {
+    // TODO: move into react plugin
     const reactRefreshEntryPath = require.resolve(
       '@rspack/dev-client/react-refresh-entry',
     );

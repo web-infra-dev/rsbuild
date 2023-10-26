@@ -27,6 +27,9 @@
     "systemjs",
     "transpiling",
     "tsbuildinfo",
-    "vitest"
+    "vitest",
+    "deepmerge",
+    "antd",
+    "svgr"
   ]
 }

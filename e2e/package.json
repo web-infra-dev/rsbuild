@@ -23,6 +23,7 @@
     "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-stylus": "workspace:*",
     "@rsbuild/plugin-source-build": "workspace:*",
+    "@rsbuild/plugin-svgr": "workspace:*",
     "@rsbuild/plugin-swc": "workspace:*",
     "@rsbuild/plugin-type-check": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",

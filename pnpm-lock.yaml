@@ -87,6 +87,9 @@ importers:
       '@rsbuild/plugin-stylus':
         specifier: workspace:*
         version: link:../packages/plugin-stylus
+      '@rsbuild/plugin-svgr':
+        specifier: workspace:*
+        version: link:../packages/plugin-svgr
       '@rsbuild/plugin-swc':
         specifier: workspace:*
         version: link:../packages/plugin-swc
@@ -330,9 +333,6 @@ importers:
       '@rspack/plugin-html':
         specifier: 0.3.8
         version: 0.3.8(@rspack/core@0.3.8)
-      '@svgr/webpack':
-        specifier: 8.0.1
-        version: 8.0.1(typescript@5.2.2)
       commander:
         specifier: ^10.0.1
         version: 10.0.1
@@ -748,6 +748,34 @@ importers:
       webpack:
         specifier: ^5.88.1
         version: 5.89.0
+
+  packages/plugin-svgr:
+    dependencies:
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@svgr/webpack':
+        specifier: 8.0.1
+        version: 8.0.1(typescript@5.2.2)
+      url-loader:
+        specifier: 4.1.1
+        version: 4.1.1(webpack@5.89.0)
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
+      '@types/node':
+        specifier: ^16
+        version: 16.18.59
+      typescript:
+        specifier: ^5
+        version: 5.2.2
 
   packages/plugin-swc:
     dependencies:
@@ -13799,6 +13827,22 @@ packages:
 
   /url-join@4.0.1:
     resolution: {integrity: sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==}
+    dev: false
+
+  /url-loader@4.1.1(webpack@5.89.0):
+    resolution: {integrity: sha512-3BTV812+AVHHOJQO8O5MkWgZ5aosP7GnROJwvzLS9hWDj00lZ6Z0wNak423Lp9PBZN05N+Jk/N5Si8jRAlGyWA==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      file-loader: '*'
+      webpack: ^4.0.0 || ^5.0.0
+    peerDependenciesMeta:
+      file-loader:
+        optional: true
+    dependencies:
+      loader-utils: 2.0.4
+      mime-types: 2.1.35
+      schema-utils: 3.3.0
+      webpack: 5.89.0
     dev: false
 
   /url-parse@1.5.10:

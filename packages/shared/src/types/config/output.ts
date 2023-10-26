@@ -75,8 +75,6 @@ export type AssetsRetryOptions = {
 
 export type Charset = 'ascii' | 'utf8';
 
-export type SvgDefaultExport = 'component' | 'url';
-
 export type LegalComments = 'none' | 'inline' | 'linked';
 
 export type NormalizedDataUriLimit = Required<DataUriLimit>;
@@ -271,14 +269,6 @@ export interface SharedOutputConfig {
    * need to be transformed and the CSS browser prefixes that need to be added.
    */
   overrideBrowserslist?: string[] | Partial<Record<RsbuildTarget, string[]>>;
-  /**
-   * Configure the default export type of SVG files.
-   */
-  svgDefaultExport?: SvgDefaultExport;
-  /**
-   * Whether to transform SVGs into React components. If true, will treat all .svg files as assets.
-   */
-  disableSvgr?: boolean;
 }
 
 export interface NormalizedSharedOutputConfig extends SharedOutputConfig {
@@ -299,11 +289,9 @@ export interface NormalizedSharedOutputConfig extends SharedOutputConfig {
   enableCssModuleTSDeclaration: boolean;
   enableInlineScripts: boolean | InlineChunkTest;
   enableInlineStyles: boolean | InlineChunkTest;
-  svgDefaultExport: SvgDefaultExport;
   cssModules: {
     localIdentName?: string;
     exportLocalsConvention: CssModuleLocalsConvention;
     auto?: CssModules['auto'];
   };
-  disableSvgr: boolean;
 }

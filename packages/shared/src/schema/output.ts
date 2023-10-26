@@ -9,7 +9,6 @@ import {
   LegalComments,
   Polyfill,
   SharedOutputConfig,
-  SvgDefaultExport,
 } from '../types';
 import { z } from '../utils';
 import { ZodType } from '../zod';
@@ -73,11 +72,6 @@ export const LegalCommentsSchema: ZodType<LegalComments> = z.enum([
 export const DisableSourceMapOptionSchema: ZodType<DisableSourceMapOption> =
   z.union([z.boolean(), z.partialObj({ js: z.boolean(), css: z.boolean() })]);
 
-export const SvgDefaultExportSchema: ZodType<SvgDefaultExport> = z.enum([
-  'component',
-  'url',
-]);
-
 const inlineSchema = z.union([
   z.boolean(),
   z.instanceof(RegExp),
@@ -119,7 +113,6 @@ export const sharedOutputConfigSchema = z.partialObj({
     z.array(z.string()),
     z.record(RsbuildTargetSchema, z.array(z.string())),
   ]),
-  svgDefaultExport: SvgDefaultExportSchema,
 });
 
 const _schema: z.ZodType<SharedOutputConfig> = sharedOutputConfigSchema;

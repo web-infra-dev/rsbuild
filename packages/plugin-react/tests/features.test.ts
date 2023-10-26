@@ -1,6 +1,7 @@
 import { expect, describe, it, vi } from 'vitest';
 import { pluginReact } from '../src';
 import { createStubRsbuild } from '@rsbuild/test-helper';
+import { mergeRegex, JS_REGEX, TS_REGEX } from '@rsbuild/shared';
 
 vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();
@@ -54,7 +55,11 @@ describe('transformImport', () => {
 
     const config = await rsbuild.unwrapConfig();
 
-    expect(config.module).toMatchSnapshot();
+    expect(
+      config.module.rules.find(
+        (r) => r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
+      ),
+    ).toMatchSnapshot();
   });
 
   it('should not apply antd & arco when transformImport is false', async () => {
@@ -70,6 +75,10 @@ describe('transformImport', () => {
 
     const config = await rsbuild.unwrapConfig();
 
-    expect(config.module).toMatchSnapshot();
+    expect(
+      config.module.rules.find(
+        (r) => r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
+      ),
+    ).toMatchSnapshot();
   });
 });

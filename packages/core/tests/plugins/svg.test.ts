@@ -4,18 +4,6 @@ import { pluginSvg } from '@src/plugins/svg';
 describe('plugin-svg', () => {
   const cases = [
     {
-      name: 'export default url',
-      rsbuildConfig: {},
-    },
-    {
-      name: 'export default Component',
-      rsbuildConfig: {
-        output: {
-          svgDefaultExport: 'component',
-        },
-      },
-    },
-    {
       name: 'should allow using output.dataUriLimit.svg to custom data uri limit',
       rsbuildConfig: {
         output: {
@@ -42,14 +30,6 @@ describe('plugin-svg', () => {
           filename: {
             svg: 'foo.svg',
           },
-        },
-      },
-    },
-    {
-      name: 'disableSvgr',
-      rsbuildConfig: {
-        output: {
-          disableSvgr: true,
         },
       },
     },
