@@ -29,7 +29,8 @@
     "build": "modern build"
   },
   "dependencies": {
-    "@clack/prompts": "^0.7.0"
+    "@clack/prompts": "^0.7.0",
+    "rslog": "^1.1.0"
   },
   "devDependencies": {
     "typescript": "^5"
