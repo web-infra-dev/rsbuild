@@ -393,6 +393,35 @@ importers:
         specifier: ^5
         version: 5.2.2
 
+  packages/create-rsbuild/template-vue3-js:
+    dependencies:
+      vue:
+        specifier: ^3.0.0
+        version: 3.3.4
+    devDependencies:
+      '@rsbuild/core':
+        specifier: nightly
+        version: link:../../core
+      '@rsbuild/plugin-vue':
+        specifier: nightly
+        version: link:../../plugin-vue
+
+  packages/create-rsbuild/template-vue3-ts:
+    dependencies:
+      vue:
+        specifier: ^3.0.0
+        version: 3.3.4
+    devDependencies:
+      '@rsbuild/core':
+        specifier: nightly
+        version: link:../../core
+      '@rsbuild/plugin-vue':
+        specifier: nightly
+        version: link:../../plugin-vue
+      typescript:
+        specifier: ^5.0.0
+        version: 5.2.2
+
   packages/doctor-sdk:
     dependencies:
       '@rsbuild/doctor-utils':

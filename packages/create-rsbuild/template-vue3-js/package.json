@@ -1,0 +1,17 @@
+{
+  "name": "rsbuild-vue3-js",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "nightly",
+    "@rsbuild/plugin-vue": "nightly"
+  }
+}
