@@ -33,6 +33,7 @@
     "rslog": "^1.1.0"
   },
   "devDependencies": {
+    "@types/node": "^16",
     "typescript": "^5"
   },
   "publishConfig": {
