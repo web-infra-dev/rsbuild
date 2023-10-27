@@ -6,40 +6,6 @@ import Rspack from '@en/shared/rspackTip.mdx';
 
 <Rspack />
 
-## Enable Rspack
-
-### Enable in Modern.js framework
-
-Modern.js framework uses webpack as the default bundler. If you want to use Rspack as the bundler, you can refer to: [Using Rspack](https://modernjs.dev/en/guides/advanced-features/rspack-start.html#initializing-an-rspack-project).
-
-### Use Rsbuild in a front-end framework
-
-Integrating rspack-provider into a frontend framework is similar to integrating webpack-provider. You only need to change the dependency from `@rsbuild/webpack` to `@rsbuild/rspack-provider`.
-
-```ts title=modern.config.ts
-import { createRsbuild } from '@rsbuild/core';
-import { rspackProvider } from '@rsbuild/rspack-provider';
-
-const provider = rspackProvider({
-  rsbuildConfig: {
-    // some configs
-  },
-});
-```
-
-```diff title=package.json
-{
-  "devDependencies": {
--    "@rsbuild/webpack": "2.8.0",
-+    "@rsbuild/rspack-provider": "2.8.0"
-  }
-}
-```
-
-import RspackPrecautions from '@en/shared/rspackPrecautions.md';
-
-<RspackPrecautions />
-
 ## Migrating from webpack to Rspack
 
 Rsbuild aims to eliminate the main differences between different bundlers and help users migrate at a lower cost. However, due to the different capabilities of each bundler, you still need to be aware of some differences.

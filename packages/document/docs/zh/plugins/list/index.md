@@ -15,9 +15,9 @@ export default defineConfig({
 });
 ```
 
-## 通用插件
+## 官方插件
 
-以下是 Rsbuild 的 Rspack 模式和 Webpack 模式下都可以使用的通用插件：
+以下是 Rsbuild 官方提供的插件。
 
 ### [React 插件](/plugins/list/plugin-react.html)
 
@@ -58,17 +58,3 @@ export default defineConfig({
 ### [Stylus 插件](/plugins/list/plugin-stylus.html)
 
 使用 Stylus 作为 CSS 预处理器。
-
-## 其他插件
-
-以下是只能在 Rsbuild 的 Webpack 模式下使用的插件，在 Rspack 模式下无须使用。
-
-### [SWC 插件](/plugins/list/plugin-swc.html)
-
-使用 SWC 进行代码编译和压缩，用于提升 Webpack 模式的构建性能。
-
-### [esbuild 插件](/plugins/list/plugin-esbuild.html)
-
-使用 esbuild 进行代码编译和压缩，用于提升 Webpack 模式的构建性能。
-
-> 你可以在 [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) 仓库下找到所有官方插件的源代码。

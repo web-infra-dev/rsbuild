@@ -66,7 +66,7 @@ export default () => ({
 });
 ```
 
-### modifyBundlerChain `实验性`
+### modifyBundlerChain
 
 :::tip 什么是 BundlerChain
 
@@ -75,7 +75,7 @@ import BundlerChain from '@zh/shared/bundlerChain.md';
 <BundlerChain />
 :::
 
-`modifyBundlerChain` 用于调用 bundler chain 来修改 webpack / Rspack 的配置。你在使用 webpack-provider 或 rspack-provider 时都可以使用该 hook。
+`modifyBundlerChain` 用于调用 bundler chain 来修改 Rspack 的配置。
 
 - **类型**
 
@@ -122,101 +122,9 @@ export default () => ({
 });
 ```
 
-### modifyWebpackChain
-
-通过 webpack chain 来修改 webpack 配置。该方法仅在使用 webpack-provider 时调用。
-
-- **类型**
-
-```ts
-type ModifyWebpackChainUtils = {
-  env: NodeEnv;
-  isProd: boolean;
-  target: RsbuildTarget;
-  webpack: typeof import('webpack');
-  isServer: boolean;
-  isWebWorker: boolean;
-  CHAIN_ID: ChainIdentifier;
-  getCompiledPath: (name: string) => string;
-  HtmlWebpackPlugin: typeof import('html-webpack-plugin');
-};
-
-function ModifyWebpackChain(
-  callback: (
-    chain: WebpackChain,
-    utils: ModifyWebpackChainUtils,
-  ) => Promise<void> | void,
-): void;
-```
-
-- **Example**
-
-```ts
-export default () => ({
-  setup: (api) => {
-    api.modifyWebpackChain((chain, utils) => {
-      if (utils.env === 'development') {
-        chain.devtool('eval');
-      }
-    });
-  },
-});
-```
-
-### modifyWebpackConfig
-
-修改最终的 webpack 配置对象，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。该方法仅在使用 webpack-provider 时调用。
-
-该方法的调用时机晚于 `modifyWebpackChain` 钩子。
-
-- **类型**
-
-```ts
-type ModifyWebpackConfigUtils = {
-  env: NodeEnv;
-  isProd: boolean;
-  target: RsbuildTarget;
-  webpack: typeof import('webpack');
-  isServer: boolean;
-  isWebWorker: boolean;
-  CHAIN_ID: ChainIdentifier;
-  getCompiledPath: (name: string) => string;
-  HtmlWebpackPlugin: typeof import('html-webpack-plugin');
-  addRules: (rules: RuleSetRule | RuleSetRule[]) => void;
-  prependPlugins: (
-    plugins: WebpackPluginInstance | WebpackPluginInstance[],
-  ) => void;
-  appendPlugins: (
-    plugins: WebpackPluginInstance | WebpackPluginInstance[],
-  ) => void;
-  removePlugin: (pluginName: string) => void;
-};
-
-function ModifyWebpackConfig(
-  callback: (
-    config: WebpackConfig,
-    utils: ModifyWebpackConfigUtils,
-  ) => Promise<WebpackConfig | void> | WebpackConfig | void,
-): void;
-```
-
-- **Example**
-
-```ts
-export default () => ({
-  setup: (api) => {
-    api.modifyWebpackConfig((config, utils) => {
-      if (utils.env === 'development') {
-        config.devtool = 'eval';
-      }
-    });
-  },
-});
-```
-
 ### modifyRspackConfig
 
-修改最终的 Rspack 配置对象，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。该方法仅在使用 rspack-provider 时调用。
+修改最终的 Rspack 配置对象，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
 
 - **类型**
 

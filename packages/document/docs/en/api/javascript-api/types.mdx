@@ -16,15 +16,6 @@ import type { RsbuildInstance } from '@rsbuild/core';
 let rsbuild: RsbuildInstance;
 ```
 
-You can pass in the Provider type through generics to make the type definition of the Rsbuild instance more accurate:
-
-```ts
-import type { createRsbuild, type RsbuildInstance } from '@rsbuild/core';
-import type { RsbuildWebpackProvider } from '@rsbuild/webpack';
-
-let rsbuild: RsbuildInstance<RsbuildWebpackProvider>;
-```
-
 ## Context
 
 The type of the context property in the Rsbuild instance.
@@ -40,8 +31,7 @@ const context: Context = rsbuild.context;
 The type of Rsbuild plugin, should be used with the `RsbuildPluginAPI` type exported from the provider.
 
 ```ts
-import type { RsbuildPlugin } from '@rsbuild/core';
-import type { RsbuildPluginAPI } from '@rsbuild/webpack';
+import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
 
 const myPlugin: RsbuildPlugin<RsbuildPluginAPI> = {
   name: 'my-plugin',

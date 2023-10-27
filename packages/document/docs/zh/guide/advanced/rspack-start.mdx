@@ -6,40 +6,6 @@ import Rspack from '@zh/shared/rspackTip.mdx';
 
 <Rspack />
 
-## 启用 Rspack
-
-### 在 Modern.js 框架中启用
-
-Modern.js 框架默认使用 webpack 作为打包工具。如果希望启用 Rspack 作为打包工具，可参考：[使用 Rspack](https://modernjs.dev/guides/advanced-features/rspack-start.html)。
-
-### 在前端框架中接入
-
-如果你基于 Rsbuild 开发了一个前端框架，接入 rspack-provider 和 [接入 webpack-provider](/guide/start/quick-start.html#在前端框架中接入) 的方式类似，只需要把依赖从 `@rsbuild/webpack` 改为 `@rsbuild/rspack-provider` 即可。
-
-```ts title=modern.config.ts
-import { createRsbuild } from '@rsbuild/core';
-import { rspackProvider } from '@rsbuild/rspack-provider';
-
-const provider = rspackProvider({
-  rsbuildConfig: {
-    // some configs
-  },
-});
-```
-
-```diff title=package.json
-{
-  "devDependencies": {
--    "@rsbuild/webpack": "2.8.0",
-+    "@rsbuild/rspack-provider": "2.8.0"
-  }
-}
-```
-
-import RspackPrecautions from '@zh/shared/rspackPrecautions.md';
-
-<RspackPrecautions />
-
 ## 从 webpack 迁移到 Rspack
 
 Rsbuild 旨在消除不同打包工具之间的主要差异，帮助用户以较低成本进行迁移。但由于各个打包工具提供的能力不同，你仍需要了解其中的部分差异。

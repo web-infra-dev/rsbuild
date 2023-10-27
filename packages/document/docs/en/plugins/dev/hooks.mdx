@@ -66,11 +66,11 @@ export default () => ({
 });
 ```
 
-### modifyBundlerChain `experimental`
+### modifyBundlerChain
 
 Bundler chain is a subset of webpack chain, which contains part of the webpack chain API that you can use to modify both webpack and Rspack configuration.
 
-`modifyBundlerChain` is used to call the bundler chain to modify the webpack / Rspack configuration. You can use this hook when using webpack-provider or rspack-provider.
+`modifyBundlerChain` is used to call the bundler chain to modify the Rspack configuration.
 
 This hook only supports modifying the configuration of the non-differentiated parts of webpack and Rspack. For example, modifying the devtool configuration option (webpack and Rspack have the same devtool property value type), or adding an [Rspack-compatible](https://www.rspack.dev/guide/plugin-compat.html) webpack plugin.
 
@@ -119,101 +119,9 @@ export default () => ({
 });
 ```
 
-### modifyWebpackChain
-
-Modify the webpack config through the webpack chain. This method is only called when using webpack-provider.
-
-- **Type**
-
-```ts
-type ModifyWebpackChainUtils = {
-  env: NodeEnv;
-  isProd: boolean;
-  target: RsbuildTarget;
-  webpack: typeof import('webpack');
-  isServer: boolean;
-  isWebWorker: boolean;
-  CHAIN_ID: ChainIdentifier;
-  getCompiledPath: (name: string) => string;
-  HtmlWebpackPlugin: typeof import('html-webpack-plugin');
-};
-
-function ModifyWebpackChain(
-  callback: (
-    chain: WebpackChain,
-    utils: ModifyWebpackChainUtils,
-  ) => Promise<void> | void,
-): void;
-```
-
-- **Example**
-
-```ts
-export default () => ({
-  setup: (api) => {
-    api.modifyWebpackChain((chain, utils) => {
-      if (utils.env === 'development') {
-        chain.devtool('eval');
-      }
-    });
-  },
-});
-```
-
-### modifyWebpackConfig
-
-To modify the final webpack config object, you can directly modify the config object, or return a new object to replace the previous object. This method is only called when using webpack-provider.
-
-This method is called later than the `modifyWebpackChain` hook.
-
-- **Type**
-
-```ts
-type ModifyWebpackConfigUtils = {
-  env: NodeEnv;
-  isProd: boolean;
-  target: RsbuildTarget;
-  webpack: typeof import('webpack');
-  isServer: boolean;
-  isWebWorker: boolean;
-  CHAIN_ID: ChainIdentifier;
-  getCompiledPath: (name: string) => string;
-  HtmlWebpackPlugin: typeof import('html-webpack-plugin');
-  addRules: (rules: RuleSetRule | RuleSetRule[]) => void;
-  prependPlugins: (
-    plugins: WebpackPluginInstance | WebpackPluginInstance[],
-  ) => void;
-  appendPlugins: (
-    plugins: WebpackPluginInstance | WebpackPluginInstance[],
-  ) => void;
-  removePlugin: (pluginName: string) => void;
-};
-
-function ModifyWebpackConfig(
-  callback: (
-    config: WebpackConfig,
-    utils: ModifyWebpackConfigUtils,
-  ) => Promise<WebpackConfig | void> | WebpackConfig | void,
-): void;
-```
-
-- **Example**
-
-```ts
-export default () => ({
-  setup: (api) => {
-    api.modifyWebpackConfig((config, utils) => {
-      if (utils.env === 'development') {
-        config.devtool = 'eval';
-      }
-    });
-  },
-});
-```
-
 ### modifyRspackConfig
 
-To modify the final Rspack config object, you can directly modify the config object, or return a new object to replace the previous object. This method is only called when using rspack-provider.
+To modify the final Rspack config object, you can directly modify the config object, or return a new object to replace the previous object.
 
 - **Type**
 

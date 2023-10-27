@@ -46,28 +46,6 @@ type CreateRsbuildOptions = {
 - `provider`: 用于切换底层的打包工具。
 - `rsbuildConfig`：Rsbuild 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制，你可以在 [配置](/config/) 中找到所有可用的配置项。
 
-### webpackProvider
-
-Rsbuild 默认使用 Rspack 作为打包工具，你可以通过 `provider` 选项来切换到 Webpack 打包。
-
-首先安装 `@rsbuild/webpack` 包：
-
-import { PackageManagerTabs } from '@theme';
-
-<PackageManagerTabs command="add @rsbuild/webpack -D" />
-
-然后在 `provider` 选项中传入 `webpackProvider`，Rsbuild 底层的打包工具就自动切换为 Webpack 了。
-
-```ts
-import { createRsbuild } from '@rsbuild/core';
-import { webpackProvider } from '@rsbuild/webpack';
-
-const rsbuild = await createRsbuild({
-  provider: webpackProvider,
-  // other options
-});
-```
-
 ## mergeRsbuildConfig
 
 用于合并多份 Rsbuild 配置对象。
@@ -103,20 +81,6 @@ console.log(mergedConfig); // { dev: { https: true } }
 
 > 该方法不会修改入参中的 config 对象。
 
-## webpack
-
-webpack 对象，用于消费 webpack 内置插件或类型定义。
-
-- **Example**
-
-```ts
-import webpack from '@rsbuild/webpack/webpack';
-
-new webpack.DefinePlugin();
-```
-
-> 大部分场景下，推荐从 Rsbuild 中引用 webpack 对象，而不是手动安装一份 "webpack" 依赖，这样可以避免出现多实例问题。
-
 ## HtmlWebpackPlugin
 
 HtmlWebpackPlugin 对象，通常用于实现 HtmlWebpackPlugin 的自定义插件。
@@ -124,7 +88,7 @@ HtmlWebpackPlugin 对象，通常用于实现 HtmlWebpackPlugin 的自定义插�
 - **Example**
 
 ```ts
-import HtmlWebpackPlugin from '@rsbuild/webpack/html-webpack-plugin';
+import HtmlWebpackPlugin from '@rsbuild/core/html-webpack-plugin';
 ```
 
 > 大部分场景下，推荐从 Rsbuild 中引用 HtmlWebpackPlugin 对象，而不是手动安装一份 "html-webpack-plugin" 依赖，这样可以避免出现多实例问题。
