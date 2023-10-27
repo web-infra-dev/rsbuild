@@ -8,7 +8,7 @@
     "directory": "packages/plugin-stylus"
   },
   "license": "MIT",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "types": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {
@@ -37,7 +37,7 @@
     "webpack": "^5.88.1"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.0.7"
+    "@rsbuild/core": "workspace:^0.0.8"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {
