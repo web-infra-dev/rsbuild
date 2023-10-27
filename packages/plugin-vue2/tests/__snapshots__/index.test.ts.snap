@@ -18,23 +18,6 @@ exports[`plugin-vue2 > should add vue-loader and VueLoaderPlugin correctly 1`] =
           },
         ],
       },
-      {
-        "test": /\\\\\\.ts\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "jsc": {
-                "parser": {
-                  "syntax": "typescript",
-                },
-              },
-              "sourceMap": true,
-            },
-          },
-        ],
-      },
     ],
   },
   "plugins": [
@@ -63,23 +46,6 @@ exports[`plugin-vue2 > should allow to configure vueLoader options 1`] = `
               },
               "experimentalInlineMatchResource": true,
               "hotReload": false,
-            },
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.ts\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "jsc": {
-                "parser": {
-                  "syntax": "typescript",
-                },
-              },
-              "sourceMap": true,
             },
           },
         ],
