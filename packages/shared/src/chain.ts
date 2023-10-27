@@ -83,6 +83,8 @@ export const CHAIN_ID = {
     WASM: 'wasm',
     /** Rule for node */
     NODE: 'node',
+    /** Rule for svelte */
+    SVELTE: 'svelte',
   },
   /** Predefined rule groups */
   ONE_OF: {
