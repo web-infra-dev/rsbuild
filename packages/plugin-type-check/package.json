@@ -8,7 +8,7 @@
     "directory": "packages/plugin-type-check"
   },
   "license": "MIT",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "types": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {
@@ -34,7 +34,7 @@
     "typescript": "^5"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.0.7"
+    "@rsbuild/core": "workspace:^0.0.8"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
