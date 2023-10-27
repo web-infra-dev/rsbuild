@@ -1,6 +1,7 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
+import { pluginBabel } from '@rsbuild/plugin-babel';
 
 test('babel', async ({ page }) => {
   const rsbuild = await build({
@@ -9,13 +10,12 @@ test('babel', async ({ page }) => {
       index: path.resolve(__dirname, './src/index.js'),
     },
     runServer: true,
-    rsbuildConfig: {
-      tools: {
-        babel(_, { addPlugins }) {
-          addPlugins([require('./plugins/myBabelPlugin')]);
-        },
-      },
-    },
+    plugins: [
+      pluginBabel((_, { addPlugins }) => {
+        addPlugins([require('./plugins/myBabelPlugin')]);
+      }),
+    ],
+    rsbuildConfig: {},
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
@@ -31,14 +31,13 @@ test('babel exclude', async ({ page }) => {
       index: path.resolve(__dirname, './src/index.js'),
     },
     runServer: true,
-    rsbuildConfig: {
-      tools: {
-        babel(_, { addPlugins, addExcludes }) {
-          addPlugins([require('./plugins/myBabelPlugin')]);
-          addExcludes(/aa/);
-        },
-      },
-    },
+    plugins: [
+      pluginBabel((_, { addPlugins, addExcludes }) => {
+        addPlugins([require('./plugins/myBabelPlugin')]);
+        addExcludes(/aa/);
+      }),
+    ],
+    rsbuildConfig: {},
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
