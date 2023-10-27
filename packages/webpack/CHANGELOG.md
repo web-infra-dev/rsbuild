@@ -1,5 +1,13 @@
 # @rsbuild/webpack
 
+## 0.0.9
+
+### Patch Changes
+
+- @rsbuild/babel-preset@0.0.9
+- @rsbuild/core@0.0.9
+- @rsbuild/shared@0.0.9
+
 ## 0.0.8
 
 ### Patch Changes

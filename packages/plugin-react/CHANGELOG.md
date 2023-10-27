@@ -1,5 +1,11 @@
 # @rsbuild/plugin-react
 
+## 0.0.9
+
+### Patch Changes
+
+- @rsbuild/shared@0.0.9
+
 ## 0.0.8
 
 ### Patch Changes

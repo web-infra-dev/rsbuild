@@ -1,5 +1,12 @@
 # @rsbuild/plugin-stylus
 
+## 0.0.9
+
+### Patch Changes
+
+- @rsbuild/core@0.0.9
+- @rsbuild/shared@0.0.9
+
 ## 0.0.8
 
 ### Patch Changes
