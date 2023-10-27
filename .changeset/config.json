@@ -5,7 +5,7 @@
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",
-  "fixed": [["@rsbuild/!(doctor-*)"], ["@rsbuild/doctor-*"]],
+  "fixed": [["@rsbuild/!(doctor-*)", "create-rsbuild"], ["@rsbuild/doctor-*"]],
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true,
     "updateInternalDependents": "always"
