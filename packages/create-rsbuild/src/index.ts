@@ -80,9 +80,16 @@ function copyFolder(src: string, dist: string) {
     gitignore: '.gitignore',
   };
 
+  // Skip local files
+  const skipFiles = ['node_modules', 'dist'];
+
   fs.mkdirSync(dist, { recursive: true });
 
   for (const file of fs.readdirSync(src)) {
+    if (skipFiles.includes(file)) {
+      continue;
+    }
+
     const srcFile = path.resolve(src, file);
     const distFile = renameFiles[file]
       ? path.resolve(dist, renameFiles[file])

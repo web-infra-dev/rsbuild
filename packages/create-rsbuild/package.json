@@ -22,7 +22,8 @@
   },
   "scripts": {
     "dev": "modern build --watch",
-    "build": "modern build"
+    "build": "modern build",
+    "start": "node ./dist/index.js"
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
