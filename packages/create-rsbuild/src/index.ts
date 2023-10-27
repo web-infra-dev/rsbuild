@@ -21,6 +21,7 @@ async function main() {
   logger.greet('◆  Create Rsbuild Project');
 
   const cwd = process.cwd();
+  const packageRoot = path.resolve(__dirname, '..');
 
   let targetDir = (await text({
     message: 'Input target folder',
@@ -60,8 +61,8 @@ async function main() {
 
   checkCancel(language);
 
-  const srcFolder = path.join(cwd, `template-${framework}-${language}`);
-  const commonFolder = path.join(cwd, `template-common`);
+  const srcFolder = path.join(packageRoot, `template-${framework}-${language}`);
+  const commonFolder = path.join(packageRoot, `template-common`);
   const distFolder = path.join(cwd, targetDir);
 
   copyFolder(commonFolder, distFolder);
@@ -79,9 +80,16 @@ function copyFolder(src: string, dist: string) {
     gitignore: '.gitignore',
   };
 
+  // Skip local files
+  const skipFiles = ['node_modules', 'dist'];
+
   fs.mkdirSync(dist, { recursive: true });
 
   for (const file of fs.readdirSync(src)) {
+    if (skipFiles.includes(file)) {
+      continue;
+    }
+
     const srcFile = path.resolve(src, file);
     const distFile = renameFiles[file]
       ? path.resolve(dist, renameFiles[file])
