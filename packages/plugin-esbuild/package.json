@@ -26,8 +26,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "esbuild": "0.17.19",
-    "esbuild-loader": "2.21.0"
+    "esbuild": "0.17.19"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
