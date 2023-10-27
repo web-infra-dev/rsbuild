@@ -47,7 +47,7 @@ exports[`plugins/react > should work with babel-loader 1`] = `
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
@@ -141,7 +141,7 @@ exports[`plugins/react > should work with babel-loader 1`] = `
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
               ],
@@ -400,7 +400,7 @@ exports[`plugins/react > should work with ts-loader 1`] = `
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
               ],
@@ -491,7 +491,7 @@ exports[`plugins/react > should work with ts-loader 1`] = `
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
               ],
