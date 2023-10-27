@@ -20,7 +20,7 @@ export function pluginEsbuild(
     setup(api) {
       api.modifyWebpackChain(async (chain, { CHAIN_ID, isProd, target }) => {
         const rsbuildConfig = api.getNormalizedConfig();
-        const esbuildLoaderPath = require.resolve('esbuild-loader');
+        const esbuildLoaderPath = require.resolve('../compiled/esbuild-loader');
 
         const options: PluginEsbuildOptions = {
           loader: {

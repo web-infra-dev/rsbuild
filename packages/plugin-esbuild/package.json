@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "esbuild": "0.17.19"
+    "esbuild": "0.17.19",
+    "webpack": "^5.88.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
