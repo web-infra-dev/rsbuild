@@ -159,8 +159,8 @@
     "test:ui": "vitest --ui"
   },
   "dependencies": {
-    "@modern-js/prod-server": "^2.38.0",
-    "@modern-js/server": "^2.38.0",
+    "@modern-js/prod-server": "^2.39.0",
+    "@modern-js/server": "^2.39.0",
     "@types/babel__core": "^7.20.3",
     "@types/fs-extra": "^11.0.2",
     "acorn": "^8.10.0",

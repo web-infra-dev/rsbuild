@@ -40,8 +40,8 @@
     ]
   },
   "devDependencies": {
-    "@modern-js/module-tools": "^2.38.0",
-    "@modern-js/monorepo-tools": "^2.38.0",
+    "@modern-js/module-tools": "^2.39.0",
+    "@modern-js/monorepo-tools": "^2.39.0",
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/tsconfig": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
