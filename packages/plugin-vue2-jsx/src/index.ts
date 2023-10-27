@@ -1,5 +1,4 @@
 import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
-import type { SharedRsbuildConfig } from '@rsbuild/shared';
 
 type VueJSXPresetOptions = {
   compositionAPI?: boolean | string;
@@ -19,25 +18,30 @@ export function pluginVue2Jsx(
   return {
     name: 'plugin-vue2-jsx',
 
+    pre: ['plugin-babel'],
+
     async setup(api) {
-      api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
-        const rsbuildConfig: SharedRsbuildConfig = {
-          tools: {
-            babel(_, { addPresets }) {
-              addPresets([
-                [
+      api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+        [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI].forEach((ruleId) => {
+          if (chain.module.rules.has(ruleId)) {
+            const rule = chain.module.rule(ruleId);
+
+            if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
+              // add babel preset
+              rule.use(CHAIN_ID.USE.BABEL).tap((babelConfig) => {
+                babelConfig.presets ??= [];
+                babelConfig.presets.push([
                   require.resolve('@vue/babel-preset-jsx'),
                   {
                     injectH: true,
                     ...options.vueJsxOptions,
                   },
-                ],
-              ]);
-            },
-          },
-        };
-
-        return mergeRsbuildConfig(config, rsbuildConfig);
+                ]);
+                return babelConfig;
+              });
+            }
+          }
+        });
       });
     },
   };

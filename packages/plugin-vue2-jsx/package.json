@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
+    "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",

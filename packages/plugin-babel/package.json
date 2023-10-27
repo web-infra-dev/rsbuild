@@ -1,16 +1,18 @@
 {
-  "name": "@rsbuild/plugin-vue-jsx",
-  "description": "Vue 3 JSX plugin of Rsbuild",
-  "homepage": "https://rsbuild.dev",
+  "name": "@rsbuild/plugin-babel",
+  "version": "0.0.7",
+  "description": "Babel plugin for Rsbuild",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
-    "directory": "packages/plugin-vue-jsx"
+    "directory": "packages/plugin-babel"
   },
-  "license": "MIT",
-  "version": "0.0.7",
-  "types": "./src/index.ts",
   "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -20,23 +22,19 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "dev": "modern build --watch",
-    "build": "modern build"
-  },
+  "license": "MIT",
   "dependencies": {
-    "@vue/babel-plugin-jsx": "1.1.1"
+    "@babel/preset-typescript": "^7.23.2",
+    "@rsbuild/shared": "workspace:*",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/plugin-babel": "workspace:*",
-    "@rsbuild/webpack": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
+    "@rsbuild/webpack": "workspace:*",
+    "@types/lodash": "^4.14.200",
+    "@types/node": "^16",
     "typescript": "^5"
-  },
-  "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.0.7"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
