@@ -15,7 +15,13 @@ test('babel', async ({ page }) => {
         addPlugins([require('./plugins/myBabelPlugin')]);
       }),
     ],
-    rsbuildConfig: {},
+    rsbuildConfig: {
+      tools: {
+        babel(_, { addPlugins }) {
+          addPlugins([require('./plugins/myBabelPlugin')]);
+        },
+      },
+    },
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
@@ -37,7 +43,14 @@ test('babel exclude', async ({ page }) => {
         addExcludes(/aa/);
       }),
     ],
-    rsbuildConfig: {},
+    rsbuildConfig: {
+      tools: {
+        babel(_, { addPlugins, addExcludes }) {
+          addPlugins([require('./plugins/myBabelPlugin')]);
+          addExcludes(/aa/);
+        },
+      },
+    },
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
