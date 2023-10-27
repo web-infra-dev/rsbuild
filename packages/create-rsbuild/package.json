@@ -20,10 +20,6 @@
       "default": "./dist/index.js"
     }
   },
-  "files": [
-    "dist",
-    "template-*"
-  ],
   "scripts": {
     "dev": "modern build --watch",
     "build": "modern build"
