@@ -22,8 +22,7 @@ export function pluginVue2(
             compilerOptions: {
               preserveWhitespace: false,
             },
-            experimentalInlineMatchResource:
-              api.context.bundlerType === 'rspack',
+            experimentalInlineMatchResource: true,
           },
           options.vueLoaderOptions ?? {},
         );
@@ -34,27 +33,6 @@ export function pluginVue2(
           .use(CHAIN_ID.USE.VUE)
           .loader(require.resolve('vue-loader'))
           .options(vueLoaderOptions);
-
-        // Handle ts syntax when using Rspack
-        if (
-          api.context.bundlerType === 'rspack' &&
-          !chain.module.rules.has(CHAIN_ID.RULE.TS)
-        ) {
-          chain.module
-            .rule(CHAIN_ID.RULE.TS)
-            .type('javascript/auto')
-            .test(/\.ts$/)
-            .use(CHAIN_ID.USE.SWC)
-            .loader('builtin:swc-loader')
-            .options({
-              sourceMap: true,
-              jsc: {
-                parser: {
-                  syntax: 'typescript',
-                },
-              },
-            });
-        }
 
         chain.plugin(CHAIN_ID.PLUGIN.VUE_LOADER_PLUGIN).use(VueLoaderPlugin);
       });

@@ -34,8 +34,7 @@ export function pluginVue(
             compilerOptions: {
               preserveWhitespace: false,
             },
-            experimentalInlineMatchResource:
-              api.context.bundlerType === 'rspack',
+            experimentalInlineMatchResource: true,
           },
           options.vueLoaderOptions ?? {},
         );
