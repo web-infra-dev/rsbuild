@@ -10,14 +10,14 @@ Static assets are files that are part of a web application and do not change, ev
 
 The following are the formats supported by Rsbuild by default:
 
-- **Image**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tiff.
+- **Image**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tiff, svg.
 - **Fonts**: woff, woff2, eot, ttf, otf, ttc.
 - **Media**: mp4, webm, ogg, mp3, wav, flac, aac, mov.
 
 If you need to import assets in other formats, please refer to [Extend Asset Types](#extend-asset-types).
 
 :::tip SVG images
-SVG image is a special case. Rsbuild support convert SVG to React components, so SVG is processed separately. For details, see [Import SVG Assets](/guide/basic/svg-assets.html).
+SVG image is a special case. Rsbuild support convert SVG to React components, so SVG is processed separately. For details, see [Svgr Plugin](/plugins/list/plugin-svgr.html).
 :::
 
 ## Import Assets in JS file

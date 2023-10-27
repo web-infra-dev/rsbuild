@@ -1,0 +1,169 @@
+# Svgr Plugin
+
+By default, Rsbuild will treat SVG files as static resources. For processing rules, please refer to: [Import Static Assets](/guide/basic/static-assets.html)。
+
+With Svgr plugin, Rsbuild supports convert SVG to React components via [SVGR](https://react-svgr.com/).
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-svgr -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginSvgr } from '@rsbuild/plugin-svgr';
+
+export default {
+  plugins: [pluginSvgr()],
+};
+```
+
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
+
+## Example
+
+After installing the plugin, Rsbuild will convert the SVG file into a React component when you reference an SVG resource in a **JS file**.
+
+```js
+import Logo from './logo.svg';
+
+console.log(Logo); // => React Component
+```
+
+## Options
+
+If you need to customize the compilation behavior of Svgr, you can use the following configs.
+
+- **Type:**
+
+```ts
+type PluginSvgrOptions = {
+  /**
+   * Configure the default export type of SVG files.
+   */
+  svgDefaultExport?: 'component' | 'url';
+};
+```
+
+- **Default:**
+
+```
+{
+  svgDefaultExport: 'component';
+}
+```
+
+### svgDefaultExport
+
+- **Type:** `'component' | 'url'`
+- **Default:** `'component'`
+
+Modify the default export type of SVG files, the default export for SVG files is React component.
+
+```ts
+import Logo from './logo.svg';
+
+console.log(Logo); // => React Component
+```
+
+When `svgDefaultExport` is set to `url`, the default export of SVG files is the URL of the file. For example:
+
+```ts
+import logo from './logo.svg';
+
+console.log(logo); // => asset url
+```
+
+At this time, you can also specify the `?url` query to import the URL, for example:
+
+```ts
+import logo from './logo.svg?url';
+
+console.log(logo); // => asset url
+```
+
+## Add type declaration
+
+When you reference an SVG asset in TypeScript code, TypeScript may prompt that the module is missing a type definition:
+
+```
+TS2307: Cannot find module './logo.svg' or its corresponding type declarations.
+```
+
+To fix this, you need to add a type declaration file for the SVG asset, please create a `src/global.d.ts` file, and add the following type declaration:
+
+```ts
+declare module '*.svg' {
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement>
+  >;
+
+  export default ReactComponent;
+}
+```
+
+If you set `svgDefaultExport` to `'url'`, then change the type declaration to:
+
+```ts
+declare module '*.svg' {
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement>
+  >;
+
+  const content: string;
+  export default content;
+}
+```
+
+After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `global.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
+
+## Modify the SVGR configuration
+
+When [SVGR](https://react-svgr.com/) is enabled, its default configuration is as follows:
+
+```js
+{
+  svgo: true,
+  svgoConfig: {
+    plugins: [
+      {
+        name: 'preset-default',
+        params: {
+          overrides: {
+            removeViewBox: false,
+          },
+        },
+      },
+      'prefixIds',
+    ],
+  },
+}
+```
+
+If you need to modify the SVGR configuration, you can do the following:
+
+```js
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module
+        .rule(CHAIN_ID.RULE.SVG)
+        .oneOf(CHAIN_ID.ONE_OF.SVG)
+        .use(CHAIN_ID.USE.SVGR)
+        .tap((options) => {
+          // modify svgoConfig
+          options.svgoConfig.plugins[0].params.overrides.removeUselessDefs = false;
+          return options;
+        });
+    },
+  },
+};
+```
