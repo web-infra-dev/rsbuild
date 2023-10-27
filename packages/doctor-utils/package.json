@@ -26,6 +26,11 @@
       "types": "./dist/type/build/index.d.ts",
       "require": "./dist/cjs/build/index.js",
       "import": "./dist/esm/build/index.js"
+    },
+    "./ruleUtils": {
+      "types": "./dist/type/rule-utils/index.d.ts",
+      "require": "./dist/cjs/burule-utilsild/index.js",
+      "import": "./dist/esm/rule-utils/index.js"
     }
   },
   "typesVersions": {
@@ -35,6 +40,9 @@
       ],
       "build": [
         "./dist/type/build/index.d.ts"
+      ],
+      "ruleUtils": [
+        "./dist/type/rule-utils/index.d.ts"
       ]
     }
   },
@@ -54,6 +62,11 @@
     "fs-extra": "^11.1.1",
     "get-port": "5.1.1",
     "json-stream-stringify": "3.0.1",
+    "acorn": "^8.10.0",
+    "acorn-import-assertions": "1.8.0",
+    "acorn-walk": "8.2.0",
+    "lines-and-columns": "2.0.3",
+    "@types/estree": "1.0.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {

@@ -565,6 +565,18 @@ importers:
 
   packages/doctor-utils:
     dependencies:
+      '@types/estree':
+        specifier: 1.0.0
+        version: 1.0.0
+      acorn:
+        specifier: ^8.10.0
+        version: 8.10.0
+      acorn-import-assertions:
+        specifier: 1.8.0
+        version: 1.8.0(acorn@8.10.0)
+      acorn-walk:
+        specifier: 8.2.0
+        version: 8.2.0
       bytes:
         specifier: 3.1.2
         version: 3.1.2
@@ -583,6 +595,9 @@ importers:
       json-stream-stringify:
         specifier: 3.0.1
         version: 3.0.1
+      lines-and-columns:
+        specifier: 2.0.3
+        version: 2.0.3
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6328,6 +6343,14 @@ packages:
       acorn-walk: 8.2.0
     dev: true
 
+  /acorn-import-assertions@1.8.0(acorn@8.10.0):
+    resolution: {integrity: sha512-m7VZ3jwz4eK6A4Vtt8Ew1/mNbP24u0FhdyfA7fSvnJR6LMdfOYnmuIrrJAgrYfYJ10F/otaHTtrtrtmHdMNzEw==}
+    peerDependencies:
+      acorn: ^8
+    dependencies:
+      acorn: 8.10.0
+    dev: false
+
   /acorn-import-assertions@1.9.0(acorn@8.10.0):
     resolution: {integrity: sha512-cmMwop9x+8KFhxvKrKfPYmN6/pKTYYHBqLa0DfvVZcKMJWNyWLnaqND7dx/qn66R7ewM1UX5XMaDVP5wlVTaVA==}
     peerDependencies:
@@ -6359,7 +6382,6 @@ packages:
   /acorn-walk@8.2.0:
     resolution: {integrity: sha512-k+iyHEuPgSw6SbuDpGQM+06HQUa04DZ3o+F6CSzXMvvI5KMvnaEqXe+YVe555R9nn6GPt404fos4wcgpw12SDA==}
     engines: {node: '>=0.4.0'}
-    dev: true
 
   /acorn@7.4.1:
     resolution: {integrity: sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==}
@@ -10087,7 +10109,6 @@ packages:
   /lines-and-columns@2.0.3:
     resolution: {integrity: sha512-cNOjgCnLB+FnvWWtyRTzmB3POJ+cXxTA81LoW7u8JdmhfXzriropYwpjShnz1QLLWsQwY7nIxoDmcPTwphDK9w==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dev: true
 
   /load-yaml-file@0.2.0:
     resolution: {integrity: sha512-OfCBkGEw4nN6JLtgRidPX6QxjBQGQf72q3si2uvqyFEMbycSFFHwAZeXx6cJgFM9wmLrf9zBwCP3Ivqa+LLZPw==}

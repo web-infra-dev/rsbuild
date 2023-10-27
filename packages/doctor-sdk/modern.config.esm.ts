@@ -8,5 +8,8 @@ export default defineConfig({
     format: 'esm',
     target: 'esnext',
     outDir: './dist/esm',
+    dts: {
+      distPath: '../type',
+    },
   },
 });
