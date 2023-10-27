@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-react",
-  "version": "0.0.7",
+  "version": "1.0.0",
   "description": "React plugin for Rsbuild",
   "repository": {
     "type": "git",
