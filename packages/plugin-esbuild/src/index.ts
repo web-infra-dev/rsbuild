@@ -1,7 +1,10 @@
 import { JS_REGEX, TS_REGEX, applyScriptCondition } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { RsbuildPluginAPI } from '@rsbuild/webpack';
-import type { LoaderOptions, MinifyPluginOptions } from 'esbuild-loader';
+import type {
+  LoaderOptions,
+  MinifyPluginOptions,
+} from '../compiled/esbuild-loader';
 
 export interface PluginEsbuildOptions {
   loader?: false | LoaderOptions;
@@ -17,7 +20,7 @@ export function pluginEsbuild(
     setup(api) {
       api.modifyWebpackChain(async (chain, { CHAIN_ID, isProd, target }) => {
         const rsbuildConfig = api.getNormalizedConfig();
-        const esbuildLoaderPath = require.resolve('esbuild-loader');
+        const esbuildLoaderPath = require.resolve('../compiled/esbuild-loader');
 
         const options: PluginEsbuildOptions = {
           loader: {
@@ -70,7 +73,9 @@ export function pluginEsbuild(
         }
 
         if (isProd && options.minimize !== false) {
-          const { ESBuildMinifyPlugin } = await import('esbuild-loader');
+          const { ESBuildMinifyPlugin } = await import(
+            '../compiled/esbuild-loader'
+          );
 
           // @ts-expect-error webpack-chain missing minimizers type
           chain.optimization.minimizers
