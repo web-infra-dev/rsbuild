@@ -16,15 +16,6 @@ import type { RsbuildInstance } from '@rsbuild/core';
 let rsbuild: RsbuildInstance;
 ```
 
-你可以通过泛型来传入 Provider 的类型，使 Rsbuild 实例获得更准确的类型定义：
-
-```ts
-import type { createRsbuild, type RsbuildInstance } from '@rsbuild/core';
-import type { RsbuildWebpackProvider } from '@rsbuild/webpack';
-
-let rsbuild: RsbuildInstance<RsbuildWebpackProvider>;
-```
-
 ## Context
 
 Rsbuild 实例中 context 属性的类型定义。
@@ -40,8 +31,7 @@ const context: Context = rsbuild.context;
 Rsbuild 插件的类型，需要配合 provider 中提供的 `RsbuildPluginAPI` 类型来使用。
 
 ```ts
-import type { RsbuildPlugin } from '@rsbuild/core';
-import type { RsbuildPluginAPI } from '@rsbuild/webpack';
+import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
 
 const myPlugin: RsbuildPlugin<RsbuildPluginAPI> = {
   name: 'my-plugin',

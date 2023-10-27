@@ -15,9 +15,9 @@ export default defineConfig({
 });
 ```
 
-## Universal Plugins
+## Official Plugins
 
-The following are universal plugins that can be used in Rspack mode and Webpack mode of Rsbuild:
+The following are official plugins that can be used in Rsbuild.
 
 ### [React Plugin](/plugins/list/plugin-react.html)
 
@@ -58,17 +58,5 @@ This plugin is designed for the monorepo scenario. It supports referencing sourc
 ### [Stylus Plugin](/plugins/list/plugin-stylus.html)
 
 Use Stylus add CSS preprocessor.
-
-## Other Plugins
-
-The following are plugins that can only be used in the Webpack mode of Rsbuild, and are not required in Rspack mode.
-
-### [SWC Plugin](/plugins/list/plugin-swc.html)
-
-Use SWC as the transformer and minimizer to improve the build performance of Webpack mode.
-
-### [esbuild Plugin](/plugins/list/plugin-esbuild.html)
-
-Use esbuild as the transformer and minimizer to improve the build performance of Webpack mode.
 
 > You can find the source code of all official plugins in the [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) repository.

@@ -36,29 +36,6 @@ nvm default 18
 node -v
 ```
 
-### 使用 Rspack 构建
-
-import Rspack from '@zh/shared/rspack.md';
-
-<Rspack />
-
-如果你对构建性能有更极致的需求，可以一键切换到 Rspack 构建模式，请参考 [使用 Rspack](/guide/advanced/rspack-start.html) 来进行切换。
-
-### 使用 SWC 或 esbuild 编译
-
-[SWC](https://swc.rs/) (Speedy Web Compiler) 是基于 `Rust` 语言编写的高性能 JavaScript 和 TypeScript 转译和压缩工具。在 Polyfill 和语法降级方面可以和 Babel 提供一致的能力，并且性能比 Babel 高出一个数量级。
-
-[esbuild](https://esbuild.github.io/) 是一款基于 Golang 开发的前端构建工具，具有打包、编译和压缩 JavaScript 代码的功能，相比传统的打包编译工具，esbuild 在性能上有显著提升。
-
-Rsbuild 提供了 SWC 插件和 esbuild 插件，让你能使用 SWC 或 esbuild 代替 babel-loader、ts-loader 和 terser 等库进行代码编译和压缩。详见：
-
-- [SWC 插件文档](/plugins/list/plugin-swc.html)
-- [esbuild 插件文档](/plugins/list/plugin-esbuild.html)
-
-:::tip SWC vs esbuild
-SWC 编译产物的兼容性较好，支持注入 core-js 等 Polyfill，并且功能更加完备，因此推荐优先使用 SWC 插件。
-:::
-
 ### 避免使用 ts-loader
 
 默认情况下，Rsbuild 使用 Babel 编译 TS 文件，开启 [tools.tsLoader](/config/options/tools.html#toolstsloader) 选项后，会使用 `ts-loader` 编译 TS 文件。

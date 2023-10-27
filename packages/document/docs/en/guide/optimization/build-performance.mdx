@@ -36,29 +36,6 @@ nvm default 18
 node -v
 ```
 
-### Using Rspack build
-
-import Rspack from '@en/shared/rspack.md';
-
-<Rspack />
-
-If you have higher build performance requirements, you can easily switch to Rspack build mode, see [Using Rspack](/guide/advanced/rspack-start.html) for more information.
-
-### Using SWC or esbuild
-
-[SWC](https://SWC.rs/) (Speedy Web Compiler) is a transformer and minimizer for JavaScript and TypeScript based on `Rust`. SWC can provide the same abilities with Babel, and it's more than 10x faster than Babel.
-
-[esbuild](https://esbuild.github.io/) is a front-end build tool based on Golang. It has the functions of bundling, compiling and minimizing JavaScript code. Compared with traditional tools, the performance is significantly improved. When minimizing code, compared to webpack's built-in terser minimizer, esbuild has dozens of times better performance.
-
-Rsbuild provides SWC plugin and esbuild plugin that allow you to use SWC or esbuild instead of babel-loader, ts-loader and terser for transformation and minification process. See:
-
-- [SWC plugin document](/plugins/list/plugin-swc.html)
-- [esbuild plugin document](/plugins/list/plugin-esbuild.html)
-
-:::tip SWC vs esbuild
-The SWC compiled outputs has better compatibility, supports polyfills such as core-js, and has more complete features, so it is recommended to use the SWC plugin first.
-:::
-
 ### Avoid using ts-loader
 
 By default, Rsbuild uses Babel to compile TS files. After enabling the [tools.tsLoader](/config/options/tools.html#toolstsloader) option, `ts-loader` will be used to compile TS files.

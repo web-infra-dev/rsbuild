@@ -15,7 +15,7 @@ Rsbuild 底层支持 webpack 和 Rspack 等 bundler，并提供统一的 Node.js
 插件提供类似 `(options?: PluginOptions) => RsbuildPlugin` 的函数作为入口，建议将插件函数命名为 `pluginXXX`。
 
 ```ts
-import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 export interface PluginFooOptions {
   message?: string;
@@ -147,7 +147,7 @@ Rsbuild 使用的是兼容 webpack5 的修改版本：[sorrycc/webpack-chain](ht
 Loader 可以读取和处理不同类型的文件模块，具体参考 [concepts](https://webpack.js.org/concepts/loaders) 和 [loaders](https://webpack.js.org/loaders/)。
 
 ```ts
-import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 export const pluginTypeScriptExt = (): RsbuildPlugin => ({
   name: 'plugin-typescript-ext',
@@ -163,7 +163,7 @@ export const pluginTypeScriptExt = (): RsbuildPlugin => ({
 ### 添加模块入口
 
 ```ts
-import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 export const pluginAdminPanel = (): RsbuildPlugin => ({
   name: 'plugin-admin-panel',
