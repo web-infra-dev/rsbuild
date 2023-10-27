@@ -1,0 +1,179 @@
+# Configure Rspack
+
+Rsbuild supports directly modifying the Rspack configuration object and also supports modifying the built-in Rspack configuration through the bundler-chain.
+
+## Modify Rspack Configuration Object
+
+You can use the `tools.rspack` option of Rsbuild to modify the Rspack configuration object. Please refer to the [tools.rspack documentation](/config/options/tools.html#toolsrspack) for complete usage.
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: (config, { env }) => {
+      if (env === 'development') {
+        config.devtool = 'cheap-module-eval-source-map';
+      }
+      return config;
+    },
+  },
+};
+```
+
+## Use Bundler Chain
+
+import BundlerChain from '@zh/shared/bundlerChain.md';
+
+<BundlerChain />
+
+Compared to directly modifying the Rspack configuration object, bundler-chain not only supports chain calls but also allows modification of built-in rules or plugins based on their IDs.
+
+### tools.bundlerChain
+
+Rsbuild provides the `tools.bundlerChain` configuration option to modify the bundler chain.
+
+The value of `tools.bundlerChain` is a `Function` type that accepts two parameters:
+
+- The first parameter is the `bundler-chain` instance, which can be used to modify the default bundler configuration.
+- The second parameter is a [toolbox](/config/options/tools.html#toolbox-2) that includes `env`, `isProd`, `CHAIN_ID`, and more.
+
+Here's a basic example:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { env }) => {
+      if (env === 'development') {
+        chain.devtool('cheap-module-eval-source-map');
+      }
+    },
+  },
+};
+```
+
+### Basics
+
+Before using the bundler chain to modify the Rspack configuration, it is recommended to familiarize yourself with some basics.
+
+#### How the Bundler Chain Locates Objects Quickly
+
+In short, the bundler chain requires users to set a unique ID for each rule, loader, plugin, and minimizer. With this ID, you can easily find the desired object from deeply nested objects.
+
+Rsbuild exports all internally defined IDs through the `CHAIN_ID` object, so you can quickly locate the loader or plugin you want to modify using these exported IDs, without the need for complex traversal in the Rspack configuration object.
+
+For example, you can remove the built-in HTML plugin using `CHAIN_ID.PLUGIN.HTML`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      //
+      chain.plugins.delete(CHAIN_ID.PLUGIN.HTML);
+    },
+  },
+};
+```
+
+#### Types of Bundler Chain IDs
+
+The `CHAIN_ID` object contains various IDs, which correspond to the following configurations:
+
+| CHAIN_ID Field            | Corresponding Configuration | Description                                                 |
+| ------------------------- | --------------------------- | ----------------------------------------------------------- |
+| `CHAIN_ID.PLUGIN`         | `plugins[i]`                | Corresponds to a plugin in the Rspack configuration         |
+| `CHAIN_ID.RULE`           | `module.rules[i]`           | Corresponds to a rule in the Rspack configuration           |
+| `CHAIN_ID.USE`            | `module.rules[i].loader`    | Corresponds to a loader in the Rspack configuration         |
+| `CHAIN_ID.MINIMIZER`      | `optimization.minimizer`    | Corresponds to a minimizer in the Rspack configuration      |
+| `CHAIN_ID.RESOLVE_PLUGIN` | `resolve.plugins[i]`        | Corresponds to a resolve plugin in the Rspack configuration |
+
+### Examples
+
+#### Configure loader
+
+Here are examples of adding, modifying, and deleting Rspack loaders.
+
+```js title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      // Add loader
+      chain.module
+        .rule('md')
+        .test(/\.md$/)
+        .use('md-loader')
+        .loader('md-loader');
+
+      // Modify loader
+      chain.module
+        .rule(CHAIN_ID.RULE.JS)
+        .use(CHAIN_ID.USE.BABEL)
+        .tap((options) => {
+          options.plugins.push('babel-plugin-xxx');
+          return options;
+        });
+
+      // Delete loader
+      chain.module.rule(CHAIN_ID.RULE.JS).uses.delete(CHAIN_ID.USE.BABEL);
+    },
+  },
+};
+```
+
+#### Configure Plugin
+
+Here are examples of adding, modifying, and deleting Rspack plugins.
+
+```js title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { bundler, CHAIN_ID }) => {
+      // Add plugin
+      chain.plugin('custom-define').use(bundler.DefinePlugin, [
+        {
+          'process.env': {
+            NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+          },
+        },
+      ]);
+
+      // Modify plugin
+      chain.plugin(CHAIN_ID.PLUGIN.HMR).tap((options) => {
+        options[0].fullBuildTimeout = 200;
+        return options;
+      });
+
+      // Delete plugin
+      chain.plugins.delete(CHAIN_ID.PLUGIN.HMR);
+    },
+  },
+};
+```
+
+#### Modify based on environment
+
+In the `tools.bundlerChain` function, you can access various environment identifiers in the second parameter, such as development/production environment build, SSR build, Web Worker build, to achieve configuration modifications for different environments.
+
+```js title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { env, isProd, target, isServer, isWebWorker }) => {
+      if (utils.env === 'development' || utils.env === 'test') {
+        // ...
+      }
+      if (utils.isProd) {
+        // ...
+      }
+      if (utils.target === 'node') {
+        // ...
+      }
+      if (utils.isServer) {
+        // ...
+      }
+      if (utils.isWebWorker) {
+        // ...
+      }
+    },
+  },
+};
+```
+
+The above are some common configuration examples. For the complete bundler-chain API, please refer to the [webpack-chain documentation](https://github.com/neutrinojs/webpack-chain).
