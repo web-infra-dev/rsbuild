@@ -72,6 +72,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../packages/plugin-babel
       '@rsbuild/plugin-image-compress':
         specifier: workspace:*
         version: link:../packages/plugin-image-compress
@@ -679,6 +682,37 @@ importers:
         specifier: ^5
         version: 5.2.2
 
+  packages/plugin-babel:
+    dependencies:
+      '@babel/preset-typescript':
+        specifier: ^7.23.2
+        version: 7.23.2(@babel/core@7.23.2)
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
+      '@types/lodash':
+        specifier: ^4.14.200
+        version: 4.14.200
+      '@types/node':
+        specifier: ^16
+        version: 16.18.59
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
   packages/plugin-esbuild:
     dependencies:
       '@rsbuild/shared':
@@ -1015,6 +1049,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../plugin-babel
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
@@ -1062,6 +1099,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../plugin-babel
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper

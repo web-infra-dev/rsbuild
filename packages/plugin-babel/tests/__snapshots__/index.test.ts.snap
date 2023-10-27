@@ -1,0 +1,198 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugins/babel > babel-loader addIncludes & addExcludes should works 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "exclude": [
+          "src/example",
+        ],
+        "include": [
+          /\\\\/node_modules\\\\/query-string\\\\//,
+        ],
+        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "options": {
+              "babelrc": false,
+              "compact": false,
+              "configFile": false,
+              "plugins": [],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] = `
+{
+  "exclude": [
+    "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+    "src/example",
+  ],
+  "include": [
+    {
+      "and": [
+        "<ROOT>",
+        {
+          "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+        },
+      ],
+    },
+    /\\\\/node_modules\\\\/query-string\\\\//,
+  ],
+  "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+  "type": "javascript/auto",
+  "use": [
+    {
+      "loader": "builtin:swc-loader",
+      "options": {
+        "env": {
+          "coreJs": "3.32",
+          "mode": "entry",
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+        "exclude": [],
+        "inlineSourcesContent": true,
+        "isModule": "unknown",
+        "jsc": {
+          "externalHelpers": true,
+          "parser": {
+            "decorators": true,
+            "syntax": "typescript",
+            "tsx": true,
+          },
+          "transform": {
+            "decoratorMetadata": true,
+            "legacyDecorator": true,
+          },
+        },
+        "minify": false,
+        "sourceMaps": true,
+      },
+    },
+    {
+      "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+      "options": {
+        "babelrc": false,
+        "compact": false,
+        "configFile": false,
+        "plugins": [],
+        "presets": [
+          [
+            "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+            {
+              "allExtensions": true,
+              "allowDeclareFields": true,
+              "allowNamespaces": true,
+              "isTSX": true,
+              "optimizeConstEnums": true,
+            },
+          ],
+        ],
+      },
+    },
+  ],
+}
+`;
+
+exports[`plugins/babel > should set babel-loader 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "options": {
+              "babelrc": false,
+              "compact": false,
+              "configFile": false,
+              "plugins": [],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`plugins/babel > should set babel-loader when config is add 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "options": {
+              "babelrc": false,
+              "compact": false,
+              "configFile": false,
+              "plugins": [
+                [
+                  "babel-plugin-import",
+                  {
+                    "libraryDirectory": "es",
+                    "libraryName": "xxx-components",
+                    "style": true,
+                  },
+                ],
+              ],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
