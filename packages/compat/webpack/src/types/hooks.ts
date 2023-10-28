@@ -3,15 +3,10 @@ import type { WebpackChain, WebpackConfig } from './thirdParty';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 
 export type ModifyWebpackChainUtils = ModifyChainUtils & {
+  /** @deprecated Use target instead. */
+  name: string;
   webpack: typeof import('webpack');
   CHAIN_ID: ChainIdentifier;
-  /**
-   * @deprecated Use target instead.
-   * */
-  name: string;
-  /**
-   * @deprecated Use HtmlPlugin instead.
-   */
   HtmlWebpackPlugin: typeof import('html-webpack-plugin');
 };
 

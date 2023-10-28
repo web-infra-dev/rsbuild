@@ -53,7 +53,8 @@ export type ModifyChainUtils = {
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
   getCompiledPath: (name: string) => string;
-  HtmlPlugin: typeof import('html-webpack-plugin');
+  // todo: html plugin type declare
+  HtmlPlugin: any;
   /**
    * @private should only used in Rsbuild
    */

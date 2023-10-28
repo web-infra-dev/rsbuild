@@ -1,13 +1,11 @@
 import { join } from 'path';
-import { expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
-import { webpackOnlyTest } from '@scripts/helper';
 
 const fixtures = __dirname;
 
-// TODO: https://github.com/web-infra-dev/rspack/issues/4395
-webpackOnlyTest('enableAssetManifest', async () => {
+test('enableAssetManifest', async () => {
   const rsbuild = await build({
     cwd: fixtures,
     entry: {

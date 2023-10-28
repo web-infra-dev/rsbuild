@@ -161,17 +161,17 @@ export default {
 };
 ```
 
-#### HtmlPlugin
+#### HtmlWebpackPlugin
 
 - **类型：** `typeof import('html-webpack-plugin')`
 
-通过这个参数你可以拿到 `html-webpack-plugin` 实例。
+通过这个参数你可以拿到 HtmlWebpackPlugin 实例。
 
 ```js
 export default {
   tools: {
-    webpack: (chain, { HtmlPlugin }) => {
-      console.log(HtmlPlugin);
+    webpack: (chain, { HtmlWebpackPlugin }) => {
+      console.log(HtmlWebpackPlugin);
     },
   },
 };
