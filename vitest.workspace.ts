@@ -22,7 +22,8 @@ export default defineWorkspace([
       exclude: isCI
         ? [
             // TODO: failed in Ubuntu
-            'packages/plugin-{swc,image-compress}/**/*.test.ts',
+            'packages/plugin-image-compress/**/*.test.ts',
+            'packages/compat/plugin-swc/**/*.test.ts',
             '**/node_modules/**',
           ]
         : ['**/node_modules/**'],
