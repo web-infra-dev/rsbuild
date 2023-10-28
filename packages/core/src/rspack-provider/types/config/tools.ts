@@ -6,7 +6,7 @@ import type {
   PostCSSLoaderOptions,
   PostCSSPlugin,
 } from '@rsbuild/shared';
-import type { Options as HTMLPluginOptions } from '@rspack/plugin-html';
+import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
 import type { RspackConfig } from '../rspack';
 import type { ModifyRspackConfigUtils } from '../hooks';
 

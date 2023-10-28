@@ -161,17 +161,17 @@ export default {
 };
 ```
 
-#### HtmlWebpackPlugin
+#### HtmlPlugin
 
 - **Type:** `typeof import('html-webpack-plugin')`
 
-The HtmlWebpackPlugin instance:
+The instance of `html-webpack-plugin`:
 
 ```js
 export default {
   tools: {
-    webpack: (chain, { HtmlWebpackPlugin }) => {
-      console.log(HtmlWebpackPlugin);
+    webpack: (chain, { HtmlPlugin }) => {
+      console.log(HtmlPlugin);
     },
   },
 };
