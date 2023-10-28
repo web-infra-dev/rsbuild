@@ -1,0 +1,44 @@
+{
+  "name": "@rsbuild/plugin-esbuild",
+  "description": "Esbuild plugin for Rsbuild",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/compat/plugin-esbuild"
+  },
+  "license": "MIT",
+  "version": "0.0.9",
+  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
+  "dependencies": {
+    "@rsbuild/shared": "workspace:*",
+    "esbuild": "0.17.19",
+    "webpack": "^5.88.1"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/webpack": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
+    "typescript": "^5"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true,
+    "types": "./dist/index.d.ts"
+  }
+}

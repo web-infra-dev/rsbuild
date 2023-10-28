@@ -95,7 +95,7 @@ importers:
         version: link:../packages/plugin-svgr
       '@rsbuild/plugin-swc':
         specifier: workspace:*
-        version: link:../packages/plugin-swc
+        version: link:../packages/compat/plugin-swc
       '@rsbuild/plugin-type-check':
         specifier: workspace:*
         version: link:../packages/plugin-type-check
@@ -116,7 +116,7 @@ importers:
         version: link:../packages/shared
       '@rsbuild/webpack':
         specifier: workspace:*
-        version: link:../packages/webpack
+        version: link:../packages/compat/webpack
       '@types/connect':
         specifier: ^3.4.37
         version: 3.4.37
@@ -265,7 +265,7 @@ importers:
         version: link:../../packages/core
       '@rsbuild/webpack':
         specifier: workspace:*
-        version: link:../../packages/webpack
+        version: link:../../packages/compat/webpack
 
   packages/babel-preset:
     dependencies:
@@ -315,6 +315,172 @@ importers:
       '@types/node':
         specifier: ^16
         version: 16.18.59
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
+  packages/compat/plugin-esbuild:
+    dependencies:
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../../shared
+      esbuild:
+        specifier: 0.17.19
+        version: 0.17.19
+      webpack:
+        specifier: ^5.88.1
+        version: 5.89.0(esbuild@0.17.19)
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../../test-helper
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
+  packages/compat/plugin-swc:
+    dependencies:
+      '@babel/core':
+        specifier: ^7.23.2
+        version: 7.23.2
+      '@babel/preset-env':
+        specifier: ^7.23.2
+        version: 7.23.2(@babel/core@7.23.2)
+      '@babel/preset-react':
+        specifier: ^7.22.15
+        version: 7.22.15(@babel/core@7.23.2)
+      '@babel/preset-typescript':
+        specifier: ^7.23.2
+        version: 7.23.2(@babel/core@7.23.2)
+      '@modern-js/swc-plugins':
+        specifier: 0.6.4
+        version: 0.6.4(@swc/helpers@0.5.1)
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../../shared
+      '@swc/helpers':
+        specifier: 0.5.1
+        version: 0.5.1
+      core-js:
+        specifier: ~3.32.2
+        version: 3.32.2
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
+      '@swc/core':
+        specifier: 1.3.42
+        version: 1.3.42
+      '@types/babel__core':
+        specifier: ^7.20.3
+        version: 7.20.3
+      '@types/lodash':
+        specifier: ^4.14.200
+        version: 4.14.200
+      magic-string:
+        specifier: 0.29.0
+        version: 0.29.0
+      react:
+        specifier: ^18
+        version: 18.2.0
+      react-dom:
+        specifier: ^18
+        version: 18.2.0(react@18.2.0)
+      source-map:
+        specifier: ^0.7.4
+        version: 0.7.4
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+      webpack:
+        specifier: ^5.88.1
+        version: 5.89.0(@swc/core@1.3.42)
+
+  packages/compat/plugin-swc/tests/fixtures/browserslist/chrome104: {}
+
+  packages/compat/plugin-swc/tests/fixtures/browserslist/ie11: {}
+
+  packages/compat/webpack:
+    dependencies:
+      '@modern-js/server':
+        specifier: ^2.39.0
+        version: 2.39.0(react-dom@18.2.0)(react@18.2.0)
+      '@pmmmwh/react-refresh-webpack-plugin':
+        specifier: 0.5.10
+        version: 0.5.10(react-refresh@0.14.0)(webpack@5.89.0)
+      '@rsbuild/babel-preset':
+        specifier: workspace:*
+        version: link:../../babel-preset
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../core
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../../shared
+      babel-plugin-import:
+        specifier: 1.13.5
+        version: 1.13.5
+      caniuse-lite:
+        specifier: ^1.0.30001520
+        version: 1.0.30001551
+      html-webpack-plugin:
+        specifier: 5.5.3
+        version: 5.5.3(webpack@5.89.0)
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      mini-css-extract-plugin:
+        specifier: 2.7.6
+        version: 2.7.6(webpack@5.89.0)
+      postcss:
+        specifier: 8.4.31
+        version: 8.4.31
+      react-refresh:
+        specifier: 0.14.0
+        version: 0.14.0
+      style-loader:
+        specifier: 3.3.3
+        version: 3.3.3(webpack@5.89.0)
+      terser-webpack-plugin:
+        specifier: 5.3.9
+        version: 5.3.9(webpack@5.89.0)
+      ts-loader:
+        specifier: 9.4.4
+        version: 9.4.4(typescript@5.2.2)(webpack@5.89.0)
+      tsconfig-paths-webpack-plugin:
+        specifier: 4.1.0
+        version: 4.1.0
+      webpack:
+        specifier: ^5.88.1
+        version: 5.89.0
+      webpack-subresource-integrity:
+        specifier: 5.1.0
+        version: 5.1.0(html-webpack-plugin@5.5.3)(webpack@5.89.0)
+    devDependencies:
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../../test-helper
+      '@types/lodash':
+        specifier: ^4.14.200
+        version: 4.14.200
+      '@types/node':
+        specifier: ^16
+        version: 16.18.59
+      react:
+        specifier: ^18
+        version: 18.2.0
+      react-dom:
+        specifier: ^18
+        version: 18.2.0(react@18.2.0)
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -702,38 +868,13 @@ importers:
         version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
-        version: link:../webpack
+        version: link:../compat/webpack
       '@types/lodash':
         specifier: ^4.14.200
         version: 4.14.200
       '@types/node':
         specifier: ^16
         version: 16.18.59
-      typescript:
-        specifier: ^5
-        version: 5.2.2
-
-  packages/plugin-esbuild:
-    dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
-      esbuild:
-        specifier: 0.17.19
-        version: 0.17.19
-      webpack:
-        specifier: ^5.88.1
-        version: 5.89.0(esbuild@0.17.19)
-    devDependencies:
-      '@rsbuild/core':
-        specifier: workspace:*
-        version: link:../core
-      '@rsbuild/test-helper':
-        specifier: workspace:*
-        version: link:../test-helper
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../webpack
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -758,7 +899,7 @@ importers:
         version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
-        version: link:../webpack
+        version: link:../compat/webpack
       '@types/node':
         specifier: ^16
         version: 16.18.59
@@ -783,7 +924,7 @@ importers:
         version: link:../core
       '@rsbuild/webpack':
         specifier: workspace:*
-        version: link:../webpack
+        version: link:../compat/webpack
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -814,7 +955,7 @@ importers:
         version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
-        version: link:../webpack
+        version: link:../compat/webpack
       '@types/node':
         specifier: ^16
         version: 16.18.59
@@ -842,7 +983,7 @@ importers:
         version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
-        version: link:../webpack
+        version: link:../compat/webpack
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -861,13 +1002,13 @@ importers:
         version: link:../core
       '@rsbuild/plugin-swc':
         specifier: workspace:*
-        version: link:../plugin-swc
+        version: link:../compat/plugin-swc
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
-        version: link:../webpack
+        version: link:../compat/webpack
       '@types/node':
         specifier: ^16
         version: 16.18.59
@@ -895,7 +1036,7 @@ importers:
         version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
-        version: link:../webpack
+        version: link:../compat/webpack
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -923,78 +1064,13 @@ importers:
         version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
-        version: link:../webpack
+        version: link:../compat/webpack
       '@types/node':
         specifier: ^16
         version: 16.18.59
       typescript:
         specifier: ^5
         version: 5.2.2
-
-  packages/plugin-swc:
-    dependencies:
-      '@babel/core':
-        specifier: ^7.23.2
-        version: 7.23.2
-      '@babel/preset-env':
-        specifier: ^7.23.2
-        version: 7.23.2(@babel/core@7.23.2)
-      '@babel/preset-react':
-        specifier: ^7.22.15
-        version: 7.22.15(@babel/core@7.23.2)
-      '@babel/preset-typescript':
-        specifier: ^7.23.2
-        version: 7.23.2(@babel/core@7.23.2)
-      '@modern-js/swc-plugins':
-        specifier: 0.6.4
-        version: 0.6.4(@swc/helpers@0.5.1)
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
-      '@swc/helpers':
-        specifier: 0.5.1
-        version: 0.5.1
-      core-js:
-        specifier: ~3.32.2
-        version: 3.32.2
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-    devDependencies:
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../webpack
-      '@swc/core':
-        specifier: 1.3.42
-        version: 1.3.42
-      '@types/babel__core':
-        specifier: ^7.20.3
-        version: 7.20.3
-      '@types/lodash':
-        specifier: ^4.14.200
-        version: 4.14.200
-      magic-string:
-        specifier: 0.29.0
-        version: 0.29.0
-      react:
-        specifier: ^18
-        version: 18.2.0
-      react-dom:
-        specifier: ^18
-        version: 18.2.0(react@18.2.0)
-      source-map:
-        specifier: ^0.7.4
-        version: 0.7.4
-      typescript:
-        specifier: ^5
-        version: 5.2.2
-      webpack:
-        specifier: ^5.88.1
-        version: 5.89.0(@swc/core@1.3.42)
-
-  packages/plugin-swc/tests/fixtures/browserslist/chrome104: {}
-
-  packages/plugin-swc/tests/fixtures/browserslist/ie11: {}
 
   packages/plugin-type-check:
     dependencies:
@@ -1057,7 +1133,7 @@ importers:
         version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
-        version: link:../webpack
+        version: link:../compat/webpack
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -1107,7 +1183,7 @@ importers:
         version: link:../test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
-        version: link:../webpack
+        version: link:../compat/webpack
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -1256,82 +1332,6 @@ importers:
       upath:
         specifier: 2.0.1
         version: 2.0.1
-
-  packages/webpack:
-    dependencies:
-      '@modern-js/server':
-        specifier: ^2.39.0
-        version: 2.39.0(react-dom@18.2.0)(react@18.2.0)
-      '@pmmmwh/react-refresh-webpack-plugin':
-        specifier: 0.5.10
-        version: 0.5.10(react-refresh@0.14.0)(webpack@5.89.0)
-      '@rsbuild/babel-preset':
-        specifier: workspace:*
-        version: link:../babel-preset
-      '@rsbuild/core':
-        specifier: workspace:*
-        version: link:../core
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
-      babel-plugin-import:
-        specifier: 1.13.5
-        version: 1.13.5
-      caniuse-lite:
-        specifier: ^1.0.30001520
-        version: 1.0.30001551
-      html-webpack-plugin:
-        specifier: 5.5.3
-        version: 5.5.3(webpack@5.89.0)
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-      mini-css-extract-plugin:
-        specifier: 2.7.6
-        version: 2.7.6(webpack@5.89.0)
-      postcss:
-        specifier: 8.4.31
-        version: 8.4.31
-      react-refresh:
-        specifier: 0.14.0
-        version: 0.14.0
-      style-loader:
-        specifier: 3.3.3
-        version: 3.3.3(webpack@5.89.0)
-      terser-webpack-plugin:
-        specifier: 5.3.9
-        version: 5.3.9(webpack@5.89.0)
-      ts-loader:
-        specifier: 9.4.4
-        version: 9.4.4(typescript@5.2.2)(webpack@5.89.0)
-      tsconfig-paths-webpack-plugin:
-        specifier: 4.1.0
-        version: 4.1.0
-      webpack:
-        specifier: ^5.88.1
-        version: 5.89.0
-      webpack-subresource-integrity:
-        specifier: 5.1.0
-        version: 5.1.0(html-webpack-plugin@5.5.3)(webpack@5.89.0)
-    devDependencies:
-      '@rsbuild/test-helper':
-        specifier: workspace:*
-        version: link:../test-helper
-      '@types/lodash':
-        specifier: ^4.14.200
-        version: 4.14.200
-      '@types/node':
-        specifier: ^16
-        version: 16.18.59
-      react:
-        specifier: ^18
-        version: 18.2.0
-      react-dom:
-        specifier: ^18
-        version: 18.2.0(react@18.2.0)
-      typescript:
-        specifier: ^5
-        version: 5.2.2
 
   scripts/check-changeset:
     dependencies:

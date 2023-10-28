@@ -222,7 +222,7 @@ exports[`plugins/styled-components > should works in webpack babel mode 1`] = `
           ],
           "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
           [
-            "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+            "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
             {},
           ],
           [
@@ -289,7 +289,7 @@ exports[`plugins/styled-components > should works in webpack swc mode 1`] = `
   "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
   "use": [
     {
-      "loader": "<ROOT>/packages/plugin-swc/dist/loader",
+      "loader": "<ROOT>/packages/compat/plugin-swc/dist/loader",
       "options": {
         "cwd": "<ROOT>",
         "env": {
