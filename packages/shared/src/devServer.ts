@@ -104,8 +104,6 @@ export async function startDevServer<
 ) {
   const logger = customLogger ?? defaultLogger;
 
-  logger.info('Starting dev server...');
-
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'development';
   }
@@ -167,7 +165,7 @@ export async function startDevServer<
             }
           }
 
-          await printServerURLs(urls, 'Dev server', logger);
+          await printServerURLs(urls, logger);
         }
 
         await options.context.hooks.onAfterStartDevServerHook.call({ port });
