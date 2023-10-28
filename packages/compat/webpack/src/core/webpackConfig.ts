@@ -70,7 +70,7 @@ async function getChainUtils(
   target: RsbuildTarget,
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
-  const { default: HtmlWebpackPlugin } = await import('html-webpack-plugin');
+  const { default: HtmlPlugin } = await import('html-webpack-plugin');
   const nodeEnv = process.env.NODE_ENV as NodeEnv;
 
   const nameMap = {
@@ -91,8 +91,8 @@ async function getChainUtils(
     isWebWorker: target === 'web-worker',
     CHAIN_ID,
     getCompiledPath,
-    HtmlWebpackPlugin,
-    HtmlPlugin: HtmlWebpackPlugin,
+    HtmlPlugin,
+    HtmlWebpackPlugin: HtmlPlugin,
   };
 }
 
