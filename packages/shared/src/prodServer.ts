@@ -33,19 +33,16 @@ export const getServerOptions = (
 
 export async function printServerURLs(
   urls: Array<{ url: string; label: string }>,
-  name = 'Server',
   logger: Logger = defaultLogger,
 ) {
-  let message = `${name} running at:\n\n`;
-
-  message += urls
+  const message = urls
     .map(
       ({ label, url }) =>
         `  ${`> ${label.padEnd(10)}`}${chalk.cyanBright(url)}\n`,
     )
     .join('');
 
-  logger.info(message);
+  logger.log(message);
 }
 
 export async function startProdServer(
