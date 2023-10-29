@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should generate meta tags correctly 1`] = `
+"
+<meta name="description" content="This is basic meta">
+<meta name="bar" content="bar">
+<meta name="foo" content="foo">"
+`;
+
+exports[`should generate meta tags correctly 2`] = `
+"
+<meta name="description" content="This is about page">
+<meta name="bar" content="bar">
+<meta name="foo" content="foo">"
+`;

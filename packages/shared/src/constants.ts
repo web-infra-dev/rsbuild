@@ -1,8 +1,5 @@
 import type { RsbuildTarget } from './types';
 
-// PACKAGES
-export const WEBPACK_PROVIDER = '@rsbuild/webpack';
-
 // Defaults
 export const DEFAULT_PORT = 8080;
 export const DEFAULT_DATA_URL_SIZE = 10000;

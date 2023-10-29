@@ -1,4 +1,3 @@
-import type { MetaOptions } from '../../generateMetaTags';
 import type { ArrayOrNot, ChainedConfig } from '../utils';
 
 export type CrossOrigin = 'anonymous' | 'use-credentials';
@@ -8,6 +7,15 @@ export type ScriptInject = boolean | 'body' | 'head';
 export type ScriptLoading = 'defer' | 'module' | 'blocking';
 
 export type OutputStructure = 'flat' | 'nested';
+
+export type MetaAttributes = { [attributeName: string]: string | boolean };
+
+export type MetaOptions = {
+  [name: string]:
+    | string
+    | false // name content pair e.g. {viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'}`
+    | MetaAttributes; // custom properties e.g. { name:"viewport" content:"width=500, initial-scale=1" }
+};
 
 export interface HtmlInjectTag {
   tag: string;
