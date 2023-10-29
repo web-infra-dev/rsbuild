@@ -1,20 +1,20 @@
-# Build Vue 2 App
-
-Although the Modern.js framework is built on React, the underlying Rsbuild is not coupled with React. Therefore, you can use Rsbuild to build your Vue applications and leverage most of the capabilities provided by Rsbuild.
+# Vue 2
 
 In this document, you will learn how to build a Vue 2 application using Rsbuild.
 
-import Vue2Project from '@en/shared/vue2Project.md';
+## Create Vue 2 Project
 
-<Vue2Project />
+You can use `create-rsbuild` to create a project with Rsbuild + Vue 2. Just execute the following command:
 
-import CliToolVue from '@en/shared/cliToolVue.md';
+import { PackageManagerTabs } from '@theme';
 
-<CliToolVue />
+<PackageManagerTabs command="create rsbuild@latest" />
+
+Then select `Vue 2` when prompted to "Select framework".
 
 ## Using Vue Plugin
 
-To compile Vue SFC (Single File Components) and JSX syntax, you need to register the Rsbuild [Vue 2 plugin](/plugins/list/plugin-vue2). The plugin will automatically add the necessary configuration for Vue builds and remove the built-in React-related configurations.
+To compile Vue SFC (Single File Components), you need to register the Rsbuild [Vue 2 plugin](/plugins/list/plugin-vue2). The plugin will automatically add the necessary configuration for Vue builds.
 
 For example, register in `rsbuild.config.ts`:
 
@@ -26,6 +26,8 @@ export default defineConfig({
   plugins: [pluginVue2()],
 });
 ```
+
+If you need to use the JSX syntax of Vue, you also need to register the [Vue 2 JSX plugin](/plugins/list/plugin-vue2-jsx).
 
 ## Type Definitions
 
