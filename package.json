@@ -50,7 +50,7 @@
     "is-ci": "^3.0.1",
     "nano-staged": "^0.8.0",
     "nx": "^17.0.1",
-    "oxlint": "^0.0.13",
+    "oxlint": "^0.0.14",
     "prettier": "^3.0.3",
     "vite-tsconfig-paths": "4.2.1",
     "vitest": "1.0.0-beta.1"

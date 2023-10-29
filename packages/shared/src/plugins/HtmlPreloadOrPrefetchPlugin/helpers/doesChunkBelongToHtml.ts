@@ -35,11 +35,8 @@ function recursiveChunkGroup(
   if (!parents.length) {
     // EntryPoint
     return [chunkGroup.name];
-  } else {
-    return parents
-      .map((chunkParent) => recursiveChunkGroup(chunkParent))
-      .flat();
   }
+  return parents.flatMap((chunkParent) => recursiveChunkGroup(chunkParent));
 }
 
 function recursiveChunkEntryNames(chunk: Chunk): string[] {
@@ -49,8 +46,7 @@ function recursiveChunkEntryNames(chunk: Chunk): string[] {
   const [...chunkGroups] = chunk.groupsIterable;
   return uniq(
     chunkGroups
-      .map((chunkGroup) => recursiveChunkGroup(chunkGroup))
-      .flat()
+      .flatMap((chunkGroup) => recursiveChunkGroup(chunkGroup))
       .filter(isChunkName),
   );
 }
