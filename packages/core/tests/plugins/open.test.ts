@@ -1,4 +1,4 @@
-import { openBrowser } from '../src/openBrowser';
+import { openBrowser } from '../../src/plugins/startUrl';
 
 describe('openBrowser', () => {
   vi.mock('../compiled/open', () => {

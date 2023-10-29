@@ -1,4 +1,4 @@
-import { generateMetaTags } from '../src/generateMetaTags';
+import { generateMetaTags } from '../src/utils/generateMetaTags';
 
 describe('generateMetaTags', () => {
   it('should return empty string when params is empty', () => {

@@ -7,14 +7,8 @@
  *
  * Modified from https://github.com/jantimon/html-webpack-plugin/blob/2f5de7ab9e8bca60e9e200f2e4b4cfab90db28d4/index.js#L800
  */
-export type MetaAttributes = { [attributeName: string]: string | boolean };
 
-export interface MetaOptions {
-  [name: string]:
-    | string
-    | false // name content pair e.g. {viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'}`
-    | MetaAttributes; // custom properties e.g. { name:"viewport" content:"width=500, initial-scale=1" }
-}
+import type { MetaOptions, MetaAttributes } from '@rsbuild/shared';
 
 const tagObjectToString = (tagDefinition: {
   tagName: string;
@@ -23,8 +17,10 @@ const tagObjectToString = (tagDefinition: {
   innerHTML?: string;
 }) => {
   const attributes = Object.keys(tagDefinition.attributes || {})
-    .filter(attributeName => tagDefinition.attributes[attributeName] !== false)
-    .map(attributeName => {
+    .filter(
+      (attributeName) => tagDefinition.attributes[attributeName] !== false,
+    )
+    .map((attributeName) => {
       if (tagDefinition.attributes[attributeName] === true) {
         return attributeName;
       }
@@ -45,7 +41,7 @@ export const generateMetaTags = (metaOptions?: MetaOptions): string => {
   // Turn { "viewport" : "width=500, initial-scale=1" } into
   // [{ name:"viewport" content:"width=500, initial-scale=1" }]
   const metaTagAttributeObjects = Object.keys(metaOptions)
-    .map(metaName => {
+    .map((metaName) => {
       const metaTagContent = metaOptions[metaName];
       return typeof metaTagContent === 'string'
         ? {
@@ -54,11 +50,11 @@ export const generateMetaTags = (metaOptions?: MetaOptions): string => {
           }
         : metaTagContent;
     })
-    .filter(attribute => attribute !== false);
+    .filter((attribute) => attribute !== false);
   // Turn [{ name:"viewport" content:"width=500, initial-scale=1" }] into
   // the html-webpack-plugin tag structure
   return metaTagAttributeObjects
-    .map(metaTagAttributes => {
+    .map((metaTagAttributes) => {
       if (metaTagAttributes === false) {
         throw new Error('Invalid meta tag');
       }

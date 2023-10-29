@@ -83,6 +83,7 @@
     "gzip-size": "^6.0.0",
     "jiti": "^1.20.0",
     "lodash": "^4.17.21",
+    "open": "^8.4.0",
     "pkg-up": "^3.1.0",
     "postcss": "8.4.31",
     "rspack-manifest-plugin": "5.0.0-alpha0",
