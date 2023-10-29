@@ -258,7 +258,6 @@ Rsbuild Rspack 构建模式对比 [Rspack CLI](https://www.rspack.dev/zh/guide/q
 在使用 Rspack 构建时，Rsbuild 默认不会启用 `babel-loader`。但当项目中使用到依赖 Babel 实现的配置项或插件时，会额外添加 `babel-loader` 进行文件转译：
 
 - 通过 [tools.babel](/config/options/tools.html#toolsbabel) 添加 Babel plugin
-- 使用 [Modern.js SSR 功能](https://modernjs.dev/guides/advanced-features/ssr.html)
 - ...
 
 你可以通过开启[调试模式](/guide/debug/debug-mode.html) 来查看最终生成的 Rspack 配置中是否存在 Babel 插件。

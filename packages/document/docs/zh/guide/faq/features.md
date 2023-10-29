@@ -80,24 +80,11 @@ Rsbuild 默认提供了移除 console 的配置项，请查看 [performance.remo
 
 ---
 
-### 如何查看最终生成的 webpack / Rspack 配置?
+### 如何查看 Rsbuild 生成的 Rspack 配置?
 
-#### 通过 inspect 命令查看
+通过 Rsbuild 调试模式可以查看 Rsbuild 生成的 Rspack 配置。
 
-当你使用 Modern.js 等上层框架时，框架通常会提供 [inspect 命令](https://modernjs.dev/apis/app/commands.html) 用于查看项目最终生成的 Rsbuild 配置以及 webpack / Rspack 配置。
-
-```bash
-➜ npx modern inspect
-
-Inspect config succeed, open following files to view the content:
-
-  - Rsbuild Config: /root/my-project/dist/rsbuild.config.js
-  - Rspack Config (web): /root/my-project/dist/rspack.config.web.js
-```
-
-#### 通过 Rsbuild 调试模式查看
-
-通过在执行构建时添加 `DEBUG=rsbuild` 环境变量可开启 Rsbuild 的[调试模式](/guide/debug/debug-mode.html)，此时会输出最终生成的 webpack 或 Rspack 配置到 dist 目录下。
+你可以在执行构建时添加 `DEBUG=rsbuild` 环境变量，即可开启 Rsbuild 的[调试模式](/guide/debug/debug-mode.html)，此时会输出内部生成的 Rspack 配置到 dist 目录下。
 
 ```bash
 ➜ DEBUG=rsbuild pnpm dev
@@ -119,7 +106,7 @@ Inspect config succeed, open following files to view the content:
 
 默认情况下，Rsbuild 会打印构建过程产生的所有 error 和 warning 日志。
 
-如果遇到由于三方包产生大量 warning 日志，暂时又无法处理，希望忽略的情况。可通过 webpack / Rspack 提供的构建配置忽略特定 warning 日志。
+如果遇到由于三方包产生大量 warning 日志，暂时又无法处理，希望忽略的情况。可通过 Rspack 提供的 `ignoreWarnings` 配置忽略特定 warning 日志。
 
 ```ts
 export default {
