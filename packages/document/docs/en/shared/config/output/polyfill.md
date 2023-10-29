@@ -1,4 +1,4 @@
-- **Type:** `'entry' | 'usage' | 'ua' | 'off'`
+- **Type:** `'entry' | 'usage' | 'off'`
 - **Default:** `'entry'`
 
 Via `output.polyfill` you can configure how the polyfill is injected.
@@ -16,12 +16,6 @@ Equivalent to `useBuiltIns: 'entry'` configuration in `@babel/preset-env`.
 Polyfill is injected in each file based on the API used in the code.
 
 Equivalent to `useBuiltIns: 'usage'` configuration in `@babel/preset-env`.
-
-#### ua
-
-The Polyfill code is dynamically delivered according to the currently requested UA information.
-
-The dynamic delivery feature needs to be used with the upper-level framework. For more details, please refer to [Modern.js - Polyfill At Runtime](https://modernjs.dev/en/guides/advanced-features/compatibility.html#polyfill-at-runtime).
 
 #### off
 

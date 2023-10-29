@@ -8,7 +8,7 @@ Developing plugins to change the Rsbuild's behavior and introduce extra features
 - Modify and compile file modules.
 - Deploy your application.
 
-Rsbuild can use webpack or Rspack as the bundler, expose unified Node.js API, and integrate into different frameworks. Users can painlessly switch between bundlers.
+Rsbuild can use Rspack as the bundler, expose unified Node.js API, and integrate into different frameworks. Users can painlessly switch between bundlers.
 
 ## Write a plugin
 
