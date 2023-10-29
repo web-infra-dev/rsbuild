@@ -20,7 +20,6 @@ export default defineConfig({
     exclude: ['**/zh/shared/**', '**/en/shared/**'],
   },
   themeConfig: {
-    enableContentAnimation: true,
     footer: {
       message: 'Copyright © 2023 ByteDance.',
     },
