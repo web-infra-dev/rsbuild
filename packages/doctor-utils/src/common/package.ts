@@ -72,23 +72,21 @@ export const getPackageMetaFromModulePath = (
   // Extract package names from module path
   // @NOTE check for uniq for pnpm cases
   const names = uniqLast(
-    paths
-      .map((packagePath) => {
-        // @ts-ignore
-        const found = packagePath.matchAll(PACKAGE_PATH_NAME);
+    paths.flatMap((packagePath) => {
+      // @ts-ignore
+      const found = packagePath.matchAll(PACKAGE_PATH_NAME);
 
-        if (!found) {
-          return [];
-        }
+      if (!found) {
+        return [];
+      }
 
-        const paksArray = compact([...found].flat());
+      const paksArray = compact([...found].flat());
 
-        return paksArray
-          .slice(1)
-          .filter(Boolean)
-          .map((name) => name.replace(/\+/g, '/'));
-      })
-      .flat(),
+      return paksArray
+        .slice(1)
+        .filter(Boolean)
+        .map((name) => name.replace(/\+/g, '/'));
+    }),
   );
 
   // If no names, skip
