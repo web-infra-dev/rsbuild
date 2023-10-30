@@ -1,5 +1,6 @@
 import path from 'path';
 import { RsbuildTarget, SharedNormalizedConfig } from '../types';
+import { isWebTarget } from '../utils';
 
 export function getTemplatePath(
   entryName: string,
@@ -23,8 +24,6 @@ export const isHtmlDisabled = (
   return (
     htmlPlugin === false ||
     (Array.isArray(htmlPlugin) && htmlPlugin.includes(false)) ||
-    target === 'node' ||
-    target === 'web-worker' ||
-    target === 'service-worker'
+    !isWebTarget(target)
   );
 };

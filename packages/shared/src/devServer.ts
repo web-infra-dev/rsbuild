@@ -210,17 +210,12 @@ export const isClientCompiler = (compiler: {
   options: {
     target?: Compiler['options']['target'];
   };
-  name?: Compiler['name'];
 }) => {
   const { target } = compiler.options;
 
-  // if target not contains `node` or `webworker`, it's a client compiler
   if (target) {
-    if (Array.isArray(target)) {
-      return !target.includes('node') && !target.includes('webworker');
-    }
-    return target !== 'node' && target !== 'webworker';
+    return Array.isArray(target) ? target.includes('web') : target === 'web';
   }
 
-  return compiler.name === 'client';
+  return false;
 };

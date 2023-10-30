@@ -75,7 +75,6 @@
   "dependencies": {
     "@modern-js/server": "^2.39.0",
     "@rspack/core": "0.3.8",
-    "@rspack/dev-client": "0.3.8",
     "@rspack/plugin-html": "0.3.8",
     "@rsbuild/shared": "workspace:*",
     "commander": "^10.0.1",
