@@ -49,13 +49,12 @@
   "license": "MIT",
   "scripts": {
     "dev": "npm run start",
-    "start": "concurrently 'npm run build:cjs -- -w' 'npm run build:esm -- -w'",
-    "test": "vitest run",
-    "build:cjs": "modern build",
-    "build:esm": "modern build -c ./modern.config.esm.ts",
-    "build": "npm run build:cjs && npm run build:esm"
+    "start": "modern build -w",
+    "build": "modern build",
+    "test": "vitest run"
   },
   "dependencies": {
+    "@types/estree": "1.0.0",
     "bytes": "3.1.2",
     "connect": "3.7.0",
     "envinfo": "7.8.1",
@@ -66,7 +65,6 @@
     "acorn-import-assertions": "1.8.0",
     "acorn-walk": "8.2.0",
     "lines-and-columns": "2.0.3",
-    "@types/estree": "1.0.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
@@ -78,7 +76,6 @@
     "@types/envinfo": "7.8.1",
     "@types/lodash": "^4.14.200",
     "tslib": "2.4.1",
-    "concurrently": "7.6.0",
     "typescript": "^5"
   },
   "publishConfig": {
