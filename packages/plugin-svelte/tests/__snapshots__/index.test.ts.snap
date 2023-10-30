@@ -13,7 +13,7 @@ exports[`plugin-svelte > should add svelte loader properly 1`] = `
               "compilerOptions": {
                 "dev": true,
               },
-              "emitCss": false,
+              "emitCss": true,
               "hotReload": true,
             },
           },
@@ -22,8 +22,19 @@ exports[`plugin-svelte > should add svelte loader properly 1`] = `
     ],
   },
   "resolve": {
+    "alias": {
+      "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
+    },
+    "conditionNames": [
+      "svelte",
+      "browser",
+      "import",
+    ],
     "extensions": [
       ".svelte",
+    ],
+    "mainFields": [
+      "svelte",
     ],
   },
   "resolveLoader": {
@@ -56,8 +67,64 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
     ],
   },
   "resolve": {
+    "alias": {
+      "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
+    },
+    "conditionNames": [
+      "svelte",
+      "browser",
+      "import",
+    ],
     "extensions": [
       ".svelte",
+    ],
+    "mainFields": [
+      "svelte",
+    ],
+  },
+  "resolveLoader": {
+    "alias": {
+      "svelte-loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+    },
+  },
+}
+`;
+
+exports[`plugin-svelte > should turn off hmr by hand correctly 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.svelte\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+            "options": {
+              "compilerOptions": {
+                "dev": false,
+              },
+              "emitCss": true,
+              "hotReload": false,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "resolve": {
+    "alias": {
+      "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
+    },
+    "conditionNames": [
+      "svelte",
+      "browser",
+      "import",
+    ],
+    "extensions": [
+      ".svelte",
+    ],
+    "mainFields": [
+      "svelte",
     ],
   },
   "resolveLoader": {

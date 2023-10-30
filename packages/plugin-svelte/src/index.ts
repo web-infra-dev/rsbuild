@@ -10,7 +10,7 @@ export function pluginSvelte(
   return {
     name: 'plugin-svelte',
 
-    async setup(api) {
+    setup(api) {
       let sveltePath: string = '';
       try {
         // Resolve `svelte` package path from the project directory
@@ -28,18 +28,17 @@ export function pluginSvelte(
         });
       }
 
-      api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
-        return mergeRsbuildConfig(config, {
-          source: {
-            alias: {
-              svelte: path.join(sveltePath, 'src/runtime'),
-            },
-          },
-        });
-      });
-
       api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
-        chain.resolve.extensions.add('.svelte');
+        const rsbuildConfig = api.getNormalizedConfig();
+
+        chain.resolve.alias
+          .set('svelte', path.join(sveltePath, 'src/runtime'))
+          .end()
+          .extensions.add('.svelte')
+          .end()
+          .mainFields.prepend('svelte')
+          .end()
+          .set('conditionNames', ['svelte', 'browser', 'import']);
 
         const loaderPath = require.resolve('svelte-loader');
 
@@ -65,8 +64,8 @@ export function pluginSvelte(
             compilerOptions: {
               dev: !isProd,
             },
-            emitCss: isProd,
-            hotReload: !isProd,
+            emitCss: !rsbuildConfig.output.disableCssExtract,
+            hotReload: !isProd && rsbuildConfig.dev.hmr,
           });
       });
     },

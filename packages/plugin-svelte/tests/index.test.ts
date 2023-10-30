@@ -23,4 +23,18 @@ describe('plugin-svelte', () => {
 
     expect(config).toMatchSnapshot();
   });
+
+  it('should turn off hmr by hand correctly', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        dev: {
+          hmr: false,
+        },
+      },
+      plugins: [pluginSvelte()],
+    });
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config).toMatchSnapshot();
+  });
 });
