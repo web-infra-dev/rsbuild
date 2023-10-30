@@ -12,8 +12,8 @@
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@rsbuild/core": "nightly",
-    "@rsbuild/plugin-react": "nightly",
+    "@rsbuild/core": "^0.0.10",
+    "@rsbuild/plugin-react": "^0.0.10",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "typescript": "^5.0.0"
