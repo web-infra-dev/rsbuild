@@ -1,0 +1,43 @@
+{
+  "name": "@rsbuild/plugin-svelte",
+  "version": "0.0.10",
+  "description": "Svelte plugin for Rsbuild",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/plugin-svelte"
+  },
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@rsbuild/shared": "workspace:*",
+    "svelte-loader": "3.1.9"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
+    "@types/node": "^16",
+    "svelte-preprocess": "^5.0.4",
+    "typescript": "^5"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true,
+    "types": "./dist/index.d.ts"
+  }
+}

@@ -83,6 +83,8 @@ export const CHAIN_ID = {
     WASM: 'wasm',
     /** Rule for node */
     NODE: 'node',
+    /** Rule for svelte */
+    SVELTE: 'svelte',
   },
   /** Predefined rule groups */
   ONE_OF: {
@@ -143,6 +145,8 @@ export const CHAIN_ID = {
     IMAGE_COMPRESS: 'image-compress',
     /** plugin-image-compress svgo-loader */
     SVGO: 'svgo',
+    /** svelte-loader */
+    SVELTE: 'svelte',
   },
   /** Predefined plugins */
   PLUGIN: {
