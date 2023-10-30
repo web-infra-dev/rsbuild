@@ -50,12 +50,6 @@ exports[`plugins/react > should work with babel-loader 1`] = `
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/react-refresh/babel.js",
-                  {
-                    "skipEnvCheck": true,
-                  },
-                ],
               ],
               "presets": [
                 [
@@ -87,15 +81,6 @@ exports[`plugins/react > should work with babel-loader 1`] = `
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
-                  {
-                    "development": true,
-                    "runtime": "classic",
-                    "useBuiltIns": true,
-                    "useSpread": false,
                   },
                 ],
               ],
@@ -177,15 +162,6 @@ exports[`plugins/react > should work with babel-loader 1`] = `
                     "optimizeConstEnums": true,
                   },
                 ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
-                  {
-                    "development": true,
-                    "runtime": "classic",
-                    "useBuiltIns": true,
-                    "useSpread": false,
-                  },
-                ],
               ],
             },
           },
@@ -193,17 +169,6 @@ exports[`plugins/react > should work with babel-loader 1`] = `
       },
     ],
   },
-  "plugins": [
-    ReactRefreshPlugin {
-      "options": {
-        "exclude": [
-          /node_modules/,
-        ],
-        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
-        "overlay": false,
-      },
-    },
-  ],
 }
 `;
 
@@ -790,12 +755,6 @@ exports[`plugins/react > should work with ts-loader 1`] = `
                   },
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/react-refresh/babel.js",
-                  {
-                    "skipEnvCheck": true,
-                  },
-                ],
               ],
               "presets": [
                 [
@@ -937,6 +896,15 @@ exports[`plugins/react > should work with ts-loader 1`] = `
     HotModuleReplacementPlugin {
       "options": {},
     },
+    ReactRefreshPlugin {
+      "options": {
+        "exclude": [
+          /node_modules/,
+        ],
+        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
+        "overlay": false,
+      },
+    },
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,
@@ -951,15 +919,6 @@ exports[`plugins/react > should work with ts-loader 1`] = `
       "showDependencies": true,
       "showEntries": true,
       "showModules": true,
-    },
-    ReactRefreshPlugin {
-      "options": {
-        "exclude": [
-          /node_modules/,
-        ],
-        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
-        "overlay": false,
-      },
     },
   ],
   "resolve": {

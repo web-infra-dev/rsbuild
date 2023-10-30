@@ -196,6 +196,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/react-refresh/babel.js",
+                  {
+                    "skipEnvCheck": true,
+                  },
+                ],
               ],
               "presets": [
                 [
@@ -227,6 +233,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": true,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
                   },
                 ],
               ],
@@ -309,6 +324,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": true,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
                   },
                 ],
               ],
@@ -604,6 +628,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     HotModuleReplacementPlugin {
       "options": {},
     },
+    ReactRefreshPlugin {
+      "options": {
+        "exclude": [
+          /node_modules/,
+        ],
+        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
+        "overlay": false,
+      },
+    },
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,
@@ -831,6 +864,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-transform-react-remove-prop-types/lib/index.js",
+                  {
+                    "removeImport": true,
+                  },
+                ],
               ],
               "presets": [
                 [
@@ -862,6 +901,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": false,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
                   },
                 ],
               ],
@@ -913,6 +961,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-transform-react-remove-prop-types/lib/index.js",
+                  {
+                    "removeImport": true,
+                  },
+                ],
               ],
               "presets": [
                 [
@@ -944,6 +998,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": false,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
                   },
                 ],
               ],
@@ -1521,6 +1584,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-transform-react-remove-prop-types/lib/index.js",
+                  {
+                    "removeImport": true,
+                  },
+                ],
               ],
               "presets": [
                 [
@@ -1543,6 +1612,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": false,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
                   },
                 ],
               ],
@@ -1587,6 +1665,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-transform-react-remove-prop-types/lib/index.js",
+                  {
+                    "removeImport": true,
+                  },
+                ],
               ],
               "presets": [
                 [
@@ -1609,6 +1693,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": false,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
                   },
                 ],
               ],
@@ -2028,6 +2121,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-transform-react-remove-prop-types/lib/index.js",
+                  {
+                    "removeImport": true,
+                  },
+                ],
               ],
               "presets": [
                 [
@@ -2059,6 +2158,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": false,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
                   },
                 ],
               ],
@@ -2110,6 +2218,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-transform-react-remove-prop-types/lib/index.js",
+                  {
+                    "removeImport": true,
+                  },
+                ],
               ],
               "presets": [
                 [
@@ -2141,6 +2255,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                     "allowNamespaces": true,
                     "isTSX": true,
                     "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": false,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
                   },
                 ],
               ],

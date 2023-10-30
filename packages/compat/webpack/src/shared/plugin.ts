@@ -36,6 +36,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     import('../plugins/pug').then((m) => m.pluginPug()),
     plugins.checkSyntax(),
     import('../plugins/copy').then((m) => m.pluginCopy()),
+    import('../plugins/react').then((m) => m.pluginReactWebpack()),
     plugins.font(),
     plugins.image(),
     plugins.media(),

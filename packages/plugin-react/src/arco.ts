@@ -1,6 +1,6 @@
 import {
-  isPackageInstalled,
   useSSR,
+  isPackageInstalled,
   type SharedRsbuildPluginAPI,
 } from '@rsbuild/shared';
 
