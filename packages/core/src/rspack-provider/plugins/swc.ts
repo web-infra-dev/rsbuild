@@ -155,6 +155,8 @@ async function applyCoreJs(
 
   swcConfig.env!.coreJs = version;
 
+  swcConfig.env!.shippedProposals = true;
+
   chain.resolve.alias.merge({
     'core-js': coreJsDir,
   });

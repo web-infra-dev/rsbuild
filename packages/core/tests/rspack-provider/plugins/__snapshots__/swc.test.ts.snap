@@ -37,6 +37,7 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -79,6 +80,7 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -154,6 +156,7 @@ exports[`plugin-swc > should add browserslist 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome 98",
                 ],
@@ -193,6 +196,7 @@ exports[`plugin-swc > should add browserslist 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome 98",
                 ],
@@ -265,6 +269,7 @@ exports[`plugin-swc > should add browserslist 2`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome 98",
                 ],
@@ -304,6 +309,7 @@ exports[`plugin-swc > should add browserslist 2`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome 98",
                 ],
@@ -376,6 +382,7 @@ exports[`plugin-swc > should add pluginImport 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -425,6 +432,7 @@ exports[`plugin-swc > should add pluginImport 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -507,6 +515,7 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -549,6 +558,7 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -830,6 +840,7 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -872,6 +883,7 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -947,6 +959,7 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -989,6 +1002,7 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1064,6 +1078,7 @@ exports[`plugin-swc > should has correct core-js 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1106,6 +1121,7 @@ exports[`plugin-swc > should has correct core-js 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1181,6 +1197,7 @@ exports[`plugin-swc > should has correct core-js 2`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1223,6 +1240,7 @@ exports[`plugin-swc > should has correct core-js 2`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1397,6 +1415,7 @@ exports[`plugin-swc > should'n override browserslist when target platform is not
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1439,6 +1458,7 @@ exports[`plugin-swc > should'n override browserslist when target platform is not
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
