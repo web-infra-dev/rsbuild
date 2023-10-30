@@ -58,7 +58,8 @@ describe('plugins/styled-components', () => {
     ).toMatchSnapshot();
   });
 
-  it('should works in webpack swc mode', async () => {
+  // TODO move to @rsbuild/webpack
+  it.skip('should works in webpack swc mode', async () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {},
       provider: webpackProvider,

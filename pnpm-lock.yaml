@@ -411,6 +411,9 @@ importers:
 
   packages/compat/webpack:
     dependencies:
+      '@babel/preset-react':
+        specifier: ^7.22.15
+        version: 7.22.15(@babel/core@7.23.2)
       '@modern-js/server':
         specifier: ^2.39.0
         version: 2.39.0(react-dom@18.2.0)(react@18.2.0)
@@ -429,6 +432,9 @@ importers:
       babel-plugin-import:
         specifier: 1.13.5
         version: 1.13.5
+      babel-plugin-transform-react-remove-prop-types:
+        specifier: 0.4.24
+        version: 0.4.24
       caniuse-lite:
         specifier: ^1.0.30001520
         version: 1.0.30001551
@@ -928,21 +934,12 @@ importers:
 
   packages/plugin-react:
     dependencies:
-      '@babel/preset-react':
-        specifier: ^7.22.15
-        version: 7.22.15(@babel/core@7.23.2)
-      '@pmmmwh/react-refresh-webpack-plugin':
-        specifier: 0.5.10
-        version: 0.5.10(react-refresh@0.14.0)(webpack@5.89.0)
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
       '@rspack/plugin-react-refresh':
         specifier: 0.3.8
         version: 0.3.8(react-refresh@0.14.0)(webpack@5.89.0)
-      babel-plugin-transform-react-remove-prop-types:
-        specifier: 0.4.24
-        version: 0.4.24
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -950,9 +947,6 @@ importers:
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../compat/webpack
       '@types/node':
         specifier: ^16
         version: 16.18.59

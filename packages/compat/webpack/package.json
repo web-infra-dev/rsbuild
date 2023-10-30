@@ -56,12 +56,14 @@
     "build": "modern build"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.22.15",
     "@modern-js/server": "^2.39.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.10",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/babel-preset": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "babel-plugin-import": "1.13.5",
+    "babel-plugin-transform-react-remove-prop-types": "0.4.24",
     "caniuse-lite": "^1.0.30001520",
     "html-webpack-plugin": "5.5.3",
     "lodash": "^4.17.21",

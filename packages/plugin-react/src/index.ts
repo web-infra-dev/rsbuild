@@ -10,7 +10,9 @@ export const pluginReact = (): DefaultRsbuildPlugin => ({
   pre: ['plugin-swc'],
 
   setup(api) {
-    applyBasicReactSupport(api);
+    if (api.context.bundlerType === 'rspack') {
+      applyBasicReactSupport(api);
+    }
     applyAntdSupport(api);
     applyArcoSupport(api);
     applySplitChunksRule(api);
