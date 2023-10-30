@@ -7,13 +7,13 @@ describe('svgr', () => {
   const cases = [
     {
       name: 'export default url',
-      pluginConfig: {
-        svgDefaultExport: 'url' as const,
-      },
+      pluginConfig: {},
     },
     {
       name: 'export default Component',
-      pluginConfig: {},
+      pluginConfig: {
+        svgDefaultExport: 'component' as const,
+      },
     },
   ];
 

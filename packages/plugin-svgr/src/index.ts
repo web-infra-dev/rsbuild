@@ -28,7 +28,7 @@ export const pluginSvgr = (
     api.modifyBundlerChain(async (chain, { isProd, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
 
-      const { svgDefaultExport = 'component' } = options;
+      const { svgDefaultExport = 'url' } = options;
       const assetType = 'svg';
 
       const distDir = getDistPath(config.output, assetType);

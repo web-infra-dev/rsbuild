@@ -1,5 +1,7 @@
 [
   "index",
+  "plugin-react",
+  "plugin-svgr",
   "plugin-vue",
   "plugin-vue-jsx",
   "plugin-vue2",

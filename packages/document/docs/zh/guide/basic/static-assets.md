@@ -10,14 +10,14 @@ Rsbuild 支持在代码中引用图片、字体、媒体类型的静态资源。
 
 以下是 Rsbuild 默认支持的静态资源格式：
 
-- **图片**：png、jpg、jpeg、gif、svg、bmp、webp、ico、apng、avif、tiff。
+- **图片**：png、jpg、jpeg、gif、svg、bmp、webp、ico、apng、avif、tiff、svg。
 - **字体**：woff、woff2、eot、ttf、otf、ttc。
 - **媒体**：mp4、webm、ogg、mp3、wav、flac、aac、mov。
 
 如果你需要引用其他格式的静态资源，请参考 [扩展静态资源类型](#扩展静态资源类型)。
 
 :::tip SVG 图片
-SVG 图片是一种特殊情况，Rsbuild 提供了 SVG 转 React 组件的能力，对 SVG 进行单独处理，详见 [引用 SVG 资源](/guide/basic/svg-assets.html)。
+SVG 图片是一种特殊情况，Rsbuild 提供了 SVG 转 React 组件的能力，对 SVG 进行单独处理，详见 [Svgr 插件](/plugins/list/plugin-svgr.html)。
 :::
 
 ## 在 JS 文件中引用

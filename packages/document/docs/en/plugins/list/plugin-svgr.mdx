@@ -1,0 +1,181 @@
+# Svgr Plugin
+
+By default, Rsbuild will treat SVG files as static resources. For processing rules, please refer to: [Import Static Assets](/guide/basic/static-assets.html)。
+
+With Svgr plugin, Rsbuild supports convert SVG to React components via [SVGR](https://react-svgr.com/).
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-svgr -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginSvgr } from '@rsbuild/plugin-svgr';
+
+export default {
+  plugins: [pluginSvgr()],
+};
+```
+
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
+
+## Example
+
+After installing the plugin, When import an SVG in a JS file, if you import `ReactComponent`, Rsbuild will call SVGR to convert the SVG into a React component.
+
+```js
+import { ReactComponent as Logo } from './logo.svg';
+
+export default () => <Logo />;
+```
+
+At this time，if you use the default import, then the SVG will be treated as a normal static asset and you will get a URL:
+
+```js
+import logoURL from './static/logo.svg';
+
+console.log(logoURL); // => "/static/logo.6c12aba3.png"
+```
+
+## Options
+
+If you need to customize the compilation behavior of Svgr, you can use the following configs.
+
+- **Type:**
+
+```ts
+type PluginSvgrOptions = {
+  /**
+   * Configure the default export type of SVG files.
+   */
+  svgDefaultExport?: 'component' | 'url';
+};
+```
+
+- **Default:**
+
+```ts
+{
+  svgDefaultExport: 'component';
+}
+```
+
+### svgDefaultExport
+
+- **Type:** `'component' | 'url'`
+- **Default:** `'url'`
+
+Modify the default export type of SVG files. For example, set the default export as a React component:
+
+```ts title="rsbuild.config.ts"
+export default {
+  plugins: [
+    pluginSvgr({
+      svgDefaultExport: 'component',
+    }),
+  ],
+};
+```
+
+Then import the SVG, you'll get a React component instead of a URL:
+
+```ts
+import Logo from './logo.svg';
+
+console.log(Logo); // => React Component
+```
+
+At this time, you can also specify the `?url` query to import the URL, for example:
+
+```ts
+import logo from './logo.svg?url';
+
+console.log(logo); // => asset url
+```
+
+## Add type declaration
+
+When you reference an SVG asset in TypeScript code, TypeScript may prompt that the module is missing a type definition:
+
+```
+TS2307: Cannot find module './logo.svg' or its corresponding type declarations.
+```
+
+To fix this, you need to add a type declaration file for the SVG asset, please create a `src/global.d.ts` file, and add the following type declaration:
+
+```ts
+declare module '*.svg' {
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement>
+  >;
+
+  const content: string;
+  export default content;
+}
+```
+
+If you set `svgDefaultExport` to `'component'`, then change the type declaration to:
+
+```ts
+declare module '*.svg' {
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement>
+  >;
+
+  export default ReactComponent;
+}
+```
+
+After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `global.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
+
+## Modify the SVGR configuration
+
+When [SVGR](https://react-svgr.com/) is enabled, its default configuration is as follows:
+
+```js
+{
+  svgo: true,
+  svgoConfig: {
+    plugins: [
+      {
+        name: 'preset-default',
+        params: {
+          overrides: {
+            removeViewBox: false,
+          },
+        },
+      },
+      'prefixIds',
+    ],
+  },
+}
+```
+
+If you need to modify the SVGR configuration, you can do the following:
+
+```js
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module
+        .rule(CHAIN_ID.RULE.SVG)
+        .oneOf(CHAIN_ID.ONE_OF.SVG)
+        .use(CHAIN_ID.USE.SVGR)
+        .tap((options) => {
+          // modify svgoConfig
+          options.svgoConfig.plugins[0].params.overrides.removeUselessDefs = false;
+          return options;
+        });
+    },
+  },
+};
+```

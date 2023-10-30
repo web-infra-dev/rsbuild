@@ -23,6 +23,10 @@ export default defineConfig({
 
 提供对 React 的支持。
 
+### [Svgr 插件](/plugins/list/plugin-svgr.html)
+
+支持将 SVG 图片转换为一个 React 组件使用。
+
 ### [Vue 插件](/plugins/list/plugin-vue.html)
 
 提供对 Vue 3 SFC（单文件组件）的支持。

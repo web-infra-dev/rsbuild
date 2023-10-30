@@ -4,7 +4,6 @@
   "output-files",
   "css-usage",
   "static-assets",
-  "svg-assets",
   "json-files",
   "wasm-assets",
   "configure-rspack",

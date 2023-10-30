@@ -231,15 +231,14 @@ $ RSPACK_PROFILE=ALL pnpm build
 
 Rsbuild Rspack 构建模式对比 [Rspack CLI](https://www.rspack.dev/zh/guide/quick-start.html#%E4%BD%BF%E7%94%A8-rspack-cli) 添加了很多开箱即用的能力，同时，这些能力的封装会带来一定程度上的性能开销和行为表现上的差异:
 
-| 功能                     | 描述                                                                                                                                                                                           | 相关链接                                                                                                                                    |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| 浏览器兼容性             | Rsbuild 会根据[构建产物类型](/api/start/build-target)来设置不同的 Browserslist 默认值                                                                                                          | <ul><li>[浏览器范围](/guide/advanced/browserslist.html)</li></ul>                                                                           |
-| SourceMap 生成           | Rsbuild 默认根据环境生成不同的 SourceMap (Rspack CLI 中默认是 false)                                                                                                                           | <ul><li>[output.disableSourceMap](/config/options/output.html#outputdisablesourcemap)</li></ul>                                             |
-| SVG 转 React 组件        | Rsbuild 默认支持在 React 组件中引用 SVG 作为组件                                                                                                                                               | <ul><li>[引用 SVG 资源](/guide/basic/svg-assets.html)</li><li>[output.disableSvgr](/config/options/output.html#outputdisablesvgr)</li></ul> |
-| 按需引入常用组件库       | 当项目中安装了 [Ant Design](https://www.npmjs.com/package/antd) 或 [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) 组件库时，Rsbuild 会自动添加对应的按需引入能力          | <ul><li>[source.transformImport](/config/options/source#sourcetransformimport)</li></ul>                                                    |
-| 默认集成 PostCSS         | Rsbuild 内默认开启 PostCSS 编译，并内置 autoprefixer 等多个插件                                                                                                                                | <ul><li>[使用 PostCSS](/guide/basic/css-usage.html#使用-postcss)</li></ul>                                                                  |
-| 使用 @rspack/html-plugin | Rsbuild 内默认集成 @rspack/html-plugin 以支持更多 HTML 模版功能 (Rspack CLI 中默认使用 builtins.html)                                                                                          | <ul><li>[tools.htmlPlugin](/config/options/tools.html#toolshtmlplugin)</li></ul>                                                            |
-| DevServer                | Rsbuild 内基于 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) 实现 DevServer (Rspack CLI 使用 [@rspack/dev-server](https://www.rspack.dev/guide/dev-server.html)) | <ul><li>[tools.devServer](/config/options/tools.html#toolsdevserver)</li></ul>                                                              |
+| 功能                     | 描述                                                                                                                                                                                           | 相关链接                                                                                        |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| 浏览器兼容性             | Rsbuild 会根据[构建产物类型](/api/start/build-target)来设置不同的 Browserslist 默认值                                                                                                          | <ul><li>[浏览器范围](/guide/advanced/browserslist.html)</li></ul>                               |
+| SourceMap 生成           | Rsbuild 默认根据环境生成不同的 SourceMap (Rspack CLI 中默认是 false)                                                                                                                           | <ul><li>[output.disableSourceMap](/config/options/output.html#outputdisablesourcemap)</li></ul> |
+| 按需引入常用组件库       | 当项目中安装了 [Ant Design](https://www.npmjs.com/package/antd) 或 [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) 组件库时，Rsbuild 会自动添加对应的按需引入能力          | <ul><li>[source.transformImport](/config/options/source#sourcetransformimport)</li></ul>        |
+| 默认集成 PostCSS         | Rsbuild 内默认开启 PostCSS 编译，并内置 autoprefixer 等多个插件                                                                                                                                | <ul><li>[使用 PostCSS](/guide/basic/css-usage.html#使用-postcss)</li></ul>                      |
+| 使用 @rspack/html-plugin | Rsbuild 内默认集成 @rspack/html-plugin 以支持更多 HTML 模版功能 (Rspack CLI 中默认使用 builtins.html)                                                                                          | <ul><li>[tools.htmlPlugin](/config/options/tools.html#toolshtmlplugin)</li></ul>                |
+| DevServer                | Rsbuild 内基于 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) 实现 DevServer (Rspack CLI 使用 [@rspack/dev-server](https://www.rspack.dev/guide/dev-server.html)) | <ul><li>[tools.devServer](/config/options/tools.html#toolsdevserver)</li></ul>                  |
 
 以上能力均提供可调整的配置选项，可以根据项目实际情况按需进行调整。
 
@@ -269,10 +268,6 @@ Rsbuild Rspack 构建模式对比 [Rspack CLI](https://www.rspack.dev/zh/guide/q
 :::tip
 在使用 [Arco Design](https://www.npmjs.com/package/@arco-design/web-react) 等组件库时，请尽量避免全量引入 Less 样式。你可以改为按需引入，或直接引入 CSS 样式。
 :::
-
-##### 大量 SVG 文件
-
-Rsbuild 默认支持将 SVG 资源作为 React 组件使用，这会产生一定的性能开销。如果你不需要此能力，可以将 [output.disableSvgr](/config/options/output.html#outputdisablesvgr) 设置为 `true` 来关闭此行为，以提升构建性能。
 
 ##### 组件库未按需引入
 
