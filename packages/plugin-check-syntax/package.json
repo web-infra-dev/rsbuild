@@ -1,0 +1,50 @@
+{
+  "name": "@rsbuild/plugin-check-syntax",
+  "description": "Check syntax plugin of Rsbuild",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/plugin-check-syntax"
+  },
+  "license": "MIT",
+  "version": "0.0.10",
+  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
+  "dependencies": {
+    "@rsbuild/shared": "workspace:*",
+    "acorn": "^8.10.0",
+    "browserslist": "^4.22.1",
+    "caniuse-lite": "^1.0.30001558",
+    "htmlparser2": "9.0.0",
+    "source-map": "^0.7.4"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
+    "@types/caniuse-lite": "^1.0.3",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": "workspace:^0.0.10"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true,
+    "types": "./dist/index.d.ts"
+  }
+}

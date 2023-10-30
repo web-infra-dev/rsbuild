@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
-import { pluginCheckSyntax } from '@src/plugins/checkSyntax';
+import { pluginCheckSyntax } from '../src/index';
 
 beforeAll(() => {
   const { NODE_ENV } = process.env;
@@ -14,11 +14,6 @@ describe('plugin-check-syntax', () => {
   it('should add check-syntax plugin properly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCheckSyntax()],
-      rsbuildConfig: {
-        security: {
-          checkSyntax: true,
-        },
-      },
     });
 
     const config = await rsbuild.unwrapConfig();
@@ -29,11 +24,6 @@ describe('plugin-check-syntax', () => {
   it('should not add check-syntax plugin when target node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCheckSyntax()],
-      rsbuildConfig: {
-        security: {
-          checkSyntax: true,
-        },
-      },
       target: 'node',
     });
 
@@ -42,15 +32,14 @@ describe('plugin-check-syntax', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should use default browserlist as targets when only set checksyntax.exclude', async () => {
+  it('should use default browserslist as targets when only set checkSyntax.exclude', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginCheckSyntax()],
+      plugins: [
+        pluginCheckSyntax({
+          exclude: [/$.html/],
+        }),
+      ],
       rsbuildConfig: {
-        security: {
-          checkSyntax: {
-            exclude: [/$.html/],
-          },
-        },
         output: {
           overrideBrowserslist: [
             'iOS 9',

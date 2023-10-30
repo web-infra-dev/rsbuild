@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugin-check-syntax > should add check-syntax plugin properly 1`] = `{}`;
+
+exports[`plugin-check-syntax > should not add check-syntax plugin when target node 1`] = `{}`;
+
+exports[`plugin-check-syntax > should use default browserslist as targets when only set checkSyntax.exclude 1`] = `{}`;

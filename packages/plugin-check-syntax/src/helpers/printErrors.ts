@@ -1,6 +1,6 @@
-import chalk from 'chalk';
-import { logger } from 'rslog';
-import type { SyntaxError } from './type';
+import { chalk } from '@rsbuild/shared/chalk';
+import { logger } from '@rsbuild/shared';
+import type { SyntaxError } from '../types';
 
 type Error = {
   source: string;

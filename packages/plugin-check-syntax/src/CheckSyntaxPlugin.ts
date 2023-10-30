@@ -1,19 +1,25 @@
 import { resolve } from 'path';
 import { parse } from 'acorn';
-import fs from 'fs-extra';
+import { fs } from '@rsbuild/shared/fs-extra';
 import {
-  AcornParseError,
-  SyntaxError,
-  generateError,
   printErrors,
+  generateError,
   getEcmaVersion,
   generateHtmlScripts,
   checkIsExcludeSource,
-  CheckSyntaxExclude,
 } from './helpers';
-import { JS_REGEX, HTML_REGEX } from '../../constants';
-import { EcmaVersion, CheckSyntaxOptions } from '../../types';
-import type { Compiler, Compilation } from 'webpack';
+import { JS_REGEX, HTML_REGEX } from '@rsbuild/shared';
+import type {
+  SyntaxError,
+  EcmaVersion,
+  CheckSyntaxOptions,
+  CheckSyntaxExclude,
+  AcornParseError,
+} from './types';
+import type { Rspack } from '@rsbuild/core/rspack-provider';
+
+type Compiler = Rspack.Compiler;
+type Compilation = Rspack.Compilation;
 
 export class CheckSyntaxPlugin {
   errors: SyntaxError[] = [];

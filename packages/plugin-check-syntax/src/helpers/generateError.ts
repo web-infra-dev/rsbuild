@@ -1,12 +1,12 @@
-import fs from 'fs-extra';
-import chalk from 'chalk';
+import { fs } from '@rsbuild/shared/fs-extra';
+import { chalk } from '@rsbuild/shared/chalk';
 import { SourceMapConsumer } from 'source-map';
 import { checkIsExcludeSource } from './utils';
 import {
   SyntaxError,
   type AcornParseError,
   type CheckSyntaxExclude,
-} from './type';
+} from '../types';
 
 export function displayCodePointer(code: string, pos: number) {
   const SUB_LEN = 80;

@@ -1,6 +1,7 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
+import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import type { SharedRsbuildConfig } from '@rsbuild/shared';
 
 function getCommonBuildConfig(cwd: string): SharedRsbuildConfig {
@@ -27,12 +28,8 @@ test('should throw error when exist syntax errors', async () => {
     build({
       cwd,
       entry: { index: path.resolve(cwd, './src/index.js') },
-      rsbuildConfig: {
-        ...getCommonBuildConfig(cwd),
-        security: {
-          checkSyntax: true,
-        },
-      },
+      rsbuildConfig: getCommonBuildConfig(cwd),
+      plugins: [pluginCheckSyntax()],
     }),
   ).rejects.toThrowError('[Syntax Checker]');
 });
@@ -43,14 +40,12 @@ test('should not throw error when the file is excluded', async () => {
     build({
       cwd,
       entry: { index: path.resolve(cwd, './src/index.js') },
-      rsbuildConfig: {
-        ...getCommonBuildConfig(cwd),
-        security: {
-          checkSyntax: {
-            exclude: /src\/test/,
-          },
-        },
-      },
+      plugins: [
+        pluginCheckSyntax({
+          exclude: /src\/test/,
+        }),
+      ],
+      rsbuildConfig: getCommonBuildConfig(cwd),
     }),
   ).resolves.toBeTruthy();
 });
@@ -62,14 +57,12 @@ test('should not throw error when the targets are support es6', async () => {
     build({
       cwd,
       entry: { index: path.resolve(cwd, './src/index.js') },
-      rsbuildConfig: {
-        ...getCommonBuildConfig(cwd),
-        security: {
-          checkSyntax: {
-            targets: ['chrome >= 60', 'edge >= 15'],
-          },
-        },
-      },
+      plugins: [
+        pluginCheckSyntax({
+          targets: ['chrome >= 60', 'edge >= 15'],
+        }),
+      ],
+      rsbuildConfig: getCommonBuildConfig(cwd),
     }),
   ).resolves.toBeTruthy();
 });
@@ -81,14 +74,12 @@ test('should throw error when using optional chaining and target is es6 browsers
     build({
       cwd,
       entry: { index: path.resolve(cwd, './src/index.js') },
-      rsbuildConfig: {
-        ...getCommonBuildConfig(cwd),
-        security: {
-          checkSyntax: {
-            targets: ['chrome >= 53'],
-          },
-        },
-      },
+      plugins: [
+        pluginCheckSyntax({
+          targets: ['chrome >= 53'],
+        }),
+      ],
+      rsbuildConfig: getCommonBuildConfig(cwd),
     }),
   ).rejects.toThrowError('[Syntax Checker]');
 });
@@ -100,14 +91,12 @@ test('should not throw error when using optional chaining and ecmaVersion is 202
     build({
       cwd,
       entry: { index: path.resolve(cwd, './src/index.js') },
-      rsbuildConfig: {
-        ...getCommonBuildConfig(cwd),
-        security: {
-          checkSyntax: {
-            ecmaVersion: 2020,
-          },
-        },
-      },
+      plugins: [
+        pluginCheckSyntax({
+          ecmaVersion: 2020,
+        }),
+      ],
+      rsbuildConfig: getCommonBuildConfig(cwd),
     }),
   ).resolves.toBeTruthy();
 });

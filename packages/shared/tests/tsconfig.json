@@ -4,5 +4,9 @@
     "baseUrl": "./",
     "types": ["vitest/globals"]
   },
-  "include": ["./**/*.ts", "../../core/tests/plugins/openBrowser.test.ts"]
+  "include": [
+    "./**/*.ts",
+    "../../core/tests/plugins/openBrowser.test.ts",
+    "../../plugin-check-syntax/tests/CheckSyntaxPlugin.test.ts"
+  ]
 }
