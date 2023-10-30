@@ -1,7 +1,15 @@
 import { expect, describe, it } from 'vitest';
 import { getModuleName } from '../src/module-graph/utils';
 
-/** Based on @bundle-stats/utils, detail url: https://github.com/relative-ci/bundle-stats/blob/master/packages/utils/src/webpack/__tests__/utils-get-module-name.js */
+/**
+ * The following code is modified based on
+ * https://github.com/relative-ci/bundle-stats/blob/master/packages/utils/src/webpack/__tests__/utils-get-module-name.js
+ *
+ * MIT Licensed
+ * Author Viorel Cojocaru
+ * Copyright 2019 Viorel Cojocaru, contributors.
+ * https://github.com/relative-ci/bundle-stats/blob/master/LICENSE.md
+ */
 describe('Webpack/utils/getModuleName', () => {
   it('should return empty name if missing', () => {
     expect(getModuleName()).toBe('');
