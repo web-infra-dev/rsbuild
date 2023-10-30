@@ -76,13 +76,14 @@ type PluginSvgrOptions = {
 
 修改 SVG 文件的默认导出类型，比如把默认导出的内容设置为 React 组件：
 
-```
+```ts title="rsbuild.config.ts"
 export default {
-  plugins: [pluginSvgr({
-    svgDefaultExport: 'component',
-  })],
+  plugins: [
+    pluginSvgr({
+      svgDefaultExport: 'component',
+    }),
+  ],
 };
-
 ```
 
 此时再使用默认导入，你会得到一个 React 组件，而不是 URL：
