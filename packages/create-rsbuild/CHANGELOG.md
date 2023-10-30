@@ -1,5 +1,11 @@
 # create-rsbuild
 
+## 0.0.10
+
+### Patch Changes
+
+- 3d261af: fix(create-rsbuild): failed to publish tsconfig of templates
+
 ## 0.0.9
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @rsbuild/plugin-image-compress
 
+## 0.0.10
+
+### Patch Changes
+
+- @rsbuild/shared@0.0.10
+
 ## 0.0.9
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @rsbuild/plugin-vue-jsx
 
+## 0.0.10
+
+### Patch Changes
+
+- @rsbuild/core@0.0.10
+
 ## 0.0.9
 
 ### Patch Changes
