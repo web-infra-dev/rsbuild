@@ -81,7 +81,12 @@ test('svgr (defaultExport component)', async ({ page }) => {
     },
     runServer: true,
     rsbuildConfig: {},
-    plugins: [pluginReact(), pluginSvgr()],
+    plugins: [
+      pluginReact(),
+      pluginSvgr({
+        svgDefaultExport: 'component',
+      }),
+    ],
   });
 
   await page.goto(getHrefByEntryName('main', rsbuild.port));
@@ -99,7 +104,12 @@ test('svgr (query url)', async ({ page }) => {
     entry: {
       main: join(fixtures, 'svg-url', 'src/index.js'),
     },
-    plugins: [pluginReact(), pluginSvgr()],
+    plugins: [
+      pluginReact(),
+      pluginSvgr({
+        svgDefaultExport: 'component',
+      }),
+    ],
     runServer: true,
   });
 

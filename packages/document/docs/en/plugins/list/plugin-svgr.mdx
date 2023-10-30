@@ -30,12 +30,20 @@ If you are using Rsbuild's JavaScript API, you can register the plugin using the
 
 ## Example
 
-After installing the plugin, Rsbuild will convert the SVG file into a React component when you reference an SVG resource in a **JS file**.
+After installing the plugin, When import an SVG in a JS file, if you import `ReactComponent`, Rsbuild will call SVGR to convert the SVG into a React component.
 
 ```js
-import Logo from './logo.svg';
+import { ReactComponent as Logo } from './logo.svg';
 
-console.log(Logo); // => React Component
+export default () => <Logo />;
+```
+
+At this time，if you use the default import, then the SVG will be treated as a normal static asset and you will get a URL:
+
+```js
+import logoURL from './static/logo.svg';
+
+console.log(logoURL); // => "/static/logo.6c12aba3.png"
 ```
 
 ## Options
@@ -55,7 +63,7 @@ type PluginSvgrOptions = {
 
 - **Default:**
 
-```
+```ts
 {
   svgDefaultExport: 'component';
 }
@@ -64,22 +72,26 @@ type PluginSvgrOptions = {
 ### svgDefaultExport
 
 - **Type:** `'component' | 'url'`
-- **Default:** `'component'`
+- **Default:** `'url'`
 
-Modify the default export type of SVG files, the default export for SVG files is React component.
+Modify the default export type of SVG files. For example, set the default export as a React component:
+
+```js
+export default {
+  plugins: [
+    pluginSvgr({
+      svgDefaultExport: 'component',
+    }),
+  ],
+};
+```
+
+Then import the SVG, you'll get a React component instead of a URL:
 
 ```ts
 import Logo from './logo.svg';
 
 console.log(Logo); // => React Component
-```
-
-When `svgDefaultExport` is set to `url`, the default export of SVG files is the URL of the file. For example:
-
-```ts
-import logo from './logo.svg';
-
-console.log(logo); // => asset url
 ```
 
 At this time, you can also specify the `?url` query to import the URL, for example:
@@ -106,11 +118,12 @@ declare module '*.svg' {
     React.SVGProps<SVGSVGElement>
   >;
 
-  export default ReactComponent;
+  const content: string;
+  export default content;
 }
 ```
 
-If you set `svgDefaultExport` to `'url'`, then change the type declaration to:
+If you set `svgDefaultExport` to `'component'`, then change the type declaration to:
 
 ```ts
 declare module '*.svg' {
@@ -118,8 +131,7 @@ declare module '*.svg' {
     React.SVGProps<SVGSVGElement>
   >;
 
-  const content: string;
-  export default content;
+  export default ReactComponent;
 }
 ```
 
