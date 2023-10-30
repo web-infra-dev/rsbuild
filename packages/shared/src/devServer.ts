@@ -165,7 +165,7 @@ export async function startDevServer<
             }
           }
 
-          await printServerURLs(urls, logger);
+          printServerURLs(urls, logger);
         }
 
         await options.context.hooks.onAfterStartDevServerHook.call({ port });
