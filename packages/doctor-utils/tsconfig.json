@@ -2,10 +2,7 @@
   "extends": "@rsbuild/tsconfig/base",
   "compilerOptions": {
     "outDir": "dist",
-    "declarationDir": "./dist/type",
-    "declaration": true,
-    "baseUrl": ".",
-    "lib": ["ESNext", "DOM"]
+    "baseUrl": "."
   },
   "include": ["src"],
   "exclude": ["**/node_modules"]

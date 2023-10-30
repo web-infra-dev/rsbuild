@@ -15,24 +15,21 @@
   },
   "scripts": {
     "dev": "npm run start",
-    "start": "concurrently 'npm run build:cjs -- -w' 'npm run build:esm -- -w'",
-    "build:cjs": "modern build",
-    "build:esm": "modern build -c ./modern.config.esm.ts",
-    "build": "npm run build:cjs && npm run build:esm",
+    "start": "modern build -w",
+    "build": "modern build",
     "test": "vitest run"
   },
   "dependencies": {
+    "@rsbuild/doctor-utils": "workspace:*",
     "lodash": "^4.17.21",
-    "source-map": "^0.7.4",
-    "@rsbuild/doctor-utils": "workspace:*"
+    "source-map": "^0.7.4"
   },
   "devDependencies": {
+    "@rsbuild/doctor-types": "workspace:*",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
-    "concurrently": "7.6.0",
     "@types/estree": "1.0.0",
     "tslib": "2.4.1",
-    "@rsbuild/doctor-types": "workspace:*",
     "typescript": "^5"
   },
   "publishConfig": {
