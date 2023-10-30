@@ -6,7 +6,6 @@ import {
 } from './constants';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import deepmerge from 'deepmerge';
-import { getCssSupport } from './getCssSupport';
 import { getSharedPkgCompiledPath as getCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
@@ -118,23 +117,11 @@ export const getPostcssConfig = async ({
     },
   };
 
-  const cssSupport = getCssSupport(browserslist);
-
   const mergedConfig = mergeChainedOptions(
     {
       postcssOptions: {
         plugins: [
           require(getCompiledPath('postcss-flexbugs-fixes')),
-          !cssSupport.customProperties &&
-            require(getCompiledPath('postcss-custom-properties')),
-          !cssSupport.initial && require(getCompiledPath('postcss-initial')),
-          !cssSupport.pageBreak &&
-            require(getCompiledPath('postcss-page-break')),
-          !cssSupport.fontVariant &&
-            require(getCompiledPath('postcss-font-variant')),
-          !cssSupport.mediaMinmax &&
-            require(getCompiledPath('postcss-media-minmax')),
-          require(getCompiledPath('postcss-nesting')),
           require(getCompiledPath('autoprefixer'))(
             mergeChainedOptions(
               {

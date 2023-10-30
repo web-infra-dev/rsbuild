@@ -7,7 +7,6 @@ export * from './createContext';
 export * from './utils';
 export * from './fs';
 export * from './getBrowserslist';
-export * from './getCssSupport';
 export * from './logger';
 export * from './mergeChainedOptions';
 export * from './mergeRsbuildConfig';

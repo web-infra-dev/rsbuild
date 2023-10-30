@@ -5,18 +5,8 @@
 const defaultOptions = {
   postcssOptions: {
     plugins: [
-      // The following plugins are enabled by default
-      require('postcss-nesting'),
-      require('postcss-media-minmax'),
       require('postcss-flexbugs-fixes'),
-      require('autoprefixer')({
-        flexbox: 'no-2009',
-      }),
-      // The following plugins are only enabled when compatibility with legacy browsers is required
-      require('postcss-custom-properties'),
-      require('postcss-initial'),
-      require('postcss-page-break'),
-      require('postcss-font-variant'),
+      require('autoprefixer')({ flexbox: 'no-2009' }),
     ],
     // CSS Source Map enabled by default in development environment
     sourceMap: isDev,
