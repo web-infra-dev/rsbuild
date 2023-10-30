@@ -8,7 +8,6 @@ import { fs } from '@rsbuild/shared/fs-extra';
 import { logger } from '@rsbuild/shared';
 import filesize from 'filesize';
 import gzipSize from 'gzip-size';
-import stripAnsi from 'strip-ansi';
 import type {
   DefaultRsbuildPlugin,
   Stats,
@@ -94,11 +93,9 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
 
   assets.sort((a, b) => b.size - a.size);
 
-  const longestLabelLength = Math.max(
-    ...assets.map((a) => stripAnsi(a.sizeLabel).length),
-  );
+  const longestLabelLength = Math.max(...assets.map((a) => a.sizeLabel.length));
   const longestFileLength = Math.max(
-    ...assets.map((a) => stripAnsi(a.folder + path.sep + a.name).length),
+    ...assets.map((a) => (a.folder + path.sep + a.name).length),
   );
 
   logger.info(`Production file sizes:\n`);
@@ -111,8 +108,8 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
   assets.forEach((asset) => {
     let { sizeLabel } = asset;
     const { name, folder, gzipSizeLabel } = asset;
-    const fileNameLength = stripAnsi(folder + path.sep + name).length;
-    const sizeLength = stripAnsi(sizeLabel).length;
+    const fileNameLength = (folder + path.sep + name).length;
+    const sizeLength = sizeLabel.length;
 
     totalSize += asset.size;
     totalGzipSize += asset.gzippedSize;
