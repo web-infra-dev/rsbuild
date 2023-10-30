@@ -36,6 +36,7 @@ export function pluginSvelte(
         chain.resolve.alias
           .set('svelte', path.join(sveltePath, 'src/runtime'))
           .end()
+          // TODO: change to use `...` wildcard
           .extensions.add('.svelte')
           .end()
           .mainFields.prepend('svelte')
