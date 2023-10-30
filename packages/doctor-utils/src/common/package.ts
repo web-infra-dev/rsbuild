@@ -1,8 +1,15 @@
 import { SDK } from '@rsbuild/doctor-types';
 import { isEmpty, last, compact } from 'lodash';
 
-/** Based on bundle-stats, detial url:  https://github.com/relative-ci/bundle-stats/blob/master/packages/utils/src/webpack/extract/modules-packages.ts#L24 */
-
+/**
+ * The following code is modified based on
+ * https://github.com/relative-ci/bundle-stats/blob/master/packages/utils/src/webpack/extract/modules-packages.ts#L24
+ *
+ * MIT Licensed
+ * Author Viorel Cojocaru
+ * Copyright 2019 Viorel Cojocaru, contributors.
+ * https://github.com/relative-ci/bundle-stats/blob/master/LICENSE.md
+ */
 const PACKAGE_PREFIX = /(?:node_modules|~)(?:\/\.pnpm)?/;
 const PACKAGE_SLUG = /[a-zA-Z0-9]+(?:[-|_|.]+[a-zA-Z0-9]+)*/;
 const VERSION = /@[\w|\-|_|.]+/;

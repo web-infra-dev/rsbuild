@@ -20,6 +20,15 @@ export function isSameRange(po1: SDK.SourceRange, po2: SDK.SourceRange) {
   return isUndefined(po1.end) && isUndefined(po2.end);
 }
 
+/**
+ * The following code is modified based on
+ * https://github.com/relative-ci/bundle-stats/blob/master/packages/utils/src/webpack/utils.js#L63
+ *
+ * MIT Licensed
+ * Author Viorel Cojocaru
+ * Copyright 2019 Viorel Cojocaru, contributors.
+ * https://github.com/relative-ci/bundle-stats/blob/master/LICENSE.md
+ */
 // css ./node_modules/css-loader/dist/cjs.js??ref--6-0!./src/assets/styles/default.styl
 const NAME_WITH_LOADERS = /!/;
 
@@ -29,7 +38,6 @@ const NAME_WITH_MODULES = /\s\+\s\d*\smodules$/;
 // css ../node_modules../node_modules/package-a
 const INVALID_CSS_PREFIX = /^css\s.*node_modules(?!\/)/;
 
-/** Based on @bundle-stats/utils, detail url: https://github.com/relative-ci/bundle-stats/blob/master/packages/utils/src/webpack/utils.js#L63 */
 export function getModuleName(name?: string) {
   if (!name) {
     return '';
