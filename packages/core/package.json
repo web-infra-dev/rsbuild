@@ -87,7 +87,6 @@
     "postcss": "8.4.31",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     "semver": "^7.5.4",
-    "strip-ansi": "^6.0.1",
     "webpack": "^5.88.1"
   },
   "devDependencies": {
