@@ -76,6 +76,7 @@ export type BuiltinSwcLoaderOptions = {
     include?: string[];
     exclude?: string[];
     coreJs?: string;
+    shippedProposals?: boolean;
     targets?: any;
   };
   isModule?: boolean | 'unknown';
