@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import Footer from './Footer.svelte';
-  export let name;
-  export let count = 0;
+  export let name: string;
+  export let count: number = 0;
 </script>
 
 <main>

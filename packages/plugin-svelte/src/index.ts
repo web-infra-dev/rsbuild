@@ -29,6 +29,8 @@ export function pluginSvelte(
       }
 
       api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
+        const { default: sveltePreprocess } = await import('svelte-preprocess');
+
         const rsbuildConfig = api.getNormalizedConfig();
 
         chain.resolve.alias
@@ -64,6 +66,7 @@ export function pluginSvelte(
             compilerOptions: {
               dev: !isProd,
             },
+            preprocess: sveltePreprocess(),
             emitCss: !rsbuildConfig.output.disableCssExtract,
             hotReload: !isProd && rsbuildConfig.dev.hmr,
           });
