@@ -25,5 +25,5 @@ pnpm build
 Preview the production build locally:
 
 ```
-pnpm serve
+pnpm preview
 ```
