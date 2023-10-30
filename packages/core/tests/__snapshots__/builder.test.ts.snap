@@ -167,9 +167,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "plugins": [
                       [Function],
-                      [Function],
-                      [Function],
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -209,9 +206,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -258,9 +252,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -311,9 +302,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -371,9 +359,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "plugins": [
                       [Function],
-                      [Function],
-                      [Function],
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -427,9 +412,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [

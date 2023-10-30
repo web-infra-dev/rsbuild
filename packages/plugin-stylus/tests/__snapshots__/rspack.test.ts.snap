@@ -20,9 +20,6 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
                   "postcssOptions": {
                     "plugins": [
                       [Function],
-                      [Function],
-                      [Function],
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -68,9 +65,6 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -133,9 +127,6 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
                   "postcssOptions": {
                     "plugins": [
                       [Function],
-                      [Function],
-                      [Function],
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -184,9 +175,6 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [

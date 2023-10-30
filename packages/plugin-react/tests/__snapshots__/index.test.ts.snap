@@ -184,9 +184,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "postcssOptions": {
                     "plugins": [
                       [Function],
-                      [Function],
-                      [Function],
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -226,9 +223,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -275,9 +269,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -328,9 +319,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -388,9 +376,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "postcssOptions": {
                     "plugins": [
                       [Function],
-                      [Function],
-                      [Function],
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -444,9 +429,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [

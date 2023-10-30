@@ -32,9 +32,6 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
               "postcssOptions": {
                 "plugins": [
                   [Function],
-                  [Function],
-                  [Function],
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -105,9 +102,6 @@ exports[`plugin-rem > should not run rem plugin when false 1`] = `
               "postcssOptions": {
                 "plugins": [
                   [Function],
-                  [Function],
-                  [Function],
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -171,9 +165,6 @@ exports[`plugin-rem > should not run rem plugin without config 1`] = `
             "options": {
               "postcssOptions": {
                 "plugins": [
-                  [Function],
-                  [Function],
-                  [Function],
                   [Function],
                   {
                     "browsers": [
@@ -239,9 +230,6 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
               "postcssOptions": {
                 "plugins": [
                   [Function],
-                  [Function],
-                  [Function],
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -302,9 +290,6 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
             "options": {
               "postcssOptions": {
                 "plugins": [
-                  [Function],
-                  [Function],
-                  [Function],
                   [Function],
                   {
                     "browsers": [
@@ -376,9 +361,6 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
             "options": {
               "postcssOptions": {
                 "plugins": [
-                  [Function],
-                  [Function],
-                  [Function],
                   [Function],
                   {
                     "browsers": [
@@ -485,9 +467,6 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
               "postcssOptions": {
                 "plugins": [
                   [Function],
-                  [Function],
-                  [Function],
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -584,9 +563,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
               "postcssOptions": {
                 "plugins": [
                   [Function],
-                  [Function],
-                  [Function],
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -647,9 +623,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
             "options": {
               "postcssOptions": {
                 "plugins": [
-                  [Function],
-                  [Function],
-                  [Function],
                   [Function],
                   {
                     "browsers": [
@@ -721,9 +694,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
             "options": {
               "postcssOptions": {
                 "plugins": [
-                  [Function],
-                  [Function],
-                  [Function],
                   [Function],
                   {
                     "browsers": [
