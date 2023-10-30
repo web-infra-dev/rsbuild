@@ -62,3 +62,7 @@ export default defineConfig({
 ### [Stylus 插件](/plugins/list/plugin-stylus.html)
 
 使用 Stylus 作为 CSS 预处理器。
+
+### [Styled Components 插件](/plugins/list/plugin-styled-components.html)
+
+提供对 styled-components 的编译时支持。
