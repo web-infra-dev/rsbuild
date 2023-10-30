@@ -54,7 +54,6 @@ export type Plugins = {
   image: PluginsFn;
   svg: PluginsFn;
   html: PluginsFn;
-  checkSyntax: PluginsFn;
   rem: PluginsFn;
   wasm: PluginsFn;
   moment: PluginsFn;

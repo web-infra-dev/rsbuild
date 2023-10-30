@@ -1,4 +1,4 @@
-import { CheckSyntaxExclude } from './type';
+import { CheckSyntaxExclude } from '../types';
 
 export function checkIsExcludeSource(
   path: string,
@@ -10,5 +10,5 @@ export function checkIsExcludeSource(
 
   const excludes = Array.isArray(exclude) ? exclude : [exclude];
 
-  return excludes.some(reg => reg.test(path));
+  return excludes.some((reg) => reg.test(path));
 }

@@ -1,9 +1,6 @@
-import { getHtmlScripts } from '../../src/plugins/CheckSyntaxPlugin/helpers/generateHtmlScripts';
-import { getEcmaVersion } from '../../src/plugins/CheckSyntaxPlugin/helpers/getEcmaVersion';
-import {
-  makeCodeFrame,
-  displayCodePointer,
-} from '../../src/plugins/CheckSyntaxPlugin/helpers';
+import { getHtmlScripts } from '../src/helpers/generateHtmlScripts';
+import { getEcmaVersion } from '../src/helpers/getEcmaVersion';
+import { makeCodeFrame, displayCodePointer } from '../src/helpers';
 
 describe('getHtmlScripts', () => {
   test('should extract inline scripts correctly', async () => {
