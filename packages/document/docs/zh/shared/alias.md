@@ -31,7 +31,7 @@
 
 ## 通过 `source.alias` 配置
 
-Rsbuild 提供了 [source.alias](http://rsbuild.dev/zh/config/options/source.html#sourcealias) 配置项，对应 webpack / Rspack 原生的 [resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) 配置，你可以通过对象或者函数的方式来配置这个选项。
+Rsbuild 提供了 [source.alias](http://rsbuild.dev/zh/config/options/source.html#sourcealias) 配置项，对应 Rspack 原生的 [resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) 配置，你可以通过对象或者函数的方式来配置这个选项。
 
 ### 使用场景
 

@@ -1,4 +1,4 @@
-- **类型：** `'entry' | 'usage' | 'ua' | 'off'`
+- **类型：** `'entry' | 'usage' | 'off'`
 - **默认值：** `'entry'`
 
 通过 `output.polyfill` 你可以配置 Polyfill 的注入方式。
@@ -16,12 +16,6 @@
 当 `output.polyfill` 配置为 `'usage'` 时，会在每个文件中根据代码中使用的 API 注入 Polyfill。
 
 等价于 `@babel/preset-env` 的 `useBuiltIns: 'usage'` 配置。
-
-#### ua
-
-根据当前请求的 UA 信息，动态下发 Polyfill 代码。
-
-动态下发能力需要与上层框架结合使用，详情可参考 [Modern.js - 运行时按需 Polyfill](https://modernjs.dev/guides/advanced-features/compatibility.html#%E8%BF%90%E8%A1%8C%E6%97%B6%E6%8C%89%E9%9C%80-polyfill)。
 
 #### off
 

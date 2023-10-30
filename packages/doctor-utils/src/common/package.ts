@@ -1,8 +1,15 @@
 import { SDK } from '@rsbuild/doctor-types';
 import { isEmpty, last, compact } from 'lodash';
 
-/** Based on bundle-stats, detial url:  https://github.com/relative-ci/bundle-stats/blob/master/packages/utils/src/webpack/extract/modules-packages.ts#L24 */
-
+/**
+ * The following code is modified based on
+ * https://github.com/relative-ci/bundle-stats/blob/master/packages/utils/src/webpack/extract/modules-packages.ts#L24
+ *
+ * MIT Licensed
+ * Author Viorel Cojocaru
+ * Copyright 2019 Viorel Cojocaru, contributors.
+ * https://github.com/relative-ci/bundle-stats/blob/master/LICENSE.md
+ */
 const PACKAGE_PREFIX = /(?:node_modules|~)(?:\/\.pnpm)?/;
 const PACKAGE_SLUG = /[a-zA-Z0-9]+(?:[-|_|.]+[a-zA-Z0-9]+)*/;
 const VERSION = /@[\w|\-|_|.]+/;
@@ -72,23 +79,21 @@ export const getPackageMetaFromModulePath = (
   // Extract package names from module path
   // @NOTE check for uniq for pnpm cases
   const names = uniqLast(
-    paths
-      .map((packagePath) => {
-        // @ts-ignore
-        const found = packagePath.matchAll(PACKAGE_PATH_NAME);
+    paths.flatMap((packagePath) => {
+      // @ts-ignore
+      const found = packagePath.matchAll(PACKAGE_PATH_NAME);
 
-        if (!found) {
-          return [];
-        }
+      if (!found) {
+        return [];
+      }
 
-        const paksArray = compact([...found].flat());
+      const paksArray = compact([...found].flat());
 
-        return paksArray
-          .slice(1)
-          .filter(Boolean)
-          .map((name) => name.replace(/\+/g, '/'));
-      })
-      .flat(),
+      return paksArray
+        .slice(1)
+        .filter(Boolean)
+        .map((name) => name.replace(/\+/g, '/'));
+    }),
   );
 
   // If no names, skip

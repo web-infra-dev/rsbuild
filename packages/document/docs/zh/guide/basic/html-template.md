@@ -6,10 +6,6 @@ Rsbuild 提供了一些配置项来对 HTML 模板进行设置。通过本章节
 
 ## 设置模板文件
 
-通常来说，HTML 模板文件是由上层框架预先定义的。
-
-比如在 Modern.js 框架中，默认会预设一份 HTML 模板，同时也支持用户自定义模板的内容。你可以阅读 [「Modern.js - HTML 模板」](https://modernjs.dev/guides/basic-features/html.html) 章节来了解相关内容。
-
 在 Rsbuild 中，你可以使用 [html.template](/config/options/html.html#htmltemplate) 和 [html.templateByEntries](/config/options/html.html#htmltemplatebyentries) 配置项来设置自定义的 HTML 模板文件。
 
 ```ts

@@ -68,7 +68,7 @@ async function main() {
   copyFolder(commonFolder, distFolder);
   copyFolder(srcFolder, distFolder);
 
-  const nextSteps = [`cd ${targetDir}`, 'npm i', 'npm dev'];
+  const nextSteps = [`cd ${targetDir}`, 'npm i', 'npm run dev'];
 
   note(nextSteps.join('\n'), 'Next steps');
 

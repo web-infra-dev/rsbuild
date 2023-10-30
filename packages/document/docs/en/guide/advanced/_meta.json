@@ -5,6 +5,5 @@
   "hmr",
   "rem",
   "browserslist",
-  "browser-compatibility",
-  "custom-webpack-config"
+  "browser-compatibility"
 ]

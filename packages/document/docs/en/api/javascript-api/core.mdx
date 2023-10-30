@@ -46,28 +46,6 @@ Description:
 - `provider`: Used to switch the underlying bundler.
 - `rsbuildConfig`: Rsbuild configuration object. Rsbuild provides a rich set of configuration options that allow you to customize the build behavior flexibly. You can find all available configuration options in the [Configuration](/config/) section.
 
-### webpackProvider
-
-Rsbuild uses Rspack as the default bundler. You can switch to Webpack packaging by using the `provider` option.
-
-First, install the `@rsbuild/webpack` package:
-
-import { PackageManagerTabs } from '@theme';
-
-<PackageManagerTabs command="add @rsbuild/webpack -D" />
-
-Then, pass `webpackProvider` as the value to the `provider` option. This will automatically switch the underlying bundler of Rsbuild to Webpack.
-
-```ts
-import { createRsbuild } from '@rsbuild/core';
-import { webpackProvider } from '@rsbuild/webpack';
-
-const rsbuild = await createRsbuild({
-  provider: webpackProvider,
-  // other options
-});
-```
-
 ## mergeRsbuildConfig
 
 Used to merge multiple Rsbuild configuration objects.
@@ -103,20 +81,6 @@ console.log(mergedConfig); // { dev: { https: true } }
 
 > This method will not modify the config object in the input parameter.
 
-## webpack
-
-A webpack object for consuming webpack builtin plugins or type definitions.
-
-- **Example**
-
-```ts
-import webpack from '@rsbuild/webpack/webpack';
-
-new webpack.DefinePlugin();
-```
-
-> In most scenarios, it is recommended to import webpack from Rsbuild instead of manually installing a "webpack" dependency, which can avoid multi-instance problems.
-
 ## HtmlWebpackPlugin
 
 HtmlWebpackPlugin object, usually used to implement custom plugins of HtmlWebpackPlugin.
@@ -124,7 +88,7 @@ HtmlWebpackPlugin object, usually used to implement custom plugins of HtmlWebpac
 - **Example**
 
 ```ts
-import HtmlWebpackPlugin from '@rsbuild/webpack/html-webpack-plugin';
+import HtmlWebpackPlugin from '@rsbuild/core/html-webpack-plugin';
 ```
 
 > In most scenarios, it is recommended to import HtmlWebpackPlugin from Rsbuild instead of manually installing a "html-webpack-plugin" dependency, which can avoid multi-instance problems.

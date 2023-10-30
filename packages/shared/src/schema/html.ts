@@ -1,5 +1,4 @@
-import { MetaAttributes, MetaOptions } from '../generateMetaTags';
-import {
+import type {
   CrossOrigin,
   HtmlInjectTag,
   HtmlInjectTagDescriptor,
@@ -7,6 +6,8 @@ import {
   ScriptInject,
   SharedHtmlConfig,
   OutputStructure,
+  MetaAttributes,
+  MetaOptions,
 } from '../types';
 import { z } from '../utils';
 import { ZodType } from '../zod';

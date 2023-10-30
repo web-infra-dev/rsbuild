@@ -6,6 +6,11 @@
   },
   {
     "type": "dir",
+    "name": "framework",
+    "label": "Framework"
+  },
+  {
+    "type": "dir",
     "name": "basic",
     "label": "Basic"
   },
@@ -13,11 +18,6 @@
     "type": "dir",
     "name": "advanced",
     "label": "Advanced"
-  },
-  {
-    "type": "dir",
-    "name": "framework",
-    "label": "Framework"
   },
   {
     "type": "dir",

@@ -1,20 +1,20 @@
-# 构建 Vue 3 应用
-
-尽管 Modern.js 框架是基于 React 实现的，但底层的 Rsbuild 并不与 React 耦合。因此，你可以使用 Rsbuild 来构建你的 Vue 应用，并使用 Rsbuild 提供的绝大多数能力。
+# Vue 3
 
 在这篇文档中，你可以了解到如何基于 Rsbuild 来构建一个 Vue 3 应用。
 
-import Vue3Project from '@zh/shared/vue3Project.md';
+## 创建 Vue 3 项目
 
-<Vue3Project />
+你可以使用 `create-rsbuild` 来创建一个 Rsbuild + Vue 3 的项目，调用以下命令：
 
-import CliToolVue from '@zh/shared/cliToolVue.md';
+import { PackageManagerTabs } from '@theme';
 
-<CliToolVue />
+<PackageManagerTabs command="create rsbuild@latest" />
+
+然后在 `Select framework` 时选择 `Vue 3` 即可。
 
 ## 使用 Vue 插件
 
-为了能够编译 Vue 的 SFC（单文件组件）和 JSX 语法，你需要注册 Rsbuild 的 [Vue 插件](/plugins/list/plugin-vue)，插件会自动添加 Vue 构建所需的配置，并移除内置的 React 相关配置。
+为了能够编译 Vue 的 SFC（单文件组件），你需要注册 Rsbuild 的 [Vue 插件](/plugins/list/plugin-vue)，插件会自动添加 Vue 构建所需的配置。
 
 例如，在 `rsbuild.config.ts` 中注册：
 
@@ -26,6 +26,8 @@ export default defineConfig({
   plugins: [pluginVue()],
 });
 ```
+
+如果你需要使用 Vue 的 JSX 语法，还需要注册 Rsbuild 的 [Vue 3 JSX 插件](/plugins/list/plugin-vue-jsx)。
 
 ## 类型定义
 

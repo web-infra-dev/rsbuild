@@ -47,7 +47,7 @@ exports[`plugin-vue-jsx > should allow to configure jsx babel plugin options 1`]
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
@@ -132,7 +132,7 @@ exports[`plugin-vue-jsx > should allow to configure jsx babel plugin options 1`]
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
@@ -231,7 +231,7 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly 1`] = `
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
@@ -314,7 +314,7 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly 1`] = `
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
@@ -411,7 +411,7 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly in rspack mode
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [
@@ -494,7 +494,7 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly in rspack mode
                 ],
                 "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
                 [
-                  "<ROOT>/packages/webpack/compiled/babel-plugin-lodash",
+                  "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
                 [

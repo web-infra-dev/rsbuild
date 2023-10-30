@@ -15,7 +15,6 @@ import {
   DEFAULT_DATA_URL_SIZE,
   DEFAULT_ASSET_PREFIX,
 } from './constants';
-import { generateMetaTags } from './generateMetaTags';
 import type {
   RsbuildTarget,
   BundlerChainRule,
@@ -304,24 +303,6 @@ export function getFavicon(
 ) {
   const { favicon, faviconByEntries } = config.html;
   return faviconByEntries?.[entryName] || favicon;
-}
-
-export async function getMetaTags(
-  entryName: string,
-  config: { html: SharedHtmlConfig; output: NormalizedSharedOutputConfig },
-) {
-  const { meta, metaByEntries } = config.html;
-
-  const metaOptions = {
-    ...(meta ?? {}),
-    ...(metaByEntries?.[entryName] ?? {}),
-  };
-
-  if (config.output.charset === 'utf8') {
-    metaOptions.charset = { charset: 'utf-8' };
-  }
-
-  return generateMetaTags(metaOptions);
 }
 
 export async function stringifyConfig(config: unknown, verbose?: boolean) {

@@ -119,7 +119,7 @@ declare module '*.png' {
 
 ## 扩展静态资源类型
 
-如果 Rsbuild 内置的静态资源类型不能满足你的需求，那么你可以通过 [tools.bundlerChain](/config/options/tools.html#toolsbundlerchain) 来修改内置的 webpack / Rspack 配置，并扩展你需要的静态资源类型。
+如果 Rsbuild 内置的静态资源类型不能满足你的需求，那么你可以通过 [tools.bundlerChain](/config/options/tools.html#toolsbundlerchain) 来修改内置的 Rspack 配置，并扩展你需要的静态资源类型。
 
 比如，你需要把 `*.pdf` 文件当做静态资源直接输出到产物目录，可以添加以下配置：
 

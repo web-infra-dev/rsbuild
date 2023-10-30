@@ -9,7 +9,6 @@ import {
   getTitle,
   getInject,
   getFavicon,
-  getMetaTags,
   getTemplatePath,
   ROUTE_SPEC_FILE,
   removeTailSlash,
@@ -18,13 +17,16 @@ import {
 } from '@rsbuild/shared';
 import { fs } from '@rsbuild/shared/fs-extra';
 import type {
+  SharedHtmlConfig,
   DefaultRsbuildPlugin,
   SharedNormalizedConfig,
   SharedRsbuildPluginAPI,
   HtmlTagsPluginOptions,
   HTMLPluginOptions,
+  NormalizedSharedOutputConfig,
 } from '@rsbuild/shared';
 import _ from 'lodash';
+import { generateMetaTags } from '../utils/generateMetaTags';
 
 // This is a minimist subset of modern.js server routes
 type RoutesInfo = {
@@ -33,6 +35,24 @@ type RoutesInfo = {
   entryName: string;
   entryPath: string;
 };
+
+export async function getMetaTags(
+  entryName: string,
+  config: { html: SharedHtmlConfig; output: NormalizedSharedOutputConfig },
+) {
+  const { meta, metaByEntries } = config.html;
+
+  const metaOptions = {
+    ...(meta ?? {}),
+    ...(metaByEntries?.[entryName] ?? {}),
+  };
+
+  if (config.output.charset === 'utf8') {
+    metaOptions.charset = { charset: 'utf-8' };
+  }
+
+  return generateMetaTags(metaOptions);
+}
 
 async function getTemplateParameters(
   entryName: string,

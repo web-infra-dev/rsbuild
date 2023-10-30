@@ -6,6 +6,7 @@
   "static-assets",
   "json-files",
   "wasm-assets",
+  "configure-rspack",
   "html-template",
   "css-modules",
   "typescript"

@@ -6,40 +6,6 @@ import Rspack from '@zh/shared/rspackTip.mdx';
 
 <Rspack />
 
-## 启用 Rspack
-
-### 在 Modern.js 框架中启用
-
-Modern.js 框架默认使用 webpack 作为打包工具。如果希望启用 Rspack 作为打包工具，可参考：[使用 Rspack](https://modernjs.dev/guides/advanced-features/rspack-start.html)。
-
-### 在前端框架中接入
-
-如果你基于 Rsbuild 开发了一个前端框架，接入 rspack-provider 和 [接入 webpack-provider](/guide/start/quick-start.html#在前端框架中接入) 的方式类似，只需要把依赖从 `@rsbuild/webpack` 改为 `@rsbuild/rspack-provider` 即可。
-
-```ts title=modern.config.ts
-import { createRsbuild } from '@rsbuild/core';
-import { rspackProvider } from '@rsbuild/rspack-provider';
-
-const provider = rspackProvider({
-  rsbuildConfig: {
-    // some configs
-  },
-});
-```
-
-```diff title=package.json
-{
-  "devDependencies": {
--    "@rsbuild/webpack": "2.8.0",
-+    "@rsbuild/rspack-provider": "2.8.0"
-  }
-}
-```
-
-import RspackPrecautions from '@zh/shared/rspackPrecautions.md';
-
-<RspackPrecautions />
-
 ## 从 webpack 迁移到 Rspack
 
 Rsbuild 旨在消除不同打包工具之间的主要差异，帮助用户以较低成本进行迁移。但由于各个打包工具提供的能力不同，你仍需要了解其中的部分差异。
@@ -114,8 +80,6 @@ Rsbuild 旨在消除不同打包工具之间的主要差异，帮助用户以较
 - [tools.cssExtract](/config/options/tools.html#toolscssextract)
 - [tools.cssLoader](/config/options/tools.html#toolscssloader) (仅在 [disableCssExtract](/config/options/output.html#outputdisablecssextract) 时支持)
 - [tools.tsLoader](/config/options/tools.html#toolstsloader)
-- [tools.webpack](/config/options/tools.html#toolswebpack)：使用 [tools.rspack](/config/options/tools#toolsrspack) 代替。
-- [tools.webpackChain](/config/options/tools.html#toolswebpackchain)：使用 [tools.bundlerChain](/config/options/tools#toolsbundlerchain) 代替。
 
 :::tip
 除上述配置外，一些已支持的配置可能存在能力差异，请参考各配置 API 获取具体差异信息。
@@ -293,7 +257,6 @@ Rsbuild Rspack 构建模式对比 [Rspack CLI](https://www.rspack.dev/zh/guide/q
 在使用 Rspack 构建时，Rsbuild 默认不会启用 `babel-loader`。但当项目中使用到依赖 Babel 实现的配置项或插件时，会额外添加 `babel-loader` 进行文件转译：
 
 - 通过 [tools.babel](/config/options/tools.html#toolsbabel) 添加 Babel plugin
-- 使用 [Modern.js SSR 功能](https://modernjs.dev/guides/advanced-features/ssr.html)
 - ...
 
 你可以通过开启[调试模式](/guide/debug/debug-mode.html) 来查看最终生成的 Rspack 配置中是否存在 Babel 插件。
