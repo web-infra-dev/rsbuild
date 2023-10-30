@@ -53,7 +53,7 @@ test('should add polyfill when set polyfill entry (default)', async ({
 
   // should polyfill all api
   expect(content.includes('object.group-by.js')).toBeTruthy();
-  expect(content.includes('String.prototype.trimEnd')).toBeFalsy();
+  expect(content.includes('String.prototype.trimEnd')).toBeTruthy();
 });
 
 test('should add polyfill when set polyfill usage', async ({ page }) => {
