@@ -44,7 +44,7 @@ export function pluginSvelte(
         chain.module
           .rule(CHAIN_ID.RULE.SVELTE)
           .test(/\.svelte$/)
-          .use(CHAIN_ID.USE.VUE)
+          .use(CHAIN_ID.USE.SVELTE)
           .loader(require.resolve('svelte-loader'))
           .options({
             compilerOptions: {
