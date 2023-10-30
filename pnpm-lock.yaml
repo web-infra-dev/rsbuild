@@ -634,6 +634,35 @@ importers:
         specifier: ^5.0.0
         version: 5.2.2
 
+  packages/create-rsbuild/template-svelte-js:
+    dependencies:
+      svelte:
+        specifier: ^4.2.2
+        version: 4.2.2
+    devDependencies:
+      '@rsbuild/core':
+        specifier: ^0.0.10
+        version: link:../../core
+      '@rsbuild/plugin-svelte':
+        specifier: ^0.0.10
+        version: link:../../plugin-svelte
+
+  packages/create-rsbuild/template-svelte-ts:
+    dependencies:
+      svelte:
+        specifier: ^4.2.2
+        version: 4.2.2
+    devDependencies:
+      '@rsbuild/core':
+        specifier: ^0.0.10
+        version: link:../../core
+      '@rsbuild/plugin-svelte':
+        specifier: ^0.0.10
+        version: link:../../plugin-svelte
+      typescript:
+        specifier: ^5.0.0
+        version: 5.2.2
+
   packages/create-rsbuild/template-vue2-js:
     dependencies:
       vue:
