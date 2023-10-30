@@ -1,0 +1,44 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugin-check-syntax > should add check-syntax plugin properly 1`] = `
+{
+  "plugins": [
+    CheckSyntaxPlugin {
+      "ecmaVersion": 6,
+      "errors": [],
+      "exclude": undefined,
+      "rootPath": "<ROOT>",
+      "targets": [
+        "chrome >= 87",
+        "edge >= 88",
+        "firefox >= 78",
+        "safari >= 14",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`plugin-check-syntax > should not add check-syntax plugin when target node 1`] = `{}`;
+
+exports[`plugin-check-syntax > should use default browserslist as targets when only set checkSyntax.exclude 1`] = `
+{
+  "plugins": [
+    CheckSyntaxPlugin {
+      "ecmaVersion": 5,
+      "errors": [],
+      "exclude": [
+        /\\$\\.html/,
+      ],
+      "rootPath": "<ROOT>",
+      "targets": [
+        "iOS 9",
+        "Android 4.4",
+        "last 2 versions",
+        "> 0.2%",
+        "not dead",
+      ],
+    },
+  ],
+}
+`;

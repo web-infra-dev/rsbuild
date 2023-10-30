@@ -167,9 +167,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "postcssOptions": {
                     "plugins": [
                       [Function],
-                      [Function],
-                      [Function],
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -209,9 +206,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -258,9 +252,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -311,9 +302,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -371,9 +359,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "postcssOptions": {
                     "plugins": [
                       [Function],
-                      [Function],
-                      [Function],
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -427,9 +412,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -831,9 +813,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "postcssOptions": {
                     "plugins": [
                       [Function],
-                      [Function],
-                      [Function],
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -873,9 +852,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -922,9 +898,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -975,9 +948,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -1035,9 +1005,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "postcssOptions": {
                     "plugins": [
                       [Function],
-                      [Function],
-                      [Function],
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -1091,9 +1058,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -1986,9 +1950,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "postcssOptions": {
                     "plugins": [
                       [Function],
-                      [Function],
-                      [Function],
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -2028,9 +1989,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -2077,9 +2035,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -2130,9 +2085,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [
@@ -2190,9 +2142,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "postcssOptions": {
                     "plugins": [
                       [Function],
-                      [Function],
-                      [Function],
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -2246,9 +2195,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "options": {
                   "postcssOptions": {
                     "plugins": [
-                      [Function],
-                      [Function],
-                      [Function],
                       [Function],
                       {
                         "browsers": [

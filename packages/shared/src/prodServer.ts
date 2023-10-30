@@ -31,7 +31,7 @@ export const getServerOptions = (
   };
 };
 
-export async function printServerURLs(
+export function printServerURLs(
   urls: Array<{ url: string; label: string }>,
   logger: Logger = defaultLogger,
 ) {
@@ -74,7 +74,7 @@ export async function startProdServer(
 
         const urls = getAddressUrls('http', port);
 
-        await printServerURLs(urls);
+        printServerURLs(urls);
         resolve({
           port,
           urls: urls.map((item) => item.url),

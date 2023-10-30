@@ -61,10 +61,14 @@ This plugin is designed for the monorepo scenario. It supports referencing sourc
 
 ### [Stylus Plugin](/plugins/list/plugin-stylus.html)
 
-Use Stylus add CSS preprocessor.
+Use Stylus as the CSS preprocessor.
 
-> You can find the source code of all official plugins in the [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) repository.
+### [Check Syntax Plugin](/plugins/list/plugin-check-syntax.html)
+
+Used to analyze the syntax compatibility of artifacts, to see if there are any advanced syntaxes that may cause compatibility issues.
 
 ### [Styled Components Plugin](/plugins/list/plugin-styled-components.html)
 
 Provides compile-time support for styled-components.
+
+> You can find the source code of all official plugins in the [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) repository.

@@ -11,7 +11,7 @@
     "vue": "^3.0.0"
   },
   "devDependencies": {
-    "@rsbuild/core": "nightly",
-    "@rsbuild/plugin-vue": "nightly"
+    "@rsbuild/core": "^0.0.10",
+    "@rsbuild/plugin-vue": "^0.0.10"
   }
 }

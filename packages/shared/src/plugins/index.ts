@@ -10,7 +10,6 @@ export {
   type InlineChunkTest,
 } from './InlineChunkHtmlPlugin';
 export { AssetsRetryPlugin } from './AssetsRetryPlugin';
-export { CheckSyntaxPlugin } from './CheckSyntaxPlugin';
 export { HtmlNetworkPerformancePlugin } from './HtmlNetworkPerformancePlugin';
 export { HTMLPreloadOrPrefetchPlugin } from './HtmlPreloadOrPrefetchPlugin';
 export { COMPILATION_PROCESS_STAGE } from './util';

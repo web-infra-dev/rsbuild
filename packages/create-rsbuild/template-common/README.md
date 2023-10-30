@@ -12,18 +12,18 @@ pnpm install
 
 Start the dev server:
 
-```
+```bash
 pnpm dev
 ```
 
 Build the app for production:
 
-```
+```bash
 pnpm build
 ```
 
 Preview the production build locally:
 
-```
-pnpm serve
+```bash
+pnpm preview
 ```

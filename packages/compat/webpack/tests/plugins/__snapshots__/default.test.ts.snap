@@ -368,9 +368,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "postcssOptions": {
                 "plugins": [
                   [Function],
-                  [Function],
-                  [Function],
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -425,9 +422,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "options": {
               "postcssOptions": {
                 "plugins": [
-                  [Function],
-                  [Function],
-                  [Function],
                   [Function],
                   {
                     "browsers": [
@@ -497,9 +491,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "options": {
               "postcssOptions": {
                 "plugins": [
-                  [Function],
-                  [Function],
-                  [Function],
                   [Function],
                   {
                     "browsers": [
@@ -1042,9 +1033,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               "postcssOptions": {
                 "plugins": [
                   [Function],
-                  [Function],
-                  [Function],
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -1099,9 +1087,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "options": {
               "postcssOptions": {
                 "plugins": [
-                  [Function],
-                  [Function],
-                  [Function],
                   [Function],
                   {
                     "browsers": [
@@ -1171,9 +1156,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "options": {
               "postcssOptions": {
                 "plugins": [
-                  [Function],
-                  [Function],
-                  [Function],
                   [Function],
                   {
                     "browsers": [

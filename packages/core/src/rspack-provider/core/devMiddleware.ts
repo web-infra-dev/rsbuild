@@ -6,57 +6,40 @@ import type { Compiler, MultiCompiler } from '@rspack/core';
 
 type DevMiddlewareOptions = ModernDevServerOptions['devMiddleware'];
 
-export function getHotRuntimeEntries(compiler: Compiler) {
-  const hot = compiler.options.devServer?.hot ?? true;
-  const refresh = compiler.options.builtins?.react?.refresh ?? true;
-
-  if (hot && refresh) {
-    // TODO: move into react plugin
-    const reactRefreshEntryPath = require.resolve(
-      '@rspack/dev-client/react-refresh-entry',
-    );
-    return [reactRefreshEntryPath];
-  }
-
-  return [];
-}
-
 function applyHMREntry(compiler: Compiler, clientPath: string) {
   if (!isClientCompiler(compiler)) {
     return;
   }
 
-  const hotRuntimeEntires = getHotRuntimeEntries(compiler);
-
-  const entires = [...hotRuntimeEntires, clientPath];
-
   for (const key in compiler.options.entry) {
     compiler.options.entry[key].import = [
-      ...entires,
+      clientPath,
       ...(compiler.options.entry[key].import || []),
     ];
   }
 }
 
-export const getDevMiddleware: (
-  compiler: Compiler | MultiCompiler,
-) => NonNullable<DevMiddlewareOptions> = (compiler) => (options) => {
-  const { hmrClientPath, callbacks, ...restOptions } = options;
+export const getDevMiddleware =
+  (
+    multiCompiler: Compiler | MultiCompiler,
+  ): NonNullable<DevMiddlewareOptions> =>
+  (options) => {
+    const { hmrClientPath, callbacks, ...restOptions } = options;
 
-  if ((compiler as MultiCompiler).compilers) {
-    (compiler as MultiCompiler).compilers.forEach((compiler) => {
-      hmrClientPath && applyHMREntry(compiler, hmrClientPath);
-
+    const setupCompiler = (compiler: Compiler) => {
+      if (hmrClientPath) {
+        applyHMREntry(compiler, hmrClientPath);
+      }
       // register hooks for each compilation, update socket stats if recompiled
       setupServerHooks(compiler, callbacks);
-    });
-  } else {
-    hmrClientPath && applyHMREntry(compiler as Compiler, hmrClientPath);
+    };
 
-    // register hooks for each compilation, update socket stats if recompiled
-    setupServerHooks(compiler as Compiler, callbacks);
-  }
+    if ((multiCompiler as MultiCompiler).compilers) {
+      (multiCompiler as MultiCompiler).compilers.forEach(setupCompiler);
+    } else {
+      setupCompiler(multiCompiler as Compiler);
+    }
 
-  // @ts-expect-error
-  return webpackDevMiddleware(compiler, restOptions);
-};
+    // @ts-expect-error compiler type mismatch
+    return webpackDevMiddleware(multiCompiler, restOptions);
+  };

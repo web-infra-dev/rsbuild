@@ -70,7 +70,6 @@ export const getDefaultHtmlConfig = (): NormalizedSharedHtmlConfig => ({
 
 export const getDefaultSecurityConfig = (): NormalizedSharedSecurityConfig => ({
   nonce: '',
-  checkSyntax: false,
 });
 
 export const getDefaultToolsConfig = (): NormalizedSharedToolsConfig => ({});

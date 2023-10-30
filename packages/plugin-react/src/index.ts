@@ -1,10 +1,10 @@
-import { DefaultRsbuildPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { applyAntdSupport } from './antd';
 import { applyArcoSupport } from './arco';
 import { applySplitChunksRule } from './splitChunks';
 import { applyBasicReactSupport } from './react';
 
-export const pluginReact = (): DefaultRsbuildPlugin => ({
+export const pluginReact = (): RsbuildPlugin => ({
   name: 'plugin-react',
 
   pre: ['plugin-swc'],

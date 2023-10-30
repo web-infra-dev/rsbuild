@@ -66,8 +66,6 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
               "postcssOptions": {
                 "plugins": [
                   [Function],
-                  [Function],
-                  [Function],
                   {
                     "browsers": [
                       "Chrome 80",
@@ -125,8 +123,6 @@ exports[`plugin-css > should remove some postcss plugins based on browserslist 1
             "options": {
               "postcssOptions": {
                 "plugins": [
-                  [Function],
-                  [Function],
                   [Function],
                   {
                     "browsers": [

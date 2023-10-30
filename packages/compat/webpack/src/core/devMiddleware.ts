@@ -11,17 +11,17 @@ const applyHMREntry = (
   clientPath: string,
 ) => {
   const applyEntry = (clientEntry: string, compiler: Compiler) => {
-    new compiler.webpack.EntryPlugin(compiler.context, clientEntry, {
-      name: undefined,
-    }).apply(compiler);
+    if (isClientCompiler(compiler)) {
+      new compiler.webpack.EntryPlugin(compiler.context, clientEntry, {
+        name: undefined,
+      }).apply(compiler);
+    }
   };
 
   // apply dev server to client compiler, add hmr client to entry.
   if ((compiler as MultiCompiler).compilers) {
     (compiler as MultiCompiler).compilers.forEach((target) => {
-      if (isClientCompiler(target)) {
-        applyEntry(clientPath, target);
-      }
+      applyEntry(clientPath, target);
     });
   } else {
     applyEntry(clientPath, compiler as Compiler);
