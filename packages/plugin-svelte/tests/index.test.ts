@@ -7,20 +7,20 @@ describe('plugin-svelte', () => {
       rsbuildConfig: {},
       plugins: [pluginSvelte()],
     });
-    const { bundlerConfigs } = await rsbuild.inspectConfig();
+    const config = await rsbuild.unwrapConfig();
 
-    expect(bundlerConfigs).toMatchSnapshot();
+    expect(config).toMatchSnapshot();
   });
 
   it('should set dev and hotReload to false in production mode', async () => {
+    process.env.NODE_ENV = 'production';
+
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {},
       plugins: [pluginSvelte()],
     });
-    const { bundlerConfigs } = await rsbuild.inspectConfig({
-      env: 'production',
-    });
+    const config = await rsbuild.unwrapConfig();
 
-    expect(bundlerConfigs).toMatchSnapshot();
+    expect(config).toMatchSnapshot();
   });
 });

@@ -1,67 +1,69 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`plugin-svelte > should add svelte loader properly 1`] = `
-[
-  "{
-  resolve: {
-    extensions: [
-      '.svelte'
-    ]
-  },
-  module: {
-    rules: [
-      /* config.module.rule('svelte') */
+{
+  "module": {
+    "rules": [
       {
-        test: /.svelte$/,
-        use: [
-          /* config.module.rule('svelte') */
+        "test": /\\\\\\.svelte\\$/,
+        "use": [
           {
-            loader: '<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js',
-            options: {
-              compilerOptions: {
-                dev: true
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+            "options": {
+              "compilerOptions": {
+                "dev": true,
               },
-              emitCss: false,
-              hotReload: true
-            }
-          }
-        ]
-      }
-    ]
-  }
-}",
-]
+              "emitCss": false,
+              "hotReload": true,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "resolve": {
+    "extensions": [
+      ".svelte",
+    ],
+  },
+  "resolveLoader": {
+    "alias": {
+      "svelte-loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+    },
+  },
+}
 `;
 
 exports[`plugin-svelte > should set dev and hotReload to false in production mode 1`] = `
-[
-  "{
-  resolve: {
-    extensions: [
-      '.svelte'
-    ]
-  },
-  module: {
-    rules: [
-      /* config.module.rule('svelte') */
+{
+  "module": {
+    "rules": [
       {
-        test: /.svelte$/,
-        use: [
-          /* config.module.rule('svelte') */
+        "test": /\\\\\\.svelte\\$/,
+        "use": [
           {
-            loader: '<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js',
-            options: {
-              compilerOptions: {
-                dev: false
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+            "options": {
+              "compilerOptions": {
+                "dev": false,
               },
-              emitCss: true,
-              hotReload: false
-            }
-          }
-        ]
-      }
-    ]
-  }
-}",
-]
+              "emitCss": true,
+              "hotReload": false,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "resolve": {
+    "extensions": [
+      ".svelte",
+    ],
+  },
+  "resolveLoader": {
+    "alias": {
+      "svelte-loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+    },
+  },
+}
 `;
