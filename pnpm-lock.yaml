@@ -93,6 +93,9 @@ importers:
       '@rsbuild/plugin-stylus':
         specifier: workspace:*
         version: link:../packages/plugin-stylus
+      '@rsbuild/plugin-svelte':
+        specifier: workspace:*
+        version: link:../packages/plugin-svelte
       '@rsbuild/plugin-svgr':
         specifier: workspace:*
         version: link:../packages/plugin-svgr
@@ -242,6 +245,12 @@ importers:
       styled-components:
         specifier: ^6.0.0
         version: 6.1.0(react-dom@18.2.0)(react@18.2.0)
+
+  e2e/cases/svelte:
+    dependencies:
+      svelte:
+        specifier: ^4.2.2
+        version: 4.2.2
 
   e2e/cases/vue:
     dependencies:
