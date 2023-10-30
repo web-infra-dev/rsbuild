@@ -29,9 +29,7 @@ export function pluginCheckSyntax(
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { isProd, target }) => {
-        const enable = options.enable ?? true;
-
-        if (!isProd || target !== 'web' || !enable) {
+        if (!isProd || target !== 'web') {
           return;
         }
 

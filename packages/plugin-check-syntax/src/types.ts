@@ -4,11 +4,6 @@ export type { EcmaVersion };
 
 export type CheckSyntaxOptions = {
   /**
-   * Whether to enable check syntax
-   */
-  enable?: boolean;
-
-  /**
    * The target browser range of the project.
    * Its value is a standard browserslist array.
    */
