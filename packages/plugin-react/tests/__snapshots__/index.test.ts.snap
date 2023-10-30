@@ -515,7 +515,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
-                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -563,7 +562,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
-                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",

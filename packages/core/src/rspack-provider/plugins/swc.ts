@@ -13,6 +13,7 @@ import {
   applyScriptCondition,
   getBrowserslistWithDefault,
   type RsbuildTarget,
+  Polyfill,
 } from '@rsbuild/shared';
 import { cloneDeep } from 'lodash';
 import * as path from 'path';
@@ -104,7 +105,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           } else {
             swcConfig.env!.mode = polyfillMode;
             /* Apply core-js version and path alias and exclude core-js */
-            await applyCoreJs(swcConfig, chain, rule);
+            await applyCoreJs(swcConfig, chain, rule, polyfillMode);
           }
         }
 
@@ -148,6 +149,7 @@ async function applyCoreJs(
   swcConfig: BuiltinSwcLoaderOptions,
   chain: BundlerChain,
   rule: BundlerChainRule,
+  polyfillMode: Polyfill,
 ) {
   const coreJsPath = require.resolve('core-js/package.json');
   const version = getCoreJsVersion(coreJsPath);
@@ -155,7 +157,11 @@ async function applyCoreJs(
 
   swcConfig.env!.coreJs = version;
 
-  swcConfig.env!.shippedProposals = true;
+  if (polyfillMode === 'usage') {
+    // enable esnext polyfill
+    // reference: https://github.com/swc-project/swc/blob/b43e38d3f92bc889e263b741dbe173a6f2206d88/crates/swc_ecma_preset_env/src/corejs3/usage.rs#L75
+    swcConfig.env!.shippedProposals = true;
+  }
 
   chain.resolve.alias.merge({
     'core-js': coreJsDir,

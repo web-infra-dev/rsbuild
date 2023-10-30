@@ -498,7 +498,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
-                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -541,7 +540,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
-                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1164,7 +1162,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
-                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1207,7 +1204,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
-                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -2321,7 +2317,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
-                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -2364,7 +2359,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "entry",
-                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
