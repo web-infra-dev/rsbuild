@@ -10,5 +10,6 @@
   "plugin-image-compress",
   "plugin-node-polyfill",
   "plugin-source-build",
-  "plugin-stylus"
+  "plugin-stylus",
+  "plugin-check-syntax"
 ]

@@ -35,11 +35,11 @@ export default defineConfig({
 
 提供对 Vue 3 JSX / TSX 语法的支持。
 
-### [Vue2 插件](/plugins/list/plugin-vue2.html)
+### [Vue 2 插件](/plugins/list/plugin-vue2.html)
 
 提供对 Vue 2 SFC（单文件组件）的支持。
 
-### [Vue2 JSX 插件](/plugins/list/plugin-vue2-jsx.html)
+### [Vue 2 JSX 插件](/plugins/list/plugin-vue2-jsx.html)
 
 提供对 Vue 2 JSX / TSX 语法的支持。
 
@@ -62,3 +62,9 @@ export default defineConfig({
 ### [Stylus 插件](/plugins/list/plugin-stylus.html)
 
 使用 Stylus 作为 CSS 预处理器。
+
+### [Check Syntax 插件](/plugins/list/plugin-check-syntax.html)
+
+用于分析产物的语法兼容性，判断是否存在导致兼容性问题的高级语法。
+
+> 你可以在 [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) 仓库中找到所有官方插件的源代码。
