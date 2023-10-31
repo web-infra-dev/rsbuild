@@ -1,11 +1,11 @@
 {
-  "name": "@rsbuild/unibuilder",
+  "name": "@rsbuild/uni-builder",
   "version": "0.0.11",
   "description": "Unified builder for Modern.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
-    "directory": "packages/compat/unibuilder"
+    "directory": "packages/compat/uni-builder"
   },
   "license": "MIT",
   "exports": {
