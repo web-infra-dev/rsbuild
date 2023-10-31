@@ -4,8 +4,6 @@ import type { ChainedConfig, JSONValue } from '../utils';
 
 export type Alias = Record<string, string | string[]>;
 
-export type ModuleScopes = Array<string | RegExp>;
-
 export type MainFields = (string | string[])[];
 
 export type GlobalVars = Record<string, JSONValue>;
