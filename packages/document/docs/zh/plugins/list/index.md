@@ -43,6 +43,10 @@ export default defineConfig({
 
 提供对 Vue 2 JSX / TSX 语法的支持。
 
+### [Babel 插件](/plugins/list/plugin-babel.html)
+
+提供对 Babel 转译能力的支持。
+
 ### [Type Check 插件](/plugins/list/plugin-type-check.html)
 
 用于在单独的进程中运行 TypeScript 类型检查。

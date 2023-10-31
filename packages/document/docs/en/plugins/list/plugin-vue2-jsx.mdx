@@ -3,7 +3,7 @@
 The Vue plugin provides support for Vue 2 JSX / TSX syntax. The plugin internally integrates [@vue/babel-preset-jsx](https://github.com/vuejs/jsx-vue2).
 
 :::tip
-When using Rspack as the bundler, using the Vue JSX plugin will significantly slow down the build performance. This is because Rspack defaults to using the faster SWC compilation, while the Vue JSX plugin relies on slower Babel compilation, resulting in additional compilation overhead.
+The Vue2 JSX plugin relies on Babel transpilation and requires an additional [Babel Plugin](/plugins/list/plugin-babel). At the same time, adding the Babel plugin will cause additional compilation overhead.
 :::
 
 ## Quick Start
@@ -21,10 +21,11 @@ import { PackageManagerTabs } from '@theme';
 You can register the plugin in the `rsbuild.config.ts` file:
 
 ```ts title="rsbuild.config.ts"
+import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginVue2Jsx } from '@rsbuild/plugin-vue2-jsx';
 
 export default {
-  plugins: [pluginVue2Jsx()],
+  plugins: [pluginBabel(), pluginVue2Jsx()],
 };
 ```
 

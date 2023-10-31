@@ -43,6 +43,10 @@ Provides support for Vue 2 SFC (Single File Components).
 
 Provides support for Vue 2 JSX / TSX syntax.
 
+### [Babel Plugin](/plugins/list/plugin-babel.html)
+
+Provides support for Babel transpilation capabilities.
+
 ### [Type Check Plugin](/plugins/list/plugin-type-check.html)
 
 Used to run TypeScript type checker on a separate process.

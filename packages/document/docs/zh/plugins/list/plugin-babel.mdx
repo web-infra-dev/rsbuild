@@ -1,0 +1,208 @@
+# Babel 插件
+
+Rsbuild 默认使用 SWC 编译，当内置的功能无法满足诉求、需要添加一些 Babel presets 或 plugins 进行额外处理时，你可以使用 Rsbuild 的 Babel 插件。
+
+:::tip
+添加 Babel 插件会在原有的 SWC 转译的基础上，额外执行 Babel 转译，产生额外的编译开销，并导致构建性能明显下降。
+:::
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-babel -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginBabel } from '@rsbuild/plugin-babel';
+
+export default {
+  plugins: [pluginBabel()],
+};
+```
+
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
+
+## 选项
+
+可通过以下配置修改 [babel-loader](https://github.com/babel/babel-loader) 的配置项。
+
+- **类型：** `Object | Function`
+
+- **默认值：**
+
+```ts
+{
+  "babelrc": false,
+  "compact": false,
+  "configFile": false,
+  "plugins": [],
+  "presets": [
+    [
+      "@babel/preset-typescript",
+      {
+        "allExtensions": true,
+        "allowDeclareFields": true,
+        "allowNamespaces": true,
+        "isTSX": true,
+        "optimizeConstEnums": true,
+      },
+    ],
+  ],
+}
+```
+
+### Function 类型
+
+当配置项为 Function 类型时，默认 Babel 配置会作为第一个参数传入，你可以直接修改配置对象，也可以返回一个对象作为最终的 `babel-loader` 配置。
+
+```js
+export default {
+  plugins: [
+    pluginBabel((config) => {
+      // 添加一个插件，比如配置某个组件库的按需引入
+      config.plugins.push([
+        'babel-plugin-import',
+        {
+          libraryName: 'xxx-components',
+          libraryDirectory: 'es',
+          style: true,
+        },
+      ]);
+    }),
+  ],
+};
+```
+
+函数的第二个参数提供了一些方便的工具函数，请继续阅读下方文档。
+
+:::tip
+以上示例仅作为参考，通常来说，你不需要手动配置 `babel-plugin-import`，因为 Rspack SWC 编译已支持 transformImport 能力，Rsbuild 也提供了更通用的 `source.transformImport` 配置。
+:::
+
+### Object 类型
+
+当配置项的值为 `Object` 类型时，会与默认配置通过 `Object.assign` 浅合并。
+
+:::caution
+`Object.assign` 是浅拷贝，会完全覆盖内置的 `presets` 或 `plugins` 数组，导致内置的 presets 或 plugins 失效，请在明确影响面的情况下再使用这种方式。
+:::
+
+```js
+export default {
+  plugins: [
+    pluginBabel({
+      plugins: [
+        [
+          'babel-plugin-import',
+          {
+            libraryName: 'xxx-components',
+            libraryDirectory: 'es',
+            style: true,
+          },
+        ],
+      ],
+    }),
+  ],
+};
+```
+
+### 工具函数
+
+配置项为 Function 类型时，第二个参数可用的工具函数如下:
+
+#### addPlugins
+
+- **类型：** `(plugins: BabelPlugin[]) => void`
+
+添加若干个 Babel 插件。
+
+```js
+export default {
+  plugins: [
+    pluginBabel((config, { addPlugins }) => {
+      addPlugins([
+        [
+          'babel-plugin-import',
+          {
+            libraryName: 'xxx-components',
+            libraryDirectory: 'es',
+            style: true,
+          },
+        ],
+      ]);
+    }),
+  ],
+};
+```
+
+#### addPresets
+
+- **类型：** `(presets: BabelPlugin[]) => void`
+
+添加若干个 Babel 预设配置 (大多数情况下不需要增加预设)。
+
+```js
+export default {
+  plugins: [
+    pluginBabel((config, { addPresets }) => {
+      addPresets(['@babel/preset-env']);
+    }),
+  ],
+};
+```
+
+#### removePlugins
+
+- **类型：** `(plugins: string | string[]) => void`
+
+移除 Babel 插件，传入需要移除的插件名称即可，你可以传入单个字符串，也可以传入一个字符串数组。
+
+```js
+export default {
+  plugins: [
+    pluginBabel((config, { removePlugins }) => {
+      removePlugins('babel-plugin-import');
+    }),
+  ],
+};
+```
+
+#### removePresets
+
+- **类型：** `(presets: string | string[]) => void`
+
+移除 Babel 预设配置，传入需要移除的预设名称即可，你可以传入单个字符串，也可以传入一个字符串数组。
+
+```js
+export default {
+  plugins: [
+    pluginBabel((config, { removePresets }) => {
+      removePresets('@babel/preset-env');
+    }),
+  ],
+};
+```
+
+### 调试 Babel 配置
+
+当你通过配置项修改 `babel-loader` 配置后，可以在 [Rsbuild 调试模式](https://rsbuild.dev/zh/guide/debug/debug-mode.html) 下查看最终生成的配置。
+
+首先通过 `DEBUG=rsbuild` 参数开启调试模式：
+
+```bash
+# 调试开发环境
+DEBUG=rsbuild pnpm dev
+
+# 调试生产环境
+DEBUG=rsbuild pnpm build
+```
+
+然后打开生成的 `rspack.config.web.js`，搜索 `babel-loader` 关键词，即可看到完整的 `babel-loader` 配置内容。

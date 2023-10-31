@@ -1,0 +1,208 @@
+# Babel Plugin
+
+Rsbuild uses SWC transpilation by default. When existing functions cannot meet the requirements, and some Babel presets or plugins need to be added for additional processing, you can use Rsbuild's Babel Plugin.
+
+:::tip
+Adding the Babel Plugin will perform additional Babel transpilation before the original SWC transpilation, resulting in additional compilation overhead and causing a significant decrease in build performance.
+:::
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-babel -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginBabel } from '@rsbuild/plugin-babel';
+
+export default {
+  plugins: [pluginBabel()],
+};
+```
+
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
+
+## Options
+
+The configurations of [babel-loader](https://github.com/babel/babel-loader) can be modified through the following configuration.
+
+- **Type:** `Object | Function`
+- **Default:**
+
+```ts
+{
+  "babelrc": false,
+  "compact": false,
+  "configFile": false,
+  "plugins": [],
+  "presets": [
+    [
+      "@babel/preset-typescript",
+      {
+        "allExtensions": true,
+        "allowDeclareFields": true,
+        "allowNamespaces": true,
+        "isTSX": true,
+        "optimizeConstEnums": true,
+      },
+    ],
+  ],
+}
+```
+
+### Function Type
+
+When configuration is of type `Function`, the default Babel configuration will be passed as the first parameter. You can directly modify the configuration object or return an object as the final `babel-loader` configuration.
+
+```js
+export default {
+  plugins: [
+    pluginBabel((config) => {
+      // Add a Babel plugin
+      // note: the plugin have been added to the default config to support antd load on demand
+      config.plugins.push([
+        'babel-plugin-import',
+        {
+          libraryName: 'xxx-components',
+          libraryDirectory: 'es',
+          style: true,
+        },
+      ]);
+    }),
+  ],
+};
+```
+
+The second parameter of the function provides some more convenient utility functions. Please continue reading the documentation below.
+
+:::tip
+The above example is just for reference, usually you don't need to manually configure `babel-plugin-import`, because the Rsbuild already provides a more general `source.transformImport` configuration.
+:::
+
+### Object Type
+
+When configuration's type is `Object`, the config will be shallow merged with default config by `Object.assign`.
+
+:::caution
+Note that `Object.assign` is a shallow copy and will completely overwrite the built-in `presets` or `plugins` array, please use it with caution.
+:::
+
+```js
+export default {
+  plugins: [
+    pluginBabel({
+      plugins: [
+        [
+          'babel-plugin-import',
+          {
+            libraryName: 'xxx-components',
+            libraryDirectory: 'es',
+            style: true,
+          },
+        ],
+      ],
+    }),
+  ],
+};
+```
+
+### Util Functions
+
+When configuration is a Function, the tool functions available for the second parameter are as follows:
+
+#### addPlugins
+
+- **Type:** `(plugins: BabelPlugin[]) => void`
+
+Add some Babel plugins. For example:
+
+```js
+export default {
+  plugins: [
+    pluginBabel((config, { addPlugins }) => {
+      addPlugins([
+        [
+          'babel-plugin-import',
+          {
+            libraryName: 'xxx-components',
+            libraryDirectory: 'es',
+            style: true,
+          },
+        ],
+      ]);
+    }),
+  ],
+};
+```
+
+#### addPresets
+
+- **Type:** `(presets: BabelPlugin[]) => void`
+
+Add Babel preset configuration. (No need to add presets in most cases)
+
+```js
+export default {
+  plugins: [
+    pluginBabel((config, { addPresets }) => {
+      addPresets(['@babel/preset-env']);
+    }),
+  ],
+};
+```
+
+#### removePlugins
+
+- **Type:** `(plugins: string | string[]) => void`
+
+To remove the Babel plugin, just pass in the name of the plugin to be removed, you can pass in a single string or an array of strings.
+
+```js
+export default {
+  plugins: [
+    pluginBabel((config, { removePlugins }) => {
+      removePlugins('babel-plugin-import');
+    }),
+  ],
+};
+```
+
+#### removePresets
+
+- **Type:** `(presets: string | string[]) => void`
+
+To remove the Babel preset configuration, pass in the name of the preset to be removed, you can pass in a single string or an array of strings.
+
+```js
+export default {
+  plugins: [
+    pluginBabel((config, { removePresets }) => {
+      removePresets('@babel/preset-env');
+    }),
+  ],
+};
+```
+
+### Debugging Babel Configuration
+
+After modifying the `babel-loader` configuration, you can view the final generated configuration in [Rsbuild debug mode](https://rsbuild.dev/guide/debug/debug-mode.html).
+
+First, enable debug mode by using the `DEBUG=rsbuild` option:
+
+```bash
+# Debug development mode
+DEBUG=rsbuild pnpm dev
+
+# Debug production mode
+DEBUG=rsbuild pnpm build
+```
+
+Then open the generated `rspack.config.web.js` file and search for the `babel-loader` keyword to see the complete `babel-loader` configuration.

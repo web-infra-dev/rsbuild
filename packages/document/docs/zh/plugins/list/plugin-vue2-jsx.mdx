@@ -3,7 +3,7 @@
 Vue2 JSX 插件提供了对 Vue 2 JSX / TSX 语法的支持，插件内部集成了 [@vue/babel-preset-jsx](https://github.com/vuejs/jsx-vue2)。
 
 :::tip
-在使用 Rspack 打包时，使用 Vue2 JSX 插件将会显著降低构建性能。因为 Rspack 默认使用的是更快的 SWC 编译，而 Vue2 JSX 插件依赖更慢的 Babel 编译，产生了额外的编译开销。
+Vue2 JSX 插件依赖 Babel 编译，需要额外添加 [Babel 插件](/plugins/list/plugin-babel)，同时，添加 Babel 插件会产生额外的编译开销。
 :::
 
 ## 快速开始
@@ -21,10 +21,11 @@ import { PackageManagerTabs } from '@theme';
 你可以在 `rsbuild.config.ts` 文件中注册插件：
 
 ```ts title="rsbuild.config.ts"
+import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginVue2Jsx } from '@rsbuild/plugin-vue2-jsx';
 
 export default {
-  plugins: [pluginVue2Jsx()],
+  plugins: [pluginBabel(), pluginVue2Jsx()],
 };
 ```
 

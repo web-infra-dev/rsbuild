@@ -84,43 +84,6 @@ npm ls postcss
 
 ---
 
-### 打开页面后报错，提示 exports is not defined？
-
-如果编译正常，但是打开页面后出现 `exports is not defined` 报错，通常是因为在项目中使用 Babel 编译了一个 CommonJS 模块，导致 Babel 出现异常。
-
-在正常情况下，Rsbuild 是不会使用 Babel 来编译 CommonJS 模块的。如果项目中使用了 [source.include](/config/options/source.html#sourceinclude) 配置项，或使用了 [tools.babel](/config/options/tools.html#toolsbabel) 的 `addIncludes` 方法，则可能会把一些 CommonJS 模块加入到 Babel 编译中。
-
-该问题有两种解决方法：
-
-1. 避免将 CommonJS 模块加入到 Babel 编译中。
-2. 将 Babel 的 `sourceType` 配置项设置为 `unambiguous`，示例如下：
-
-```js
-export default {
-  tools: {
-    babel(config) {
-      config.sourceType = 'unambiguous';
-    },
-  },
-};
-```
-
-将 `sourceType` 设置为 `unambiguous` 可能会产生一些其他影响，请参考 [Babel 官方文档](https://babeljs.io/docs/en/options#sourcetype)。
-
----
-
-### 编译时报错 "Error: ES Modules may not assign module.exports or exports.\*, Use ESM export syntax"？
-
-如果编译时出现以下报错，通常也是因为在项目中使用 Babel 编译了一个 CommonJS 模块，解决方法与上述的 `exports is not defined` 问题一致。
-
-```bash
-Error: ES Modules may not assign module.exports or exports.*, Use ESM export syntax, instead: 581
-```
-
-更多信息请参考 issue：[babel#12731](https://github.com/babel/babel/issues/12731)。
-
----
-
 ### 编译时报错 "export 'foo' (imported as 'foo') was not found in './utils'"？
 
 如果编译的过程中出现此报错，说明代码中引用了一个不存在的导出。
@@ -173,7 +136,7 @@ export type { Foo } from './utils'; // 正确写法
 ```ts
 export default {
   tools: {
-    webpackChain(chain) {
+    bundlerChain(chain) {
       chain.module.parser.merge({
         javascript: {
           exportsPresence: 'warn',
