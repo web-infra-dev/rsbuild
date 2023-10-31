@@ -12,7 +12,7 @@
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@rsbuild/core": "^0.0.11",
-    "@rsbuild/plugin-react": "^0.0.11"
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/plugin-react": "workspace:*"
   }
 }

@@ -615,10 +615,10 @@ importers:
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../core
       '@rsbuild/plugin-react':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../plugin-react
 
   packages/create-rsbuild/template-react-ts:
@@ -631,10 +631,10 @@ importers:
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../core
       '@rsbuild/plugin-react':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../plugin-react
       '@types/react':
         specifier: ^18
@@ -653,10 +653,10 @@ importers:
         version: 4.2.2
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../core
       '@rsbuild/plugin-svelte':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../plugin-svelte
 
   packages/create-rsbuild/template-svelte-ts:
@@ -666,10 +666,10 @@ importers:
         version: 4.2.2
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../core
       '@rsbuild/plugin-svelte':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../plugin-svelte
       typescript:
         specifier: ^5.2.0
@@ -682,10 +682,10 @@ importers:
         version: 2.7.14
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../core
       '@rsbuild/plugin-vue2':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../plugin-vue2
 
   packages/create-rsbuild/template-vue2-ts:
@@ -695,10 +695,10 @@ importers:
         version: 2.7.14
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../core
       '@rsbuild/plugin-vue2':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../plugin-vue2
       typescript:
         specifier: ^5.2.0
@@ -711,10 +711,10 @@ importers:
         version: 3.3.4
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../core
       '@rsbuild/plugin-vue':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../plugin-vue
 
   packages/create-rsbuild/template-vue3-ts:
@@ -724,10 +724,10 @@ importers:
         version: 3.3.4
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../core
       '@rsbuild/plugin-vue':
-        specifier: ^0.0.11
+        specifier: workspace:*
         version: link:../../plugin-vue
       typescript:
         specifier: ^5.2.0
