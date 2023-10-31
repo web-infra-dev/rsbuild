@@ -437,6 +437,22 @@ importers:
 
   packages/compat/plugin-swc/tests/fixtures/browserslist/ie11: {}
 
+  packages/compat/unibuilder:
+    dependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../core
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../../shared
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../webpack
+    devDependencies:
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
   packages/compat/webpack:
     dependencies:
       '@babel/core':
