@@ -1,5 +1,11 @@
 # @rsbuild/doctor-utils
 
+## 0.0.3
+
+### Patch Changes
+
+- 0dcdcce: chore: doctor add based on.
+
 ## 0.0.2
 
 ### Patch Changes

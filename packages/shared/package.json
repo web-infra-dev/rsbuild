@@ -8,7 +8,7 @@
     "directory": "packages/shared"
   },
   "license": "MIT",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "types": "./src/index.ts",
   "main": "./dist/index.js",
   "exports": {

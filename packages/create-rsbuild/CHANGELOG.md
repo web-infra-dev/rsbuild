@@ -1,5 +1,12 @@
 # create-rsbuild
 
+## 0.0.11
+
+### Patch Changes
+
+- 8a4cf1e: fix(create-rsbuild): incorrect preview command
+- db6b547: feat(create-rsbuild): templates depend on latest version of Rsbuild
+
 ## 0.0.10
 
 ### Patch Changes
