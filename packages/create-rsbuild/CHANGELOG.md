@@ -1,5 +1,11 @@
 # create-rsbuild
 
+## 0.0.12
+
+### Patch Changes
+
+- 50c2711: feat(create-rsbuild): always use the latest version
+
 ## 0.0.11
 
 ### Patch Changes

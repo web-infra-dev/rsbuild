@@ -1,5 +1,12 @@
 # @rsbuild/plugin-react
 
+## 0.0.12
+
+### Patch Changes
+
+- ba13a3d: fix(plugin-react): missing react-refresh dependency
+  - @rsbuild/shared@0.0.12
+
 ## 0.0.11
 
 ### Patch Changes
