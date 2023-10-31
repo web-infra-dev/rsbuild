@@ -63,6 +63,10 @@ export default defineConfig({
 
 使用 Stylus 作为 CSS 预处理器。
 
+### [Styled Components 插件](/plugins/list/plugin-styled-components.html)
+
+提供对 styled-components 的编译时支持。
+
 ### [Check Syntax 插件](/plugins/list/plugin-check-syntax.html)
 
 用于分析产物的语法兼容性，判断是否存在导致兼容性问题的高级语法。

@@ -1,0 +1,97 @@
+# Styled Components 插件
+
+:::tip styled-components 介绍
+[styled-components](https://styled-components.com/) 是一个社区常用的 CSS-in-JS 实现库，它使用 JavaScript 的新特性 [Tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) 编写组件的 CSS 样式。
+:::
+
+Rsbuild 提供对 styled-components 的编译时支持，优化调试体验并对 styled-components 添加服务器端渲染支持。
+
+详情可参考 [Rspack#styledComponents](https://www.rspack.dev/zh/guide/loader.html#optionsrspackexperimentsstyledcomponents)。
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-styled-components -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
+
+export default {
+  plugins: [pluginStyledComponents()],
+};
+```
+
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
+
+## 示例
+
+注册完插件后，你可以使用 styled-components 编写样式：
+
+```ts
+import styled from 'styled-components';
+
+const div = styled.div`
+  color: red;
+`;
+
+console.log('div', div);
+```
+
+## 选项
+
+如果你需要自定义 styled-components 的编译行为，可以使用以下配置项。
+
+可查阅 [styled-components 文档](https://www.rspack.dev/zh/guide/loader.html#optionsrspackexperimentsstyledcomponents) 来了解具体用法。
+
+- **类型：**
+
+```ts
+type StyledComponentsOptions = {
+  displayName?: boolean;
+  ssr?: boolean;
+  fileName?: boolean;
+  meaninglessFileNames?: string[];
+  namespace?: string;
+  topLevelImportPaths?: string[];
+  transpileTemplateLiterals?: boolean;
+  minify?: boolean;
+  pure?: boolean;
+  cssProps?: boolean;
+};
+```
+
+- **默认值：**
+
+```ts
+{
+  displayName: true,
+  // 在 SSR 构建中 isSSR 为 true
+  ssr: isSSR,
+  // 在生产环境构建时启用 `pure` 来优化包体积
+  pure: isProd,
+  transpileTemplateLiterals: true,
+}
+```
+
+- **示例：**
+
+当配置项值为 Object 类型时，会与默认配置通过 `Object.assign` 合并。
+
+```ts title="rsbuild.config.ts"
+export default {
+  plugins: [
+    pluginStyledComponents({
+      pure: true,
+    }),
+  ],
+};
+```
