@@ -14,7 +14,7 @@ exports[`plugins/babel > babel-loader addIncludes & addExcludes should works 1`]
         "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
@@ -94,7 +94,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
       },
     },
     {
-      "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+      "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
       "options": {
         "babelrc": false,
         "compact": false,
@@ -126,7 +126,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
         "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
@@ -161,7 +161,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
         "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
