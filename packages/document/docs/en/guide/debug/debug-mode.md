@@ -10,7 +10,7 @@ DEBUG=rsbuild pnpm dev
 DEBUG=rsbuild pnpm build
 ```
 
-In debug mode, Rsbuild will output some additional log information, and write the Rsbuild config and webpack config to the dist directory, which is convenient for developers to view and debug.
+In debug mode, Rsbuild will output some additional log information, and write the Rsbuild config and Rspack config to the dist directory, which is convenient for developers to view and debug.
 
 ## Log Information
 

@@ -84,43 +84,6 @@ Solution:
 
 ---
 
-### Find `exports is not defined` runtime error?
-
-If the compilation is succeed, but the `exports is not defined` error appears after opening the page, it is usually because a CommonJS module is compiled by Babel.
-
-Under normal circumstances, Rsbuild will not use Babel to compile CommonJS modules. If the [source.include](/config/options/source.html#sourceinclude) configuration option is used in the project, or the [tools.babel](/config/options/tools.html#tools-babel) `addIncludes` method, some CommonJS modules may be added to the Babel compilation.
-
-There are two workarounds for this problem:
-
-1. Avoid adding CommonJS modules to Babel compilation.
-2. Set Babel's `sourceType` configuration option to `unambiguous`, for example:
-
-```js
-export default {
-  tools: {
-    babel(config) {
-      config.sourceType = 'unambiguous';
-    },
-  },
-};
-```
-
-Setting `sourceType` to `unambiguous` may have some other effects, please refer to [Babel official documentation](https://babeljs.io/docs/en/options#sourcetype).
-
----
-
-### Compile error "Error: ES Modules may not assign module.exports or exports.\*, Use ESM export syntax"?
-
-If the following error occurs during compilation, it is usually because a CommonJS module is compiled with Babel in the project, and the solution is same as the above `exports is not defined` problem.
-
-```bash
-Error: ES Modules may not assign module.exports or exports.*, Use ESM export syntax, instead: 581
-```
-
-For more information, please refer to issue: [babel#12731](https://github.com/babel/babel/issues/12731).
-
----
-
 ### Compilation error "export 'foo' (imported as 'foo') was not found in './utils'"?
 
 If you encounter this error during the compilation process, it means that your code is referencing an export that does not exist.
@@ -173,7 +136,7 @@ In some cases, the error may be caused by a third-party dependency that you cann
 ```ts
 export default {
   tools: {
-    webpackChain(chain) {
+    bundlerChain(chain) {
       chain.module.parser.merge({
         javascript: {
           exportsPresence: 'warn',

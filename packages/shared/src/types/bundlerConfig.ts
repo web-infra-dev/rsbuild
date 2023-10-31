@@ -209,7 +209,7 @@ export interface BundlerChain
   >;
   module: PickAndModifyThis<
     WebpackChain['module'],
-    'rules' | 'rule' | 'delete'
+    'rules' | 'rule' | 'delete' | 'parser'
   >;
 }
 

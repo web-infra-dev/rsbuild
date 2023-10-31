@@ -10,7 +10,7 @@ DEBUG=rsbuild pnpm dev
 DEBUG=rsbuild pnpm build
 ```
 
-在调试模式下，Rsbuild 会输出一些额外的日志信息，并将内部最终生成的 Rsbuild 配置和 webpack 配置写入到产物目录下，便于开发者查看和调试。
+在调试模式下，Rsbuild 会输出一些额外的日志信息，并将内部最终生成的 Rsbuild 配置和 Rspack 配置写入到产物目录下，便于开发者查看和调试。
 
 ## 日志信息
 
