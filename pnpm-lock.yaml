@@ -1043,6 +1043,9 @@ importers:
       '@rspack/plugin-react-refresh':
         specifier: 0.3.8
         version: 0.3.8(react-refresh@0.14.0)(webpack@5.89.0)
+      react-refresh:
+        specifier: ^0.14.0
+        version: 0.14.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*

@@ -27,7 +27,7 @@ export interface SourceConfig extends SharedSourceConfig {
    */
   moduleScopes?: ChainedConfig<ModuleScopes>;
   /**
-   * Configurare babel-plugin-import or swc-plugin-import or Rspack builtins plugin import
+   * Configure babel-plugin-import or swc-plugin-import or Rspack builtins plugin import
    */
   transformImport?: false | TransformImport[];
 }
