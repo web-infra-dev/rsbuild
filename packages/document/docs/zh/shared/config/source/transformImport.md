@@ -19,39 +19,7 @@ type Config =
     }>;
 ```
 
-- **默认值：**
-
-当项目中安装了 [Ant Design 组件库](https://www.npmjs.com/package/antd) &lt;= 4.x 版本时，Rsbuild 会自动添加以下默认配置：
-
-```js
-const defaultAntdConfig = {
-  libraryName: 'antd',
-  libraryDirectory: isServer ? 'lib' : 'es',
-  style: true,
-};
-```
-
-当项目中安装了 [Arco Design 组件库](https://www.npmjs.com/package/@arco-design/web-react) 时，Rsbuild 会自动添加以下默认配置：
-
-```js
-const defaultArcoConfig = [
-  {
-    libraryName: '@arco-design/web-react',
-    libraryDirectory: isServer ? 'lib' : 'es',
-    camelToDashComponentName: false,
-    style: true,
-  },
-  {
-    libraryName: '@arco-design/web-react/icon',
-    libraryDirectory: isServer ? 'react-icon-cjs' : 'react-icon',
-    camelToDashComponentName: false,
-  },
-];
-```
-
-:::tip
-当你添加了 `antd` 或 `@arco-design/web-react` 相关的配置时，优先级会高于上述默认配置。
-:::
+- **默认值：** 当你使用 [React 插件](/plugins/list/plugin-react)时，自动支持 [React 组件库的按需引入](/plugins/list/plugin-react.html#组件库按需引入)。
 
 ### 示例
 
