@@ -1,5 +1,11 @@
 # @rsbuild/plugin-esbuild
 
+## 0.0.12
+
+### Patch Changes
+
+- @rsbuild/shared@0.0.12
+
 ## 0.0.9
 
 ### Patch Changes

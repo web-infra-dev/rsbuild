@@ -1,5 +1,12 @@
 # @rsbuild/plugin-check-syntax
 
+## 0.0.12
+
+### Patch Changes
+
+- @rsbuild/core@0.0.12
+- @rsbuild/shared@0.0.12
+
 ## 0.0.11
 
 ### Patch Changes
