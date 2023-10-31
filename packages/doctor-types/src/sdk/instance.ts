@@ -72,7 +72,7 @@ export interface DoctorSDKInstance {
   /**
    * folder of manifest
    *   - used to save the manifest.json and sharding files.
-   * @default ".web-doctor"
+   * @default ".rsbuild-doctor"
    */
   readonly outputDir: string;
 
@@ -117,7 +117,7 @@ export interface DoctorSdkInstance {
   /**
    * folder of manifest
    *   - used to save the manifest.json and sharding files.
-   * @default ".web-doctor"
+   * @default ".rsbuild-doctor"
    */
   readonly outputDir: string;
 

@@ -1,3 +1,3 @@
-export * from './chunk-graph';
-export * from './module-graph';
-export * from './package-graph';
+export * as Graph from './graph';
+export * as SDK from './sdk';
+export * as Error from './error';

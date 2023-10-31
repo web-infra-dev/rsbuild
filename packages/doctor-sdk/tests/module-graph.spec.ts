@@ -1,7 +1,7 @@
 import path from 'path';
 import { expect, describe, it } from 'vitest';
 import type { SDK } from '@rsbuild/doctor-types';
-import { Module, ModuleGraph, PackageGraph } from '../src';
+import { Module, ModuleGraph, PackageGraph } from '../src/graph';
 
 const resolveFixture = (...paths: string[]) => {
   return path.resolve(__dirname, 'fixture', ...paths);

@@ -1,6 +1,11 @@
 {
   "extends": "@rsbuild/tsconfig/base",
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "removeComments": true,
+    "strict": true,
+    "declaration": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
