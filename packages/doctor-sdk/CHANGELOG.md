@@ -1,5 +1,13 @@
 # @rsbuild/doctor-sdk
 
+## 0.0.3
+
+### Patch Changes
+
+- 0dcdcce: chore: doctor add based on.
+- Updated dependencies [0dcdcce]
+  - @rsbuild/doctor-utils@0.0.3
+
 ## 0.0.2
 
 ### Patch Changes
