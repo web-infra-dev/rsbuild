@@ -1,8 +1,12 @@
 # Styled Components Plugin
 
+:::tip About styled-components
 [styled-components](https://styled-components.com/) is a popular CSS-in-JS implementation library, which uses the new JavaScript feature [Tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) to write component CSS styles.
+:::
 
-Rsbuild provides compile-time support for styled-components. For details, please refer to [rspack#styledComponents](https://www.rspack.dev/guide/loader.html#optionsrspackexperimentsstyledcomponents).
+Rsbuild provides compile-time support for styled-components, improve the debugging experience and add server-side rendering support to styled-components.
+
+For details, please refer to [Rspack#styledComponents](https://www.rspack.dev/guide/loader.html#optionsrspackexperimentsstyledcomponents).
 
 ## Quick Start
 
@@ -27,6 +31,8 @@ export default {
 ```
 
 If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
+
+## Example
 
 After registering the plugin, you can use styled-components to write styles:
 
@@ -77,6 +83,8 @@ type StyledComponentsOptions = {
 ```
 
 - **Example:**
+
+When the value is an Object, use the `Object.assign` function to merge with the default config.
 
 ```ts title="rsbuild.config.ts"
 export default {

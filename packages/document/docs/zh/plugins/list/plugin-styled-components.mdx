@@ -1,8 +1,12 @@
 # Styled Components 插件
 
+:::tip styled-components 介绍
 [styled-components](https://styled-components.com/) 是一个社区常用的 CSS-in-JS 实现库，它使用 JavaScript 的新特性 [Tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) 编写组件的 CSS 样式。
+:::
 
-Rsbuild 提供对 styled-components 的编译时支持，详情可参考 [rspack#styledComponents](https://www.rspack.dev/zh/guide/loader.html#optionsrspackexperimentsstyledcomponents)。
+Rsbuild 提供对 styled-components 的编译时支持，优化调试体验并对 styled-components 添加服务器端渲染支持。
+
+详情可参考 [Rspack#styledComponents](https://www.rspack.dev/zh/guide/loader.html#optionsrspackexperimentsstyledcomponents)。
 
 ## 快速开始
 
@@ -27,6 +31,8 @@ export default {
 ```
 
 如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
+
+## 示例
 
 注册完插件后，你可以使用 styled-components 编写样式：
 
@@ -77,6 +83,8 @@ type StyledComponentsOptions = {
 ```
 
 - **示例：**
+
+当配置项值为 Object 类型时，会与默认配置通过 `Object.assign` 合并。
 
 ```ts title="rsbuild.config.ts"
 export default {
