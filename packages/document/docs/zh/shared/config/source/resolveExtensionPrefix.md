@@ -1,7 +1,7 @@
 - **类型：** `string | Record<RsbuildTarget, string>`
 - **默认值：** `undefined`
 
-用于为 [resolve.extensions](https://webpack.js.org/configuration/resolve/#resolveextensions) 添加统一的前缀。
+用于为 [resolve.extensions](https://www.rspack.dev/zh/config/resolve.html#resolveextensions) 添加统一的前缀。
 
 如果多个文件拥有相同的名称，但具有不同的文件后缀，Rsbuild 会根据 extensions 数组的顺序进行识别，解析数组中第一个被识别的文件，并跳过其余文件。
 

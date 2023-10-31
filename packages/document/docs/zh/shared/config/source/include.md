@@ -3,7 +3,7 @@
 
 出于编译性能的考虑，默认情况下，Rsbuild 不会编译 node_modules 下的 JavaScript/TypeScript 文件，也不会编译当前工程目录外部的 JavaScript/TypeScript 文件。
 
-通过 `source.include` 配置项，可以指定需要 Rsbuild 额外进行编译的目录或模块。`source.include` 的用法与 webpack 中的 [Rule.include](https://webpack.js.org/configuration/module/#ruleinclude) 一致，支持传入字符串或正则表达式来匹配模块的路径。
+通过 `source.include` 配置项，可以指定需要 Rsbuild 额外进行编译的目录或模块。`source.include` 的用法与 Rspack 中的 [Rule.include](https://www.rspack.dev/zh/config/module.html#ruleinclude) 一致，支持传入字符串或正则表达式来匹配模块的路径。
 
 比如:
 
@@ -84,31 +84,11 @@ export default {
 };
 ```
 
-### 编译 CommonJS 模块
-
-Babel 默认无法编译 CommonJS 模块，如果你编译了一个 CommonJS 模块，可能会出现 `exports is not defined` 的运行时报错信息。
-
-当你需要使用 `source.include` 来编译 CommonJS 模块时，可以将 Babel 的 `sourceType` 配置设置为 `unambiguous`：
-
-```ts
-export default {
-  tools: {
-    babel(config) {
-      config.sourceType = 'unambiguous';
-    },
-  },
-};
-```
-
-将 `sourceType` 设置为 `unambiguous` 可能会产生一些其他影响，请参考 [Babel 官方文档](https://babeljs.io/docs/en/options#sourcetype)。
-
 ### 匹配 Symlink
 
 如果你匹配的模块是通过 symlink 链接到当前项目中的，那么需要匹配这个模块的**真实路径**，而不是 symlink 后的路径。
 
 比如，你将 Monorepo 中的 `packages/foo` 路径 symlink 到当前项目的 `node_modules/foo` 路径下，则需要去匹配 `packages/foo` 路径，而不是 `node_modules/foo` 路径。
-
-该行为可以通过 webpack 的 [resolve.symlinks](https://webpack.js.org/configuration/resolve/#resolvesymlinks) 配置项来进行控制。
 
 ### 注意事项
 

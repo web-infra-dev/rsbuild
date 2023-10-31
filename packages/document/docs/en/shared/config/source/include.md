@@ -1,9 +1,9 @@
 - **Type:** `Array<string | RegExp>`
 - **Default:** `[]`
 
-In order to maintain faster compilation speed, Rsbuild will not compile JavaScript/TypeScript files under node_modules through `babel-loader` or `ts-loader` by default, as will as the JavaScript/TypeScript files outside the current project directory.
+In order to maintain faster compilation speed, Rsbuild will not compile JavaScript/TypeScript files under node_modules through SWC by default, as will as the JavaScript/TypeScript files outside the current project directory.
 
-Through the `source.include` config, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://webpack.js.org/configuration/module/#ruleinclude) in webpack, which supports passing in strings or regular expressions to match the module path.
+Through the `source.include` config, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://www.rspack.dev/config/module.html#ruleinclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
 
 For example:
 
@@ -84,31 +84,11 @@ export default {
 };
 ```
 
-### Compile CommonJS Module
-
-Babel cannot compile CommonJS modules by default, and if you compile a CommonJS module, you may get a runtime error message `exports is not defined`.
-
-When you need to compile a CommonJS module using `source.include`, you can set Babel's `sourceType` configuration to `unambiguous`.
-
-```ts
-export default {
-  tools: {
-    babel(config) {
-      config.sourceType = 'unambiguous';
-    },
-  },
-};
-```
-
-Setting `sourceType` to `unambiguous` may have some other effects, please refer to [Babel official documentation](https://babeljs.io/docs/en/options#sourcetype).
-
 ### Matching Symlink
 
 If you match a module that is symlinked to the current project, then you need to match the **real path** of the module, not the symlinked path.
 
 For example, if you symlink the `packages/foo` path in Monorepo to the `node_modules/foo` path of the current project, you need to match the `packages/foo` path, not the `node_modules/foo` path.
-
-This behavior can be controlled via webpack's [resolve.symlinks](https://webpack.js.org/configuration/resolve/#resolvesymlinks) config.
 
 ### Precautions
 

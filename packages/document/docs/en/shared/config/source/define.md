@@ -10,11 +10,7 @@ Each key passed into options is an identifier or multiple identifiers joined wit
 - If the value is an object all keys are defined the same way.
 - If you prefix typeof to the key, it's only defined for typeof calls.
 
-For more information please visit [webpack - DefinePlugin](https://webpack.js.org/plugins/define-plugin/).
-
-:::tip
-When using Rspack as the bundler, the supported types can be found in [Rspack.builtins.define](https://www.rspack.dev/config/builtins.html#builtinsdefine).
-:::
+For more information please visit [Rspack - DefinePlugin](https://www.rspack.dev/config/plugins.html#defineplugin).
 
 ### Example
 
