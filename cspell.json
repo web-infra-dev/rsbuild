@@ -32,7 +32,6 @@
     "systemjs",
     "transpiling",
     "tsbuildinfo",
-    "unibuilder",
     "vitest"
   ]
 }

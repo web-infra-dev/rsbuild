@@ -437,7 +437,7 @@ importers:
 
   packages/compat/plugin-swc/tests/fixtures/browserslist/ie11: {}
 
-  packages/compat/unibuilder:
+  packages/compat/uni-builder:
     dependencies:
       '@rsbuild/core':
         specifier: workspace:*
