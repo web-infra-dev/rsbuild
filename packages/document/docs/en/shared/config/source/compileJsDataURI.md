@@ -3,7 +3,7 @@
 
 This option is used to control whether to compile JavaScript code inside data URIs.
 
-By default, Rsbuild uses Babel or SWC to compile the code inside data URIs. For example, the following code:
+By default, Rsbuild uses SWC to compile the code inside data URIs. For example, the following code:
 
 ```js
 import x from 'data:text/javascript,export default 1;';

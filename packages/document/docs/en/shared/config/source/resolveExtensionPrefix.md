@@ -1,7 +1,7 @@
 - **Type:** `string | Record<RsbuildTarget, string>`
 - **Default:** `undefined`
 
-Add a prefix to [resolve.extensions](https://webpack.js.org/configuration/resolve/#resolveextensions).
+Add a prefix to [resolve.extensions](https://www.rspack.dev/config/resolve.html#resolveextensions).
 
 If multiple files share the same name but have different extensions, Rsbuild will resolve the one with the extension listed first in the array and skip the rest.
 

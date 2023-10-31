@@ -31,7 +31,7 @@ You can refer to the [TypeScript - paths](https://www.typescriptlang.org/tsconfi
 
 ## Use `source.alias` Configuration
 
-Rsbuild provides the [source.alias](https://rsbuild.dev/config/options/source.html#sourcealias) configuration option, which corresponds to the webpack/Rspack native [resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) configuration. You can configure this option using an object or a function.
+Rsbuild provides the [source.alias](https://rsbuild.dev/config/options/source.html#sourcealias) configuration option, which corresponds to the webpack/Rspack native [resolve.alias](https://www.rspack.dev/config/resolve.html#resolvealias) configuration. You can configure this option using an object or a function.
 
 ### Use Cases
 
