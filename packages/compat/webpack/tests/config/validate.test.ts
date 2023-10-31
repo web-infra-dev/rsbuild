@@ -28,14 +28,12 @@ describe('validateRsbuildConfig', () => {
     const config: RsbuildConfig = {
       tools: {
         htmlPlugin: false,
-        babel: () => undefined,
         terser: [],
       },
     };
     await expect(validateRsbuildConfig(config)).resolves.toMatchInlineSnapshot(`
       {
         "tools": {
-          "babel": [Function],
           "htmlPlugin": false,
           "terser": [],
         },

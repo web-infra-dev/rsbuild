@@ -1,10 +1,10 @@
 import { join } from 'path';
 import { pluginEntry } from '@rsbuild/core/plugins/entry';
 import { pluginBasic } from '@/plugins/basic';
-import { applyDefaultRsbuildOptions } from '@rsbuild/shared';
 import { createStubRsbuild, fixturesDir } from './helper';
 import { createCompiler } from '@/core/createCompiler';
 import { createPrimaryContext } from '@/core/createContext';
+import { getCreateRsbuildDefaultOptions } from '@rsbuild/core';
 
 describe('build hooks', () => {
   test('should call onBeforeBuild hook before build', async () => {
@@ -30,6 +30,7 @@ describe('build hooks', () => {
 
     expect(fn).toHaveBeenCalledTimes(1);
   });
+
   test('should call onBeforeBuild hook before build in watch mode', async () => {
     const fn = vi.fn();
     const rsbuild = await createStubRsbuild({
@@ -49,8 +50,10 @@ describe('build hooks', () => {
     });
     expect(fn).toHaveBeenCalledTimes(1);
   });
+
   const createDefaultContext = () =>
-    createPrimaryContext(applyDefaultRsbuildOptions({}), {});
+    createPrimaryContext(getCreateRsbuildDefaultOptions(), {});
+
   test('should return Compiler when passing single webpack config', async () => {
     const compiler = await createCompiler({
       context: createDefaultContext(),

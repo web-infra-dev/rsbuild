@@ -6,8 +6,6 @@
  * https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
 
-// Modified by Chao Xu (xuchaobei)
-
 import type webpack from 'webpack';
 import type { StatsCompilation } from 'webpack';
 

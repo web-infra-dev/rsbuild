@@ -2,7 +2,6 @@ import {
   pick,
   debug,
   createPluginStore,
-  applyDefaultRsbuildOptions,
   type RsbuildInstance,
   type RsbuildProvider,
   type CreateRsbuildOptions,
@@ -17,6 +16,14 @@ const getRspackProvider = async (rsbuildConfig: RsbuildConfig) => {
     rsbuildConfig,
   });
 };
+
+export const getCreateRsbuildDefaultOptions =
+  (): Required<CreateRsbuildOptions> => ({
+    cwd: process.cwd(),
+    entry: {},
+    target: ['web'],
+    configPath: null,
+  });
 
 export async function createRsbuild<
   P extends ({ rsbuildConfig }: { rsbuildConfig: T }) => RsbuildProvider,
@@ -33,7 +40,11 @@ export async function createRsbuild<
     ? options.provider({ rsbuildConfig })
     : await getRspackProvider(rsbuildConfig as RsbuildConfig);
 
-  const rsbuildOptions = applyDefaultRsbuildOptions(options);
+  const rsbuildOptions = {
+    ...getCreateRsbuildDefaultOptions(),
+    ...options,
+  };
+
   const pluginStore = createPluginStore();
   const {
     build,

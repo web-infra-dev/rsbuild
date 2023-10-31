@@ -38,7 +38,6 @@ export const sharedToolsConfigSchema = z.partialObj({
   pug: z.union([z.literal(true), z.chained(z.any())]),
   sass: z.chained(z.any(), z.object({ addExcludes: FileFilterUtilSchema })),
   less: z.chained(z.any(), z.object({ addExcludes: FileFilterUtilSchema })),
-  babel: z.chained(z.any(), z.any()),
   postcss: z.chained(z.any(), z.object({ addPlugins: z.function() })),
   cssLoader: z.chained(z.any(), z.object({ addPlugins: z.function() })),
   minifyCss: z.chained(z.any()),

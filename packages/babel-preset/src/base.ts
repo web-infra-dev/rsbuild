@@ -1,4 +1,3 @@
-import { join } from 'path';
 import type { BabelConfig, BasePresetOptions } from './types';
 
 export const generateBaseConfig = (

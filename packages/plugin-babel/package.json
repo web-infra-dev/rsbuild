@@ -26,12 +26,13 @@
   "dependencies": {
     "@babel/preset-typescript": "^7.23.2",
     "@rsbuild/shared": "workspace:*",
-    "lodash": "^4.17.21"
+    "@types/babel__core": "^7.20.3",
+    "lodash": "^4.17.21",
+    "upath": "2.0.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
-    "@rsbuild/webpack": "workspace:*",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "typescript": "^5"

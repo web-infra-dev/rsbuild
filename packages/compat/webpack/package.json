@@ -62,6 +62,7 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/babel-preset": "workspace:*",
     "@rsbuild/shared": "workspace:*",
+    "@rsbuild/plugin-babel": "workspace:*",
     "babel-plugin-import": "1.13.5",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
     "caniuse-lite": "^1.0.30001520",

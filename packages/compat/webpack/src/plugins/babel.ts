@@ -6,12 +6,12 @@ import {
   JS_REGEX,
   TS_REGEX,
   mergeRegex,
-  getBabelUtils,
   addCoreJsEntry,
   mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
 } from '@rsbuild/shared';
+import { getBabelUtils } from '@rsbuild/plugin-babel';
 import { getCompiledPath } from '../shared';
 
 import type {

@@ -161,7 +161,6 @@
   "dependencies": {
     "@modern-js/prod-server": "^2.39.0",
     "@modern-js/server": "^2.39.0",
-    "@types/babel__core": "^7.20.3",
     "@types/fs-extra": "^11.0.2",
     "browserslist": "^4.22.1",
     "chalk": "^4.1.2",
@@ -176,7 +175,6 @@
     "rslog": "^1.1.0",
     "semver": "^7.5.4",
     "url-join": "^4.0.1",
-    "upath": "2.0.1",
     "webpack": "^5.88.1",
     "webpack-chain": "npm:webpack-5-chain@8.0.1",
     "webpack-sources": "^3.2.3",
