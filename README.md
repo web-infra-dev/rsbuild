@@ -24,7 +24,13 @@ Rsbuild is an Rspack-based build tool for the web.
 
 The main goal of Rsbuild is to provide out-of-the-box build capabilities for Rspack users, allowing developers to start a web project with zero configuration.
 
+Rsbuild integrates high-performance Rust-based tools from the community, including [Rspack](https://github.com/web-infra-dev/rspack), [Oxc](https://github.com/web-infra-dev/oxc), and [SWC](https://swc.rs/), to provide first-class build speed and development experience.
+
+![rsbuild-toolchain](https://github.com/web-infra-dev/rsbuild/assets/7237365/204dadf8-b923-4f9c-8823-f3d75cb133ae)
+
 Rsbuild also provides universal build capabilities for higher level solutions, such as Rspress and Modern.js. In fact, Rsbuild is a rebrand of the Modern.js Builder. It has been decoupled from Modern.js to provide greater flexibility and to meet the diverse needs of community users.
+
+## Position
 
 The following diagram illustrates the relationship between Rsbuild and other tools in the ecosystem:
 
@@ -41,7 +47,9 @@ The following diagram illustrates the relationship between Rsbuild and other too
 
 ## Getting Started
 
-**This project is new and under active development. It will be available in late November 2023.**
+You can refer to [Quick Start](https://rsbuild.dev/guide/start/quick-start.html) to start experiencing Rsbuild.
+
+Please note that the Rsbuild project is still under active development. We are still in the process of refactoring and optimizing. The documentation is not yet complete.
 
 ## Ecosystem
 

@@ -18,7 +18,7 @@ exports[`plugins/react > should work with babel-loader 1`] = `
         "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
@@ -97,7 +97,7 @@ exports[`plugins/react > should work with babel-loader 1`] = `
         },
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
@@ -336,7 +336,7 @@ exports[`plugins/react > should work with ts-loader 1`] = `
         "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
@@ -427,7 +427,7 @@ exports[`plugins/react > should work with ts-loader 1`] = `
         },
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
@@ -727,7 +727,7 @@ exports[`plugins/react > should work with ts-loader 1`] = `
         "test": /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/babel-loader",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
             "options": {
               "plugins": [
                 "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",

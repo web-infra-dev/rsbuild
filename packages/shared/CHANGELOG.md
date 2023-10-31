@@ -1,5 +1,14 @@
 # @rsbuild/shared
 
+## 0.0.11
+
+### Patch Changes
+
+- 70c39ed: perf: reduce builtin PostCSS plugins
+- 18f3997: fix(schema): add missing tools schemas
+- d5ed6d6: refactor: extract checkSyntax plugin as a standalone package
+- b07fdba: refactor: move babel helpers to plugin-babel
+
 ## 0.0.10
 
 ## 0.0.9

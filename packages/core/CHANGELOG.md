@@ -1,5 +1,21 @@
 # @rsbuild/core
 
+## 0.0.11
+
+### Patch Changes
+
+- 70c39ed: perf: reduce builtin PostCSS plugins
+- 18f3997: fix(schema): add missing tools schemas
+- 1bb644b: perf(core): remove strip-ansi dependency
+- d5ed6d6: refactor: extract checkSyntax plugin as a standalone package
+- 884fbb7: refactor: replace @rspack/dev-client with @rspack/plugin-react-refresh
+- b07fdba: refactor: move babel helpers to plugin-babel
+- Updated dependencies [70c39ed]
+- Updated dependencies [18f3997]
+- Updated dependencies [d5ed6d6]
+- Updated dependencies [b07fdba]
+  - @rsbuild/shared@0.0.11
+
 ## 0.0.10
 
 ### Patch Changes

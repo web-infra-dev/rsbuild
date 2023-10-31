@@ -37,8 +37,6 @@ export type SharedCompiledPkgNames =
   | 'sass-loader'
   | 'less-loader'
   | 'node-loader'
-  | 'babel-loader'
-  | 'file-loader'
   | 'toml-loader'
   | 'yaml-loader'
   | 'assetsRetry.js'

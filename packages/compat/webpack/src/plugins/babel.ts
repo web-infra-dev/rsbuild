@@ -34,14 +34,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
     api.modifyBundlerChain(
       async (
         chain,
-        {
-          CHAIN_ID,
-          target,
-          isProd,
-          isServer,
-          isServiceWorker,
-          getCompiledPath,
-        },
+        { CHAIN_ID, target, isProd, isServer, isServiceWorker },
       ) => {
         const config = api.getNormalizedConfig();
         const browserslist = await getBrowserslistWithDefault(
@@ -144,7 +137,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
         rule
           .test(useTsLoader ? JS_REGEX : mergeRegex(JS_REGEX, TS_REGEX))
           .use(CHAIN_ID.USE.BABEL)
-          .loader(getCompiledPath('babel-loader'))
+          .loader(require.resolve('babel-loader'))
           .options(babelOptions);
 
         /**
@@ -160,7 +153,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
               or: ['text/javascript', 'application/javascript'],
             })
             .use(CHAIN_ID.USE.BABEL)
-            .loader(getCompiledPath('babel-loader'))
+            .loader(require.resolve('babel-loader'))
             // Using cloned options to keep options separate from each other
             .options(lodash.cloneDeep(babelOptions));
         }

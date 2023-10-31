@@ -1,5 +1,11 @@
 # @rsbuild/document
 
+## 0.0.11
+
+### Patch Changes
+
+- 70c39ed: perf: reduce builtin PostCSS plugins
+
 ## 0.0.10
 
 ## 0.0.9
