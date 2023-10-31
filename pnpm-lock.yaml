@@ -615,11 +615,11 @@ importers:
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.10
-        version: 0.0.10(react-dom@18.2.0)(react-refresh@0.14.0)(react@18.2.0)
+        specifier: ^0.0.11
+        version: link:../../core
       '@rsbuild/plugin-react':
-        specifier: ^0.0.10
-        version: 0.0.10(@babel/core@7.23.2)(react-refresh@0.14.0)(webpack@5.89.0)
+        specifier: ^0.0.11
+        version: link:../../plugin-react
 
   packages/create-rsbuild/template-react-ts:
     dependencies:
@@ -631,11 +631,11 @@ importers:
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.10
-        version: 0.0.10(react-dom@18.2.0)(react-refresh@0.14.0)(react@18.2.0)
+        specifier: ^0.0.11
+        version: link:../../core
       '@rsbuild/plugin-react':
-        specifier: ^0.0.10
-        version: 0.0.10(@babel/core@7.23.2)(react-refresh@0.14.0)(webpack@5.89.0)
+        specifier: ^0.0.11
+        version: link:../../plugin-react
       '@types/react':
         specifier: ^18
         version: 18.0.38
@@ -643,7 +643,7 @@ importers:
         specifier: ^18
         version: 18.2.14
       typescript:
-        specifier: ^5.0.0
+        specifier: ^5.2.0
         version: 5.2.2
 
   packages/create-rsbuild/template-svelte-js:
@@ -653,11 +653,11 @@ importers:
         version: 4.2.2
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.10
-        version: 0.0.10(react-dom@18.2.0)(react-refresh@0.14.0)(react@18.2.0)
+        specifier: ^0.0.11
+        version: link:../../core
       '@rsbuild/plugin-svelte':
-        specifier: ^0.0.10
-        version: 0.0.10(svelte@4.2.2)
+        specifier: ^0.0.11
+        version: link:../../plugin-svelte
 
   packages/create-rsbuild/template-svelte-ts:
     dependencies:
@@ -666,13 +666,13 @@ importers:
         version: 4.2.2
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.10
-        version: 0.0.10(react-dom@18.2.0)(react-refresh@0.14.0)(react@18.2.0)
+        specifier: ^0.0.11
+        version: link:../../core
       '@rsbuild/plugin-svelte':
-        specifier: ^0.0.10
-        version: 0.0.10(svelte@4.2.2)
+        specifier: ^0.0.11
+        version: link:../../plugin-svelte
       typescript:
-        specifier: ^5.0.0
+        specifier: ^5.2.0
         version: 5.2.2
 
   packages/create-rsbuild/template-vue2-js:
@@ -682,11 +682,11 @@ importers:
         version: 2.7.14
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.10
-        version: 0.0.10(react-dom@18.2.0)(react-refresh@0.14.0)(react@18.2.0)
+        specifier: ^0.0.11
+        version: link:../../core
       '@rsbuild/plugin-vue2':
-        specifier: ^0.0.10
-        version: 0.0.10(@rsbuild/core@0.0.10)(css-loader@6.8.1)(prettier@3.0.3)(react-dom@18.2.0)(react@18.2.0)(webpack@5.89.0)
+        specifier: ^0.0.11
+        version: link:../../plugin-vue2
 
   packages/create-rsbuild/template-vue2-ts:
     dependencies:
@@ -695,42 +695,42 @@ importers:
         version: 2.7.14
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.10
-        version: 0.0.10(react-dom@18.2.0)(react-refresh@0.14.0)(react@18.2.0)
+        specifier: ^0.0.11
+        version: link:../../core
       '@rsbuild/plugin-vue2':
-        specifier: ^0.0.10
-        version: 0.0.10(@rsbuild/core@0.0.10)(css-loader@6.8.1)(prettier@3.0.3)(react-dom@18.2.0)(react@18.2.0)(webpack@5.89.0)
+        specifier: ^0.0.11
+        version: link:../../plugin-vue2
       typescript:
-        specifier: ^5.0.0
+        specifier: ^5.2.0
         version: 5.2.2
 
   packages/create-rsbuild/template-vue3-js:
     dependencies:
       vue:
-        specifier: ^3.0.0
+        specifier: ^3.3.4
         version: 3.3.4
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.10
-        version: 0.0.10(react-dom@18.2.0)(react-refresh@0.14.0)(react@18.2.0)
+        specifier: ^0.0.11
+        version: link:../../core
       '@rsbuild/plugin-vue':
-        specifier: ^0.0.10
-        version: 0.0.10(@rsbuild/core@0.0.10)(vue@3.3.4)(webpack@5.89.0)
+        specifier: ^0.0.11
+        version: link:../../plugin-vue
 
   packages/create-rsbuild/template-vue3-ts:
     dependencies:
       vue:
-        specifier: ^3.0.0
+        specifier: ^3.3.4
         version: 3.3.4
     devDependencies:
       '@rsbuild/core':
-        specifier: ^0.0.10
-        version: 0.0.10(react-dom@18.2.0)(react-refresh@0.14.0)(react@18.2.0)
+        specifier: ^0.0.11
+        version: link:../../core
       '@rsbuild/plugin-vue':
-        specifier: ^0.0.10
-        version: 0.0.10(@rsbuild/core@0.0.10)(vue@3.3.4)(webpack@5.89.0)
+        specifier: ^0.0.11
+        version: link:../../plugin-vue
       typescript:
-        specifier: ^5.0.0
+        specifier: ^5.2.0
         version: 5.2.2
 
   packages/doctor-sdk:
@@ -1146,6 +1146,9 @@ importers:
       svelte-loader:
         specifier: 3.1.9
         version: 3.1.9(svelte@4.2.2)
+      svelte-preprocess:
+        specifier: ^5.0.4
+        version: 5.0.4(@babel/core@7.23.2)(postcss@8.4.31)(svelte@4.2.2)(typescript@5.2.2)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1156,9 +1159,6 @@ importers:
       '@types/node':
         specifier: ^16
         version: 16.18.59
-      svelte-preprocess:
-        specifier: ^5.0.4
-        version: 5.0.4(@babel/core@7.23.2)(postcss@8.4.31)(svelte@4.2.2)(typescript@5.2.2)
       typescript:
         specifier: ^5
         version: 5.2.2
@@ -1214,7 +1214,7 @@ importers:
         version: link:../shared
       vue-loader:
         specifier: ^17.2.2
-        version: 17.3.0(vue@3.3.4)(webpack@5.89.0)
+        version: 17.3.0(webpack@5.89.0)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1261,7 +1261,7 @@ importers:
         version: link:../shared
       vue-loader:
         specifier: ^15.11.1
-        version: 15.11.1(css-loader@6.8.1)(prettier@3.0.3)(react-dom@18.2.0)(react@18.2.0)(webpack@5.89.0)
+        version: 15.11.1(css-loader@6.8.1)(prettier@3.0.3)(webpack@5.89.0)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -3802,6 +3802,7 @@ packages:
       '@swc/helpers': 0.5.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   /@modern-js/babel-plugin-module-resolver@2.38.0:
     resolution: {integrity: sha512-UkDGikLRd6u9gQsz1MlSJTVEKnQopg7iiWuNHZHBzI8fYvzcGocnEVo/1sw+dB1d+X8mcGzXOKizNjZ6ive+kQ==}
@@ -3821,6 +3822,7 @@ packages:
       pkg-up: 3.1.0
       reselect: 4.1.8
       resolve: 1.22.8
+    dev: false
 
   /@modern-js/builder-rspack-provider@2.38.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-YZgsAGiuH317EeQXd1h6KDYr0vZ+F5tDp9Au4KfqaMXlcv3I7/cVfCXsP2z7wZZB7HwSvEDsRA+fEFyXG3tjFQ==}
@@ -4242,6 +4244,7 @@ packages:
       - react
       - react-dom
       - supports-color
+    dev: false
 
   /@modern-js/runtime-utils@2.38.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-MvBwBIJv4hUQrN11YMRXFRZk5IF2DGmfNKF8ZqW7mGfETpzRFSg3kbO5ae8BpIGvaoLXUZ7KstE+FG3qw6s46A==}
@@ -4281,6 +4284,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       react-router-dom: 6.15.0(react-dom@18.2.0)(react@18.2.0)
       serialize-javascript: 6.0.1
+    dev: false
 
   /@modern-js/server-core@2.38.0:
     resolution: {integrity: sha512-0nmvOM16m7SQ267awuNTPFIps80G4kz/EfEgMXOVcfXURhHbt0OKxCS2AfYieQV3MDBRt5FaS/IIsfQAYoamlw==}
@@ -4296,6 +4300,7 @@ packages:
       '@modern-js/plugin': 2.39.0
       '@modern-js/utils': 2.39.0
       '@swc/helpers': 0.5.1
+    dev: false
 
   /@modern-js/server-utils@2.38.0:
     resolution: {integrity: sha512-mfxkvdB01A9FJpmNSPUTVUPrfeleXU2tPH+BqB3AjEer299ZFx1T/7f8tFerAQ4zIoh20lre8VTmOZbpAitM1w==}
@@ -4333,6 +4338,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/traverse'
       - supports-color
+    dev: false
 
   /@modern-js/server@2.38.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-+ncMmhc6ZJIz8w48q19TTQmH0BkuYYHrtCZ7NK3+dINQHJRDQ7iUJxz3soaA/TtmiiM60butCGmMcYqt84FQUg==}
@@ -4410,6 +4416,7 @@ packages:
       - react-dom
       - supports-color
       - utf-8-validate
+    dev: false
 
   /@modern-js/swc-plugins-darwin-arm64@0.6.4:
     resolution: {integrity: sha512-JunAQouAx1/d1I6omWFh9iSs5SdefDlrhGmiqg4OdNC5rXJe6b4BGu30a/g4Ijkg9FPj+F0Pysn9wPAJz13Bfg==}
@@ -4905,166 +4912,6 @@ packages:
     dependencies:
       estree-walker: 2.0.2
       picomatch: 2.3.1
-    dev: true
-
-  /@rsbuild/core@0.0.10(react-dom@18.2.0)(react-refresh@0.14.0)(react@18.2.0):
-    resolution: {integrity: sha512-6QGts4Cp2/YjLV9OOehbPNt3URG4iFKgvdvtrfayTvS4FZglqiHLuYF9EeznwbjckHsRWYwMFfmQQeEVXVxMMQ==}
-    engines: {node: '>=14.0.0'}
-    hasBin: true
-    dependencies:
-      '@modern-js/server': 2.39.0(react-dom@18.2.0)(react@18.2.0)
-      '@rsbuild/shared': link:packages/shared
-      '@rspack/core': 0.3.8
-      '@rspack/dev-client': 0.3.8(react-refresh@0.14.0)(webpack@5.89.0)
-      '@rspack/plugin-html': 0.3.8(@rspack/core@0.3.8)
-      commander: 10.0.1
-      filesize: 8.0.7
-      gzip-size: 6.0.0
-      jiti: 1.20.0
-      lodash: 4.17.21
-      open: 8.4.2
-      pkg-up: 3.1.0
-      postcss: 8.4.31
-      rspack-manifest-plugin: 5.0.0-alpha0(webpack@5.89.0)
-      semver: 7.5.4
-      strip-ansi: 6.0.1
-      webpack: 5.89.0
-    transitivePeerDependencies:
-      - '@babel/traverse'
-      - '@swc/core'
-      - '@types/express'
-      - '@types/webpack'
-      - bufferutil
-      - debug
-      - devcert
-      - esbuild
-      - react
-      - react-dom
-      - react-refresh
-      - sockjs-client
-      - supports-color
-      - ts-node
-      - tsconfig-paths
-      - type-fest
-      - uglify-js
-      - utf-8-validate
-      - webpack-cli
-      - webpack-dev-server
-      - webpack-hot-middleware
-      - webpack-plugin-serve
-    dev: true
-
-  /@rsbuild/plugin-react@0.0.10(@babel/core@7.23.2)(react-refresh@0.14.0)(webpack@5.89.0):
-    resolution: {integrity: sha512-KEXKy7+QzAYn9tHu3CeAoWJSdWubSRE7jkuHGIJCHA+ypkpmtw875zbgQ4PX7lJtRoq/LdeRwNKAVFm5jEksvQ==}
-    dependencies:
-      '@babel/preset-react': 7.22.15(@babel/core@7.23.2)
-      '@pmmmwh/react-refresh-webpack-plugin': 0.5.10(react-refresh@0.14.0)(webpack@5.89.0)
-      '@rsbuild/shared': link:packages/shared
-      '@rspack/plugin-react-refresh': 0.3.8(react-refresh@0.14.0)(webpack@5.89.0)
-      babel-plugin-transform-react-remove-prop-types: 0.4.24
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@types/webpack'
-      - react-refresh
-      - sockjs-client
-      - type-fest
-      - webpack
-      - webpack-dev-server
-      - webpack-hot-middleware
-      - webpack-plugin-serve
-    dev: true
-
-  /@rsbuild/plugin-svelte@0.0.10(svelte@4.2.2):
-    resolution: {integrity: sha512-gYxQaLG01B0IdoH+MmbJNPDijIE/xRnvCBbZqzgaA6P926XcGQHdFtbPbFB9s2PkQDejLM0v3SqHh4jZpiQVuA==}
-    dependencies:
-      '@rsbuild/shared': link:packages/shared
-      svelte-loader: 3.1.9(svelte@4.2.2)
-    transitivePeerDependencies:
-      - svelte
-    dev: true
-
-  /@rsbuild/plugin-vue2@0.0.10(@rsbuild/core@0.0.10)(css-loader@6.8.1)(prettier@3.0.3)(react-dom@18.2.0)(react@18.2.0)(webpack@5.89.0):
-    resolution: {integrity: sha512-wfs6tAJLklTscjikZK6pc53EKYnD4qgJ0RdCyBPKNe42wkURTNaS06fv3GxYg+Hp1u362UkPKoPr813sSir/ww==}
-    peerDependencies:
-      '@rsbuild/core': ^0.0.10
-    dependencies:
-      '@rsbuild/core': 0.0.10(react-dom@18.2.0)(react-refresh@0.14.0)(react@18.2.0)
-      '@rsbuild/shared': link:packages/shared
-      vue-loader: 15.11.1(css-loader@6.8.1)(prettier@3.0.3)(react-dom@18.2.0)(react@18.2.0)(webpack@5.89.0)
-    transitivePeerDependencies:
-      - '@vue/compiler-sfc'
-      - arc-templates
-      - atpl
-      - babel-core
-      - bracket-template
-      - cache-loader
-      - coffee-script
-      - css-loader
-      - dot
-      - dust
-      - dustjs-helpers
-      - dustjs-linkedin
-      - eco
-      - ect
-      - ejs
-      - haml-coffee
-      - hamlet
-      - hamljs
-      - handlebars
-      - hogan.js
-      - htmling
-      - jade
-      - jazz
-      - jqtpl
-      - just
-      - liquid-node
-      - liquor
-      - lodash
-      - marko
-      - mote
-      - mustache
-      - nunjucks
-      - plates
-      - prettier
-      - pug
-      - qejs
-      - ractive
-      - razor-tmpl
-      - react
-      - react-dom
-      - slm
-      - squirrelly
-      - swig
-      - swig-templates
-      - teacup
-      - templayed
-      - then-jade
-      - then-pug
-      - tinyliquid
-      - toffee
-      - twig
-      - twing
-      - underscore
-      - vash
-      - velocityjs
-      - vue-template-compiler
-      - walrus
-      - webpack
-      - whiskers
-    dev: true
-
-  /@rsbuild/plugin-vue@0.0.10(@rsbuild/core@0.0.10)(vue@3.3.4)(webpack@5.89.0):
-    resolution: {integrity: sha512-aRxzat/PTd8h+KZ+1d33IoG1CWKWDoN3TPRc208mQFPUTKicqYcoLdcuJFiqf9qSq4D2FrjCQ22rQEJyHqHpLw==}
-    peerDependencies:
-      '@rsbuild/core': ^0.0.10
-    dependencies:
-      '@rsbuild/core': 0.0.10(react-dom@18.2.0)(react-refresh@0.14.0)(react@18.2.0)
-      '@rsbuild/shared': link:packages/shared
-      vue-loader: 17.3.0(vue@3.3.4)(webpack@5.89.0)
-    transitivePeerDependencies:
-      - '@vue/compiler-sfc'
-      - vue
-      - webpack
     dev: true
 
   /@rspack/binding-darwin-arm64@0.3.8:
@@ -5948,6 +5795,7 @@ packages:
 
   /@types/estree@1.0.3:
     resolution: {integrity: sha512-CS2rOaoQ/eAgAfcTfq6amKG7bsN+EMcgGY4FAFQdvSj2y1ixvOZTUA9mOtCai7E1SYu283XNw7urKK30nP3wkQ==}
+    dev: false
 
   /@types/express-serve-static-core@4.17.38:
     resolution: {integrity: sha512-hXOtc0tuDHZPFwwhuBJXPbjemWtXnJjbvuuyNH2Y5Z6in+iXc63c4eXYDc7GGGqHy+iwYqAJMdaItqdnbcBKmg==}
@@ -6095,7 +5943,7 @@ packages:
 
   /@types/pug@2.0.8:
     resolution: {integrity: sha512-QzhsZ1dMGyJbn/D9V80zp4GIA4J4rfAjCCxc3MP+new0E8dyVdSkR735Lx+n3LIaHNFcjHL5+TbziccuT+fdoQ==}
-    dev: true
+    dev: false
 
   /@types/qs@6.9.9:
     resolution: {integrity: sha512-wYLxw35euwqGvTDx6zfY1vokBFnsK0HNrzc6xNHchxfO2hpuRg74GbkEW7e3sSmPvj0TjCDT1VCa6OtHXnubsg==}
@@ -6350,12 +6198,14 @@ packages:
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
       source-map-js: 1.0.2
+    dev: false
 
   /@vue/compiler-dom@3.3.4:
     resolution: {integrity: sha512-wyM+OjOVpuUukIq6p5+nwHYtj9cFroz9cwkfmP9O1nzH68BenTTv0u7/ndggT8cIQlnBeOo6sUT/gvHcIkLA5w==}
     dependencies:
       '@vue/compiler-core': 3.3.4
       '@vue/shared': 3.3.4
+    dev: false
 
   /@vue/compiler-sfc@2.7.14:
     resolution: {integrity: sha512-aNmNHyLPsw+sVvlQFQ2/8sjNuLtK54TC6cuKnVzAY93ks4ZBrvwQSnkkIh7bsbNhum5hJBS00wSDipQ937f5DA==}
@@ -6378,17 +6228,19 @@ packages:
       magic-string: 0.30.5
       postcss: 8.4.31
       source-map-js: 1.0.2
+    dev: false
 
   /@vue/compiler-ssr@3.3.4:
     resolution: {integrity: sha512-m0v6oKpup2nMSehwA6Uuu+j+wEwcy7QmwMkVNVfrV9P2qE5KshC6RwOCq8fjGS/Eak/uNb8AaWekfiXxbBB6gQ==}
     dependencies:
       '@vue/compiler-dom': 3.3.4
       '@vue/shared': 3.3.4
+    dev: false
 
-  /@vue/component-compiler-utils@3.3.0(react-dom@18.2.0)(react@18.2.0):
+  /@vue/component-compiler-utils@3.3.0:
     resolution: {integrity: sha512-97sfH2mYNU+2PzGrmK2haqffDpVASuib9/w2/noxiFi31Z54hW+q3izKQXXQZSNhtiUpAI36uSuYepeBe4wpHQ==}
     dependencies:
-      consolidate: 0.15.1(react-dom@18.2.0)(react@18.2.0)
+      consolidate: 0.15.1
       hash-sum: 1.0.2
       lru-cache: 4.1.5
       merge-source-map: 1.1.0
@@ -6452,6 +6304,7 @@ packages:
       - velocityjs
       - walrus
       - whiskers
+    dev: false
 
   /@vue/reactivity-transform@3.3.4:
     resolution: {integrity: sha512-MXgwjako4nu5WFLAjpBnCj/ieqcjE2aJBINUNQzkZQfzIZA4xn+0fV1tIYBJvvva3N3OvKGofRLvQIwEQPpaXw==}
@@ -6461,17 +6314,20 @@ packages:
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
       magic-string: 0.30.5
+    dev: false
 
   /@vue/reactivity@3.3.4:
     resolution: {integrity: sha512-kLTDLwd0B1jG08NBF3R5rqULtv/f8x3rOFByTDz4J53ttIQEDmALqKqXY0J+XQeN0aV2FBxY8nJDf88yvOPAqQ==}
     dependencies:
       '@vue/shared': 3.3.4
+    dev: false
 
   /@vue/runtime-core@3.3.4:
     resolution: {integrity: sha512-R+bqxMN6pWO7zGI4OMlmvePOdP2c93GsHFM/siJI7O2nxFRzj55pLwkpCedEY+bTMgp5miZ8CxfIZo3S+gFqvA==}
     dependencies:
       '@vue/reactivity': 3.3.4
       '@vue/shared': 3.3.4
+    dev: false
 
   /@vue/runtime-dom@3.3.4:
     resolution: {integrity: sha512-Aj5bTJ3u5sFsUckRghsNjVTtxZQ1OyMWCr5dZRAPijF/0Vy4xEoRCwLyHXcj4D0UFbJ4lbx3gPTgg06K/GnPnQ==}
@@ -6479,6 +6335,7 @@ packages:
       '@vue/runtime-core': 3.3.4
       '@vue/shared': 3.3.4
       csstype: 3.1.2
+    dev: false
 
   /@vue/server-renderer@3.3.4(vue@3.3.4):
     resolution: {integrity: sha512-Q6jDDzR23ViIb67v+vM1Dqntu+HUexQcsWKhhQa4ARVzxOY2HbC7QRW/ggkDBd5BU+uM1sV6XOAP0b216o34JQ==}
@@ -6488,9 +6345,11 @@ packages:
       '@vue/compiler-ssr': 3.3.4
       '@vue/shared': 3.3.4
       vue: 3.3.4
+    dev: false
 
   /@vue/shared@3.3.4:
     resolution: {integrity: sha512-7OjdcV8vQ74eiz1TZLzZP4JwqM5fA94K6yntPS5Z25r9HDuGNzaGdgvwKYq6S+MxwF0TFRwe50fIR/MYnakdkQ==}
+    dev: false
 
   /@webassemblyjs/ast@1.11.6:
     resolution: {integrity: sha512-IN1xI7PwOvLPgjcf180gC1bqn3q/QaOCwYUahIOhbYUu8KA/3tw2RT/T0Gidi1l7Hhj5D/INhJxiICObqpMu4Q==}
@@ -6801,6 +6660,7 @@ packages:
     resolution: {integrity: sha512-b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A==}
     dependencies:
       dequal: 2.0.3
+    dev: false
 
   /arr-union@3.1.0:
     resolution: {integrity: sha512-sKpyeERZ02v1FeCZT8lrfJq5u6goHCtpTAzPwJYe7c8SPFOboNjNg1vz2L4VTn9T4PQxEx13TbXLmYUcS6Ug7Q==}
@@ -6918,6 +6778,7 @@ packages:
     resolution: {integrity: sha512-jsyHu61e6N4Vbz/v18DHwWYKK0bSWLqn47eeDSKPB7m8tqMHF9YJ+mhIk2lVteyZrY8tnSj/jHOv4YiTCuCJgg==}
     dependencies:
       dequal: 2.0.3
+    dev: false
 
   /babel-loader@9.1.3(@babel/core@7.23.2)(webpack@5.89.0):
     resolution: {integrity: sha512-xG3ST4DglodGf8qSwv0MdeWLhrDsw/32QMdTO5T1ZIp9gQur0HkCyFs7Awskr10JKXFXwpAhiCuYX5oGXnRGbw==}
@@ -6995,6 +6856,7 @@ packages:
 
   /babel-plugin-transform-react-remove-prop-types@0.4.24:
     resolution: {integrity: sha512-eqj0hVcJUR57/Ug2zE1Yswsw4LhuqqHhD+8v120T1cl3kjg76QwtyBrdIk4WVwK+lAhBJVYCd/v+4nc4y+8JsA==}
+    dev: false
 
   /babel-plugin-transform-typescript-metadata@0.3.2(@babel/core@7.23.2):
     resolution: {integrity: sha512-mWEvCQTgXQf48yDqgN7CH50waTyYBeP2Lpqx4nNWab9sxEpdXVeKgfj1qYI2/TgUPQtNFZ85i3PemRtnXVYYJg==}
@@ -7040,6 +6902,7 @@ packages:
 
   /bluebird@3.7.2:
     resolution: {integrity: sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==}
+    dev: false
 
   /bn.js@4.12.0:
     resolution: {integrity: sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==}
@@ -7150,7 +7013,7 @@ packages:
 
   /buffer-crc32@0.2.13:
     resolution: {integrity: sha512-VO9Ht/+p3SN7SKWqcrgEzjGbRSJYTx+Q1pTQC0wrWqHx0vpJraQ6GtHx8tvcg1rlK1byhU5gccxgOgj7B0TDkQ==}
-    dev: true
+    dev: false
 
   /buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
@@ -7458,6 +7321,7 @@ packages:
       acorn: 8.10.0
       estree-walker: 3.0.3
       periscopic: 3.1.0
+    dev: false
 
   /color-convert@1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
@@ -7580,7 +7444,7 @@ packages:
     resolution: {integrity: sha512-ZMkYO/LkF17QvCPqM0gxw8yUzigAOZOSWSHg91FH6orS7vcEj5dVZTidN2fQ14yBSdg97RqhSNwLUXInd52OTA==}
     dev: false
 
-  /consolidate@0.15.1(react-dom@18.2.0)(react@18.2.0):
+  /consolidate@0.15.1:
     resolution: {integrity: sha512-DW46nrsMJgy9kqAbPt5rKaCr7uFtpo4mSUvLHIUbJEjm0vo+aY5QLwBUq3FK4tRnJr/X0Psc0C4jf/h+HtXSMw==}
     engines: {node: '>= 0.10.0'}
     deprecated: Please upgrade to consolidate v1.0.0+ as it has been modernized with several long-awaited fixes implemented. Maintenance is supported by Forward Email at https://forwardemail.net ; follow/watch https://github.com/ladjs/consolidate for updates and release changelog
@@ -7747,8 +7611,7 @@ packages:
         optional: true
     dependencies:
       bluebird: 3.7.2
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /constants-browserify@1.0.0:
     resolution: {integrity: sha512-xFxOwqIzR/e1k1gLiWEophSCMqXcwVHIH7akf7b/vxcUeGunlj3hvZaaqxwHsTgn+IndtkQJgSztIDWeumWJDQ==}
@@ -7907,6 +7770,7 @@ packages:
       postcss-value-parser: 4.2.0
       semver: 7.5.4
       webpack: 5.89.0
+    dev: false
 
   /css-minimizer-webpack-plugin@5.0.1(webpack@5.89.0):
     resolution: {integrity: sha512-3caImjKFQkS+ws1TGcFn0V1HyDJFq1Euy589JlD6/3rV2kj+w7r5G9WDMgSHvpvXHNZ2calVypZWuEDQd9wfLg==}
@@ -8220,7 +8084,6 @@ packages:
   /detect-indent@6.1.0:
     resolution: {integrity: sha512-reYkTUJAZb9gUuZ2RvVCNhVHdg62RHnJ7WJl8ftMi4diZ6NWlciOzQN88pUhSELEwflJht4oQDv0F0BMlwaYtA==}
     engines: {node: '>=8'}
-    dev: true
 
   /detective@5.2.1:
     resolution: {integrity: sha512-v9XE1zRnz1wRtgurGu0Bs8uHKFSTdteYZNbIPFVhUZ39L/S79ppMpdmVOZAnoz1jfEFodc48n6MX483Xo3t1yw==}
@@ -8522,7 +8385,7 @@ packages:
 
   /es6-promise@3.3.1:
     resolution: {integrity: sha512-SOp9Phqvqn7jtEUxPWdWfWoLmyt2VaJ6MpvP9Comy1MceMXqE6bxvaTu4iaxpYYPzhny28Lc+M87/c2cPK6lDg==}
-    dev: true
+    dev: false
 
   /esbuild-android-arm64@0.13.15:
     resolution: {integrity: sha512-m602nft/XXeO8YQPUDVoHfjyRVPdPgjyyXOxZ44MK/agewFFkPa8tUo6lAzSWh5Ui5PB4KR9UIFTSBKh/RrCmg==}
@@ -8931,6 +8794,7 @@ packages:
   /filesize@8.0.7:
     resolution: {integrity: sha512-pjmC+bkIF8XI7fWaH8KxHcZL3DPybs1roSKP4rKDvy20tAWwIObE4+JIseG2byfGKhud5ZnM4YSGKBz7Sh0ndQ==}
     engines: {node: '>= 0.4.0'}
+    dev: false
 
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
@@ -9362,6 +9226,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       duplexer: 0.1.2
+    dev: false
 
   /hard-rejection@2.1.0:
     resolution: {integrity: sha512-VIZB+ibDhx7ObhAe7OVtoEbuP4h/MuOTHJ+J8h/eBXotJYl0fBgR72xDFCKgIh22OJZIOVNxBMWuhAr10r8HdA==}
@@ -9414,9 +9279,11 @@ packages:
 
   /hash-sum@1.0.2:
     resolution: {integrity: sha512-fUs4B4L+mlt8/XAtSOGMUO1TXmAelItBPtJG7CyHJfYTdDjwisntGO2JQz7oUsatOY9o68+57eziUVNw/mRHmA==}
+    dev: false
 
   /hash-sum@2.0.0:
     resolution: {integrity: sha512-WdZTbAByD+pHfl/g9QSsBIIwy8IT+EsPiKDs0KNX+zSHhdDLFKdZu0BQHljvO+0QI/BasbMSUa8wYNCZTvhslg==}
+    dev: false
 
   /hash.js@1.1.7:
     resolution: {integrity: sha512-taOaskGt4z4SOANNseOviYDvjEJinIkRgmp7LbKP2YTTmVxWBl87s/uzK9r+44BclBSp2X7K1hqeNfz9JbBeXA==}
@@ -10292,6 +10159,7 @@ packages:
     hasBin: true
     dependencies:
       minimist: 1.2.8
+    dev: false
 
   /json5@2.2.3:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
@@ -10392,6 +10260,7 @@ packages:
       big.js: 5.2.2
       emojis-list: 3.0.0
       json5: 1.0.2
+    dev: false
 
   /loader-utils@2.0.4:
     resolution: {integrity: sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw==}
@@ -10413,6 +10282,7 @@ packages:
 
   /locate-character@3.0.0:
     resolution: {integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==}
+    dev: false
 
   /locate-path@3.0.0:
     resolution: {integrity: sha512-7AO748wWnIhNqAuaty2ZWHkQHRSNfPVIsPIfwEOWO22AmaoVrWavlOcMR5nzTLNYvp36X220/maaRsrec1G65A==}
@@ -10558,7 +10428,7 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
-    dev: true
+    dev: false
 
   /magic-string@0.29.0:
     resolution: {integrity: sha512-WcfidHrDjMY+eLjlU+8OvwREqHwpgCeKVBUpQ3OhYYuvfaYCUgcbuBzappNzZvg/v8onU3oQj+BYpkOJe9Iw4Q==}
@@ -10853,6 +10723,7 @@ packages:
     resolution: {integrity: sha512-Qkcp7P2ygktpMPh2mCQZaf3jhN6D3Z/qVZHSdWvQ+2Ef5HgRAPBO57A77+ENm0CPx2+1Ce/MYKi3ymqdfuqibw==}
     dependencies:
       source-map: 0.6.1
+    dev: false
 
   /merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
@@ -11232,7 +11103,6 @@ packages:
   /min-indent@1.0.1:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
-    dev: true
 
   /mini-css-extract-plugin@2.7.6(webpack@5.89.0):
     resolution: {integrity: sha512-Qk7HcgaPkGG6eD77mLvZS1nmxlao3j+9PkrT9Uc7HAE1id3F41+DdBRYRYkbyfNRGzm8/YWtzhw7nVPmwhqTQw==}
@@ -11315,7 +11185,7 @@ packages:
     hasBin: true
     dependencies:
       minimist: 1.2.8
-    dev: true
+    dev: false
 
   /mkdirp@1.0.4:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
@@ -11883,6 +11753,7 @@ packages:
 
   /picocolors@0.2.1:
     resolution: {integrity: sha512-cMlDqaLEqfSaW8Z7N5Jw+lyIW869EzT73/F5lhtY9cLGoVxSXznfgfXMO0Z5K0o0Q2TkTXq+0KFsdnSe3jDViA==}
+    dev: false
 
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
@@ -12333,6 +12204,7 @@ packages:
     dependencies:
       picocolors: 0.2.1
       source-map: 0.6.1
+    dev: false
 
   /postcss@8.4.21:
     resolution: {integrity: sha512-tP7u/Sn/dVxK2NnruI4H9BG+x+Wxz6oeZ1cJ8P6G/PZY0IKk4k/63TDsQf2kQq3+qoJeLm2kIBUNlZe3zgb4Zg==}
@@ -12910,7 +12782,7 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
-    dev: true
+    dev: false
 
   /rimraf@3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
@@ -13055,7 +12927,7 @@ packages:
       graceful-fs: 4.2.11
       mkdirp: 0.5.6
       rimraf: 2.7.1
-    dev: true
+    dev: false
 
   /sax@1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
@@ -13311,7 +13183,7 @@ packages:
       buffer-crc32: 0.2.13
       minimist: 1.2.8
       sander: 0.5.1
-    dev: true
+    dev: false
 
   /source-list-map@2.0.1:
     resolution: {integrity: sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==}
@@ -13500,7 +13372,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       min-indent: 1.0.1
-    dev: true
 
   /strip-literal@1.3.0:
     resolution: {integrity: sha512-PugKzOsyXpArk0yWmUwqOZecSO0GH0bPoctLcqNDH9J04pVW3lflYE0ujElBGTloevcxF5MofAOZ7C5l2b+wLg==}
@@ -13641,6 +13512,7 @@ packages:
 
   /svelte-dev-helper@1.1.9:
     resolution: {integrity: sha512-oU+Xv7Dl4kRU2kdFjsoPLfJfnt5hUhsFUZtuzI3Ku/f2iAFZqBoEuXOqK3N9ngD4dxQOmN4OKWPHVi3NeAeAfQ==}
+    dev: false
 
   /svelte-hmr@0.14.12(svelte@4.2.2):
     resolution: {integrity: sha512-4QSW/VvXuqVcFZ+RhxiR8/newmwOCTlbYIezvkeN6302YFRE8cXy0naamHcjz8Y9Ce3ITTZtrHrIL0AGfyo61w==}
@@ -13649,6 +13521,7 @@ packages:
       svelte: '>=3.19.0'
     dependencies:
       svelte: 4.2.2
+    dev: false
 
   /svelte-loader@3.1.9(svelte@4.2.2):
     resolution: {integrity: sha512-RITPqze3TppOhaZF8SEFTDTwFHov17k3UkOjpxyL/No/YVrvckKmXWOEj7QEpsZZZSNQPb28tMZbHEI2xLhJMQ==}
@@ -13659,6 +13532,7 @@ packages:
       svelte: 4.2.2
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@4.2.2)
+    dev: false
 
   /svelte-preprocess@5.0.4(@babel/core@7.23.2)(postcss@8.4.31)(svelte@4.2.2)(typescript@5.2.2):
     resolution: {integrity: sha512-ABia2QegosxOGsVlsSBJvoWeXy1wUKSfF7SWJdTjLAbx/Y3SrVevvvbFNQqrSJw89+lNSsM58SipmZJ5SRi5iw==}
@@ -13707,7 +13581,7 @@ packages:
       strip-indent: 3.0.0
       svelte: 4.2.2
       typescript: 5.2.2
-    dev: true
+    dev: false
 
   /svelte@4.2.2:
     resolution: {integrity: sha512-My2tytF2e2NnHSpn2M7/3VdXT4JdTglYVUuSuK/mXL2XtulPYbeBfl8Dm1QiaKRn0zoULRnL+EtfZHHP0k4H3A==}
@@ -13726,6 +13600,7 @@ packages:
       locate-character: 3.0.0
       magic-string: 0.30.5
       periscopic: 3.1.0
+    dev: false
 
   /svg-parser@2.0.4:
     resolution: {integrity: sha512-e4hG1hRwoOdRb37cIMSgzNsxyzKfayW6VOflrwvR+/bzrkyxY/31WkbgnQpgtrNp1SdpJvpUAGTa/ZoiPNDuRQ==}
@@ -14596,8 +14471,9 @@ packages:
 
   /vue-hot-reload-api@2.3.4:
     resolution: {integrity: sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==}
+    dev: false
 
-  /vue-loader@15.11.1(css-loader@6.8.1)(prettier@3.0.3)(react-dom@18.2.0)(react@18.2.0)(webpack@5.89.0):
+  /vue-loader@15.11.1(css-loader@6.8.1)(prettier@3.0.3)(webpack@5.89.0):
     resolution: {integrity: sha512-0iw4VchYLePqJfJu9s62ACWUXeSqM30SQqlIftbYWM3C+jpPcEHKSPUZBLjSF9au4HTHQ/naF6OGnO3Q/qGR3Q==}
     peerDependencies:
       '@vue/compiler-sfc': ^3.0.8
@@ -14616,7 +14492,7 @@ packages:
       vue-template-compiler:
         optional: true
     dependencies:
-      '@vue/component-compiler-utils': 3.3.0(react-dom@18.2.0)(react@18.2.0)
+      '@vue/component-compiler-utils': 3.3.0
       css-loader: 6.8.1(webpack@5.89.0)
       hash-sum: 1.0.2
       loader-utils: 1.4.2
@@ -14678,8 +14554,9 @@ packages:
       - velocityjs
       - walrus
       - whiskers
+    dev: false
 
-  /vue-loader@17.3.0(vue@3.3.4)(webpack@5.89.0):
+  /vue-loader@17.3.0(webpack@5.89.0):
     resolution: {integrity: sha512-VUURABiN0TIUz0yvJJ/V/rZjGUh10JZtD+IDI5bXFslzFi9mV6ebKkPzoqiSi8e0vh8Ip7JHJx+I0AzAG0KsCA==}
     peerDependencies:
       '@vue/compiler-sfc': '*'
@@ -14693,18 +14570,20 @@ packages:
     dependencies:
       chalk: 4.1.2
       hash-sum: 2.0.0
-      vue: 3.3.4
       watchpack: 2.4.0
       webpack: 5.89.0
+    dev: false
 
   /vue-style-loader@4.1.3:
     resolution: {integrity: sha512-sFuh0xfbtpRlKfm39ss/ikqs9AbKCoXZBpHeVZ8Tx650o0k0q/YCM7FRvigtxpACezfq6af+a7JeqVTWvncqDg==}
     dependencies:
       hash-sum: 1.0.2
       loader-utils: 1.4.2
+    dev: false
 
   /vue-template-es2015-compiler@1.9.1:
     resolution: {integrity: sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==}
+    dev: false
 
   /vue@2.7.14:
     resolution: {integrity: sha512-b2qkFyOM0kwqWFuQmgd4o+uHGU7T+2z3T+WQp8UBjADfEv2n4FEMffzBmCKNP0IGzOEEfYjvtcC62xaSKeQDrQ==}
@@ -14721,6 +14600,7 @@ packages:
       '@vue/runtime-dom': 3.3.4
       '@vue/server-renderer': 3.3.4(vue@3.3.4)
       '@vue/shared': 3.3.4
+    dev: false
 
   /w-json@1.3.10:
     resolution: {integrity: sha512-XadVyw0xE+oZ5FGApXsdswv96rOhStzKqL53uSe5UaTadABGkWIg1+DTx8kiZ/VqTZTBneoL0l65RcPe4W3ecw==}

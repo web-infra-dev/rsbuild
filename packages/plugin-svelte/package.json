@@ -25,13 +25,13 @@
   "license": "MIT",
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "svelte-loader": "3.1.9"
+    "svelte-loader": "3.1.9",
+    "svelte-preprocess": "^5.0.4"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
     "@types/node": "^16",
-    "svelte-preprocess": "^5.0.4",
     "typescript": "^5"
   },
   "publishConfig": {

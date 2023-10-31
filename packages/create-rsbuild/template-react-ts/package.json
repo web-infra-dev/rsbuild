@@ -12,10 +12,10 @@
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@rsbuild/core": "^0.0.10",
-    "@rsbuild/plugin-react": "^0.0.10",
+    "@rsbuild/core": "^0.0.11",
+    "@rsbuild/plugin-react": "^0.0.11",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "typescript": "^5.0.0"
+    "typescript": "^5.2.0"
   }
 }
