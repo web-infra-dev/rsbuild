@@ -25,7 +25,8 @@
   "license": "MIT",
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/plugin-react-refresh": "0.3.8"
+    "@rspack/plugin-react-refresh": "0.3.8",
+    "react-refresh": "^0.14.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
