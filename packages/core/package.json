@@ -1,25 +1,17 @@
 {
   "name": "@rsbuild/core",
+  "version": "0.0.11",
   "description": "Unleash the power of Rspack with the out-of-the-box build tool.",
   "homepage": "https://rsbuild.dev",
+  "bugs": {
+    "url": "https://github.com/web-infra-dev/rsbuild/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/core"
   },
-  "bugs": {
-    "url": "https://github.com/web-infra-dev/rsbuild/issues"
-  },
-  "bin": {
-    "rsbuild": "./bin/rsbuild.js"
-  },
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "license": "MIT",
-  "version": "0.0.11",
-  "types": "./src/index.ts",
-  "main": "./dist/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -42,6 +34,8 @@
       "default": "./dist/rspack-provider/index.js"
     }
   },
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
   "typesVersions": {
     "*": {
       "cli": [
@@ -58,25 +52,22 @@
       ]
     }
   },
+  "bin": {
+    "rsbuild": "./bin/rsbuild.js"
+  },
   "files": [
     "bin",
     "dist"
   ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public",
-    "provenance": true,
-    "types": "./dist/index.d.ts"
-  },
   "scripts": {
-    "dev": "modern build --watch",
-    "build": "modern build"
+    "build": "modern build",
+    "dev": "modern build --watch"
   },
   "dependencies": {
     "@modern-js/server": "^2.39.0",
+    "@rsbuild/shared": "workspace:*",
     "@rspack/core": "0.3.8",
     "@rspack/plugin-html": "0.3.8",
-    "@rsbuild/shared": "workspace:*",
     "commander": "^10.0.1",
     "filesize": "^8.0.7",
     "gzip-size": "^6.0.0",
@@ -94,5 +85,14 @@
     "@types/node": "^16",
     "@types/semver": "^7.5.4",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/",
+    "types": "./dist/index.d.ts"
   }
 }

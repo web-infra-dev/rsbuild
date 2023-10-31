@@ -1,5 +1,6 @@
 {
   "name": "@rsbuild/babel-preset",
+  "version": "0.0.11",
   "description": "The babel config of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -8,9 +9,6 @@
     "directory": "packages/babel-preset"
   },
   "license": "MIT",
-  "version": "0.0.11",
-  "types": "./src/index.ts",
-  "main": "./dist/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -25,6 +23,8 @@
       "default": "./dist/node.js"
     }
   },
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
   "typesVersions": {
     "*": {
       "web": [
@@ -38,15 +38,9 @@
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public",
-    "provenance": true,
-    "types": "./dist/index.d.ts"
-  },
   "scripts": {
-    "dev": "modern build --watch",
-    "build": "modern build"
+    "build": "modern build",
+    "dev": "modern build --watch"
   },
   "dependencies": {
     "@babel/core": "^7.23.2",
@@ -59,8 +53,8 @@
     "@babel/preset-typescript": "^7.23.2",
     "@babel/runtime": "^7.23.2",
     "@babel/types": "^7.23.0",
-    "@rsbuild/shared": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
+    "@rsbuild/shared": "workspace:*",
     "@types/babel__core": "^7.20.3",
     "babel-plugin-dynamic-import-node": "2.3.3",
     "core-js": "~3.32.2"
@@ -68,5 +62,11 @@
   "devDependencies": {
     "@types/node": "^16",
     "typescript": "^5"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/",
+    "types": "./dist/index.d.ts"
   }
 }

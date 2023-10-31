@@ -7,12 +7,7 @@
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/compat/webpack"
   },
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "license": "MIT",
-  "types": "./src/index.ts",
-  "main": "./dist/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -27,6 +22,8 @@
       "default": "./dist/plugins/babel.js"
     }
   },
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
   "typesVersions": {
     "*": {
       "plugin-babel": [
@@ -42,38 +39,32 @@
     "compiled",
     "dist"
   ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public",
-    "provenance": true,
-    "types": "./dist/index.d.ts"
-  },
   "scripts": {
-    "dev": "modern build --watch",
-    "build": "modern build"
+    "build": "modern build",
+    "dev": "modern build --watch"
   },
   "dependencies": {
     "@babel/core": "^7.23.2",
     "@babel/preset-react": "^7.22.15",
     "@modern-js/server": "^2.39.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.10",
-    "@rsbuild/core": "workspace:*",
     "@rsbuild/babel-preset": "workspace:*",
-    "@rsbuild/shared": "workspace:*",
+    "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
+    "@rsbuild/shared": "workspace:*",
     "babel-loader": "9.1.3",
     "babel-plugin-import": "1.13.5",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
-    "caniuse-lite": "^1.0.30001520",
+    "caniuse-lite": "^1.0.30001559",
     "html-webpack-plugin": "5.5.3",
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "2.7.6",
     "postcss": "8.4.31",
-    "react-refresh": "0.14.0",
+    "react-refresh": "^0.14.0",
     "style-loader": "3.3.3",
     "terser-webpack-plugin": "5.3.9",
-    "tsconfig-paths-webpack-plugin": "4.1.0",
     "ts-loader": "9.4.4",
+    "tsconfig-paths-webpack-plugin": "4.1.0",
     "webpack": "^5.88.1",
     "webpack-subresource-integrity": "5.1.0"
   },
@@ -81,8 +72,17 @@
     "@rsbuild/test-helper": "workspace:*",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
-    "typescript": "^5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/",
+    "types": "./dist/index.d.ts"
   }
 }

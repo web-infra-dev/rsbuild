@@ -1,29 +1,29 @@
 {
   "name": "@rsbuild/doctor-types",
   "version": "0.0.3",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/doctor-types"
   },
-  "scripts": {
-    "dev": "npm run start",
-    "start": "npm run build -- -w",
-    "build": "tsc -p tsconfig.json"
-  },
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "npm run start",
+    "start": "npm run build -- -w"
+  },
   "dependencies": {
+    "@rspack/core": "0.3.8",
     "@types/connect": "3.4.35",
     "@types/estree": "1.0.0",
     "@types/tapable": "2.2.2",
     "@types/webpack": "5.28.0",
-    "source-map": "^0.7.4",
-    "@rspack/core": "0.3.8"
+    "source-map": "^0.7.4"
   },
   "devDependencies": {
     "@types/node": "^16",
@@ -33,7 +33,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/",
-    "provenance": true
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
   }
 }

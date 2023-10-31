@@ -7,22 +7,22 @@
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/plugin-react"
   },
-  "main": "./dist/index.js",
-  "types": "./src/index.ts",
-  "scripts": {
-    "dev": "modern build --watch",
-    "build": "modern build"
-  },
+  "license": "MIT",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
   "files": [
     "dist"
   ],
-  "license": "MIT",
+  "scripts": {
+    "build": "modern build",
+    "dev": "modern build --watch"
+  },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
     "@rspack/plugin-react-refresh": "0.3.8",
@@ -35,9 +35,9 @@
     "typescript": "^5"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
     "access": "public",
     "provenance": true,
+    "registry": "https://registry.npmjs.org/",
     "types": "./dist/index.d.ts"
   }
 }

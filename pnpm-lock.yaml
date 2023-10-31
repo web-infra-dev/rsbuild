@@ -489,8 +489,8 @@ importers:
         specifier: 0.4.24
         version: 0.4.24
       caniuse-lite:
-        specifier: ^1.0.30001520
-        version: 1.0.30001551
+        specifier: ^1.0.30001559
+        version: 1.0.30001559
       html-webpack-plugin:
         specifier: 5.5.3
         version: 5.5.3(webpack@5.89.0)
@@ -504,7 +504,7 @@ importers:
         specifier: 8.4.31
         version: 8.4.31
       react-refresh:
-        specifier: 0.14.0
+        specifier: ^0.14.0
         version: 0.14.0
       style-loader:
         specifier: 3.3.3
@@ -979,8 +979,8 @@ importers:
         specifier: ^4.22.1
         version: 4.22.1
       caniuse-lite:
-        specifier: ^1.0.30001558
-        version: 1.0.30001558
+        specifier: ^1.0.30001559
+        version: 1.0.30001559
       htmlparser2:
         specifier: 9.0.0
         version: 9.0.0
@@ -3857,7 +3857,7 @@ packages:
       '@rspack/dev-client': 0.3.8(react-refresh@0.14.0)(webpack@5.89.0)
       '@rspack/plugin-html': 0.3.8(@rspack/core@0.3.8)
       '@swc/helpers': 0.5.1
-      caniuse-lite: 1.0.30001558
+      caniuse-lite: 1.0.30001559
       core-js: 3.32.2
       postcss: 8.4.31
       react-refresh: 0.14.0
@@ -3907,7 +3907,7 @@ packages:
       '@modern-js/utils': 2.38.0
       '@swc/helpers': 0.5.1
       acorn: 8.10.0
-      caniuse-lite: 1.0.30001558
+      caniuse-lite: 1.0.30001559
       css-minimizer-webpack-plugin: 5.0.1(webpack@5.89.0)
       cssnano: 6.0.1(postcss@8.4.31)
       fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.2.2)(webpack@5.89.0)
@@ -4545,7 +4545,7 @@ packages:
     resolution: {integrity: sha512-shRDwZpo3ZitfRrZ0hFKSWmBd8XtfwwkCXxWAykkei+7TRkkCVFgRT8pazJnMtgwNml1kYNOnDCSMXcG/qwx/Q==}
     dependencies:
       '@swc/helpers': 0.5.1
-      caniuse-lite: 1.0.30001558
+      caniuse-lite: 1.0.30001559
       lodash: 4.17.21
       rslog: 1.1.0
 
@@ -4553,7 +4553,7 @@ packages:
     resolution: {integrity: sha512-k8J4eYgguKRHbJd4gON9DDzxX8Cmb7BS2lOGf6Uqsd4T8/KkfTl1C0qTO9Jso63K7RJJpw6dKGUQEp46qWelBA==}
     dependencies:
       '@swc/helpers': 0.5.1
-      caniuse-lite: 1.0.30001558
+      caniuse-lite: 1.0.30001559
       lodash: 4.17.21
       rslog: 1.1.0
 
@@ -6765,7 +6765,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.22.1
-      caniuse-lite: 1.0.30001558
+      caniuse-lite: 1.0.30001559
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -7025,7 +7025,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001558
+      caniuse-lite: 1.0.30001559
       electron-to-chromium: 1.4.559
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
@@ -7120,16 +7120,12 @@ packages:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
     dependencies:
       browserslist: 4.22.1
-      caniuse-lite: 1.0.30001558
+      caniuse-lite: 1.0.30001559
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
 
-  /caniuse-lite@1.0.30001551:
-    resolution: {integrity: sha512-vtBAez47BoGMMzlbYhfXrMV1kvRF2WP/lqiMuDu1Sb4EE4LKEgjopFDSRtZfdVnslNRpOqV/woE+Xgrwj6VQlg==}
-    dev: false
-
-  /caniuse-lite@1.0.30001558:
-    resolution: {integrity: sha512-/Et7DwLqpjS47JPEcz6VnxU9PwcIdVi0ciLXRWBQdj1XFye68pSQYpV0QtPTfUKWuOaEig+/Vez2l74eDc1tPQ==}
+  /caniuse-lite@1.0.30001559:
+    resolution: {integrity: sha512-cPiMKZgqgkg5LY3/ntGeLFUpi6tzddBNS58A4tnTgQw1zON7u2sZMU7SzOeVH4tj20++9ggL+V6FDOFMTaFFYA==}
 
   /ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}

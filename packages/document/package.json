@@ -9,26 +9,26 @@
     "directory": "packages/document"
   },
   "license": "MIT",
-  "scripts": {
-    "dev": "rspress dev",
-    "build:doc": "rspress build",
-    "preview": "rspress preview"
-  },
   "files": [
     "docs",
     "src",
     "rspress.config.ts"
   ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public",
-    "provenance": true
+  "scripts": {
+    "build:doc": "rspress build",
+    "dev": "rspress dev",
+    "preview": "rspress preview"
   },
   "devDependencies": {
     "@rspress/shared": "^1.2.1",
     "@types/node": "^16",
-    "rspress": "^1.2.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "rspress": "^1.2.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
   }
 }
