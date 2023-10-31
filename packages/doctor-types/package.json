@@ -29,7 +29,7 @@
     "@types/node": "^16",
     "@types/react": "^18",
     "tslib": "2.4.1",
-    "typescript": "^5"
+    "typescript": "^5.2.2"
   },
   "publishConfig": {
     "access": "public",

@@ -37,7 +37,7 @@
     "@rsbuild/test-helper": "workspace:*",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
-    "typescript": "^5"
+    "typescript": "^5.2.2"
   },
   "publishConfig": {
     "access": "public",

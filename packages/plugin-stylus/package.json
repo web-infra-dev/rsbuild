@@ -33,8 +33,8 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "typescript": "^5",
-    "webpack": "^5.88.1"
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0"
   },
   "peerDependencies": {
     "@rsbuild/core": "workspace:^0.0.11"

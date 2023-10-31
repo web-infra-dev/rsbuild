@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-router-dom": "^6.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.17.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {
@@ -46,6 +46,6 @@
     "get-port": "^5.0.0",
     "playwright": "1.33.0",
     "serve-static": "^1.15.0",
-    "typescript": "^5"
+    "typescript": "^5.2.2"
   }
 }

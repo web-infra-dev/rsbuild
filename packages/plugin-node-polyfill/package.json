@@ -31,7 +31,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "typescript": "^5"
+    "typescript": "^5.2.2"
   },
   "publishConfig": {
     "access": "public",

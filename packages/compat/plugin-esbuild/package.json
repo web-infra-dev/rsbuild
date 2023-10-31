@@ -27,13 +27,13 @@
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
     "esbuild": "0.17.19",
-    "webpack": "^5.88.1"
+    "webpack": "^5.89.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "typescript": "^5"
+    "typescript": "^5.2.2"
   },
   "publishConfig": {
     "access": "public",
