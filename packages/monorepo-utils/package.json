@@ -1,5 +1,6 @@
 {
   "name": "@rsbuild/monorepo-utils",
+  "version": "0.0.11",
   "description": "The monorepo utils of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -8,27 +9,20 @@
     "directory": "packages/monorepo-utils"
   },
   "license": "MIT",
-  "version": "0.0.11",
-  "types": "./src/index.ts",
-  "main": "./dist/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public",
-    "provenance": true,
-    "types": "./dist/index.d.ts"
-  },
   "scripts": {
-    "dev": "modern build --watch",
-    "build": "modern build"
+    "build": "modern build",
+    "dev": "modern build --watch"
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
@@ -41,5 +35,11 @@
   "devDependencies": {
     "@types/node": "^16",
     "typescript": "^5"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/",
+    "types": "./dist/index.d.ts"
   }
 }

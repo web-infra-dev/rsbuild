@@ -1,5 +1,6 @@
 {
   "name": "@rsbuild/test-helper",
+  "version": "0.0.11",
   "description": "The vitest helpers of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -8,35 +9,34 @@
     "directory": "packages/test-helper"
   },
   "license": "MIT",
-  "version": "0.0.11",
-  "main": "./dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.js",
       "default": "./dist/index.js"
     }
   },
-  "scripts": {
-    "dev": "modern build --watch",
-    "build": "modern build"
-  },
+  "main": "./dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public",
-    "provenance": true,
-    "types": "./dist/index.d.ts"
+  "scripts": {
+    "build": "modern build",
+    "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
     "@rsbuild/core": "workspace:*",
-    "@types/node": "^16",
+    "@rsbuild/shared": "workspace:*",
     "@types/lodash": "^4.14.200",
+    "@types/node": "^16",
     "lodash": "^4.17.21",
-    "upath": "2.0.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "upath": "2.0.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/",
+    "types": "./dist/index.d.ts"
   }
 }

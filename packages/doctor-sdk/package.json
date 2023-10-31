@@ -1,22 +1,22 @@
 {
   "name": "@rsbuild/doctor-sdk",
   "version": "0.0.3",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/doctor-sdk"
+  },
+  "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/type/index.d.ts",
   "files": [
     "dist"
   ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/web-infra-dev/rsbuild",
-    "directory": "packages/doctor-sdk"
-  },
   "scripts": {
+    "build": "modern build",
     "dev": "npm run start",
     "start": "modern build -w",
-    "build": "modern build",
     "test": "vitest run"
   },
   "dependencies": {
@@ -26,15 +26,15 @@
   },
   "devDependencies": {
     "@rsbuild/doctor-types": "workspace:*",
+    "@types/estree": "1.0.0",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
-    "@types/estree": "1.0.0",
     "tslib": "2.4.1",
     "typescript": "^5"
   },
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/",
-    "provenance": true
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
   }
 }

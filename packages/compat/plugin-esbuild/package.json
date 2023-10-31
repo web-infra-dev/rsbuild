@@ -1,5 +1,6 @@
 {
   "name": "@rsbuild/plugin-esbuild",
+  "version": "0.0.11",
   "description": "Esbuild plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -8,21 +9,20 @@
     "directory": "packages/compat/plugin-esbuild"
   },
   "license": "MIT",
-  "version": "0.0.11",
-  "types": "./src/index.ts",
-  "main": "./dist/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "dev": "modern build --watch",
-    "build": "modern build"
+    "build": "modern build",
+    "dev": "modern build --watch"
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
@@ -31,14 +31,14 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/webpack": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
+    "@rsbuild/webpack": "workspace:*",
     "typescript": "^5"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
     "access": "public",
     "provenance": true,
+    "registry": "https://registry.npmjs.org/",
     "types": "./dist/index.d.ts"
   }
 }

@@ -1,5 +1,6 @@
 {
   "name": "@rsbuild/plugin-stylus",
+  "version": "0.0.11",
   "description": "Stylus plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -8,21 +9,20 @@
     "directory": "packages/plugin-stylus"
   },
   "license": "MIT",
-  "version": "0.0.11",
-  "types": "./src/index.ts",
-  "main": "./dist/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "dev": "modern build --watch",
-    "build": "modern build"
+    "build": "modern build",
+    "dev": "modern build --watch"
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
@@ -30,8 +30,8 @@
     "stylus-loader": "7.1.0"
   },
   "devDependencies": {
-    "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/core": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "typescript": "^5",
     "webpack": "^5.88.1"
@@ -45,9 +45,9 @@
     }
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
     "access": "public",
     "provenance": true,
+    "registry": "https://registry.npmjs.org/",
     "types": "./dist/index.d.ts"
   }
 }
