@@ -54,13 +54,13 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-router-dom:
-        specifier: ^6.8.1
+        specifier: ^6.17.0
         version: 6.17.0(react-dom@18.2.0)(react@18.2.0)
       vue:
         specifier: ^3.3.4
@@ -157,34 +157,34 @@ importers:
         specifier: ^1.15.0
         version: 1.15.0
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   e2e/cases/import-antd-v4:
     dependencies:
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
 
   e2e/cases/import-antd-v5:
     dependencies:
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
 
   e2e/cases/import-arco:
     dependencies:
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
 
   e2e/cases/moment:
@@ -228,10 +228,10 @@ importers:
   e2e/cases/source-map:
     dependencies:
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       source-map:
         specifier: 0.7.4
@@ -344,7 +344,7 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/compat/plugin-esbuild:
@@ -356,7 +356,7 @@ importers:
         specifier: 0.17.19
         version: 0.17.19
       webpack:
-        specifier: ^5.88.1
+        specifier: ^5.89.0
         version: 5.89.0(esbuild@0.17.19)
     devDependencies:
       '@rsbuild/core':
@@ -369,7 +369,7 @@ importers:
         specifier: workspace:*
         version: link:../webpack
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/compat/plugin-swc:
@@ -418,19 +418,19 @@ importers:
         specifier: 0.29.0
         version: 0.29.0
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       source-map:
         specifier: ^0.7.4
         version: 0.7.4
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
       webpack:
-        specifier: ^5.88.1
+        specifier: ^5.89.0
         version: 5.89.0(@swc/core@1.3.42)
 
   packages/compat/plugin-swc/tests/fixtures/browserslist/chrome104: {}
@@ -450,7 +450,7 @@ importers:
         version: link:../webpack
     devDependencies:
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/compat/webpack:
@@ -519,7 +519,7 @@ importers:
         specifier: 4.1.0
         version: 4.1.0
       webpack:
-        specifier: ^5.88.1
+        specifier: ^5.89.0
         version: 5.89.0
       webpack-subresource-integrity:
         specifier: 5.1.0
@@ -535,13 +535,13 @@ importers:
         specifier: ^16
         version: 16.18.59
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/core:
@@ -589,7 +589,7 @@ importers:
         specifier: ^7.5.4
         version: 7.5.4
       webpack:
-        specifier: ^5.88.1
+        specifier: ^5.89.0
         version: 5.89.0
     devDependencies:
       '@types/lodash':
@@ -602,7 +602,7 @@ importers:
         specifier: ^7.5.4
         version: 7.5.4
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/create-rsbuild:
@@ -618,16 +618,16 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/create-rsbuild/template-react-js:
     dependencies:
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@rsbuild/core':
@@ -640,10 +640,10 @@ importers:
   packages/create-rsbuild/template-react-ts:
     dependencies:
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@rsbuild/core':
@@ -659,7 +659,7 @@ importers:
         specifier: ^18
         version: 18.2.14
       typescript:
-        specifier: ^5.2.0
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/create-rsbuild/template-svelte-js:
@@ -688,7 +688,7 @@ importers:
         specifier: workspace:*
         version: link:../../plugin-svelte
       typescript:
-        specifier: ^5.2.0
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/create-rsbuild/template-vue2-js:
@@ -717,7 +717,7 @@ importers:
         specifier: workspace:*
         version: link:../../plugin-vue2
       typescript:
-        specifier: ^5.2.0
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/create-rsbuild/template-vue3-js:
@@ -746,7 +746,7 @@ importers:
         specifier: workspace:*
         version: link:../../plugin-vue
       typescript:
-        specifier: ^5.2.0
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/doctor-sdk:
@@ -777,7 +777,7 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/doctor-types:
@@ -811,7 +811,7 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/doctor-utils:
@@ -878,7 +878,7 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/document:
@@ -890,10 +890,10 @@ importers:
         specifier: ^16
         version: 16.18.59
       react:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       rspress:
         specifier: ^1.2.1
@@ -924,7 +924,7 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/plugin-babel:
@@ -964,7 +964,7 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/plugin-check-syntax:
@@ -998,7 +998,7 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/plugin-image-compress:
@@ -1026,10 +1026,10 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
       webpack:
-        specifier: ^5.88.1
+        specifier: ^5.89.0
         version: 5.89.0
 
   packages/plugin-node-polyfill:
@@ -1048,7 +1048,7 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/plugin-react:
@@ -1073,7 +1073,7 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/plugin-source-build:
@@ -1098,7 +1098,7 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/plugin-styled-components:
@@ -1126,7 +1126,7 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/plugin-stylus:
@@ -1151,10 +1151,10 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
       webpack:
-        specifier: ^5.88.1
+        specifier: ^5.89.0
         version: 5.89.0
 
   packages/plugin-svelte:
@@ -1179,7 +1179,7 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/plugin-svgr:
@@ -1204,7 +1204,7 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/plugin-type-check:
@@ -1223,7 +1223,7 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/plugin-vue:
@@ -1242,10 +1242,10 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
       webpack:
-        specifier: ^5.88.1
+        specifier: ^5.89.0
         version: 5.89.0
 
   packages/plugin-vue-jsx:
@@ -1270,7 +1270,7 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/plugin-vue2:
@@ -1289,10 +1289,10 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
       webpack:
-        specifier: ^5.88.1
+        specifier: ^5.89.0
         version: 5.89.0
 
   packages/plugin-vue2-jsx:
@@ -1320,7 +1320,7 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/shared:
@@ -1374,7 +1374,7 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       webpack:
-        specifier: ^5.88.1
+        specifier: ^5.89.0
         version: 5.89.0
       webpack-chain:
         specifier: npm:webpack-5-chain@8.0.1
@@ -1420,7 +1420,7 @@ importers:
         specifier: 5.3.9
         version: 5.3.9(webpack@5.89.0)
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/test-helper:
@@ -1441,7 +1441,7 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       typescript:
-        specifier: ^5
+        specifier: ^5.2.2
         version: 5.2.2
       upath:
         specifier: 2.0.1
@@ -1471,15 +1471,15 @@ importers:
         specifier: ^1.1.3
         version: 1.1.3
       '@modern-js/generator-utils':
-        specifier: ^3.2.7
-        version: 3.2.7(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+        specifier: ^3.2.8
+        version: 3.2.8(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
       fs-extra:
-        specifier: ^10.1.0
-        version: 10.1.0
+        specifier: ^11.1.1
+        version: 11.1.1
     devDependencies:
       '@types/fs-extra':
-        specifier: ^9.0.13
-        version: 9.0.13
+        specifier: ^11.0.2
+        version: 11.0.3
       '@types/node':
         specifier: ^16
         version: 16.18.59
@@ -4011,17 +4011,6 @@ packages:
       '@swc/helpers': 0.5.1
     dev: true
 
-  /@modern-js/generator-common@3.2.7(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-QAhPaI00qX0eYbzCPZnNYv26kFY5e0hOWZdwBmlHbAM5eJWs5Yyzjh31NRb0RvFmiRS5Dm8jCiZfxRqrMig3rA==}
-    dependencies:
-      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
-      '@modern-js/plugin-i18n': 2.38.0
-      '@swc/helpers': 0.5.1
-    transitivePeerDependencies:
-      - '@modern-js/codesmith'
-      - typescript
-    dev: false
-
   /@modern-js/generator-common@3.2.8(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
     resolution: {integrity: sha512-JTAhQoFIYqQHtxkL3BIdGSGYb+Jm0sn6GljBs4NHmSL+2fyOe/Sq/tS22/GLovI8IB8DTINkm5fA2kH76BqT3g==}
     dependencies:
@@ -4031,19 +4020,6 @@ packages:
     transitivePeerDependencies:
       - '@modern-js/codesmith'
       - typescript
-    dev: true
-
-  /@modern-js/generator-utils@3.2.7(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-GMjGWuD5mMruvGGQpW6M5phISog/TJP7B9XQUk5iJkQfxDJ3tXcz4ZRcDXCci3ggkkUh5XEK5yU5beVEtWri/g==}
-    dependencies:
-      '@modern-js/generator-common': 3.2.7(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
-      '@modern-js/plugin-i18n': 2.38.0
-      '@modern-js/utils': 2.38.0
-      '@swc/helpers': 0.5.1
-    transitivePeerDependencies:
-      - '@modern-js/codesmith'
-      - typescript
-    dev: false
 
   /@modern-js/generator-utils@3.2.8(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
     resolution: {integrity: sha512-ZYUUgd1Q/irVhtg156Ozo8CvS40nEIib9mlG06wulb5UsRHoh6LHc05iHsxd3iT5Ye5MEJx5JtvHMKHBUqq17Q==}
@@ -4055,7 +4031,6 @@ packages:
     transitivePeerDependencies:
       - '@modern-js/codesmith'
       - typescript
-    dev: true
 
   /@modern-js/module-tools@2.39.0(typescript@5.2.2):
     resolution: {integrity: sha512-tRM9HoK9wadiUlShWaUsHBOPdYSRHTRK+QsyjEVNQZ069OQ/SVlZIUL8OiEPnjoXeOiYX63XYb37czIN0XzKwA==}
@@ -4176,19 +4151,11 @@ packages:
       - debug
     dev: true
 
-  /@modern-js/plugin-i18n@2.38.0:
-    resolution: {integrity: sha512-Jgxw3hae1XgBBDLbYIyMQJtof9I/zcMEXS/s7Du5k0I7DXBV91iXhjY7lRLphsOQ7VbcmsqrXzIzM5LLt/8mBA==}
-    dependencies:
-      '@modern-js/utils': 2.38.0
-      '@swc/helpers': 0.5.1
-    dev: false
-
   /@modern-js/plugin-i18n@2.39.0:
     resolution: {integrity: sha512-+FKe2l7C0GNACq3ANuIXsKhnJL1Nn1cXVkjehpvinHaJYeFI93Zt/voqJFL71jmV7ZukMVgivbSdJydFkxRZ0Q==}
     dependencies:
       '@modern-js/utils': 2.39.0
       '@swc/helpers': 0.5.1
-    dev: true
 
   /@modern-js/plugin-lint@2.39.0:
     resolution: {integrity: sha512-4r6XfVmoc3/4kVxoha/FCEftSgBUvd7L8p5btxvGferxHajwFwXi9qATLvHzBmh9S+CtKy7gULpk4KEHV5zLUQ==}
@@ -4548,6 +4515,7 @@ packages:
       caniuse-lite: 1.0.30001559
       lodash: 4.17.21
       rslog: 1.1.0
+    dev: true
 
   /@modern-js/utils@2.39.0:
     resolution: {integrity: sha512-k8J4eYgguKRHbJd4gON9DDzxX8Cmb7BS2lOGf6Uqsd4T8/KkfTl1C0qTO9Jso63K7RJJpw6dKGUQEp46qWelBA==}
@@ -5839,12 +5807,6 @@ packages:
     dependencies:
       '@types/jsonfile': 6.1.3
       '@types/node': 16.18.59
-
-  /@types/fs-extra@9.0.13:
-    resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
-    dependencies:
-      '@types/node': 16.18.59
-    dev: true
 
   /@types/hast@2.3.7:
     resolution: {integrity: sha512-EVLigw5zInURhzfXUM65eixfadfsHKomGKUakToXo84t8gGIJuTcD2xooM2See7GyQ7DRtYjhCHnSUQez8JaLw==}

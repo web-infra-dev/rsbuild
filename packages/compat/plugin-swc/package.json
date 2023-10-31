@@ -65,11 +65,11 @@
     "@types/babel__core": "^7.20.3",
     "@types/lodash": "^4.14.200",
     "magic-string": "0.29.0",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "source-map": "^0.7.4",
-    "typescript": "^5",
-    "webpack": "^5.88.1"
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0"
   },
   "publishConfig": {
     "access": "public",

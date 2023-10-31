@@ -169,7 +169,7 @@
     "rslog": "^1.1.0",
     "semver": "^7.5.4",
     "url-join": "^4.0.1",
-    "webpack": "^5.88.1",
+    "webpack": "^5.89.0",
     "webpack-chain": "npm:webpack-5-chain@8.0.1",
     "webpack-sources": "^3.2.3",
     "zod": "^3.22.3",
@@ -186,7 +186,7 @@
     "html-webpack-plugin": "5.5.3",
     "terser": "5.19.2",
     "terser-webpack-plugin": "5.3.9",
-    "typescript": "^5"
+    "typescript": "^5.2.2"
   },
   "publishConfig": {
     "access": "public",

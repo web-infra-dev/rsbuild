@@ -30,7 +30,7 @@
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "lodash": "^4.17.21",
-    "typescript": "^5",
+    "typescript": "^5.2.2",
     "upath": "2.0.1"
   },
   "publishConfig": {

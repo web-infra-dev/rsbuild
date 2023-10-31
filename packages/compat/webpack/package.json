@@ -65,16 +65,16 @@
     "terser-webpack-plugin": "5.3.9",
     "ts-loader": "9.4.4",
     "tsconfig-paths-webpack-plugin": "4.1.0",
-    "webpack": "^5.88.1",
+    "webpack": "^5.89.0",
     "webpack-subresource-integrity": "5.1.0"
   },
   "devDependencies": {
     "@rsbuild/test-helper": "workspace:*",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
-    "react": "^18",
-    "react-dom": "^18",
-    "typescript": "^5"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.2.2"
   },
   "engines": {
     "node": ">=14.0.0"

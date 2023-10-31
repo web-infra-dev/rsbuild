@@ -34,8 +34,8 @@
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@types/node": "^16",
-    "typescript": "^5",
-    "webpack": "^5.88.1"
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0"
   },
   "publishConfig": {
     "access": "public",
