@@ -1,10 +1,10 @@
 import {
   TS_REGEX,
-  getBabelUtils,
   mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
 } from '@rsbuild/shared';
+import { getBabelUtils } from '@rsbuild/plugin-babel';
 import _ from 'lodash';
 import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
 import { getUseBuiltIns } from './babel';

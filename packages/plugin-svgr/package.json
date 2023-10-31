@@ -31,7 +31,6 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
-    "@rsbuild/webpack": "workspace:*",
     "@types/node": "^16",
     "typescript": "^5"
   },

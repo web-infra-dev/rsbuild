@@ -6,6 +6,7 @@ import type {
   CreateRsbuildOptions,
   BundlerPluginInstance,
 } from '@rsbuild/shared';
+import { getCreateRsbuildDefaultOptions } from '@rsbuild/core';
 import type { RsbuildConfig } from '@rsbuild/core/rspack-provider';
 
 const getRspackProvider = async (rsbuildConfig: RsbuildConfig) => {
@@ -102,10 +103,11 @@ export async function createStubRsbuild<
     matchBundlerPlugin: (name: string) => Promise<BundlerPluginInstance | null>;
   }
 > {
-  const { pick, createPluginStore, applyDefaultRsbuildOptions } = await import(
-    '@rsbuild/shared'
-  );
-  const rsbuildOptions = applyDefaultRsbuildOptions(options);
+  const { pick, createPluginStore } = await import('@rsbuild/shared');
+  const rsbuildOptions = {
+    ...getCreateRsbuildDefaultOptions(),
+    ...options,
+  };
 
   const provider = options.provider
     ? options.provider({ rsbuildConfig })

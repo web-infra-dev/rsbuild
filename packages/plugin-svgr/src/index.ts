@@ -6,7 +6,6 @@ import {
   getDistPath,
   getFilename,
   chainStaticAssetRule,
-  getSvgoDefaultConfig,
   DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
 
@@ -18,6 +17,24 @@ export type PluginSvgrOptions = {
    */
   svgDefaultExport?: SvgDefaultExport;
 };
+
+function getSvgoDefaultConfig() {
+  return {
+    plugins: [
+      {
+        name: 'preset-default',
+        params: {
+          overrides: {
+            // viewBox is required to resize SVGs with CSS.
+            // @see https://github.com/svg/svgo/issues/1128
+            removeViewBox: false,
+          },
+        },
+      },
+      'prefixIds',
+    ],
+  };
+}
 
 export const pluginSvgr = (
   options: PluginSvgrOptions = {},

@@ -60,6 +60,7 @@
     "@babel/runtime": "^7.23.2",
     "@babel/types": "^7.23.0",
     "@rsbuild/shared": "workspace:*",
+    "@rsbuild/plugin-babel": "workspace:*",
     "@types/babel__core": "^7.20.3",
     "babel-plugin-dynamic-import-node": "2.3.3",
     "core-js": "~3.32.2"

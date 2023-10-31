@@ -2,7 +2,7 @@ import type {
   PresetEnvOptions,
   PresetEnvTargets,
   PresetEnvBuiltIns,
-} from '@rsbuild/shared';
+} from '@rsbuild/plugin-babel';
 
 export type { TransformOptions as BabelConfig } from '@babel/core';
 

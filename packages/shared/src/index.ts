@@ -1,5 +1,3 @@
-export * from './applyDefaultRsbuildOptions';
-export * from './babel';
 export * from './constants';
 export * from './createHook';
 export * from './pluginStore';
@@ -24,7 +22,6 @@ export * from './plugins';
 export * from './apply';
 export * from './fallback';
 export * from './getLoaderOptions';
-export * from './svgo';
 export * from './patch';
 export * from './manifest';
 export * from './css';

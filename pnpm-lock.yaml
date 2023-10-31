@@ -324,6 +324,9 @@ importers:
       '@babel/types':
         specifier: ^7.23.0
         version: 7.23.0
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../plugin-babel
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
@@ -451,6 +454,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../core
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../../plugin-babel
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../../shared
@@ -907,9 +913,15 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      '@types/babel__core':
+        specifier: ^7.20.3
+        version: 7.20.3
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      upath:
+        specifier: 2.0.1
+        version: 2.0.1
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -917,9 +929,6 @@ importers:
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../compat/webpack
       '@types/lodash':
         specifier: ^4.14.200
         version: 4.14.200
@@ -1160,9 +1169,6 @@ importers:
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../compat/webpack
       '@types/node':
         specifier: ^16
         version: 16.18.59
@@ -1294,9 +1300,6 @@ importers:
       '@modern-js/server':
         specifier: ^2.39.0
         version: 2.39.0(react-dom@18.2.0)(react@18.2.0)
-      '@types/babel__core':
-        specifier: ^7.20.3
-        version: 7.20.3
       '@types/fs-extra':
         specifier: ^11.0.2
         version: 11.0.3
@@ -1336,9 +1339,6 @@ importers:
       semver:
         specifier: ^7.5.4
         version: 7.5.4
-      upath:
-        specifier: 2.0.1
-        version: 2.0.1
       url-join:
         specifier: ^4.0.1
         version: 4.0.1

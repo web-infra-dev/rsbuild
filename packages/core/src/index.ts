@@ -1,4 +1,4 @@
-export { createRsbuild } from './createRsbuild';
+export { createRsbuild, getCreateRsbuildDefaultOptions } from './createRsbuild';
 export { mergeRsbuildConfig } from '@rsbuild/shared';
 
 export { defineConfig } from './cli';
