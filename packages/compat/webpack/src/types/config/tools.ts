@@ -50,15 +50,6 @@ export type ToolsWebpackChainConfig = ArrayOrNot<
 
 export interface ToolsConfig extends SharedToolsConfig {
   /**
-  /**
-   * Modify the config of [sass-loader](https://github.com/webpack-contrib/sass-loader).
-   */
-  sass?: ToolsSassConfig;
-  /**
-   * Modify the config of [less-loader](https://github.com/webpack-contrib/less-loader).
-   */
-  less?: ToolsLessConfig;
-  /**
    * Modify the options of [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin).
    */
   terser?: ToolsTerserConfig;

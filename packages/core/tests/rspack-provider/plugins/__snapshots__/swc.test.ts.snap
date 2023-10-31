@@ -947,6 +947,7 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -989,6 +990,7 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
               "env": {
                 "coreJs": "3.32",
                 "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
