@@ -1,10 +1,1 @@
-[
-  "source",
-  "html",
-  "security",
-  "dev",
-  "output",
-  "tools",
-  "performance",
-  "experiments"
-]
+["source", "html", "dev", "output", "tools", "performance"]

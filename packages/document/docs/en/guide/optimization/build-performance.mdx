@@ -36,43 +36,9 @@ nvm default 18
 node -v
 ```
 
-### Avoid using ts-loader
-
-By default, Rsbuild uses Babel to compile TS files. After enabling the [tools.tsLoader](/config/options/tools.html#toolstsloader) option, `ts-loader` will be used to compile TS files.
-
-Please avoid using `ts-loader` because it requires additional parsing and type checking, which will slow down the build.
-
-```js
-export default {
-  tools: {
-    // remove this config
-    tsLoader: {},
-  },
-};
-```
-
-See the [tools.tsLoader documentation](/config/options/tools.html#toolstsloader) for details.
-
 ## Development optimization strategies
 
 The following are strategies for improve build performance in development environment.
-
-### Enable Lazy Compilation
-
-You can enable the lazy compilation (i.e. on-demand compilation) to improve the compilation startup speed.
-
-```ts
-export default {
-  experiments: {
-    lazyCompilation: {
-      imports: true,
-      entries: false,
-    },
-  },
-};
-```
-
-This is an experimental feature and may not work correctly in some scenarios, see [experiments.lazyCompilation](/config/options/experiments.html#experiments-lazycompilation) for details.
 
 ### Adjust Source Map format
 

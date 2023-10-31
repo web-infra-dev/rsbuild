@@ -1,9 +1,1 @@
-[
-  "rspack-start",
-  "alias",
-  "define",
-  "hmr",
-  "rem",
-  "browserslist",
-  "browser-compatibility"
-]
+["alias", "define", "hmr", "rem", "browserslist", "browser-compatibility"]
