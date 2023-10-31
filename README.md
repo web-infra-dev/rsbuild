@@ -30,6 +30,8 @@ Rsbuild integrates high-performance Rust-based tools from the community, includi
 
 Rsbuild also provides universal build capabilities for higher level solutions, such as Rspress and Modern.js. In fact, Rsbuild is a rebrand of the Modern.js Builder. It has been decoupled from Modern.js to provide greater flexibility and to meet the diverse needs of community users.
 
+## Position
+
 The following diagram illustrates the relationship between Rsbuild and other tools in the ecosystem:
 
 ![Rspack Ecosystem](https://github.com/web-infra-dev/rsbuild/assets/7237365/1ec93ad6-b8b1-475b-963f-cba1e7d79dec)
@@ -45,7 +47,9 @@ The following diagram illustrates the relationship between Rsbuild and other too
 
 ## Getting Started
 
-**This project is new and under active development. It will be available in late November 2023.**
+You can refer to [Quick Start](https://rsbuild.dev/guide/start/quick-start.html) to start experiencing Rsbuild.
+
+Please note that the Rsbuild project is still under active development. We are still in the process of refactoring and optimizing. The documentation is not yet complete.
 
 ## Ecosystem
 
