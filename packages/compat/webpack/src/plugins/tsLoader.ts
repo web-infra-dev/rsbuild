@@ -14,80 +14,78 @@ export const pluginTsLoader = (): RsbuildPlugin => {
   return {
     name: 'plugin-ts-loader',
     setup(api) {
-      api.modifyWebpackChain(
-        async (chain, { target, CHAIN_ID, getCompiledPath }) => {
-          const config = api.getNormalizedConfig();
-          if (!config.tools.tsLoader) {
-            return;
-          }
+      api.modifyWebpackChain(async (chain, { target, CHAIN_ID }) => {
+        const config = api.getNormalizedConfig();
+        if (!config.tools.tsLoader) {
+          return;
+        }
 
-          const { rootPath } = api.context;
-          const browserslist = await getBrowserslistWithDefault(
-            rootPath,
-            config,
-            target,
-          );
+        const { rootPath } = api.context;
+        const browserslist = await getBrowserslistWithDefault(
+          rootPath,
+          config,
+          target,
+        );
 
-          const baseBabelConfig = getBabelConfigForWeb({
-            presetEnv: {
-              targets: browserslist,
-              useBuiltIns: getUseBuiltIns(config),
+        const baseBabelConfig = getBabelConfigForWeb({
+          presetEnv: {
+            targets: browserslist,
+            useBuiltIns: getUseBuiltIns(config),
+          },
+        });
+
+        const babelUtils = getBabelUtils(baseBabelConfig);
+
+        const babelLoaderOptions = mergeChainedOptions(
+          baseBabelConfig,
+          config.tools.babel,
+          babelUtils,
+        );
+
+        const includes: Array<string | RegExp> = [];
+        const excludes: Array<string | RegExp> = [];
+
+        const tsLoaderUtils = {
+          addIncludes(items: string | RegExp | (string | RegExp)[]) {
+            includes.push(..._.castArray(items));
+          },
+          addExcludes(items: string | RegExp | (string | RegExp)[]) {
+            excludes.push(..._.castArray(items));
+          },
+        };
+        // @ts-expect-error ts-loader has incorrect types for compilerOptions
+        const tsLoaderOptions = mergeChainedOptions(
+          {
+            compilerOptions: {
+              target: 'esnext',
+              module: 'esnext',
             },
-          });
+            transpileOnly: true,
+            allowTsInNodeModules: true,
+          },
+          config.tools.tsLoader,
+          tsLoaderUtils,
+        );
+        const rule = chain.module.rule(CHAIN_ID.RULE.TS);
 
-          const babelUtils = getBabelUtils(baseBabelConfig);
+        applyScriptCondition({
+          rule,
+          config,
+          context: api.context,
+          includes,
+          excludes,
+        });
 
-          const babelLoaderOptions = mergeChainedOptions(
-            baseBabelConfig,
-            config.tools.babel,
-            babelUtils,
-          );
-
-          const includes: Array<string | RegExp> = [];
-          const excludes: Array<string | RegExp> = [];
-
-          const tsLoaderUtils = {
-            addIncludes(items: string | RegExp | (string | RegExp)[]) {
-              includes.push(..._.castArray(items));
-            },
-            addExcludes(items: string | RegExp | (string | RegExp)[]) {
-              excludes.push(..._.castArray(items));
-            },
-          };
-          // @ts-expect-error ts-loader has incorrect types for compilerOptions
-          const tsLoaderOptions = mergeChainedOptions(
-            {
-              compilerOptions: {
-                target: 'esnext',
-                module: 'esnext',
-              },
-              transpileOnly: true,
-              allowTsInNodeModules: true,
-            },
-            config.tools.tsLoader,
-            tsLoaderUtils,
-          );
-          const rule = chain.module.rule(CHAIN_ID.RULE.TS);
-
-          applyScriptCondition({
-            rule,
-            config,
-            context: api.context,
-            includes,
-            excludes,
-          });
-
-          rule
-            .test(TS_REGEX)
-            .use(CHAIN_ID.USE.BABEL)
-            .loader(getCompiledPath('babel-loader'))
-            .options(babelLoaderOptions)
-            .end()
-            .use(CHAIN_ID.USE.TS)
-            .loader(require.resolve('ts-loader'))
-            .options(tsLoaderOptions);
-        },
-      );
+        rule
+          .test(TS_REGEX)
+          .use(CHAIN_ID.USE.BABEL)
+          .loader(require.resolve('babel-loader'))
+          .options(babelLoaderOptions)
+          .end()
+          .use(CHAIN_ID.USE.TS)
+          .loader(require.resolve('ts-loader'))
+          .options(tsLoaderOptions);
+      });
     },
   };
 };

@@ -27,85 +27,79 @@ export const pluginBabel = (
       return;
     }
 
-    api.modifyBundlerChain(
-      async (chain, { CHAIN_ID, isProd, getCompiledPath }) => {
-        const getBabelOptions = () => {
-          // 1. Create babel utils function about include/exclude,
-          const includes: Array<string | RegExp> = [];
-          const excludes: Array<string | RegExp> = [];
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
+      const getBabelOptions = () => {
+        // 1. Create babel utils function about include/exclude,
+        const includes: Array<string | RegExp> = [];
+        const excludes: Array<string | RegExp> = [];
 
-          const babelUtils = {
-            addIncludes(items: string | RegExp | Array<string | RegExp>) {
-              if (Array.isArray(items)) {
-                includes.push(...items);
-              } else {
-                includes.push(items);
-              }
-            },
-            addExcludes(items: string | RegExp | Array<string | RegExp>) {
-              if (Array.isArray(items)) {
-                excludes.push(...items);
-              } else {
-                excludes.push(items);
-              }
-            },
-          };
-
-          const baseConfig = {
-            plugins: [],
-            presets: [
-              // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
-              [
-                require.resolve('@babel/preset-typescript'),
-                DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS,
-              ],
-            ],
-          };
-
-          const userBabelConfig = applyUserBabelConfig(
-            cloneDeep(baseConfig),
-            options,
-            babelUtils,
-          );
-
-          const babelOptions: BabelConfig = {
-            babelrc: false,
-            configFile: false,
-            compact: isProd,
-            ...userBabelConfig,
-          };
-
-          return {
-            babelOptions,
-            includes,
-            excludes,
-          };
+        const babelUtils = {
+          addIncludes(items: string | RegExp | Array<string | RegExp>) {
+            if (Array.isArray(items)) {
+              includes.push(...items);
+            } else {
+              includes.push(items);
+            }
+          },
+          addExcludes(items: string | RegExp | Array<string | RegExp>) {
+            if (Array.isArray(items)) {
+              excludes.push(...items);
+            } else {
+              excludes.push(items);
+            }
+          },
         };
 
-        const {
+        const baseConfig = {
+          plugins: [],
+          presets: [
+            // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
+            [
+              require.resolve('@babel/preset-typescript'),
+              DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS,
+            ],
+          ],
+        };
+
+        const userBabelConfig = applyUserBabelConfig(
+          cloneDeep(baseConfig),
+          options,
+          babelUtils,
+        );
+
+        const babelOptions: BabelConfig = {
+          babelrc: false,
+          configFile: false,
+          compact: isProd,
+          ...userBabelConfig,
+        };
+
+        return {
           babelOptions,
-          includes = [],
-          excludes = [],
-        } = getBabelOptions();
+          includes,
+          excludes,
+        };
+      };
 
-        // already set source.include / exclude in plugin-swc
-        const rule = chain.module.rule(CHAIN_ID.RULE.JS);
+      const { babelOptions, includes = [], excludes = [] } = getBabelOptions();
 
-        includes.forEach((condition) => {
-          rule.include.add(condition);
-        });
+      // already set source.include / exclude in plugin-swc
+      const rule = chain.module.rule(CHAIN_ID.RULE.JS);
 
-        excludes.forEach((condition) => {
-          rule.exclude.add(condition);
-        });
+      includes.forEach((condition) => {
+        rule.include.add(condition);
+      });
 
-        rule
-          .test(mergeRegex(JS_REGEX, TS_REGEX))
-          .use(CHAIN_ID.USE.BABEL)
-          .after(CHAIN_ID.USE.SWC)
-          .loader(getCompiledPath('babel-loader'))
-          .options(babelOptions);
-      },
-    );
+      excludes.forEach((condition) => {
+        rule.exclude.add(condition);
+      });
+
+      rule
+        .test(mergeRegex(JS_REGEX, TS_REGEX))
+        .use(CHAIN_ID.USE.BABEL)
+        .after(CHAIN_ID.USE.SWC)
+        .loader(require.resolve('babel-loader'))
+        .options(babelOptions);
+    });
   },
 });
