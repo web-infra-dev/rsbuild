@@ -1,0 +1,40 @@
+{
+  "name": "@rsbuild/unibuilder",
+  "version": "0.0.11",
+  "description": "Unified builder for Modern.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/compat/unibuilder"
+  },
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "dev": "modern build --watch",
+    "build": "modern build"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/shared": "workspace:*",
+    "@rsbuild/webpack": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true,
+    "types": "./dist/index.d.ts"
+  }
+}
