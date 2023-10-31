@@ -45,7 +45,7 @@ Provides support for Vue 2 JSX / TSX syntax.
 
 ### [Babel Plugin](/plugins/list/plugin-babel.html)
 
-Provides support for Babel translation capabilities.
+Provides support for Babel transpilation capabilities.
 
 ### [Type Check Plugin](/plugins/list/plugin-type-check.html)
 
