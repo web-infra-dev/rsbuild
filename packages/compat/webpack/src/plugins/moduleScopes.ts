@@ -1,10 +1,6 @@
 import path from 'path';
-import {
-  ensureAbsolutePath,
-  type ChainedConfig,
-  type ModuleScopes,
-} from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
+import { ensureAbsolutePath, type ChainedConfig } from '@rsbuild/shared';
+import type { RsbuildPlugin, ModuleScopes } from '../types';
 
 export const isPrimitiveScope = (
   items: unknown[],

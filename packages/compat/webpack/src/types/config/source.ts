@@ -2,8 +2,9 @@ import type {
   SharedSourceConfig,
   NormalizedSharedSourceConfig,
   ChainedConfig,
-  ModuleScopes,
 } from '@rsbuild/shared';
+
+export type ModuleScopes = Array<string | RegExp>;
 
 export type TransformImport = {
   libraryName: string;
