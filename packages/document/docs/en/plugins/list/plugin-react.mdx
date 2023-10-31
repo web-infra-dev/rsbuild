@@ -27,3 +27,41 @@ export default {
 If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
 
 After registering the plugin, you can directly develop React.
+
+## Import component library on demand
+
+The on-demand import capability of the React component library comes from [source.transformImport](/config/options/source.html#sourcetransformimport).
+
+When the [Ant Design component library](https://www.npmjs.com/package/antd) &lt;= 4.x version is installed in the project, Rsbuild will automatically add on-demand import capabilities, and the default configuration is as follows:
+
+```js
+const defaultAntdConfig = {
+  libraryName: 'antd',
+  libraryDirectory: isServer ? 'lib' : 'es',
+  style: true,
+};
+```
+
+When the [Arco Design component library](https://www.npmjs.com/package/@arco-design/web-react) is installed in the project, Rsbuild will automatically add on-demand import capabilities, and the default configuration is as follows:
+
+```js
+const defaultArcoConfig = [
+  {
+    libraryName: '@arco-design/web-react',
+    libraryDirectory: isServer ? 'lib' : 'es',
+    camelToDashComponentName: false,
+    style: true,
+  },
+  {
+    libraryName: '@arco-design/web-react/icon',
+    libraryDirectory: isServer ? 'react-icon-cjs' : 'react-icon',
+    camelToDashComponentName: false,
+  },
+];
+```
+
+:::tip
+When you add configurations for `antd` or `@arco-design/web-react` in [source.transformImport](/config/options/source.html#sourcetransformimport), the priority will be higher than the default configurations mentioned above.
+
+At the same time, the above default behavior can be turned off by manually setting `transformImport: false`.
+:::

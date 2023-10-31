@@ -12,7 +12,7 @@ import { PackageManagerTabs } from '@theme';
 
 Then select `Vue 3` when prompted to "Select framework".
 
-## Using Vue Plugin
+## Use Vue in an existing project
 
 To compile Vue SFC (Single File Components), you need to register the Rsbuild [Vue plugin](/plugins/list/plugin-vue). The plugin will automatically add the necessary configuration for Vue builds.
 
@@ -26,6 +26,8 @@ export default defineConfig({
   plugins: [pluginVue()],
 });
 ```
+
+## Use the JSX syntax of Vue
 
 If you need to use the JSX syntax of Vue, you also need to register the [Vue 3 JSX plugin](/plugins/list/plugin-vue-jsx).
 

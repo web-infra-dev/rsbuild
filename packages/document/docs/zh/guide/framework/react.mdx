@@ -1,0 +1,44 @@
+# React
+
+在这篇文档中，你可以了解到如何基于 Rsbuild 来构建一个 React 应用。
+
+## 创建 React 项目
+
+你可以使用 `create-rsbuild` 来创建一个 Rsbuild + React 的项目，调用以下命令：
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="create rsbuild@latest" />
+
+然后在 `Select framework` 时选择 `React` 即可。
+
+## 在已有项目中使用 React
+
+为了能够编译 React，你需要注册 Rsbuild 的 [React 插件](/plugins/list/plugin-react)，插件会自动添加 React 构建所需的配置。
+
+例如，在 `rsbuild.config.ts` 中注册：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+});
+```
+
+## 使用 SVGR
+
+Rsbuild 支持调用 [SVGR](https://react-svgr.com/)，将 SVG 图片转换为一个 React 组件使用。
+
+如果你需要使用 SVGR，需要注册 Rsbuild 的 [SVGR 插件](/plugins/list/plugin-svgr)。
+
+## 使用 styled-components
+
+Rsbuild 提供对 styled-components 的编译时支持，优化调试体验并对 styled-components 添加服务器端渲染支持。
+
+如果你需要使用 styled-components, 我们推荐你注册 [Styled Components 插件](/plugins/list/plugin-styled-components)。
+
+import DeployApp from '@zh/shared/deployApp.md';
+
+<DeployApp />

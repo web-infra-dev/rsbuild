@@ -12,7 +12,7 @@ import { PackageManagerTabs } from '@theme';
 
 然后在 `Select framework` 时选择 `Vue 3` 即可。
 
-## 使用 Vue 插件
+## 在已有项目中使用 Vue
 
 为了能够编译 Vue 的 SFC（单文件组件），你需要注册 Rsbuild 的 [Vue 插件](/plugins/list/plugin-vue)，插件会自动添加 Vue 构建所需的配置。
 
@@ -26,6 +26,8 @@ export default defineConfig({
   plugins: [pluginVue()],
 });
 ```
+
+## 使用 Vue JSX 语法
 
 如果你需要使用 Vue 的 JSX 语法，还需要注册 Rsbuild 的 [Vue 3 JSX 插件](/plugins/list/plugin-vue-jsx)。
 

@@ -1,0 +1,44 @@
+# React
+
+In this document, you will learn how to build a React application using Rsbuild.
+
+## Create React Project
+
+You can use `create-rsbuild` to create a project with Rsbuild + React. Just execute the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="create rsbuild@latest" />
+
+Then select `React` when prompted to "Select framework".
+
+## Use React in an existing project
+
+To compile React, you need to register the Rsbuild [React Plugin](/plugins/list/plugin-react). The plugin will automatically add the necessary configuration for React builds.
+
+For example, register in `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+});
+```
+
+## Use SVGR
+
+Rsbuild supports convert SVG to React components via [SVGR](https://react-svgr.com/).
+
+If you need to use svgr, you also need to register the [Svgr plugin](/plugins/list/plugin-svgr).
+
+## Use styled-components
+
+Rsbuild provides compile-time support for styled-components, improve the debugging experience and add server-side rendering support to styled-components.
+
+If you need to use styled-components, We recommend register the [Styled Components plugin](/plugins/list/plugin-styled-components).
+
+import DeployApp from '@en/shared/deployApp.md';
+
+<DeployApp />

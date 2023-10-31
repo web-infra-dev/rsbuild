@@ -27,3 +27,41 @@ export default {
 如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
 
 注册完插件后，你可以直接进行 React 开发。
+
+## 组件库按需引入
+
+React 组件库的按需引入能力来自 [source.transformImport](/config/options/source.html#sourcetransformimport)。
+
+当项目中安装了 [Ant Design 组件库](https://www.npmjs.com/package/antd) &lt;= 4.x 版本时，Rsbuild 会自动添加按需引入能力，默认配置如下：
+
+```js
+const defaultAntdConfig = {
+  libraryName: 'antd',
+  libraryDirectory: isServer ? 'lib' : 'es',
+  style: true,
+};
+```
+
+当项目中安装了 [Arco Design 组件库](https://www.npmjs.com/package/@arco-design/web-react) 时，Rsbuild 会自动添加按需引入能力，默认配置如下：
+
+```js
+const defaultArcoConfig = [
+  {
+    libraryName: '@arco-design/web-react',
+    libraryDirectory: isServer ? 'lib' : 'es',
+    camelToDashComponentName: false,
+    style: true,
+  },
+  {
+    libraryName: '@arco-design/web-react/icon',
+    libraryDirectory: isServer ? 'react-icon-cjs' : 'react-icon',
+    camelToDashComponentName: false,
+  },
+];
+```
+
+:::tip
+当你在 [source.transformImport](/config/options/source.html#sourcetransformimport) 中添加了 `antd` 或 `@arco-design/web-react` 相关的配置时，优先级会高于上述默认配置。
+
+同时，可通过手动设置 `transformImport: false` 来关掉以上默认行为。
+:::

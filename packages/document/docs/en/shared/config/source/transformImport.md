@@ -19,39 +19,7 @@ type Config =
     }>;
 ```
 
-- **Default:**
-
-When the [Ant Design component library](https://www.npmjs.com/package/antd) &lt;= 4.x version is installed in the project, Rsbuild will automatically add the following default configurations:
-
-```js
-const defaultAntdConfig = {
-  libraryName: 'antd',
-  libraryDirectory: isServer ? 'lib' : 'es',
-  style: true,
-};
-```
-
-When the [Arco Design component library](https://www.npmjs.com/package/@arco-design/web-react) is installed in the project, Rsbuild will automatically add the following default configurations:
-
-```js
-const defaultArcoConfig = [
-  {
-    libraryName: '@arco-design/web-react',
-    libraryDirectory: isServer ? 'lib' : 'es',
-    camelToDashComponentName: false,
-    style: true,
-  },
-  {
-    libraryName: '@arco-design/web-react/icon',
-    libraryDirectory: isServer ? 'react-icon-cjs' : 'react-icon',
-    camelToDashComponentName: false,
-  },
-];
-```
-
-:::tip
-When you add configurations for `antd` or `@arco-design/web-react`, the priority will be higher than the default configurations mentioned above.
-:::
+- **Default:** When you use [React plugin](/plugins/list/plugin-react), [React component library on-demand import](/plugins/list/plugin-react.html#import-component-library-on-demand) is automatically supported.
 
 ### Example
 
