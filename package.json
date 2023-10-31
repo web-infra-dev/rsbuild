@@ -35,7 +35,8 @@
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
       "prettier --write",
       "oxlint"
-    ]
+    ],
+    "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
     "@modern-js/module-tools": "^2.39.0",
