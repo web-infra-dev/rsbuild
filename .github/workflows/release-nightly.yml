@@ -12,6 +12,7 @@ permissions:
 jobs:
   release:
     name: Release Nightly
+    if: github.repository == 'web-infra-dev/rsbuild'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
