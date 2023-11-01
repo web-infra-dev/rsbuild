@@ -130,7 +130,7 @@ export default {
 
 ### 如何获取页面实际生效的 rootFontSize 值？
 
-页面实际生效的 rootFontSize 会根据当前页面的情况动态计算。 可通过打印 `document.documentElement.style.fontSize` 查看，也可通过 `window.ROOT_FONT_SIZE` 获取。
+页面实际生效的 rootFontSize 会根据当前页面的情况动态计算。你可以通过打印 `document.documentElement.style.fontSize` 查看，也可通过 `window.ROOT_FONT_SIZE` 获取。
 
 ### 如何指定页面实际生效的 rootFontSize 值？
 
