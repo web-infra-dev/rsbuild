@@ -1,5 +1,9 @@
-import { createRsbuild } from '@rsbuild/core';
-import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/webpack';
+import { RsbuildInstance, createRsbuild } from '@rsbuild/core';
+import type {
+  RsbuildConfig,
+  RsbuildPlugin,
+  WebpackProvider,
+} from '@rsbuild/webpack';
 import type { UniBuilderWebpackConfig } from '../types';
 import type { CreateWebpackBuilderOptions } from '../types';
 
@@ -15,7 +19,7 @@ export function parseConfig(uniBuilderConfig: UniBuilderWebpackConfig): {
 
 export async function createWebpackBuilder(
   options: CreateWebpackBuilderOptions,
-) {
+): Promise<RsbuildInstance<WebpackProvider>> {
   const { rsbuildConfig, rsbuildPlugins } = parseConfig(options.config);
   const { webpackProvider } = await import('@rsbuild/webpack');
   const rsbuild = await createRsbuild({
