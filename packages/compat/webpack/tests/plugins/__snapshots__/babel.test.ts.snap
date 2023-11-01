@@ -79,7 +79,7 @@ exports[`plugin-babel > should add rule to compile Data URI when enable source.c
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -158,7 +158,7 @@ exports[`plugin-babel > should add rule to compile Data URI when enable source.c
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -394,7 +394,7 @@ exports[`plugin-babel > should apply exclude condition when using source.exclude
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -473,7 +473,7 @@ exports[`plugin-babel > should apply exclude condition when using source.exclude
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -571,7 +571,7 @@ exports[`plugin-babel > should override targets of babel-preset-env when using o
                     "targets": [
                       "Chrome 80",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -647,7 +647,7 @@ exports[`plugin-babel > should override targets of babel-preset-env when using o
                     "targets": [
                       "Chrome 80",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -916,7 +916,7 @@ exports[`plugin-babel > should set include/exclude 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -995,7 +995,7 @@ exports[`plugin-babel > should set include/exclude 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [

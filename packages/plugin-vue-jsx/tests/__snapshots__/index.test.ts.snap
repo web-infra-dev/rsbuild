@@ -76,7 +76,7 @@ exports[`plugin-vue-jsx > should allow to configure jsx babel plugin options 1`]
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -161,7 +161,7 @@ exports[`plugin-vue-jsx > should allow to configure jsx babel plugin options 1`]
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -258,7 +258,7 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -341,7 +341,7 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -438,7 +438,7 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly in rspack mode
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -521,7 +521,7 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly in rspack mode
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [

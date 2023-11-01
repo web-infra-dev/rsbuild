@@ -61,12 +61,7 @@ describe('modifyRsbuildConfig', () => {
 
     const config = await rsbuild.unwrapWebpackConfig();
     expect(config.entry).toEqual({
-      main: [
-        'data:text/javascript,import "core-js";',
-        'a.js',
-        'b.js',
-        'src/index.ts',
-      ],
+      main: ['a.js', 'b.js', 'src/index.ts'],
     });
   });
 });

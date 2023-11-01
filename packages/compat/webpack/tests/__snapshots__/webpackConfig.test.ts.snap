@@ -269,7 +269,7 @@ exports[`webpackConfig > should not have any pluginImport in Babel 1`] = `
                   "firefox >= 78",
                   "safari >= 14",
                 ],
-                "useBuiltIns": "entry",
+                "useBuiltIns": "usage",
               },
             ],
             [
@@ -348,7 +348,7 @@ exports[`webpackConfig > should not have any pluginImport in Babel 1`] = `
                   "firefox >= 78",
                   "safari >= 14",
                 ],
-                "useBuiltIns": "entry",
+                "useBuiltIns": "usage",
               },
             ],
             [
@@ -437,7 +437,7 @@ exports[`webpackConfig > should not set default pluginImport for Babel 1`] = `
                   "firefox >= 78",
                   "safari >= 14",
                 ],
-                "useBuiltIns": "entry",
+                "useBuiltIns": "usage",
               },
             ],
             [
@@ -516,7 +516,7 @@ exports[`webpackConfig > should not set default pluginImport for Babel 1`] = `
                   "firefox >= 78",
                   "safari >= 14",
                 ],
-                "useBuiltIns": "entry",
+                "useBuiltIns": "usage",
               },
             ],
             [
@@ -636,7 +636,7 @@ exports[`webpackConfig > should set proper pluginImport option in Babel 1`] = `
                   "firefox >= 78",
                   "safari >= 14",
                 ],
-                "useBuiltIns": "entry",
+                "useBuiltIns": "usage",
               },
             ],
             [
@@ -723,7 +723,7 @@ exports[`webpackConfig > should set proper pluginImport option in Babel 1`] = `
                   "firefox >= 78",
                   "safari >= 14",
                 ],
-                "useBuiltIns": "entry",
+                "useBuiltIns": "usage",
               },
             ],
             [

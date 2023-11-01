@@ -479,7 +479,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -521,7 +522,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1125,7 +1127,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1167,7 +1170,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -2262,7 +2266,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -2304,7 +2309,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",

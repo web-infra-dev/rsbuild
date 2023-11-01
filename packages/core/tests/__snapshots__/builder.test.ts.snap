@@ -479,7 +479,8 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -521,7 +522,8 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",

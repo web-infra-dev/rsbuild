@@ -183,25 +183,9 @@ Rsbuild 底层通过 Babel 或 SWC 编译 JavaScript 代码，并注入 [core-js
 
 在不同的使用场景下，你可能会需要不同的 polyfill 方案。Rsbuild 提供了 [output.polyfill](/config/options/output.html#outputpolyfill) 配置项来切换不同的 polyfill 方案。
 
-### entry 方案
-
-entry 为默认方案，无须手动设置。
-
-在使用 entry 方案时，Rsbuild 会根据当前项目设置的浏览器范围来计算需要注入哪些 `core-js` 方法，并在每个页面的入口文件中进行注入。这种方式注入的 polyfill 较为全面，不需要再担心项目源码和第三方依赖的 polyfill 问题，但是因为包含了一些没有用到的 polyfill 代码，所以最终的包大小可能会有所增加。
-
-entry 方案对应的配置为：
-
-```ts
-export default {
-  output: {
-    polyfill: 'entry',
-  },
-};
-```
-
 ### usage 方案
 
-usage 方案可以更精确地控制需要注入哪些 core-js polyfill。
+usage 为默认方案，无须手动设置，它可以精确地控制需要注入哪些 core-js polyfill。
 
 当你开启 usage 方案时，Rsbuild 会分析项目中的源代码，并判断需要注入哪些 polyfill。
 
@@ -226,6 +210,20 @@ usage 方案对应的配置为：
 export default {
   output: {
     polyfill: 'usage',
+  },
+};
+```
+
+### entry 方案
+
+在使用 entry 方案时，Rsbuild 会根据当前项目设置的浏览器范围来计算需要注入哪些 `core-js` 方法，并在每个页面的入口文件中进行注入。这种方式注入的 polyfill 较为全面，不需要再担心项目源码和第三方依赖的 polyfill 问题，但是因为包含了一些没有用到的 polyfill 代码，所以最终的包大小可能会有所增加。
+
+entry 方案对应的配置为：
+
+```ts
+export default {
+  output: {
+    polyfill: 'entry',
   },
 };
 ```

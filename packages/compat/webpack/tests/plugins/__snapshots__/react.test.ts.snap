@@ -70,7 +70,7 @@ exports[`plugins/react > should work with babel-loader 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -149,7 +149,7 @@ exports[`plugins/react > should work with babel-loader 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -388,7 +388,7 @@ exports[`plugins/react > should work with ts-loader 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -479,7 +479,7 @@ exports[`plugins/react > should work with ts-loader 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -766,7 +766,7 @@ exports[`plugins/react > should work with ts-loader 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
