@@ -47,25 +47,9 @@ describe('plugin-minimize', () => {
           },
           "name": "SwcJsMinimizerRspackPlugin",
         },
-        CssMinimizerPlugin {
-          "options": {
-            "exclude": undefined,
-            "include": undefined,
-            "minimizer": {
-              "implementation": [Function],
-              "options": {
-                "preset": [
-                  "default",
-                  {
-                    "mergeLonghand": false,
-                  },
-                ],
-              },
-            },
-            "parallel": true,
-            "test": /\\\\\\.css\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-            "warningsFilter": [Function],
-          },
+        Plugin {
+          "_options": false,
+          "name": "SwcCssMinimizerRspackPlugin",
         },
       ]
     `,
@@ -126,25 +110,9 @@ describe('plugin-minimize', () => {
           },
           "name": "SwcJsMinimizerRspackPlugin",
         },
-        CssMinimizerPlugin {
-          "options": {
-            "exclude": undefined,
-            "include": undefined,
-            "minimizer": {
-              "implementation": [Function],
-              "options": {
-                "preset": [
-                  "default",
-                  {
-                    "mergeLonghand": false,
-                  },
-                ],
-              },
-            },
-            "parallel": true,
-            "test": /\\\\\\.css\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-            "warningsFilter": [Function],
-          },
+        Plugin {
+          "_options": false,
+          "name": "SwcCssMinimizerRspackPlugin",
         },
       ]
     `,
@@ -189,25 +157,9 @@ describe('plugin-minimize', () => {
           },
           "name": "SwcJsMinimizerRspackPlugin",
         },
-        CssMinimizerPlugin {
-          "options": {
-            "exclude": undefined,
-            "include": undefined,
-            "minimizer": {
-              "implementation": [Function],
-              "options": {
-                "preset": [
-                  "default",
-                  {
-                    "mergeLonghand": false,
-                  },
-                ],
-              },
-            },
-            "parallel": true,
-            "test": /\\\\\\.css\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-            "warningsFilter": [Function],
-          },
+        Plugin {
+          "_options": false,
+          "name": "SwcCssMinimizerRspackPlugin",
         },
       ]
     `,
@@ -249,25 +201,9 @@ describe('plugin-minimize', () => {
           },
           "name": "SwcJsMinimizerRspackPlugin",
         },
-        CssMinimizerPlugin {
-          "options": {
-            "exclude": undefined,
-            "include": undefined,
-            "minimizer": {
-              "implementation": [Function],
-              "options": {
-                "preset": [
-                  "default",
-                  {
-                    "mergeLonghand": false,
-                  },
-                ],
-              },
-            },
-            "parallel": true,
-            "test": /\\\\\\.css\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-            "warningsFilter": [Function],
-          },
+        Plugin {
+          "_options": false,
+          "name": "SwcCssMinimizerRspackPlugin",
         },
       ]
     `,

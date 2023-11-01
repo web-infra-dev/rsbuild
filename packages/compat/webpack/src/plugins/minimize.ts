@@ -1,9 +1,5 @@
-import {
-  CHAIN_ID,
-  applyCSSMinimizer,
-  BundlerChain,
-  getJSMinifyOptions,
-} from '@rsbuild/shared';
+import { CHAIN_ID, BundlerChain, getJSMinifyOptions } from '@rsbuild/shared';
+import { applyCSSMinimizer } from '@rsbuild/plugin-css-minimizer';
 import type { RsbuildPlugin, NormalizedConfig } from '../types';
 
 async function applyJSMinimizer(chain: BundlerChain, config: NormalizedConfig) {
@@ -25,7 +21,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'plugin-minimize',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { isProd }) => {
+    api.modifyBundlerChain(async (chain, { isProd, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
       const isMinimize = isProd && !config.output.disableMinimize;
 
@@ -34,7 +30,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
 
       if (isMinimize) {
         await applyJSMinimizer(chain, config);
-        await applyCSSMinimizer(chain, config);
+        await applyCSSMinimizer(chain, CHAIN_ID, config.tools.minifyCss);
       }
     });
   },

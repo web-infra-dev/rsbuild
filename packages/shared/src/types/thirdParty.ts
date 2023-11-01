@@ -13,10 +13,6 @@ import type {
   AcceptedPlugin,
   SourceMapOptions,
 } from 'postcss';
-import type CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-
-export type CssMinimizerPluginOptions = CssMinimizerPlugin.BasePluginOptions &
-  CssMinimizerPlugin.DefinedDefaultMinimizerAndOptions<CssMinimizerPlugin.CssNanoOptionsExtended>;
 
 export type TerserPluginOptions = TerserPlugin.BasePluginOptions &
   TerserPlugin.DefinedDefaultMinimizerAndOptions<TerserPlugin.TerserOptions>;
