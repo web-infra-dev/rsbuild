@@ -3,7 +3,7 @@ import { build } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { fs } from '@rsbuild/shared/fs-extra';
 import type { SharedTransformImport } from '@rsbuild/shared';
-import { RsbuildConfig } from '@rsbuild/webpack';
+import { RsbuildConfig } from '@rsbuild/core';
 
 export const cases: Parameters<typeof shareTest>[] = [
   [

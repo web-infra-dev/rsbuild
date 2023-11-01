@@ -1,3 +1,4 @@
+import type { Builtins } from '@rspack/core';
 import type { RsbuildTarget } from '../rsbuild';
 import type { ModifyChainUtils } from '../hooks';
 import type { ChainedConfig, JSONValue } from '../utils';
@@ -60,7 +61,11 @@ export interface SharedSourceConfig {
    */
   resolveExtensionPrefix?: string | Partial<Record<RsbuildTarget, string>>;
   /**
-   * Simple transformImport configuration
+   * Used to replaces variables in your code with other values or expressions at compile time.
+   */
+  define?: Builtins['define'];
+  /**
+   * Used to import the code and style of the component library on demand
    */
   transformImport?: false | SharedTransformImport[];
 }
@@ -72,9 +77,14 @@ export type SharedTransformImport = {
   styleLibraryDirectory?: string;
   camelToDashComponentName?: boolean;
   transformToDefaultImport?: boolean;
+  /** Type is string when use Rspack */
+  customName?: any;
+  /** Type is string when use Rspack */
+  customStyleName?: any;
 };
 
 export interface NormalizedSharedSourceConfig extends SharedSourceConfig {
+  define: Builtins['define'];
   alias: ChainedConfig<Alias>;
   aliasStrategy: AliasStrategy;
   preEntry: string[];

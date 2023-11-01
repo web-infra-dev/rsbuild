@@ -2,6 +2,7 @@ import type { InlineChunkTest } from '../../plugins/InlineChunkHtmlPlugin';
 import type { RsbuildTarget } from '../rsbuild';
 import type { CrossOrigin } from './html';
 import type { Externals } from 'webpack';
+import type { Builtins } from '@rspack/core';
 
 export type DistPathConfig = {
   /** The root directory of all files. */
@@ -269,6 +270,10 @@ export interface SharedOutputConfig {
    * need to be transformed and the CSS browser prefixes that need to be added.
    */
   overrideBrowserslist?: string[] | Partial<Record<RsbuildTarget, string[]>>;
+  /**
+   * Copies the specified file or directory to the dist directory.
+   */
+  copy?: Builtins['copy'] | NonNullable<Builtins['copy']>['patterns'];
 }
 
 export interface NormalizedSharedOutputConfig extends SharedOutputConfig {

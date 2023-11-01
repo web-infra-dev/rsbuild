@@ -4,7 +4,11 @@ import type {
 } from '@rsbuild/shared';
 import type { RsbuildConfig, NormalizedConfig } from './config';
 import type { ModifyRspackConfigFn } from './hooks';
-import type { Compiler, MultiCompiler, RspackConfig } from './rspack';
+import type {
+  Compiler,
+  MultiCompiler,
+  RspackConfig,
+} from '@rsbuild/shared/src/types/rspack';
 
 export interface RsbuildPluginAPI
   extends DefaultRsbuildPluginAPI<
