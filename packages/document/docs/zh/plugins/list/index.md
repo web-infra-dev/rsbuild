@@ -75,4 +75,8 @@ export default defineConfig({
 
 用于分析产物的语法兼容性，判断是否存在导致兼容性问题的高级语法。
 
+### [CSS Minimizer 插件](/plugins/list/plugin-css-minimizer.html)
+
+用于自定义 CSS 压缩工具，切换到 [cssnano] 或其他工具进行 CSS 压缩。
+
 > 你可以在 [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) 仓库中找到所有官方插件的源代码。

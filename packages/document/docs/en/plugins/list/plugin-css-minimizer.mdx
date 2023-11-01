@@ -1,0 +1,77 @@
+# CSS Minimizer Plugin
+
+The Rsbuild by default uses the SWC built-in by Rspack to minify CSS code. You can customize the CSS minimizer by using the CSS Minimizer plugin and switch to [cssnano](https://cssnano.co/) or other tools for CSS minification.
+
+The CSS Minimizer plugin internally integrates [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+```bash
+npm install @rsbuild/plugin-css-minimizer -D
+```
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+
+export default {
+  plugins: [pluginCssMinimizer()],
+};
+```
+
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
+
+## Options
+
+### pluginOptions
+
+Used to customize the options of css-minimizer-webpack-plugin.
+
+The value of `pluginOptions` will be merged with the default options inside the plugin using `Object.assign` and then passed to the css-minimizer-webpack-plugin. You can refer to the [README documentation](https://github.com/webpack-contrib/css-minimizer-webpack-plugin) of css-minimizer-webpack-plugin to explore all available options.
+
+- **Type:** `Object | Function | undefined`
+- **Default:**
+
+```ts
+const defaultOptions = {
+  minimizerOptions: {
+    preset: [
+      'default',
+      {
+        mergeLonghand: false,
+      },
+    ],
+  },
+};
+```
+
+- **Example 1:** modify the `preset` configuration of [cssnano](https://cssnano.co/).
+
+```js
+pluginCssMinimizer({
+  pluginOptions: {
+    minimizerOptions: {
+      preset: require.resolve('cssnano-preset-simple'),
+    },
+  },
+});
+```
+
+- **Example 2:** pass a function to modify the default options.
+
+```js
+pluginCssMinimizer({
+  pluginOptions: (options) => {
+    options.minimizerOptions = {
+      preset: require.resolve('cssnano-preset-simple'),
+    };
+  },
+});
+```

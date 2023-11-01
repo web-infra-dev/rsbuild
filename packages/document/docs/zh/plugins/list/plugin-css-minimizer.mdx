@@ -1,0 +1,77 @@
+# CSS Minimizer 插件
+
+Rsbuild 默认使用 Rspack 内置的 SWC 来压缩 CSS 代码，你可以通过 CSS Minimizer 插件来自定义 CSS 压缩工具，切换到 [cssnano](https://cssnano.co/) 或其他工具进行 CSS 压缩。
+
+CSS Minimizer 插件内部集成了 [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin)。
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-css-minimizer -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+
+export default {
+  plugins: [pluginCssMinimizer()],
+};
+```
+
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
+
+## 选项
+
+### pluginOptions
+
+用于自定义 css-minimizer-webpack-plugin 的选项。
+
+`pluginOptions` 的值会与插件内部的默认选项通过 `Object.assign` 合并，然后透传给 css-minimizer-webpack-plugin 插件。你可以阅读 css-minimizer-webpack-plugin 的 [README 文档](https://github.com/webpack-contrib/css-minimizer-webpack-plugin) 来了解所有可用的选项。
+
+- **类型：** `Object | Function | undefined`
+- **默认值：**
+
+```ts
+const defaultOptions = {
+  minimizerOptions: {
+    preset: [
+      'default',
+      {
+        mergeLonghand: false,
+      },
+    ],
+  },
+};
+```
+
+- **示例一：** 修改 [cssnano](https://cssnano.co/) 的 `preset` 配置。
+
+```js
+pluginCssMinimizer({
+  pluginOptions: {
+    minimizerOptions: {
+      preset: require.resolve('cssnano-preset-simple'),
+    },
+  },
+});
+```
+
+- **示例二：** 传入一个函数来修改默认选项。
+
+```js
+pluginCssMinimizer({
+  pluginOptions: (options) => {
+    options.minimizerOptions = {
+      preset: require.resolve('cssnano-preset-simple'),
+    };
+  },
+});
+```
