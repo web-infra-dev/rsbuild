@@ -11,13 +11,14 @@ import type CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 export type CssMinimizerPluginOptions = CssMinimizerPlugin.BasePluginOptions &
   CssMinimizerPlugin.DefinedDefaultMinimizerAndOptions<CssMinimizerPlugin.CssNanoOptionsExtended>;
 
-export type PluginCssMinimizerOptions =
-  ChainedConfig<CssMinimizerPluginOptions>;
+export type PluginCssMinimizerOptions = {
+  pluginOptions?: ChainedConfig<CssMinimizerPluginOptions>;
+};
 
 export async function applyCSSMinimizer(
   chain: BundlerChain,
   CHAIN_ID: ChainIdentifier,
-  options?: PluginCssMinimizerOptions,
+  options: PluginCssMinimizerOptions = {},
 ) {
   const { default: CssMinimizerPlugin } = await import(
     'css-minimizer-webpack-plugin'
@@ -27,7 +28,7 @@ export async function applyCSSMinimizer(
     {
       minimizerOptions: getCssnanoDefaultOptions(),
     },
-    options,
+    options.pluginOptions,
   );
 
   chain.optimization

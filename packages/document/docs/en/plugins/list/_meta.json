@@ -13,5 +13,6 @@
   "plugin-source-build",
   "plugin-stylus",
   "plugin-styled-components",
-  "plugin-check-syntax"
+  "plugin-check-syntax",
+  "plugin-css-minimizer"
 ]
