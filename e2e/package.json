@@ -19,6 +19,7 @@
     "@playwright/test": "1.33.0",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
+    "@rsbuild/plugin-css-minimizer": "workspace:*",
     "@rsbuild/plugin-check-syntax": "workspace:*",
     "@rsbuild/plugin-image-compress": "workspace:*",
     "@rsbuild/plugin-node-polyfill": "workspace:*",

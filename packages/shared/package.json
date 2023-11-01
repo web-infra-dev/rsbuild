@@ -158,7 +158,6 @@
     "@types/fs-extra": "^11.0.2",
     "browserslist": "^4.22.1",
     "chalk": "^4.1.2",
-    "css-minimizer-webpack-plugin": "5.0.1",
     "cssnano": "6.0.1",
     "deepmerge": "^4.3.1",
     "fs-extra": "^11.1.1",

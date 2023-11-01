@@ -1,12 +1,15 @@
-import { CHAIN_ID, applyCSSMinimizer, BundlerChain } from '@rsbuild/shared';
+import { CHAIN_ID, BundlerChain } from '@rsbuild/shared';
 import type {
   RsbuildPlugin,
   NormalizedConfig,
   RspackBuiltinsConfig,
 } from '../types';
-import { SwcJsMinimizerRspackPlugin } from '@rspack/core';
+import {
+  SwcJsMinimizerRspackPlugin,
+  SwcCssMinimizerRspackPlugin,
+} from '@rspack/core';
 
-export async function applyJSMinimizer(
+export function applyJSMinimizer(
   chain: BundlerChain,
   config: NormalizedConfig,
 ) {
@@ -45,11 +48,18 @@ export async function applyJSMinimizer(
     .end();
 }
 
+export function applyCSSMinimizer(chain: BundlerChain) {
+  chain.optimization
+    .minimizer(CHAIN_ID.MINIMIZER.CSS)
+    .use(SwcCssMinimizerRspackPlugin, [])
+    .end();
+}
+
 export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'plugin-minimize',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { isProd }) => {
+    api.modifyBundlerChain((chain, { isProd }) => {
       const config = api.getNormalizedConfig();
       const isMinimize = isProd && !config.output.disableMinimize;
 
@@ -57,8 +67,8 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       chain.optimization.minimize(isMinimize);
 
       if (isMinimize) {
-        await applyJSMinimizer(chain, config);
-        await applyCSSMinimizer(chain, config);
+        applyJSMinimizer(chain, config);
+        applyCSSMinimizer(chain);
       }
     });
   },

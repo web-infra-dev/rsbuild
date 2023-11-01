@@ -25,5 +25,6 @@ export const toolsConfigSchema: z.ZodType<ToolsConfig> = sharedToolsConfigSchema
     }),
     webpack: z.chained(z.any(), z.any()),
     webpackChain: z.arrayOrNot(z.function()),
+    minifyCss: z.chained(z.any()),
   })
   .partial();

@@ -40,7 +40,6 @@ export const sharedToolsConfigSchema = z.partialObj({
   less: z.chained(z.any(), z.object({ addExcludes: FileFilterUtilSchema })),
   postcss: z.chained(z.any(), z.object({ addPlugins: z.function() })),
   cssLoader: z.chained(z.any(), z.object({ addPlugins: z.function() })),
-  minifyCss: z.chained(z.any()),
   styleLoader: z.chained(z.any()),
   devServer: sharedDevServerConfigSchema,
   autoprefixer: z.chained(z.any()),

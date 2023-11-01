@@ -78,6 +78,9 @@ importers:
       '@rsbuild/plugin-check-syntax':
         specifier: workspace:*
         version: link:../packages/plugin-check-syntax
+      '@rsbuild/plugin-css-minimizer':
+        specifier: workspace:*
+        version: link:../packages/plugin-css-minimizer
       '@rsbuild/plugin-image-compress':
         specifier: workspace:*
         version: link:../packages/plugin-image-compress
@@ -476,6 +479,9 @@ importers:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
         version: link:../../plugin-babel
+      '@rsbuild/plugin-css-minimizer':
+        specifier: workspace:*
+        version: link:../../plugin-css-minimizer
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../../shared
@@ -1001,6 +1007,31 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
+  packages/plugin-css-minimizer:
+    dependencies:
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+      css-minimizer-webpack-plugin:
+        specifier: 5.0.1
+        version: 5.0.1(webpack@5.89.0)
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
+      '@types/lodash':
+        specifier: ^4.14.200
+        version: 4.14.200
+      '@types/node':
+        specifier: ^16
+        version: 16.18.59
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
   packages/plugin-image-compress:
     dependencies:
       '@napi-rs/image':
@@ -1340,9 +1371,6 @@ importers:
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
-      css-minimizer-webpack-plugin:
-        specifier: 5.0.1
-        version: 5.0.1(webpack@5.89.0)
       cssnano:
         specifier: 6.0.1
         version: 6.0.1(postcss@8.4.31)

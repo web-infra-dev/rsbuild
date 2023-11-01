@@ -8,7 +8,6 @@ import type {
   PostCSSPlugin,
   CSSLoaderOptions,
   StyleLoaderOptions,
-  CssMinimizerPluginOptions,
 } from '../thirdParty';
 import type { BundlerChain } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils } from '../hooks';
@@ -87,8 +86,6 @@ export type ToolsCSSLoaderConfig = ChainedConfig<CSSLoaderOptions>;
 
 export type ToolsStyleLoaderConfig = ChainedConfig<StyleLoaderOptions>;
 
-export type ToolsMinifyCssConfig = ChainedConfig<CssMinimizerPluginOptions>;
-
 export interface SharedToolsConfig {
   /**
    * Modify the config of [sass-loader](https://github.com/webpack-contrib/sass-loader).
@@ -114,10 +111,6 @@ export interface SharedToolsConfig {
    * Modify the options of [css-loader](https://github.com/webpack-contrib/css-loader).
    */
   cssLoader?: ToolsCSSLoaderConfig;
-  /**
-   * Modify the options of [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
-   */
-  minifyCss?: ToolsMinifyCssConfig;
   /**
    * Modify the options of [postcss-loader](https://github.com/webpack-contrib/postcss-loader).
    */
