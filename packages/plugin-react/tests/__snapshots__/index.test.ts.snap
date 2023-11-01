@@ -158,7 +158,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.svg\\$/,
+        "test": /\\\\\\.svg\\$/i,
       },
       {
         "dependency": "url",

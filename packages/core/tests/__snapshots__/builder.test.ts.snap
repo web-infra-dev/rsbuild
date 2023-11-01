@@ -141,7 +141,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.svg\\$/,
+        "test": /\\\\\\.svg\\$/i,
       },
       {
         "dependency": "url",
