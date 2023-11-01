@@ -15,8 +15,6 @@ describe('test server/apis/project.ts', () => {
 
     expect(env.ip).toEqual(ip.address());
     expect(env.port).toEqual(target.server.port);
-    expect(env.machineId).toBeTruthy();
-    expect(typeof env.machineId === 'string').toBeTruthy();
   });
 
   it(`test api: ${SDK.ServerAPI.API.Manifest}`, async () => {

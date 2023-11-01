@@ -1,6 +1,5 @@
 import { SDK } from '@rsbuild/doctor-types';
 import ip from 'ip';
-import { machineId } from 'node-machine-id';
 import { BaseAPI } from './base';
 import { Router } from '../router';
 
@@ -14,7 +13,6 @@ export class ProjectAPI extends BaseAPI {
     return {
       ip: ip.address(),
       port: server.port,
-      machineId: await machineId(),
     };
   }
 

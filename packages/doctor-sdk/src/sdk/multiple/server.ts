@@ -1,6 +1,6 @@
 import { Server } from '@rsbuild/doctor-utils';
 import { DoctorServer } from '../server';
-import { DoctorSlaveSDK } from './slave';
+import type { DoctorSlaveSDK } from './slave';
 
 export class DoctorSlaveServer extends DoctorServer {
   protected sdk: DoctorSlaveSDK;

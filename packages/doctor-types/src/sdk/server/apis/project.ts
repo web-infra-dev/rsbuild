@@ -8,7 +8,6 @@ export interface ProjectAPIResponse {
   [API.Env]: {
     ip: string;
     port: number;
-    machineId: string;
   };
   [API.GetProjectInfo]: Pick<
     DoctorManifestData,
