@@ -68,7 +68,7 @@ export function rspackProvider({
           rsbuildOptions,
         });
 
-        // todo: compiler 类型定义
+        // todo: compiler type declaration
         return createCompiler({
           context,
           rspackConfigs,

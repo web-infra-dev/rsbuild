@@ -35,7 +35,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
       if (isServer) {
         // FIXME:
         // When targe = node, we no need to specify conditionsNames.
-        // We gueess the webpack would auto specify refrence to target.
+        // We guess the webpack would auto specify reference to target.
         // Rspack has't the action, so we need manually specify.
         const nodeConditionNames = ['require', 'node'];
         setConfig(rspackConfig, 'resolve.conditionNames', nodeConditionNames);

@@ -1,14 +1,25 @@
 import path from 'path';
 import {
-  getRegExpForExts,
   getDistPath,
   getFilename,
   chainStaticAssetRule,
 } from '@rsbuild/shared';
 import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
+export function getRegExpForExts(exts: string[]): RegExp {
+  const matcher = exts
+    .map((ext) => ext.trim())
+    .map((ext) => (ext.startsWith('.') ? ext.slice(1) : ext))
+    .join('|');
+
+  return new RegExp(
+    exts.length === 1 ? `\\.${matcher}$` : `\\.(${matcher})$`,
+    'i',
+  );
+}
+
 export const pluginAsset = (
-  assetType: 'image' | 'media' | 'font',
+  assetType: 'image' | 'media' | 'font' | 'svg',
   exts: string[],
 ): DefaultRsbuildPlugin => ({
   name: `plugin-${assetType}`,

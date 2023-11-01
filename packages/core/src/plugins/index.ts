@@ -16,11 +16,11 @@ export const plugins: Plugins = {
   cache: () => import('./cache').then((m) => m.pluginCache()),
   yaml: () => import('./yaml').then((m) => m.pluginYaml()),
   toml: () => import('./toml').then((m) => m.pluginToml()),
-  svg: () => import('./svg').then((m) => m.pluginSvg()),
   splitChunks: () => import('./splitChunks').then((m) => m.pluginSplitChunks()),
   inlineChunk: () => import('./inlineChunk').then((m) => m.pluginInlineChunk()),
   bundleAnalyzer: () =>
     import('./bundleAnalyzer').then((m) => m.pluginBundleAnalyzer()),
+  svg: () => import('./asset').then((m) => m.pluginAsset('svg', ['svg'])),
   font: () =>
     import('./asset').then((m) => m.pluginAsset('font', FONT_EXTENSIONS)),
   image: () =>

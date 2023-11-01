@@ -59,7 +59,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.svg\\$/,
+        "test": /\\\\\\.svg\\$/i,
       },
       {
         "oneOf": [
@@ -718,7 +718,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.svg\\$/,
+        "test": /\\\\\\.svg\\$/i,
       },
       {
         "oneOf": [
@@ -1425,7 +1425,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.svg\\$/,
+        "test": /\\\\\\.svg\\$/i,
       },
       {
         "oneOf": [
@@ -1966,7 +1966,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.svg\\$/,
+        "test": /\\\\\\.svg\\$/i,
       },
       {
         "oneOf": [
