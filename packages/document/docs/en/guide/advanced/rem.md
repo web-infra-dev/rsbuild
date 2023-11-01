@@ -39,7 +39,7 @@ h1 {
 }
 ```
 
-By default, Rsbuild converts all CSS properties from px to rem. If you want to convert only the `font-size` property, you can setting pxtorem.propList is `['font-size']`.
+By default, Rsbuild converts all CSS properties from px to rem. If you want to convert only the `font-size` property, you can setting `pxtorem.propList` is `['font-size']`.
 
 ```ts
 export default {
@@ -52,6 +52,39 @@ export default {
   },
 };
 ```
+
+### How to ignore some CSS properties converted to REM?
+
+[pxtorem.propList](https://github.com/cuth/postcss-pxtorem#options) in addition to specifying which attributes need to be converted, you also can specify which elements are not converted through `!`:
+
+```ts
+export default {
+  output: {
+    convertToRem: {
+      pxtorem: {
+        propList: ['*', '!border-width'], // not convert 'border-width'
+      },
+    },
+  },
+};
+```
+
+If you only want some individual CSS properties not to be converted to REM, you can also refer to the following writing method:
+
+```css
+/* `px` is converted to `rem` */
+.convert {
+    font-size: 16px; // converted to 1rem
+}
+
+/* `Px` or `PX` is ignored by `postcss-pxtorem` but still accepted by browsers */
+.ignore {
+    border: 1Px solid; // ignored
+    border-width: 2PX; // ignored
+}
+```
+
+More info about [postcss-pxtorem](https://github.com/cuth/postcss-pxtorem#a-message-about-ignoring-properties)。
 
 ## Setting the page rootFontSize
 
@@ -78,7 +111,7 @@ export default {
 };
 ```
 
-## Customize maxRootFontSize
+### Customize maxRootFontSize
 
 In the desktop browser, the page rootFontSize obtained from the calculation formula is often too large. When the calculated result large than the maxRootFontSize, the maxRootFontSize will used as the page rootFontSize.
 
@@ -94,11 +127,28 @@ export default {
 };
 ```
 
+### How to get the rootFontSize value that is actually in effect on the page?
+
+The actual rootFontSize in effect for the page is calculated dynamically based on the current page. It can be seen by printing `document.documentElement.style.fontSize` or obtained by `window.ROOT_FONT_SIZE`.
+
+### How to specify the actual rootFontSize value of the page?
+
+By default, the actual rootFontSize of the page will be dynamically calculated based on the situation of the current page. If you want to specify the actual rootFontSize of the page, you can turn off the `enableRuntime` configuration and set it in [Customized html template](/config/options/html.html#htmltemplate) and inject `document.documentElement.style.fontSize = '64px'` by yourself.
+
+```ts
+export default {
+  html: {
+    template: './static/index.html',
+  },
+  output: {
+    convertToRem: {
+      enableRuntime: false,
+    },
+  },
+};
+```
+
 ## How to determine if REM is in effect？
 
 1. CSS: Check the generated `.css` file to see if the value of the corresponding property is converted from px to rem.
 2. HTML: Open the Page Console to see if a valid value exists for `document.documentElement.style.fontSize`.
-
-## How to get the rootFontSize value that is actually in effect on the page?
-
-The actual rootFontSize in effect for the page is calculated dynamically based on the current page. It can be seen by printing `document.documentElement.style.fontSize` or obtained by `window.ROOT_FONT_SIZE`.
