@@ -1,6 +1,7 @@
 import {
   debug,
   CHAIN_ID,
+  castArray,
   BundlerConfig,
   modifyBundlerChain,
   mergeChainedOptions,
@@ -8,7 +9,6 @@ import {
   type RsbuildTarget,
   type ModifyChainUtils,
 } from '@rsbuild/shared';
-import { castArray } from 'lodash';
 import { getCompiledPath } from '../shared';
 import type { Context, RspackConfig, ModifyRspackConfigUtils } from '../types';
 

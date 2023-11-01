@@ -1,6 +1,6 @@
 import { getExtensions } from '../config';
 import _ from 'lodash';
-import { ensureAbsolutePath } from '../utils';
+import { castArray, ensureAbsolutePath } from '../utils';
 import type { ChainIdentifier } from '../chain';
 import { mergeChainedOptions } from '../mergeChainedOptions';
 import {
@@ -99,7 +99,7 @@ async function applyAlias({
    * - Absolute paths or a package name are not processed.
    */
   Object.keys(mergedAlias).forEach((name) => {
-    const values = _.castArray(mergedAlias[name]);
+    const values = castArray(mergedAlias[name]);
     const formattedValues = values.map((value) => {
       if (typeof value === 'string' && value.startsWith('.')) {
         return ensureAbsolutePath(rootPath, value);

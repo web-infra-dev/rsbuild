@@ -1,5 +1,5 @@
 import { isAbsolute, normalize, sep } from 'path';
-import { ensureArray, mergeChainedOptions } from '@rsbuild/shared';
+import { castArray, mergeChainedOptions } from '@rsbuild/shared';
 import upath from 'upath';
 import type {
   BabelPlugin,
@@ -57,7 +57,7 @@ const removePlugins = (
     return;
   }
 
-  const removeList = ensureArray(plugins);
+  const removeList = castArray(plugins);
 
   config.plugins = config.plugins.filter((item: BabelPlugin) => {
     const name = getPluginItemName(item);
@@ -76,7 +76,7 @@ const removePresets = (
     return;
   }
 
-  const removeList = ensureArray(presets);
+  const removeList = castArray(presets);
 
   config.presets = config.presets.filter((item: BabelPlugin) => {
     const name = getPluginItemName(item);

@@ -1,5 +1,6 @@
 import {
   TS_REGEX,
+  castArray,
   mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
@@ -47,10 +48,10 @@ export const pluginTsLoader = (): RsbuildPlugin => {
 
         const tsLoaderUtils = {
           addIncludes(items: string | RegExp | (string | RegExp)[]) {
-            includes.push(..._.castArray(items));
+            includes.push(...castArray(items));
           },
           addExcludes(items: string | RegExp | (string | RegExp)[]) {
-            excludes.push(..._.castArray(items));
+            excludes.push(...castArray(items));
           },
         };
         // @ts-expect-error ts-loader has incorrect types for compilerOptions

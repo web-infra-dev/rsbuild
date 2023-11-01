@@ -1,10 +1,5 @@
-import _ from 'lodash';
 import { join } from 'path';
-import {
-  logger,
-  ensureArray,
-  type DefaultRsbuildPlugin,
-} from '@rsbuild/shared';
+import { logger, castArray, type DefaultRsbuildPlugin } from '@rsbuild/shared';
 import { execSync } from 'child_process';
 
 const supportedChromiumBrowsers = [
@@ -117,7 +112,7 @@ export function pluginStartUrl(): DefaultRsbuildPlugin {
           urls.push(`${protocol}://localhost:${port}`);
         } else {
           urls.push(
-            ..._.castArray(startUrl).map((item) =>
+            ...castArray(startUrl).map((item) =>
               replacePlaceholder(item, port),
             ),
           );
@@ -137,7 +132,7 @@ export function pluginStartUrl(): DefaultRsbuildPlugin {
         };
 
         if (beforeStartUrl) {
-          Promise.all(ensureArray(beforeStartUrl).map((fn) => fn())).then(
+          Promise.all(castArray(beforeStartUrl).map((fn) => fn())).then(
             openUrls,
           );
         } else {

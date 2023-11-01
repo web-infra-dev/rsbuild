@@ -1,5 +1,4 @@
-import { DefaultRsbuildPlugin } from '@rsbuild/shared';
-import _ from 'lodash';
+import { castArray, type DefaultRsbuildPlugin } from '@rsbuild/shared';
 
 export const pluginEntry = (): DefaultRsbuildPlugin => ({
   name: 'plugin-entry',
@@ -12,7 +11,7 @@ export const pluginEntry = (): DefaultRsbuildPlugin => ({
       Object.keys(entry).forEach((entryName) => {
         const appendEntry = (file: string) => chain.entry(entryName).add(file);
         preEntry.forEach(appendEntry);
-        _.castArray(entry[entryName]).forEach(appendEntry);
+        castArray(entry[entryName]).forEach(appendEntry);
       });
     });
   },
