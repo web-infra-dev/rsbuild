@@ -183,25 +183,9 @@ Rsbuild compiles JavaScript code through Babel or SWC, and injects polyfill libr
 
 In different usage scenarios, you may need different polyfill solutions. Rsbuild provides [output.polyfill](/config/options/output.html#outputpolyfill) config to switch between different polyfill modes.
 
-### entry mode
+### Usage mode
 
-entry is the default mode and does not need to be set manually.
-
-When using the entry mode, Rsbuild will analyze which `core-js` methods need to be injected according to the browserslist set by the current project, and inject them to the entry file of each page. The polyfill injected in this way is more comprehensive, and there is no need to worry about the project source code and third-party dependencies polyfill issues. However, because some unused polyfill codes are included, the bundle size may increase.
-
-The config of entry mode is:
-
-```ts
-export default {
-  output: {
-    polyfill: 'entry',
-  },
-};
-```
-
-### usage mode
-
-The usage mode allows more precise control over which core-js polyfills need to be injected.
+The usage is the default mode and does not need to be set manually, it allows more precise control over which core-js polyfills need to be injected.
 
 When you enable the usage mode, Rsbuild will analyze the source code in the project and determine which polyfills need to be injected.
 
@@ -226,6 +210,20 @@ The config of usage mode is:
 export default {
   output: {
     polyfill: 'usage',
+  },
+};
+```
+
+### Entry mode
+
+When using the entry mode, Rsbuild will analyze which `core-js` methods need to be injected according to the browserslist set by the current project, and inject them to the entry file of each page. The polyfill injected in this way is more comprehensive, and there is no need to worry about the project source code and third-party dependencies polyfill issues. However, because some unused polyfill codes are included, the bundle size may increase.
+
+The config of entry mode is:
+
+```ts
+export default {
+  output: {
+    polyfill: 'entry',
   },
 };
 ```

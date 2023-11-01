@@ -66,7 +66,8 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
       "options": {
         "env": {
           "coreJs": "3.32",
-          "mode": "entry",
+          "mode": "usage",
+          "shippedProposals": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",

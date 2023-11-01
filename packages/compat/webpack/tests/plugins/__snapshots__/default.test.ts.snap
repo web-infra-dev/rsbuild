@@ -222,7 +222,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -313,7 +313,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -881,7 +881,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -978,7 +978,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -2129,7 +2129,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -2226,7 +2226,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [

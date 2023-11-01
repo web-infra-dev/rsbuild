@@ -13,7 +13,7 @@ test('module-scopes', async ({ page }) => {
   };
 
   await expect(
-    build({
+    build<'webpack'>({
       ...buildOpts,
       rsbuildConfig: {
         source: {
@@ -35,7 +35,7 @@ test('module-scopes', async ({ page }) => {
   rsbuild.close();
 
   // should not throw
-  rsbuild = await build({
+  rsbuild = await build<'webpack'>({
     ...buildOpts,
     rsbuildConfig: {
       source: {

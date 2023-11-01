@@ -104,7 +104,7 @@ export const getDefaultOutputConfig = (): NormalizedSharedOutputConfig => ({
   assetPrefix: DEFAULT_ASSET_PREFIX,
   filename: {},
   charset: 'ascii',
-  polyfill: 'entry',
+  polyfill: 'usage',
   dataUriLimit: {
     svg: DEFAULT_DATA_URL_SIZE,
     font: DEFAULT_DATA_URL_SIZE,

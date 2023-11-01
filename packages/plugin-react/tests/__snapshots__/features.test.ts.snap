@@ -97,7 +97,8 @@ exports[`transformImport > should apply antd & arco transformImport 1`] = `
       "options": {
         "env": {
           "coreJs": "3.32",
-          "mode": "entry",
+          "mode": "usage",
+          "shippedProposals": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -171,7 +172,8 @@ exports[`transformImport > should not apply antd & arco when transformImport is 
       "options": {
         "env": {
           "coreJs": "3.32",
-          "mode": "entry",
+          "mode": "usage",
+          "shippedProposals": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",

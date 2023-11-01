@@ -77,7 +77,8 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
       "options": {
         "env": {
           "coreJs": "3.32",
-          "mode": "entry",
+          "mode": "usage",
+          "shippedProposals": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -139,7 +140,8 @@ exports[`plugins/styled-components > should works in rspack mode 1`] = `
       "options": {
         "env": {
           "coreJs": "3.32",
-          "mode": "entry",
+          "mode": "usage",
+          "shippedProposals": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -260,7 +262,7 @@ exports[`plugins/styled-components > should works in webpack babel mode 1`] = `
                 "firefox >= 78",
                 "safari >= 14",
               ],
-              "useBuiltIns": "entry",
+              "useBuiltIns": "usage",
             },
           ],
           [

@@ -36,7 +36,8 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -78,7 +79,8 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -153,7 +155,8 @@ exports[`plugin-swc > should add browserslist 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome 98",
                 ],
@@ -192,7 +195,8 @@ exports[`plugin-swc > should add browserslist 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome 98",
                 ],
@@ -264,7 +268,8 @@ exports[`plugin-swc > should add browserslist 2`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome 98",
                 ],
@@ -303,7 +308,8 @@ exports[`plugin-swc > should add browserslist 2`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome 98",
                 ],
@@ -375,7 +381,8 @@ exports[`plugin-swc > should add pluginImport 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -424,7 +431,8 @@ exports[`plugin-swc > should add pluginImport 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -506,7 +514,8 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -548,7 +557,8 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1398,7 +1408,8 @@ exports[`plugin-swc > should'n override browserslist when target platform is not
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1440,7 +1451,8 @@ exports[`plugin-swc > should'n override browserslist when target platform is not
             "options": {
               "env": {
                 "coreJs": "3.32",
-                "mode": "entry",
+                "mode": "usage",
+                "shippedProposals": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",

@@ -1,22 +1,44 @@
 - **Type:** `'entry' | 'usage' | 'off'`
-- **Default:** `'entry'`
+- **Default:** `'usage'`
 
-Via `output.polyfill` you can configure how the polyfill is injected.
+Through the `output.polyfill` option, you can control the injection mode of the polyfills.
 
-### Config
-
-#### entry
-
-Polyfill is injected in every entry file when `output.polyfill` is configured as `'entry'`.
-
-Equivalent to `useBuiltIns: 'entry'` configuration in `@babel/preset-env`.
+### Configuration Options
 
 #### usage
 
-Polyfill is injected in each file based on the API used in the code.
+When `output.polyfill` is configured as `'usage'`, Rsbuild will inject the polyfills based on the APIs used in each file.
 
-Equivalent to `useBuiltIns: 'usage'` configuration in `@babel/preset-env`.
+```ts
+export default {
+  output: {
+    polyfill: 'usage',
+  },
+};
+```
+
+#### entry
+
+When `output.polyfill` is configured as `'entry'`, Rsbuild will inject the polyfills in each entry file.
+
+```ts
+export default {
+  output: {
+    polyfill: 'entry',
+  },
+};
+```
 
 #### off
 
-Polyfill is not injected. When using this option, you need to ensure code compatibility yourself.
+When `output.polyfill` is configured as `'off'`, Rsbuild will not inject the polyfills, and developers need to ensure code compatibility themselves.
+
+```ts
+export default {
+  output: {
+    polyfill: 'off',
+  },
+};
+```
+
+> Please refer to the [Polyfill Mode](/guide/advanced/browser-compatibility.html#polyfill-mode) for more details.

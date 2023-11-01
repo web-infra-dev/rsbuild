@@ -61,7 +61,7 @@ exports[`plugin-ts-loader > should set include/exclude 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
@@ -152,7 +152,7 @@ exports[`plugin-ts-loader > should set ts-loader 1`] = `
                       "firefox >= 78",
                       "safari >= 14",
                     ],
-                    "useBuiltIns": "entry",
+                    "useBuiltIns": "usage",
                   },
                 ],
                 [
