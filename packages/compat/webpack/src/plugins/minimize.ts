@@ -30,7 +30,9 @@ export const pluginMinimize = (): RsbuildPlugin => ({
 
       if (isMinimize) {
         await applyJSMinimizer(chain, config);
-        await applyCSSMinimizer(chain, CHAIN_ID, config.tools.minifyCss);
+        await applyCSSMinimizer(chain, CHAIN_ID, {
+          pluginOptions: config.tools.minifyCss,
+        });
       }
     });
   },
