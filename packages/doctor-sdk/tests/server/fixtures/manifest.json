@@ -1,0 +1,51 @@
+{
+  "client": {
+    "enableRoutes": [
+      "Overall",
+      "Compile.WebpackLoaders",
+      "Compile.ModuleResolve",
+      "Compile.WebpackPlugins",
+      "Bundle.TreeShaking",
+      "Bundle.ModuleGraph",
+      "Bundle.BundleSize"
+    ]
+  },
+  "data": {
+    "hash": "2fc05482493cefd2d8a662738567e891",
+    "root": "/Users/bytedance/Projects/webinfra/devtools/examples/webpack-minimal",
+    "envinfo": [
+      "/Users/bytedance/Projects/webinfra/devtools/examples/webpack-minimal/dist/.web-doctor/envinfo/0"
+    ],
+    "pid": 99486,
+    "errors": [
+      "/Users/bytedance/Projects/webinfra/devtools/examples/webpack-minimal/dist/.web-doctor/errors/0"
+    ],
+    "configs": [
+      "/Users/bytedance/Projects/webinfra/devtools/examples/webpack-minimal/dist/.web-doctor/configs/0"
+    ],
+    "summary": [
+      "/Users/bytedance/Projects/webinfra/devtools/examples/webpack-minimal/dist/.web-doctor/summary/0"
+    ],
+    "resolver": [
+      "/Users/bytedance/Projects/webinfra/devtools/examples/webpack-minimal/dist/.web-doctor/resolver/0"
+    ],
+    "loader": [
+      "/Users/bytedance/Projects/webinfra/devtools/examples/webpack-minimal/dist/.web-doctor/loader/0"
+    ],
+    "moduleGraph": [
+      "/Users/bytedance/Projects/webinfra/devtools/examples/webpack-minimal/dist/.web-doctor/moduleGraph/0"
+    ],
+    "chunkGraph": [
+      "/Users/bytedance/Projects/webinfra/devtools/examples/webpack-minimal/dist/.web-doctor/chunkGraph/0"
+    ],
+    "plugin": [
+      "/Users/bytedance/Projects/webinfra/devtools/examples/webpack-minimal/dist/.web-doctor/plugin/0"
+    ],
+    "packageGraph": [
+      "/Users/bytedance/Projects/webinfra/devtools/examples/webpack-minimal/dist/.web-doctor/packageGraph/0"
+    ],
+    "emoCheck": [
+      "/Users/bytedance/Projects/webinfra/devtools/examples/webpack-minimal/dist/.web-doctor/emoCheck/0"
+    ]
+  }
+}

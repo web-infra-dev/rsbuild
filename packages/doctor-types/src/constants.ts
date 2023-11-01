@@ -29,7 +29,7 @@ export const FontExtensions = ['.ttf', '.fnt', '.fon', '.otf'];
 
 export const MapExtensions = ['.js.map', '.ts.map', '.LICENSE.txt'];
 
-export const DoctorOutputFolder = '.doctor';
+export const DoctorOutputFolder = '.rsbuild-doctor';
 
 export const DoctorOutputManifest = 'manifest.json';
 
@@ -38,10 +38,10 @@ export const DoctorOutputManifestPath =
 
 export const StatsFilePath = 'dist/stats.json';
 
-export const DoctorMonitorNodeBId = 'Web-Doctor';
+export const DoctorMonitorNodeBId = 'Rsbuild-Doctor';
 
-export const DoctorMonitorWebBId = 'Doctor-Client';
+export const DoctorMonitorWebBId = 'Rsbuild-Doctor-Client';
 
-export const DoctorMonitorDocBId = 'Doctor-Doc';
+export const DoctorMonitorDocBId = 'Rsbuild-Doctor-Doc';
 
-export const DoctorProcessEnvDebugKey = 'WEB_DOCTOR_DEBUG';
+export const DoctorProcessEnvDebugKey = 'RSBUILD_DOCTOR_DEBUG';

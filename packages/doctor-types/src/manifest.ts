@@ -52,7 +52,6 @@ export enum DoctorManifestClientRoutes {
   BundleSize = 'Bundle.BundleSize',
   ModuleGraph = 'Bundle.ModuleGraph',
   TreeShaking = 'Bundle.TreeShaking',
-  EmoCheck = 'Emo.Check',
 }
 
 export enum DoctorManifestClientConstant {

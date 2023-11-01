@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { getModuleName } from '../src/module-graph/utils';
+import { getModuleName } from '../src/graph/module-graph/utils';
 
 /**
  * The following code is modified based on

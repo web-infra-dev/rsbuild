@@ -20,6 +20,7 @@ interface StoreCommonData {
 }
 
 export interface BuilderStoreData extends StoreCommonData {
+  [key: string]: any;
   errors: ErrorsData;
   configs: ConfigData;
   summary: SummaryData;
