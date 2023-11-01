@@ -1,6 +1,7 @@
 import path from 'path';
 import {
   isURL,
+  castArray,
   isFileExists,
   isPlainObject,
   isHtmlDisabled,
@@ -103,9 +104,10 @@ async function getChunks(entryName: string, entryValue: string | string[]) {
 export const applyInjectTags = (api: SharedRsbuildPluginAPI) => {
   api.modifyBundlerChain(async (chain, { HtmlPlugin, CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
-    const tags = _.castArray(config.html.tags).filter(Boolean);
+
+    const tags = castArray(config.html.tags).filter(Boolean);
     const tagsByEntries = _.mapValues(config.html.tagsByEntries, (tags) =>
-      _.castArray(tags).filter(Boolean),
+      castArray(tags).filter(Boolean),
     );
     const shouldByEntries = _.some(tagsByEntries, 'length');
 

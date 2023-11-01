@@ -1,14 +1,13 @@
 import {
   debug,
   CHAIN_ID,
-  ensureArray,
+  castArray,
   modifyBundlerChain,
   mergeChainedOptions,
   type NodeEnv,
   type WebpackChain,
   type RsbuildTarget,
 } from '@rsbuild/shared';
-import { castArray } from 'lodash';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 
@@ -32,7 +31,7 @@ async function modifyWebpackChain(
   );
 
   if (context.config.tools?.webpackChain) {
-    ensureArray(context.config.tools.webpackChain).forEach((item) => {
+    castArray(context.config.tools.webpackChain).forEach((item) => {
       item(modifiedChain, utils);
     });
   }

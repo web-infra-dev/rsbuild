@@ -5,7 +5,7 @@ import {
   SassLoaderOptions,
   LessLoaderOptions,
 } from './types';
-import { getSharedPkgCompiledPath } from './utils';
+import { castArray, getSharedPkgCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import _ from 'lodash';
 
@@ -16,7 +16,7 @@ export const getSassLoaderOptions = async (
   const excludes: (RegExp | string)[] = [];
 
   const addExcludes: FileFilterUtil = (items) => {
-    excludes.push(..._.castArray(items));
+    excludes.push(...castArray(items));
   };
 
   const mergedOptions = mergeChainedOptions<
@@ -51,7 +51,7 @@ export const getLessLoaderOptions = async (
   const excludes: (RegExp | string)[] = [];
 
   const addExcludes: FileFilterUtil = (items) => {
-    excludes.push(..._.castArray(items));
+    excludes.push(...castArray(items));
   };
 
   const defaultLessLoaderOptions: LessLoaderOptions = {

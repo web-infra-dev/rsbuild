@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { isFunction, isUndefined } from './utils';
+import { castArray, isFunction, isUndefined } from './utils';
 
 /**
  * When merging config, some properties prefer `override` rather than `merge to array`
@@ -24,7 +24,7 @@ export const mergeRsbuildConfig = <T>(...configs: T[]): T =>
       }
 
       if (pair.some(Array.isArray)) {
-        return [..._.castArray(target), ..._.castArray(source)];
+        return [...castArray(target), ...castArray(source)];
       }
       // convert function to chained function
       if (pair.some(isFunction)) {

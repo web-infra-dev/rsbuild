@@ -1,4 +1,4 @@
-import { ensureArray } from './utils';
+import { castArray } from './utils';
 import { debug } from './logger';
 import {
   Context,
@@ -34,7 +34,7 @@ export async function modifyBundlerChain(
     await context.hooks.modifyBundlerChainHook.call(bundlerChain, utils);
 
   if (context.config.tools?.bundlerChain) {
-    ensureArray(context.config.tools.bundlerChain).forEach((item) => {
+    castArray(context.config.tools.bundlerChain).forEach((item) => {
       item(modifiedBundlerChain, utils);
     });
   }

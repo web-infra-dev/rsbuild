@@ -116,11 +116,11 @@ export const getCoreJsVersion = (corejsPkgPath: string) => {
 export const ensureAbsolutePath = (base: string, filePath: string): string =>
   path.isAbsolute(filePath) ? filePath : path.resolve(base, filePath);
 
-export const ensureArray = <T>(params: T | T[]): T[] => {
-  if (Array.isArray(params)) {
-    return params;
+export const castArray = <T>(arr?: T | T[]): T[] => {
+  if (arr === undefined) {
+    return [];
   }
-  return [params];
+  return Array.isArray(arr) ? arr : [arr];
 };
 
 /**
@@ -131,7 +131,7 @@ export const isPackageInstalled = (
   resolvePaths: string | string[],
 ) => {
   try {
-    require.resolve(name, { paths: ensureArray(resolvePaths) });
+    require.resolve(name, { paths: castArray(resolvePaths) });
     return true;
   } catch (err) {
     return false;
