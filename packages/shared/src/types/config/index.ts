@@ -27,22 +27,22 @@ import type { DeepReadonly } from '../utils';
 export interface SharedRsbuildConfig {
   dev?: SharedDevConfig;
   html?: SharedHtmlConfig;
+  tools?: SharedToolsConfig;
   source?: SharedSourceConfig;
   output?: SharedOutputConfig;
   security?: SharedSecurityConfig;
   performance?: SharedPerformanceConfig;
   experiments?: SharedExperimentsConfig;
-  tools?: SharedToolsConfig;
 }
 
 export type SharedNormalizedConfig = DeepReadonly<{
   dev: NormalizedSharedDevConfig;
   html: NormalizedSharedHtmlConfig;
+  tools: SharedToolsConfig;
   source: NormalizedSharedSourceConfig;
   output: NormalizedSharedOutputConfig;
   security: NormalizedSharedSecurityConfig;
   performance: NormalizedSharedPerformanceConfig;
-  tools: SharedToolsConfig;
 }>;
 
 export * from './dev';

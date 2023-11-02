@@ -1,5 +1,6 @@
-import type { DeepReadonly } from '@rsbuild/shared';
 import type {
+  SharedRsbuildConfig,
+  SharedNormalizedConfig,
   SharedDevConfig,
   SharedHtmlConfig,
   SharedToolsConfig,
@@ -31,22 +32,6 @@ export type NormalizedOutputConfig = NormalizedSharedOutputConfig;
 export type NormalizedSecurityConfig = NormalizedSharedSecurityConfig;
 export type NormalizedPerformanceConfig = NormalizedSharedPerformanceConfig;
 
-export interface RsbuildConfig {
-  dev?: DevConfig;
-  html?: HtmlConfig;
-  tools?: ToolsConfig;
-  source?: SourceConfig;
-  output?: OutputConfig;
-  security?: SecurityConfig;
-  performance?: PerformanceConfig;
-}
+export type RsbuildConfig = SharedRsbuildConfig;
 
-export type NormalizedConfig = DeepReadonly<{
-  dev: NormalizedDevConfig;
-  html: NormalizedHtmlConfig;
-  tools: NormalizedToolsConfig;
-  source: NormalizedSourceConfig;
-  output: NormalizedOutputConfig;
-  security: NormalizedSecurityConfig;
-  performance: NormalizedPerformanceConfig;
-}>;
+export type NormalizedConfig = SharedNormalizedConfig;
