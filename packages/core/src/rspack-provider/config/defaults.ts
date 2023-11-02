@@ -13,10 +13,7 @@ import type { RsbuildConfig } from '../types';
 export const createDefaultConfig = (): RsbuildConfig => ({
   dev: getDefaultDevConfig(),
   html: getDefaultHtmlConfig(),
-  source: {
-    ...getDefaultSourceConfig(),
-    define: {},
-  },
+  source: getDefaultSourceConfig(),
   output: getDefaultOutputConfig(),
   tools: getDefaultToolsConfig(),
   security: getDefaultSecurityConfig(),

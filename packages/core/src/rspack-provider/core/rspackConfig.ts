@@ -6,11 +6,13 @@ import {
   modifyBundlerChain,
   mergeChainedOptions,
   type NodeEnv,
+  type RspackConfig,
   type RsbuildTarget,
   type ModifyChainUtils,
+  type ModifyRspackConfigUtils,
 } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
-import type { Context, RspackConfig, ModifyRspackConfigUtils } from '../types';
+import type { Context } from '../types';
 
 async function modifyRspackConfig(
   context: Context,

@@ -4,6 +4,9 @@ import type { ChainedConfig, JSONValue } from '../utils';
 
 export type Alias = Record<string, string | string[]>;
 
+// Use a loose type to compat webpack
+export type Define = Record<string, any>;
+
 export type MainFields = (string | string[])[];
 
 export type GlobalVars = Record<string, JSONValue>;
@@ -60,7 +63,11 @@ export interface SharedSourceConfig {
    */
   resolveExtensionPrefix?: string | Partial<Record<RsbuildTarget, string>>;
   /**
-   * Simple transformImport configuration
+   * Used to replaces variables in your code with other values or expressions at compile time.
+   */
+  define?: Define;
+  /**
+   * Used to import the code and style of the component library on demand
    */
   transformImport?: false | SharedTransformImport[];
 }
@@ -72,9 +79,14 @@ export type SharedTransformImport = {
   styleLibraryDirectory?: string;
   camelToDashComponentName?: boolean;
   transformToDefaultImport?: boolean;
+  // Use a loose type to compat webpack
+  customName?: any;
+  // Use a loose type to compat webpack
+  customStyleName?: any;
 };
 
 export interface NormalizedSharedSourceConfig extends SharedSourceConfig {
+  define: Define;
   alias: ChainedConfig<Alias>;
   aliasStrategy: AliasStrategy;
   preEntry: string[];

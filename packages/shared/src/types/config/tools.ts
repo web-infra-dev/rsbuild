@@ -10,11 +10,12 @@ import type {
   StyleLoaderOptions,
 } from '../thirdParty';
 import type { BundlerChain } from '../bundlerConfig';
-import type { ModifyBundlerChainUtils } from '../hooks';
+import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type { DevServerHttpsOptions } from './dev';
+import type { RspackConfig, RspackRule, RspackPluginInstance } from '../rspack';
+import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
 
-/** html-rspack-plugin is compatible with html-webpack-plugin */
-export type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+export type { HTMLPluginOptions };
 
 export type DevServerOptions = {
   /** config of hmr client. */
@@ -86,6 +87,32 @@ export type ToolsCSSLoaderConfig = ChainedConfig<CSSLoaderOptions>;
 
 export type ToolsStyleLoaderConfig = ChainedConfig<StyleLoaderOptions>;
 
+export type ToolsHtmlPluginConfig = ChainedConfig<
+  HTMLPluginOptions,
+  {
+    entryName: string;
+    entryValue: string | string[];
+  }
+>;
+
+export type ModifyRspackConfigUtils = ModifyChainUtils & {
+  addRules: (rules: RspackRule | RspackRule[]) => void;
+  prependPlugins: (
+    plugins: RspackPluginInstance | RspackPluginInstance[],
+  ) => void;
+  appendPlugins: (
+    plugins: RspackPluginInstance | RspackPluginInstance[],
+  ) => void;
+  removePlugin: (pluginName: string) => void;
+  mergeConfig: typeof import('../../../compiled/webpack-merge').merge;
+  rspack: typeof import('@rspack/core');
+};
+
+export type ToolsRspackConfig = ChainedConfig<
+  RspackConfig,
+  ModifyRspackConfigUtils
+>;
+
 export interface SharedToolsConfig {
   /**
    * Modify the config of [sass-loader](https://github.com/webpack-contrib/sass-loader).
@@ -123,6 +150,14 @@ export interface SharedToolsConfig {
    * Modify the options of [style-loader](https://github.com/webpack-contrib/style-loader).
    */
   styleLoader?: ToolsStyleLoaderConfig;
+  /**
+   * Configure the html-webpack-plugin.
+   */
+  htmlPlugin?: false | ToolsHtmlPluginConfig;
+  /**
+   * Configure Rspack.
+   */
+  rspack?: ToolsRspackConfig;
 }
 
 export type NormalizedSharedToolsConfig = SharedToolsConfig;

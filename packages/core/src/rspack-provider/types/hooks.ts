@@ -1,18 +1,5 @@
-import type { ModifyChainUtils } from '@rsbuild/shared';
-import type { RspackConfig, RspackRule, RspackPluginInstance } from './rspack';
-
-export type ModifyRspackConfigUtils = ModifyChainUtils & {
-  addRules: (rules: RspackRule | RspackRule[]) => void;
-  prependPlugins: (
-    plugins: RspackPluginInstance | RspackPluginInstance[],
-  ) => void;
-  appendPlugins: (
-    plugins: RspackPluginInstance | RspackPluginInstance[],
-  ) => void;
-  removePlugin: (pluginName: string) => void;
-  mergeConfig: typeof import('@rsbuild/shared/webpack-merge').merge;
-  rspack: typeof import('@rspack/core');
-};
+import type { ModifyRspackConfigUtils } from '@rsbuild/shared';
+import type { RspackConfig } from '@rsbuild/shared';
 
 export type ModifyRspackConfigFn = (
   config: RspackConfig,
