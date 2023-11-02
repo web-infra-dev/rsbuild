@@ -559,11 +559,11 @@ importers:
         specifier: workspace:*
         version: link:../shared
       '@rspack/core':
-        specifier: 0.3.8
-        version: 0.3.8
+        specifier: 0.3.10
+        version: 0.3.10
       '@rspack/plugin-html':
-        specifier: 0.3.8
-        version: 0.3.8(@rspack/core@0.3.8)
+        specifier: 0.3.10
+        version: 0.3.10(@rspack/core@0.3.10)
       commander:
         specifier: ^10.0.1
         version: 10.0.1
@@ -849,8 +849,8 @@ importers:
   packages/doctor-types:
     dependencies:
       '@rspack/core':
-        specifier: 0.3.8
-        version: 0.3.8
+        specifier: 0.3.10
+        version: 0.3.10
       '@types/connect':
         specifier: 3.4.35
         version: 3.4.35
@@ -1157,8 +1157,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       '@rspack/plugin-react-refresh':
-        specifier: 0.3.8
-        version: 0.3.8(react-refresh@0.14.0)(webpack@5.89.0)
+        specifier: 0.3.10
+        version: 0.3.10(react-refresh@0.14.0)(webpack@5.89.0)
       react-refresh:
         specifier: ^0.14.0
         version: 0.14.0
@@ -1499,8 +1499,8 @@ importers:
         specifier: ^7.23.2
         version: 7.23.2(@babel/core@7.23.2)
       '@rspack/core':
-        specifier: 0.3.8
-        version: 0.3.8
+        specifier: 0.3.10
+        version: 0.3.10
       '@types/lodash':
         specifier: ^4.14.200
         version: 4.14.200
@@ -4763,92 +4763,94 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@rspack/binding-darwin-arm64@0.3.8:
-    resolution: {integrity: sha512-qvxzkUaqAbVmwJuVW3p7o1XVT5z2MbwpC9VZQr1fAd7/vEdDfiMm8Vz1AcY/WKxrUjX6rwNs3Ix1SdSBveThKQ==}
+  /@rspack/binding-darwin-arm64@0.3.10:
+    resolution: {integrity: sha512-PFBjZ624tkB90wkfh3zwyKt6bVfdVS6HWvLOmWV1Le8NtRuvH60FSutMJQK0nX3a5QIxqt3ScSoRTbpXqGV4hw==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     optional: true
 
-  /@rspack/binding-darwin-x64@0.3.8:
-    resolution: {integrity: sha512-Ae3cJiTcXuBTZdLv+vDtbjGcx5D0rizg7nuRmtFmDvtPjYgFE9y0F+VzajQVySqvtAO8kowryC8BYjqnJ7A2Rg==}
+  /@rspack/binding-darwin-x64@0.3.10:
+    resolution: {integrity: sha512-ZpbdR3PnRlGQ9JYInEG8uBD3RY9Mh8/W//sc+9Zn+gmLZK3k/ehTKNRzxjoxJpf6mdueC/xFIjafLGQj7A3z/g==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     optional: true
 
-  /@rspack/binding-linux-arm64-gnu@0.3.8:
-    resolution: {integrity: sha512-aZ/cbLq8j85t4TLA94Oj+urPMDlBb+FHce4YGatX6+0juzxNUY23rSRB6pvtQz6DkFxFHDayiOcLkk8loiNiUQ==}
+  /@rspack/binding-linux-arm64-gnu@0.3.10:
+    resolution: {integrity: sha512-LXV3131ZQ0KXacQ2oZG1GnzlxcrKGcEgQ9yTmBllQdDQ/x5mal9lYx1065tWro6Cw6FHUSG0dlRuAnPcl3rtgw==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     optional: true
 
-  /@rspack/binding-linux-arm64-musl@0.3.8:
-    resolution: {integrity: sha512-fcwnXl6BqnZ21LizWdcuFz1CNHHuMRoll1z5nfnWn5yzNo5eprXNqFgw0aC5R15Gri/GaiT7bZA7FXAU7eGR8g==}
+  /@rspack/binding-linux-arm64-musl@0.3.10:
+    resolution: {integrity: sha512-iFML4S5QeMNFbX50DZpbKbmTRWnGndbsXsGLgAfaCbZFMfo2iWPwQc/HSAb1WLETfZg6GQF0Pyg20bn3o9z9Ig==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     optional: true
 
-  /@rspack/binding-linux-x64-gnu@0.3.8:
-    resolution: {integrity: sha512-W7Kqf13GE/mT/HiQfnLMCkrNxekaJuk53sOYVehxBJ6J5NKvL/uzBvPa3m2EtbhUUkBnR0t87Yp04YS9JrnkeA==}
+  /@rspack/binding-linux-x64-gnu@0.3.10:
+    resolution: {integrity: sha512-9m+3kwqU15LARiAiqa9wLgP5e+UkgdWPKfBtpLJCvmXDpbyPio1RDRaF+21Mre2pkaXhMGkHPXda/yBulJsY2Q==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     optional: true
 
-  /@rspack/binding-linux-x64-musl@0.3.8:
-    resolution: {integrity: sha512-KIRAj7WQ3JLaCENctA1aiREw9PPuLAFMxkXPGm2YeszfLhv+o3Suehc0OvsPcGeXg/laGKQzl0RV6dHyKfocQg==}
+  /@rspack/binding-linux-x64-musl@0.3.10:
+    resolution: {integrity: sha512-7p8annA+W1iq4bEnRDlGTra3VFBYqKmMJaYBudIe7LTbtiayZPcqo1MmxyO4EJ+L711DX6Z6imid1FNn31cijA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     optional: true
 
-  /@rspack/binding-win32-arm64-msvc@0.3.8:
-    resolution: {integrity: sha512-PHlMQu0uiUBiJCpxR1ql6HJBeFpsombiPRquoN2d/a5WfkETDX04BnfN7XW8Fe9j164iCe5yU0Xwk0gaaJp3Uw==}
+  /@rspack/binding-win32-arm64-msvc@0.3.10:
+    resolution: {integrity: sha512-IfRa6wbrsHDY8h1uEEU5dytIL0Uf3URYqk+RJG0dS6gLQFDlpo/VRKaA4fDCcbt/8MwxVM2XAMVGNWD/iSsNMQ==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     optional: true
 
-  /@rspack/binding-win32-ia32-msvc@0.3.8:
-    resolution: {integrity: sha512-ln3js9wOQLJi9E1MVNtLui56a3pXmSnEags9YJhZs5ZMT5SJGsofoa0zXNxeTMuRQ0Gx5w0tVSXZXgyVUm1OdA==}
+  /@rspack/binding-win32-ia32-msvc@0.3.10:
+    resolution: {integrity: sha512-nm6s1yBhS0Pd6LrojDfxC63G9g1HZ/MDP4faViqXWGcyVJ7m0ZemCydiuo2OyDetycTzNY0vXaESipcvptysdw==}
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
     optional: true
 
-  /@rspack/binding-win32-x64-msvc@0.3.8:
-    resolution: {integrity: sha512-UK70L1vsp5St0qPATB1UdrFh9Ax/G1VpWx3Fp4W5iNzfcLBDKbCpEyCetxZhjHCcFVfbSE74X34NzgDiLDFrHA==}
+  /@rspack/binding-win32-x64-msvc@0.3.10:
+    resolution: {integrity: sha512-OjZkoDfNW0dKr3mhEDHLDRstgbOJPZPm+adXssVQWGm1XZK6OlbOGnbOtkcTL7+8fnUA/c2mvkO553Ze7R01ZQ==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     optional: true
 
-  /@rspack/binding@0.3.8:
-    resolution: {integrity: sha512-urM1+I6BL1jv6hUZ44Nv2kYYWVIQxRIJoZFrlubo1XhTJqTFUPNF/7E/ritNC9J6gxxZMQLc0NLJz4jdUTaUbg==}
+  /@rspack/binding@0.3.10:
+    resolution: {integrity: sha512-ID7jN3wUPubGFVgEU1zH5/zSBQwJOPGGQ8YcuKlxNT9Qvz+/g26vZk73CJh/y1gO/Be+awCPZG5wq13mLt6txQ==}
     optionalDependencies:
-      '@rspack/binding-darwin-arm64': 0.3.8
-      '@rspack/binding-darwin-x64': 0.3.8
-      '@rspack/binding-linux-arm64-gnu': 0.3.8
-      '@rspack/binding-linux-arm64-musl': 0.3.8
-      '@rspack/binding-linux-x64-gnu': 0.3.8
-      '@rspack/binding-linux-x64-musl': 0.3.8
-      '@rspack/binding-win32-arm64-msvc': 0.3.8
-      '@rspack/binding-win32-ia32-msvc': 0.3.8
-      '@rspack/binding-win32-x64-msvc': 0.3.8
+      '@rspack/binding-darwin-arm64': 0.3.10
+      '@rspack/binding-darwin-x64': 0.3.10
+      '@rspack/binding-linux-arm64-gnu': 0.3.10
+      '@rspack/binding-linux-arm64-musl': 0.3.10
+      '@rspack/binding-linux-x64-gnu': 0.3.10
+      '@rspack/binding-linux-x64-musl': 0.3.10
+      '@rspack/binding-win32-arm64-msvc': 0.3.10
+      '@rspack/binding-win32-ia32-msvc': 0.3.10
+      '@rspack/binding-win32-x64-msvc': 0.3.10
 
-  /@rspack/core@0.3.8:
-    resolution: {integrity: sha512-KUYYqm+PKVJBnnLuB+t0RCu0LhWm8mM3K3/VIGSATUi66Xgn7mxbSoab0IrCXWGekPUpUrmoA7hLg06wMtVJlQ==}
+  /@rspack/core@0.3.10:
+    resolution: {integrity: sha512-1mwLC9zyF15kpOQzxsrG5zjPxOSQHnKW/MUXvx4ak0JuZCK3uJgLsK8Jn8tSqvEeh2rWvm7k0S6GJIFl2F2jvA==}
     dependencies:
-      '@rspack/binding': 0.3.8
+      '@rspack/binding': 0.3.10
       '@swc/helpers': 0.5.1
       browserslist: 4.22.1
       compare-versions: 6.0.0-rc.1
       enhanced-resolve: 5.12.0
       graceful-fs: 4.2.10
+      json-parse-even-better-errors: 3.0.0
       neo-async: 2.6.2
+      querystring: 0.2.1
       react-refresh: 0.14.0
       schema-utils: 4.2.0
       tapable: 2.2.1
@@ -4859,15 +4861,15 @@ packages:
       zod: 3.22.4
       zod-validation-error: 1.2.0(zod@3.22.4)
 
-  /@rspack/plugin-html@0.3.8(@rspack/core@0.3.8):
-    resolution: {integrity: sha512-eHZo+Ah2vrsS9pxT5Xue7SjSMN8joSNHDLui95Pnni1oj1ESuCojhxPCRxUhbort7xwsGYpnhfhsJZoHL8qN4w==}
+  /@rspack/plugin-html@0.3.10(@rspack/core@0.3.10):
+    resolution: {integrity: sha512-zTbcoigqKG8UChq4nBcr47dUZiIBiWwKhqXX++6k7AocyUbBwcVL6tGOtBeSXTMH8IHDazgCACLfbzX+FyKMaw==}
     peerDependencies:
-      '@rspack/core': 0.3.8
+      '@rspack/core': 0.3.10
     peerDependenciesMeta:
       '@rspack/core':
         optional: true
     dependencies:
-      '@rspack/core': 0.3.8
+      '@rspack/core': 0.3.10
       '@types/html-minifier-terser': 7.0.0
       html-minifier-terser: 7.0.0
       lodash.template: 4.5.0
@@ -4875,8 +4877,8 @@ packages:
       tapable: 2.2.1
     dev: false
 
-  /@rspack/plugin-react-refresh@0.3.8(react-refresh@0.14.0)(webpack@5.89.0):
-    resolution: {integrity: sha512-HF6liXhYJqXRYlQNRNTu1YpR4QykOAjh9/8bt6kYKsWZPj5D1zcPH+evpvF7QxcRpfSRXRujyHOXMIKBLTBqIQ==}
+  /@rspack/plugin-react-refresh@0.3.10(react-refresh@0.14.0)(webpack@5.89.0):
+    resolution: {integrity: sha512-oeCsfEXRguZox5rNyV3ifbyk3G578YZ+5l0ZNCk/tDF5xQnMeJ9vRJ7iFYcHVcuZhZQhuxCwLzeXJ5RNWleqig==}
     peerDependencies:
       react-refresh: '>=0.10.0 <1.0.0'
     peerDependenciesMeta:
@@ -10054,6 +10056,10 @@ packages:
   /json-parse-even-better-errors@2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
 
+  /json-parse-even-better-errors@3.0.0:
+    resolution: {integrity: sha512-iZbGHafX/59r39gPwVPRBGw0QQKnA7tte5pSMrhWOW7swGsVvVTjmfyAV9pNqk8YGT7tRCdxRu8uzcgZwoDooA==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+
   /json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
 
@@ -12306,6 +12312,11 @@ packages:
     resolution: {integrity: sha512-773xhDQnZBMFobEiztv8LIl70ch5MSF/jUQVlhwFyBILqq96anmoctVIYz+ZRp0qbCKATTn6ev02M3r7Ga5vqA==}
     engines: {node: '>=0.4.x'}
     dev: false
+
+  /querystring@0.2.1:
+    resolution: {integrity: sha512-wkvS7mL/JMugcup3/rMitHmd9ecIGd2lhFhK9N3UUQ450h66d1r3Y9nvXzQAW1Lq+wyx61k/1pfKS5KuKiyEbg==}
+    engines: {node: '>=0.4.x'}
+    deprecated: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
 
   /querystringify@2.2.0:
     resolution: {integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==}
