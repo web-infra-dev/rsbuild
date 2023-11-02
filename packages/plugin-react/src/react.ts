@@ -82,7 +82,6 @@ export const applyBasicReactSupport = (api: RsbuildPluginAPI) => {
 
     const { default: ReactRefreshRspackPlugin } = await import(
       // TODO https://github.com/web-infra-dev/rspack/issues/4471
-      // @ts-expect-error
       '@rspack/plugin-react-refresh'
     );
 
