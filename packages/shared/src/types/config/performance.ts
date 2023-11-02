@@ -37,7 +37,7 @@ export interface PreloadOrPreFetchOption {
   exclude?: Filter;
 }
 
-export interface SharedPerformanceConfig {
+export interface PerformanceConfig {
   /**
    * Whether to remove `console.xx` in production build.
    */
@@ -104,8 +104,7 @@ export interface SharedPerformanceConfig {
   profile?: boolean;
 }
 
-export interface NormalizedSharedPerformanceConfig
-  extends SharedPerformanceConfig {
+export interface NormalizedPerformanceConfig extends PerformanceConfig {
   printFileSize: boolean;
   buildCache: BuildCacheOptions | boolean;
   chunkSplit: RsbuildChunkSplit;

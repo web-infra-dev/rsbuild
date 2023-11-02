@@ -1,4 +1,4 @@
-import { RsbuildTarget, MainFields, SharedSourceConfig } from '../types';
+import { RsbuildTarget, MainFields, SourceConfig } from '../types';
 import { z } from '../utils';
 import { ZodType } from '../zod';
 
@@ -31,4 +31,4 @@ export const sharedSourceConfigSchema = z.partialObj({
   ]),
 });
 
-const _schema: z.ZodType<SharedSourceConfig> = sharedSourceConfigSchema;
+const _schema: z.ZodType<SourceConfig> = sharedSourceConfigSchema;

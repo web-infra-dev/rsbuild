@@ -6,7 +6,7 @@ import {
   ModifyBundlerChainUtils,
   ModifyBundlerChainFn,
   BundlerChain,
-  SharedRsbuildConfig,
+  RsbuildConfig,
 } from './types';
 
 export async function getBundlerChain() {
@@ -22,7 +22,7 @@ export async function modifyBundlerChain(
     hooks: {
       modifyBundlerChainHook: CreateAsyncHook<ModifyBundlerChainFn>;
     };
-    config: Readonly<SharedRsbuildConfig>;
+    config: Readonly<RsbuildConfig>;
   },
   utils: ModifyBundlerChainUtils,
 ) {

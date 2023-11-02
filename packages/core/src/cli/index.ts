@@ -9,9 +9,8 @@ type RunCliOptions = {
 };
 
 export async function runCli(options: RunCliOptions = {}) {
-  const { provider, ...config } = await loadConfig();
+  const config = await loadConfig();
   const rsbuild = await createRsbuild({
-    provider,
     rsbuildConfig: config,
     entry: config.source?.entries || getDefaultEntries(),
   });

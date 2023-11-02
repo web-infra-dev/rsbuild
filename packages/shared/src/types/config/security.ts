@@ -4,7 +4,7 @@ export type SriOptions = {
   hashLoading?: 'eager' | 'lazy';
 };
 
-export interface SharedSecurityConfig {
+export interface SecurityConfig {
   /**
    * Adding an nonce attribute to sub-resources introduced by HTML allows the browser to
    * verify the nonce of the introduced resource, thus preventing xss.
@@ -12,4 +12,4 @@ export interface SharedSecurityConfig {
   nonce?: string;
 }
 
-export type NormalizedSharedSecurityConfig = Required<SharedSecurityConfig>;
+export type NormalizedSecurityConfig = Required<SecurityConfig>;

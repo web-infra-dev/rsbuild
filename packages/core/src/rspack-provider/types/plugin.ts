@@ -1,8 +1,9 @@
 import type {
+  RsbuildConfig,
+  NormalizedConfig,
   DefaultRsbuildPluginAPI,
   RsbuildPlugin as BaseRsbuildPlugin,
 } from '@rsbuild/shared';
-import type { RsbuildConfig, NormalizedConfig } from './config';
 import type { ModifyRspackConfigFn } from './hooks';
 import type {
   RspackConfig,

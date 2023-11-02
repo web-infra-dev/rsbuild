@@ -1,10 +1,10 @@
 import type {
   SriOptions,
-  SharedSecurityConfig,
-  NormalizedSharedSecurityConfig,
+  SecurityConfig as BaseSecurityConfig,
+  NormalizedSecurityConfig as BaseNormalizedSecurityConfig,
 } from '@rsbuild/shared';
 
-export type SecurityConfig = SharedSecurityConfig & {
+export type SecurityConfig = BaseSecurityConfig & {
   /**
    * Adding an integrity attribute (`integrity`) to sub-resources introduced by HTML allows the browser to
    * verify the integrity of the introduced resource, thus preventing tampering with the downloaded resource.
@@ -12,5 +12,5 @@ export type SecurityConfig = SharedSecurityConfig & {
   sri?: SriOptions | boolean;
 };
 
-export type NormalizedSecurityConfig = NormalizedSharedSecurityConfig &
+export type NormalizedSecurityConfig = BaseNormalizedSecurityConfig &
   Required<Pick<SecurityConfig, 'sri'>>;

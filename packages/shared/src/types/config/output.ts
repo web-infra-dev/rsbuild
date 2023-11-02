@@ -152,7 +152,7 @@ export type CssModules = {
 
 export type CopyPluginOptions = NonNullable<Builtins['copy']>;
 
-export interface SharedOutputConfig {
+export interface OutputConfig {
   /**
    * At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
    * For more information, please see: [webpack Externals](https://webpack.js.org/configuration/externals/)
@@ -282,7 +282,7 @@ export type OverrideBrowserslist =
   | string[]
   | Partial<Record<RsbuildTarget, string[]>>;
 
-export interface NormalizedSharedOutputConfig extends SharedOutputConfig {
+export interface NormalizedOutputConfig extends OutputConfig {
   filename: FilenameConfig;
   distPath: DistPathConfig;
   polyfill: Polyfill;

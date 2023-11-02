@@ -7,10 +7,10 @@ import { getPort } from './port';
 import { getAddressUrls } from './url';
 import { logger as defaultLogger } from './logger';
 import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
-import type { Context, StartServerResult, SharedRsbuildConfig } from './types';
+import type { Context, StartServerResult, RsbuildConfig } from './types';
 
 export const getServerOptions = (
-  rsbuildConfig: SharedRsbuildConfig,
+  rsbuildConfig: RsbuildConfig,
 ): ModernServerOptions['config'] => {
   return {
     output: {
@@ -47,7 +47,7 @@ export function printServerURLs(
 
 export async function startProdServer(
   context: Context,
-  rsbuildConfig: SharedRsbuildConfig,
+  rsbuildConfig: RsbuildConfig,
 ) {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'production';

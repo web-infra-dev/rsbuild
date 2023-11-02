@@ -2,7 +2,7 @@ import {
   getPackageNameFromModulePath,
   MODULE_PATH_REGEX,
   getHTMLPathByEntry,
-  NormalizedSharedOutputConfig,
+  NormalizedOutputConfig,
 } from '../src';
 
 describe('getPackageNameFromModulePath', () => {
@@ -58,7 +58,7 @@ describe('getHTMLPathByEntry', () => {
         distPath: {
           html: 'my-html',
         },
-      } as NormalizedSharedOutputConfig,
+      } as NormalizedOutputConfig,
       html: {
         outputStructure: 'nested',
       },
@@ -73,7 +73,7 @@ describe('getHTMLPathByEntry', () => {
         distPath: {
           html: 'html',
         },
-      } as NormalizedSharedOutputConfig,
+      } as NormalizedOutputConfig,
       html: {
         outputStructure: 'flat',
       },

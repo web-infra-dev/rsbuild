@@ -40,7 +40,7 @@ export type HtmlInjectTagHandler = (
 
 export type HtmlInjectTagDescriptor = HtmlInjectTag | HtmlInjectTagHandler;
 
-export interface SharedHtmlConfig {
+export interface HtmlConfig {
   /**
    * Configure the `<meta>` tag of the HTML.
    */
@@ -139,7 +139,7 @@ export interface SharedHtmlConfig {
   scriptLoading?: ScriptLoading;
 }
 
-export type NormalizedSharedHtmlConfig = SharedHtmlConfig & {
+export type NormalizedHtmlConfig = HtmlConfig & {
   mountId: string;
   inject: ScriptInject;
   crossorigin: boolean | CrossOrigin;

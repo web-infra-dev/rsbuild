@@ -1,9 +1,9 @@
 import type WebpackChain from 'webpack-chain';
-import { SharedNormalizedConfig, BundlerChain } from './types';
+import { NormalizedConfig, BundlerChain } from './types';
 import { createVirtualModule } from './utils';
 
 const enableCoreJsEntry = (
-  config: SharedNormalizedConfig,
+  config: NormalizedConfig,
   isServer: boolean,
   isServiceWorker: boolean,
 ) => config.output.polyfill === 'entry' && !isServer && !isServiceWorker;
@@ -16,7 +16,7 @@ export function addCoreJsEntry({
   isServiceWorker,
 }: {
   chain: BundlerChain | WebpackChain;
-  config: SharedNormalizedConfig;
+  config: NormalizedConfig;
   isServer: boolean;
   isServiceWorker: boolean;
 }) {

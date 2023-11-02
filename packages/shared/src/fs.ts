@@ -4,21 +4,21 @@ import { removeLeadingSlash } from './utils';
 import { promises, constants, existsSync, statSync } from 'fs';
 import {
   DistPathConfig,
-  NormalizedSharedOutputConfig,
-  SharedHtmlConfig,
+  NormalizedOutputConfig,
+  HtmlConfig,
   FilenameConfig,
 } from './types';
 
 export function getAbsoluteDistPath(
   cwd: string,
-  outputConfig: NormalizedSharedOutputConfig,
+  outputConfig: NormalizedOutputConfig,
 ) {
   const root = getDistPath(outputConfig, 'root');
   return isAbsolute(root) ? root : join(cwd, root);
 }
 
 export const getDistPath = (
-  outputConfig: NormalizedSharedOutputConfig,
+  outputConfig: NormalizedOutputConfig,
   type: keyof DistPathConfig,
 ): string => {
   const { distPath } = outputConfig;
@@ -68,8 +68,8 @@ export function getPackageNameFromModulePath(modulePath: string) {
 export function getHTMLPathByEntry(
   entryName: string,
   config: {
-    output: NormalizedSharedOutputConfig;
-    html: SharedHtmlConfig;
+    output: NormalizedOutputConfig;
+    html: HtmlConfig;
   },
 ) {
   const htmlPath = getDistPath(config.output, 'html');
@@ -82,7 +82,7 @@ export function getHTMLPathByEntry(
 }
 
 export const getFilename = (
-  output: NormalizedSharedOutputConfig,
+  output: NormalizedOutputConfig,
   type: keyof FilenameConfig,
   isProd: boolean,
 ) => {

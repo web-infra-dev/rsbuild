@@ -8,7 +8,7 @@ import {
   BundlerChain,
   ChainedConfig,
   SharedRsbuildPluginAPI,
-  SharedNormalizedConfig,
+  NormalizedConfig,
 } from '../types';
 
 export function applyResolvePlugin(api: SharedRsbuildPluginAPI) {
@@ -45,7 +45,7 @@ function applyFullySpecified({
   CHAIN_ID,
 }: {
   chain: BundlerChain;
-  config: SharedNormalizedConfig;
+  config: NormalizedConfig;
   CHAIN_ID: ChainIdentifier;
 }) {
   chain.module
@@ -61,7 +61,7 @@ function applyExtensions({
   isTsProject,
 }: {
   chain: BundlerChain;
-  config: SharedNormalizedConfig;
+  config: NormalizedConfig;
   target: RsbuildTarget;
   isTsProject: boolean;
 }) {
@@ -80,7 +80,7 @@ async function applyAlias({
   rootPath,
 }: {
   chain: BundlerChain;
-  config: SharedNormalizedConfig;
+  config: NormalizedConfig;
   rootPath: string;
 }) {
   const { alias } = config.source as {
@@ -120,7 +120,7 @@ function applyMainFields({
   target,
 }: {
   chain: BundlerChain;
-  config: SharedNormalizedConfig;
+  config: NormalizedConfig;
   target: RsbuildTarget;
 }) {
   const { resolveMainFields } = config.source;

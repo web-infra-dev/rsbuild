@@ -6,7 +6,7 @@ export type ProgressBarConfig = {
   id?: string;
 };
 
-export interface SharedDevConfig {
+export interface DevConfig {
   /**
    * Whether to enable Hot Module Replacement.
    */
@@ -44,5 +44,5 @@ export interface SharedDevConfig {
   host?: string;
 }
 
-export type NormalizedSharedDevConfig = SharedDevConfig &
-  Required<Omit<SharedDevConfig, 'beforeStartUrl'>>;
+export type NormalizedDevConfig = DevConfig &
+  Required<Omit<DevConfig, 'beforeStartUrl'>>;

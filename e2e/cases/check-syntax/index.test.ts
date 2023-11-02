@@ -2,9 +2,9 @@ import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
-import type { SharedRsbuildConfig } from '@rsbuild/shared';
+import type { RsbuildConfig } from '@rsbuild/shared';
 
-function getCommonBuildConfig(cwd: string): SharedRsbuildConfig {
+function getCommonBuildConfig(cwd: string): RsbuildConfig {
   return {
     source: {
       exclude: [path.resolve(cwd, './src/test.js')],

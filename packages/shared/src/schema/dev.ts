@@ -1,5 +1,5 @@
 import type {
-  SharedDevConfig,
+  DevConfig,
   ProgressBarConfig,
   DevServerHttpsOptions,
 } from '../types';
@@ -32,4 +32,4 @@ export const sharedDevConfigSchema = z.partialObj({
   progressBar: z.union([z.boolean(), ProgressBarConfigSchema]),
 });
 
-const _schema: z.ZodType<SharedDevConfig> = sharedDevConfigSchema;
+const _schema: z.ZodType<DevConfig> = sharedDevConfigSchema;

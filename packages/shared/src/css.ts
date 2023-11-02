@@ -12,11 +12,11 @@ import type {
   CssModules,
   RsbuildTarget,
   CSSLoaderOptions,
-  SharedNormalizedConfig,
+  NormalizedConfig,
 } from './types';
 
 export const getCssModuleLocalIdentName = (
-  config: SharedNormalizedConfig,
+  config: NormalizedConfig,
   isProd: boolean,
 ) =>
   config.output.cssModules.localIdentName ||
@@ -103,7 +103,7 @@ export const getPostcssConfig = async ({
   enableCssMinify: boolean;
   enableSourceMap: boolean;
   browserslist: string[];
-  config: SharedNormalizedConfig;
+  config: NormalizedConfig;
 }) => {
   const extraPlugins: AcceptedPlugin[] = [];
 
@@ -193,7 +193,7 @@ export const getCssLoaderOptions = async ({
   isWebWorker,
   localIdentName,
 }: {
-  config: SharedNormalizedConfig;
+  config: NormalizedConfig;
   enableSourceMap: boolean;
   importLoaders: number;
   isServer: boolean;
@@ -228,7 +228,7 @@ export const getCssLoaderOptions = async ({
 };
 
 export const isUseCssExtract = (
-  config: SharedNormalizedConfig,
+  config: NormalizedConfig,
   target: RsbuildTarget,
 ) =>
   !config.output.disableCssExtract &&

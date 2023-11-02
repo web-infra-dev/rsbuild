@@ -1,4 +1,4 @@
-import { SharedExperimentsConfig } from '../types';
+import { ExperimentsConfig } from '../types';
 import { z } from '../utils';
 
 export const sharedExperimentsConfigSchema = z.partialObj({
@@ -8,5 +8,4 @@ export const sharedExperimentsConfigSchema = z.partialObj({
   ]),
 });
 
-const _schema: z.ZodType<SharedExperimentsConfig> =
-  sharedExperimentsConfigSchema;
+const _schema: z.ZodType<ExperimentsConfig> = sharedExperimentsConfigSchema;

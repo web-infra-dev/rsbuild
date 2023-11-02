@@ -1,5 +1,5 @@
 import type {
-  SharedNormalizedConfig,
+  NormalizedConfig,
   RsbuildTarget,
   SharedCompiledPkgNames,
 } from './types';
@@ -49,7 +49,7 @@ export const awaitableGetter = <T>(
   return { then, promises };
 };
 
-export const isUseJsSourceMap = (config: SharedNormalizedConfig) => {
+export const isUseJsSourceMap = (config: NormalizedConfig) => {
   const { disableSourceMap } = config.output || {};
 
   if (typeof disableSourceMap === 'boolean') {
@@ -59,7 +59,7 @@ export const isUseJsSourceMap = (config: SharedNormalizedConfig) => {
   return !disableSourceMap.js;
 };
 
-export const isUseCssSourceMap = (config: SharedNormalizedConfig) => {
+export const isUseCssSourceMap = (config: NormalizedConfig) => {
   const { disableSourceMap } = config.output || {};
 
   if (typeof disableSourceMap === 'boolean') {
