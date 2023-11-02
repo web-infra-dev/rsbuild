@@ -64,7 +64,7 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@modern-js/server": "^2.39.0",
+    "@modern-js/server": "^2.39.1",
     "@rsbuild/shared": "workspace:*",
     "@rspack/core": "0.3.8",
     "@rspack/plugin-html": "0.3.8",

@@ -153,8 +153,8 @@
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@modern-js/prod-server": "^2.39.0",
-    "@modern-js/server": "^2.39.0",
+    "@modern-js/prod-server": "^2.39.1",
+    "@modern-js/server": "^2.39.1",
     "@types/fs-extra": "^11.0.2",
     "acorn": "^8.10.0",
     "browserslist": "^4.22.1",
