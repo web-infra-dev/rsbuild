@@ -1,10 +1,7 @@
 import path from 'path';
-import { RsbuildTarget, SharedNormalizedConfig } from '../types';
+import { RsbuildTarget, NormalizedConfig } from '../types';
 
-export function getTemplatePath(
-  entryName: string,
-  config: SharedNormalizedConfig,
-) {
+export function getTemplatePath(entryName: string, config: NormalizedConfig) {
   const DEFAULT_TEMPLATE = path.resolve(
     __dirname,
     '../../static/template.html',
@@ -14,7 +11,7 @@ export function getTemplatePath(
 }
 
 export const isHtmlDisabled = (
-  config: SharedNormalizedConfig,
+  config: NormalizedConfig,
   target: RsbuildTarget,
 ) => {
   const { htmlPlugin } = config.tools as {

@@ -4,25 +4,18 @@ import { findExists } from '@rsbuild/shared';
 import type {
   RsbuildEntry,
   RsbuildPlugin,
-  RsbuildProvider,
-  SharedRsbuildConfig,
+  RsbuildConfig as BaseRsbuildConfig,
 } from '@rsbuild/shared';
 import { fs } from '@rsbuild/shared/fs-extra';
-import type { RsbuildConfig as RspackRsbuildConfig } from '../rspack-provider';
 
-export type RsbuildConfig<Config> = Config & {
+export type RsbuildConfig = BaseRsbuildConfig & {
   source?: {
     entries?: RsbuildEntry;
   };
   plugins?: RsbuildPlugin[];
-  provider?: ({ rsbuildConfig }: { rsbuildConfig: Config }) => RsbuildProvider;
 };
 
-export const defineConfig = <
-  T extends SharedRsbuildConfig = RspackRsbuildConfig,
->(
-  config: RsbuildConfig<T>,
-) => config;
+export const defineConfig = (config: RsbuildConfig) => config;
 
 const resolveConfigPath = () => {
   const CONFIG_FILES = [

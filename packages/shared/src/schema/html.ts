@@ -4,7 +4,7 @@ import type {
   HtmlInjectTagDescriptor,
   ScriptLoading,
   ScriptInject,
-  SharedHtmlConfig,
+  HtmlConfig,
   OutputStructure,
   MetaAttributes,
   MetaOptions,
@@ -79,4 +79,4 @@ export const sharedHtmlConfigSchema = z.partialObj({
   scriptLoading: ScriptLoadingSchema,
 });
 
-const _schema: z.ZodType<SharedHtmlConfig> = sharedHtmlConfigSchema;
+const _schema: z.ZodType<HtmlConfig> = sharedHtmlConfigSchema;

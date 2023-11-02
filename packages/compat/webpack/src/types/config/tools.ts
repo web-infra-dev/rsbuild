@@ -2,8 +2,8 @@ import type {
   ArrayOrNot,
   ChainedConfig,
   FileFilterUtil,
-  SharedToolsConfig,
   TerserPluginOptions,
+  ToolsConfig as BaseToolsConfig,
 } from '@rsbuild/shared';
 import type {
   BabelTransformOptions,
@@ -15,11 +15,10 @@ import type {
   ModifyWebpackConfigUtils,
 } from '../hooks';
 import type {
-  CSSExtractOptions,
-  HTMLPluginOptions,
-  TSLoaderOptions,
   WebpackChain,
   WebpackConfig,
+  TSLoaderOptions,
+  CSSExtractOptions,
 } from '../thirdParty';
 import type { NormalizedCSSExtractOptions } from '../thirdParty/css';
 
@@ -33,14 +32,6 @@ export type ToolsTSLoaderConfig = ChainedConfig<
 export type ToolsCssExtractConfig =
   | CSSExtractOptions
   | ((options: CSSExtractOptions) => CSSExtractOptions | void);
-
-export type ToolsHtmlPluginConfig = ChainedConfig<
-  HTMLPluginOptions,
-  {
-    entryName: string;
-    entryValue: WebpackConfig['entry'];
-  }
->;
 
 export type ToolsWebpackConfig = ChainedConfig<
   WebpackConfig,
@@ -56,7 +47,7 @@ export type ToolsBabelConfig = ChainedConfig<
   BabelConfigUtils
 >;
 
-export interface ToolsConfig extends SharedToolsConfig {
+export interface ToolsConfig extends BaseToolsConfig {
   /**
    * Modify the options of [babel-loader](https://github.com/babel/babel-loader)
    * When `tools.babel`'s type is Function，the default babel config will be passed in as the first parameter, the config object can be modified directly, or a value can be returned as the final result.
@@ -73,10 +64,6 @@ export interface ToolsConfig extends SharedToolsConfig {
    * When `tools.tsLoader` is not undefined, Rsbuild will use ts-loader instead of babel-loader to compile TypeScript code.
    */
   tsLoader?: ToolsTSLoaderConfig;
-  /**
-   * Modify the options of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
-   */
-  htmlPlugin?: false | ToolsHtmlPluginConfig;
   /**
    * Modify the options of [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin).
    */

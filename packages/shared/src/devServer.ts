@@ -1,5 +1,5 @@
 import type {
-  SharedRsbuildConfig,
+  RsbuildConfig,
   StartDevServerOptions,
   StartServerResult,
   Context,
@@ -26,7 +26,7 @@ export const getDevServerOptions = async ({
   serverOptions,
   port,
 }: {
-  rsbuildConfig: SharedRsbuildConfig;
+  rsbuildConfig: RsbuildConfig;
   serverOptions: ServerOptions;
   port: number;
 }): Promise<{
@@ -76,7 +76,7 @@ export type DevServerContext = Context & {
       typeof createAsyncHook<OnAfterStartDevServerFn>
     >;
   };
-  config: Readonly<SharedRsbuildConfig>;
+  config: Readonly<RsbuildConfig>;
 };
 
 export async function startDevServer<

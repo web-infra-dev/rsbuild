@@ -18,18 +18,18 @@ import {
 import type {
   RsbuildTarget,
   BundlerChainRule,
-  SharedHtmlConfig,
-  SharedRsbuildConfig,
+  HtmlConfig,
+  RsbuildConfig,
   InspectConfigOptions,
   CreateRsbuildOptions,
-  NormalizedSharedDevConfig,
-  NormalizedSharedHtmlConfig,
-  NormalizedSharedOutputConfig,
-  NormalizedSharedSourceConfig,
-  NormalizedSharedSecurityConfig,
-  NormalizedSharedPerformanceConfig,
-  NormalizedSharedToolsConfig,
-  SharedNormalizedConfig,
+  NormalizedDevConfig,
+  NormalizedHtmlConfig,
+  NormalizedOutputConfig,
+  NormalizedSourceConfig,
+  NormalizedSecurityConfig,
+  NormalizedPerformanceConfig,
+  NormalizedToolsConfig,
+  NormalizedConfig,
 } from './types';
 import { pick } from './pick';
 import { logger } from 'rslog';
@@ -42,7 +42,7 @@ import _ from 'lodash';
 import { DEFAULT_DEV_HOST } from './constants';
 import { getJSMinifyOptions } from './minimize';
 
-export const getDefaultDevConfig = (): NormalizedSharedDevConfig => ({
+export const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
   https: false,
   port: DEFAULT_PORT,
@@ -52,7 +52,7 @@ export const getDefaultDevConfig = (): NormalizedSharedDevConfig => ({
   host: DEFAULT_DEV_HOST,
 });
 
-export const getDefaultSourceConfig = (): NormalizedSharedSourceConfig => ({
+export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
   alias: {},
   define: {},
   aliasStrategy: 'prefer-tsconfig',
@@ -61,7 +61,7 @@ export const getDefaultSourceConfig = (): NormalizedSharedSourceConfig => ({
   compileJsDataURI: true,
 });
 
-export const getDefaultHtmlConfig = (): NormalizedSharedHtmlConfig => ({
+export const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
   inject: 'head',
   mountId: DEFAULT_MOUNT_ID,
   crossorigin: false,
@@ -69,26 +69,25 @@ export const getDefaultHtmlConfig = (): NormalizedSharedHtmlConfig => ({
   scriptLoading: 'defer',
 });
 
-export const getDefaultSecurityConfig = (): NormalizedSharedSecurityConfig => ({
+export const getDefaultSecurityConfig = (): NormalizedSecurityConfig => ({
   nonce: '',
 });
 
-export const getDefaultToolsConfig = (): NormalizedSharedToolsConfig => ({});
+export const getDefaultToolsConfig = (): NormalizedToolsConfig => ({});
 
-export const getDefaultPerformanceConfig =
-  (): NormalizedSharedPerformanceConfig => ({
-    profile: false,
-    buildCache: true,
-    printFileSize: true,
-    removeConsole: false,
-    transformLodash: true,
-    removeMomentLocale: false,
-    chunkSplit: {
-      strategy: 'split-by-experience',
-    },
-  });
+export const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
+  profile: false,
+  buildCache: true,
+  printFileSize: true,
+  removeConsole: false,
+  transformLodash: true,
+  removeMomentLocale: false,
+  chunkSplit: {
+    strategy: 'split-by-experience',
+  },
+});
 
-export const getDefaultOutputConfig = (): NormalizedSharedOutputConfig => ({
+export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   distPath: {
     root: ROOT_DIST_DIR,
     js: JS_DIST_DIR,
@@ -221,7 +220,7 @@ export function getExtensions({
   isTsProject,
 }: {
   target?: RsbuildTarget;
-  resolveExtensionPrefix?: NormalizedSharedSourceConfig['resolveExtensionPrefix'];
+  resolveExtensionPrefix?: NormalizedSourceConfig['resolveExtensionPrefix'];
   isTsProject?: boolean;
 } = {}) {
   let extensions = [
@@ -254,10 +253,7 @@ export function getExtensions({
 
 type MinifyOptions = NonNullable<Parameters<typeof minify>[1]>;
 
-export async function getMinify(
-  isProd: boolean,
-  config: SharedNormalizedConfig,
-) {
+export async function getMinify(isProd: boolean, config: NormalizedConfig) {
   if (config.output.disableMinimize || !isProd) {
     return false;
   }
@@ -279,18 +275,12 @@ export async function getMinify(
   };
 }
 
-export function getTitle(
-  entryName: string,
-  config: { html: SharedHtmlConfig },
-) {
+export function getTitle(entryName: string, config: { html: HtmlConfig }) {
   const { title, titleByEntries } = config.html;
   return titleByEntries?.[entryName] || title || '';
 }
 
-export function getInject(
-  entryName: string,
-  config: { html: SharedHtmlConfig },
-) {
+export function getInject(entryName: string, config: { html: HtmlConfig }) {
   const { inject, injectByEntries } = config.html;
   return injectByEntries?.[entryName] || inject || true;
 }
@@ -298,7 +288,7 @@ export function getInject(
 export function getFavicon(
   entryName: string,
   config: {
-    html: SharedHtmlConfig;
+    html: HtmlConfig;
   },
 ) {
   const { favicon, faviconByEntries } = config.html;
@@ -381,9 +371,9 @@ export const getDefaultStyledComponentsConfig = (
  * Omit unused keys from Rsbuild config passed by user
  */
 export const pickRsbuildConfig = (
-  rsbuildConfig: SharedRsbuildConfig,
-): SharedRsbuildConfig => {
-  const keys: Array<keyof SharedRsbuildConfig> = [
+  rsbuildConfig: RsbuildConfig,
+): RsbuildConfig => {
+  const keys: Array<keyof RsbuildConfig> = [
     'dev',
     'html',
     'tools',

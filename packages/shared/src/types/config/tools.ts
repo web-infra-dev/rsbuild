@@ -113,7 +113,7 @@ export type ToolsRspackConfig = ChainedConfig<
   ModifyRspackConfigUtils
 >;
 
-export interface SharedToolsConfig {
+export interface ToolsConfig {
   /**
    * Modify the config of [sass-loader](https://github.com/webpack-contrib/sass-loader).
    */
@@ -160,4 +160,4 @@ export interface SharedToolsConfig {
   rspack?: ToolsRspackConfig;
 }
 
-export type NormalizedSharedToolsConfig = SharedToolsConfig;
+export type NormalizedToolsConfig = ToolsConfig;

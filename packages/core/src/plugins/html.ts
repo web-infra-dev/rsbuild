@@ -18,13 +18,13 @@ import {
 } from '@rsbuild/shared';
 import { fs } from '@rsbuild/shared/fs-extra';
 import type {
-  SharedHtmlConfig,
+  HtmlConfig,
   DefaultRsbuildPlugin,
-  SharedNormalizedConfig,
+  NormalizedConfig,
   SharedRsbuildPluginAPI,
   HtmlTagsPluginOptions,
   HTMLPluginOptions,
-  NormalizedSharedOutputConfig,
+  NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import _ from 'lodash';
 import { generateMetaTags } from '../utils/generateMetaTags';
@@ -39,7 +39,7 @@ type RoutesInfo = {
 
 export async function getMetaTags(
   entryName: string,
-  config: { html: SharedHtmlConfig; output: NormalizedSharedOutputConfig },
+  config: { html: HtmlConfig; output: NormalizedOutputConfig },
 ) {
   const { meta, metaByEntries } = config.html;
 
@@ -57,7 +57,7 @@ export async function getMetaTags(
 
 async function getTemplateParameters(
   entryName: string,
-  config: SharedNormalizedConfig,
+  config: NormalizedConfig,
   assetPrefix: string,
 ): Promise<HTMLPluginOptions['templateParameters']> {
   const { mountId, templateParameters, templateParametersByEntries } =

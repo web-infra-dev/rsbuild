@@ -1,7 +1,7 @@
 import type {
-  SharedSourceConfig,
-  NormalizedSharedSourceConfig,
   ChainedConfig,
+  SourceConfig as BaseSourceConfig,
+  NormalizedSourceConfig as BaseNormalizedSourceConfig,
 } from '@rsbuild/shared';
 
 export type ModuleScopes = Array<string | RegExp>;
@@ -17,30 +17,18 @@ export type TransformImport = {
   customStyleName?: ((member: string) => string | undefined) | string;
 };
 
-export interface SourceConfig extends SharedSourceConfig {
-  /**
-   * Replaces variables in your code with other values or expressions at compile time.
-   */
-  define?: Record<string, any>;
+export interface SourceConfig extends BaseSourceConfig {
   /**
    * Restrict importing paths. After configuring this option, all source files can only import code from
    * the specific paths, and import code from other paths is not allowed.
    */
   moduleScopes?: ChainedConfig<ModuleScopes>;
-  /**
-   * Configure babel-plugin-import or swc-plugin-import or Rspack builtins plugin import
-   */
-  transformImport?: false | TransformImport[];
 }
 
-export interface NormalizedSourceConfig extends NormalizedSharedSourceConfig {
-  define: Record<string, any>;
-
+export interface NormalizedSourceConfig extends BaseNormalizedSourceConfig {
   /**
    * Restrict importing paths. After configuring this option, all source files can only import code from
    * the specific paths, and import code from other paths is not allowed.
    */
   moduleScopes?: ChainedConfig<ModuleScopes>;
-
-  transformImport?: false | TransformImport[];
 }

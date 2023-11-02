@@ -2,7 +2,7 @@ import { NODE_MODULES_REGEX } from '../constants';
 import type {
   WebpackChainRule,
   BundlerChainRule,
-  SharedNormalizedConfig,
+  NormalizedConfig,
   Context,
 } from '../types';
 
@@ -14,7 +14,7 @@ export function applyScriptCondition({
   excludes,
 }: {
   rule: BundlerChainRule | WebpackChainRule;
-  config: SharedNormalizedConfig;
+  config: NormalizedConfig;
   context: Context;
   includes: (string | RegExp)[];
   excludes: (string | RegExp)[];

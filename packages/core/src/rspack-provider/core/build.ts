@@ -1,10 +1,10 @@
 import { createCompiler } from './createCompiler';
 import { initConfigs, InitConfigsOptions } from './initConfigs';
-import {
-  logger,
-  BuildOptions,
+import { logger } from '@rsbuild/shared';
+import type {
   Stats,
   MultiStats,
+  BuildOptions,
   RspackConfig,
   RspackCompiler,
   RspackMultiCompiler,

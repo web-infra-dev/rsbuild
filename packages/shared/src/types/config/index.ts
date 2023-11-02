@@ -1,48 +1,39 @@
-import type { SharedDevConfig, NormalizedSharedDevConfig } from './dev';
-import type { SharedHtmlConfig, NormalizedSharedHtmlConfig } from './html';
+import type { DevConfig, NormalizedDevConfig } from './dev';
+import type { HtmlConfig, NormalizedHtmlConfig } from './html';
+import type { OutputConfig, NormalizedOutputConfig } from './output';
+import type { SourceConfig, NormalizedSourceConfig } from './source';
+import type { SecurityConfig, NormalizedSecurityConfig } from './security';
 import type {
-  SharedOutputConfig,
-  NormalizedSharedOutputConfig,
-} from './output';
-import type {
-  SharedSourceConfig,
-  NormalizedSharedSourceConfig,
-} from './source';
-import type {
-  SharedSecurityConfig,
-  NormalizedSharedSecurityConfig,
-} from './security';
-import type {
-  SharedPerformanceConfig,
-  NormalizedSharedPerformanceConfig,
+  PerformanceConfig,
+  NormalizedPerformanceConfig,
 } from './performance';
-import type { SharedExperimentsConfig } from './experiments';
-import type { SharedToolsConfig } from './tools';
+import type { ExperimentsConfig } from './experiments';
+import type { ToolsConfig, NormalizedToolsConfig } from './tools';
 import type { DeepReadonly } from '../utils';
 
 /**
  * The shared Rsbuild config.
  * Can be used with both Rspack and Webpack.
  * */
-export interface SharedRsbuildConfig {
-  dev?: SharedDevConfig;
-  html?: SharedHtmlConfig;
-  tools?: SharedToolsConfig;
-  source?: SharedSourceConfig;
-  output?: SharedOutputConfig;
-  security?: SharedSecurityConfig;
-  performance?: SharedPerformanceConfig;
-  experiments?: SharedExperimentsConfig;
+export interface RsbuildConfig {
+  dev?: DevConfig;
+  html?: HtmlConfig;
+  tools?: ToolsConfig;
+  source?: SourceConfig;
+  output?: OutputConfig;
+  security?: SecurityConfig;
+  performance?: PerformanceConfig;
+  experiments?: ExperimentsConfig;
 }
 
-export type SharedNormalizedConfig = DeepReadonly<{
-  dev: NormalizedSharedDevConfig;
-  html: NormalizedSharedHtmlConfig;
-  tools: SharedToolsConfig;
-  source: NormalizedSharedSourceConfig;
-  output: NormalizedSharedOutputConfig;
-  security: NormalizedSharedSecurityConfig;
-  performance: NormalizedSharedPerformanceConfig;
+export type NormalizedConfig = DeepReadonly<{
+  dev: NormalizedDevConfig;
+  html: NormalizedHtmlConfig;
+  tools: NormalizedToolsConfig;
+  source: NormalizedSourceConfig;
+  output: NormalizedOutputConfig;
+  security: NormalizedSecurityConfig;
+  performance: NormalizedPerformanceConfig;
 }>;
 
 export * from './dev';

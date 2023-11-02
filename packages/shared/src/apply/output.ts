@@ -2,7 +2,7 @@ import { posix } from 'path';
 import type {
   Context,
   SharedRsbuildPluginAPI,
-  SharedNormalizedConfig,
+  NormalizedConfig,
 } from '../types';
 import { getDistPath, getFilename } from '../fs';
 import {
@@ -68,7 +68,7 @@ function getPublicPath({
   isProd,
   context,
 }: {
-  config: SharedNormalizedConfig;
+  config: NormalizedConfig;
   isProd: boolean;
   context: Context;
 }) {

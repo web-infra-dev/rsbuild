@@ -18,7 +18,7 @@ export type ChainedGlobalVars = ChainedConfig<
 
 export type AliasStrategy = 'prefer-tsconfig' | 'prefer-alias';
 
-export interface SharedSourceConfig {
+export interface SourceConfig {
   /**
    * Create aliases to import or require certain modules,
    * same as the [resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) config of webpack.
@@ -85,7 +85,7 @@ export type SharedTransformImport = {
   customStyleName?: any;
 };
 
-export interface NormalizedSharedSourceConfig extends SharedSourceConfig {
+export interface NormalizedSourceConfig extends SourceConfig {
   define: Define;
   alias: ChainedConfig<Alias>;
   aliasStrategy: AliasStrategy;

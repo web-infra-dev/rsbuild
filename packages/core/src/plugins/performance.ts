@@ -1,7 +1,7 @@
 import type {
   DefaultRsbuildPlugin,
   BundlerChain,
-  SharedNormalizedConfig,
+  NormalizedConfig,
 } from '@rsbuild/shared';
 
 function applyProfile({
@@ -9,7 +9,7 @@ function applyProfile({
   config,
 }: {
   chain: BundlerChain;
-  config: SharedNormalizedConfig;
+  config: NormalizedConfig;
 }) {
   const { profile } = config.performance;
   if (!profile) {

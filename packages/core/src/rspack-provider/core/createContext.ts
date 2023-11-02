@@ -4,7 +4,7 @@ import {
   TS_CONFIG_FILE,
   createContextByConfig,
   type CreateRsbuildOptions,
-  NormalizedSharedOutputConfig,
+  type NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import { initHooks } from './initHooks';
 import { validateRsbuildConfig } from '../config/validate';
@@ -22,7 +22,7 @@ export async function createContext(
   const rsbuildConfig = withDefaultConfig(userRsbuildConfig);
   const context = createContextByConfig(
     options,
-    rsbuildConfig.output as NormalizedSharedOutputConfig,
+    rsbuildConfig.output as NormalizedOutputConfig,
     'rspack',
   );
   const configValidatingTask = Promise.resolve();

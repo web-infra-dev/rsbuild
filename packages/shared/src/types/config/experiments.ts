@@ -1,4 +1,4 @@
-export interface SharedExperimentsConfig {
+export interface ExperimentsConfig {
   /**
    * Enable lazy compilation, compile dynamic imports only when they are in use.
    */
@@ -9,3 +9,5 @@ export interface SharedExperimentsConfig {
         imports?: boolean;
       };
 }
+
+export type NormalizedExperimentsConfig = ExperimentsConfig;

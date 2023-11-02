@@ -4,7 +4,7 @@ import { logger } from 'rslog';
 import {
   Context,
   CreateRsbuildOptions,
-  NormalizedSharedOutputConfig,
+  NormalizedOutputConfig,
   BundlerType,
 } from './types';
 import { getAbsoluteDistPath } from './fs';
@@ -14,7 +14,7 @@ import { getAbsoluteDistPath } from './fs';
  */
 export function createContextByConfig(
   options: Required<CreateRsbuildOptions>,
-  outputConfig: NormalizedSharedOutputConfig,
+  outputConfig: NormalizedOutputConfig,
   bundlerType: BundlerType,
 ): Context {
   const { cwd, target, configPath } = options;

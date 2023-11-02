@@ -1,4 +1,4 @@
-import { SharedSecurityConfig, SriOptions } from '../types';
+import { SecurityConfig, SriOptions } from '../types';
 import { z } from '../utils';
 import { ZodType } from '../zod';
 
@@ -14,4 +14,4 @@ export const sharedSecurityConfigSchema = z.partialObj({
   nonce: z.string(),
 });
 
-const _schema: z.ZodType<SharedSecurityConfig> = sharedSecurityConfigSchema;
+const _schema: z.ZodType<SecurityConfig> = sharedSecurityConfigSchema;

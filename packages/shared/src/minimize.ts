@@ -1,9 +1,9 @@
-import { TerserPluginOptions, SharedNormalizedConfig } from './types';
+import { TerserPluginOptions, NormalizedConfig } from './types';
 import { mergeChainedOptions } from './mergeChainedOptions';
 
 function applyRemoveConsole(
   options: TerserPluginOptions,
-  config: SharedNormalizedConfig,
+  config: NormalizedConfig,
 ) {
   if (!options.terserOptions) {
     options.terserOptions = {};
@@ -31,7 +31,7 @@ function applyRemoveConsole(
   return options;
 }
 
-export async function getJSMinifyOptions(config: SharedNormalizedConfig) {
+export async function getJSMinifyOptions(config: NormalizedConfig) {
   const DEFAULT_OPTIONS: TerserPluginOptions = {
     terserOptions: {
       mangle: {

@@ -3,9 +3,9 @@ import {
   debug,
   isFileExists,
   TS_CONFIG_FILE,
-  type CreateRsbuildOptions,
   createContextByConfig,
-  NormalizedSharedOutputConfig,
+  type CreateRsbuildOptions,
+  type NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import { initHooks } from './initHooks';
 import { validateRsbuildConfig } from '../config/validate';
@@ -24,7 +24,7 @@ export function createPrimaryContext(
   const rsbuildConfig = withDefaultConfig(userRsbuildConfig);
   const context = createContextByConfig(
     options,
-    rsbuildConfig.output as NormalizedSharedOutputConfig,
+    rsbuildConfig.output as NormalizedOutputConfig,
     'webpack',
   );
   const configValidatingTask = Promise.resolve();

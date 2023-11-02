@@ -1,4 +1,4 @@
-import { SharedToolsConfig, FileFilterUtil } from '../types';
+import { ToolsConfig, FileFilterUtil } from '../types';
 import { DevServerHttpsOptionsSchema } from './dev';
 import { z } from '../utils';
 
@@ -46,4 +46,4 @@ export const sharedToolsConfigSchema = z.partialObj({
   bundlerChain: z.arrayOrNot(z.function()),
 });
 
-const _schema: z.ZodType<SharedToolsConfig> = sharedToolsConfigSchema;
+const _schema: z.ZodType<ToolsConfig> = sharedToolsConfigSchema;

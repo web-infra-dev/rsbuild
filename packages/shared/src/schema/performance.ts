@@ -1,7 +1,7 @@
 import {
   BuildCacheOptions,
   ConsoleType,
-  SharedPerformanceConfig,
+  PerformanceConfig,
   SplitBySize,
   SplitCustom,
 } from '../types';
@@ -84,5 +84,4 @@ export const sharedPerformanceConfigSchema = z.partialObj({
   prefetch: preloadSchema,
 });
 
-const _schema: z.ZodType<SharedPerformanceConfig> =
-  sharedPerformanceConfigSchema;
+const _schema: z.ZodType<PerformanceConfig> = sharedPerformanceConfigSchema;

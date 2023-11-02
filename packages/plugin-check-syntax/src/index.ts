@@ -2,7 +2,7 @@ import {
   getBrowserslistWithDefault,
   type RsbuildTarget,
   type RsbuildPlugin,
-  type SharedNormalizedConfig,
+  type NormalizedConfig,
 } from '@rsbuild/shared';
 import type { RsbuildPluginAPI } from '@rsbuild/core/rspack-provider';
 import type { CheckSyntaxOptions } from './types';
@@ -11,7 +11,7 @@ export type PluginCheckSyntaxOptions = CheckSyntaxOptions;
 
 async function getTargets(
   rootPath: string,
-  rsbuildConfig: SharedNormalizedConfig,
+  rsbuildConfig: NormalizedConfig,
   rsbuildTarget: RsbuildTarget,
   checkSyntax: CheckSyntaxOptions,
 ) {

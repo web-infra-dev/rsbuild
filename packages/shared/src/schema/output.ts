@@ -8,7 +8,7 @@ import type {
   FilenameConfig,
   CopyPluginOptions,
   AssetsRetryOptions,
-  SharedOutputConfig,
+  OutputConfig,
   DisableSourceMapOption,
 } from '../types';
 import { z } from '../utils';
@@ -123,4 +123,4 @@ export const sharedOutputConfigSchema = z.partialObj({
   copy: z.union([CopyPluginOptionsSchema, CopyPluginPatternsSchema]),
 });
 
-const _schema: z.ZodType<SharedOutputConfig> = sharedOutputConfigSchema;
+const _schema: z.ZodType<OutputConfig> = sharedOutputConfigSchema;

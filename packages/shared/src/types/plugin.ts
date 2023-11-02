@@ -11,7 +11,7 @@ import type {
   ModifyBundlerChainFn,
 } from './hooks';
 import { Context } from './context';
-import { SharedRsbuildConfig, SharedNormalizedConfig } from './config';
+import { RsbuildConfig, NormalizedConfig } from './config';
 import { PromiseOrNot } from './utils';
 
 export type PluginStore = {
@@ -99,8 +99,8 @@ export type DefaultRsbuildPluginAPI<
 };
 
 export type SharedRsbuildPluginAPI = DefaultRsbuildPluginAPI<
-  SharedRsbuildConfig,
-  SharedNormalizedConfig
+  RsbuildConfig,
+  NormalizedConfig
 >;
 
 export type DefaultRsbuildPlugin = RsbuildPlugin<SharedRsbuildPluginAPI>;
