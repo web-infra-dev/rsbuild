@@ -1,10 +1,10 @@
 import type * as Rspack from '@rspack/core';
 
-type Compiler = Rspack.Compiler;
 type RspackOptions = Rspack.RspackOptions;
-type MultiCompiler = Rspack.MultiCompiler;
+export type RspackCompiler = Rspack.Compiler;
+export type RspackMultiCompiler = Rspack.MultiCompiler;
 
-export type { Compiler, MultiCompiler, Rspack };
+export type { Rspack };
 
 type BuiltinsOptions = NonNullable<RspackOptions['builtins']>;
 

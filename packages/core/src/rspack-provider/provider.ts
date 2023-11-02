@@ -3,6 +3,9 @@ import {
   pickRsbuildConfig,
   createPublicContext,
   type RsbuildProvider,
+  type RspackConfig,
+  type RspackCompiler,
+  type RspackMultiCompiler,
 } from '@rsbuild/shared';
 import { chalk } from '@rsbuild/shared/chalk';
 import { createContext } from './core/createContext';
@@ -13,19 +16,13 @@ import {
   isSatisfyRspackMinimumVersion,
   supportedRspackMinimumVersion,
 } from './shared/rspackVersion';
-import type {
-  Compiler,
-  RspackConfig,
-  RsbuildConfig,
-  NormalizedConfig,
-  MultiCompiler,
-} from './types';
+import type { RsbuildConfig, NormalizedConfig } from './types';
 
 export type RspackProvider = RsbuildProvider<
   RsbuildConfig,
   RspackConfig,
   NormalizedConfig,
-  Compiler | MultiCompiler
+  RspackCompiler | RspackMultiCompiler
 >;
 
 export function rspackProvider({

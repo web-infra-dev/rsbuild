@@ -1,11 +1,11 @@
 import { join, isAbsolute } from 'path';
-import { initConfigs, InitConfigsOptions } from './initConfigs';
+import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import {
-  InspectConfigOptions,
-  outputInspectConfigFiles,
   stringifyConfig,
+  outputInspectConfigFiles,
+  type RspackConfig,
+  type InspectConfigOptions,
 } from '@rsbuild/shared';
-import type { RspackConfig } from '../types';
 
 export async function inspectConfig({
   context,

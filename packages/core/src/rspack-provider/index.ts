@@ -12,8 +12,6 @@ export type {
 
   // Plugin Types
   RsbuildPluginAPI,
-
-  // Rspack
-  Rspack,
-  RspackConfig,
 } from './types';
+
+export type { Rspack, RspackConfig } from '@rsbuild/shared';

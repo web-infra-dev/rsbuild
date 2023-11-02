@@ -4,5 +4,5 @@
     "outDir": "./dist",
     "baseUrl": "./"
   },
-  "include": ["src", "../shared/src/types/rspack.ts"]
+  "include": ["src"]
 }

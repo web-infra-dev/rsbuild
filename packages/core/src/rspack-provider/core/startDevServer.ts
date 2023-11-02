@@ -3,11 +3,12 @@ import {
   startDevServer as baseStartDevServer,
   StartDevServerOptions,
   getDevServerOptions,
+  type RspackCompiler,
+  type RspackMultiCompiler,
 } from '@rsbuild/shared';
 import { createCompiler } from './createCompiler';
-import { initConfigs, InitConfigsOptions } from './initConfigs';
-import type { Compiler, MultiCompiler } from '../types';
 import { getDevMiddleware } from './devMiddleware';
+import { initConfigs, type InitConfigsOptions } from './initConfigs';
 
 type ServerOptions = Exclude<StartDevServerOptions['serverOptions'], undefined>;
 
@@ -15,11 +16,11 @@ export async function createDevServer(
   options: InitConfigsOptions,
   port: number,
   serverOptions: ServerOptions,
-  customCompiler?: Compiler | MultiCompiler,
+  customCompiler?: RspackCompiler | RspackMultiCompiler,
 ) {
   const { Server } = await import('@modern-js/server');
 
-  let compiler: Compiler | MultiCompiler;
+  let compiler: RspackCompiler | RspackMultiCompiler;
   if (customCompiler) {
     compiler = customCompiler;
   } else {
@@ -68,7 +69,7 @@ export async function startDevServer(
         options,
         port,
         serverOptions,
-        compiler as unknown as Compiler,
+        compiler as unknown as RspackCompiler,
       ),
     startDevServerOptions,
   );

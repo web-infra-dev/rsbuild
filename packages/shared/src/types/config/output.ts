@@ -150,6 +150,8 @@ export type CssModules = {
   exportLocalsConvention?: CssModuleLocalsConvention;
 };
 
+export type CopyPluginOptions = NonNullable<Builtins['copy']>;
+
 export interface SharedOutputConfig {
   /**
    * At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
@@ -273,8 +275,12 @@ export interface SharedOutputConfig {
   /**
    * Copies the specified file or directory to the dist directory.
    */
-  copy?: Builtins['copy'] | NonNullable<Builtins['copy']>['patterns'];
+  copy?: CopyPluginOptions | CopyPluginOptions['patterns'];
 }
+
+export type OverrideBrowserslist =
+  | string[]
+  | Partial<Record<RsbuildTarget, string[]>>;
 
 export interface NormalizedSharedOutputConfig extends SharedOutputConfig {
   filename: FilenameConfig;

@@ -1,10 +1,6 @@
 import browserslist from 'browserslist';
 import { DEFAULT_BROWSERSLIST } from './constants';
-import type {
-  RsbuildTarget,
-  SharedRsbuildConfig,
-  SharedNormalizedConfig,
-} from './types';
+import type { RsbuildTarget, OverrideBrowserslist } from './types';
 
 // using cache to avoid multiple calls to loadConfig
 const browsersListCache = new Map<string, string[]>();
@@ -26,7 +22,7 @@ export async function getBrowserslist(path: string) {
 
 export async function getBrowserslistWithDefault(
   path: string,
-  config: SharedRsbuildConfig | SharedNormalizedConfig,
+  config: { output?: { overrideBrowserslist?: OverrideBrowserslist } },
   target: RsbuildTarget,
 ): Promise<string[]> {
   const { overrideBrowserslist: overrides = {} } = config?.output || {};
