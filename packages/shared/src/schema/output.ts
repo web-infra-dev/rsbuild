@@ -1,14 +1,15 @@
-import {
-  AssetsRetryOptions,
+import type {
   Charset,
+  Polyfill,
   CssModules,
   DataUriLimit,
-  DisableSourceMapOption,
+  LegalComments,
   DistPathConfig,
   FilenameConfig,
-  LegalComments,
-  Polyfill,
+  CopyPluginOptions,
+  AssetsRetryOptions,
   SharedOutputConfig,
+  DisableSourceMapOption,
 } from '../types';
 import { z } from '../utils';
 import { ZodType } from '../zod';
@@ -84,6 +85,12 @@ export const CssModulesSchema: ZodType<CssModules> = z.partialObj({
   exportLocalsConvention: z.any(),
 });
 
+const CopyPluginPatternsSchema = z.array(z.any());
+
+const CopyPluginOptionsSchema: z.ZodType<CopyPluginOptions> = z.object({
+  patterns: CopyPluginPatternsSchema,
+});
+
 export const sharedOutputConfigSchema = z.partialObj({
   distPath: DistPathConfigSchema,
   filename: FilenameConfigSchema,
@@ -113,6 +120,7 @@ export const sharedOutputConfigSchema = z.partialObj({
     z.array(z.string()),
     z.record(RsbuildTargetSchema, z.array(z.string())),
   ]),
+  copy: z.union([CopyPluginOptionsSchema, CopyPluginPatternsSchema]),
 });
 
 const _schema: z.ZodType<SharedOutputConfig> = sharedOutputConfigSchema;

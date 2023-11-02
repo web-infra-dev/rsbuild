@@ -1,5 +1,6 @@
 import { fs } from '@rsbuild/shared/fs-extra';
-import type { CopyPluginOptions, RsbuildPlugin } from '../types';
+import type { CopyPluginOptions } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
 export const pluginCopy = (): RsbuildPlugin => ({
   name: 'plugin-copy',

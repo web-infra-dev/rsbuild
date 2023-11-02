@@ -5,15 +5,16 @@ import {
   mergeRegex,
   setConfig,
   isWebTarget,
-  BundlerChain,
   addCoreJsEntry,
-  BundlerChainRule,
   isUseJsSourceMap,
   getCoreJsVersion,
   applyScriptCondition,
   getBrowserslistWithDefault,
+  type Polyfill,
+  type BundlerChain,
   type RsbuildTarget,
-  Polyfill,
+  type BundlerChainRule,
+  type BuiltinSwcLoaderOptions,
 } from '@rsbuild/shared';
 import { cloneDeep } from 'lodash';
 import * as path from 'path';
@@ -21,7 +22,6 @@ import type {
   RsbuildPlugin,
   NormalizedConfig,
   NormalizedSourceConfig,
-  BuiltinSwcLoaderOptions,
 } from '../types';
 
 const builtinSwcLoaderName = 'builtin:swc-loader';

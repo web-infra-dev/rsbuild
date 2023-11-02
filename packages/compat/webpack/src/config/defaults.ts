@@ -20,10 +20,7 @@ export const createDefaultConfig = (): RsbuildConfig => ({
       pluginOptions: {},
     },
   },
-  source: {
-    ...getDefaultSourceConfig(),
-    define: {},
-  },
+  source: getDefaultSourceConfig(),
   output: getDefaultOutputConfig(),
   security: {
     ...getDefaultSecurityConfig(),

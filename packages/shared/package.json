@@ -179,6 +179,7 @@
     "@babel/core": "^7.23.2",
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-typescript": "^7.23.2",
+    "@rspack/core": "0.3.8",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "@types/semver": "^7.5.4",

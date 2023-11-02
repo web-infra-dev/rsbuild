@@ -54,6 +54,7 @@ export const getDefaultDevConfig = (): NormalizedSharedDevConfig => ({
 
 export const getDefaultSourceConfig = (): NormalizedSharedSourceConfig => ({
   alias: {},
+  define: {},
   aliasStrategy: 'prefer-tsconfig',
   preEntry: [],
   globalVars: {},

@@ -1,12 +1,21 @@
 import { createCompiler } from './createCompiler';
 import { initConfigs, InitConfigsOptions } from './initConfigs';
-import { logger, BuildOptions, Stats, MultiStats } from '@rsbuild/shared';
-import type { Compiler, MultiCompiler, RspackConfig } from '../types';
+import {
+  logger,
+  BuildOptions,
+  Stats,
+  MultiStats,
+  RspackConfig,
+  RspackCompiler,
+  RspackMultiCompiler,
+} from '@rsbuild/shared';
 
 export type BuildExecuter = {
-  (compiler: Compiler): Promise<{ stats?: Stats }>;
-  (compiler: MultiCompiler): Promise<{ stats?: MultiStats }>;
-  (compiler: Compiler | MultiCompiler): Promise<{ stats?: Stats | MultiStats }>;
+  (compiler: RspackCompiler): Promise<{ stats?: Stats }>;
+  (compiler: RspackMultiCompiler): Promise<{ stats?: MultiStats }>;
+  (
+    compiler: RspackCompiler | RspackMultiCompiler,
+  ): Promise<{ stats?: Stats | MultiStats }>;
 };
 
 export const rspackBuild: BuildExecuter = async (compiler) => {
@@ -41,7 +50,7 @@ export const build = async (
 
   const { context } = initOptions;
 
-  let compiler: Compiler | MultiCompiler;
+  let compiler: RspackCompiler | RspackMultiCompiler;
   let bundlerConfigs: RspackConfig[] | undefined;
 
   if (customCompiler) {

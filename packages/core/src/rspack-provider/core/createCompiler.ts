@@ -5,8 +5,9 @@ import {
   prettyTime,
   formatStats,
   TARGET_ID_MAP,
+  type RspackConfig,
 } from '@rsbuild/shared';
-import type { Context, RspackConfig } from '../types';
+import type { Context } from '../types';
 
 export async function createCompiler({
   context,

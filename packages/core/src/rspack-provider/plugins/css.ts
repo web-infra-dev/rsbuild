@@ -1,3 +1,4 @@
+import path from 'path';
 import {
   getBrowserslistWithDefault,
   isUseCssExtract,
@@ -14,16 +15,12 @@ import {
   mergeChainedOptions,
   type BundlerChain,
   type Context,
+  type RspackRule,
+  type RuleSetRule,
   type StyleLoaderOptions,
   type ModifyBundlerChainUtils,
 } from '@rsbuild/shared';
-import path from 'path';
-import type {
-  RsbuildPlugin,
-  NormalizedConfig,
-  RspackRule,
-  RuleSetRule,
-} from '../types';
+import type { RsbuildPlugin, NormalizedConfig } from '../types';
 import { getCompiledPath } from '../shared';
 
 export const enableNativeCss = (config: NormalizedConfig) =>

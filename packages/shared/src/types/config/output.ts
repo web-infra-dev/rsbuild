@@ -2,6 +2,7 @@ import type { InlineChunkTest } from '../../plugins/InlineChunkHtmlPlugin';
 import type { RsbuildTarget } from '../rsbuild';
 import type { CrossOrigin } from './html';
 import type { Externals } from 'webpack';
+import type { Builtins } from '@rspack/core';
 
 export type DistPathConfig = {
   /** The root directory of all files. */
@@ -149,6 +150,8 @@ export type CssModules = {
   exportLocalsConvention?: CssModuleLocalsConvention;
 };
 
+export type CopyPluginOptions = NonNullable<Builtins['copy']>;
+
 export interface SharedOutputConfig {
   /**
    * At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
@@ -269,7 +272,15 @@ export interface SharedOutputConfig {
    * need to be transformed and the CSS browser prefixes that need to be added.
    */
   overrideBrowserslist?: string[] | Partial<Record<RsbuildTarget, string[]>>;
+  /**
+   * Copies the specified file or directory to the dist directory.
+   */
+  copy?: CopyPluginOptions | CopyPluginOptions['patterns'];
 }
+
+export type OverrideBrowserslist =
+  | string[]
+  | Partial<Record<RsbuildTarget, string[]>>;
 
 export interface NormalizedSharedOutputConfig extends SharedOutputConfig {
   filename: FilenameConfig;

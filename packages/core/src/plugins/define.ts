@@ -35,7 +35,6 @@ export const pluginDefine = (): DefaultRsbuildPlugin => ({
           (value) => JSON.stringify(value) ?? 'undefined',
         );
         // Macro defines.
-        // @ts-expect-error
         const defineExprs = config.source.define;
 
         chain
