@@ -8,11 +8,11 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
     ],
   },
   "plugins": [
-    HtmlRspackPlugin {
-      "name": "HtmlRspackPlugin",
+    HtmlWebpackPlugin {
       "userOptions": {
         "inject": true,
       },
+      "version": 5,
     },
   ],
 }
@@ -26,8 +26,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
     ],
   },
   "plugins": [
-    HtmlRspackPlugin {
-      "name": "HtmlRspackPlugin",
+    HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
           "main",
@@ -40,6 +39,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
         "template": "<ROOT>/packages/shared/static/template.html",
         "templateParameters": [Function],
       },
+      "version": 5,
     },
   ],
 }
@@ -53,8 +53,7 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
     ],
   },
   "plugins": [
-    HtmlRspackPlugin {
-      "name": "HtmlRspackPlugin",
+    HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
           "main",
@@ -66,6 +65,7 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
         "template": "<ROOT>/packages/shared/static/template.html",
         "templateParameters": [Function],
       },
+      "version": 5,
     },
   ],
 }
@@ -79,8 +79,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
     ],
   },
   "plugins": [
-    HtmlRspackPlugin {
-      "name": "HtmlRspackPlugin",
+    HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
           "main",
@@ -111,6 +110,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
         "template": "<ROOT>/packages/shared/static/template.html",
         "templateParameters": [Function],
       },
+      "version": 5,
     },
   ],
 }
@@ -124,8 +124,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
     ],
   },
   "plugins": [
-    HtmlRspackPlugin {
-      "name": "HtmlRspackPlugin",
+    HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
           "main",
@@ -137,6 +136,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         "template": "<ROOT>/packages/shared/static/template.html",
         "templateParameters": [Function],
       },
+      "version": 5,
     },
   ],
 }
@@ -153,8 +153,7 @@ exports[`plugin-html > should support multi entry 1`] = `
     ],
   },
   "plugins": [
-    HtmlRspackPlugin {
-      "name": "HtmlRspackPlugin",
+    HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
           "main",
@@ -166,9 +165,9 @@ exports[`plugin-html > should support multi entry 1`] = `
         "template": "foo",
         "templateParameters": [Function],
       },
+      "version": 5,
     },
-    HtmlRspackPlugin {
-      "name": "HtmlRspackPlugin",
+    HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
           "foo",
@@ -180,6 +179,7 @@ exports[`plugin-html > should support multi entry 1`] = `
         "template": "bar",
         "templateParameters": [Function],
       },
+      "version": 5,
     },
   ],
 }

@@ -1,11 +1,13 @@
 import { join, resolve } from 'path';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
+import { webpackOnlyTest } from '@scripts/helper';
 
 const fixtures = resolve(__dirname, '../');
 
-test('pug', async ({ page }) => {
+// TODO unify pug plugin
+webpackOnlyTest('pug', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
     entry: {
