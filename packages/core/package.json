@@ -57,7 +57,8 @@
   },
   "files": [
     "bin",
-    "dist"
+    "dist",
+    "static"
   ],
   "scripts": {
     "build": "modern build",
