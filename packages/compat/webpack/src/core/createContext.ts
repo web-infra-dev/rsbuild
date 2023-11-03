@@ -8,7 +8,6 @@ import {
   type NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import { initHooks } from './initHooks';
-import { validateRsbuildConfig } from '../config/validate';
 import { withDefaultConfig } from '../config/defaults';
 import type { Context, RsbuildConfig } from '../types';
 
@@ -27,12 +26,10 @@ export function createPrimaryContext(
     rsbuildConfig.output as NormalizedOutputConfig,
     'webpack',
   );
-  const configValidatingTask = Promise.resolve();
 
   return {
     ...context,
     hooks: initHooks(),
-    configValidatingTask,
     config: { ...rsbuildConfig },
     originalConfig: userRsbuildConfig,
   };
@@ -48,7 +45,6 @@ export async function createContext(
 ): Promise<Context> {
   debug('create context');
 
-  await validateRsbuildConfig(rsbuildConfig);
   const ctx = createPrimaryContext(options, rsbuildConfig);
 
   const tsconfigPath = join(ctx.rootPath, TS_CONFIG_FILE);

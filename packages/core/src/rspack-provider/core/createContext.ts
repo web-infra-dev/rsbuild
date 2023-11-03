@@ -7,7 +7,6 @@ import {
   type NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import { initHooks } from './initHooks';
-import { validateRsbuildConfig } from '../config/validate';
 import { withDefaultConfig } from '../config/defaults';
 import type { Context, RsbuildConfig } from '../types';
 
@@ -25,16 +24,12 @@ export async function createContext(
     rsbuildConfig.output as NormalizedOutputConfig,
     'rspack',
   );
-  const configValidatingTask = Promise.resolve();
-
-  await validateRsbuildConfig(rsbuildConfig);
 
   const tsconfigPath = join(context.rootPath, TS_CONFIG_FILE);
 
   return {
     ...context,
     hooks: initHooks(),
-    configValidatingTask,
     config: { ...rsbuildConfig },
     originalConfig: userRsbuildConfig,
     tsconfigPath: (await isFileExists(tsconfigPath)) ? tsconfigPath : undefined,
