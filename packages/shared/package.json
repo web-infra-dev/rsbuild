@@ -140,7 +140,6 @@
   "dependencies": {
     "@modern-js/prod-server": "^2.39.2",
     "@modern-js/server": "^2.39.2",
-    "@types/fs-extra": "^11.0.2",
     "acorn": "^8.10.0",
     "browserslist": "^4.22.1",
     "chalk": "^4.1.2",
@@ -163,6 +162,7 @@
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-typescript": "^7.23.2",
     "@rspack/core": "0.3.10",
+    "@types/fs-extra": "^11.0.2",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "@types/semver": "^7.5.4",
