@@ -205,10 +205,6 @@ export interface OutputConfig {
    */
   cleanDistPath?: boolean;
   /**
-   * @deprecated use output.cssModules.localIdentName instead
-   */
-  cssModuleLocalIdentName?: string;
-  /**
    * Allow to custom CSS Modules options.
    */
   cssModules?: CssModules;
