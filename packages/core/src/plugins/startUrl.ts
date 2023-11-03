@@ -57,10 +57,8 @@ export async function openBrowser(url: string): Promise<boolean> {
       }
       return false;
     } catch (err) {
-      logger.error(
-        'Failed to open start URL with apple script:',
-        JSON.stringify(err),
-      );
+      logger.error('Failed to open start URL with apple script.');
+      logger.error(err);
       return false;
     }
   }
@@ -72,7 +70,8 @@ export async function openBrowser(url: string): Promise<boolean> {
     await open(url);
     return true;
   } catch (err) {
-    logger.error('Failed to open start URL:', JSON.stringify(err));
+    logger.error('Failed to open start URL.');
+    logger.error(err);
     return false;
   }
 }
