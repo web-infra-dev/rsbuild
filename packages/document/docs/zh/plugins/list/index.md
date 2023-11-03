@@ -79,4 +79,10 @@ export default defineConfig({
 
 用于自定义 CSS 压缩工具，切换到 [cssnano] 或其他工具进行 CSS 压缩。
 
-> 你可以在 [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) 仓库中找到所有官方插件的源代码。
+### [Pug 插件](/plugins/list/plugin-pug.html)
+
+提供对 Pug 模板引擎的支持。
+
+:::tip
+你可以在 [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) 仓库中找到所有官方插件的源代码。
+:::

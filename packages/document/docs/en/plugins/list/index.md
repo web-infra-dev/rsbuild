@@ -79,4 +79,10 @@ Used to analyze the syntax compatibility of artifacts, to see if there are any a
 
 Used to customize CSS minimizer, switch to [cssnano] or other tools for CSS compression.
 
-> You can find the source code of all official plugins in the [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) repository.
+### [Pug Plugin](/plugins/list/plugin-pug.html)
+
+Provides support for the Pug template engine.
+
+:::tip
+You can find the source code of all official plugins in the [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) repository.
+:::

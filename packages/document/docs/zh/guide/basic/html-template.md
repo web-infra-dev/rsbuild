@@ -188,32 +188,7 @@ export default {
 
 ### [Pug](https://pugjs.org/)
 
-当模板文件的后缀为 `.pug` 时，Rsbuild 会使用 Pug 模板引擎对模板进行编译。Pug 是一款健壮、灵活、功能丰富的模板引擎，专门为 Node.js 平台开发。
-
-使用 Pug 模板前，需要开启 [tools.pug](/config/options/tools.html#toolspug) 配置项，并通过 [html.template](/config/options/html.html#htmltemplate) 配置项来引用一个 `.pug` 模板文件：
-
-```ts
-export default {
-  html: {
-    template: './static/index.pug',
-  },
-  tools: {
-    pug: true,
-  },
-};
-```
-
-开启后，你可以在 `.pug` 模板中使用 Pug 语法：
-
-```html
-<!-- 输入  -->
-p Hello #{text}!
-
-<!-- 输出 -->
-<p>Hello World!</p>
-```
-
-请阅读 [Pug](https://pugjs.org/) 文档来了解完整用法。
+Rsbuild 通过 Pug 插件来支持 Pug 模板引擎，请阅读 [Pug 插件文档](/plugins/list/plugin-pug) 来了解用法。
 
 ## 注入标签
 
