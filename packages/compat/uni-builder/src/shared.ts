@@ -17,12 +17,12 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   rsbuildPlugins: RsbuildPlugin[];
 } {
   const rsbuildConfig = deepmerge({}, uniBuilderConfig);
+  const { output } = rsbuildConfig;
 
-  if (rsbuildConfig.output.cssModuleLocalIdentName) {
-    rsbuildConfig.output.cssModules ||= {};
-    rsbuildConfig.output.cssModules.localIdentName =
-      rsbuildConfig.output.cssModuleLocalIdentName;
-    delete rsbuildConfig.output.cssModuleLocalIdentName;
+  if (output.cssModuleLocalIdentName) {
+    output.cssModules ||= {};
+    output.cssModules.localIdentName = output.cssModuleLocalIdentName;
+    delete output.cssModuleLocalIdentName;
   }
 
   return {
