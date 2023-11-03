@@ -1,5 +1,6 @@
 import os from 'os';
 import { URL } from 'url';
+import { uniq } from 'lodash';
 import urlJoin from 'url-join';
 import { DEFAULT_DEV_HOST } from './constants';
 
@@ -37,7 +38,7 @@ const getIpv4Interfaces = () => {
       }
     });
   });
-  return ipv4Interfaces;
+  return uniq(ipv4Interfaces);
 };
 
 export const getAddressUrls = (
