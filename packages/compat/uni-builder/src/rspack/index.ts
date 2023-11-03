@@ -6,7 +6,7 @@ import type {
 } from '@rsbuild/core/rspack-provider';
 import type { UniBuilderRspackConfig } from '../types';
 import type { CreateRspackBuilderOptions } from '../types';
-import { parseCommonConfig } from 'src/shared';
+import { parseCommonConfig } from '../shared';
 
 export function parseConfig(uniBuilderConfig: UniBuilderRspackConfig): {
   rsbuildConfig: RsbuildConfig;

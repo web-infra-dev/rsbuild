@@ -6,7 +6,7 @@ import type {
 } from '@rsbuild/webpack';
 import type { UniBuilderWebpackConfig } from '../types';
 import type { CreateWebpackBuilderOptions } from '../types';
-import { parseCommonConfig } from 'src/shared';
+import { parseCommonConfig } from '../shared';
 
 export function parseConfig(uniBuilderConfig: UniBuilderWebpackConfig): {
   rsbuildConfig: RsbuildConfig;
