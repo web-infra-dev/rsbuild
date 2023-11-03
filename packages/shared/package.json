@@ -42,10 +42,6 @@
       "types": "./compiled/babel-loader/index.d.ts",
       "default": "./compiled/babel-loader/index.js"
     },
-    "./pug": {
-      "types": "./compiled/pug/index.d.ts",
-      "default": "./compiled/pug/index.js"
-    },
     "./zod": {
       "types": "./dist/re-exports/zod.d.ts",
       "default": "./dist/re-exports/zod.js"
@@ -108,9 +104,6 @@
       "zod": [
         "./dist/re-exports/zod.d.ts",
         "./src/re-exports/zod.ts"
-      ],
-      "pug": [
-        "./compiled/pug/index.d.ts"
       ],
       "css-modules-typescript-loader": [
         "./dist/loaders/css-modules-typescript-loader.d.ts",

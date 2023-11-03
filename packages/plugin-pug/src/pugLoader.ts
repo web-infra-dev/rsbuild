@@ -1,11 +1,8 @@
-import pug from '@rsbuild/shared/pug';
-import type { PugOptions } from '@rsbuild/shared';
-import type { webpack } from '../types';
+import pug from 'pug';
+import type { Rspack } from '@rsbuild/shared';
+import type { Options } from 'pug';
 
-export default function (
-  this: webpack.LoaderContext<PugOptions>,
-  source: string,
-) {
+export default function (this: Rspack.LoaderContext<Options>, source: string) {
   const options = {
     filename: this.resourcePath,
     doctype: 'html',

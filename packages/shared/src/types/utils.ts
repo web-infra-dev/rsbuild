@@ -26,7 +26,6 @@ export type DeepReadonly<T> = keyof T extends never
 export type FileFilterUtil = (items: ArrayOrNot<string | RegExp>) => void;
 
 export type SharedCompiledPkgNames =
-  | 'pug'
   | 'sass'
   | 'less'
   | 'css-loader'

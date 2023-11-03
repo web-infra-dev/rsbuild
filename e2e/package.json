@@ -23,6 +23,7 @@
     "@rsbuild/plugin-check-syntax": "workspace:*",
     "@rsbuild/plugin-image-compress": "workspace:*",
     "@rsbuild/plugin-node-polyfill": "workspace:*",
+    "@rsbuild/plugin-pug": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-stylus": "workspace:*",
     "@rsbuild/plugin-source-build": "workspace:*",
