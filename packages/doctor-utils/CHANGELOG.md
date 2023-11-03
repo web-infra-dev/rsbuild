@@ -1,5 +1,11 @@
 # @rsbuild/doctor-utils
 
+## 0.0.4
+
+### Patch Changes
+
+- 76b1832: feat(rsbuild/doctor): add doctor sdk server
+
 ## 0.0.3
 
 ### Patch Changes
