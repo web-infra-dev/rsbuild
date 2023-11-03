@@ -188,10 +188,12 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
               assetPrefix,
             );
 
-            metaPluginOptions.meta.push({
-              tags: metaTags,
-              filename,
-            });
+            if (metaTags.length) {
+              metaPluginOptions.meta.push({
+                tags: metaTags,
+                filename,
+              });
+            }
 
             const pluginOptions: HTMLPluginOptions = {
               chunks,
@@ -237,9 +239,11 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
           }),
         );
 
-        chain
-          .plugin(CHAIN_ID.PLUGIN.HTML_META)
-          .use(HtmlMetaPlugin, [metaPluginOptions]);
+        if (metaPluginOptions.meta.length) {
+          chain
+            .plugin(CHAIN_ID.PLUGIN.HTML_META)
+            .use(HtmlMetaPlugin, [metaPluginOptions]);
+        }
 
         if (config.security) {
           const { nonce } = config.security;
