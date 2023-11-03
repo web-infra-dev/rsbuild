@@ -82,8 +82,6 @@ export const getSharedPkgCompiledPath = (packageName: SharedCompiledPkgNames) =>
 export const isURL = (str: string) =>
   str.startsWith('http') || str.startsWith('//:');
 
-export * as z from './zod';
-
 export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
   return ['web', 'web-worker'].some((t) =>
     (Array.isArray(target) ? target : [target]).includes(t as RsbuildTarget),

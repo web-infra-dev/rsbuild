@@ -42,10 +42,6 @@
       "types": "./compiled/babel-loader/index.d.ts",
       "default": "./compiled/babel-loader/index.js"
     },
-    "./zod": {
-      "types": "./dist/re-exports/zod.d.ts",
-      "default": "./dist/re-exports/zod.js"
-    },
     "./css-modules-typescript-loader": {
       "types": "./dist/loaders/css-modules-typescript-loader.d.ts",
       "default": "./dist/loaders/css-modules-typescript-loader.js"
@@ -100,10 +96,6 @@
       ],
       "webpack-dev-middleware": [
         "./compiled/webpack-dev-middleware/types/index.d.ts"
-      ],
-      "zod": [
-        "./dist/re-exports/zod.d.ts",
-        "./src/re-exports/zod.ts"
       ],
       "css-modules-typescript-loader": [
         "./dist/loaders/css-modules-typescript-loader.d.ts",
@@ -164,9 +156,7 @@
     "url-join": "^4.0.1",
     "webpack": "^5.89.0",
     "webpack-chain": "npm:webpack-5-chain@8.0.1",
-    "webpack-sources": "^3.2.3",
-    "zod": "^3.22.3",
-    "zod-validation-error": "1.2.0"
+    "webpack-sources": "^3.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",

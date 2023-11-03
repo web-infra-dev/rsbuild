@@ -12,8 +12,6 @@ export type Context = BaseContext & {
   hooks: Readonly<Hooks>;
   /** Current Rsbuild config. */
   config: Readonly<RsbuildConfig>;
-  /** The async task to validate schema of config. */
-  configValidatingTask: Promise<void>;
   /** The original Rsbuild config passed from the createRsbuild method. */
   originalConfig: Readonly<RsbuildConfig>;
   /** The normalized Rsbuild config. */

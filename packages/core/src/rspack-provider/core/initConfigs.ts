@@ -35,7 +35,6 @@ export async function initConfigs({
   pluginStore,
   rsbuildOptions,
 }: InitConfigsOptions) {
-  await context.configValidatingTask;
   await initPlugins({
     pluginAPI: context.pluginAPI,
     pluginStore,
