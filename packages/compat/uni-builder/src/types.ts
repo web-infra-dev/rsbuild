@@ -19,9 +19,20 @@ export type RsbuildConfig<B = 'rspack'> = B extends 'rspack'
   ? RsbuildRspackConfig
   : RsbuildWebpackConfig;
 
-export type UniBuilderWebpackConfig = RsbuildWebpackConfig & {};
+export type UniBuilderExtraConfig = {
+  output: {
+    /**
+     * @deprecated use output.cssModules.localIdentName instead
+     */
+    cssModuleLocalIdentName?: string;
+  };
+};
 
-export type UniBuilderRspackConfig = RsbuildRspackConfig & {};
+export type UniBuilderWebpackConfig = RsbuildWebpackConfig &
+  UniBuilderExtraConfig;
+
+export type UniBuilderRspackConfig = RsbuildRspackConfig &
+  UniBuilderExtraConfig;
 
 export type BuilderConfig<B = 'rspack'> = B extends 'rspack'
   ? UniBuilderRspackConfig

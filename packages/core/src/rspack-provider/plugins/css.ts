@@ -254,7 +254,6 @@ export const pluginCss = (): RsbuildPlugin => {
 
           let localIdentName =
             config.output.cssModules.localIdentName ||
-            config.output.cssModuleLocalIdentName ||
             // Using shorter classname in production to reduce bundle size
             (isProd ? '[local]-[hash:6]' : '[path][name]__[local]-[hash:6]');
 
