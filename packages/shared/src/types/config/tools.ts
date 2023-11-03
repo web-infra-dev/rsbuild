@@ -3,7 +3,6 @@ import type {
   AutoprefixerOptions,
   SassLoaderOptions,
   LessLoaderOptions,
-  PugOptions,
   PostCSSLoaderOptions,
   PostCSSPlugin,
   CSSLoaderOptions,
@@ -76,8 +75,6 @@ export type ToolsBundlerChainConfig = ArrayOrNot<
   (chain: BundlerChain, utils: ModifyBundlerChainUtils) => void
 >;
 
-export type ToolsPugConfig = true | ChainedConfig<PugOptions>;
-
 export type ToolsPostCSSLoaderConfig = ChainedConfig<
   PostCSSLoaderOptions,
   { addPlugins: (plugins: PostCSSPlugin | PostCSSPlugin[]) => void }
@@ -142,10 +139,6 @@ export interface ToolsConfig {
    * Modify the options of [postcss-loader](https://github.com/webpack-contrib/postcss-loader).
    */
   postcss?: ToolsPostCSSLoaderConfig;
-  /**
-   * Configure the [Pug](https://pugjs.org/) template engine.
-   */
-  pug?: ToolsPugConfig;
   /**
    * Modify the options of [style-loader](https://github.com/webpack-contrib/style-loader).
    */

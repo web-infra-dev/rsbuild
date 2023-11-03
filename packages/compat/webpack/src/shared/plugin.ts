@@ -33,7 +33,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.cleanOutput?.(),
     import('../plugins/hmr').then((m) => m.pluginHMR()),
     plugins.svg(),
-    import('../plugins/pug').then((m) => m.pluginPug()),
     import('../plugins/copy').then((m) => m.pluginCopy()),
     import('../plugins/react').then((m) => m.pluginReactWebpack()),
     plugins.font(),

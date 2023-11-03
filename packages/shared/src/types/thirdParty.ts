@@ -17,8 +17,6 @@ import type {
 export type TerserPluginOptions = TerserPlugin.BasePluginOptions &
   TerserPlugin.DefinedDefaultMinimizerAndOptions<TerserPlugin.TerserOptions>;
 
-export type { Options as PugOptions } from '../../compiled/pug';
-
 export type AutoprefixerOptions = {
   /** environment for `Browserslist` */
   env?: string;
