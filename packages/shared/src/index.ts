@@ -17,7 +17,6 @@ export * from './format';
 export * from './devServer';
 export * from './prodServer';
 export * from './chain';
-export * from './schema';
 export * from './plugins';
 export * from './apply';
 export * from './fallback';
