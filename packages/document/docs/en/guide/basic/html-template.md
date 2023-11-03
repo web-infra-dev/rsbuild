@@ -188,32 +188,7 @@ Please read the [EJS](https://ejs.co/) documentation for details.
 
 ### [Pug](https://pugjs.org/)
 
-When the suffix of the template is `.pug`, Rsbuild will use the Pug template engine to compile it. Pug is a robust, elegant, feature rich template engine for Node.js.
-
-Before using the Pug template, you need to enable the [tools.pug](/config/options/tools.html#toolspug) config, and define the [html.template](/config/options/html.html#htmltemplate) config to reference a `.pug` template:
-
-```ts
-export default {
-  html: {
-    template: './static/index.pug',
-  },
-  tools: {
-    pug: true,
-  },
-};
-```
-
-Then you can use Pug syntax in `.pug` templates:
-
-```html
-<!-- input -->
-p Hello #{text}!
-
-<!-- output -->
-<p>Hello World!</p>
-```
-
-Please read the [Pug](https://pugjs.org/) documentation for details.
+Rsbuild supports the Pug template engine through the Pug plugin. Please refer to the [Pug plugin documentation](/plugins/list/plugin-pug) for usage guide.
 
 ## Injecting Tags
 
