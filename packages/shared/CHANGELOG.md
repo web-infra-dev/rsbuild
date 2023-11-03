@@ -1,5 +1,18 @@
 # @rsbuild/shared
 
+## 0.0.13
+
+### Patch Changes
+
+- 9c19198: refactor: simplify RsbuildConfig definitions
+- fedbe79: refactor: use plugin to generate meta tags instead of template params
+- 219dd60: chore(deps): bump Rspack v0.3.9
+- b46bc69: refactor: replace @rspack/html-plugin with html-webpack-plugin
+- 3bf93a5: refactor: extract css-minimizer plugin as a standalone package
+- 84a4d61: chore(utils): unify the castArray implementation
+- 510de48: perf: switch the default polyfill mode to usage
+- 73ec291: perf: remove config validation
+
 ## 0.0.12
 
 ## 0.0.11

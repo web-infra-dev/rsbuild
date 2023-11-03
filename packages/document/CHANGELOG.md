@@ -1,5 +1,11 @@
 # @rsbuild/document
 
+## 0.0.13
+
+### Patch Changes
+
+- b46bc69: refactor: replace @rspack/html-plugin with html-webpack-plugin
+
 ## 0.0.12
 
 ## 0.0.11
