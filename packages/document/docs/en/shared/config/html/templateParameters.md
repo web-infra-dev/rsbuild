@@ -3,7 +3,6 @@
 
 ```ts
 type DefaultParameters = {
-  meta: string; // corresponding to html.meta config
   title: string; // corresponding to html.title config
   mountId: string; // corresponding to html.mountId config
   entryName: string; // entry name

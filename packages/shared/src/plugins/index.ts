@@ -3,6 +3,7 @@ export { HtmlTagsPlugin } from './HtmlTagsPlugin';
 export type { HtmlTagsPluginOptions } from './HtmlTagsPlugin';
 export { HtmlCrossOriginPlugin } from './HtmlCrossOriginPlugin';
 export { HtmlNoncePlugin } from './HtmlNoncePlugin';
+export { HtmlMetaPlugin, type HtmlMetaPluginOptions } from './HtmlMetaPlugin';
 export { HtmlAppIconPlugin } from './HtmlAppIconPlugin';
 export { HtmlFaviconUrlPlugin, type FaviconUrls } from './HtmlFaviconUrlPlugin';
 export {

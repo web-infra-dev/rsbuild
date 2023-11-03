@@ -180,6 +180,8 @@ export const CHAIN_ID = {
     BUNDLE_ANALYZER: 'bundle-analyze',
     /** HtmlTagsPlugin */
     HTML_TAGS: 'html-tags',
+    /** HtmlMetaPlugin */
+    HTML_META: 'html-meta',
     /** HtmlNoncePlugin */
     HTML_NONCE: 'html-nonce',
     /** HtmlCrossOriginPlugin */

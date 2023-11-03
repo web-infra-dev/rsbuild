@@ -2,28 +2,31 @@ import path from 'path';
 import {
   isURL,
   castArray,
+  getTitle,
+  getMinify,
+  getInject,
+  getFavicon,
+  getDistPath,
   isFileExists,
   isPlainObject,
   isHtmlDisabled,
-  getDistPath,
-  getMinify,
-  getTitle,
-  getInject,
-  getFavicon,
+  HtmlMetaPlugin,
   getTemplatePath,
   ROUTE_SPEC_FILE,
   removeTailSlash,
   mergeChainedOptions,
-  type FaviconUrls,
 } from '@rsbuild/shared';
 import { fs } from '@rsbuild/shared/fs-extra';
 import type {
   HtmlConfig,
+  MetaOptions,
+  FaviconUrls,
   DefaultRsbuildPlugin,
   NormalizedConfig,
   SharedRsbuildPluginAPI,
   HtmlTagsPluginOptions,
   HTMLPluginOptions,
+  HtmlMetaPluginOptions,
   NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import _ from 'lodash';
@@ -43,14 +46,13 @@ export async function getMetaTags(
 ) {
   const { meta, metaByEntries } = config.html;
 
-  const metaOptions = {
-    ...(meta ?? {}),
-    ...(metaByEntries?.[entryName] ?? {}),
-  };
+  const metaOptions: MetaOptions = {};
 
   if (config.output.charset === 'utf8') {
     metaOptions.charset = { charset: 'utf-8' };
   }
+
+  Object.assign(metaOptions, meta, metaByEntries?.[entryName]);
 
   return generateMetaTags(metaOptions);
 }
@@ -63,12 +65,10 @@ async function getTemplateParameters(
   const { mountId, templateParameters, templateParametersByEntries } =
     config.html;
 
-  const meta = await getMetaTags(entryName, config);
   const title = getTitle(entryName, config);
   const templateParams =
     templateParametersByEntries?.[entryName] || templateParameters;
   const baseParameters = {
-    meta,
     title,
     mountId,
     entryName,
@@ -168,6 +168,11 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
         const htmlPaths = api.getHTMLPaths();
         const faviconUrls: FaviconUrls = [];
 
+        const metaPluginOptions: HtmlMetaPluginOptions = {
+          meta: [],
+          HtmlPlugin,
+        };
+
         await Promise.all(
           entryNames.map(async (entryName, index) => {
             const entryValue = entries[entryName].values() as string | string[];
@@ -176,11 +181,19 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
             const favicon = getFavicon(entryName, config);
             const filename = htmlPaths[entryName];
             const template = getTemplatePath(entryName, config);
+            const metaTags = await getMetaTags(entryName, config);
             const templateParameters = await getTemplateParameters(
               entryName,
               config,
               assetPrefix,
             );
+
+            if (metaTags.length) {
+              metaPluginOptions.meta.push({
+                tags: metaTags,
+                filename,
+              });
+            }
 
             const pluginOptions: HTMLPluginOptions = {
               chunks,
@@ -225,6 +238,12 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
               .use(HtmlPlugin, [finalOptions]);
           }),
         );
+
+        if (metaPluginOptions.meta.length) {
+          chain
+            .plugin(CHAIN_ID.PLUGIN.HTML_META)
+            .use(HtmlMetaPlugin, [metaPluginOptions]);
+        }
 
         if (config.security) {
           const { nonce } = config.security;
