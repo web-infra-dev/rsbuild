@@ -1524,8 +1524,8 @@ importers:
         specifier: 0.3.10
         version: 0.3.10
       '@types/fs-extra':
-        specifier: ^11.0.3
-        version: 11.0.3
+        specifier: ^11.0.2
+        version: 11.0.2
       '@types/lodash':
         specifier: ^4.14.200
         version: 4.14.200
@@ -5613,6 +5613,13 @@ packages:
       '@types/express-serve-static-core': 4.17.38
       '@types/qs': 6.9.9
       '@types/serve-static': 1.15.4
+    dev: true
+
+  /@types/fs-extra@11.0.2:
+    resolution: {integrity: sha512-c0hrgAOVYr21EX8J0jBMXGLMgJqVf/v6yxi0dLaJboW9aQPh16Id+z6w2Tx1hm+piJOLv8xPfVKZCLfjPw/IMQ==}
+    dependencies:
+      '@types/jsonfile': 6.1.3
+      '@types/node': 16.18.59
     dev: true
 
   /@types/fs-extra@11.0.3:
