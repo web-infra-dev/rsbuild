@@ -14,10 +14,6 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./chalk": {
-      "types": "./dist/re-exports/chalk.d.ts",
-      "default": "./dist/re-exports/chalk.js"
-    },
     "./deepmerge": {
       "types": "./dist/re-exports/deepmerge.d.ts",
       "default": "./dist/re-exports/deepmerge.js"
@@ -37,10 +33,6 @@
     "./webpack-bundle-analyzer": {
       "types": "./compiled/webpack-bundle-analyzer/index.d.ts",
       "default": "./compiled/webpack-bundle-analyzer/index.js"
-    },
-    "./babel-loader": {
-      "types": "./compiled/babel-loader/index.d.ts",
-      "default": "./compiled/babel-loader/index.js"
     },
     "./css-modules-typescript-loader": {
       "types": "./dist/loaders/css-modules-typescript-loader.d.ts",
@@ -79,9 +71,6 @@
   "types": "./src/index.ts",
   "typesVersions": {
     "*": {
-      "chalk": [
-        "./dist/re-exports/chalk.d.ts"
-      ],
       "deepmerge": [
         "./dist/re-exports/deepmerge.d.ts"
       ],
@@ -142,12 +131,12 @@
     "@modern-js/server": "0.0.0-next-20231103131234",
     "acorn": "^8.10.0",
     "browserslist": "^4.22.1",
-    "chalk": "^4.1.2",
     "cssnano": "6.0.1",
     "deepmerge": "^4.3.1",
     "fs-extra": "^11.1.1",
     "line-diff": "2.1.1",
     "lodash": "^4.17.21",
+    "picocolors": "1.0.0",
     "pkg-up": "^3.1.0",
     "postcss": "8.4.31",
     "rslog": "^1.1.0",

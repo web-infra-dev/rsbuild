@@ -1465,9 +1465,6 @@ importers:
       browserslist:
         specifier: ^4.22.1
         version: 4.22.1
-      chalk:
-        specifier: ^4.1.2
-        version: 4.1.2
       cssnano:
         specifier: 6.0.1
         version: 6.0.1(postcss@8.4.31)
@@ -1483,6 +1480,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      picocolors:
+        specifier: 1.0.0
+        version: 1.0.0
       pkg-up:
         specifier: ^3.1.0
         version: 3.1.0

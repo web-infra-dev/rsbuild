@@ -6,8 +6,7 @@
  * modified from https://github.com/facebook/create-react-app/blob/master/packages/react-dev-utils/ModuleScopePlugin.js
  */
 import { dirname, relative, resolve } from 'path';
-import { chalk } from '@rsbuild/shared/chalk';
-import { isRegExp, isString } from '@rsbuild/shared';
+import { color, isRegExp, isString } from '@rsbuild/shared';
 
 export class ModuleScopePlugin {
   scopes: Array<string | RegExp>;
@@ -106,16 +105,16 @@ export class ModuleScopePlugin {
             );
           })
         ) {
-          let message = `You attempted to import ${chalk.bold(
+          let message = `You attempted to import ${color.bold(
             request.__innerRequest_request,
           )} which is not allowed. `;
           if (allowedDirs.length) {
-            message += `Allowed dirs: ${chalk.bold(
+            message += `Allowed dirs: ${color.bold(
               relativeAllowedDirs.join(','),
             )}. `;
           }
           if (allowedPatterns.length) {
-            message += `Allowed patterns: ${chalk.bold(
+            message += `Allowed patterns: ${color.bold(
               allowedPatterns.map((p) => p.toString()).join(','),
             )}. `;
           }
