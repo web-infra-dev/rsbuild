@@ -1,4 +1,5 @@
 import {
+  isProd,
   mergeChainedOptions,
   getCssnanoDefaultOptions,
   type BundlerChain,
@@ -20,6 +21,10 @@ export async function applyCSSMinimizer(
   CHAIN_ID: ChainIdentifier,
   options: PluginCssMinimizerOptions = {},
 ) {
+  if (!isProd()) {
+    return;
+  }
+
   const { default: CssMinimizerPlugin } = await import(
     'css-minimizer-webpack-plugin'
   );
