@@ -6,6 +6,7 @@
       "dependsOn": ["^build"],
       "inputs": [
         "{projectRoot}/src/**/*",
+        "!{projectRoot}/**/*.{md,mdx}",
         "{projectRoot}/tsconfig.json",
         "{projectRoot}/package.json",
         "{projectRoot}/modern.config.*",
