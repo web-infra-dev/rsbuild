@@ -1,4 +1,5 @@
 import {
+  color,
   startProdServer,
   pickRsbuildConfig,
   createPublicContext,
@@ -7,7 +8,6 @@ import {
   type RspackCompiler,
   type RspackMultiCompiler,
 } from '@rsbuild/shared';
-import { chalk } from '@rsbuild/shared/chalk';
 import { createContext } from './core/createContext';
 import { initConfigs } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
@@ -35,7 +35,7 @@ export function rspackProvider({
   return async ({ pluginStore, rsbuildOptions, plugins }) => {
     if (!(await isSatisfyRspackMinimumVersion())) {
       throw new Error(
-        `The current Rspack version does not meet the requirements, the minimum supported version of Rspack is ${chalk.green(
+        `The current Rspack version does not meet the requirements, the minimum supported version of Rspack is ${color.green(
           supportedRspackMinimumVersion,
         )}`,
       );

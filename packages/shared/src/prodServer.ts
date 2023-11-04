@@ -2,7 +2,7 @@ import prodServer, {
   Logger,
   type ModernServerOptions,
 } from '@modern-js/prod-server';
-import chalk from 'chalk';
+import { color } from './color';
 import { getPort } from './port';
 import { getAddressUrls } from './url';
 import { logger as defaultLogger } from './logger';
@@ -36,10 +36,7 @@ export function printServerURLs(
   logger: Logger = defaultLogger,
 ) {
   const message = urls
-    .map(
-      ({ label, url }) =>
-        `  ${`> ${label.padEnd(10)}`}${chalk.cyanBright(url)}\n`,
-    )
+    .map(({ label, url }) => `  ${`> ${label.padEnd(10)}`}${color.cyan(url)}\n`)
     .join('');
 
   logger.log(message);

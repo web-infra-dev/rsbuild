@@ -1,5 +1,5 @@
 import net from 'net';
-import chalk from 'chalk';
+import { color } from './color';
 import { logger } from './logger';
 
 /**
@@ -66,7 +66,7 @@ export const getPort = async (
       );
     } else if (!silent) {
       logger.info(
-        `Port ${original} is in use. ${chalk.yellow(`using port ${port}.`)}\n`,
+        `Port ${original} is in use. ${color.yellow(`using port ${port}.`)}\n`,
       );
     }
   }

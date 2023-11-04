@@ -1,9 +1,9 @@
 import {
+  color,
   getDistPath,
   getSharedPkgCompiledPath,
   type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
-import { chalk } from '@rsbuild/shared/chalk';
 
 export const pluginNodeAddons = (): DefaultRsbuildPlugin => ({
   name: 'plugin-node-addons',
@@ -22,7 +22,7 @@ export const pluginNodeAddons = (): DefaultRsbuildPlugin => ({
 
           if (!pkgJSON) {
             throw new Error(
-              `Failed to compile Node.js addons, couldn't find the package.json of ${chalk.yellow(
+              `Failed to compile Node.js addons, couldn't find the package.json of ${color.yellow(
                 resource,
               )}.`,
             );

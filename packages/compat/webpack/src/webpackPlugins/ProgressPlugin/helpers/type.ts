@@ -1,12 +1,10 @@
-import type { chalk } from '@rsbuild/shared/chalk';
-
-type Color = (typeof chalk)['ForegroundColor'];
+import type { Colors } from '@rsbuild/shared';
 
 export type Props = {
   total: number;
   current: number;
-  color: Color;
-  bgColor: Color;
+  color: Colors;
+  bgColor: Colors;
   char: string;
   width: number;
   buildIcon: string;
@@ -16,7 +14,7 @@ export type Props = {
   done: boolean;
   messageWidth: number;
   spaceWidth: number;
-  messageColor: Color;
+  messageColor: Colors;
   id: string;
   maxIdLen: number;
   hasErrors: boolean;

@@ -34,7 +34,7 @@ import type {
 import { pick } from './pick';
 import { logger } from 'rslog';
 import { join } from 'path';
-import chalk from 'chalk';
+import { color } from './color';
 import type { minify } from 'terser';
 import fs from 'fs-extra';
 
@@ -184,7 +184,9 @@ export async function outputInspectConfigFiles({
   const fileInfos = files
     .map(
       (item) =>
-        `  - ${chalk.bold.yellow(item.label)}: ${chalk.underline(item.path)}`,
+        `  - ${color.bold(color.yellow(item.label))}: ${color.underline(
+          item.path,
+        )}`,
     )
     .join('\n');
 
