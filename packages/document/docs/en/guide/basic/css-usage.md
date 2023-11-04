@@ -42,15 +42,11 @@ Please read the [Using CSS Modules](/guide/basic/css-modules.html) chapter for a
 
 ## CSS Minify
 
-Usually, in production environments we compress static assets such as CSS, JS, etc. to achieve better transfer efficiency.
+During the production build, Rsbuild compresses static assets such as CSS and JS to provide better transmission efficiency.
 
-Rsbuild automatically compresses CSS code at production build time with [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin) (The compression tool used at the bottom is [cssnano](https://cssnano.co/)).
+Rsbuild by default uses the built-in `SwcCssMinimizerRspackPlugin` plugin from Rspack to automatically compress CSS code during production builds.
 
-You can configure [tools.minifyCss](/config/options/tools.html#toolsminifycss) to make it more customizable.
-
-:::tip About cssnano
-cssnano is a tool for optimizing and minifying CSS files. It reduces the size of CSS files by removing unused rules, merging similar rules, removing comments and whitespace, and converting length units, among other techniques, to improve the loading speed of websites.
-:::
+You can customize the CSS minimizer by using the [CSS Minimizer plugin](/plugins/list/plugin-css-minimizer.html) to switch to cssnano or other tools for CSS compression.
 
 ## Inline CSS Files
 

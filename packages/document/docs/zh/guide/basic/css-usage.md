@@ -42,15 +42,11 @@ Rsbuild 内置了一些 PostCSS 插件，会对 CSS 进行以下转换：
 
 ## CSS 压缩
 
-通常情况下，在生产环境我们会将 CSS、JS 等静态资源进行压缩，以达到更好的传输效率。
+在生产环境构建时， Rsbuild 会将 CSS、JS 等静态资源进行压缩，以达到更好的传输效率。
 
-Rsbuild 通过 [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin) 在生产环境构建时自动压缩 CSS 代码（底层使用的压缩工具为 [cssnano](https://cssnano.co/)）。
+Rsbuild 默认使用 Rspack 内置的 `SwcCssMinimizerRspackPlugin` 插件，在生产环境构建时自动压缩 CSS 代码。
 
-你可以通过 [tools.minifyCss](/config/options/tools.html#toolsminifycss) 配置项来修改 `css-minimizer-webpack-plugin`的配置。
-
-:::tip 关于 cssnano
-cssnano 是一个用于优化和压缩 CSS 文件的工具。它通过删除未使用的规则、合并相同的规则、移除注释和空白符以及转换长度单位等方式来减小 CSS 文件的体积，从而提升网站的加载速度。
-:::
+你可以通过 [CSS Minimizer 插件](/plugins/list/plugin-css-minimizer.html) 来自定义 CSS 压缩工具，切换到 cssnano 或其他工具进行 CSS 压缩。
 
 ## 内联 CSS 文件
 
