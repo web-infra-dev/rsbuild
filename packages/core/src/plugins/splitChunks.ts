@@ -107,9 +107,6 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
     };
   });
 
-  assert(defaultConfig !== false);
-  assert(override !== false);
-
   return {
     ...defaultConfig,
     ...override,
@@ -124,8 +121,6 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
 
 function splitByModule(ctx: SplitChunksContext): SplitChunks {
   const { override, userDefinedCacheGroups, defaultConfig } = ctx;
-  assert(defaultConfig !== false);
-  assert(override !== false);
   return {
     ...defaultConfig,
     minSize: 0,
@@ -139,6 +134,7 @@ function splitByModule(ctx: SplitChunksContext): SplitChunks {
         priority: -10,
         test: NODE_MODULES_REGEX,
         // todo: not support in rspack
+        // @ts-expect-error
         name(module: { context: string | null }): string | false {
           return getPackageNameFromModulePath(module.context!);
         },
@@ -151,8 +147,6 @@ function splitByModule(ctx: SplitChunksContext): SplitChunks {
 function splitBySize(ctx: SplitChunksContext): SplitChunks {
   const { override, userDefinedCacheGroups, defaultConfig, rsbuildConfig } =
     ctx;
-  assert(defaultConfig !== false);
-  assert(override !== false);
   assert(rsbuildConfig.strategy === 'split-by-size');
   return {
     ...defaultConfig,
@@ -169,8 +163,6 @@ function splitBySize(ctx: SplitChunksContext): SplitChunks {
 
 function splitCustom(ctx: SplitChunksContext): SplitChunks {
   const { override, userDefinedCacheGroups, defaultConfig } = ctx;
-  assert(defaultConfig !== false);
-  assert(override !== false);
   return {
     ...defaultConfig,
     ...override,
@@ -184,14 +176,13 @@ function splitCustom(ctx: SplitChunksContext): SplitChunks {
 
 function allInOne(_ctx: SplitChunksContext): SplitChunks {
   // Set false to avoid chunk split.
+  // @ts-expect-error Rspack type missing
   return false;
 }
 
 // Ignore user defined cache group to get single vendor chunk.
 function singleVendor(ctx: SplitChunksContext): SplitChunks {
   const { override, defaultConfig, userDefinedCacheGroups } = ctx;
-  assert(defaultConfig !== false);
-  assert(override !== false);
 
   const singleVendorCacheGroup: CacheGroup = {
     singleVendor: {
@@ -255,6 +246,7 @@ export function pluginSplitChunks(): DefaultRsbuildPlugin {
             // Optimize both `initial` and `async` chunks
             chunks: 'all',
             // When chunk size >= 50000 bytes, split it into separate chunk
+            // @ts-expect-error Rspack type missing
             enforceSizeThreshold: 50000,
             cacheGroups: {},
           };

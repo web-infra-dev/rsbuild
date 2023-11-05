@@ -30,6 +30,7 @@ export const pluginFallback = (): RsbuildPlugin => ({
         return;
       }
 
+      // @ts-expect-error rule type mismatch
       config.module.rules = resourceRuleFallback(config.module.rules);
     });
   },

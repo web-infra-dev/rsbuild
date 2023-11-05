@@ -25,6 +25,7 @@ export function webpackProvider({
 }): WebpackProvider {
   const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
 
+  // @ts-expect-error compiler type mismatch
   return async ({ pluginStore, rsbuildOptions, plugins }) => {
     const context = await createContext(rsbuildOptions, rsbuildConfig);
     const pluginAPI = getPluginAPI({ context, pluginStore });

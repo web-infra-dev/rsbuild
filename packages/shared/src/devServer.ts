@@ -17,7 +17,7 @@ import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import { createAsyncHook } from './createHook';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import { getServerOptions, printServerURLs } from './prodServer';
-import type { Compiler } from 'webpack';
+import type { Compiler } from '@rspack/core';
 
 type ServerOptions = Exclude<StartDevServerOptions['serverOptions'], undefined>;
 

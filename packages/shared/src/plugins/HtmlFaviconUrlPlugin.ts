@@ -1,5 +1,5 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { Compiler, Compilation } from 'webpack';
+import type { Compiler, Compilation } from '@rspack/core';
 
 export type FaviconUrls = Array<{
   filename: string;
@@ -27,11 +27,12 @@ export class HtmlFaviconUrlPlugin {
   apply(compiler: Compiler) {
     // add html asset tags
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
+      // @ts-expect-error compilation type mismatch
       this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tap(
         this.name,
-        data => {
+        (data) => {
           const matched = this.faviconUrls.find(
-            item => item.filename === data.outputName,
+            (item) => item.filename === data.outputName,
           );
 
           if (matched) {

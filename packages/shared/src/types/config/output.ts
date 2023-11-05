@@ -1,8 +1,7 @@
 import type { InlineChunkTest } from '../../plugins/InlineChunkHtmlPlugin';
 import type { RsbuildTarget } from '../rsbuild';
 import type { CrossOrigin } from './html';
-import type { Externals } from 'webpack';
-import type { Builtins } from '@rspack/core';
+import type { Builtins, Externals } from '@rspack/core';
 
 export type DistPathConfig = {
   /** The root directory of all files. */
