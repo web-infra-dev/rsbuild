@@ -1,5 +1,15 @@
 # @rsbuild/shared
 
+## 0.0.14
+
+### Patch Changes
+
+- 705c6a7: refactor: move legacy manifest config to uni-builder
+- a4badc6: perf: using a lighter modern.js server package
+- 8f52317: perf: replace chalk with picocolors
+- 094cd55: refactor: @rsbuild/core no longer depend on webpack
+- c331840: refactor: @rsbuild/shared no longer depend on webpack
+
 ## 0.0.13
 
 ### Patch Changes

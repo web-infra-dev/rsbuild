@@ -1,5 +1,18 @@
 # @rsbuild/plugin-check-syntax
 
+## 0.0.14
+
+### Patch Changes
+
+- 8f52317: perf: replace chalk with picocolors
+- Updated dependencies [705c6a7]
+- Updated dependencies [a4badc6]
+- Updated dependencies [8f52317]
+- Updated dependencies [094cd55]
+- Updated dependencies [c331840]
+  - @rsbuild/shared@0.0.14
+  - @rsbuild/core@0.0.14
+
 ## 0.0.13
 
 ### Patch Changes

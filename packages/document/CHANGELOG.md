@@ -1,5 +1,11 @@
 # @rsbuild/document
 
+## 0.0.14
+
+### Patch Changes
+
+- 705c6a7: refactor: move legacy manifest config to uni-builder
+
 ## 0.0.13
 
 ### Patch Changes
