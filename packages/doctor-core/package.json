@@ -1,0 +1,73 @@
+{
+  "name": "@rsbuild/doctor-core",
+  "version": "0.0.4",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/doctor-core"
+  },
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/type/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/type/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    },
+    "./utils": {
+      "types": "./dist/type/build-utils/index.d.ts",
+      "require": "./dist/cjs/build-utils/index.js",
+      "import": "./dist/esm/build-utils/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "utils": [
+        "./dist/type/build-utils/index.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "dev": "npm run start",
+    "build": "modern build",
+    "start": "modern build -w",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@rsbuild/doctor-sdk": "workspace:*",
+    "@rsbuild/doctor-utils": "workspace:*",
+    "@rspack/core": "0.3.11",
+    "bytes": "3.1.2",
+    "loader-utils": "^2.0.4",
+    "lodash": "^4.17.21",
+    "memfs": "3.4.10",
+    "path-browserify": "1.0.1",
+    "source-map": "^0.7.4",
+    "webpack-bundle-analyzer": "^4.9.1"
+  },
+  "devDependencies": {
+    "@rsbuild/doctor-types": "workspace:*",
+    "@types/bytes": "3.1.1",
+    "@types/loader-utils": "^2.0.5",
+    "@types/lodash": "^4.14.200",
+    "@types/node": "^16",
+    "@types/path-browserify": "1.0.1",
+    "@types/tapable": "2.2.2",
+    "@types/webpack": "5.28.0",
+    "@types/webpack4": "npm:@types/webpack@4.41.26",
+    "tslib": "2.4.1",
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0",
+    "webpack4": "npm:webpack@4.46.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}
