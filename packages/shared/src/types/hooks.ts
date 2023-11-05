@@ -54,10 +54,6 @@ export type ModifyChainUtils = {
   CHAIN_ID: ChainIdentifier;
   getCompiledPath: (name: string) => string;
   HtmlPlugin: typeof import('html-webpack-plugin');
-  /**
-   * @private should only used in Rsbuild
-   */
-  webpack: typeof import('webpack');
 };
 
 export type ModifyBundlerChainUtils = ModifyChainUtils & {
