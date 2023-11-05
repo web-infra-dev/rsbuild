@@ -1,4 +1,4 @@
-import type webpack from 'webpack';
+import { Configuration } from '@rspack/core';
 import type { BundleAnalyzerPlugin } from '../../../compiled/webpack-bundle-analyzer';
 
 export type ConsoleType = 'log' | 'info' | 'warn' | 'error' | 'table' | 'group';
@@ -110,7 +110,7 @@ export interface NormalizedPerformanceConfig extends PerformanceConfig {
   chunkSplit: RsbuildChunkSplit;
 }
 
-export type SplitChunks = webpack.Configuration extends {
+export type SplitChunks = Configuration extends {
   optimization?: {
     splitChunks?: infer P;
   };
@@ -118,7 +118,7 @@ export type SplitChunks = webpack.Configuration extends {
   ? P
   : never;
 
-export type CacheGroup = webpack.Configuration extends {
+export type CacheGroup = Configuration extends {
   optimization?: {
     splitChunks?:
       | {

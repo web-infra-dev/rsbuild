@@ -1,6 +1,6 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
-import type { Compiler, Compilation } from 'webpack';
+import type { Compiler, Compilation } from '@rspack/core';
 
 export type HtmlMetaPluginOptions = {
   meta: Array<{
@@ -25,6 +25,7 @@ export class HtmlMetaPlugin {
 
   apply(compiler: Compiler) {
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
+      // @ts-expect-error compilation type mismatch
       this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tap(
         this.name,
         (data) => {

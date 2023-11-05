@@ -16,7 +16,8 @@
  */
 
 import { ChunkGroup } from './extractChunks';
-import { Chunk, Compilation } from 'webpack';
+import type { Compilation } from '@rspack/core';
+import type { Chunk } from 'webpack';
 import { PreloadOrPreFetchOption } from '../../../types';
 import { BeforeAssetTagGenerationHtmlPluginData } from './type';
 import { uniq } from 'lodash';

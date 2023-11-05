@@ -9,12 +9,12 @@ import {
   COMPILATION_PROCESS_STAGE,
 } from './util';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { WebpackPluginInstance, Compiler, Compilation } from 'webpack';
+import type { RspackPluginInstance, Compiler, Compilation } from '@rspack/core';
 import type { AssetsRetryOptions } from '../types';
 import path from 'path';
 import { withPublicPath } from '../url';
 
-export class AssetsRetryPlugin implements WebpackPluginInstance {
+export class AssetsRetryPlugin implements RspackPluginInstance {
   readonly name: string;
 
   readonly distDir: string;
@@ -90,6 +90,7 @@ export class AssetsRetryPlugin implements WebpackPluginInstance {
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       // the behavior of inject/modify tags in afterTemplateExecution hook will not take effect when inject option is false
+      // @ts-expect-error compilation type mismatch
       this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapPromise(
         this.name,
         async (data) => {

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { Compiler } from 'webpack';
+import type { Compiler } from '@rspack/core';
 import { withPublicPath } from '../url';
 import {
   HtmlInjectTag,
@@ -79,6 +79,7 @@ export class HtmlTagsPlugin {
   apply(compiler: Compiler) {
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       const compilationHash = compilation.hash || '';
+      // @ts-expect-error compilation type mismatch
       const hooks = this.ctx.HtmlPlugin.getHooks(compilation);
       hooks.alterAssetTagGroups.tap(this.name, (params) => {
         // skip unmatched file and empty tag list.

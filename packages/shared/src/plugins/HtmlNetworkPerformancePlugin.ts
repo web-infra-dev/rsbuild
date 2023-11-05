@@ -1,4 +1,4 @@
-import type { Compiler, Compilation, WebpackPluginInstance } from 'webpack';
+import type { Compiler, Compilation, RspackPluginInstance } from '@rspack/core';
 import { kebabCase, upperFirst } from 'lodash';
 import {
   PreconnectOption,
@@ -25,7 +25,7 @@ function generateLinks(
   }));
 }
 
-export class HtmlNetworkPerformancePlugin implements WebpackPluginInstance {
+export class HtmlNetworkPerformancePlugin implements RspackPluginInstance {
   readonly options: DnsPrefetch | Preconnect;
 
   readonly type: NetworkPerformanceType;
@@ -46,6 +46,7 @@ export class HtmlNetworkPerformancePlugin implements WebpackPluginInstance {
     compiler.hooks.compilation.tap(
       `HTML${this.type}Plugin`,
       (compilation: Compilation) => {
+        // @ts-expect-error compilation type mismatch
         this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapPromise(
           `HTML${upperFirst(this.type)}Plugin`,
           async (htmlPluginData) => {

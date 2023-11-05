@@ -4,7 +4,7 @@ import { NodeEnv, PromiseOrNot } from './utils';
 import { RsbuildTarget } from './rsbuild';
 import { BundlerChain } from './bundlerConfig';
 import { mergeRsbuildConfig } from '../mergeRsbuildConfig';
-import type { WebpackPluginInstance } from 'webpack';
+import type { RspackPluginInstance } from '@rspack/core';
 
 export type OnBeforeBuildFn<BundlerConfig = unknown> = (params: {
   bundlerConfigs?: BundlerConfig[];
@@ -58,9 +58,9 @@ export type ModifyChainUtils = {
 
 export type ModifyBundlerChainUtils = ModifyChainUtils & {
   bundler: {
-    BannerPlugin: WebpackPluginInstance;
-    DefinePlugin: WebpackPluginInstance;
-    ProvidePlugin: WebpackPluginInstance;
+    BannerPlugin: RspackPluginInstance;
+    DefinePlugin: RspackPluginInstance;
+    ProvidePlugin: RspackPluginInstance;
   };
 };
 
