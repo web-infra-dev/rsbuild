@@ -56,11 +56,16 @@ export type ModifyChainUtils = {
   HtmlPlugin: typeof import('html-webpack-plugin');
 };
 
+interface PluginInstance {
+  apply: (compiler: any) => void;
+  [k: string]: any;
+}
+
 export type ModifyBundlerChainUtils = ModifyChainUtils & {
   bundler: {
-    BannerPlugin: RspackPluginInstance;
-    DefinePlugin: RspackPluginInstance;
-    ProvidePlugin: RspackPluginInstance;
+    BannerPlugin: PluginInstance;
+    DefinePlugin: PluginInstance;
+    ProvidePlugin: PluginInstance;
   };
 };
 
