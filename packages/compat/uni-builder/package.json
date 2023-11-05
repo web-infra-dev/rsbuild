@@ -26,7 +26,10 @@
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/shared": "workspace:*",
-    "@rsbuild/webpack": "workspace:*"
+    "@rsbuild/webpack": "workspace:*",
+    "rspack-manifest-plugin": "5.0.0-alpha0",
+    "webpack": "^5.89.0",
+    "webpack-manifest-plugin": "5.0.0"
   },
   "devDependencies": {
     "typescript": "^5.2.2"

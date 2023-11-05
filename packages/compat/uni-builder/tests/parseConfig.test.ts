@@ -1,4 +1,4 @@
-import { parseCommonConfig } from '../src/shared';
+import { parseCommonConfig } from '../src/shared/parseCommonConfig';
 
 describe('parseCommonConfig', () => {
   test('output.cssModuleLocalIdentName', () => {

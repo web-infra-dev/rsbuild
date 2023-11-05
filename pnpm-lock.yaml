@@ -454,6 +454,15 @@ importers:
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
+      rspack-manifest-plugin:
+        specifier: 5.0.0-alpha0
+        version: 5.0.0-alpha0(webpack@5.89.0)
+      webpack:
+        specifier: ^5.89.0
+        version: 5.89.0
+      webpack-manifest-plugin:
+        specifier: 5.0.0
+        version: 5.0.0(webpack@5.89.0)
     devDependencies:
       typescript:
         specifier: ^5.2.2
@@ -594,9 +603,6 @@ importers:
       postcss:
         specifier: 8.4.31
         version: 8.4.31
-      rspack-manifest-plugin:
-        specifier: 5.0.0-alpha0
-        version: 5.0.0-alpha0(webpack@5.89.0)
       semver:
         specifier: ^7.5.4
         version: 7.5.4
@@ -14629,6 +14635,17 @@ packages:
     dependencies:
       deepmerge: 1.5.2
       javascript-stringify: 2.1.0
+    dev: false
+
+  /webpack-manifest-plugin@5.0.0(webpack@5.89.0):
+    resolution: {integrity: sha512-8RQfMAdc5Uw3QbCQ/CBV/AXqOR8mt03B6GJmRbhWopE8GzRfEpn+k0ZuWywxW+5QZsffhmFDY1J6ohqJo+eMuw==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      webpack: ^5.47.0
+    dependencies:
+      tapable: 2.2.1
+      webpack: 5.89.0
+      webpack-sources: 2.3.1
     dev: false
 
   /webpack-sources@2.3.1:

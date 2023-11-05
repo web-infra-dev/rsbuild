@@ -6,19 +6,32 @@ import type {
 } from '@rsbuild/core/rspack-provider';
 import type { UniBuilderRspackConfig } from '../types';
 import type { CreateRspackBuilderOptions } from '../types';
-import { parseCommonConfig } from '../shared';
+import { parseCommonConfig } from '../shared/parseCommonConfig';
 
-export function parseConfig(uniBuilderConfig: UniBuilderRspackConfig): {
+export async function parseConfig(
+  uniBuilderConfig: UniBuilderRspackConfig,
+): Promise<{
   rsbuildConfig: RsbuildConfig;
   rsbuildPlugins: RsbuildPlugin[];
-} {
-  return parseCommonConfig<'rspack'>(uniBuilderConfig);
+}> {
+  const { rsbuildConfig, rsbuildPlugins } =
+    parseCommonConfig<'rspack'>(uniBuilderConfig);
+
+  if (uniBuilderConfig.output?.enableAssetManifest) {
+    const { pluginManifest } = await import('./plugins/manifest');
+    rsbuildPlugins.push(pluginManifest());
+  }
+
+  return {
+    rsbuildConfig,
+    rsbuildPlugins,
+  };
 }
 
 export async function createRspackBuilder(
   options: CreateRspackBuilderOptions,
 ): Promise<RsbuildInstance<RspackProvider>> {
-  const { rsbuildConfig, rsbuildPlugins } = parseConfig(options.config);
+  const { rsbuildConfig, rsbuildPlugins } = await parseConfig(options.config);
   const rsbuild = await createRsbuild({
     rsbuildConfig,
   });

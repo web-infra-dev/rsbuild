@@ -237,10 +237,6 @@ export interface OutputConfig {
    */
   disableCssModuleExtension?: boolean;
   /**
-   * Whether to generate a manifest file that contains information of all assets.
-   */
-  enableAssetManifest?: boolean;
-  /**
    * If this option is enabled, all unrecognized files will be emitted to the dist directory.
    * Otherwise, an exception will be thrown.
    */
@@ -290,7 +286,6 @@ export interface NormalizedOutputConfig extends OutputConfig {
   disableSourceMap: DisableSourceMapOption;
   disableFilenameHash: boolean;
   disableInlineRuntimeChunk: boolean;
-  enableAssetManifest: boolean;
   enableAssetFallback: boolean;
   enableLatestDecorators: boolean;
   enableCssModuleTSDeclaration: boolean;

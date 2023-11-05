@@ -1,17 +1,11 @@
-import type { RsbuildPlugin } from '../types';
-import { generateManifest } from '@rsbuild/shared';
+import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import { generateManifest } from '../../shared/manifest';
 
-export const pluginManifest = (): RsbuildPlugin => ({
+export const pluginManifest = (): RsbuildPlugin<RsbuildPluginAPI> => ({
   name: 'plugin-manifest',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-      const config = api.getNormalizedConfig();
-
-      if (!config.output.enableAssetManifest) {
-        return;
-      }
-
       const { WebpackManifestPlugin } = await import('rspack-manifest-plugin');
       const publicPath = chain.output.get('publicPath');
 

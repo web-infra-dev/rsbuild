@@ -27,7 +27,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     import('../plugins/less').then((m) => m.pluginLess()),
     import('../plugins/sass').then((m) => m.pluginSass()),
     import('../plugins/minimize').then((m) => m.pluginMinimize()),
-    import('../plugins/manifest').then((m) => m.pluginManifest()),
     plugins.rem(),
     import('../plugins/hmr').then((m) => m.pluginHMR()),
     import('../plugins/progress').then((m) => m.pluginProgress()),
