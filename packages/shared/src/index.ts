@@ -23,7 +23,6 @@ export * from './apply';
 export * from './fallback';
 export * from './getLoaderOptions';
 export * from './patch';
-export * from './manifest';
 export * from './css';
 export * from './minimize';
 export * from './core-js';

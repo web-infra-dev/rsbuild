@@ -17,7 +17,7 @@ export const generateManifest = (
   const entrypointFiles = Object.keys(entries).reduce<string[]>(
     (previous, name) =>
       previous.concat(
-        entries[name].filter(fileName => !fileName.endsWith('.map')),
+        entries[name].filter((fileName) => !fileName.endsWith('.map')),
       ),
     [],
   );

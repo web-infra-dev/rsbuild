@@ -4,7 +4,7 @@ import type {
   RsbuildConfig as RsbuildRspackConfig,
 } from '@rsbuild/core';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
-import type { UniBuilderRspackConfig, UniBuilderWebpackConfig } from './types';
+import type { UniBuilderRspackConfig, UniBuilderWebpackConfig } from '../types';
 
 export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   uniBuilderConfig: B extends 'rspack'

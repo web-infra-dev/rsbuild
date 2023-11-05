@@ -25,6 +25,10 @@ export type UniBuilderExtraConfig = {
      * @deprecated use output.cssModules.localIdentName instead
      */
     cssModuleLocalIdentName?: string;
+    /**
+     * Whether to generate a manifest file that contains information of all assets.
+     */
+    enableAssetManifest?: boolean;
   };
 };
 
