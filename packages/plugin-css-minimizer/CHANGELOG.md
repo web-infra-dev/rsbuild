@@ -1,5 +1,17 @@
 # @rsbuild/plugin-css-minimizer
 
+## 0.0.14
+
+### Patch Changes
+
+- 0316dd1: fix(css-minimizer): only apply in production
+- Updated dependencies [705c6a7]
+- Updated dependencies [a4badc6]
+- Updated dependencies [8f52317]
+- Updated dependencies [094cd55]
+- Updated dependencies [c331840]
+  - @rsbuild/shared@0.0.14
+
 ## 0.0.13
 
 ### Patch Changes

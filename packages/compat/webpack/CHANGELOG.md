@@ -1,5 +1,24 @@
 # @rsbuild/webpack
 
+## 0.0.14
+
+### Patch Changes
+
+- 705c6a7: refactor: move legacy manifest config to uni-builder
+- a4badc6: perf: using a lighter modern.js server package
+- 8f52317: perf: replace chalk with picocolors
+- Updated dependencies [705c6a7]
+- Updated dependencies [a4badc6]
+- Updated dependencies [8f52317]
+- Updated dependencies [0316dd1]
+- Updated dependencies [094cd55]
+- Updated dependencies [c331840]
+  - @rsbuild/shared@0.0.14
+  - @rsbuild/core@0.0.14
+  - @rsbuild/plugin-css-minimizer@0.0.14
+  - @rsbuild/babel-preset@0.0.14
+  - @rsbuild/plugin-babel@0.0.14
+
 ## 0.0.13
 
 ### Patch Changes
