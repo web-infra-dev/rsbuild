@@ -52,6 +52,7 @@ export const build = async (
   let bundlerConfigs: WebpackConfig[] | undefined;
 
   if (customCompiler) {
+    // @ts-expect-error compiler type mismatch
     compiler = customCompiler;
   } else {
     const { webpackConfigs } = await initConfigs(initOptions);

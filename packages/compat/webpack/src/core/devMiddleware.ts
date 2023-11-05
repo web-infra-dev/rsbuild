@@ -11,6 +11,7 @@ const applyHMREntry = (
   clientPath: string,
 ) => {
   const applyEntry = (clientEntry: string, compiler: Compiler) => {
+    // @ts-expect-error compiler type mismatch
     if (isClientCompiler(compiler)) {
       new compiler.webpack.EntryPlugin(compiler.context, clientEntry, {
         name: undefined,
