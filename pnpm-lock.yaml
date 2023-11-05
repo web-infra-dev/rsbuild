@@ -606,9 +606,6 @@ importers:
       semver:
         specifier: ^7.5.4
         version: 7.5.4
-      webpack:
-        specifier: ^5.89.0
-        version: 5.89.0
     devDependencies:
       '@types/lodash':
         specifier: ^4.14.200
