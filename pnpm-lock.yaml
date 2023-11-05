@@ -457,6 +457,9 @@ importers:
       rspack-manifest-plugin:
         specifier: 5.0.0-alpha0
         version: 5.0.0-alpha0(webpack@5.89.0)
+      webpack:
+        specifier: ^5.89.0
+        version: 5.89.0
       webpack-manifest-plugin:
         specifier: 5.0.0
         version: 5.0.0(webpack@5.89.0)
