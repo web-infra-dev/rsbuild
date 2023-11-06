@@ -12,5 +12,3 @@ export default {
   },
 };
 ```
-
-Rsbuild will automatically add `<meta charset="utf-8">` to the generated HTML files if `output.charset` is `utf8`.

@@ -1,5 +1,27 @@
-- **类型：** `Record<string, false | string | Record<string, string | boolean>>`
-- **默认值：** `undefined`
+- **类型：**
+
+```ts
+type MetaAttrs = { [attrName: string]: string | boolean };
+type MetaOptions = {
+  [name: string]: string | false | MetaAttrs;
+};
+```
+
+- **默认值：**
+
+```ts
+const defaultMeta = {
+  // <meta charset="UTF-8" />
+  charset: {
+    charset: 'UTF-8',
+  },
+  // <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  viewport: {
+    name: 'viewport',
+    content: 'width=device-width, initial-scale=1.0',
+  },
+};
+```
 
 配置 HTML 页面的 `<meta>` 标签。
 

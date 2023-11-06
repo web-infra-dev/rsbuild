@@ -3,31 +3,16 @@
 exports[`should generate meta tags correctly 1`] = `
 [
   {
-    "attributes": {
-      "content": "This is basic meta",
-      "name": "description",
-    },
-    "meta": {},
-    "tagName": "meta",
-    "voidTag": true,
+    "content": "This is basic meta",
+    "name": "description",
   },
   {
-    "attributes": {
-      "content": "bar",
-      "name": "bar",
-    },
-    "meta": {},
-    "tagName": "meta",
-    "voidTag": true,
+    "content": "bar",
+    "name": "bar",
   },
   {
-    "attributes": {
-      "content": "foo",
-      "name": "foo",
-    },
-    "meta": {},
-    "tagName": "meta",
-    "voidTag": true,
+    "content": "foo",
+    "name": "foo",
   },
 ]
 `;
@@ -35,31 +20,16 @@ exports[`should generate meta tags correctly 1`] = `
 exports[`should generate meta tags correctly 2`] = `
 [
   {
-    "attributes": {
-      "content": "This is about page",
-      "name": "description",
-    },
-    "meta": {},
-    "tagName": "meta",
-    "voidTag": true,
+    "content": "This is about page",
+    "name": "description",
   },
   {
-    "attributes": {
-      "content": "bar",
-      "name": "bar",
-    },
-    "meta": {},
-    "tagName": "meta",
-    "voidTag": true,
+    "content": "bar",
+    "name": "bar",
   },
   {
-    "attributes": {
-      "content": "foo",
-      "name": "foo",
-    },
-    "meta": {},
-    "tagName": "meta",
-    "voidTag": true,
+    "content": "foo",
+    "name": "foo",
   },
 ]
 `;

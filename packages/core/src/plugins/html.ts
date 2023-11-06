@@ -47,12 +47,7 @@ export async function getMetaTags(
   config: { html: HtmlConfig; output: NormalizedOutputConfig },
 ) {
   const { meta, metaByEntries } = config.html;
-
   const metaOptions: MetaOptions = {};
-
-  if (config.output.charset === 'utf8') {
-    metaOptions.charset = { charset: 'utf-8' };
-  }
 
   Object.assign(metaOptions, meta, metaByEntries?.[entryName]);
 
@@ -169,11 +164,11 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
         const faviconUrls: FaviconUrls = [];
 
         const metaPluginOptions: HtmlMetaPluginOptions = {
-          meta: [],
+          meta: {},
           HtmlPlugin,
         };
         const titlePluginOptions: HtmlTitlePluginOptions = {
-          titles: [],
+          titles: {},
           HtmlPlugin,
         };
 
@@ -194,16 +189,10 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
             );
 
             if (metaTags.length) {
-              metaPluginOptions.meta.push({
-                tags: metaTags,
-                filename,
-              });
+              metaPluginOptions.meta[filename] = metaTags;
             }
             if (title) {
-              titlePluginOptions.titles.push({
-                title,
-                filename,
-              });
+              titlePluginOptions.titles[filename] = title;
             }
 
             const pluginOptions: HTMLPluginOptions = {
@@ -250,13 +239,13 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
           }),
         );
 
-        if (metaPluginOptions.meta.length) {
+        if (Object.keys(metaPluginOptions.meta).length) {
           chain
             .plugin(CHAIN_ID.PLUGIN.HTML_META)
             .use(HtmlMetaPlugin, [metaPluginOptions]);
         }
 
-        if (titlePluginOptions.titles.length) {
+        if (Object.keys(titlePluginOptions.titles).length) {
           chain
             .plugin(CHAIN_ID.PLUGIN.HTML_TITLE)
             .use(HtmlTitlePlugin, [titlePluginOptions]);

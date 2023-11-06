@@ -1,5 +1,27 @@
-- **Type:** `Record<string, false | string | Record<string, string | boolean>>`
-- **Default:** `undefined`
+- **Type:**
+
+```ts
+type MetaAttrs = { [attrName: string]: string | boolean };
+type MetaOptions = {
+  [name: string]: string | false | MetaAttrs;
+};
+```
+
+- **Default:**
+
+```ts
+const defaultMeta = {
+  // <meta charset="UTF-8" />
+  charset: {
+    charset: 'UTF-8',
+  },
+  // <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  viewport: {
+    name: 'viewport',
+    content: 'width=device-width, initial-scale=1.0',
+  },
+};
+```
 
 Configure the `<meta>` tag of the HTML.
 

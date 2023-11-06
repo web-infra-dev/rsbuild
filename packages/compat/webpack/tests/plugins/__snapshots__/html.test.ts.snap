@@ -39,6 +39,30 @@ exports[`plugin-html > should add one tags plugin instance 1`] = `
       },
       "version": 5,
     },
+    HtmlMetaPlugin {
+      "HtmlPlugin": [Function],
+      "meta": {
+        "foo.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+        "main.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+      },
+      "name": "HtmlMetaPlugin",
+    },
     HtmlTagsPlugin {
       "ctx": {
         "HtmlPlugin": [Function],
@@ -101,6 +125,30 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlMetaPlugin {
+      "HtmlPlugin": [Function],
+      "meta": {
+        "foo.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+        "main.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+      },
+      "name": "HtmlMetaPlugin",
     },
     HtmlTagsPlugin {
       "ctx": {
@@ -166,6 +214,21 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
       },
       "version": 5,
     },
+    HtmlMetaPlugin {
+      "HtmlPlugin": [Function],
+      "meta": {
+        "main.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+      },
+      "name": "HtmlMetaPlugin",
+    },
   ],
 }
 `;
@@ -193,6 +256,21 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
       },
       "version": 5,
     },
+    HtmlMetaPlugin {
+      "HtmlPlugin": [Function],
+      "meta": {
+        "main.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+      },
+      "name": "HtmlMetaPlugin",
+    },
   ],
 }
 `;
@@ -218,6 +296,21 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlMetaPlugin {
+      "HtmlPlugin": [Function],
+      "meta": {
+        "main.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+      },
+      "name": "HtmlMetaPlugin",
     },
   ],
 }
@@ -264,6 +357,21 @@ exports[`plugin-html > should enable minify in production 1`] = `
       },
       "version": 5,
     },
+    HtmlMetaPlugin {
+      "HtmlPlugin": [Function],
+      "meta": {
+        "main.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+      },
+      "name": "HtmlMetaPlugin",
+    },
   ],
 }
 `;
@@ -289,6 +397,21 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlMetaPlugin {
+      "HtmlPlugin": [Function],
+      "meta": {
+        "main.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+      },
+      "name": "HtmlMetaPlugin",
     },
   ],
 }
@@ -332,6 +455,30 @@ exports[`plugin-html > should support multi entry 1`] = `
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlMetaPlugin {
+      "HtmlPlugin": [Function],
+      "meta": {
+        "foo.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+        "main.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+      },
+      "name": "HtmlMetaPlugin",
     },
   ],
 }

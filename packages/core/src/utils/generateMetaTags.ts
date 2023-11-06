@@ -8,12 +8,9 @@
  * Modified from https://github.com/jantimon/html-webpack-plugin/blob/2f5de7ab9e8bca60e9e200f2e4b4cfab90db28d4/index.js#L800
  */
 
-import type { MetaOptions } from '@rsbuild/shared';
-import type { HtmlTagObject } from 'html-webpack-plugin';
+import type { MetaAttrs, MetaOptions } from '@rsbuild/shared';
 
-export const generateMetaTags = (
-  metaOptions?: MetaOptions,
-): HtmlTagObject[] => {
+export const generateMetaTags = (metaOptions?: MetaOptions): MetaAttrs[] => {
   if (!metaOptions) {
     return [];
   }
@@ -40,11 +37,6 @@ export const generateMetaTags = (
       throw new Error('Invalid meta tag');
     }
 
-    return {
-      tagName: 'meta',
-      voidTag: true,
-      attributes: metaTagAttributes,
-      meta: {},
-    };
+    return metaTagAttributes;
   });
 };
