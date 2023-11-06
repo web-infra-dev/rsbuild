@@ -36,6 +36,12 @@ Plugins available for the Vue framework:
 - [Vue2 Plugin](/plugins/list/plugin-vue2): Provides support for Vue 2 SFC (Single File Components).
 - [Vue2 JSX Plugin](/plugins/list/plugin-vue2-jsx): Provides support for Vue 2 JSX / TSX syntax.
 
+### Svelte Related
+
+Plugins available for the Svelte framework:
+
+- [Svelte Plugin](/plugins/list/plugin-svelte): Provides support for Svelte components (`.svelte` files).
+
 ### Common
 
 The following are common framework-agnostic plugins:
