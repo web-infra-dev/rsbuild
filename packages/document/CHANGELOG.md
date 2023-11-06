@@ -1,5 +1,12 @@
 # @rsbuild/document
 
+## 0.0.15
+
+### Patch Changes
+
+- 25ab68e: refactor: use plugin to generate titles instead of template params
+- 200aaba: fix(doc): link error in NextStep component
+
 ## 0.0.14
 
 ### Patch Changes
