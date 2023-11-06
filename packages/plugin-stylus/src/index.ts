@@ -34,17 +34,13 @@ export function pluginStylus(
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
 
-        const mergedOptions = mergeChainedOptions<
-          StylusLoaderOptions,
-          undefined
-        >(
-          {
+        const mergedOptions = mergeChainedOptions({
+          defaults: {
             sourceMap: isUseCssSourceMap(config),
           },
           options,
-          undefined,
-          deepmerge,
-        );
+          mergeFn: deepmerge,
+        });
 
         const rule = chain.module
           .rule(utils.CHAIN_ID.RULE.STYLUS)

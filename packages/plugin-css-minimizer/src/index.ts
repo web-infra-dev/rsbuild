@@ -29,12 +29,12 @@ export async function applyCSSMinimizer(
     'css-minimizer-webpack-plugin'
   );
 
-  const mergedOptions: CssMinimizerPluginOptions = mergeChainedOptions(
-    {
+  const mergedOptions: CssMinimizerPluginOptions = mergeChainedOptions({
+    defaults: {
       minimizerOptions: getCssnanoDefaultOptions(),
     },
-    options.pluginOptions,
-  );
+    options: options.pluginOptions,
+  });
 
   chain.optimization
     .minimizer(CHAIN_ID.MINIMIZER.CSS)

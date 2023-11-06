@@ -17,7 +17,6 @@ import {
   type Context,
   type RspackRule,
   type RuleSetRule,
-  type StyleLoaderOptions,
   type ModifyBundlerChainUtils,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin, NormalizedConfig } from '../types';
@@ -66,14 +65,15 @@ export async function applyBaseCSSRule({
     });
 
     if (!isServer && !isWebWorker) {
-      const styleLoaderOptions = mergeChainedOptions<StyleLoaderOptions, null>(
-        {
+      const styleLoaderOptions = mergeChainedOptions({
+        defaults: {
           // todo: hmr does not work while esModule is true
           // @ts-expect-error
           esModule: false,
         },
-        config.tools.styleLoader,
-      );
+        options: config.tools.styleLoader,
+      });
+
       rule
         .use(CHAIN_ID.USE.STYLE)
         .loader(require.resolve('style-loader'))

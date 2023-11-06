@@ -26,12 +26,12 @@ async function modifyRspackConfig(
   );
 
   if (context.config.tools?.rspack) {
-    modifiedConfig = mergeChainedOptions(
-      modifiedConfig,
-      context.config.tools.rspack,
+    modifiedConfig = mergeChainedOptions({
+      defaults: modifiedConfig,
+      options: context.config.tools.rspack,
       utils,
-      utils.mergeConfig,
-    );
+      mergeFn: utils.mergeConfig,
+    });
   }
 
   debug('modify Rspack config done');

@@ -157,11 +157,11 @@ export const applyUserBabelConfig = (
       ...extraBabelUtils,
     } as BabelConfigUtils;
 
-    return mergeChainedOptions(
-      defaultOptions,
-      userBabelConfig || {},
-      babelUtils,
-    );
+    return mergeChainedOptions({
+      defaults: defaultOptions,
+      options: userBabelConfig,
+      utils: babelUtils,
+    });
   }
 
   return defaultOptions;

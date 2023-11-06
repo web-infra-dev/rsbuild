@@ -60,11 +60,11 @@ export async function getJSMinifyOptions(config: NormalizedConfig) {
       break;
   }
 
-  const mergedOptions = mergeChainedOptions(
-    DEFAULT_OPTIONS,
+  const mergedOptions = mergeChainedOptions({
+    defaults: DEFAULT_OPTIONS,
     // @ts-expect-error
-    config.tools.terser,
-  );
+    options: config.tools.terser,
+  });
 
   const finalOptions = applyRemoveConsole(mergedOptions, config);
 
