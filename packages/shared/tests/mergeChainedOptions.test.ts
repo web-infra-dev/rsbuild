@@ -85,7 +85,7 @@ describe('mergeChainedOptions', () => {
     });
   });
 
-  test.only(`should support function and use object param`, () => {
+  test(`should support function and use object param`, () => {
     const defaults = { a: 'a' };
 
     const options = [
