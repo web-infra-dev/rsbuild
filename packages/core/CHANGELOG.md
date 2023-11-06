@@ -1,5 +1,13 @@
 # @rsbuild/core
 
+## 0.0.15
+
+### Patch Changes
+
+- 25ab68e: refactor: use plugin to generate titles instead of template params
+- Updated dependencies [25ab68e]
+  - @rsbuild/shared@0.0.15
+
 ## 0.0.14
 
 ### Patch Changes

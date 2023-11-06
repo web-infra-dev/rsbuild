@@ -1,5 +1,13 @@
 # @rsbuild/plugin-swc
 
+## 0.0.15
+
+### Patch Changes
+
+- bfe7aac: chore: bump swc and helpers
+- Updated dependencies [25ab68e]
+  - @rsbuild/shared@0.0.15
+
 ## 0.0.14
 
 ### Patch Changes

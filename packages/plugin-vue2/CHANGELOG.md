@@ -1,5 +1,14 @@
 # @rsbuild/plugin-vue2
 
+## 0.0.15
+
+### Patch Changes
+
+- 18fd155: fix(plugin-vue): failed to resolve webpack
+- Updated dependencies [25ab68e]
+  - @rsbuild/shared@0.0.15
+  - @rsbuild/core@0.0.15
+
 ## 0.0.14
 
 ### Patch Changes
