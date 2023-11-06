@@ -64,8 +64,8 @@ export const pluginTsLoader = (): RsbuildPlugin => {
         };
 
         const tsLoaderOptions = mergeChainedOptions({
-          // @ts-expect-error ts-loader has incorrect types for compilerOptions
           defaults: tsLoaderDefaultOptions,
+          // @ts-expect-error ts-loader has incorrect types for compilerOptions
           options: config.tools.tsLoader,
           utils: tsLoaderUtils,
         });

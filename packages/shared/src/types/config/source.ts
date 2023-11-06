@@ -1,6 +1,10 @@
 import type { RsbuildTarget } from '../rsbuild';
 import type { ModifyChainUtils } from '../hooks';
-import type { ChainedConfig, JSONValue } from '../utils';
+import type {
+  ChainedConfig,
+  ChainedConfigWithUtils,
+  JSONValue,
+} from '../utils';
 
 export type Alias = Record<string, string | string[]>;
 
@@ -11,7 +15,7 @@ export type MainFields = (string | string[])[];
 
 export type GlobalVars = Record<string, JSONValue>;
 
-export type ChainedGlobalVars = ChainedConfig<
+export type ChainedGlobalVars = ChainedConfigWithUtils<
   GlobalVars,
   Pick<ModifyChainUtils, 'env' | 'target'>
 >;
