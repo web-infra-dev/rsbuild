@@ -1,12 +1,4 @@
-- **Type:**
-
-```ts
-type MetaAttrs = { [attrName: string]: string | boolean };
-type MetaOptions = {
-  [name: string]: string | false | MetaAttrs;
-};
-```
-
+- **Type:** `Object | Function`
 - **Default:**
 
 ```ts
@@ -16,16 +8,21 @@ const defaultMeta = {
     charset: 'UTF-8',
   },
   // <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  viewport: {
-    name: 'viewport',
-    content: 'width=device-width, initial-scale=1.0',
-  },
+  viewport: 'width=device-width, initial-scale=1.0',
 };
 ```
 
 Configure the `<meta>` tag of the HTML.
 
 ### String Type
+
+- **Type:**
+
+```ts
+type MetaOptions = {
+  [name: string]: string;
+};
+```
 
 When the `value` of a `meta` object is a string, the `key` of the object is automatically mapped to `name`, and the `value` is mapped to `content`.
 
@@ -49,19 +46,31 @@ The generated `meta` tag in HTML is:
 
 ### Object Type
 
+- **Type:**
+
+```ts
+type MetaOptions = {
+  [name: string]:
+    | string
+    | false
+    | {
+        [attr: string]: string | boolean;
+      };
+};
+```
+
 When the `value` of a `meta` object is an object, the `key: value` of the object is mapped to the attribute of the `meta` tag.
 
 In this case, the `name` and `content` properties will not be set by default.
 
-For example to set `http-equiv`:
+For example to set `charset`:
 
 ```js
 export default {
   html: {
     meta: {
-      'http-equiv': {
-        'http-equiv': 'x-ua-compatible',
-        content: 'ie=edge',
+      charset: {
+        charset: 'UTF-8',
       },
     },
   },
@@ -71,20 +80,76 @@ export default {
 The `meta` tag in HTML is:
 
 ```html
-<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<meta charset="UTF-8" />
+```
+
+### Function Usage
+
+- **Type:**
+
+```ts
+type MetaFunction = ({
+  value: MetaOptions,
+  entryName: string,
+}) => MetaOptions | void;
+```
+
+When `html.meta` is of type `Function`, the function receives an object as an argument with the following properties:
+
+- `value`: the default meta configuration of Rsbuild.
+- `entryName`: the name of the current entry.
+
+You can directly modify the configuration object and not return anything, or you can return an object as the final configuration.
+
+For example, you can directly modify the built-in `meta` configuration object:
+
+```js
+export default {
+  html: {
+    meta({ value }) {
+      value.description = 'this is my page';
+      return value;
+    },
+  },
+};
+```
+
+In the MPA (Multi-Page Application) scenario, you can return different `meta` configurations based on the entry name, thus generating different `meta` tags for each page:
+
+```js
+export default {
+  html: {
+    meta({ entryName }) {
+      switch (entryName) {
+        case 'foo':
+          return {
+            description: 'this is foo page',
+          };
+        case 'bar':
+          return {
+            description: 'this is bar page',
+          };
+        default:
+          return {
+            description: 'this is other pages',
+          };
+      }
+    },
+  },
+};
 ```
 
 ### Remove Default Value
 
 Setting the `value` of the `meta` object to `false` and the meta tag will not be generated.
 
-For example to remove the `imagemode`:
+For example to remove the `viewport`:
 
 ```ts
 export default {
   html: {
     meta: {
-      imagemode: false,
+      viewport: false,
     },
   },
 };

@@ -63,16 +63,15 @@ test('should generate meta tags via function correctly', async () => {
     },
     rsbuildConfig: {
       html: {
-        meta(val, { entryName }) {
+        meta({ value, entryName }) {
           if (entryName === 'bar') {
             return {
-              ...val,
+              ...value,
               description: 'this is bar',
             };
           }
 
           return {
-            ...val,
             description: 'this is foo',
             'http-equiv': {
               'http-equiv': 'x-ua-compatible',
@@ -91,6 +90,9 @@ test('should generate meta tags via function correctly', async () => {
   expect(fooHtml).toContain('<meta name="description" content="this is foo">');
   expect(fooHtml).toContain(
     '<meta http-equiv="x-ua-compatible" content="ie=edge">',
+  );
+  expect(fooHtml).not.toContain(
+    '<meta name="description" content="this is bar">',
   );
 
   const barHtml =
