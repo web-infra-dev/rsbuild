@@ -62,6 +62,13 @@ export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
 });
 
 export const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
+  meta: {
+    charset: { charset: 'UTF-8' },
+    viewport: {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1.0',
+    },
+  },
   inject: 'head',
   mountId: DEFAULT_MOUNT_ID,
   crossorigin: false,

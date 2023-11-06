@@ -8,13 +8,13 @@ export type ScriptLoading = 'defer' | 'module' | 'blocking';
 
 export type OutputStructure = 'flat' | 'nested';
 
-export type MetaAttributes = { [attributeName: string]: string | boolean };
+export type MetaAttrs = { [attrName: string]: string | boolean };
 
 export type MetaOptions = {
   [name: string]:
     | string
     | false // name content pair e.g. {viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'}`
-    | MetaAttributes; // custom properties e.g. { name:"viewport" content:"width=500, initial-scale=1" }
+    | MetaAttrs; // custom properties e.g. { name:"viewport" content:"width=500, initial-scale=1" }
 };
 
 export interface HtmlInjectTag {
@@ -140,6 +140,7 @@ export interface HtmlConfig {
 }
 
 export type NormalizedHtmlConfig = HtmlConfig & {
+  meta: MetaOptions;
   mountId: string;
   inject: ScriptInject;
   crossorigin: boolean | CrossOrigin;

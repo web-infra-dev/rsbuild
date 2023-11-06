@@ -47,12 +47,7 @@ export async function getMetaTags(
   config: { html: HtmlConfig; output: NormalizedOutputConfig },
 ) {
   const { meta, metaByEntries } = config.html;
-
   const metaOptions: MetaOptions = {};
-
-  if (config.output.charset === 'utf8') {
-    metaOptions.charset = { charset: 'utf-8' };
-  }
 
   Object.assign(metaOptions, meta, metaByEntries?.[entryName]);
 
