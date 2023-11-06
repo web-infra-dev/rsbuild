@@ -53,9 +53,9 @@
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.23.2",
-    "@modern-js/swc-plugins": "0.6.4",
+    "@modern-js/swc-plugins": "0.6.5",
     "@rsbuild/shared": "workspace:*",
-    "@swc/helpers": "0.5.1",
+    "@swc/helpers": "0.5.3",
     "core-js": "~3.32.2",
     "lodash": "^4.17.21"
   },
