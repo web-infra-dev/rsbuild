@@ -50,6 +50,52 @@ exports[`plugin-svelte > should add svelte loader properly 1`] = `
 }
 `;
 
+exports[`plugin-svelte > should override default svelte-loader options throw options.svelteLoaderOptions 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.svelte\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+            "options": {
+              "compilerOptions": {
+                "dev": false,
+              },
+              "emitCss": true,
+              "hotReload": false,
+              "preprocess": null,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "resolve": {
+    "alias": {
+      "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
+    },
+    "conditionNames": [
+      "svelte",
+      "browser",
+      "import",
+    ],
+    "extensions": [
+      ".svelte",
+    ],
+    "mainFields": [
+      "svelte",
+    ],
+  },
+  "resolveLoader": {
+    "alias": {
+      "svelte-loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+    },
+  },
+}
+`;
+
 exports[`plugin-svelte > should set dev and hotReload to false in production mode 1`] = `
 {
   "module": {

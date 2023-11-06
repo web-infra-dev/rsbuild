@@ -1,8 +1,16 @@
 import path from 'path';
 import { logger } from '@rsbuild/shared';
+import { deepmerge } from '@rsbuild/shared/deepmerge';
 import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
 
-export type PluginSvelteOptions = {};
+export type PluginSvelteOptions = {
+  /**
+   * The options of svelte-loader
+   *
+   * See https://github.com/sveltejs/svelte-loader
+   */
+  svelteLoaderOptions?: Record<string, any>;
+};
 
 export function pluginSvelte(
   options: PluginSvelteOptions = {},
@@ -58,19 +66,24 @@ export function pluginSvelte(
           },
         });
 
-        chain.module
-          .rule(CHAIN_ID.RULE.SVELTE)
-          .test(/\.svelte$/)
-          .use(CHAIN_ID.USE.SVELTE)
-          .loader(loaderPath)
-          .options({
+        const svelteLoaderOptions = deepmerge(
+          {
             compilerOptions: {
               dev: !isProd,
             },
             preprocess: sveltePreprocess(),
             emitCss: !rsbuildConfig.output.disableCssExtract,
             hotReload: !isProd && rsbuildConfig.dev.hmr,
-          });
+          },
+          options.svelteLoaderOptions ?? {},
+        );
+
+        chain.module
+          .rule(CHAIN_ID.RULE.SVELTE)
+          .test(/\.svelte$/)
+          .use(CHAIN_ID.USE.SVELTE)
+          .loader(loaderPath)
+          .options(svelteLoaderOptions);
       });
     },
   };
