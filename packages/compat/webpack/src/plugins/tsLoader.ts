@@ -37,11 +37,11 @@ export const pluginTsLoader = (): RsbuildPlugin => {
 
         const babelUtils = getBabelUtils(baseBabelConfig);
 
-        const babelLoaderOptions = mergeChainedOptions(
-          baseBabelConfig,
-          config.tools.babel,
-          babelUtils,
-        );
+        const babelLoaderOptions = mergeChainedOptions({
+          defaults: baseBabelConfig,
+          options: config.tools.babel,
+          utils: babelUtils,
+        });
 
         const includes: Array<string | RegExp> = [];
         const excludes: Array<string | RegExp> = [];
@@ -54,19 +54,21 @@ export const pluginTsLoader = (): RsbuildPlugin => {
             excludes.push(...castArray(items));
           },
         };
-        // @ts-expect-error ts-loader has incorrect types for compilerOptions
-        const tsLoaderOptions = mergeChainedOptions(
-          {
-            compilerOptions: {
-              target: 'esnext',
-              module: 'esnext',
-            },
-            transpileOnly: true,
-            allowTsInNodeModules: true,
+        const tsLoaderDefaultOptions = {
+          compilerOptions: {
+            target: 'esnext',
+            module: 'esnext',
           },
-          config.tools.tsLoader,
-          tsLoaderUtils,
-        );
+          transpileOnly: true,
+          allowTsInNodeModules: true,
+        };
+
+        const tsLoaderOptions = mergeChainedOptions({
+          // @ts-expect-error ts-loader has incorrect types for compilerOptions
+          defaults: tsLoaderDefaultOptions,
+          options: config.tools.tsLoader,
+          utils: tsLoaderUtils,
+        });
         const rule = chain.module.rule(CHAIN_ID.RULE.TS);
 
         applyScriptCondition({

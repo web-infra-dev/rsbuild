@@ -91,7 +91,10 @@ async function applyAlias({
     return;
   }
 
-  const mergedAlias = mergeChainedOptions({}, alias);
+  const mergedAlias = mergeChainedOptions({
+    defaults: {},
+    options: alias,
+  });
 
   /**
    * Format alias value:

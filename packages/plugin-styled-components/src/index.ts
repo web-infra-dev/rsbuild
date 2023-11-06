@@ -1,9 +1,9 @@
 import {
-  DefaultRsbuildPlugin,
-  getDefaultStyledComponentsConfig,
-  mergeChainedOptions,
-  ChainedConfig,
   useSSR,
+  mergeChainedOptions,
+  getDefaultStyledComponentsConfig,
+  type ChainedConfig,
+  type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
 
 /**
@@ -28,15 +28,15 @@ export const pluginStyledComponents = (
   name: 'plugin-styled-components',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
       const { bundlerType } = api.context;
 
       const isSSR = useSSR(api.context.target);
 
-      const styledComponentsOptions = mergeChainedOptions<
-        StyledComponentsOptions,
-        {}
-      >(getDefaultStyledComponentsConfig(isProd, isSSR), userConfig);
+      const styledComponentsOptions = mergeChainedOptions({
+        defaults: getDefaultStyledComponentsConfig(isProd, isSSR),
+        options: userConfig,
+      });
 
       if (!styledComponentsOptions) {
         return;

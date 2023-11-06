@@ -51,12 +51,11 @@ export const getDevServerOptions = async ({
     (serverOptions.dev as Exclude<typeof serverOptions.dev, boolean>) || {},
   );
 
-  const devConfig = mergeChainedOptions(
-    defaultDevConfig,
-    rsbuildConfig.tools?.devServer,
-    {},
-    deepmerge,
-  );
+  const devConfig = mergeChainedOptions({
+    defaults: defaultDevConfig,
+    options: rsbuildConfig.tools?.devServer,
+    mergeFn: deepmerge,
+  });
 
   const defaultConfig = getServerOptions(rsbuildConfig);
   const config = serverOptions.config

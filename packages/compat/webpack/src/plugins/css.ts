@@ -11,7 +11,6 @@ import {
   getCssModuleLocalIdentName,
   type Context,
   type BundlerChainRule,
-  type StyleLoaderOptions,
 } from '@rsbuild/shared';
 import type {
   RsbuildPlugin,
@@ -44,19 +43,8 @@ export async function applyBaseCSSRule({
 
   const enableSourceMap = isUseCssSourceMap(config);
   const enableCSSModuleTS = Boolean(config.output.enableCssModuleTSDeclaration);
-  // 2. Prepare loader options
-  const extraCSSOptions: Required<CSSExtractOptions> =
-    typeof config.tools.cssExtract === 'object'
-      ? config.tools.cssExtract
-      : {
-          loaderOptions: {},
-          pluginOptions: {},
-        };
-  const styleLoaderOptions = mergeChainedOptions<StyleLoaderOptions, null>(
-    {},
-    config.tools.styleLoader,
-  );
 
+  // 2. Prepare loader options
   const localIdentName = getCssModuleLocalIdentName(config, isProd);
 
   const cssLoaderOptions = await getCssLoaderOptions({
@@ -73,6 +61,14 @@ export async function applyBaseCSSRule({
   if (!isServer && !isWebWorker) {
     // use mini-css-extract-plugin loader
     if (enableExtractCSS) {
+      const extraCSSOptions: Required<CSSExtractOptions> =
+        typeof config.tools.cssExtract === 'object'
+          ? config.tools.cssExtract
+          : {
+              loaderOptions: {},
+              pluginOptions: {},
+            };
+
       rule
         .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
         .loader(require('mini-css-extract-plugin').loader)
@@ -81,6 +77,11 @@ export async function applyBaseCSSRule({
     }
     // use style-loader
     else {
+      const styleLoaderOptions = mergeChainedOptions({
+        defaults: {},
+        options: config.tools.styleLoader,
+      });
+
       rule
         .use(CHAIN_ID.USE.STYLE)
         .loader(require.resolve('style-loader'))

@@ -14,12 +14,17 @@ export const pluginPug = (
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+      const pugOptions = mergeChainedOptions({
+        defaults: {},
+        options: options.pugOptions,
+      });
+
       chain.module
         .rule(CHAIN_ID.RULE.PUG)
         .test(/\.pug$/)
         .use(CHAIN_ID.USE.PUG)
         .loader(path.resolve(__dirname, './pugLoader'))
-        .options(mergeChainedOptions({}, options.pugOptions));
+        .options(pugOptions);
     });
   },
 });

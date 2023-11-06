@@ -92,14 +92,14 @@ export const pluginBabel = (): RsbuildPlugin => ({
             config.performance.transformLodash,
           );
 
-          const babelConfig = mergeChainedOptions(
-            baseBabelConfig,
-            config.tools.babel,
-            {
+          const babelConfig = mergeChainedOptions({
+            defaults: baseBabelConfig,
+            options: config.tools.babel,
+            utils: {
               ...getBabelUtils(baseBabelConfig),
               ...babelUtils,
             },
-          );
+          });
 
           // 3. Compute final babel config
           const finalOptions: BabelConfig = {

@@ -81,7 +81,10 @@ async function getTemplateParameters(
       },
       ...baseParameters,
     };
-    return mergeChainedOptions(defaultOptions, templateParams);
+    return mergeChainedOptions({
+      defaults: defaultOptions,
+      options: templateParams,
+    });
   };
 }
 
@@ -217,14 +220,14 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
               }
             }
 
-            const finalOptions = mergeChainedOptions(
-              pluginOptions,
-              (config.tools as { htmlPlugin?: any }).htmlPlugin,
-              {
+            const finalOptions = mergeChainedOptions({
+              defaults: pluginOptions,
+              options: config.tools.htmlPlugin,
+              utils: {
                 entryName,
                 entryValue,
               },
-            );
+            });
 
             routesInfo.push({
               urlPath: index === 0 ? '/' : `/${entryName}`,
