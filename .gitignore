@@ -14,3 +14,4 @@ tsconfig.tsbuildinfo
 !.vscode/extensions.json
 .idea/
 .nx/
+.history/
