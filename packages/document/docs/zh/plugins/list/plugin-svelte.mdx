@@ -1,0 +1,61 @@
+# Svelte 插件
+
+Svelte 插件提供了对 Svelte 组件（`.svelte` 文件）的支持，插件内部集成了 [svelte-loader](https://github.com/sveltejs/svelte-loader)。
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-svelte -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginSvelte } from '@rsbuild/plugin-svelte';
+
+export default {
+  plugins: [pluginSvelte()],
+};
+```
+
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
+
+注册完插件后，你可以直接在代码中引入 `*.svelte` 单文件组件。
+
+## 选项
+
+如果你需要自定义 Svelte 的编译行为，可以使用以下配置项。
+
+### svelteLoaderOptions
+
+传递给 `svelte-loader` 的选项，请查阅 [svelte-loader 文档](https://github.com/sveltejs/svelte-loader) 来了解具体用法。
+
+- **类型：** `Object`
+- **默认值：**
+
+```js
+const defaultOptions = {
+  compilerOptions: {
+    dev: !isProd,
+  },
+  preprocess: require('svelte-preprocess')(),
+  emitCss: !rsbuildConfig.output.disableCssExtract,
+  hotReload: !isProd && rsbuildConfig.dev.hmr,
+}
+```
+
+- **示例：**
+
+```ts
+pluginSvelte({
+  svelteLoaderOptions: {
+    preprocess: null,
+  },
+});
+```

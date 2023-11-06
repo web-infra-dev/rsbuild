@@ -36,6 +36,12 @@ export default defineConfig({
 - [Vue 2 插件](/plugins/list/plugin-vue2)：提供对 Vue 2 SFC（单文件组件）的支持。
 - [Vue 2 JSX 插件](/plugins/list/plugin-vue2-jsx)：提供对 Vue 2 JSX / TSX 语法的支持。
 
+## Svelte 相关
+
+适用于 Svelte 框架的插件有：
+
+- [Svelte 插件](/plugins/list/plugin-svelte)：提供对 Svelte 组件（`.svelte` 文件）的支持
+
 ### 通用插件
 
 以下是与框架无关的通用插件：
