@@ -1368,6 +1368,9 @@ importers:
       vue-loader:
         specifier: ^17.2.2
         version: 17.3.0(webpack@5.89.0)
+      webpack:
+        specifier: ^5.89.0
+        version: 5.89.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1378,9 +1381,6 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
-      webpack:
-        specifier: ^5.89.0
-        version: 5.89.0
 
   packages/plugin-vue-jsx:
     dependencies:
@@ -1415,6 +1415,9 @@ importers:
       vue-loader:
         specifier: ^15.11.1
         version: 15.11.1(css-loader@6.8.1)(prettier@3.0.3)(webpack@5.89.0)
+      webpack:
+        specifier: ^5.89.0
+        version: 5.89.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1425,9 +1428,6 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
-      webpack:
-        specifier: ^5.89.0
-        version: 5.89.0
 
   packages/plugin-vue2-jsx:
     dependencies:
