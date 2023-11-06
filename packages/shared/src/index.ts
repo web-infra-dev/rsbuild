@@ -25,6 +25,6 @@ export * from './getLoaderOptions';
 export * from './patch';
 export * from './css';
 export * from './minimize';
-export * from './core-js';
+export * from './coreJs';
 export * from './progress';
 export * from './prettyTime';
