@@ -37,6 +37,6 @@ export const generateMetaTags = (metaOptions?: MetaOptions): MetaAttrs[] => {
       throw new Error('Invalid meta tag');
     }
 
-    return metaTagAttributes;
+    return metaTagAttributes || {};
   });
 };
