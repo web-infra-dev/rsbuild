@@ -1,7 +1,8 @@
 import { deepmerge } from '@rsbuild/shared/deepmerge';
-import type {
-  RsbuildPlugin,
-  RsbuildConfig as RsbuildRspackConfig,
+import {
+  mergeRsbuildConfig,
+  type RsbuildPlugin,
+  type RsbuildConfig as RsbuildRspackConfig,
 } from '@rsbuild/core';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 import type { UniBuilderRspackConfig, UniBuilderWebpackConfig } from '../types';
@@ -17,7 +18,8 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   rsbuildPlugins: RsbuildPlugin[];
 } {
   const rsbuildConfig = deepmerge({}, uniBuilderConfig);
-  const { output } = rsbuildConfig;
+  const extraConfig: RsbuildRspackConfig | RsbuildWebpackConfig = {};
+  const { html = {}, output = {} } = rsbuildConfig;
 
   if (output.cssModuleLocalIdentName) {
     output.cssModules ||= {};
@@ -25,8 +27,15 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
     delete output.cssModuleLocalIdentName;
   }
 
+  if (html.metaByEntries) {
+    extraConfig.html ||= {};
+    extraConfig.html.meta = ({ entryName }: { entryName: string }) =>
+      html.metaByEntries![entryName];
+    delete html.metaByEntries;
+  }
+
   return {
-    rsbuildConfig: rsbuildConfig,
+    rsbuildConfig: mergeRsbuildConfig(rsbuildConfig, extraConfig),
     rsbuildPlugins: [],
   };
 }

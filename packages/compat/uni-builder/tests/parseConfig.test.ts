@@ -8,12 +8,37 @@ describe('parseCommonConfig', () => {
           cssModuleLocalIdentName: '[local]-[hash:base64:6]',
         },
       }).rsbuildConfig,
-    ).toEqual({
-      output: {
-        cssModules: {
-          localIdentName: '[local]-[hash:base64:6]',
+    ).toMatchSnapshot();
+  });
+
+  test('html.metaByEntries', () => {
+    expect(
+      parseCommonConfig({
+        html: {
+          metaByEntries: {
+            foo: {
+              viewport: 'bar',
+            },
+          },
         },
-      },
-    });
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+
+    expect(
+      parseCommonConfig({
+        html: {
+          meta: {
+            charset: {
+              charset: 'UTF-8',
+            },
+          },
+          metaByEntries: {
+            foo: {
+              viewport: 'bar',
+            },
+          },
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
   });
 });

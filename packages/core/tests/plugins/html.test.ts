@@ -4,11 +4,6 @@ it('should generate meta tags correctly', async () => {
   const rsbuildConfig = {
     html: {
       meta: { description: 'This is basic meta', bar: 'bar', foo: 'foo' },
-      metaByEntries: {
-        entry1: {
-          description: 'This is about page',
-        },
-      },
     },
     output: {} as any,
   };

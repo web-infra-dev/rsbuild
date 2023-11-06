@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`parseCommonConfig > html.metaByEntries 1`] = `
+{
+  "html": {
+    "meta": [Function],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.metaByEntries 2`] = `
+{
+  "html": {
+    "meta": [
+      {
+        "charset": {
+          "charset": "UTF-8",
+        },
+      },
+      [Function],
+    ],
+  },
+}
+`;
+
+exports[`parseCommonConfig > output.cssModuleLocalIdentName 1`] = `
+{
+  "output": {
+    "cssModules": {
+      "localIdentName": "[local]-[hash:base64:6]",
+    },
+  },
+}
+`;

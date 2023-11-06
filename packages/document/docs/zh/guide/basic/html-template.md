@@ -69,7 +69,7 @@ export default {
 
 ## 设置 meta 标签
 
-你可以通过 [html.meta](/config/options/html.html#htmlmeta) 和 [html.metaByEntries](/config/options/html.html#htmlmetabyentries) 配置项来设置 HTML 的 `<meta>` 标签。
+你可以通过 [html.meta](/config/options/html.html#htmlmeta) 配置项来设置 HTML 的 `<meta>` 标签。
 
 比如设置 description：
 

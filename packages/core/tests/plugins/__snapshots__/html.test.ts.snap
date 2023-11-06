@@ -20,7 +20,7 @@ exports[`should generate meta tags correctly 1`] = `
 exports[`should generate meta tags correctly 2`] = `
 [
   {
-    "content": "This is about page",
+    "content": "This is basic meta",
     "name": "description",
   },
   {
