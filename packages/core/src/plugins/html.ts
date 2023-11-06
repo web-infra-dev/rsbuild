@@ -64,15 +64,12 @@ export async function getMetaTags(
   entryName: string,
   config: { html: HtmlConfig; output: NormalizedOutputConfig },
 ) {
-  const { metaByEntries } = config.html;
   const merged = mergeChainedOptions({
     defaults: {},
     options: config.html.meta,
     utils: { entryName },
     useObjectParam: true,
   });
-
-  Object.assign(merged, metaByEntries?.[entryName]);
 
   return generateMetaTags(merged);
 }

@@ -32,7 +32,7 @@
 | Stylus 预处理        | 可选功能，编译 Stylus 文件                          | <ul><li>[Stylus 插件](/plugins/list/plugin-stylus.html)</li></ul>                                                                                                                                             |
 | CSS Modules 编译     | 默认支持编译 CSS Modules 文件                       | <ul><li>[使用 CSS Modules](/guide/basic/css-modules.html)</li><li>[tools.cssLoader](/config/options/tools.html#toolscssloader)</li></ul>                                                                      |
 | CSS Modules 类型提示 | 可选功能，自动生成 CSS Modules 的类型定义文件       | <ul><li>[使用 CSS Modules](/guide/basic/css-modules.html)</li><li>[enableCssModuleTSDeclaration](/config/options/output.html#outputenablecssmoduletsdeclaration)</li></ul>                                    |
-| CSS 压缩             | 默认在生产环境构建时开启压缩                        | <ul><li>[引用样式资源](/guide/basic/static-assets.html)</li></ul>                                                                        |
+| CSS 压缩             | 默认在生产环境构建时开启压缩                        | <ul><li>[引用样式资源](/guide/basic/static-assets.html)</li></ul>                                                                                                                                             |
 | 抽取 CSS 文件        | 默认会将 CSS 抽取为独立的文件                       | <ul><li>[tools.cssExtract](/config/options/tools.html#toolscssextract)</li></ul>                                                                                                                              |
 | Styled Components    | 支持 styled-components 编译                         | <ul><li>[Styled Components 插件](/plugins/list/plugin-styled-components.html)</li></ul>                                                                                                                       |
 | 内联 CSS 到 JS 中    | 可选功能，将 CSS 文件内联到 JS 文件中               | <ul><li>[引用样式资源](/guide/basic/static-assets.html)</li><li>[output.disableCssExtract](/config/options/output.html#outputdisablecssextract)</li></ul>                                                     |
@@ -43,7 +43,7 @@
 | 功能              | 描述                            | 相关链接                                                                                                                                                                                                                     |
 | ----------------- | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 设置标题          | 设置 HTML 的 title 标签         | <ul><li>[设置页面标题](/guide/basic/html-template.html#设置页面标题)</li><li>[html.title](/config/options/html.html#htmltitle)</li><li>[html.titleByEntries](/config/options/html.html#htmltitlebyentries)</li></ul>         |
-| 设置 meta         | 设置 HTML 的 meta 标签          | <ul><li>[设置 meta 标签](/guide/basic/html-template.html#设置-meta-标签)</li><li>[html.meta](/config/options/html.html#htmlmeta)</li><li>[html.metaByEntries](/config/options/html.html#htmlmetabyentries)</li></ul>         |
+| 设置 meta         | 设置 HTML 的 meta 标签          | <ul><li>[设置 meta 标签](/guide/basic/html-template.html#设置-meta-标签)</li><li>[html.meta](/config/options/html.html#htmlmeta)</li></ul>                                                                                   |
 | 设置 favicon      | 设置页面的 favicon 图标         | <ul><li>[设置页面图标](/guide/basic/html-template.html#设置页面图标)</li><li>[html.favicon](/config/options/html.html#htmlfavicon)</li><li>[html.faviconByEntries](/config/options/html.html#htmlfaviconbyentries)</li></ul> |
 | 设置 app 图标     | 设置 iOS 系统下的 apple icon    | <ul><li>[设置页面图标](/guide/basic/html-template.html#设置页面图标)</li><li>[html.appIcon](/config/options/html.html#htmlappicon)</li></ul>                                                                                 |
 | 使用 EJS 模板引擎 | 可选功能，使用 EJS 模板语法     | <ul><li>[模板引擎 - EJS](/guide/basic/html-template.html#ejs)</li></ul>                                                                                                                                                      |
@@ -70,16 +70,16 @@
 
 ## 静态资源相关
 
-| 功能               | 描述                                           | 相关链接                                                                                                                                               |
-| ------------------ | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 引用图片资源       | 支持在代码中引用图片资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets.html)</li></ul>                                                                                      |
-| 引用字体资源       | 支持在代码中引用字体资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets.html)</li></ul>                                                                                      |
-| 引用视频资源       | 支持在代码中引用视频资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets.html)</li></ul>                                                                                      |
-| 引用 Wasm 资源     | 支持在代码中引用 WebAssembly 资源              | <ul><li>[引用 Wasm 资源](/guide/basic/wasm-assets.html)</li></ul>                                                                                      |
-| 引用 node addons   | 支持在代码中引用 Node.js addons                | -                                                                                                                                                      |
-| 静态资源内联       | 默认将体积较小的图片等资源内联到 JS 中         | <ul><li>[静态资源内联](/guide/optimization/inline-assets.html)</li><li>[output.dataUriLimit](/config/options/output.html#outputdataurilimit)</li></ul> |
-| 清理静态资源       | 每次开始构建前，自动清理 dist 目录下的静态资源 | <ul><li>[output.cleanDistPath](/config/options/output.html#outputcleandistpath)</li></ul>                                                              |
-| 拷贝静态资源       | 可选功能，将静态资源拷贝到 dist 目录下         | <ul><li>[output.copy](/config/options/output.html#outputcopy)</li></ul>                                                                                |
+| 功能             | 描述                                           | 相关链接                                                                                                                                               |
+| ---------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 引用图片资源     | 支持在代码中引用图片资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets.html)</li></ul>                                                                                      |
+| 引用字体资源     | 支持在代码中引用字体资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets.html)</li></ul>                                                                                      |
+| 引用视频资源     | 支持在代码中引用视频资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets.html)</li></ul>                                                                                      |
+| 引用 Wasm 资源   | 支持在代码中引用 WebAssembly 资源              | <ul><li>[引用 Wasm 资源](/guide/basic/wasm-assets.html)</li></ul>                                                                                      |
+| 引用 node addons | 支持在代码中引用 Node.js addons                | -                                                                                                                                                      |
+| 静态资源内联     | 默认将体积较小的图片等资源内联到 JS 中         | <ul><li>[静态资源内联](/guide/optimization/inline-assets.html)</li><li>[output.dataUriLimit](/config/options/output.html#outputdataurilimit)</li></ul> |
+| 清理静态资源     | 每次开始构建前，自动清理 dist 目录下的静态资源 | <ul><li>[output.cleanDistPath](/config/options/output.html#outputcleandistpath)</li></ul>                                                              |
+| 拷贝静态资源     | 可选功能，将静态资源拷贝到 dist 目录下         | <ul><li>[output.copy](/config/options/output.html#outputcopy)</li></ul>                                                                                |
 
 ## 性能相关
 

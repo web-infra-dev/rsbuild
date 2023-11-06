@@ -69,7 +69,7 @@ export default {
 
 ## Set Meta Tags
 
-You can set the meta tags through the [html.meta](/config/options/html.html#htmlmeta) and [html.metaByEntries](/config/options/html.html#htmlmetabyentries) configs.
+You can set the meta tags through the [html.meta](/config/options/html.html#htmlmeta) config.
 
 For example to setting description:
 

@@ -1,3 +1,4 @@
+import type { MetaOptions } from '@rsbuild/shared';
 import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core/rspack-provider';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 
@@ -20,7 +21,7 @@ export type RsbuildConfig<B = 'rspack'> = B extends 'rspack'
   : RsbuildWebpackConfig;
 
 export type UniBuilderExtraConfig = {
-  output: {
+  output?: {
     /**
      * @deprecated use output.cssModules.localIdentName instead
      */
@@ -29,6 +30,12 @@ export type UniBuilderExtraConfig = {
      * Whether to generate a manifest file that contains information of all assets.
      */
     enableAssetManifest?: boolean;
+  };
+  html?: {
+    /**
+     * @deprecated use html.meta instead
+     */
+    metaByEntries?: Record<string, MetaOptions>;
   };
 };
 
