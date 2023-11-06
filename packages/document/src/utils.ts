@@ -1,6 +1,9 @@
-import { useLang, withBase } from 'rspress/runtime';
+import { useLang, withBase, usePageData } from 'rspress/runtime';
 
 export function useUrl(url: string) {
   const lang = useLang();
-  return withBase(lang === 'zh' ? url : `/en${url}`);
+  const {
+    siteData: { lang: defaultLang },
+  } = usePageData();
+  return withBase(lang === defaultLang ? url : `/${lang}${url}`);
 }
