@@ -182,6 +182,8 @@ export const CHAIN_ID = {
     HTML_TAGS: 'html-tags',
     /** HtmlMetaPlugin */
     HTML_META: 'html-meta',
+    /** HtmlTitlePlugin */
+    HTML_TITLE: 'html-title',
     /** HtmlNoncePlugin */
     HTML_NONCE: 'html-nonce',
     /** HtmlCrossOriginPlugin */

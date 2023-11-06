@@ -3,7 +3,6 @@
 
 ```ts
 type DefaultParameters = {
-  title: string; // corresponding to html.title config
   mountId: string; // corresponding to html.mountId config
   entryName: string; // entry name
   assetPrefix: string; // corresponding to output.assetPrefix config

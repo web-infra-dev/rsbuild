@@ -11,6 +11,7 @@ import {
   isPlainObject,
   isHtmlDisabled,
   HtmlMetaPlugin,
+  HtmlTitlePlugin,
   getTemplatePath,
   ROUTE_SPEC_FILE,
   removeTailSlash,
@@ -21,12 +22,13 @@ import type {
   HtmlConfig,
   MetaOptions,
   FaviconUrls,
-  DefaultRsbuildPlugin,
   NormalizedConfig,
-  SharedRsbuildPluginAPI,
-  HtmlTagsPluginOptions,
   HTMLPluginOptions,
+  DefaultRsbuildPlugin,
   HtmlMetaPluginOptions,
+  HtmlTagsPluginOptions,
+  HtmlTitlePluginOptions,
+  SharedRsbuildPluginAPI,
   NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import _ from 'lodash';
@@ -65,11 +67,9 @@ async function getTemplateParameters(
   const { mountId, templateParameters, templateParametersByEntries } =
     config.html;
 
-  const title = getTitle(entryName, config);
   const templateParams =
     templateParametersByEntries?.[entryName] || templateParameters;
   const baseParameters = {
-    title,
     mountId,
     entryName,
     assetPrefix,
@@ -172,6 +172,10 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
           meta: [],
           HtmlPlugin,
         };
+        const titlePluginOptions: HtmlTitlePluginOptions = {
+          titles: [],
+          HtmlPlugin,
+        };
 
         await Promise.all(
           entryNames.map(async (entryName, index) => {
@@ -182,6 +186,7 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
             const filename = htmlPaths[entryName];
             const template = getTemplatePath(entryName, config);
             const metaTags = await getMetaTags(entryName, config);
+            const title = await getTitle(entryName, config);
             const templateParameters = await getTemplateParameters(
               entryName,
               config,
@@ -191,6 +196,12 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
             if (metaTags.length) {
               metaPluginOptions.meta.push({
                 tags: metaTags,
+                filename,
+              });
+            }
+            if (title) {
+              titlePluginOptions.titles.push({
+                title,
                 filename,
               });
             }
@@ -243,6 +254,12 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
           chain
             .plugin(CHAIN_ID.PLUGIN.HTML_META)
             .use(HtmlMetaPlugin, [metaPluginOptions]);
+        }
+
+        if (titlePluginOptions.titles.length) {
+          chain
+            .plugin(CHAIN_ID.PLUGIN.HTML_TITLE)
+            .use(HtmlTitlePlugin, [titlePluginOptions]);
         }
 
         if (config.security) {
