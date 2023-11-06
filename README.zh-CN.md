@@ -78,7 +78,7 @@ Rsbuild 还为上层的解决方案（如 Rspress 和 Modern.js）提供通用�
 Rsbuild 的一些实现参考了以下项目，感谢他们：
 
 - `plugin-module-scope` 和 `plugin-file-size`：参考自 [create-react-app](https://github.com/facebook/create-react-app)
-- `generateMetaTags` 工具函数：参考自 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)。
+- 部分工具函数参考自 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)。
 
 ## License
 

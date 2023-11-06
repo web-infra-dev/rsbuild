@@ -76,7 +76,7 @@ This repo has adopted the ByteDance Open Source Code of Conduct. Please check [C
 Some implementations of Rsbuild are referenced from the following projects. We would like to express our gratitude to them:
 
 - `plugin-module-scope` and `plugin-file-size`: referenced from [create-react-app](https://github.com/facebook/create-react-app)
-- `generateMetaTags` util: referenced from [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
+- Some utils are referenced from [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
 
 ## License
 

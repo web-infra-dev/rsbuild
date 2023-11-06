@@ -1,4 +1,8 @@
-import type { ArrayOrNot, ChainedConfig } from '../utils';
+import type {
+  ArrayOrNot,
+  ChainedConfig,
+  ChainedConfigCombineUtils,
+} from '../utils';
 
 export type CrossOrigin = 'anonymous' | 'use-credentials';
 
@@ -8,13 +12,18 @@ export type ScriptLoading = 'defer' | 'module' | 'blocking';
 
 export type OutputStructure = 'flat' | 'nested';
 
+/**
+ * custom properties
+ * e.g. { name: 'viewport' content: 'width=500, initial-scale=1' }
+ * */
 export type MetaAttrs = { [attrName: string]: string | boolean };
 
 export type MetaOptions = {
-  [name: string]:
-    | string
-    | false // name content pair e.g. {viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'}`
-    | MetaAttrs; // custom properties e.g. { name:"viewport" content:"width=500, initial-scale=1" }
+  /**
+   * name content pair
+   * e.g. { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' }`
+   * */
+  [name: string]: string | false | MetaAttrs | undefined;
 };
 
 export interface HtmlInjectTag {
@@ -44,7 +53,7 @@ export interface HtmlConfig {
   /**
    * Configure the `<meta>` tag of the HTML.
    */
-  meta?: MetaOptions;
+  meta?: ChainedConfigCombineUtils<MetaOptions, { entryName: string }>;
   /**
    * Set different meta tags for different pages.
    * The usage is same as `meta`, and you can use the "entry name" as the key to set each page individually.

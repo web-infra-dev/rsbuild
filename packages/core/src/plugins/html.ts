@@ -19,6 +19,7 @@ import {
 } from '@rsbuild/shared';
 import { fs } from '@rsbuild/shared/fs-extra';
 import type {
+  MetaAttrs,
   HtmlConfig,
   MetaOptions,
   FaviconUrls,
@@ -32,7 +33,24 @@ import type {
   NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import _ from 'lodash';
-import { generateMetaTags } from '../utils/generateMetaTags';
+
+export const generateMetaTags = (metaOptions?: MetaOptions): MetaAttrs[] => {
+  if (!metaOptions) {
+    return [];
+  }
+
+  return Object.keys(metaOptions)
+    .map((metaName) => {
+      const metaTagContent = metaOptions[metaName];
+      return typeof metaTagContent === 'string'
+        ? {
+            name: metaName,
+            content: metaTagContent,
+          }
+        : metaTagContent;
+    })
+    .filter(Boolean) as MetaAttrs[];
+};
 
 // This is a minimist subset of modern.js server routes
 type RoutesInfo = {
@@ -46,12 +64,17 @@ export async function getMetaTags(
   entryName: string,
   config: { html: HtmlConfig; output: NormalizedOutputConfig },
 ) {
-  const { meta, metaByEntries } = config.html;
-  const metaOptions: MetaOptions = {};
+  const { metaByEntries } = config.html;
+  const merged = mergeChainedOptions({
+    defaults: {},
+    options: config.html.meta,
+    utils: { entryName },
+    useObjectParam: true,
+  });
 
-  Object.assign(metaOptions, meta, metaByEntries?.[entryName]);
+  Object.assign(merged, metaByEntries?.[entryName]);
 
-  return generateMetaTags(metaOptions);
+  return generateMetaTags(merged);
 }
 
 async function getTemplateParameters(
