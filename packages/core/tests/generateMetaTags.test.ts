@@ -14,13 +14,8 @@ describe('generateMetaTags', () => {
     };
     expect(generateMetaTags(options)).toEqual([
       {
-        attributes: {
-          content: 'width=500, initial-scale=1',
-          name: 'viewport',
-        },
-        meta: {},
-        tagName: 'meta',
-        voidTag: true,
+        content: 'width=500, initial-scale=1',
+        name: 'viewport',
       },
     ]);
   });

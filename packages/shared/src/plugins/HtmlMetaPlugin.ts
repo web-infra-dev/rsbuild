@@ -1,12 +1,9 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { HtmlTagObject } from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
+import type { MetaAttrs } from '../types';
 
 export type HtmlMetaPluginOptions = {
-  meta: Array<{
-    tags: HtmlTagObject[];
-    filename: string;
-  }>;
+  meta: Record<string, MetaAttrs[]>;
   HtmlPlugin: typeof HtmlWebpackPlugin;
 };
 
@@ -29,12 +26,19 @@ export class HtmlMetaPlugin {
       this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tap(
         this.name,
         (data) => {
-          const matched = this.meta.find(
-            (item) => item.filename === data.outputName,
+          const matchedKey = Object.keys(this.meta).find(
+            (key) => key === data.outputName,
           );
 
-          if (matched) {
-            data.headTags.unshift(...matched.tags);
+          if (matchedKey) {
+            data.headTags.unshift(
+              ...this.meta[matchedKey].map((attr) => ({
+                attributes: attr,
+                meta: {},
+                tagName: 'meta',
+                voidTag: true,
+              })),
+            );
           }
 
           return data;

@@ -41,6 +41,21 @@ exports[`plugin-inline-chunk > should add InlineChunkHtmlPlugin properly by defa
       },
       "version": 5,
     },
+    HtmlMetaPlugin {
+      "HtmlPlugin": [Function],
+      "meta": {
+        "main.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+      },
+      "name": "HtmlMetaPlugin",
+    },
     InlineChunkHtmlPlugin {
       "distPath": {
         "css": "static/css",
@@ -99,6 +114,21 @@ exports[`plugin-inline-chunk > should use proper plugin options when disableInli
       },
       "version": 5,
     },
+    HtmlMetaPlugin {
+      "HtmlPlugin": [Function],
+      "meta": {
+        "main.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+      },
+      "name": "HtmlMetaPlugin",
+    },
     InlineChunkHtmlPlugin {
       "distPath": {
         "css": "static/css",
@@ -154,6 +184,21 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlMetaPlugin {
+      "HtmlPlugin": [Function],
+      "meta": {
+        "main.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+      },
+      "name": "HtmlMetaPlugin",
     },
     InlineChunkHtmlPlugin {
       "distPath": {
@@ -213,6 +258,21 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlMetaPlugin {
+      "HtmlPlugin": [Function],
+      "meta": {
+        "main.html": [
+          {
+            "charset": "UTF-8",
+          },
+          {
+            "content": "width=device-width, initial-scale=1.0",
+            "name": "viewport",
+          },
+        ],
+      },
+      "name": "HtmlMetaPlugin",
     },
     InlineChunkHtmlPlugin {
       "distPath": {

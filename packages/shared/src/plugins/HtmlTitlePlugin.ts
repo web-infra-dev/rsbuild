@@ -2,10 +2,7 @@ import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
 
 export type HtmlTitlePluginOptions = {
-  titles: Array<{
-    title: string;
-    filename: string;
-  }>;
+  titles: Record<string, string>;
   HtmlPlugin: typeof HtmlWebpackPlugin;
 };
 
@@ -28,14 +25,14 @@ export class HtmlTitlePlugin {
       this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tap(
         this.name,
         (data) => {
-          const matched = this.titles.find(
-            (item) => item.filename === data.outputName,
+          const matchedKey = Object.keys(this.titles).find(
+            (key) => key === data.outputName,
           );
 
-          if (matched) {
+          if (matchedKey) {
             data.headTags.unshift({
               tagName: 'title',
-              innerHTML: matched.title,
+              innerHTML: this.titles[matchedKey],
               attributes: {},
               voidTag: false,
               meta: {},
