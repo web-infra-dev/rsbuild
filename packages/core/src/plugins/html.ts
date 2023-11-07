@@ -2,10 +2,8 @@ import path from 'path';
 import {
   isURL,
   castArray,
-  getTitle,
   getMinify,
-  getInject,
-  getFavicon,
+  isFunction,
   getDistPath,
   isFileExists,
   isPlainObject,
@@ -33,6 +31,35 @@ import type {
   NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import _ from 'lodash';
+
+export function getTitle(entryName: string, config: { html: HtmlConfig }) {
+  const { title, titleByEntries } = config.html;
+  if (titleByEntries?.[entryName]) {
+    return titleByEntries?.[entryName];
+  }
+
+  return mergeChainedOptions({
+    defaults: '',
+    options: title,
+    utils: { entryName },
+    useObjectParam: true,
+  });
+}
+
+export function getInject(entryName: string, config: { html: HtmlConfig }) {
+  const { inject, injectByEntries } = config.html;
+  return injectByEntries?.[entryName] || inject || true;
+}
+
+export function getFavicon(
+  entryName: string,
+  config: {
+    html: HtmlConfig;
+  },
+) {
+  const { favicon, faviconByEntries } = config.html;
+  return faviconByEntries?.[entryName] || favicon;
+}
 
 export const generateMetaTags = (metaOptions?: MetaOptions): MetaAttrs[] => {
   if (!metaOptions) {
@@ -204,7 +231,7 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
             const filename = htmlPaths[entryName];
             const template = getTemplatePath(entryName, config);
             const metaTags = await getMetaTags(entryName, config);
-            const title = await getTitle(entryName, config);
+            const title = getTitle(entryName, config);
             const templateParameters = await getTemplateParameters(
               entryName,
               config,

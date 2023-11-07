@@ -29,6 +29,13 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
       },
       "name": "HtmlMetaPlugin",
     },
+    HtmlTitlePlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlTitlePlugin",
+      "titles": {
+        "main.html": "Rsbuild App",
+      },
+    },
   ],
 }
 `;
@@ -71,6 +78,13 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
       },
       "name": "HtmlMetaPlugin",
     },
+    HtmlTitlePlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlTitlePlugin",
+      "titles": {
+        "main.html": "Rsbuild App",
+      },
+    },
   ],
 }
 `;
@@ -111,6 +125,13 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
         ],
       },
       "name": "HtmlMetaPlugin",
+    },
+    HtmlTitlePlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlTitlePlugin",
+      "titles": {
+        "main.html": "Rsbuild App",
+      },
     },
   ],
 }
@@ -172,6 +193,13 @@ exports[`plugin-html > should enable minify in production 1`] = `
       },
       "name": "HtmlMetaPlugin",
     },
+    HtmlTitlePlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlTitlePlugin",
+      "titles": {
+        "main.html": "Rsbuild App",
+      },
+    },
   ],
 }
 `;
@@ -212,6 +240,13 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         ],
       },
       "name": "HtmlMetaPlugin",
+    },
+    HtmlTitlePlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlTitlePlugin",
+      "titles": {
+        "main.html": "Rsbuild App",
+      },
     },
   ],
 }
@@ -279,6 +314,14 @@ exports[`plugin-html > should support multi entry 1`] = `
         ],
       },
       "name": "HtmlMetaPlugin",
+    },
+    HtmlTitlePlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlTitlePlugin",
+      "titles": {
+        "foo.html": "Rsbuild App",
+        "main.html": "Rsbuild App",
+      },
     },
   ],
 }

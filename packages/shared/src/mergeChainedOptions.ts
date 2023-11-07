@@ -42,7 +42,7 @@ export function mergeChainedOptions<T extends Record<string, unknown>>({
     return defaults;
   }
 
-  if (isPlainObject(options) as any) {
+  if (isPlainObject(options)) {
     return mergeFn(defaults, options);
   }
 
@@ -54,9 +54,7 @@ export function mergeChainedOptions<T extends Record<string, unknown>>({
         })
       : options(defaults, utils);
 
-    if (ret) {
-      return ret;
-    }
+    return ret || defaults;
   } else if (Array.isArray(options)) {
     return options.reduce(
       (defaults, options) =>
@@ -71,5 +69,5 @@ export function mergeChainedOptions<T extends Record<string, unknown>>({
     );
   }
 
-  return defaults;
+  return options ?? defaults;
 }
