@@ -615,6 +615,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "plugins": [
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "faviconUrls": {},
+        "meta": {},
+        "titles": {},
+      },
+    },
     Plugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
@@ -1286,6 +1296,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "plugins": [
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "faviconUrls": {},
+        "meta": {},
+        "titles": {},
+      },
+    },
     Plugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
@@ -2388,6 +2408,16 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "plugins": [
     TestPlugin {
       "name": "TestPlugin",
+    },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "faviconUrls": {},
+        "meta": {},
+        "titles": {},
+      },
     },
     Plugin {
       "_options": {

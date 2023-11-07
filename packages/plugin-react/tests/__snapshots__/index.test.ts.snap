@@ -654,6 +654,16 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "plugins": [
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "faviconUrls": {},
+        "meta": {},
+        "titles": {},
+      },
+    },
     Plugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
