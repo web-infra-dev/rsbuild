@@ -79,7 +79,7 @@ describe('parseCommonConfig', () => {
     expect(
       parseCommonConfig({
         html: {
-          title: 'https://www.foo.com/default.ico',
+          favicon: 'https://www.foo.com/default.ico',
           faviconByEntries: {
             foo: 'https://www.foo.com/foo.ico',
           },

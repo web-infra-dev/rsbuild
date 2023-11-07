@@ -1,5 +1,24 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`parseCommonConfig > html.faviconByEntries 1`] = `
+{
+  "html": {
+    "favicon": [Function],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.faviconByEntries 2`] = `
+{
+  "html": {
+    "favicon": [
+      "/https/www.foo.com/default.ico",
+      [Function],
+    ],
+  },
+}
+`;
+
 exports[`parseCommonConfig > html.metaByEntries 1`] = `
 {
   "html": {
