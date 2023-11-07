@@ -136,3 +136,16 @@ pluginTypeCheck({
 
 - `fork-ts-checker-webpack-plugin` does not support checking TypeScript code in `.vue` files.
 - If you have enabled `ts-loader` in your project and manually configured `compileOnly: false`, please disable the Type Check plugin to avoid duplicate type checking.
+
+# Performance Optimization
+
+Type checking has a significant performance overhead. You can refer to the [Performance Guide](https://github.com/microsoft/TypeScript/wiki/Performance) in the official TypeScript documentation for performance optimization.
+
+For example, properly configuring the `include` and `exclude` scopes in `tsconfig.json` can significantly reduce unnecessary type checking and improve TypeScript performance:
+
+```json title="tsconfig.json"
+{
+  "include": ["src"],
+  "exclude": ["**/node_modules", "**/.*/"]
+}
+```
