@@ -44,30 +44,31 @@ exports[`plugin-html > should add one tags plugin instance 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {
-          "foo.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-          "main.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-        },
-        "titles": {
-          "foo.html": "Rsbuild App",
-          "main.html": "Rsbuild App",
+        "info": {
+          "foo.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
         },
       },
     },
@@ -139,30 +140,31 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {
-          "foo.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-          "main.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-        },
-        "titles": {
-          "foo.html": "Rsbuild App",
-          "main.html": "Rsbuild App",
+        "info": {
+          "foo.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
         },
       },
     },
@@ -235,20 +237,19 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {
-          "main.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-        },
-        "titles": {
-          "main.html": "Rsbuild App",
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
         },
       },
     },
@@ -284,20 +285,19 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {
-          "main.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-        },
-        "titles": {
-          "main.html": "Rsbuild App",
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
         },
       },
     },
@@ -332,20 +332,19 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {
-          "main.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-        },
-        "titles": {
-          "main.html": "Rsbuild App",
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
         },
       },
     },
@@ -399,20 +398,19 @@ exports[`plugin-html > should enable minify in production 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {
-          "main.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-        },
-        "titles": {
-          "main.html": "Rsbuild App",
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
         },
       },
     },
@@ -447,20 +445,19 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {
-          "main.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-        },
-        "titles": {
-          "main.html": "Rsbuild App",
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
         },
       },
     },
@@ -512,30 +509,31 @@ exports[`plugin-html > should support multi entry 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {
-          "foo.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-          "main.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-        },
-        "titles": {
-          "foo.html": "Rsbuild App",
-          "main.html": "Rsbuild App",
+        "info": {
+          "foo.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
         },
       },
     },

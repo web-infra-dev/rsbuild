@@ -2,10 +2,14 @@ import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
 import type { MetaAttrs } from '@rsbuild/shared';
 
+export type HtmlInfo = {
+  meta?: MetaAttrs[];
+  title?: string;
+  favicon?: string;
+};
+
 export type HtmlBasicPluginOptions = {
-  meta: Record<string, MetaAttrs[]>;
-  titles: Record<string, string>;
-  faviconUrls: Record<string, string>;
+  info: Record<string, HtmlInfo>;
   HtmlPlugin: typeof HtmlWebpackPlugin;
 };
 
@@ -27,12 +31,11 @@ export class HtmlBasicPlugin {
       headTags: HtmlWebpackPlugin.HtmlTagObject[],
       outputName: string,
     ) => {
-      const { titles } = this.options;
-      const matched = Object.keys(titles).find((key) => key === outputName);
-      if (matched) {
+      const { title } = this.options.info[outputName];
+      if (title) {
         headTags.unshift({
           tagName: 'title',
-          innerHTML: titles[matched],
+          innerHTML: title,
           attributes: {},
           voidTag: false,
           meta: {},
@@ -44,11 +47,10 @@ export class HtmlBasicPlugin {
       headTags: HtmlWebpackPlugin.HtmlTagObject[],
       outputName: string,
     ) => {
-      const { meta } = this.options;
-      const matched = Object.keys(meta).find((key) => key === outputName);
-      if (matched) {
+      const { meta } = this.options.info[outputName];
+      if (meta) {
         headTags.unshift(
-          ...meta[matched].map((attr) => ({
+          ...meta.map((attr) => ({
             tagName: 'meta',
             attributes: attr,
             meta: {},
@@ -62,17 +64,14 @@ export class HtmlBasicPlugin {
       headTags: HtmlWebpackPlugin.HtmlTagObject[],
       outputName: string,
     ) => {
-      const { faviconUrls } = this.options;
-      const matched = Object.keys(faviconUrls).find(
-        (key) => key === outputName,
-      );
-      if (matched) {
+      const { favicon } = this.options.info[outputName];
+      if (favicon) {
         headTags.unshift({
           tagName: 'link',
           voidTag: true,
           attributes: {
             rel: 'icon',
-            href: faviconUrls[matched],
+            href: favicon,
           },
           meta: {},
         });

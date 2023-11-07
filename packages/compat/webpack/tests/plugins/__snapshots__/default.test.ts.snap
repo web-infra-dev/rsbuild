@@ -600,9 +600,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {},
-        "titles": {},
+        "info": {},
       },
     },
     DefinePlugin {
@@ -1316,9 +1314,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {},
-        "titles": {},
+        "info": {},
       },
     },
     DefinePlugin {

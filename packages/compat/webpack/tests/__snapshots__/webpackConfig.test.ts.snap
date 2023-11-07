@@ -12,9 +12,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
     "name": "HtmlBasicPlugin",
     "options": {
       "HtmlPlugin": [Function],
-      "faviconUrls": {},
-      "meta": {},
-      "titles": {},
+      "info": {},
     },
   },
   DefinePlugin {

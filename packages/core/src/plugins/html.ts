@@ -27,7 +27,7 @@ import type {
 import _ from 'lodash';
 import {
   HtmlBasicPlugin,
-  type HtmlBasicPluginOptions,
+  type HtmlInfo,
 } from '../rspack-plugins/HtmlBasicPlugin';
 
 export function getTitle(entryName: string, config: { html: HtmlConfig }) {
@@ -205,13 +205,7 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
         const entries = chain.entryPoints.entries() || {};
         const entryNames = Object.keys(entries);
         const htmlPaths = api.getHTMLPaths();
-
-        const basicPluginOptions: HtmlBasicPluginOptions = {
-          meta: {},
-          titles: {},
-          faviconUrls: {},
-          HtmlPlugin,
-        };
+        const htmlInfoMap: Record<string, HtmlInfo> = {};
 
         await Promise.all(
           entryNames.map(async (entryName, index) => {
@@ -237,20 +231,23 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
               scriptLoading: config.html.scriptLoading,
             };
 
+            const htmlInfo: HtmlInfo = {};
+            htmlInfoMap[filename] = htmlInfo;
+
             const title = getTitle(entryName, config);
             if (title) {
-              basicPluginOptions.titles[filename] = title;
+              htmlInfo.title = title;
             }
 
             const metaTags = await getMetaTags(entryName, config);
             if (metaTags.length) {
-              basicPluginOptions.meta[filename] = metaTags;
+              htmlInfo.meta = metaTags;
             }
 
             const favicon = getFavicon(entryName, config);
             if (favicon) {
               if (isURL(favicon)) {
-                basicPluginOptions.faviconUrls[filename] = favicon;
+                htmlInfo.favicon = favicon;
               } else {
                 // HTMLWebpackPlugin only support favicon file path
                 pluginOptions.favicon = favicon;
@@ -281,7 +278,7 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
-          .use(HtmlBasicPlugin, [basicPluginOptions]);
+          .use(HtmlBasicPlugin, [{ HtmlPlugin, info: htmlInfoMap }]);
 
         if (config.security) {
           const { nonce } = config.security;

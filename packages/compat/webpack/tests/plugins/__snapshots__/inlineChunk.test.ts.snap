@@ -46,20 +46,19 @@ exports[`plugin-inline-chunk > should add InlineChunkHtmlPlugin properly by defa
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {
-          "main.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-        },
-        "titles": {
-          "main.html": "Rsbuild App",
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
         },
       },
     },
@@ -126,20 +125,19 @@ exports[`plugin-inline-chunk > should use proper plugin options when disableInli
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {
-          "main.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-        },
-        "titles": {
-          "main.html": "Rsbuild App",
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
         },
       },
     },
@@ -204,20 +202,19 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {
-          "main.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-        },
-        "titles": {
-          "main.html": "Rsbuild App",
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
         },
       },
     },
@@ -285,20 +282,19 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {
-          "main.html": [
-            {
-              "charset": "UTF-8",
-            },
-            {
-              "content": "width=device-width, initial-scale=1.0",
-              "name": "viewport",
-            },
-          ],
-        },
-        "titles": {
-          "main.html": "Rsbuild App",
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
         },
       },
     },

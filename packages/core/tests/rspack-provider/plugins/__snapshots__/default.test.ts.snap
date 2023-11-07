@@ -620,9 +620,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {},
-        "titles": {},
+        "info": {},
       },
     },
     Plugin {
@@ -1301,9 +1299,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {},
-        "titles": {},
+        "info": {},
       },
     },
     Plugin {
@@ -2414,9 +2410,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "faviconUrls": {},
-        "meta": {},
-        "titles": {},
+        "info": {},
       },
     },
     Plugin {
