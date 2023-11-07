@@ -7,7 +7,6 @@ import {
   isFileExists,
   isPlainObject,
   isHtmlDisabled,
-  getTemplatePath,
   ROUTE_SPEC_FILE,
   removeTailSlash,
   mergeChainedOptions,
@@ -30,7 +29,7 @@ import {
   type HtmlInfo,
 } from '../rspack-plugins/HtmlBasicPlugin';
 
-export function getTitle(entryName: string, config: { html: HtmlConfig }) {
+export function getTitle(entryName: string, config: NormalizedConfig) {
   return mergeChainedOptions({
     defaults: '',
     options: config.html.title,
@@ -39,10 +38,23 @@ export function getTitle(entryName: string, config: { html: HtmlConfig }) {
   });
 }
 
-export function getInject(entryName: string, config: { html: HtmlConfig }) {
+export function getInject(entryName: string, config: NormalizedConfig) {
   return mergeChainedOptions({
     defaults: 'head',
     options: config.html.inject,
+    utils: { entryName },
+    useObjectParam: true,
+  });
+}
+
+export function getTemplatePath(entryName: string, config: NormalizedConfig) {
+  const DEFAULT_TEMPLATE = path.resolve(
+    __dirname,
+    '../../static/template.html',
+  );
+  return mergeChainedOptions({
+    defaults: DEFAULT_TEMPLATE,
+    options: config.html.template,
     utils: { entryName },
     useObjectParam: true,
   });
@@ -135,7 +147,7 @@ async function getTemplateParameters(
   };
 }
 
-async function getChunks(entryName: string, entryValue: string | string[]) {
+function getChunks(entryName: string, entryValue: string | string[]) {
   const dependOn = [];
 
   if (isPlainObject(entryValue)) {
@@ -216,7 +228,7 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
         await Promise.all(
           entryNames.map(async (entryName, index) => {
             const entryValue = entries[entryName].values() as string | string[];
-            const chunks = await getChunks(entryName, entryValue);
+            const chunks = getChunks(entryName, entryValue);
             const inject = getInject(entryName, config);
             const filename = htmlPaths[entryName];
             const template = getTemplatePath(entryName, config);

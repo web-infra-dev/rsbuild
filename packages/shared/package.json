@@ -107,8 +107,7 @@
   },
   "files": [
     "dist",
-    "compiled",
-    "static"
+    "compiled"
   ],
   "scripts": {
     "build": "modern build && node scripts/postCompile.js",

@@ -174,8 +174,9 @@ describe('plugin-html', () => {
       },
       rsbuildConfig: {
         html: {
-          template: 'bar',
-          templateByEntries: { main: 'foo' },
+          template({ entryName }) {
+            return entryName === 'main' ? 'foo' : 'bar';
+          },
         },
       },
     });

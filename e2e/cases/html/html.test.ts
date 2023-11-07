@@ -175,47 +175,6 @@ test('template & templateParameters', async ({ page }) => {
   rsbuild.close();
 });
 
-test('templateByEntries & templateParametersByEntries', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: join(fixtures, 'template'),
-    entry: {
-      main: join(fixtures, 'template/src/index.ts'),
-      foo: join(fixtures, 'template/src/index.ts'),
-      bar: join(fixtures, 'template/src/index.ts'),
-    },
-    runServer: true,
-    rsbuildConfig: {
-      html: {
-        templateByEntries: {
-          foo: './static/foo.html',
-          bar: './static/bar.html',
-        },
-        templateParametersByEntries: {
-          foo: {
-            type: 'foo',
-          },
-          bar: {
-            type: 'bar',
-          },
-        },
-      },
-    },
-  });
-
-  await page.goto(getHrefByEntryName('foo', rsbuild.port));
-
-  const testTemplate = page.locator('#test-template');
-  await expect(testTemplate).toHaveText('foo');
-  await expect(page.evaluate(`window.type`)).resolves.toBe('foo');
-
-  await page.goto(getHrefByEntryName('bar', rsbuild.port));
-
-  await expect(testTemplate).toHaveText('bar');
-  await expect(page.evaluate(`window.type`)).resolves.toBe('bar');
-
-  rsbuild.close();
-});
-
 test('html.outputStructure', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'template'),

@@ -23,7 +23,7 @@ export type RsbuildConfig<B = 'rspack'> = B extends 'rspack'
 export type UniBuilderExtraConfig = {
   output?: {
     /**
-     * @deprecated use output.cssModules.localIdentName instead
+     * @deprecated use `output.cssModules.localIdentName` instead
      */
     cssModuleLocalIdentName?: string;
     /**
@@ -33,21 +33,25 @@ export type UniBuilderExtraConfig = {
   };
   html?: {
     /**
-     * @deprecated use html.meta instead
+     * @deprecated use `html.meta` instead
      */
     metaByEntries?: Record<string, MetaOptions>;
     /**
-     * @deprecated use html.title instead
+     * @deprecated use `html.title` instead
      */
     titleByEntries?: Record<string, string>;
     /**
-     * @deprecated use html.favicon instead
+     * @deprecated use `html.favicon` instead
      */
     faviconByEntries?: Record<string, string | undefined>;
     /**
-     * @deprecated use html.inject instead
+     * @deprecated use `html.inject` instead
      */
     injectByEntries?: Record<string, ScriptInject>;
+    /**
+     * @deprecated use `html.template` instead
+     */
+    templateByEntries?: Partial<Record<string, string>>;
   };
 };
 

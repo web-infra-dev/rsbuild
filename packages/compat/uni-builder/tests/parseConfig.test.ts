@@ -110,4 +110,27 @@ describe('parseCommonConfig', () => {
       }).rsbuildConfig,
     ).toMatchSnapshot();
   });
+
+  test('html.templateByEntries', () => {
+    expect(
+      parseCommonConfig({
+        html: {
+          templateByEntries: {
+            foo: './static/foo.html',
+          },
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+
+    expect(
+      parseCommonConfig({
+        html: {
+          template: './static/index.html',
+          templateByEntries: {
+            foo: './static/foo.html',
+          },
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+  });
 });

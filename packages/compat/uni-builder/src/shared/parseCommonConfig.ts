@@ -53,6 +53,12 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
     delete html.injectByEntries;
   }
 
+  if (html.templateByEntries) {
+    extraConfig.html.template = ({ entryName }: { entryName: string }) =>
+      html.templateByEntries![entryName];
+    delete html.templateByEntries;
+  }
+
   return {
     rsbuildConfig: mergeRsbuildConfig(rsbuildConfig, extraConfig),
     rsbuildPlugins: [],

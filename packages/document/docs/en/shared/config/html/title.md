@@ -34,7 +34,7 @@ When `html.title` is of type Function, the function receives an object as the ar
 - `value`: the default title configuration of Rsbuild.
 - `entryName`: the name of the current entry.
 
-In the case of an MPA (multi-page application) scenario, you can return different `title` strings based on the entry name, thus generating different `title` tags for each page:
+In the MPA (multi-page application) scenario, you can return different `title` strings based on the entry name, thus generating different `title` tags for each page:
 
 ```js
 export default {

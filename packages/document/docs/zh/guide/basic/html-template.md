@@ -6,7 +6,7 @@ Rsbuild 提供了一些配置项来对 HTML 模板进行设置。通过本章节
 
 ## 设置模板文件
 
-在 Rsbuild 中，你可以使用 [html.template](/config/options/html.html#htmltemplate) 和 [html.templateByEntries](/config/options/html.html#htmltemplatebyentries) 配置项来设置自定义的 HTML 模板文件。
+在 Rsbuild 中，你可以使用 [html.template](/config/options/html.html#htmltemplate) 配置项来设置自定义的 HTML 模板文件。
 
 ```ts
 export default {
