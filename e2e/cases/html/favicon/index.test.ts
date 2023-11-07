@@ -64,3 +64,37 @@ test('should allow favicon to be a CDN URL', async () => {
 
   expect(html).toContain('<link rel="icon" href="https://foo.com/icon.png">');
 });
+
+test('should generate favicon via function correctly', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    entry: {
+      foo: path.resolve(__dirname, './src/foo.js'),
+      bar: path.resolve(__dirname, './src/foo.js'),
+    },
+    rsbuildConfig: {
+      html: {
+        favicon({ entryName }) {
+          const icons: Record<string, string> = {
+            foo: 'https://example.com/foo.ico',
+            bar: 'https://example.com/bar.ico',
+          };
+          return icons[entryName] || 'https://example.com/default.ico';
+        },
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const fooHtml =
+    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  expect(fooHtml).toContain(
+    '<link rel="icon" href="https://example.com/foo.ico">',
+  );
+
+  const barHtml =
+    files[Object.keys(files).find((file) => file.endsWith('bar.html'))!];
+  expect(barHtml).toContain(
+    '<link rel="icon" href="https://example.com/bar.ico">',
+  );
+});

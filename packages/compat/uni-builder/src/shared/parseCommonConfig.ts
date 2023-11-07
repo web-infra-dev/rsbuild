@@ -41,6 +41,12 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
     delete html.titleByEntries;
   }
 
+  if (html.faviconByEntries) {
+    extraConfig.html.favicon = ({ entryName }: { entryName: string }) =>
+      html.faviconByEntries![entryName];
+    delete html.faviconByEntries;
+  }
+
   return {
     rsbuildConfig: mergeRsbuildConfig(rsbuildConfig, extraConfig),
     rsbuildPlugins: [],

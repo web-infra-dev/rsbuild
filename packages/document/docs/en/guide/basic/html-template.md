@@ -50,7 +50,7 @@ export default {
 
 Rsbuild supports setting [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) icon and [apple-touch-icon](https://webhint.io/docs/user-guide/hints/hint-apple-touch-icons/) icon.
 
-You can set the favicon through the [html.favicon](/config/options/html.html#htmlfavicon) and [html.faviconByEntries](/config/options/html.html#htmlfaviconbyentries) configs.
+You can set the favicon through the [html.favicon](/config/options/html.html#htmlfavicon) config.
 
 ```ts
 export default {

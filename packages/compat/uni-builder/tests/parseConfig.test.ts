@@ -64,4 +64,27 @@ describe('parseCommonConfig', () => {
       }).rsbuildConfig,
     ).toMatchSnapshot();
   });
+
+  test('html.faviconByEntries', () => {
+    expect(
+      parseCommonConfig({
+        html: {
+          faviconByEntries: {
+            foo: 'https://www.foo.com/foo.ico',
+          },
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+
+    expect(
+      parseCommonConfig({
+        html: {
+          favicon: 'https://www.foo.com/default.ico',
+          faviconByEntries: {
+            foo: 'https://www.foo.com/foo.ico',
+          },
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+  });
 });

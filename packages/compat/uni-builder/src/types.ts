@@ -40,6 +40,10 @@ export type UniBuilderExtraConfig = {
      * @deprecated use html.title instead
      */
     titleByEntries?: Record<string, string>;
+    /**
+     * @deprecated use html.favicon instead
+     */
+    faviconByEntries?: Record<string, string | undefined>;
   };
 };
 

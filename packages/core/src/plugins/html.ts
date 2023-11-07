@@ -31,10 +31,9 @@ import {
 } from '../rspack-plugins/HtmlBasicPlugin';
 
 export function getTitle(entryName: string, config: { html: HtmlConfig }) {
-  const { title } = config.html;
   return mergeChainedOptions({
     defaults: '',
-    options: title,
+    options: config.html.title,
     utils: { entryName },
     useObjectParam: true,
   });
@@ -51,8 +50,12 @@ export function getFavicon(
     html: HtmlConfig;
   },
 ) {
-  const { favicon, faviconByEntries } = config.html;
-  return faviconByEntries?.[entryName] || favicon;
+  return mergeChainedOptions({
+    defaults: '',
+    options: config.html.favicon,
+    utils: { entryName },
+    useObjectParam: true,
+  });
 }
 
 export const generateMetaTags = (metaOptions?: MetaOptions): MetaAttrs[] => {
@@ -91,7 +94,6 @@ export async function getMetaTags(
     utils: { entryName },
     useObjectParam: true,
   });
-
   return generateMetaTags(merged);
 }
 
