@@ -115,7 +115,7 @@ type DefaultParameters = {
 };
 ```
 
-你也可以通过 [html.templateParameters](/config/options/html.html#htmltemplateparameters) 和 [html.templateParametersByEntries](/config/options/html.html#htmltemplateparametersbyentries) 配置项来传入自定义的模板参数。
+你也可以通过 [html.templateParameters](/config/options/html.html#htmltemplateparameters) 配置项来传入自定义的模板参数。
 
 比如：
 

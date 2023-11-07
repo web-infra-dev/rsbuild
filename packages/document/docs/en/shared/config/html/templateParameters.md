@@ -1,4 +1,4 @@
-- **Type:** `Object | Function`
+- **类型：** `Record<string, unknown> | Function`
 - **Default:**
 
 ```ts
@@ -6,8 +6,7 @@ type DefaultParameters = {
   mountId: string; // corresponding to html.mountId config
   entryName: string; // entry name
   assetPrefix: string; // corresponding to output.assetPrefix config
-  compilation: webpack.Compilation; // Compilation object corresponding to webpack
-  webpackConfig: config; // webpack config
+  compilation: Compilation; // Compilation object of Rspack
   // htmlWebpackPlugin built-in parameters
   // See https://github.com/jantimon/html-webpack-plugin for details
   htmlWebpackPlugin: {
@@ -18,39 +17,13 @@ type DefaultParameters = {
 };
 ```
 
-Define the parameters in the HTML template, corresponding to the `templateParameters` config of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin). You can use the config as an object or a function.
+Define the parameters in the HTML template, corresponding to the `templateParameters` config of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
 
-If it is an object, it will be merged with the default parameters. For example:
+### Object Usage
 
-```ts
-export default {
-  html: {
-    templateParameters: {
-      title: 'My App',
-    },
-  },
-};
-```
+If the value of `templateParameters` is an object, it will be merged with the default parameters using `Object.assign`.
 
-If it is a function, the default parameters will be passed in, and you can return an object to override the default parameters. For example:
-
-```ts
-export default {
-  html: {
-    templateParameters: (defaultParameters) => {
-      console.log(defaultParameters.compilation);
-      console.log(defaultParameters.title);
-      return {
-        title: 'My App',
-      };
-    },
-  },
-};
-```
-
-### Example
-
-To use the `foo` parameter in the HTML template, you can add the following config:
+For example, if you need to use the `foo` parameter in an HTML template, you can add the following settings:
 
 ```js
 export default {
@@ -62,21 +35,7 @@ export default {
 };
 ```
 
-Or you can use a function to dynamically generate the parameters:
-
-```js
-export default {
-  html: {
-    templateParameters: (defaultParameters) => {
-      return {
-        foo: 'bar',
-      };
-    },
-  },
-};
-```
-
-Then you can use the `foo` parameter in the HTML template by `<%= foo %>`:
+Then, you can read the parameter in the HTML template using `<%= foo %>`:
 
 ```html
 <script>
@@ -84,8 +43,49 @@ Then you can use the `foo` parameter in the HTML template by `<%= foo %>`:
 </script>
 ```
 
-The compiled HTML is:
+The compiled HTML code will be:
+
+```html
+<script>
+  window.foo = 'bar';
+</script>
+```
+
+### Function Usage
+
+- **Type:**
+
+```ts
+type TemplateParametersFunction = (
+  defaultValue: Record<string, unknown>,
+  utils: { entryName: string },
+) => Record<string, unknown> | void;
+```
+
+When `html.templateParameters` is of type Function, the function receives two parameters:
+
+- `value`: Default `templateParameters` configuration of Rsbuild.
+- `utils`: An object containing the `entryName` field, corresponding to the name of the current entry.
+
+In the context of a multi-page application (MPA), you can set different `templateParameters` based on the entry name:
 
 ```js
-<script>window.foo = 'bar'</script>
+export default {
+  html: {
+    templateParameters(defaultValue, { entryName }) {
+      const params = {
+        foo: {
+          ...defaultValue,
+          type: 'Foo',
+        },
+        bar: {
+          ...defaultValue,
+          type: 'Bar',
+          hello: 'world',
+        },
+      };
+      return params[entryName] || defaultValue;
+    },
+  },
+};
 ```

@@ -52,6 +52,10 @@ export type UniBuilderExtraConfig = {
      * @deprecated use `html.template` instead
      */
     templateByEntries?: Partial<Record<string, string>>;
+    /**
+     * @deprecated use `html.templateParameters` instead
+     */
+    templateParametersByEntries?: Record<string, Record<string, unknown>>;
   };
 };
 

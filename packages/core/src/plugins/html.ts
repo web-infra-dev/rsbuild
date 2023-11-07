@@ -113,24 +113,17 @@ export async function getMetaTags(
   return generateMetaTags(merged);
 }
 
-async function getTemplateParameters(
+function getTemplateParameters(
   entryName: string,
   config: NormalizedConfig,
   assetPrefix: string,
-): Promise<HTMLPluginOptions['templateParameters']> {
-  const { mountId, templateParameters, templateParametersByEntries } =
-    config.html;
-
-  const templateParams =
-    templateParametersByEntries?.[entryName] || templateParameters;
-  const baseParameters = {
-    mountId,
-    entryName,
-    assetPrefix,
-  };
-
+): HTMLPluginOptions['templateParameters'] {
   return (compilation, assets, assetTags, pluginOptions) => {
+    const { mountId, templateParameters } = config.html;
     const defaultOptions = {
+      mountId,
+      entryName,
+      assetPrefix,
       compilation,
       webpackConfig: compilation.options,
       htmlWebpackPlugin: {
@@ -138,11 +131,11 @@ async function getTemplateParameters(
         files: assets,
         options: pluginOptions,
       },
-      ...baseParameters,
     };
     return mergeChainedOptions({
       defaults: defaultOptions,
-      options: templateParams,
+      options: templateParameters,
+      utils: { entryName },
     });
   };
 }
@@ -232,7 +225,7 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
             const inject = getInject(entryName, config);
             const filename = htmlPaths[entryName];
             const template = getTemplatePath(entryName, config);
-            const templateParameters = await getTemplateParameters(
+            const templateParameters = getTemplateParameters(
               entryName,
               config,
               assetPrefix,

@@ -80,6 +80,27 @@ exports[`parseCommonConfig > html.templateByEntries 2`] = `
 }
 `;
 
+exports[`parseCommonConfig > html.templateParametersByEntries 1`] = `
+{
+  "html": {
+    "templateParameters": [Function],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.templateParametersByEntries 2`] = `
+{
+  "html": {
+    "templateParameters": [
+      {
+        "name": "jack",
+      },
+      [Function],
+    ],
+  },
+}
+`;
+
 exports[`parseCommonConfig > html.titleByEntries 1`] = `
 {
   "html": {
