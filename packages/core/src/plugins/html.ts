@@ -3,13 +3,10 @@ import {
   isURL,
   castArray,
   getMinify,
-  isFunction,
   getDistPath,
   isFileExists,
   isPlainObject,
   isHtmlDisabled,
-  HtmlMetaPlugin,
-  HtmlTitlePlugin,
   getTemplatePath,
   ROUTE_SPEC_FILE,
   removeTailSlash,
@@ -20,17 +17,18 @@ import type {
   MetaAttrs,
   HtmlConfig,
   MetaOptions,
-  FaviconUrls,
   NormalizedConfig,
   HTMLPluginOptions,
   DefaultRsbuildPlugin,
-  HtmlMetaPluginOptions,
   HtmlTagsPluginOptions,
-  HtmlTitlePluginOptions,
   SharedRsbuildPluginAPI,
   NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import _ from 'lodash';
+import {
+  HtmlBasicPlugin,
+  type HtmlInfo,
+} from '../rspack-plugins/HtmlBasicPlugin';
 
 export function getTitle(entryName: string, config: { html: HtmlConfig }) {
   const { title } = config.html;
@@ -207,39 +205,21 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
         const entries = chain.entryPoints.entries() || {};
         const entryNames = Object.keys(entries);
         const htmlPaths = api.getHTMLPaths();
-        const faviconUrls: FaviconUrls = [];
-
-        const metaPluginOptions: HtmlMetaPluginOptions = {
-          meta: {},
-          HtmlPlugin,
-        };
-        const titlePluginOptions: HtmlTitlePluginOptions = {
-          titles: {},
-          HtmlPlugin,
-        };
+        const htmlInfoMap: Record<string, HtmlInfo> = {};
 
         await Promise.all(
           entryNames.map(async (entryName, index) => {
             const entryValue = entries[entryName].values() as string | string[];
             const chunks = await getChunks(entryName, entryValue);
             const inject = getInject(entryName, config);
-            const favicon = getFavicon(entryName, config);
+
             const filename = htmlPaths[entryName];
             const template = getTemplatePath(entryName, config);
-            const metaTags = await getMetaTags(entryName, config);
-            const title = getTitle(entryName, config);
             const templateParameters = await getTemplateParameters(
               entryName,
               config,
               assetPrefix,
             );
-
-            if (metaTags.length) {
-              metaPluginOptions.meta[filename] = metaTags;
-            }
-            if (title) {
-              titlePluginOptions.titles[filename] = title;
-            }
 
             const pluginOptions: HTMLPluginOptions = {
               chunks,
@@ -251,12 +231,23 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
               scriptLoading: config.html.scriptLoading,
             };
 
+            const htmlInfo: HtmlInfo = {};
+            htmlInfoMap[filename] = htmlInfo;
+
+            const title = getTitle(entryName, config);
+            if (title) {
+              htmlInfo.title = title;
+            }
+
+            const metaTags = await getMetaTags(entryName, config);
+            if (metaTags.length) {
+              htmlInfo.meta = metaTags;
+            }
+
+            const favicon = getFavicon(entryName, config);
             if (favicon) {
               if (isURL(favicon)) {
-                faviconUrls.push({
-                  filename,
-                  url: favicon,
-                });
+                htmlInfo.favicon = favicon;
               } else {
                 // HTMLWebpackPlugin only support favicon file path
                 pluginOptions.favicon = favicon;
@@ -285,17 +276,9 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
           }),
         );
 
-        if (Object.keys(metaPluginOptions.meta).length) {
-          chain
-            .plugin(CHAIN_ID.PLUGIN.HTML_META)
-            .use(HtmlMetaPlugin, [metaPluginOptions]);
-        }
-
-        if (Object.keys(titlePluginOptions.titles).length) {
-          chain
-            .plugin(CHAIN_ID.PLUGIN.HTML_TITLE)
-            .use(HtmlTitlePlugin, [titlePluginOptions]);
-        }
+        chain
+          .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
+          .use(HtmlBasicPlugin, [{ HtmlPlugin, info: htmlInfoMap }]);
 
         if (config.security) {
           const { nonce } = config.security;
@@ -325,14 +308,6 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
               ]);
 
             chain.output.crossOriginLoading(formattedCrossorigin);
-          }
-
-          if (faviconUrls.length) {
-            const { HtmlFaviconUrlPlugin } = await import('@rsbuild/shared');
-
-            chain
-              .plugin(CHAIN_ID.PLUGIN.FAVICON_URL)
-              .use(HtmlFaviconUrlPlugin, [{ faviconUrls, HtmlPlugin }]);
           }
 
           if (appIcon) {

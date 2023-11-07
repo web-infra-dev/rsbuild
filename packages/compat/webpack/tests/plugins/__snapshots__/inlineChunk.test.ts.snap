@@ -41,26 +41,25 @@ exports[`plugin-inline-chunk > should add InlineChunkHtmlPlugin properly by defa
       },
       "version": 5,
     },
-    HtmlMetaPlugin {
+    HtmlBasicPlugin {
       "HtmlPlugin": [Function],
-      "meta": {
-        "main.html": [
-          {
-            "charset": "UTF-8",
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
           },
-          {
-            "content": "width=device-width, initial-scale=1.0",
-            "name": "viewport",
-          },
-        ],
-      },
-      "name": "HtmlMetaPlugin",
-    },
-    HtmlTitlePlugin {
-      "HtmlPlugin": [Function],
-      "name": "HtmlTitlePlugin",
-      "titles": {
-        "main.html": "Rsbuild App",
+        },
       },
     },
     InlineChunkHtmlPlugin {
@@ -121,26 +120,25 @@ exports[`plugin-inline-chunk > should use proper plugin options when disableInli
       },
       "version": 5,
     },
-    HtmlMetaPlugin {
+    HtmlBasicPlugin {
       "HtmlPlugin": [Function],
-      "meta": {
-        "main.html": [
-          {
-            "charset": "UTF-8",
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
           },
-          {
-            "content": "width=device-width, initial-scale=1.0",
-            "name": "viewport",
-          },
-        ],
-      },
-      "name": "HtmlMetaPlugin",
-    },
-    HtmlTitlePlugin {
-      "HtmlPlugin": [Function],
-      "name": "HtmlTitlePlugin",
-      "titles": {
-        "main.html": "Rsbuild App",
+        },
       },
     },
     InlineChunkHtmlPlugin {
@@ -199,26 +197,25 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
       },
       "version": 5,
     },
-    HtmlMetaPlugin {
+    HtmlBasicPlugin {
       "HtmlPlugin": [Function],
-      "meta": {
-        "main.html": [
-          {
-            "charset": "UTF-8",
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
           },
-          {
-            "content": "width=device-width, initial-scale=1.0",
-            "name": "viewport",
-          },
-        ],
-      },
-      "name": "HtmlMetaPlugin",
-    },
-    HtmlTitlePlugin {
-      "HtmlPlugin": [Function],
-      "name": "HtmlTitlePlugin",
-      "titles": {
-        "main.html": "Rsbuild App",
+        },
       },
     },
     InlineChunkHtmlPlugin {
@@ -280,26 +277,25 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
       },
       "version": 5,
     },
-    HtmlMetaPlugin {
+    HtmlBasicPlugin {
       "HtmlPlugin": [Function],
-      "meta": {
-        "main.html": [
-          {
-            "charset": "UTF-8",
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
           },
-          {
-            "content": "width=device-width, initial-scale=1.0",
-            "name": "viewport",
-          },
-        ],
-      },
-      "name": "HtmlMetaPlugin",
-    },
-    HtmlTitlePlugin {
-      "HtmlPlugin": [Function],
-      "name": "HtmlTitlePlugin",
-      "titles": {
-        "main.html": "Rsbuild App",
+        },
       },
     },
     InlineChunkHtmlPlugin {
