@@ -120,17 +120,15 @@ export const pluginSwc = (): RsbuildPlugin => ({
          * https://webpack.js.org/api/module-methods/#import
          * @example: import x from 'data:text/javascript,export default 1;';
          */
-        if (config.source.compileJsDataURI) {
-          chain.module
-            .rule(CHAIN_ID.RULE.JS_DATA_URI)
-            .mimetype({
-              or: ['text/javascript', 'application/javascript'],
-            })
-            .use(CHAIN_ID.USE.SWC)
-            .loader(builtinSwcLoaderName)
-            // Using cloned options to keep options separate from each other
-            .options(cloneDeep(swcConfig));
-        }
+        chain.module
+          .rule(CHAIN_ID.RULE.JS_DATA_URI)
+          .mimetype({
+            or: ['text/javascript', 'application/javascript'],
+          })
+          .use(CHAIN_ID.USE.SWC)
+          .loader(builtinSwcLoaderName)
+          // Using cloned options to keep options separate from each other
+          .options(cloneDeep(swcConfig));
       },
     );
 

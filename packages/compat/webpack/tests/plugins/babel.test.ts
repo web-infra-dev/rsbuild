@@ -98,20 +98,6 @@ describe('plugin-babel', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should add rule to compile Data URI when enable source.compileJsDataURI', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel()],
-      rsbuildConfig: {
-        source: {
-          compileJsDataURI: true,
-        },
-      },
-    });
-    const config = await rsbuild.unwrapWebpackConfig();
-
-    expect(config).toMatchSnapshot();
-  });
-
   it('should adjust jsescOption config when charset is utf8', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],

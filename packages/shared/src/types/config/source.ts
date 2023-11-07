@@ -54,10 +54,6 @@ export interface SourceConfig {
    */
   globalVars?: ChainedGlobalVars;
   /**
-   * Whether to compile JavaScript code imported via Data URI.
-   */
-  compileJsDataURI?: boolean;
-  /**
    * This configuration will determine which field of `package.json` you use to import the `npm` module.
    * Same as the [resolve.mainFields](https://webpack.js.org/configuration/resolve/#resolvemainfields) config of webpack.
    */
@@ -95,5 +91,4 @@ export interface NormalizedSourceConfig extends SourceConfig {
   aliasStrategy: AliasStrategy;
   preEntry: string[];
   globalVars: ChainedGlobalVars;
-  compileJsDataURI: boolean;
 }

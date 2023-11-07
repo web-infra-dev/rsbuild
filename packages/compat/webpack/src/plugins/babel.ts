@@ -146,17 +146,15 @@ export const pluginBabel = (): RsbuildPlugin => ({
          * https://webpack.js.org/api/module-methods/#import
          * @example: import x from 'data:text/javascript,export default 1;';
          */
-        if (config.source.compileJsDataURI) {
-          chain.module
-            .rule(CHAIN_ID.RULE.JS_DATA_URI)
-            .mimetype({
-              or: ['text/javascript', 'application/javascript'],
-            })
-            .use(CHAIN_ID.USE.BABEL)
-            .loader(require.resolve('babel-loader'))
-            // Using cloned options to keep options separate from each other
-            .options(lodash.cloneDeep(babelOptions));
-        }
+        chain.module
+          .rule(CHAIN_ID.RULE.JS_DATA_URI)
+          .mimetype({
+            or: ['text/javascript', 'application/javascript'],
+          })
+          .use(CHAIN_ID.USE.BABEL)
+          .loader(require.resolve('babel-loader'))
+          // Using cloned options to keep options separate from each other
+          .options(lodash.cloneDeep(babelOptions));
 
         addCoreJsEntry({ chain, config, isServer, isServiceWorker });
       },
