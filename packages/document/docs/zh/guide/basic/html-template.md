@@ -18,7 +18,7 @@ export default {
 
 ## 设置页面标题
 
-你可以通过 [html.title](/config/options/html.html#htmltitle) 和 [html.titleByEntries](/config/options/html.html#htmltitlebyentries) 配置项来设置 HTML 的 `<title>` 标签。
+你可以通过 [html.title](/config/options/html.html#htmltitle) 配置项来设置 HTML 的 `<title>` 标签。
 
 当你的项目中只有一个页面时，直接使用 `html.title` 设置即可：
 
@@ -30,14 +30,17 @@ export default {
 };
 ```
 
-当你的项目中有多个页面时，请使用 `html.titleByEntries` 来为不同的页面设置对应的标题，`html.titleByEntries` 使用页面的「入口名称」作为 key。
+当你的项目中有多个页面时，可以基于入口名称来为不同的页面设置对应的标题。
 
 ```ts
 export default {
   html: {
-    titleByEntries: {
-      foo: 'Foo',
-      bar: 'Bar',
+    title({ entryName }) {
+      const titles = {
+        foo: 'Foo',
+        bar: 'Bar',
+      };
+      return titles[entryName];
     },
   },
 };

@@ -23,8 +23,28 @@ exports[`parseCommonConfig > html.metaByEntries 2`] = `
 }
 `;
 
+exports[`parseCommonConfig > html.titleByEntries 1`] = `
+{
+  "html": {
+    "title": [Function],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.titleByEntries 2`] = `
+{
+  "html": {
+    "title": [
+      "Default",
+      [Function],
+    ],
+  },
+}
+`;
+
 exports[`parseCommonConfig > output.cssModuleLocalIdentName 1`] = `
 {
+  "html": {},
   "output": {
     "cssModules": {
       "localIdentName": "[local]-[hash:base64:6]",

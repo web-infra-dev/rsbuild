@@ -18,7 +18,6 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   rsbuildPlugins: RsbuildPlugin[];
 } {
   const rsbuildConfig = deepmerge({}, uniBuilderConfig);
-  const extraConfig: RsbuildRspackConfig | RsbuildWebpackConfig = {};
   const { html = {}, output = {} } = rsbuildConfig;
 
   if (output.cssModuleLocalIdentName) {
@@ -27,11 +26,19 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
     delete output.cssModuleLocalIdentName;
   }
 
+  const extraConfig: RsbuildRspackConfig | RsbuildWebpackConfig = {};
+  extraConfig.html ||= {};
+
   if (html.metaByEntries) {
-    extraConfig.html ||= {};
     extraConfig.html.meta = ({ entryName }: { entryName: string }) =>
       html.metaByEntries![entryName];
     delete html.metaByEntries;
+  }
+
+  if (html.titleByEntries) {
+    extraConfig.html.title = ({ entryName }: { entryName: string }) =>
+      html.titleByEntries![entryName];
+    delete html.titleByEntries;
   }
 
   return {

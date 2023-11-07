@@ -18,7 +18,7 @@ export default {
 
 ## Set Page Title
 
-You can set the HTML `<title>` tag through the [html.title](/config/options/html.html#htmltitle) and [html.titleByEntries](/config/options/html.html#htmltitlebyentries) configs.
+You can set the HTML `<title>` tag through the [html.title](/config/options/html.html#htmltitle) config.
 
 When there is only one page in your project, just use the `html.title` setting directly:
 
@@ -30,14 +30,17 @@ export default {
 };
 ```
 
-When there are multiple pages in your project, please use `html.titleByEntries` to set corresponding titles for different pages. `html.titleByEntries` uses the page's "entry name" as the key.
+When your project has multiple pages, you can set corresponding titles for different pages based on the entry name.
 
 ```ts
 export default {
   html: {
-    titleByEntries: {
-      foo: 'Foo',
-      bar: 'Bar',
+    title({ entryName }) {
+      const titles = {
+        foo: 'Foo',
+        bar: 'Bar',
+      };
+      return titles[entryName];
     },
   },
 };

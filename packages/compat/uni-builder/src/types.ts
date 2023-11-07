@@ -36,6 +36,10 @@ export type UniBuilderExtraConfig = {
      * @deprecated use html.meta instead
      */
     metaByEntries?: Record<string, MetaOptions>;
+    /**
+     * @deprecated use html.title instead
+     */
+    titleByEntries?: Record<string, string>;
   };
 };
 

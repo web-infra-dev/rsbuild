@@ -2,6 +2,18 @@ import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
+test('should generate default title correctly', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    entry: { foo: path.resolve(__dirname, './src/foo.js') },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const html =
+    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  expect(html).toContain('<title>Rsbuild App</title>');
+});
+
 test('should generate title correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
@@ -63,7 +75,8 @@ test('should generate title via function correctly', async () => {
   expect(barHtml).toContain('<title>bar</title>');
 });
 
-test('should generate title for MPA correctly', async () => {
+// TODO move to uni-builder
+test.skip('should generate title for MPA correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: {
@@ -73,9 +86,9 @@ test('should generate title for MPA correctly', async () => {
     rsbuildConfig: {
       html: {
         title: 'default',
-        titleByEntries: {
-          foo: 'foo',
-        },
+        // titleByEntries: {
+        //   foo: 'foo',
+        // },
       },
     },
   });
