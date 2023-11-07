@@ -49,15 +49,17 @@ export type HtmlInjectTagHandler = (
 
 export type HtmlInjectTagDescriptor = HtmlInjectTag | HtmlInjectTagHandler;
 
+type ChainedHtmlOption<O> = ChainedConfigCombineUtils<O, { entryName: string }>;
+
 export interface HtmlConfig {
   /**
    * Configure the `<meta>` tag of the HTML.
    */
-  meta?: ChainedConfigCombineUtils<MetaOptions, { entryName: string }>;
+  meta?: ChainedHtmlOption<MetaOptions>;
   /**
    * Set the title tag of the HTML page.
    */
-  title?: ChainedConfigCombineUtils<string, { entryName: string }>;
+  title?: ChainedHtmlOption<string>;
   /**
    * Set the inject position of the `<script>` tag.
    */
@@ -81,13 +83,7 @@ export interface HtmlConfig {
   /**
    * Set the favicon icon for all pages.
    */
-  favicon?: string;
-  /**
-   * Set different favicon for different pages.
-   * The usage is same as `favicon`, and you can use the "entry name" as the key to set each page individually.
-   * `faviconByEntries` will overrides the value set in `favicon`.
-   */
-  faviconByEntries?: Record<string, string | undefined>;
+  favicon?: ChainedHtmlOption<string>;
   /**
    * Set the file path of the app icon, which can be a relative path or an absolute path.
    */
@@ -137,8 +133,8 @@ export interface HtmlConfig {
 }
 
 export type NormalizedHtmlConfig = HtmlConfig & {
-  meta: ChainedConfigCombineUtils<MetaOptions, { entryName: string }>;
-  title: ChainedConfigCombineUtils<string, { entryName: string }>;
+  meta: ChainedHtmlOption<MetaOptions>;
+  title: ChainedHtmlOption<string>;
   mountId: string;
   inject: ScriptInject;
   crossorigin: boolean | CrossOrigin;

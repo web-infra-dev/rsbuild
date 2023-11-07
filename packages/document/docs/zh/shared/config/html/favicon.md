@@ -1,4 +1,4 @@
-- **类型：** `string`
+- **类型：** `string ｜ Function`
 - **默认值：** `undefined`
 
 设置页面的 favicon 图标，可以设置为：
@@ -49,4 +49,33 @@ export default {
 
 ```html
 <link rel="icon" href="/favicon.ico" />
+```
+
+### 函数用法
+
+- **类型：**
+
+```ts
+type FaviconFunction = ({ value: string; entryName: string }) => string | void;
+```
+
+当 `html.favicon` 为 Function 类型时，函数接收一个对象作为入参，对象的值包括：
+
+- `value`：Rsbuild 的默认 favicon 配置。
+- `entryName`: 当前入口的名称。
+
+在 MPA（多页面应用）场景下，你可以基于入口名称返回不同的 `favicon`，从而为每个页面生成不同的标签：
+
+```js
+export default {
+  html: {
+    favicon({ entryName }) {
+      const icons = {
+        foo: 'https://example.com/foo.ico',
+        bar: 'https://example.com/bar.ico',
+      };
+      return icons[entryName] || 'https://example.com/default.ico';
+    },
+  },
+};
 ```

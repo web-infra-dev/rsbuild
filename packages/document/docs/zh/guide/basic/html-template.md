@@ -50,7 +50,7 @@ export default {
 
 Rsbuild 支持设置 [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) 图标 和 iOS 系统下的 [apple-touch-icon](https://webhint.io/docs/user-guide/hints/hint-apple-touch-icons/) 图标。
 
-你可以通过 [html.favicon](/config/options/html.html#htmlfavicon) 和 [html.faviconByEntries](/config/options/html.html#htmlfaviconbyentries) 配置项来设置 favicon 图标。
+你可以通过 [html.favicon](/config/options/html.html#htmlfavicon) 配置项来设置 favicon 图标。
 
 ```ts
 export default {
