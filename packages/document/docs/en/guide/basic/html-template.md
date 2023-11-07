@@ -115,7 +115,7 @@ type DefaultParameters = {
 };
 ```
 
-You can also use the [html.templateParameters](/config/options/html.html#htmltemplateparameters) and [html.templateParametersByEntries](/config/options/html.html#htmltemplateparametersbyentries) configs to pass in custom template parameters.
+You can also use the [html.templateParameters](/config/options/html.html#htmltemplateparameters) config to pass in custom template parameters.
 
 For example:
 

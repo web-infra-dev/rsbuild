@@ -30,33 +30,37 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   extraConfig.html ||= {};
 
   if (html.metaByEntries) {
-    extraConfig.html.meta = ({ entryName }: { entryName: string }) =>
-      html.metaByEntries![entryName];
+    extraConfig.html.meta = ({ entryName }) => html.metaByEntries![entryName];
     delete html.metaByEntries;
   }
 
   if (html.titleByEntries) {
-    extraConfig.html.title = ({ entryName }: { entryName: string }) =>
-      html.titleByEntries![entryName];
+    extraConfig.html.title = ({ entryName }) => html.titleByEntries![entryName];
     delete html.titleByEntries;
   }
 
   if (html.faviconByEntries) {
-    extraConfig.html.favicon = ({ entryName }: { entryName: string }) =>
+    extraConfig.html.favicon = ({ entryName }) =>
       html.faviconByEntries![entryName];
     delete html.faviconByEntries;
   }
 
   if (html.injectByEntries) {
-    extraConfig.html.inject = ({ entryName }: { entryName: string }) =>
+    extraConfig.html.inject = ({ entryName }) =>
       html.injectByEntries![entryName];
     delete html.injectByEntries;
   }
 
   if (html.templateByEntries) {
-    extraConfig.html.template = ({ entryName }: { entryName: string }) =>
+    extraConfig.html.template = ({ entryName }) =>
       html.templateByEntries![entryName];
     delete html.templateByEntries;
+  }
+
+  if (html.templateParametersByEntries) {
+    extraConfig.html.templateParameters = (_, { entryName }) =>
+      html.templateParametersByEntries![entryName];
+    delete html.templateParametersByEntries;
   }
 
   return {

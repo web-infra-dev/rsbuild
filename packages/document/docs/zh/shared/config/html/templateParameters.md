@@ -1,4 +1,4 @@
-- **类型：** `Object | Function`
+- **类型：** `Record<string, unknown> | Function`
 - **默认值：**
 
 ```ts
@@ -6,8 +6,7 @@ type DefaultParameters = {
   mountId: string; // 对应 html.mountId 配置
   entryName: string; // 入口名称
   assetPrefix: string; // 对应 output.assetPrefix 配置
-  compilation: webpack.Compilation; // 对应 webpack 的 compilation 对象
-  webpackConfig: Configuration; // webpack 配置
+  compilation: Compilation; // Rspack 的 compilation 对象
   // htmlWebpackPlugin 内置的参数
   // 详见 https://github.com/jantimon/html-webpack-plugin
   htmlWebpackPlugin: {
@@ -18,39 +17,13 @@ type DefaultParameters = {
 };
 ```
 
-定义 HTML 模板中的参数，对应 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) 的 `templateParameters` 配置项。你可以使用配置为对象或者函数。
+定义 HTML 模板中的参数，对应 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) 的 `templateParameters` 配置项。
 
-如果是对象，会和默认参数合并。比如：
+### 对象用法
 
-```ts
-export default {
-  html: {
-    templateParameters: {
-      title: 'My App',
-    },
-  },
-};
-```
+如果 `templateParameters` 的值是一个对象，它会和默认参数通过 `Object.assign` 合并。
 
-如果是函数，会传入默认参数，你可以返回一个对象，用于覆盖默认参数。比如：
-
-```ts
-export default {
-  html: {
-    templateParameters: (defaultParameters) => {
-      console.log(defaultParameters.compilation);
-      console.log(defaultParameters.title);
-      return {
-        title: 'My App',
-      };
-    },
-  },
-};
-```
-
-### 示例
-
-如果需要在 HTML 模板中使用 `foo` 参数，可以添加如下设置：
+比如，如果你需要在 HTML 模板中使用 `foo` 参数，可以添加如下设置：
 
 ```js
 export default {
@@ -62,28 +35,57 @@ export default {
 };
 ```
 
-或者使用函数配置：
+接下来，你可以在 HTML 模板中，通过 `<%= foo %>` 来读取参数：
+
+```html
+<script>
+  window.foo = '<%= foo %>';
+</script>
+```
+
+编译后的 HTML 代码如下：
+
+```html
+<script>
+  window.foo = 'bar';
+</script>
+```
+
+### 函数用法
+
+- **类型：**
+
+```ts
+type TemplateParametersFunction = (
+  defaultValue: Record<string, unknown>,
+  utils: { entryName: string },
+) => Record<string, unknown> | void;
+```
+
+当 `html.templateParameters` 为 Function 类型时，函数接收两个参数：
+
+- `value`：Rsbuild 的默认 templateParameters 配置。
+- `utils`: 一个对象，其中包含了 `entryName` 字段，对应当前入口的名称。
+
+在 MPA（多页面应用）场景下，你可以基于入口名称设置不同的 `templateParameters` 参数：
 
 ```js
 export default {
   html: {
-    templateParameters: (defaultParameters) => {
-      return {
-        foo: 'bar',
+    templateParameters(defaultValue, { entryName }) {
+      const params = {
+        foo: {
+          ...defaultValue,
+          type: 'Foo',
+        },
+        bar: {
+          ...defaultValue,
+          type: 'Bar',
+          hello: 'world',
+        },
       };
+      return params[entryName] || defaultValue;
     },
   },
 };
-```
-
-接下来，你可以在 HTML 模板中，通过 `<%= foo %>` 来读取参数：
-
-```js
-<script>window.foo = '<%= foo %>'</script>
-```
-
-经过编译后的最终 HTML 代码如下：
-
-```js
-<script>window.foo = 'bar'</script>
 ```

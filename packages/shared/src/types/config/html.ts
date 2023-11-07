@@ -1,6 +1,6 @@
 import type {
   ArrayOrNot,
-  ChainedConfig,
+  ChainedConfigWithUtils,
   ChainedConfigCombineUtils,
 } from '../utils';
 
@@ -104,15 +104,9 @@ export interface HtmlConfig {
    * Define the parameters in the HTML template,
    * corresponding to the `templateParameters` config of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
    */
-  templateParameters?: ChainedConfig<Record<string, unknown>>;
-  /**
-   * Set different template parameters for different pages.
-   * The usage is same as `templateParameters`, and you can use the "entry name" as the key to set each page individually.
-   * `templateParametersByEntries` will overrides the value set in `templateParameters`.
-   */
-  templateParametersByEntries?: Record<
-    string,
-    ChainedConfig<Record<string, unknown>>
+  templateParameters?: ChainedConfigWithUtils<
+    Record<string, unknown>,
+    { entryName: string }
   >;
   /**
    * Set the loading mode of the `<script>` tag.

@@ -133,4 +133,33 @@ describe('parseCommonConfig', () => {
       }).rsbuildConfig,
     ).toMatchSnapshot();
   });
+
+  test('html.templateParametersByEntries', () => {
+    expect(
+      parseCommonConfig({
+        html: {
+          templateParametersByEntries: {
+            foo: {
+              name: 'jack',
+            },
+          },
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+
+    expect(
+      parseCommonConfig({
+        html: {
+          templateParameters: {
+            name: 'jack',
+          },
+          templateParametersByEntries: {
+            foo: {
+              name: 'rose',
+            },
+          },
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+  });
 });
