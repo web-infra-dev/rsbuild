@@ -1,5 +1,17 @@
 # @rsbuild/core
 
+## 0.0.16
+
+### Patch Changes
+
+- a2a18ec: feat: support html.meta to be a function
+- 8f03dd0: refactor: move html.metaByEntries option to uni-builder
+- 9a52542: feat: add default meta configs and simplify the templates
+- Updated dependencies [a2a18ec]
+- Updated dependencies [8f03dd0]
+- Updated dependencies [9a52542]
+  - @rsbuild/shared@0.0.16
+
 ## 0.0.15
 
 ### Patch Changes

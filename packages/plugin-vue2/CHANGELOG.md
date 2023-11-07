@@ -1,5 +1,15 @@
 # @rsbuild/plugin-vue2
 
+## 0.0.16
+
+### Patch Changes
+
+- Updated dependencies [a2a18ec]
+- Updated dependencies [8f03dd0]
+- Updated dependencies [9a52542]
+  - @rsbuild/shared@0.0.16
+  - @rsbuild/core@0.0.16
+
 ## 0.0.15
 
 ### Patch Changes
