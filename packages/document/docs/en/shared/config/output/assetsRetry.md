@@ -274,7 +274,7 @@ Currently, `assetsRetry` cannot work on dynamically imported resources. This fea
 
 `assetsRetry` listens to the page error event to know whether the current resource fails to load and needs to be retried. Therefore, if the resource in the custom template is executed earlier than `assetsRetry`, then `assetsRetry` cannot listen to the event that the resource fails to load, so it cannot retry.
 
-If you want `assetsRetry` to work on resources in custom templates, you can refer to [Custom Insertion Example](https://github.com/jantimon/html-webpack-plugin/tree/main/examples/custom-insertion-position) to modify [html.inject](https://rsbuild.dev/config/options/html.html) configuration and custom template.
+If you want `assetsRetry` to work on resources in custom templates, you can refer to [Custom Insertion Example](https://github.com/jantimon/html-webpack-plugin/tree/main/examples/custom-insertion-position) to modify [html.inject](https://rsbuild.dev/config/options/html) configuration and custom template.
 
 ```diff
 <!DOCTYPE html>

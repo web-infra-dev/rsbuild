@@ -32,4 +32,4 @@ export type { SomeType } from './types';
 
 Rsbuild 提供了 Type Check 插件，用于在单独的进程中运行 TypeScript 类型检查，插件内部集成了 [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)。
 
-请参考 [Type Check 插件](/plugins/list/plugin-type-check.html) 了解用法。
+请参考 [Type Check 插件](/plugins/list/plugin-type-check) 了解用法。

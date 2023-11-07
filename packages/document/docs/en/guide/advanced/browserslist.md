@@ -162,7 +162,7 @@ not op_mini all
 
 ## Default Browserslist
 
-Rsbuild will set different default values of Browserslist according to [build target](/api/start/build-target.html), but we recommend that you explicitly set Browserslist in your project, which will make the compatible scope of the project more clear.
+Rsbuild will set different default values of Browserslist according to [build target](/api/start/build-target), but we recommend that you explicitly set Browserslist in your project, which will make the compatible scope of the project more clear.
 
 ### Web Target
 

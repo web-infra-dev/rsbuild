@@ -224,7 +224,7 @@ Unused components are not bundled into the artifacts, and their external depende
 
 ## In-source testing
 
-Vitest supports writing tests inside source files to test the behavior of private features without exporting them. Set up `Define` to remove the test code from the production build. Please refer to the [Vitest's documentation](https://vitest.dev/guide/in-source.html) for detailed guidelines
+Vitest supports writing tests inside source files to test the behavior of private features without exporting them. Set up `Define` to remove the test code from the production build. Please refer to the [Vitest's documentation](https://vitest.dev/guide/in-source) for detailed guidelines
 
 ```js
 // the implementation

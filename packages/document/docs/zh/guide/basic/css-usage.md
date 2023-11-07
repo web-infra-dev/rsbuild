@@ -10,7 +10,7 @@ Rsbuild 内置了社区流行的 CSS 预处理器，包括 Less 和 Sass。
 
 默认情况下，你不需要对 Less 和 Sass 进行任何配置。如果你有自定义 loader 配置的需求，可以通过配置 [tools.less](/config/options/tools.html#toolsless)、[tools.sass](/config/options/tools.html#toolssass) 来进行设置。
 
-你也可以在 Rsbuild 中使用 Stylus，只需要安装 Rsbuild 提供的 Stylus 插件即可，使用方式请参考 [Stylus 插件](/plugins/list/plugin-stylus.html)。
+你也可以在 Rsbuild 中使用 Stylus，只需要安装 Rsbuild 提供的 Stylus 插件即可，使用方式请参考 [Stylus 插件](/plugins/list/plugin-stylus)。
 
 ## 使用 PostCSS
 
@@ -38,7 +38,7 @@ Rsbuild 内置了一些 PostCSS 插件，会对 CSS 进行以下转换：
 
 ## 使用 CSS Modules
 
-请阅读 [使用 CSS Modules](/guide/basic/css-modules.html) 章节来了解 CSS Modules 的完整用法。
+请阅读 [使用 CSS Modules](/guide/basic/css-modules) 章节来了解 CSS Modules 的完整用法。
 
 ## CSS 压缩
 
@@ -46,7 +46,7 @@ Rsbuild 内置了一些 PostCSS 插件，会对 CSS 进行以下转换：
 
 Rsbuild 默认使用 Rspack 内置的 `SwcCssMinimizerRspackPlugin` 插件，在生产环境构建时自动压缩 CSS 代码。
 
-你可以通过 [CSS Minimizer 插件](/plugins/list/plugin-css-minimizer.html) 来自定义 CSS 压缩工具，切换到 cssnano 或其他工具进行 CSS 压缩。
+你可以通过 [CSS Minimizer 插件](/plugins/list/plugin-css-minimizer) 来自定义 CSS 压缩工具，切换到 cssnano 或其他工具进行 CSS 压缩。
 
 ## 内联 CSS 文件
 

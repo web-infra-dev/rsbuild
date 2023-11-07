@@ -48,7 +48,7 @@ rsbuild.addPlugins([pluginFoo({ message: 'some other message.' })]);
 
 Rsbuild 在内部按照约定的生命周期进行任务调度，插件可以通过注册钩子来介入工作流程的任意阶段，并实现自己的功能。
 
-Rsbuild 生命周期钩子的完整列表参考 [API 文档](/plugins/dev/hooks.html)。
+Rsbuild 生命周期钩子的完整列表参考 [API 文档](/plugins/dev/hooks)。
 
 Rsbuild 不会接管底层 Bundler 的生命周期，相关生命周期钩子的使用方式见对应文档：[webpack hooks](https://webpack.js.org/api/compiler-hooks/)
 

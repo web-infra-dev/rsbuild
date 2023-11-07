@@ -50,7 +50,7 @@ The following diagram illustrates the relationship between Rsbuild and other too
 
 ## Getting Started
 
-You can refer to [Quick Start](https://rsbuild.dev/guide/start/quick-start.html) to start experiencing Rsbuild.
+You can refer to [Quick Start](https://rsbuild.dev/guide/start/quick-start) to start experiencing Rsbuild.
 
 Please note that the Rsbuild project is still under active development. We are still in the process of refactoring and optimizing. The documentation is not yet complete.
 

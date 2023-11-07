@@ -92,7 +92,7 @@ dist
 
 ## Node.js Output Directory
 
-When the [Build Target](/api/start/build-target.html) of Rsbuild contains `'node'`, or you have enabled server-side features such as SSR in the higher level solutions, Rsbuild will generate some output files for Node.js and output them to the `bundles` directory:
+When the [Build Target](/api/start/build-target) of Rsbuild contains `'node'`, or you have enabled server-side features such as SSR in the higher level solutions, Rsbuild will generate some output files for Node.js and output them to the `bundles` directory:
 
 ```bash
 dist

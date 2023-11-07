@@ -55,7 +55,7 @@ For example, if you only need to be compatible with browsers above Chrome 100, y
 ```
 
 :::tip
-Please read the [Browserslist](/guide/advanced/browserslist.html) chapter to know more about the usage of Browserslist.
+Please read the [Browserslist](/guide/advanced/browserslist) chapter to know more about the usage of Browserslist.
 :::
 
 ## Usage polyfill
@@ -73,7 +73,7 @@ export default {
 ```
 
 :::tip
-Please read the [Browser Compatibility](/guide/advanced/browser-compatibility.html) chapter to know more about the usage of Browserslist.
+Please read the [Browser Compatibility](/guide/advanced/browser-compatibility) chapter to know more about the usage of Browserslist.
 :::
 
 ## Image Compression
