@@ -42,7 +42,7 @@ webpack 版本问题有以下几种情况：
 
 这个问题有以下解决方法：
 
-1. 你可以使用 Rsbuild 的 Source Build 插件来编译 monorepo 中的其他子项目，参考[「Source Build 插件」](/plugins/list/plugin-source-build.html)。
+1. 你可以使用 Rsbuild 的 Source Build 插件来编译 monorepo 中的其他子项目，参考[「Source Build 插件」](/plugins/list/plugin-source-build)。
 2. 你可以添加 `source.include` 配置项，指定需要额外进行编译的目录或模块，参考 [source.include 用法介绍](/config/options/source.html#sourceinclude)。
 3. 你可以预先构建需要引用的子项目，生成对应的构建产物，并在当前项目引用构建产物，而不是引用源代码。
 

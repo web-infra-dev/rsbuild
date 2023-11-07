@@ -224,7 +224,7 @@ const App = () => {
 
 ## 源码内联测试
 
-Vitest 支持将测试写在源码文件内，能够在不导出的情况下测试私有功能的行为，并且通过设置 Define 来在正式构建时剔除测试代码。详细指南请参考 [Vitest 官方文档](https://cn.vitest.dev/guide/in-source.html)。
+Vitest 支持将测试写在源码文件内，能够在不导出的情况下测试私有功能的行为，并且通过设置 Define 来在正式构建时剔除测试代码。详细指南请参考 [Vitest 官方文档](https://cn.vitest.dev/guide/in-source)。
 
 ```js
 // 函数实现

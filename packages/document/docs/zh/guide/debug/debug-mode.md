@@ -54,7 +54,7 @@ module.exports = {
 };
 ```
 
-关于 Rsbuild 配置项的完整介绍，请查看 [Rsbuild 配置项](/guide/basic/config.html) 章节。
+关于 Rsbuild 配置项的完整介绍，请查看 [Rsbuild 配置项](/guide/basic/config) 章节。
 
 ## Rspack 配置文件
 
@@ -77,7 +77,7 @@ module.exports = {
 };
 ```
 
-关于 Rspack 配置项的完整介绍，请查看 [Rspack 官方文档](https://www.rspack.dev/zh/config.html)。
+关于 Rspack 配置项的完整介绍，请查看 [Rspack 官方文档](https://www.rspack.dev/zh/config)。
 
 ## Webpack 配置文件
 

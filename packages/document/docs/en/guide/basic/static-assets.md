@@ -17,7 +17,7 @@ The following are the formats supported by Rsbuild by default:
 If you need to import assets in other formats, please refer to [Extend Asset Types](#extend-asset-types).
 
 :::tip SVG images
-SVG image is a special case. Rsbuild support convert SVG to React components, so SVG is processed separately. For details, see [Svgr Plugin](/plugins/list/plugin-svgr.html).
+SVG image is a special case. Rsbuild support convert SVG to React components, so SVG is processed separately. For details, see [Svgr Plugin](/plugins/list/plugin-svgr).
 :::
 
 ## Import Assets in JS file
@@ -31,7 +31,7 @@ import logo from './static/logo.png';
 export default = () => <img src={logo} />;
 ```
 
-Import with [alias](/guide/advanced/alias.html) are also supported:
+Import with [alias](/guide/advanced/alias) are also supported:
 
 ```tsx
 import logo from '@/static/logo.png';
@@ -49,7 +49,7 @@ In CSS files, you can reference static assets in relative paths:
 }
 ```
 
-Import with [alias](/guide/advanced/alias.html) are also supported:
+Import with [alias](/guide/advanced/alias) are also supported:
 
 ```css
 .logo {
@@ -72,7 +72,7 @@ console.log(largeImage); // "/static/largeImage.6c12aba3.png"
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
-For a more detailed introduction to asset inlining, please refer to the [Static Asset Inlining](/guide/optimization/inline-assets.html) chapter.
+For a more detailed introduction to asset inlining, please refer to the [Static Asset Inlining](/guide/optimization/inline-assets) chapter.
 
 ## Output Files
 
@@ -81,7 +81,7 @@ When static assets are imported, they will be output to the dist directory. You 
 - Modify the output filename through [output.filename](/config/options/output.html#outputfilename).
 - Modify the output path through [output.distPath](/config/options/output.html#outputdistpath).
 
-Please read [Output Files](/guide/basic/output-files.html) for details.
+Please read [Output Files](/guide/basic/output-files) for details.
 
 ## URL Prefix
 

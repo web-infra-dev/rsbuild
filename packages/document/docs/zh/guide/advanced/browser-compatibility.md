@@ -6,7 +6,7 @@
 
 在处理兼容性问题之前，首先需要明确你的项目需要支持的浏览器范围，并添加相应的 browserslist 配置。
 
-- 如果你还没有设置浏览器范围，请先阅读 [设置浏览器范围](/guide/advanced/browserslist.html) 章节。
+- 如果你还没有设置浏览器范围，请先阅读 [设置浏览器范围](/guide/advanced/browserslist) 章节。
 
 - 如果你已经设置了浏览器范围，那么 Rsbuild 会自动根据该范围进行编译，对 JavaScript 语法和 CSS 语法进行降级处理，并注入所需的 polyfill 代码。大部分情况下，你可以放心地使用现代 ECMAScript 特性，无须担心兼容性问题。
 

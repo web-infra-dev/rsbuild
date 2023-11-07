@@ -32,4 +32,4 @@ When transpiling TypeScript code using tools like SWC and Babel, type checking i
 
 Rsbuild provides the Type Check plugin, which runs TypeScript type checking in a separate process. The plugin internally integrates [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin).
 
-Please refer to the [Type Check plugin](/plugins/list/plugin-type-check.html) for usage instructions.
+Please refer to the [Type Check plugin](/plugins/list/plugin-type-check) for usage instructions.

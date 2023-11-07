@@ -54,7 +54,7 @@ module.exports = {
 };
 ```
 
-For a complete introduction to Rsbuild config, please see the [Rsbuild Config](/guide/basic/config.html) chapter.
+For a complete introduction to Rsbuild config, please see the [Rsbuild Config](/guide/basic/config) chapter.
 
 ## Rspack Config File
 

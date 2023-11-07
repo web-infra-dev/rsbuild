@@ -162,7 +162,7 @@ not op_mini all
 
 ## Browserslist 默认值
 
-Rsbuild 会根据[构建产物类型](/api/start/build-target.html)来设置不同的 Browserslist 默认值，但我们推荐你在项目中显式设置 Browserslist，这会让项目的兼容范围更加明确。
+Rsbuild 会根据[构建产物类型](/api/start/build-target)来设置不同的 Browserslist 默认值，但我们推荐你在项目中显式设置 Browserslist，这会让项目的兼容范围更加明确。
 
 ### Web 产物
 
