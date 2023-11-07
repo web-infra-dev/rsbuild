@@ -1,5 +1,13 @@
 # @rsbuild/document
 
+## 0.0.16
+
+### Patch Changes
+
+- a2a18ec: feat: support html.meta to be a function
+- 8f03dd0: refactor: move html.metaByEntries option to uni-builder
+- 9a52542: feat: add default meta configs and simplify the templates
+
 ## 0.0.15
 
 ### Patch Changes
