@@ -9,7 +9,7 @@ import type { RsbuildPlugin } from '../types';
 export function pluginSass(): RsbuildPlugin {
   return {
     name: 'plugin-sass',
-    async setup(api) {
+    setup(api) {
       api.onAfterCreateCompiler(({ compiler }) => {
         patchCompilerGlobalLocation(compiler);
       });
@@ -18,7 +18,7 @@ export function pluginSass(): RsbuildPlugin {
         const config = api.getNormalizedConfig();
         const { applyBaseCSSRule } = await import('./css');
 
-        const { excludes, options } = await getSassLoaderOptions(
+        const { excludes, options } = getSassLoaderOptions(
           config.tools.sass,
           // source-maps required for loaders preceding resolve-url-loader
           true,

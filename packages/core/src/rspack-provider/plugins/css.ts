@@ -55,7 +55,7 @@ export async function applyBaseCSSRule({
   if (!enableNativeCss(config)) {
     const localIdentName = getCssModuleLocalIdentName(config, isProd);
 
-    const cssLoaderOptions = await getCssLoaderOptions({
+    const cssLoaderOptions = getCssLoaderOptions({
       config,
       enableSourceMap,
       importLoaders,
@@ -138,7 +138,7 @@ export async function applyBaseCSSRule({
   }
 
   if (!isServer && !isWebWorker) {
-    const postcssLoaderOptions = await getPostcssConfig({
+    const postcssLoaderOptions = getPostcssConfig({
       enableSourceMap,
       browserslist,
       config,

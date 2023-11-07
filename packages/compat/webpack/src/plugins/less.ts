@@ -18,7 +18,7 @@ export function pluginLess(): RsbuildPlugin {
         const config = api.getNormalizedConfig();
         const { applyBaseCSSRule } = await import('./css');
 
-        const { options, excludes } = await getLessLoaderOptions(
+        const { options, excludes } = getLessLoaderOptions(
           config.tools.less,
           isUseCssSourceMap(config),
         );

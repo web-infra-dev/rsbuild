@@ -12,7 +12,7 @@ import {
 } from '../types';
 
 export function applyResolvePlugin(api: SharedRsbuildPluginAPI) {
-  api.modifyBundlerChain(async (chain, { target, CHAIN_ID }) => {
+  api.modifyBundlerChain((chain, { target, CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
     const isTsProject = Boolean(api.context.tsconfigPath);
     applyExtensions({
@@ -22,7 +22,7 @@ export function applyResolvePlugin(api: SharedRsbuildPluginAPI) {
       isTsProject,
     });
 
-    await applyAlias({
+    applyAlias({
       chain,
       config,
       rootPath: api.context.rootPath,
@@ -74,7 +74,7 @@ function applyExtensions({
   chain.resolve.extensions.merge(extensions);
 }
 
-async function applyAlias({
+function applyAlias({
   chain,
   config,
   rootPath,

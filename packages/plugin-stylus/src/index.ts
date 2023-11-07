@@ -29,7 +29,7 @@ export function pluginStylus(
   return {
     name: 'plugin-stylus',
 
-    async setup(api) {
+    setup(api) {
       const { bundlerType } = api.context;
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
