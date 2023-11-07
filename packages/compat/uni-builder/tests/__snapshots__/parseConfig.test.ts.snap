@@ -61,6 +61,25 @@ exports[`parseCommonConfig > html.metaByEntries 2`] = `
 }
 `;
 
+exports[`parseCommonConfig > html.templateByEntries 1`] = `
+{
+  "html": {
+    "template": [Function],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.templateByEntries 2`] = `
+{
+  "html": {
+    "template": [
+      "static/index.html",
+      [Function],
+    ],
+  },
+}
+`;
+
 exports[`parseCommonConfig > html.titleByEntries 1`] = `
 {
   "html": {

@@ -6,7 +6,7 @@ Rsbuild provides some configs to set the HTML template. Through this chapter, yo
 
 ## Set Template
 
-In Rsbuild, you can use [html.template](/config/options/html.html#htmltemplate) and [html.templateByEntries](/config/options/html.html#htmltemplatebyentries) configs to define the path to the custom HTML template.
+In Rsbuild, you can use [html.template](/config/options/html.html#htmltemplate) config to define the path to the custom HTML template.
 
 ```ts
 export default {

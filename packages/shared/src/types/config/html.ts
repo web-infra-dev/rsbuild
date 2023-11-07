@@ -99,13 +99,7 @@ export interface HtmlConfig {
    * Define the path to the HTML template,
    * corresponding to the `template` config of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
    */
-  template?: string;
-  /**
-   * Set different template file for different pages.
-   * The usage is same as `template`, and you can use the "entry name" as the key to set each page individually.
-   * `templateByEntries` will overrides the value set in `template`.
-   */
-  templateByEntries?: Partial<Record<string, string>>;
+  template?: ChainedHtmlOption<string>;
   /**
    * Define the parameters in the HTML template,
    * corresponding to the `templateParameters` config of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
