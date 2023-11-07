@@ -44,7 +44,7 @@ test.describe('html configure multi', () => {
   test('title default', async ({ page }) => {
     await page.goto(getHrefByEntryName('main', rsbuild.port));
 
-    await expect(page.evaluate(`document.title`)).resolves.toBe('');
+    await expect(page.evaluate(`document.title`)).resolves.toBe('Rsbuild App');
   });
 
   test('inject default (head)', async () => {

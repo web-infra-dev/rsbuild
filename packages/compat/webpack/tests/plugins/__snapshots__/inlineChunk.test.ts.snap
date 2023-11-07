@@ -56,6 +56,13 @@ exports[`plugin-inline-chunk > should add InlineChunkHtmlPlugin properly by defa
       },
       "name": "HtmlMetaPlugin",
     },
+    HtmlTitlePlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlTitlePlugin",
+      "titles": {
+        "main.html": "Rsbuild App",
+      },
+    },
     InlineChunkHtmlPlugin {
       "distPath": {
         "css": "static/css",
@@ -129,6 +136,13 @@ exports[`plugin-inline-chunk > should use proper plugin options when disableInli
       },
       "name": "HtmlMetaPlugin",
     },
+    HtmlTitlePlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlTitlePlugin",
+      "titles": {
+        "main.html": "Rsbuild App",
+      },
+    },
     InlineChunkHtmlPlugin {
       "distPath": {
         "css": "static/css",
@@ -199,6 +213,13 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
         ],
       },
       "name": "HtmlMetaPlugin",
+    },
+    HtmlTitlePlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlTitlePlugin",
+      "titles": {
+        "main.html": "Rsbuild App",
+      },
     },
     InlineChunkHtmlPlugin {
       "distPath": {
@@ -273,6 +294,13 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
         ],
       },
       "name": "HtmlMetaPlugin",
+    },
+    HtmlTitlePlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlTitlePlugin",
+      "titles": {
+        "main.html": "Rsbuild App",
+      },
     },
     InlineChunkHtmlPlugin {
       "distPath": {

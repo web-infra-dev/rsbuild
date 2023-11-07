@@ -57,7 +57,7 @@ export interface HtmlConfig {
   /**
    * Set the title tag of the HTML page.
    */
-  title?: string;
+  title?: ChainedConfigCombineUtils<string, { entryName: string }>;
   /**
    * Set different title for different pages.
    * The usage is same as `title`, and you can use the "entry name" as the key to set each page individually.
@@ -143,7 +143,8 @@ export interface HtmlConfig {
 }
 
 export type NormalizedHtmlConfig = HtmlConfig & {
-  meta: MetaOptions;
+  meta: ChainedConfigCombineUtils<MetaOptions, { entryName: string }>;
+  title: ChainedConfigCombineUtils<string, { entryName: string }>;
   mountId: string;
   inject: ScriptInject;
   crossorigin: boolean | CrossOrigin;
