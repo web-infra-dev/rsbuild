@@ -41,4 +41,27 @@ describe('parseCommonConfig', () => {
       }).rsbuildConfig,
     ).toMatchSnapshot();
   });
+
+  test('html.titleByEntries', () => {
+    expect(
+      parseCommonConfig({
+        html: {
+          titleByEntries: {
+            foo: 'Foo',
+          },
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+
+    expect(
+      parseCommonConfig({
+        html: {
+          title: 'Default',
+          titleByEntries: {
+            foo: 'Foo',
+          },
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+  });
 });

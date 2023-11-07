@@ -33,11 +33,7 @@ import type {
 import _ from 'lodash';
 
 export function getTitle(entryName: string, config: { html: HtmlConfig }) {
-  const { title, titleByEntries } = config.html;
-  if (titleByEntries?.[entryName]) {
-    return titleByEntries?.[entryName];
-  }
-
+  const { title } = config.html;
   return mergeChainedOptions({
     defaults: '',
     options: title,

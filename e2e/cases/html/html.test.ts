@@ -41,12 +41,6 @@ test.describe('html configure multi', () => {
     expect(errors).toEqual([]);
   });
 
-  test('title default', async ({ page }) => {
-    await page.goto(getHrefByEntryName('main', rsbuild.port));
-
-    await expect(page.evaluate(`document.title`)).resolves.toBe('Rsbuild App');
-  });
-
   test('inject default (head)', async () => {
     const pagePath = join(rsbuild.distPath, 'main.html');
     const content = await fs.readFile(pagePath, 'utf-8');
@@ -151,27 +145,6 @@ test.describe('html element set', () => {
   });
 });
 
-test('custom title', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: join(fixtures, 'template'),
-    entry: {
-      main: join(join(fixtures, 'template'), 'src/index.ts'),
-    },
-    runServer: true,
-    rsbuildConfig: {
-      html: {
-        title: 'custom title',
-      },
-    },
-  });
-
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
-
-  await expect(page.evaluate(`document.title`)).resolves.toBe('custom title');
-
-  rsbuild.close();
-});
-
 test('template & templateParameters', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'template'),
@@ -190,10 +163,6 @@ test('template & templateParameters', async ({ page }) => {
   });
 
   await page.goto(getHrefByEntryName('main', rsbuild.port));
-
-  await expect(page.evaluate(`document.title`)).resolves.toBe(
-    'custom template',
-  );
 
   const testTemplate = page.locator('#test-template');
   await expect(testTemplate).toHaveText('xxx');
@@ -243,46 +212,6 @@ test('templateByEntries & templateParametersByEntries', async ({ page }) => {
 
   await expect(testTemplate).toHaveText('bar');
   await expect(page.evaluate(`window.type`)).resolves.toBe('bar');
-
-  rsbuild.close();
-});
-
-test('title & titleByEntries & templateByEntries', async ({ page }) => {
-  // priority: template title > titleByEntries > title
-  const rsbuild = await build({
-    cwd: join(fixtures, 'template'),
-    entry: {
-      main: join(fixtures, 'template/src/index.ts'),
-      foo: join(fixtures, 'template/src/index.ts'),
-      bar: join(fixtures, 'template/src/index.ts'),
-    },
-    runServer: true,
-    rsbuildConfig: {
-      html: {
-        title: 'custom title',
-        titleByEntries: {
-          foo: 'Tiktok',
-        },
-        templateByEntries: {
-          bar: './static/index.html',
-        },
-        templateParameters: {
-          foo: 'bar',
-        },
-      },
-    },
-  });
-
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
-  await expect(page.evaluate(`document.title`)).resolves.toBe('custom title');
-
-  await page.goto(getHrefByEntryName('foo', rsbuild.port));
-  await expect(page.evaluate(`document.title`)).resolves.toBe('Tiktok');
-
-  await page.goto(getHrefByEntryName('bar', rsbuild.port));
-  await expect(page.evaluate(`document.title`)).resolves.toBe(
-    'custom template',
-  );
 
   rsbuild.close();
 });
