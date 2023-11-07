@@ -35,7 +35,7 @@ export function pluginNodePolyfill(): RsbuildPlugin<RsbuildPluginAPI> {
   return {
     name: 'plugin-node-polyfill',
 
-    async setup(api) {
+    setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID, isServer, bundler }) => {
         // it had not need `node polyfill`, if the target is 'node'(server runtime).
         if (isServer) {

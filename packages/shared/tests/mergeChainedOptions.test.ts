@@ -25,7 +25,7 @@ describe('mergeChainedOptions', () => {
   test(`should support custom merge function`, () => {
     const merge = (target: any, source: any) => {
       for (const key in source) {
-        if (target.hasOwnProperty(key)) {
+        if (Object.hasOwn(target, key)) {
           target[key] += source[key];
         } else {
           target[key] = source[key];

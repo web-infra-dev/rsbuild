@@ -9,7 +9,7 @@ import { castArray, getSharedPkgCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import _ from 'lodash';
 
-export const getSassLoaderOptions = async (
+export const getSassLoaderOptions = (
   rsbuildSassConfig: ToolsSassConfig | undefined,
   isUseCssSourceMap: boolean,
 ) => {
@@ -46,7 +46,7 @@ export const getSassLoaderOptions = async (
   };
 };
 
-export const getLessLoaderOptions = async (
+export const getLessLoaderOptions = (
   rsbuildLessConfig: ToolsLessConfig | undefined,
   isUseCssSourceMap: boolean,
 ) => {

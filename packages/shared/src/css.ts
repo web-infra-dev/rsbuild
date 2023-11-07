@@ -92,7 +92,7 @@ export const getCssnanoDefaultOptions = (): CssNanoOptions => ({
   ],
 });
 
-export const getPostcssConfig = async ({
+export const getPostcssConfig = ({
   enableCssMinify,
   enableSourceMap,
   browserslist,
@@ -185,7 +185,7 @@ export const normalizeCssLoaderOptions = (
   return options;
 };
 
-export const getCssLoaderOptions = async ({
+export const getCssLoaderOptions = ({
   config,
   enableSourceMap,
   importLoaders,

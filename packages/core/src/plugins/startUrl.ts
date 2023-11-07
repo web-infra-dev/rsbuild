@@ -84,7 +84,7 @@ const openedURLs: string[] = [];
 export function pluginStartUrl(): DefaultRsbuildPlugin {
   return {
     name: 'plugin-start-url',
-    async setup(api) {
+    setup(api) {
       let port: number;
 
       api.onAfterStartDevServer(async (params) => {

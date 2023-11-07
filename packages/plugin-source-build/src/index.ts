@@ -44,7 +44,7 @@ export function pluginSourceBuild(
   return {
     name: pluginName,
 
-    async setup(api) {
+    setup(api) {
       const projectRootPath = api.context.rootPath;
 
       // TODO: when rspack support tsconfig paths functionality, this comment will remove

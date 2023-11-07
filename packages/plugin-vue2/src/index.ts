@@ -13,8 +13,8 @@ export function pluginVue2(
   return {
     name: 'plugin-vue2',
 
-    async setup(api) {
-      api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+    setup(api) {
+      api.modifyBundlerChain((chain, { CHAIN_ID }) => {
         chain.resolve.extensions.add('.vue');
 
         const vueLoaderOptions = deepmerge(

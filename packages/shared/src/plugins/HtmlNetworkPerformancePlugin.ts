@@ -47,9 +47,9 @@ export class HtmlNetworkPerformancePlugin implements RspackPluginInstance {
       `HTML${this.type}Plugin`,
       (compilation: Compilation) => {
         // @ts-expect-error compilation type mismatch
-        this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapPromise(
+        this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tap(
           `HTML${upperFirst(this.type)}Plugin`,
-          async (htmlPluginData) => {
+          (htmlPluginData) => {
             const { headTags } = htmlPluginData;
 
             const options: PreconnectOption[] | DnsPrefetchOption[] =

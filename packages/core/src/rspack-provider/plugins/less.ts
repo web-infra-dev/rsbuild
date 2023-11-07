@@ -25,7 +25,7 @@ export function pluginLess(): RsbuildPlugin {
           importLoaders: 2,
         });
 
-        const { excludes, options } = await getLessLoaderOptions(
+        const { excludes, options } = getLessLoaderOptions(
           config.tools.less,
           isUseCssSourceMap(config),
         );
