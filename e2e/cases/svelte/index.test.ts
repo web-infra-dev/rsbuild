@@ -65,3 +65,73 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
   fs.writeFileSync(bPath, sourceCodeB, 'utf-8'); // recover the source code
   handle.server.close();
 });
+
+rspackOnlyTest(
+  'should build svelte component with typescript',
+  async ({ page }) => {
+    const root = path.join(__dirname, 'ts');
+
+    const handle = await build({
+      cwd: root,
+      entry: {
+        main: path.join(root, 'src/index.ts'),
+      },
+      runServer: true,
+      plugins: [pluginSvelte()],
+    });
+
+    await page.goto(getHrefByEntryName('main', handle.port));
+
+    const title = page.locator('#title');
+
+    await expect(title).toHaveText('Hello world!');
+
+    handle.close();
+  },
+);
+
+rspackOnlyTest('should build svelte component with less', async ({ page }) => {
+  const root = path.join(__dirname, 'less');
+
+  const handle = await build({
+    cwd: root,
+    entry: {
+      main: path.join(root, 'src/index.js'),
+    },
+    runServer: true,
+    plugins: [pluginSvelte()],
+  });
+
+  await page.goto(getHrefByEntryName('main', handle.port));
+
+  const title = page.locator('#title');
+
+  await expect(title).toHaveText('Hello world!');
+  // use the text color to assert the less compilation result
+  await expect(title).toHaveCSS('color', 'rgb(255, 62, 0)');
+
+  handle.close();
+});
+
+rspackOnlyTest('should build svelte component with scss', async ({ page }) => {
+  const root = path.join(__dirname, 'scss');
+
+  const handle = await build({
+    cwd: root,
+    entry: {
+      main: path.join(root, 'src/index.js'),
+    },
+    runServer: true,
+    plugins: [pluginSvelte()],
+  });
+
+  await page.goto(getHrefByEntryName('main', handle.port));
+
+  const title = page.locator('#title');
+
+  await expect(title).toHaveText('Hello world!');
+  // use the text color to assert the less compilation result
+  await expect(title).toHaveCSS('color', 'rgb(255, 62, 0)');
+
+  handle.close();
+});
