@@ -1,4 +1,4 @@
-import type { MetaOptions } from '@rsbuild/shared';
+import type { MetaOptions, ScriptInject } from '@rsbuild/shared';
 import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core/rspack-provider';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 
@@ -44,6 +44,10 @@ export type UniBuilderExtraConfig = {
      * @deprecated use html.favicon instead
      */
     faviconByEntries?: Record<string, string | undefined>;
+    /**
+     * @deprecated use html.inject instead
+     */
+    injectByEntries?: Record<string, ScriptInject>;
   };
 };
 

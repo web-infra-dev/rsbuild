@@ -1,4 +1,4 @@
-- **Type:** `'head' | 'body' | 'true' | false`
+- **Type:** `'head' | 'body' | boolean | Function`
 - **Default:** `'head'`
 
 Set the inject position of the `<script>` tag.
@@ -54,4 +54,29 @@ You will see that the script tag is generated at the end of the body tag:
     <script defer src="/static/js/main.js"></script>
   </body>
 </html>
+```
+
+### Function Usage
+
+- **Type:**
+
+```ts
+type InjectFunction = ({ value: ScriptInject; entryName: string }) => string | void;
+```
+
+When `html.inject` is of type Function, the function receives an object as its parameter, with the following properties:
+
+- `value`: the default inject configuration of Rsbuild.
+- `entryName`: the name of the current entry.
+
+In the context of MPA (Multi-Page Application), you can set different `inject` behaviors based on the entry name:
+
+```js
+export default {
+  html: {
+    inject({ entryName }) {
+      return entryName === 'foo' ? 'body' : 'head';
+    },
+  },
+};
 ```

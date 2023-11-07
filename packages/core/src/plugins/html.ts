@@ -40,8 +40,12 @@ export function getTitle(entryName: string, config: { html: HtmlConfig }) {
 }
 
 export function getInject(entryName: string, config: { html: HtmlConfig }) {
-  const { inject, injectByEntries } = config.html;
-  return injectByEntries?.[entryName] || inject || true;
+  return mergeChainedOptions({
+    defaults: 'head',
+    options: config.html.inject,
+    utils: { entryName },
+    useObjectParam: true,
+  });
 }
 
 export function getFavicon(
@@ -214,7 +218,6 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
             const entryValue = entries[entryName].values() as string | string[];
             const chunks = await getChunks(entryName, entryValue);
             const inject = getInject(entryName, config);
-
             const filename = htmlPaths[entryName];
             const template = getTemplatePath(entryName, config);
             const templateParameters = await getTemplateParameters(

@@ -87,4 +87,27 @@ describe('parseCommonConfig', () => {
       }).rsbuildConfig,
     ).toMatchSnapshot();
   });
+
+  test('html.faviconByEntries', () => {
+    expect(
+      parseCommonConfig({
+        html: {
+          injectByEntries: {
+            foo: 'head',
+          },
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+
+    expect(
+      parseCommonConfig({
+        html: {
+          inject: 'body',
+          injectByEntries: {
+            foo: 'head',
+          },
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+  });
 });
