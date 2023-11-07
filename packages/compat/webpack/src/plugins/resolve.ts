@@ -59,11 +59,9 @@ export const pluginResolve = (): RsbuildPlugin => ({
       const config = api.getNormalizedConfig();
       const isTsProject = Boolean(api.context.tsconfigPath);
 
-      if (config.source.compileJsDataURI) {
-        chain.module
-          .rule(CHAIN_ID.RULE.JS_DATA_URI)
-          .resolve.set('fullySpecified', false);
-      }
+      chain.module
+        .rule(CHAIN_ID.RULE.JS_DATA_URI)
+        .resolve.set('fullySpecified', false);
 
       if (isTsProject && config.source.aliasStrategy === 'prefer-tsconfig') {
         await applyTsConfigPathsPlugin({

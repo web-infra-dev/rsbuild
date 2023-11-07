@@ -56,11 +56,6 @@ describe('plugin-resolve', () => {
   it('should disable resolve.fullySpecified by default', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
-      rsbuildConfig: {
-        source: {
-          compileJsDataURI: true,
-        },
-      },
     });
     const config = await rsbuild.unwrapWebpackConfig();
 

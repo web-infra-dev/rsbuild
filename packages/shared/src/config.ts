@@ -58,7 +58,6 @@ export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
   aliasStrategy: 'prefer-tsconfig',
   preEntry: [],
   globalVars: {},
-  compileJsDataURI: true,
 });
 
 export const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
