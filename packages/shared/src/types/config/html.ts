@@ -63,13 +63,7 @@ export interface HtmlConfig {
   /**
    * Set the inject position of the `<script>` tag.
    */
-  inject?: ScriptInject;
-  /**
-   * Set different script tag inject positions for different pages.
-   * The usage is same as `inject`, and you can use the "entry name" as the key to set each page individually.
-   * `injectByEntries` will overrides the value set in `inject`.
-   */
-  injectByEntries?: Record<string, ScriptInject>;
+  inject?: ChainedHtmlOption<ScriptInject>;
   /**
    * Inject custom html tags into the output html files.
    */
@@ -136,7 +130,7 @@ export type NormalizedHtmlConfig = HtmlConfig & {
   meta: ChainedHtmlOption<MetaOptions>;
   title: ChainedHtmlOption<string>;
   mountId: string;
-  inject: ScriptInject;
+  inject: ChainedHtmlOption<ScriptInject>;
   crossorigin: boolean | CrossOrigin;
   outputStructure: OutputStructure;
   scriptLoading: ScriptLoading;

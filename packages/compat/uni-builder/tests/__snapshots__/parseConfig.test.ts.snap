@@ -19,6 +19,25 @@ exports[`parseCommonConfig > html.faviconByEntries 2`] = `
 }
 `;
 
+exports[`parseCommonConfig > html.faviconByEntries 3`] = `
+{
+  "html": {
+    "inject": [Function],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.faviconByEntries 4`] = `
+{
+  "html": {
+    "inject": [
+      "body",
+      [Function],
+    ],
+  },
+}
+`;
+
 exports[`parseCommonConfig > html.metaByEntries 1`] = `
 {
   "html": {
