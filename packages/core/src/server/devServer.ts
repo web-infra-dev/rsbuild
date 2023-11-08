@@ -67,7 +67,7 @@ export class RsbuildDevServer {
   public async onInit(app: Server) {
     this.app = app;
 
-    // Order: devServer.before => setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push => devServer.after
+    // Order: setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push
     const { before, after } = this.applySetupMiddlewares();
 
     before.forEach((fn) => this.middlewares.use(fn));
@@ -125,6 +125,7 @@ export class RsbuildDevServer {
 
     devMiddleware.middleware && this.middlewares.use(devMiddleware.middleware);
 
+    // TODO: add favicon fallback
     if (dev.historyApiFallback) {
       const { default: connectHistoryApiFallback } = await import(
         'connect-history-api-fallback'

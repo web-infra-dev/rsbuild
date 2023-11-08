@@ -15,7 +15,9 @@ test('should provide history api fallback correctly', async ({ page }) => {
     rsbuildConfig: {
       tools: {
         devServer: {
-          historyApiFallback: true,
+          historyApiFallback: {
+            index: '/main.html',
+          },
         },
       },
     },

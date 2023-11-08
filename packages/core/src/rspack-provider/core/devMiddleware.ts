@@ -1,5 +1,5 @@
 import webpackDevMiddleware from '@rsbuild/shared/webpack-dev-middleware';
-import type { DevMiddleware } from '../../server/types';
+import type { DevMiddleware } from '../../server';
 import { setupServerHooks, isClientCompiler } from '@rsbuild/shared';
 
 import type { Compiler, MultiCompiler } from '@rspack/core';
