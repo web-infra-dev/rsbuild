@@ -1,5 +1,11 @@
 # @rsbuild/doctor-types
 
+## 0.0.5
+
+### Patch Changes
+
+- 41a7938: feat(deps): bump Rspack v0.3.11
+
 ## 0.0.4
 
 ### Patch Changes

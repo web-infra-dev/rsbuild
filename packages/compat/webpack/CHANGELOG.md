@@ -1,5 +1,30 @@
 # @rsbuild/webpack
 
+## 0.0.17
+
+### Patch Changes
+
+- b25b47c: feat: support html.template as a function
+- fd05681: refactor: remove source.compileJsDataURI option
+- 6220e04: refactor: merge HTML plugins into a unified plugin
+- 58e7453: feat: support html.favicon as a function
+- Updated dependencies [b25b47c]
+- Updated dependencies [3b87b50]
+- Updated dependencies [fd05681]
+- Updated dependencies [6220e04]
+- Updated dependencies [41a7938]
+- Updated dependencies [f1f15cf]
+- Updated dependencies [60fc2de]
+- Updated dependencies [58e7453]
+- Updated dependencies [659a2f5]
+- Updated dependencies [7ecbc74]
+- Updated dependencies [47078fd]
+  - @rsbuild/shared@0.0.17
+  - @rsbuild/core@0.0.17
+  - @rsbuild/babel-preset@0.0.17
+  - @rsbuild/plugin-babel@0.0.17
+  - @rsbuild/plugin-css-minimizer@0.0.17
+
 ## 0.0.16
 
 ### Patch Changes

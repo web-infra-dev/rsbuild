@@ -1,5 +1,21 @@
 # @rsbuild/shared
 
+## 0.0.17
+
+### Patch Changes
+
+- b25b47c: feat: support html.template as a function
+- 3b87b50: refactor: move html.titleByEntries option to uni-builder
+- fd05681: refactor: remove source.compileJsDataURI option
+- 6220e04: refactor: merge HTML plugins into a unified plugin
+- 41a7938: feat(deps): bump Rspack v0.3.11
+- f1f15cf: feat: support html.templateParameters as a function
+- 60fc2de: feat: support html.title as a function
+- 58e7453: feat: support html.favicon as a function
+- 659a2f5: chore: remove cssnano from shared package
+- 7ecbc74: feat: support html.inject as a function
+- 47078fd: types: fix source.alias type
+
 ## 0.0.16
 
 ### Patch Changes
