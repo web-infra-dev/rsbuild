@@ -1484,9 +1484,6 @@ importers:
       browserslist:
         specifier: ^4.22.1
         version: 4.22.1
-      cssnano:
-        specifier: 6.0.1
-        version: 6.0.1(postcss@8.4.31)
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
