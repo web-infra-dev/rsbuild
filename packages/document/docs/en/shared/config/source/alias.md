@@ -1,4 +1,9 @@
-- **Type:** `Record<string, string | string[]> | Function`
+- **Type:**
+
+```ts
+type Alias = Record<string, string | false | (string | false)[]> | Function;
+```
+
 - **Default:** `undefined`
 
 Create aliases to import or require certain modules, same as the [resolve.alias](https://www.rspack.dev/config/resolve.html#resolvealias) config of Rspack.

@@ -6,7 +6,7 @@ import type {
   JSONValue,
 } from '../utils';
 
-export type Alias = Record<string, string | string[]>;
+export type Alias = Record<string, string | false | (string | false)[]>;
 
 // Use a loose type to compat webpack
 export type Define = Record<string, any>;

@@ -1,4 +1,9 @@
-- **类型：** `Record<string, string | string[]> | Function`
+- **类型：**
+
+```ts
+type Alias = Record<string, string | false | (string | false)[]> | Function;
+```
+
 - **默认值：** `undefined`
 
 设置文件引用的别名，对应 Rspack 的 [resolve.alias](https://www.rspack.dev/zh/config/resolve.html#resolvealias) 配置。
