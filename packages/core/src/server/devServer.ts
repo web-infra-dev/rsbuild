@@ -101,7 +101,7 @@ export class RsbuildDevServer {
         res.setHeader('Access-Control-Allow-Credentials', 'false');
       }
 
-      // 用户在 devServer 上配置的 headers 不会对 html 的请求生效，加入下面代码，使配置的 headers 对所有请求生效
+      // The headers configured by the user on devServer will not take effect on html requests. Add the following code to make the configured headers take effect on all requests.
       const confHeaders = dev.headers;
       if (confHeaders) {
         for (const [key, value] of Object.entries(confHeaders)) {
