@@ -8,6 +8,7 @@ import type {
   ExposeServerApis,
   RsbuildDevServerOptions,
   CreateDevServerOptions,
+  ServerApi,
 } from './types';
 
 import { getDefaultDevOptions } from './constants';
@@ -187,13 +188,13 @@ export async function createDevServer(options: CreateDevServerOptions) {
   const httpServer =
     serverOptions.customApp || (await devServer.createHTTPServer());
 
-  const server = {
+  const server: ServerApi = {
     middlewares: devServer.middlewares,
     init: async () => {
       await devServer.onInit(httpServer);
     },
     // resolvedConfig,
-    listen: (options?: number | ListenOptions, cb?: () => void) => {
+    listen: (options, cb) => {
       devServer.listen(options, cb);
     },
     close: () => {

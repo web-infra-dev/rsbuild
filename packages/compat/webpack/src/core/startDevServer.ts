@@ -16,8 +16,6 @@ export async function createDevServer(
   serverOptions: Exclude<StartDevServerOptions['serverOptions'], undefined>,
   customCompiler?: Compiler | MultiCompiler,
 ) {
-  const { Server } = await import('@modern-js/server');
-
   let compiler: Compiler | MultiCompiler;
   if (customCompiler) {
     compiler = customCompiler;

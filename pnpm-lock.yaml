@@ -480,9 +480,6 @@ importers:
       '@babel/preset-react':
         specifier: ^7.22.15
         version: 7.22.15(@babel/core@7.23.2)
-      '@modern-js/server':
-        specifier: 0.0.0-next-20231103131234
-        version: 0.0.0-next-20231103131234
       '@pmmmwh/react-refresh-webpack-plugin':
         specifier: 0.5.10
         version: 0.5.10(react-refresh@0.14.0)(webpack@5.89.0)
@@ -568,9 +565,6 @@ importers:
 
   packages/core:
     dependencies:
-      '@modern-js/server':
-        specifier: 0.0.0-next-20231103131234
-        version: 0.0.0-next-20231103131234
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared

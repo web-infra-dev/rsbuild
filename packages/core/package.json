@@ -21,6 +21,10 @@
       "types": "./dist/server/index.d.ts",
       "default": "./dist/server/index.js"
     },
+    "./hmr-client": {
+      "types": "./dist/server/dev-middleware/hmr-client/index.d.ts",
+      "default": "./dist/server/dev-middleware/hmr-client/index.js"
+    },
     "./cli": {
       "types": "./dist/cli/index.d.ts",
       "default": "./dist/cli/index.js"
@@ -48,6 +52,9 @@
       "server": [
         "./dist/server/index.d.ts"
       ],
+      "hmr-client": [
+        "./dist/server/dev-middleware/hmr-client/index.d.ts"
+      ],
       "plugins/*": [
         "./dist/plugins/*.d.ts"
       ],
@@ -72,7 +79,6 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@modern-js/server": "0.0.0-next-20231103131234",
     "@rsbuild/shared": "workspace:*",
     "@rspack/core": "0.3.11",
     "connect": "3.7.0",

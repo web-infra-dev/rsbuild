@@ -6,6 +6,8 @@ import type {
   RequestHandler,
   ExposeServerApis,
 } from '@rsbuild/shared';
+import type Connect from 'connect';
+import type { ListenOptions } from 'net';
 
 type Middleware = (
   req: IncomingMessage,
@@ -61,3 +63,10 @@ export type CreateDevServerOptions = {
     customApp?: Server;
   };
 } & RsbuildDevServerOptions;
+
+export type ServerApi = {
+  middlewares: Connect.Server;
+  init: () => Promise<void>;
+  listen: (options?: number | ListenOptions, cb?: () => void) => void;
+  close: () => void;
+};
