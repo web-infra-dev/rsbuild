@@ -591,8 +591,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "performance": {
-    "maxAssetSize": 3000000,
-    "maxEntrypointSize": 3000000,
+    "hints": false,
   },
   "plugins": [
     HtmlBasicPlugin {
@@ -1305,8 +1304,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "performance": {
-    "maxAssetSize": 3000000,
-    "maxEntrypointSize": 3000000,
+    "hints": false,
   },
   "plugins": [
     HtmlBasicPlugin {
@@ -1884,8 +1882,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "performance": {
-    "maxAssetSize": 30000000,
-    "maxEntrypointSize": 30000000,
+    "hints": false,
   },
   "plugins": [
     DefinePlugin {
@@ -2445,8 +2442,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "performance": {
-    "maxAssetSize": 30000000,
-    "maxEntrypointSize": 30000000,
+    "hints": false,
   },
   "plugins": [
     DefinePlugin {
