@@ -1,10 +1,6 @@
 import type { RsbuildTarget } from '../rsbuild';
 import type { ModifyChainUtils } from '../hooks';
-import type {
-  ChainedConfig,
-  ChainedConfigWithUtils,
-  JSONValue,
-} from '../utils';
+import type { ChainedConfig, ChainedConfigWithUtils } from '../utils';
 
 export type Alias = Record<string, string | false | (string | false)[]>;
 
@@ -12,13 +8,6 @@ export type Alias = Record<string, string | false | (string | false)[]>;
 export type Define = Record<string, any>;
 
 export type MainFields = (string | string[])[];
-
-export type GlobalVars = Record<string, JSONValue>;
-
-export type ChainedGlobalVars = ChainedConfigWithUtils<
-  GlobalVars,
-  Pick<ModifyChainUtils, 'env' | 'target'>
->;
 
 export type AliasStrategy = 'prefer-tsconfig' | 'prefer-alias';
 
@@ -49,10 +38,6 @@ export interface SourceConfig {
    * It can be used to execute global logics, such as polyfill injection.
    */
   preEntry?: string | string[];
-  /**
-   * Define global variables. It can replace expressions like `process.env.FOO` in your code after compile.
-   */
-  globalVars?: ChainedGlobalVars;
   /**
    * This configuration will determine which field of `package.json` you use to import the `npm` module.
    * Same as the [resolve.mainFields](https://webpack.js.org/configuration/resolve/#resolvemainfields) config of webpack.
@@ -90,5 +75,4 @@ export interface NormalizedSourceConfig extends SourceConfig {
   alias: ChainedConfig<Alias>;
   aliasStrategy: AliasStrategy;
   preEntry: string[];
-  globalVars: ChainedGlobalVars;
 }

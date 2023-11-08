@@ -6,6 +6,7 @@ import {
 } from '@rsbuild/core';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 import type { UniBuilderRspackConfig, UniBuilderWebpackConfig } from '../types';
+import { pluginGlobalVars } from './plugins/globalVars';
 
 export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   uniBuilderConfig: B extends 'rspack'
@@ -63,8 +64,12 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
     delete html.templateParametersByEntries;
   }
 
+  const rsbuildPlugins: RsbuildPlugin[] = [
+    pluginGlobalVars(uniBuilderConfig.source?.globalVars),
+  ];
+
   return {
     rsbuildConfig: mergeRsbuildConfig(rsbuildConfig, extraConfig),
-    rsbuildPlugins: [],
+    rsbuildPlugins,
   };
 }

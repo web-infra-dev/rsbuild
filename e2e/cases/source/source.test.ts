@@ -43,7 +43,8 @@ test.describe('source configure multi', () => {
   });
 });
 
-test('global-vars', async ({ page }) => {
+// TODO: move to uni-builder
+test.skip('global-vars', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'global-vars'),
     entry: {
@@ -52,9 +53,9 @@ test('global-vars', async ({ page }) => {
     runServer: true,
     rsbuildConfig: {
       source: {
-        globalVars: {
-          ENABLE_TEST: true,
-        },
+        // globalVars: {
+        //   ENABLE_TEST: true,
+        // },
       },
     },
   });

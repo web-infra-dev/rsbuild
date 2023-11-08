@@ -108,7 +108,7 @@ The environment variable `NODE_ENV` shown in the example above is already inject
 
 ### process.env Injection
 
-When using `source.define` or `source.globalVars`, please avoid injecting the entire `process.env` object, e.g. the following usage is not recommended:
+When using `source.define`, please avoid injecting the entire `process.env` object, e.g. the following usage is not recommended:
 
 ```js
 export default {
@@ -127,23 +127,9 @@ If the above usage is adopted, the following problems will be caused:
 
 So please avoid full injection, just inject the used variables from `process.env`.
 
-## Setup Environment Variables
+## Notes
 
-You may often need to set environment variables, in which case you can instead use the [source.globalVars](/config/options/source.html#sourceglobalvars) configuration to simplify configuration. It is a syntax sugar of `source.define`, the only difference is that `source.globalVars` will automatically stringify the value, which makes it easier to set the value of global variables and avoid writing a lot of `JSON.stringify(...)` stuffs.
-
-```js
-export default {
-  source: {
-    globalVars: {
-      'process.env.NODE_ENV': 'production',
-      'import.meta.foo': { bar: 42 },
-      'import.meta.baz': false,
-    },
-  },
-};
-```
-
-Note that either of these methods will only match the full expression; destructing the expression will prevent the Rsbuild from correctly recognizing it.
+Note that `source.define` will only match the full expression; destructing the expression will prevent the Rsbuild from correctly recognizing it.
 
 ```js
 console.log(process.env.NODE_ENV);
@@ -186,10 +172,6 @@ export default {
     define: {
       'process.env.REGION': JSON.stringify(process.env.REGION),
     },
-    // or...
-    globalVars: {
-      'process.env.REGION': process.env.REGION,
-    },
   },
 };
 ```
@@ -221,24 +203,3 @@ const App = () => {
 ```
 
 Unused components are not bundled into the artifacts, and their external dependencies can be optimized accordingly, resulting in a destination with better size and performance.
-
-## In-source testing
-
-Vitest supports writing tests inside source files to test the behavior of private features without exporting them. Set up `Define` to remove the test code from the production build. Please refer to the [Vitest's documentation](https://vitest.dev/guide/in-source) for detailed guidelines
-
-```js
-// the implementation
-function add(...args) {
-  return args.reduce((a, b) => a + b, 0);
-}
-
-// in-source test suites
-if (import.meta.vitest) {
-  const { it, expect } = import.meta.vitest;
-  it('add', () => {
-    expect(add()).toBe(0);
-    expect(add(1)).toBe(1);
-    expect(add(1, 2, 3)).toBe(6);
-  });
-}
-```

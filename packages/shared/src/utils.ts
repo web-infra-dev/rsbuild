@@ -88,6 +88,12 @@ export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
   );
 }
 
+export function isServerTarget(target: RsbuildTarget | RsbuildTarget[]) {
+  return (Array.isArray(target) ? target : [target]).some((item) =>
+    ['node', 'service-worker'].includes(item),
+  );
+}
+
 export function resolvePackage(loader: string, dirname: string) {
   // Vitest do not support require.resolve to source file
   return process.env.VITEST
@@ -136,6 +142,7 @@ export const isPackageInstalled = (
   }
 };
 
+// TODO: move to react plugin
 export const isBeyondReact17 = (cwd: string) => {
   const pkgPath = pkgUp.sync({ cwd });
 
@@ -155,9 +162,3 @@ export const isBeyondReact17 = (cwd: string) => {
 
   return semver.satisfies(semver.minVersion(deps.react)!, '>=17.0.0');
 };
-
-export function useSSR(target: RsbuildTarget | RsbuildTarget[]) {
-  return (Array.isArray(target) ? target : [target]).some((item) =>
-    ['node', 'service-worker'].includes(item),
-  );
-}
