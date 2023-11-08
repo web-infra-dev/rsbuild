@@ -6,8 +6,8 @@ import {
   isBeyondReact17,
   getCoreJsVersion,
   getBrowserslistWithDefault,
-  type ModifyChainUtils,
   getDefaultStyledComponentsConfig,
+  type ModifyChainUtils,
 } from '@rsbuild/shared';
 import { Extensions } from '@modern-js/swc-plugins';
 import { getDefaultSwcConfig } from './plugin';
@@ -22,14 +22,16 @@ import { CORE_JS_DIR_PATH, SWC_HELPERS_DIR_PATH } from './constants';
 /**
  * Determine react runtime mode based on react version
  */
-export function determinePresetReact(
+export async function determinePresetReact(
   root: string,
   pluginConfig: ObjPluginSwcOptions,
 ) {
   const presetReact =
     pluginConfig.presetReact || (pluginConfig.presetReact = {});
 
-  presetReact.runtime ??= isBeyondReact17(root) ? 'automatic' : 'classic';
+  presetReact.runtime ??= (await isBeyondReact17(root))
+    ? 'automatic'
+    : 'classic';
 }
 
 export function checkUseMinify(
@@ -132,7 +134,7 @@ export async function applyPluginConfig(
   // and then invoke function with this config
   const pluginOptions = isUsingFnOptions ? {} : rawOptions;
 
-  determinePresetReact(rootPath, pluginOptions);
+  await determinePresetReact(rootPath, pluginOptions);
 
   const swc = {
     jsc: {
