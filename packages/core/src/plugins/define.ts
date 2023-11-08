@@ -1,8 +1,6 @@
-import { mapValues } from 'lodash';
 import {
   removeTailSlash,
-  mergeChainedOptions,
-  type GlobalVars,
+  type Define,
   type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
 
@@ -10,7 +8,7 @@ export const pluginDefine = (): DefaultRsbuildPlugin => ({
   name: 'plugin-define',
 
   setup(api) {
-    api.modifyBundlerChain((chain, { env, target, CHAIN_ID, bundler }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, bundler }) => {
       const config = api.getNormalizedConfig();
       const publicPath = chain.output.get('publicPath');
       const assetPrefix =
@@ -18,27 +16,18 @@ export const pluginDefine = (): DefaultRsbuildPlugin => ({
           ? publicPath
           : config.output.assetPrefix;
 
-      const builtinVars: GlobalVars = {
-        'process.env.NODE_ENV': process.env.NODE_ENV,
-        'process.env.ASSET_PREFIX': removeTailSlash(assetPrefix),
+      const builtinVars: Define = {
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        'process.env.ASSET_PREFIX': JSON.stringify(
+          removeTailSlash(assetPrefix),
+        ),
       };
-      // Serialize global vars. User can customize value of `builtinVars`.
-      const globalVars = mergeChainedOptions({
-        defaults: builtinVars,
-        options: config.source.globalVars,
-        utils: { env, target },
-      });
-
-      const serializedVars = mapValues(
-        globalVars,
-        (value) => JSON.stringify(value) ?? 'undefined',
-      );
-      // Macro defines.
-      const defineExprs = config.source.define;
 
       chain
         .plugin(CHAIN_ID.PLUGIN.DEFINE)
-        .use(bundler.DefinePlugin, [{ ...serializedVars, ...defineExprs }]);
+        .use(bundler.DefinePlugin, [
+          { ...builtinVars, ...config.source.define },
+        ]);
     });
   },
 });

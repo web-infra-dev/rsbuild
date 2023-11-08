@@ -31,6 +31,7 @@ export const getPublicPathFromCompiler = (compiler: Compiler) => {
   return DEFAULT_ASSET_PREFIX;
 };
 
+// TODO: use define to inject version
 export const getRsbuildVersion = async (): Promise<string> => {
   const pkgJson = await fs.readJSON(path.join(__dirname, '../../package.json'));
   return pkgJson.version.replace(/\./g, '_');

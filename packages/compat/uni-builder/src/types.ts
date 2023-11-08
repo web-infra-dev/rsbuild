@@ -1,4 +1,10 @@
-import type { MetaOptions, ScriptInject } from '@rsbuild/shared';
+import type {
+  ChainedConfigWithUtils,
+  MetaOptions,
+  NodeEnv,
+  RsbuildTarget,
+  ScriptInject,
+} from '@rsbuild/shared';
 import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core/rspack-provider';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 
@@ -20,7 +26,23 @@ export type RsbuildConfig<B = 'rspack'> = B extends 'rspack'
   ? RsbuildRspackConfig
   : RsbuildWebpackConfig;
 
+export type GlobalVars = Record<string, any>;
+
+export type ChainedGlobalVars = ChainedConfigWithUtils<
+  GlobalVars,
+  {
+    env: NodeEnv;
+    target: RsbuildTarget;
+  }
+>;
+
 export type UniBuilderExtraConfig = {
+  source?: {
+    /**
+     * Define global variables. It can replace expressions like `process.env.FOO` in your code after compile.
+     */
+    globalVars?: ChainedGlobalVars;
+  };
   output?: {
     /**
      * @deprecated use `output.cssModules.localIdentName` instead

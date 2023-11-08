@@ -1,5 +1,5 @@
 import {
-  useSSR,
+  isServerTarget,
   mergeChainedOptions,
   getDefaultStyledComponentsConfig,
   type ChainedConfig,
@@ -31,7 +31,7 @@ export const pluginStyledComponents = (
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
       const { bundlerType } = api.context;
 
-      const isSSR = useSSR(api.context.target);
+      const isSSR = isServerTarget(api.context.target);
 
       const styledComponentsOptions = mergeChainedOptions({
         defaults: getDefaultStyledComponentsConfig(isProd, isSSR),

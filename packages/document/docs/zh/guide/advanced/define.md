@@ -108,7 +108,7 @@ export default {
 
 ### process.env 注入方式
 
-在使用 `source.define` 或 `source.globalVars` 时，请避免注入整个 `process.env` 对象，比如下面的用法是不推荐的：
+在使用 `source.define` 时，请避免注入整个 `process.env` 对象，比如下面的用法是不推荐的：
 
 ```js
 export default {
@@ -127,23 +127,9 @@ export default {
 
 因此，请按照实际需求来注入 `process.env` 上的环境变量，避免全量注入。
 
-## 设置环境变量
+### 注意事项
 
-针对设置环境变量的高频场景，Rsbuild 还提供了 [source.globalVars](/config/options/source.html#sourceglobalvars) 配置用于简化配置，它是 `source.define` 的一个语法糖，唯一的区别是 `source.globalVars` 会自动将传入的值进行 JSON 序列化处理，这使得设置环境变量的值更容易，避免大量书写 `JSON.stringify(...)` 转换语句：
-
-```js
-export default {
-  source: {
-    globalVars: {
-      'process.env.NODE_ENV': 'production',
-      'import.meta.foo': { bar: 42 },
-      'import.meta.baz': false,
-    },
-  },
-};
-```
-
-需要注意的是不论以上哪种方式都只会匹配完整的表达式，对表达式进行解构会让 Rsbuild 无法正确识别：
+需要注意的是，`source.define` 只会匹配完整的表达式，对表达式进行解构会让 Rsbuild 无法正确识别：
 
 ```js
 console.log(process.env.NODE_ENV);
@@ -186,10 +172,6 @@ export default {
     define: {
       'process.env.REGION': JSON.stringify(process.env.REGION),
     },
-    // or...
-    globalVars: {
-      'process.env.REGION': process.env.REGION,
-    },
   },
 };
 ```
@@ -221,24 +203,3 @@ const App = () => {
 ```
 
 未用到的组件不会被打包到产物中，它们的外部依赖也会对应地被优化，最终即可得到体积和性能都更优的产物代码。
-
-## 源码内联测试
-
-Vitest 支持将测试写在源码文件内，能够在不导出的情况下测试私有功能的行为，并且通过设置 Define 来在正式构建时剔除测试代码。详细指南请参考 [Vitest 官方文档](https://cn.vitest.dev/guide/in-source)。
-
-```js
-// 函数实现
-function add(...args) {
-  return args.reduce((a, b) => a + b, 0);
-}
-
-// 源码内的测试套件
-if (import.meta.vitest) {
-  const { it, expect } = import.meta.vitest;
-  it('add', () => {
-    expect(add()).toBe(0);
-    expect(add(1)).toBe(1);
-    expect(add(1, 2, 3)).toBe(6);
-  });
-}
-```
