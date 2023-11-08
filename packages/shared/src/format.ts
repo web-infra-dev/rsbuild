@@ -1,13 +1,13 @@
 import { color } from './color';
 import type { Stats, MultiStats } from './types';
-import { formatWebpackMessages } from './formatWebpack';
+import { formatStatsMessages } from './formatStats';
 
 export function formatStats(stats: Stats | MultiStats, showWarnings = true) {
   const statsData = stats.toJson({
     preset: 'errors-warnings',
   });
 
-  const { errors, warnings } = formatWebpackMessages(statsData, color);
+  const { errors, warnings } = formatStatsMessages(statsData, color);
 
   if (errors.length) {
     const errorMsgs = `${errors.join('\n\n')}\n`;

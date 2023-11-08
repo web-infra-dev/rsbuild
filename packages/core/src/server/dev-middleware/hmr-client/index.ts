@@ -5,7 +5,8 @@
  * Tips: this package will be bundled and running in the browser, do not import from the entry of @modern-js/utils.
  */
 import stripAnsi from 'strip-ansi';
-import { formatWebpackMessages, StatsError } from '@rsbuild/shared';
+import type { StatsError } from '@rsbuild/shared';
+import { formatStatsMessages } from '@rsbuild/shared/format-stats';
 import { createSocketUrl } from './createSocketUrl';
 
 // declare any to fix the type of `module.hot`
@@ -81,7 +82,7 @@ function handleWarnings(warnings: StatsError[]) {
 
   function printWarnings() {
     // Print warnings to the console.
-    const formatted = formatWebpackMessages({
+    const formatted = formatStatsMessages({
       warnings,
       errors: [],
     });
@@ -116,7 +117,7 @@ function handleErrors(errors: StatsError[]) {
   hasCompileErrors = true;
 
   // "Massage" webpack messages.
-  const formatted = formatWebpackMessages({
+  const formatted = formatStatsMessages({
     errors,
     warnings: [],
   });

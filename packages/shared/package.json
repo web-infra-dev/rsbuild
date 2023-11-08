@@ -18,6 +18,10 @@
       "types": "./dist/re-exports/deepmerge.d.ts",
       "default": "./dist/re-exports/deepmerge.js"
     },
+    "./format-stats": {
+      "types": "./dist/formatStats.d.ts",
+      "default": "./dist/formatStats.js"
+    },
     "./fs-extra": {
       "types": "./dist/re-exports/fs-extra.d.ts",
       "default": "./dist/re-exports/fs-extra.js"
@@ -69,6 +73,9 @@
     "*": {
       "deepmerge": [
         "./dist/re-exports/deepmerge.d.ts"
+      ],
+      "format-stats": [
+        "./dist/formatStats.d.ts"
       ],
       "fs-extra": [
         "./dist/re-exports/fs-extra.d.ts"

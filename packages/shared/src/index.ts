@@ -28,6 +28,3 @@ export * from './minimize';
 export * from './coreJs';
 export * from './progress';
 export * from './prettyTime';
-export * from './formatWebpack';
-export * from './url';
-export * from './port';

@@ -135,7 +135,7 @@ export default {
   });
 }
 
-function formatWebpackMessages(
+function formatStatsMessages(
   json?: Pick<StatsCompilation, 'errors' | 'warnings'>,
   color = defaultColor,
 ): {
@@ -166,4 +166,4 @@ function formatWebpackMessages(
   return result;
 }
 
-export { formatWebpackMessages };
+export { formatStatsMessages };
