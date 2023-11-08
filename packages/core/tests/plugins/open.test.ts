@@ -8,7 +8,7 @@ describe('openBrowser', () => {
   });
   vi.mock('child_process', () => {
     return {
-      execSync: () => '',
+      exec: () => '',
     };
   });
   it('should open an Microsoft Edge browser if you have', async () => {
