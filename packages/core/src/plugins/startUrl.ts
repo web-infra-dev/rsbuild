@@ -1,6 +1,9 @@
 import { join } from 'path';
 import { logger, castArray, type DefaultRsbuildPlugin } from '@rsbuild/shared';
-import { execSync } from 'child_process';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+
+const execAsync = promisify(exec);
 
 const supportedChromiumBrowsers = [
   'Google Chrome Canary',
@@ -13,12 +16,12 @@ const supportedChromiumBrowsers = [
   'Chromium',
 ];
 
-const getTargetBrowser = () => {
+const getTargetBrowser = async () => {
   // Use user setting first
   let targetBrowser = process.env.BROWSER;
   // If user setting not found or not support, use opening browser first
   if (!targetBrowser || !supportedChromiumBrowsers.includes(targetBrowser)) {
-    const ps = execSync('ps cax').toString();
+    const { stdout: ps } = await execAsync('ps cax');
     targetBrowser = supportedChromiumBrowsers.find((b) => ps.includes(b));
   }
   return targetBrowser;
@@ -41,18 +44,18 @@ export async function openBrowser(url: string): Promise<boolean> {
 
   if (shouldTryOpenChromeWithAppleScript) {
     try {
-      const targetBrowser = getTargetBrowser();
+      const targetBrowser = await getTargetBrowser();
       if (targetBrowser) {
         // Try to reuse existing tab with AppleScript
-        execSync(
+        await execAsync(
           `osascript openChrome.applescript "${encodeURI(
             url,
           )}" "${targetBrowser}"`,
           {
-            stdio: 'ignore',
             cwd: join(__dirname, '../../static'),
           },
         );
+
         return true;
       }
       return false;
@@ -85,17 +88,8 @@ export function pluginStartUrl(): DefaultRsbuildPlugin {
   return {
     name: 'plugin-start-url',
     setup(api) {
-      let port: number;
-
       api.onAfterStartDevServer(async (params) => {
-        ({ port } = params);
-      });
-
-      api.onDevCompileDone(async ({ isFirstCompile }) => {
-        if (!isFirstCompile || !port) {
-          return;
-        }
-
+        const { port } = params;
         const config = api.getNormalizedConfig();
         const { startUrl, beforeStartUrl } = config.dev;
         const { open, https } = api.context.devServer || {};

@@ -6,6 +6,7 @@
   // words - list of words to be always considered correct
   "words": [
     "antd",
+    "applescript",
     "atrules",
     "deepmerge",
     "docgen",
@@ -24,6 +25,7 @@
     "onclosetag",
     "onopentag",
     "ontext",
+    "osascript",
     "outro",
     "oxlint",
     "pluggable",

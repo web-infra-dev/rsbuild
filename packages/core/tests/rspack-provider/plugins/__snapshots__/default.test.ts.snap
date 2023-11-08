@@ -1352,7 +1352,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
 }
 `;
 
-exports[`applyDefaultPlugins > should apply default plugins correctyly when target = node 1`] = `
+exports[`applyDefaultPlugins > should apply default plugins correctly when target = node 1`] = `
 {
   "builtins": {
     "css": {
