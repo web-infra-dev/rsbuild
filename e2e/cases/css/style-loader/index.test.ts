@@ -5,8 +5,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
-// TODO enable CSS minify for style-loader
-test.skip('should inline style when disableCssExtract is false', async ({
+test('should inline style when disableCssExtract is false', async ({
   page,
 }) => {
   const rsbuild = await build({
@@ -36,7 +35,7 @@ test.skip('should inline style when disableCssExtract is false', async ({
   )!;
   expect(
     files[mainJsFile].includes(
-      'body,html{margin:0;padding:0}*{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;box-sizing:border-box}',
+      'html,\\nbody {\\n  padding: 0;\\n  margin: 0;\\n}\\n\\n* {\\n  -webkit-font-smoothing: antialiased;\\n  -moz-osx-font-smoothing: grayscale;\\n  box-sizing: border-box;\\n}\\n\\n.description {\\n  text-align: center;\\n  line-height: 1.5;\\n  font-size: 16px;',
     ),
   ).toBeTruthy();
 
