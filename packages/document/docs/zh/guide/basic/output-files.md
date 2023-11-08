@@ -92,7 +92,7 @@ dist
 
 ## Node.js 产物目录
 
-当 Rsbuild 的 [构建产物类型](/api/start/build-target.html) 中包含 `'node'`，或者你在上层框架中开启了 SSR 等服务端功能时，Rsbuild 会在构建后生成一份 Node.js 产物，并输出到 `bundles` 目录下：
+当 Rsbuild 的 [构建产物类型](/api/start/build-target) 中包含 `'node'`，或者你在上层框架中开启了 SSR 等服务端功能时，Rsbuild 会在构建后生成一份 Node.js 产物，并输出到 `bundles` 目录下：
 
 ```bash
 dist

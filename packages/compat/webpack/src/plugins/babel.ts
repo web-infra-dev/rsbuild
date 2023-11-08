@@ -10,15 +10,12 @@ import {
   mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
+  type TransformImport,
 } from '@rsbuild/shared';
 import { getBabelUtils } from '@rsbuild/plugin-babel';
 import { getCompiledPath } from '../shared';
 
-import type {
-  RsbuildPlugin,
-  NormalizedConfig,
-  TransformImport,
-} from '../types';
+import type { RsbuildPlugin, NormalizedConfig } from '../types';
 
 export const getUseBuiltIns = (config: NormalizedConfig) => {
   const { polyfill } = config.output;
@@ -92,14 +89,14 @@ export const pluginBabel = (): RsbuildPlugin => ({
             config.performance.transformLodash,
           );
 
-          const babelConfig = mergeChainedOptions(
-            baseBabelConfig,
-            config.tools.babel,
-            {
+          const babelConfig = mergeChainedOptions({
+            defaults: baseBabelConfig,
+            options: config.tools.babel,
+            utils: {
               ...getBabelUtils(baseBabelConfig),
               ...babelUtils,
             },
-          );
+          });
 
           // 3. Compute final babel config
           const finalOptions: BabelConfig = {
@@ -146,17 +143,15 @@ export const pluginBabel = (): RsbuildPlugin => ({
          * https://webpack.js.org/api/module-methods/#import
          * @example: import x from 'data:text/javascript,export default 1;';
          */
-        if (config.source.compileJsDataURI) {
-          chain.module
-            .rule(CHAIN_ID.RULE.JS_DATA_URI)
-            .mimetype({
-              or: ['text/javascript', 'application/javascript'],
-            })
-            .use(CHAIN_ID.USE.BABEL)
-            .loader(require.resolve('babel-loader'))
-            // Using cloned options to keep options separate from each other
-            .options(lodash.cloneDeep(babelOptions));
-        }
+        chain.module
+          .rule(CHAIN_ID.RULE.JS_DATA_URI)
+          .mimetype({
+            or: ['text/javascript', 'application/javascript'],
+          })
+          .use(CHAIN_ID.USE.BABEL)
+          .loader(require.resolve('babel-loader'))
+          // Using cloned options to keep options separate from each other
+          .options(lodash.cloneDeep(babelOptions));
 
         addCoreJsEntry({ chain, config, isServer, isServiceWorker });
       },

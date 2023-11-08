@@ -57,10 +57,8 @@ export async function openBrowser(url: string): Promise<boolean> {
       }
       return false;
     } catch (err) {
-      logger.error(
-        'Failed to open start URL with apple script:',
-        JSON.stringify(err),
-      );
+      logger.error('Failed to open start URL with apple script.');
+      logger.error(err);
       return false;
     }
   }
@@ -72,7 +70,8 @@ export async function openBrowser(url: string): Promise<boolean> {
     await open(url);
     return true;
   } catch (err) {
-    logger.error('Failed to open start URL:', JSON.stringify(err));
+    logger.error('Failed to open start URL.');
+    logger.error(err);
     return false;
   }
 }
@@ -85,7 +84,7 @@ const openedURLs: string[] = [];
 export function pluginStartUrl(): DefaultRsbuildPlugin {
   return {
     name: 'plugin-start-url',
-    async setup(api) {
+    setup(api) {
       let port: number;
 
       api.onAfterStartDevServer(async (params) => {
@@ -99,15 +98,16 @@ export function pluginStartUrl(): DefaultRsbuildPlugin {
 
         const config = api.getNormalizedConfig();
         const { startUrl, beforeStartUrl } = config.dev;
-        const { https } = api.context.devServer || {};
+        const { open, https } = api.context.devServer || {};
+        const shouldOpen = Boolean(startUrl) || open;
 
-        if (!startUrl) {
+        if (!shouldOpen) {
           return;
         }
 
         const urls: string[] = [];
 
-        if (startUrl === true) {
+        if (startUrl === true || !startUrl) {
           const protocol = https ? 'https' : 'http';
           urls.push(`${protocol}://localhost:${port}`);
         } else {

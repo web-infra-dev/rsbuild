@@ -6,10 +6,10 @@ export const pluginReactWebpack = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyRsbuildConfig(async (config, { mergeRsbuildConfig }) => {
+      const isNewJsx = await isBeyondReact17(api.context.rootPath);
       const babelConfig: RsbuildConfig = {
         tools: {
           babel(_, { addPresets, addPlugins }) {
-            const isNewJsx = isBeyondReact17(api.context.rootPath);
             const presetReactOptions = {
               development: !isProd(),
               // Will use the native built-in instead of trying to polyfill

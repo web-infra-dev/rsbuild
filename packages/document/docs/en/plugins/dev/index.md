@@ -48,7 +48,7 @@ The package name of the plugin needs to contain the conventional `plugin-` prefi
 
 Rsbuild uses lifetime planning work internally, and plugins can also register hooks to take part in any stage of the workflow and implement their own features.
 
-The full list of Rsbuild's lifetime hooks can be found in the [API References](/plugins/dev/hooks.html).
+The full list of Rsbuild's lifetime hooks can be found in the [API References](/plugins/dev/hooks).
 
 The Rsbuild does not take over the hooks of the underlying bundlers, whose documents can be found here: [webpack hooks](https://webpack.js.org/api/compiler-hooks/)
 

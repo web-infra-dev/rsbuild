@@ -20,8 +20,6 @@ export const getCssModuleLocalIdentName = (
   isProd: boolean,
 ) =>
   config.output.cssModules.localIdentName ||
-  // compatible with the deprecated config
-  config.output.cssModuleLocalIdentName ||
   // Using shorter classname in production to reduce bundle size
   (isProd
     ? '[local]-[hash:base64:6]'
@@ -94,7 +92,7 @@ export const getCssnanoDefaultOptions = (): CssNanoOptions => ({
   ],
 });
 
-export const getPostcssConfig = async ({
+export const getPostcssConfig = ({
   enableCssMinify,
   enableSourceMap,
   browserslist,
@@ -117,30 +115,29 @@ export const getPostcssConfig = async ({
     },
   };
 
-  const mergedConfig = mergeChainedOptions(
-    {
-      postcssOptions: {
-        plugins: [
-          require(getCompiledPath('postcss-flexbugs-fixes')),
-          require(getCompiledPath('autoprefixer'))(
-            mergeChainedOptions(
-              {
-                flexbox: 'no-2009',
-                overrideBrowserslist: browserslist,
-              },
-              config.tools.autoprefixer,
-            ),
-          ),
-          enableCssMinify
-            ? require('cssnano')(getCssnanoDefaultOptions())
-            : false,
-        ].filter(Boolean),
-      },
-      sourceMap: enableSourceMap,
+  const autoprefixerOptions = mergeChainedOptions({
+    defaults: {
+      flexbox: 'no-2009',
+      overrideBrowserslist: browserslist,
     },
-    config.tools.postcss || {},
+    options: config.tools.autoprefixer,
+  });
+
+  const defaultPostcssConfig = {
+    postcssOptions: {
+      plugins: [
+        require(getCompiledPath('postcss-flexbugs-fixes')),
+        require(getCompiledPath('autoprefixer'))(autoprefixerOptions),
+      ].filter(Boolean),
+    },
+    sourceMap: enableSourceMap,
+  };
+
+  const mergedConfig = mergeChainedOptions({
+    defaults: defaultPostcssConfig,
+    options: config.tools.postcss,
     utils,
-  );
+  });
   if (extraPlugins.length) {
     assert('postcssOptions' in mergedConfig);
     assert('plugins' in mergedConfig.postcssOptions!);
@@ -185,7 +182,7 @@ export const normalizeCssLoaderOptions = (
   return options;
 };
 
-export const getCssLoaderOptions = async ({
+export const getCssLoaderOptions = ({
   config,
   enableSourceMap,
   importLoaders,
@@ -202,23 +199,25 @@ export const getCssLoaderOptions = async ({
 }) => {
   const { cssModules } = config.output;
 
-  const mergedCssLoaderOptions = mergeChainedOptions<CSSLoaderOptions, null>(
-    {
-      importLoaders,
-      modules: {
-        auto: getCssModulesAutoRule(
-          cssModules,
-          config.output.disableCssModuleExtension,
-        ),
-        exportLocalsConvention: cssModules.exportLocalsConvention,
-        localIdentName,
-      },
-      sourceMap: enableSourceMap,
+  const defaultOptions = {
+    importLoaders,
+    modules: {
+      auto: getCssModulesAutoRule(
+        cssModules,
+        config.output.disableCssModuleExtension,
+      ),
+      exportLocalsConvention: cssModules.exportLocalsConvention,
+      localIdentName,
     },
-    config.tools.cssLoader,
-    undefined,
-    deepmerge,
-  );
+    sourceMap: enableSourceMap,
+  };
+
+  const mergedCssLoaderOptions = mergeChainedOptions({
+    defaults: defaultOptions,
+    options: config.tools.cssLoader,
+    mergeFn: deepmerge,
+  });
+
   const cssLoaderOptions = normalizeCssLoaderOptions(
     mergedCssLoaderOptions,
     isServer || isWebWorker,

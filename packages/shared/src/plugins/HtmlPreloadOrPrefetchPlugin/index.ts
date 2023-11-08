@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import type { Compiler, WebpackPluginInstance, Compilation } from 'webpack';
+import type { Compiler, RspackPluginInstance, Compilation } from '@rspack/core';
 import { upperFirst } from 'lodash';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import { PreloadOrPreFetchOption } from '../../types';
@@ -64,6 +64,7 @@ function generateLinks(
 ): HtmlWebpackPlugin.HtmlTagObject[] {
   // get all chunks
   const extractedChunks = extractChunks({
+    // @ts-expect-error compilation type mismatch
     compilation,
     includeType: options.type,
   });
@@ -151,7 +152,7 @@ function generateLinks(
   return links;
 }
 
-export class HTMLPreloadOrPrefetchPlugin implements WebpackPluginInstance {
+export class HTMLPreloadOrPrefetchPlugin implements RspackPluginInstance {
   readonly options: PreloadOrPreFetchOption;
 
   resourceHints: HtmlWebpackPlugin.HtmlTagObject[] = [];
@@ -179,6 +180,7 @@ export class HTMLPreloadOrPrefetchPlugin implements WebpackPluginInstance {
 
   apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(this.constructor.name, (compilation) => {
+      // @ts-expect-error compilation type mismatch
       this.HtmlPlugin.getHooks(compilation).beforeAssetTagGeneration.tap(
         `HTML${upperFirst(this.type)}Plugin`,
         (htmlPluginData) => {
@@ -194,6 +196,7 @@ export class HTMLPreloadOrPrefetchPlugin implements WebpackPluginInstance {
         },
       );
 
+      // @ts-expect-error compilation type mismatch
       this.HtmlPlugin.getHooks(compilation).alterAssetTags.tap(
         `HTML${upperFirst(this.type)}Plugin`,
         (htmlPluginData) => {

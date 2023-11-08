@@ -1,4 +1,4 @@
-- **类型：** `'head' | 'body'| 'true' | false`
+- **类型：** `'head' | 'body' | boolean | Function`
 - **默认值：** `'head'`
 
 修改构建产物中 `<script>` 标签在 HTML 中的插入位置。
@@ -54,4 +54,29 @@ export default {
     <script defer src="/static/js/main.js"></script>
   </body>
 </html>
+```
+
+### 函数用法
+
+- **类型：**
+
+```ts
+type InjectFunction = ({ value: ScriptInject; entryName: string }) => string | void;
+```
+
+当 `html.inject` 为 Function 类型时，函数接收一个对象作为入参，对象的值包括：
+
+- `value`：Rsbuild 的默认 inject 配置。
+- `entryName`: 当前入口的名称。
+
+在 MPA（多页面应用）场景下，你可以基于入口名称设置不同的 `inject` 方式：
+
+```js
+export default {
+  html: {
+    inject({ entryName }) {
+      return entryName === 'foo' ? 'body' : 'head';
+    },
+  },
+};
 ```

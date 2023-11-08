@@ -1,8 +1,7 @@
 import type { InlineChunkTest } from '../../plugins/InlineChunkHtmlPlugin';
 import type { RsbuildTarget } from '../rsbuild';
 import type { CrossOrigin } from './html';
-import type { Externals } from 'webpack';
-import type { Builtins } from '@rspack/core';
+import type { Builtins, Externals } from '@rspack/core';
 
 export type DistPathConfig = {
   /** The root directory of all files. */
@@ -205,10 +204,6 @@ export interface OutputConfig {
    */
   cleanDistPath?: boolean;
   /**
-   * @deprecated use output.cssModules.localIdentName instead
-   */
-  cssModuleLocalIdentName?: string;
-  /**
    * Allow to custom CSS Modules options.
    */
   cssModules?: CssModules;
@@ -240,10 +235,6 @@ export interface OutputConfig {
    * Whether to treat all .css files in the source directory as CSS Modules.
    */
   disableCssModuleExtension?: boolean;
-  /**
-   * Whether to generate a manifest file that contains information of all assets.
-   */
-  enableAssetManifest?: boolean;
   /**
    * If this option is enabled, all unrecognized files will be emitted to the dist directory.
    * Otherwise, an exception will be thrown.
@@ -294,7 +285,6 @@ export interface NormalizedOutputConfig extends OutputConfig {
   disableSourceMap: DisableSourceMapOption;
   disableFilenameHash: boolean;
   disableInlineRuntimeChunk: boolean;
-  enableAssetManifest: boolean;
   enableAssetFallback: boolean;
   enableLatestDecorators: boolean;
   enableCssModuleTSDeclaration: boolean;

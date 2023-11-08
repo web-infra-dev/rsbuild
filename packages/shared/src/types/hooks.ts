@@ -4,7 +4,7 @@ import { NodeEnv, PromiseOrNot } from './utils';
 import { RsbuildTarget } from './rsbuild';
 import { BundlerChain } from './bundlerConfig';
 import { mergeRsbuildConfig } from '../mergeRsbuildConfig';
-import type { WebpackPluginInstance } from 'webpack';
+import type { RspackPluginInstance } from '@rspack/core';
 
 export type OnBeforeBuildFn<BundlerConfig = unknown> = (params: {
   bundlerConfigs?: BundlerConfig[];
@@ -54,17 +54,18 @@ export type ModifyChainUtils = {
   CHAIN_ID: ChainIdentifier;
   getCompiledPath: (name: string) => string;
   HtmlPlugin: typeof import('html-webpack-plugin');
-  /**
-   * @private should only used in Rsbuild
-   */
-  webpack: typeof import('webpack');
 };
+
+interface PluginInstance {
+  apply: (compiler: any) => void;
+  [k: string]: any;
+}
 
 export type ModifyBundlerChainUtils = ModifyChainUtils & {
   bundler: {
-    BannerPlugin: WebpackPluginInstance;
-    DefinePlugin: WebpackPluginInstance;
-    ProvidePlugin: WebpackPluginInstance;
+    BannerPlugin: PluginInstance;
+    DefinePlugin: PluginInstance;
+    ProvidePlugin: PluginInstance;
   };
 };
 

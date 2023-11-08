@@ -17,7 +17,7 @@ import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import { createAsyncHook } from './createHook';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import { getServerOptions, printServerURLs } from './prodServer';
-import type { Compiler } from 'webpack';
+import type { Compiler } from '@rspack/core';
 
 type ServerOptions = Exclude<StartDevServerOptions['serverOptions'], undefined>;
 
@@ -51,12 +51,11 @@ export const getDevServerOptions = async ({
     (serverOptions.dev as Exclude<typeof serverOptions.dev, boolean>) || {},
   );
 
-  const devConfig = mergeChainedOptions(
-    defaultDevConfig,
-    rsbuildConfig.tools?.devServer,
-    {},
-    deepmerge,
-  );
+  const devConfig = mergeChainedOptions({
+    defaults: defaultDevConfig,
+    options: rsbuildConfig.tools?.devServer,
+    mergeFn: deepmerge,
+  });
 
   const defaultConfig = getServerOptions(rsbuildConfig);
   const config = serverOptions.config
@@ -92,6 +91,7 @@ export async function startDevServer<
     compiler: StartDevServerOptions['compiler'],
   ) => Promise<Server>,
   {
+    open,
     compiler,
     printURLs = true,
     strictPort = false,
@@ -129,6 +129,7 @@ export async function startDevServer<
     hostname: host,
     port,
     https,
+    open,
   };
 
   const server = await createDevServer(options, port, serverOptions, compiler);

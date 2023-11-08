@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/shared",
-  "version": "0.0.12",
+  "version": "0.0.17",
   "description": "The shared modules and dependencies of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -14,10 +14,6 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./chalk": {
-      "types": "./dist/re-exports/chalk.d.ts",
-      "default": "./dist/re-exports/chalk.js"
-    },
     "./deepmerge": {
       "types": "./dist/re-exports/deepmerge.d.ts",
       "default": "./dist/re-exports/deepmerge.js"
@@ -26,10 +22,6 @@
       "types": "./dist/re-exports/fs-extra.d.ts",
       "default": "./dist/re-exports/fs-extra.js"
     },
-    "./open": {
-      "types": "./compiled/open/index.d.ts",
-      "default": "./compiled/open/index.js"
-    },
     "./webpack-dev-middleware": {
       "types": "./compiled/webpack-dev-middleware/types/index.d.ts",
       "default": "./compiled/webpack-dev-middleware/index.js"
@@ -37,18 +29,6 @@
     "./webpack-bundle-analyzer": {
       "types": "./compiled/webpack-bundle-analyzer/index.d.ts",
       "default": "./compiled/webpack-bundle-analyzer/index.js"
-    },
-    "./babel-loader": {
-      "types": "./compiled/babel-loader/index.d.ts",
-      "default": "./compiled/babel-loader/index.js"
-    },
-    "./pug": {
-      "types": "./compiled/pug/index.d.ts",
-      "default": "./compiled/pug/index.js"
-    },
-    "./zod": {
-      "types": "./dist/re-exports/zod.d.ts",
-      "default": "./dist/re-exports/zod.js"
     },
     "./css-modules-typescript-loader": {
       "types": "./dist/loaders/css-modules-typescript-loader.d.ts",
@@ -87,17 +67,11 @@
   "types": "./src/index.ts",
   "typesVersions": {
     "*": {
-      "chalk": [
-        "./dist/re-exports/chalk.d.ts"
-      ],
       "deepmerge": [
         "./dist/re-exports/deepmerge.d.ts"
       ],
       "fs-extra": [
         "./dist/re-exports/fs-extra.d.ts"
-      ],
-      "open": [
-        "./compiled/open/index.d.ts"
       ],
       "webpack-bundle-analyzer": [
         "./compiled/webpack-bundle-analyzer/index.d.ts"
@@ -105,20 +79,11 @@
       "webpack-dev-middleware": [
         "./compiled/webpack-dev-middleware/types/index.d.ts"
       ],
-      "zod": [
-        "./dist/re-exports/zod.d.ts",
-        "./src/re-exports/zod.ts"
-      ],
-      "pug": [
-        "./compiled/pug/index.d.ts"
-      ],
       "css-modules-typescript-loader": [
-        "./dist/loaders/css-modules-typescript-loader.d.ts",
-        "./src/loaders/css-modules-typescript-loader.ts"
+        "./dist/loaders/css-modules-typescript-loader.d.ts"
       ],
       "ignore-css-loader": [
-        "./dist/loaders/ignore-css-loader.d.ts",
-        "./src/loaders/ignore-css-loader.ts"
+        "./dist/loaders/ignore-css-loader.d.ts"
       ],
       "icss-utils": [
         "./compiled/icss-utils/index.d.ts"
@@ -142,8 +107,7 @@
   },
   "files": [
     "dist",
-    "compiled",
-    "static"
+    "compiled"
   ],
   "scripts": {
     "build": "modern build && node scripts/postCompile.js",
@@ -153,33 +117,28 @@
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@modern-js/prod-server": "^2.39.2",
-    "@modern-js/server": "^2.39.2",
-    "@types/fs-extra": "^11.0.2",
-    "acorn": "^8.10.0",
+    "@modern-js/prod-server": "0.0.0-next-20231103131234",
+    "@modern-js/server": "0.0.0-next-20231103131234",
+    "@rspack/core": "0.3.11",
     "browserslist": "^4.22.1",
-    "chalk": "^4.1.2",
-    "cssnano": "6.0.1",
     "deepmerge": "^4.3.1",
     "fs-extra": "^11.1.1",
     "line-diff": "2.1.1",
     "lodash": "^4.17.21",
-    "pkg-up": "^3.1.0",
+    "picocolors": "1.0.0",
     "postcss": "8.4.31",
     "rslog": "^1.1.0",
     "semver": "^7.5.4",
     "url-join": "^4.0.1",
-    "webpack": "^5.89.0",
     "webpack-chain": "npm:webpack-5-chain@8.0.1",
-    "webpack-sources": "^3.2.3",
-    "zod": "^3.22.3",
-    "zod-validation-error": "1.2.0"
+    "webpack-sources": "^3.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-typescript": "^7.23.2",
-    "@rspack/core": "0.3.10",
+    "@rspack/core": "0.3.11",
+    "@types/fs-extra": "^11.0.2",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "@types/semver": "^7.5.4",
@@ -187,7 +146,8 @@
     "html-webpack-plugin": "5.5.3",
     "terser": "5.19.2",
     "terser-webpack-plugin": "5.3.9",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0"
   },
   "publishConfig": {
     "access": "public",

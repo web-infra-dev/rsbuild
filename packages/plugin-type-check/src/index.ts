@@ -57,35 +57,36 @@ export const pluginTypeCheck = (
           return;
         }
 
-        const typeCheckerOptions = mergeChainedOptions(
-          {
-            typescript: {
-              // avoid OOM issue
-              memoryLimit: 8192,
-              // use tsconfig of user project
-              configFile: api.context.tsconfigPath,
-              typescriptPath,
+        const defaultOptions = {
+          typescript: {
+            // avoid OOM issue
+            memoryLimit: 8192,
+            // use tsconfig of user project
+            configFile: api.context.tsconfigPath,
+            typescriptPath,
+          },
+          issue: {
+            exclude: [
+              { file: '**/*.(spec|test).ts' },
+              { file: '**/node_modules/**/*' },
+            ],
+          },
+          logger: {
+            log() {
+              // do nothing
+              // we only want to display error messages
             },
-            issue: {
-              exclude: [
-                { file: '**/*.(spec|test).ts' },
-                { file: '**/node_modules/**/*' },
-              ],
-            },
-            logger: {
-              log() {
-                // do nothing
-                // we only want to display error messages
-              },
-              error(message: string) {
-                console.error(message.replace(/ERROR/g, 'Type Error'));
-              },
+            error(message: string) {
+              console.error(message.replace(/ERROR/g, 'Type Error'));
             },
           },
-          forkTsCheckerOptions,
-          undefined,
-          deepmerge,
-        );
+        };
+
+        const typeCheckerOptions = mergeChainedOptions({
+          defaults: defaultOptions,
+          options: forkTsCheckerOptions,
+          mergeFn: deepmerge,
+        });
 
         if (
           api.context.bundlerType === 'rspack' &&

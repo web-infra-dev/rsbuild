@@ -53,12 +53,12 @@ async function modifyWebpackConfig(
   );
 
   if (context.config.tools?.webpack) {
-    modifiedConfig = mergeChainedOptions(
-      modifiedConfig,
-      context.config.tools.webpack,
+    modifiedConfig = mergeChainedOptions({
+      defaults: modifiedConfig,
+      options: context.config.tools.webpack,
       utils,
-      utils.mergeConfig,
-    );
+      mergeFn: utils.mergeConfig,
+    });
   }
 
   debug('modify webpack config done');

@@ -1,22 +1,19 @@
-export type JSONPrimitive = string | number | boolean | null | undefined;
-
-export type JSONArray = Array<JSONValue>;
-
-export type JSONObject = { [key: string]: JSONValue };
-
-export type JSONValue = JSONPrimitive | JSONObject | JSONArray;
-
 export type ArrayOrNot<T> = T | T[];
 
 export type PromiseOrNot<T> = T | Promise<T>;
 
 export type NodeEnv = 'development' | 'production' | 'test';
 
-export type ChainedConfig<Config, Utils = unknown> = ArrayOrNot<
-  | Config
-  | (keyof Utils extends never
-      ? (config: Config) => Config | void
-      : (config: Config, utils: Utils) => Config | void)
+export type ChainedConfig<Config> = ArrayOrNot<
+  Config | ((config: Config) => Config | void)
+>;
+
+export type ChainedConfigWithUtils<Config, Utils> = ArrayOrNot<
+  Config | ((config: Config, utils: Utils) => Config | void)
+>;
+
+export type ChainedConfigCombineUtils<Config, Utils> = ArrayOrNot<
+  Config | ((params: { value: Config } & Utils) => Config | void)
 >;
 
 export type DeepReadonly<T> = keyof T extends never
@@ -26,7 +23,6 @@ export type DeepReadonly<T> = keyof T extends never
 export type FileFilterUtil = (items: ArrayOrNot<string | RegExp>) => void;
 
 export type SharedCompiledPkgNames =
-  | 'pug'
   | 'sass'
   | 'less'
   | 'css-loader'

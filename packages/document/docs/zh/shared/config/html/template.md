@@ -1,16 +1,57 @@
-- **类型：** `string`
+- **类型：** `string | Function`
 - **默认值：**
 
-定义 HTML 模板的文件路径，对应 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) 的 `template` 配置项。
+定义 HTML 模板的文件路径，可以是相对路径或绝对路径。
 
-### 示例
+如果没有指定 `template`，默认会使用 Rsbuild 内置的 HTML 模板：
 
-使用自定义的 HTML 模板文件替代默认模板，可以添加如下设置：
+```html
+<!doctype html>
+<html>
+  <head></head>
+  <body>
+    <div id="<%= mountId %>"></div>
+  </body>
+</html>
+```
+
+### 字符串用法
+
+例如，使用 `static/index.html` 文件替代默认 HTML 模板，可以添加如下设置：
 
 ```js
 export default {
   html: {
     template: './static/index.html',
+  },
+};
+```
+
+### 函数用法
+
+- **类型：**
+
+```ts
+type TemplateFunction = ({ value: string; entryName: string }) => string | void;
+```
+
+当 `html.template` 为 Function 类型时，函数接收一个对象作为入参，对象的值包括：
+
+- `value`：Rsbuild 的默认 template 配置。
+- `entryName`: 当前入口的名称。
+
+在 MPA（多页面应用）场景下，你可以基于入口名称返回不同的 `template` 路口，从而为每个页面设置不同的模板：
+
+```js
+export default {
+  html: {
+    template({ entryName }) {
+      const templates = {
+        foo: './static/foo.html',
+        bar: './static/bar.html',
+      };
+      return templates[entryName] || './static/index.html',
+    },
   },
 };
 ```

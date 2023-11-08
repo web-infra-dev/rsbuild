@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import { color } from './color';
 import basePrettyTime from '../compiled/pretty-time';
 
 const TIME_REGEXP = /([\d.]+)([a-zA-Z]+)/;
@@ -15,8 +15,8 @@ export const prettyTime = (time: number | [number, number], digits = 1) => {
         time = Number(time).toFixed(0);
       }
 
-      return `${chalk.bold(time)} ${p2}`;
+      return `${color.bold(time)} ${p2}`;
     }
-    return chalk.bold(match);
+    return color.bold(match);
   });
 };

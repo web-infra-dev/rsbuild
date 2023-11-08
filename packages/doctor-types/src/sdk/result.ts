@@ -1,4 +1,4 @@
-import { EmoCheckData } from 'src/emo';
+import { EmoCheckData } from '../emo';
 import { LoaderData } from './loader';
 import { ModuleGraphData, ModuleCodeData } from './module';
 import { ChunkGraphData } from './chunk';

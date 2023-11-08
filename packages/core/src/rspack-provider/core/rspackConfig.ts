@@ -26,12 +26,12 @@ async function modifyRspackConfig(
   );
 
   if (context.config.tools?.rspack) {
-    modifiedConfig = mergeChainedOptions(
-      modifiedConfig,
-      context.config.tools.rspack,
+    modifiedConfig = mergeChainedOptions({
+      defaults: modifiedConfig,
+      options: context.config.tools.rspack,
       utils,
-      utils.mergeConfig,
-    );
+      mergeFn: utils.mergeConfig,
+    });
   }
 
   debug('modify Rspack config done');
@@ -90,7 +90,6 @@ async function getConfigUtils(
 async function getChainUtils(target: RsbuildTarget): Promise<ModifyChainUtils> {
   const nodeEnv = process.env.NODE_ENV as NodeEnv;
   const { default: HtmlPlugin } = await import('html-webpack-plugin');
-  const { default: webpack } = await import('webpack');
 
   return {
     env: nodeEnv,
@@ -102,7 +101,6 @@ async function getChainUtils(target: RsbuildTarget): Promise<ModifyChainUtils> {
     getCompiledPath,
     CHAIN_ID,
     HtmlPlugin,
-    webpack,
   };
 }
 

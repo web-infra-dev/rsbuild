@@ -17,7 +17,6 @@ import {
   type Context,
   type RspackRule,
   type RuleSetRule,
-  type StyleLoaderOptions,
   type ModifyBundlerChainUtils,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin, NormalizedConfig } from '../types';
@@ -56,7 +55,7 @@ export async function applyBaseCSSRule({
   if (!enableNativeCss(config)) {
     const localIdentName = getCssModuleLocalIdentName(config, isProd);
 
-    const cssLoaderOptions = await getCssLoaderOptions({
+    const cssLoaderOptions = getCssLoaderOptions({
       config,
       enableSourceMap,
       importLoaders,
@@ -66,14 +65,15 @@ export async function applyBaseCSSRule({
     });
 
     if (!isServer && !isWebWorker) {
-      const styleLoaderOptions = mergeChainedOptions<StyleLoaderOptions, null>(
-        {
+      const styleLoaderOptions = mergeChainedOptions({
+        defaults: {
           // todo: hmr does not work while esModule is true
           // @ts-expect-error
           esModule: false,
         },
-        config.tools.styleLoader,
-      );
+        options: config.tools.styleLoader,
+      });
+
       rule
         .use(CHAIN_ID.USE.STYLE)
         .loader(require.resolve('style-loader'))
@@ -138,7 +138,7 @@ export async function applyBaseCSSRule({
   }
 
   if (!isServer && !isWebWorker) {
-    const postcssLoaderOptions = await getPostcssConfig({
+    const postcssLoaderOptions = getPostcssConfig({
       enableSourceMap,
       browserslist,
       config,
@@ -254,7 +254,6 @@ export const pluginCss = (): RsbuildPlugin => {
 
           let localIdentName =
             config.output.cssModules.localIdentName ||
-            config.output.cssModuleLocalIdentName ||
             // Using shorter classname in production to reduce bundle size
             (isProd ? '[local]-[hash:6]' : '[path][name]__[local]-[hash:6]');
 

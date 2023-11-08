@@ -1,4 +1,4 @@
-- **Type:** `string`
+- **Type:** `string ｜ Function`
 - **Default:** `undefined`
 
 Set the favicon icon path for all pages, can be set as:
@@ -49,4 +49,33 @@ After recompiling, the following tags are automatically generated in the HTML:
 
 ```html
 <link rel="icon" href="/favicon.ico" />
+```
+
+### Function Usage
+
+- **Type:**
+
+```ts
+type FaviconFunction = ({ value: string; entryName: string }) => string | void;
+```
+
+When `html.favicon` is of type Function, the function receives an object as input, with the following properties:
+
+- `value`: the default favicon configuration for Rsbuild.
+- `entryName`: the name of the current entry.
+
+In the context of MPA (Multi-Page Application), you can return different `favicon` based on the entry name, thus generating different tags for each page:
+
+```js
+export default {
+  html: {
+    favicon({ entryName }) {
+      const icons = {
+        foo: 'https://example.com/foo.ico',
+        bar: 'https://example.com/bar.ico',
+      };
+      return icons[entryName] || 'https://example.com/default.ico';
+    },
+  },
+};
 ```

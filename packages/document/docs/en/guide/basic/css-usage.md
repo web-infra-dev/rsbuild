@@ -10,7 +10,7 @@ The Rsbuild has built-in community popular CSS preprocessors such as Less, Sass.
 
 By default, you don't need to configure anything for Less and Sass. If you need to customize loader config, you can configure [tools.less](/config/options/tools.html#toolsless), [tools.sass](/config/options/tools.html#toolssass) to set it up.
 
-You can also use Stylus in Rsbuild, just install the Stylus plugin provided by Rsbuild, please refer to [Stylus Plugin](/plugins/list/plugin-stylus.html) for usage.
+You can also use Stylus in Rsbuild, just install the Stylus plugin provided by Rsbuild, please refer to [Stylus Plugin](/plugins/list/plugin-stylus) for usage.
 
 ## Using PostCSS
 
@@ -33,24 +33,20 @@ export default {
 
 Rsbuild has some builtin PostCSS plugins, which will perform the following transformations on CSS:
 
-- [autoprefixer](https://github.com/postcss/autoprefixer): we have enabled [autoprefixer](https://github.com/postcss/autoprefixer) to add vendor prefixes to CSS rules. If you want to configure the target browser, you can use [browserslist](/guide/advanced/browserslist.html).
+- [autoprefixer](https://github.com/postcss/autoprefixer): we have enabled [autoprefixer](https://github.com/postcss/autoprefixer) to add vendor prefixes to CSS rules. If you want to configure the target browser, you can use [browserslist](/guide/advanced/browserslist).
 - [postcss-flexbugs-fixes](https://www.npmjs.com/package/postcss-flexbugs-fixes): Used to fix known [Flex Bugs](https://github.com/philipwalton/flexbugs).
 
 ## Using CSS Modules
 
-Please read the [Using CSS Modules](/guide/basic/css-modules.html) chapter for a complete usage of CSS Modules.
+Please read the [Using CSS Modules](/guide/basic/css-modules) chapter for a complete usage of CSS Modules.
 
 ## CSS Minify
 
-Usually, in production environments we compress static assets such as CSS, JS, etc. to achieve better transfer efficiency.
+During the production build, Rsbuild compresses static assets such as CSS and JS to provide better transmission efficiency.
 
-Rsbuild automatically compresses CSS code at production build time with [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin) (The compression tool used at the bottom is [cssnano](https://cssnano.co/)).
+Rsbuild by default uses the built-in `SwcCssMinimizerRspackPlugin` plugin from Rspack to automatically compress CSS code during production builds.
 
-You can configure [tools.minifyCss](/config/options/tools.html#toolsminifycss) to make it more customizable.
-
-:::tip About cssnano
-cssnano is a tool for optimizing and minifying CSS files. It reduces the size of CSS files by removing unused rules, merging similar rules, removing comments and whitespace, and converting length units, among other techniques, to improve the loading speed of websites.
-:::
+You can customize the CSS minimizer by using the [CSS Minimizer plugin](/plugins/list/plugin-css-minimizer) to switch to cssnano or other tools for CSS compression.
 
 ## Inline CSS Files
 

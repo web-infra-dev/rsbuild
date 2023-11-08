@@ -8,7 +8,7 @@
     ]
   },
   "scripts": {
-    "build": "nx run-many -t build --exclude @examples/* @scripts/* @e2e/* rsbuild-*",
+    "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @examples/* @scripts/* @e2e/* rsbuild-* --parallel=10",
     "bump": "modern bump",
     "change": "modern change",
     "check-changeset": "cd ./scripts/check-changeset && pnpm start",
@@ -44,6 +44,7 @@
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/tsconfig": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
+    "cross-env": "^7.0.3",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "nano-staged": "^0.8.0",

@@ -8,12 +8,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
     applyResolvePlugin(api);
 
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-      const config = api.getNormalizedConfig();
-
-      if (
-        chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI) &&
-        config.source.compileJsDataURI
-      ) {
+      if (chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI)) {
         chain.module
           .rule(CHAIN_ID.RULE.JS_DATA_URI)
           .resolve.set('fullySpecified', false);

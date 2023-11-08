@@ -1,8 +1,8 @@
-import { generateMetaTags } from '../src/utils/generateMetaTags';
+import { generateMetaTags } from '../src/plugins/html';
 
 describe('generateMetaTags', () => {
   it('should return empty string when params is empty', () => {
-    expect(generateMetaTags()).toEqual('');
+    expect(generateMetaTags()).toEqual([]);
   });
 
   it('should generate meta tag correctly', () => {
@@ -12,8 +12,11 @@ describe('generateMetaTags', () => {
         content: 'width=500, initial-scale=1',
       },
     };
-    expect(generateMetaTags(options).trim()).toEqual(
-      '<meta name="viewport" content="width=500, initial-scale=1">',
-    );
+    expect(generateMetaTags(options)).toEqual([
+      {
+        content: 'width=500, initial-scale=1',
+        name: 'viewport',
+      },
+    ]);
   });
 });

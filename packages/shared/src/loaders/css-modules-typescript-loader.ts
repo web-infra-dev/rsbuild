@@ -14,7 +14,7 @@ import fs from 'fs';
 import path from 'path';
 // @ts-expect-error
 import LineDiff from 'line-diff';
-import type { LoaderContext } from 'webpack';
+import type { LoaderContext } from '@rspack/core';
 import { isCssModules, CssLoaderModules, isInNodeModules } from '../css';
 
 const bannerMessage =

@@ -4,6 +4,7 @@ import type {
   FileFilterUtil,
   TerserPluginOptions,
   ToolsConfig as BaseToolsConfig,
+  ChainedConfigWithUtils,
 } from '@rsbuild/shared';
 import type {
   BabelTransformOptions,
@@ -24,7 +25,7 @@ import type { NormalizedCSSExtractOptions } from '../thirdParty/css';
 
 export type ToolsTerserConfig = ChainedConfig<TerserPluginOptions>;
 
-export type ToolsTSLoaderConfig = ChainedConfig<
+export type ToolsTSLoaderConfig = ChainedConfigWithUtils<
   TSLoaderOptions,
   { addIncludes: FileFilterUtil; addExcludes: FileFilterUtil }
 >;
@@ -33,7 +34,7 @@ export type ToolsCssExtractConfig =
   | CSSExtractOptions
   | ((options: CSSExtractOptions) => CSSExtractOptions | void);
 
-export type ToolsWebpackConfig = ChainedConfig<
+export type ToolsWebpackConfig = ChainedConfigWithUtils<
   WebpackConfig,
   ModifyWebpackConfigUtils
 >;
@@ -42,7 +43,7 @@ export type ToolsWebpackChainConfig = ArrayOrNot<
   (chain: WebpackChain, utils: ModifyWebpackChainUtils) => void
 >;
 
-export type ToolsBabelConfig = ChainedConfig<
+export type ToolsBabelConfig = ChainedConfigWithUtils<
   BabelTransformOptions,
   BabelConfigUtils
 >;

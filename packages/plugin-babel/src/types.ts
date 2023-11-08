@@ -1,4 +1,4 @@
-import type { ChainedConfig } from '@rsbuild/shared';
+import type { ChainedConfig, ChainedConfigWithUtils } from '@rsbuild/shared';
 import type {
   PluginItem as BabelPlugin,
   PluginOptions as BabelPluginOptions,
@@ -62,7 +62,7 @@ export type BabelConfigUtils = {
   modifyPresetReactOptions: (options: PresetReactOptions) => void;
 };
 
-export type PluginBabelOptions = ChainedConfig<
+export type PluginBabelOptions = ChainedConfigWithUtils<
   BabelTransformOptions,
   BabelConfigUtils
 >;

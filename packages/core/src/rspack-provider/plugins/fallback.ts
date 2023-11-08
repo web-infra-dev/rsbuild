@@ -30,8 +30,6 @@ export const pluginFallback = (): RsbuildPlugin => ({
       setConfig(
         config,
         'module.rules',
-        // Rspack RuleSetRule is not exactly aligned with webpack. But it doesn't matter in resourceRuleFallback.
-        // @ts-expect-error
         resourceRuleFallback(config.module?.rules),
       );
     });

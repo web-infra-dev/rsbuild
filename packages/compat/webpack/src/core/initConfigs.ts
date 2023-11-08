@@ -36,7 +36,6 @@ export async function initConfigs({
 }: InitConfigsOptions): Promise<{
   webpackConfigs: WebpackConfig[];
 }> {
-  await context.configValidatingTask;
   await initPlugins({
     pluginAPI: context.pluginAPI,
     pluginStore,

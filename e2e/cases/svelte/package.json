@@ -4,5 +4,10 @@
   "version": "1.0.0",
   "dependencies": {
     "svelte": "^4.2.2"
+  },
+  "devDependencies": {
+    "less": "^4.2.0",
+    "sass": "^1.69.5",
+    "stylus": "0.59.0"
   }
 }

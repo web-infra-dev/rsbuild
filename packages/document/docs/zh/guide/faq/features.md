@@ -84,7 +84,7 @@ Rsbuild 默认提供了移除 console 的配置项，请查看 [performance.remo
 
 通过 Rsbuild 调试模式可以查看 Rsbuild 生成的 Rspack 配置。
 
-你可以在执行构建时添加 `DEBUG=rsbuild` 环境变量，即可开启 Rsbuild 的[调试模式](/guide/debug/debug-mode.html)，此时会输出内部生成的 Rspack 配置到 dist 目录下。
+你可以在执行构建时添加 `DEBUG=rsbuild` 环境变量，即可开启 Rsbuild 的[调试模式](/guide/debug/debug-mode)，此时会输出内部生成的 Rspack 配置到 dist 目录下。
 
 ```bash
 ➜ DEBUG=rsbuild pnpm dev

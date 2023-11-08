@@ -36,10 +36,31 @@ exports[`plugin-inline-chunk > should add InlineChunkHtmlPlugin properly by defa
           "useShortDoctype": true,
         },
         "scriptLoading": "defer",
-        "template": "<ROOT>/packages/shared/static/template.html",
+        "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
+      },
     },
     InlineChunkHtmlPlugin {
       "distPath": {
@@ -94,10 +115,31 @@ exports[`plugin-inline-chunk > should use proper plugin options when disableInli
           "useShortDoctype": true,
         },
         "scriptLoading": "defer",
-        "template": "<ROOT>/packages/shared/static/template.html",
+        "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
+      },
     },
     InlineChunkHtmlPlugin {
       "distPath": {
@@ -150,10 +192,31 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
           "useShortDoctype": true,
         },
         "scriptLoading": "defer",
-        "template": "<ROOT>/packages/shared/static/template.html",
+        "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
+      },
     },
     InlineChunkHtmlPlugin {
       "distPath": {
@@ -209,10 +272,31 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
           "useShortDoctype": true,
         },
         "scriptLoading": "defer",
-        "template": "<ROOT>/packages/shared/static/template.html",
+        "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
+      },
     },
     InlineChunkHtmlPlugin {
       "distPath": {

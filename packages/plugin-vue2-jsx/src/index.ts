@@ -20,8 +20,8 @@ export function pluginVue2Jsx(
 
     pre: ['plugin-babel'],
 
-    async setup(api) {
-      api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+    setup(api) {
+      api.modifyBundlerChain((chain, { CHAIN_ID }) => {
         [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI].forEach((ruleId) => {
           if (chain.module.rules.has(ruleId)) {
             const rule = chain.module.rule(ruleId);

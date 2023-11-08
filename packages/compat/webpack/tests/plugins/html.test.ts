@@ -118,24 +118,6 @@ describe('plugin-html', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should register faviconUrl plugin when html.favicon is a URL', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-      },
-      rsbuildConfig: {
-        html: {
-          favicon: 'https://www.foo.com/favicon.ico',
-        },
-      },
-    });
-
-    expect(
-      await rsbuild.matchWebpackPlugin('HtmlFaviconUrlPlugin'),
-    ).toBeTruthy();
-  });
-
   it('should allow to set inject by html.inject option', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
@@ -233,8 +215,9 @@ describe('plugin-html', () => {
       },
       rsbuildConfig: {
         html: {
-          template: 'bar',
-          templateByEntries: { main: 'foo' },
+          template({ entryName }) {
+            return entryName === 'main' ? 'foo' : 'bar';
+          },
         },
       },
     });

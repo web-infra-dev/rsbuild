@@ -1,4 +1,4 @@
-import { isAbsolute, join } from 'path';
+import path, { isAbsolute, join } from 'path';
 import { MODULE_PATH_REGEX } from './constants';
 import { removeLeadingSlash } from './utils';
 import { promises, constants, existsSync, statSync } from 'fs';
@@ -107,3 +107,51 @@ export const getFilename = (
       throw new Error(`unknown key ${type} in "output.filename"`);
   }
 };
+
+export async function findUp({
+  filename,
+  cwd = process.cwd(),
+}: {
+  filename: string;
+  cwd?: string;
+}) {
+  const { root } = path.parse(cwd);
+
+  let dir = cwd;
+  while (dir && dir !== root) {
+    const filePath = path.join(dir, filename);
+
+    try {
+      const stats = await promises.stat(filePath);
+      if (stats?.isFile()) {
+        return filePath;
+      }
+    } catch {}
+
+    dir = path.dirname(dir);
+  }
+}
+
+export function findUpSync({
+  filename,
+  cwd = process.cwd(),
+}: {
+  filename: string;
+  cwd?: string;
+}) {
+  const { root } = path.parse(cwd);
+
+  let dir = cwd;
+  while (dir && dir !== root) {
+    const filePath = path.join(dir, filename);
+
+    try {
+      const stats = statSync(filePath, { throwIfNoEntry: false });
+      if (stats?.isFile()) {
+        return filePath;
+      }
+    } catch {}
+
+    dir = path.dirname(dir);
+  }
+}

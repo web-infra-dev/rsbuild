@@ -1,4 +1,4 @@
-import type { LoaderContext } from 'webpack';
+import type { LoaderContext } from '@rspack/core';
 
 export default function (this: LoaderContext<unknown>, source: string) {
   this?.cacheable(true);

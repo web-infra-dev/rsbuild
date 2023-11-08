@@ -11,7 +11,7 @@ import {
 } from './util';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { RemOptions } from '../types';
-import type { Compiler, Compilation, WebpackPluginInstance } from 'webpack';
+import type { Compiler, Compilation, RspackPluginInstance } from '@rspack/core';
 
 type AutoSetRootFontSizeOptions = Omit<
   RemOptions,
@@ -55,7 +55,7 @@ export const DEFAULT_OPTIONS: Required<AutoSetRootFontSizeOptions> = {
   useRootFontSizeBeyondMax: false,
 };
 
-export class AutoSetRootFontSizePlugin implements WebpackPluginInstance {
+export class AutoSetRootFontSizePlugin implements RspackPluginInstance {
   readonly name: string = 'AutoSetRootFontSizePlugin';
 
   readonly distDir: string;
@@ -120,6 +120,7 @@ export class AutoSetRootFontSizePlugin implements WebpackPluginInstance {
     }
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
+      // @ts-expect-error compilation type mismatch
       this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapPromise(
         this.name,
         async (data) => {

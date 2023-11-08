@@ -14,6 +14,27 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
       },
       "version": 5,
     },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
+      },
+    },
   ],
 }
 `;
@@ -36,10 +57,31 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
         "inject": "head",
         "minify": false,
         "scriptLoading": "defer",
-        "template": "<ROOT>/packages/shared/static/template.html",
+        "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
+      },
     },
   ],
 }
@@ -62,10 +104,31 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
         "inject": "body",
         "minify": false,
         "scriptLoading": "defer",
-        "template": "<ROOT>/packages/shared/static/template.html",
+        "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
+      },
     },
   ],
 }
@@ -107,10 +170,31 @@ exports[`plugin-html > should enable minify in production 1`] = `
           "useShortDoctype": true,
         },
         "scriptLoading": "defer",
-        "template": "<ROOT>/packages/shared/static/template.html",
+        "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
+      },
     },
   ],
 }
@@ -133,10 +217,31 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         "inject": "head",
         "minify": false,
         "scriptLoading": "defer",
-        "template": "<ROOT>/packages/shared/static/template.html",
+        "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
+      },
     },
   ],
 }
@@ -180,6 +285,39 @@ exports[`plugin-html > should support multi entry 1`] = `
         "templateParameters": [Function],
       },
       "version": 5,
+    },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "foo.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+          "main.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
+      },
     },
   ],
 }

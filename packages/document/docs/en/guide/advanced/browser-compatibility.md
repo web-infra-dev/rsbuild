@@ -6,7 +6,7 @@ This chapter introduces how to use the capabilities provided by Rsbuild to deal 
 
 Before dealing with compatibility issues, you first need to clarify which browsers your project needs to support, and add the corresponding browserslist config.
 
-- If you haven't set browserslist yet, please read the [Browserslist](/guide/advanced/browserslist.html) chapter first.
+- If you haven't set browserslist yet, please read the [Browserslist](/guide/advanced/browserslist) chapter first.
 
 - If you have set a browserslist, Rsbuild will automatically compile according to that scope, downgrade JavaScript syntax and CSS syntax, and inject the required polyfill. In most cases, you can safely use modern ECMAScript features without worrying about compatibility issues.
 

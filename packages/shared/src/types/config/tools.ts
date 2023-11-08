@@ -1,9 +1,13 @@
-import type { ArrayOrNot, ChainedConfig, FileFilterUtil } from '../utils';
+import type {
+  ArrayOrNot,
+  ChainedConfig,
+  FileFilterUtil,
+  ChainedConfigWithUtils,
+} from '../utils';
 import type {
   AutoprefixerOptions,
   SassLoaderOptions,
   LessLoaderOptions,
-  PugOptions,
   PostCSSLoaderOptions,
   PostCSSPlugin,
   CSSLoaderOptions,
@@ -91,12 +95,12 @@ export type ToolsDevServerConfig = ChainedConfig<DevServerOptions>;
 
 export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
 
-export type ToolsSassConfig = ChainedConfig<
+export type ToolsSassConfig = ChainedConfigWithUtils<
   SassLoaderOptions,
   { addExcludes: FileFilterUtil }
 >;
 
-export type ToolsLessConfig = ChainedConfig<
+export type ToolsLessConfig = ChainedConfigWithUtils<
   LessLoaderOptions,
   { addExcludes: FileFilterUtil }
 >;
@@ -105,9 +109,7 @@ export type ToolsBundlerChainConfig = ArrayOrNot<
   (chain: BundlerChain, utils: ModifyBundlerChainUtils) => void
 >;
 
-export type ToolsPugConfig = true | ChainedConfig<PugOptions>;
-
-export type ToolsPostCSSLoaderConfig = ChainedConfig<
+export type ToolsPostCSSLoaderConfig = ChainedConfigWithUtils<
   PostCSSLoaderOptions,
   { addPlugins: (plugins: PostCSSPlugin | PostCSSPlugin[]) => void }
 >;
@@ -116,7 +118,7 @@ export type ToolsCSSLoaderConfig = ChainedConfig<CSSLoaderOptions>;
 
 export type ToolsStyleLoaderConfig = ChainedConfig<StyleLoaderOptions>;
 
-export type ToolsHtmlPluginConfig = ChainedConfig<
+export type ToolsHtmlPluginConfig = ChainedConfigWithUtils<
   HTMLPluginOptions,
   {
     entryName: string;
@@ -137,7 +139,7 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
   rspack: typeof import('@rspack/core');
 };
 
-export type ToolsRspackConfig = ChainedConfig<
+export type ToolsRspackConfig = ChainedConfigWithUtils<
   RspackConfig,
   ModifyRspackConfigUtils
 >;
@@ -171,10 +173,6 @@ export interface ToolsConfig {
    * Modify the options of [postcss-loader](https://github.com/webpack-contrib/postcss-loader).
    */
   postcss?: ToolsPostCSSLoaderConfig;
-  /**
-   * Configure the [Pug](https://pugjs.org/) template engine.
-   */
-  pug?: ToolsPugConfig;
   /**
    * Modify the options of [style-loader](https://github.com/webpack-contrib/style-loader).
    */

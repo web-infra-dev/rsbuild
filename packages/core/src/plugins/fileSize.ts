@@ -3,9 +3,8 @@
  * license at https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
 import path from 'path';
-import { chalk } from '@rsbuild/shared/chalk';
 import { fs } from '@rsbuild/shared/fs-extra';
-import { logger } from '@rsbuild/shared';
+import { color, logger } from '@rsbuild/shared';
 import filesize from 'filesize';
 import gzipSize from 'gzip-size';
 import type {
@@ -21,12 +20,12 @@ export const filterAsset = (asset: string) =>
 
 const getAssetColor = (size: number) => {
   if (size > 300 * 1000) {
-    return chalk.bold.red;
+    return color.red;
   }
   if (size > 100 * 1000) {
-    return chalk.yellow;
+    return color.yellow;
   }
-  return chalk.green;
+  return color.green;
 };
 
 async function printHeader(
@@ -44,7 +43,7 @@ async function printHeader(
     return `${prev + curLabel}    `;
   }, '  ');
 
-  logger.log(chalk.bold.blue(headerRow));
+  logger.log(color.bold(color.blue(headerRow)));
 }
 
 async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
@@ -120,7 +119,7 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
     }
 
     let fileNameLabel =
-      chalk.dim(asset.folder + path.sep) + chalk.cyan(asset.name);
+      color.dim(asset.folder + path.sep) + color.cyan(asset.name);
 
     if (fileNameLength < longestFileLength) {
       const rightPadding = ' '.repeat(longestFileLength - fileNameLength);
@@ -130,14 +129,13 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
     logger.log(`  ${fileNameLabel}    ${sizeLabel}    ${gzipSizeLabel}`);
   });
 
-  const totalSizeLabel = `${chalk.bold.blue('Total size:')}  ${filesize(
+  const totalSizeLabel = `${color.bold(color.blue('Total size:'))}  ${filesize(
     totalSize,
     { round: 1 },
   )}`;
-  const gzippedSizeLabel = `${chalk.bold.blue('Gzipped size:')}  ${filesize(
-    totalGzipSize,
-    { round: 1 },
-  )}`;
+  const gzippedSizeLabel = `${color.bold(
+    color.blue('Gzipped size:'),
+  )}  ${filesize(totalGzipSize, { round: 1 })}`;
   logger.log(`\n  ${totalSizeLabel}\n  ${gzippedSizeLabel}\n`);
 }
 

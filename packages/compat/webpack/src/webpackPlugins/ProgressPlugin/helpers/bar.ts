@@ -1,7 +1,7 @@
 import cliTruncate from '../../../../compiled/cli-truncate';
 import type { Props } from './type';
 import { clamp } from './utils';
-import { chalk } from '@rsbuild/shared/chalk';
+import { color as colors } from '@rsbuild/shared';
 
 const defaultOption: Props = {
   total: 100,
@@ -17,7 +17,7 @@ const defaultOption: Props = {
   done: false,
   spaceWidth: 1,
   messageWidth: 25,
-  messageColor: 'grey',
+  messageColor: 'gray',
   id: '',
   maxIdLen: 16,
   hasErrors: false,
@@ -60,10 +60,11 @@ export const renderBar = (option: Partial<Props>) => {
   const space = ' '.repeat(spaceWidth);
   const percent = clamp(Math.floor((current / total) * 100), 0, 100);
 
-  // colors
-  const barColor = Reflect.get(chalk, color);
-  const backgroundColor = Reflect.get(chalk, bgColor);
-  const doneColor = hasErrors ? chalk.bold.red : Reflect.get(chalk, color);
+  // @ts-expect-error
+  const barColor = colors[color];
+  // @ts-expect-error
+  const backgroundColor = color[bgColor];
+  const doneColor = hasErrors ? colors.red : barColor;
   const idColor = done ? doneColor : barColor;
 
   const id = mergedOptions.id
@@ -73,7 +74,7 @@ export const renderBar = (option: Partial<Props>) => {
 
   if (done) {
     if (hasErrors) {
-      const message = doneColor(errorInfo);
+      const message = colors.bold(doneColor(errorInfo));
 
       if (terminalWidth >= MIDDLE_WIDTH) {
         return [idColor(errorIcon), id, doneColor(`${space}${message}`)].join(
@@ -86,10 +87,10 @@ export const renderBar = (option: Partial<Props>) => {
     return '';
   }
 
-  const msgStr = Reflect.get(
-    chalk,
-    messageColor,
-  )(cliTruncate(message, messageWidth, { position: 'start' }));
+  // @ts-expect-error
+  const msgStr = colors[messageColor](
+    cliTruncate(message, messageWidth, { position: 'start' }),
+  );
 
   const left = clamp(Math.floor((percent * width) / 100), 0, width);
   const right = clamp(width - left, 0, width);

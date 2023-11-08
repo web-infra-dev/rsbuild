@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { Compiler, Compilation } from 'webpack';
+import type { Compiler, Compilation } from '@rspack/core';
 // @ts-expect-error
 import { RawSource } from 'webpack-sources';
 import { COMPILATION_PROCESS_STAGE } from './util';
@@ -42,9 +42,10 @@ export class HtmlAppIconPlugin {
 
     // add html asset tags
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
+      // @ts-expect-error compilation type mismatch
       this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tap(
         this.name,
-        data => {
+        (data) => {
           const { publicPath } = compiler.options.output;
 
           data.headTags.unshift({
@@ -72,7 +73,7 @@ export class HtmlAppIconPlugin {
             name: this.name,
             stage: COMPILATION_PROCESS_STAGE.PROCESS_ASSETS_STAGE_PRE_PROCESS,
           },
-          assets => {
+          (assets) => {
             const source = fs.readFileSync(this.iconPath);
             assets[iconRelativePath] = new RawSource(source, false);
           },

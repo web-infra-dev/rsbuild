@@ -14,3 +14,39 @@ export default {
   },
 };
 ```
+
+### 注意事项
+
+建议仅在开发环境在开启 `disableCssExtract` 选项。
+
+对于生产环境构建，建议使用 Rsbuild 的默认行为，将 CSS 抽取为单独的 bundle，以便浏览器能够并行加载 CSS 和 JS 资源。
+
+比如：
+
+```ts
+export default {
+  output: {
+    disableCssExtract: process.env.NODE_ENV === 'development',
+  },
+};
+```
+
+如果你需要在生产环境下开启该选项，请留意内联的 CSS 代码不会经过 Rsbuild 默认的 CSS 压缩器，你可以手动注册 PostCSS 的 [cssnano](https://cssnano.co/) 插件来对内联代码进行压缩。
+
+1. 安装 cssnano：
+
+```bash
+npm add cssnano -D
+```
+
+2. 使用 `tools.postcss` 注册 cssnano：
+
+```ts
+export default {
+  tools: {
+    postcss: (opts) => {
+      opts.postcssOptions.plugins.push(require('cssnano'));
+    },
+  },
+};
+```

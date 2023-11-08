@@ -1,5 +1,4 @@
 import { posix } from 'path';
-import { CSSExtractOptions } from '../types/thirdParty/css';
 import {
   getDistPath,
   getFilename,
@@ -25,10 +24,10 @@ export const pluginOutput = (): RsbuildPlugin => ({
         const { default: MiniCssExtractPlugin } = await import(
           'mini-css-extract-plugin'
         );
-        const extractPluginOptions = mergeChainedOptions(
-          {},
-          (config.tools.cssExtract as CSSExtractOptions)?.pluginOptions || {},
-        );
+        const extractPluginOptions = mergeChainedOptions({
+          defaults: {},
+          options: config.tools.cssExtract?.pluginOptions,
+        });
 
         const cssFilename = getFilename(config.output, 'css', isProd);
 

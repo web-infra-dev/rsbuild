@@ -256,23 +256,6 @@ describe('plugin-css', () => {
     );
   });
 
-  it('should allow to custom cssModuleLocalIdentName', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginCss()],
-      rsbuildConfig: {
-        output: {
-          cssModuleLocalIdentName: '[hash:base64]',
-        },
-      },
-    });
-
-    const config = await rsbuild.unwrapWebpackConfig();
-
-    expect(JSON.stringify(config)).toContain(
-      '"localIdentName":"[hash:base64]"',
-    );
-  });
-
   it('should remove some postcss plugins based on browserslist', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],

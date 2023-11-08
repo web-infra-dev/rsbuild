@@ -1,9 +1,11 @@
+import { dirname } from 'path';
 import {
+  color,
+  findUpSync,
   getDistPath,
   getSharedPkgCompiledPath,
   type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
-import { chalk } from '@rsbuild/shared/chalk';
 
 export const pluginNodeAddons = (): DefaultRsbuildPlugin => ({
   name: 'plugin-node-addons',
@@ -15,15 +17,16 @@ export const pluginNodeAddons = (): DefaultRsbuildPlugin => ({
           return;
         }
 
-        const pkgUp = await import('pkg-up');
-
-        const getDistName = (resource: string) => {
-          const pkgJSON = pkgUp.sync({ cwd: resource });
+        const getDistName = (resourcePath: string) => {
+          const pkgJSON = findUpSync({
+            filename: 'package.json',
+            cwd: dirname(resourcePath),
+          });
 
           if (!pkgJSON) {
             throw new Error(
-              `Failed to compile Node.js addons, couldn't find the package.json of ${chalk.yellow(
-                resource,
+              `Failed to compile Node.js addons, couldn't find the package.json of ${color.yellow(
+                resourcePath,
               )}.`,
             );
           }
@@ -41,7 +44,7 @@ export const pluginNodeAddons = (): DefaultRsbuildPlugin => ({
           const { name: pkgName } = require(pkgJSON);
           const config = api.getNormalizedConfig();
           const serverPath = getDistPath(config.output, 'server');
-          return `${serverPath}/${getFilename(resource, pkgName)}`;
+          return `${serverPath}/${getFilename(resourcePath, pkgName)}`;
         };
 
         chain.module

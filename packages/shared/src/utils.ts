@@ -5,8 +5,8 @@ import type {
 } from './types';
 import path from 'path';
 import fs from 'fs-extra';
-import pkgUp from 'pkg-up';
 import semver from 'semver';
+import { findUp } from './fs';
 
 export const isDev = (): boolean => process.env.NODE_ENV === 'development';
 export const isProd = (): boolean => process.env.NODE_ENV === 'production';
@@ -82,11 +82,15 @@ export const getSharedPkgCompiledPath = (packageName: SharedCompiledPkgNames) =>
 export const isURL = (str: string) =>
   str.startsWith('http') || str.startsWith('//:');
 
-export * as z from './zod';
-
 export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
   return ['web', 'web-worker'].some((t) =>
     (Array.isArray(target) ? target : [target]).includes(t as RsbuildTarget),
+  );
+}
+
+export function isServerTarget(target: RsbuildTarget | RsbuildTarget[]) {
+  return (Array.isArray(target) ? target : [target]).some((item) =>
+    ['node', 'service-worker'].includes(item),
   );
 }
 
@@ -138,8 +142,9 @@ export const isPackageInstalled = (
   }
 };
 
-export const isBeyondReact17 = (cwd: string) => {
-  const pkgPath = pkgUp.sync({ cwd });
+// TODO: move to react plugin
+export const isBeyondReact17 = async (cwd: string) => {
+  const pkgPath = await findUp({ cwd, filename: 'package.json' });
 
   if (!pkgPath) {
     return false;
@@ -157,9 +162,3 @@ export const isBeyondReact17 = (cwd: string) => {
 
   return semver.satisfies(semver.minVersion(deps.react)!, '>=17.0.0');
 };
-
-export function useSSR(target: RsbuildTarget | RsbuildTarget[]) {
-  return (Array.isArray(target) ? target : [target]).some((item) =>
-    ['node', 'service-worker'].includes(item),
-  );
-}

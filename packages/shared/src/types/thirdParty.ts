@@ -4,7 +4,7 @@ import type {
 } from '../../compiled/sass';
 import type * as SassLoader from '../../compiled/sass-loader';
 import type Less from '../../compiled/less';
-import type { LoaderContext } from 'webpack';
+import type { LoaderContext } from '@rspack/core';
 import type TerserPlugin from 'terser-webpack-plugin';
 import type {
   Syntax,
@@ -16,8 +16,6 @@ import type {
 
 export type TerserPluginOptions = TerserPlugin.BasePluginOptions &
   TerserPlugin.DefinedDefaultMinimizerAndOptions<TerserPlugin.TerserOptions>;
-
-export type { Options as PugOptions } from '../../compiled/pug';
 
 export type AutoprefixerOptions = {
   /** environment for `Browserslist` */

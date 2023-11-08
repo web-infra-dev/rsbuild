@@ -1,5 +1,58 @@
 # @rsbuild/shared
 
+## 0.0.17
+
+### Patch Changes
+
+- b25b47c: feat: support html.template as a function
+- 3b87b50: refactor: move html.titleByEntries option to uni-builder
+- fd05681: refactor: remove source.compileJsDataURI option
+- 6220e04: refactor: merge HTML plugins into a unified plugin
+- 41a7938: feat(deps): bump Rspack v0.3.11
+- f1f15cf: feat: support html.templateParameters as a function
+- 60fc2de: feat: support html.title as a function
+- 58e7453: feat: support html.favicon as a function
+- 659a2f5: chore: remove cssnano from shared package
+- 7ecbc74: feat: support html.inject as a function
+- 47078fd: types: fix source.alias type
+
+## 0.0.16
+
+### Patch Changes
+
+- a2a18ec: feat: support html.meta to be a function
+- 8f03dd0: refactor: move html.metaByEntries option to uni-builder
+- 9a52542: feat: add default meta configs and simplify the templates
+
+## 0.0.15
+
+### Patch Changes
+
+- 25ab68e: refactor: use plugin to generate titles instead of template params
+
+## 0.0.14
+
+### Patch Changes
+
+- 705c6a7: refactor: move legacy manifest config to uni-builder
+- a4badc6: perf: using a lighter modern.js server package
+- 8f52317: perf: replace chalk with picocolors
+- 094cd55: refactor: @rsbuild/core no longer depend on webpack
+- c331840: refactor: @rsbuild/shared no longer depend on webpack
+
+## 0.0.13
+
+### Patch Changes
+
+- 9c19198: refactor: simplify RsbuildConfig definitions
+- fedbe79: refactor: use plugin to generate meta tags instead of template params
+- 219dd60: chore(deps): bump Rspack v0.3.9
+- b46bc69: refactor: replace @rspack/html-plugin with html-webpack-plugin
+- 3bf93a5: refactor: extract css-minimizer plugin as a standalone package
+- 84a4d61: chore(utils): unify the castArray implementation
+- 510de48: perf: switch the default polyfill mode to usage
+- 73ec291: perf: remove config validation
+
 ## 0.0.12
 
 ## 0.0.11

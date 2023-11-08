@@ -55,7 +55,7 @@ Rsbuild 默认的 Browserslist 配置为：
 ```
 
 :::tip
-请阅读 [设置浏览器范围](/guide/advanced/browserslist.html) 章节来了解更多关于 Browserslist 的用法。
+请阅读 [设置浏览器范围](/guide/advanced/browserslist) 章节来了解更多关于 Browserslist 的用法。
 :::
 
 ## 按需引入 polyfill
@@ -73,7 +73,7 @@ export default {
 ```
 
 :::tip
-请阅读 [浏览器兼容性](/guide/advanced/browser-compatibility.html) 章节来了解更多关于 polyfill 的用法。
+请阅读 [浏览器兼容性](/guide/advanced/browser-compatibility) 章节来了解更多关于 polyfill 的用法。
 :::
 
 ## 使用图片压缩

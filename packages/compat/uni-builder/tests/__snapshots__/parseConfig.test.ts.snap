@@ -1,0 +1,132 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`parseCommonConfig > html.faviconByEntries 1`] = `
+{
+  "html": {
+    "favicon": [Function],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.faviconByEntries 2`] = `
+{
+  "html": {
+    "favicon": [
+      "/https/www.foo.com/default.ico",
+      [Function],
+    ],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.faviconByEntries 3`] = `
+{
+  "html": {
+    "inject": [Function],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.faviconByEntries 4`] = `
+{
+  "html": {
+    "inject": [
+      "body",
+      [Function],
+    ],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.metaByEntries 1`] = `
+{
+  "html": {
+    "meta": [Function],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.metaByEntries 2`] = `
+{
+  "html": {
+    "meta": [
+      {
+        "charset": {
+          "charset": "UTF-8",
+        },
+      },
+      [Function],
+    ],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.templateByEntries 1`] = `
+{
+  "html": {
+    "template": [Function],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.templateByEntries 2`] = `
+{
+  "html": {
+    "template": [
+      "static/index.html",
+      [Function],
+    ],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.templateParametersByEntries 1`] = `
+{
+  "html": {
+    "templateParameters": [Function],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.templateParametersByEntries 2`] = `
+{
+  "html": {
+    "templateParameters": [
+      {
+        "name": "jack",
+      },
+      [Function],
+    ],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.titleByEntries 1`] = `
+{
+  "html": {
+    "title": [Function],
+  },
+}
+`;
+
+exports[`parseCommonConfig > html.titleByEntries 2`] = `
+{
+  "html": {
+    "title": [
+      "Default",
+      [Function],
+    ],
+  },
+}
+`;
+
+exports[`parseCommonConfig > output.cssModuleLocalIdentName 1`] = `
+{
+  "html": {},
+  "output": {
+    "cssModules": {
+      "localIdentName": "[local]-[hash:base64:6]",
+    },
+  },
+}
+`;

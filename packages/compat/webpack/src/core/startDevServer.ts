@@ -54,10 +54,10 @@ export async function startDevServer(
   options: InitConfigsOptions,
   startDevServerOptions: StartDevServerOptions = {},
 ) {
-  // TODO
   return baseStartDevServer(
     options,
-    createDevServer as any,
+    // @ts-expect-error compiler type mismatch
+    createDevServer,
     startDevServerOptions,
   );
 }

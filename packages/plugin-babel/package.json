@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-babel",
-  "version": "0.0.12",
+  "version": "0.0.17",
   "description": "Babel plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -11,6 +11,7 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
       "default": "./dist/index.js"
     }
   },

@@ -1,5 +1,5 @@
 import { JS_REGEX, TS_REGEX, HTML_REGEX, JSON_REGEX } from './constants';
-import type { RuleSetRule } from 'webpack';
+import type { RuleSetRule } from '@rspack/core';
 
 type Rules = (undefined | null | false | '' | 0 | RuleSetRule | '...')[];
 
@@ -30,7 +30,7 @@ export const resourceRuleFallback = (
         rule.mimetype
       )
     ) {
-      rule.oneOf.forEach(item => {
+      rule.oneOf.forEach((item) => {
         if (item) {
           innerRules.push(item);
         }

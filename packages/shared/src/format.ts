@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import { color } from './color';
 import type { Stats, MultiStats } from './types';
 import { formatWebpackMessages } from './formatWebpack';
 
@@ -7,15 +7,15 @@ export function formatStats(stats: Stats | MultiStats, showWarnings = true) {
     preset: 'errors-warnings',
   });
 
-  const { errors, warnings } = formatWebpackMessages(statsData, chalk);
+  const { errors, warnings } = formatWebpackMessages(statsData, color);
 
   if (errors.length) {
     const errorMsgs = `${errors.join('\n\n')}\n`;
     const isTerserError = errorMsgs.includes('from Terser');
-    const title = chalk.red.bold(
-      isTerserError ? `Minify error: ` : `Compile error: `,
+    const title = color.bold(
+      color.red(isTerserError ? `Minify error: ` : `Compile error: `),
     );
-    const tip = chalk.yellow(
+    const tip = color.yellow(
       isTerserError
         ? `Failed to minify with terser, check for syntax errors.`
         : 'Failed to compile, check the errors for troubleshooting.',
@@ -29,7 +29,7 @@ export function formatStats(stats: Stats | MultiStats, showWarnings = true) {
 
   // always show warnings in tty mode
   if (warnings.length && (showWarnings || process.stdout.isTTY)) {
-    const title = chalk.yellow.bold(`Compile Warning: \n`);
+    const title = color.bold(color.yellow(`Compile Warning: \n`));
     return {
       message: `${title}${`${warnings.join('\n\n')}\n`}`,
       level: 'warning',

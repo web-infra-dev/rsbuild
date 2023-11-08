@@ -13,7 +13,7 @@ export function pluginVue(
   return {
     name: 'plugin-vue',
 
-    async setup(api) {
+    setup(api) {
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
         return mergeRsbuildConfig(config, {
           source: {

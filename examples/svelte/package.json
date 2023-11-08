@@ -2,7 +2,7 @@
   "name": "@examples/svelte",
   "private": true,
   "scripts": {
-    "dev": "rsbuild dev",
+    "dev": "rsbuild dev --open",
     "build": "rsbuild build",
     "preview": "rsbuild preview"
   },

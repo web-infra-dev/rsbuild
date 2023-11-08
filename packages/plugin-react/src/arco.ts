@@ -1,5 +1,5 @@
 import {
-  useSSR,
+  isServerTarget,
   isPackageInstalled,
   type SharedRsbuildPluginAPI,
 } from '@rsbuild/shared';
@@ -18,7 +18,7 @@ export const applyArcoSupport = (api: SharedRsbuildPluginAPI) => {
       return;
     }
 
-    const isUseSSR = useSSR(api.context.target);
+    const isUseSSR = isServerTarget(api.context.target);
 
     if (!transformImport?.some((item) => item.libraryName === ARCO_NAME)) {
       transformImport.push({

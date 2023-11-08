@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugin-global-vars > 'globalVars function' 1`] = `
+{
+  "plugins": [
+    Plugin {
+      "_options": {
+        "ENV": ""test"",
+        "TARGET": ""web"",
+      },
+      "name": "DefinePlugin",
+    },
+  ],
+}
+`;
+
+exports[`plugin-global-vars > 'globalVars' 1`] = `
+{
+  "plugins": [
+    Plugin {
+      "_options": {
+        "import.meta.bar": "{"a":"bar","b":false,"c":{"d":42}}",
+        "process.env.foo": ""foo"",
+        "window.baz": "[null,"baz"]",
+      },
+      "name": "DefinePlugin",
+    },
+  ],
+}
+`;

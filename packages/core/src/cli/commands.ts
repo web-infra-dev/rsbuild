@@ -9,6 +9,10 @@ export type InspectOptions = {
   verbose?: boolean;
 };
 
+export type DevOptions = {
+  open?: boolean;
+};
+
 export function setupProgram(rsbuild: RsbuildInstance) {
   const pkgJson = join(__dirname, '../../package.json');
   const { version } = fs.readJSONSync(pkgJson);
@@ -17,9 +21,12 @@ export function setupProgram(rsbuild: RsbuildInstance) {
 
   program
     .command('dev')
+    .option(`--open`, 'open the page in browser on startup')
     .description('starting the dev server')
-    .action(async () => {
-      await rsbuild.startDevServer();
+    .action(async (options: DevOptions) => {
+      await rsbuild.startDevServer({
+        open: options.open,
+      });
     });
 
   program

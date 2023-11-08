@@ -1,64 +1,73 @@
-import { logger } from 'rslog';
+import {
+  ChainedConfig,
+  ChainedConfigWithUtils,
+  ChainedConfigCombineUtils,
+} from './types';
 import { isFunction, isPlainObject } from './utils';
 
-export type Falsy = false | null | undefined | 0 | '';
+export type Falsy = false | null | undefined;
 
-export function mergeChainedOptions<T, U>(
-  defaults: T,
-  options?:
-    | T
-    | ((config: T, utils?: U) => T | void)
-    | Array<T | ((config: T, utils?: U) => T | void)>
-    | Falsy,
-  utils?: U,
-  mergeFn?: typeof Object.assign,
-): T;
-export function mergeChainedOptions<T, U>(
-  defaults: T,
-  options:
-    | T
-    | ((config: T, utils: U) => T | void)
-    | Array<T | ((config: T, utils: U) => T | void)>
-    | Falsy,
-  utils: U,
-  mergeFn?: typeof Object.assign,
-): T;
-export function mergeChainedOptions<T extends Record<string, unknown>>(
-  defaults: T,
-  options?: unknown,
-  utils?: unknown,
+export function mergeChainedOptions<T, U>(params: {
+  defaults: T;
+  options?: ChainedConfig<T> | Falsy;
+  mergeFn?: typeof Object.assign;
+}): T;
+export function mergeChainedOptions<T, U>(params: {
+  defaults: T;
+  options: ChainedConfigWithUtils<T, U> | Falsy;
+  utils: U;
+  mergeFn?: typeof Object.assign;
+}): T;
+export function mergeChainedOptions<T, U>(params: {
+  defaults: T;
+  options: ChainedConfigCombineUtils<T, U> | Falsy;
+  utils: U;
+  mergeFn?: typeof Object.assign;
+  useObjectParam?: true;
+}): T;
+export function mergeChainedOptions<T extends Record<string, unknown>>({
+  defaults,
+  options,
+  utils,
   mergeFn = Object.assign,
-) {
+  useObjectParam,
+}: {
+  defaults: T;
+  options?: unknown;
+  utils?: unknown;
+  mergeFn?: typeof Object.assign;
+  useObjectParam?: true;
+}) {
   if (!options) {
     return defaults;
   }
 
-  if (isPlainObject(options) as any) {
+  if (isPlainObject(options)) {
     return mergeFn(defaults, options);
   }
 
   if (isFunction(options)) {
-    const ret = options(defaults, utils);
-    if (ret) {
-      if (!isPlainObject(ret)) {
-        logger.warn(
-          `${options.name}: Function should mutate the config and return nothing, or return a cloned or merged version of config object.`,
-        );
-      }
-      return ret;
-    }
+    const ret = useObjectParam
+      ? options({
+          value: defaults,
+          ...(utils as Record<string, unknown>),
+        })
+      : options(defaults, utils);
+
+    return ret || defaults;
   } else if (Array.isArray(options)) {
     return options.reduce(
-      (memo, cur) => mergeChainedOptions(memo, cur, utils, mergeFn),
+      (defaults, options) =>
+        mergeChainedOptions({
+          defaults,
+          options,
+          utils,
+          mergeFn,
+          useObjectParam,
+        }),
       defaults,
-    );
-  } else {
-    throw new Error(
-      `mergeChainedOptions error:\ndefault options is: ${JSON.stringify(
-        defaults,
-      )}`,
     );
   }
 
-  return defaults;
+  return options ?? defaults;
 }

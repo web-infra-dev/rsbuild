@@ -13,10 +13,9 @@ function getCommonBuildConfig(cwd: string): RsbuildConfig {
       overrideBrowserslist: ['ie 11'],
     },
     tools: {
-      // @ts-expect-error
       rspack: (config) => {
         config.target = ['web'];
-        config.builtins.presetEnv = undefined;
+        config.builtins!.presetEnv = undefined;
       },
     },
   };

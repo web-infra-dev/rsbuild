@@ -1,20 +1,13 @@
 import type { RsbuildTarget } from '../rsbuild';
 import type { ModifyChainUtils } from '../hooks';
-import type { ChainedConfig, JSONValue } from '../utils';
+import type { ChainedConfig, ChainedConfigWithUtils } from '../utils';
 
-export type Alias = Record<string, string | string[]>;
+export type Alias = Record<string, string | false | (string | false)[]>;
 
 // Use a loose type to compat webpack
 export type Define = Record<string, any>;
 
 export type MainFields = (string | string[])[];
-
-export type GlobalVars = Record<string, JSONValue>;
-
-export type ChainedGlobalVars = ChainedConfig<
-  GlobalVars,
-  Pick<ModifyChainUtils, 'env' | 'target'>
->;
 
 export type AliasStrategy = 'prefer-tsconfig' | 'prefer-alias';
 
@@ -46,14 +39,6 @@ export interface SourceConfig {
    */
   preEntry?: string | string[];
   /**
-   * Define global variables. It can replace expressions like `process.env.FOO` in your code after compile.
-   */
-  globalVars?: ChainedGlobalVars;
-  /**
-   * Whether to compile JavaScript code imported via Data URI.
-   */
-  compileJsDataURI?: boolean;
-  /**
    * This configuration will determine which field of `package.json` you use to import the `npm` module.
    * Same as the [resolve.mainFields](https://webpack.js.org/configuration/resolve/#resolvemainfields) config of webpack.
    */
@@ -69,10 +54,10 @@ export interface SourceConfig {
   /**
    * Used to import the code and style of the component library on demand
    */
-  transformImport?: false | SharedTransformImport[];
+  transformImport?: false | TransformImport[];
 }
 
-export type SharedTransformImport = {
+export type TransformImport = {
   libraryName: string;
   libraryDirectory?: string;
   style?: string | boolean;
@@ -90,6 +75,4 @@ export interface NormalizedSourceConfig extends SourceConfig {
   alias: ChainedConfig<Alias>;
   aliasStrategy: AliasStrategy;
   preEntry: string[];
-  globalVars: ChainedGlobalVars;
-  compileJsDataURI: boolean;
 }

@@ -37,4 +37,20 @@ describe('plugin-svelte', () => {
 
     expect(config).toMatchSnapshot();
   });
+
+  it('should override default svelte-loader options throw options.svelteLoaderOptions', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {},
+      plugins: [
+        pluginSvelte({
+          svelteLoaderOptions: {
+            preprocess: null,
+          },
+        }),
+      ],
+    });
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config).toMatchSnapshot();
+  });
 });

@@ -7,7 +7,7 @@
  */
 import { join } from 'path';
 import { isFunction, addTrailingSlash } from '../utils';
-import type { Compiler, Compilation } from 'webpack';
+import type { Compiler, Compilation } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
 import { COMPILATION_PROCESS_STAGE, getPublicPathFromCompiler } from './util';
@@ -226,6 +226,7 @@ export class InlineChunkHtmlPlugin {
       const tagFunction = (tag: HtmlTagObject) =>
         this.getInlinedTag(publicPath, tag, compilation);
 
+      // @ts-expect-error compilation type mismatch
       const hooks = this.htmlPlugin.getHooks(compilation);
 
       hooks.alterAssetTagGroups.tap(this.name, (assets) => {

@@ -13,7 +13,7 @@ export function pluginVueJsx(
 
     pre: ['plugin-babel'],
 
-    async setup(api) {
+    setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
         [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI].forEach((ruleId) => {
           if (chain.module.rules.has(ruleId)) {

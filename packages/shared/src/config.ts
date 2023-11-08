@@ -34,7 +34,7 @@ import type {
 import { pick } from './pick';
 import { logger } from 'rslog';
 import { join } from 'path';
-import chalk from 'chalk';
+import { color } from './color';
 import type { minify } from 'terser';
 import fs from 'fs-extra';
 
@@ -57,11 +57,14 @@ export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
   define: {},
   aliasStrategy: 'prefer-tsconfig',
   preEntry: [],
-  globalVars: {},
-  compileJsDataURI: true,
 });
 
 export const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
+  meta: {
+    charset: { charset: 'UTF-8' },
+    viewport: 'width=device-width, initial-scale=1.0',
+  },
+  title: 'Rsbuild App',
   inject: 'head',
   mountId: DEFAULT_MOUNT_ID,
   crossorigin: false,
@@ -123,7 +126,6 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   disableCssModuleExtension: false,
   disableInlineRuntimeChunk: false,
   enableAssetFallback: false,
-  enableAssetManifest: false,
   enableLatestDecorators: false,
   enableCssModuleTSDeclaration: false,
   enableInlineScripts: false,
@@ -184,7 +186,9 @@ export async function outputInspectConfigFiles({
   const fileInfos = files
     .map(
       (item) =>
-        `  - ${chalk.bold.yellow(item.label)}: ${chalk.underline(item.path)}`,
+        `  - ${color.bold(color.yellow(item.label))}: ${color.underline(
+          item.path,
+        )}`,
     )
     .join('\n');
 
@@ -273,26 +277,6 @@ export async function getMinify(isProd: boolean, config: NormalizedConfig) {
     minifyCSS: true,
     minifyURLs: true,
   };
-}
-
-export function getTitle(entryName: string, config: { html: HtmlConfig }) {
-  const { title, titleByEntries } = config.html;
-  return titleByEntries?.[entryName] || title || '';
-}
-
-export function getInject(entryName: string, config: { html: HtmlConfig }) {
-  const { inject, injectByEntries } = config.html;
-  return injectByEntries?.[entryName] || inject || true;
-}
-
-export function getFavicon(
-  entryName: string,
-  config: {
-    html: HtmlConfig;
-  },
-) {
-  const { favicon, faviconByEntries } = config.html;
-  return faviconByEntries?.[entryName] || favicon;
 }
 
 export async function stringifyConfig(config: unknown, verbose?: boolean) {

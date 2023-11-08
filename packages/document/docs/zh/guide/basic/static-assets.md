@@ -17,7 +17,7 @@ Rsbuild 支持在代码中引用图片、字体、媒体类型的静态资源。
 如果你需要引用其他格式的静态资源，请参考 [扩展静态资源类型](#扩展静态资源类型)。
 
 :::tip SVG 图片
-SVG 图片是一种特殊情况，Rsbuild 提供了 SVG 转 React 组件的能力，对 SVG 进行单独处理，详见 [Svgr 插件](/plugins/list/plugin-svgr.html)。
+SVG 图片是一种特殊情况，Rsbuild 提供了 SVG 转 React 组件的能力，对 SVG 进行单独处理，详见 [Svgr 插件](/plugins/list/plugin-svgr)。
 :::
 
 ## 在 JS 文件中引用
@@ -31,7 +31,7 @@ import logo from './static/logo.png';
 export default = () => <img src={logo} />;
 ```
 
-也支持使用[路径别名](/guide/advanced/alias.html)来引用：
+也支持使用[路径别名](/guide/advanced/alias)来引用：
 
 ```tsx
 import logo from '@/static/logo.png';
@@ -49,7 +49,7 @@ export default = () => <img src={logo} />;
 }
 ```
 
-也支持使用[路径别名](/guide/advanced/alias.html)来引用：
+也支持使用[路径别名](/guide/advanced/alias)来引用：
 
 ```css
 .logo {
@@ -72,7 +72,7 @@ console.log(largeImage); // "/static/largeImage.6c12aba3.png"
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
-关于资源内联的更详细介绍，请参考 [静态资源内联](/guide/optimization/inline-assets.html) 章节。
+关于资源内联的更详细介绍，请参考 [静态资源内联](/guide/optimization/inline-assets) 章节。
 
 ## 构建产物
 
@@ -81,7 +81,7 @@ console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 - 通过 [output.filename](/config/options/output.html#outputfilename) 来修改产物的文件名。
 - 通过 [output.distPath](/config/options/output.html#outputdistpath) 来修改产物的输出路径。
 
-请阅读 [构建产物目录](/guide/basic/output-files.html) 来了解更多细节。
+请阅读 [构建产物目录](/guide/basic/output-files) 来了解更多细节。
 
 ## URL 前缀
 

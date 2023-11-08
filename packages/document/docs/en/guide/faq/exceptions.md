@@ -42,7 +42,7 @@ Therefore, when you reference the source code of other sub-projects, you may enc
 
 There are several solutions to this problem:
 
-1. You can use the Source Build plugin to compile other sub-projects within the monorepo. Please refer to [Source Code Plugin](/plugins/list/plugin-source-build.html) for more information.
+1. You can use the Source Build plugin to compile other sub-projects within the monorepo. Please refer to [Source Code Plugin](/plugins/list/plugin-source-build) for more information.
 2. You can add the `source.include` configuration option to specify the directories or modules that need to be additionally compiled. Please refer to [Usage of source.include](/config/options/source.html#sourceinclude) for more information.
 3. You can pre-build the sub-projects that need to be referenced, generate the corresponding build artifacts, and then reference the build artifacts in the current project instead of referencing the source code.
 

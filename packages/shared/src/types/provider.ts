@@ -1,6 +1,6 @@
 import type { PluginStore, Plugins, DefaultRsbuildPluginAPI } from './plugin';
 import type { Context } from './context';
-import type { Compiler, MultiCompiler } from 'webpack';
+import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
 import type { Server, ModernDevServerOptions } from '@modern-js/server';
 import type { AddressUrl } from '../url';
@@ -11,6 +11,7 @@ export type Bundler = 'rspack' | 'webpack';
 export type CreateCompilerOptions = { watch?: boolean };
 
 export type StartDevServerOptions = {
+  open?: boolean;
   compiler?: Compiler | MultiCompiler;
   printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
   logger?: Logger;

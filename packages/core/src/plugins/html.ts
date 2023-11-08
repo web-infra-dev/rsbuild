@@ -2,32 +2,95 @@ import path from 'path';
 import {
   isURL,
   castArray,
+  getMinify,
+  getDistPath,
   isFileExists,
   isPlainObject,
   isHtmlDisabled,
-  getDistPath,
-  getMinify,
-  getTitle,
-  getInject,
-  getFavicon,
-  getTemplatePath,
   ROUTE_SPEC_FILE,
   removeTailSlash,
   mergeChainedOptions,
-  type FaviconUrls,
 } from '@rsbuild/shared';
 import { fs } from '@rsbuild/shared/fs-extra';
 import type {
+  MetaAttrs,
   HtmlConfig,
-  DefaultRsbuildPlugin,
+  MetaOptions,
   NormalizedConfig,
-  SharedRsbuildPluginAPI,
-  HtmlTagsPluginOptions,
   HTMLPluginOptions,
+  DefaultRsbuildPlugin,
+  HtmlTagsPluginOptions,
+  SharedRsbuildPluginAPI,
   NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import _ from 'lodash';
-import { generateMetaTags } from '../utils/generateMetaTags';
+import {
+  HtmlBasicPlugin,
+  type HtmlInfo,
+} from '../rspack-plugins/HtmlBasicPlugin';
+
+export function getTitle(entryName: string, config: NormalizedConfig) {
+  return mergeChainedOptions({
+    defaults: '',
+    options: config.html.title,
+    utils: { entryName },
+    useObjectParam: true,
+  });
+}
+
+export function getInject(entryName: string, config: NormalizedConfig) {
+  return mergeChainedOptions({
+    defaults: 'head',
+    options: config.html.inject,
+    utils: { entryName },
+    useObjectParam: true,
+  });
+}
+
+export function getTemplatePath(entryName: string, config: NormalizedConfig) {
+  const DEFAULT_TEMPLATE = path.resolve(
+    __dirname,
+    '../../static/template.html',
+  );
+  return mergeChainedOptions({
+    defaults: DEFAULT_TEMPLATE,
+    options: config.html.template,
+    utils: { entryName },
+    useObjectParam: true,
+  });
+}
+
+export function getFavicon(
+  entryName: string,
+  config: {
+    html: HtmlConfig;
+  },
+) {
+  return mergeChainedOptions({
+    defaults: '',
+    options: config.html.favicon,
+    utils: { entryName },
+    useObjectParam: true,
+  });
+}
+
+export const generateMetaTags = (metaOptions?: MetaOptions): MetaAttrs[] => {
+  if (!metaOptions) {
+    return [];
+  }
+
+  return Object.keys(metaOptions)
+    .map((metaName) => {
+      const metaTagContent = metaOptions[metaName];
+      return typeof metaTagContent === 'string'
+        ? {
+            name: metaName,
+            content: metaTagContent,
+          }
+        : metaTagContent;
+    })
+    .filter(Boolean) as MetaAttrs[];
+};
 
 // This is a minimist subset of modern.js server routes
 type RoutesInfo = {
@@ -41,42 +104,26 @@ export async function getMetaTags(
   entryName: string,
   config: { html: HtmlConfig; output: NormalizedOutputConfig },
 ) {
-  const { meta, metaByEntries } = config.html;
-
-  const metaOptions = {
-    ...(meta ?? {}),
-    ...(metaByEntries?.[entryName] ?? {}),
-  };
-
-  if (config.output.charset === 'utf8') {
-    metaOptions.charset = { charset: 'utf-8' };
-  }
-
-  return generateMetaTags(metaOptions);
+  const merged = mergeChainedOptions({
+    defaults: {},
+    options: config.html.meta,
+    utils: { entryName },
+    useObjectParam: true,
+  });
+  return generateMetaTags(merged);
 }
 
-async function getTemplateParameters(
+function getTemplateParameters(
   entryName: string,
   config: NormalizedConfig,
   assetPrefix: string,
-): Promise<HTMLPluginOptions['templateParameters']> {
-  const { mountId, templateParameters, templateParametersByEntries } =
-    config.html;
-
-  const meta = await getMetaTags(entryName, config);
-  const title = getTitle(entryName, config);
-  const templateParams =
-    templateParametersByEntries?.[entryName] || templateParameters;
-  const baseParameters = {
-    meta,
-    title,
-    mountId,
-    entryName,
-    assetPrefix,
-  };
-
+): HTMLPluginOptions['templateParameters'] {
   return (compilation, assets, assetTags, pluginOptions) => {
+    const { mountId, templateParameters } = config.html;
     const defaultOptions = {
+      mountId,
+      entryName,
+      assetPrefix,
       compilation,
       webpackConfig: compilation.options,
       htmlWebpackPlugin: {
@@ -84,13 +131,16 @@ async function getTemplateParameters(
         files: assets,
         options: pluginOptions,
       },
-      ...baseParameters,
     };
-    return mergeChainedOptions(defaultOptions, templateParams);
+    return mergeChainedOptions({
+      defaults: defaultOptions,
+      options: templateParameters,
+      utils: { entryName },
+    });
   };
 }
 
-async function getChunks(entryName: string, entryValue: string | string[]) {
+function getChunks(entryName: string, entryValue: string | string[]) {
   const dependOn = [];
 
   if (isPlainObject(entryValue)) {
@@ -166,17 +216,16 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
         const entries = chain.entryPoints.entries() || {};
         const entryNames = Object.keys(entries);
         const htmlPaths = api.getHTMLPaths();
-        const faviconUrls: FaviconUrls = [];
+        const htmlInfoMap: Record<string, HtmlInfo> = {};
 
         await Promise.all(
           entryNames.map(async (entryName, index) => {
             const entryValue = entries[entryName].values() as string | string[];
-            const chunks = await getChunks(entryName, entryValue);
+            const chunks = getChunks(entryName, entryValue);
             const inject = getInject(entryName, config);
-            const favicon = getFavicon(entryName, config);
             const filename = htmlPaths[entryName];
             const template = getTemplatePath(entryName, config);
-            const templateParameters = await getTemplateParameters(
+            const templateParameters = getTemplateParameters(
               entryName,
               config,
               assetPrefix,
@@ -192,26 +241,37 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
               scriptLoading: config.html.scriptLoading,
             };
 
+            const htmlInfo: HtmlInfo = {};
+            htmlInfoMap[filename] = htmlInfo;
+
+            const title = getTitle(entryName, config);
+            if (title) {
+              htmlInfo.title = title;
+            }
+
+            const metaTags = await getMetaTags(entryName, config);
+            if (metaTags.length) {
+              htmlInfo.meta = metaTags;
+            }
+
+            const favicon = getFavicon(entryName, config);
             if (favicon) {
               if (isURL(favicon)) {
-                faviconUrls.push({
-                  filename,
-                  url: favicon,
-                });
+                htmlInfo.favicon = favicon;
               } else {
                 // HTMLWebpackPlugin only support favicon file path
                 pluginOptions.favicon = favicon;
               }
             }
 
-            const finalOptions = mergeChainedOptions(
-              pluginOptions,
-              (config.tools as { htmlPlugin?: any }).htmlPlugin,
-              {
+            const finalOptions = mergeChainedOptions({
+              defaults: pluginOptions,
+              options: config.tools.htmlPlugin,
+              utils: {
                 entryName,
                 entryValue,
               },
-            );
+            });
 
             routesInfo.push({
               urlPath: index === 0 ? '/' : `/${entryName}`,
@@ -225,6 +285,10 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
               .use(HtmlPlugin, [finalOptions]);
           }),
         );
+
+        chain
+          .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
+          .use(HtmlBasicPlugin, [{ HtmlPlugin, info: htmlInfoMap }]);
 
         if (config.security) {
           const { nonce } = config.security;
@@ -254,14 +318,6 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
               ]);
 
             chain.output.crossOriginLoading(formattedCrossorigin);
-          }
-
-          if (faviconUrls.length) {
-            const { HtmlFaviconUrlPlugin } = await import('@rsbuild/shared');
-
-            chain
-              .plugin(CHAIN_ID.PLUGIN.FAVICON_URL)
-              .use(HtmlFaviconUrlPlugin, [{ faviconUrls, HtmlPlugin }]);
           }
 
           if (appIcon) {

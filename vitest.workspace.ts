@@ -3,7 +3,8 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import { Console } from 'console';
 import isCI from 'is-ci';
 
-// Disable chalk in test
+// Disable color in test
+process.env.NO_COLOR = '1';
 process.env.FORCE_COLOR = '0';
 
 // mock Console

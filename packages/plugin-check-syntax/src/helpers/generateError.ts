@@ -1,5 +1,5 @@
 import { fs } from '@rsbuild/shared/fs-extra';
-import { chalk } from '@rsbuild/shared/chalk';
+import { color } from '@rsbuild/shared';
 import { SourceMapConsumer } from 'source-map';
 import { checkIsExcludeSource } from './utils';
 import {
@@ -13,7 +13,7 @@ export function displayCodePointer(code: string, pos: number) {
   const start = Math.max(pos - SUB_LEN / 2, 0);
   const subCode = code.slice(start, start + SUB_LEN);
   const arrowPos = pos - start;
-  const arrowLine = chalk.yellow('^'.padStart(arrowPos + 11, ' '));
+  const arrowLine = color.yellow('^'.padStart(arrowPos + 11, ' '));
   return `${subCode}\n${arrowLine}`;
 }
 
@@ -63,10 +63,10 @@ export function makeCodeFrame(lines: string[], highlightIndex: number) {
   for (let i = startLine; i < endLine; i++) {
     if (i === highlightIndex) {
       const lineNumber = `> ${i + 1}`.padStart(6, ' ');
-      ret.push(chalk.yellow(`${lineNumber} | ${lines[i]}`));
+      ret.push(color.yellow(`${lineNumber} | ${lines[i]}`));
     } else {
       const lineNumber = ` ${i + 1}`.padStart(6, ' ');
-      ret.push(chalk.gray(`${lineNumber} | ${lines[i]}`));
+      ret.push(color.gray(`${lineNumber} | ${lines[i]}`));
     }
   }
 

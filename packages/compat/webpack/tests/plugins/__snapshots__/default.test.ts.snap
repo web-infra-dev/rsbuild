@@ -595,6 +595,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "maxEntrypointSize": 3000000,
   },
   "plugins": [
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {},
+      },
+    },
     DefinePlugin {
       "definitions": {
         "process.env.ASSET_PREFIX": """",
@@ -1301,6 +1309,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "maxEntrypointSize": 3000000,
   },
   "plugins": [
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {},
+      },
+    },
     DefinePlugin {
       "definitions": {
         "process.env.ASSET_PREFIX": """",
