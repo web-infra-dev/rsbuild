@@ -116,6 +116,7 @@ exports[`transformImport > should apply antd & arco transformImport 1`] = `
             "syntax": "typescript",
             "tsx": true,
           },
+          "preserveAllComments": true,
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,
@@ -191,6 +192,7 @@ exports[`transformImport > should not apply antd & arco when transformImport is 
             "syntax": "typescript",
             "tsx": true,
           },
+          "preserveAllComments": true,
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,
