@@ -1,7 +1,7 @@
 - **Type:**
 
 ```ts
-type Alias = Record<string, string | false | Array<string | false>> | Function;
+type Alias = Record<string, string | false | (string | false)[]> | Function;
 ```
 
 - **Default:** `undefined`
