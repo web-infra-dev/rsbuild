@@ -98,8 +98,8 @@ export function pluginStartUrl(): DefaultRsbuildPlugin {
 
         const config = api.getNormalizedConfig();
         const { startUrl, beforeStartUrl } = config.dev;
-        const { https } = api.context.devServer || {};
-        const shouldOpen = Boolean(startUrl) || api.context.devServer?.open;
+        const { open, https } = api.context.devServer || {};
+        const shouldOpen = Boolean(startUrl) || open;
 
         if (!shouldOpen) {
           return;
