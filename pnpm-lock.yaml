@@ -289,15 +289,6 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
 
-  examples/basic-webpack:
-    dependencies:
-      '@rsbuild/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../../packages/compat/webpack
-
   examples/svelte:
     dependencies:
       svelte:
