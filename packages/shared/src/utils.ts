@@ -5,8 +5,8 @@ import type {
 } from './types';
 import path from 'path';
 import fs from 'fs-extra';
-import pkgUp from 'pkg-up';
 import semver from 'semver';
+import { findUp } from './fs';
 
 export const isDev = (): boolean => process.env.NODE_ENV === 'development';
 export const isProd = (): boolean => process.env.NODE_ENV === 'production';
@@ -143,8 +143,8 @@ export const isPackageInstalled = (
 };
 
 // TODO: move to react plugin
-export const isBeyondReact17 = (cwd: string) => {
-  const pkgPath = pkgUp.sync({ cwd });
+export const isBeyondReact17 = async (cwd: string) => {
+  const pkgPath = await findUp({ cwd, filename: 'package.json' });
 
   if (!pkgPath) {
     return false;
