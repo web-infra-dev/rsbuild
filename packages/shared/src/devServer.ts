@@ -91,6 +91,7 @@ export async function startDevServer<
     compiler: StartDevServerOptions['compiler'],
   ) => Promise<Server>,
   {
+    open,
     compiler,
     printURLs = true,
     strictPort = false,
@@ -128,6 +129,7 @@ export async function startDevServer<
     hostname: host,
     port,
     https,
+    open,
   };
 
   const server = await createDevServer(options, port, serverOptions, compiler);

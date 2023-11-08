@@ -175,12 +175,14 @@ await rsbuild.build({
 
 ## rsbuild.startDevServer
 
-启动本地 Dev Server，基于 Modern.js Dev Server 实现。
+启动本地 dev server。
 
 - **类型**
 
 ```ts
 type StartDevServerOptions = {
+  // 启动时是否在浏览器中打开页面
+  open?: boolean;
   // 是否输出 URL 信息，默认为 true
   printURLs?: boolean | Function;
   // 是否在端口被占用时抛出异常，默认为 false

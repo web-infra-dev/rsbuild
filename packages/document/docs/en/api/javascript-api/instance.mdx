@@ -175,12 +175,14 @@ await rsbuild.build({
 
 ## rsbuild.startDevServer
 
-Start the local Dev Server, based on the Modern.js Dev Server.
+Start the local dev server.
 
 - **Type**
 
 ```ts
 type StartDevServerOptions = {
+  // Whether to open the page in browser on startup
+  open?: boolean;
   // Whether to output URL infos, the default is true
   printURLs?: boolean | Function;
   // Whether to throw an exception when the port is occupied, the default is false
