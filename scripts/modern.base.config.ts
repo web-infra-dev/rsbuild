@@ -1,4 +1,9 @@
-import { defineConfig, moduleTools } from '@modern-js/module-tools';
+import {
+  defineConfig,
+  moduleTools,
+  PartialBaseBuildConfig,
+} from '@modern-js/module-tools';
+import path from 'path';
 
 export default defineConfig({
   plugins: [moduleTools()],
@@ -7,6 +12,42 @@ export default defineConfig({
     format: 'cjs',
     target: 'es2019',
   },
+});
+
+export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
+  {
+    format: 'cjs',
+    target: 'es2019',
+    autoExtension: true,
+    dts: {
+      respectExternal: false,
+    },
+  },
+  {
+    format: 'esm',
+    target: 'es2020',
+    dts: false,
+    autoExtension: true,
+    shims: true,
+    esbuildOptions: (option) => {
+      let { inject } = option;
+      const filepath = path.join(__dirname, 'require_shims.js');
+      if (inject) {
+        inject.push(filepath);
+      } else {
+        inject = [filepath];
+      }
+      return {
+        ...option,
+        inject,
+      };
+    },
+  },
+];
+
+export const configWithMjs = defineConfig({
+  plugins: [moduleTools()],
+  buildConfig: buildConfigWithMjs,
 });
 
 export const configWithEsm = defineConfig({
