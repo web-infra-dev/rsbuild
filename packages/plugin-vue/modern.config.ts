@@ -1,17 +1,3 @@
-import { defineConfig, moduleTools } from '@modern-js/module-tools';
+import { configWithMjs } from '../../scripts/modern.base.config';
 
-export default defineConfig({
-  plugins: [moduleTools()],
-  buildConfig: [
-    {
-      format: 'cjs',
-      target: 'es2019',
-    },
-    {
-      format: 'esm',
-      target: 'es2019',
-      autoExtension: true,
-      dts: false,
-    },
-  ],
-});
+export default configWithMjs;
