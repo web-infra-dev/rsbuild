@@ -128,9 +128,10 @@ export const getPostcssConfig = ({
       plugins: [
         require(getCompiledPath('postcss-flexbugs-fixes')),
         require(getCompiledPath('autoprefixer'))(autoprefixerOptions),
-        enableCssMinify
-          ? require('cssnano')(getCssnanoDefaultOptions())
-          : false,
+        // TODO consider use lightingcss or move to the CSS minimizer plugin
+        // enableCssMinify
+        //   ? require('cssnano')(getCssnanoDefaultOptions())
+        //   : false,
       ].filter(Boolean),
     },
     sourceMap: enableSourceMap,
