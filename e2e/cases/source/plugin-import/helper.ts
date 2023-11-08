@@ -2,8 +2,8 @@ import path from 'path';
 import { build } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { fs } from '@rsbuild/shared/fs-extra';
-import type { SharedTransformImport } from '@rsbuild/shared';
 import { RsbuildConfig } from '@rsbuild/core';
+import type { TransformImport } from '@rsbuild/shared';
 
 export const cases: Parameters<typeof shareTest>[] = [
   [
@@ -59,7 +59,7 @@ export function copyPkgToNodeModules() {
 export function shareTest(
   msg: string,
   entry: string,
-  transformImport: SharedTransformImport,
+  transformImport: TransformImport,
   otherConfigs: {
     plugins?: any[];
   } = {},

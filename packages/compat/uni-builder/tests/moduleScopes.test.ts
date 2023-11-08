@@ -2,18 +2,13 @@ import {
   pluginModuleScopes,
   isPrimitiveScope,
   applyScopeChain,
-} from '@/plugins/moduleScopes';
-import { createStubRsbuild } from '../helper';
+} from '../src/webpack/plugins/moduleScopes';
+import { createStubRsbuild } from '../../webpack/tests/helper';
 
 describe('plugin-module-scopes', () => {
   it('should set entry correctly', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginModuleScopes()],
-      rsbuildConfig: {
-        source: {
-          moduleScopes: ['./src/foo.ts', './src/bar.ts'],
-        },
-      },
+      plugins: [pluginModuleScopes(['./src/foo.ts', './src/bar.ts'])],
     });
     const config = await rsbuild.unwrapWebpackConfig();
 

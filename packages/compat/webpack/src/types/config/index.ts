@@ -1,16 +1,17 @@
 import type { DeepReadonly } from '@rsbuild/shared';
 import type { NormalizedSecurityConfig, SecurityConfig } from './security';
-import type { NormalizedSourceConfig, SourceConfig } from './source';
 import type { NormalizedToolsConfig, ToolsConfig } from './tools';
 
 import type {
   DevConfig,
   HtmlConfig,
+  SourceConfig,
   OutputConfig,
   ExperimentsConfig,
   PerformanceConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
+  NormalizedSourceConfig,
   NormalizedOutputConfig,
   NormalizedExperimentsConfig,
   NormalizedPerformanceConfig,
@@ -19,18 +20,19 @@ import type {
 export type {
   DevConfig,
   HtmlConfig,
+  SourceConfig,
   OutputConfig,
   ExperimentsConfig,
   PerformanceConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
+  NormalizedSourceConfig,
   NormalizedOutputConfig,
   NormalizedExperimentsConfig,
   NormalizedPerformanceConfig,
 };
 
 export * from './security';
-export * from './source';
 export * from './tools';
 
 /** The Rsbuild config when using Webpack as the bundler */

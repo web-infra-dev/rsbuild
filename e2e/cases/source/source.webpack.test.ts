@@ -4,7 +4,8 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 
 const fixtures = __dirname;
 
-test('module-scopes', async ({ page }) => {
+// TODO run with uni-builder
+test.skip('module-scopes', async ({ page }) => {
   const buildOpts = {
     cwd: join(fixtures, 'module-scopes'),
     entry: {
@@ -17,7 +18,7 @@ test('module-scopes', async ({ page }) => {
       ...buildOpts,
       rsbuildConfig: {
         source: {
-          moduleScopes: ['./src'],
+          //   moduleScopes: ['./src'],
         },
       },
     }),
@@ -39,7 +40,7 @@ test('module-scopes', async ({ page }) => {
     ...buildOpts,
     rsbuildConfig: {
       source: {
-        moduleScopes: ['./src', './common'],
+        // moduleScopes: ['./src', './common'],
       },
     },
   });

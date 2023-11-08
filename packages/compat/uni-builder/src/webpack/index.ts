@@ -7,6 +7,7 @@ import type {
 import type { UniBuilderWebpackConfig } from '../types';
 import type { CreateWebpackBuilderOptions } from '../types';
 import { parseCommonConfig } from '../shared/parseCommonConfig';
+import { pluginModuleScopes } from './plugins/moduleScopes';
 
 export async function parseConfig(
   uniBuilderConfig: UniBuilderWebpackConfig,
@@ -38,7 +39,10 @@ export async function createWebpackBuilder(
     provider: webpackProvider,
   });
 
-  rsbuild.addPlugins(rsbuildPlugins);
+  rsbuild.addPlugins([
+    ...rsbuildPlugins,
+    pluginModuleScopes(options.config.source?.moduleScopes),
+  ]);
 
   return rsbuild;
 }

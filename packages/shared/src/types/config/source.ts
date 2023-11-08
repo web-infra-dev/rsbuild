@@ -54,10 +54,10 @@ export interface SourceConfig {
   /**
    * Used to import the code and style of the component library on demand
    */
-  transformImport?: false | SharedTransformImport[];
+  transformImport?: false | TransformImport[];
 }
 
-export type SharedTransformImport = {
+export type TransformImport = {
   libraryName: string;
   libraryDirectory?: string;
   style?: string | boolean;
