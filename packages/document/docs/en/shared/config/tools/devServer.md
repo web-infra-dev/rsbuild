@@ -4,75 +4,10 @@
 The config of DevServer can be modified through `tools.devServer`.
 
 :::tip
-Modern.js does not directly use [webpack-dev-server](https://webpack.js.org/api/webpack-dev-server/) or [@rspack/dev-server](https://www.rspack.dev/guide/dev-server), but implement DevServer based on [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware).
+Rsbuild does not directly use [webpack-dev-server](https://webpack.js.org/api/webpack-dev-server/) or [@rspack/dev-server](https://www.rspack.dev/guide/dev-server), but implement DevServer based on [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware).
 :::
 
 ### Options
-
-#### after
-
-- **Type:** `Array`
-- **Default:** `[]`
-
-Provides the ability to execute custom middleware after all other middleware internally within the server.
-
-```js
-export default {
-  tools: {
-    devServer: {
-      after: [
-        async (req, res, next) => {
-          console.log('after dev middleware');
-          next();
-        },
-      ],
-    },
-  },
-};
-```
-
-`webpack-dev-server` uses Express as the server-side framework. Modern.js does not use any framework, and the `req` and `res` in the above middleware are all native Node objects. Therefore, the Express middleware used in `webpack-dev-server` may not be directly usable in Modern.js.
-
-If you want to migrate the Express middleware used in `webpack-dev-server`, you can use the following method to pass the Express app as middleware:
-
-```js
-import expressMiddleware from 'my-express-middleware';
-import express from 'express';
-
-// init Express app
-const app = express();
-app.use(expressMiddleware);
-
-export default {
-  tools: {
-    devServer: {
-      after: [app],
-    },
-  },
-};
-```
-
-#### before
-
-- **Type:** `Array`
-- **Default:** `[]`
-
-Provides the ability to execute custom middleware prior to all other middleware internally within the server.
-
-```js
-export default {
-  tools: {
-    devServer: {
-      before: [
-        async (req, res, next) => {
-          console.log('before dev middleware');
-          next();
-        },
-      ],
-    },
-  },
-};
-```
 
 #### client
 
@@ -182,6 +117,20 @@ export default {
 };
 ```
 
+For example, if you use client-side routing and want all page requests to fallback to index.html, you can configure it as follows:
+
+```js
+export default {
+  tools: {
+    devServer: {
+      historyApiFallback: {
+        rewrites: [{ from: /.*\.html/, to: '/index.html' }],
+      },
+    },
+  },
+};
+```
+
 For more options and information, see the [connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback) documentation.
 
 #### hot
@@ -245,7 +194,7 @@ Array<
 
 Provides the ability to execute a custom function and apply custom middlewares.
 
-The order among several different types of middleware is: `devServer.before` => `unshift` => internal middlewares => `push` => `devServer.after`.
+The order among several different types of middleware is: `unshift` => internal middlewares => `push`.
 
 ```js
 export default {

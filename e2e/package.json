@@ -37,7 +37,7 @@
     "@rsbuild/plugin-vue2-jsx": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@types/connect": "^3.4.37",
+    "@types/connect": "3.4.35",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "@types/react": "^18",

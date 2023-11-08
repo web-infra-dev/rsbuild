@@ -4,75 +4,10 @@
 通过 `tools.devServer` 可以修改开发环境服务器的配置。
 
 :::tip
-Modern.js 中并没有直接使用 [webpack-dev-server](https://webpack.js.org/api/webpack-dev-server/) 或 [@rspack/dev-server](https://www.rspack.dev/guide/dev-server), 而是基于 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) 实现 DevServer。
+Rsbuild 中并没有直接使用 [webpack-dev-server](https://webpack.js.org/api/webpack-dev-server/) 或 [@rspack/dev-server](https://www.rspack.dev/guide/dev-server), 而是基于 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) 实现 DevServer。
 :::
 
 ### 选项
-
-#### after
-
-- **类型：** `Array`
-- **默认值：** `[]`
-
-添加自定义中间件，在所有开发环境中间件后执行。
-
-```js
-export default {
-  tools: {
-    devServer: {
-      after: [
-        async (req, res, next) => {
-          console.log('after dev middleware');
-          next();
-        },
-      ],
-    },
-  },
-};
-```
-
-`webpack-dev-server` 使用 Express 作为服务端框架。Modern.js 中没有使用任何框架，上述中间件中 `req` 和 `res` 都是 Node 原生对象，因此 `webpack-dev-server` 的 Express 中间件不一定能直接在 Modern.js 中使用。
-
-如果要迁移 `webpack-dev-server` 中使用的 Express 中间件，可以使用以下方式，将 Express app 作为中间件传入：
-
-```js
-import expressMiddleware from 'my-express-middleware';
-import express from 'express';
-
-// 初始化 Express app
-const app = express();
-app.use(expressMiddleware);
-
-export default {
-  tools: {
-    devServer: {
-      after: [app],
-    },
-  },
-};
-```
-
-#### before
-
-- **类型：** `Array`
-- **默认值：** `[]`
-
-添加自定义中间件，在所有开发环境中间件前执行。
-
-```js
-export default {
-  tools: {
-    devServer: {
-      before: [
-        async (req, res, next) => {
-          console.log('before dev middleware');
-          next();
-        },
-      ],
-    },
-  },
-};
-```
 
 #### client
 
@@ -182,6 +117,21 @@ export default {
 };
 ```
 
+例如，当你使用客户端路由，希望所有页面请求都可以 fallback 到 index.html 时，可以配置成如下方式：
+
+```js
+export default {
+  tools: {
+    devServer: {
+      historyApiFallback: {
+        // 允许对 .html 请求进行 fallback
+        rewrites: [{ from: /.*\.html/, to: '/index.html' }],
+      },
+    },
+  },
+};
+```
+
 更多选项和详细信息可参考 [connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback) 文档。
 
 #### hot
@@ -245,7 +195,7 @@ Array<
 
 提供执行自定义函数和应用自定义中间件的能力。
 
-几种不同中间件之间的执行顺序是: `devServer.before` => `unshift` => 内置中间件 => `push` => `devServer.after`。
+中间件的执行顺序是: `unshift` => 内置中间件 => `push`。
 
 ```js
 export default {

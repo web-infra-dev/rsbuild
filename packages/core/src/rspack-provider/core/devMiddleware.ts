@@ -1,10 +1,8 @@
 import webpackDevMiddleware from '@rsbuild/shared/webpack-dev-middleware';
-import type { ModernDevServerOptions } from '@modern-js/server';
+import type { DevMiddleware } from '../../server';
 import { setupServerHooks, isClientCompiler } from '@rsbuild/shared';
 
 import type { Compiler, MultiCompiler } from '@rspack/core';
-
-type DevMiddlewareOptions = ModernDevServerOptions['devMiddleware'];
 
 function applyHMREntry(compiler: Compiler, clientPath: string) {
   if (!isClientCompiler(compiler)) {
@@ -20,9 +18,7 @@ function applyHMREntry(compiler: Compiler, clientPath: string) {
 }
 
 export const getDevMiddleware =
-  (
-    multiCompiler: Compiler | MultiCompiler,
-  ): NonNullable<DevMiddlewareOptions> =>
+  (multiCompiler: Compiler | MultiCompiler): NonNullable<DevMiddleware> =>
   (options) => {
     const { hmrClientPath, callbacks, ...restOptions } = options;
 

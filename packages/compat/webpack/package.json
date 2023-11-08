@@ -46,7 +46,6 @@
   "dependencies": {
     "@babel/core": "^7.23.2",
     "@babel/preset-react": "^7.22.15",
-    "@modern-js/server": "0.0.0-next-20231103131234",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.10",
     "@rsbuild/babel-preset": "workspace:*",
     "@rsbuild/core": "workspace:*",

@@ -18,6 +18,22 @@ import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type { DevServerHttpsOptions } from './dev';
 import type { RspackConfig, RspackRule, RspackPluginInstance } from '../rspack';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+import type { IncomingMessage, ServerResponse } from 'http';
+
+export type NextFunction = () => void;
+
+export type RequestHandler = (
+  req: IncomingMessage,
+  res: ServerResponse,
+  next: NextFunction,
+) => void;
+
+export type ExposeServerApis = {
+  sockWrite: (
+    type: string,
+    data?: string | boolean | Record<string, any>,
+  ) => void;
+};
 
 export type { HTMLPluginOptions };
 
@@ -59,6 +75,19 @@ export type DevServerOptions = {
           to: string | RegExp | Function;
         }>;
       };
+  /** Provides the ability to execute a custom function and apply custom middlewares */
+  setupMiddlewares?: Array<
+    (
+      /** Order: `devServer.before` => `unshift` => internal middlewares => `push` => `devServer.after` */
+      middlewares: {
+        /** Use the `unshift` method if you want to run a middleware before all other middlewares */
+        unshift: (...handlers: RequestHandler[]) => void;
+        /** Use the `push` method if you want to run a middleware after all other middlewares */
+        push: (...handlers: RequestHandler[]) => void;
+      },
+      server: ExposeServerApis,
+    ) => void
+  >;
   [propName: string]: any;
 };
 

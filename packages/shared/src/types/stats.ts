@@ -38,7 +38,7 @@ export interface StatsAsset {
   info: StatsAssetInfo;
 }
 
-interface StatsError {
+export interface StatsError {
   message: string;
   formatted?: string;
 }
@@ -55,6 +55,7 @@ interface StatsModule {
 
 interface StatsCompilation {
   assets?: Array<StatsAsset>;
+  hash?: string;
   modules?: Array<StatsModule>;
   chunks?: Array<StatsChunk>;
   // entrypoints?: Array<StatsEntrypoint>;
