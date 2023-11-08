@@ -5,8 +5,7 @@
  * Tips: this package will be bundled and running in the browser, do not import from the entry of @modern-js/utils.
  */
 import stripAnsi from 'strip-ansi';
-import { formatWebpackMessages } from '@rsbuild/shared';
-import type webpack from 'webpack';
+import { formatWebpackMessages, StatsError } from '@rsbuild/shared';
 import { createSocketUrl } from './createSocketUrl';
 
 // declare any to fix the type of `module.hot`
@@ -73,7 +72,7 @@ function handleSuccess() {
 }
 
 // Compilation with warnings (e.g. ESLint).
-function handleWarnings(warnings: webpack.StatsError[]) {
+function handleWarnings(warnings: StatsError[]) {
   clearOutdatedErrors();
 
   const isHotUpdate = !isFirstCompilation;
@@ -110,7 +109,7 @@ function handleWarnings(warnings: webpack.StatsError[]) {
 }
 
 // Compilation with errors (e.g. syntax error or missing modules).
-function handleErrors(errors: webpack.StatsError[]) {
+function handleErrors(errors: StatsError[]) {
   clearOutdatedErrors();
 
   isFirstCompilation = false;

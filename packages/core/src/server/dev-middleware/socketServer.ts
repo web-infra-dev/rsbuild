@@ -1,8 +1,7 @@
 import { Server } from 'http';
 import { Socket } from 'net';
 import ws from 'ws';
-import { logger } from '@rsbuild/shared';
-import type webpack from 'webpack';
+import { logger, Stats } from '@rsbuild/shared';
 import type { DevServerOptions } from '../types';
 
 interface ExtWebSocket extends ws {
@@ -18,7 +17,7 @@ export default class SocketServer {
 
   private app?: Server;
 
-  private stats?: webpack.Stats;
+  private stats?: Stats;
 
   private timer: NodeJS.Timeout | null = null;
 
@@ -70,7 +69,7 @@ export default class SocketServer {
     });
   }
 
-  public updateStats(stats: webpack.Stats) {
+  public updateStats(stats: Stats) {
     this.stats = stats;
     this.sendStats();
   }

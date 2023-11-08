@@ -1,5 +1,4 @@
-import { logger } from '@rsbuild/shared';
-import { chalk } from '@rsbuild/shared/chalk';
+import { color, logger } from '@rsbuild/shared';
 import type { DevServerHttpsOptions } from './types';
 
 export const genHttpsOptions = async (
@@ -18,7 +17,7 @@ export const genHttpsOptions = async (
     try {
       devcertPath = require.resolve('devcert', { paths: [pwd, __dirname] });
     } catch (err) {
-      const command = chalk.yellow.bold(`npm add devcert@1.2.2 -D`);
+      const command = color.bold(color.yellow(`npm add devcert@1.2.2 -D`));
       logger.error(
         `You have enabled "dev.https" option, but the "devcert" package is not installed.`,
       );
