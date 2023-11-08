@@ -18,7 +18,7 @@
     "start": "npm run build -- -w"
   },
   "dependencies": {
-    "@rspack/core": "0.3.10",
+    "@rspack/core": "0.3.11",
     "@types/connect": "3.4.35",
     "@types/estree": "1.0.0",
     "@types/tapable": "2.2.2",
