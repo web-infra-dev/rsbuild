@@ -19,6 +19,41 @@
     "start": "modern build -w",
     "test": "vitest run"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/type/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    },
+    "./graph": {
+      "types": "./dist/type/graph/index.d.ts",
+      "require": "./dist/cjs/graph/index.js",
+      "import": "./dist/esm/graph/index.js"
+    },
+    "./error": {
+      "types": "./dist/type/error/index.d.ts",
+      "require": "./dist/cjs/error/index.js",
+      "import": "./dist/esm/error/index.js"
+    },
+    "./sdk": {
+      "types": "./dist/type/sdk/index.d.ts",
+      "require": "./dist/cjs/sdk/index.js",
+      "import": "./dist/esm/sdk/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "graph": [
+        "./dist/type/graph/index.d.ts"
+      ],
+      "error": [
+        "./dist/type/error/index.d.ts"
+      ],
+      "sdk": [
+        "./dist/type/sdk/index.d.ts"
+      ]
+    }
+  },
   "dependencies": {
     "@rsbuild/doctor-utils": "workspace:*",
     "body-parser": "1.20.1",
