@@ -10,15 +10,12 @@ import {
   mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
+  type TransformImport,
 } from '@rsbuild/shared';
 import { getBabelUtils } from '@rsbuild/plugin-babel';
 import { getCompiledPath } from '../shared';
 
-import type {
-  RsbuildPlugin,
-  NormalizedConfig,
-  TransformImport,
-} from '../types';
+import type { RsbuildPlugin, NormalizedConfig } from '../types';
 
 export const getUseBuiltIns = (config: NormalizedConfig) => {
   const { polyfill } = config.output;

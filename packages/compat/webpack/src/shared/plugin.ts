@@ -45,7 +45,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.define(),
     import('../plugins/progress').then((m) => m.pluginProgress()),
     import('../plugins/minimize').then((m) => m.pluginMinimize()),
-    import('../plugins/moduleScopes').then((m) => m.pluginModuleScopes()),
     import('../plugins/tsLoader').then((m) => m.pluginTsLoader()),
     import('../plugins/babel').then((m) => m.pluginBabel()),
     import('../plugins/css').then((m) => m.pluginCss()),

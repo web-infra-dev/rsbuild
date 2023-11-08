@@ -1,4 +1,5 @@
 import type {
+  ChainedConfig,
   ChainedConfigWithUtils,
   MetaOptions,
   NodeEnv,
@@ -36,12 +37,19 @@ export type ChainedGlobalVars = ChainedConfigWithUtils<
   }
 >;
 
+export type ModuleScopes = Array<string | RegExp>;
+
 export type UniBuilderExtraConfig = {
   source?: {
     /**
      * Define global variables. It can replace expressions like `process.env.FOO` in your code after compile.
      */
     globalVars?: ChainedGlobalVars;
+    /**
+     * Restrict importing paths. After configuring this option, all source files can only import code from
+     * the specific paths, and import code from other paths is not allowed.
+     */
+    moduleScopes?: ChainedConfig<ModuleScopes>;
   };
   output?: {
     /**
