@@ -230,7 +230,6 @@ export function pluginSplitChunks(): DefaultRsbuildPlugin {
 
             // web worker does not support dynamic imports, dynamicImportMode need set to eager
             if (isWebWorker || isServiceWorker) {
-              // todo: not support in rspack
               chain.module.parser.merge({
                 javascript: {
                   dynamicImportMode: 'eager',

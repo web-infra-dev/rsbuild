@@ -26,7 +26,7 @@ describe('applyDefaultPlugins', () => {
     process.env.NODE_ENV = NODE_ENV;
   });
 
-  it('should apply default plugins correctyly when target = node', async () => {
+  it('should apply default plugins correctly when target = node', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'test';
     const rsbuild = await createStubRsbuild({

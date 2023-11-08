@@ -33,6 +33,7 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
             "syntax": "typescript",
             "tsx": true,
           },
+          "preserveAllComments": true,
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,
@@ -96,6 +97,7 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
             "syntax": "typescript",
             "tsx": true,
           },
+          "preserveAllComments": true,
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,
@@ -159,6 +161,7 @@ exports[`plugins/styled-components > should works in rspack mode 1`] = `
             "syntax": "typescript",
             "tsx": true,
           },
+          "preserveAllComments": true,
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,

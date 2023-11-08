@@ -73,7 +73,13 @@ export function getCurrentTimestamp(
   startHRTime: [number, number],
 ): number {
   const endHRTime = hrtime(startHRTime);
-  const end = start + endHRTime[0] * 1000 + endHRTime[1] / 1000000;
+  // When in CI env, this (endHRTime[1] / 1000000) may have decimal, this would made test failed.
+  const end =
+    start +
+    endHRTime[0] * 1000 +
+    (process.env.VITEST
+      ? Math.round(endHRTime[1] / 1000000)
+      : endHRTime[1] / 1000000);
 
   return end;
 }
