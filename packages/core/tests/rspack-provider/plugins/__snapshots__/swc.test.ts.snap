@@ -55,6 +55,7 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -98,6 +99,7 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -171,6 +173,7 @@ exports[`plugin-swc > should add browserslist 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -211,6 +214,7 @@ exports[`plugin-swc > should add browserslist 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -284,6 +288,7 @@ exports[`plugin-swc > should add browserslist 2`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -324,6 +329,7 @@ exports[`plugin-swc > should add browserslist 2`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -400,6 +406,7 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -450,6 +457,7 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -533,6 +541,7 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -576,6 +585,7 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -643,6 +653,7 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -680,6 +691,7 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -746,6 +758,7 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -787,6 +800,7 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -857,6 +871,7 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -899,6 +914,7 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -975,6 +991,7 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -1018,6 +1035,7 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -1093,6 +1111,7 @@ exports[`plugin-swc > should has correct core-js 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -1135,6 +1154,7 @@ exports[`plugin-swc > should has correct core-js 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -1210,6 +1230,7 @@ exports[`plugin-swc > should has correct core-js 2`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -1252,6 +1273,7 @@ exports[`plugin-swc > should has correct core-js 2`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -1319,6 +1341,7 @@ exports[`plugin-swc > should has correct core-js 3`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -1356,6 +1379,7 @@ exports[`plugin-swc > should has correct core-js 3`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -1427,6 +1451,7 @@ exports[`plugin-swc > should'n override browserslist when target platform is not
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -1470,6 +1495,7 @@ exports[`plugin-swc > should'n override browserslist when target platform is not
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,

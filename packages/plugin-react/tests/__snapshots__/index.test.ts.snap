@@ -515,6 +515,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
@@ -563,6 +564,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
+                "preserveAllComments": true,
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
