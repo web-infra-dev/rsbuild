@@ -671,13 +671,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       },
       "name": "DefinePlugin",
     },
-    Plugin {
-      "_options": {
-        "prefix": "Client",
-        "profile": false,
-      },
-      "name": "ProgressPlugin",
-    },
     ReactRefreshRspackPlugin {
       "options": {
         "exclude": /node_modules/i,

@@ -45,4 +45,4 @@ export interface DevConfig {
 }
 
 export type NormalizedDevConfig = DevConfig &
-  Required<Omit<DevConfig, 'beforeStartUrl'>>;
+  Required<Omit<DevConfig, 'beforeStartUrl' | 'progressBar'>>;

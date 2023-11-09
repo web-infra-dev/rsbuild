@@ -19,7 +19,12 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   rsbuildPlugins: RsbuildPlugin[];
 } {
   const rsbuildConfig = deepmerge({}, uniBuilderConfig);
-  const { html = {}, output = {} } = rsbuildConfig;
+  const { dev = {}, html = {}, output = {} } = rsbuildConfig;
+
+  // enable progress bar by default
+  if (dev.progressBar === undefined) {
+    dev.progressBar = true;
+  }
 
   if (output.cssModuleLocalIdentName) {
     output.cssModules ||= {};
@@ -63,6 +68,10 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
       html.templateParametersByEntries![entryName];
     delete html.templateParametersByEntries;
   }
+
+  rsbuildConfig.dev = dev;
+  rsbuildConfig.html = html;
+  rsbuildConfig.output = output;
 
   const rsbuildPlugins: RsbuildPlugin[] = [
     pluginGlobalVars(uniBuilderConfig.source?.globalVars),

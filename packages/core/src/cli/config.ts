@@ -13,6 +13,10 @@ export type RsbuildConfig = BaseRsbuildConfig & {
     entries?: RsbuildEntry;
   };
   plugins?: RsbuildPlugin[];
+  /**
+   * @private only for testing
+   */
+  provider?: any;
 };
 
 export const defineConfig = (config: RsbuildConfig) => config;

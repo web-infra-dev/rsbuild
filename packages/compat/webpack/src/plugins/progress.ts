@@ -1,4 +1,4 @@
-import { TARGET_ID_MAP } from '@rsbuild/shared';
+import { TARGET_ID_MAP, isProd } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginProgress = (): RsbuildPlugin => ({
@@ -6,7 +6,9 @@ export const pluginProgress = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyWebpackChain(async (chain, { target, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
-      const options = config.dev.progressBar;
+      // enable progress bar for webpack by default
+      const options = config.dev.progressBar ?? true;
+
       if (!options) {
         return;
       }

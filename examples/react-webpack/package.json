@@ -1,5 +1,5 @@
 {
-  "name": "@examples/react",
+  "name": "@examples/react-webpack",
   "private": true,
   "scripts": {
     "dev": "rsbuild dev --open",
@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
+    "@rsbuild/webpack": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
     "typescript": "^5.2.2"
   }

@@ -63,7 +63,7 @@ export const renderBar = (option: Partial<Props>) => {
   // @ts-expect-error
   const barColor = colors[color];
   // @ts-expect-error
-  const backgroundColor = color[bgColor];
+  const backgroundColor = colors[bgColor];
   const doneColor = hasErrors ? colors.red : barColor;
   const idColor = done ? doneColor : barColor;
 

@@ -632,13 +632,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
       },
       "name": "DefinePlugin",
     },
-    Plugin {
-      "_options": {
-        "prefix": "Client",
-        "profile": false,
-      },
-      "name": "ProgressPlugin",
-    },
   ],
   "resolve": {
     "alias": {
