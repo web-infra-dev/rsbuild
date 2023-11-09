@@ -2,6 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { SDK } from '@rsbuild/doctor-types';
 import { Router } from '../../../src/sdk/server/router';
 
+// make sure the decorators work.
+import '../../../src/sdk/server/apis';
+
 describe('ensure all of the apis implementation for server', () => {
   const apis = Object.values(SDK.ServerAPI.API);
 
@@ -13,5 +16,6 @@ describe('ensure all of the apis implementation for server', () => {
     list.forEach((api) => {
       expect(apis).toContain(api);
     });
+    expect(list.length).toBeGreaterThan(30);
   });
 });
