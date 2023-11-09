@@ -1,6 +1,5 @@
 import {
   debug,
-  startDevServer as baseStartDevServer,
   StartDevServerOptions,
   getDevServerOptions,
   type RspackCompiler,
@@ -49,27 +48,4 @@ export async function createDevServer(
   debug('create dev server done');
 
   return server;
-}
-
-export async function startDevServer(
-  options: InitConfigsOptions,
-  startDevServerOptions: StartDevServerOptions = {},
-) {
-  return baseStartDevServer(
-    options,
-    (
-      options: InitConfigsOptions,
-      port: number,
-      serverOptions: ServerOptions,
-      compiler: StartDevServerOptions['compiler'],
-    ) =>
-      createDevServer(
-        options,
-        port,
-        serverOptions,
-        compiler as unknown as RspackCompiler,
-        // TODO: update baseStartDevServer
-      ) as any,
-    startDevServerOptions,
-  );
 }

@@ -1,11 +1,6 @@
-import type { IncomingMessage, ServerResponse } from 'http';
-import type { Server } from 'http';
-import type {
-  DevServerOptions,
-  NextFunction,
-  RequestHandler,
-  ExposeServerApis,
-} from '@rsbuild/shared';
+import type { IncomingMessage, ServerResponse, Server } from 'http';
+import { DevServerOptions, NextFunction } from './config/tools';
+import type { Logger } from '../logger';
 import type Connect from 'connect';
 import type { ListenOptions } from 'net';
 
@@ -14,8 +9,6 @@ type Middleware = (
   res: ServerResponse,
   next: NextFunction,
 ) => Promise<void>;
-
-export { DevServerOptions, RequestHandler, ExposeServerApis };
 
 export type DevMiddlewareAPI = Middleware & {
   close: (callback: (err: Error | null | undefined) => void) => any;
@@ -50,8 +43,6 @@ export type DevMiddlewareOptions = {
  */
 export type DevMiddleware = (options: DevMiddlewareOptions) => DevMiddlewareAPI;
 
-export type DevServerHttpsOptions = boolean | { key: string; cert: string };
-
 export type RsbuildDevServerOptions = {
   pwd: string;
   dev: boolean | Partial<DevServerOptions>;
@@ -61,12 +52,23 @@ export type RsbuildDevServerOptions = {
 export type CreateDevServerOptions = {
   server?: {
     customApp?: Server;
+    logger?: Logger;
   };
 } & RsbuildDevServerOptions;
 
 export type ServerApi = {
   middlewares: Connect.Server;
+  logger: Logger;
   init: () => Promise<void>;
-  listen: (options?: number | ListenOptions, cb?: () => void) => void;
+  listen: (
+    options?: number | ListenOptions,
+    cb?: (err: Error) => Promise<void>,
+  ) => void;
   close: () => void;
+};
+
+export type StartServerResult = {
+  urls: string[];
+  port: number;
+  server: ServerApi;
 };

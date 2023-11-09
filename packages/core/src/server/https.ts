@@ -1,5 +1,4 @@
-import { color, logger } from '@rsbuild/shared';
-import type { DevServerHttpsOptions } from './types';
+import { color, logger, type DevServerHttpsOptions } from '@rsbuild/shared';
 
 export const genHttpsOptions = async (
   userOptions: DevServerHttpsOptions,

@@ -1,8 +1,7 @@
 import { Server } from 'http';
 import { Socket } from 'net';
 import ws from 'ws';
-import { logger, Stats } from '@rsbuild/shared';
-import type { DevServerOptions } from '../types';
+import { logger, Stats, DevServerOptions } from '@rsbuild/shared';
 
 interface ExtWebSocket extends ws {
   isAlive: boolean;

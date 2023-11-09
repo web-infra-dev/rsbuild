@@ -2,7 +2,7 @@ import type { PluginStore, Plugins, DefaultRsbuildPluginAPI } from './plugin';
 import type { Context } from './context';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
-import type { Server, ModernDevServerOptions } from '@modern-js/server';
+import { StartServerResult, RsbuildDevServerOptions } from './server';
 import type { AddressUrl } from '../url';
 import type { Logger } from '../logger';
 
@@ -17,9 +17,7 @@ export type StartDevServerOptions = {
   logger?: Logger;
   strictPort?: boolean;
   getPortSilently?: boolean;
-  serverOptions?: Partial<Omit<ModernDevServerOptions, 'config'>> & {
-    config?: Partial<ModernDevServerOptions['config']>;
-  };
+  serverOptions?: Partial<RsbuildDevServerOptions>;
 };
 
 export type BuildOptions = {
@@ -33,12 +31,6 @@ export type InspectConfigOptions = {
   verbose?: boolean;
   outputPath?: string;
   writeToDisk?: boolean;
-};
-
-export type StartServerResult = {
-  urls: string[];
-  port: number;
-  server: Server;
 };
 
 export type RsbuildProvider<
