@@ -117,7 +117,7 @@
     "compiled"
   ],
   "scripts": {
-    "build": "modern build && node scripts/postCompile.js",
+    "build": "modern build",
     "dev": "modern build --watch",
     "test": "vitest run",
     "test:ui": "vitest --ui",
@@ -140,9 +140,6 @@
     "webpack-sources": "^3.2.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
-    "@babel/preset-env": "^7.23.2",
-    "@babel/preset-typescript": "^7.23.2",
     "@rspack/core": "0.3.11",
     "@types/connect": "3.4.35",
     "@types/fs-extra": "^11.0.2",

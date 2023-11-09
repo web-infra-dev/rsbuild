@@ -1,16 +1,18 @@
 {
-  "name": "@rsbuild/uni-builder",
+  "name": "@rsbuild/plugin-assets-retry",
   "version": "0.0.17",
-  "description": "Unified builder for Modern.js",
+  "description": "Assets retry plugin for Rsbuild",
+  "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
-    "directory": "packages/compat/uni-builder"
+    "directory": "packages/plugin-assets-retry"
   },
   "license": "MIT",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
       "default": "./dist/index.js"
     }
   },
@@ -20,19 +22,23 @@
     "dist"
   ],
   "scripts": {
-    "build": "modern build",
+    "build": "modern build && node scripts/postCompile.js",
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/core": "workspace:*",
-    "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/shared": "workspace:*",
-    "@rsbuild/webpack": "workspace:*",
-    "rspack-manifest-plugin": "5.0.0-alpha0",
-    "webpack": "^5.89.0",
-    "webpack-manifest-plugin": "5.0.0"
+    "serialize-javascript": "^6.0.0",
+    "webpack-sources": "^3.2.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
+    "@babel/preset-typescript": "^7.23.2",
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
+    "@types/serialize-javascript": "^5.0.1",
+    "html-webpack-plugin": "5.5.3",
+    "terser": "5.19.2",
     "typescript": "^5.2.2"
   },
   "publishConfig": {

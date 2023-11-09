@@ -1,6 +1,6 @@
+import type { CrossOrigin } from '@rsbuild/shared';
 import type {
-  CrossOrigin,
-  AssetsRetryOptions,
+  PluginAssetsRetryOptions,
   AssetsRetryHookContext,
 } from '../types';
 
@@ -48,7 +48,7 @@ function getRequestUrl(element: HTMLElement) {
   return null;
 }
 
-const defaultConfig: AssetsRetryOptions = {
+const defaultConfig: PluginAssetsRetryOptions = {
   max: 3,
   type: TYPES,
   domain: [],
@@ -56,7 +56,7 @@ const defaultConfig: AssetsRetryOptions = {
 };
 
 function validateTargetInfo(
-  config: AssetsRetryOptions,
+  config: PluginAssetsRetryOptions,
   e: Event,
 ): { target: HTMLElement; tagName: string; url: string } | false {
   const target: HTMLElement = e.target as HTMLElement;
@@ -154,7 +154,7 @@ function reloadElementResource(
   }
 }
 
-function retry(config: AssetsRetryOptions, e: Event) {
+function retry(config: PluginAssetsRetryOptions, e: Event) {
   const targetInfo = validateTargetInfo(config, e);
   if (targetInfo === false) {
     return;
@@ -227,7 +227,7 @@ function retry(config: AssetsRetryOptions, e: Event) {
   reloadElementResource(target, element, attributes);
 }
 
-function load(config: AssetsRetryOptions, e: Event) {
+function load(config: PluginAssetsRetryOptions, e: Event) {
   const targetInfo = validateTargetInfo(config, e);
   if (targetInfo === false) {
     return;
@@ -276,7 +276,7 @@ function resourceMonitor(
   }
 }
 
-function init(options: AssetsRetryOptions) {
+function init(options: PluginAssetsRetryOptions) {
   const config = Object.assign({}, defaultConfig, options);
   // Normalize config
   if (!Array.isArray(config.type) || config.type.length === 0) {

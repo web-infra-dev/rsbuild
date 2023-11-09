@@ -1,20 +1,19 @@
-import fs from 'fs-extra';
+import path from 'path';
 // @ts-expect-error
 import { RawSource } from 'webpack-sources';
-import { getSharedPkgCompiledPath } from '../utils';
+import { fs } from '@rsbuild/shared/fs-extra';
 import {
+  withPublicPath,
   generateScriptTag,
   getRsbuildVersion,
   getPublicPathFromCompiler,
   COMPILATION_PROCESS_STAGE,
-} from './util';
+  type Rspack,
+} from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { RspackPluginInstance, Compiler, Compilation } from '@rspack/core';
-import type { AssetsRetryOptions } from '../types';
-import path from 'path';
-import { withPublicPath } from '../url';
+import type { PluginAssetsRetryOptions } from './types';
 
-export class AssetsRetryPlugin implements RspackPluginInstance {
+export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
   readonly name: string;
 
   readonly distDir: string;
@@ -25,10 +24,10 @@ export class AssetsRetryPlugin implements RspackPluginInstance {
 
   scriptPath: string;
 
-  readonly #retryOptions: AssetsRetryOptions;
+  readonly #retryOptions: PluginAssetsRetryOptions;
 
   constructor(
-    options: AssetsRetryOptions & {
+    options: PluginAssetsRetryOptions & {
       distDir: string;
       HtmlPlugin: typeof HtmlWebpackPlugin;
     },
@@ -48,10 +47,8 @@ export class AssetsRetryPlugin implements RspackPluginInstance {
   }
 
   async getRetryCode() {
-    const { default: serialize } = await import(
-      '../../compiled/serialize-javascript'
-    );
-    const runtimeFilePath = getSharedPkgCompiledPath('assetsRetry.js');
+    const { default: serialize } = await import('serialize-javascript');
+    const runtimeFilePath = path.join(__dirname, './runtime.js');
     const runtimeCode = await fs.readFile(runtimeFilePath, 'utf-8');
     return `(function(){${runtimeCode};init(${serialize(
       this.#retryOptions,
@@ -66,11 +63,11 @@ export class AssetsRetryPlugin implements RspackPluginInstance {
     return this.scriptPath;
   }
 
-  apply(compiler: Compiler): void {
+  apply(compiler: Rspack.Compiler): void {
     if (!this.inlineScript) {
       compiler.hooks.thisCompilation.tap(
         this.name,
-        (compilation: Compilation) => {
+        (compilation: Rspack.Compilation) => {
           compilation.hooks.processAssets.tapPromise(
             {
               name: this.name,

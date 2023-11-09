@@ -58,7 +58,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     import('../plugins/sri').then((m) => m.pluginSRI()),
     plugins.startUrl?.(),
     plugins.inlineChunk(),
-    plugins.assetsRetry(),
     plugins.externals(),
     plugins.performance(),
     import('../plugins/lazyCompilation').then((m) => m.pluginLazyCompilation()),

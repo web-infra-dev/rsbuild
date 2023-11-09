@@ -27,7 +27,6 @@ export const plugins: Plugins = {
     import('./asset').then((m) => m.pluginAsset('image', IMAGE_EXTENSIONS)),
   media: () =>
     import('./asset').then((m) => m.pluginAsset('media', MEDIA_EXTENSIONS)),
-  assetsRetry: () => import('./assetsRetry').then((m) => m.pluginAssetsRetry()),
   rem: () => import('./rem').then((m) => m.pluginRem()),
   wasm: () => import('./wasm').then((m) => m.pluginWasm()),
   moment: () => import('./moment').then((m) => m.pluginMoment()),
