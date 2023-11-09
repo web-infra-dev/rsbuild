@@ -19,8 +19,24 @@ import type { DevServerHttpsOptions } from './dev';
 import type { RspackConfig, RspackRule, RspackPluginInstance } from '../rspack';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
 import type { IncomingMessage, ServerResponse } from 'http';
+import type { Options as ProxyOptions } from 'http-proxy-middleware';
 
 export type NextFunction = () => void;
+
+export type ProxyDetail = ProxyOptions & {
+  bypass?: (
+    req: IncomingMessage,
+    res: ServerResponse,
+    proxyOptions: RsbuildProxyOptions,
+  ) => string | undefined | null | false;
+  context?: string | string[];
+};
+
+export type RsbuildProxyOptions =
+  | Record<string, string>
+  | Record<string, ProxyDetail>
+  | ProxyDetail[]
+  | ProxyDetail;
 
 export type RequestHandler = (
   req: IncomingMessage,
@@ -51,6 +67,7 @@ export type DevServerOptions = {
     writeToDisk?: boolean | ((filename: string) => boolean);
     outputFileSystem?: Record<string, any>;
   };
+  proxy?: RsbuildProxyOptions;
   headers?: Record<string, string | string[]>;
   /** Provides the ability to execute a custom function and apply custom middlewares */
   /** Whether to watch files change. */

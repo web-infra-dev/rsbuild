@@ -14,6 +14,7 @@ import {
   printServerURLs,
   ROOT_DIST_DIR,
 } from '@rsbuild/shared';
+import { faviconFallbackMiddleware } from './middlewares';
 
 type RsbuildProdServerOptions = {
   pwd: string;
@@ -39,6 +40,12 @@ export class RsbuildProdServer {
   }
 
   private async applyDefaultMiddlewares() {
+    this.applyStaticAssetMiddleware();
+
+    this.middlewares.use(faviconFallbackMiddleware);
+  }
+
+  private applyStaticAssetMiddleware() {
     const {
       output: { path, assetPrefix },
       pwd,
