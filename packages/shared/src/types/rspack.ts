@@ -127,7 +127,7 @@ export interface RspackConfig extends RspackOptions {
    * `builtins.html` are no longer supported by Rspack, please use [tools.htmlPlugin](https://rsbuild.dev/api/config-tools.html#toolshtmlplugin) instead.
    */
   builtins?: Omit<BuiltinsOptions, 'html'>;
-  /** rspack-dev-server is not used in modern.js */
+  /** rspack-dev-server is not used in rsbuild */
   devServer?: {
     hot?: boolean;
   };

@@ -1,5 +1,8 @@
 import { isDev, logger, debug, formatStats, type Stats } from '@rsbuild/shared';
 import type { Context, WebpackConfig } from '../types';
+import { initConfigs, InitConfigsOptions } from './initConfigs';
+import type { Compiler, MultiCompiler } from 'webpack';
+import { getDevMiddleware } from './devMiddleware';
 
 export async function createCompiler({
   context,
@@ -45,4 +48,22 @@ export async function createCompiler({
   debug('create compiler done');
 
   return compiler;
+}
+
+export async function startDevCompile(
+  options: InitConfigsOptions,
+  customCompiler?: Compiler | MultiCompiler,
+) {
+  let compiler: Compiler | MultiCompiler;
+  if (customCompiler) {
+    compiler = customCompiler;
+  } else {
+    const { webpackConfigs } = await initConfigs(options);
+    compiler = await createCompiler({
+      context: options.context,
+      webpackConfigs,
+    });
+  }
+
+  return getDevMiddleware(compiler);
 }

@@ -125,12 +125,10 @@ export async function startProdServer(
           port,
           urls: urls.map((item) => item.url),
           server: {
-            middlewares: server.middlewares,
             close: () => {
               server.close();
             },
-            // TODO: decouple with Modern.js server
-          } as any,
+          },
         });
       },
     );
