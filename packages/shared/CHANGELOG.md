@@ -1,5 +1,19 @@
 # @rsbuild/shared
 
+## 0.0.18
+
+### Patch Changes
+
+- 164f135: refactor: extract assetsRetry as a standalone plugin
+- 96d9d43: fix: url logs break the progress bar
+- 4887d6d: chore: use findUp utils to replace pkg-up dep
+- c743a94: refactor: move source.moduleScopes to uni-builder
+- faf797a: fix(deps): add missing dependencies to core and shared
+- 594c16a: feat: only enable progress bar in production
+- 7fe5f26: refactor: move source.globalVars option to uni-builder
+- 78d4d94: feat: replace pretty-time and improve time format
+- fad683d: feat(cli): add new --open option for dev command
+
 ## 0.0.17
 
 ### Patch Changes

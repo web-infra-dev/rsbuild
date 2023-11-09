@@ -1,5 +1,13 @@
 # create-rsbuild
 
+## 0.0.18
+
+### Patch Changes
+
+- 6f1c4a1: feat: add builtin assets and CSS modules types
+- eed4dcb: feat(create-rsbuild): update all pages in templates
+- a4485ea: feat(create-rspack): add dev --open option by default
+
 ## 0.0.17
 
 ## 0.0.16

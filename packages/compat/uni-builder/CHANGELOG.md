@@ -1,5 +1,32 @@
 # @rsbuild/uni-builder
 
+## 0.0.18
+
+### Patch Changes
+
+- 164f135: refactor: extract assetsRetry as a standalone plugin
+- c743a94: refactor: move source.moduleScopes to uni-builder
+- 594c16a: feat: only enable progress bar in production
+- 7fe5f26: refactor: move source.globalVars option to uni-builder
+- Updated dependencies [6f1c4a1]
+- Updated dependencies [164f135]
+- Updated dependencies [efcc697]
+- Updated dependencies [96d9d43]
+- Updated dependencies [4887d6d]
+- Updated dependencies [c743a94]
+- Updated dependencies [faf797a]
+- Updated dependencies [58306e2]
+- Updated dependencies [a2bd530]
+- Updated dependencies [594c16a]
+- Updated dependencies [7fe5f26]
+- Updated dependencies [c3201ae]
+- Updated dependencies [78d4d94]
+- Updated dependencies [fad683d]
+  - @rsbuild/core@0.0.18
+  - @rsbuild/webpack@0.0.18
+  - @rsbuild/shared@0.0.18
+  - @rsbuild/plugin-assets-retry@0.0.18
+
 ## 0.0.17
 
 ### Patch Changes
