@@ -74,7 +74,9 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
     compiler.hooks.done.tap(this.name, (stat) => {
       if (startTime) {
         this.hasCompileErrors = stat.hasErrors();
-        this.compileTime = prettyTime(process.hrtime(startTime));
+        const hrtime = process.hrtime(startTime);
+        const seconds = hrtime[0] + hrtime[1] / 1e9;
+        this.compileTime = prettyTime(seconds);
         startTime = null;
 
         if (!this.hasCompileErrors) {

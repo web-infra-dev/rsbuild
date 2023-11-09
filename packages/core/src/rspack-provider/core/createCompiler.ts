@@ -33,15 +33,22 @@ export async function createCompiler({
       timings: true,
     });
 
-    if (!stats.hasErrors()) {
-      obj.children?.forEach((c, index) => {
+    if (!stats.hasErrors() && obj.children) {
+      const showName = obj.children.length > 1;
+      obj.children.forEach((c, index) => {
         if (c.time) {
-          const time = prettyTime([0, c.time * 10 ** 6]);
-          const target = Array.isArray(context.target)
-            ? context.target[index]
-            : context.target;
-          const name = TARGET_ID_MAP[target || 'web'];
-          logger.ready(`${name} compiled in ${time}`);
+          const time = prettyTime(c.time / 1000);
+          const message = `compiled in ${time}`;
+
+          if (showName) {
+            const target = Array.isArray(context.target)
+              ? context.target[index]
+              : context.target;
+            const name = TARGET_ID_MAP[target || 'web'];
+            logger.ready(`${name} ${message}`);
+          } else {
+            logger.ready(message);
+          }
         }
       });
     }
