@@ -7,6 +7,7 @@
   "plugin-vue2",
   "plugin-vue2-jsx",
   "plugin-svelte",
+  "plugin-assets-retry",
   "plugin-babel",
   "plugin-type-check",
   "plugin-image-compress",
