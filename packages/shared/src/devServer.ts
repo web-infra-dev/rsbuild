@@ -12,14 +12,34 @@ import { isFunction } from './utils';
 import { getPort } from './port';
 import type { ModernDevServerOptions, Server } from '@modern-js/server';
 import deepmerge from 'deepmerge';
-import { logger as defaultLogger, debug } from './logger';
+import { color } from './color';
+import { logger as defaultLogger, debug, Logger } from './logger';
 import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import { createAsyncHook } from './createHook';
 import { mergeChainedOptions } from './mergeChainedOptions';
-import { getServerOptions, printServerURLs } from './prodServer';
 import type { Compiler } from '@rspack/core';
 
 type ServerOptions = Exclude<StartDevServerOptions['serverOptions'], undefined>;
+
+export const getServerOptions = (rsbuildConfig: RsbuildConfig) => {
+  return {
+    output: {
+      path: rsbuildConfig.output?.distPath?.root,
+      assetPrefix: rsbuildConfig.output?.assetPrefix,
+    },
+  };
+};
+
+export function printServerURLs(
+  urls: Array<{ url: string; label: string }>,
+  logger: Logger = defaultLogger,
+) {
+  const message = urls
+    .map(({ label, url }) => `  ${`> ${label.padEnd(10)}`}${color.cyan(url)}\n`)
+    .join('');
+
+  logger.log(message);
+}
 
 export const getDevServerOptions = async ({
   rsbuildConfig,
@@ -30,7 +50,7 @@ export const getDevServerOptions = async ({
   serverOptions: ServerOptions;
   port: number;
 }): Promise<{
-  config: ModernDevServerOptions['config'];
+  config: ReturnType<typeof getServerOptions>;
   devConfig: ModernDevServerOptions['dev'];
 }> => {
   const defaultDevConfig = deepmerge(

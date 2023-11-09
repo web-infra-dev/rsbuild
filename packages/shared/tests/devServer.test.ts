@@ -91,20 +91,9 @@ describe('test dev server', () => {
     ).resolves.toMatchInlineSnapshot(`
       {
         "config": {
-          "bff": {},
-          "html": {},
           "output": {
             "assetPrefix": undefined,
-            "distPath": undefined,
             "path": undefined,
-          },
-          "runtime": {},
-          "server": {},
-          "source": {
-            "alias": {},
-          },
-          "tools": {
-            "babel": {},
           },
         },
         "devConfig": {
@@ -155,22 +144,9 @@ describe('test dev server', () => {
     ).resolves.toMatchInlineSnapshot(`
       {
         "config": {
-          "bff": {},
-          "html": {},
           "output": {
             "assetPrefix": undefined,
-            "distPath": {
-              "root": "dist",
-            },
             "path": "dist",
-          },
-          "runtime": {},
-          "server": {},
-          "source": {
-            "alias": {},
-          },
-          "tools": {
-            "babel": {},
           },
         },
         "devConfig": {
