@@ -162,4 +162,20 @@ describe('parseCommonConfig', () => {
       }).rsbuildConfig,
     ).toMatchSnapshot();
   });
+
+  test('output.assetsRetry', () => {
+    expect(
+      parseCommonConfig({}).rsbuildPlugins.some(
+        (item) => item.name === 'plugin-assets-retry',
+      ),
+    ).toBeFalsy();
+
+    expect(
+      parseCommonConfig({
+        output: {
+          assetsRetry: {},
+        },
+      }).rsbuildPlugins.some((item) => item.name === 'plugin-assets-retry'),
+    ).toBeTruthy();
+  });
 });

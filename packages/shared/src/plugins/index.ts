@@ -8,7 +8,11 @@ export {
   InlineChunkHtmlPlugin,
   type InlineChunkTest,
 } from './InlineChunkHtmlPlugin';
-export { AssetsRetryPlugin } from './AssetsRetryPlugin';
 export { HtmlNetworkPerformancePlugin } from './HtmlNetworkPerformancePlugin';
 export { HTMLPreloadOrPrefetchPlugin } from './HtmlPreloadOrPrefetchPlugin';
-export { COMPILATION_PROCESS_STAGE } from './util';
+export {
+  COMPILATION_PROCESS_STAGE,
+  generateScriptTag,
+  getRsbuildVersion,
+  getPublicPathFromCompiler,
+} from './util';

@@ -48,7 +48,6 @@ export type Plugins = {
   splitChunks: PluginsFn;
   inlineChunk: PluginsFn;
   bundleAnalyzer: PluginsFn;
-  assetsRetry: PluginsFn;
   font: PluginsFn;
   media: PluginsFn;
   image: PluginsFn;

@@ -1,6 +1,5 @@
 import type { InlineChunkTest } from '../../plugins/InlineChunkHtmlPlugin';
 import type { RsbuildTarget } from '../rsbuild';
-import type { CrossOrigin } from './html';
 import type { Builtins, Externals } from '@rspack/core';
 
 export type DistPathConfig = {
@@ -52,25 +51,6 @@ export type DataUriLimit = {
   image?: number;
   /** The data URI limit of media resources such as videos. */
   media?: number;
-};
-
-export type AssetsRetryHookContext = {
-  url: string;
-  times: number;
-  domain: string;
-  tagName: string;
-};
-
-export type AssetsRetryOptions = {
-  max?: number;
-  type?: string[];
-  test?: string | ((url: string) => boolean);
-  domain?: string[];
-  crossOrigin?: boolean | CrossOrigin;
-  inlineScript?: boolean;
-  onFail?: (options: AssetsRetryHookContext) => void;
-  onRetry?: (options: AssetsRetryHookContext) => void;
-  onSuccess?: (options: AssetsRetryHookContext) => void;
 };
 
 export type Charset = 'ascii' | 'utf8';
@@ -176,10 +156,6 @@ export interface OutputConfig {
    * Configure how the polyfill is injected.
    */
   polyfill?: Polyfill;
-  /**
-   * Configure the retry of assets.
-   */
-  assetsRetry?: AssetsRetryOptions;
   /**
    * When using CDN in the production environment,
    * you can use this option to set the URL prefix of static assets,

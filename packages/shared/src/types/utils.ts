@@ -35,7 +35,6 @@ export type SharedCompiledPkgNames =
   | 'node-loader'
   | 'toml-loader'
   | 'yaml-loader'
-  | 'assetsRetry.js'
   | 'resolve-url-loader';
 
 export type CompilerTapFn<

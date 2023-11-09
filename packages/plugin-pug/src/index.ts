@@ -23,7 +23,7 @@ export const pluginPug = (
         .rule(CHAIN_ID.RULE.PUG)
         .test(/\.pug$/)
         .use(CHAIN_ID.USE.PUG)
-        .loader(path.resolve(__dirname, './pugLoader'))
+        .loader(path.resolve(__dirname, './loader'))
         .options(pugOptions);
     });
   },

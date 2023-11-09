@@ -5,9 +5,9 @@ const { performance } = require('perf_hooks');
 
 async function compileRetryRuntime() {
   const { minify } = await import('terser');
-  const source = path.join(__dirname, '../src/runtime/assetsRetry.ts');
+  const source = path.join(__dirname, '../src/runtime/index.ts');
   const runtimeCode = await readFile(source, 'utf8');
-  const distPath = path.join(__dirname, '../compiled/assetsRetry.js');
+  const distPath = path.join(__dirname, '../dist/runtime.js');
   const { code } = await transformAsync(runtimeCode, {
     presets: [
       '@babel/preset-typescript',

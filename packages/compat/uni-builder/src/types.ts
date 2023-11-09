@@ -8,6 +8,7 @@ import type {
 } from '@rsbuild/shared';
 import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core/rspack-provider';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
+import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 
 export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
@@ -60,6 +61,10 @@ export type UniBuilderExtraConfig = {
      * Whether to generate a manifest file that contains information of all assets.
      */
     enableAssetManifest?: boolean;
+    /**
+     * Configure the retry of assets.
+     */
+    assetsRetry?: PluginAssetsRetryOptions;
   };
   html?: {
     /**

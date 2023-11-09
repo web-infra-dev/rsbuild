@@ -7,6 +7,7 @@ import {
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 import type { UniBuilderRspackConfig, UniBuilderWebpackConfig } from '../types';
 import { pluginGlobalVars } from './plugins/globalVars';
+import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 
 export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   uniBuilderConfig: B extends 'rspack'
@@ -76,6 +77,12 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   const rsbuildPlugins: RsbuildPlugin[] = [
     pluginGlobalVars(uniBuilderConfig.source?.globalVars),
   ];
+
+  if (uniBuilderConfig.output?.assetsRetry) {
+    rsbuildPlugins.push(
+      pluginAssetsRetry(uniBuilderConfig.output?.assetsRetry),
+    );
+  }
 
   return {
     rsbuildConfig: mergeRsbuildConfig(rsbuildConfig, extraConfig),
