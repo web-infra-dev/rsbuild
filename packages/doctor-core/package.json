@@ -59,11 +59,9 @@
     "@types/path-browserify": "1.0.1",
     "@types/tapable": "2.2.2",
     "@types/webpack": "5.28.0",
-    "@types/webpack4": "npm:@types/webpack@4.41.26",
     "tslib": "2.4.1",
     "typescript": "^5.2.2",
-    "webpack": "^5.89.0",
-    "webpack4": "npm:webpack@4.46.0"
+    "webpack": "^5.89.0"
   },
   "publishConfig": {
     "access": "public",
