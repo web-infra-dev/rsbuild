@@ -111,11 +111,14 @@ export async function startDevServer<
     printURLs = true,
     strictPort = false,
     serverOptions = {},
+    logger: customLogger,
     getPortSilently,
   }: StartDevServerOptions & {
     defaultPort?: number;
   } = {},
 ) {
+  const logger = customLogger ?? defaultLogger;
+
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'development';
   }
@@ -158,7 +161,7 @@ export async function startDevServer<
       }
     }
 
-    printServerURLs(urls, server.logger);
+    printServerURLs(urls, logger);
   }
 
   await options.context.hooks.onBeforeStartDevServerHook.call();
