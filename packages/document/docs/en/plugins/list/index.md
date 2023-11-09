@@ -46,6 +46,7 @@ Plugins available for the Svelte framework:
 
 The following are common framework-agnostic plugins:
 
+- [Assets Retry Plugin](/plugins/list/plugin-assets-retry): Used to automatically resend requests when static assets fail to load.
 - [Babel Plugin](/plugins/list/plugin-babel): Provides support for Babel transpilation capabilities.
 - [Type Check Plugin](/plugins/list/plugin-type-check): Used to run TypeScript type checker on a separate process.
 - [Image Compress Plugin](/plugins/list/plugin-image-compress): Compress the image resources used in the project.

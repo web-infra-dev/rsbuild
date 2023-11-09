@@ -46,6 +46,7 @@ export default defineConfig({
 
 以下是与框架无关的通用插件：
 
+- [Assets Retry 插件](/plugins/list/plugin-assets-retry)：用于在静态资源加载失败时自动发起重试请求。
 - [Babel 插件](/plugins/list/plugin-babel)：提供对 Babel 转译能力的支持。
 - [Type Check 插件](/plugins/list/plugin-type-check)：用于在单独的进程中运行 TypeScript 类型检查。
 - [Image Compress 插件](/plugins/list/plugin-image-compress)：将项目中用到的图片资源进行压缩处理。
