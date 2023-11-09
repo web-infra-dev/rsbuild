@@ -22,6 +22,8 @@ import { getDefaultDevOptions } from './constants';
 import DevMiddleware from './dev-middleware';
 import { deepmerge } from '@rsbuild/shared/deepmerge';
 import connect from 'connect';
+import { createProxyMiddleware } from './proxy';
+import { faviconFallbackMiddleware } from './middlewares';
 
 export class RsbuildDevServer {
   private readonly dev: DevServerOptions;
@@ -118,22 +120,20 @@ export class RsbuildDevServer {
       next();
     });
 
-    // TODO
     // dev proxy handler, each proxy has own handler
-    // if (dev.proxy) {
-    //   const { handlers, handleUpgrade } = createProxyHandler(dev.proxy);
-    //   app && handleUpgrade(app);
-    //   handlers.forEach((handler) => {
-    //     this.addHandler(handler);
-    //   });
-    // }
+    if (dev.proxy) {
+      const { middlewares, handleUpgrade } = createProxyMiddleware(dev.proxy);
+      app && handleUpgrade(app);
+      middlewares.forEach((middleware) => {
+        this.middlewares.use(middleware);
+      });
+    }
 
     // do webpack build / plugin apply / socket server when pass compiler instance
     devMiddleware.init(app);
 
     devMiddleware.middleware && this.middlewares.use(devMiddleware.middleware);
 
-    // TODO: add favicon fallback
     if (dev.historyApiFallback) {
       const { default: connectHistoryApiFallback } = await import(
         'connect-history-api-fallback'
@@ -151,6 +151,8 @@ export class RsbuildDevServer {
       devMiddleware.middleware &&
         this.middlewares.use(devMiddleware.middleware);
     }
+
+    this.middlewares.use(faviconFallbackMiddleware);
   }
 
   public async createHTTPServer() {

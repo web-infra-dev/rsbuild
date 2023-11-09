@@ -152,6 +152,7 @@
     "@types/semver": "^7.5.4",
     "@types/url-join": "^4.0.2",
     "html-webpack-plugin": "5.5.3",
+    "http-proxy-middleware": "^2.0.1",
     "terser": "5.19.2",
     "terser-webpack-plugin": "5.3.9",
     "typescript": "^5.2.2",
