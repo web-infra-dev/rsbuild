@@ -1,8 +1,8 @@
 import type { IncomingMessage, ServerResponse, Server } from 'http';
 import { DevServerOptions, NextFunction } from './config/tools';
 import type { Logger } from '../logger';
-import type Connect from 'connect';
-import type { ListenOptions } from 'net';
+// import type Connect from 'connect';
+// import type { ListenOptions } from 'net';
 
 type Middleware = (
   req: IncomingMessage,
@@ -57,13 +57,12 @@ export type CreateDevServerOptions = {
 } & RsbuildDevServerOptions;
 
 export type ServerApi = {
-  middlewares: Connect.Server;
-  logger: Logger;
-  init: () => Promise<void>;
-  listen: (
-    options?: number | ListenOptions,
-    cb?: (err: Error) => Promise<void>,
-  ) => void;
+  // middlewares: Connect.Server;
+  // logger: Logger;
+  // listen: (
+  //   options?: number | ListenOptions,
+  //   cb?: (err: Error) => Promise<void>,
+  // ) => void;
   close: () => void;
 };
 

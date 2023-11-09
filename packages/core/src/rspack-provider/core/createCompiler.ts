@@ -7,6 +7,10 @@ import {
   TARGET_ID_MAP,
   type RspackConfig,
 } from '@rsbuild/shared';
+import { type RspackCompiler, type RspackMultiCompiler } from '@rsbuild/shared';
+import { getDevMiddleware } from './devMiddleware';
+import { initConfigs, type InitConfigsOptions } from './initConfigs';
+
 import type { Context } from '../types';
 
 export async function createCompiler({
@@ -72,4 +76,22 @@ export async function createCompiler({
   debug('create compiler done');
 
   return compiler;
+}
+
+export async function startDevCompile(
+  options: InitConfigsOptions,
+  customCompiler?: RspackCompiler | RspackMultiCompiler,
+) {
+  let compiler: RspackCompiler | RspackMultiCompiler;
+  if (customCompiler) {
+    compiler = customCompiler;
+  } else {
+    const { rspackConfigs } = await initConfigs(options);
+    compiler = await createCompiler({
+      context: options.context,
+      rspackConfigs,
+    });
+  }
+
+  return getDevMiddleware(compiler);
 }

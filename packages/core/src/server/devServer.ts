@@ -8,12 +8,19 @@ import {
   ExposeServerApis,
   RsbuildDevServerOptions,
   CreateDevServerOptions,
-  ServerApi,
   logger as defaultLogger,
+  DevServerContext,
+  StartDevServerOptions,
+  getAddressUrls,
+  printServerURLs,
+  debug,
+  isFunction,
+  StartServerResult,
+  getDevOptions,
 } from '@rsbuild/shared';
 import { getDefaultDevOptions } from './constants';
 import DevMiddleware from './dev-middleware';
-import { deepmerge as deepMerge } from '@rsbuild/shared/deepmerge';
+import { deepmerge } from '@rsbuild/shared/deepmerge';
 import connect from 'connect';
 
 export class RsbuildDevServer {
@@ -38,7 +45,7 @@ export class RsbuildDevServer {
   private getDevOptions(options: RsbuildDevServerOptions) {
     const devOptions = typeof options.dev === 'boolean' ? {} : options.dev;
     const defaultOptions = getDefaultDevOptions();
-    return deepMerge(defaultOptions, devOptions);
+    return deepmerge(defaultOptions, devOptions);
   }
 
   private applySetupMiddlewares() {
@@ -160,7 +167,7 @@ export class RsbuildDevServer {
 
   public listen(
     options?: number | ListenOptions | undefined,
-    listener?: () => void,
+    listener?: (err?: Error) => Promise<void>,
   ) {
     const callback = () => {
       listener?.();
@@ -178,33 +185,109 @@ export class RsbuildDevServer {
   }
 }
 
-export async function createDevServer(options: CreateDevServerOptions) {
-  const { server: serverOptions = {}, ...devOptions } = options;
+export async function startDevServer<
+  Options extends {
+    context: DevServerContext;
+  },
+>(
+  options: Options,
+  startDevCompile: (
+    options: Options,
+    compiler: StartDevServerOptions['compiler'],
+  ) => Promise<CreateDevServerOptions['devMiddleware']>,
+  {
+    open,
+    compiler,
+    printURLs = true,
+    strictPort = false,
+    serverOptions = {},
+    logger: customLogger,
+    getPortSilently,
+  }: StartDevServerOptions & {
+    defaultPort?: number;
+  } = {},
+) {
+  if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'development';
+  }
 
-  const logger = serverOptions.logger ?? defaultLogger;
+  const rsbuildConfig = options.context.config;
+  const logger = customLogger ?? defaultLogger;
+  const { devServerConfig, port, host, https } = await getDevOptions({
+    rsbuildConfig,
+    serverOptions,
+    strictPort,
+    getPortSilently,
+  });
 
-  // const resolvedConfig = await resolveConfig(devOptions, serverOptions);
-
-  const devServer = new RsbuildDevServer(devOptions);
-
-  const httpServer =
-    serverOptions.customApp || (await devServer.createHTTPServer());
-
-  const server: ServerApi = {
-    middlewares: devServer.middlewares,
-    init: async () => {
-      await devServer.onInit(httpServer);
-    },
-    // resolvedConfig,
-    listen: (options, cb) => {
-      // TODO: ???
-      devServer.listen(options, cb as any);
-    },
-    logger,
-    close: () => {
-      devServer.close();
-    },
+  options.context.devServer = {
+    hostname: host,
+    port,
+    https,
+    open,
   };
 
-  return server;
+  const protocol = https ? 'https' : 'http';
+  let urls = getAddressUrls(protocol, port, rsbuildConfig.dev?.host);
+
+  if (printURLs) {
+    if (isFunction(printURLs)) {
+      urls = printURLs(urls);
+
+      if (!Array.isArray(urls)) {
+        throw new Error('Please return an array in the `printURLs` function.');
+      }
+    }
+
+    printServerURLs(urls, logger);
+  }
+
+  debug('create dev server');
+
+  // TODO: reorder
+  const devMiddleware = await startDevCompile(options, compiler);
+
+  const server = new RsbuildDevServer({
+    pwd: options.context.rootPath,
+    devMiddleware,
+    dev: devServerConfig,
+  });
+
+  debug('create dev server done');
+
+  await options.context.hooks.onBeforeStartDevServerHook.call();
+
+  // TODO: support customApp
+  const httpServer = await server.createHTTPServer();
+
+  await server.onInit(httpServer);
+
+  debug('listen dev server');
+
+  return new Promise<StartServerResult>((resolve) => {
+    server.listen(
+      {
+        host,
+        port,
+      },
+      async (err?: Error) => {
+        if (err) {
+          throw err;
+        }
+
+        debug('listen dev server done');
+
+        await options.context.hooks.onAfterStartDevServerHook.call({ port });
+        resolve({
+          port,
+          urls: urls.map((item) => item.url),
+          server: {
+            close: () => {
+              server.close();
+            },
+          },
+        });
+      },
+    );
+  });
 }
