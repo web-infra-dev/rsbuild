@@ -2,6 +2,7 @@ import {
   color,
   pickRsbuildConfig,
   createPublicContext,
+  startDevServer,
   type RsbuildProvider,
   type RspackConfig,
   type RspackCompiler,
@@ -73,9 +74,10 @@ export function rspackProvider({
       },
 
       async startDevServer(options) {
-        const { startDevServer } = await import('./core/startDevServer');
+        const { createDevServer } = await import('./core/startDevServer');
         return startDevServer(
           { context, pluginStore, rsbuildOptions },
+          createDevServer,
           options,
         );
       },

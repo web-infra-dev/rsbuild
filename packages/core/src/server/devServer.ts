@@ -2,15 +2,15 @@ import { createServer, Server } from 'http';
 import { createServer as createHttpsServer } from 'https';
 import type { ListenOptions } from 'net';
 import url from 'url';
-import type {
+import {
   DevServerOptions,
   RequestHandler,
   ExposeServerApis,
   RsbuildDevServerOptions,
   CreateDevServerOptions,
   ServerApi,
-} from './types';
-
+  logger as defaultLogger,
+} from '@rsbuild/shared';
 import { getDefaultDevOptions } from './constants';
 import DevMiddleware from './dev-middleware';
 import { deepmerge as deepMerge } from '@rsbuild/shared/deepmerge';
@@ -181,6 +181,8 @@ export class RsbuildDevServer {
 export async function createDevServer(options: CreateDevServerOptions) {
   const { server: serverOptions = {}, ...devOptions } = options;
 
+  const logger = serverOptions.logger ?? defaultLogger;
+
   // const resolvedConfig = await resolveConfig(devOptions, serverOptions);
 
   const devServer = new RsbuildDevServer(devOptions);
@@ -195,8 +197,10 @@ export async function createDevServer(options: CreateDevServerOptions) {
     },
     // resolvedConfig,
     listen: (options, cb) => {
-      devServer.listen(options, cb);
+      // TODO: ???
+      devServer.listen(options, cb as any);
     },
+    logger,
     close: () => {
       devServer.close();
     },

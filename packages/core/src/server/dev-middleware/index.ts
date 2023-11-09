@@ -1,10 +1,10 @@
 import { Server } from 'http';
 import { EventEmitter } from 'events';
-import {
+import type {
   DevServerOptions,
   DevMiddlewareAPI,
   DevMiddleware as CustomDevMiddleware,
-} from '../types';
+} from '@rsbuild/shared';
 import SocketServer from './socketServer';
 
 type Options = {

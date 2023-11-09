@@ -1,6 +1,5 @@
 import {
   debug,
-  startDevServer as baseStartDevServer,
   StartDevServerOptions,
   getDevServerOptions,
 } from '@rsbuild/shared';
@@ -46,16 +45,4 @@ export async function createDevServer(
   debug('create dev server done');
 
   return server;
-}
-
-export async function startDevServer(
-  options: InitConfigsOptions,
-  startDevServerOptions: StartDevServerOptions = {},
-) {
-  return baseStartDevServer(
-    options,
-    // @ts-expect-error compiler type mismatch
-    createDevServer,
-    startDevServerOptions,
-  );
 }

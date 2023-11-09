@@ -90,12 +90,6 @@ describe('test dev server', () => {
       }),
     ).resolves.toMatchInlineSnapshot(`
       {
-        "config": {
-          "output": {
-            "assetPrefix": undefined,
-            "path": undefined,
-          },
-        },
         "devConfig": {
           "client": {
             "port": "8080",
@@ -143,12 +137,6 @@ describe('test dev server', () => {
       }),
     ).resolves.toMatchInlineSnapshot(`
       {
-        "config": {
-          "output": {
-            "assetPrefix": undefined,
-            "path": "dist",
-          },
-        },
         "devConfig": {
           "client": {
             "host": "",

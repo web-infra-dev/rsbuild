@@ -1,6 +1,7 @@
 import {
   pickRsbuildConfig,
   createPublicContext,
+  startDevServer,
   type RsbuildProvider,
 } from '@rsbuild/shared';
 import { startProdServer } from '@rsbuild/core/server';
@@ -63,9 +64,11 @@ export function webpackProvider({
       },
 
       async startDevServer(options) {
-        const { startDevServer } = await import('./core/startDevServer');
+        const { createDevServer } = await import('./core/startDevServer');
         return startDevServer(
           { context, pluginStore, rsbuildOptions },
+          // @ts-expect-error compiler type mismatch
+          createDevServer,
           options,
         );
       },

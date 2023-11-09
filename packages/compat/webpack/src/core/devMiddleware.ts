@@ -1,7 +1,10 @@
 import webpackDevMiddleware from '@rsbuild/shared/webpack-dev-middleware';
 import type { Compiler, MultiCompiler } from 'webpack';
-import type { DevMiddleware } from '@rsbuild/core/server';
-import { setupServerHooks, isClientCompiler } from '@rsbuild/shared';
+import {
+  setupServerHooks,
+  isClientCompiler,
+  DevMiddleware,
+} from '@rsbuild/shared';
 import { IncomingMessage, ServerResponse } from 'http';
 
 const applyHMREntry = (

@@ -6,11 +6,12 @@ import type {
   OnAfterStartDevServerFn,
   OnBeforeStartDevServerFn,
   CompilerTapFn,
+  DevServerOptions,
+  ServerApi,
 } from './types';
 import { getAddressUrls } from './url';
 import { isFunction } from './utils';
 import { getPort } from './port';
-import type { ModernDevServerOptions, Server } from '@modern-js/server';
 import deepmerge from 'deepmerge';
 import { color } from './color';
 import { logger as defaultLogger, debug, Logger } from './logger';
@@ -50,8 +51,7 @@ export const getDevServerOptions = async ({
   serverOptions: ServerOptions;
   port: number;
 }): Promise<{
-  config: ReturnType<typeof getServerOptions>;
-  devConfig: ModernDevServerOptions['dev'];
+  devConfig: DevServerOptions;
 }> => {
   const defaultDevConfig = deepmerge(
     {
@@ -77,12 +77,7 @@ export const getDevServerOptions = async ({
     mergeFn: deepmerge,
   });
 
-  const defaultConfig = getServerOptions(rsbuildConfig);
-  const config = serverOptions.config
-    ? deepmerge(defaultConfig, serverOptions.config)
-    : defaultConfig;
-
-  return { config, devConfig };
+  return { devConfig };
 };
 
 /** The context used by startDevServer. */
@@ -109,7 +104,7 @@ export async function startDevServer<
     port: number,
     serverOptions: ServerOptions,
     compiler: StartDevServerOptions['compiler'],
-  ) => Promise<Server>,
+  ) => Promise<ServerApi>,
   {
     open,
     compiler,

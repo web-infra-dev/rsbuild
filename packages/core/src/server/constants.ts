@@ -1,4 +1,4 @@
-import { DevServerOptions } from './types';
+import type { DevServerOptions } from '@rsbuild/shared';
 
 /**
  * hmr socket connect path
