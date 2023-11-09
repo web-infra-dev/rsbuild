@@ -1,22 +1,12 @@
-import { useState } from 'react';
+import './App.css';
 
-const HelloWorld = () => {
-  const [count, setCount] = useState(0);
-
+const App = () => {
   return (
-    <div>
-      <h1>Rsbuild + React</h1>
-
-      <div>
-        <button type="button" onClick={() => setCount(count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>App.tsx</code> to test HMR
-        </p>
-      </div>
+    <div className="content">
+      <h1>Rsbuild with React</h1>
+      <p>Start building amazing things with Rsbuild.</p>
     </div>
   );
 };
 
-export default HelloWorld;
+export default App;
