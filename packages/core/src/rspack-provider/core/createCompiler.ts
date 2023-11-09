@@ -34,21 +34,14 @@ export async function createCompiler({
     });
 
     if (!stats.hasErrors() && obj.children) {
-      const showName = obj.children.length > 1;
       obj.children.forEach((c, index) => {
         if (c.time) {
           const time = prettyTime(c.time / 1000);
-          const message = `compiled in ${time}`;
-
-          if (showName) {
-            const target = Array.isArray(context.target)
-              ? context.target[index]
-              : context.target;
-            const name = TARGET_ID_MAP[target || 'web'];
-            logger.ready(`${name} ${message}`);
-          } else {
-            logger.ready(message);
-          }
+          const target = Array.isArray(context.target)
+            ? context.target[index]
+            : context.target;
+          const name = TARGET_ID_MAP[target || 'web'];
+          logger.ready(`${name} compiled in ${time}`);
         }
       });
     }
