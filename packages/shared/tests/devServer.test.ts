@@ -90,19 +90,17 @@ describe('test dev server', () => {
       }),
     ).resolves.toMatchInlineSnapshot(`
       {
-        "devConfig": {
-          "client": {
-            "port": "8080",
-          },
-          "devMiddleware": {
-            "writeToDisk": [Function],
-          },
-          "hot": true,
-          "https": undefined,
-          "liveReload": true,
-          "port": 8080,
-          "watch": true,
+        "client": {
+          "port": "8080",
         },
+        "devMiddleware": {
+          "writeToDisk": [Function],
+        },
+        "hot": true,
+        "https": undefined,
+        "liveReload": true,
+        "port": 8080,
+        "watch": true,
       }
     `);
 
@@ -137,21 +135,19 @@ describe('test dev server', () => {
       }),
     ).resolves.toMatchInlineSnapshot(`
       {
-        "devConfig": {
-          "client": {
-            "host": "",
-            "path": "",
-            "port": "8081",
-          },
-          "devMiddleware": {
-            "writeToDisk": [Function],
-          },
-          "hot": false,
-          "https": true,
-          "liveReload": false,
-          "port": 8081,
-          "watch": true,
+        "client": {
+          "host": "",
+          "path": "",
+          "port": "8081",
         },
+        "devMiddleware": {
+          "writeToDisk": [Function],
+        },
+        "hot": false,
+        "https": true,
+        "liveReload": false,
+        "port": 8081,
+        "watch": true,
       }
     `);
   });
