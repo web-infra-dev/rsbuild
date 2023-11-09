@@ -4,7 +4,7 @@ import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
 import type { Server, ModernDevServerOptions } from '@modern-js/server';
 import type { AddressUrl } from '../url';
-import { Logger } from '@modern-js/prod-server';
+import type { Logger } from '../logger';
 
 export type Bundler = 'rspack' | 'webpack';
 

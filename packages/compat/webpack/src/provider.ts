@@ -1,9 +1,9 @@
 import {
-  startProdServer,
   pickRsbuildConfig,
   createPublicContext,
   type RsbuildProvider,
 } from '@rsbuild/shared';
+import { startProdServer } from '@rsbuild/core/server';
 import { createContext } from './core/createContext';
 import { applyDefaultPlugins } from './shared/plugin';
 import { RsbuildConfig, NormalizedConfig, WebpackConfig } from './types';

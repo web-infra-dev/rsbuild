@@ -1,6 +1,5 @@
 import {
   color,
-  startProdServer,
   pickRsbuildConfig,
   createPublicContext,
   type RsbuildProvider,
@@ -16,6 +15,7 @@ import {
   isSatisfyRspackMinimumVersion,
   supportedRspackMinimumVersion,
 } from './shared/rspackVersion';
+import { startProdServer } from '../server';
 import type { RsbuildConfig, NormalizedConfig } from './types';
 
 export type RspackProvider = RsbuildProvider<
