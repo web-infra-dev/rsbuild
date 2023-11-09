@@ -2,7 +2,6 @@ import { ModuleGraph } from '@rsbuild/doctor-sdk/graph';
 import path, { relative } from 'path';
 import Webpack from 'webpack';
 import { createFsFromVolume, Volume } from 'memfs';
-import * as Webpack4 from 'webpack4';
 
 export function removeAbsModulePath(graph: ModuleGraph, root: string) {
   for (const mod of graph.getModules()) {
@@ -37,10 +36,8 @@ export function compileByWebpack5(
 }
 
 function promisifyCompilerRun<
-  T extends Webpack4.Compiler | Webpack.Compiler,
-  P = T extends Webpack4.Compiler
-    ? Webpack4.Stats.ToJsonOutput
-    : Webpack.StatsCompilation,
+  T extends Webpack.Compiler,
+  P = Webpack.StatsCompilation,
 >(compiler: T): Promise<P> {
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {

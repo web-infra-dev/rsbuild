@@ -36,7 +36,7 @@ export function getLoaderOptions<T>(loaderContext: Plugin.LoaderContext<T>) {
     return loaderContext.getOptions();
   }
 
-  // webpack4
+  // if don't have loaderContext.getOptions use loader-utils.
   return getOptions(loaderContext as any) as unknown as Readonly<T>;
 }
 
