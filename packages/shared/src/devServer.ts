@@ -64,7 +64,7 @@ export const getDevOptions = async ({
       ? Boolean(serverOptions?.dev?.https)
       : false;
 
-  const devServerConfig = getDevServerOptions({
+  const devServerConfig = await getDevServerOptions({
     rsbuildConfig,
     serverOptions,
     port,
