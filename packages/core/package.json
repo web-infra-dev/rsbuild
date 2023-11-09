@@ -40,6 +40,9 @@
     "./rspack-provider": {
       "types": "./dist/rspack-provider/index.d.ts",
       "default": "./dist/rspack-provider/index.js"
+    },
+    "./types": {
+      "types": "./types.d.ts"
     }
   },
   "main": "./dist/index.js",
@@ -72,7 +75,8 @@
   "files": [
     "bin",
     "dist",
-    "static"
+    "static",
+    "types.d.ts"
   ],
   "scripts": {
     "build": "modern build",
