@@ -66,7 +66,7 @@ export const getPort = async (
       );
     } else if (!silent) {
       logger.info(
-        `Port ${original} is in use. ${color.yellow(`using port ${port}.`)}\n`,
+        `Port ${original} is in use, ${color.yellow(`using port ${port}.`)}\n`,
       );
     }
   }

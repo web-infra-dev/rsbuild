@@ -134,6 +134,21 @@ export async function startDevServer<
 
   const server = await createDevServer(options, port, serverOptions, compiler);
 
+  const protocol = https ? 'https' : 'http';
+  let urls = getAddressUrls(protocol, port, rsbuildConfig.dev?.host);
+
+  if (printURLs) {
+    if (isFunction(printURLs)) {
+      urls = printURLs(urls);
+
+      if (!Array.isArray(urls)) {
+        throw new Error('Please return an array in the `printURLs` function.');
+      }
+    }
+
+    printServerURLs(urls, logger);
+  }
+
   await options.context.hooks.onBeforeStartDevServerHook.call();
 
   debug('listen dev server');
@@ -151,23 +166,6 @@ export async function startDevServer<
         }
 
         debug('listen dev server done');
-
-        const protocol = https ? 'https' : 'http';
-        let urls = getAddressUrls(protocol, port, rsbuildConfig.dev?.host);
-
-        if (printURLs) {
-          if (isFunction(printURLs)) {
-            urls = printURLs(urls);
-
-            if (!Array.isArray(urls)) {
-              throw new Error(
-                'Please return an array in the `printURLs` function.',
-              );
-            }
-          }
-
-          printServerURLs(urls, logger);
-        }
 
         await options.context.hooks.onAfterStartDevServerHook.call({ port });
         resolve({
