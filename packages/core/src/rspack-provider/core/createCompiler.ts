@@ -33,10 +33,10 @@ export async function createCompiler({
       timings: true,
     });
 
-    if (!stats.hasErrors()) {
-      obj.children?.forEach((c, index) => {
+    if (!stats.hasErrors() && obj.children) {
+      obj.children.forEach((c, index) => {
         if (c.time) {
-          const time = prettyTime([0, c.time * 10 ** 6]);
+          const time = prettyTime(c.time / 1000);
           const target = Array.isArray(context.target)
             ? context.target[index]
             : context.target;
