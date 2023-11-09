@@ -10,7 +10,7 @@ import {
   COMPILATION_PROCESS_STAGE,
   type Rspack,
 } from '@rsbuild/shared';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import type { PluginAssetsRetryOptions } from './types';
 
 export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {

@@ -17,7 +17,7 @@
 
 import type { Compiler, RspackPluginInstance, Compilation } from '@rspack/core';
 import { upperFirst } from 'lodash';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import { PreloadOrPreFetchOption } from '../../types';
 import {
   extractChunks,

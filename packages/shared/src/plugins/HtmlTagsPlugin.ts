@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import type { Compiler } from '@rspack/core';
 import { withPublicPath } from '../url';
 import {
@@ -154,7 +154,7 @@ export class HtmlTagsPlugin {
           return ret;
         };
 
-        // create tag list from html-webpack-plugin and options.
+        // create tag list from html-rspack-plugin and options.
         const [handlers, records] = _.partition(this.ctx.tags, _.isFunction);
 
         let tags = [
@@ -181,7 +181,7 @@ export class HtmlTagsPlugin {
           tags = handler(tags, utils) || tags;
         }
 
-        // apply to html-webpack-plugin.
+        // apply to html-rspack-plugin.
         const [headTags, bodyTags] = _.partition(
           tags,
           (tag) => tag.head ?? HEAD_TAGS.includes(tag.tag),

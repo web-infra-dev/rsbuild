@@ -1,4 +1,4 @@
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import type { CrossOrigin } from '../types';
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
 

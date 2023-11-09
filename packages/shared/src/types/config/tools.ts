@@ -17,7 +17,7 @@ import type { BundlerChain } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type { DevServerHttpsOptions } from './dev';
 import type { RspackConfig, RspackRule, RspackPluginInstance } from '../rspack';
-import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+import type { Options as HTMLPluginOptions } from 'html-rspack-plugin';
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Options as ProxyOptions } from 'http-proxy-middleware';
 
@@ -195,7 +195,7 @@ export interface ToolsConfig {
    */
   styleLoader?: ToolsStyleLoaderConfig;
   /**
-   * Configure the html-webpack-plugin.
+   * Configure the html-rspack-plugin.
    */
   htmlPlugin?: false | ToolsHtmlPluginConfig;
   /**

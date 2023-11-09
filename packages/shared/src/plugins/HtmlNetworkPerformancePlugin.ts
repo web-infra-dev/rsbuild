@@ -6,7 +6,7 @@ import {
   DnsPrefetch,
   Preconnect,
 } from '../types';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
 
 type NetworkPerformanceType = 'preconnect' | 'dnsPrefetch';
 

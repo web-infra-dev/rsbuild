@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
 // @ts-expect-error
 import { RawSource } from 'webpack-sources';

@@ -1,5 +1,5 @@
 import type { Compiler, Compilation } from '@rspack/core';
-import type HtmlPlugin from 'html-webpack-plugin';
+import type HtmlPlugin from 'html-rspack-plugin';
 import { COMPILATION_PROCESS_STAGE } from '@rsbuild/shared';
 
 export class RemoveCssSourcemapPlugin {
