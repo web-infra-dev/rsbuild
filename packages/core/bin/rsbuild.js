@@ -1,7 +1,18 @@
 #!/usr/bin/env node
 const { logger } = require('rslog');
 
+function initNodeEnv() {
+  if (!process.env.NODE_ENV) {
+    const command = process.argv[2];
+    process.env.NODE_ENV = ['build', 'preview'].includes(command)
+      ? 'production'
+      : 'development';
+  }
+}
+
 async function main() {
+  initNodeEnv();
+
   const { version } = require('../package.json');
 
   // If not called through a package manager,
