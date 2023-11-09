@@ -645,6 +645,9 @@ importers:
       postcss:
         specifier: 8.4.31
         version: 8.4.31
+      rslog:
+        specifier: ^1.1.0
+        version: 1.1.0
       semver:
         specifier: ^7.5.4
         version: 7.5.4
@@ -1635,6 +1638,9 @@ importers:
       browserslist:
         specifier: ^4.22.1
         version: 4.22.1
+      caniuse-lite:
+        specifier: ^1.0.30001559
+        version: 1.0.30001559
       connect:
         specifier: 3.7.0
         version: 3.7.0
@@ -1644,12 +1650,21 @@ importers:
       fs-extra:
         specifier: ^11.1.1
         version: 11.1.1
+      gzip-size:
+        specifier: ^6.0.0
+        version: 6.0.0
+      json5:
+        specifier: ^2.2.3
+        version: 2.2.3
       line-diff:
         specifier: 2.1.1
         version: 2.1.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      mime-types:
+        specifier: ^2.1.35
+        version: 2.1.35
       picocolors:
         specifier: 1.0.0
         version: 1.0.0
