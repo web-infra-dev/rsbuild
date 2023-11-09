@@ -1,5 +1,14 @@
 # @rsbuild/document
 
+## 0.0.18
+
+### Patch Changes
+
+- 4887d6d: chore: use findUp utils to replace pkg-up dep
+- 594c16a: feat: only enable progress bar in production
+- 7fe5f26: refactor: move source.globalVars option to uni-builder
+- fad683d: feat(cli): add new --open option for dev command
+
 ## 0.0.17
 
 ### Patch Changes

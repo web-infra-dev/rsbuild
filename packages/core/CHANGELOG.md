@@ -1,5 +1,31 @@
 # @rsbuild/core
 
+## 0.0.18
+
+### Patch Changes
+
+- 6f1c4a1: feat: add builtin assets and CSS modules types
+- 164f135: refactor: extract assetsRetry as a standalone plugin
+- efcc697: feat: support dynamicImportMode.eager and preserveAllComments'
+- 4887d6d: chore: use findUp utils to replace pkg-up dep
+- faf797a: fix(deps): add missing dependencies to core and shared
+- 58306e2: perf: make open browser faster
+- 594c16a: feat: only enable progress bar in production
+- 7fe5f26: refactor: move source.globalVars option to uni-builder
+- c3201ae: feat: add Rsbuild server, decouple with Modern.js server
+- 78d4d94: feat: replace pretty-time and improve time format
+- fad683d: feat(cli): add new --open option for dev command
+- Updated dependencies [164f135]
+- Updated dependencies [96d9d43]
+- Updated dependencies [4887d6d]
+- Updated dependencies [c743a94]
+- Updated dependencies [faf797a]
+- Updated dependencies [594c16a]
+- Updated dependencies [7fe5f26]
+- Updated dependencies [78d4d94]
+- Updated dependencies [fad683d]
+  - @rsbuild/shared@0.0.18
+
 ## 0.0.17
 
 ### Patch Changes

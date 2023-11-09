@@ -1,5 +1,11 @@
 # @rsbuild/doctor-utils
 
+## 0.0.6
+
+### Patch Changes
+
+- 3d49f6d: fix: doctor utils time test error
+
 ## 0.0.5
 
 ## 0.0.4
