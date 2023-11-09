@@ -549,8 +549,8 @@ importers:
         specifier: ^1.0.30001559
         version: 1.0.30001559
       html-rspack-plugin:
-        specifier: 5.5.3-beta.1
-        version: 5.5.3-beta.1(@rspack/core@0.3.11)(webpack@5.89.0)
+        specifier: 5.5.3
+        version: 5.5.3(@rspack/core@0.3.11)(webpack@5.89.0)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -628,8 +628,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       html-rspack-plugin:
-        specifier: 5.5.3-beta.1
-        version: 5.5.3-beta.1(@rspack/core@0.3.11)(webpack@5.89.0)
+        specifier: 5.5.3
+        version: 5.5.3(@rspack/core@0.3.11)(webpack@5.89.0)
       http-compression:
         specifier: 1.0.6
         version: 1.0.6
@@ -1175,8 +1175,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.4
       html-rspack-plugin:
-        specifier: 5.5.3-beta.1
-        version: 5.5.3-beta.1(@rspack/core@0.3.11)(webpack@5.89.0)
+        specifier: 5.5.3
+        version: 5.5.3(@rspack/core@0.3.11)(webpack@5.89.0)
       terser:
         specifier: 5.19.2
         version: 5.19.2
@@ -1703,8 +1703,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       html-rspack-plugin:
-        specifier: 5.5.3-beta.1
-        version: 5.5.3-beta.1(@rspack/core@0.3.11)(webpack@5.89.0)
+        specifier: 5.5.3
+        version: 5.5.3(@rspack/core@0.3.11)(webpack@5.89.0)
       http-proxy-middleware:
         specifier: ^2.0.1
         version: 2.0.6
@@ -9397,8 +9397,8 @@ packages:
       relateurl: 0.2.7
       terser: 5.19.2
 
-  /html-rspack-plugin@5.5.3-beta.1(@rspack/core@0.3.11)(webpack@5.89.0):
-    resolution: {integrity: sha512-1QjWK4MNRbW677BEQOdYpw+G1chpd9Ii/1EYO/+0qO+QreG5m5fYFW5f13B9/l6Cp3ZcHIGvELF7vsuITwIH2w==}
+  /html-rspack-plugin@5.5.3(@rspack/core@0.3.11)(webpack@5.89.0):
+    resolution: {integrity: sha512-ca8XVwjNFHd1urKVFicmDr12cFE2iLYe0+muXqiSpwZJecJRfpO6PaVy3Ss96Tyoml22Go+bFC6miR/KEps/OQ==}
     engines: {node: '>=10.13.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
