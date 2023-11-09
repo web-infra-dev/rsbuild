@@ -632,13 +632,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       },
       "name": "DefinePlugin",
     },
-    Plugin {
-      "_options": {
-        "prefix": "Client",
-        "profile": false,
-      },
-      "name": "ProgressPlugin",
-    },
   ],
   "resolve": {
     "alias": {
@@ -1761,13 +1754,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       },
       "name": "DefinePlugin",
     },
-    Plugin {
-      "_options": {
-        "prefix": "Server",
-        "profile": false,
-      },
-      "name": "ProgressPlugin",
-    },
   ],
   "resolve": {
     "conditionNames": [
@@ -2427,13 +2413,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "process.env.NODE_ENV": ""development"",
       },
       "name": "DefinePlugin",
-    },
-    Plugin {
-      "_options": {
-        "prefix": "Client",
-        "profile": false,
-      },
-      "name": "ProgressPlugin",
     },
   ],
   "resolve": {

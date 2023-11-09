@@ -2,52 +2,75 @@
 
 exports[`parseCommonConfig > html.faviconByEntries 1`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {
     "favicon": [Function],
   },
+  "output": {},
 }
 `;
 
 exports[`parseCommonConfig > html.faviconByEntries 2`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {
     "favicon": [
       "/https/www.foo.com/default.ico",
       [Function],
     ],
   },
+  "output": {},
 }
 `;
 
 exports[`parseCommonConfig > html.faviconByEntries 3`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {
     "inject": [Function],
   },
+  "output": {},
 }
 `;
 
 exports[`parseCommonConfig > html.faviconByEntries 4`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {
     "inject": [
       "body",
       [Function],
     ],
   },
+  "output": {},
 }
 `;
 
 exports[`parseCommonConfig > html.metaByEntries 1`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {
     "meta": [Function],
   },
+  "output": {},
 }
 `;
 
 exports[`parseCommonConfig > html.metaByEntries 2`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {
     "meta": [
       {
@@ -58,38 +81,54 @@ exports[`parseCommonConfig > html.metaByEntries 2`] = `
       [Function],
     ],
   },
+  "output": {},
 }
 `;
 
 exports[`parseCommonConfig > html.templateByEntries 1`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {
     "template": [Function],
   },
+  "output": {},
 }
 `;
 
 exports[`parseCommonConfig > html.templateByEntries 2`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {
     "template": [
       "static/index.html",
       [Function],
     ],
   },
+  "output": {},
 }
 `;
 
 exports[`parseCommonConfig > html.templateParametersByEntries 1`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {
     "templateParameters": [Function],
   },
+  "output": {},
 }
 `;
 
 exports[`parseCommonConfig > html.templateParametersByEntries 2`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {
     "templateParameters": [
       {
@@ -98,30 +137,42 @@ exports[`parseCommonConfig > html.templateParametersByEntries 2`] = `
       [Function],
     ],
   },
+  "output": {},
 }
 `;
 
 exports[`parseCommonConfig > html.titleByEntries 1`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {
     "title": [Function],
   },
+  "output": {},
 }
 `;
 
 exports[`parseCommonConfig > html.titleByEntries 2`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {
     "title": [
       "Default",
       [Function],
     ],
   },
+  "output": {},
 }
 `;
 
 exports[`parseCommonConfig > output.cssModuleLocalIdentName 1`] = `
 {
+  "dev": {
+    "progressBar": true,
+  },
   "html": {},
   "output": {
     "cssModules": {

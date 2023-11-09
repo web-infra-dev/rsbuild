@@ -152,8 +152,6 @@ export async function startDevServer<
     open,
   };
 
-  const server = await createDevServer(options, port, serverOptions, compiler);
-
   const protocol = https ? 'https' : 'http';
   let urls = getAddressUrls(protocol, port, rsbuildConfig.dev?.host);
 
@@ -168,6 +166,8 @@ export async function startDevServer<
 
     printServerURLs(urls, logger);
   }
+
+  const server = await createDevServer(options, port, serverOptions, compiler);
 
   await options.context.hooks.onBeforeStartDevServerHook.call();
 

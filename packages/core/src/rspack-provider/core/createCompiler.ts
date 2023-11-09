@@ -27,7 +27,11 @@ export async function createCompiler({
 
   let isFirstCompile = true;
 
-  compiler.hooks.done.tap('done', async (stats) => {
+  compiler.hooks.watchRun.tap('rsbuild:compiling', () => {
+    logger.start('Compiling...');
+  });
+
+  compiler.hooks.done.tap('rsbuild:done', async (stats) => {
     const obj = stats.toJson({
       all: false,
       timings: true,

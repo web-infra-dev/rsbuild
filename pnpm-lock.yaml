@@ -302,6 +302,28 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
+  examples/react-webpack:
+    dependencies:
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@rsbuild/plugin-react':
+        specifier: workspace:*
+        version: link:../../packages/plugin-react
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../../packages/compat/webpack
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
   examples/svelte:
     dependencies:
       svelte:

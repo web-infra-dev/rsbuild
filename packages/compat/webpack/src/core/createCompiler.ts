@@ -22,7 +22,7 @@ export async function createCompiler({
 
   let isFirstCompile = true;
 
-  compiler.hooks.done.tap('done', async (stats: unknown) => {
+  compiler.hooks.done.tap('rsbuild:done', async (stats: unknown) => {
     const { message, level } = formatStats(stats as Stats);
 
     if (level === 'error') {

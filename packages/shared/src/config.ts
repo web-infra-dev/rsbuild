@@ -39,6 +39,7 @@ import type { minify } from 'terser';
 import fs from 'fs-extra';
 
 import _ from 'lodash';
+import { isProd } from './utils';
 import { DEFAULT_DEV_HOST } from './constants';
 import { getJSMinifyOptions } from './minimize';
 
@@ -48,7 +49,6 @@ export const getDefaultDevConfig = (): NormalizedDevConfig => ({
   port: DEFAULT_PORT,
   assetPrefix: DEFAULT_ASSET_PREFIX,
   startUrl: false,
-  progressBar: true,
   host: DEFAULT_DEV_HOST,
 });
 

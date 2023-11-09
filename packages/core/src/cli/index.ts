@@ -13,6 +13,7 @@ export async function runCli(options: RunCliOptions = {}) {
   const rsbuild = await createRsbuild({
     rsbuildConfig: config,
     entry: config.source?.entries || getDefaultEntries(),
+    provider: config.provider,
   });
 
   if (options.defaultPlugins) {
