@@ -80,15 +80,3 @@ console.log(mergedConfig); // { dev: { https: true } }
 ```
 
 > This method will not modify the config object in the input parameter.
-
-## HtmlWebpackPlugin
-
-HtmlWebpackPlugin object, usually used to implement custom plugins of HtmlWebpackPlugin.
-
-- **Example**
-
-```ts
-import HtmlWebpackPlugin from '@rsbuild/core/html-webpack-plugin';
-```
-
-> In most scenarios, it is recommended to import HtmlWebpackPlugin from Rsbuild instead of manually installing a "html-webpack-plugin" dependency, which can avoid multi-instance problems.
