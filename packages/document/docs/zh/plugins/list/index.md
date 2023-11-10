@@ -24,7 +24,7 @@ export default defineConfig({
 适用于 React 框架的插件有：
 
 - [React 插件](/plugins/list/plugin-react)：提供对 React 的支持。
-- [Svgr 插件](/plugins/list/plugin-svgr)：支持将 SVG 图片转换为一个 React 组件使用。
+- [SVGR 插件](/plugins/list/plugin-svgr)：支持将 SVG 图片转换为一个 React 组件使用。
 - [Styled Components 插件](/plugins/list/plugin-styled-components)：提供对 styled-components 的编译时支持。
 
 ### Vue 相关
