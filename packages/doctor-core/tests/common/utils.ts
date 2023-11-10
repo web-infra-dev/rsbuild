@@ -46,7 +46,7 @@ function promisifyCompilerRun<
       }
 
       if (!stats) {
-        reject('Stats 文件为空，请检查构建配置');
+        reject('Stats is Empty!');
         return;
       }
 
