@@ -48,10 +48,7 @@ export type Plugins = {
   splitChunks: PluginsFn;
   inlineChunk: PluginsFn;
   bundleAnalyzer: PluginsFn;
-  font: PluginsFn;
-  media: PluginsFn;
-  image: PluginsFn;
-  svg: PluginsFn;
+  asset: PluginsFn;
   html: PluginsFn;
   rem: PluginsFn;
   wasm: PluginsFn;

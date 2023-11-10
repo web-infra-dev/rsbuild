@@ -38,60 +38,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.svg\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
             "resourceQuery": /\\(__inline=false\\|url\\)/,
@@ -119,6 +65,33 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "oneOf": [
           {
             "generator": {
+              "filename": "static/svg/[name].[contenthash:8].svg",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/svg/[name].[contenthash:8].svg",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.svg\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
             "resourceQuery": /\\(__inline=false\\|url\\)/,
@@ -141,6 +114,33 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
         ],
         "test": /\\\\\\.\\(mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
+              "filename": "static/font/[name].[contenthash:8][ext]",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/font/[name].[contenthash:8][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
         "dependency": "url",
@@ -704,60 +704,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.svg\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
             "resourceQuery": /\\(__inline=false\\|url\\)/,
@@ -785,6 +731,33 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "oneOf": [
           {
             "generator": {
+              "filename": "static/svg/[name].[contenthash:8].svg",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/svg/[name].[contenthash:8].svg",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.svg\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
             "resourceQuery": /\\(__inline=false\\|url\\)/,
@@ -807,6 +780,33 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           },
         ],
         "test": /\\\\\\.\\(mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
+              "filename": "static/font/[name].[contenthash:8][ext]",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/font/[name].[contenthash:8][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
         "dependency": "url",
@@ -1418,60 +1418,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.svg\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
             "resourceQuery": /\\(__inline=false\\|url\\)/,
@@ -1499,6 +1445,33 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "oneOf": [
           {
             "generator": {
+              "filename": "static/svg/[name].[contenthash:8].svg",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/svg/[name].[contenthash:8].svg",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.svg\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
             "resourceQuery": /\\(__inline=false\\|url\\)/,
@@ -1521,6 +1494,33 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
         ],
         "test": /\\\\\\.\\(mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
+              "filename": "static/font/[name].[contenthash:8][ext]",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/font/[name].[contenthash:8][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
         "dependency": "url",
@@ -1958,60 +1958,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.svg\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
             "resourceQuery": /\\(__inline=false\\|url\\)/,
@@ -2039,6 +1985,33 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "oneOf": [
           {
             "generator": {
+              "filename": "static/svg/[name].[contenthash:8].svg",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/svg/[name].[contenthash:8].svg",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.svg\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
             "resourceQuery": /\\(__inline=false\\|url\\)/,
@@ -2061,6 +2034,33 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
         ],
         "test": /\\\\\\.\\(mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
+              "filename": "static/font/[name].[contenthash:8][ext]",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/font/[name].[contenthash:8][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
         "dependency": "url",

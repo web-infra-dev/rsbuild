@@ -1,9 +1,4 @@
-import {
-  MEDIA_EXTENSIONS,
-  FONT_EXTENSIONS,
-  IMAGE_EXTENSIONS,
-  Plugins,
-} from '@rsbuild/shared';
+import type { Plugins } from '@rsbuild/shared';
 
 export const plugins: Plugins = {
   html: () => import('./html').then((m) => m.pluginHtml()),
@@ -20,13 +15,7 @@ export const plugins: Plugins = {
   inlineChunk: () => import('./inlineChunk').then((m) => m.pluginInlineChunk()),
   bundleAnalyzer: () =>
     import('./bundleAnalyzer').then((m) => m.pluginBundleAnalyzer()),
-  svg: () => import('./asset').then((m) => m.pluginAsset('svg', ['svg'])),
-  font: () =>
-    import('./asset').then((m) => m.pluginAsset('font', FONT_EXTENSIONS)),
-  image: () =>
-    import('./asset').then((m) => m.pluginAsset('image', IMAGE_EXTENSIONS)),
-  media: () =>
-    import('./asset').then((m) => m.pluginAsset('media', MEDIA_EXTENSIONS)),
+  asset: () => import('./asset').then((m) => m.pluginAsset()),
   rem: () => import('./rem').then((m) => m.pluginRem()),
   wasm: () => import('./wasm').then((m) => m.pluginWasm()),
   moment: () => import('./moment').then((m) => m.pluginMoment()),
