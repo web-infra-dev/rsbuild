@@ -1,14 +1,14 @@
 import { Server } from 'http';
 import { EventEmitter } from 'events';
 import type {
-  DevServerOptions,
+  DevConfig,
   DevMiddlewareAPI,
   DevMiddleware as CustomDevMiddleware,
 } from '@rsbuild/shared';
 import SocketServer from './socketServer';
 
 type Options = {
-  dev: DevServerOptions;
+  dev: DevConfig;
   devMiddleware?: CustomDevMiddleware;
 };
 
@@ -16,7 +16,7 @@ const noop = () => {
   // noop
 };
 
-function getHMRClientPath(client: DevServerOptions['client']) {
+function getHMRClientPath(client: DevConfig['client']) {
   const protocol = client?.protocol ? `&protocol=${client.protocol}` : '';
   const host = client?.host ? `&host=${client.host}` : '';
   const path = client?.path ? `&path=${client.path}` : '';
@@ -33,7 +33,7 @@ function getHMRClientPath(client: DevServerOptions['client']) {
 export default class DevMiddleware extends EventEmitter {
   public middleware?: DevMiddlewareAPI;
 
-  private devOptions: DevServerOptions;
+  private devOptions: DevConfig;
 
   private socketServer: SocketServer;
 
@@ -82,7 +82,7 @@ export default class DevMiddleware extends EventEmitter {
       },
     };
 
-    const enableHMR = this.devOptions.hot || this.devOptions.liveReload;
+    const enableHMR = this.devOptions.hmr;
 
     const middleware = devMiddleware({
       headers: devOptions.headers,

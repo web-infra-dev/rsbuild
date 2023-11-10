@@ -24,7 +24,7 @@ The following are official plugins that can be used in Rsbuild.
 Plugins available for the React framework:
 
 - [React Plugin](/plugins/list/plugin-react): Provides support for React.
-- [Svgr Plugin](/plugins/list/plugin-svgr): Support convert SVG to React components.
+- [SVGR Plugin](/plugins/list/plugin-svgr): Support convert SVG to React components.
 - [Styled Components Plugin](/plugins/list/plugin-styled-components): Provides compile-time support for styled-components.
 
 ### Vue Related

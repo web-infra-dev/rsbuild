@@ -1,9 +1,41 @@
 import type { ArrayOrNot } from '../utils';
+import type { IncomingMessage, ServerResponse } from 'http';
+import type { Options as ProxyOptions } from 'http-proxy-middleware';
 
 export type DevServerHttpsOptions = boolean | { key: string; cert: string };
 
 export type ProgressBarConfig = {
   id?: string;
+};
+
+export type NextFunction = () => void;
+
+export type ProxyDetail = ProxyOptions & {
+  bypass?: (
+    req: IncomingMessage,
+    res: ServerResponse,
+    proxyOptions: RsbuildProxyOptions,
+  ) => string | undefined | null | false;
+  context?: string | string[];
+};
+
+export type RsbuildProxyOptions =
+  | Record<string, string>
+  | Record<string, ProxyDetail>
+  | ProxyDetail[]
+  | ProxyDetail;
+
+export type RequestHandler = (
+  req: IncomingMessage,
+  res: ServerResponse,
+  next: NextFunction,
+) => void;
+
+export type ExposeServerApis = {
+  sockWrite: (
+    type: string,
+    data?: string | boolean | Record<string, any>,
+  ) => void;
 };
 
 export interface DevConfig {
@@ -42,7 +74,56 @@ export interface DevConfig {
    * Used to set the host of Dev Server.
    */
   host?: string;
+
+  /** config of hmr client. */
+  client?: {
+    path?: string;
+    port?: string;
+    host?: string;
+    protocol?: string;
+  };
+  /** Whether to enable gzip compression */
+  compress?: boolean;
+  /** see https://github.com/webpack/webpack-dev-middleware */
+  devMiddleware?: {
+    writeToDisk?: boolean | ((filename: string) => boolean);
+    outputFileSystem?: Record<string, any>;
+  };
+  proxy?: RsbuildProxyOptions;
+  headers?: Record<string, string | string[]>;
+  /** see https://github.com/bripkens/connect-history-api-fallback */
+  historyApiFallback?:
+    | boolean
+    | {
+        index?: string;
+        verbose?: boolean;
+        logger?: typeof console.log;
+        htmlAcceptHeaders?: string[];
+        disableDotRule?: true;
+        rewrites?: Array<{
+          from: RegExp;
+          to: string | RegExp | Function;
+        }>;
+      };
+  /** Provides the ability to execute a custom function and apply custom middlewares */
+  setupMiddlewares?: Array<
+    (
+      /** Order: `devServer.before` => `unshift` => internal middlewares => `push` => `devServer.after` */
+      middlewares: {
+        /** Use the `unshift` method if you want to run a middleware before all other middlewares */
+        unshift: (...handlers: RequestHandler[]) => void;
+        /** Use the `push` method if you want to run a middleware after all other middlewares */
+        push: (...handlers: RequestHandler[]) => void;
+      },
+      server: ExposeServerApis,
+    ) => void
+  >;
 }
 
 export type NormalizedDevConfig = DevConfig &
-  Required<Omit<DevConfig, 'beforeStartUrl' | 'progressBar'>>;
+  Required<
+    Pick<
+      DevConfig,
+      'hmr' | 'port' | 'https' | 'startUrl' | 'assetPrefix' | 'host'
+    >
+  >;

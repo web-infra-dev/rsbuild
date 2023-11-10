@@ -17,7 +17,7 @@ The following are the formats supported by Rsbuild by default:
 If you need to import assets in other formats, please refer to [Extend Asset Types](#extend-asset-types).
 
 :::tip SVG images
-SVG image is a special case. Rsbuild support convert SVG to React components, so SVG is processed separately. For details, see [Svgr Plugin](/plugins/list/plugin-svgr).
+SVG image is a special case. Rsbuild support convert SVG to React components, so SVG is processed separately. For details, see [SVGR Plugin](/plugins/list/plugin-svgr).
 :::
 
 ## Import Assets in JS file

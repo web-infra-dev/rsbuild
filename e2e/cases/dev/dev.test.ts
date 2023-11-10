@@ -16,12 +16,10 @@ test('default & hmr (default true)', async ({ page }) => {
     },
     plugins: [pluginReact()],
     rsbuildConfig: {
-      tools: {
-        devServer: {
-          client: {
-            host: '',
-            port: '',
-          },
+      dev: {
+        client: {
+          host: '',
+          port: '',
         },
       },
     },
@@ -116,9 +114,7 @@ test('dev.port & output.distPath', async ({ page }) => {
   await fs.remove(join(fixtures, 'basic/dist-1'));
 });
 
-test('hmr should work when setting dev.port & devServer.client', async ({
-  page,
-}) => {
+test('hmr should work when setting dev.port & client', async ({ page }) => {
   await fs.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src-1'));
   const cwd = join(fixtures, 'hmr');
   const rsbuild = await dev({
@@ -130,12 +126,8 @@ test('hmr should work when setting dev.port & devServer.client', async ({
     rsbuildConfig: {
       dev: {
         port: 3001,
-      },
-      tools: {
-        devServer: {
-          client: {
-            host: '',
-          },
+        client: {
+          host: '',
         },
       },
     },
@@ -187,7 +179,7 @@ test('dev.https', async () => {
 });
 
 // hmr will timeout in CI
-test.skip('tools.devServer', async ({ page }) => {
+test('devServer', async ({ page }) => {
   let i = 0;
   let reloadFn: undefined | (() => void);
 
@@ -198,20 +190,16 @@ test.skip('tools.devServer', async ({ page }) => {
       main: join(join(fixtures, 'basic'), 'src/index.ts'),
     },
     rsbuildConfig: {
-      tools: {
-        devServer: {
-          setupMiddlewares: [
-            (_middlewares, server) => {
-              reloadFn = () => server.sockWrite('content-changed');
-            },
-          ],
-          before: [
-            (req, res, next) => {
+      dev: {
+        setupMiddlewares: [
+          (middlewares, server) => {
+            middlewares.unshift((req, res, next) => {
               i++;
               next();
-            },
-          ],
-        },
+            });
+            reloadFn = () => server.sockWrite('content-changed');
+          },
+        ],
       },
     },
   });

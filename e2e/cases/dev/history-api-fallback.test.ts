@@ -13,11 +13,9 @@ test('should provide history api fallback correctly', async ({ page }) => {
     },
     plugins: [pluginReact()],
     rsbuildConfig: {
-      tools: {
-        devServer: {
-          historyApiFallback: {
-            index: '/main.html',
-          },
+      dev: {
+        historyApiFallback: {
+          index: '/main.html',
         },
       },
     },

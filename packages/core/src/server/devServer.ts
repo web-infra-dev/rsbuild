@@ -3,7 +3,7 @@ import { createServer as createHttpsServer } from 'https';
 import type { ListenOptions } from 'net';
 import url from 'url';
 import {
-  DevServerOptions,
+  DevConfig,
   RequestHandler,
   ExposeServerApis,
   RsbuildDevServerOptions,
@@ -18,15 +18,13 @@ import {
   StartServerResult,
   getDevOptions,
 } from '@rsbuild/shared';
-import { getDefaultDevOptions } from './constants';
 import DevMiddleware from './dev-middleware';
-import { deepmerge } from '@rsbuild/shared/deepmerge';
 import connect from 'connect';
 import { createProxyMiddleware } from './proxy';
 import { faviconFallbackMiddleware } from './middlewares';
 
 export class RsbuildDevServer {
-  private readonly dev: DevServerOptions;
+  private readonly dev: DevConfig;
   private readonly devMiddleware: DevMiddleware;
   private pwd: string;
   private app!: Server;
@@ -34,8 +32,7 @@ export class RsbuildDevServer {
 
   constructor(options: RsbuildDevServerOptions) {
     this.pwd = options.pwd;
-    // set dev server options, like webpack-dev-server
-    this.dev = deepmerge(getDefaultDevOptions(), options.dev);
+    this.dev = options.dev;
 
     // create dev middleware instance
     this.devMiddleware = new DevMiddleware({

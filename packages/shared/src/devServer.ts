@@ -4,7 +4,7 @@ import type {
   OnAfterStartDevServerFn,
   OnBeforeStartDevServerFn,
   CompilerTapFn,
-  DevServerOptions,
+  DevConfig,
 } from './types';
 import { getPort } from './port';
 import deepmerge from 'deepmerge';
@@ -12,7 +12,6 @@ import { color } from './color';
 import { logger as defaultLogger, Logger } from './logger';
 import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import { createAsyncHook } from './createHook';
-import { mergeChainedOptions } from './mergeChainedOptions';
 import type { Compiler } from '@rspack/core';
 
 export function printServerURLs(
@@ -26,13 +25,50 @@ export function printServerURLs(
   logger.log(message);
 }
 
+/**
+ * hmr socket connect path
+ */
+export const HMR_SOCK_PATH = '/webpack-hmr';
+
+export const mergeDevOptions = ({
+  rsbuildConfig,
+  port,
+}: {
+  rsbuildConfig: RsbuildConfig;
+  port: number;
+}) => {
+  const defaultDevConfig: DevConfig = {
+    client: {
+      path: HMR_SOCK_PATH,
+      port: port.toString(),
+      // By default it is set to "location.hostname"
+      host: '',
+      // By default it is set to "location.protocol === 'https:' ? 'wss' : 'ws'""
+      protocol: '',
+    },
+    compress: true,
+    port,
+    devMiddleware: {
+      writeToDisk: (file: string) => !file.includes('.hot-update.'),
+    },
+  };
+
+  const devServerConfig = rsbuildConfig.dev
+    ? deepmerge(defaultDevConfig, rsbuildConfig.dev)
+    : defaultDevConfig;
+
+  devServerConfig.port = port;
+
+  return devServerConfig;
+};
+
 export const getDevOptions = async ({
   rsbuildConfig,
   strictPort,
   getPortSilently,
 }: {
   rsbuildConfig: RsbuildConfig;
-  strictPort: boolean;
+  strictPort?: boolean;
   getPortSilently?: boolean;
 }) => {
   const port = await getPort(rsbuildConfig.dev?.port || DEFAULT_PORT, {
@@ -44,40 +80,9 @@ export const getDevOptions = async ({
 
   const https = Boolean(rsbuildConfig.dev?.https) || false;
 
-  const devServerConfig = await getDevServerOptions({
-    rsbuildConfig,
-    port,
-  });
+  const devServerConfig = mergeDevOptions({ rsbuildConfig, port });
 
-  return { port, host, https, devServerConfig };
-};
-
-export const getDevServerOptions = async ({
-  rsbuildConfig,
-  port,
-}: {
-  rsbuildConfig: RsbuildConfig;
-  port: number;
-}): Promise<DevServerOptions> => {
-  const defaultDevConfig = {
-    hot: rsbuildConfig.dev?.hmr ?? true,
-    watch: true,
-    client: {
-      port: port.toString(),
-    },
-    port,
-    liveReload: rsbuildConfig.dev?.hmr ?? true,
-    devMiddleware: {
-      writeToDisk: (file: string) => !file.includes('.hot-update.'),
-    },
-    https: rsbuildConfig.dev?.https,
-  };
-
-  return mergeChainedOptions({
-    defaults: defaultDevConfig,
-    options: rsbuildConfig.tools?.devServer,
-    mergeFn: deepmerge,
-  });
+  return { devServerConfig, port, host, https };
 };
 
 /** The context used by startDevServer. */

@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import {
   setupServerHooks,
   isClientCompiler,
-  getDevServerOptions,
+  mergeDevOptions,
 } from '../src/devServer';
 
 describe('test dev server', () => {
@@ -82,72 +82,57 @@ describe('test dev server', () => {
   });
 
   test('getDevServerOptions', async () => {
-    await expect(
-      getDevServerOptions({
+    expect(
+      mergeDevOptions({
         rsbuildConfig: {},
-        serverOptions: {},
         port: 8080,
       }),
-    ).resolves.toMatchInlineSnapshot(`
+    ).toMatchInlineSnapshot(`
       {
         "client": {
+          "host": "",
+          "path": "/webpack-hmr",
           "port": "8080",
+          "protocol": "",
         },
+        "compress": true,
         "devMiddleware": {
           "writeToDisk": [Function],
         },
-        "hot": true,
-        "https": undefined,
-        "liveReload": true,
         "port": 8080,
-        "watch": true,
       }
     `);
 
-    await expect(
-      getDevServerOptions({
+    expect(
+      mergeDevOptions({
         rsbuildConfig: {
           dev: {
             hmr: false,
             https: true,
-          },
-          output: {
-            distPath: {
-              root: 'dist',
+            port: 8080,
+            client: {
+              host: '',
+              path: '',
             },
-          },
-          tools: {
-            devServer: {
-              client: {
-                host: '',
-                path: '',
-              },
-            },
-          },
-        },
-        serverOptions: {
-          runtime: {
-            router: true,
-            state: true,
           },
         },
         port: 8081,
       }),
-    ).resolves.toMatchInlineSnapshot(`
+    ).toMatchInlineSnapshot(`
       {
         "client": {
           "host": "",
           "path": "",
           "port": "8081",
+          "protocol": "",
         },
+        "compress": true,
         "devMiddleware": {
           "writeToDisk": [Function],
         },
-        "hot": false,
+        "hmr": false,
         "https": true,
-        "liveReload": false,
         "port": 8081,
-        "watch": true,
       }
     `);
   });
