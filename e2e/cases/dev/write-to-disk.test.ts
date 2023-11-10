@@ -10,16 +10,7 @@ test('writeToDisk default', async ({ page }) => {
     entry: {
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
-    rsbuildConfig: {
-      tools: {
-        devServer: {
-          client: {
-            host: '',
-            port: '',
-          },
-        },
-      },
-    },
+    rsbuildConfig: {},
   });
 
   await page.goto(getHrefByEntryName('main', rsbuild.port));
@@ -37,11 +28,9 @@ test('writeToDisk false', async ({ page }) => {
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
     rsbuildConfig: {
-      tools: {
-        devServer: {
-          devMiddleware: {
-            writeToDisk: false,
-          },
+      dev: {
+        devMiddleware: {
+          writeToDisk: false,
         },
       },
     },
@@ -62,11 +51,9 @@ test('writeToDisk true', async ({ page }) => {
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
     rsbuildConfig: {
-      tools: {
-        devServer: {
-          devMiddleware: {
-            writeToDisk: true,
-          },
+      dev: {
+        devMiddleware: {
+          writeToDisk: true,
         },
       },
     },

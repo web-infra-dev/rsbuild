@@ -15,100 +15,10 @@ import type {
 } from '../thirdParty';
 import type { BundlerChain } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
-import type { DevServerHttpsOptions } from './dev';
 import type { RspackConfig, RspackRule, RspackPluginInstance } from '../rspack';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
-import type { IncomingMessage, ServerResponse } from 'http';
-import type { Options as ProxyOptions } from 'http-proxy-middleware';
-
-export type NextFunction = () => void;
-
-export type ProxyDetail = ProxyOptions & {
-  bypass?: (
-    req: IncomingMessage,
-    res: ServerResponse,
-    proxyOptions: RsbuildProxyOptions,
-  ) => string | undefined | null | false;
-  context?: string | string[];
-};
-
-export type RsbuildProxyOptions =
-  | Record<string, string>
-  | Record<string, ProxyDetail>
-  | ProxyDetail[]
-  | ProxyDetail;
-
-export type RequestHandler = (
-  req: IncomingMessage,
-  res: ServerResponse,
-  next: NextFunction,
-) => void;
-
-export type ExposeServerApis = {
-  sockWrite: (
-    type: string,
-    data?: string | boolean | Record<string, any>,
-  ) => void;
-};
 
 export type { HTMLPluginOptions };
-
-export type DevServerOptions = {
-  /** config of hmr client. */
-  client?: {
-    path?: string;
-    port?: string;
-    host?: string;
-    protocol?: string;
-  };
-  /** Whether to enable gzip compression */
-  compress?: boolean;
-  devMiddleware?: {
-    writeToDisk?: boolean | ((filename: string) => boolean);
-    outputFileSystem?: Record<string, any>;
-  };
-  proxy?: RsbuildProxyOptions;
-  headers?: Record<string, string | string[]>;
-  /** Provides the ability to execute a custom function and apply custom middlewares */
-  /** Whether to watch files change. */
-  watch?: boolean;
-  /** Whether to enable hot reload. */
-  hot?: boolean | string;
-  /** Whether to enable page reload. */
-  liveReload?: boolean;
-  /** Whether to enable https. */
-  https?: DevServerHttpsOptions;
-  /** see https://github.com/bripkens/connect-history-api-fallback */
-  historyApiFallback?:
-    | boolean
-    | {
-        index?: string;
-        verbose?: boolean;
-        logger?: typeof console.log;
-        htmlAcceptHeaders?: string[];
-        disableDotRule?: true;
-        rewrites?: Array<{
-          from: RegExp;
-          to: string | RegExp | Function;
-        }>;
-      };
-  /** Provides the ability to execute a custom function and apply custom middlewares */
-  setupMiddlewares?: Array<
-    (
-      /** Order: `devServer.before` => `unshift` => internal middlewares => `push` => `devServer.after` */
-      middlewares: {
-        /** Use the `unshift` method if you want to run a middleware before all other middlewares */
-        unshift: (...handlers: RequestHandler[]) => void;
-        /** Use the `push` method if you want to run a middleware after all other middlewares */
-        push: (...handlers: RequestHandler[]) => void;
-      },
-      server: ExposeServerApis,
-    ) => void
-  >;
-  [propName: string]: any;
-};
-
-export type ToolsDevServerConfig = ChainedConfig<DevServerOptions>;
 
 export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
 
@@ -178,10 +88,6 @@ export interface ToolsConfig {
    * Modify the config of [autoprefixer](https://github.com/postcss/autoprefixer)
    */
   autoprefixer?: ToolsAutoprefixerConfig;
-  /**
-   * Modify the options of DevServer.
-   */
-  devServer?: ToolsDevServerConfig;
   /**
    * Modify the options of [css-loader](https://github.com/webpack-contrib/css-loader).
    */
