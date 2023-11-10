@@ -30,7 +30,8 @@
     "@rsbuild/webpack": "workspace:*",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     "webpack": "^5.89.0",
-    "webpack-manifest-plugin": "5.0.0"
+    "webpack-manifest-plugin": "5.0.0",
+    "webpack-subresource-integrity": "5.1.0"
   },
   "devDependencies": {
     "typescript": "^5.2.2"

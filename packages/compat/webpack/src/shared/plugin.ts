@@ -33,7 +33,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.toml(),
     plugins.yaml(),
     plugins.splitChunks(),
-    import('../plugins/sri').then((m) => m.pluginSRI()),
     plugins.startUrl?.(),
     plugins.inlineChunk(),
     plugins.externals(),
