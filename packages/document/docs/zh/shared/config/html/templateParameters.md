@@ -8,7 +8,7 @@ type DefaultParameters = {
   assetPrefix: string; // 对应 output.assetPrefix 配置
   compilation: Compilation; // Rspack 的 compilation 对象
   // htmlWebpackPlugin 内置的参数
-  // 详见 https://github.com/rspack-contrib/html-rspack-plugin
+  // 详见 https://github.com/jantimon/html-webpack-plugin
   htmlWebpackPlugin: {
     tags: object;
     files: object;
@@ -17,7 +17,7 @@ type DefaultParameters = {
 };
 ```
 
-定义 HTML 模板中的参数，对应 [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) 的 `templateParameters` 配置项。
+定义 HTML 模板中的参数，对应 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) 的 `templateParameters` 配置项。
 
 ### 对象用法
 

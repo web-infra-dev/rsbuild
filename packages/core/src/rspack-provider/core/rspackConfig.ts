@@ -89,7 +89,7 @@ async function getConfigUtils(
 
 async function getChainUtils(target: RsbuildTarget): Promise<ModifyChainUtils> {
   const nodeEnv = process.env.NODE_ENV as NodeEnv;
-  const { default: HtmlPlugin } = await import('html-rspack-plugin');
+  const { default: HtmlPlugin } = await import('html-webpack-plugin');
 
   return {
     env: nodeEnv,

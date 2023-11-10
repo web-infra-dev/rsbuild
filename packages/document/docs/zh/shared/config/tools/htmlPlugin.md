@@ -26,7 +26,7 @@ const defaultHtmlPluginOptions = {
 };
 ```
 
-通过 `tools.htmlPlugin` 可以修改 [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) 的配置项。
+通过 `tools.htmlPlugin` 可以修改 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) 的配置项。
 
 ### Object 类型
 
@@ -64,7 +64,7 @@ export default {
 
 ### Boolean 类型
 
-将 `tools.htmlPlugin` 配置为 `false`，可以禁用默认的 `html-rspack-plugin` 插件。
+将 `tools.htmlPlugin` 配置为 `false`，可以禁用默认的 `html-webpack-plugin` 插件。
 
 ```js
 export default {

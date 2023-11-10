@@ -9,7 +9,7 @@ import {
   getPublicPathFromCompiler,
   COMPILATION_PROCESS_STAGE,
 } from './util';
-import type HtmlWebpackPlugin from 'html-rspack-plugin';
+import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { RemOptions } from '../types';
 import type { Compiler, Compilation, RspackPluginInstance } from '@rspack/core';
 

@@ -106,7 +106,7 @@ type DefaultParameters = {
   compilation: webpack.Compilation; // 对应 webpack 的 compilation 对象
   webpackConfig: Configuration; // webpack 配置
   // htmlWebpackPlugin 内置的参数
-  // 详见 https://github.com/rspack-contrib/html-rspack-plugin
+  // 详见 https://github.com/jantimon/html-webpack-plugin
   htmlWebpackPlugin: {
     tags: object;
     files: object;

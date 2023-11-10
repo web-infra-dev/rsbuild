@@ -118,9 +118,9 @@ export default {
 
 #### HtmlPlugin
 
-- **Type:** `typeof import('html-rspack-plugin')`
+- **Type:** `typeof import('html-webpack-plugin')`
 
-The instance of `html-rspack-plugin`:
+The instance of `html-webpack-plugin`:
 
 ```js
 export default {

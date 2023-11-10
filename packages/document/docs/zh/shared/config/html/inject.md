@@ -7,7 +7,7 @@
 
 - `'head'`: script 标签会插入在 HTML 的 head 标签内。
 - `'body'`: script 标签会插入在 HTML 的 body 标签尾部。
-- `true`: 最终表现取决于 `html-rspack-plugin` 的 scriptLoading 配置项。
+- `true`: 最终表现取决于 `html-webpack-plugin` 的 scriptLoading 配置项。
 - `false`: script 标签不插入 HTML 中。
 
 #### 默认插入位置

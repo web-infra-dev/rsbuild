@@ -106,7 +106,7 @@ type DefaultParameters = {
   compilation: webpack.Compilation; // Compilation object corresponding to webpack
   webpackConfig: config; // webpack config
   // htmlWebpackPlugin built-in parameters
-  // See https://github.com/rspack-contrib/html-rspack-plugin for details
+  // See https://github.com/jantimon/html-webpack-plugin for details
   htmlWebpackPlugin: {
     tags: object;
     files: object;

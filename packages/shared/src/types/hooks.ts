@@ -53,7 +53,7 @@ export type ModifyChainUtils = {
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
   getCompiledPath: (name: string) => string;
-  HtmlPlugin: typeof import('html-rspack-plugin');
+  HtmlPlugin: typeof import('html-webpack-plugin');
 };
 
 interface PluginInstance {

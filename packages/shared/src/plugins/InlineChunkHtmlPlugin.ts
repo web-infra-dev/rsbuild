@@ -8,8 +8,8 @@
 import { join } from 'path';
 import { isFunction, addTrailingSlash } from '../utils';
 import type { Compiler, Compilation } from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-rspack-plugin';
-import type { HtmlTagObject } from 'html-rspack-plugin';
+import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type { HtmlTagObject } from 'html-webpack-plugin';
 import { COMPILATION_PROCESS_STAGE, getPublicPathFromCompiler } from './util';
 
 export type InlineChunkTestFunction = (params: {
@@ -240,7 +240,7 @@ export class InlineChunkHtmlPlugin {
           name: 'InlineChunkHtmlPlugin',
           /**
            * Remove marked inline assets in summarize stage,
-           * which should be later than the emitting of html-rspack-plugin
+           * which should be later than the emitting of html-webpack-plugin
            */
           stage: COMPILATION_PROCESS_STAGE.PROCESS_ASSETS_STAGE_SUMMARIZE,
         },

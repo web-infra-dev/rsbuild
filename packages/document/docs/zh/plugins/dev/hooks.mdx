@@ -87,7 +87,7 @@ type ModifyBundlerChainUtils = {
   isServer: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
-  HtmlPlugin: typeof import('html-rspack-plugin');
+  HtmlPlugin: typeof import('html-webpack-plugin');
   bundler: {
     // 取决于 bundler 类型
     BannerPlugin: typeof webpack.BannerPlugin | typeof rspack.BannerPlugin;

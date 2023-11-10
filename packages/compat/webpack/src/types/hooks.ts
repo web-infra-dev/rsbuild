@@ -12,7 +12,7 @@ export type ModifyWebpackChainUtils = ModifyChainUtils & {
   /**
    * @deprecated Use HtmlPlugin instead.
    */
-  HtmlWebpackPlugin: typeof import('html-rspack-plugin');
+  HtmlWebpackPlugin: typeof import('html-webpack-plugin');
 };
 
 export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {

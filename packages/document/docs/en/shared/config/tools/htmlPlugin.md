@@ -26,7 +26,7 @@ const defaultHtmlPluginOptions = {
 };
 ```
 
-The configs of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) can be modified through `tools.htmlPlugin`.
+The configs of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) can be modified through `tools.htmlPlugin`.
 
 ### Object Type
 
@@ -64,7 +64,7 @@ export default {
 
 ### Boolean Type
 
-The built-in `html-rspack-plugin` plugins can be disabled by set `tools.htmlPlugin` to `false`.
+The built-in `html-webpack-plugin` plugins can be disabled by set `tools.htmlPlugin` to `false`.
 
 ```js
 export default {

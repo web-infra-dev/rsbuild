@@ -1,4 +1,4 @@
-import type HtmlWebpackPlugin from 'html-rspack-plugin';
+import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
 import type { MetaAttrs } from '@rsbuild/shared';
 

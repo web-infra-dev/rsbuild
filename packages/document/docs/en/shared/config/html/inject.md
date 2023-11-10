@@ -7,7 +7,7 @@ Can be set to the following values:
 
 - `'head'`: The script tag will be inject inside the head tag.
 - `'body'`: The script tag is inject at the end of the body tag.
-- `true`: The result depends on the scriptLoading config of `html-rspack-plugin`.
+- `true`: The result depends on the scriptLoading config of `html-webpack-plugin`.
 - `false`: script tags will not be injected.
 
 #### Default inject position
