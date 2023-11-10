@@ -1,7 +1,7 @@
 import { Server } from 'http';
 import { Socket } from 'net';
 import ws from 'ws';
-import { logger, Stats, DevServerOptions } from '@rsbuild/shared';
+import { logger, Stats, DevConfig } from '@rsbuild/shared';
 
 interface ExtWebSocket extends ws {
   isAlive: boolean;
@@ -12,7 +12,7 @@ export default class SocketServer {
 
   private readonly sockets: ws[] = [];
 
-  private readonly options: DevServerOptions;
+  private readonly options: DevConfig;
 
   private app?: Server;
 
@@ -20,7 +20,7 @@ export default class SocketServer {
 
   private timer: NodeJS.Timeout | null = null;
 
-  constructor(options: DevServerOptions) {
+  constructor(options: DevConfig) {
     this.options = options;
   }
 
@@ -124,12 +124,8 @@ export default class SocketServer {
       }
     });
 
-    if (this.options.hot || this.options.hot === 'only') {
+    if (this.options.hmr) {
       this.singleWrite(connection, 'hot');
-    }
-
-    if (this.options.liveReload) {
-      this.singleWrite(connection, 'liveReload');
     }
 
     // send first stats to active client sock if stats exist

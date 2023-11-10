@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse, Server } from 'http';
-import { DevServerOptions, NextFunction } from './config/tools';
+import { DevConfig, NextFunction } from './config/dev';
 import type { Logger } from '../logger';
 // import type Connect from 'connect';
 // import type { ListenOptions } from 'net';
@@ -45,7 +45,7 @@ export type DevMiddleware = (options: DevMiddlewareOptions) => DevMiddlewareAPI;
 
 export type RsbuildDevServerOptions = {
   pwd: string;
-  dev: Partial<DevServerOptions>;
+  dev: DevConfig;
   devMiddleware?: DevMiddleware;
 };
 
