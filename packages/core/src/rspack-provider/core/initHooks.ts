@@ -13,8 +13,9 @@ import {
   type RspackConfig,
   type RspackCompiler,
   type RspackMultiCompiler,
+  type ModifyRspackConfigFn,
 } from '@rsbuild/shared';
-import type { RsbuildConfig, ModifyRspackConfigFn } from '../types';
+import type { RsbuildConfig } from '../types';
 
 export function initHooks() {
   return {

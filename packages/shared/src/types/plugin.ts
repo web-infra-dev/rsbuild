@@ -1,3 +1,4 @@
+import type WebpackChain from 'webpack-chain';
 import type {
   OnExitFn,
   OnAfterBuildFn,
@@ -9,10 +10,62 @@ import type {
   OnBeforeCreateCompilerFn,
   ModifyRsbuildConfigFn,
   ModifyBundlerChainFn,
+  ModifyChainUtils,
 } from './hooks';
 import { Context } from './context';
-import { RsbuildConfig, NormalizedConfig } from './config';
-import { PromiseOrNot } from './utils';
+import {
+  RsbuildConfig,
+  NormalizedConfig,
+  ModifyRspackConfigUtils,
+} from './config';
+import type { PromiseOrNot } from './utils';
+import type { RspackConfig } from './rspack';
+import type {
+  RuleSetRule,
+  WebpackPluginInstance,
+  Configuration as WebpackConfig,
+} from 'webpack';
+import type { ChainIdentifier } from '../chain';
+
+export type ModifyRspackConfigFn = (
+  config: RspackConfig,
+  utils: ModifyRspackConfigUtils,
+) => Promise<RspackConfig | void> | RspackConfig | void;
+
+export type ModifyWebpackChainUtils = ModifyChainUtils & {
+  webpack: typeof import('webpack');
+  CHAIN_ID: ChainIdentifier;
+  /**
+   * @deprecated Use target instead.
+   * */
+  name: string;
+  /**
+   * @deprecated Use HtmlPlugin instead.
+   */
+  HtmlWebpackPlugin: typeof import('html-webpack-plugin');
+};
+
+export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {
+  addRules: (rules: RuleSetRule | RuleSetRule[]) => void;
+  prependPlugins: (
+    plugins: WebpackPluginInstance | WebpackPluginInstance[],
+  ) => void;
+  appendPlugins: (
+    plugins: WebpackPluginInstance | WebpackPluginInstance[],
+  ) => void;
+  removePlugin: (pluginName: string) => void;
+  mergeConfig: typeof import('../../compiled/webpack-merge').merge;
+};
+
+export type ModifyWebpackChainFn = (
+  chain: WebpackChain,
+  utils: ModifyWebpackChainUtils,
+) => Promise<void> | void;
+
+export type ModifyWebpackConfigFn = (
+  config: WebpackConfig,
+  utils: ModifyWebpackConfigUtils,
+) => Promise<WebpackConfig | void> | WebpackConfig | void;
 
 export type PluginStore = {
   readonly plugins: RsbuildPlugin[];
@@ -92,6 +145,13 @@ export type DefaultRsbuildPluginAPI<
 
   modifyRsbuildConfig: (fn: ModifyRsbuildConfigFn<Config>) => void;
   modifyBundlerChain: (fn: ModifyBundlerChainFn) => void;
+
+  /** Only works when bundler is Rspack */
+  modifyRspackConfig: (fn: ModifyRspackConfigFn) => void;
+  /** Only works when bundler is Webpack */
+  modifyWebpackChain: (fn: ModifyWebpackChainFn) => void;
+  /** Only works when bundler is Webpack */
+  modifyWebpackConfig: (fn: ModifyWebpackConfigFn) => void;
 };
 
 export type SharedRsbuildPluginAPI = DefaultRsbuildPluginAPI<

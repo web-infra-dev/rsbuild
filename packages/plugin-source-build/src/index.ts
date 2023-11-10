@@ -79,47 +79,43 @@ export function pluginSourceBuild(
       });
 
       if (api.context.bundlerType === 'webpack') {
-        (api as unknown as RsbuildWebpackPluginAPI).modifyWebpackChain(
-          (chain, { CHAIN_ID }) => {
-            const {
-              tools: { tsLoader },
-            } = (
-              api as unknown as RsbuildWebpackPluginAPI
-            ).getNormalizedConfig();
+        api.modifyWebpackChain((chain, { CHAIN_ID }) => {
+          const {
+            tools: { tsLoader },
+          } = (api as unknown as RsbuildWebpackPluginAPI).getNormalizedConfig();
 
-            const useTsLoader = Boolean(tsLoader);
-            // webpack.js.org/configuration/module/#ruleresolve
-            chain.module
-              .rule(useTsLoader ? CHAIN_ID.RULE.TS : CHAIN_ID.RULE.JS)
-              // source > webpack default mainFiedls.
-              // when source is not exist, other mainFields will effect.
-              .resolve.mainFields.merge([sourceField, '...']);
+          const useTsLoader = Boolean(tsLoader);
+          // webpack.js.org/configuration/module/#ruleresolve
+          chain.module
+            .rule(useTsLoader ? CHAIN_ID.RULE.TS : CHAIN_ID.RULE.JS)
+            // source > webpack default mainFiedls.
+            // when source is not exist, other mainFields will effect.
+            .resolve.mainFields.merge([sourceField, '...']);
 
-            // webpack chain not support resolve.conditionNames
-            chain.module
-              .rule(useTsLoader ? CHAIN_ID.RULE.TS : CHAIN_ID.RULE.JS)
-              .resolve.merge({
-                conditionNames: ['...', sourceField],
-              });
+          // webpack chain not support resolve.conditionNames
+          chain.module
+            .rule(useTsLoader ? CHAIN_ID.RULE.TS : CHAIN_ID.RULE.JS)
+            .resolve.merge({
+              conditionNames: ['...', sourceField],
+            });
 
-            const { TS_CONFIG_PATHS } = CHAIN_ID.RESOLVE_PLUGIN;
+          const { TS_CONFIG_PATHS } = CHAIN_ID.RESOLVE_PLUGIN;
 
-            // set references config
-            // https://github.com/dividab/tsconfig-paths-webpack-plugin#options
-            if (chain.resolve.plugins.has(TS_CONFIG_PATHS)) {
-              chain.resolve.plugin(TS_CONFIG_PATHS).tap((options) => {
-                const references = projects
-                  .map((project) => path.join(project.dir, TS_CONFIG_FILE))
-                  .filter((filePath) => fs.existsSync(filePath));
+          // set references config
+          // https://github.com/dividab/tsconfig-paths-webpack-plugin#options
+          if (chain.resolve.plugins.has(TS_CONFIG_PATHS)) {
+            chain.resolve.plugin(TS_CONFIG_PATHS).tap((options) => {
+              const references = projects
+                .map((project) => path.join(project.dir, TS_CONFIG_FILE))
+                .filter((filePath) => fs.existsSync(filePath));
 
-                return options.map((option) => ({
-                  ...option,
-                  references,
-                }));
-              });
-            }
-          },
-        );
+              return options.map((option) => ({
+                ...option,
+                references,
+              }));
+            });
+          }
+        });
       }
     },
   };

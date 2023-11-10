@@ -5,7 +5,6 @@ import type {
 import type { Compiler, MultiCompiler } from 'webpack';
 import type { RsbuildConfig, NormalizedConfig } from './config';
 import type { WebpackConfig } from './thirdParty';
-import type { ModifyWebpackChainFn, ModifyWebpackConfigFn } from './hooks';
 
 export interface RsbuildPluginAPI
   extends DefaultRsbuildPluginAPI<
@@ -13,10 +12,6 @@ export interface RsbuildPluginAPI
     NormalizedConfig,
     WebpackConfig,
     Compiler | MultiCompiler
-  > {
-  // Modifiers
-  modifyWebpackChain: (fn: ModifyWebpackChainFn) => void;
-  modifyWebpackConfig: (fn: ModifyWebpackConfigFn) => void;
-}
+  > {}
 
 export type RsbuildPlugin = BaseRsbuildPlugin<RsbuildPluginAPI>;

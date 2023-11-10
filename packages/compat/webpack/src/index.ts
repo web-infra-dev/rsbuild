@@ -24,12 +24,6 @@ export type {
   NormalizedConfig,
   PerformanceConfig,
 
-  // Hook Callback Types
-  ModifyWebpackChainFn,
-  ModifyWebpackConfigFn,
-  ModifyWebpackChainUtils,
-  ModifyWebpackConfigUtils,
-
   // Third Party Types
   webpack,
   WebpackChain,
