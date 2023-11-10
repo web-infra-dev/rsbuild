@@ -2,8 +2,12 @@ import path from 'path';
 import {
   getDistPath,
   getFilename,
+  MEDIA_EXTENSIONS,
+  FONT_EXTENSIONS,
+  IMAGE_EXTENSIONS,
   chainStaticAssetRule,
 } from '@rsbuild/shared';
+
 import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 
 export function getRegExpForExts(exts: string[]): RegExp {
@@ -18,29 +22,35 @@ export function getRegExpForExts(exts: string[]): RegExp {
   );
 }
 
-export const pluginAsset = (
-  assetType: 'image' | 'media' | 'font' | 'svg',
-  exts: string[],
-): DefaultRsbuildPlugin => ({
-  name: `plugin-${assetType}`,
+export const pluginAsset = (): DefaultRsbuildPlugin => ({
+  name: 'plugin-asset',
 
   setup(api) {
     api.modifyBundlerChain((chain, { isProd }) => {
       const config = api.getNormalizedConfig();
-      const regExp = getRegExpForExts(exts);
-      const distDir = getDistPath(config.output, assetType);
-      const filename = getFilename(config.output, assetType, isProd);
 
-      const maxSize = config.output.dataUriLimit[assetType];
+      const createAssetRule = (
+        assetType: 'image' | 'media' | 'font' | 'svg',
+        exts: string[],
+      ) => {
+        const regExp = getRegExpForExts(exts);
+        const distDir = getDistPath(config.output, assetType);
+        const filename = getFilename(config.output, assetType, isProd);
+        const maxSize = config.output.dataUriLimit[assetType];
+        const rule = chain.module.rule(assetType).test(regExp);
 
-      const rule = chain.module.rule(assetType).test(regExp);
+        chainStaticAssetRule({
+          rule,
+          maxSize,
+          filename: path.posix.join(distDir, filename),
+          assetType,
+        });
+      };
 
-      chainStaticAssetRule({
-        rule,
-        maxSize,
-        filename: path.posix.join(distDir, filename),
-        assetType,
-      });
+      createAssetRule('image', IMAGE_EXTENSIONS);
+      createAssetRule('svg', ['svg']);
+      createAssetRule('media', MEDIA_EXTENSIONS);
+      createAssetRule('font', FONT_EXTENSIONS);
     });
   },
 });

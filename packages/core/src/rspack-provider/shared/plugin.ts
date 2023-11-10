@@ -14,10 +14,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.fileSize(),
     // cleanOutput plugin should before the html plugin
     plugins.cleanOutput(),
-    plugins.font(),
-    plugins.image(),
-    plugins.media(),
-    plugins.svg(),
+    plugins.asset(),
     plugins.html(),
     plugins.wasm(),
     plugins.moment(),
