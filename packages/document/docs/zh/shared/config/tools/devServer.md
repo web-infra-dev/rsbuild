@@ -343,10 +343,3 @@ export default {
   },
 };
 ```
-
-#### watch
-
-- **类型：** `boolean`
-- **默认值：** `true`
-
-是否监听 `mock/`、`server/`、`api/` 等目录的文件变化。

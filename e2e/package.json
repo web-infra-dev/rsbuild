@@ -9,6 +9,7 @@
     "test:webpack-swc": "PROVIDE_TYPE=webpack playwright test swc"
   },
   "dependencies": {
+    "devcert": "1.2.2",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

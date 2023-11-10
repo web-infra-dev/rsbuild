@@ -35,19 +35,13 @@ export class RsbuildDevServer {
   constructor(options: RsbuildDevServerOptions) {
     this.pwd = options.pwd;
     // set dev server options, like webpack-dev-server
-    this.dev = this.getDevOptions(options);
+    this.dev = deepmerge(getDefaultDevOptions(), options.dev);
 
     // create dev middleware instance
     this.devMiddleware = new DevMiddleware({
       dev: this.dev,
       devMiddleware: options.devMiddleware,
     });
-  }
-
-  private getDevOptions(options: RsbuildDevServerOptions) {
-    const devOptions = typeof options.dev === 'boolean' ? {} : options.dev;
-    const defaultOptions = getDefaultDevOptions();
-    return deepmerge(defaultOptions, devOptions);
   }
 
   private applySetupMiddlewares() {
@@ -202,7 +196,6 @@ export async function startDevServer<
     compiler,
     printURLs = true,
     strictPort = false,
-    serverOptions = {},
     logger: customLogger,
     getPortSilently,
   }: StartDevServerOptions & {
@@ -217,7 +210,6 @@ export async function startDevServer<
   const logger = customLogger ?? defaultLogger;
   const { devServerConfig, port, host, https } = await getDevOptions({
     rsbuildConfig,
-    serverOptions,
     strictPort,
     getPortSilently,
   });
