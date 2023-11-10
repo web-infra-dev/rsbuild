@@ -24,7 +24,7 @@ export default {
 
 在默认情况下，Rsbuild 使用当前页面的 host 和端口号来拼接 HMR 对应的 WebSocket URL。
 
-当出现 HMR 连接失败的情况时，你可以通过自定义 `devServer.client` 配置的方式来指定 WebSocket URL。
+当出现 HMR 连接失败的情况时，你可以通过自定义 `dev.client` 配置的方式来指定 WebSocket URL。
 
 ### 默认配置
 
@@ -32,17 +32,15 @@ export default {
 
 ```ts
 export default {
-  tools: {
-    devServer: {
-      client: {
-        path: '/webpack-hmr',
-        // 默认设置为 dev server 的端口号
-        port: '',
-        // 默认设置为 location.hostname
-        host: '',
-        // 默认设置为 location.protocol === 'https:' ? 'wss' : 'ws'
-        protocol: '',
-      },
+  dev: {
+    client: {
+      path: '/webpack-hmr',
+      // 默认设置为 dev server 的端口号
+      port: '',
+      // 默认设置为 location.hostname
+      host: '',
+      // 默认设置为 location.protocol === 'https:' ? 'wss' : 'ws'
+      protocol: '',
     },
   },
 };
@@ -50,27 +48,18 @@ export default {
 
 ### 线上代理
 
-如果你将一个线上页面代理到本地进行开发，WebSocket 请求将会连接失败。此时你可以尝试将 `devServer.client` 配置成如下值，使 HMR 请求能打到本地的 Dev Server。
+如果你将一个线上页面代理到本地进行开发，WebSocket 请求将会连接失败。此时你可以尝试将 `dev.client` 配置成如下值，使 HMR 请求能打到本地的 Dev Server。
 
 ```ts
 export default {
-  tools: {
-    devServer: {
-      client: {
-        host: 'localhost',
-        protocol: 'ws',
-      },
+  dev: {
+    client: {
+      host: 'localhost',
+      protocol: 'ws',
     },
   },
 };
 ```
-
-## Live reloading 和 Hot reloading 的区别
-
-- Live reloading: 修改文件之后，webpack 重新编译，并强制刷新浏览器，属于全局（整个应用）刷新，相当于 `window.location.reload()`；
-- Hot reloading: 修改文件之后，webpack 重新编译对应模块，刷新时可以记住应用的状态，从而做到局部刷新，即热更新。
-
-DevServer 提供了 [hot](/config/options/tools.html#hot) 和 [liveReload](/config/options/tools.html#livereload) 这两个配置项来控制更新方式。当 hot 和 liveReload 同时开启时，DevServer 会优先尝试使用 hot 模式 (HMR)，如果 HMR 更新失败后，会降级到重新加载页面。
 
 ## 常见问题
 
