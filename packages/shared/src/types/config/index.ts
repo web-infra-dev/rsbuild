@@ -7,7 +7,6 @@ import type {
   PerformanceConfig,
   NormalizedPerformanceConfig,
 } from './performance';
-import type { ExperimentsConfig } from './experiments';
 import type { ToolsConfig, NormalizedToolsConfig } from './tools';
 import type { DeepReadonly } from '../utils';
 
@@ -23,7 +22,6 @@ export interface RsbuildConfig {
   output?: OutputConfig;
   security?: SecurityConfig;
   performance?: PerformanceConfig;
-  experiments?: ExperimentsConfig;
 }
 
 export type NormalizedConfig = DeepReadonly<{
@@ -42,5 +40,4 @@ export * from './output';
 export * from './source';
 export * from './security';
 export * from './performance';
-export * from './experiments';
 export * from './tools';

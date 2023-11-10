@@ -1,17 +1,20 @@
-import type { RsbuildPlugin } from '../types';
+import type { RsbuildPlugin } from '@rsbuild/webpack';
 
-export const pluginLazyCompilation = (): RsbuildPlugin => ({
+export type LazyCompilationOptions =
+  | boolean
+  | {
+      entries?: boolean;
+      imports?: boolean;
+    };
+
+export const pluginLazyCompilation = (
+  options: LazyCompilationOptions,
+): RsbuildPlugin => ({
   name: 'plugin-lazy-compilation',
 
   setup(api) {
     api.modifyWebpackChain((chain, { isProd, isServer, isWebWorker }) => {
-      const config = api.getNormalizedConfig();
-      if (
-        isProd ||
-        isServer ||
-        isWebWorker ||
-        !config.experiments.lazyCompilation
-      ) {
+      if (isProd || isServer || isWebWorker || !options) {
         return;
       }
 
@@ -20,7 +23,7 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
 
       chain.experiments({
         ...chain.get('experiments'),
-        lazyCompilation: config.experiments.lazyCompilation,
+        lazyCompilation: options,
       });
     });
   },

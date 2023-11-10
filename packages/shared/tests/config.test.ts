@@ -107,7 +107,6 @@ describe('pickRsbuildConfig', () => {
       output: {},
       security: {},
       performance: {},
-      experiments: {},
       extraKey: 'extraValue',
     };
 
@@ -121,7 +120,6 @@ describe('pickRsbuildConfig', () => {
       output: {},
       security: {},
       performance: {},
-      experiments: {},
     });
   });
 

@@ -23,9 +23,6 @@ export const createDefaultConfig = (): RsbuildConfig => ({
   source: getDefaultSourceConfig(),
   output: getDefaultOutputConfig(),
   security: getDefaultSecurityConfig(),
-  experiments: {
-    lazyCompilation: false,
-  },
   performance: getDefaultPerformanceConfig(),
 });
 

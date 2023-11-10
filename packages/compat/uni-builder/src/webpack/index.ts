@@ -28,6 +28,13 @@ export async function parseConfig(
     rsbuildPlugins.push(pluginSRI(uniBuilderConfig.security?.sri));
   }
 
+  if (uniBuilderConfig.experiments?.lazyCompilation) {
+    const { pluginLazyCompilation } = await import('./plugins/lazyCompilation');
+    rsbuildPlugins.push(
+      pluginLazyCompilation(uniBuilderConfig.experiments?.lazyCompilation),
+    );
+  }
+
   return {
     rsbuildConfig,
     rsbuildPlugins,

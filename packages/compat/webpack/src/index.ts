@@ -23,7 +23,6 @@ export type {
   SecurityConfig,
   NormalizedConfig,
   PerformanceConfig,
-  ExperimentsConfig,
 
   // Hook Callback Types
   ModifyWebpackChainFn,
