@@ -1,0 +1,71 @@
+# Create React App
+
+本章节介绍如何将 [Create React App](https://github.com/facebook/create-react-app)（简称 CRA）项目迁移到 Rsbuild。
+
+## 安装依赖
+
+首先你需要把 CRA 的 npm 依赖替换为 Rsbuild 的依赖。
+
+import { PackageManagerTabs } from '@theme';
+
+移除 CRA 的依赖：
+
+<PackageManagerTabs command="remove react-scripts" />
+
+安装 Rsbuild 的依赖：
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-react -D" />
+
+## 更新 npm scripts
+
+下一步，你需要把 `package.json` 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
+
+```diff title="package.json"
+{
+  "scripts": {
+-   "start": "react-scripts start",
+-   "build": "react-scripts build",
+-   "eject": "react-scripts eject"
++   "start": "rsbuild dev",
++   "build": "rsbuild build",
++   "preview": "rsbuild preview"
+  }
+}
+```
+
+:::tip
+Rsbuild 未集成测试框架，因此没有提供用于替换 `react-scripts test` 的命令，你可以直接使用 Jest 或 Vitest 等测试框架。
+:::
+
+## 创建配置文件
+
+请在 `package.json` 的同级目录下创建 Rsbuild 的配置文件 `rsbuild.config.ts`，并添加以下内容：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+});
+```
+
+这样就完成了从 CRA 到 Rsbuild 的基本迁移，此时你可以执行 `npm run start` 命令来尝试启动开发服务器。
+
+## 使用 SVGR
+
+如果你使用了 CRA 的 "SVG 转 React 组件" 功能（即 [SVGR](https://react-svgr.com/)），那么还需要安装 Rsbuild 的 SVGR 插件。
+
+比如使用了以下用法：
+
+```jsx
+import { ReactComponent as Logo } from './logo.svg';
+
+const App = () => (
+  <div>
+    <Logo />
+  </div>
+);
+```
+
+请参考 [SVGR 插件](/plugins/list/plugin-svgr) 文档了解如何在 Rsbuild 中使用 SVGR。

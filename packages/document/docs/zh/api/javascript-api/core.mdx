@@ -80,15 +80,3 @@ console.log(mergedConfig); // { dev: { https: true } }
 ```
 
 > 该方法不会修改入参中的 config 对象。
-
-## HtmlWebpackPlugin
-
-HtmlWebpackPlugin 对象，通常用于实现 HtmlWebpackPlugin 的自定义插件。
-
-- **Example**
-
-```ts
-import HtmlWebpackPlugin from '@rsbuild/core/html-webpack-plugin';
-```
-
-> 大部分场景下，推荐从 Rsbuild 中引用 HtmlWebpackPlugin 对象，而不是手动安装一份 "html-webpack-plugin" 依赖，这样可以避免出现多实例问题。

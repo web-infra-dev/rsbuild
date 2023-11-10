@@ -19,7 +19,7 @@ const defaultHtmlPluginOptions = {
     removeScriptTypeAttributes: true,
     removeStyleLinkTypeAttributes: true,
     removeEmptyAttributes: true,
-    minifyJS, // 基于 output.charset 和 tools.terser.terserOptions 生成
+    minifyJS,
     minifyCSS: true,
     minifyURLs: true,
   },

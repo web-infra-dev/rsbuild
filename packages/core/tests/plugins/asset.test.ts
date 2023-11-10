@@ -1,4 +1,4 @@
-import { FONT_EXTENSIONS, IMAGE_EXTENSIONS } from '@rsbuild/shared';
+import { FONT_EXTENSIONS } from '@rsbuild/shared';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginAsset, getRegExpForExts } from '@src/plugins/asset';
 
@@ -50,7 +50,7 @@ describe('plugin-asset(image)', () => {
 
   it.each(cases)('$name', async (item) => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginAsset('image', IMAGE_EXTENSIONS)],
+      plugins: [pluginAsset()],
       rsbuildConfig: item.rsbuildConfig,
     });
 

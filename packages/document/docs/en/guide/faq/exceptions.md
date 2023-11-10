@@ -303,28 +303,7 @@ Usually, you don't need to install `core-js` in the project, because the Rsbuild
 
 If there is an error that `core-js` cannot be found, there may be several reasons:
 
-1. The `plugins` configured by Babel is overwritten in the project, causing the built-in `babelPluginLockCorejsVersion` does not work. In this case, just change `tools.babel` to a function:
-
-```ts
-// Wrong usage, will override Rsbuild's default Babel plugins
-export default {
-  tools: {
-    babel: {
-      plugins: ['babel-plugin-xxx'],
-    },
-  },
-};
-
-// Correct usage, add a new plugin in the default configuration instead of overriding the plugin
-export default {
-  tools: {
-    babel(config) {
-      config.plugins.push('babel-plugin-xxx');
-    },
-  },
-};
-```
-
+1. The current project overrides the built-in `alias` configuration of Rsbuild, causing the incorrect resolution of the `core-js` path when referenced. In this case, you can check the `alias` configuration of the project.
 2. Some code in the project depends on `core-js` v2. In this case, you usually need to find out the corresponding code and upgrade `core-js` to the v3.
 3. An npm package in `node_modules` imported `core-js`, but does not declare the `core-js` dependency in `dependencies`. In this case, you need to declare the `core-js` dependency in the corresponding npm package, or install a copy of `core-js` in the project root directory.
 
