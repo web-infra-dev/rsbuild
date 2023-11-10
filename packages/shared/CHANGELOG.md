@@ -1,5 +1,11 @@
 # @rsbuild/shared
 
+## 0.0.19
+
+### Patch Changes
+
+- f47302e: chore: update stats chunk type
+
 ## 0.0.18
 
 ### Patch Changes
