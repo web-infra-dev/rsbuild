@@ -7,16 +7,13 @@ import {
   type NodeEnv,
   type WebpackChain,
   type RsbuildTarget,
+  type ModifyWebpackChainUtils,
+  type ModifyWebpackConfigUtils,
 } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 
-import type {
-  Context,
-  WebpackConfig,
-  ModifyWebpackChainUtils,
-  ModifyWebpackConfigUtils,
-} from '../types';
+import type { Context, WebpackConfig } from '../types';
 
 async function modifyWebpackChain(
   context: Context,

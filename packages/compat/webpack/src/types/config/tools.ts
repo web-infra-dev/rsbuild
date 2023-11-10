@@ -5,16 +5,14 @@ import type {
   TerserPluginOptions,
   ToolsConfig as BaseToolsConfig,
   ChainedConfigWithUtils,
+  ModifyWebpackChainUtils,
+  ModifyWebpackConfigUtils,
 } from '@rsbuild/shared';
 import type {
   BabelTransformOptions,
   BabelConfigUtils,
 } from '@rsbuild/plugin-babel';
 import type { PluginCssMinimizerOptions } from '@rsbuild/plugin-css-minimizer';
-import type {
-  ModifyWebpackChainUtils,
-  ModifyWebpackConfigUtils,
-} from '../hooks';
 import type {
   WebpackChain,
   WebpackConfig,

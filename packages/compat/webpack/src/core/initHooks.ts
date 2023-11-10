@@ -4,6 +4,8 @@ import {
   OnAfterBuildFn,
   OnBeforeBuildFn,
   OnDevCompileDoneFn,
+  ModifyWebpackChainFn,
+  ModifyWebpackConfigFn,
   ModifyRsbuildConfigFn,
   OnAfterStartDevServerFn,
   OnBeforeStartDevServerFn,
@@ -12,12 +14,7 @@ import {
 } from '@rsbuild/shared';
 import type { ModifyBundlerChainFn } from '@rsbuild/shared';
 import type { Compiler, MultiCompiler } from 'webpack';
-import type {
-  WebpackConfig,
-  RsbuildConfig,
-  ModifyWebpackChainFn,
-  ModifyWebpackConfigFn,
-} from '../types';
+import type { WebpackConfig, RsbuildConfig } from '../types';
 
 export function initHooks() {
   return {

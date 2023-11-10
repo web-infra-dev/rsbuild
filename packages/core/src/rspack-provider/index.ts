@@ -6,10 +6,6 @@ export type {
   // Config Types
   RsbuildConfig,
   NormalizedConfig,
-
-  // Hook Callback Types
-  ModifyRspackConfigFn,
-
   // Plugin Types
   RsbuildPluginAPI,
 } from './types';
