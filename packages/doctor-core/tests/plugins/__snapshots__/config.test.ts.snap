@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`test src/utils/config.ts > makeRulesSerializable() 1`] = `
+"[
+  {
+    \\"test\\": \\"/rule1/\\"
+  },
+  {
+    \\"test\\": \\"/rule2/\\",
+    \\"oneOf\\": [
+      {
+        \\"test\\": \\"/oneof1/\\"
+      },
+      {
+        \\"test\\": \\"aaa\\"
+      }
+    ],
+    \\"exclude\\": {
+      \\"and\\": [
+        \\"/exclude_and1/\\",
+        \\"/exclude_and2/\\"
+      ],
+      \\"or\\": [
+        \\"/exclude_or/\\"
+      ],
+      \\"not\\": \\"/exclude_not/\\"
+    }
+  }
+]"
+`;

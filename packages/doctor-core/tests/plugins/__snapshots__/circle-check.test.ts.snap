@@ -1,0 +1,47 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`test checkCirclePath function > makeRulesSerializable() 1`] = `
+[
+  [
+    "foo",
+    "a",
+  ],
+  [
+    "foo",
+    "x",
+    "foo",
+  ],
+]
+`;
+
+exports[`test checkCirclePath function > makeRulesSerializable() 2`] = `
+{
+  "a": {
+    "b": "b",
+  },
+  "foo": "[Circular]",
+}
+`;
+
+exports[`test checkCirclePath function makeRulesSerializable() 1`] = `
+[
+  [
+    "foo",
+    "a",
+  ],
+  [
+    "foo",
+    "x",
+    "foo",
+  ],
+]
+`;
+
+exports[`test checkCirclePath function makeRulesSerializable() 2`] = `
+{
+  "a": {
+    "b": "b",
+  },
+  "foo": "[Circular]",
+}
+`;
