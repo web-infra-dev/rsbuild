@@ -1,0 +1,71 @@
+# Create React App
+
+This chapter introduces how to migrate a [Create React App](https://github.com/facebook/create-react-app) (CRA) project to Rsbuild.
+
+## Installing Dependencies
+
+First, you need to replace the npm dependencies of CRA with Rsbuild's dependencies.
+
+import { PackageManagerTabs } from '@theme';
+
+Remove CRA dependencies:
+
+<PackageManagerTabs command="remove react-scripts" />
+
+Install Rsbuild dependencies:
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-react -D" />
+
+## Updating npm scripts
+
+Next, you need to update the npm scripts in `package.json` to Rsbuild's CLI commands.
+
+```diff title="package.json"
+{
+  "scripts": {
+-   "start": "react-scripts start",
+-   "build": "react-scripts build",
+-   "eject": "react-scripts eject"
++   "start": "rsbuild dev",
++   "build": "rsbuild build",
++   "preview": "rsbuild preview"
+  }
+}
+```
+
+:::tip
+Rsbuild does not integrate testing frameworks, so it does not provide a command to replace `react-scripts test`. You can directly use testing frameworks such as Jest or Vitest.
+:::
+
+## Creating Configuration File
+
+Please create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as `package.json` and add the following content:
+
+```typescript title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+});
+```
+
+With this, the basic migration from CRA to Rsbuild is complete. You can now run the `npm run start` command to try starting the development server.
+
+## Using SVGR
+
+If you are using the "SVG to React Component" feature of CRA (i.e., [SVGR](https://react-svgr.com/)), you also need to install the SVGR plugin for Rsbuild.
+
+For example, if you are using the following usage:
+
+```jsx
+import { ReactComponent as Logo } from './logo.svg';
+
+const App = () => (
+  <div>
+    <Logo />
+  </div>
+);
+```
+
+Please refer to the [SVGR plugin](/plugins/list/plugin-svgr) documentation to learn how to use SVGR in Rsbuild.

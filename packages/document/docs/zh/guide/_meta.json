@@ -26,6 +26,11 @@
   },
   {
     "type": "dir",
+    "name": "migration",
+    "label": "迁移"
+  },
+  {
+    "type": "dir",
     "name": "debug",
     "label": "调试"
   },
