@@ -365,7 +365,6 @@ export const pickRsbuildConfig = (
     'output',
     'security',
     'performance',
-    'experiments',
   ];
   return pick(rsbuildConfig, keys);
 };

@@ -1,14 +1,15 @@
 import type {
+  NodeEnv,
+  MetaOptions,
+  ScriptInject,
+  RsbuildTarget,
   ChainedConfig,
   ChainedConfigWithUtils,
-  MetaOptions,
-  NodeEnv,
-  RsbuildTarget,
-  ScriptInject,
 } from '@rsbuild/shared';
 import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core/rspack-provider';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
+import type { LazyCompilationOptions } from './webpack/plugins/lazyCompilation';
 
 export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
@@ -108,6 +109,9 @@ export type UniBuilderWebpackConfig = RsbuildWebpackConfig &
        * verify the integrity of the introduced resource, thus preventing tampering with the downloaded resource.
        */
       sri?: SriOptions | boolean;
+    };
+    experiments?: {
+      lazyCompilation?: LazyCompilationOptions;
     };
   };
 

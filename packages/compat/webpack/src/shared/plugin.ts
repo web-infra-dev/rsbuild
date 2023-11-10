@@ -37,7 +37,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.inlineChunk(),
     plugins.externals(),
     plugins.performance(),
-    import('../plugins/lazyCompilation').then((m) => m.pluginLazyCompilation()),
     plugins.networkPerformance(),
     plugins.preloadOrPrefetch(),
     import('../plugins/fallback').then((m) => m.pluginFallback()), // fallback should be the last plugin

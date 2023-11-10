@@ -7,14 +7,12 @@ import type {
   SourceConfig,
   OutputConfig,
   SecurityConfig,
-  ExperimentsConfig,
   PerformanceConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
   NormalizedSourceConfig,
   NormalizedOutputConfig,
   NormalizedSecurityConfig,
-  NormalizedExperimentsConfig,
   NormalizedPerformanceConfig,
 } from '@rsbuild/shared';
 
@@ -24,14 +22,12 @@ export type {
   SourceConfig,
   OutputConfig,
   SecurityConfig,
-  ExperimentsConfig,
   PerformanceConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
   NormalizedSourceConfig,
   NormalizedOutputConfig,
   NormalizedSecurityConfig,
-  NormalizedExperimentsConfig,
   NormalizedPerformanceConfig,
 };
 
@@ -46,7 +42,6 @@ export interface RsbuildConfig {
   output?: OutputConfig;
   security?: SecurityConfig;
   performance?: PerformanceConfig;
-  experiments?: ExperimentsConfig;
 }
 
 export type NormalizedConfig = DeepReadonly<{
@@ -57,5 +52,4 @@ export type NormalizedConfig = DeepReadonly<{
   output: NormalizedOutputConfig;
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;
-  experiments: NormalizedExperimentsConfig;
 }>;
