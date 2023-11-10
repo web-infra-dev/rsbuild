@@ -52,22 +52,6 @@ console.log(example.hello); // 'world';
 console.log(example.foo); // { bar: 'baz' };
 ```
 
-### 添加类型声明
-
-当你在 TypeScript 代码中引用 YAML 文件时，请在项目中创建 `src/global.d.ts` 文件，并添加相应的类型声明：
-
-```ts title="src/global.d.ts"
-declare module '*.yaml' {
-  const content: Record<string, any>;
-  export default content;
-}
-
-declare module '*.yml' {
-  const content: Record<string, any>;
-  export default content;
-}
-```
-
 ## TOML 文件
 
 TOML 是一种语义明显、易于阅读的配置文件格式。
@@ -90,11 +74,27 @@ console.log(example.hello); // 'world';
 console.log(example.foo); // { bar: 'baz' };
 ```
 
-### 添加类型声明
+## 类型声明
 
-当你在 TypeScript 代码中引用 TOML 文件时，请在项目中创建 `src/global.d.ts` 文件，并添加相应的类型声明：
+当你在 TypeScript 代码中引用 YAML 或 TOML 文件时，请在项目中创建 `src/env.d.ts` 文件，并添加相应的类型声明。
 
-```ts title="src/global.d.ts"
+- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的类型声明：
+
+```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+- 方法二：手动添加需要的类型声明：
+
+```ts title="src/env.d.ts"
+declare module '*.yaml' {
+  const content: Record<string, any>;
+  export default content;
+}
+declare module '*.yml' {
+  const content: Record<string, any>;
+  export default content;
+}
 declare module '*.toml' {
   const content: Record<string, any>;
   export default content;

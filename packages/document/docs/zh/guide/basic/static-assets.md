@@ -98,7 +98,7 @@ import logo from './static/logo.png';
 console.log(logo); // "https://modern.com/static/logo.6c12aba3.png"
 ```
 
-## 添加类型声明
+## 类型声明
 
 当你在 TypeScript 代码中引用静态资源时，TypeScript 可能会提示该模块缺少类型定义：
 
@@ -106,16 +106,25 @@ console.log(logo); // "https://modern.com/static/logo.6c12aba3.png"
 TS2307: Cannot find module './logo.png' or its corresponding type declarations.
 ```
 
-此时你需要为静态资源添加类型声明文件，请在项目中创建 `src/global.d.ts` 文件，并添加相应的类型声明。以 png 图片为例，需要添加以下声明：
+此时你需要为静态资源添加类型声明文件，请在项目中创建 `src/env.d.ts` 文件，并添加相应的类型声明。
 
-```ts title="src/global.d.ts"
+- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的类型声明：
+
+```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+- 方法二：手动添加需要的类型声明：
+
+```ts title="src/env.d.ts"
+// 以 png 图片为例
 declare module '*.png' {
   const content: string;
   export default content;
 }
 ```
 
-添加类型声明后，如果依然存在上述错误提示，请尝试重启当前 IDE，或者调整 `global.d.ts` 所在的目录，使 TypeScript 能够正确识别类型定义。
+添加类型声明后，如果依然存在上述错误提示，请尝试重启当前 IDE，或者调整 `env.d.ts` 所在的目录，使 TypeScript 能够正确识别类型定义。
 
 ## 扩展静态资源类型
 
