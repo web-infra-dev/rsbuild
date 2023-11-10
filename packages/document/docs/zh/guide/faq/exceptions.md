@@ -307,28 +307,7 @@ Module not found: Can't resolve 'core-js/modules/es.error.cause.js'
 
 如果出现 `core-js` 找不到的报错，可能有以下几个原因：
 
-1. 项目里覆盖了 Babel 配置的 `plugins`，导致内置的 `babelPluginLockCorejsVersion` 无法正确生效。这种情况将 `tools.babel` 更改为函数用法即可：
-
-```ts
-// 错误用法，会覆盖 Rsbuild 默认的 Babel 插件
-export default {
-  tools: {
-    babel: {
-      plugins: ['babel-plugin-xxx'],
-    },
-  },
-};
-
-// 正确用法，在默认配置中新增一个插件，而非覆盖插件
-export default {
-  tools: {
-    babel(config) {
-      config.plugins.push('babel-plugin-xxx');
-    },
-  },
-};
-```
-
+1. 当前项目覆盖了 Rsbuild 内置的 `alias` 配置，导致引用 `core-js` 时，没有解析到正确的 `core-js` 路径，这种情况下，你可以检查项目的 `alias` 配置。
 2. 项目里某一处代码依赖了 `core-js` v2 版本。这种情况通常需要你找出对应的代码，并升级其中的 `core-js` 到 v3 版本。
 3. `node_modules` 中的某一个 npm 包引用了 `core-js`，但是没有在 `dependencies` 中声明 `core-js` 依赖。这种情况需要你在对应的 npm 包中声明 `core-js` 依赖，或者在项目根目录下安装一份 `core-js`。
 
