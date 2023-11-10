@@ -108,7 +108,7 @@ export interface DevConfig {
   /** Provides the ability to execute a custom function and apply custom middlewares */
   setupMiddlewares?: Array<
     (
-      /** Order: `devServer.before` => `unshift` => internal middlewares => `push` => `devServer.after` */
+      /** Order: `unshift` => internal middlewares => `push` */
       middlewares: {
         /** Use the `unshift` method if you want to run a middleware before all other middlewares */
         unshift: (...handlers: RequestHandler[]) => void;

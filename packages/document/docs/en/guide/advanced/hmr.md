@@ -24,7 +24,7 @@ export default {
 
 By default, Rsbuild uses the host and port number of the current page to splice the WebSocket URL of HMR.
 
-When the HMR connection fails, you can specify the WebSocket URL by customizing `devServer.client` configuration.
+When the HMR connection fails, you can specify the WebSocket URL by customizing `dev.client` configuration.
 
 ### Default Config
 
@@ -32,17 +32,15 @@ The default config are as follows, Rsbuild will automatically deduce the URL of 
 
 ```ts
 export default {
-  tools: {
-    devServer: {
-      client: {
-        path: '/webpack-hmr',
-        // Equivalent to port of the dev server
-        port: '',
-        // Equivalent to location.hostname
-        host: '',
-        // Equivalent to location.protocol === 'https:' ? 'wss' : 'ws'
-        protocol: '',
-      },
+  dev: {
+    client: {
+      path: '/webpack-hmr',
+      // Equivalent to port of the dev server
+      port: '',
+      // Equivalent to location.hostname
+      host: '',
+      // Equivalent to location.protocol === 'https:' ? 'wss' : 'ws'
+      protocol: '',
     },
   },
 };
@@ -50,27 +48,18 @@ export default {
 
 ### Proxy
 
-If you are proxying an online page to local development, WebSocket requests will fail to connect. You can try configuring `devServer.client` to the following values so that HMR requests can reach the local Dev Server.
+If you are proxying an online page to local development, WebSocket requests will fail to connect. You can try configuring `dev.client` to the following values so that HMR requests can reach the local Dev Server.
 
 ```ts
 export default {
-  tools: {
-    devServer: {
-      client: {
-        host: 'localhost',
-        protocol: 'ws',
-      },
+  dev: {
+    client: {
+      host: 'localhost',
+      protocol: 'ws',
     },
   },
 };
 ```
-
-## Live reloading vs Hot reloading
-
-- Live reloading: After modifying the file, webpack recompiles and forces a browser refresh, which is a global (application-wide) refresh, equivalent to `window.location.reload()`.
-- Hot reloading: After modifying the file, webpack recompiles the corresponding module and remembers the state of the application when it is refreshed, thus enabling a partial refresh, i.e. hot update.
-
-DevServer provides two configuration options, [hot](/config/options/tools.html#hot) and [liveReload](/config/options/tools.html#livereload), to control how updates are made. When both hot and liveReload are open, DevServer will attempt to use hot mode (HMR) first, and will degrade to reloading the page if the HMR update fails.
 
 ## FAQ
 
