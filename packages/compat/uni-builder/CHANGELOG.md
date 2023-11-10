@@ -1,5 +1,16 @@
 # @rsbuild/uni-builder
 
+## 0.0.19
+
+### Patch Changes
+
+- Updated dependencies [f47302e]
+- Updated dependencies [5e13847]
+  - @rsbuild/shared@0.0.19
+  - @rsbuild/core@0.0.19
+  - @rsbuild/webpack@0.0.19
+  - @rsbuild/plugin-assets-retry@0.0.19
+
 ## 0.0.18
 
 ### Patch Changes

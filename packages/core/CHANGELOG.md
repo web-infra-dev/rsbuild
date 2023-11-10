@@ -1,5 +1,13 @@
 # @rsbuild/core
 
+## 0.0.19
+
+### Patch Changes
+
+- 5e13847: fix(core): failed to read NODE_ENV in config file
+- Updated dependencies [f47302e]
+  - @rsbuild/shared@0.0.19
+
 ## 0.0.18
 
 ### Patch Changes
