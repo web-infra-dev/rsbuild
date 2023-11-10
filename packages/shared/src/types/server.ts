@@ -45,7 +45,7 @@ export type DevMiddleware = (options: DevMiddlewareOptions) => DevMiddlewareAPI;
 
 export type RsbuildDevServerOptions = {
   pwd: string;
-  dev: boolean | Partial<DevServerOptions>;
+  dev: Partial<DevServerOptions>;
   devMiddleware?: DevMiddleware;
 };
 

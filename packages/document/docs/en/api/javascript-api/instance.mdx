@@ -189,8 +189,6 @@ type StartDevServerOptions = {
   strictPort?: boolean;
   // custom Compiler object
   compiler?: Compiler | MultiCompiler;
-  // passing through the build-independent dev server configuration
-  serverOptions?: Partial<ModernDevServerOptions>;
   // Whether to get the port silently, the default is false
   getPortSliently?: boolean;
   // custom logger
@@ -252,7 +250,7 @@ You can also directly configure `printURLs` as a function to modify URLs, such a
 
 ```ts
 await rsbuild.startDevServer({
-  printURLs: urls => {
+  printURLs: (urls) => {
     return urls.map(({ label, url }) => ({
       label,
       url: `${url}/path`,

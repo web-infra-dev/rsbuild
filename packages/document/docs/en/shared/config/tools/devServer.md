@@ -342,10 +342,3 @@ export default {
   },
 };
 ```
-
-#### watch
-
-- **Type:** `boolean`
-- **Default:** `true`
-
-Whether to watch files change in directories such as `mock/`, `server/`, `api/`.

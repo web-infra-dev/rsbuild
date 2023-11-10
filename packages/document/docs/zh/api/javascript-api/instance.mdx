@@ -189,8 +189,6 @@ type StartDevServerOptions = {
   strictPort?: boolean;
   // 自定义 Compiler 对象
   compiler?: Compiler | MultiCompiler;
-  // 透传与构建无关的 dev server 配置
-  serverOptions?: Partial<ModernDevServerOptions>;
   // 是否在启动时静默获取端口号，默认为 false
   getPortSliently?: boolean;
   // 自定义日志输出对象
@@ -252,7 +250,7 @@ await rsbuild.startDevServer({
 
 ```ts
 await rsbuild.startDevServer({
-  printURLs: urls => {
+  printURLs: (urls) => {
     return urls.map(({ label, url }) => ({
       label,
       url: `${url}/path`,

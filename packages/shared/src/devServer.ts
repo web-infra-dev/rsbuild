@@ -1,6 +1,5 @@
 import type {
   RsbuildConfig,
-  StartDevServerOptions,
   Context,
   OnAfterStartDevServerFn,
   OnBeforeStartDevServerFn,
@@ -16,17 +15,6 @@ import { createAsyncHook } from './createHook';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type { Compiler } from '@rspack/core';
 
-type ServerOptions = Exclude<StartDevServerOptions['serverOptions'], undefined>;
-
-export const getServerOptions = (rsbuildConfig: RsbuildConfig) => {
-  return {
-    output: {
-      path: rsbuildConfig.output?.distPath?.root,
-      assetPrefix: rsbuildConfig.output?.assetPrefix,
-    },
-  };
-};
-
 export function printServerURLs(
   urls: Array<{ url: string; label: string }>,
   logger: Logger = defaultLogger,
@@ -40,12 +28,10 @@ export function printServerURLs(
 
 export const getDevOptions = async ({
   rsbuildConfig,
-  serverOptions,
   strictPort,
   getPortSilently,
 }: {
   rsbuildConfig: RsbuildConfig;
-  serverOptions: ServerOptions;
   strictPort: boolean;
   getPortSilently?: boolean;
 }) => {
@@ -54,19 +40,12 @@ export const getDevOptions = async ({
     silent: getPortSilently,
   });
 
-  const host =
-    typeof serverOptions?.dev === 'object' && serverOptions?.dev?.host
-      ? serverOptions?.dev?.host
-      : DEFAULT_DEV_HOST;
+  const host = rsbuildConfig.dev?.host || DEFAULT_DEV_HOST;
 
-  const https =
-    typeof serverOptions?.dev === 'object' && serverOptions?.dev?.https
-      ? Boolean(serverOptions?.dev?.https)
-      : false;
+  const https = Boolean(rsbuildConfig.dev?.https) || false;
 
   const devServerConfig = await getDevServerOptions({
     rsbuildConfig,
-    serverOptions,
     port,
   });
 
@@ -75,30 +54,24 @@ export const getDevOptions = async ({
 
 export const getDevServerOptions = async ({
   rsbuildConfig,
-  serverOptions,
   port,
 }: {
   rsbuildConfig: RsbuildConfig;
-  serverOptions: ServerOptions;
   port: number;
 }): Promise<DevServerOptions> => {
-  const defaultDevConfig = deepmerge(
-    {
-      hot: rsbuildConfig.dev?.hmr ?? true,
-      watch: true,
-      client: {
-        port: port.toString(),
-      },
-      port,
-      liveReload: rsbuildConfig.dev?.hmr ?? true,
-      devMiddleware: {
-        writeToDisk: (file: string) => !file.includes('.hot-update.'),
-      },
-      https: rsbuildConfig.dev?.https,
+  const defaultDevConfig = {
+    hot: rsbuildConfig.dev?.hmr ?? true,
+    watch: true,
+    client: {
+      port: port.toString(),
     },
-    // merge devServerOptions from serverOptions
-    (serverOptions.dev as Exclude<typeof serverOptions.dev, boolean>) || {},
-  );
+    port,
+    liveReload: rsbuildConfig.dev?.hmr ?? true,
+    devMiddleware: {
+      writeToDisk: (file: string) => !file.includes('.hot-update.'),
+    },
+    https: rsbuildConfig.dev?.https,
+  };
 
   return mergeChainedOptions({
     defaults: defaultDevConfig,

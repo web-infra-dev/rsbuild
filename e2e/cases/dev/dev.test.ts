@@ -116,7 +116,7 @@ test('dev.port & output.distPath', async ({ page }) => {
   await fs.remove(join(fixtures, 'basic/dist-1'));
 });
 
-test.skip('hmr should work when setting dev.port & serverOptions.dev.client', async ({
+test('hmr should work when setting dev.port & devServer.client', async ({
   page,
 }) => {
   await fs.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src-1'));
@@ -131,11 +131,11 @@ test.skip('hmr should work when setting dev.port & serverOptions.dev.client', as
       dev: {
         port: 3001,
       },
-    },
-    serverOptions: {
-      dev: {
-        client: {
-          host: '',
+      tools: {
+        devServer: {
+          client: {
+            host: '',
+          },
         },
       },
     },
@@ -168,7 +168,7 @@ test.skip('hmr should work when setting dev.port & serverOptions.dev.client', as
 });
 
 // need devcert
-test.skip('dev.https', async () => {
+test('dev.https', async () => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     entry: {

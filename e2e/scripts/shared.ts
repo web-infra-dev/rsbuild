@@ -8,7 +8,6 @@ import type {
   RsbuildConfig as RspackRsbuildConfig,
 } from '@rsbuild/core';
 import type { RsbuildConfig as WebpackRsbuildConfig } from '@rsbuild/webpack';
-import { StartDevServerOptions } from '@rsbuild/shared';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
   const baseUrl = new URL(`http://localhost:${port}`);
@@ -87,7 +86,6 @@ const updateConfigForTest = <BundlerType>(
 
 export async function dev<BundlerType = 'rspack'>({
   plugins,
-  serverOptions,
   rsbuildConfig = {},
   ...options
 }: CreateRsbuildOptions & {
@@ -95,7 +93,6 @@ export async function dev<BundlerType = 'rspack'>({
   rsbuildConfig?: BundlerType extends 'webpack'
     ? WebpackRsbuildConfig
     : RspackRsbuildConfig;
-  serverOptions?: StartDevServerOptions['serverOptions'];
 }) {
   process.env.NODE_ENV = 'development';
 
@@ -109,7 +106,6 @@ export async function dev<BundlerType = 'rspack'>({
 
   return rsbuild.startDevServer({
     printURLs: false,
-    serverOptions,
   });
 }
 
