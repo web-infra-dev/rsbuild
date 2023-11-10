@@ -1,5 +1,12 @@
 # @rsbuild/doctor-sdk
 
+## 0.0.7
+
+### Patch Changes
+
+- 798872f: fix: doctor sdk server router tests supply
+  - @rsbuild/doctor-utils@0.0.7
+
 ## 0.0.6
 
 ### Patch Changes
