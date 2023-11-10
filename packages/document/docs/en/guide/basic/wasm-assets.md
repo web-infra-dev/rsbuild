@@ -51,7 +51,7 @@ export default {
 };
 ```
 
-## Add Type Declaration
+## Type Declaration
 
 When you import a Wasm file in TypeScript code, you usually need to add the corresponding type declaration.
 

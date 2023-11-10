@@ -98,7 +98,7 @@ import logo from './static/logo.png';
 console.log(logo); // "https://modern.com/static/logo.6c12aba3.png"
 ```
 
-## Add Type Declaration
+## Type Declaration
 
 When you import static assets in TypeScript code, TypeScript may prompt that the module is missing a type definition:
 
@@ -106,16 +106,25 @@ When you import static assets in TypeScript code, TypeScript may prompt that the
 TS2307: Cannot find module './logo.png' or its corresponding type declarations.
 ```
 
-To fix this, you need to add a type declaration file for the static assets, please create a `src/global.d.ts` file, and add the corresponding type declaration. Taking png images as an example, you need to add the following declarations:
+To fix this, you need to add a type declaration file for the static assets, please create a `src/env.d.ts` file, and add the corresponding type declaration.
 
-```ts title="src/global.d.ts"
+- Method 1: If the `@rsbuild/core` package is installed, you can directly reference the type declarations provided by `@rsbuild/core`:
+
+```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+- Method 2: Manually add the required type declarations:
+
+```ts title="src/env.d.ts"
+// Taking png images as an example
 declare module '*.png' {
   const content: string;
   export default content;
 }
 ```
 
-After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `global.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
+After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `env.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
 
 ## Extend Asset Types
 

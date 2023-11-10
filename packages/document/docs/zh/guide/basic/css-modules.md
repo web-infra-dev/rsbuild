@@ -93,7 +93,7 @@ export default {
 
 如果你需要自定义 CSS Modules 的其他配置，可以通过 [output.cssModules](/config/options/output.html#outputcssmodules) 进行设置。
 
-## 添加类型声明
+## 类型声明
 
 当你在 TypeScript 代码中引用 CSS Modules 时，TypeScript 可能会提示该模块缺少类型定义：
 
@@ -101,30 +101,38 @@ export default {
 TS2307: Cannot find module './index.module.css' or its corresponding type declarations.
 ```
 
-此时你需要为 CSS Modules 添加类型声明文件，请在项目中创建 `src/global.d.ts` 文件，并添加相应的类型声明：
+此时你需要为 CSS Modules 添加类型声明文件，请在项目中创建 `src/env.d.ts` 文件，并添加相应的类型声明。
 
-```ts title="src/global.d.ts"
+- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的类型声明：
+
+```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+- 方法二：手动添加需要的类型声明：
+
+```ts title="src/env.d.ts"
 declare module '*.module.css' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
-
 declare module '*.module.scss' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
-
 declare module '*.module.sass' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
-
 declare module '*.module.less' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
-
 declare module '*.module.styl' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+declare module '*.module.stylus' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
@@ -132,34 +140,34 @@ declare module '*.module.styl' {
 
 如果你开启了 `disableCssModuleExtension` 配置值，还需要添加以下类型：
 
-```ts title="src/global.d.ts"
+```ts title="src/env.d.ts"
 declare module '*.css' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
-
 declare module '*.scss' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
-
 declare module '*.sass' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
-
 declare module '*.less' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
-
 declare module '*.styl' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+declare module '*.stylus' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
 ```
 
-添加类型声明后，如果依然存在上述错误提示，请尝试重启当前 IDE，或者调整 `global.d.ts` 所在的目录，使 TypeScript 能够正确识别类型定义。
+添加类型声明后，如果依然存在上述错误提示，请尝试重启当前 IDE，或者调整 `env.d.ts` 所在的目录，使 TypeScript 能够正确识别类型定义。
 
 ## 生成准确的类型定义
 
@@ -222,6 +230,7 @@ export default cssExports;
 *.module.scss.d.ts
 *.module.less.d.ts
 *.module.styl.d.ts
+*.module.stylus.d.ts
 ```
 
 此外，如果生成的代码导致了 ESLint 报错，你也可以将上述配置添加到 `.eslintignore` 文件里。

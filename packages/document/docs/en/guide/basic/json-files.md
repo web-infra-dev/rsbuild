@@ -52,22 +52,6 @@ console.log(example.hello); // 'world';
 console.log(example.foo); // { bar: 'baz' };
 ```
 
-### Add type declaration
-
-When you import a YAML file in your TypeScript code, please create a `src/global.d.ts` file in your project and add the corresponding type declaration:
-
-```ts title="src/global.d.ts"
-declare module '*.yaml' {
-  const content: Record<string, any>;
-  export default content;
-}
-
-declare module '*.yml' {
-  const content: Record<string, any>;
-  export default content;
-}
-```
-
 ## Toml file
 
 Toml is a semantically explicit, easy-to-read configuration file format.
@@ -90,11 +74,27 @@ console.log(example.hello); // 'world';
 console.log(example.foo); // { bar: 'baz' };
 ```
 
-### Add type declaration
+## Type Declaration
 
-When you import Toml files in TypeScript code, please create a `src/global.d.ts` file in your project and add the corresponding type declarations:
+When you import YAML or Toml files in TypeScript code, please create a `src/env.d.ts` file in your project and add the corresponding type declarations.
 
-```ts title="src/global.d.ts"
+- Method 1: If the `@rsbuild/core` package is installed, you can directly reference the type declarations provided by `@rsbuild/core`:
+
+```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+- Method 2: Manually add the required type declarations:
+
+```ts title="src/env.d.ts"
+declare module '*.yaml' {
+  const content: Record<string, any>;
+  export default content;
+}
+declare module '*.yml' {
+  const content: Record<string, any>;
+  export default content;
+}
 declare module '*.toml' {
   const content: Record<string, any>;
   export default content;

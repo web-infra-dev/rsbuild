@@ -38,15 +38,9 @@ export default function Foo() {
 
 在上面这个例子中，`foo.png` 图片将始终被内联，无论该图片的大小是否大于阈值。
 
-除了 `inline` 参数以外，你也可以使用 `__inline` 参数来强制内联该资源：
-
-```tsx
-import img from './foo.png?__inline';
-```
-
 ### 从 CSS 文件中引用
 
-当你在 CSS 文件中引用静态资源时，同样可以通过 `inline` 或 `__inline` 参数来强制内联资源。
+当你在 CSS 文件中引用静态资源时，同样可以通过 `inline` 参数来强制内联资源。
 
 ```css
 .foo {
@@ -73,15 +67,9 @@ export default function Foo() {
 
 在上面这个例子中，`foo.png` 图片将始终通过单独的资源文件加载，无论该图片的大小是否小于阈值。
 
-除了 `url` 参数以外，你也可以使用 `__inline=false` 参数来强制不内联该资源：
-
-```tsx
-import img from './foo.png?__inline=false';
-```
-
 ### 从 CSS 文件中引用
 
-当你在 CSS 文件中引用静态资源时，同样可以通过 `url` 或 `__inline=false` 参数来强制不内联资源。
+当你在 CSS 文件中引用静态资源时，同样可以通过 `url` 参数来强制不内联资源。
 
 ```css
 .foo {
@@ -125,7 +113,7 @@ export default {
 };
 ```
 
-## 添加类型声明
+## 类型声明
 
 当你在 TypeScript 代码中使用 `?inline` 和 `?url` 等 URL 参数时，TypeScript 可能会提示该模块缺少类型定义：
 
@@ -133,25 +121,22 @@ export default {
 TS2307: Cannot find module './logo.png?inline' or its corresponding type declarations.
 ```
 
-此时你需要为这些 URL 参数添加类型声明，请在项目中创建 `src/global.d.ts` 文件，并添加以下类型声明：
+此时你需要为这些 URL 参数添加类型声明，请在项目中创建 `src/env.d.ts` 文件，并添加类型声明。
+
+- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的类型声明：
 
 ```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+- 方法二：手动添加需要的类型声明：
+
+```ts
+declare module '*?url' {
+  const content: string;
+  export default content;
+}
 declare module '*?inline' {
-  const content: string;
-  export default content;
-}
-
-declare module '*?inline' {
-  const content: string;
-  export default content;
-}
-
-declare module '*?__inline' {
-  const content: string;
-  export default content;
-}
-
-declare module '*?inline=false' {
   const content: string;
   export default content;
 }

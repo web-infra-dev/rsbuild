@@ -102,7 +102,7 @@ import logo from './logo.svg?url';
 console.log(logo); // => asset url
 ```
 
-## Add type declaration
+## Type Declaration
 
 When you reference an SVG asset in TypeScript code, TypeScript may prompt that the module is missing a type definition:
 
@@ -110,14 +110,13 @@ When you reference an SVG asset in TypeScript code, TypeScript may prompt that t
 TS2307: Cannot find module './logo.svg' or its corresponding type declarations.
 ```
 
-To fix this, you need to add a type declaration file for the SVG asset, please create a `src/global.d.ts` file, and add the following type declaration:
+To fix this, you need to add a type declaration file for the SVG asset, please create a `src/env.d.ts` file, and add the following type declaration:
 
 ```ts
 declare module '*.svg' {
   export const ReactComponent: React.FunctionComponent<
     React.SVGProps<SVGSVGElement>
   >;
-
   const content: string;
   export default content;
 }
@@ -130,12 +129,11 @@ declare module '*.svg' {
   export const ReactComponent: React.FunctionComponent<
     React.SVGProps<SVGSVGElement>
   >;
-
   export default ReactComponent;
 }
 ```
 
-After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `global.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
+After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `env.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
 
 ## Modify the SVGR configuration
 

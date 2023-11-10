@@ -38,15 +38,9 @@ export default function Foo() {
 
 In the above example, the `foo.png` image will always be inlined, regardless of whether the size of the image is larger than the threshold.
 
-In addition to the `inline` query, you can also use the `__inline` query to force inlining of the asset:
-
-```tsx
-import img from '. /foo.png?__inline';
-```
-
 ### Referenced from CSS file
 
-When you reference a static asset in your CSS file, you can also force inline the asset with the `inline` or `__inline` queries.
+When you reference a static asset in your CSS file, you can also force inline the asset with the `inline` query.
 
 ```css
 .foo {
@@ -73,15 +67,9 @@ export default function Foo() {
 
 In the above example, the `foo.png` image will always be loaded as a separate file, even if the size of the image is smaller than the threshold.
 
-In addition to the `url` query, you can also use the `__inline=false` query to force the asset not to be inlined:
-
-```tsx
-import img from '. /foo.png?__inline=false';
-```
-
 ### Referenced from CSS file
 
-When you reference a static asset in your CSS file, you can also force the asset not to be inlined with `url` or `__inline=false` queries.
+When you reference a static asset in your CSS file, you can also force the asset not to be inlined with `url` query.
 
 ```css
 .foo {
@@ -124,7 +112,7 @@ export default {
 };
 ```
 
-## Add Type Declaration
+## Type Declaration
 
 When you use URL queries such as `?inline` and `?url` in TypeScript code, TypeScript may prompt that the module is missing a type definition:
 
@@ -132,25 +120,22 @@ When you use URL queries such as `?inline` and `?url` in TypeScript code, TypeSc
 TS2307: Cannot find module './logo.png?inline' or its corresponding type declarations.
 ```
 
-To fix this, you can add type declarations for these URL queries, please create `src/global.d.ts` file and add the following type declarations:
+To fix this, you can add type declarations for these URL queries, please create `src/env.d.ts` file and add the following type declarations.
+
+- Method 1: If the `@rsbuild/core` package is installed, you can directly reference the type declarations provided by `@rsbuild/core`:
 
 ```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+- Method 2: Manually add the required type declarations:
+
+```ts
+declare module '*?url' {
+  const content: string;
+  export default content;
+}
 declare module '*?inline' {
-  const content: string;
-  export default content;
-}
-
-declare module '*?inline' {
-  const content: string;
-  export default content;
-}
-
-declare module '*?__inline' {
-  const content: string;
-  export default content;
-}
-
-declare module '*?inline=false' {
   const content: string;
   export default content;
 }
