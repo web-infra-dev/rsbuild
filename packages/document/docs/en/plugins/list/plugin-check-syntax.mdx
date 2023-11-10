@@ -57,6 +57,14 @@ error   [Syntax Checker] Find some syntax errors after production build:
 Currently, syntax checking is implemented based on AST parser. Each time it performs a check, it can only identify the first incompatible syntax found in the file. If there are multiple incompatible syntaxes in the file, you need to fix the detected syntax and re-run the check.
 :::
 
+### Solutions
+
+If a syntax error is detected, you can handle it in the following ways:
+
+- If you want to downgrade this syntax to ensure good code compatibility, you can compile the corresponding module through the `source.include` config.
+- If you don't want to downgrade the syntax, you can adjust the project's browserslist to match the syntax.
+- If you do not want to check the syntax of certain products, you can use the `checkSyntax.exclude` configuration to exclude the files to be checked.
+
 ### Options
 
 ### targets

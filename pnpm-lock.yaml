@@ -508,6 +508,9 @@ importers:
       webpack-manifest-plugin:
         specifier: 5.0.0
         version: 5.0.0(webpack@5.89.0)
+      webpack-subresource-integrity:
+        specifier: 5.1.0
+        version: 5.1.0(webpack@5.89.0)
     devDependencies:
       typescript:
         specifier: ^5.2.2
@@ -581,9 +584,6 @@ importers:
       webpack:
         specifier: ^5.89.0
         version: 5.89.0
-      webpack-subresource-integrity:
-        specifier: 5.1.0
-        version: 5.1.0(html-rspack-plugin@5.5.4)(webpack@5.89.0)
     devDependencies:
       '@rsbuild/test-helper':
         specifier: workspace:*
@@ -14895,7 +14895,7 @@ packages:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
     engines: {node: '>=10.13.0'}
 
-  /webpack-subresource-integrity@5.1.0(html-rspack-plugin@5.5.4)(webpack@5.89.0):
+  /webpack-subresource-integrity@5.1.0(webpack@5.89.0):
     resolution: {integrity: sha512-sacXoX+xd8r4WKsy9MvH/q/vBtEHr86cpImXwyg74pFIpERKt6FmB8cXpeuh0ZLgclOlHI4Wcll7+R5L02xk9Q==}
     engines: {node: '>= 12'}
     peerDependencies:
@@ -14905,7 +14905,6 @@ packages:
       html-webpack-plugin:
         optional: true
     dependencies:
-      html-webpack-plugin: /html-rspack-plugin@5.5.4(@rspack/core@0.3.11)(webpack@5.89.0)
       typed-assert: 1.0.9
       webpack: 5.89.0
     dev: false

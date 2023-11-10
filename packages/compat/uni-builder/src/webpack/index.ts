@@ -23,6 +23,11 @@ export async function parseConfig(
     rsbuildPlugins.push(pluginManifest());
   }
 
+  if (uniBuilderConfig.security?.sri) {
+    const { pluginSRI } = await import('./plugins/sri');
+    rsbuildPlugins.push(pluginSRI(uniBuilderConfig.security?.sri));
+  }
+
   return {
     rsbuildConfig,
     rsbuildPlugins,

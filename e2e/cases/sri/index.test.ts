@@ -1,10 +1,10 @@
 import path from 'path';
-import { expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
-import { webpackOnlyTest } from '@scripts/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-webpackOnlyTest('security.sri', async ({ page }) => {
+// TODO: uni-builder
+test.skip('security.sri', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
@@ -12,7 +12,7 @@ webpackOnlyTest('security.sri', async ({ page }) => {
     plugins: [pluginReact()],
     rsbuildConfig: {
       security: {
-        sri: true,
+        // sri: true,
       },
     },
   });

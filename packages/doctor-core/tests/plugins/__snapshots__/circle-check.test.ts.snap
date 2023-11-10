@@ -22,26 +22,3 @@ exports[`test checkCirclePath function > makeRulesSerializable() 2`] = `
   "foo": "[Circular]",
 }
 `;
-
-exports[`test checkCirclePath function makeRulesSerializable() 1`] = `
-[
-  [
-    "foo",
-    "a",
-  ],
-  [
-    "foo",
-    "x",
-    "foo",
-  ],
-]
-`;
-
-exports[`test checkCirclePath function makeRulesSerializable() 2`] = `
-{
-  "a": {
-    "b": "b",
-  },
-  "foo": "[Circular]",
-}
-`;
