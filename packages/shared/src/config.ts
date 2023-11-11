@@ -122,7 +122,6 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   },
   disableFilenameHash: false,
   disableCssModuleExtension: false,
-  disableInlineRuntimeChunk: false,
   enableAssetFallback: false,
   enableLatestDecorators: false,
   enableCssModuleTSDeclaration: false,

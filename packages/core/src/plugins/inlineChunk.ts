@@ -2,7 +2,6 @@ import {
   pick,
   JS_REGEX,
   CSS_REGEX,
-  RUNTIME_CHUNK_NAME,
   isHtmlDisabled,
   DefaultRsbuildPlugin,
   type InlineChunkTest,
@@ -23,7 +22,6 @@ export const pluginInlineChunk = (): DefaultRsbuildPlugin => ({
         const { InlineChunkHtmlPlugin } = await import('@rsbuild/shared');
 
         const {
-          disableInlineRuntimeChunk,
           enableInlineStyles,
           // todo: not support enableInlineScripts in Rspack yet, which will take unknown build error
           enableInlineScripts,
@@ -44,12 +42,8 @@ export const pluginInlineChunk = (): DefaultRsbuildPlugin => ({
           );
         }
 
-        if (!disableInlineRuntimeChunk) {
-          scriptTests.push(
-            // RegExp like /bundler-runtime([.].+)?\.js$/
-            // matches bundler-runtime.js and bundler-runtime.123456.js
-            new RegExp(`${RUNTIME_CHUNK_NAME}([.].+)?\\.js$`),
-          );
+        if (!scriptTests.length && !styleTests.length) {
+          return;
         }
 
         chain.plugin(CHAIN_ID.PLUGIN.INLINE_HTML).use(InlineChunkHtmlPlugin, [

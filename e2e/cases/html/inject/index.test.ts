@@ -12,7 +12,6 @@ test('Rsbuild injection script order should be as expected', async () => {
         template: './static/index.html',
       },
       output: {
-        disableInlineRuntimeChunk: true,
         convertToRem: {
           inlineRuntime: false,
         },
@@ -51,11 +50,9 @@ test('should set inject via function correctly', async () => {
 
   const fooHtml =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
-  expect(fooHtml).toContain(
-    '<body><div id="root"></div><script defer="defer">',
-  );
+  expect(fooHtml).toContain('<body><div id="root"></div><script defer="defer"');
 
   const indexHtml =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
-  expect(indexHtml).toContain('</title><script defer="defer">');
+  expect(indexHtml).toContain('</title><script defer="defer"');
 });

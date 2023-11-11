@@ -552,9 +552,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "name": "Client",
   "optimization": {
     "minimize": false,
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {
         "lib-axios": {
@@ -1266,9 +1263,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         },
       },
     ],
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {
         "lib-axios": {
@@ -1320,19 +1314,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""production"",
       },
-    },
-    InlineChunkHtmlPlugin {
-      "distPath": {
-        "css": "static/css",
-        "js": "static/js",
-      },
-      "htmlPlugin": [Function],
-      "inlinedAssets": Set {},
-      "name": "InlineChunkHtmlPlugin",
-      "scriptTests": [
-        /bundler-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
-      ],
-      "styleTests": [],
     },
     MiniCssExtractPlugin {
       "_sortedModulesCache": WeakMap {},

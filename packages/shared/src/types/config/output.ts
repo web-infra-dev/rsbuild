@@ -204,10 +204,6 @@ export interface OutputConfig {
    */
   disableFilenameHash?: boolean;
   /**
-   * Controls whether to the inline the runtime chunk to HTML.
-   */
-  disableInlineRuntimeChunk?: boolean;
-  /**
    * Whether to treat all .css files in the source directory as CSS Modules.
    */
   disableCssModuleExtension?: boolean;
@@ -260,7 +256,6 @@ export interface NormalizedOutputConfig extends OutputConfig {
   disableMinimize: boolean;
   disableSourceMap: DisableSourceMapOption;
   disableFilenameHash: boolean;
-  disableInlineRuntimeChunk: boolean;
   enableAssetFallback: boolean;
   enableLatestDecorators: boolean;
   enableCssModuleTSDeclaration: boolean;

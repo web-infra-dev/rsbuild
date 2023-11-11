@@ -66,6 +66,10 @@ export type UniBuilderExtraConfig = {
      * Configure the retry of assets.
      */
     assetsRetry?: PluginAssetsRetryOptions;
+    /**
+     * Controls whether to the inline the runtime chunk to HTML.
+     */
+    disableInlineRuntimeChunk?: boolean;
   };
   html?: {
     /**

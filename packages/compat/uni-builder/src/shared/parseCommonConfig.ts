@@ -8,6 +8,7 @@ import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 import type { UniBuilderRspackConfig, UniBuilderWebpackConfig } from '../types';
 import { pluginGlobalVars } from './plugins/globalVars';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
+import { pluginRuntimeChunk } from './plugins/runtimeChunk';
 
 export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   uniBuilderConfig: B extends 'rspack'
@@ -82,6 +83,10 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
     rsbuildPlugins.push(
       pluginAssetsRetry(uniBuilderConfig.output?.assetsRetry),
     );
+  }
+
+  if (!uniBuilderConfig.output?.disableInlineRuntimeChunk) {
+    rsbuildPlugins.push(pluginRuntimeChunk());
   }
 
   return {

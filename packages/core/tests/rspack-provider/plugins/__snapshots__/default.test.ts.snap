@@ -577,9 +577,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "name": "Client",
   "optimization": {
     "minimize": false,
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {
         "lib-axios": {
@@ -1251,9 +1248,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "name": "SwcCssMinimizerRspackPlugin",
       },
     ],
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {
         "lib-axios": {
@@ -1316,19 +1310,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "profile": false,
       },
       "name": "ProgressPlugin",
-    },
-    InlineChunkHtmlPlugin {
-      "distPath": {
-        "css": "static/css",
-        "js": "static/js",
-      },
-      "htmlPlugin": [Function],
-      "inlinedAssets": Set {},
-      "name": "InlineChunkHtmlPlugin",
-      "scriptTests": [
-        /bundler-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
-      ],
-      "styleTests": [],
     },
   ],
   "resolve": {
@@ -2356,9 +2337,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "name": "Client",
   "optimization": {
     "minimize": false,
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {
         "lib-axios": {
