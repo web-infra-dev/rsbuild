@@ -28,7 +28,7 @@ export function printServerURLs(
 /**
  * hmr socket connect path
  */
-export const HMR_SOCK_PATH = '/webpack-hmr';
+export const HMR_SOCK_PATH = '/rsbuild-hmr';
 
 export const mergeDevOptions = ({
   rsbuildConfig,
