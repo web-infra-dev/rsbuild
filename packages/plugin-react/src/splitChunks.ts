@@ -1,5 +1,6 @@
 import { createDependenciesRegExp } from '@rsbuild/core/plugins/splitChunks';
 import {
+  isProd,
   isPackageInstalled,
   type CacheGroup,
   type SharedRsbuildPluginAPI,
@@ -9,7 +10,14 @@ export async function splitByExperience(rootPath: string): Promise<CacheGroup> {
   const experienceCacheGroup: CacheGroup = {};
 
   const packageRegExps: Record<string, RegExp> = {
-    react: createDependenciesRegExp('react', 'react-dom', 'scheduler'),
+    react: createDependenciesRegExp(
+      'react',
+      'react-dom',
+      'scheduler',
+      ...(isProd()
+        ? []
+        : ['react-refresh', '@pmmmwh/react-refresh-webpack-plugin']),
+    ),
     router: createDependenciesRegExp(
       'react-router',
       'react-router-dom',

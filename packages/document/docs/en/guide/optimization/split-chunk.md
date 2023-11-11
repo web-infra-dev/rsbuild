@@ -24,7 +24,7 @@ Rsbuild supports the following chunk splitting strategies:
 Rsbuild adopts the `split-by-experience` strategy by default, which is a strategy we have developed from experience. Specifically, when the following npm packages are referenced in your project, they will automatically be split into separate chunks:
 
 - `lib-polyfill.js`: includes `core-js`, `@babel/runtime`, `@swc/helpers`, `tslib`.
-- `lib-react.js`: includes `react`, `react-dom`.
+- `lib-react.js`: includes `react`, `react-dom`, `scheduler`.
 - `lib-router.js`: includes `react-router`, `react-router-dom`, `history`, `@remix-run/router`.
 - `lib-lodash.js`: includes `lodash`, `lodash-es`.
 - `lib-antd.js`: includes `antd`.

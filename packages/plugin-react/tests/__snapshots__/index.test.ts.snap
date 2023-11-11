@@ -628,7 +628,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           "name": "lib-react",
           "priority": 0,
           "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\|react-refresh\\|@pmmmwh\\\\/react-refresh-webpack-plugin\\)\\[\\\\\\\\/\\]/,
         },
         "lib-router": {
           "name": "lib-router",
