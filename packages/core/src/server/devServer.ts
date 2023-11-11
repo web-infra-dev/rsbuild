@@ -249,7 +249,7 @@ export async function startDevServer<
       }
     }
 
-    printServerURLs(urls, logger);
+    printServerURLs(urls, options.context.entry, logger);
   }
 
   debug('create dev server');

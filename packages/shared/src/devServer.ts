@@ -5,6 +5,7 @@ import type {
   OnBeforeStartDevServerFn,
   CompilerTapFn,
   DevConfig,
+  RsbuildEntry,
 } from './types';
 import { getPort } from './port';
 import deepmerge from 'deepmerge';
@@ -14,13 +15,40 @@ import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import { createAsyncHook } from './createHook';
 import type { Compiler } from '@rspack/core';
 
+export const normalizeUrl = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
+
+export const getRoutesName = (entry: RsbuildEntry) => {
+  return Object.keys(entry).map((name) => (name === 'index' ? '' : name));
+};
+
 export function printServerURLs(
   urls: Array<{ url: string; label: string }>,
+  entry: RsbuildEntry,
   logger: Logger = defaultLogger,
 ) {
-  const message = urls
-    .map(({ label, url }) => `  ${`> ${label.padEnd(10)}`}${color.cyan(url)}\n`)
-    .join('');
+  const routes = getRoutesName(entry);
+
+  let message = '';
+  if (routes.length === 1) {
+    message = urls
+      .map(
+        ({ label, url }) =>
+          `  ${`> ${label.padEnd(10)}`}${color.cyan(
+            normalizeUrl(`${url}/${routes[0]}`),
+          )}\n`,
+      )
+      .join('');
+  } else {
+    const maxNameLength = Math.max(...routes.map((name) => name.length));
+    urls.forEach(({ label, url }) => {
+      message += `  ${color.bold(`> ${label}`)}\n`;
+      routes.forEach((entryName) => {
+        message += `    ${color.yellow('○')}  ${color.yellow(
+          entryName.padEnd(maxNameLength + 8),
+        )}${color.cyan(normalizeUrl(`${url}/${entryName}`))}\n`;
+      });
+    });
+  }
 
   logger.log(message);
 }
