@@ -8,7 +8,7 @@ type ParsedSearch = {
 /**
  * hmr socket connect path
  */
-export const HMR_SOCK_PATH = '/webpack-hmr';
+export const HMR_SOCK_PATH = '/rsbuild-hmr';
 
 export function createSocketUrl(resourceQuery: string) {
   // ?host=localhost&port=8080&path=modern_js_hmr_ws

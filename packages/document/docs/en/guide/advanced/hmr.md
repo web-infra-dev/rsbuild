@@ -34,7 +34,7 @@ The default config are as follows, Rsbuild will automatically deduce the URL of 
 export default {
   dev: {
     client: {
-      path: '/webpack-hmr',
+      path: '/rsbuild-hmr',
       // Equivalent to port of the dev server
       port: '',
       // Equivalent to location.hostname

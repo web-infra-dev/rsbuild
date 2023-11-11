@@ -21,7 +21,7 @@
 打开浏览器的控制台，查看是否有 `[HMR] connected.` 日志。
 
 - 如果有，说明 Web Socket 连接正常，请继续检查后续步骤。
-- 如果没有，请打开 Chrome 的 Network 面板，查看 `ws://[host]:[port]/webpack-hmr` 的请求状态，若请求异常，说明热更新失败的原因是 Web Socket 请求没有建立成功。
+- 如果没有，请打开 Chrome 的 Network 面板，查看 `ws://[host]:[port]/rsbuild-hmr` 的请求状态，若请求异常，说明热更新失败的原因是 Web Socket 请求没有建立成功。
 
 Web Socket 请求没有建立成功的原因可能有很多种，例如开启了网络代理，导致 Web Socket 请求没有正确发送到开发服务器。你可以检查 Web Socket 请求的地址是否为你的开发服务器地址，如果不是，则可以通过 [dev.client](/config/options/dev.html#devclient) 来配置 Web Socket 请求的地址。
 

@@ -91,7 +91,7 @@ describe('test dev server', () => {
       {
         "client": {
           "host": "",
-          "path": "/webpack-hmr",
+          "path": "/rsbuild-hmr",
           "port": "8080",
           "protocol": "",
         },
