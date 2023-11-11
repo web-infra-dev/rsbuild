@@ -340,6 +340,22 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-svelte
 
+  examples/uni-builder:
+    dependencies:
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@rsbuild/uni-builder':
+        specifier: workspace:*
+        version: link:../../packages/compat/uni-builder
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
   packages/babel-preset:
     dependencies:
       '@babel/core':
