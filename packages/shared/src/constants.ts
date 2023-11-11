@@ -75,7 +75,6 @@ export const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
 export const MODULE_PATH_REGEX =
   /[\\/]node_modules[\\/](\.pnpm[\\/])?(?:(@[^[\\/]+)(?:[\\/]))?([^\\/]+)/;
 
-export const RUNTIME_CHUNK_NAME = 'bundler-runtime';
 export const TS_CONFIG_FILE = 'tsconfig.json';
 
 export const ROUTE_SPEC_FILE = 'route.json';

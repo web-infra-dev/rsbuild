@@ -1,7 +1,6 @@
 import assert from 'assert';
 import {
   NODE_MODULES_REGEX,
-  RUNTIME_CHUNK_NAME,
   getPackageNameFromModulePath,
   type Polyfill,
   type CacheGroup,
@@ -275,13 +274,6 @@ export function pluginSplitChunks(): DefaultRsbuildPlugin {
           });
 
           chain.optimization.splitChunks(splitChunksOptions);
-
-          // should not extract runtime chunk when strategy is `all-in-one`
-          if (chunkSplit.strategy !== 'all-in-one') {
-            chain.optimization.runtimeChunk({
-              name: RUNTIME_CHUNK_NAME,
-            });
-          }
         },
       );
     },

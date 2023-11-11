@@ -62,19 +62,6 @@ exports[`plugin-inline-chunk > should add InlineChunkHtmlPlugin properly by defa
         },
       },
     },
-    InlineChunkHtmlPlugin {
-      "distPath": {
-        "css": "static/css",
-        "js": "static/js",
-      },
-      "htmlPlugin": [Function],
-      "inlinedAssets": Set {},
-      "name": "InlineChunkHtmlPlugin",
-      "scriptTests": [
-        /bundler-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
-      ],
-      "styleTests": [],
-    },
   ],
 }
 `;
@@ -140,17 +127,6 @@ exports[`plugin-inline-chunk > should use proper plugin options when disableInli
           },
         },
       },
-    },
-    InlineChunkHtmlPlugin {
-      "distPath": {
-        "css": "static/css",
-        "js": "static/js",
-      },
-      "htmlPlugin": [Function],
-      "inlinedAssets": Set {},
-      "name": "InlineChunkHtmlPlugin",
-      "scriptTests": [],
-      "styleTests": [],
     },
   ],
 }
@@ -228,7 +204,6 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
       "name": "InlineChunkHtmlPlugin",
       "scriptTests": [
         /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-        /bundler-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
       ],
       "styleTests": [],
     },
@@ -306,9 +281,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
       "htmlPlugin": [Function],
       "inlinedAssets": Set {},
       "name": "InlineChunkHtmlPlugin",
-      "scriptTests": [
-        /bundler-runtime\\(\\[\\.\\]\\.\\+\\)\\?\\\\\\.js\\$/,
-      ],
+      "scriptTests": [],
       "styleTests": [
         /\\\\\\.css\\$/,
       ],

@@ -3,9 +3,6 @@
 exports[`plugin-split-chunks > 'should allow forceSplitting to be an object' 1`] = `
 {
   "optimization": {
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {
         "axios": {
@@ -41,9 +38,6 @@ exports[`plugin-split-chunks > 'should set all-in-one config' 1`] = `
 exports[`plugin-split-chunks > 'should set custom config' 1`] = `
 {
   "optimization": {
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {
         "force-split-0": {
@@ -63,9 +57,6 @@ exports[`plugin-split-chunks > 'should set custom config' 1`] = `
 exports[`plugin-split-chunks > 'should set single-size config' 1`] = `
 {
   "optimization": {
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {},
       "chunks": "all",
@@ -80,9 +71,6 @@ exports[`plugin-split-chunks > 'should set single-size config' 1`] = `
 exports[`plugin-split-chunks > 'should set single-vendor config' 1`] = `
 {
   "optimization": {
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {
         "singleVendor": {
@@ -104,9 +92,6 @@ exports[`plugin-split-chunks > 'should set single-vendor config' 1`] = `
 exports[`plugin-split-chunks > 'should set split-by-experience config correctly when polyfill is off' 1`] = `
 {
   "optimization": {
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {
         "lib-axios": {
@@ -132,9 +117,6 @@ exports[`plugin-split-chunks > 'should set split-by-experience config correctly 
 exports[`plugin-split-chunks > 'should set split-by-experience config' 1`] = `
 {
   "optimization": {
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {
         "lib-axios": {

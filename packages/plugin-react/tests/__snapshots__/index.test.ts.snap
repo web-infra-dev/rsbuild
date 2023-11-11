@@ -604,9 +604,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
   "name": "Client",
   "optimization": {
     "minimize": false,
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {
         "lib-axios": {
