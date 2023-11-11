@@ -4,7 +4,7 @@ import { dev } from '@scripts/shared';
 
 const fixtures = __dirname;
 
-test('access / success when entry is index', async ({ page }) => {
+test('should access / success when entry is index', async ({ page }) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     entry: {
@@ -29,7 +29,9 @@ test('access / success when entry is index', async ({ page }) => {
   await rsbuild.server.close();
 });
 
-test('access /main.html success (with suffix)', async ({ page }) => {
+test('should access /main.html success when entry is main', async ({
+  page,
+}) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     entry: {
@@ -54,9 +56,7 @@ test('access /main.html success (with suffix)', async ({ page }) => {
   await rsbuild.server.close();
 });
 
-test('access /main success when outputPath is /main.html and write to disk', async ({
-  page,
-}) => {
+test('should access /main success when entry is main', async ({ page }) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     entry: {
@@ -83,7 +83,7 @@ test('access /main success when outputPath is /main.html and write to disk', asy
   await rsbuild.server.close();
 });
 
-test('access /main success when outputPath is /main.html and write to memory', async ({
+test('should access /main success when entry is main and use memoryFs', async ({
   page,
 }) => {
   const rsbuild = await dev({
@@ -110,7 +110,9 @@ test('access /main success when outputPath is /main.html and write to memory', a
   await rsbuild.server.close();
 });
 
-test('access /main success when set assetPrefix', async ({ page }) => {
+test('should access /main success when entry is main and set assetPrefix', async ({
+  page,
+}) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     entry: {
@@ -136,7 +138,7 @@ test('access /main success when set assetPrefix', async ({ page }) => {
   await rsbuild.server.close();
 });
 
-test('access /main success when outputPath is /main/index.html', async ({
+test('should access /main success when entry is main and outputPath is /main/index.html', async ({
   page,
 }) => {
   const rsbuild = await dev({
@@ -166,7 +168,7 @@ test('access /main success when outputPath is /main/index.html', async ({
   await rsbuild.server.close();
 });
 
-test('fallback failed when page is 404', async ({ page }) => {
+test('should return 404 when page is not found', async ({ page }) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     entry: {
