@@ -17,22 +17,31 @@ import {
   isFunction,
   StartServerResult,
   getDevOptions,
+  ROOT_DIST_DIR,
+  isURL,
 } from '@rsbuild/shared';
 import DevMiddleware from './dev-middleware';
 import connect from 'connect';
 import { createProxyMiddleware } from './proxy';
-import { faviconFallbackMiddleware } from './middlewares';
+import {
+  faviconFallbackMiddleware,
+  getHtmlFallbackMiddleware,
+  notFoundMiddleware,
+} from './middlewares';
+import { join } from 'path';
 
 export class RsbuildDevServer {
   private readonly dev: DevConfig;
   private readonly devMiddleware: DevMiddleware;
   private pwd: string;
   private app!: Server;
+  private output: RsbuildDevServerOptions['output'];
   public middlewares = connect();
 
   constructor(options: RsbuildDevServerOptions) {
     this.pwd = options.pwd;
     this.dev = options.dev;
+    this.output = options.output;
 
     // create dev middleware instance
     this.devMiddleware = new DevMiddleware({
@@ -125,6 +134,14 @@ export class RsbuildDevServer {
 
     devMiddleware.middleware && this.middlewares.use(devMiddleware.middleware);
 
+    this.middlewares.use(
+      getHtmlFallbackMiddleware({
+        distPath: join(this.pwd, this.output.distPath),
+        assetPrefix: this.output.assetPrefix,
+        callback: devMiddleware.middleware,
+      }),
+    );
+
     if (dev.historyApiFallback) {
       const { default: connectHistoryApiFallback } = await import(
         'connect-history-api-fallback'
@@ -144,6 +161,8 @@ export class RsbuildDevServer {
     }
 
     this.middlewares.use(faviconFallbackMiddleware);
+
+    this.middlewares.use(notFoundMiddleware);
   }
 
   public async createHTTPServer() {
@@ -242,6 +261,14 @@ export async function startDevServer<
     pwd: options.context.rootPath,
     devMiddleware,
     dev: devServerConfig,
+    output: {
+      distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
+      assetPrefix:
+        typeof devServerConfig.assetPrefix === 'string' &&
+        !isURL(devServerConfig.assetPrefix)
+          ? devServerConfig.assetPrefix
+          : '',
+    },
   });
 
   debug('create dev server done');
