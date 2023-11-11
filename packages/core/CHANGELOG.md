@@ -1,5 +1,36 @@
 # @rsbuild/core
 
+## 0.0.20
+
+### Patch Changes
+
+- 06e7fce: chore(deps): bump html-rspack-plugin v5.5.4
+- a802111: chore: rename hmr path to /rsbuild-hmr
+- 0ca7057: perf: integrate html-rspack-plugin to reduce dependencies
+- 9ffb36b: refactor(core): merge asset plugins to a single plugin
+- 3c4e511: hotfix(dev-server): support access page without suffix
+- 7158af9: refactor: simplify rsbuild dev-related configurations #444
+- b55d867: feat(server): should print urls by html entry
+- d5eaaf6: types: provide all static assets types
+- 1626d73: types: unify plugin hooks type
+- 73780a8: types: add configuration files and simplify queries
+- 9b33bb7: fix(server): remove useless serverOptions, and fix https urls not print when set https
+
+  fix(server): 移除无用的 serverOptions 配置，并修复 https url 打印错误
+
+- 0b1171b: refactor: move disableInlineRuntimeChunk to uni-builder
+- Updated dependencies [06e7fce]
+- Updated dependencies [a802111]
+- Updated dependencies [ae399ab]
+- Updated dependencies [0ca7057]
+- Updated dependencies [9ffb36b]
+- Updated dependencies [7158af9]
+- Updated dependencies [bdd54f8]
+- Updated dependencies [1626d73]
+- Updated dependencies [9b33bb7]
+- Updated dependencies [0b1171b]
+  - @rsbuild/shared@0.0.20
+
 ## 0.0.19
 
 ### Patch Changes

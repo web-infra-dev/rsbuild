@@ -1,5 +1,33 @@
 # @rsbuild/uni-builder
 
+## 0.0.20
+
+### Patch Changes
+
+- ae399ab: refactor: move sri plugin to uni-builder
+- bdd54f8: refactor: move lazyCompilation plugin to uni-builder
+- 0b1171b: refactor: move disableInlineRuntimeChunk to uni-builder
+- Updated dependencies [06e7fce]
+- Updated dependencies [a802111]
+- Updated dependencies [ae399ab]
+- Updated dependencies [0ca7057]
+- Updated dependencies [9ffb36b]
+- Updated dependencies [97edf56]
+- Updated dependencies [3c4e511]
+- Updated dependencies [7158af9]
+- Updated dependencies [b55d867]
+- Updated dependencies [d5eaaf6]
+- Updated dependencies [bdd54f8]
+- Updated dependencies [1626d73]
+- Updated dependencies [73780a8]
+- Updated dependencies [16a0ee2]
+- Updated dependencies [9b33bb7]
+- Updated dependencies [0b1171b]
+  - @rsbuild/plugin-assets-retry@0.0.20
+  - @rsbuild/webpack@0.0.20
+  - @rsbuild/shared@0.0.20
+  - @rsbuild/core@0.0.20
+
 ## 0.0.19
 
 ### Patch Changes

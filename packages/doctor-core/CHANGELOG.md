@@ -1,5 +1,14 @@
 # @rsbuild/doctor-core
 
+## 0.0.8
+
+### Patch Changes
+
+- ae399ab: refactor: move sri plugin to uni-builder
+- b3b2988: feat: doctor-core add shared inner plugins
+  - @rsbuild/doctor-sdk@0.0.8
+  - @rsbuild/doctor-utils@0.0.8
+
 ## 0.0.7
 
 ### Patch Changes

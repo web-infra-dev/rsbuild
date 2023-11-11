@@ -1,5 +1,23 @@
 # @rsbuild/shared
 
+## 0.0.20
+
+### Patch Changes
+
+- 06e7fce: chore(deps): bump html-rspack-plugin v5.5.4
+- a802111: chore: rename hmr path to /rsbuild-hmr
+- ae399ab: refactor: move sri plugin to uni-builder
+- 0ca7057: perf: integrate html-rspack-plugin to reduce dependencies
+- 9ffb36b: refactor(core): merge asset plugins to a single plugin
+- 7158af9: refactor: simplify rsbuild dev-related configurations #444
+- bdd54f8: refactor: move lazyCompilation plugin to uni-builder
+- 1626d73: types: unify plugin hooks type
+- 9b33bb7: fix(server): remove useless serverOptions, and fix https urls not print when set https
+
+  fix(server): 移除无用的 serverOptions 配置，并修复 https url 打印错误
+
+- 0b1171b: refactor: move disableInlineRuntimeChunk to uni-builder
+
 ## 0.0.19
 
 ### Patch Changes

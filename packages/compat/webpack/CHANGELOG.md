@@ -1,5 +1,38 @@
 # @rsbuild/webpack
 
+## 0.0.20
+
+### Patch Changes
+
+- 06e7fce: chore(deps): bump html-rspack-plugin v5.5.4
+- ae399ab: refactor: move sri plugin to uni-builder
+- 0ca7057: perf: integrate html-rspack-plugin to reduce dependencies
+- 9ffb36b: refactor(core): merge asset plugins to a single plugin
+- 97edf56: fix(webpack): add missing dependencies for compiled packages
+- bdd54f8: refactor: move lazyCompilation plugin to uni-builder
+- 1626d73: types: unify plugin hooks type
+- 16a0ee2: feat(plugin-react): split react-refresh to lib-react.js
+- 0b1171b: refactor: move disableInlineRuntimeChunk to uni-builder
+- Updated dependencies [06e7fce]
+- Updated dependencies [a802111]
+- Updated dependencies [ae399ab]
+- Updated dependencies [0ca7057]
+- Updated dependencies [9ffb36b]
+- Updated dependencies [3c4e511]
+- Updated dependencies [7158af9]
+- Updated dependencies [b55d867]
+- Updated dependencies [d5eaaf6]
+- Updated dependencies [bdd54f8]
+- Updated dependencies [1626d73]
+- Updated dependencies [73780a8]
+- Updated dependencies [9b33bb7]
+- Updated dependencies [0b1171b]
+  - @rsbuild/shared@0.0.20
+  - @rsbuild/core@0.0.20
+  - @rsbuild/babel-preset@0.0.20
+  - @rsbuild/plugin-babel@0.0.20
+  - @rsbuild/plugin-css-minimizer@0.0.20
+
 ## 0.0.19
 
 ### Patch Changes

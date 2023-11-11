@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-styled-components",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "styled-components plugin for Rsbuild",
   "repository": {
     "type": "git",
