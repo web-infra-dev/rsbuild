@@ -127,7 +127,7 @@ export async function startProdServer(
       () => {
         const urls = getAddressUrls('http', port);
 
-        printServerURLs(urls);
+        printServerURLs(urls, context.entry);
         resolve({
           port,
           urls: urls.map((item) => item.url),
