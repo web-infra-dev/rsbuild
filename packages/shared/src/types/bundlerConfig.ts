@@ -1,4 +1,4 @@
-import { Configuration } from '@rspack/core';
+import type { Configuration } from '@rspack/core';
 import type WebpackChain from 'webpack-chain';
 
 export interface BundlerPluginInstance {

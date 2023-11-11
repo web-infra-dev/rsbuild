@@ -76,10 +76,11 @@ This repo has adopted the ByteDance Open Source Code of Conduct. Please check [C
 
 ## Credits
 
-Some implementations of Rsbuild are referenced from the following projects. We would like to express our gratitude to them:
+Some of the implementations of Rsbuild have drawn inspiration from outstanding projects in the community. We would like to express our gratitude to them:
 
-- `plugin-module-scope` and `plugin-file-size`: referenced from [create-react-app](https://github.com/facebook/create-react-app)
-- Some utils are referenced from [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
+- The design of some APIs is referenced from [vite](https://github.com/vitejs/vite).
+- The implementation of some plugins is referenced from [create-react-app](https://github.com/facebook/create-react-app)
+- Some utility functions are referenced from [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
 
 ## License
 

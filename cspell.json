@@ -36,6 +36,8 @@
     "rslog",
     "rspack",
     "rspress",
+    "selfsign",
+    "sirv",
     "stacktracey",
     "svgr",
     "systemjs",

@@ -78,10 +78,11 @@ Rsbuild 还为上层的解决方案（如 Rspress 和 Modern.js）提供通用�
 
 ## 致谢
 
-Rsbuild 的一些实现参考了以下项目，感谢他们：
+Rsbuild 的一些实现参考了社区中杰出的项目，对他们表示感谢：
 
-- `plugin-module-scope` 和 `plugin-file-size`：参考自 [create-react-app](https://github.com/facebook/create-react-app)
-- 部分工具函数参考自 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)。
+- 部分 API 的设计参考了 [vite](https://github.com/vitejs/vite)。
+- 部分插件的实现参考了 [create-react-app](https://github.com/facebook/create-react-app)。
+- 部分 util 函数参考了 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)。
 
 ## License
 
