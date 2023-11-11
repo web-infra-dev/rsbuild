@@ -45,8 +45,13 @@ export type DevMiddleware = (options: DevMiddlewareOptions) => DevMiddlewareAPI;
 
 export type RsbuildDevServerOptions = {
   pwd: string;
+  /** Rsbuild devConfig */
   dev: DevConfig;
   devMiddleware?: DevMiddleware;
+  output: {
+    distPath: string;
+    assetPrefix: string;
+  };
 };
 
 export type CreateDevServerOptions = {

@@ -3,6 +3,8 @@ import { URL } from 'url';
 import urlJoin from 'url-join';
 import { DEFAULT_DEV_HOST } from './constants';
 
+export { urlJoin };
+
 export const withPublicPath = (str: string, base: string) => {
   // The use of an absolute URL without a protocol is technically legal,
   // however it cannot be parsed as a URL instance.
