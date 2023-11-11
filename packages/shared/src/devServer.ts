@@ -14,11 +14,21 @@ import { logger as defaultLogger, Logger } from './logger';
 import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import { createAsyncHook } from './createHook';
 import type { Compiler } from '@rspack/core';
+import { normalizeUrl } from './url';
 
-export const normalizeUrl = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
-
-export const getRoutesName = (entry: RsbuildEntry) => {
-  return Object.keys(entry).map((name) => (name === 'index' ? '' : name));
+/*
+ * format route by entry and adjust the index route to be the first
+ */
+export const formatRoutes = (entry: RsbuildEntry) => {
+  return (
+    Object.keys(entry)
+      .map((name) => ({
+        name,
+        route: name === 'index' ? '' : name,
+      }))
+      // adjust the index route to be the first
+      .sort((a) => (a.name === 'index' ? -1 : 1))
+  );
 };
 
 export function printServerURLs(
@@ -26,7 +36,7 @@ export function printServerURLs(
   entry: RsbuildEntry,
   logger: Logger = defaultLogger,
 ) {
-  const routes = getRoutesName(entry);
+  const routes = formatRoutes(entry);
 
   let message = '';
   if (routes.length === 1) {
@@ -34,18 +44,18 @@ export function printServerURLs(
       .map(
         ({ label, url }) =>
           `  ${`> ${label.padEnd(10)}`}${color.cyan(
-            normalizeUrl(`${url}/${routes[0]}`),
+            normalizeUrl(`${url}/${routes[0].route}`),
           )}\n`,
       )
       .join('');
   } else {
-    const maxNameLength = Math.max(...routes.map((name) => name.length));
+    const maxNameLength = Math.max(...routes.map((r) => r.name.length));
     urls.forEach(({ label, url }) => {
       message += `  ${color.bold(`> ${label}`)}\n`;
-      routes.forEach((entryName) => {
+      routes.forEach((r) => {
         message += `    ${color.yellow('○')}  ${color.yellow(
-          entryName.padEnd(maxNameLength + 8),
-        )}${color.cyan(normalizeUrl(`${url}/${entryName}`))}\n`;
+          r.name.padEnd(maxNameLength + 8),
+        )}${color.cyan(normalizeUrl(`${url}/${r.route}`))}\n`;
       });
     });
   }

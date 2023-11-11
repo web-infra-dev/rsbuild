@@ -3,7 +3,129 @@ import {
   setupServerHooks,
   isClientCompiler,
   mergeDevOptions,
+  formatRoutes,
+  printServerURLs,
 } from '../src/devServer';
+
+test('formatRoutes', () => {
+  expect(
+    formatRoutes({
+      index: 'src/index.ts',
+      foo: 'src/index.ts',
+      bar: 'src/index.ts',
+    }),
+  ).toEqual([
+    {
+      name: 'index',
+      route: '',
+    },
+    {
+      name: 'foo',
+      route: 'foo',
+    },
+    {
+      name: 'bar',
+      route: 'bar',
+    },
+  ]);
+
+  expect(
+    formatRoutes({
+      foo: 'src/index.ts',
+      bar: 'src/index.ts',
+      index: 'src/index.ts',
+    }),
+  ).toEqual([
+    {
+      name: 'index',
+      route: '',
+    },
+    {
+      name: 'foo',
+      route: 'foo',
+    },
+    {
+      name: 'bar',
+      route: 'bar',
+    },
+  ]);
+
+  expect(
+    formatRoutes({
+      foo: 'src/index.ts',
+    }),
+  ).toEqual([
+    {
+      name: 'foo',
+      route: 'foo',
+    },
+  ]);
+});
+
+test('printServerURLs', () => {
+  let message: string;
+  const logger = {
+    log: (msg: string) => {
+      message = msg;
+    },
+  };
+
+  printServerURLs(
+    [
+      {
+        url: 'http://localhost:8080',
+        label: 'local',
+      },
+      {
+        url: 'http://10.94.62.193:8080/',
+        label: 'network',
+      },
+    ],
+    {
+      index: 'src/index.ts',
+    },
+    // @ts-expect-error
+    logger,
+  );
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  > local     http:/localhost:8080/
+      > network   http:/10.94.62.193:8080/
+    "
+  `);
+
+  printServerURLs(
+    [
+      {
+        url: 'http://localhost:8080',
+        label: 'local',
+      },
+      {
+        url: 'http://10.94.62.193:8080/',
+        label: 'network',
+      },
+    ],
+    {
+      foo: 'src/index.ts',
+      bar: 'src/index.ts',
+      index: 'src/index.ts',
+    },
+    // @ts-expect-error
+    logger,
+  );
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  > local
+        ○  index        http:/localhost:8080/
+        ○  foo          http:/localhost:8080/foo
+        ○  bar          http:/localhost:8080/bar
+      > network
+        ○  index        http:/10.94.62.193:8080/
+        ○  foo          http:/10.94.62.193:8080/foo
+        ○  bar          http:/10.94.62.193:8080/bar
+    "
+  `);
+});
 
 describe('test dev server', () => {
   test('should setupServerHooks correctly', () => {
