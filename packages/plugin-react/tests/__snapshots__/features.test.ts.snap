@@ -37,7 +37,7 @@ exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is i
       "name": "lib-react",
       "priority": 0,
       "reuseExistingChunk": true,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\|react-refresh\\|@pmmmwh\\\\/react-refresh-webpack-plugin\\)\\[\\\\\\\\/\\]/,
     },
     "lib-router": {
       "name": "lib-router",
