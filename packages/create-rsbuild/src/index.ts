@@ -49,6 +49,7 @@ async function main() {
       { value: 'vue3', label: 'Vue 3' },
       { value: 'vue2', label: 'Vue 2' },
       { value: 'svelte', label: 'Svelte' },
+      { value: 'vanilla', label: 'Vanilla' },
     ],
   })) as string;
 
