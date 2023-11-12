@@ -16,7 +16,7 @@ import {
   type BundlerChainRule,
   type BuiltinSwcLoaderOptions,
 } from '@rsbuild/shared';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from '@rsbuild/shared/deepmerge';
 import * as path from 'path';
 import type {
   RsbuildPlugin,
