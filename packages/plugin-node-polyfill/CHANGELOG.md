@@ -1,5 +1,21 @@
 # @rsbuild/plugin-node-polyfill
 
+## 0.0.20
+
+### Patch Changes
+
+- Updated dependencies [06e7fce]
+- Updated dependencies [a802111]
+- Updated dependencies [ae399ab]
+- Updated dependencies [0ca7057]
+- Updated dependencies [9ffb36b]
+- Updated dependencies [7158af9]
+- Updated dependencies [bdd54f8]
+- Updated dependencies [1626d73]
+- Updated dependencies [9b33bb7]
+- Updated dependencies [0b1171b]
+  - @rsbuild/shared@0.0.20
+
 ## 0.0.19
 
 ### Patch Changes

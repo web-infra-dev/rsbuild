@@ -1,5 +1,16 @@
 # @rsbuild/document
 
+## 0.0.20
+
+### Patch Changes
+
+- a802111: chore: rename hmr path to /rsbuild-hmr
+- ae399ab: refactor: move sri plugin to uni-builder
+- 0ca7057: perf: integrate html-rspack-plugin to reduce dependencies
+- bdd54f8: refactor: move lazyCompilation plugin to uni-builder
+- 16a0ee2: feat(plugin-react): split react-refresh to lib-react.js
+- 0b1171b: refactor: move disableInlineRuntimeChunk to uni-builder
+
 ## 0.0.19
 
 ## 0.0.18

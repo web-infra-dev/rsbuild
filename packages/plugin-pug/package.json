@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-pug",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Pug plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
