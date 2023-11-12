@@ -356,6 +356,15 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
+  examples/vanilla:
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
   packages/babel-preset:
     dependencies:
       '@babel/core':
@@ -799,6 +808,21 @@ importers:
       '@rsbuild/plugin-svelte':
         specifier: workspace:*
         version: link:../../plugin-svelte
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
+  packages/create-rsbuild/template-vanilla-js:
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../core
+
+  packages/create-rsbuild/template-vanilla-ts:
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../core
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
