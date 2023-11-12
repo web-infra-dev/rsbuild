@@ -697,9 +697,6 @@ importers:
       sirv:
         specifier: ^2.0.3
         version: 2.0.3
-      strip-ansi:
-        specifier: ^6.0.1
-        version: 6.0.1
       ws:
         specifier: ^8.2.0
         version: 8.14.2

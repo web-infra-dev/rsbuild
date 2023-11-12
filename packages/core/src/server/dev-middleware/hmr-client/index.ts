@@ -4,7 +4,6 @@
  *
  * Tips: this package will be bundled and running in the browser, do not import from the entry of @rsbuild/core.
  */
-import stripAnsi from 'strip-ansi';
 import type { StatsError } from '@rsbuild/shared';
 import { formatStatsMessages } from '@rsbuild/shared/format-stats';
 import { createSocketUrl } from './createSocketUrl';
@@ -96,7 +95,7 @@ function handleWarnings(warnings: StatsError[]) {
           );
           break;
         }
-        console.warn(stripAnsi(formatted.warnings[i]));
+        console.warn(formatted.warnings[i]);
       }
     }
   }
@@ -125,7 +124,7 @@ function handleErrors(errors: StatsError[]) {
   // Also log them to the console.
   if (typeof console !== 'undefined' && typeof console.error === 'function') {
     for (const error of formatted.errors) {
-      console.error(stripAnsi(error));
+      console.error(error);
     }
   }
 
