@@ -1,4 +1,4 @@
-import { deepmerge } from '@rsbuild/shared/deepmerge';
+import { deepmerge } from '@rsbuild/shared';
 import {
   mergeRsbuildConfig,
   type RsbuildPlugin,

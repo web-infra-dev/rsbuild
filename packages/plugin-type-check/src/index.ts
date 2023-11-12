@@ -2,10 +2,10 @@ import { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
 import {
   logger,
   CHAIN_ID,
+  deepmerge,
   mergeChainedOptions,
   type ChainedConfig,
 } from '@rsbuild/shared';
-import { deepmerge } from '@rsbuild/shared/deepmerge';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
 type ForkTsCheckerOptions = ConstructorParameters<

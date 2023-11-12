@@ -5,7 +5,7 @@ import {
   NODE_MODULES_REGEX,
 } from './constants';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
-import deepmerge from 'deepmerge';
+import deepmerge from '../compiled/deepmerge';
 import { getSharedPkgCompiledPath as getCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type {

@@ -1,4 +1,4 @@
-import { deepmerge } from '@rsbuild/shared/deepmerge';
+import { deepmerge } from '@rsbuild/shared';
 import { VueLoaderPlugin } from 'vue-loader';
 import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
 import type { VueLoaderOptions } from 'vue-loader';

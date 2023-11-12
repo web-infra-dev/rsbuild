@@ -1,10 +1,10 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import {
+  deepmerge,
   STYLUS_REGEX,
   isUseCssSourceMap,
   mergeChainedOptions,
 } from '@rsbuild/shared';
-import { deepmerge } from '@rsbuild/shared/deepmerge';
 import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 
 type StylusOptions = {

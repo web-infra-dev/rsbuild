@@ -7,6 +7,9 @@ import path from 'path';
 import fs from 'fs-extra';
 import semver from 'semver';
 import { findUp } from './fs';
+import deepmerge from '../compiled/deepmerge';
+
+export { deepmerge };
 
 export const isDev = (): boolean => process.env.NODE_ENV === 'development';
 export const isProd = (): boolean => process.env.NODE_ENV === 'production';
@@ -165,3 +168,5 @@ export const isBeyondReact17 = async (cwd: string) => {
 
 export const camelCase = (input: string): string =>
   input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
+
+export const cloneDeep = <T>(value: T): T => deepmerge({}, value);

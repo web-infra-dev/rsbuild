@@ -1,4 +1,4 @@
-import { deepmerge } from '@rsbuild/shared/deepmerge';
+import { deepmerge } from '@rsbuild/shared';
 import { generateBaseConfig } from './base';
 import type { BabelConfig, NodePresetOptions } from './types';
 

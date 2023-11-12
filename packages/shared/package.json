@@ -14,10 +14,6 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./deepmerge": {
-      "types": "./dist/re-exports/deepmerge.d.ts",
-      "default": "./dist/re-exports/deepmerge.js"
-    },
     "./format-stats": {
       "types": "./dist/formatStats.d.ts",
       "default": "./dist/formatStats.js"
@@ -71,9 +67,6 @@
   "types": "./src/index.ts",
   "typesVersions": {
     "*": {
-      "deepmerge": [
-        "./dist/re-exports/deepmerge.d.ts"
-      ],
       "format-stats": [
         "./dist/formatStats.d.ts"
       ],
@@ -128,7 +121,6 @@
     "connect": "3.7.0",
     "browserslist": "^4.22.1",
     "caniuse-lite": "^1.0.30001559",
-    "deepmerge": "^4.3.1",
     "fs-extra": "^11.1.1",
     "gzip-size": "^6.0.0",
     "json5": "^2.2.3",

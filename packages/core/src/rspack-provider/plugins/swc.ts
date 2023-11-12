@@ -4,6 +4,7 @@ import {
   TS_REGEX,
   mergeRegex,
   setConfig,
+  cloneDeep,
   isWebTarget,
   addCoreJsEntry,
   isUseJsSourceMap,
@@ -16,7 +17,6 @@ import {
   type BundlerChainRule,
   type BuiltinSwcLoaderOptions,
 } from '@rsbuild/shared';
-import { cloneDeep } from '@rsbuild/shared/deepmerge';
 import * as path from 'path';
 import type {
   RsbuildPlugin,
