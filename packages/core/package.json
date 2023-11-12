@@ -101,7 +101,6 @@
     "rslog": "^1.1.0",
     "semver": "^7.5.4",
     "sirv": "^2.0.3",
-    "strip-ansi": "^6.0.1",
     "ws": "^8.2.0"
   },
   "devDependencies": {
