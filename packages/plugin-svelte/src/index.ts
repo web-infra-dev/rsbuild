@@ -1,6 +1,5 @@
 import path from 'path';
-import { logger } from '@rsbuild/shared';
-import { deepmerge } from '@rsbuild/shared/deepmerge';
+import { logger, deepmerge } from '@rsbuild/shared';
 import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
 
 export type PluginSvelteOptions = {

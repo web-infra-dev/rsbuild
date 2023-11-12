@@ -6,7 +6,7 @@ import {
   type RemOptions,
   type PxToRemOptions,
 } from '@rsbuild/shared';
-import { cloneDeep } from '@rsbuild/shared/deepmerge';
+import { cloneDeep } from '@rsbuild/shared';
 
 const defaultOptions: RemOptions = {
   enableRuntime: true,

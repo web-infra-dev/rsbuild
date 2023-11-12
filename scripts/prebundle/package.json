@@ -1,0 +1,25 @@
+{
+  "name": "@rsbuild/prebundle",
+  "private": true,
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "start": "pnpm build && node ./dist/index.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.23.2",
+    "@types/node": "^16",
+    "@types/fs-extra": "^11.0.2",
+    "@vercel/ncc": "0.33.3",
+    "dts-packer": "0.0.3",
+    "fast-glob": "^3.3.1",
+    "fs-extra": "^11.1.1",
+    "postcss": "8.4.31",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "deepmerge": "^4.3.1"
+  }
+}

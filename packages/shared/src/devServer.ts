@@ -8,7 +8,7 @@ import type {
   RsbuildEntry,
 } from './types';
 import { getPort } from './port';
-import deepmerge from 'deepmerge';
+import deepmerge from '../compiled/deepmerge';
 import { color } from './color';
 import { logger as defaultLogger, Logger } from './logger';
 import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
