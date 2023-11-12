@@ -22,8 +22,8 @@ import type {
   HtmlTagsPluginOptions,
   SharedRsbuildPluginAPI,
   NormalizedOutputConfig,
+  HtmlInjectTagDescriptor,
 } from '@rsbuild/shared';
-import _ from 'lodash';
 import {
   HtmlBasicPlugin,
   type HtmlInfo,
@@ -156,10 +156,14 @@ export const applyInjectTags = (api: SharedRsbuildPluginAPI) => {
     const config = api.getNormalizedConfig();
 
     const tags = castArray(config.html.tags).filter(Boolean);
-    const tagsByEntries = _.mapValues(config.html.tagsByEntries, (tags) =>
-      castArray(tags).filter(Boolean),
+    const tagsByEntries = config.html.tagsByEntries || {};
+    Object.keys(tagsByEntries).forEach(
+      (key) =>
+        (tagsByEntries[key] = castArray(tagsByEntries[key]).filter(Boolean)),
     );
-    const shouldByEntries = _.some(tagsByEntries, 'length');
+    const shouldByEntries = Object.values(tagsByEntries).some(
+      (entry) => Array.isArray(entry) && entry.length > 0,
+    );
 
     // skip if options is empty.
     if (!tags.length && !shouldByEntries) {
@@ -186,7 +190,10 @@ export const applyInjectTags = (api: SharedRsbuildPluginAPI) => {
     // apply webpack plugin for each entries.
     for (const [entry, filename] of Object.entries(api.getHTMLPaths())) {
       const opts = { ...sharedOptions, includes: [filename] };
-      entry in tagsByEntries && (opts.tags = tagsByEntries[entry]);
+      entry in tagsByEntries &&
+        (opts.tags = (
+          tagsByEntries as Record<string, HtmlInjectTagDescriptor[]>
+        )[entry]);
       chain
         .plugin(`${CHAIN_ID.PLUGIN.HTML_TAGS}#${entry}`)
         .use(HtmlTagsPlugin, [opts]);

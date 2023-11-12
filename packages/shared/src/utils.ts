@@ -162,3 +162,6 @@ export const isBeyondReact17 = async (cwd: string) => {
 
   return semver.satisfies(semver.minVersion(deps.react)!, '>=17.0.0');
 };
+
+export const camelCase = (input: string): string =>
+  input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   getDistPath,
   AutoSetRootFontSizePlugin,
@@ -7,6 +6,7 @@ import {
   type RemOptions,
   type PxToRemOptions,
 } from '@rsbuild/shared';
+import { cloneDeep } from '@rsbuild/shared/deepmerge';
 
 const defaultOptions: RemOptions = {
   enableRuntime: true,
@@ -53,7 +53,7 @@ export const pluginRem = (): DefaultRsbuildPlugin => ({
             rootValue: userOptions.rootFontSize,
             unitPrecision: 5,
             propList: ['*'],
-            ..._.cloneDeep(userOptions.pxtorem || {}),
+            ...(userOptions.pxtorem ? cloneDeep(userOptions.pxtorem) : {}),
           });
         // Deep copy options to prevent unexpected behavior.
         applyRules.forEach((name) => {
