@@ -13,6 +13,11 @@ test('should provide history api fallback correctly', async ({ page }) => {
     },
     plugins: [pluginReact()],
     rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-historyApiFallback',
+        },
+      },
       dev: {
         historyApiFallback: {
           index: '/main.html',

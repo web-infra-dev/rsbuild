@@ -6,6 +6,7 @@ import type {
   CompilerTapFn,
   DevConfig,
   RsbuildEntry,
+  Routes,
 } from './types';
 import { getPort } from './port';
 import deepmerge from '../compiled/deepmerge';
@@ -19,12 +20,12 @@ import { normalizeUrl } from './url';
 /*
  * format route by entry and adjust the index route to be the first
  */
-export const formatRoutes = (entry: RsbuildEntry) => {
+export const formatRoutes = (entry: RsbuildEntry, prefix?: string): Routes => {
   return (
     Object.keys(entry)
       .map((name) => ({
         name,
-        route: name === 'index' ? '' : name,
+        route: (prefix ? `${prefix}/` : '') + (name === 'index' ? '' : name),
       }))
       // adjust the index route to be the first
       .sort((a) => (a.name === 'index' ? -1 : 1))
@@ -33,12 +34,11 @@ export const formatRoutes = (entry: RsbuildEntry) => {
 
 export function printServerURLs(
   urls: Array<{ url: string; label: string }>,
-  entry: RsbuildEntry,
+  routes: Routes,
   logger: Logger = defaultLogger,
 ) {
-  const routes = formatRoutes(entry);
-
   let message = '';
+
   if (routes.length === 1) {
     message = urls
       .map(

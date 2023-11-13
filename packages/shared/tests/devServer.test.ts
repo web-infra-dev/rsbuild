@@ -60,6 +60,30 @@ test('formatRoutes', () => {
       route: 'foo',
     },
   ]);
+
+  expect(
+    formatRoutes(
+      {
+        index: 'src/index.ts',
+        foo: 'src/index.ts',
+        bar: 'src/index.ts',
+      },
+      'html',
+    ),
+  ).toEqual([
+    {
+      name: 'index',
+      route: 'html/',
+    },
+    {
+      name: 'foo',
+      route: 'html/foo',
+    },
+    {
+      name: 'bar',
+      route: 'html/bar',
+    },
+  ]);
 });
 
 test('printServerURLs', () => {
@@ -81,9 +105,12 @@ test('printServerURLs', () => {
         label: 'network',
       },
     ],
-    {
-      index: 'src/index.ts',
-    },
+    [
+      {
+        name: 'index',
+        route: '',
+      },
+    ],
     // @ts-expect-error
     logger,
   );
@@ -105,11 +132,20 @@ test('printServerURLs', () => {
         label: 'network',
       },
     ],
-    {
-      foo: 'src/index.ts',
-      bar: 'src/index.ts',
-      index: 'src/index.ts',
-    },
+    [
+      {
+        name: 'index',
+        route: '',
+      },
+      {
+        name: 'foo',
+        route: 'html/foo',
+      },
+      {
+        name: 'bar',
+        route: 'bar',
+      },
+    ],
     // @ts-expect-error
     logger,
   );
@@ -117,11 +153,11 @@ test('printServerURLs', () => {
   expect(message!).toMatchInlineSnapshot(`
     "  > local
         ○  index        http:/localhost:8080/
-        ○  foo          http:/localhost:8080/foo
+        ○  foo          http:/localhost:8080/html/foo
         ○  bar          http:/localhost:8080/bar
       > network
         ○  index        http:/10.94.62.193:8080/
-        ○  foo          http:/10.94.62.193:8080/foo
+        ○  foo          http:/10.94.62.193:8080/html/foo
         ○  bar          http:/10.94.62.193:8080/bar
     "
   `);

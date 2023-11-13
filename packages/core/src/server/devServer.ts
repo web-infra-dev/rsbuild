@@ -19,6 +19,7 @@ import {
   getDevOptions,
   ROOT_DIST_DIR,
   isURL,
+  formatRoutes,
 } from '@rsbuild/shared';
 import DevMiddleware from './dev-middleware';
 import connect from 'connect';
@@ -239,6 +240,10 @@ export async function startDevServer<
 
   const protocol = https ? 'https' : 'http';
   let urls = getAddressUrls(protocol, port, rsbuildConfig.dev?.host);
+  const routes = formatRoutes(
+    options.context.entry,
+    rsbuildConfig.output?.distPath?.html,
+  );
 
   if (printURLs) {
     if (isFunction(printURLs)) {
@@ -249,7 +254,7 @@ export async function startDevServer<
       }
     }
 
-    printServerURLs(urls, options.context.entry, logger);
+    printServerURLs(urls, routes, logger);
   }
 
   debug('create dev server');
@@ -295,7 +300,11 @@ export async function startDevServer<
 
         debug('listen dev server done');
 
-        await options.context.hooks.onAfterStartDevServerHook.call({ port });
+        await options.context.hooks.onAfterStartDevServerHook.call({
+          port,
+          routes,
+        });
+
         resolve({
           port,
           urls: urls.map((item) => item.url),

@@ -16,6 +16,11 @@ test('default & hmr (default true)', async ({ page }) => {
     },
     plugins: [pluginReact()],
     rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-hmr',
+        },
+      },
       dev: {
         client: {
           host: '',
@@ -124,6 +129,11 @@ test('hmr should work when setting dev.port & client', async ({ page }) => {
     },
     plugins: [pluginReact()],
     rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-hmr-1',
+        },
+      },
       dev: {
         port: 3001,
         client: {
@@ -167,6 +177,11 @@ test('dev.https', async () => {
       main: join(join(fixtures, 'basic'), 'src/index.ts'),
     },
     rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-https',
+        },
+      },
       dev: {
         https: true,
       },
@@ -190,6 +205,11 @@ test('devServer', async ({ page }) => {
       main: join(join(fixtures, 'basic'), 'src/index.ts'),
     },
     rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-dev-server',
+        },
+      },
       dev: {
         setupMiddlewares: [
           (middlewares, server) => {
