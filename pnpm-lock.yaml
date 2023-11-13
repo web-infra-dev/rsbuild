@@ -96,6 +96,9 @@ importers:
       '@rsbuild/plugin-react':
         specifier: workspace:*
         version: link:../packages/plugin-react
+      '@rsbuild/plugin-rem':
+        specifier: workspace:*
+        version: link:../packages/plugin-rem
       '@rsbuild/plugin-source-build':
         specifier: workspace:*
         version: link:../packages/plugin-source-build
@@ -500,6 +503,9 @@ importers:
       '@rsbuild/plugin-assets-retry':
         specifier: workspace:*
         version: link:../../plugin-assets-retry
+      '@rsbuild/plugin-rem':
+        specifier: workspace:*
+        version: link:../../plugin-rem
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../../shared
@@ -1186,9 +1192,6 @@ importers:
       serialize-javascript:
         specifier: ^6.0.0
         version: 6.0.1
-      webpack-sources:
-        specifier: ^3.2.3
-        version: 3.2.3
     devDependencies:
       '@babel/core':
         specifier: ^7.23.2
@@ -1410,6 +1413,25 @@ importers:
       '@types/node':
         specifier: ^16
         version: 16.18.59
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
+  packages/plugin-rem:
+    dependencies:
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+      terser:
+        specifier: 5.19.2
+        version: 5.19.2
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -14245,6 +14267,7 @@ packages:
   /terser@5.19.2:
     resolution: {integrity: sha512-qC5+dmecKJA4cpYxRa5aVkKehYsQKc+AHeKl0Oe62aYjBL8ZA33tTljktDHJSaxxMnbI5ZYw+o/S2DxxLu8OfA==}
     engines: {node: '>=10'}
+    hasBin: true
     dependencies:
       '@jridgewell/source-map': 0.3.5
       acorn: 8.10.0

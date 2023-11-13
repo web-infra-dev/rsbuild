@@ -3,17 +3,13 @@ import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
 import { pluginStylus } from '@rsbuild/plugin-stylus';
+import { pluginRem } from '@rsbuild/plugin-rem';
 
 test('should compile stylus and rem correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    plugins: [pluginStylus()],
-    rsbuildConfig: {
-      output: {
-        convertToRem: true,
-      },
-    },
+    plugins: [pluginStylus(), pluginRem()],
   });
   const files = await rsbuild.unwrapOutputJSON();
 

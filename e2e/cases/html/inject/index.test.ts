@@ -1,20 +1,21 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
+import { pluginRem } from '@rsbuild/plugin-rem';
 
 test('Rsbuild injection script order should be as expected', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
+    plugins: [
+      pluginRem({
+        inlineRuntime: false,
+      }),
+    ],
     rsbuildConfig: {
       html: {
         inject: false,
         template: './static/index.html',
-      },
-      output: {
-        convertToRem: {
-          inlineRuntime: false,
-        },
       },
     },
   });

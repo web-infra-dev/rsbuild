@@ -103,7 +103,6 @@ export type Plugins = {
   bundleAnalyzer: PluginsFn;
   asset: PluginsFn;
   html: PluginsFn;
-  rem: PluginsFn;
   wasm: PluginsFn;
   moment: PluginsFn;
   nodeAddons: PluginsFn;

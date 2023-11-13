@@ -2,7 +2,7 @@ import {
   getRootPixelCode,
   genJSTemplate,
   DEFAULT_OPTIONS,
-} from '../../src/plugins/AutoSetRootFontSizePlugin';
+} from '../src/AutoSetRootFontSizePlugin';
 
 const customOptions = {
   ...DEFAULT_OPTIONS,
