@@ -5,14 +5,16 @@ import {
 } from '@modern-js/module-tools';
 import path from 'path';
 
-export default defineConfig({
+export const baseBuildConfig = {
   plugins: [moduleTools()],
   buildConfig: {
-    buildType: 'bundleless',
-    format: 'cjs',
-    target: 'es2019',
+    buildType: 'bundleless' as const,
+    format: 'cjs' as const,
+    target: 'es2019' as const,
   },
-});
+};
+
+export default defineConfig(baseBuildConfig);
 
 export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
   {

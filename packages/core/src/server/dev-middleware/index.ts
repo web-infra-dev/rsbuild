@@ -23,7 +23,7 @@ function getHMRClientPath(client: DevConfig['client']) {
   const port = client?.port ? `&port=${client.port}` : '';
 
   const clientEntry = `${require.resolve(
-    '@rsbuild/core/hmr-client',
+    '@rsbuild/core/client/hmr',
   )}?${host}${path}${port}${protocol}`;
 
   // replace cjs with esm because we want to use the es5 version
