@@ -1,5 +1,11 @@
 # @rsbuild/document
 
+## 0.0.21
+
+### Patch Changes
+
+- 2b2ac7f: hotfix(doc): use rspress next version to adapt rsbuild server
+
 ## 0.0.20
 
 ### Patch Changes

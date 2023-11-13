@@ -1,5 +1,21 @@
 # @rsbuild/shared
 
+## 0.0.21
+
+### Patch Changes
+
+- 42ace29: chore: using exports.types to replace typesVersion
+- c90bebe: perf: prebundle picocolors dependency
+- a919119: chore(core): remove lodash dependency
+- 0270c27: feat(cli): restart dev server when config file changed
+- a58e71c: perf(shared): prebundle webpack-chain and webpack-sources
+- dbdc3c5: hotfix(server): should print url with distPath.html
+- a694a55: chore(deps): bump html-rspack-plugin v5.5.5
+- 8aa416e: perf: add prebundle scripts and bundle deepmerge
+- 6abd810: chore(server): route.json is no longer needed
+- 4092858: chore: add prod-server e2e test cases and support not printURLs when preview
+- 648e847: perf: prebundle fs-extra and url-join
+
 ## 0.0.20
 
 ### Patch Changes

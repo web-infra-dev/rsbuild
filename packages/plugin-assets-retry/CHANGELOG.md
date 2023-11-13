@@ -1,5 +1,24 @@
 # @rsbuild/plugin-assets-retry
 
+## 0.0.21
+
+### Patch Changes
+
+- a694a55: chore(deps): bump html-rspack-plugin v5.5.5
+- 648e847: perf: prebundle fs-extra and url-join
+- Updated dependencies [42ace29]
+- Updated dependencies [c90bebe]
+- Updated dependencies [a919119]
+- Updated dependencies [0270c27]
+- Updated dependencies [a58e71c]
+- Updated dependencies [dbdc3c5]
+- Updated dependencies [a694a55]
+- Updated dependencies [8aa416e]
+- Updated dependencies [6abd810]
+- Updated dependencies [4092858]
+- Updated dependencies [648e847]
+  - @rsbuild/shared@0.0.21
+
 ## 0.0.20
 
 ### Patch Changes

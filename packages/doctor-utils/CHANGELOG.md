@@ -1,5 +1,11 @@
 # @rsbuild/doctor-utils
 
+## 0.0.9
+
+### Patch Changes
+
+- 42ace29: chore: using exports.types to replace typesVersion
+
 ## 0.0.8
 
 ## 0.0.7
