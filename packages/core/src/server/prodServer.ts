@@ -12,6 +12,7 @@ import {
   getAddressUrls,
   DEFAULT_DEV_HOST,
   printServerURLs,
+  formatRoutes,
   ROOT_DIST_DIR,
 } from '@rsbuild/shared';
 import { faviconFallbackMiddleware } from './middlewares';
@@ -126,8 +127,12 @@ export async function startProdServer(
       },
       () => {
         const urls = getAddressUrls('http', port);
+        const routes = formatRoutes(
+          context.entry,
+          rsbuildConfig.output?.distPath?.html,
+        );
 
-        printServerURLs(urls, context.entry);
+        printServerURLs(urls, routes);
         resolve({
           port,
           urls: urls.map((item) => item.url),

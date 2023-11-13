@@ -16,6 +16,11 @@ test('should access / success when entry is index', async ({ page }) => {
           writeToDisk: true,
         },
       },
+      output: {
+        distPath: {
+          root: 'dist-html-fallback-0',
+        },
+      },
     },
   });
 
@@ -38,6 +43,11 @@ test('should access /main.html success when entry is main', async ({
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
     rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-html-fallback-1',
+        },
+      },
       dev: {
         devMiddleware: {
           writeToDisk: true,
@@ -63,6 +73,11 @@ test('should access /main success when entry is main', async ({ page }) => {
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
     rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-html-fallback-2',
+        },
+      },
       dev: {
         devMiddleware: {
           writeToDisk: true,
@@ -92,6 +107,11 @@ test('should access /main success when entry is main and use memoryFs', async ({
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
     rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-html-fallback-3',
+        },
+      },
       dev: {
         devMiddleware: {
           writeToDisk: false,
@@ -119,6 +139,11 @@ test('should access /main success when entry is main and set assetPrefix', async
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
     rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-html-fallback-4',
+        },
+      },
       dev: {
         devMiddleware: {
           writeToDisk: true,
@@ -147,6 +172,11 @@ test('should access /main success when entry is main and outputPath is /main/ind
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
     rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-html-fallback-5',
+        },
+      },
       html: {
         outputStructure: 'nested',
       },
@@ -175,6 +205,11 @@ test('should return 404 when page is not found', async ({ page }) => {
       main: join(fixtures, 'basic', 'src/index.ts'),
     },
     rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-html-fallback-6',
+        },
+      },
       dev: {
         devMiddleware: {
           writeToDisk: true,
@@ -186,6 +221,47 @@ test('should return 404 when page is not found', async ({ page }) => {
   const url = new URL(`http://localhost:${rsbuild.port}/main1`);
 
   const res = await page.goto(url.href);
+
+  expect(res?.status()).toBe(404);
+
+  await rsbuild.server.close();
+});
+
+test('should access /html/main success when entry is main and outputPath is /html/main.html', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: join(fixtures, 'basic'),
+    entry: {
+      main: join(fixtures, 'basic', 'src/index.ts'),
+    },
+    rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-html-fallback-5',
+          html: 'html',
+        },
+      },
+      dev: {
+        devMiddleware: {
+          writeToDisk: true,
+        },
+      },
+    },
+  });
+
+  // access /html/main success
+  const url = new URL(`http://localhost:${rsbuild.port}/html/main`);
+
+  await page.goto(url.href);
+
+  const locator = page.locator('#test');
+  await expect(locator).toHaveText('Hello Rsbuild!');
+
+  // access /main failed
+  const url1 = new URL(`http://localhost:${rsbuild.port}/main`);
+
+  const res = await page.goto(url1.href);
 
   expect(res?.status()).toBe(404);
 
