@@ -23,6 +23,11 @@
       "types": "./dist/type/build-utils/index.d.ts",
       "require": "./dist/cjs/build-utils/index.js",
       "import": "./dist/esm/build-utils/index.js"
+    },
+    "./rules": {
+      "types": "./dist/type/rules/index.d.ts",
+      "require": "./dist/cjs/rues/index.js",
+      "import": "./dist/esm/rules/index.js"
     }
   },
   "scripts": {
@@ -43,6 +48,7 @@
     "memfs": "3.4.10",
     "node-fetch": "^3.3.2",
     "path-browserify": "1.0.1",
+    "semver": "^7.5.4",
     "source-map": "^0.7.4",
     "webpack-bundle-analyzer": "^4.9.1"
   },
@@ -54,6 +60,7 @@
     "@types/node": "^16",
     "@types/node-fetch": "^2.6.9",
     "@types/path-browserify": "1.0.1",
+    "@types/semver": "^7.5.4",
     "@types/tapable": "2.2.2",
     "@types/webpack": "5.28.0",
     "babel-loader": "9.1.3",
