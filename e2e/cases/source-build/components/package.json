@@ -6,22 +6,14 @@
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "source": "./src/index.tsx",
       "default": "./dist/index.js"
     },
     "./card": {
+      "types": "./dist/types/card/index.d.ts",
       "source": "./src/card/index.tsx",
       "default": "./dist/card/index.js"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "./dist/types/index.d.ts"
-      ],
-      "card": [
-        "./dist/types/card/index.d.ts"
-      ]
     }
   },
   "dependencies": {

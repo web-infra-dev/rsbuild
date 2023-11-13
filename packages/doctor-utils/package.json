@@ -9,9 +9,9 @@
   "license": "MIT",
   "exports": {
     ".": {
-      "types": "./dist/type/common/index.d.ts",
-      "require": "./dist/cjs/common/index.js",
-      "import": "./dist/esm/common/index.js"
+      "types": "./dist/type/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
     },
     "./common": {
       "types": "./dist/type/common/index.d.ts",
@@ -36,22 +36,6 @@
   },
   "main": "dist/index.js",
   "types": "dist/type/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "common": [
-        "./dist/type/common/index.d.ts"
-      ],
-      "build": [
-        "./dist/type/build/index.d.ts"
-      ],
-      "ruleUtils": [
-        "./dist/type/rule-utils/index.d.ts"
-      ],
-      "logger": [
-        "./dist/type/logger/index.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist"
   ],
@@ -74,7 +58,7 @@
     "fs-extra": "^11.1.1",
     "get-port": "5.1.1",
     "json-stream-stringify": "3.0.1",
-    "lines-and-columns": "2.0.3",
+    "lines-and-columns": "2.0.4",
     "lodash": "^4.17.21",
     "strip-ansi": "^6.0.1"
   },

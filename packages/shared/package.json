@@ -55,49 +55,12 @@
       "default": "./compiled/postcss-modules-values/index.js"
     },
     "./webpack-merge": {
-      "types": "./compiled/webpack-merge/index.d.ts",
+      "types": "./compiled/webpack-merge/types/index.d.ts",
       "default": "./compiled/webpack-merge/index.js"
     }
   },
   "main": "./dist/index.js",
   "types": "./src/index.ts",
-  "typesVersions": {
-    "*": {
-      "format-stats": [
-        "./dist/formatStats.d.ts"
-      ],
-      "webpack-bundle-analyzer": [
-        "./compiled/webpack-bundle-analyzer/index.d.ts"
-      ],
-      "webpack-dev-middleware": [
-        "./compiled/webpack-dev-middleware/types/index.d.ts"
-      ],
-      "css-modules-typescript-loader": [
-        "./dist/loaders/css-modules-typescript-loader.d.ts"
-      ],
-      "ignore-css-loader": [
-        "./dist/loaders/ignore-css-loader.d.ts"
-      ],
-      "icss-utils": [
-        "./compiled/icss-utils/index.d.ts"
-      ],
-      "postcss-modules-extract-imports": [
-        "./compiled/postcss-modules-extract-imports/index.d.ts"
-      ],
-      "postcss-modules-local-by-default": [
-        "./compiled/postcss-modules-local-by-default/index.d.ts"
-      ],
-      "postcss-modules-scope": [
-        "./compiled/postcss-modules-scope/index.d.ts"
-      ],
-      "postcss-modules-values": [
-        "./compiled/postcss-modules-values/index.d.ts"
-      ],
-      "webpack-merge": [
-        "./compiled/webpack-merge/types/index.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist",
     "compiled"

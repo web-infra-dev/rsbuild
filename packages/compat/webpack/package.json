@@ -24,16 +24,6 @@
   },
   "main": "./dist/index.js",
   "types": "./src/index.ts",
-  "typesVersions": {
-    "*": {
-      "plugin-babel": [
-        "./dist/plugins/babel.d.ts"
-      ],
-      "plugin-css": [
-        "./dist/plugins/css.d.ts"
-      ]
-    }
-  },
   "files": [
     "static",
     "compiled",

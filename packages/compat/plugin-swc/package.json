@@ -28,19 +28,6 @@
   },
   "main": "./dist/index.js",
   "types": "./src/index.ts",
-  "typesVersions": {
-    "*": {
-      "loader": [
-        "./dist/loader.d.ts"
-      ],
-      "plugin": [
-        "./dist/plugin.d.ts"
-      ],
-      "binding": [
-        "./dist/binding.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist"
   ],

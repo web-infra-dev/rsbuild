@@ -9,6 +9,7 @@ import type {
 import {
   SourceMap,
   PitchLoaderDefinitionFunction as RspackPitchLoaderDefinitionFunction,
+  // @ts-expect-error
 } from '@rspack/core/dist/config/adapterRuleUse';
 
 export type RuleSetRule = RspackRuleSetRule | WebpackRuleSetRule;

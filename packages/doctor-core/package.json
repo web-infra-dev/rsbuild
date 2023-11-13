@@ -25,13 +25,6 @@
       "import": "./dist/esm/build-utils/index.js"
     }
   },
-  "typesVersions": {
-    "*": {
-      "utils": [
-        "./dist/type/build-utils/index.d.ts"
-      ]
-    }
-  },
   "scripts": {
     "dev": "npm run start",
     "build": "modern build",
