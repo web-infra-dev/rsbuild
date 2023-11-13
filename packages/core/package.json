@@ -22,8 +22,8 @@
       "default": "./dist/server/index.js"
     },
     "./client/*": {
-      "types": "./dist/server/dev-middleware/dist/client/*.d.ts",
-      "default": "./dist/server/dev-middleware/dist/client/*.js"
+      "types": "./dist/client/*.d.ts",
+      "default": "./dist/client/*.js"
     },
     "./cli": {
       "types": "./dist/cli/index.d.ts",
@@ -56,7 +56,7 @@
         "./dist/server/index.d.ts"
       ],
       "client/*": [
-        "./dist/server/dev-middleware/client/*.d.ts"
+        "./dist/client/*.d.ts"
       ],
       "plugins/*": [
         "./dist/plugins/*.d.ts"
