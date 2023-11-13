@@ -22,7 +22,7 @@ import {
   formatRoutes,
 } from '@rsbuild/shared';
 import DevMiddleware from './dev-middleware';
-import connect from 'connect';
+import connect from '@rsbuild/shared/connect';
 import { createProxyMiddleware } from './proxy';
 import {
   faviconFallbackMiddleware,
@@ -146,11 +146,10 @@ export class RsbuildDevServer {
 
     if (dev.historyApiFallback) {
       const { default: connectHistoryApiFallback } = await import(
-        'connect-history-api-fallback'
+        '../../compiled/connect-history-api-fallback'
       );
 
       const historyApiFallbackMiddleware = connectHistoryApiFallback(
-        // @ts-expect-error
         typeof dev.historyApiFallback === 'boolean'
           ? {}
           : dev.historyApiFallback,

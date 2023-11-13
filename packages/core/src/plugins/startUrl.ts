@@ -74,7 +74,7 @@ export async function openBrowser(url: string): Promise<boolean> {
   // Fallback to open
   // (It will always open new tab)
   try {
-    const { default: open } = await import('open');
+    const { default: open } = await import('../../compiled/open');
     await open(url);
     return true;
   } catch (err) {
