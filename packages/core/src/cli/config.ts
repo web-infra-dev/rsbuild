@@ -7,6 +7,7 @@ import type {
   RsbuildPlugin,
   RsbuildConfig as BaseRsbuildConfig,
 } from '@rsbuild/shared';
+import { restartDevServer } from '../server/restart';
 
 export type RsbuildConfig = BaseRsbuildConfig & {
   source?: {
@@ -44,14 +45,34 @@ const resolveConfigPath = () => {
   return null;
 };
 
+async function watchConfig(configFile: string) {
+  const chokidar = await import('@rsbuild/shared/chokidar');
+  const watcher = chokidar.watch(configFile, {});
+  const callback = async () => {
+    watcher.close();
+    await restartDevServer({ filePath: configFile });
+  };
+
+  watcher.on('change', callback);
+  watcher.on('unlink', callback);
+}
+
 export async function loadConfig(): Promise<ReturnType<typeof defineConfig>> {
   const configFile = resolveConfigPath();
 
   if (configFile) {
     const loadConfig = jiti(__filename, {
       esmResolve: true,
+      // disable require cache to support restart CLI and read the new config
+      requireCache: false,
       interopDefault: true,
     });
+
+    const command = process.argv[2];
+    if (command === 'dev') {
+      watchConfig(configFile);
+    }
+
     return loadConfig(configFile);
   }
 

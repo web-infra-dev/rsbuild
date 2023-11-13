@@ -38,6 +38,7 @@ export const TASKS: TaskConfig[] = [
       'deepmerge',
       'url-join',
       'fs-extra',
+      'chokidar',
       'webpack-chain',
       'mime-types',
       {

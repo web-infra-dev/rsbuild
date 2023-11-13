@@ -30,6 +30,7 @@ import {
   notFoundMiddleware,
 } from './middlewares';
 import { join } from 'path';
+import { registerCleaner } from './restart';
 
 export class RsbuildDevServer {
   private readonly dev: DevConfig;
@@ -304,6 +305,8 @@ export async function startDevServer<
           port,
           routes,
         });
+
+        registerCleaner(() => server.close());
 
         resolve({
           port,
