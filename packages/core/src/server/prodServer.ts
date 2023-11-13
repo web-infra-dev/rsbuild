@@ -1,6 +1,6 @@
 import type { ListenOptions } from 'net';
 import { createServer, Server } from 'http';
-import connect from 'connect';
+import connect from '@rsbuild/shared/connect';
 import { join } from 'path';
 import sirv from 'sirv';
 import {

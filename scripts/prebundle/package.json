@@ -20,12 +20,16 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@types/connect": "3.4.35",
     "@types/fs-extra": "^11.0.2",
     "@types/url-join": "^4.0.2",
     "chokidar": "3.5.3",
+    "connect": "3.7.0",
+    "connect-history-api-fallback": "^2.0.0",
     "deepmerge": "^4.3.1",
     "fs-extra": "^11.1.1",
     "mime-types": "^2.1.35",
+    "open": "^8.4.0",
     "picocolors": "1.0.0",
     "url-join": "^4.0.1",
     "webpack-chain": "npm:webpack-5-chain@8.0.1",

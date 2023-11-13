@@ -22,6 +22,10 @@
       "types": "./compiled/chokidar/types/index.d.ts",
       "default": "./compiled/chokidar/index.js"
     },
+    "./connect": {
+      "types": "./compiled/connect/index.d.ts",
+      "default": "./compiled/connect/index.js"
+    },
     "./webpack-dev-middleware": {
       "types": "./compiled/webpack-dev-middleware/types/index.d.ts",
       "default": "./compiled/webpack-dev-middleware/index.js"
@@ -78,7 +82,6 @@
   },
   "dependencies": {
     "@rspack/core": "0.3.11",
-    "connect": "3.7.0",
     "browserslist": "^4.22.1",
     "caniuse-lite": "^1.0.30001559",
     "gzip-size": "^6.0.0",
@@ -91,7 +94,6 @@
   },
   "devDependencies": {
     "@rspack/core": "0.3.11",
-    "@types/connect": "3.4.35",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "@types/semver": "^7.5.4",
