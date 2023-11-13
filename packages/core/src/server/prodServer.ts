@@ -14,6 +14,8 @@ import {
   printServerURLs,
   formatRoutes,
   ROOT_DIST_DIR,
+  PreviewServerOptions,
+  isFunction,
 } from '@rsbuild/shared';
 import { faviconFallbackMiddleware } from './middlewares';
 
@@ -101,6 +103,7 @@ export class RsbuildProdServer {
 export async function startProdServer(
   context: Context,
   rsbuildConfig: RsbuildConfig,
+  { printURLs = true }: PreviewServerOptions = {},
 ) {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'production';
@@ -127,12 +130,19 @@ export async function startProdServer(
       },
       () => {
         const urls = getAddressUrls('http', port);
-        const routes = formatRoutes(
-          context.entry,
-          rsbuildConfig.output?.distPath?.html,
-        );
 
-        printServerURLs(urls, routes);
+        if (printURLs) {
+          const routes = formatRoutes(
+            context.entry,
+            rsbuildConfig.output?.distPath?.html,
+          );
+
+          printServerURLs(
+            isFunction(printURLs) ? printURLs(urls) : urls,
+            routes,
+          );
+        }
+
         resolve({
           port,
           urls: urls.map((item) => item.url),

@@ -6,6 +6,7 @@ import {
   type RspackConfig,
   type RspackCompiler,
   type RspackMultiCompiler,
+  type PreviewServerOptions,
 } from '@rsbuild/shared';
 import { createContext } from './core/createContext';
 import { initConfigs } from './core/initConfigs';
@@ -81,8 +82,8 @@ export function rspackProvider({
         );
       },
 
-      async preview() {
-        return startProdServer(context, context.config);
+      async preview(options?: PreviewServerOptions) {
+        return startProdServer(context, context.config, options);
       },
 
       async build(options) {

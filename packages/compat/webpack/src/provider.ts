@@ -2,6 +2,7 @@ import {
   pickRsbuildConfig,
   createPublicContext,
   type RsbuildProvider,
+  type PreviewServerOptions,
 } from '@rsbuild/shared';
 import { startProdServer, startDevServer } from '@rsbuild/core/server';
 import { createContext } from './core/createContext';
@@ -72,8 +73,8 @@ export function webpackProvider({
         );
       },
 
-      async preview() {
-        return startProdServer(context, context.config);
+      async preview(options?: PreviewServerOptions) {
+        return startProdServer(context, context.config, options);
       },
 
       async build(options) {
