@@ -4,7 +4,7 @@ import type {
   SharedCompiledPkgNames,
 } from './types';
 import path from 'path';
-import fs from 'fs-extra';
+import fse from '../compiled/fs-extra';
 import semver from 'semver';
 import { findUp } from './fs';
 import deepmerge from '../compiled/deepmerge';
@@ -106,7 +106,7 @@ export function resolvePackage(loader: string, dirname: string) {
 
 export const getCoreJsVersion = (corejsPkgPath: string) => {
   try {
-    const { version } = fs.readJSONSync(corejsPkgPath);
+    const { version } = fse.readJSONSync(corejsPkgPath);
     const [major, minor] = version.split('.');
     return `${major}.${minor}`;
   } catch (err) {
@@ -153,7 +153,7 @@ export const isBeyondReact17 = async (cwd: string) => {
     return false;
   }
 
-  const pkgInfo = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+  const pkgInfo = JSON.parse(fse.readFileSync(pkgPath, 'utf8'));
   const deps = {
     ...pkgInfo.devDependencies,
     ...pkgInfo.dependencies,

@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { program } from 'commander';
 import type { RsbuildInstance, RsbuildMode } from '..';
 
@@ -15,7 +15,7 @@ export type DevOptions = {
 
 export function setupProgram(rsbuild: RsbuildInstance) {
   const pkgJson = join(__dirname, '../../package.json');
-  const { version } = fs.readJSONSync(pkgJson);
+  const { version } = fse.readJSONSync(pkgJson);
 
   program.name('rsbuild').usage('<command> [options]').version(version);
 

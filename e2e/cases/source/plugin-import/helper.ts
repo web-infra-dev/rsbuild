@@ -1,7 +1,7 @@
 import path from 'path';
 import { build } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { RsbuildConfig } from '@rsbuild/core';
 import type { TransformImport } from '@rsbuild/shared';
 
@@ -52,8 +52,11 @@ export function findEntry(
 export function copyPkgToNodeModules() {
   const nodeModules = path.resolve(__dirname, 'node_modules');
 
-  fs.ensureDirSync(nodeModules);
-  fs.copySync(path.resolve(__dirname, 'foo'), path.resolve(nodeModules, 'foo'));
+  fse.ensureDirSync(nodeModules);
+  fse.copySync(
+    path.resolve(__dirname, 'foo'),
+    path.resolve(nodeModules, 'foo'),
+  );
 }
 
 export function shareTest(

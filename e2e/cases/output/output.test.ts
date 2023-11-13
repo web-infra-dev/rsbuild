@@ -1,6 +1,6 @@
 import { join, dirname } from 'path';
 import { expect, test } from '@playwright/test';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { build } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
 
@@ -12,8 +12,8 @@ test.describe('output configure multi', () => {
   let rsbuild: Awaited<ReturnType<typeof build>>;
 
   test.beforeAll(async () => {
-    await fs.mkdir(dirname(distFilePath), { recursive: true });
-    await fs.writeFile(
+    await fse.mkdir(dirname(distFilePath), { recursive: true });
+    await fse.writeFile(
       distFilePath,
       `{
       "test": 1
@@ -44,17 +44,17 @@ test.describe('output configure multi', () => {
   });
 
   test('cleanDistPath default (enable)', async () => {
-    expect(fs.existsSync(distFilePath)).toBeFalsy();
+    expect(fse.existsSync(distFilePath)).toBeFalsy();
   });
 
   test('copy', async () => {
-    expect(fs.existsSync(join(fixtures, 'rem/dist-1/icon.png'))).toBeTruthy();
+    expect(fse.existsSync(join(fixtures, 'rem/dist-1/icon.png'))).toBeTruthy();
   });
 
   test('distPath', async () => {
-    expect(fs.existsSync(join(fixtures, 'rem/dist-1/main.html'))).toBeTruthy();
+    expect(fse.existsSync(join(fixtures, 'rem/dist-1/main.html'))).toBeTruthy();
 
-    expect(fs.existsSync(join(fixtures, 'rem/dist-1/aa/js'))).toBeTruthy();
+    expect(fse.existsSync(join(fixtures, 'rem/dist-1/aa/js'))).toBeTruthy();
   });
 
   test('sourcemap', async () => {
@@ -74,8 +74,8 @@ test.describe('output configure multi', () => {
 test('cleanDistPath disable', async () => {
   const distFilePath = join(fixtures, 'rem/dist-2/test.json');
 
-  await fs.mkdir(dirname(distFilePath), { recursive: true });
-  await fs.writeFile(
+  await fse.mkdir(dirname(distFilePath), { recursive: true });
+  await fse.writeFile(
     distFilePath,
     `{
     "test": 1
@@ -98,7 +98,7 @@ test('cleanDistPath disable', async () => {
     },
   });
 
-  expect(fs.existsSync(distFilePath)).toBeTruthy();
+  expect(fse.existsSync(distFilePath)).toBeTruthy();
 
   rsbuild.close();
   rsbuild.clean();

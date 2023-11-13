@@ -1,5 +1,5 @@
+import fs from 'fs';
 import path from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
 import { TS_CONFIG_FILE } from '@rsbuild/shared';
 import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
 import type { RsbuildPluginAPI as RsbuildWebpackPluginAPI } from '@rsbuild/webpack';

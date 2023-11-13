@@ -1,4 +1,4 @@
-import { fs } from '@rsbuild/shared/fs-extra';
+import fs from 'fs';
 import type { CopyPluginOptions } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 

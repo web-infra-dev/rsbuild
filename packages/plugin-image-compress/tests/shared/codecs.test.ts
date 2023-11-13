@@ -1,6 +1,6 @@
 import assert from 'assert';
 import path from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import codecs from '../../src/shared/codecs';
 
 describe('codecs', () => {
@@ -14,7 +14,7 @@ describe('codecs', () => {
       }
       assert(ext);
       const filename = path.resolve(__dirname, '../assets', `image.${ext}`);
-      const oldBuf = await fs.readFile(filename);
+      const oldBuf = await fse.readFile(filename);
       const newBuf = await codec.handler(oldBuf, {});
       expect(newBuf.length).lessThan(oldBuf.length);
     },

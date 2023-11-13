@@ -1,5 +1,5 @@
 import path from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { getMonorepoBaseData, getMonorepoSubProjects } from '../common';
 import type { Project } from '../project/project';
 import type { MonorepoAnalyzer } from '../types';
@@ -42,7 +42,7 @@ const getDependentProjects = async (
   );
 
   let projectName: string;
-  if (await fs.pathExists(currentProjectPkgJsonPath)) {
+  if (await fse.pathExists(currentProjectPkgJsonPath)) {
     ({ name: projectName } = await readPackageJson(currentProjectPkgJsonPath));
   } else {
     projectName = projectNameOrRootPath;
@@ -53,9 +53,10 @@ const getDependentProjects = async (
     return [];
   }
 
-
   const projects = await getMonorepoSubProjects(monoBaseData);
-  const currentProject = projects.find(project => project.name === projectName);
+  const currentProject = projects.find(
+    (project) => project.name === projectName,
+  );
 
   if (!currentProject) {
     return [];

@@ -3,7 +3,7 @@
  * license at https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
 import path from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { color, logger } from '@rsbuild/shared';
 import gzipSize from 'gzip-size';
 import type {
@@ -52,7 +52,7 @@ const calcFileSize = (len: number) => {
 
 async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
   const formatAsset = (asset: StatsAsset) => {
-    const contents = fs.readFileSync(path.join(distPath, asset.name));
+    const contents = fse.readFileSync(path.join(distPath, asset.name));
     const size = contents.length;
     const gzippedSize = gzipSize.sync(contents);
 

@@ -11,7 +11,7 @@ import {
   removeTailSlash,
   mergeChainedOptions,
 } from '@rsbuild/shared';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import type {
   MetaAttrs,
   HtmlConfig,
@@ -349,7 +349,7 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
       // generate a basic route.json for modern.js server
       // if the framework has already generate a route.json, do nothing
       if (!(await isFileExists(routeFilePath)) && routesInfo.length) {
-        await fs.outputFile(
+        await fse.outputFile(
           routeFilePath,
           JSON.stringify({ routes: routesInfo }, null, 2),
         );

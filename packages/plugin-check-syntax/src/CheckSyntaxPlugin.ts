@@ -1,6 +1,5 @@
 import { resolve } from 'path';
 import { parse } from 'acorn';
-import { fs } from '@rsbuild/shared/fs-extra';
 import {
   printErrors,
   generateError,
@@ -8,7 +7,7 @@ import {
   generateHtmlScripts,
   checkIsExcludeSource,
 } from './helpers';
-import { JS_REGEX, HTML_REGEX } from '@rsbuild/shared';
+import { fse, JS_REGEX, HTML_REGEX } from '@rsbuild/shared';
 import type {
   SyntaxError,
   EcmaVersion,
@@ -83,7 +82,7 @@ export class CheckSyntaxPlugin {
     }
 
     if (JS_REGEX.test(filepath)) {
-      const jsScript = await fs.readFile(filepath, 'utf-8');
+      const jsScript = await fse.readFile(filepath, 'utf-8');
       await this.tryParse(filepath, jsScript);
     }
   }

@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { expect, test } from '@playwright/test';
 import { dev, getHrefByEntryName } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -8,7 +8,7 @@ const fixtures = __dirname;
 
 // hmr test will timeout in CI
 test('default & hmr (default true)', async ({ page }) => {
-  await fs.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src'));
+  await fse.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src'));
   const rsbuild = await dev({
     cwd: join(fixtures, 'hmr'),
     entry: {
@@ -33,9 +33,9 @@ test('default & hmr (default true)', async ({ page }) => {
 
   const appPath = join(fixtures, 'hmr', 'test-src/App.tsx');
 
-  await fs.writeFile(
+  await fse.writeFile(
     appPath,
-    fs.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
+    fse.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
   );
 
   // wait for hmr take effect
@@ -45,7 +45,7 @@ test('default & hmr (default true)', async ({ page }) => {
 
   const cssPath = join(fixtures, 'hmr', 'test-src/App.css');
 
-  await fs.writeFile(
+  await fse.writeFile(
     cssPath,
     `#test {
   color: rgb(0, 0, 255);
@@ -58,12 +58,12 @@ test('default & hmr (default true)', async ({ page }) => {
   await expect(locator).toHaveCSS('color', 'rgb(0, 0, 255)');
 
   // restore
-  await fs.writeFile(
+  await fse.writeFile(
     appPath,
-    fs.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
+    fse.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
   );
 
-  await fs.writeFile(
+  await fse.writeFile(
     cssPath,
     `#test {
   color: rgb(255, 0, 0);
@@ -100,9 +100,9 @@ test('dev.port & output.distPath', async ({ page }) => {
 
   expect(rsbuild.port).toBe(3000);
 
-  expect(fs.existsSync(join(fixtures, 'basic/dist-1/main.html'))).toBeTruthy();
+  expect(fse.existsSync(join(fixtures, 'basic/dist-1/main.html'))).toBeTruthy();
 
-  expect(fs.existsSync(join(fixtures, 'basic/dist-1/aa/js'))).toBeTruthy();
+  expect(fse.existsSync(join(fixtures, 'basic/dist-1/aa/js'))).toBeTruthy();
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
@@ -111,11 +111,11 @@ test('dev.port & output.distPath', async ({ page }) => {
 
   expect(errors).toEqual([]);
 
-  await fs.remove(join(fixtures, 'basic/dist-1'));
+  await fse.remove(join(fixtures, 'basic/dist-1'));
 });
 
 test('hmr should work when setting dev.port & client', async ({ page }) => {
-  await fs.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src-1'));
+  await fse.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src-1'));
   const cwd = join(fixtures, 'hmr');
   const rsbuild = await dev({
     cwd,
@@ -141,9 +141,9 @@ test('hmr should work when setting dev.port & client', async ({ page }) => {
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await fs.writeFile(
+  await fse.writeFile(
     appPath,
-    fs.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
+    fse.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
   );
 
   // wait for hmr take effect
@@ -151,9 +151,9 @@ test('hmr should work when setting dev.port & client', async ({ page }) => {
   await expect(locator).toHaveText('Hello Test!');
 
   // restore
-  await fs.writeFile(
+  await fse.writeFile(
     appPath,
-    fs.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
+    fse.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
   );
 
   await rsbuild.server.close();

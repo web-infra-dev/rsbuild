@@ -1,8 +1,8 @@
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { Parser } from 'htmlparser2';
 
 export async function generateHtmlScripts(filepath: string) {
-  const html = await fs.readFile(filepath, 'utf-8');
+  const html = await fse.readFile(filepath, 'utf-8');
   return getHtmlScripts(html);
 }
 

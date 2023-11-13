@@ -1,5 +1,4 @@
-import { fs } from '@rsbuild/shared/fs-extra';
-import { color } from '@rsbuild/shared';
+import { fse, color } from '@rsbuild/shared';
 import { SourceMapConsumer } from 'source-map';
 import { checkIsExcludeSource } from './utils';
 import {
@@ -83,12 +82,12 @@ async function tryGenerateErrorFromSourceMap({
   rootPath: string;
 }): Promise<SyntaxError | null> {
   const sourceMapPath = `${filepath}.map`;
-  if (!fs.existsSync(sourceMapPath)) {
+  if (!fse.existsSync(sourceMapPath)) {
     return null;
   }
 
   try {
-    const sourcemap = await fs.readFile(sourceMapPath, 'utf-8');
+    const sourcemap = await fse.readFile(sourceMapPath, 'utf-8');
     const consumer = await new SourceMapConsumer(sourcemap);
     const sm = consumer.originalPositionFor({
       line: err.loc.line,
