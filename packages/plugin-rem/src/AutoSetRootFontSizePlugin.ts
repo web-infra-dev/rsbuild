@@ -1,19 +1,19 @@
 import path from 'path';
-import { logger } from 'rslog';
-import { withPublicPath } from '../url';
 import {
+  logger,
+  withPublicPath,
   generateScriptTag,
   getRsbuildVersion,
   getPublicPathFromCompiler,
   COMPILATION_PROCESS_STAGE,
-} from './util';
-import WebpackSources from '../../compiled/webpack-sources';
+  type Rspack,
+} from '@rsbuild/shared';
+import WebpackSources from '@rsbuild/shared/webpack-sources';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { RemOptions } from '../types';
-import type { Compiler, Compilation, RspackPluginInstance } from '@rspack/core';
+import type { PluginRemOptions } from './types';
 
 type AutoSetRootFontSizeOptions = Omit<
-  RemOptions,
+  PluginRemOptions,
   'pxtorem' | 'enableRuntime'
 > & {
   /** expose root font size to global */
@@ -54,7 +54,7 @@ export const DEFAULT_OPTIONS: Required<AutoSetRootFontSizeOptions> = {
   useRootFontSizeBeyondMax: false,
 };
 
-export class AutoSetRootFontSizePlugin implements RspackPluginInstance {
+export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
   readonly name: string = 'AutoSetRootFontSizePlugin';
 
   readonly distDir: string;
@@ -68,7 +68,7 @@ export class AutoSetRootFontSizePlugin implements RspackPluginInstance {
   HtmlPlugin: typeof HtmlWebpackPlugin;
 
   constructor(
-    options: RemOptions,
+    options: PluginRemOptions,
     entries: Array<string>,
     HtmlPlugin: typeof HtmlWebpackPlugin,
     distDir: string,
@@ -89,7 +89,7 @@ export class AutoSetRootFontSizePlugin implements RspackPluginInstance {
     return this.scriptPath;
   }
 
-  apply(compiler: Compiler) {
+  apply(compiler: Rspack.Compiler) {
     let runtimeCode: string | undefined;
 
     const getRuntimeCode = async () => {
@@ -103,7 +103,7 @@ export class AutoSetRootFontSizePlugin implements RspackPluginInstance {
     if (!this.options.inlineRuntime) {
       compiler.hooks.thisCompilation.tap(
         this.name,
-        (compilation: Compilation) => {
+        (compilation: Rspack.Compilation) => {
           compilation.hooks.processAssets.tapPromise(
             {
               name: this.name,

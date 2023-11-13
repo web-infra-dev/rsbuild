@@ -31,7 +31,6 @@ export type SharedCompiledPkgNames =
   | 'less'
   | 'css-loader'
   | 'postcss-loader'
-  | 'postcss-pxtorem'
   | 'postcss-flexbugs-fixes'
   | 'autoprefixer'
   | 'sass-loader'

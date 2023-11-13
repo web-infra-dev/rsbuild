@@ -1,19 +1,17 @@
-import {
-  getDistPath,
-  AutoSetRootFontSizePlugin,
-  getSharedPkgCompiledPath,
-  type DefaultRsbuildPlugin,
-  type RemOptions,
-  type PxToRemOptions,
-} from '@rsbuild/shared';
+import { getDistPath, type DefaultRsbuildPlugin } from '@rsbuild/shared';
 import { cloneDeep } from '@rsbuild/shared';
+import type { PluginRemOptions, PxToRemOptions } from './types';
 
-const defaultOptions: RemOptions = {
+const defaultOptions: PluginRemOptions = {
   enableRuntime: true,
   rootFontSize: 50,
 };
 
-export const pluginRem = (): DefaultRsbuildPlugin => ({
+export type { PluginRemOptions };
+
+export const pluginRem = (
+  options: PluginRemOptions = {},
+): DefaultRsbuildPlugin => ({
   name: 'plugin-rem',
 
   pre: ['plugin-css', 'plugin-less', 'plugin-sass', 'plugin-stylus'],
@@ -22,22 +20,19 @@ export const pluginRem = (): DefaultRsbuildPlugin => ({
     api.modifyBundlerChain(
       async (chain, { CHAIN_ID, isServer, isWebWorker, HtmlPlugin }) => {
         const config = api.getNormalizedConfig();
-        const {
-          output: { convertToRem },
-        } = config;
 
-        if (!convertToRem || isServer || isWebWorker) {
+        if (isServer || isWebWorker) {
           return;
         }
 
         const userOptions = {
           ...defaultOptions,
-          ...(typeof convertToRem === 'boolean' ? {} : convertToRem),
+          ...options,
         };
 
         // handle css
         const { default: PxToRemPlugin } = (await import(
-          getSharedPkgCompiledPath('postcss-pxtorem')
+          '../compiled/postcss-pxtorem'
         )) as {
           default: (_opts: PxToRemOptions) => any;
         };
@@ -48,6 +43,7 @@ export const pluginRem = (): DefaultRsbuildPlugin => ({
           CHAIN_ID.RULE.SASS,
           CHAIN_ID.RULE.STYLUS,
         ];
+
         const getPxToRemPlugin = () =>
           PxToRemPlugin({
             rootValue: userOptions.rootFontSize,
@@ -55,6 +51,7 @@ export const pluginRem = (): DefaultRsbuildPlugin => ({
             propList: ['*'],
             ...(userOptions.pxtorem ? cloneDeep(userOptions.pxtorem) : {}),
           });
+
         // Deep copy options to prevent unexpected behavior.
         applyRules.forEach((name) => {
           chain.module.rules.has(name) &&
@@ -77,6 +74,10 @@ export const pluginRem = (): DefaultRsbuildPlugin => ({
         if (!userOptions.enableRuntime) {
           return;
         }
+
+        const { AutoSetRootFontSizePlugin } = await import(
+          './AutoSetRootFontSizePlugin'
+        );
 
         const entries = Object.keys(chain.entryPoints.entries() || {});
         const distDir = getDistPath(config.output, 'js');

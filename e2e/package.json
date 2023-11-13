@@ -26,6 +26,7 @@
     "@rsbuild/plugin-node-polyfill": "workspace:*",
     "@rsbuild/plugin-pug": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
+    "@rsbuild/plugin-rem": "workspace:*",
     "@rsbuild/plugin-stylus": "workspace:*",
     "@rsbuild/plugin-source-build": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",

@@ -1,6 +1,5 @@
 import path from 'path';
-// @ts-expect-error
-import { RawSource } from 'webpack-sources';
+import WebpackSources from '@rsbuild/shared/webpack-sources';
 import {
   fse,
   withPublicPath,
@@ -75,7 +74,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
             },
             async (assets) => {
               const scriptPath = await this.getScriptPath();
-              assets[scriptPath] = new RawSource(
+              assets[scriptPath] = new WebpackSources.RawSource(
                 await this.getRetryCode(),
                 false,
               );

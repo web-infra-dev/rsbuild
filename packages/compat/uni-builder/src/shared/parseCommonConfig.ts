@@ -6,8 +6,9 @@ import {
 } from '@rsbuild/core';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 import type { UniBuilderRspackConfig, UniBuilderWebpackConfig } from '../types';
-import { pluginGlobalVars } from './plugins/globalVars';
+import { pluginRem } from '@rsbuild/plugin-rem';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
+import { pluginGlobalVars } from './plugins/globalVars';
 import { pluginRuntimeChunk } from './plugins/runtimeChunk';
 
 export function parseCommonConfig<B = 'rspack' | 'webpack'>(
@@ -82,6 +83,13 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   if (uniBuilderConfig.output?.assetsRetry) {
     rsbuildPlugins.push(
       pluginAssetsRetry(uniBuilderConfig.output?.assetsRetry),
+    );
+  }
+
+  const remOptions = uniBuilderConfig.output?.convertToRem;
+  if (remOptions) {
+    rsbuildPlugins.push(
+      pluginRem(typeof remOptions === 'boolean' ? {} : remOptions),
     );
   }
 
