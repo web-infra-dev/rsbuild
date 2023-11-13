@@ -10,7 +10,7 @@ import {
 } from './types';
 
 export async function getBundlerChain() {
-  const { default: WebpackChain } = await import('webpack-chain');
+  const { default: WebpackChain } = await import('../compiled/webpack-chain');
 
   const bundlerChain = new WebpackChain();
 

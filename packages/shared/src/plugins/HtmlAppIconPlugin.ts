@@ -2,8 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
-// @ts-expect-error
-import { RawSource } from 'webpack-sources';
+import WebpackSources from '../../compiled/webpack-sources';
 import { COMPILATION_PROCESS_STAGE } from './util';
 
 type AppIconOptions = {
@@ -75,7 +74,10 @@ export class HtmlAppIconPlugin {
           },
           (assets) => {
             const source = fs.readFileSync(this.iconPath);
-            assets[iconRelativePath] = new RawSource(source, false);
+            assets[iconRelativePath] = new WebpackSources.RawSource(
+              source,
+              false,
+            );
           },
         );
       },

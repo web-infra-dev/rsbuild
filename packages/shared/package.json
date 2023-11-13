@@ -116,14 +116,11 @@
     "caniuse-lite": "^1.0.30001559",
     "gzip-size": "^6.0.0",
     "json5": "^2.2.3",
-    "mime-types": "^2.1.35",
     "line-diff": "2.1.1",
     "lodash": "^4.17.21",
     "postcss": "8.4.31",
     "rslog": "^1.1.0",
-    "semver": "^7.5.4",
-    "webpack-chain": "npm:webpack-5-chain@8.0.1",
-    "webpack-sources": "^3.2.3"
+    "semver": "^7.5.4"
   },
   "devDependencies": {
     "@rspack/core": "0.3.11",

@@ -1,4 +1,4 @@
-import type WebpackChain from 'webpack-chain';
+import type { WebpackChain } from './utils';
 import type {
   OnExitFn,
   OnAfterBuildFn,
