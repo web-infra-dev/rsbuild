@@ -1,5 +1,6 @@
-import { join } from 'path';
+import path, { join } from 'path';
 import type { TaskConfig } from './types';
+import fs from 'fs-extra';
 
 export const ROOT_DIR = join(__dirname, '..', '..', '..');
 export const PACKAGES_DIR = join(ROOT_DIR, 'packages');
@@ -33,6 +34,18 @@ export const TASKS: TaskConfig[] = [
   {
     packageDir: 'shared',
     packageName: '@rsbuild/shared',
-    dependencies: ['deepmerge'],
+    dependencies: [
+      'deepmerge',
+      {
+        name: 'picocolors',
+        beforeBundle({ depPath }) {
+          const typesFile = path.join(depPath, 'types.ts');
+          // Fix type bundle
+          if (fs.existsSync(typesFile)) {
+            fs.renameSync(typesFile, path.join(depPath, 'types.d.ts'));
+          }
+        },
+      },
+    ],
   },
 ];
