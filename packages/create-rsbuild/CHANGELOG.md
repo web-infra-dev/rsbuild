@@ -1,5 +1,11 @@
 # create-rsbuild
 
+## 0.0.21
+
+### Patch Changes
+
+- a782b44: feat(create-rsbuild): add new vanilla template
+
 ## 0.0.20
 
 ## 0.0.19

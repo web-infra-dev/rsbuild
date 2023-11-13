@@ -1,5 +1,33 @@
 # @rsbuild/core
 
+## 0.0.21
+
+### Patch Changes
+
+- 42ace29: chore: using exports.types to replace typesVersion
+- a919119: chore(core): remove lodash dependency
+- 0270c27: feat(cli): restart dev server when config file changed
+- dbdc3c5: hotfix(server): should print url with distPath.html
+- d691901: perf(core): remove strip-ansi dependency
+- a694a55: chore(deps): bump html-rspack-plugin v5.5.5
+- 8aa416e: perf: add prebundle scripts and bundle deepmerge
+- 69262e9: perf(core): remove filesize dependency
+- 6abd810: chore(server): route.json is no longer needed
+- 4092858: chore: add prod-server e2e test cases and support not printURLs when preview
+- 648e847: perf: prebundle fs-extra and url-join
+- Updated dependencies [42ace29]
+- Updated dependencies [c90bebe]
+- Updated dependencies [a919119]
+- Updated dependencies [0270c27]
+- Updated dependencies [a58e71c]
+- Updated dependencies [dbdc3c5]
+- Updated dependencies [a694a55]
+- Updated dependencies [8aa416e]
+- Updated dependencies [6abd810]
+- Updated dependencies [4092858]
+- Updated dependencies [648e847]
+  - @rsbuild/shared@0.0.21
+
 ## 0.0.20
 
 ### Patch Changes
