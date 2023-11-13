@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 
@@ -22,5 +22,5 @@ test('should preview dist files correctly', async ({ page }) => {
 
   await server.close();
 
-  await fs.remove(join(cwd, 'dist-1'));
+  await fse.remove(join(cwd, 'dist-1'));
 });

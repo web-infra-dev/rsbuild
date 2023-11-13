@@ -1,7 +1,7 @@
 import { URL } from 'url';
 import assert from 'assert';
 import { join } from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { globContentJSON, runStaticServer } from '@scripts/helper';
 import type {
   CreateRsbuildOptions,
@@ -143,7 +143,7 @@ export async function build<BundlerType = 'rspack'>({
       })
     : { port: 0, close: noop };
 
-  const clean = async () => await fs.remove(distPath);
+  const clean = async () => await fse.remove(distPath);
 
   const unwrapOutputJSON = async (ignoreMap = true) => {
     return globContentJSON(distPath, {

@@ -5,7 +5,7 @@ import {
   experimental_cleanupGlobalTrace as cleanupGlobalTrace,
 } from '@rspack/core';
 import inspector from 'inspector';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { logger } from '@rsbuild/shared';
 
 export const stopProfiler = (
@@ -20,7 +20,7 @@ export const stopProfiler = (
       logger.error('Failed to generate JS CPU profile:', error);
       return;
     }
-    fs.writeFileSync(output, JSON.stringify(param.profile));
+    fse.writeFileSync(output, JSON.stringify(param.profile));
   });
 };
 
@@ -62,7 +62,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     const loggingFilePath = path.join(profileDir, 'logging.json');
 
     const onStart = () => {
-      fs.ensureDirSync(profileDir);
+      fse.ensureDirSync(profileDir);
 
       if (enableProfileTrace) {
         registerGlobalTrace('trace', 'chrome', traceFilePath);
@@ -86,7 +86,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
           logging: 'verbose',
           loggingTrace: true,
         });
-        fs.writeFileSync(loggingFilePath, JSON.stringify(logging));
+        fse.writeFileSync(loggingFilePath, JSON.stringify(logging));
       }
     });
 

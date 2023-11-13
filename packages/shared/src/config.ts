@@ -35,7 +35,7 @@ import { logger } from 'rslog';
 import { join } from 'path';
 import { color } from './color';
 import type { minify } from 'terser';
-import fs from 'fs-extra';
+import fse from '../compiled/fs-extra';
 
 import _ from 'lodash';
 import { DEFAULT_DEV_HOST } from './constants';
@@ -162,7 +162,7 @@ export async function outputInspectConfigFiles({
       let outputFilePath = join(outputPath, outputFile);
 
       // if filename is conflict, add a random id to the filename.
-      if (fs.existsSync(outputFilePath)) {
+      if (fse.existsSync(outputFilePath)) {
         outputFilePath = outputFilePath.replace(/\.js$/, `.${Date.now()}.js`);
       }
 
@@ -176,7 +176,7 @@ export async function outputInspectConfigFiles({
 
   await Promise.all(
     files.map((item) =>
-      fs.outputFile(item.path, `module.exports = ${item.content}`),
+      fse.outputFile(item.path, `module.exports = ${item.content}`),
     ),
   );
 

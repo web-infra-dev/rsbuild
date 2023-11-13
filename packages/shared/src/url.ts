@@ -1,6 +1,6 @@
 import os from 'os';
 import { URL } from 'url';
-import urlJoin from 'url-join';
+import urlJoin from '../compiled/url-join';
 import { DEFAULT_DEV_HOST } from './constants';
 
 export { urlJoin };

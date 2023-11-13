@@ -1,15 +1,15 @@
 import { join, resolve } from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
 const fixtures = __dirname;
 
 const generatorTempDir = async (testDir: string) => {
-  await fs.emptyDir(testDir);
-  await fs.copy(join(fixtures, 'src'), testDir);
+  await fse.emptyDir(testDir);
+  await fse.copy(join(fixtures, 'src'), testDir);
 
-  return () => fs.remove(testDir);
+  return () => fse.remove(testDir);
 };
 
 test('should generator ts declaration correctly for css modules auto true', async () => {
@@ -27,12 +27,12 @@ test('should generator ts declaration correctly for css modules auto true', asyn
     },
   });
 
-  expect(fs.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
-  expect(fs.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
-  expect(fs.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
-  expect(fs.existsSync(join(testDir, './d.global.less.d.ts'))).toBeFalsy();
+  expect(fse.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
+  expect(fse.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
+  expect(fse.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
+  expect(fse.existsSync(join(testDir, './d.global.less.d.ts'))).toBeFalsy();
 
-  const content = fs.readFileSync(join(testDir, './b.module.scss.d.ts'), {
+  const content = fse.readFileSync(join(testDir, './b.module.scss.d.ts'), {
     encoding: 'utf-8',
   });
 
@@ -64,10 +64,10 @@ test('should generator ts declaration correctly for css modules auto function', 
     },
   });
 
-  expect(fs.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
-  expect(fs.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeFalsy();
-  expect(fs.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
-  expect(fs.existsSync(join(testDir, './d.global.less.d.ts'))).toBeTruthy();
+  expect(fse.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
+  expect(fse.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeFalsy();
+  expect(fse.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
+  expect(fse.existsSync(join(testDir, './d.global.less.d.ts'))).toBeTruthy();
 
   await clear();
 });
@@ -90,10 +90,10 @@ test('should generator ts declaration correctly for css modules auto Regexp', as
     },
   });
 
-  expect(fs.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
-  expect(fs.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
-  expect(fs.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
-  expect(fs.existsSync(join(testDir, './d.global.less.d.ts'))).toBeFalsy();
+  expect(fse.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
+  expect(fse.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
+  expect(fse.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
+  expect(fse.existsSync(join(testDir, './d.global.less.d.ts'))).toBeFalsy();
 
   await clear();
 });
@@ -117,9 +117,9 @@ test('should generator ts declaration correctly for custom exportLocalsConventio
     },
   });
 
-  expect(fs.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
+  expect(fse.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
 
-  const content = fs.readFileSync(join(testDir, './b.module.scss.d.ts'), {
+  const content = fse.readFileSync(join(testDir, './b.module.scss.d.ts'), {
     encoding: 'utf-8',
   });
 

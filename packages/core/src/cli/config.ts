@@ -1,3 +1,4 @@
+import fs from 'fs';
 import jiti from 'jiti';
 import { join } from 'path';
 import { findExists } from '@rsbuild/shared';
@@ -6,7 +7,6 @@ import type {
   RsbuildPlugin,
   RsbuildConfig as BaseRsbuildConfig,
 } from '@rsbuild/shared';
-import { fs } from '@rsbuild/shared/fs-extra';
 
 export type RsbuildConfig = BaseRsbuildConfig & {
   source?: {

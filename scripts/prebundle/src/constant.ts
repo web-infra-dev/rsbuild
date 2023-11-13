@@ -36,6 +36,8 @@ export const TASKS: TaskConfig[] = [
     packageName: '@rsbuild/shared',
     dependencies: [
       'deepmerge',
+      'url-join',
+      'fs-extra',
       {
         name: 'picocolors',
         beforeBundle({ depPath }) {

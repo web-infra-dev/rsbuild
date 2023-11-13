@@ -1,5 +1,5 @@
 import path from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { PNPM_WORKSPACE_FILE, RUSH_JSON_FILE } from '../constants';
 
 export type IsMonorepoFn = (
@@ -14,7 +14,7 @@ export type IsMonorepoResult = {
 export const isPnpmMonorepo: IsMonorepoFn = async (
   monorepoRootPath: string,
 ) => {
-  const existPnpmWorkspaceFile = await fs.pathExists(
+  const existPnpmWorkspaceFile = await fse.pathExists(
     path.join(monorepoRootPath, PNPM_WORKSPACE_FILE),
   );
 
@@ -24,7 +24,7 @@ export const isPnpmMonorepo: IsMonorepoFn = async (
 export const isRushMonorepo: IsMonorepoFn = async (
   monorepoRootPath: string,
 ) => {
-  const existRushJsonFile = await fs.pathExists(
+  const existRushJsonFile = await fse.pathExists(
     path.join(monorepoRootPath, RUSH_JSON_FILE),
   );
   return existRushJsonFile;

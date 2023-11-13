@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
 
@@ -43,7 +43,7 @@ test.describe('html configure multi', () => {
 
   test('inject default (head)', async () => {
     const pagePath = join(rsbuild.distPath, 'main.html');
-    const content = await fs.readFile(pagePath, 'utf-8');
+    const content = await fse.readFile(pagePath, 'utf-8');
 
     expect(
       /<head>[\s\S]*<script[\s\S]*>[\s\S]*<\/head>/.test(content),
@@ -80,11 +80,14 @@ test.describe('html element set', () => {
       },
     });
 
-    mainContent = await fs.readFile(
+    mainContent = await fse.readFile(
       join(rsbuild.distPath, 'main.html'),
       'utf-8',
     );
-    fooContent = await fs.readFile(join(rsbuild.distPath, 'foo.html'), 'utf-8');
+    fooContent = await fse.readFile(
+      join(rsbuild.distPath, 'foo.html'),
+      'utf-8',
+    );
   });
 
   test.afterAll(() => {
@@ -98,7 +101,7 @@ test.describe('html element set', () => {
     expect(iconRelativePath).toBeDefined();
 
     const iconPath = join(rsbuild.distPath, iconRelativePath);
-    expect(fs.existsSync(iconPath)).toBeTruthy();
+    expect(fse.existsSync(iconPath)).toBeTruthy();
 
     // should work on all page
     expect(
@@ -113,7 +116,7 @@ test.describe('html element set', () => {
     expect(iconRelativePath).toBeDefined();
 
     const iconPath = join(rsbuild.distPath, iconRelativePath);
-    expect(fs.existsSync(iconPath)).toBeTruthy();
+    expect(fse.existsSync(iconPath)).toBeTruthy();
 
     // should work on all page
     expect(/<link.*rel="icon".*href="(.*?)">/.test(fooContent)).toBeTruthy();
@@ -193,7 +196,7 @@ test('html.outputStructure', async ({ page }) => {
 
   const pagePath = join(rsbuild.distPath, 'main/index.html');
 
-  expect(fs.existsSync(pagePath)).toBeTruthy();
+  expect(fse.existsSync(pagePath)).toBeTruthy();
 
   rsbuild.close();
 });
@@ -219,7 +222,7 @@ test('tools.htmlPlugin', async ({ page }) => {
   await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   const pagePath = join(rsbuild.distPath, 'main.html');
-  const content = await fs.readFile(pagePath, 'utf-8');
+  const content = await fse.readFile(pagePath, 'utf-8');
 
   const allScripts = /(<script [\s\S]*?>)/g.exec(content);
 

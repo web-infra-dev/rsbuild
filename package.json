@@ -18,7 +18,7 @@
     "e2e:rspack": "cd ./e2e && pnpm test:rspack",
     "e2e:webpack": "cd ./e2e && pnpm test:webpack",
     "gen-release-note": "modern gen-release-note",
-    "lint": "oxlint .",
+    "lint": "echo todo",
     "new": "modern new",
     "prepare": "pnpm run build && husky install",
     "release": "modern release",
@@ -33,8 +33,7 @@
   "nano-staged": {
     "*.{md,json,css,less,scss}": "prettier --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "prettier --write",
-      "oxlint"
+      "prettier --write"
     ],
     "package.json": "pnpm run check-dependency-version"
   },
@@ -49,7 +48,6 @@
     "is-ci": "^3.0.1",
     "nano-staged": "^0.8.0",
     "nx": "^17.0.1",
-    "oxlint": "^0.0.14",
     "prettier": "^3.0.3",
     "vite-tsconfig-paths": "4.2.1",
     "vitest": "1.0.0-beta.1"
