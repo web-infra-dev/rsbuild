@@ -34,5 +34,3 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
 
   return ret;
 };
-
-export { runStaticServer } from './static';

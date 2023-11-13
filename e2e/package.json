@@ -38,17 +38,12 @@
     "@rsbuild/plugin-vue2-jsx": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@types/connect": "3.4.35",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/serve-static": "^1.15.4",
-    "connect": "^3.7.0",
     "fast-glob": "^3.3.1",
-    "get-port": "^5.0.0",
     "playwright": "1.33.0",
-    "serve-static": "^1.15.0",
     "typescript": "^5.2.2"
   }
 }
