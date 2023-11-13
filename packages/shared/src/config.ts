@@ -277,7 +277,7 @@ export async function getMinify(isProd: boolean, config: NormalizedConfig) {
 }
 
 export async function stringifyConfig(config: unknown, verbose?: boolean) {
-  const { default: WebpackChain } = await import('webpack-chain');
+  const { default: WebpackChain } = await import('../compiled/webpack-chain');
 
   // webpackChain.toString can be used as a common stringify method
   const stringify = WebpackChain.toString as (

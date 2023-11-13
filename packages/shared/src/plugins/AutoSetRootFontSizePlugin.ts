@@ -1,7 +1,5 @@
 import path from 'path';
 import { logger } from 'rslog';
-// @ts-expect-error
-import { RawSource } from 'webpack-sources';
 import { withPublicPath } from '../url';
 import {
   generateScriptTag,
@@ -9,6 +7,7 @@ import {
   getPublicPathFromCompiler,
   COMPILATION_PROCESS_STAGE,
 } from './util';
+import WebpackSources from '../../compiled/webpack-sources';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { RemOptions } from '../types';
 import type { Compiler, Compilation, RspackPluginInstance } from '@rspack/core';
@@ -112,7 +111,10 @@ export class AutoSetRootFontSizePlugin implements RspackPluginInstance {
             },
             async (assets) => {
               const scriptPath = await this.getScriptPath();
-              assets[scriptPath] = new RawSource(await getRuntimeCode(), false);
+              assets[scriptPath] = new WebpackSources.RawSource(
+                await getRuntimeCode(),
+                false,
+              );
             },
           );
         },

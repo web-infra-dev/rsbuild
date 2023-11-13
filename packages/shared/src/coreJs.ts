@@ -1,5 +1,4 @@
-import type WebpackChain from 'webpack-chain';
-import { NormalizedConfig, BundlerChain } from './types';
+import type { WebpackChain, NormalizedConfig, BundlerChain } from './types';
 import { createVirtualModule } from './utils';
 
 const enableCoreJsEntry = (

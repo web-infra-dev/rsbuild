@@ -38,6 +38,12 @@ export const TASKS: TaskConfig[] = [
       'deepmerge',
       'url-join',
       'fs-extra',
+      'webpack-chain',
+      'mime-types',
+      {
+        name: 'webpack-sources',
+        ignoreDts: true,
+      },
       {
         name: 'picocolors',
         beforeBundle({ depPath }) {
@@ -46,6 +52,14 @@ export const TASKS: TaskConfig[] = [
           if (fs.existsSync(typesFile)) {
             fs.renameSync(typesFile, path.join(depPath, 'types.d.ts'));
           }
+        },
+      },
+      {
+        name: 'webpack-dev-middleware',
+        externals: {
+          'schema-utils/declarations/validate':
+            'schema-utils/declarations/validate',
+          'mime-types': '../mime-types',
         },
       },
     ],

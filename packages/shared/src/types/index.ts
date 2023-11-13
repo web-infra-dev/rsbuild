@@ -1,7 +1,3 @@
-import type WebpackChain from 'webpack-chain';
-
-export type { WebpackChain };
-
 export * from './rspack';
 export * from './rsbuild';
 export * from './context';

@@ -24,7 +24,11 @@
     "@types/url-join": "^4.0.2",
     "deepmerge": "^4.3.1",
     "fs-extra": "^11.1.1",
+    "mime-types": "^2.1.35",
     "picocolors": "1.0.0",
-    "url-join": "^4.0.1"
+    "url-join": "^4.0.1",
+    "webpack-chain": "npm:webpack-5-chain@8.0.1",
+    "webpack-dev-middleware": "6.1.1",
+    "webpack-sources": "^3.2.3"
   }
 }
