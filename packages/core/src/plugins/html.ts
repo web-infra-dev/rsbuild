@@ -4,14 +4,11 @@ import {
   castArray,
   getMinify,
   getDistPath,
-  isFileExists,
   isPlainObject,
   isHtmlDisabled,
-  ROUTE_SPEC_FILE,
   removeTailSlash,
   mergeChainedOptions,
 } from '@rsbuild/shared';
-import { fse } from '@rsbuild/shared';
 import type {
   MetaAttrs,
   HtmlConfig,
@@ -90,14 +87,6 @@ export const generateMetaTags = (metaOptions?: MetaOptions): MetaAttrs[] => {
         : metaTagContent;
     })
     .filter(Boolean) as MetaAttrs[];
-};
-
-// This is a minimist subset of modern.js server routes
-type RoutesInfo = {
-  isSPA: boolean;
-  urlPath: string;
-  entryName: string;
-  entryPath: string;
 };
 
 export async function getMetaTags(
@@ -205,8 +194,6 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
   name: 'plugin-html',
 
   setup(api) {
-    const routesInfo: RoutesInfo[] = [];
-
     api.modifyBundlerChain(
       async (chain, { HtmlPlugin, isProd, CHAIN_ID, target }) => {
         const config = api.getNormalizedConfig();
@@ -280,13 +267,6 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
               },
             });
 
-            routesInfo.push({
-              urlPath: index === 0 ? '/' : `/${entryName}`,
-              entryName,
-              entryPath: filename,
-              isSPA: true,
-            });
-
             chain
               .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
               .use(HtmlPlugin, [finalOptions]);
@@ -342,22 +322,6 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
         }
       },
     );
-
-    const emitRouteJson = async () => {
-      const routeFilePath = path.join(api.context.distPath, ROUTE_SPEC_FILE);
-
-      // generate a basic route.json for modern.js server
-      // if the framework has already generate a route.json, do nothing
-      if (!(await isFileExists(routeFilePath)) && routesInfo.length) {
-        await fse.outputFile(
-          routeFilePath,
-          JSON.stringify({ routes: routesInfo }, null, 2),
-        );
-      }
-    };
-
-    api.onBeforeBuild(emitRouteJson);
-    api.onBeforeStartDevServer(emitRouteJson);
 
     applyInjectTags(api);
   },
