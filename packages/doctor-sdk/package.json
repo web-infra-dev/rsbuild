@@ -41,19 +41,6 @@
       "import": "./dist/esm/sdk/index.js"
     }
   },
-  "typesVersions": {
-    "*": {
-      "graph": [
-        "./dist/type/graph/index.d.ts"
-      ],
-      "error": [
-        "./dist/type/error/index.d.ts"
-      ],
-      "sdk": [
-        "./dist/type/sdk/index.d.ts"
-      ]
-    }
-  },
   "dependencies": {
     "@rsbuild/doctor-utils": "workspace:*",
     "body-parser": "1.20.1",
@@ -67,7 +54,7 @@
     "open": "^8.4.0",
     "p-limit": "3.1.0",
     "serve-static": "1.15.0",
-    "socket.io": "4.6.1",
+    "socket.io": "4.7.2",
     "source-map": "^0.7.4",
     "strip-ansi": "^6.0.1",
     "tapable": "2.2.1"

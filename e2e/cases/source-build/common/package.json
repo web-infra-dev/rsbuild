@@ -6,14 +6,8 @@
   "source": "./src/index.ts",
   "exports": {
     ".": {
+      "types": "./src/index.ts",
       "source": "./src/index.ts"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "./src/index.ts"
-      ]
     }
   }
 }

@@ -25,16 +25,6 @@
   },
   "main": "./dist/index.js",
   "types": "./src/index.ts",
-  "typesVersions": {
-    "*": {
-      "web": [
-        "./dist/web.d.ts"
-      ],
-      "node": [
-        "./dist/node.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist"
   ],

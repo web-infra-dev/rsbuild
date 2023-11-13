@@ -102,7 +102,7 @@ export const getPostcssConfig = ({
   enableSourceMap: boolean;
   browserslist: string[];
   config: NormalizedConfig;
-}) => {
+}): ProcessOptions => {
   const extraPlugins: AcceptedPlugin[] = [];
 
   const utils = {

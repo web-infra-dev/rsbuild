@@ -3,14 +3,14 @@
     "target": "ES2019",
     "lib": ["DOM", "ESNext"],
     "allowJs": true,
-    "module": "commonjs",
+    "module": "ES2020",
     "strict": true,
     "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "jsx": "preserve",
     "resolveJsonModule": true,
-    "moduleResolution": "node"
+    "moduleResolution": "Bundler"
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Base"

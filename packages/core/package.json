@@ -47,28 +47,6 @@
   },
   "main": "./dist/index.js",
   "types": "./src/index.ts",
-  "typesVersions": {
-    "*": {
-      "cli": [
-        "./dist/cli/index.d.ts"
-      ],
-      "server": [
-        "./dist/server/index.d.ts"
-      ],
-      "hmr-client": [
-        "./dist/server/dev-middleware/hmr-client/index.d.ts"
-      ],
-      "plugins/*": [
-        "./dist/plugins/*.d.ts"
-      ],
-      "rspack-plugin-css": [
-        "./dist/rspack-provider/plugins/css.d.ts"
-      ],
-      "rspack-provider": [
-        "./dist/rspack-provider/index.d.ts"
-      ]
-    }
-  },
   "bin": {
     "rsbuild": "./bin/rsbuild.js"
   },
