@@ -1,4 +1,4 @@
-import color from 'picocolors';
+import color from '../compiled/picocolors';
 
 export { color };
 

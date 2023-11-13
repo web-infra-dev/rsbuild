@@ -27,9 +27,7 @@ Rsbuild 是一个基于 Rspack 的 web 构建工具。
 
 Rsbuild 的目标是为 Rspack 用户提供开箱即用的构建能力，使开发者能够在零配置的情况下启动一个 web 项目。
 
-Rsbuild 集成了社区中基于 Rust 的高性能工具，包括 [Rspack](https://github.com/web-infra-dev/rspack)、[Oxc](https://github.com/web-infra-dev/oxc) 和 [SWC](https://swc.rs/)，以提供一流的构建速度和开发体验。
-
-![rsbuild-toolchain](https://github.com/web-infra-dev/rsbuild/assets/7237365/204dadf8-b923-4f9c-8823-f3d75cb133ae)
+Rsbuild 集成了社区中基于 Rust 的高性能工具，包括 [Rspack](https://github.com/web-infra-dev/rspack) 和 [SWC](https://swc.rs/)，以提供一流的构建速度和开发体验。
 
 Rsbuild 还为上层的解决方案（如 Rspress 和 Modern.js）提供通用的构建能力。实际上，Rsbuild 是由 Modern.js Builder 演进而来，它已经与 Modern.js 解耦，以提供更好的灵活性，并满足社区用户的多样化需求。
 
@@ -80,9 +78,9 @@ Rsbuild 还为上层的解决方案（如 Rspress 和 Modern.js）提供通用�
 
 Rsbuild 的一些实现参考了社区中杰出的项目，对他们表示感谢：
 
-- 部分 API 的设计参考了 [vite](https://github.com/vitejs/vite)。
 - 部分插件的实现参考了 [create-react-app](https://github.com/facebook/create-react-app)。
 - 部分 util 函数参考了 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)。
+- 部分 API 的设计参考了 [vite](https://github.com/vitejs/vite)。
 
 ## License
 

@@ -27,9 +27,7 @@ Rsbuild is an Rspack-based build tool for the web.
 
 The main goal of Rsbuild is to provide out-of-the-box build capabilities for Rspack users, allowing developers to start a web project with zero configuration.
 
-Rsbuild integrates high-performance Rust-based tools from the community, including [Rspack](https://github.com/web-infra-dev/rspack), [Oxc](https://github.com/web-infra-dev/oxc), and [SWC](https://swc.rs/), to provide first-class build speed and development experience.
-
-![rsbuild-toolchain](https://github.com/web-infra-dev/rsbuild/assets/7237365/204dadf8-b923-4f9c-8823-f3d75cb133ae)
+Rsbuild integrates high-performance Rust-based tools from the community, including [Rspack](https://github.com/web-infra-dev/rspack) and [SWC](https://swc.rs/), to provide first-class build speed and development experience.
 
 Rsbuild also provides universal build capabilities for higher level solutions, such as Rspress and Modern.js. In fact, Rsbuild is a rebrand of the Modern.js Builder. It has been decoupled from Modern.js to provide greater flexibility and to meet the diverse needs of community users.
 
@@ -78,9 +76,9 @@ This repo has adopted the ByteDance Open Source Code of Conduct. Please check [C
 
 Some of the implementations of Rsbuild have drawn inspiration from outstanding projects in the community. We would like to express our gratitude to them:
 
-- The design of some APIs is referenced from [vite](https://github.com/vitejs/vite).
 - The implementation of some plugins is referenced from [create-react-app](https://github.com/facebook/create-react-app)
 - Some utility functions are referenced from [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
+- The design of some APIs is referenced from [vite](https://github.com/vitejs/vite).
 
 ## License
 
