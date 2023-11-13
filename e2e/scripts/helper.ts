@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
 import glob, { Options as GlobOptions } from 'fast-glob';
 
@@ -33,4 +33,18 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
   }
 
   return ret;
+};
+
+export const awaitFileExists = async (dir: string, checks = 0) => {
+  const maxChecks = 100;
+  const interval = 100;
+  if (fse.existsSync(dir)) {
+    expect(true).toBe(true);
+  } else if (checks < maxChecks) {
+    checks++;
+    await new Promise((resolve) => setTimeout(resolve, interval));
+    await awaitFileExists(dir, checks);
+  } else {
+    expect(false).toBe(true);
+  }
 };
