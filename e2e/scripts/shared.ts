@@ -2,7 +2,7 @@ import { URL } from 'url';
 import assert from 'assert';
 import { join } from 'path';
 import { fse } from '@rsbuild/shared';
-import { globContentJSON, runStaticServer } from '@scripts/helper';
+import { globContentJSON } from '@scripts/helper';
 import type {
   CreateRsbuildOptions,
   RsbuildConfig as RspackRsbuildConfig,
@@ -137,11 +137,14 @@ export async function build<BundlerType = 'rspack'>({
 
   const { distPath } = rsbuild.context;
 
-  const { port, close } = runServer
-    ? await runStaticServer(distPath, {
-        port: rsbuildConfig.dev!.port,
+  const {
+    port,
+    server: { close },
+  } = runServer
+    ? await rsbuild.preview({
+        printURLs: false,
       })
-    : { port: 0, close: noop };
+    : { port: 0, server: { close: noop } };
 
   const clean = async () => await fse.remove(distPath);
 
