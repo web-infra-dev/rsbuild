@@ -1,5 +1,5 @@
 import { join, resolve } from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -7,8 +7,8 @@ import { pluginReact } from '@rsbuild/plugin-react';
 const fixtures = resolve(__dirname);
 
 test('enableCssModuleTSDeclaration', async () => {
-  fs.removeSync(join(fixtures, 'src/App.module.less.d.ts'));
-  fs.removeSync(join(fixtures, 'src/App.module.scss.d.ts'));
+  fse.removeSync(join(fixtures, 'src/App.module.less.d.ts'));
+  fse.removeSync(join(fixtures, 'src/App.module.scss.d.ts'));
 
   await build({
     cwd: fixtures,
@@ -24,11 +24,11 @@ test('enableCssModuleTSDeclaration', async () => {
   });
 
   expect(
-    fs.existsSync(join(fixtures, 'src/App.module.less.d.ts')),
+    fse.existsSync(join(fixtures, 'src/App.module.less.d.ts')),
   ).toBeTruthy();
 
   expect(
-    fs
+    fse
       .readFileSync(join(fixtures, 'src/App.module.less.d.ts'), {
         encoding: 'utf-8',
       })
@@ -36,11 +36,11 @@ test('enableCssModuleTSDeclaration', async () => {
   ).toBeTruthy();
 
   expect(
-    fs.existsSync(join(fixtures, 'src/App.module.scss.d.ts')),
+    fse.existsSync(join(fixtures, 'src/App.module.scss.d.ts')),
   ).toBeTruthy();
 
   expect(
-    fs
+    fse
       .readFileSync(join(fixtures, 'src/App.module.scss.d.ts'), {
         encoding: 'utf-8',
       })

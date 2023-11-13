@@ -18,10 +18,6 @@
       "types": "./dist/formatStats.d.ts",
       "default": "./dist/formatStats.js"
     },
-    "./fs-extra": {
-      "types": "./dist/re-exports/fs-extra.d.ts",
-      "default": "./dist/re-exports/fs-extra.js"
-    },
     "./webpack-dev-middleware": {
       "types": "./compiled/webpack-dev-middleware/types/index.d.ts",
       "default": "./compiled/webpack-dev-middleware/index.js"
@@ -69,9 +65,6 @@
     "*": {
       "format-stats": [
         "./dist/formatStats.d.ts"
-      ],
-      "fs-extra": [
-        "./dist/re-exports/fs-extra.d.ts"
       ],
       "webpack-bundle-analyzer": [
         "./compiled/webpack-bundle-analyzer/index.d.ts"
@@ -121,7 +114,6 @@
     "connect": "3.7.0",
     "browserslist": "^4.22.1",
     "caniuse-lite": "^1.0.30001559",
-    "fs-extra": "^11.1.1",
     "gzip-size": "^6.0.0",
     "json5": "^2.2.3",
     "mime-types": "^2.1.35",
@@ -130,18 +122,15 @@
     "postcss": "8.4.31",
     "rslog": "^1.1.0",
     "semver": "^7.5.4",
-    "url-join": "^4.0.1",
     "webpack-chain": "npm:webpack-5-chain@8.0.1",
     "webpack-sources": "^3.2.3"
   },
   "devDependencies": {
     "@rspack/core": "0.3.11",
     "@types/connect": "3.4.35",
-    "@types/fs-extra": "^11.0.2",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "@types/semver": "^7.5.4",
-    "@types/url-join": "^4.0.2",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.5",
     "http-proxy-middleware": "^2.0.1",
     "terser": "5.19.2",

@@ -1,8 +1,8 @@
 import path from 'path';
 // @ts-expect-error
 import { RawSource } from 'webpack-sources';
-import { fs } from '@rsbuild/shared/fs-extra';
 import {
+  fse,
   withPublicPath,
   generateScriptTag,
   getRsbuildVersion,
@@ -49,7 +49,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
   async getRetryCode() {
     const { default: serialize } = await import('serialize-javascript');
     const runtimeFilePath = path.join(__dirname, './runtime.js');
-    const runtimeCode = await fs.readFile(runtimeFilePath, 'utf-8');
+    const runtimeCode = await fse.readFile(runtimeFilePath, 'utf-8');
     return `(function(){${runtimeCode};init(${serialize(
       this.#retryOptions,
     )});})()`;

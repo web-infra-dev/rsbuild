@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { isAbsolute, join } from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import {
   findExists,
   BuildCacheOptions,
@@ -16,7 +16,7 @@ async function validateCache(
   const configFile = join(cacheDirectory, 'buildDependencies.json');
 
   if (await isFileExists(configFile)) {
-    const prevBuildDependencies = await fs.readJSON(configFile);
+    const prevBuildDependencies = await fse.readJSON(configFile);
 
     if (
       JSON.stringify(prevBuildDependencies) ===
@@ -29,10 +29,10 @@ async function validateCache(
      * If the filenames in the buildDependencies are changed, webpack will not invalidate the previous cache.
      * So we need to remove the cache directory to make sure the cache is invalidated.
      */
-    await fs.remove(cacheDirectory);
+    await fse.remove(cacheDirectory);
   }
 
-  await fs.outputJSON(configFile, buildDependencies);
+  await fse.outputJSON(configFile, buildDependencies);
 }
 
 function getDigestHash(digest: Array<string | undefined>) {

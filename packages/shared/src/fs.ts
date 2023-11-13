@@ -1,4 +1,5 @@
 import path, { isAbsolute, join } from 'path';
+import fse from '../compiled/fs-extra';
 import { MODULE_PATH_REGEX } from './constants';
 import { removeLeadingSlash } from './utils';
 import { promises, constants, existsSync, statSync } from 'fs';
@@ -8,6 +9,8 @@ import {
   HtmlConfig,
   FilenameConfig,
 } from './types';
+
+export { fse };
 
 export function getAbsoluteDistPath(
   cwd: string,

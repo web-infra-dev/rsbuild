@@ -2,7 +2,7 @@ import path from 'path';
 import { expect } from '@playwright/test';
 import { webpackOnlyTest } from '@scripts/helper';
 import { build } from '@scripts/shared';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 
 webpackOnlyTest(
   'should save the buildDependencies to cache directory and hit cache',
@@ -35,7 +35,7 @@ webpackOnlyTest(
 
     const configFile = path.resolve(cacheDirectory, 'buildDependencies.json');
 
-    fs.emptyDirSync(cacheDirectory);
+    fse.emptyDirSync(cacheDirectory);
 
     // first build no cache
     let rsbuild = await build(buildConfig);
@@ -44,7 +44,7 @@ webpackOnlyTest(
       (await rsbuild.getIndexFile()).content.includes('222222'),
     ).toBeTruthy();
 
-    const buildDependencies = await fs.readJSON(configFile);
+    const buildDependencies = await fse.readJSON(configFile);
     expect(Object.keys(buildDependencies)).toEqual(['tsconfig']);
 
     process.env.TEST_ENV = 'a';
@@ -88,7 +88,7 @@ webpackOnlyTest('cacheDigest should work', async () => {
 
   const configFile = path.resolve(cacheDirectory, 'buildDependencies.json');
 
-  fs.emptyDirSync(cacheDirectory);
+  fse.emptyDirSync(cacheDirectory);
 
   // first build no cache
   let rsbuild = await build(getBuildConfig());
@@ -97,7 +97,7 @@ webpackOnlyTest('cacheDigest should work', async () => {
     (await rsbuild.getIndexFile()).content.includes('222222'),
   ).toBeTruthy();
 
-  const buildDependencies = await fs.readJSON(configFile);
+  const buildDependencies = await fse.readJSON(configFile);
   expect(Object.keys(buildDependencies)).toEqual(['tsconfig']);
 
   process.env.TEST_ENV = 'a';
