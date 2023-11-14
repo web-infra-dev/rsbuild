@@ -78,7 +78,7 @@ export async function createCompiler({
   return compiler;
 }
 
-export async function startDevCompile(
+export async function createDevMiddleware(
   options: InitConfigsOptions,
   customCompiler?: RspackCompiler | RspackMultiCompiler,
 ) {

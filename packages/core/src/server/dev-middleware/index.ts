@@ -35,6 +35,8 @@ export default class DevMiddleware extends EventEmitter {
 
   private devOptions: DevConfig;
 
+  private devMiddleware?: CustomDevMiddleware;
+
   private socketServer: SocketServer;
 
   constructor({ dev, devMiddleware }: Options) {
@@ -45,13 +47,15 @@ export default class DevMiddleware extends EventEmitter {
     // init socket server
     this.socketServer = new SocketServer(dev);
 
-    if (devMiddleware) {
-      // start dev middleware
-      this.middleware = this.setupDevMiddleware(devMiddleware);
-    }
+    this.devMiddleware = devMiddleware;
   }
 
   public init(app: Server) {
+    if (this.devMiddleware) {
+      // start compiling
+      this.middleware = this.setupDevMiddleware(this.devMiddleware);
+    }
+
     app.on('listening', () => {
       this.socketServer.prepare(app);
     });
