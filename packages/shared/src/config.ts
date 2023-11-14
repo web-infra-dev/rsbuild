@@ -31,7 +31,7 @@ import type {
   NormalizedConfig,
 } from './types';
 import { pick } from './pick';
-import { logger } from 'rslog';
+import { logger } from './logger';
 import { join } from 'path';
 import { color } from './color';
 import type { minify } from 'terser';

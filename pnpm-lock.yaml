@@ -652,21 +652,12 @@ importers:
       '@rspack/core':
         specifier: 0.3.12
         version: 0.3.12
-      commander:
-        specifier: ^10.0.1
-        version: 10.0.1
       core-js:
         specifier: ~3.32.2
         version: 3.32.2
-      gzip-size:
-        specifier: ^6.0.0
-        version: 6.0.0
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.5.5
         version: /html-rspack-plugin@5.5.5
-      http-compression:
-        specifier: 1.0.6
-        version: 1.0.6
       http-proxy-middleware:
         specifier: ^2.0.1
         version: 2.0.6
@@ -676,9 +667,6 @@ importers:
       postcss:
         specifier: 8.4.31
         version: 8.4.31
-      rslog:
-        specifier: ^1.1.0
-        version: 1.1.0
       semver:
         specifier: ^7.5.4
         version: 7.5.4
@@ -708,8 +696,8 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0
       rslog:
-        specifier: ^1.1.0
-        version: 1.1.0
+        specifier: ^1.1.1
+        version: 1.1.1
     devDependencies:
       '@types/node':
         specifier: ^16
@@ -1727,9 +1715,6 @@ importers:
       caniuse-lite:
         specifier: ^1.0.30001559
         version: 1.0.30001559
-      gzip-size:
-        specifier: ^6.0.0
-        version: 6.0.0
       json5:
         specifier: ^2.2.3
         version: 2.2.3
@@ -1742,9 +1727,6 @@ importers:
       postcss:
         specifier: 8.4.31
         version: 8.4.31
-      rslog:
-        specifier: ^1.1.0
-        version: 1.1.0
       semver:
         specifier: ^7.5.4
         version: 7.5.4
@@ -1862,6 +1844,9 @@ importers:
       chokidar:
         specifier: 3.5.3
         version: 3.5.3
+      commander:
+        specifier: ^10.0.1
+        version: 10.0.1
       connect:
         specifier: 3.7.0
         version: 3.7.0
@@ -1871,6 +1856,12 @@ importers:
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
+      gzip-size:
+        specifier: ^6.0.0
+        version: 6.0.0
+      http-compression:
+        specifier: 1.0.6
+        version: 1.0.6
       mime-types:
         specifier: ^2.1.35
         version: 2.1.35
@@ -1883,6 +1874,9 @@ importers:
       postcss-value-parser:
         specifier: 4.2.0
         version: 4.2.0
+      rslog:
+        specifier: ^1.1.1
+        version: 1.1.1
       url-join:
         specifier: ^4.0.1
         version: 4.0.1
@@ -4675,7 +4669,7 @@ packages:
       '@swc/helpers': 0.5.1
       caniuse-lite: 1.0.30001559
       lodash: 4.17.21
-      rslog: 1.1.0
+      rslog: 1.1.1
     dev: false
 
   /@modern-js/utils@2.40.0:
@@ -4684,7 +4678,7 @@ packages:
       '@swc/helpers': 0.5.1
       caniuse-lite: 1.0.30001559
       lodash: 4.17.21
-      rslog: 1.1.0
+      rslog: 1.1.1
 
   /@napi-rs/image-android-arm-eabi@1.7.0:
     resolution: {integrity: sha512-lpyqxaIYUrdk096xoJjvPGin5jY1Ehor0RxryqDvowGUhVU3TDgolsjjuFPEki3cfvV6zzAm7bWUkmxIci2zaw==}
@@ -5354,7 +5348,7 @@ packages:
     dependencies:
       '@rsbuild/core': link:packages/core
       chalk: 4.1.2
-      rslog: 1.1.0
+      rslog: 1.1.1
       unified: 10.1.2
     dev: true
 
@@ -9562,7 +9556,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       duplexer: 0.1.2
-    dev: false
 
   /hard-rejection@2.1.0:
     resolution: {integrity: sha512-VIZB+ibDhx7ObhAe7OVtoEbuP4h/MuOTHJ+J8h/eBXotJYl0fBgR72xDFCKgIh22OJZIOVNxBMWuhAr10r8HdA==}
@@ -9898,7 +9891,7 @@ packages:
   /http-compression@1.0.6:
     resolution: {integrity: sha512-Yy9VFT/0fJhbpSHmqA34CJKZDXLnHoQUP2wbFXY7duOx3nc9Qf8MVJezaXTP7IirvJ9DmUv/vm7qFNu/RntdWw==}
     engines: {node: '>= 4'}
-    dev: false
+    dev: true
 
   /http-errors@2.0.0:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
@@ -13369,8 +13362,8 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /rslog@1.1.0:
-    resolution: {integrity: sha512-wtTijPuwUhyVG7YvnIVzlefhlto4qJ9vm42ewwJtqrOBP/vKdZCIyfiYm0odVCR3ajR1CIUqaloIzbqhlbyaZA==}
+  /rslog@1.1.1:
+    resolution: {integrity: sha512-ncYfbtX17x9Irt3gowS8lPdbx6F9WaRpR+5M/OopoCvfUDFDyQGxUEG+cbnjzyZ7PTYmb07Fn+rdGBfWPN2b7w==}
     engines: {node: '>=14.17.6'}
 
   /rspack-manifest-plugin@5.0.0-alpha0(webpack@5.89.0):

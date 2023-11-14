@@ -1,6 +1,6 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
-import { logger } from 'rslog';
+import { logger } from './logger';
 import {
   Context,
   CreateRsbuildOptions,

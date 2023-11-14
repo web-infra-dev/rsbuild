@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { logger } = require('rslog');
+const { logger } = require('@rsbuild/shared/rslog');
 
 function initNodeEnv() {
   if (!process.env.NODE_ENV) {

@@ -5,7 +5,6 @@
 import path from 'path';
 import { fse } from '@rsbuild/shared';
 import { color, logger } from '@rsbuild/shared';
-import gzipSize from 'gzip-size';
 import type {
   DefaultRsbuildPlugin,
   Stats,
@@ -51,6 +50,8 @@ const calcFileSize = (len: number) => {
 };
 
 async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
+  const { default: gzipSize } = await import('@rsbuild/shared/gzip-size');
+
   const formatAsset = (asset: StatsAsset) => {
     const contents = fse.readFileSync(path.join(distPath, asset.name));
     const size = contents.length;

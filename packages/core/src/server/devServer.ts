@@ -94,8 +94,9 @@ export class RsbuildDevServer {
 
     // compression should be the first middleware
     if (dev.compress) {
-      // @ts-expect-error http-compression does not provide a type definition
-      const { default: compression } = await import('http-compression');
+      const { default: compression } = await import(
+        '../../compiled/http-compression'
+      );
       this.middlewares.use((req, res, next) => {
         compression({
           gzip: true,

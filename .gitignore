@@ -5,6 +5,7 @@ node_modules/
 
 dist/
 dist-*
+!**/rslog/dist
 coverage/
 doc_build/
 playwright-report/

@@ -64,15 +64,11 @@
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
     "@rspack/core": "0.3.12",
-    "commander": "^10.0.1",
     "core-js": "~3.32.2",
-    "gzip-size": "^6.0.0",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.5",
-    "http-compression": "1.0.6",
     "http-proxy-middleware": "^2.0.1",
     "jiti": "^1.20.0",
     "postcss": "8.4.31",
-    "rslog": "^1.1.0",
     "semver": "^7.5.4",
     "sirv": "^2.0.3",
     "ws": "^8.2.0"

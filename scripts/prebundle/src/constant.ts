@@ -31,6 +31,11 @@ export const TASKS: TaskConfig[] = [
     packageName: '@rsbuild/core',
     dependencies: [
       'open',
+      'commander',
+      {
+        name: 'http-compression',
+        ignoreDts: true,
+      },
       {
         name: 'connect-history-api-fallback',
         ignoreDts: true,
@@ -41,6 +46,7 @@ export const TASKS: TaskConfig[] = [
     packageDir: 'shared',
     packageName: '@rsbuild/shared',
     dependencies: [
+      'rslog',
       'deepmerge',
       'url-join',
       'fs-extra',
@@ -49,6 +55,7 @@ export const TASKS: TaskConfig[] = [
       'mime-types',
       'connect',
       'browserslist',
+      'gzip-size',
       {
         name: 'webpack-sources',
         ignoreDts: true,
