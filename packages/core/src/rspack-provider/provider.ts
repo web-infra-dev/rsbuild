@@ -16,7 +16,6 @@ import {
   isSatisfyRspackMinimumVersion,
   supportedRspackMinimumVersion,
 } from './shared/rspackVersion';
-import { startProdServer, startDevServer } from '../server';
 import type { RsbuildConfig, NormalizedConfig } from './types';
 
 export type RspackProvider = RsbuildProvider<
@@ -74,6 +73,7 @@ export function rspackProvider({
       },
 
       async startDevServer(options) {
+        const { startDevServer } = await import('../server/devServer');
         const { createDevMiddleware } = await import('./core/createCompiler');
         return startDevServer(
           { context, pluginStore, rsbuildOptions },
@@ -83,6 +83,7 @@ export function rspackProvider({
       },
 
       async preview(options?: PreviewServerOptions) {
+        const { startProdServer } = await import('../server/prodServer');
         return startProdServer(context, context.config, options);
       },
 
