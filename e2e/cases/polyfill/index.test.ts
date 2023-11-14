@@ -45,7 +45,7 @@ test('should add polyfill when set polyfill entry (default)', async ({
 
   expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
 
-  rsbuild.close();
+  await rsbuild.close();
 
   const files = await rsbuild.unwrapOutputJSON(false);
 
@@ -72,7 +72,7 @@ test('should add polyfill when set polyfill usage', async ({ page }) => {
 
   expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
 
-  rsbuild.close();
+  await rsbuild.close();
 
   const files = await rsbuild.unwrapOutputJSON(false);
 

@@ -39,7 +39,7 @@ test.describe('output configure multi', () => {
   });
 
   test.afterAll(async () => {
-    rsbuild.close();
+    await rsbuild.close();
     await rsbuild.clean();
   });
 
@@ -100,7 +100,7 @@ test('cleanDistPath disable', async () => {
 
   expect(fse.existsSync(distFilePath)).toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
   rsbuild.clean();
 });
 

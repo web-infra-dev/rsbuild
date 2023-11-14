@@ -86,6 +86,6 @@ cases.forEach((_case) => {
       ).resolves.toBeTruthy();
     }
 
-    rsbuild.close();
+    await rsbuild.close();
   });
 });

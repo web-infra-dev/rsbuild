@@ -21,5 +21,5 @@ test('decorator legacy(default)', async ({ page }) => {
     );
   }
 
-  rsbuild.close();
+  await rsbuild.close();
 });

@@ -147,7 +147,7 @@ export async function startProdServer(
           port,
           urls: urls.map((item) => item.url),
           server: {
-            close: () => {
+            close: async () => {
               server.close();
             },
           },

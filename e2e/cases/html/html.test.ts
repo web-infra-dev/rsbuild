@@ -26,7 +26,7 @@ test.describe('html configure multi', () => {
   });
 
   test.afterAll(() => {
-    rsbuild.close();
+    await rsbuild.close();
   });
 
   test('mountId', async ({ page }) => {
@@ -91,7 +91,7 @@ test.describe('html element set', () => {
   });
 
   test.afterAll(() => {
-    rsbuild.close();
+    await rsbuild.close();
   });
 
   test('appicon', async () => {
@@ -175,7 +175,7 @@ test('template & templateParameters', async ({ page }) => {
 
   await expect(page.evaluate(`window.foo`)).resolves.toBe('bar');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('html.outputStructure', async ({ page }) => {
@@ -198,7 +198,7 @@ test('html.outputStructure', async ({ page }) => {
 
   expect(fse.existsSync(pagePath)).toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('tools.htmlPlugin', async ({ page }) => {
@@ -230,5 +230,5 @@ test('tools.htmlPlugin', async ({ page }) => {
     allScripts?.every((data) => data.includes('type="module"')),
   ).toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });

@@ -41,5 +41,5 @@ test.skip('enableAssetManifest', async () => {
   expect(Object.keys(manifest.files).length).toBe(3);
   expect(manifest.entrypoints.length).toBe(1);
 
-  rsbuild.close();
+  await rsbuild.close();
 });

@@ -23,7 +23,7 @@ test('rem default (disable)', async ({ page }) => {
   const description = page.locator('#description');
   await expect(description).toHaveCSS('font-size', '16px');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('rem enable', async ({ page }) => {
@@ -54,7 +54,7 @@ test('rem enable', async ({ page }) => {
   const description = page.locator('#description');
   await expect(description).toHaveCSS('font-size', '20.48px');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('should inline runtime code to html by default', async () => {

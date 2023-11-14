@@ -16,7 +16,7 @@ test('decorator legacy(default)', async ({ page }) => {
   expect(await page.evaluate('window.aaa')).toBe('hello!');
   expect(await page.evaluate('window.bbb')).toBe('world');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('decorator latest', async ({ page }) => {
@@ -37,5 +37,5 @@ test('decorator latest', async ({ page }) => {
   expect(await page.evaluate('window.aaa')).toBe('hello!');
   expect(await page.evaluate('window.bbb')).toBe('world');
 
-  rsbuild.close();
+  await rsbuild.close();
 });

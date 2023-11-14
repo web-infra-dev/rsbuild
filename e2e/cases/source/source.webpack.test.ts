@@ -33,7 +33,7 @@ test.skip('module-scopes', async ({ page }) => {
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
 
-  rsbuild.close();
+  await rsbuild.close();
 
   // should not throw
   rsbuild = await build<'webpack'>({
@@ -45,5 +45,5 @@ test.skip('module-scopes', async ({ page }) => {
     },
   });
 
-  rsbuild.close();
+  await rsbuild.close();
 });

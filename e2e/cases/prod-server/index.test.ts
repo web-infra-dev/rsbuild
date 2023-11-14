@@ -27,7 +27,7 @@ test('should access / success when entry is index', async ({ page }) => {
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('should access /main.html success when entry is main', async ({
@@ -55,7 +55,7 @@ test('should access /main.html success when entry is main', async ({
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('should access /main success when entry is main', async ({ page }) => {
@@ -83,7 +83,7 @@ test('should access /main success when entry is main', async ({ page }) => {
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('should access /main success when entry is main and set assetPrefix', async ({
@@ -112,7 +112,7 @@ test('should access /main success when entry is main and set assetPrefix', async
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('should access /main success when entry is main and outputPath is /main/index.html', async ({
@@ -143,7 +143,7 @@ test('should access /main success when entry is main and outputPath is /main/ind
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('should return 404 when page is not found', async ({ page }) => {
@@ -168,7 +168,7 @@ test('should return 404 when page is not found', async ({ page }) => {
 
   expect(res?.status()).toBe(404);
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('should access /html/main success when entry is main and outputPath is /html/main.html', async ({
@@ -205,5 +205,5 @@ test('should access /html/main success when entry is main and outputPath is /htm
 
   expect(res?.status()).toBe(404);
 
-  rsbuild.close();
+  await rsbuild.close();
 });

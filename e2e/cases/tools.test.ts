@@ -30,7 +30,7 @@ test('postcss plugins overwrite', async ({ page }) => {
   const title = page.locator('#title');
   await expect(title).toHaveText('title');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('bundlerChain - set alias config', async ({ page }) => {
@@ -54,7 +54,7 @@ test('bundlerChain - set alias config', async ({ page }) => {
   await page.goto(getHrefByEntryName('main', rsbuild.port));
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 // Rspack do not support publicPath function yet

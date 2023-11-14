@@ -49,7 +49,7 @@ test('legalComments linked (default)', async ({ page }) => {
 
   expect(JsContent.includes('Foo Bar')).toBeFalsy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('legalComments none', async ({ page }) => {
@@ -93,7 +93,7 @@ test('legalComments none', async ({ page }) => {
 
   expect(JsContent.includes('@license BBB')).toBeFalsy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('legalComments inline', async ({ page }) => {
@@ -138,5 +138,5 @@ test('legalComments inline', async ({ page }) => {
   expect(JsContent.includes('@license BBB')).toBeTruthy();
   expect(JsContent.includes('Foo Bar')).toBeFalsy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });

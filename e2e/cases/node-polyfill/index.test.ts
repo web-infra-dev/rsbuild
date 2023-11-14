@@ -24,5 +24,5 @@ test('should add node-polyfill when add node-polyfill plugin', async ({
   const testQueryString = page.locator('#test-querystring');
   await expect(testQueryString).toHaveText('foo=bar');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
