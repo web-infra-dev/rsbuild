@@ -36,6 +36,9 @@ test('default & hmr (default true)', async ({ page }) => {
   await expect(locator).toHaveText('Hello Rsbuild!');
   await expect(locator).toHaveCSS('color', 'rgb(255, 0, 0)');
 
+  const locatorKeep = page.locator('#test-keep');
+  const keepNum = await locatorKeep.innerHTML();
+
   const appPath = join(fixtures, 'hmr', 'test-src/App.tsx');
 
   await fse.writeFile(
@@ -47,6 +50,9 @@ test('default & hmr (default true)', async ({ page }) => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
   await expect(locator).toHaveText('Hello Test!');
+
+  // #test-keep should unchanged when app.tsx hmr
+  await expect(locatorKeep.innerHTML()).resolves.toBe(keepNum);
 
   const cssPath = join(fixtures, 'hmr', 'test-src/App.css');
 
