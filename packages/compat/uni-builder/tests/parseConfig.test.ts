@@ -11,6 +11,16 @@ describe('parseCommonConfig', () => {
     ).toMatchSnapshot();
   });
 
+  test('output.disableCssModuleExtension', () => {
+    expect(
+      parseCommonConfig({
+        output: {
+          disableCssModuleExtension: true,
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+  });
+
   test('html.metaByEntries', () => {
     expect(
       parseCommonConfig({

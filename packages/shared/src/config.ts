@@ -121,13 +121,13 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     css: undefined,
   },
   disableFilenameHash: false,
-  disableCssModuleExtension: false,
   enableAssetFallback: false,
   enableLatestDecorators: false,
   enableCssModuleTSDeclaration: false,
   enableInlineScripts: false,
   enableInlineStyles: false,
   cssModules: {
+    auto: true,
     exportLocalsConvention: 'camelCase',
   },
 });

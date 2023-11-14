@@ -15,11 +15,10 @@ For custom CSS Modules configuration.
 The `auto` configuration option allows CSS modules to be automatically enabled based on their filenames.
 
 - **Type:** `boolean | RegExp | ((resourcePath: string) => boolean)`
-- **Default:** `undefined`
+- **Default:** `true`
 
 Type description:
 
-- `undefined`: According to the [output.disableCssModuleExtension](https://rsbuild.dev/config/options/output.html#outputdisablecssmoduleextension) configuration option to determine which style files to enable CSS modules.
 - `true`: enable CSS modules for all files matching `/\.module\.\w+$/i.test(filename)` regexp.
 - `false`: disables CSS Modules.
 - `RegExp`: enable CSS modules for all files matching `/RegExp/i.test(filename)` regexp.

@@ -1,9 +1,5 @@
 import assert from 'assert';
-import {
-  CSS_MODULES_REGEX,
-  GLOBAL_CSS_REGEX,
-  NODE_MODULES_REGEX,
-} from './constants';
+import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import deepmerge from '../compiled/deepmerge';
 import { getSharedPkgCompiledPath as getCompiledPath } from './utils';
@@ -26,14 +22,6 @@ export const getCssModuleLocalIdentName = (
     : '[path][name]__[local]-[hash:base64:6]');
 
 export const isInNodeModules = (path: string) => NODE_MODULES_REGEX.test(path);
-
-/** Determine if a file path is a CSS module when disableCssModuleExtension is enabled. */
-export const isLooseCssModules = (path: string) => {
-  if (NODE_MODULES_REGEX.test(path)) {
-    return CSS_MODULES_REGEX.test(path);
-  }
-  return !GLOBAL_CSS_REGEX.test(path);
-};
 
 export type CssLoaderModules =
   | boolean
@@ -62,17 +50,6 @@ export const isCssModules = (filename: string, modules: CssLoaderModules) => {
     return auto(filename);
   }
   return true;
-};
-
-export const getCssModulesAutoRule = (
-  config?: CssModules,
-  disableCssModuleExtension = false,
-) => {
-  if (!config || config?.auto === undefined) {
-    return disableCssModuleExtension ? isLooseCssModules : true;
-  }
-
-  return config.auto;
 };
 
 type CssNanoOptions = {
@@ -202,10 +179,7 @@ export const getCssLoaderOptions = ({
   const defaultOptions = {
     importLoaders,
     modules: {
-      auto: getCssModulesAutoRule(
-        cssModules,
-        config.output.disableCssModuleExtension,
-      ),
+      auto: cssModules.auto,
       exportLocalsConvention: cssModules.exportLocalsConvention,
       localIdentName,
     },
