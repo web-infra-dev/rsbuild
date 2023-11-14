@@ -41,6 +41,7 @@ export const TASKS: TaskConfig[] = [
     packageDir: 'shared',
     packageName: '@rsbuild/shared',
     dependencies: [
+      'rslog',
       'deepmerge',
       'url-join',
       'fs-extra',
@@ -49,6 +50,7 @@ export const TASKS: TaskConfig[] = [
       'mime-types',
       'connect',
       'browserslist',
+      'gzip-size',
       {
         name: 'webpack-sources',
         ignoreDts: true,

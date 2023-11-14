@@ -18,6 +18,14 @@
       "types": "./dist/formatStats.d.ts",
       "default": "./dist/formatStats.js"
     },
+    "./rslog": {
+      "types": "./compiled/rslog/dist/types/index.d.ts",
+      "default": "./compiled/rslog/index.js"
+    },
+    "./gzip-size": {
+      "types": "./compiled/gzip-size/index.d.ts",
+      "default": "./compiled/gzip-size/index.js"
+    },
     "./browserslist": {
       "types": "./compiled/browserslist/index.d.ts",
       "default": "./compiled/browserslist/index.js"
@@ -91,12 +99,10 @@
   "dependencies": {
     "@rspack/core": "0.3.12",
     "caniuse-lite": "^1.0.30001559",
-    "gzip-size": "^6.0.0",
     "json5": "^2.2.3",
     "line-diff": "2.1.1",
     "lodash": "^4.17.21",
     "postcss": "8.4.31",
-    "rslog": "^1.1.0",
     "semver": "^7.5.4"
   },
   "devDependencies": {

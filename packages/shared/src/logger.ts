@@ -1,4 +1,4 @@
-import { logger, type Logger } from 'rslog';
+import { logger, type Logger } from '../compiled/rslog';
 import { color } from './color';
 
 export const isDebug = () =>

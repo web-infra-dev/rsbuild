@@ -658,9 +658,6 @@ importers:
       core-js:
         specifier: ~3.32.2
         version: 3.32.2
-      gzip-size:
-        specifier: ^6.0.0
-        version: 6.0.0
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.5.5
         version: /html-rspack-plugin@5.5.5
@@ -676,9 +673,6 @@ importers:
       postcss:
         specifier: 8.4.31
         version: 8.4.31
-      rslog:
-        specifier: ^1.1.0
-        version: 1.1.0
       semver:
         specifier: ^7.5.4
         version: 7.5.4
@@ -1727,9 +1721,6 @@ importers:
       caniuse-lite:
         specifier: ^1.0.30001559
         version: 1.0.30001559
-      gzip-size:
-        specifier: ^6.0.0
-        version: 6.0.0
       json5:
         specifier: ^2.2.3
         version: 2.2.3
@@ -1742,9 +1733,6 @@ importers:
       postcss:
         specifier: 8.4.31
         version: 8.4.31
-      rslog:
-        specifier: ^1.1.0
-        version: 1.1.0
       semver:
         specifier: ^7.5.4
         version: 7.5.4
@@ -1871,6 +1859,9 @@ importers:
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
+      gzip-size:
+        specifier: ^6.0.0
+        version: 6.0.0
       mime-types:
         specifier: ^2.1.35
         version: 2.1.35
@@ -1883,6 +1874,9 @@ importers:
       postcss-value-parser:
         specifier: 4.2.0
         version: 4.2.0
+      rslog:
+        specifier: ^1.1.0
+        version: 1.1.0
       url-join:
         specifier: ^4.0.1
         version: 4.0.1
@@ -9562,7 +9556,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       duplexer: 0.1.2
-    dev: false
 
   /hard-rejection@2.1.0:
     resolution: {integrity: sha512-VIZB+ibDhx7ObhAe7OVtoEbuP4h/MuOTHJ+J8h/eBXotJYl0fBgR72xDFCKgIh22OJZIOVNxBMWuhAr10r8HdA==}
