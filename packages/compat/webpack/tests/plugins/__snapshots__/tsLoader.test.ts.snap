@@ -17,9 +17,10 @@ exports[`plugin-ts-loader > should set include/exclude 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           "src/**/*.ts",
         ],
-        "test": /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
@@ -109,8 +110,9 @@ exports[`plugin-ts-loader > should set ts-loader 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",

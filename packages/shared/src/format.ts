@@ -7,7 +7,7 @@ export function formatStats(stats: Stats | MultiStats, showWarnings = true) {
     preset: 'errors-warnings',
   });
 
-  const { errors, warnings } = formatStatsMessages(statsData, color);
+  const { errors, warnings } = formatStatsMessages(statsData);
 
   if (errors.length) {
     const errorMsgs = `${errors.join('\n\n')}\n`;

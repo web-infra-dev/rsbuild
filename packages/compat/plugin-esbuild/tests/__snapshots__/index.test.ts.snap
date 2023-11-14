@@ -5,7 +5,7 @@ exports[`plugin-esbuild > should not set format iife when target is not web 1`] 
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/compat/plugin-esbuild/compiled/esbuild-loader/index.js",
@@ -27,8 +27,9 @@ exports[`plugin-esbuild > should not set format iife when target is not web 1`] 
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/compat/plugin-esbuild/compiled/esbuild-loader/index.js",
@@ -64,7 +65,7 @@ exports[`plugin-esbuild > should set esbuild minimizer in production 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/compat/plugin-esbuild/compiled/esbuild-loader/index.js",
@@ -86,8 +87,9 @@ exports[`plugin-esbuild > should set esbuild minimizer in production 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/compat/plugin-esbuild/compiled/esbuild-loader/index.js",
@@ -123,7 +125,7 @@ exports[`plugin-esbuild > should set esbuild-loader 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/compat/plugin-esbuild/compiled/esbuild-loader/index.js",
@@ -145,8 +147,9 @@ exports[`plugin-esbuild > should set esbuild-loader 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/compat/plugin-esbuild/compiled/esbuild-loader/index.js",

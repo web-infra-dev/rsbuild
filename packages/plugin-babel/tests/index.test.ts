@@ -1,7 +1,7 @@
 import { expect, describe, it } from 'vitest';
 import { pluginBabel } from '../src';
 import { createStubRsbuild } from '@rsbuild/test-helper';
-import { mergeRegex, JS_REGEX, TS_REGEX } from '@rsbuild/shared';
+import { SCRIPT_REGEX } from '@rsbuild/shared';
 
 describe('plugins/babel', () => {
   it('babel-loader should works with builtin:swc-loader', async () => {
@@ -20,7 +20,7 @@ describe('plugins/babel', () => {
 
     expect(
       config.module.rules.find(
-        (r) => r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
+        (r) => r.test.toString() === SCRIPT_REGEX.toString(),
       ),
     ).toMatchSnapshot();
   });

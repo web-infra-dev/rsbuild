@@ -17,9 +17,10 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           /foo/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -136,7 +137,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
 {
   "rules": [
     {
-      "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+      "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -195,7 +196,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
 {
   "rules": [
     {
-      "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+      "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -251,7 +252,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
 {
   "rules": [
     {
-      "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+      "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -310,7 +311,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
 {
   "rules": [
     {
-      "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+      "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -369,7 +370,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 4`] = 
 {
   "rules": [
     {
-      "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+      "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -470,8 +471,9 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
           },
         ],
       },
+      /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
-    "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+    "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "use": [
       {
         "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -668,8 +670,9 @@ exports[`plugin-swc > should set swc-loader 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",

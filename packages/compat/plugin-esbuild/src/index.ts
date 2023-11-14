@@ -63,13 +63,6 @@ export function pluginEsbuild(
               loader: 'tsx',
               ...options?.loader,
             });
-          applyScriptCondition({
-            rule,
-            config: rsbuildConfig,
-            context: api.context,
-            includes: [],
-            excludes: [],
-          });
         }
 
         if (isProd && options.minimize !== false) {

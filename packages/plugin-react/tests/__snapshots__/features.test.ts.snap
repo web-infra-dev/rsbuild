@@ -88,8 +88,9 @@ exports[`transformImport > should apply antd & arco transformImport 1`] = `
         },
       ],
     },
+    /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
-  "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+  "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
     {
@@ -164,8 +165,9 @@ exports[`transformImport > should not apply antd & arco when transformImport is 
         },
       ],
     },
+    /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
-  "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+  "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
     {
