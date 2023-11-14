@@ -23,8 +23,9 @@ exports[`plugin-babel > should adjust browserslist when target is node 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
@@ -166,8 +167,9 @@ exports[`plugin-babel > should apply exclude condition when using source.exclude
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
@@ -346,8 +348,9 @@ exports[`plugin-babel > should override targets of babel-preset-env when using o
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
@@ -512,8 +515,9 @@ exports[`plugin-babel > should set babel-loader 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
@@ -687,9 +691,10 @@ exports[`plugin-babel > should set include/exclude 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           "src/**/*.ts",
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",

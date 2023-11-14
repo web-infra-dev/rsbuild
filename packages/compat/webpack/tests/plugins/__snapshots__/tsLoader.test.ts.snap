@@ -17,6 +17,7 @@ exports[`plugin-ts-loader > should set include/exclude 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           "src/**/*.ts",
         ],
         "test": /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
@@ -109,6 +110,7 @@ exports[`plugin-ts-loader > should set ts-loader 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
         "test": /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
         "use": [

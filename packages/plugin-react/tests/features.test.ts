@@ -1,7 +1,7 @@
 import { expect, describe, it, vi } from 'vitest';
 import { pluginReact } from '../src';
 import { createStubRsbuild } from '@rsbuild/test-helper';
-import { mergeRegex, JS_REGEX, TS_REGEX } from '@rsbuild/shared';
+import { SCRIPT_REGEX } from '@rsbuild/shared';
 
 vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();
@@ -57,7 +57,7 @@ describe('transformImport', () => {
 
     expect(
       config.module.rules.find(
-        (r) => r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
+        (r) => r.test.toString() === SCRIPT_REGEX.toString(),
       ),
     ).toMatchSnapshot();
   });
@@ -77,7 +77,7 @@ describe('transformImport', () => {
 
     expect(
       config.module.rules.find(
-        (r) => r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
+        (r) => r.test.toString() === SCRIPT_REGEX.toString(),
       ),
     ).toMatchSnapshot();
   });

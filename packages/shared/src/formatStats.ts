@@ -85,59 +85,8 @@ function formatMessage(stats: webpack.StatsError | string) {
   return message.trim();
 }
 
-type ErrorHelper = {
-  validator: (message: string) => boolean | void;
-  formatter: (message: string) => string;
-};
-
-const noop = (message: string) => message;
-const defaultColor = {
-  gray: noop,
-  cyan: noop,
-  green: noop,
-  yellow: noop,
-  underline: noop,
-};
-
-export function addErrorTips(errors: string[], color = defaultColor) {
-  const errorHelpers: ErrorHelper[] = [
-    {
-      validator(message) {
-        return (
-          (message.includes('You may need an appropriate loader') ||
-            message.includes('You may need an additional loader')) &&
-          message.includes('.ts')
-        );
-      },
-      formatter(message) {
-        return `${message}\n\n${color.yellow(
-          `If it is a TypeScript file, you can use "source.include" config to compile it. see ${color.underline(
-            'https://rsbuild.dev/api/config-source.html#sourceinclude',
-          )}`,
-        )}
-
-${color.green(`${color.gray('// config file')}
-export default {
-  source: {
-    include: [
-      ${color.gray('// add some include rules')}
-    ]
-  }
-}`)}
-        `;
-      },
-    },
-  ];
-
-  return errors.map((error) => {
-    const helper = errorHelpers.find((item) => item.validator(error));
-    return helper ? helper.formatter(error) : error;
-  });
-}
-
 function formatStatsMessages(
   json?: Pick<StatsCompilation, 'errors' | 'warnings'>,
-  color = defaultColor,
 ): {
   errors: string[];
   warnings: string[];
@@ -160,8 +109,6 @@ function formatStatsMessages(
   if (result.errors.length > 1) {
     result.errors.length = 1;
   }
-
-  result.errors = addErrorTips(result.errors, color);
 
   return result;
 }

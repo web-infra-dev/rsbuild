@@ -1,7 +1,7 @@
 import { expect, describe, it } from 'vitest';
 import { pluginStyledComponents } from '../src';
 import { createStubRsbuild } from '@rsbuild/test-helper';
-import { mergeRegex, JS_REGEX, TS_REGEX } from '@rsbuild/shared';
+import { SCRIPT_REGEX } from '@rsbuild/shared';
 import { webpackProvider } from '@rsbuild/webpack';
 import { pluginSwc } from '@rsbuild/plugin-swc';
 
@@ -18,8 +18,7 @@ describe('plugins/styled-components', () => {
     for (const config of configs) {
       expect(
         config.module.rules.find(
-          (r) =>
-            r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
+          (r) => r.test.toString() === SCRIPT_REGEX.toString(),
         ),
       ).toMatchSnapshot();
     }
@@ -35,7 +34,7 @@ describe('plugins/styled-components', () => {
 
     expect(
       config.module.rules.find(
-        (r) => r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
+        (r) => r.test.toString() === SCRIPT_REGEX.toString(),
       ),
     ).toMatchSnapshot();
   });
@@ -51,9 +50,7 @@ describe('plugins/styled-components', () => {
 
     expect(
       config.module.rules.find(
-        (r) =>
-          r.test &&
-          r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
+        (r) => r.test && r.test.toString() === SCRIPT_REGEX.toString(),
       ),
     ).toMatchSnapshot();
   });
@@ -70,9 +67,7 @@ describe('plugins/styled-components', () => {
 
     expect(
       config.module.rules.find(
-        (r) =>
-          r.test &&
-          r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
+        (r) => r.test && r.test.toString() === SCRIPT_REGEX.toString(),
       ),
     ).toMatchSnapshot();
   });
