@@ -21,9 +21,9 @@
       "types": "./dist/server/index.d.ts",
       "default": "./dist/server/index.js"
     },
-    "./hmr-client": {
-      "types": "./dist/server/dev-middleware/hmr-client/index.d.ts",
-      "default": "./dist/server/dev-middleware/hmr-client/index.js"
+    "./client/*": {
+      "types": "./dist/client/*.d.ts",
+      "default": "./dist/client/*.js"
     },
     "./cli": {
       "types": "./dist/cli/index.d.ts",
