@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/core": "0.3.11",
+    "@rspack/core": "0.3.12",
     "commander": "^10.0.1",
     "core-js": "~3.32.2",
     "gzip-size": "^6.0.0",
