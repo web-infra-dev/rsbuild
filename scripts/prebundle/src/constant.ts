@@ -33,6 +33,10 @@ export const TASKS: TaskConfig[] = [
       'open',
       'commander',
       {
+        name: 'http-compression',
+        ignoreDts: true,
+      },
+      {
         name: 'connect-history-api-fallback',
         ignoreDts: true,
       },

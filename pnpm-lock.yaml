@@ -658,9 +658,6 @@ importers:
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.5.5
         version: /html-rspack-plugin@5.5.5
-      http-compression:
-        specifier: 1.0.6
-        version: 1.0.6
       http-proxy-middleware:
         specifier: ^2.0.1
         version: 2.0.6
@@ -1862,6 +1859,9 @@ importers:
       gzip-size:
         specifier: ^6.0.0
         version: 6.0.0
+      http-compression:
+        specifier: 1.0.6
+        version: 1.0.6
       mime-types:
         specifier: ^2.1.35
         version: 2.1.35
@@ -9891,7 +9891,7 @@ packages:
   /http-compression@1.0.6:
     resolution: {integrity: sha512-Yy9VFT/0fJhbpSHmqA34CJKZDXLnHoQUP2wbFXY7duOx3nc9Qf8MVJezaXTP7IirvJ9DmUv/vm7qFNu/RntdWw==}
     engines: {node: '>= 4'}
-    dev: false
+    dev: true
 
   /http-errors@2.0.0:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
