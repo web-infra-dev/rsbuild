@@ -41,8 +41,8 @@ exports[`plugin-fallback > should convert fallback rule correctly 1`] = `
           },
           {
             "exclude": [
-              /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\)\\$/,
-              /\\\\\\.\\(ts\\|tsx\\|mts\\|cts\\)\\$/,
+              /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
+              /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
               /\\\\\\.html\\$/,
               /\\\\\\.json\\$/,
             ],
@@ -99,8 +99,8 @@ exports[`plugin-fallback > should not convert fallback rule when output.enableAs
           },
           {
             "exclude": [
-              /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\)\\$/,
-              /\\\\\\.\\(ts\\|tsx\\|mts\\|cts\\)\\$/,
+              /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
+              /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
               /\\\\\\.html\\$/,
               /\\\\\\.json\\$/,
             ],

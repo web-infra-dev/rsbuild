@@ -203,7 +203,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
       "inlinedAssets": Set {},
       "name": "InlineChunkHtmlPlugin",
       "scriptTests": [
-        /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\)\\$/,
+        /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
       ],
       "styleTests": [],
     },
