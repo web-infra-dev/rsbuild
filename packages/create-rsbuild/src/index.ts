@@ -48,6 +48,7 @@ async function main() {
       { value: 'react', label: 'React' },
       { value: 'vue3', label: 'Vue 3' },
       { value: 'vue2', label: 'Vue 2' },
+      { value: 'lit', label: 'Lit' },
       { value: 'svelte', label: 'Svelte' },
       { value: 'vanilla', label: 'Vanilla' },
     ],
