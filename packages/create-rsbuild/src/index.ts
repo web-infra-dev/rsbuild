@@ -31,7 +31,7 @@ async function main() {
   logger.greet('◆  Create Rsbuild Project');
 
   const cwd = process.cwd();
-  const pkgInfo = pkgFromUserAgent(process.env._config_user_agent);
+  const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
   const pkgManager = pkgInfo ? pkgInfo.name : 'npm'
   const packageRoot = path.resolve(__dirname, '..');
   const packageJsonPath = path.join(packageRoot, 'package.json');
