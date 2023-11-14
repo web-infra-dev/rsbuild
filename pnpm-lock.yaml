@@ -75,6 +75,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@rsbuild/plugin-assets-retry':
+        specifier: workspace:*
+        version: link:../packages/plugin-assets-retry
       '@rsbuild/plugin-babel':
         specifier: workspace:*
         version: link:../packages/plugin-babel

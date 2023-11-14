@@ -1,16 +1,14 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
+import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 
-// TODO uni-builder
-test.skip('should inline assets retry runtime code to html by default', async () => {
+test('should inline assets retry runtime code to html by default', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
+    plugins: [pluginAssetsRetry()],
     rsbuildConfig: {
-      output: {
-        // assetsRetry: {},
-      },
       tools: {
         htmlPlugin: (config: any) => {
           // minifyJS will minify function name
@@ -29,18 +27,15 @@ test.skip('should inline assets retry runtime code to html by default', async ()
   expect(files[htmlFile!].includes('function retry')).toBeTruthy();
 });
 
-// TODO uni-builder
-test.skip('should extract assets retry runtime code when inlineScript is false', async () => {
+test('should extract assets retry runtime code when inlineScript is false', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
-    rsbuildConfig: {
-      output: {
-        // assetsRetry: {
-        //   inlineScript: false,
-        // },
-      },
-    },
+    plugins: [
+      pluginAssetsRetry({
+        inlineScript: false,
+      }),
+    ],
   });
   const files = await rsbuild.unwrapOutputJSON();
 

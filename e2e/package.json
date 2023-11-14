@@ -19,6 +19,7 @@
   "devDependencies": {
     "@playwright/test": "1.33.0",
     "@rsbuild/core": "workspace:*",
+    "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/plugin-css-minimizer": "workspace:*",
     "@rsbuild/plugin-check-syntax": "workspace:*",
