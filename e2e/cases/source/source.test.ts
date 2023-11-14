@@ -25,7 +25,7 @@ test.describe('source configure multi', () => {
     });
   });
 
-  test.afterAll(() => {
+  test.afterAll(async () => {
     await rsbuild.close();
   });
 

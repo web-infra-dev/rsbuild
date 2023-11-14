@@ -25,7 +25,7 @@ test.describe('html configure multi', () => {
     });
   });
 
-  test.afterAll(() => {
+  test.afterAll(async () => {
     await rsbuild.close();
   });
 
@@ -90,7 +90,7 @@ test.describe('html element set', () => {
     );
   });
 
-  test.afterAll(() => {
+  test.afterAll(async () => {
     await rsbuild.close();
   });
 
