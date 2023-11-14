@@ -1,0 +1,15 @@
+{
+  "name": "rsbuild-lit-js",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "rsbuild dev --open",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "lit": "^3.0.2",
+    "typescript": "^5.2.2"
+  }
+}
