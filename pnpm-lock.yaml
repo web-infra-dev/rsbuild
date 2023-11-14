@@ -726,9 +726,6 @@ importers:
       lit:
         specifier: ^3.0.2
         version: 3.0.2
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
 
   packages/create-rsbuild/template-lit-ts:
     devDependencies:
