@@ -26,6 +26,7 @@
     "autoprefixer": "10.4.16",
     "browserslist": "4.22.1",
     "chokidar": "3.5.3",
+    "commander": "^10.0.1",
     "connect": "3.7.0",
     "connect-history-api-fallback": "^2.0.0",
     "deepmerge": "^4.3.1",

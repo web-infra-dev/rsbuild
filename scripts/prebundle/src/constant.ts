@@ -31,6 +31,7 @@ export const TASKS: TaskConfig[] = [
     packageName: '@rsbuild/core',
     dependencies: [
       'open',
+      'commander',
       {
         name: 'connect-history-api-fallback',
         ignoreDts: true,

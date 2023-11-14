@@ -652,9 +652,6 @@ importers:
       '@rspack/core':
         specifier: 0.3.12
         version: 0.3.12
-      commander:
-        specifier: ^10.0.1
-        version: 10.0.1
       core-js:
         specifier: ~3.32.2
         version: 3.32.2
@@ -1850,6 +1847,9 @@ importers:
       chokidar:
         specifier: 3.5.3
         version: 3.5.3
+      commander:
+        specifier: ^10.0.1
+        version: 10.0.1
       connect:
         specifier: 3.7.0
         version: 3.7.0

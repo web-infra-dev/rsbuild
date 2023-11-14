@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { fse } from '@rsbuild/shared';
-import { program } from 'commander';
+import { program } from '../../compiled/commander';
 import type { RsbuildInstance, RsbuildMode } from '..';
 
 export type InspectOptions = {
