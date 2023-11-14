@@ -1305,9 +1305,6 @@ importers:
       acorn:
         specifier: ^8.10.0
         version: 8.10.0
-      browserslist:
-        specifier: ^4.22.1
-        version: 4.22.1
       caniuse-lite:
         specifier: ^1.0.30001559
         version: 1.0.30001559
@@ -1727,9 +1724,6 @@ importers:
       '@rspack/core':
         specifier: 0.3.11
         version: 0.3.11
-      browserslist:
-        specifier: ^4.22.1
-        version: 4.22.1
       caniuse-lite:
         specifier: ^1.0.30001559
         version: 1.0.30001559
@@ -1859,6 +1853,12 @@ importers:
       '@types/url-join':
         specifier: ^4.0.2
         version: 4.0.2
+      autoprefixer:
+        specifier: 10.4.16
+        version: 10.4.16(postcss@8.4.31)
+      browserslist:
+        specifier: 4.22.1
+        version: 4.22.1
       chokidar:
         specifier: 3.5.3
         version: 3.5.3
@@ -1880,6 +1880,9 @@ importers:
       picocolors:
         specifier: 1.0.0
         version: 1.0.0
+      postcss-value-parser:
+        specifier: 4.2.0
+        version: 4.2.0
       url-join:
         specifier: ^4.0.1
         version: 4.0.1
@@ -6938,6 +6941,22 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
+  /autoprefixer@10.4.16(postcss@8.4.31):
+    resolution: {integrity: sha512-7vd3UC6xKp0HLfua5IjZlcXvGAGy7cBAXTg2lyQ/8WpNhd6SiZ8Be+xm3FyBSYJx5GKcpRCzBh7RH4/0dnY+uQ==}
+    engines: {node: ^10 || ^12 || >=14}
+    hasBin: true
+    peerDependencies:
+      postcss: ^8.1.0
+    dependencies:
+      browserslist: 4.22.1
+      caniuse-lite: 1.0.30001559
+      fraction.js: 4.3.7
+      normalize-range: 0.1.2
+      picocolors: 1.0.0
+      postcss: 8.4.31
+      postcss-value-parser: 4.2.0
+    dev: true
+
   /available-typed-arrays@1.0.5:
     resolution: {integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==}
     engines: {node: '>= 0.4'}
@@ -7220,6 +7239,7 @@ packages:
   /browserslist@4.22.1:
     resolution: {integrity: sha512-FEVc202+2iuClEhZhrWy6ZiAcRLvNMyYcxZ8raemul1DYVOVdFsbqckWLdsixQZCpJlwe77Z3UTalE7jsjnKfQ==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
+    hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001559
       electron-to-chromium: 1.4.559

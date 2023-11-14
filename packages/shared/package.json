@@ -18,6 +18,10 @@
       "types": "./dist/formatStats.d.ts",
       "default": "./dist/formatStats.js"
     },
+    "./browserslist": {
+      "types": "./compiled/browserslist/index.d.ts",
+      "default": "./compiled/browserslist/index.js"
+    },
     "./chokidar": {
       "types": "./compiled/chokidar/types/index.d.ts",
       "default": "./compiled/chokidar/index.js"
@@ -86,7 +90,6 @@
   },
   "dependencies": {
     "@rspack/core": "0.3.11",
-    "browserslist": "^4.22.1",
     "caniuse-lite": "^1.0.30001559",
     "gzip-size": "^6.0.0",
     "json5": "^2.2.3",
