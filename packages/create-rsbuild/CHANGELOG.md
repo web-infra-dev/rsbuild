@@ -1,5 +1,14 @@
 # create-rsbuild
 
+## 0.0.22
+
+### Patch Changes
+
+- 73cac183: feat(create-rsbuild): add new lit template
+- 6c00e30: fix(create-rsbuild): missing tsconfig.json in vanilla template
+- 6c00e30: feat(create-rsbuild): improve next steps message
+- 82e7c249: fix(create-rsbuild): incorrect title in sample code
+
 ## 0.0.21
 
 ### Patch Changes

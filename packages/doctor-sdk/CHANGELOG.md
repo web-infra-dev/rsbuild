@@ -1,5 +1,11 @@
 # @rsbuild/doctor-sdk
 
+## 0.0.10
+
+### Patch Changes
+
+- @rsbuild/doctor-utils@0.0.10
+
 ## 0.0.9
 
 ### Patch Changes

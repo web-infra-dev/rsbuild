@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/shared",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "The shared modules and dependencies of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
