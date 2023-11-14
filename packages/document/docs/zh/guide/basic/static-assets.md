@@ -155,7 +155,7 @@ console.log(myFile); // "/static/myFile.6c12aba3.pdf"
 
 关于以上配置的更多介绍，请参考：
 
-- [Rspack 文档 - Asset modules](https://www.rspack.dev/guide/asset-module.html#asset-modules)
+- [Rspack 文档 - Asset modules](https://rspack.dev/guide/asset-module.html#asset-modules)
 - [webpack 文档 - Asset modules](https://webpack.js.org/guides/asset-modules/)
 
 ## 图片格式

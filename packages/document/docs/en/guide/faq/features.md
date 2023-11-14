@@ -2,7 +2,7 @@
 
 ### How to import UI Component library on demand?
 
-If you need to configure the on-demand import of the component library, you can configure it through [source.transformImport](/config/options/source.html#sourcetransformimport), which is equivalent to [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import).
+If you need to configure the on-demand import of the component library, you can configure it through [source.transformImport](/config/options/source.html#sourcetransformimport), which is equivalent to [babel-plugin-import](https://npmjs.com/package/babel-plugin-import).
 
 ```ts
 export default {

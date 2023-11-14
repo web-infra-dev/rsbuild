@@ -26,25 +26,11 @@ webpack 版本问题有以下几种情况：
 
 ---
 
-### 编译产物中存在未编译的 ES6+ 代码？
+### 编译产物中存在未编译的 ESNext 代码？
 
-默认情况下，Rsbuild 不会通过 `babel-loader` 或 `ts-loader` 来编译 `node_modules` 下的文件。如果项目引入的 npm 包中含有 ES6+ 语法，会被打包进产物中。
+默认情况下，Rsbuild 不会编译 `node_modules` 下的 JavaScript 文件。如果项目引入的 npm 包中含有 ESNext 语法，会被打包进产物中。
 
 遇到这种情况时，可以通过 [source.include](/config/options/source.html#sourceinclude) 配置项来指定需要额外进行编译的目录或模块。
-
----
-
-### 在 Monorepo 中引用其他模块，代码没有被正确编译？
-
-出于编译性能的考虑，默认情况下，Rsbuild 不会编译 `node_modules` 下的文件，也不会编译当前工程目录外部的文件。
-
-因此，当你引用其他子项目的源代码时，可能会遇到类似 `You may need an additional loader to handle the result of these loaders.` 的报错。
-
-这个问题有以下解决方法：
-
-1. 你可以使用 Rsbuild 的 Source Build 插件来编译 monorepo 中的其他子项目，参考[「Source Build 插件」](/plugins/list/plugin-source-build)。
-2. 你可以添加 `source.include` 配置项，指定需要额外进行编译的目录或模块，参考 [source.include 用法介绍](/config/options/source.html#sourceinclude)。
-3. 你可以预先构建需要引用的子项目，生成对应的构建产物，并在当前项目引用构建产物，而不是引用源代码。
 
 ---
 
@@ -60,10 +46,7 @@ File was processed with these loaders:
 You may need an additional loader to handle the result of these loaders.
 ```
 
-解决方法：
-
-- 如果是引用了当前工程外部的 `.ts` 文件，或者是 node_modules 下的 `.ts` 文件，请添加 [source.include](/config/options/source.html#sourceinclude) 配置项，指定需要额外进行编译的文件。
-- 如果是引用了 Rsbuild 不支持的文件格式，请自行配置对应的 webpack loader 进行编译。
+请检查是否引用了 Rsbuild 不支持的文件格式，并自行配置相应的 Rspack loader 对其进行编译。
 
 ---
 

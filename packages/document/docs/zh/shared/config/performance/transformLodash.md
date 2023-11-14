@@ -2,9 +2,9 @@
 - **默认值：** `true`
 - **打包工具：** `仅支持 webpack`
 
-是否模块化 [lodash](https://www.npmjs.com/package/lodash) 的导入，删除未使用的 lodash 模块，从而减少 lodash 代码体积。
+是否模块化 [lodash](https://npmjs.com/package/lodash) 的导入，删除未使用的 lodash 模块，从而减少 lodash 代码体积。
 
-这项优化基于 [babel-plugin-lodash](https://www.npmjs.com/package/babel-plugin-lodash) 和 [swc-plugin-lodash](https://github.com/web-infra-dev/swc-plugins/tree/main/crates/plugin_lodash) 实现。
+这项优化基于 [babel-plugin-lodash](https://npmjs.com/package/babel-plugin-lodash) 和 [swc-plugin-lodash](https://github.com/web-infra-dev/swc-plugins/tree/main/crates/plugin_lodash) 实现。
 
 ### 示例
 

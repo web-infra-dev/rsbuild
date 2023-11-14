@@ -33,7 +33,7 @@ After building, you can see that the JS files are loaded from:
 `output.assetPrefix` corresponds to the following native configurations:
 
 - [output.publicPath](https://webpack.js.org/guides/public-path/) configuration in webpack.
-- [output.publicPath](https://www.rspack.dev/config/output.html#outputpublicpath) configuration in Rspack.
+- [output.publicPath](https://rspack.dev/config/output.html#outputpublicpath) configuration in Rspack.
 
 The differences from the native configuration are as follows:
 

@@ -66,7 +66,7 @@ If you are unsure about the type of React build you are using, you can refer to 
 
 Usually, we only set the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
 
-If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing tools like [mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin) from reading the latest file content.
+If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing tools like [mini-css-extract-plugin](https://npmjs.com/package/mini-css-extract-plugin) from reading the latest file content.
 
 - Correct usage:
 

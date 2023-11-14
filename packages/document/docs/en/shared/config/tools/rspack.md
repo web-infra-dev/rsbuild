@@ -2,7 +2,7 @@
 - **Default:** `undefined`
 - **Bundler:** `only support Rspack`
 
-`tools.rspack` is used to configure [Rspack](https://www.rspack.dev/).
+`tools.rspack` is used to configure [Rspack](https://rspack.dev/).
 
 ### Object Type
 
@@ -146,7 +146,7 @@ export default {
 
 - **Type:** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
-Add additional [Rspack rules](https://www.rspack.dev/config/module.html#modulerules).
+Add additional [Rspack rules](https://rspack.dev/config/module.html#modulerules).
 
 For example:
 
