@@ -194,6 +194,7 @@ export class RsbuildDevServer {
   }
 
   public close() {
+    this.devMiddleware.close();
     this.app.close();
   }
 }
