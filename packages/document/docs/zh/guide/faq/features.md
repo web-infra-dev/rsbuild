@@ -2,7 +2,7 @@
 
 ### 如何配置组件库按需引入？
 
-如果需要配置组件库的按需引入，你可以通过 [source.transformImport](/config/options/source.html#sourcetransformimport) 配置，这个配置的能力等价于 [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import)。
+如果需要配置组件库的按需引入，你可以通过 [source.transformImport](/config/options/source.html#sourcetransformimport) 配置，这个配置的能力等价于 [babel-plugin-import](https://npmjs.com/package/babel-plugin-import)。
 
 ```ts
 export default {

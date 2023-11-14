@@ -48,8 +48,13 @@ export const TASKS: TaskConfig[] = [
       'webpack-chain',
       'mime-types',
       'connect',
+      'browserslist',
       {
         name: 'webpack-sources',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-value-parser',
         ignoreDts: true,
       },
       {
@@ -68,6 +73,15 @@ export const TASKS: TaskConfig[] = [
           'schema-utils/declarations/validate':
             'schema-utils/declarations/validate',
           'mime-types': '../mime-types',
+        },
+      },
+      {
+        name: 'autoprefixer',
+        ignoreDts: true,
+        externals: {
+          picocolors: '../picocolors',
+          browserslist: '../browserslist',
+          'postcss-value-parser': '../postcss-value-parser',
         },
       },
     ],

@@ -1,6 +1,6 @@
-用于按需引入组件库的代码和样式，能力等价于 [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import)。
+用于按需引入组件库的代码和样式，能力等价于 [babel-plugin-import](https://npmjs.com/package/babel-plugin-import)。
 
-它与 [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import) 的区别在于，`source.transformImport` 不与 Babel 耦合。Rsbuild 会自动识别当前使用的编译工具是 Babel、SWC 还是 Rspack，并添加相应的按需引入配置。
+它与 [babel-plugin-import](https://npmjs.com/package/babel-plugin-import) 的区别在于，`source.transformImport` 不与 Babel 耦合。Rsbuild 会自动识别当前使用的编译工具是 Babel、SWC 还是 Rspack，并添加相应的按需引入配置。
 
 - **类型：**
 

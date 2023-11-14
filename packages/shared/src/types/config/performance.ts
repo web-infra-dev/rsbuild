@@ -47,7 +47,7 @@ export interface PerformanceConfig {
    */
   removeMomentLocale?: boolean;
   /**
-   * Specifies whether to modularize the import of [lodash](https://www.npmjs.com/package/lodash)
+   * Specifies whether to modularize the import of [lodash](https://npmjs.com/package/lodash)
    * and remove unused lodash modules to reduce the code size of lodash.
    */
   transformLodash?: boolean;

@@ -4,8 +4,7 @@ import { getBabelConfigForNode } from '@rsbuild/babel-preset/node';
 import type { BabelConfig } from '@rsbuild/babel-preset';
 import {
   JS_REGEX,
-  TS_REGEX,
-  mergeRegex,
+  SCRIPT_REGEX,
   addCoreJsEntry,
   mergeChainedOptions,
   applyScriptCondition,
@@ -132,7 +131,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
         });
 
         rule
-          .test(useTsLoader ? JS_REGEX : mergeRegex(JS_REGEX, TS_REGEX))
+          .test(useTsLoader ? JS_REGEX : SCRIPT_REGEX)
           .use(CHAIN_ID.USE.BABEL)
           .loader(require.resolve('babel-loader'))
           .options(babelOptions);

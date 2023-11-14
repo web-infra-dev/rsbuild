@@ -1,9 +1,20 @@
 - **类型：** `Array<string | RegExp>`
-- **默认值：** `[]`
+- **默认值：**
 
-出于编译性能的考虑，默认情况下，Rsbuild 不会编译 node_modules 下的 JavaScript/TypeScript 文件，也不会编译当前工程目录外部的 JavaScript/TypeScript 文件。
+```ts
+const defaultInclude = [
+  {
+    and: [rootPath, { not: /[\\/]node_modules[\\/]/ }],
+  },
+  /\.(ts|tsx|jsx|mts|cts)$/,
+];
+```
 
-通过 `source.include` 配置项，可以指定需要 Rsbuild 额外进行编译的目录或模块。`source.include` 的用法与 Rspack 中的 [Rule.include](https://www.rspack.dev/zh/config/module.html#ruleinclude) 一致，支持传入字符串或正则表达式来匹配模块的路径。
+`source.include` 用于指定额外需要编译的 JavaScript 文件。
+
+为了避免二次编译，默认情况下，Rsbuild 只会编译当前目录下的 JavaScript 文件，以及所有目录下的 TypeScript 和 JSX 文件，不会编译 node_modules 下的 JavaScript 文件。
+
+通过 `source.include` 配置项，可以指定需要 Rsbuild 额外进行编译的目录或模块。`source.include` 的用法与 Rspack 中的 [Rule.include](https://rspack.dev/zh/config/module.html#ruleinclude) 一致，支持传入字符串或正则表达式来匹配模块的路径。
 
 比如:
 
@@ -19,7 +30,7 @@ export default {
 
 ### 编译 npm 包
 
-比较典型的使用场景是编译 node_modules 下的 npm 包，因为某些第三方依赖存在 ES6+ 的语法，这可能导致在低版本浏览器上无法运行，你可以通过该选项指定需要编译的依赖，从而解决此类问题。
+比较典型的使用场景是编译 node_modules 下的 npm 包，因为某些第三方依赖存在 ESNext 的语法，这可能导致在低版本浏览器上无法运行，你可以通过该选项指定需要编译的依赖，从而解决此类问题。
 
 以 `query-string` 为例，你可以做如下的配置：
 
@@ -48,7 +59,7 @@ export default {
 
 当你通过 `source.include` 编译一个 npm 包时，Rsbuild 默认只会编译匹配到的模块，不会编译对应模块的**子依赖**。
 
-以 `query-string` 为例，它依赖的 `decode-uri-component` 包中同样存在 ES6+ 代码，因此你需要将 `decode-uri-component` 也加入到 `source.include` 中：
+以 `query-string` 为例，它依赖的 `decode-uri-component` 包中同样存在 ESNext 代码，因此你需要将 `decode-uri-component` 也加入到 `source.include` 中：
 
 ```ts
 export default {
@@ -63,7 +74,7 @@ export default {
 
 ### 编译 Monorepo 中的其他库
 
-在 Monorepo 中进行开发时，如果需要引用 Monorepo 中其他库的源代码，也可以直接在 `source.include` 进行配置:
+在 Monorepo 中进行开发时，如果需要引用 Monorepo 中其他库的 JavaScript 代码，也可以直接在 `source.include` 进行配置:
 
 ```ts
 import path from 'path';

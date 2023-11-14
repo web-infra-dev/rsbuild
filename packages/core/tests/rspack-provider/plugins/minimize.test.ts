@@ -31,23 +31,19 @@ describe('plugin-minimize', () => {
     expect(bundlerConfigs[0].optimization?.minimizer).toMatchInlineSnapshot(
       `
       [
-        Plugin {
+        SwcJsMinimizerRspackPlugin {
           "_options": {
-            "asciiOnly": true,
-            "comments": "false",
-            "dropConsole": false,
+            "compress": "{"passes":1,"pure_funcs":[],"drop_console":false}",
             "exclude": undefined,
             "extractComments": "true",
+            "format": "{"comments":false,"asciiOnly":true}",
             "include": undefined,
-            "keepClassNames": false,
-            "keepFnNames": false,
-            "passes": 1,
-            "pureFuncs": [],
+            "mangle": "{"keep_classnames":false,"keep_fnames":false}",
             "test": undefined,
           },
           "name": "SwcJsMinimizerRspackPlugin",
         },
-        Plugin {
+        SwcCssMinimizerRspackPlugin {
           "_options": false,
           "name": "SwcCssMinimizerRspackPlugin",
         },
@@ -94,23 +90,19 @@ describe('plugin-minimize', () => {
     expect(bundlerConfigs[0].optimization?.minimizer).toMatchInlineSnapshot(
       `
       [
-        Plugin {
+        SwcJsMinimizerRspackPlugin {
           "_options": {
-            "asciiOnly": true,
-            "comments": "false",
-            "dropConsole": true,
+            "compress": "{"passes":1,"pure_funcs":[],"drop_console":true}",
             "exclude": undefined,
             "extractComments": "true",
+            "format": "{"comments":false,"asciiOnly":true}",
             "include": undefined,
-            "keepClassNames": false,
-            "keepFnNames": false,
-            "passes": 1,
-            "pureFuncs": [],
+            "mangle": "{"keep_classnames":false,"keep_fnames":false}",
             "test": undefined,
           },
           "name": "SwcJsMinimizerRspackPlugin",
         },
-        Plugin {
+        SwcCssMinimizerRspackPlugin {
           "_options": false,
           "name": "SwcCssMinimizerRspackPlugin",
         },
@@ -138,26 +130,19 @@ describe('plugin-minimize', () => {
     expect(bundlerConfigs[0].optimization?.minimizer).toMatchInlineSnapshot(
       `
       [
-        Plugin {
+        SwcJsMinimizerRspackPlugin {
           "_options": {
-            "asciiOnly": true,
-            "comments": "false",
-            "dropConsole": false,
+            "compress": "{"passes":1,"pure_funcs":["console.log","console.warn"],"drop_console":false}",
             "exclude": undefined,
             "extractComments": "true",
+            "format": "{"comments":false,"asciiOnly":true}",
             "include": undefined,
-            "keepClassNames": false,
-            "keepFnNames": false,
-            "passes": 1,
-            "pureFuncs": [
-              "console.log",
-              "console.warn",
-            ],
+            "mangle": "{"keep_classnames":false,"keep_fnames":false}",
             "test": undefined,
           },
           "name": "SwcJsMinimizerRspackPlugin",
         },
-        Plugin {
+        SwcCssMinimizerRspackPlugin {
           "_options": false,
           "name": "SwcCssMinimizerRspackPlugin",
         },
@@ -185,23 +170,19 @@ describe('plugin-minimize', () => {
     expect(bundlerConfigs[0].optimization?.minimizer).toMatchInlineSnapshot(
       `
       [
-        Plugin {
+        SwcJsMinimizerRspackPlugin {
           "_options": {
-            "asciiOnly": false,
-            "comments": "false",
-            "dropConsole": false,
+            "compress": "{"passes":1,"pure_funcs":[],"drop_console":false}",
             "exclude": undefined,
             "extractComments": "true",
+            "format": "{"comments":false,"asciiOnly":false}",
             "include": undefined,
-            "keepClassNames": false,
-            "keepFnNames": false,
-            "passes": 1,
-            "pureFuncs": [],
+            "mangle": "{"keep_classnames":false,"keep_fnames":false}",
             "test": undefined,
           },
           "name": "SwcJsMinimizerRspackPlugin",
         },
-        Plugin {
+        SwcCssMinimizerRspackPlugin {
           "_options": false,
           "name": "SwcCssMinimizerRspackPlugin",
         },

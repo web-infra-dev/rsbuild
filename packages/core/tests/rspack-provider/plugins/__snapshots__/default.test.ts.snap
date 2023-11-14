@@ -470,8 +470,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -622,7 +623,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "info": {},
       },
     },
-    Plugin {
+    DefinePlugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""development"",
@@ -1118,8 +1119,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -1227,23 +1229,19 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "chunkIds": "deterministic",
     "minimize": true,
     "minimizer": [
-      Plugin {
+      SwcJsMinimizerRspackPlugin {
         "_options": {
-          "asciiOnly": true,
-          "comments": "false",
-          "dropConsole": false,
+          "compress": "{"passes":1,"pure_funcs":[],"drop_console":false}",
           "exclude": undefined,
           "extractComments": "true",
+          "format": "{"comments":false,"asciiOnly":true}",
           "include": undefined,
-          "keepClassNames": false,
-          "keepFnNames": false,
-          "passes": 1,
-          "pureFuncs": [],
+          "mangle": "{"keep_classnames":false,"keep_fnames":false}",
           "test": undefined,
         },
         "name": "SwcJsMinimizerRspackPlugin",
       },
-      Plugin {
+      SwcCssMinimizerRspackPlugin {
         "_options": false,
         "name": "SwcCssMinimizerRspackPlugin",
       },
@@ -1293,7 +1291,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "info": {},
       },
     },
-    Plugin {
+    DefinePlugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""production"",
@@ -1304,7 +1302,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "htmlPlugin": [Function],
       "name": "RemoveCssSourcemapPlugin",
     },
-    Plugin {
+    ProgressPlugin {
       "_options": {
         "prefix": "Client",
         "profile": false,
@@ -1618,8 +1616,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -1728,7 +1727,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "plugins": [
-    Plugin {
+    DefinePlugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""test"",
@@ -2230,8 +2229,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -2385,7 +2385,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "info": {},
       },
     },
-    Plugin {
+    DefinePlugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""development"",

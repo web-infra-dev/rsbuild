@@ -143,9 +143,9 @@ export default {
 
 ## 模板引擎
 
-Rsbuild 支持 [Lodash Template](https://www.lodashjs.com/docs/lodash.template)、[EJS](https://ejs.co/)、[Pug](https://pugjs.org/) 等多个模板引擎，默认使用最基础的 Lodash Template 作为模板引擎。
+Rsbuild 支持 [Lodash Template](https://lodashjs.com/docs/lodash.template)、[EJS](https://ejs.co/)、[Pug](https://pugjs.org/) 等多个模板引擎，默认使用最基础的 Lodash Template 作为模板引擎。
 
-### [Lodash Template](https://www.lodashjs.com/docs/lodash.template)
+### [Lodash Template](https://lodashjs.com/docs/lodash.template)
 
 当模板文件的后缀为 `.html` 时，Rsbuild 会使用 Lodash Template 对模板进行编译。
 
@@ -159,7 +159,7 @@ Rsbuild 支持 [Lodash Template](https://www.lodashjs.com/docs/lodash.template)�
 <div>hello world!</div>
 ```
 
-请阅读 [Lodash Template](https://www.lodashjs.com/docs/lodash.template) 文档来了解完整用法。
+请阅读 [Lodash Template](https://lodashjs.com/docs/lodash.template) 文档来了解完整用法。
 
 ### [EJS](https://ejs.co/)
 

@@ -1,4 +1,4 @@
-import browserslist from 'browserslist';
+import browserslist from '@rsbuild/shared/browserslist';
 import { features, feature as featureUnpack } from 'caniuse-lite';
 
 /**

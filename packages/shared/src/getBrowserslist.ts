@@ -1,4 +1,4 @@
-import browserslist from 'browserslist';
+import browserslist from '../compiled/browserslist';
 import { DEFAULT_BROWSERSLIST } from './constants';
 import type { RsbuildTarget, OverrideBrowserslist } from './types';
 

@@ -11,7 +11,7 @@ exports[`plugins/babel > babel-loader addIncludes & addExcludes should works 1`]
         "include": [
           /\\\\/node_modules\\\\/query-string\\\\//,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
@@ -56,9 +56,10 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
         },
       ],
     },
+    /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     /\\\\/node_modules\\\\/query-string\\\\//,
   ],
-  "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+  "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
     {
@@ -125,7 +126,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
@@ -160,7 +161,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",

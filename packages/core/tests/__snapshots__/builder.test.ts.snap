@@ -470,8 +470,9 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -622,7 +623,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "info": {},
       },
     },
-    Plugin {
+    DefinePlugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""development"",

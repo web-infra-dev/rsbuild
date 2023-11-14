@@ -1,5 +1,5 @@
 import { DefaultRsbuildPlugin } from '@rsbuild/shared';
-import { JS_REGEX, TS_REGEX, mergeRegex } from '@rsbuild/shared';
+import { SCRIPT_REGEX } from '@rsbuild/shared';
 import { cloneDeep } from 'lodash';
 import { applyUserBabelConfig, type BabelConfig } from './helper';
 import type { PluginBabelOptions } from './types';
@@ -95,7 +95,7 @@ export const pluginBabel = (
       });
 
       rule
-        .test(mergeRegex(JS_REGEX, TS_REGEX))
+        .test(SCRIPT_REGEX)
         .use(CHAIN_ID.USE.BABEL)
         .after(CHAIN_ID.USE.SWC)
         .loader(require.resolve('babel-loader'))

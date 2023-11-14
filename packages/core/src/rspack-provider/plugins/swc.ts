@@ -1,11 +1,9 @@
 import {
   logger,
-  JS_REGEX,
-  TS_REGEX,
-  mergeRegex,
   setConfig,
   cloneDeep,
   isWebTarget,
+  SCRIPT_REGEX,
   addCoreJsEntry,
   isUseJsSourceMap,
   getCoreJsVersion,
@@ -74,7 +72,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
 
         const rule = chain.module
           .rule(CHAIN_ID.RULE.JS)
-          .test(mergeRegex(JS_REGEX, TS_REGEX))
+          .test(SCRIPT_REGEX)
           .type('javascript/auto');
 
         applyScriptCondition({

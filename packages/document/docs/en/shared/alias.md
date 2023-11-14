@@ -26,12 +26,12 @@ For example:
 After configuring, if you reference `@common/Foo.tsx` in your code, it will be mapped to the `<project>/src/common/Foo.tsx` path.
 
 :::tip
-You can refer to the [TypeScript - paths](https://www.typescriptlang.org/tsconfig#paths) documentation for more details.
+You can refer to the [TypeScript - paths](https://typescriptlang.org/tsconfig#paths) documentation for more details.
 :::
 
 ## Use `source.alias` Configuration
 
-Rsbuild provides the [source.alias](https://rsbuild.dev/config/options/source.html#sourcealias) configuration option, which corresponds to the webpack/Rspack native [resolve.alias](https://www.rspack.dev/config/resolve.html#resolvealias) configuration. You can configure this option using an object or a function.
+Rsbuild provides the [source.alias](https://rsbuild.dev/config/options/source.html#sourcealias) configuration option, which corresponds to the webpack/Rspack native [resolve.alias](https://rspack.dev/config/resolve.html#resolvealias) configuration. You can configure this option using an object or a function.
 
 ### Use Cases
 

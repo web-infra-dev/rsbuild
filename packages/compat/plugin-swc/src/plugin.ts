@@ -1,11 +1,6 @@
 import * as path from 'path';
 import type { RsbuildPluginAPI, RsbuildPlugin } from '@rsbuild/webpack';
-import {
-  JS_REGEX,
-  TS_REGEX,
-  mergeRegex,
-  DEFAULT_BROWSERSLIST,
-} from '@rsbuild/shared';
+import { SCRIPT_REGEX, DEFAULT_BROWSERSLIST } from '@rsbuild/shared';
 import type { PluginSwcOptions, TransformConfig } from './types';
 import {
   applyPluginConfig,
@@ -46,7 +41,6 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
       chain.module.rule(CHAIN_ID.RULE.JS).uses.delete(CHAIN_ID.USE.BABEL);
       chain.module.delete(CHAIN_ID.RULE.TS);
 
-      const TJS_REGEX = mergeRegex(JS_REGEX, TS_REGEX);
       for (let i = 0; i < swcConfigs.length; i++) {
         const { test, include, exclude, swcConfig } = swcConfigs[i];
 
@@ -56,7 +50,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
 
         // Insert swc loader and plugin
         rule
-          .test(test || TJS_REGEX)
+          .test(test || SCRIPT_REGEX)
           .use(CHAIN_ID.USE.SWC)
           .loader(path.resolve(__dirname, './loader'))
           .options(removeUselessOptions(swcConfig) satisfies TransformConfig);
