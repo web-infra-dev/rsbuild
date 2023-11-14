@@ -11,11 +11,10 @@ import {
   OnBeforeCreateCompilerFn,
   ModifyBundlerChainFn,
   type RspackConfig,
-  type RspackCompiler,
-  type RspackMultiCompiler,
   type ModifyRspackConfigFn,
 } from '@rsbuild/shared';
 import type { RsbuildConfig } from '../types';
+import type { Compiler, MultiCompiler } from '@rspack/core';
 
 export function initHooks() {
   return {
@@ -32,9 +31,7 @@ export function initHooks() {
     modifyRsbuildConfigHook:
       createAsyncHook<ModifyRsbuildConfigFn<RsbuildConfig>>(),
     onAfterCreateCompilerHook:
-      createAsyncHook<
-        OnAfterCreateCompilerFn<RspackCompiler | RspackMultiCompiler>
-      >(),
+      createAsyncHook<OnAfterCreateCompilerFn<Compiler | MultiCompiler>>(),
     onBeforeCreateCompilerHook:
       createAsyncHook<OnBeforeCreateCompilerFn<RspackConfig>>(),
 

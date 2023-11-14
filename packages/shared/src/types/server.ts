@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse, Server } from 'http';
 import { DevConfig, NextFunction } from './config/dev';
 import type { Logger } from '../logger';
-// import type Connect from 'connect';
+// import type Connect from '../../compiled/connect';
 // import type { ListenOptions } from 'net';
 
 type Middleware = (

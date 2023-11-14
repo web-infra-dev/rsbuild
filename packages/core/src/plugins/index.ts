@@ -16,7 +16,6 @@ export const plugins: Plugins = {
   bundleAnalyzer: () =>
     import('./bundleAnalyzer').then((m) => m.pluginBundleAnalyzer()),
   asset: () => import('./asset').then((m) => m.pluginAsset()),
-  rem: () => import('./rem').then((m) => m.pluginRem()),
   wasm: () => import('./wasm').then((m) => m.pluginWasm()),
   moment: () => import('./moment').then((m) => m.pluginMoment()),
   nodeAddons: () => import('./nodeAddons').then((m) => m.pluginNodeAddons()),

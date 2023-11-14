@@ -10,6 +10,7 @@ import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core/rspack-
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import type { LazyCompilationOptions } from './webpack/plugins/lazyCompilation';
+import type { PluginRemOptions } from '@rsbuild/plugin-rem';
 
 export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
@@ -70,6 +71,10 @@ export type UniBuilderExtraConfig = {
      * Controls whether to the inline the runtime chunk to HTML.
      */
     disableInlineRuntimeChunk?: boolean;
+    /**
+     * Convert px to rem in CSS.
+     */
+    convertToRem?: boolean | PluginRemOptions;
   };
   html?: {
     /**

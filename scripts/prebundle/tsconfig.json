@@ -2,7 +2,9 @@
   "extends": "@rsbuild/tsconfig/base",
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "module": "CommonJS",
+    "moduleResolution": "Node"
   },
   "include": ["src"]
 }

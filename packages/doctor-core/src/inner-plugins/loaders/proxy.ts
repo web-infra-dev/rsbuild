@@ -6,7 +6,8 @@ import {
   reportLoader,
   shouldSkipLoader,
 } from '../utils';
-import { ProxyLoaderOptions } from '@/types';
+import type { ProxyLoaderOptions } from '@/types';
+import type { LoaderContext } from 'webpack';
 
 const loaderModule: Plugin.LoaderDefinition<ProxyLoaderOptions, {}> = function (
   ...args
@@ -86,7 +87,7 @@ const loaderModule: Plugin.LoaderDefinition<ProxyLoaderOptions, {}> = function (
   this.callback(null, ...args);
 };
 
-loaderModule.pitch = function () {
+loaderModule.pitch = function (this: LoaderContext<ProxyLoaderOptions>) {
   if (shouldSkipLoader(this)) {
     return;
   }

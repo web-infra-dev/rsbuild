@@ -23,6 +23,13 @@ test('multi compiler dev', async ({ page }) => {
     cwd: __dirname,
     entry: { main: path.resolve(__dirname, 'src/index.js') },
     target: ['web', 'node'],
+    rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-dev',
+        },
+      },
+    },
   });
 
   await page.goto(getHrefByEntryName('main', rsbuild.port));

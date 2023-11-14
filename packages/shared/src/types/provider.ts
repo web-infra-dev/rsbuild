@@ -19,6 +19,10 @@ export type StartDevServerOptions = {
   getPortSilently?: boolean;
 };
 
+export type PreviewServerOptions = {
+  printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
+};
+
 export type BuildOptions = {
   mode?: RsbuildMode;
   watch?: boolean;
@@ -73,7 +77,7 @@ export type ProviderInstance<
     options?: StartDevServerOptions,
   ) => Promise<StartServerResult>;
 
-  preview: () => Promise<StartServerResult>;
+  preview: (options?: PreviewServerOptions) => Promise<StartServerResult>;
 
   build: (options?: BuildOptions) => Promise<void>;
 

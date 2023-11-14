@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-swc",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "SWC plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -28,19 +28,6 @@
   },
   "main": "./dist/index.js",
   "types": "./src/index.ts",
-  "typesVersions": {
-    "*": {
-      "loader": [
-        "./dist/loader.d.ts"
-      ],
-      "plugin": [
-        "./dist/plugin.d.ts"
-      ],
-      "binding": [
-        "./dist/binding.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist"
   ],

@@ -29,7 +29,13 @@ export const TASKS: TaskConfig[] = [
   {
     packageDir: 'core',
     packageName: '@rsbuild/core',
-    dependencies: [],
+    dependencies: [
+      'open',
+      {
+        name: 'connect-history-api-fallback',
+        ignoreDts: true,
+      },
+    ],
   },
   {
     packageDir: 'shared',
@@ -38,8 +44,10 @@ export const TASKS: TaskConfig[] = [
       'deepmerge',
       'url-join',
       'fs-extra',
+      'chokidar',
       'webpack-chain',
       'mime-types',
+      'connect',
       {
         name: 'webpack-sources',
         ignoreDts: true,

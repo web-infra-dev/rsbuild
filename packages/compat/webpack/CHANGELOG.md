@@ -1,5 +1,32 @@
 # @rsbuild/webpack
 
+## 0.0.21
+
+### Patch Changes
+
+- 42ace29: chore: using exports.types to replace typesVersion
+- a694a55: chore(deps): bump html-rspack-plugin v5.5.5
+- 4092858: chore: add prod-server e2e test cases and support not printURLs when preview
+- 648e847: perf: prebundle fs-extra and url-join
+- Updated dependencies [42ace29]
+- Updated dependencies [c90bebe]
+- Updated dependencies [a919119]
+- Updated dependencies [0270c27]
+- Updated dependencies [a58e71c]
+- Updated dependencies [dbdc3c5]
+- Updated dependencies [d691901]
+- Updated dependencies [a694a55]
+- Updated dependencies [8aa416e]
+- Updated dependencies [69262e9]
+- Updated dependencies [6abd810]
+- Updated dependencies [4092858]
+- Updated dependencies [648e847]
+  - @rsbuild/babel-preset@0.0.21
+  - @rsbuild/shared@0.0.21
+  - @rsbuild/core@0.0.21
+  - @rsbuild/plugin-babel@0.0.21
+  - @rsbuild/plugin-css-minimizer@0.0.21
+
 ## 0.0.20
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-assets-retry",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "Assets retry plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -27,8 +27,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "serialize-javascript": "^6.0.0",
-    "webpack-sources": "^3.2.3"
+    "serialize-javascript": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",

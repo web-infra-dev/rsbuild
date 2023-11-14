@@ -1,5 +1,13 @@
 # @rsbuild/doctor-sdk
 
+## 0.0.9
+
+### Patch Changes
+
+- 42ace29: chore: using exports.types to replace typesVersion
+- Updated dependencies [42ace29]
+  - @rsbuild/doctor-utils@0.0.9
+
 ## 0.0.8
 
 ### Patch Changes
