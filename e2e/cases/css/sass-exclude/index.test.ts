@@ -11,15 +11,11 @@ test('should exclude specified scss file', async () => {
         sass: (_, { addExcludes }) => {
           addExcludes([/b\.scss$/]);
         },
-        rspack: {
-          module: {
-            rules: [
-              {
-                test: /b\.scss$/,
-                type: 'asset/resource',
-              },
-            ],
-          },
+        bundlerChain(chain) {
+          chain.module
+            .rule('fallback')
+            .test(/b\.scss$/)
+            .type('asset/resource');
         },
       },
     },

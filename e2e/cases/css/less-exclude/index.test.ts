@@ -11,15 +11,11 @@ test('should exclude specified less file', async () => {
         less: (_, { addExcludes }) => {
           addExcludes([/b\.less$/]);
         },
-        rspack: {
-          module: {
-            rules: [
-              {
-                test: /b\.less$/,
-                type: 'asset/resource',
-              },
-            ],
-          },
+        bundlerChain(chain) {
+          chain.module
+            .rule('fallback')
+            .test(/b\.less$/)
+            .type('asset/resource');
         },
       },
     },
