@@ -15,5 +15,5 @@ test('should run top level await correctly', async ({ page }) => {
 
   expect(await page.evaluate('window.foo')).toEqual('hello');
 
-  rsbuild.close();
+  await rsbuild.close();
 });

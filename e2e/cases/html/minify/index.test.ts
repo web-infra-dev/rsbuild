@@ -49,7 +49,7 @@ test('should minify template js & css', async ({ page }) => {
   // keep html comments
   expect(content.includes('<!-- HTML COMMENT-->')).toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 webpackOnlyTest(
@@ -93,6 +93,6 @@ webpackOnlyTest(
     ).toBeTruthy();
     expect(content.includes('window.a=1,window.b=2')).toBeTruthy();
 
-    rsbuild.close();
+    await rsbuild.close();
   },
 );

@@ -15,7 +15,7 @@ test('multi compiler build', async ({ page }) => {
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('multi compiler dev', async ({ page }) => {

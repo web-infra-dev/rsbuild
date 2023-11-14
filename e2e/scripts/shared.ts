@@ -18,7 +18,7 @@ export const getHrefByEntryName = (entryName: string, port: number) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = () => {};
+const noop = async () => {};
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions,

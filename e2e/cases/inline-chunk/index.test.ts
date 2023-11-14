@@ -47,7 +47,7 @@ test.skip('disableInlineRuntimeChunk', () => {
   });
 
   test.afterAll(async () => {
-    rsbuild.close();
+    await rsbuild.close();
   });
 
   test('should emit bundler-runtime', async ({ page }) => {
@@ -97,7 +97,7 @@ test.skip('inline runtime chunk by default', async ({ page }) => {
 
   expect(isRuntimeChunkInHtml(indexHtml)).toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 // TODO: uni-builder
@@ -193,7 +193,7 @@ webpackOnlyTest(
         .length,
     ).toEqual(3);
 
-    rsbuild.close();
+    await rsbuild.close();
   },
 );
 

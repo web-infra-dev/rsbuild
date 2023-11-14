@@ -311,7 +311,7 @@ export async function startDevServer<
           port,
           urls: urls.map((item) => item.url),
           server: {
-            close: () => {
+            close: async () => {
               server.close();
             },
           },

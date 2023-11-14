@@ -49,5 +49,5 @@ test('should minify template js & css correctly when use swc-plugin', async ({
   ).toBeTruthy();
   expect(content.includes('window.a=1,window.b=2')).toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });

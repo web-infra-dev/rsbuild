@@ -31,7 +31,7 @@ test('svg (assets)', async ({ page }) => {
     ),
   ).resolves.toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('svgr (defaultExport url)', async ({ page }) => {
@@ -70,7 +70,7 @@ test('svgr (defaultExport url)', async ({ page }) => {
     ),
   ).resolves.toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('svgr (defaultExport component)', async ({ page }) => {
@@ -95,7 +95,7 @@ test('svgr (defaultExport component)', async ({ page }) => {
     page.evaluate(`document.getElementById('test-svg').tagName === 'svg'`),
   ).resolves.toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('svgr (query url)', async ({ page }) => {
@@ -129,7 +129,7 @@ test('svgr (query url)', async ({ page }) => {
     ),
   ).resolves.toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 // It's an old bug when use svgr in css and external react.
@@ -180,5 +180,5 @@ test('svgr (external react)', async ({ page }) => {
     ),
   ).resolves.toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });

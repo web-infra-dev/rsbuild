@@ -27,7 +27,7 @@ test('babel', async ({ page }) => {
   await page.goto(getHrefByEntryName('index', rsbuild.port));
   expect(await page.evaluate('window.b')).toBe(10);
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('babel exclude', async ({ page }) => {
@@ -57,5 +57,5 @@ test('babel exclude', async ({ page }) => {
   expect(await page.evaluate('window.b')).toBe(10);
   expect(await page.evaluate('window.bb')).toBeUndefined();
 
-  rsbuild.close();
+  await rsbuild.close();
 });

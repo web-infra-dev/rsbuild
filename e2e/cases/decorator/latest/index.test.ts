@@ -31,5 +31,5 @@ webpackOnlyTest('decorator latest', async ({ page }) => {
     );
   }
 
-  rsbuild.close();
+  await rsbuild.close();
 });

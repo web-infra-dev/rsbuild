@@ -79,5 +79,5 @@ test('disableCssExtract', async ({ page }) => {
   const title = page.locator('#title');
   await expect(title).toHaveCSS('font-size', '20px');
 
-  rsbuild.close();
+  await rsbuild.close();
 });

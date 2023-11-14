@@ -26,7 +26,7 @@ rspackOnlyTest('should build basic Vue sfc correctly', async ({ page }) => {
   await expect(button1).toHaveText('A: 0');
   await expect(button2).toHaveText('B: 0');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 rspackOnlyTest('should build Vue sfc style correctly', async ({ page }) => {
@@ -49,7 +49,7 @@ rspackOnlyTest('should build Vue sfc style correctly', async ({ page }) => {
   const body = page.locator('body');
   await expect(body).toHaveCSS('background-color', 'rgb(0, 0, 255)');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 rspackOnlyTest('should build basic Vue jsx correctly', async ({ page }) => {
@@ -69,7 +69,7 @@ rspackOnlyTest('should build basic Vue jsx correctly', async ({ page }) => {
   const button1 = page.locator('#button1');
   await expect(button1).toHaveText('A: 0');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 rspackOnlyTest(
@@ -91,7 +91,7 @@ rspackOnlyTest(
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0 foo: bar');
 
-    rsbuild.close();
+    await rsbuild.close();
   },
 );
 
@@ -117,7 +117,7 @@ rspackOnlyTest(
     const foo = page.locator('#foo');
     await expect(foo).toHaveText('Foo');
 
-    rsbuild.close();
+    await rsbuild.close();
   },
 );
 
@@ -143,6 +143,6 @@ rspackOnlyTest(
     const foo = page.locator('#foo');
     await expect(foo).toHaveText('Foo');
 
-    rsbuild.close();
+    await rsbuild.close();
   },
 );

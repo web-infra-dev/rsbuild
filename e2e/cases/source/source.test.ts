@@ -25,8 +25,8 @@ test.describe('source configure multi', () => {
     });
   });
 
-  test.afterAll(() => {
-    rsbuild.close();
+  test.afterAll(async () => {
+    await rsbuild.close();
   });
 
   test('alias', async ({ page }) => {
@@ -65,7 +65,7 @@ test.skip('global-vars', async ({ page }) => {
   const testEl = page.locator('#test-el');
   await expect(testEl).toHaveText('aaaaa');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('define', async ({ page }) => {
@@ -89,7 +89,7 @@ test('define', async ({ page }) => {
   const testEl = page.locator('#test-el');
   await expect(testEl).toHaveText('aaaaa');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('tsconfig paths should work and override the alias config', async ({
@@ -116,7 +116,7 @@ test('tsconfig paths should work and override the alias config', async ({
   const foo = page.locator('#foo');
   await expect(foo).toHaveText('tsconfig paths worked');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('tsconfig paths should not work when aliasStrategy is "prefer-alias"', async ({
@@ -144,5 +144,5 @@ test('tsconfig paths should not work when aliasStrategy is "prefer-alias"', asyn
   const foo = page.locator('#foo');
   await expect(foo).toHaveText('source.alias worked');
 
-  rsbuild.close();
+  await rsbuild.close();
 });

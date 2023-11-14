@@ -38,7 +38,7 @@ test('externals', async ({ page }) => {
   expect(externalVar).toBeDefined();
 
   rsbuild.clean();
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('should not external dependencies when target is web worker', async () => {

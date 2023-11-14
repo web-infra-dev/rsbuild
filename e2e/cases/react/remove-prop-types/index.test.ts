@@ -19,5 +19,5 @@ webpackOnlyTest('should remove prop-types by default', async ({ page }) => {
   await page.goto(getHrefByEntryName('main', rsbuild.port));
 
   expect(await page.evaluate('window.testAppPropTypes')).toBeUndefined();
-  rsbuild.close();
+  await rsbuild.close();
 });

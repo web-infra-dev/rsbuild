@@ -19,5 +19,5 @@ test('should run top level await correctly when using SWC', async ({
 
   expect(await page.evaluate('window.foo')).toEqual('hello');
 
-  rsbuild.close();
+  await rsbuild.close();
 });

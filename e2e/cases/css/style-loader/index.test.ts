@@ -47,5 +47,5 @@ test('should inline style when disableCssExtract is false', async ({
   const title = page.locator('#header');
   await expect(title).toHaveCSS('font-size', '20px');
 
-  rsbuild.close();
+  await rsbuild.close();
 });

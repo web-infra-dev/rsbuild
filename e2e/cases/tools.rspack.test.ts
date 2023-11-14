@@ -25,5 +25,5 @@ test('tools.rspack', async ({ page }) => {
   const testEl = page.locator('#test-el');
   await expect(testEl).toHaveText('aaaaa');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
