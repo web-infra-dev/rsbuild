@@ -8,12 +8,15 @@ test('should exclude specified scss file', async () => {
     entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       tools: {
-        sass: (opts, { addExcludes }) => {
+        sass: (_, { addExcludes }) => {
           addExcludes([/b\.scss$/]);
         },
-      },
-      output: {
-        enableAssetFallback: true,
+        bundlerChain(chain) {
+          chain.module
+            .rule('fallback')
+            .test(/b\.scss$/)
+            .type('asset/resource');
+        },
       },
     },
   });

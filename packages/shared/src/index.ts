@@ -19,7 +19,6 @@ export * from './devServer';
 export * from './chain';
 export * from './plugins';
 export * from './apply';
-export * from './fallback';
 export * from './getLoaderOptions';
 export * from './patch';
 export * from './css';

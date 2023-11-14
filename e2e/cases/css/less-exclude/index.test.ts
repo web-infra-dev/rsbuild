@@ -8,12 +8,15 @@ test('should exclude specified less file', async () => {
     entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       tools: {
-        less: (opts, { addExcludes }) => {
+        less: (_, { addExcludes }) => {
           addExcludes([/b\.less$/]);
         },
-      },
-      output: {
-        enableAssetFallback: true,
+        bundlerChain(chain) {
+          chain.module
+            .rule('fallback')
+            .test(/b\.less$/)
+            .type('asset/resource');
+        },
       },
     },
   });

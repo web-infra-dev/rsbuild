@@ -1,12 +1,12 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
-import { pluginFallback } from '@/plugins/fallback';
-import { RsbuildPlugin } from '@/types';
+import { pluginFallback } from '../src/shared/plugins/fallback';
+import { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import { createStubRsbuild } from '../../webpack/tests/helper';
 
 describe('plugin-fallback', () => {
-  const testPlugin: RsbuildPlugin = {
+  const testPlugin: RsbuildPlugin<RsbuildPluginAPI> = {
     name: 'test-plugin',
     setup(api) {
-      api.modifyBundlerChain((chain) => {
+      api.modifyWebpackChain((chain) => {
         chain.module
           .rule('mjs')
           .test(/\.m?js/)
@@ -41,17 +41,17 @@ describe('plugin-fallback', () => {
         },
       },
     });
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const config = await rsbuild.unwrapWebpackConfig();
 
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(config).toMatchSnapshot();
   });
 
   it('should not convert fallback rule when output.enableAssetFallback is not enabled', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [testPlugin, pluginFallback()],
     });
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const config = await rsbuild.unwrapWebpackConfig();
 
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(config).toMatchSnapshot();
   });
 });

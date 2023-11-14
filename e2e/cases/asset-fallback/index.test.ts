@@ -2,7 +2,8 @@ import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
-test('should handle unknown modules with fallback rule', async () => {
+// TODO: uni-builder
+test.skip('should handle unknown modules with fallback rule', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
