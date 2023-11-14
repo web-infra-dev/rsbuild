@@ -143,9 +143,9 @@ The generated HTML code is as follows:
 
 ## Template Engine
 
-Rsbuild supports using [Lodash Template](https://www.lodashjs.com/docs/lodash.template), [EJS](https://ejs.co/), [Pug](https://pugjs.org/) as template engines, the most basic Lodash Template is used as the default template engine.
+Rsbuild supports using [Lodash Template](https://lodashjs.com/docs/lodash.template), [EJS](https://ejs.co/), [Pug](https://pugjs.org/) as template engines, the most basic Lodash Template is used as the default template engine.
 
-### [Lodash Template](https://www.lodashjs.com/docs/lodash.template)
+### [Lodash Template](https://lodashjs.com/docs/lodash.template)
 
 When the suffix of the template is `.html`, Rsbuild will use Lodash Template to compile it.
 
@@ -159,7 +159,7 @@ For example, if you define a `text` parameter in a template with a value of `'wo
 <div>hello world!</div>
 ```
 
-Please read the [Lodash Template](https://www.lodashjs.com/docs/lodash.template) documentation for details.
+Please read the [Lodash Template](https://lodashjs.com/docs/lodash.template) documentation for details.
 
 ### [EJS](https://ejs.co/)
 

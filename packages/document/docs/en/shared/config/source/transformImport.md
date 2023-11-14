@@ -1,6 +1,6 @@
-Used to import the code and style of the component library on demand, which is equivalent to [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import).
+Used to import the code and style of the component library on demand, which is equivalent to [babel-plugin-import](https://npmjs.com/package/babel-plugin-import).
 
-The difference between it and [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import) is that `source.transformImport` is not coupled with Babel. Rsbuild will automatically identify whether the currently used tools is Babel, SWC or Rspack, and apply the corresponding on-demand import configuration.
+The difference between it and [babel-plugin-import](https://npmjs.com/package/babel-plugin-import) is that `source.transformImport` is not coupled with Babel. Rsbuild will automatically identify whether the currently used tools is Babel, SWC or Rspack, and apply the corresponding on-demand import configuration.
 
 - **Type:**
 

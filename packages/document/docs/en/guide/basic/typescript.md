@@ -32,7 +32,7 @@ Please note that the fields in `tsconfig.json` will not affect the compilation b
 
 ### isolatedModules
 
-Unlike the native TypeScript compiler, tools like SWC and Babel compile each file separately and cannot determine whether an imported name is a type or a value. Therefore, when using TypeScript in Rsbuild, you need to enable the [isolatedModules](https://www.typescriptlang.org/tsconfig/#isolatedModules) option in your `tsconfig.json` file:
+Unlike the native TypeScript compiler, tools like SWC and Babel compile each file separately and cannot determine whether an imported name is a type or a value. Therefore, when using TypeScript in Rsbuild, you need to enable the [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) option in your `tsconfig.json` file:
 
 ```json title="tsconfig.json"
 {

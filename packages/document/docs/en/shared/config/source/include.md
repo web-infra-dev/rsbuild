@@ -1,9 +1,20 @@
 - **Type:** `Array<string | RegExp>`
-- **Default:** `[]`
+- **Default:**
 
-In order to maintain faster compilation speed, Rsbuild will not compile JavaScript/TypeScript files under node_modules through SWC by default, as will as the JavaScript/TypeScript files outside the current project directory.
+```ts
+const defaultInclude = [
+  {
+    and: [rootPath, { not: /[\\/]node_modules[\\/]/ }],
+  },
+  /\.(ts|tsx|jsx|mts|cts)$/,
+];
+```
 
-Through the `source.include` config, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://www.rspack.dev/config/module.html#ruleinclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
+The `source.include` is used to specify additional JavaScript files that need to be compiled.
+
+To avoid redundant compilation, by default, Rsbuild only compiles JavaScript files in the current directory and TypeScript and JSX files in all directories. It does not compile JavaScript files under node_modules.
+
+Through the `source.include` config, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://rspack.dev/config/module.html#ruleinclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
 
 For example:
 
@@ -19,7 +30,7 @@ export default {
 
 ### Compile Npm Packages
 
-A typical usage scenario is to compile npm packages under node_modules, because some third-party dependencies have ES6+ syntax, which may cause them to fail to run on low-version browsers. You can solve the problem by using this config to specify the dependencies that need to be compiled.
+A typical usage scenario is to compile npm packages under node_modules, because some third-party dependencies have ESNext syntax, which may cause them to fail to run on low-version browsers. You can solve the problem by using this config to specify the dependencies that need to be compiled.
 
 Take `query-string` as an example, you can add the following config:
 
@@ -48,7 +59,7 @@ The above two methods match the absolute paths of files using "path prefixes" an
 
 When you compile an npm package via `source.include`, Rsbuild will only compile the matching module by default, not the **Sub Dependencies** of the module.
 
-Take `query-string` for example, it depends on the `decode-uri-component` package, which also has ES6+ code, so you need to add the `decode-uri-component` package to `source.include` as well.
+Take `query-string` for example, it depends on the `decode-uri-component` package, which also has ESNext code, so you need to add the `decode-uri-component` package to `source.include` as well.
 
 ```ts
 export default {

@@ -26,25 +26,11 @@ Deleting the lock file will automatically upgrade the dependency version in the 
 
 ---
 
-### Find ES6+ code in the compiled files?
+### Find ESNext code in the compiled files?
 
-By default, Rsbuild will not compile files under `node_modules` through `babel-loader` or `ts-loader`. If the npm package introduced by the project contains ES6+ syntax, it will be bundled into the output files.
+By default, Rsbuild does not compile JavaScript files under `node_modules`. If an npm package used in the project contains ESNext syntax, it will be bundled into the output.
 
 When this happens, you can specify directories or modules that need to be compiled additionally through the [source.include](/config/options/source.html#sourceinclude) configuration option.
-
----
-
-### Failed import other modules in Monorepo?
-
-Due to considerations of compilation performance, by default, the Rsbuild does not compile files under `node_modules` or files outside the current project directory.
-
-Therefore, when you reference the source code of other sub-projects, you may encounter an error similar to `You may need an additional loader to handle the result of these loaders.`
-
-There are several solutions to this problem:
-
-1. You can use the Source Build plugin to compile other sub-projects within the monorepo. Please refer to [Source Code Plugin](/plugins/list/plugin-source-build) for more information.
-2. You can add the `source.include` configuration option to specify the directories or modules that need to be additionally compiled. Please refer to [Usage of source.include](/config/options/source.html#sourceinclude) for more information.
-3. You can pre-build the sub-projects that need to be referenced, generate the corresponding build artifacts, and then reference the build artifacts in the current project instead of referencing the source code.
 
 ---
 
@@ -77,10 +63,7 @@ File was processed with these loaders:
 You may need an additional loader to handle the result of these loaders.
 ```
 
-Solution:
-
-- If the `.ts` file outside the current project is referenced, or the `.ts` file under node_modules, please add the [source.include](/config/options/source.html#sourceinclude) configuration Items that specify files that require additional compilation.
-- If you refer to a file format that is not supported by Rsbuild, please configure the corresponding webpack loader for compilation.
+Please check if any file formats not supported by Rsbuild are being referenced, and configure the corresponding Rspack loader to compile them.
 
 ---
 

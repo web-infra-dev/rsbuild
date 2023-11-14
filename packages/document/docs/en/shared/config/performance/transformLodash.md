@@ -2,9 +2,9 @@
 - **Default:** `true`
 - **Bundler:** `only support webpack`
 
-Specifies whether to modularize the import of [lodash](https://www.npmjs.com/package/lodash) and remove unused lodash modules to reduce the code size of lodash.
+Specifies whether to modularize the import of [lodash](https://npmjs.com/package/lodash) and remove unused lodash modules to reduce the code size of lodash.
 
-This optimization is implemented using [babel-plugin-lodash](https://www.npmjs.com/package/babel-plugin-lodash) and [swc-plugin-lodash](https://github.com/web-infra-dev/swc-plugins/tree/main/crates/plugin_lodash) under the hood.
+This optimization is implemented using [babel-plugin-lodash](https://npmjs.com/package/babel-plugin-lodash) and [swc-plugin-lodash](https://github.com/web-infra-dev/swc-plugins/tree/main/crates/plugin_lodash) under the hood.
 
 ### Example
 

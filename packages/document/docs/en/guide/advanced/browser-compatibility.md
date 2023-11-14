@@ -179,7 +179,7 @@ export default {
 
 ## Polyfill mode
 
-Rsbuild compiles JavaScript code through Babel or SWC, and injects polyfill libraries like [core-js](https://github.com/zloirock/core-js), [@babel/runtime](https://www.npmjs.com/package/@babel/runtime) and [@swc/helpers](https://www.npmjs.com/package/@swc/helpers).
+Rsbuild compiles JavaScript code through Babel or SWC, and injects polyfill libraries like [core-js](https://github.com/zloirock/core-js), [@babel/runtime](https://npmjs.com/package/@babel/runtime) and [@swc/helpers](https://npmjs.com/package/@swc/helpers).
 
 In different usage scenarios, you may need different polyfill solutions. Rsbuild provides [output.polyfill](/config/options/output.html#outputpolyfill) config to switch between different polyfill modes.
 
