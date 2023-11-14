@@ -1,4 +1,8 @@
-import { deepmerge } from '@rsbuild/shared';
+import {
+  deepmerge,
+  NODE_MODULES_REGEX,
+  CSS_MODULES_REGEX,
+} from '@rsbuild/shared';
 import {
   mergeRsbuildConfig,
   type RsbuildPlugin,
@@ -10,6 +14,16 @@ import { pluginRem } from '@rsbuild/plugin-rem';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import { pluginGlobalVars } from './plugins/globalVars';
 import { pluginRuntimeChunk } from './plugins/runtimeChunk';
+
+const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
+
+/** Determine if a file path is a CSS module when disableCssModuleExtension is enabled. */
+export const isLooseCssModules = (path: string) => {
+  if (NODE_MODULES_REGEX.test(path)) {
+    return CSS_MODULES_REGEX.test(path);
+  }
+  return !GLOBAL_CSS_REGEX.test(path);
+};
 
 export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   uniBuilderConfig: B extends 'rspack'
@@ -32,6 +46,13 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   if (output.cssModuleLocalIdentName) {
     output.cssModules ||= {};
     output.cssModules.localIdentName = output.cssModuleLocalIdentName;
+    delete output.cssModuleLocalIdentName;
+  }
+
+  if (output.disableCssModuleExtension) {
+    output.cssModules ||= {};
+    // priority: output.cssModules.auto -> disableCssModuleExtension
+    output.cssModules.auto ??= isLooseCssModules;
     delete output.cssModuleLocalIdentName;
   }
 

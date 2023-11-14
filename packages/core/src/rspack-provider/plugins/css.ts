@@ -8,7 +8,6 @@ import {
   getCssLoaderOptions,
   setConfig,
   logger,
-  getCssModulesAutoRule,
   getPostcssConfig,
   getCssModuleLocalIdentName,
   resolvePackage,
@@ -110,13 +109,7 @@ export async function applyBaseCSSRule({
   } else {
     // can not get experiment.css result, so we fake a css-modules-typescript-pre-loader
     if (!isServer && !isWebWorker && enableCSSModuleTS) {
-      const { cssModules, disableCssModuleExtension } = config.output;
-
-      const cssModulesAuto = getCssModulesAutoRule(
-        cssModules,
-        disableCssModuleExtension,
-      );
-
+      const { cssModules } = config.output;
       rule
         .use(CHAIN_ID.USE.CSS_MODULES_TS)
         .loader(
@@ -128,7 +121,7 @@ export async function applyBaseCSSRule({
         .options({
           modules: {
             exportLocalsConvention: cssModules.exportLocalsConvention,
-            auto: cssModulesAuto,
+            auto: cssModules.auto,
           },
         })
         .end();
@@ -180,10 +173,7 @@ export const applyCSSModuleRule = (
     return;
   }
 
-  const cssModulesAuto = getCssModulesAutoRule(
-    config.output.cssModules,
-    config.output.disableCssModuleExtension,
-  );
+  const cssModulesAuto = config.output.cssModules.auto;
 
   if (!cssModulesAuto) {
     return;

@@ -5,7 +5,16 @@ import { castArray, isFunction, isUndefined } from './utils';
  * When merging config, some properties prefer `override` rather than `merge to array`
  */
 export const isOverriddenConfigKey = (key: string) =>
-  ['removeConsole', 'enableInlineScripts', 'enableInlineStyles'].includes(key);
+  [
+    // performance.removeConsole
+    'removeConsole',
+    // output.enableInlineScripts
+    'enableInlineScripts',
+    // output.enableInlineStyles
+    'enableInlineStyles',
+    // cssModules.auto
+    'auto',
+  ].includes(key);
 
 export const mergeRsbuildConfig = <T>(...configs: T[]): T =>
   _.mergeWith(

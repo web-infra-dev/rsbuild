@@ -28,14 +28,15 @@ test('should compile CSS modules correctly', async () => {
   }
 });
 
-test('should treat normal CSS as CSS modules when disableCssModuleExtension is true', async () => {
+// TODO: uni-builder
+test.skip('should treat normal CSS as CSS modules when disableCssModuleExtension is true', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       output: {
         disableSourceMap: true,
-        disableCssModuleExtension: true,
+        // disableCssModuleExtension: true,
       },
     },
   });

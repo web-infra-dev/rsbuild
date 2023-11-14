@@ -34,36 +34,13 @@ export default () => {
 };
 ```
 
-## Enable CSS Modules for all CSS files
+## CSS Modules Recognition Rules
 
-By default, only files ending in `*.module.css` are treated CSS Modules.
+By default, only files ending with `*.module.css` are recognized as CSS Modules.
 
-If you want to treat all CSS files in the source directory as CSS Modules, you can enable the [output.disableCssModuleExtension](https://rsbuild.dev/config/options/output.html#outputdisablecssmoduleextension) config, for example:
+If you want to treat other CSS files as CSS Modules as well, you can achieve this by configuring [output.cssModules.auto](/config/options/output.html#cssmodulesauto).
 
-```ts
-export default {
-  output: {
-    disableCssModuleExtension: true,
-  },
-};
-```
-
-When set, the following two files are treated as CSS Modules:
-
-```ts
-import styles1 from './foo.module.css';
-import styles2 from './bar.css';
-```
-
-:::tip
-We do not recommend enabling this config, because after enabling disableCssModuleExtension, CSS Modules files and ordinary CSS files cannot be clearly distinguished, which is not conducive to long-term maintenance.
-:::
-
-## Enable CSS Modules for the specified style file
-
-By default, only files ending in `*.module.css` are treated CSS Modules.
-
-If you want to enable CSS Modules only for specified style files, you can configure [output.cssModules](/config/options/output.html#outputcssmodule), for example:
+For example:
 
 ```ts
 export default {
@@ -75,6 +52,13 @@ export default {
     },
   },
 };
+```
+
+After this configuration, the following two files will be recognized as CSS Modules:
+
+```ts
+import styles1 from './foo.module.css';
+import styles2 from './shared/bar.css';
 ```
 
 ## Custom Class Names
@@ -133,35 +117,6 @@ declare module '*.module.styl' {
   export default classes;
 }
 declare module '*.module.stylus' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-```
-
-If you enabled the `disableCssModuleExtension` config, you also need to add the following types:
-
-```ts title="src/env.d.ts"
-declare module '*.css' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-declare module '*.scss' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-declare module '*.sass' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-declare module '*.less' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-declare module '*.styl' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-declare module '*.stylus' {
   const classes: { readonly [key: string]: string };
   export default classes;
 }

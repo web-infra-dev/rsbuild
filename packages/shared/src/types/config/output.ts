@@ -155,10 +155,6 @@ export interface OutputConfig {
    */
   disableFilenameHash?: boolean;
   /**
-   * Whether to treat all .css files in the source directory as CSS Modules.
-   */
-  disableCssModuleExtension?: boolean;
-  /**
    * If this option is enabled, all unrecognized files will be emitted to the dist directory.
    * Otherwise, an exception will be thrown.
    */

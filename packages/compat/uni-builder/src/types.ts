@@ -75,6 +75,10 @@ export type UniBuilderExtraConfig = {
      * Convert px to rem in CSS.
      */
     convertToRem?: boolean | PluginRemOptions;
+    /**
+     * Whether to treat all .css files in the source directory as CSS Modules.
+     */
+    disableCssModuleExtension?: boolean;
   };
   html?: {
     /**

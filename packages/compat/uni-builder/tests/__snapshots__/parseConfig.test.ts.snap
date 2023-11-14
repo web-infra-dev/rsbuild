@@ -181,3 +181,18 @@ exports[`parseCommonConfig > output.cssModuleLocalIdentName 1`] = `
   },
 }
 `;
+
+exports[`parseCommonConfig > output.disableCssModuleExtension 1`] = `
+{
+  "dev": {
+    "progressBar": true,
+  },
+  "html": {},
+  "output": {
+    "cssModules": {
+      "auto": [Function],
+    },
+    "disableCssModuleExtension": true,
+  },
+}
+`;
