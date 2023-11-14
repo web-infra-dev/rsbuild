@@ -155,11 +155,6 @@ export interface OutputConfig {
    */
   disableFilenameHash?: boolean;
   /**
-   * If this option is enabled, all unrecognized files will be emitted to the dist directory.
-   * Otherwise, an exception will be thrown.
-   */
-  enableAssetFallback?: boolean;
-  /**
    * Whether to use the new decorator proposal.
    */
   enableLatestDecorators?: boolean;
@@ -203,7 +198,6 @@ export interface NormalizedOutputConfig extends OutputConfig {
   disableMinimize: boolean;
   disableSourceMap: DisableSourceMapOption;
   disableFilenameHash: boolean;
-  enableAssetFallback: boolean;
   enableLatestDecorators: boolean;
   enableCssModuleTSDeclaration: boolean;
   enableInlineScripts: boolean | InlineChunkTest;

@@ -78,28 +78,40 @@ exports[`plugin-fallback > should not convert fallback rule when output.enableAs
               },
             ],
           },
-        ],
-      },
-      {
-        "mimetype": "text/javascript",
-        "resolve": {
-          "fullySpecified": false,
-        },
-        "use": [
           {
-            "loader": "data-uri",
+            "mimetype": "text/javascript",
+            "resolve": {
+              "fullySpecified": false,
+            },
+            "use": [
+              {
+                "loader": "data-uri",
+              },
+            ],
           },
-        ],
-      },
-      {
-        "test": /bar/,
-        "use": [
           {
-            "loader": "bar",
+            "test": /bar/,
+            "use": [
+              {
+                "loader": "bar",
+              },
+            ],
+          },
+          {
+            "exclude": [
+              /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
+              /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+              /\\\\\\.html\\$/,
+              /\\\\\\.json\\$/,
+            ],
+            "type": "asset/resource",
           },
         ],
       },
     ],
+  },
+  "output": {
+    "assetModuleFilename": "static/media/[name].[contenthash:8][ext]",
   },
 }
 `;

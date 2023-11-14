@@ -38,5 +38,4 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.preloadOrPrefetch(),
     plugins.performance(),
     import('../plugins/rspack-profile').then((m) => m.pluginRspackProfile()),
-    import('../plugins/fallback').then((m) => m.pluginFallback()), // fallback should be the last plugin
   ]);

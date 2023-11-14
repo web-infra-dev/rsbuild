@@ -121,7 +121,6 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     css: undefined,
   },
   disableFilenameHash: false,
-  enableAssetFallback: false,
   enableLatestDecorators: false,
   enableCssModuleTSDeclaration: false,
   enableInlineScripts: false,
