@@ -59,11 +59,12 @@ export default class DevMiddleware extends EventEmitter {
     app.on('listening', () => {
       this.socketServer.prepare(app);
     });
+  }
 
-    app.on('close', async () => {
-      this.middleware?.close(noop);
-      this.socketServer.close();
-    });
+  public close() {
+    // socketServer close should before app close
+    this.socketServer.close();
+    this.middleware?.close(noop);
   }
 
   public sockWrite(
