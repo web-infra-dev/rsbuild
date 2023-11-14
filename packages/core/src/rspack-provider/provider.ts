@@ -74,10 +74,10 @@ export function rspackProvider({
       },
 
       async startDevServer(options) {
-        const { startDevCompile } = await import('./core/createCompiler');
+        const { createDevMiddleware } = await import('./core/createCompiler');
         return startDevServer(
           { context, pluginStore, rsbuildOptions },
-          startDevCompile,
+          createDevMiddleware,
           options,
         );
       },

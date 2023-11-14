@@ -64,11 +64,11 @@ export function webpackProvider({
       },
 
       async startDevServer(options) {
-        const { startDevCompile } = await import('./core/createCompiler');
+        const { createDevMiddleware } = await import('./core/createCompiler');
         return startDevServer(
           { context, pluginStore, rsbuildOptions },
           // @ts-expect-error compiler type mismatch
-          startDevCompile,
+          createDevMiddleware,
           options,
         );
       },

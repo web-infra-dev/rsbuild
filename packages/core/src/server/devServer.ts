@@ -204,7 +204,7 @@ export async function startDevServer<
   },
 >(
   options: Options,
-  startDevCompile: (
+  createDevMiddleware: (
     options: Options,
     compiler: StartDevServerOptions['compiler'],
   ) => Promise<CreateDevServerOptions['devMiddleware']>,
@@ -245,22 +245,9 @@ export async function startDevServer<
     rsbuildConfig.output?.distPath?.html,
   );
 
-  if (printURLs) {
-    if (isFunction(printURLs)) {
-      urls = printURLs(urls);
-
-      if (!Array.isArray(urls)) {
-        throw new Error('Please return an array in the `printURLs` function.');
-      }
-    }
-
-    printServerURLs(urls, routes, logger);
-  }
-
   debug('create dev server');
 
-  // TODO: reorder
-  const devMiddleware = await startDevCompile(options, compiler);
+  const devMiddleware = await createDevMiddleware(options, compiler);
 
   const server = new RsbuildDevServer({
     pwd: options.context.rootPath,
@@ -282,6 +269,19 @@ export async function startDevServer<
 
   // TODO: support customApp
   const httpServer = await server.createHTTPServer();
+
+  // print url after http server created and before dev compile (just a short time interval)
+  if (printURLs) {
+    if (isFunction(printURLs)) {
+      urls = printURLs(urls);
+
+      if (!Array.isArray(urls)) {
+        throw new Error('Please return an array in the `printURLs` function.');
+      }
+    }
+
+    printServerURLs(urls, routes, logger);
+  }
 
   await server.onInit(httpServer);
 
