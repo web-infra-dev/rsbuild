@@ -1432,6 +1432,9 @@ importers:
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
+      html-webpack-plugin:
+        specifier: npm:html-rspack-plugin@5.5.5
+        version: /html-rspack-plugin@5.5.5
       typescript:
         specifier: ^5.2.2
         version: 5.2.2

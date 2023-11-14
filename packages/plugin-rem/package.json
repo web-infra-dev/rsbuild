@@ -33,6 +33,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.5",
     "typescript": "^5.2.2"
   },
   "publishConfig": {

@@ -17,5 +17,6 @@
   "plugin-styled-components",
   "plugin-check-syntax",
   "plugin-css-minimizer",
-  "plugin-pug"
+  "plugin-pug",
+  "plugin-rem"
 ]
