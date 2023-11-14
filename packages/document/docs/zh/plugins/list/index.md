@@ -56,6 +56,7 @@ export default defineConfig({
 - [Check Syntax 插件](/plugins/list/plugin-check-syntax)：用于分析产物的语法兼容性，判断是否存在导致兼容性问题的高级语法。
 - [CSS Minimizer 插件](/plugins/list/plugin-css-minimizer)：用于自定义 CSS 压缩工具，切换到 [cssnano](https://cssnano.co/) 或其他工具进行 CSS 压缩。
 - [Pug 插件](/plugins/list/plugin-pug)：提供对 Pug 模板引擎的支持。
+- [Rem 插件](/plugins/list/plugin-rem)：用于实现移动端页面的 rem 自适应布局。
 
 :::tip
 你可以在 [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) 仓库中找到所有官方插件的源代码。
