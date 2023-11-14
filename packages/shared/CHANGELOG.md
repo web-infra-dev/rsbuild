@@ -1,5 +1,16 @@
 # @rsbuild/shared
 
+## 0.0.22
+
+### Patch Changes
+
+- 64e1913a: perf(deps): prebundle connect and open
+- 34255e7: perf: prebundle browserslist and bump autoprefixer
+- 1151c677: refactor: extract rem as a standalone plugin
+- 7aeebf41: refactor: move disableCssModuleExtension config to uni-builder
+- f0f0627: feat(deps): bump Rspack v0.3.12
+- 190b8c2: feat: always compile TS and JSX files
+
 ## 0.0.21
 
 ### Patch Changes

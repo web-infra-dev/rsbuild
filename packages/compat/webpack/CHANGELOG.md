@@ -1,5 +1,26 @@
 # @rsbuild/webpack
 
+## 0.0.22
+
+### Patch Changes
+
+- 1151c677: refactor: extract rem as a standalone plugin
+- 190b8c2: feat: always compile TS and JSX files
+- Updated dependencies [a82f18c]
+- Updated dependencies [64e1913a]
+- Updated dependencies [34255e7]
+- Updated dependencies [1151c677]
+- Updated dependencies [6df00856]
+- Updated dependencies [85134ea]
+- Updated dependencies [7aeebf41]
+- Updated dependencies [f0f0627]
+- Updated dependencies [190b8c2]
+  - @rsbuild/core@0.0.22
+  - @rsbuild/shared@0.0.22
+  - @rsbuild/plugin-babel@0.0.22
+  - @rsbuild/plugin-css-minimizer@0.0.22
+  - @rsbuild/babel-preset@0.0.22
+
 ## 0.0.21
 
 ### Patch Changes

@@ -1,5 +1,25 @@
 # @rsbuild/core
 
+## 0.0.22
+
+### Patch Changes
+
+- a82f18c: chore(type): update server.close as an async function
+- 64e1913a: perf(deps): prebundle connect and open
+- 1151c677: refactor: extract rem as a standalone plugin
+- 6df00856: chore: compile hmr-client as es5
+- 85134ea: chore(server): adjust printURLs, httpServer and dev compile execution order
+- 7aeebf41: refactor: move disableCssModuleExtension config to uni-builder
+- f0f0627: feat(deps): bump Rspack v0.3.12
+- 190b8c2: feat: always compile TS and JSX files
+- Updated dependencies [64e1913a]
+- Updated dependencies [34255e7]
+- Updated dependencies [1151c677]
+- Updated dependencies [7aeebf41]
+- Updated dependencies [f0f0627]
+- Updated dependencies [190b8c2]
+  - @rsbuild/shared@0.0.22
+
 ## 0.0.21
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @rsbuild/document
 
+## 0.0.22
+
+### Patch Changes
+
+- 7aeebf41: refactor: move disableCssModuleExtension config to uni-builder
+
 ## 0.0.21
 
 ### Patch Changes

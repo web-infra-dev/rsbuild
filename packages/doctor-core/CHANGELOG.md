@@ -1,5 +1,14 @@
 # @rsbuild/doctor-core
 
+## 0.0.10
+
+### Patch Changes
+
+- 307ec00e: feat: Rsbuild Doctor add rules to doctor-core package.
+- f0f0627: feat(deps): bump Rspack v0.3.12
+  - @rsbuild/doctor-sdk@0.0.10
+  - @rsbuild/doctor-utils@0.0.10
+
 ## 0.0.9
 
 ### Patch Changes
