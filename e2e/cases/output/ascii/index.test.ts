@@ -5,9 +5,6 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 test('output.charset default (ascii)', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     runServer: true,
   });
 
@@ -31,9 +28,6 @@ test('output.charset default (ascii)', async ({ page }) => {
 test('output.charset (utf8)', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     rsbuildConfig: {
       output: {
         charset: 'utf8',

@@ -1,4 +1,3 @@
-import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { pluginBabel } from '@rsbuild/plugin-babel';
@@ -6,9 +5,6 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 test('babel', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     runServer: true,
     plugins: [
       pluginBabel((_, { addPlugins }) => {
@@ -33,9 +29,6 @@ test('babel', async ({ page }) => {
 test('babel exclude', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     runServer: true,
     plugins: [
       pluginBabel((_, { addPlugins, addExcludes }) => {

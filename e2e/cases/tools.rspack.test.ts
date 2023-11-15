@@ -7,11 +7,13 @@ const fixtures = __dirname;
 test('tools.rspack', async ({ page }) => {
   const rsbuild = await build<'rspack'>({
     cwd: join(fixtures, 'source/global-vars'),
-    entry: {
-      main: join(fixtures, 'source/global-vars/src/index.ts'),
-    },
     runServer: true,
     rsbuildConfig: {
+      source: {
+        entries: {
+          index: join(fixtures, 'source/global-vars/src/index.ts'),
+        },
+      },
       tools: {
         rspack: (config, { rspack }) => {
           config.plugins?.push(
@@ -24,7 +26,7 @@ test('tools.rspack', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const testEl = page.locator('#test-el');
   await expect(testEl).toHaveText('aaaaa');

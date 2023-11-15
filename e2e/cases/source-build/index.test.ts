@@ -12,9 +12,6 @@ webpackOnlyTest(
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: fixture,
-      entry: {
-        index: join(fixture, 'src/index.tsx'),
-      },
       plugins: [pluginSourceBuild(), pluginReact()],
     });
 

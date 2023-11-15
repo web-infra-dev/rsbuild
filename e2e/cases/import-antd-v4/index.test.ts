@@ -9,7 +9,6 @@ test.setTimeout(120000);
 test.skip('should import antd v4 correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.ts') },
   });
   const files = await rsbuild.unwrapOutputJSON();
   expect(

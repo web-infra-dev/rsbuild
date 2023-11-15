@@ -22,9 +22,6 @@ test.describe('output configure multi', () => {
 
     rsbuild = await build({
       cwd: join(fixtures, 'rem'),
-      entry: {
-        main: join(fixtures, 'rem/src/index.ts'),
-      },
       plugins: [pluginReact()],
       rsbuildConfig: {
         output: {
@@ -52,7 +49,9 @@ test.describe('output configure multi', () => {
   });
 
   test('distPath', async () => {
-    expect(fse.existsSync(join(fixtures, 'rem/dist-1/main.html'))).toBeTruthy();
+    expect(
+      fse.existsSync(join(fixtures, 'rem/dist-1/index.html')),
+    ).toBeTruthy();
 
     expect(fse.existsSync(join(fixtures, 'rem/dist-1/aa/js'))).toBeTruthy();
   });
@@ -84,9 +83,6 @@ test('cleanDistPath disable', async () => {
 
   const rsbuild = await build({
     cwd: join(fixtures, 'rem'),
-    entry: {
-      main: join(fixtures, 'rem/src/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
@@ -107,9 +103,6 @@ test('cleanDistPath disable', async () => {
 test('disableSourcemap', async () => {
   const rsbuild = await build({
     cwd: join(fixtures, 'rem'),
-    entry: {
-      main: join(fixtures, 'rem/src/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {

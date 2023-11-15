@@ -10,10 +10,10 @@ const expectConsoleType = async (
   consoleType: Record<string, boolean>,
 ) => {
   const files = await rsbuild.unwrapOutputJSON();
-  const mainFile = Object.keys(files).find(
-    (name) => name.includes('main.') && name.endsWith('.js'),
+  const indexFile = Object.keys(files).find(
+    (name) => name.includes('index.') && name.endsWith('.js'),
   )!;
-  const content = files[mainFile];
+  const content = files[indexFile];
 
   Object.entries(consoleType).forEach(([key, value]) => {
     expect(content.includes(`test-console-${key}`)).toEqual(value);
@@ -23,9 +23,6 @@ const expectConsoleType = async (
 test('should remove specified console correctly when using SWC plugin', async () => {
   const rsbuild = await build({
     cwd,
-    entry: {
-      main: join(cwd, 'src/index.js'),
-    },
     plugins: [pluginSwc()],
     rsbuildConfig: {
       performance: {
@@ -45,9 +42,6 @@ test('should remove specified console correctly when using SWC plugin', async ()
 test('should remove all console correctly when using SWC plugin', async () => {
   const rsbuild = await build({
     cwd,
-    entry: {
-      main: join(cwd, 'src/index.js'),
-    },
     plugins: [pluginSwc()],
     rsbuildConfig: {
       performance: {

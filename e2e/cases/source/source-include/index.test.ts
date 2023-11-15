@@ -7,7 +7,6 @@ test('should not compile file which outside of project by default', async () => 
   await expect(
     build({
       cwd: __dirname,
-      entry: { index: path.resolve(__dirname, './src/index.js') },
       plugins: [pluginCheckSyntax()],
       rsbuildConfig: {
         output: {
@@ -22,7 +21,6 @@ test('should compile specified file when source.include', async () => {
   await expect(
     build({
       cwd: __dirname,
-      entry: { index: path.resolve(__dirname, './src/index.js') },
       plugins: [pluginCheckSyntax()],
       rsbuildConfig: {
         source: {

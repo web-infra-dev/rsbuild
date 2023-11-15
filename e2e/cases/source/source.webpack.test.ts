@@ -8,9 +8,6 @@ const fixtures = __dirname;
 test.skip('module-scopes', async ({ page }) => {
   const buildOpts = {
     cwd: join(fixtures, 'module-scopes'),
-    entry: {
-      main: join(fixtures, 'module-scopes/src/index.js'),
-    },
   };
 
   await expect(
@@ -18,6 +15,9 @@ test.skip('module-scopes', async ({ page }) => {
       ...buildOpts,
       rsbuildConfig: {
         source: {
+          entries: {
+            index: join(fixtures, 'module-scopes/src/index.js'),
+          },
           //   moduleScopes: ['./src'],
         },
       },
@@ -29,7 +29,7 @@ test.skip('module-scopes', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
 

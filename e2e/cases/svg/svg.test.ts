@@ -9,13 +9,17 @@ const fixtures = __dirname;
 test('svg (assets)', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'svg-assets'),
-    entry: {
-      main: join(fixtures, 'svg-assets', 'src/index.js'),
-    },
     runServer: true,
+    rsbuildConfig: {
+      source: {
+        entries: {
+          index: join(fixtures, 'svg-assets', 'src/index.js'),
+        },
+      },
+    },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   // test svg asset
   await expect(
@@ -37,10 +41,14 @@ test('svg (assets)', async ({ page }) => {
 test('svgr (defaultExport url)', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'svg'),
-    entry: {
-      main: join(fixtures, 'svg', 'src/index.js'),
-    },
     runServer: true,
+    rsbuildConfig: {
+      source: {
+        entries: {
+          index: join(fixtures, 'svg', 'src/index.js'),
+        },
+      },
+    },
     plugins: [
       pluginReact(),
       pluginSvgr({
@@ -49,7 +57,7 @@ test('svgr (defaultExport url)', async ({ page }) => {
     ],
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   // test svgr（namedExport）
   await expect(
@@ -76,9 +84,6 @@ test('svgr (defaultExport url)', async ({ page }) => {
 test('svgr (defaultExport component)', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'svg-default-export-component'),
-    entry: {
-      main: join(fixtures, 'svg-default-export-component', 'src/index.js'),
-    },
     runServer: true,
     rsbuildConfig: {},
     plugins: [
@@ -89,7 +94,7 @@ test('svgr (defaultExport component)', async ({ page }) => {
     ],
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   await expect(
     page.evaluate(`document.getElementById('test-svg').tagName === 'svg'`),
@@ -101,9 +106,6 @@ test('svgr (defaultExport component)', async ({ page }) => {
 test('svgr (query url)', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'svg-url'),
-    entry: {
-      main: join(fixtures, 'svg-url', 'src/index.js'),
-    },
     plugins: [
       pluginReact(),
       pluginSvgr({
@@ -113,7 +115,7 @@ test('svgr (query url)', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   // test svg asset
   await expect(
@@ -136,9 +138,6 @@ test('svgr (query url)', async ({ page }) => {
 test('svgr (external react)', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'svg-external-react'),
-    entry: {
-      main: join(fixtures, 'svg-external-react', 'src/index.js'),
-    },
     runServer: true,
     plugins: [
       pluginReact(),
@@ -159,7 +158,7 @@ test('svgr (external react)', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   // test svgr（namedExport）
   await expect(

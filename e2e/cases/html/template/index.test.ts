@@ -5,11 +5,13 @@ import { build } from '@scripts/shared';
 test('should set template via function correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.ts'),
-      foo: path.resolve(__dirname, './src/foo.js'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          index: path.resolve(__dirname, './src/index.ts'),
+          foo: path.resolve(__dirname, './src/foo.js'),
+        },
+      },
       html: {
         template({ entryName }) {
           return entryName === 'index'

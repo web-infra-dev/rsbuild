@@ -7,7 +7,6 @@ import { webpackOnlyTest } from '@scripts/helper';
 webpackOnlyTest('removeMomentLocale false (default)', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { main: join(__dirname, './src/index.js') },
     rsbuildConfig: {
       performance: {
         chunkSplit: {
@@ -41,7 +40,6 @@ webpackOnlyTest('removeMomentLocale false (default)', async () => {
 test('removeMomentLocale true', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { main: join(__dirname, './src/index.js') },
     rsbuildConfig: {
       performance: {
         removeMomentLocale: true,

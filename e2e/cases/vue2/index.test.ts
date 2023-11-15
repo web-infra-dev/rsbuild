@@ -11,14 +11,11 @@ rspackOnlyTest('should build basic Vue sfc correctly', async ({ page }) => {
 
   const rsbuild = await build({
     cwd: root,
-    entry: {
-      main: join(root, 'src/index.js'),
-    },
     runServer: true,
     plugins: [pluginVue2()],
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const button1 = page.locator('#button1');
   const button2 = page.locator('#button2');
@@ -34,14 +31,11 @@ rspackOnlyTest('should build Vue sfc style correctly', async ({ page }) => {
 
   const rsbuild = await build({
     cwd: root,
-    entry: {
-      main: join(root, 'src/index.js'),
-    },
     runServer: true,
     plugins: [pluginVue2()],
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const button = page.locator('#button');
   await expect(button).toHaveCSS('color', 'rgb(255, 0, 0)');
@@ -57,14 +51,11 @@ rspackOnlyTest('should build basic Vue jsx correctly', async ({ page }) => {
 
   const rsbuild = await build({
     cwd: root,
-    entry: {
-      main: join(root, 'src/index.js'),
-    },
     runServer: true,
     plugins: [pluginVue2(), pluginVue2Jsx(), pluginBabel()],
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const button1 = page.locator('#button1');
   await expect(button1).toHaveText('A: 0');
@@ -79,14 +70,11 @@ rspackOnlyTest(
 
     const rsbuild = await build({
       cwd: root,
-      entry: {
-        main: join(root, 'src/index.js'),
-      },
       runServer: true,
       plugins: [pluginBabel(), pluginVue2()],
     });
 
-    await page.goto(getHrefByEntryName('main', rsbuild.port));
+    await page.goto(getHrefByEntryName('index', rsbuild.port));
 
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0 foo: bar');
@@ -102,14 +90,11 @@ rspackOnlyTest(
 
     const rsbuild = await build({
       cwd: root,
-      entry: {
-        main: join(root, 'src/index.js'),
-      },
       runServer: true,
       plugins: [pluginBabel(), pluginVue2(), pluginVue2Jsx()],
     });
 
-    await page.goto(getHrefByEntryName('main', rsbuild.port));
+    await page.goto(getHrefByEntryName('index', rsbuild.port));
 
     const button = page.locator('#button');
     await expect(button).toHaveText('0');
@@ -128,14 +113,11 @@ rspackOnlyTest(
 
     const rsbuild = await build({
       cwd: root,
-      entry: {
-        main: join(root, 'src/index.js'),
-      },
       runServer: true,
       plugins: [pluginBabel(), pluginVue2(), pluginVue2Jsx()],
     });
 
-    await page.goto(getHrefByEntryName('main', rsbuild.port));
+    await page.goto(getHrefByEntryName('index', rsbuild.port));
 
     const button = page.locator('#button');
     await expect(button).toHaveText('0');

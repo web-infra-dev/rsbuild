@@ -10,7 +10,6 @@ test('should compress image with use plugin-image-compress', async () => {
   await expect(
     build({
       cwd: __dirname,
-      entry: { index: path.resolve(__dirname, './src/index.js') },
       plugins: [
         pluginImageCompress(),
         {

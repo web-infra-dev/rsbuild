@@ -7,7 +7,6 @@ import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 rspackOnlyTest('should minimize CSS correctly by default', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {},
   });
   const files = await rsbuild.unwrapOutputJSON();
@@ -23,7 +22,6 @@ rspackOnlyTest('should minimize CSS correctly by default', async () => {
 test('should minimize CSS with plugin-css-minimizer correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {},
     plugins: [pluginCssMinimizer()],
   });

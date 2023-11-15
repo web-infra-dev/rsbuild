@@ -16,19 +16,15 @@ import { PackageManagerTabs } from '@theme';
 
 ### 2. 创建 Rsbuild 实例
 
-你可以调用 `createRsbuild` 方法来创建一个 Rsbuild 实例对象，并通过 `entry` 选项设置应用入口：
+你可以调用 `createRsbuild` 方法来创建一个 Rsbuild 实例对象：
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
 
-const rsbuild = await createRsbuild({
-  entry: {
-    index: './src/index.ts',
-  },
-});
+const rsbuild = await createRsbuild();
 ```
 
-除了上述示例中的 `entry` 选项，`createRsbuild` 方法也提供了一些其他选项，你可以在 [API - createRsbuild](/api/javascript-api/core.html#creatersbuild) 中进一步了解。
+`createRsbuild` 方法提供了一些选项，你可以在 [API - createRsbuild](/api/javascript-api/core.html#creatersbuild) 中进一步了解。
 
 ### 3. 调用 Rsbuild 实例方法
 

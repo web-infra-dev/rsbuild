@@ -7,9 +7,6 @@ const fixtures = __dirname;
 test('should access / success when entry is index', async ({ page }) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      index: join(fixtures, 'basic', 'src/index.ts'),
-    },
     rsbuildConfig: {
       dev: {
         devMiddleware: {
@@ -39,10 +36,12 @@ test('should access /main.html success when entry is main', async ({
 }) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic', 'src/index.ts'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'basic', 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-html-fallback-1',
@@ -69,10 +68,12 @@ test('should access /main.html success when entry is main', async ({
 test('should access /main success when entry is main', async ({ page }) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic', 'src/index.ts'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'basic', 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-html-fallback-2',
@@ -103,10 +104,12 @@ test('should access /main success when entry is main and use memoryFs', async ({
 }) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic', 'src/index.ts'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'basic', 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-html-fallback-3',
@@ -135,10 +138,12 @@ test('should access /main success when entry is main and set assetPrefix', async
 }) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic', 'src/index.ts'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'basic', 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-html-fallback-4',
@@ -168,10 +173,12 @@ test('should access /main success when entry is main and outputPath is /main/ind
 }) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic', 'src/index.ts'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'basic', 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-html-fallback-5',
@@ -201,10 +208,12 @@ test('should access /main success when entry is main and outputPath is /main/ind
 test('should return 404 when page is not found', async ({ page }) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic', 'src/index.ts'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'basic', 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-html-fallback-6',
@@ -232,10 +241,12 @@ test('should access /html/main success when entry is main and outputPath is /htm
 }) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic', 'src/index.ts'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'basic', 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-html-fallback-5',

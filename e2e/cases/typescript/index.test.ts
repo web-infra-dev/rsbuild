@@ -6,7 +6,6 @@ import { build } from '@scripts/shared';
 webpackOnlyTest('should compile const enum correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.ts') },
     rsbuildConfig: {
       output: {
         polyfill: 'off',

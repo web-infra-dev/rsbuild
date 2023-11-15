@@ -9,7 +9,6 @@ test('should add node-polyfill when add node-polyfill plugin', async ({
 }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     plugins: [pluginNodePolyfill(), pluginReact()],
     runServer: true,
   });

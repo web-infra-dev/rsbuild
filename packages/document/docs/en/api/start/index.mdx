@@ -16,19 +16,15 @@ import { PackageManagerTabs } from '@theme';
 
 ### 2. Create an Rsbuild Instance
 
-You can call the `createRsbuild` method to create an Rsbuild instance and set the application entry point using the `entry` option:
+You can call the `createRsbuild` method to create an Rsbuild instance:
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
 
-const rsbuild = await createRsbuild({
-  entry: {
-    index: './src/index.ts',
-  },
-});
+const rsbuild = await createRsbuild();
 ```
 
-Apart from the `entry` option mentioned in the example above, the `createRsbuild` method has several other options, which you can learn more about in the [API - createRsbuild](/api/javascript-api/core.html#creatersbuild).
+The `createRsbuild` method provides some options, which you can learn more about in the [API - createRsbuild](/api/javascript-api/core.html#creatersbuild).
 
 ### 3. Call Rsbuild Instance Method
 

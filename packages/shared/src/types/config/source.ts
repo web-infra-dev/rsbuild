@@ -1,6 +1,5 @@
-import type { RsbuildTarget } from '../rsbuild';
-import type { ModifyChainUtils } from '../hooks';
-import type { ChainedConfig, ChainedConfigWithUtils } from '../utils';
+import type { RsbuildEntry, RsbuildTarget } from '../rsbuild';
+import type { ChainedConfig } from '../utils';
 
 export type Alias = Record<string, string | false | (string | false)[]>;
 
@@ -28,6 +27,10 @@ export interface SourceConfig {
    * `babel-loader` or `ts-loader` by default, as will as the files outside the current project directory.
    */
   include?: (string | RegExp)[];
+  /**
+   * Set the entry modules.
+   */
+  entries?: RsbuildEntry;
   /**
    * Specifies that certain files that will be excluded from compilation.
    */

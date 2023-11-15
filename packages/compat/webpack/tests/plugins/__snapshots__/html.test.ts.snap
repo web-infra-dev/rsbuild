@@ -221,8 +221,8 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
 exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin 1`] = `
 {
   "entry": {
-    "main": [
-      "src/main.ts",
+    "index": [
+      "src/index.js",
     ],
   },
   "plugins": [
@@ -238,7 +238,7 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
       "options": {
         "HtmlPlugin": [Function],
         "info": {
-          "main.html": {
+          "index.html": {
             "meta": [
               {
                 "charset": "UTF-8",
@@ -260,18 +260,18 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
 exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = `
 {
   "entry": {
-    "main": [
-      "src/main.ts",
+    "index": [
+      "src/index.js",
     ],
   },
   "plugins": [
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
-          "main",
+          "index",
         ],
         "favicon": "src/favicon.ico",
-        "filename": "main.html",
+        "filename": "index.html",
         "inject": "head",
         "minify": false,
         "scriptLoading": "defer",
@@ -286,7 +286,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
       "options": {
         "HtmlPlugin": [Function],
         "info": {
-          "main.html": {
+          "index.html": {
             "meta": [
               {
                 "charset": "UTF-8",
@@ -308,17 +308,17 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
 exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
 {
   "entry": {
-    "main": [
-      "src/main.ts",
+    "index": [
+      "src/index.js",
     ],
   },
   "plugins": [
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
-          "main",
+          "index",
         ],
-        "filename": "main.html",
+        "filename": "index.html",
         "inject": "body",
         "minify": false,
         "scriptLoading": "defer",
@@ -333,7 +333,7 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
       "options": {
         "HtmlPlugin": [Function],
         "info": {
-          "main.html": {
+          "index.html": {
             "meta": [
               {
                 "charset": "UTF-8",
@@ -355,17 +355,17 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
 exports[`plugin-html > should enable minify in production 1`] = `
 {
   "entry": {
-    "main": [
-      "src/main.ts",
+    "index": [
+      "src/index.js",
     ],
   },
   "plugins": [
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
-          "main",
+          "index",
         ],
-        "filename": "main.html",
+        "filename": "index.html",
         "inject": "head",
         "minify": {
           "collapseWhitespace": true,
@@ -399,7 +399,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
       "options": {
         "HtmlPlugin": [Function],
         "info": {
-          "main.html": {
+          "index.html": {
             "meta": [
               {
                 "charset": "UTF-8",
@@ -421,17 +421,17 @@ exports[`plugin-html > should enable minify in production 1`] = `
 exports[`plugin-html > should register html plugin correctly 1`] = `
 {
   "entry": {
-    "main": [
-      "src/main.ts",
+    "index": [
+      "src/index.js",
     ],
   },
   "plugins": [
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
-          "main",
+          "index",
         ],
-        "filename": "main.html",
+        "filename": "index.html",
         "inject": "head",
         "minify": false,
         "scriptLoading": "defer",
@@ -446,7 +446,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
       "options": {
         "HtmlPlugin": [Function],
         "info": {
-          "main.html": {
+          "index.html": {
             "meta": [
               {
                 "charset": "UTF-8",

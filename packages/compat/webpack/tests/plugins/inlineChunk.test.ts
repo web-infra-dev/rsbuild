@@ -15,9 +15,6 @@ describe('plugin-inline-chunk', () => {
   it('should add InlineChunkHtmlPlugin properly by default', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
-      entry: {
-        main: './src/main.ts',
-      },
     });
     const config = await rsbuild.unwrapWebpackConfig();
 
@@ -27,9 +24,6 @@ describe('plugin-inline-chunk', () => {
   it('should use proper plugin options when enableInlineScripts is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
-      entry: {
-        main: './src/main.ts',
-      },
       rsbuildConfig: {
         output: {
           enableInlineScripts: true,
@@ -44,9 +38,6 @@ describe('plugin-inline-chunk', () => {
   it('should use proper plugin options when enableInlineStyles is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
-      entry: {
-        main: './src/main.ts',
-      },
       rsbuildConfig: {
         output: {
           enableInlineStyles: true,
@@ -58,29 +49,9 @@ describe('plugin-inline-chunk', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should use proper plugin options when disableInlineRuntimeChunk is true', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
-      entry: {
-        main: './src/main.ts',
-      },
-      rsbuildConfig: {
-        output: {
-          disableInlineRuntimeChunk: true,
-        },
-      },
-    });
-    const config = await rsbuild.unwrapWebpackConfig();
-
-    expect(config).toMatchSnapshot();
-  });
-
   it('should not apply InlineChunkHtmlPlugin when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
-      entry: {
-        main: './src/main.ts',
-      },
       target: 'node',
     });
 
@@ -92,9 +63,6 @@ describe('plugin-inline-chunk', () => {
   it('should not apply InlineChunkHtmlPlugin when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
-      entry: {
-        main: './src/main.ts',
-      },
       target: 'web-worker',
     });
 
@@ -107,9 +75,6 @@ describe('plugin-inline-chunk', () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
-      entry: {
-        main: './src/main.ts',
-      },
     });
 
     expect(

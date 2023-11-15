@@ -13,11 +13,15 @@ const buildFixture = (
 
   return build({
     cwd: root,
-    entry: {
-      main: path.join(root, entry),
-    },
     runServer: true,
     plugins: [pluginSvelte()],
+    rsbuildConfig: {
+      source: {
+        entries: {
+          index: path.join(root, entry),
+        },
+      },
+    },
   });
 };
 
@@ -26,7 +30,7 @@ rspackOnlyTest(
   async ({ page }) => {
     const handle = await buildFixture('basic', 'src/index.js');
 
-    await page.goto(getHrefByEntryName('main', handle.port));
+    await page.goto(getHrefByEntryName('index', handle.port));
 
     const title = page.locator('#title');
 
@@ -41,13 +45,17 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
 
   const handle = await dev({
     cwd: root,
-    entry: {
-      main: path.join(root, 'src/index.js'),
-    },
     plugins: [pluginSvelte()],
+    rsbuildConfig: {
+      source: {
+        entries: {
+          index: path.join(root, 'src/index.js'),
+        },
+      },
+    },
   });
 
-  await page.goto(getHrefByEntryName('main', handle.port));
+  await page.goto(getHrefByEntryName('index', handle.port));
 
   const a = page.locator('#A');
   const b = page.locator('#B');
@@ -78,7 +86,7 @@ rspackOnlyTest(
   async ({ page }) => {
     const handle = await buildFixture('ts', 'src/index.ts');
 
-    await page.goto(getHrefByEntryName('main', handle.port));
+    await page.goto(getHrefByEntryName('index', handle.port));
 
     const title = page.locator('#title');
 
@@ -95,7 +103,7 @@ rspackOnlyTest(
     async ({ page }) => {
       const handle = await buildFixture(name, 'src/index.js');
 
-      await page.goto(getHrefByEntryName('main', handle.port));
+      await page.goto(getHrefByEntryName('index', handle.port));
 
       const title = page.locator('#title');
 

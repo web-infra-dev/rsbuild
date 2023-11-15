@@ -8,14 +8,11 @@ test('should preview dist files correctly', async ({ page }) => {
 
   const { instance } = await build({
     cwd,
-    entry: {
-      main: join(cwd, 'src/index.js'),
-    },
   });
 
   const { port, server } = await instance.preview();
 
-  await page.goto(getHrefByEntryName('main', port));
+  await page.goto(getHrefByEntryName('index', port));
 
   const rootEl = page.locator('#root');
   await expect(rootEl).toHaveText('Hello Rsbuild!');

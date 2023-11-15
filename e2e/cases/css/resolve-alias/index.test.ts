@@ -5,7 +5,6 @@ import { build } from '@scripts/shared';
 test('should compile CSS with alias correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       source: {
         alias: {

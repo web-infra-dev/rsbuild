@@ -9,11 +9,13 @@ const fixtures = __dirname;
 test('should generate prefetch link when prefetch is defined', async () => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/page1/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'src/page1/index.ts'),
+        },
+      },
       output: {
         assetPrefix: 'https://www.foo.com',
       },
@@ -47,11 +49,13 @@ test('should generate prefetch link when prefetch is defined', async () => {
 test('should generate prefetch link correctly when assetPrefix do not have a protocol', async () => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/page1/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'src/page1/index.ts'),
+        },
+      },
       output: {
         assetPrefix: '//www.foo.com',
       },
@@ -82,11 +86,13 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
 test('should generate prefetch link with filter', async () => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/page1/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'src/page1/index.ts'),
+        },
+      },
       performance: {
         prefetch: {
           include: [/.*\.png$/],
@@ -121,12 +127,14 @@ webpackOnlyTest(
   async () => {
     const rsbuild = await build({
       cwd: fixtures,
-      entry: {
-        page1: join(fixtures, 'src/page1/index.ts'),
-        page2: join(fixtures, 'src/page2/index.ts'),
-      },
       plugins: [pluginReact()],
       rsbuildConfig: {
+        source: {
+          entries: {
+            page1: join(fixtures, 'src/page1/index.ts'),
+            page2: join(fixtures, 'src/page2/index.ts'),
+          },
+        },
         performance: {
           prefetch: {
             type: 'all-chunks',
@@ -168,11 +176,13 @@ webpackOnlyTest(
 test('should generate preload link when preload is defined', async () => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/page1/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'src/page1/index.ts'),
+        },
+      },
       performance: {
         preload: true,
       },

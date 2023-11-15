@@ -5,7 +5,6 @@ import {
   TS_CONFIG_FILE,
   createContextByConfig,
   type CreateRsbuildOptions,
-  type NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import { initHooks } from './initHooks';
 import { withDefaultConfig } from '../config/defaults';
@@ -23,8 +22,9 @@ export function createPrimaryContext(
   const rsbuildConfig = withDefaultConfig(userRsbuildConfig);
   const context = createContextByConfig(
     options,
-    rsbuildConfig.output as NormalizedOutputConfig,
     'webpack',
+    rsbuildConfig.source,
+    rsbuildConfig.output,
   );
 
   return {

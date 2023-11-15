@@ -8,9 +8,6 @@ const fixtures = __dirname;
 test('legalComments linked (default)', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.jsx'),
-    },
     runServer: true,
     plugins: [pluginReact()],
     rsbuildConfig: {
@@ -22,7 +19,7 @@ test('legalComments linked (default)', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild!');
 
@@ -31,7 +28,7 @@ test('legalComments linked (default)', async ({ page }) => {
   const LicenseContent =
     files[
       Object.keys(files).find(
-        (file) => file.includes('js/main') && file.endsWith('.LICENSE.txt'),
+        (file) => file.includes('js/index') && file.endsWith('.LICENSE.txt'),
       )!
     ];
 
@@ -43,7 +40,7 @@ test('legalComments linked (default)', async ({ page }) => {
   const JsContent =
     files[
       Object.keys(files).find(
-        (file) => file.includes('js/main') && file.endsWith('.js'),
+        (file) => file.includes('js/index') && file.endsWith('.js'),
       )!
     ];
 
@@ -55,9 +52,6 @@ test('legalComments linked (default)', async ({ page }) => {
 test('legalComments none', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.jsx'),
-    },
     runServer: true,
     plugins: [pluginReact()],
     rsbuildConfig: {
@@ -72,14 +66,14 @@ test('legalComments none', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild!');
 
   const files = await rsbuild.unwrapOutputJSON();
 
   const LicenseFile = Object.keys(files).find(
-    (file) => file.includes('js/main') && file.endsWith('.LICENSE.txt'),
+    (file) => file.includes('js/index') && file.endsWith('.LICENSE.txt'),
   )!;
 
   expect(LicenseFile).toBeUndefined();
@@ -87,7 +81,7 @@ test('legalComments none', async ({ page }) => {
   const JsContent =
     files[
       Object.keys(files).find(
-        (file) => file.includes('js/main') && file.endsWith('.js'),
+        (file) => file.includes('js/index') && file.endsWith('.js'),
       )!
     ];
 
@@ -99,9 +93,6 @@ test('legalComments none', async ({ page }) => {
 test('legalComments inline', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.jsx'),
-    },
     runServer: true,
     plugins: [pluginReact()],
     rsbuildConfig: {
@@ -116,14 +107,14 @@ test('legalComments inline', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild!');
 
   const files = await rsbuild.unwrapOutputJSON();
 
   const LicenseFile = Object.keys(files).find(
-    (file) => file.includes('js/main') && file.endsWith('.LICENSE.txt'),
+    (file) => file.includes('js/index') && file.endsWith('.LICENSE.txt'),
   )!;
 
   expect(LicenseFile).toBeUndefined();
@@ -131,7 +122,7 @@ test('legalComments inline', async ({ page }) => {
   const JsContent =
     files[
       Object.keys(files).find(
-        (file) => file.includes('js/main') && file.endsWith('.js'),
+        (file) => file.includes('js/index') && file.endsWith('.js'),
       )!
     ];
 

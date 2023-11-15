@@ -17,9 +17,6 @@ test('should generate config files when writeToDisk is true', async () => {
   const rsbuild = await createRsbuild(
     {
       cwd: __dirname,
-      entry: {
-        index: path.resolve(__dirname, './src/index.js'),
-      },
     },
     {},
   );
@@ -39,9 +36,6 @@ test('should generate bundler config for node when target contains node', async 
     {
       cwd: __dirname,
       target: ['web', 'node'],
-      entry: {
-        index: path.resolve(__dirname, './src/index.js'),
-      },
     },
     {},
   );
@@ -62,9 +56,6 @@ test('should not generate config files when writeToDisk is false', async () => {
   const rsbuild = await createRsbuild(
     {
       cwd: __dirname,
-      entry: {
-        index: path.resolve(__dirname, './src/index.js'),
-      },
     },
     {},
   );

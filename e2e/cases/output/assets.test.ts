@@ -62,15 +62,12 @@ cases.forEach((_case) => {
   test(_case.name, async ({ page }) => {
     const rsbuild = await build({
       cwd: _case.cwd,
-      entry: {
-        main: join(_case.cwd, 'src/index.js'),
-      },
       runServer: true,
       plugins: [pluginReact()],
       rsbuildConfig: _case.config || {},
     });
 
-    await page.goto(getHrefByEntryName('main', rsbuild.port));
+    await page.goto(getHrefByEntryName('index', rsbuild.port));
 
     if (_case.expected === 'url') {
       await expect(

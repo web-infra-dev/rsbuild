@@ -7,7 +7,6 @@ import { pluginStylus } from '@rsbuild/plugin-stylus';
 test('should compile stylus correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     plugins: [pluginStylus()],
   });
   const files = await rsbuild.unwrapOutputJSON();

@@ -5,7 +5,6 @@ import { build } from '@scripts/shared';
 test('should compile CSS modules composes correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
   });
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -26,7 +25,11 @@ test('should compile CSS modules composes correctly', async () => {
 test('should compile CSS modules composes with external correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { external: path.resolve(__dirname, './src/external.js') },
+    rsbuildConfig: {
+      source: {
+        entries: { external: path.resolve(__dirname, './src/external.js') },
+      },
+    },
   });
   const files = await rsbuild.unwrapOutputJSON();
 

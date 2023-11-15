@@ -5,7 +5,6 @@ import { build } from '@scripts/shared';
 test('should exclude specified less file', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       tools: {
         less: (_, { addExcludes }) => {

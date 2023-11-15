@@ -3,17 +3,17 @@
 exports[`plugin-inline-chunk > should add InlineChunkHtmlPlugin properly by default 1`] = `
 {
   "entry": {
-    "main": [
-      "src/main.ts",
+    "index": [
+      "src/index.js",
     ],
   },
   "plugins": [
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
-          "main",
+          "index",
         ],
-        "filename": "main.html",
+        "filename": "index.html",
         "inject": "head",
         "minify": {
           "collapseWhitespace": true,
@@ -47,73 +47,7 @@ exports[`plugin-inline-chunk > should add InlineChunkHtmlPlugin properly by defa
       "options": {
         "HtmlPlugin": [Function],
         "info": {
-          "main.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
-            "title": "Rsbuild App",
-          },
-        },
-      },
-    },
-  ],
-}
-`;
-
-exports[`plugin-inline-chunk > should use proper plugin options when disableInlineRuntimeChunk is true 1`] = `
-{
-  "entry": {
-    "main": [
-      "src/main.ts",
-    ],
-  },
-  "plugins": [
-    HtmlWebpackPlugin {
-      "userOptions": {
-        "chunks": [
-          "main",
-        ],
-        "filename": "main.html",
-        "inject": "head",
-        "minify": {
-          "collapseWhitespace": true,
-          "keepClosingSlash": true,
-          "minifyCSS": true,
-          "minifyJS": {
-            "format": {
-              "ascii_only": true,
-            },
-            "mangle": {
-              "safari10": true,
-            },
-          },
-          "minifyURLs": true,
-          "removeComments": false,
-          "removeEmptyAttributes": true,
-          "removeRedundantAttributes": true,
-          "removeScriptTypeAttributes": true,
-          "removeStyleLinkTypeAttributes": true,
-          "useShortDoctype": true,
-        },
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-      },
-      "version": 5,
-    },
-    HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
-      "name": "HtmlBasicPlugin",
-      "options": {
-        "HtmlPlugin": [Function],
-        "info": {
-          "main.html": {
+          "index.html": {
             "meta": [
               {
                 "charset": "UTF-8",
@@ -135,17 +69,17 @@ exports[`plugin-inline-chunk > should use proper plugin options when disableInli
 exports[`plugin-inline-chunk > should use proper plugin options when enableInlineScripts is true 1`] = `
 {
   "entry": {
-    "main": [
-      "src/main.ts",
+    "index": [
+      "src/index.js",
     ],
   },
   "plugins": [
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
-          "main",
+          "index",
         ],
-        "filename": "main.html",
+        "filename": "index.html",
         "inject": "head",
         "minify": {
           "collapseWhitespace": true,
@@ -179,7 +113,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
       "options": {
         "HtmlPlugin": [Function],
         "info": {
-          "main.html": {
+          "index.html": {
             "meta": [
               {
                 "charset": "UTF-8",
@@ -214,17 +148,17 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
 exports[`plugin-inline-chunk > should use proper plugin options when enableInlineStyles is true 1`] = `
 {
   "entry": {
-    "main": [
-      "src/main.ts",
+    "index": [
+      "src/index.js",
     ],
   },
   "plugins": [
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
-          "main",
+          "index",
         ],
-        "filename": "main.html",
+        "filename": "index.html",
         "inject": "head",
         "minify": {
           "collapseWhitespace": true,
@@ -258,7 +192,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when enableInlin
       "options": {
         "HtmlPlugin": [Function],
         "info": {
-          "main.html": {
+          "index.html": {
             "meta": [
               {
                 "charset": "UTF-8",

@@ -33,6 +33,11 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "hot": true,
   },
   "devtool": "cheap-module-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
     "rspackFuture": {
@@ -654,12 +659,39 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "plugins": [
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "filename": "index.html",
+        "inject": "head",
+        "minify": false,
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+      },
+      "version": 5,
+    },
     HtmlBasicPlugin {
       "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "info": {},
+        "info": {
+          "index.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
       },
     },
     DefinePlugin {

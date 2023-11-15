@@ -33,7 +33,6 @@ test.skip('disableInlineRuntimeChunk', () => {
   test.beforeAll(async () => {
     rsbuild = await build({
       cwd: __dirname,
-      entry: { index: path.resolve(__dirname, './src/index.js') },
       runServer: true,
       rsbuildConfig: {
         tools: toolsConfig,
@@ -70,7 +69,6 @@ test.skip('disableInlineRuntimeChunk', () => {
 test.skip('inline runtime chunk by default', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     runServer: true,
     rsbuildConfig: {
       tools: toolsConfig,
@@ -104,7 +102,6 @@ test.skip('inline runtime chunk by default', async ({ page }) => {
 test.skip('inline runtime chunk and remove source map when devtool is "hidden-source-map"', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       tools: {
         bundlerChain(chain) {
@@ -129,11 +126,13 @@ test.skip('inline runtime chunk and remove source map when devtool is "hidden-so
 test.skip('inline runtime chunk by default with multiple entries', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-      another: path.resolve(__dirname, './src/another.js'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          index: path.resolve(__dirname, './src/index.js'),
+          another: path.resolve(__dirname, './src/another.js'),
+        },
+      },
       tools: toolsConfig,
     },
   });
@@ -160,12 +159,14 @@ webpackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
-      entry: {
-        index: path.resolve(__dirname, './src/index.js'),
-        another: path.resolve(__dirname, './src/another.js'),
-      },
       runServer: true,
       rsbuildConfig: {
+        source: {
+          entries: {
+            index: path.resolve(__dirname, './src/index.js'),
+            another: path.resolve(__dirname, './src/another.js'),
+          },
+        },
         output: {
           enableInlineScripts: true,
         },
@@ -200,9 +201,6 @@ webpackOnlyTest(
 test('using RegExp to inline scripts', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     rsbuildConfig: {
       output: {
         enableInlineScripts: /\/index\.\w+\.js$/,
@@ -229,9 +227,6 @@ test('using RegExp to inline scripts', async () => {
 test('inline scripts by filename and file size', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     rsbuildConfig: {
       output: {
         enableInlineScripts({ size, name }) {
@@ -260,9 +255,6 @@ test('inline scripts by filename and file size', async () => {
 test('using RegExp to inline styles', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     rsbuildConfig: {
       output: {
         enableInlineStyles: /\/index\.\w+\.css$/,
@@ -283,9 +275,6 @@ test('using RegExp to inline styles', async () => {
 test('inline styles by filename and file size', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     rsbuildConfig: {
       output: {
         enableInlineStyles({ size, name }) {

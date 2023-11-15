@@ -11,11 +11,13 @@ test('default & hmr (default true)', async ({ page }) => {
   await fse.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src'));
   const rsbuild = await dev({
     cwd: join(fixtures, 'hmr'),
-    entry: {
-      main: join(fixtures, 'hmr', 'test-src/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
+      source: {
+        entries: {
+          index: join(fixtures, 'hmr', 'test-src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-hmr',
@@ -30,7 +32,7 @@ test('default & hmr (default true)', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
@@ -90,9 +92,6 @@ test('dev.port & output.distPath', async ({ page }) => {
 
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic', 'src/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
       dev: {
@@ -107,11 +106,13 @@ test('dev.port & output.distPath', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   expect(rsbuild.port).toBe(3000);
 
-  expect(fse.existsSync(join(fixtures, 'basic/dist-1/main.html'))).toBeTruthy();
+  expect(
+    fse.existsSync(join(fixtures, 'basic/dist-1/index.html')),
+  ).toBeTruthy();
 
   expect(fse.existsSync(join(fixtures, 'basic/dist-1/aa/js'))).toBeTruthy();
 
@@ -130,11 +131,13 @@ test('hmr should work when setting dev.port & client', async ({ page }) => {
   const cwd = join(fixtures, 'hmr');
   const rsbuild = await dev({
     cwd,
-    entry: {
-      main: join(cwd, 'test-src-1/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
+      source: {
+        entries: {
+          index: join(cwd, 'test-src-1/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-hmr-1',
@@ -149,7 +152,7 @@ test('hmr should work when setting dev.port & client', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
   expect(rsbuild.port).toBe(3001);
 
   const appPath = join(fixtures, 'hmr', 'test-src-1/App.tsx');
@@ -179,9 +182,6 @@ test('hmr should work when setting dev.port & client', async ({ page }) => {
 test('dev.https', async () => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(join(fixtures, 'basic'), 'src/index.ts'),
-    },
     rsbuildConfig: {
       output: {
         distPath: {
@@ -207,9 +207,6 @@ test('devServer', async ({ page }) => {
   // Only tested to see if it works, not all configurations.
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(join(fixtures, 'basic'), 'src/index.ts'),
-    },
     rsbuildConfig: {
       output: {
         distPath: {
@@ -230,7 +227,7 @@ test('devServer', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');

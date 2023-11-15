@@ -11,8 +11,12 @@ describe('build hooks', () => {
     const fn = vi.fn();
     const rsbuild = await createStubRsbuild({
       cwd: fixturesDir,
-      entry: {
-        main: join(fixturesDir, 'src/index.js'),
+      rsbuildConfig: {
+        source: {
+          entries: {
+            main: join(fixturesDir, 'src/index.js'),
+          },
+        },
       },
       plugins: [
         pluginEntry(),
@@ -52,7 +56,13 @@ describe('build hooks', () => {
   });
 
   const createDefaultContext = () =>
-    createPrimaryContext(getCreateRsbuildDefaultOptions(), {});
+    createPrimaryContext(getCreateRsbuildDefaultOptions(), {
+      source: {
+        entries: {
+          index: './src/index.js',
+        },
+      },
+    });
 
   test('should return Compiler when passing single webpack config', async () => {
     const compiler = await createCompiler({

@@ -8,11 +8,13 @@ const cwd = join(__dirname, 'history-api-fallback');
 test('should provide history api fallback correctly', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
-    entry: {
-      main: join(cwd, 'src/index.tsx'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(cwd, 'src/index.tsx'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-historyApiFallback',

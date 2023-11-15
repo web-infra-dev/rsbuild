@@ -9,13 +9,10 @@ const fixtures = resolve(__dirname, '../');
 test('rem default (disable)', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     plugins: [pluginReact()],
     runServer: true,
   });
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const title = page.locator('#title');
   await expect(title).toHaveCSS('font-size', '20px');
@@ -30,14 +27,11 @@ test('rem enable', async ({ page }) => {
   // convert to rem
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     plugins: [pluginReact(), pluginRem()],
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const root = page.locator('html');
   await expect(root).toHaveCSS('font-size', '64px');
@@ -60,7 +54,6 @@ test('rem enable', async ({ page }) => {
 test('should inline runtime code to html by default', async () => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: { index: join(fixtures, 'src/index.ts') },
     plugins: [pluginReact(), pluginRem()],
   });
   const files = await rsbuild.unwrapOutputJSON();
@@ -73,7 +66,6 @@ test('should inline runtime code to html by default', async () => {
 test('should extract runtime code when inlineRuntime is false', async () => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: { index: join(fixtures, 'src/index.ts') },
     plugins: [
       pluginReact(),
       pluginRem({

@@ -6,9 +6,6 @@ import { webpackOnlyTest } from '@scripts/helper';
 webpackOnlyTest('decorator latest', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     runServer: true,
     rsbuildConfig: {
       output: {
