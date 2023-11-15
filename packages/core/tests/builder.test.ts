@@ -7,7 +7,7 @@ describe('should use rspack as default bundler', () => {
     const rsbuild = await createRsbuild({
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             index: './src/index.js',
           },
         },

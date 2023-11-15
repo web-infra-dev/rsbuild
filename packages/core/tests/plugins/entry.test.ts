@@ -50,7 +50,7 @@ describe('plugin-entry', () => {
       plugins: [pluginEntry()],
       rsbuildConfig: {
         source: {
-          entries: item.entry as unknown as Record<string, string | string[]>,
+          entry: item.entry as unknown as Record<string, string | string[]>,
           preEntry: item.preEntry,
         },
       },

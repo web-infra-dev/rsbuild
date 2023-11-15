@@ -17,7 +17,7 @@ const buildFixture = (
     plugins: [pluginSvelte()],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: path.join(root, entry),
         },
       },
@@ -48,7 +48,7 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
     plugins: [pluginSvelte()],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: path.join(root, 'src/index.js'),
         },
       },

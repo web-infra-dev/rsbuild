@@ -10,7 +10,7 @@ test('tools.rspack', async ({ page }) => {
     runServer: true,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: join(fixtures, 'source/global-vars/src/index.ts'),
         },
       },

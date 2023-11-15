@@ -110,9 +110,9 @@ export async function createStubRsbuild<
   };
 
   // mock default entry
-  if (!rsbuildConfig.source?.entries) {
+  if (!rsbuildConfig.source?.entry) {
     rsbuildConfig.source ||= {};
-    rsbuildConfig.source.entries = {
+    rsbuildConfig.source.entry = {
       index: './src/index.js',
     };
   }

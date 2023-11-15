@@ -95,7 +95,7 @@ describe('plugin-swc', () => {
       plugins: [pluginSwc(), pluginEntry()],
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             main: './src/index.js',
           },
           transformImport: false,
@@ -115,7 +115,7 @@ describe('plugin-swc', () => {
       target: 'web',
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             main: './src/index.js',
           },
         },
@@ -136,7 +136,7 @@ async function matchConfigSnapshot(
   rsbuildConfig: RsbuildConfig,
 ) {
   rsbuildConfig.source ||= {};
-  rsbuildConfig.source.entries = {
+  rsbuildConfig.source.entry = {
     main: './src/index.js',
   };
 

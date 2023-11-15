@@ -7,7 +7,7 @@ test('should generate meta tags correctly', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: { foo: path.resolve(__dirname, './src/foo.js') },
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
       html: {
         meta: {
@@ -40,7 +40,7 @@ test('should generate meta tags correctly when using custom HTML template', asyn
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: { foo: path.resolve(__dirname, './src/foo.js') },
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
       html: {
         meta: {
@@ -63,7 +63,7 @@ test('should generate meta tags via function correctly', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           foo: path.resolve(__dirname, './src/foo.js'),
           bar: path.resolve(__dirname, './src/foo.js'),
         },
@@ -115,7 +115,7 @@ test.skip('should generate meta tags for MPA correctly', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           foo: path.resolve(__dirname, './src/foo.js'),
           bar: path.resolve(__dirname, './src/foo.js'),
         },

@@ -35,7 +35,7 @@ test('should access /main.html success when entry is main', async ({
     runServer: true,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'src/index.ts'),
         },
       },
@@ -63,7 +63,7 @@ test('should access /main success when entry is main', async ({ page }) => {
     runServer: true,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'src/index.ts'),
         },
       },
@@ -95,7 +95,7 @@ test('should access /main success when entry is main and set assetPrefix', async
     runServer: true,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'src/index.ts'),
         },
       },
@@ -126,7 +126,7 @@ test('should access /main success when entry is main and outputPath is /main/ind
     runServer: true,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'src/index.ts'),
         },
       },
@@ -157,7 +157,7 @@ test('should return 404 when page is not found', async ({ page }) => {
     runServer: true,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'src/index.ts'),
         },
       },
@@ -186,7 +186,7 @@ test('should access /html/main success when entry is main and outputPath is /htm
     runServer: true,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'src/index.ts'),
         },
       },

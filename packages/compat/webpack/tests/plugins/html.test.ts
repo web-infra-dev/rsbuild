@@ -172,7 +172,7 @@ describe('plugin-html', () => {
       plugins: [pluginEntry(), pluginHtml()],
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             main: './src/main.ts',
             foo: './src/foo.ts',
           },
@@ -194,7 +194,7 @@ describe('plugin-html', () => {
       plugins: [pluginEntry(), pluginHtml()],
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             main: './src/main.ts',
             foo: './src/foo.ts',
           },
@@ -216,7 +216,7 @@ describe('plugin-html', () => {
       plugins: [pluginEntry(), pluginHtml()],
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             main: './src/main.ts',
             foo: './src/foo.ts',
           },

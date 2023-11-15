@@ -12,7 +12,7 @@ test('should generate prefetch link when prefetch is defined', async () => {
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'src/page1/index.ts'),
         },
       },
@@ -52,7 +52,7 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'src/page1/index.ts'),
         },
       },
@@ -89,7 +89,7 @@ test('should generate prefetch link with filter', async () => {
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'src/page1/index.ts'),
         },
       },
@@ -130,7 +130,7 @@ webpackOnlyTest(
       plugins: [pluginReact()],
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             page1: join(fixtures, 'src/page1/index.ts'),
             page2: join(fixtures, 'src/page2/index.ts'),
           },
@@ -179,7 +179,7 @@ test('should generate preload link when preload is defined', async () => {
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'src/page1/index.ts'),
         },
       },

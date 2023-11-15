@@ -14,7 +14,7 @@ test('default & hmr (default true)', async ({ page }) => {
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: join(fixtures, 'hmr', 'test-src/index.ts'),
         },
       },
@@ -134,7 +134,7 @@ test('hmr should work when setting dev.port & client', async ({ page }) => {
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: join(cwd, 'test-src-1/index.ts'),
         },
       },

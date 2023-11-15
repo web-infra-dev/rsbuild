@@ -10,7 +10,7 @@ test('should externalHelpers by default', async () => {
     plugins: providerType === 'rspack' ? [] : [pluginSwc()],
     rsbuildConfig: {
       source: {
-        entries: { index: path.resolve(__dirname, './src/main.ts') },
+        entry: { index: path.resolve(__dirname, './src/main.ts') },
       },
     },
   });

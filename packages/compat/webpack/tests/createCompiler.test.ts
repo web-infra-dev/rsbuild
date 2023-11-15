@@ -13,7 +13,7 @@ describe('build hooks', () => {
       cwd: fixturesDir,
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             main: join(fixturesDir, 'src/index.js'),
           },
         },
@@ -58,7 +58,7 @@ describe('build hooks', () => {
   const createDefaultContext = () =>
     createPrimaryContext(getCreateRsbuildDefaultOptions(), {
       source: {
-        entries: {
+        entry: {
           index: './src/index.js',
         },
       },

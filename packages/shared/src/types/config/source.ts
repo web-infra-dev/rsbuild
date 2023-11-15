@@ -30,6 +30,10 @@ export interface SourceConfig {
   /**
    * Set the entry modules.
    */
+  entry?: RsbuildEntry;
+  /**
+   * @default Use `source.entry` instead.
+   */
   entries?: RsbuildEntry;
   /**
    * Specifies that certain files that will be excluded from compilation.

@@ -33,7 +33,7 @@ describe('modifyRsbuildConfig', () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             main: 'src/index.ts',
           },
           preEntry: 'a.js',

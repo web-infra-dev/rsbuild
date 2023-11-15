@@ -10,7 +10,7 @@ import {
 } from './types';
 import { findExists, getAbsoluteDistPath } from './fs';
 
-function getDefaultEntries(root: string) {
+function getDefaultEntry(root: string) {
   const files = ['ts', 'tsx', 'js', 'jsx'].map((ext) =>
     join(root, `src/index.${ext}`),
   );
@@ -24,7 +24,7 @@ function getDefaultEntries(root: string) {
   }
 
   throw new Error(
-    'Could not find the entry file, please make sure that `src/index.(js|ts|tsx|jsx)` exists, or customize entry through the `source.entries` configuration.',
+    'Could not find the entry file, please make sure that `src/index.(js|ts|tsx|jsx)` exists, or customize entry through the `source.entry` configuration.',
   );
 }
 
@@ -44,8 +44,22 @@ export function createContextByConfig(
   const distPath = getAbsoluteDistPath(cwd, outputConfig);
   const cachePath = join(rootPath, 'node_modules', '.cache');
 
+  if (sourceConfig.entries) {
+    logger.warn(
+      '[Rsbuild] `source.entries` option has been renamed to `source.entry`, please update the Rsbuild config.',
+    );
+    logger.warn(
+      '[Rsbuild] `source.entries` option will be removed in Rsbuild v0.2.0.',
+    );
+  }
+
   const context: Context = {
-    entry: sourceConfig.entries || getDefaultEntries(rootPath),
+    entry:
+      sourceConfig.entry ||
+      // TODO: remove sourceConfig.entries in v0.2.0
+      // compat with previous config
+      sourceConfig.entries ||
+      getDefaultEntry(rootPath),
     target,
     srcPath,
     rootPath,
