@@ -1,5 +1,24 @@
 # @rsbuild/uni-builder
 
+## 0.0.23
+
+### Patch Changes
+
+- d796953: types: fix RsbuildPlugin do not provide API type by default
+- Updated dependencies [e612b120]
+- Updated dependencies [0aa061d]
+- Updated dependencies [2f124f6d]
+- Updated dependencies [8d884d7]
+- Updated dependencies [725941dd]
+- Updated dependencies [0dbf692]
+- Updated dependencies [254b220]
+- Updated dependencies [d796953]
+  - @rsbuild/core@0.0.23
+  - @rsbuild/shared@0.0.23
+  - @rsbuild/webpack@0.0.23
+  - @rsbuild/plugin-assets-retry@0.0.23
+  - @rsbuild/plugin-rem@0.0.23
+
 ## 0.0.22
 
 ### Patch Changes

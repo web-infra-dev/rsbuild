@@ -1,5 +1,16 @@
 # @rsbuild/plugin-react
 
+## 0.0.23
+
+### Patch Changes
+
+- 8d884d7: refactor: always use source.entries to set entry
+- Updated dependencies [2f124f6d]
+- Updated dependencies [8d884d7]
+- Updated dependencies [0dbf692]
+- Updated dependencies [254b220]
+  - @rsbuild/shared@0.0.23
+
 ## 0.0.22
 
 ### Patch Changes

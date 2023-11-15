@@ -1,5 +1,14 @@
 # @rsbuild/shared
 
+## 0.0.23
+
+### Patch Changes
+
+- 2f124f6d: perf: prebundle gzip-size, rslog and more
+- 8d884d7: refactor: always use source.entries to set entry
+- 0dbf692: refactor: rename source.entries to source.entry
+- 254b220: feat: support use index.cjs or index.mjs as the default entry
+
 ## 0.0.22
 
 ### Patch Changes

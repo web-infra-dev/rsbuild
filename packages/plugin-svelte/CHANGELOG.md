@@ -1,5 +1,16 @@
 # @rsbuild/plugin-svelte
 
+## 0.0.23
+
+### Patch Changes
+
+- d796953: types: fix RsbuildPlugin do not provide API type by default
+- Updated dependencies [2f124f6d]
+- Updated dependencies [8d884d7]
+- Updated dependencies [0dbf692]
+- Updated dependencies [254b220]
+  - @rsbuild/shared@0.0.23
+
 ## 0.0.22
 
 ### Patch Changes
