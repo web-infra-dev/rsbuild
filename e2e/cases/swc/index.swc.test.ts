@@ -109,7 +109,7 @@ test('core-js-entry', async () => {
     ],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: path.resolve(__dirname, './src/core-js-entry.ts'),
         },
       },
@@ -136,7 +136,7 @@ test('core-js-usage', async () => {
     ],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: path.resolve(__dirname, './src/core-js-usage.ts'),
         },
       },

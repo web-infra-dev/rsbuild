@@ -1,7 +1,7 @@
 - **类型：**
 
 ```ts
-type Entries = Record<string, string | string[]>;
+type Entry = Record<string, string | string[]>;
 ```
 
 - **默认值：**
@@ -19,7 +19,7 @@ const defaultEntry = {
 ```ts
 export default {
   source: {
-    entries: {
+    entry: {
       foo: './src/pages/foo/index.ts',
       bar: './src/pages/bar/index.ts',
     },

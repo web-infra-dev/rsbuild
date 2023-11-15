@@ -7,7 +7,7 @@ const enableCoreJsEntry = (
   isServiceWorker: boolean,
 ) => config.output.polyfill === 'entry' && !isServer && !isServiceWorker;
 
-/** Add core-js-entry to every entries. */
+/** Add core-js-entry to every entry. */
 export function addCoreJsEntry({
   chain,
   config,

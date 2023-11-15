@@ -10,7 +10,7 @@ test('webpackChain - register plugin', async ({ page }) => {
     runServer: true,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: join(fixtures, 'source/global-vars/src/index.ts'),
         },
       },

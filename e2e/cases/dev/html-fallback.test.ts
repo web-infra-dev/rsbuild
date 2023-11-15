@@ -38,7 +38,7 @@ test('should access /main.html success when entry is main', async ({
     cwd: join(fixtures, 'basic'),
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'basic', 'src/index.ts'),
         },
       },
@@ -70,7 +70,7 @@ test('should access /main success when entry is main', async ({ page }) => {
     cwd: join(fixtures, 'basic'),
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'basic', 'src/index.ts'),
         },
       },
@@ -106,7 +106,7 @@ test('should access /main success when entry is main and use memoryFs', async ({
     cwd: join(fixtures, 'basic'),
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'basic', 'src/index.ts'),
         },
       },
@@ -140,7 +140,7 @@ test('should access /main success when entry is main and set assetPrefix', async
     cwd: join(fixtures, 'basic'),
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'basic', 'src/index.ts'),
         },
       },
@@ -175,7 +175,7 @@ test('should access /main success when entry is main and outputPath is /main/ind
     cwd: join(fixtures, 'basic'),
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'basic', 'src/index.ts'),
         },
       },
@@ -210,7 +210,7 @@ test('should return 404 when page is not found', async ({ page }) => {
     cwd: join(fixtures, 'basic'),
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'basic', 'src/index.ts'),
         },
       },
@@ -243,7 +243,7 @@ test('should access /html/main success when entry is main and outputPath is /htm
     cwd: join(fixtures, 'basic'),
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(fixtures, 'basic', 'src/index.ts'),
         },
       },

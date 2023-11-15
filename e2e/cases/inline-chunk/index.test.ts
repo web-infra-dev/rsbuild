@@ -128,7 +128,7 @@ test.skip('inline runtime chunk by default with multiple entries', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: path.resolve(__dirname, './src/index.js'),
           another: path.resolve(__dirname, './src/another.js'),
         },
@@ -162,7 +162,7 @@ webpackOnlyTest(
       runServer: true,
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             index: path.resolve(__dirname, './src/index.js'),
             another: path.resolve(__dirname, './src/another.js'),
           },

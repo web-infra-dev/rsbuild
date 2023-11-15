@@ -57,7 +57,7 @@ describe('plugin-babel', () => {
       plugins: [pluginEntry(), pluginBabel()],
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             main: './index.js',
           },
         },
@@ -75,7 +75,7 @@ describe('plugin-babel', () => {
       plugins: [pluginEntry(), pluginBabel()],
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             main: './index.js',
           },
         },

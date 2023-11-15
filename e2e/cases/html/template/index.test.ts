@@ -7,7 +7,7 @@ test('should set template via function correctly', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: path.resolve(__dirname, './src/index.ts'),
           foo: path.resolve(__dirname, './src/foo.js'),
         },

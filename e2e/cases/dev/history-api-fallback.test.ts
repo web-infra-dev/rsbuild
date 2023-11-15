@@ -11,7 +11,7 @@ test('should provide history api fallback correctly', async ({ page }) => {
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           main: join(cwd, 'src/index.tsx'),
         },
       },

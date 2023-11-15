@@ -27,7 +27,7 @@ test('should compile CSS modules composes with external correctly', async () => 
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: { external: path.resolve(__dirname, './src/external.js') },
+        entry: { external: path.resolve(__dirname, './src/external.js') },
       },
     },
   });

@@ -7,7 +7,7 @@ test('should generate default title correctly', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: { foo: path.resolve(__dirname, './src/foo.js') },
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
     },
   });
@@ -23,7 +23,7 @@ test('should generate title correctly', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: { foo: path.resolve(__dirname, './src/foo.js') },
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
       html: {
         title: 'foo',
@@ -42,7 +42,7 @@ test('should generate title correctly when using custom HTML template', async ()
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: { foo: path.resolve(__dirname, './src/foo.js') },
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
       html: {
         title: 'foo',
@@ -62,7 +62,7 @@ test('should generate title via function correctly', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           foo: path.resolve(__dirname, './src/foo.js'),
           bar: path.resolve(__dirname, './src/foo.js'),
         },
@@ -91,7 +91,7 @@ test.skip('should generate title for MPA correctly', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           foo: path.resolve(__dirname, './src/foo.js'),
           bar: path.resolve(__dirname, './src/foo.js'),
         },

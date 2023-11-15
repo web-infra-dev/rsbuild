@@ -13,7 +13,7 @@ test('postcss plugins overwrite', async ({ page }) => {
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: join(fixtures, 'output/rem/src/index.ts'),
         },
       },
@@ -41,7 +41,7 @@ test('bundlerChain - set alias config', async ({ page }) => {
     runServer: true,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: join(fixtures, 'source/basic/src/index.js'),
         },
       },
@@ -68,7 +68,7 @@ webpackOnlyTest('bundlerChain - custom publicPath function', async () => {
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: join(fixtures, 'output/rem/src/index.ts'),
         },
       },

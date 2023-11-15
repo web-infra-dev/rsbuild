@@ -36,7 +36,7 @@ test('should set inject via function correctly', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: path.resolve(__dirname, './src/index.js'),
           foo: path.resolve(__dirname, './src/foo.js'),
         },

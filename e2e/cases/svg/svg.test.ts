@@ -12,7 +12,7 @@ test('svg (assets)', async ({ page }) => {
     runServer: true,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: join(fixtures, 'svg-assets', 'src/index.js'),
         },
       },
@@ -44,7 +44,7 @@ test('svgr (defaultExport url)', async ({ page }) => {
     runServer: true,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: join(fixtures, 'svg', 'src/index.js'),
         },
       },

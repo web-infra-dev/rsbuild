@@ -13,7 +13,7 @@ test.describe('source configure multi', () => {
       runServer: true,
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             index: join(fixtures, 'basic/src/index.js'),
           },
           alias: {
@@ -50,7 +50,7 @@ test.skip('global-vars', async ({ page }) => {
     runServer: true,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           index: join(fixtures, 'global-vars/src/index.ts'),
         },
         // globalVars: {

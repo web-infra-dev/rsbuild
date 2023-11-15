@@ -15,7 +15,7 @@ test.skip('module-scopes', async ({ page }) => {
       ...buildOpts,
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             index: join(fixtures, 'module-scopes/src/index.js'),
           },
           //   moduleScopes: ['./src'],

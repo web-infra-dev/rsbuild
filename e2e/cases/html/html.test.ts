@@ -62,7 +62,7 @@ test.describe('html element set', () => {
       runServer: true,
       rsbuildConfig: {
         source: {
-          entries: {
+          entry: {
             main: join(join(fixtures, 'template'), 'src/index.ts'),
             foo: join(fixtures, 'template/src/index.ts'),
           },

@@ -67,7 +67,7 @@ test('should generate favicon via function correctly', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entries: {
+        entry: {
           foo: path.resolve(__dirname, './src/foo.js'),
           bar: path.resolve(__dirname, './src/foo.js'),
         },

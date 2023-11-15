@@ -213,7 +213,7 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
         const htmlInfoMap: Record<string, HtmlInfo> = {};
 
         await Promise.all(
-          entryNames.map(async (entryName, index) => {
+          entryNames.map(async (entryName) => {
             const entryValue = entries[entryName].values() as string | string[];
             const chunks = getChunks(entryName, entryValue);
             const inject = getInject(entryName, config);

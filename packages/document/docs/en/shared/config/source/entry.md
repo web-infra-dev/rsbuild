@@ -1,7 +1,7 @@
 - **Type:**
 
 ```ts
-type Entries = Record<string, string | string[]>;
+type Entry = Record<string, string | string[]>;
 ```
 
 - **Default:**
@@ -19,7 +19,7 @@ Used to set the entry modules for building, the usage is the as same the [entry]
 ```ts
 export default {
   source: {
-    entries: {
+    entry: {
       foo: './src/pages/foo/index.ts',
       bar: './src/pages/bar/index.ts',
     },

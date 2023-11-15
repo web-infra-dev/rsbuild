@@ -72,7 +72,7 @@ export function shareTest(
   };
   const config: RsbuildConfig = {
     source: {
-      entries: {
+      entry: {
         index: entry,
       },
       transformImport: [transformImport],

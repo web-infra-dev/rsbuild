@@ -21,7 +21,7 @@ test('should build web-worker target with dynamicImport correctly', async () => 
     target: 'web-worker',
     rsbuildConfig: {
       source: {
-        entries: { index: path.resolve(__dirname, './src/index2.js') },
+        entry: { index: path.resolve(__dirname, './src/index2.js') },
       },
     },
   });
