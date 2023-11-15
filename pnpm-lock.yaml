@@ -1165,8 +1165,8 @@ importers:
   packages/document:
     devDependencies:
       '@rspress/shared':
-        specifier: 0.0.0-next-20231113024827
-        version: 0.0.0-next-20231113024827
+        specifier: 0.0.0-next-20231115072918
+        version: 0.0.0-next-20231115072918
       '@types/node':
         specifier: ^16
         version: 16.18.59
@@ -1177,8 +1177,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       rspress:
-        specifier: 0.0.0-next-20231113024827
-        version: 0.0.0-next-20231113024827(webpack@5.89.0)
+        specifier: 0.0.0-next-20231115072918
+        version: 0.0.0-next-20231115072918(webpack@5.89.0)
 
   packages/monorepo-utils:
     dependencies:
@@ -5129,8 +5129,8 @@ packages:
       - webpack-plugin-serve
     dev: false
 
-  /@rspress/core@0.0.0-next-20231113024827(webpack@5.89.0):
-    resolution: {integrity: sha512-JdSAaWGcxenjihQ2DkKl69GgvQRYBmvCsY5yA4O3v7hcSAmVugNqnCus0j071SnfsQfq7tDQ9EJyL6VGTvVnwQ==}
+  /@rspress/core@0.0.0-next-20231115072918(webpack@5.89.0):
+    resolution: {integrity: sha512-xTuQDNKN4+S+DrMMiuid13R+IB0h5TSrNaALZJ937BuUtssCT4QwTiNDZYSVT32YqUlZizTwns+XCyTrsMorBg==}
     engines: {node: '>=14.17.6'}
     dependencies:
       '@loadable/component': 5.15.2(react@18.2.0)
@@ -5142,13 +5142,13 @@ packages:
       '@rsbuild/plugin-react': link:packages/plugin-react
       '@rsbuild/plugin-svgr': link:packages/plugin-svgr
       '@rspress/mdx-rs': 0.4.1
-      '@rspress/plugin-auto-nav-sidebar': 0.0.0-next-20231113024827
-      '@rspress/plugin-container-syntax': 0.0.0-next-20231113024827
-      '@rspress/plugin-last-updated': 0.0.0-next-20231113024827
-      '@rspress/plugin-medium-zoom': 0.0.0-next-20231113024827(@rspress/runtime@0.0.0-next-20231113024827)
-      '@rspress/runtime': 0.0.0-next-20231113024827
-      '@rspress/shared': 0.0.0-next-20231113024827
-      '@rspress/theme-default': 0.0.0-next-20231113024827(postcss@8.4.21)(webpack@5.89.0)
+      '@rspress/plugin-auto-nav-sidebar': 0.0.0-next-20231115072918
+      '@rspress/plugin-container-syntax': 0.0.0-next-20231115072918
+      '@rspress/plugin-last-updated': 0.0.0-next-20231115072918
+      '@rspress/plugin-medium-zoom': 0.0.0-next-20231115072918(@rspress/runtime@0.0.0-next-20231115072918)
+      '@rspress/runtime': 0.0.0-next-20231115072918
+      '@rspress/shared': 0.0.0-next-20231115072918
+      '@rspress/theme-default': 0.0.0-next-20231115072918(postcss@8.4.21)(webpack@5.89.0)
       '@types/compression': 1.7.4
       '@types/polka': 0.5.6
       autoprefixer: 10.4.13(postcss@8.4.21)
@@ -5300,51 +5300,51 @@ packages:
       '@rspress/mdx-rs-win32-x64-msvc': 0.4.1
     dev: true
 
-  /@rspress/plugin-auto-nav-sidebar@0.0.0-next-20231113024827:
-    resolution: {integrity: sha512-Wuh49TVj1jMUKVV9NxYYT/CLNDToMPp5asGd+Paj1Ywzcno+JUEgGVZc2dnAPzUDjWsLqA4H6jR42nUgVSEkSg==}
+  /@rspress/plugin-auto-nav-sidebar@0.0.0-next-20231115072918:
+    resolution: {integrity: sha512-VPX9HKeFm4/ZppwX1WPNdRJZHn3CsrOVZl9eQzLMcgMWQNtM8TokBBWjQVlu9zlR4fojpTKI1/QThY2k70Bf2w==}
     engines: {node: '>=14.17.6'}
     dependencies:
       '@modern-js/utils': 2.40.0
-      '@rspress/shared': 0.0.0-next-20231113024827
+      '@rspress/shared': 0.0.0-next-20231115072918
     dev: true
 
-  /@rspress/plugin-container-syntax@0.0.0-next-20231113024827:
-    resolution: {integrity: sha512-UaXSLBYU5LvaI8EYjbRnvS5RcgvpR0tawYI/WBWJuAZdBoaWAYtVD5H0Zg8pRoF28nM1EsK6a3pazo0i8JYQCg==}
+  /@rspress/plugin-container-syntax@0.0.0-next-20231115072918:
+    resolution: {integrity: sha512-HfLt2xYI496GXxP07SY3MxmBgooRaa1Uyf6O/KPDLL0cid4/XpTtLAlIlEAXlqnFvcweVR9XRxUujPDuINQtFw==}
     engines: {node: '>=14.17.6'}
     dependencies:
-      '@rspress/shared': 0.0.0-next-20231113024827
+      '@rspress/shared': 0.0.0-next-20231115072918
     dev: true
 
-  /@rspress/plugin-last-updated@0.0.0-next-20231113024827:
-    resolution: {integrity: sha512-fvpchi/BxvJh8mYXCq4vvPVpXYVCWrqPu/Tchxzjt+JR38ZYaxGIWoydAgqVQ8wBQie6oCFcGXFGmsqOAhUQ5w==}
+  /@rspress/plugin-last-updated@0.0.0-next-20231115072918:
+    resolution: {integrity: sha512-5gm++6a0ecjEPeQ0N7qNhPlhmnJ+N80DY9y2RpeL+nXdZtFDY9vdRDOUKiPKKLHMYZkmL0WsiQU4jMi8nlGGpg==}
     engines: {node: '>=14.17.6'}
     dependencies:
       '@modern-js/utils': 2.40.0
     dev: true
 
-  /@rspress/plugin-medium-zoom@0.0.0-next-20231113024827(@rspress/runtime@0.0.0-next-20231113024827):
-    resolution: {integrity: sha512-+tb+HWMZdYJKQwbEb7mFSGk3dKLffBC0OptsATbkt2QisVZ3cRP5kZh66/i9aiQxhUK5CSjFoimPUELKeULdmA==}
+  /@rspress/plugin-medium-zoom@0.0.0-next-20231115072918(@rspress/runtime@0.0.0-next-20231115072918):
+    resolution: {integrity: sha512-8sucONJ7t/Gee7XlzwJaUgLQ3kW1vzeBXxg8NhYqum9zbuwkt0qc4n4jUIXcq7HixvrfdWPe8PTCWux8eH1RtQ==}
     engines: {node: '>=14.17.6'}
     peerDependencies:
-      '@rspress/runtime': 0.0.0-next-20231113024827
+      '@rspress/runtime': 0.0.0-next-20231115072918
     dependencies:
-      '@rspress/runtime': 0.0.0-next-20231113024827
+      '@rspress/runtime': 0.0.0-next-20231115072918
       medium-zoom: 1.0.8
     dev: true
 
-  /@rspress/runtime@0.0.0-next-20231113024827:
-    resolution: {integrity: sha512-FAM7JrHmdWTOfiak/VTsr4hczwBsqi/VhPt8PqqYp7v+P1DKcf+Bbh9PBQmbm32bwePthBsHiQYFf0HFzDlqsw==}
+  /@rspress/runtime@0.0.0-next-20231115072918:
+    resolution: {integrity: sha512-MFGuuK0UJgOnXag84xzgqX8XH2GI4l0KH5iqEXR/iuizW+zyAi9GhAOC1zhSQFMUxrZOPwJUfs9Z1bTLh3Re4A==}
     engines: {node: '>=14.17.6'}
     dependencies:
-      '@rspress/shared': 0.0.0-next-20231113024827
+      '@rspress/shared': 0.0.0-next-20231115072918
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-helmet-async: 1.3.0(react-dom@18.2.0)(react@18.2.0)
       react-router-dom: 6.17.0(react-dom@18.2.0)(react@18.2.0)
     dev: true
 
-  /@rspress/shared@0.0.0-next-20231113024827:
-    resolution: {integrity: sha512-zlKY3nxN+aVzJR8bE8oAoveqBgnPTf4FnRSByKZj/cB0vqLno2wUNv3ZwDko2efjuVpX8ruH/e8MTzhxS/Mtjw==}
+  /@rspress/shared@0.0.0-next-20231115072918:
+    resolution: {integrity: sha512-BraBulKUct5CtI8mTinw4mC0tBAY/gI+KFoBbCM51p9aLinnjL51rX625BGwuE+JsuZ85JWEaCQkwvIvvIZuPg==}
     dependencies:
       '@rsbuild/core': link:packages/core
       chalk: 4.1.2
@@ -5352,13 +5352,13 @@ packages:
       unified: 10.1.2
     dev: true
 
-  /@rspress/theme-default@0.0.0-next-20231113024827(postcss@8.4.21)(webpack@5.89.0):
-    resolution: {integrity: sha512-Y0grqJcF3DhnY4bnkcdkRStpB7jy9cEgQQIEGj2/RF9NnddbrpU0dsBp7A6EecCGuFSdW7hegCUz3DQ2bM7rww==}
+  /@rspress/theme-default@0.0.0-next-20231115072918(postcss@8.4.21)(webpack@5.89.0):
+    resolution: {integrity: sha512-hwbxOcCZ9D5Cx7pLXYJC2NbhNFMI7Hhs91nWc9xByLe9FMZMQpp4hdo8B9veHB9/nYS48NnlTU7J9Od0AGHdsg==}
     engines: {node: '>=14.17.6'}
     dependencies:
       '@mdx-js/react': 2.2.1(react@18.2.0)
-      '@rspress/runtime': 0.0.0-next-20231113024827
-      '@rspress/shared': 0.0.0-next-20231113024827
+      '@rspress/runtime': 0.0.0-next-20231115072918
+      '@rspress/shared': 0.0.0-next-20231115072918
       body-scroll-lock: 4.0.0-beta.0
       copy-to-clipboard: 3.3.3
       flexsearch: 0.6.32
@@ -5862,7 +5862,7 @@ packages:
       '@types/body-parser': 1.19.2
       '@types/express-serve-static-core': 4.17.38
       '@types/qs': 6.9.9
-      '@types/serve-static': 1.15.4
+      '@types/serve-static': 1.15.0
     dev: true
 
   /@types/fs-extra@11.0.3:
@@ -5891,10 +5891,6 @@ packages:
   /@types/http-cache-semantics@4.0.4:
     resolution: {integrity: sha512-1m0bIFVc7eJWyve9S0RnuRgcQqF/Xd5QsUZAZeQFr1Q3/p9JWoQQEqmVy+DPTNpGXwhgIetAoYF8JSc33q29QA==}
     dev: false
-
-  /@types/http-errors@2.0.3:
-    resolution: {integrity: sha512-pP0P/9BnCj1OVvQR2lF41EkDG/lWWnDyA203b/4Fmi2eTyORnBtcDoKDwjWQthELrBvWkMOrvSOnZ8OVlW6tXA==}
-    dev: true
 
   /@types/http-proxy@1.17.14:
     resolution: {integrity: sha512-SSrD0c1OQzlFX7pGu1eXxSEjemej64aaNPRhhVYUGqXh0BtldAAx37MG8btcumvpgKyZp1F5Gn3JkktdxiFv6w==}
@@ -6103,14 +6099,6 @@ packages:
   /@types/serve-static@1.15.0:
     resolution: {integrity: sha512-z5xyF6uh8CbjAu9760KDKsH2FcDxZ2tFCsA4HIMWE6IkiYMXfVoa+4f9KX+FN0ZLsaMw1WNG2ETLA6N+/YA+cg==}
     dependencies:
-      '@types/mime': 3.0.3
-      '@types/node': 16.18.59
-    dev: true
-
-  /@types/serve-static@1.15.4:
-    resolution: {integrity: sha512-aqqNfs1XTF0HDrFdlY//+SGUxmdSUbjeRXb5iaZc3x0/vMbYmdw9qvOgHWOyyLFxSSRnUuP5+724zBgfw8/WAw==}
-    dependencies:
-      '@types/http-errors': 2.0.3
       '@types/mime': 3.0.3
       '@types/node': 16.18.59
     dev: true
@@ -13383,13 +13371,13 @@ packages:
       fs-extra: 11.1.1
     dev: true
 
-  /rspress@0.0.0-next-20231113024827(webpack@5.89.0):
-    resolution: {integrity: sha512-GAIudCbm0zPTNdEfgz8Buke+38iYU6P42M7bZJcbmiDihF8l3pnPb3nuZ4v1EO6F1iDhH05i9xwGzfCRTAy22w==}
+  /rspress@0.0.0-next-20231115072918(webpack@5.89.0):
+    resolution: {integrity: sha512-2W6A7VbImIKjh2HbU8xznKaNGMKhAAQHK8ess1MLgf2frPlPe6J4UgPJLtSrGnx9o7N3fZ6K1+13Mn68ZzEhBQ==}
     hasBin: true
     dependencies:
       '@modern-js/node-bundle-require': 2.40.0
-      '@rspress/core': 0.0.0-next-20231113024827(webpack@5.89.0)
-      '@rspress/shared': 0.0.0-next-20231113024827
+      '@rspress/core': 0.0.0-next-20231115072918(webpack@5.89.0)
+      '@rspress/shared': 0.0.0-next-20231115072918
       cac: 6.7.14
       chalk: 5.3.0
       chokidar: 3.5.3
