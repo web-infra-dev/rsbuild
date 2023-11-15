@@ -82,8 +82,6 @@ export default {
 };
 ```
 
-如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
-
 ### 配置子项目
 
 当注册 Source Build 插件后，Rsbuild 在构建过程中，会优先读取子项目的 `source` 字段对应的文件。因此，你需要在子项目的 package.json 中配置 `source` 字段，并且指向源码文件路径。
