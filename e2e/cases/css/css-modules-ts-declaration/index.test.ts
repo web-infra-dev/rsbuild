@@ -18,8 +18,10 @@ test('should generator ts declaration correctly for css modules auto true', asyn
 
   await build({
     cwd: __dirname,
-    entry: { index: resolve(testDir, 'index.js') },
     rsbuildConfig: {
+      source: {
+        entries: { index: resolve(testDir, 'index.js') },
+      },
       output: {
         disableSourceMap: true,
         enableCssModuleTSDeclaration: true,
@@ -50,8 +52,10 @@ test('should generator ts declaration correctly for css modules auto function', 
 
   await build({
     cwd: __dirname,
-    entry: { index: resolve(testDir, 'index.js') },
     rsbuildConfig: {
+      source: {
+        entries: { index: resolve(testDir, 'index.js') },
+      },
       output: {
         disableSourceMap: true,
         enableCssModuleTSDeclaration: true,
@@ -78,8 +82,10 @@ test('should generator ts declaration correctly for css modules auto Regexp', as
 
   await build({
     cwd: __dirname,
-    entry: { index: resolve(testDir, 'index.js') },
     rsbuildConfig: {
+      source: {
+        entries: { index: resolve(testDir, 'index.js') },
+      },
       output: {
         disableSourceMap: true,
         enableCssModuleTSDeclaration: true,
@@ -104,8 +110,10 @@ test('should generator ts declaration correctly for custom exportLocalsConventio
 
   await build({
     cwd: __dirname,
-    entry: { index: resolve(testDir, 'index.js') },
     rsbuildConfig: {
+      source: {
+        entries: { index: resolve(testDir, 'index.js') },
+      },
       output: {
         disableSourceMap: true,
         enableCssModuleTSDeclaration: true,

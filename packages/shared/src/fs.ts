@@ -3,29 +3,30 @@ import fse from '../compiled/fs-extra';
 import { MODULE_PATH_REGEX } from './constants';
 import { removeLeadingSlash } from './utils';
 import { promises, constants, existsSync, statSync } from 'fs';
-import {
-  DistPathConfig,
-  NormalizedOutputConfig,
+import type {
   HtmlConfig,
+  OutputConfig,
+  DistPathConfig,
   FilenameConfig,
+  NormalizedOutputConfig,
 } from './types';
 
 export { fse };
 
 export function getAbsoluteDistPath(
   cwd: string,
-  outputConfig: NormalizedOutputConfig,
+  outputConfig: OutputConfig | NormalizedOutputConfig,
 ) {
   const root = getDistPath(outputConfig, 'root');
   return isAbsolute(root) ? root : join(cwd, root);
 }
 
 export const getDistPath = (
-  outputConfig: NormalizedOutputConfig,
+  outputConfig: OutputConfig | NormalizedOutputConfig,
   type: keyof DistPathConfig,
 ): string => {
   const { distPath } = outputConfig;
-  const ret = distPath[type];
+  const ret = distPath?.[type];
   if (typeof ret !== 'string') {
     throw new Error(`unknown key ${type} in "output.distPath"`);
   }

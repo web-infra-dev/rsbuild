@@ -5,8 +5,10 @@ import { build } from '@scripts/shared';
 test('should generate meta tags correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { foo: path.resolve(__dirname, './src/foo.js') },
     rsbuildConfig: {
+      source: {
+        entries: { foo: path.resolve(__dirname, './src/foo.js') },
+      },
       html: {
         meta: {
           foo: 'bar',
@@ -36,8 +38,10 @@ test('should generate meta tags correctly', async () => {
 test('should generate meta tags correctly when using custom HTML template', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { foo: path.resolve(__dirname, './src/foo.js') },
     rsbuildConfig: {
+      source: {
+        entries: { foo: path.resolve(__dirname, './src/foo.js') },
+      },
       html: {
         meta: {
           foo: 'bar',
@@ -57,11 +61,13 @@ test('should generate meta tags correctly when using custom HTML template', asyn
 test('should generate meta tags via function correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      foo: path.resolve(__dirname, './src/foo.js'),
-      bar: path.resolve(__dirname, './src/foo.js'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          foo: path.resolve(__dirname, './src/foo.js'),
+          bar: path.resolve(__dirname, './src/foo.js'),
+        },
+      },
       html: {
         meta({ value, entryName }) {
           if (entryName === 'bar') {
@@ -107,11 +113,13 @@ test('should generate meta tags via function correctly', async () => {
 test.skip('should generate meta tags for MPA correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      foo: path.resolve(__dirname, './src/foo.js'),
-      bar: path.resolve(__dirname, './src/foo.js'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          foo: path.resolve(__dirname, './src/foo.js'),
+          bar: path.resolve(__dirname, './src/foo.js'),
+        },
+      },
       html: {
         meta: {
           foo: 'bar',

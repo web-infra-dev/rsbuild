@@ -7,12 +7,39 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "foo": "2",
     },
   },
+  HtmlWebpackPlugin {
+    "userOptions": {
+      "chunks": [
+        "index",
+      ],
+      "filename": "index.html",
+      "inject": "head",
+      "minify": false,
+      "scriptLoading": "defer",
+      "template": "<ROOT>/packages/core/static/template.html",
+      "templateParameters": [Function],
+    },
+    "version": 5,
+  },
   HtmlBasicPlugin {
     "HtmlPlugin": [Function],
     "name": "HtmlBasicPlugin",
     "options": {
       "HtmlPlugin": [Function],
-      "info": {},
+      "info": {
+        "index.html": {
+          "meta": [
+            {
+              "charset": "UTF-8",
+            },
+            {
+              "content": "width=device-width, initial-scale=1.0",
+              "name": "viewport",
+            },
+          ],
+          "title": "Rsbuild App",
+        },
+      },
     },
   },
   DefinePlugin {

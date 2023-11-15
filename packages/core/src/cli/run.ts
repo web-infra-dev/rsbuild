@@ -1,6 +1,6 @@
-import { RsbuildPlugin, createRsbuild } from '..';
+import { createRsbuild, type RsbuildPlugin } from '..';
 import { setupProgram } from './commands';
-import { getDefaultEntries, loadConfig } from './config';
+import { loadConfig } from './config';
 
 type RunCliOptions = {
   isRestart?: boolean;
@@ -12,7 +12,6 @@ export async function runCli(options: RunCliOptions = {}) {
 
   const rsbuild = await createRsbuild({
     rsbuildConfig: config,
-    entry: config.source?.entries || getDefaultEntries(),
     provider: config.provider,
   });
 

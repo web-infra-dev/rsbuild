@@ -31,11 +31,11 @@ describe('modifyRsbuildConfig', () => {
 
   it('should modify config by utils', async () => {
     const rsbuild = await createStubRsbuild({
-      entry: {
-        main: 'src/index.ts',
-      },
       rsbuildConfig: {
         source: {
+          entries: {
+            main: 'src/index.ts',
+          },
           preEntry: 'a.js',
         },
       },

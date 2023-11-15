@@ -22,6 +22,14 @@ export async function createStubRsbuild({
   rsbuildConfig?: RsbuildConfig;
   plugins?: RsbuildPlugin[];
 }) {
+  // mock default entry
+  if (!rsbuildConfig.source?.entries) {
+    rsbuildConfig.source ||= {};
+    rsbuildConfig.source.entries = {
+      index: './src/index.js',
+    };
+  }
+
   const rsbuild = await createBaseRsbuild({
     provider: webpackProvider,
     rsbuildConfig,

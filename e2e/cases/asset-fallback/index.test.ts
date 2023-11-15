@@ -6,10 +6,14 @@ import { build } from '@scripts/shared';
 test.skip('should handle unknown modules with fallback rule', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
+      source: {
+        entries: {
+          index: path.resolve(__dirname, './src/index.js'),
+        },
+      },
       output: {
-        enableAssetFallback: true,
+        // enableAssetFallback: true,
       },
     },
   });

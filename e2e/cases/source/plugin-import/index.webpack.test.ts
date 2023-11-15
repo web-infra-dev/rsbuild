@@ -10,7 +10,6 @@ test('should import with function customName', async () => {
 
   const setupConfig = {
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
   };
 
   {
@@ -62,7 +61,6 @@ test('should import with template config with SWC', async () => {
 
   const setupConfig = {
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     plugins: [pluginSwc()],
   };
 

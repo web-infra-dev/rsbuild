@@ -6,7 +6,6 @@ import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
 
 const commonConfig = {
   cwd: __dirname,
-  entry: { index: path.resolve(__dirname, './src/main.js') },
   rsbuildConfig: {
     tools: {
       bundlerChain: (chain: any) => {

@@ -7,9 +7,6 @@ const fixtures = __dirname;
 test('should access / success when entry is index', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      index: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     rsbuildConfig: {
       output: {
@@ -35,11 +32,13 @@ test('should access /main.html success when entry is main', async ({
 }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-1',
@@ -61,11 +60,13 @@ test('should access /main.html success when entry is main', async ({
 test('should access /main success when entry is main', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-2',
@@ -91,11 +92,13 @@ test('should access /main success when entry is main and set assetPrefix', async
 }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-4',
@@ -120,11 +123,13 @@ test('should access /main success when entry is main and outputPath is /main/ind
 }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-5',
@@ -149,11 +154,13 @@ test('should access /main success when entry is main and outputPath is /main/ind
 test('should return 404 when page is not found', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-6',
@@ -176,11 +183,13 @@ test('should access /html/main success when entry is main and outputPath is /htm
 }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     rsbuildConfig: {
+      source: {
+        entries: {
+          main: join(fixtures, 'src/index.ts'),
+        },
+      },
       output: {
         distPath: {
           root: 'dist-7',

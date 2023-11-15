@@ -32,7 +32,6 @@ test('should add polyfill when set polyfill entry (default)', async ({
 }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       output: {
         polyfill: 'entry',
@@ -59,7 +58,6 @@ test('should add polyfill when set polyfill entry (default)', async ({
 test('should add polyfill when set polyfill usage', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       output: {
         polyfill: 'usage',

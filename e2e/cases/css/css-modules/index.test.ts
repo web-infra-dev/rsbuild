@@ -5,7 +5,6 @@ import { build } from '@scripts/shared';
 test('should compile CSS modules correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       output: {
         disableSourceMap: true,
@@ -32,7 +31,6 @@ test('should compile CSS modules correctly', async () => {
 test.skip('should treat normal CSS as CSS modules when disableCssModuleExtension is true', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       output: {
         disableSourceMap: true,
@@ -59,7 +57,6 @@ test.skip('should treat normal CSS as CSS modules when disableCssModuleExtension
 test('should compile CSS modules follow by output.cssModules', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       output: {
         cssModules: {

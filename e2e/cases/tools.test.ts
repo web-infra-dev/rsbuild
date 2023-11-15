@@ -9,12 +9,14 @@ const fixtures = __dirname;
 test('postcss plugins overwrite', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'output/rem'),
-    entry: {
-      main: join(fixtures, 'output/rem/src/index.ts'),
-    },
     runServer: true,
     plugins: [pluginReact()],
     rsbuildConfig: {
+      source: {
+        entries: {
+          index: join(fixtures, 'output/rem/src/index.ts'),
+        },
+      },
       tools: {
         postcss: {
           postcssOptions: {
@@ -25,7 +27,7 @@ test('postcss plugins overwrite', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const title = page.locator('#title');
   await expect(title).toHaveText('title');
@@ -36,11 +38,13 @@ test('postcss plugins overwrite', async ({ page }) => {
 test('bundlerChain - set alias config', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'source/basic'),
-    entry: {
-      main: join(fixtures, 'source/basic/src/index.js'),
-    },
     runServer: true,
     rsbuildConfig: {
+      source: {
+        entries: {
+          index: join(fixtures, 'source/basic/src/index.js'),
+        },
+      },
       tools: {
         bundlerChain: (chain) => {
           chain.resolve.alias.merge({
@@ -51,7 +55,7 @@ test('bundlerChain - set alias config', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
 
   await rsbuild.close();
@@ -61,11 +65,13 @@ test('bundlerChain - set alias config', async ({ page }) => {
 webpackOnlyTest('bundlerChain - custom publicPath function', async () => {
   const rsbuild = await build({
     cwd: join(fixtures, 'output/rem'),
-    entry: {
-      main: join(fixtures, 'output/rem/src/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
+      source: {
+        entries: {
+          index: join(fixtures, 'output/rem/src/index.ts'),
+        },
+      },
       output: {
         disableFilenameHash: true,
       },
@@ -84,9 +90,9 @@ webpackOnlyTest('bundlerChain - custom publicPath function', async () => {
 
   const htmlContent = files[htmlFile!];
   expect(htmlContent).toContain(
-    `script defer="defer" src="https://www.foo.com/static/js/main.js"></script>`,
+    `script defer="defer" src="https://www.foo.com/static/js/index.js"></script>`,
   );
   expect(htmlContent).toContain(
-    `<link href="https://www.foo.com/static/css/main.css" rel="stylesheet">`,
+    `<link href="https://www.foo.com/static/css/index.css" rel="stylesheet">`,
   );
 });

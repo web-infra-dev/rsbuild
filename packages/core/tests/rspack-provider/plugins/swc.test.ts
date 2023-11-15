@@ -92,12 +92,12 @@ describe('plugin-swc', () => {
   it('should disable all pluginImport', async () => {
     const rsbuild = await createStubRsbuild({
       target: 'web',
-      entry: {
-        main: './src/index.js',
-      },
       plugins: [pluginSwc(), pluginEntry()],
       rsbuildConfig: {
         source: {
+          entries: {
+            main: './src/index.js',
+          },
           transformImport: false,
         },
       },
@@ -113,8 +113,12 @@ describe('plugin-swc', () => {
   it('should add antd pluginImport', async () => {
     const rsbuild = await createStubRsbuild({
       target: 'web',
-      entry: {
-        main: './src/index.js',
+      rsbuildConfig: {
+        source: {
+          entries: {
+            main: './src/index.js',
+          },
+        },
       },
       plugins: [pluginSwc(), pluginEntry()],
     });
@@ -131,11 +135,13 @@ async function matchConfigSnapshot(
   target: RsbuildTarget | RsbuildTarget[],
   rsbuildConfig: RsbuildConfig,
 ) {
+  rsbuildConfig.source ||= {};
+  rsbuildConfig.source.entries = {
+    main: './src/index.js',
+  };
+
   const rsbuild = await createStubRsbuild({
     target,
-    entry: {
-      main: './src/index.js',
-    },
     plugins: [pluginSwc(), pluginEntry()],
     rsbuildConfig,
   });

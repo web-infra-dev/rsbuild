@@ -6,9 +6,6 @@ describe('plugin-html', () => {
   it('should register html plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
@@ -19,9 +16,6 @@ describe('plugin-html', () => {
   it('should register nonce plugin when using security.nonce', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-      },
       rsbuildConfig: {
         security: {
           nonce: 'test-nonce',
@@ -37,9 +31,6 @@ describe('plugin-html', () => {
   it('should register crossorigin plugin when using html.crossorigin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-      },
       rsbuildConfig: {
         html: {
           crossorigin: true,
@@ -57,9 +48,6 @@ describe('plugin-html', () => {
   it('should register appIcon plugin when using html.appIcon', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-      },
       rsbuildConfig: {
         html: {
           appIcon: './src/assets/icon.png',
@@ -75,9 +63,6 @@ describe('plugin-html', () => {
   it('should allow to set favicon by html.favicon option', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-      },
       rsbuildConfig: {
         html: {
           favicon: './src/favicon.ico',
@@ -92,9 +77,6 @@ describe('plugin-html', () => {
   it('should register faviconUrl plugin when html.favicon is a URL', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-      },
       rsbuildConfig: {
         html: {
           favicon: 'https://www.foo.com/favicon.ico',
@@ -112,9 +94,6 @@ describe('plugin-html', () => {
   it('should allow to set inject by html.inject option', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-      },
       rsbuildConfig: {
         html: {
           inject: 'body',
@@ -132,9 +111,6 @@ describe('plugin-html', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-      },
     });
     const bundlerConfigs = await rsbuild.initConfigs();
 
@@ -146,13 +122,10 @@ describe('plugin-html', () => {
   it('should allow to modify plugin options by tools.htmlPlugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-      },
       rsbuildConfig: {
         tools: {
           htmlPlugin(_config, utils) {
-            expect(utils.entryName).toEqual('main');
+            expect(utils.entryName).toEqual('index');
             return {
               inject: true,
             };
@@ -168,11 +141,13 @@ describe('plugin-html', () => {
   it('should support multi entry', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-        foo: './src/foo.ts',
-      },
       rsbuildConfig: {
+        source: {
+          entries: {
+            main: './src/main.ts',
+            foo: './src/foo.ts',
+          },
+        },
         html: {
           template({ entryName }) {
             return entryName === 'main' ? 'foo' : 'bar';
@@ -189,9 +164,6 @@ describe('plugin-html', () => {
   it('should allow to disable html plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-      },
       rsbuildConfig: {
         tools: {
           htmlPlugin: false,
@@ -207,9 +179,6 @@ describe('plugin-html', () => {
   it('should disable html plugin when htmlPlugin is an array and contains false', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      entry: {
-        main: './src/main.ts',
-      },
       rsbuildConfig: {
         tools: {
           htmlPlugin: [{}, false],

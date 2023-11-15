@@ -12,9 +12,6 @@ test.describe('html configure multi', () => {
   test.beforeAll(async () => {
     rsbuild = await build({
       cwd: join(fixtures, 'mount-id'),
-      entry: {
-        main: join(join(fixtures, 'mount-id'), 'src/index.ts'),
-      },
       runServer: true,
       plugins: [pluginReact()],
       rsbuildConfig: {
@@ -33,7 +30,7 @@ test.describe('html configure multi', () => {
     const errors: string[] = [];
     page.on('pageerror', (err) => errors.push(err.message));
 
-    await page.goto(getHrefByEntryName('main', rsbuild.port));
+    await page.goto(getHrefByEntryName('index', rsbuild.port));
 
     const test = page.locator('#test');
     await expect(test).toHaveText('Hello Rsbuild!');
@@ -42,7 +39,7 @@ test.describe('html configure multi', () => {
   });
 
   test('inject default (head)', async () => {
-    const pagePath = join(rsbuild.distPath, 'main.html');
+    const pagePath = join(rsbuild.distPath, 'index.html');
     const content = await fse.readFile(pagePath, 'utf-8');
 
     expect(
@@ -62,12 +59,14 @@ test.describe('html element set', () => {
   test.beforeAll(async () => {
     rsbuild = await build({
       cwd: join(fixtures, 'template'),
-      entry: {
-        main: join(join(fixtures, 'template'), 'src/index.ts'),
-        foo: join(fixtures, 'template/src/index.ts'),
-      },
       runServer: true,
       rsbuildConfig: {
+        source: {
+          entries: {
+            main: join(join(fixtures, 'template'), 'src/index.ts'),
+            foo: join(fixtures, 'template/src/index.ts'),
+          },
+        },
         html: {
           meta: {
             description: 'a description of the page',
@@ -151,9 +150,6 @@ test.describe('html element set', () => {
 test('template & templateParameters', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'template'),
-    entry: {
-      main: join(join(fixtures, 'template'), 'src/index.ts'),
-    },
     runServer: true,
     rsbuildConfig: {
       html: {
@@ -165,7 +161,7 @@ test('template & templateParameters', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const testTemplate = page.locator('#test-template');
   await expect(testTemplate).toHaveText('xxx');
@@ -181,9 +177,6 @@ test('template & templateParameters', async ({ page }) => {
 test('html.outputStructure', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'template'),
-    entry: {
-      main: join(join(fixtures, 'template'), 'src/index.ts'),
-    },
     runServer: true,
     rsbuildConfig: {
       html: {
@@ -192,9 +185,9 @@ test('html.outputStructure', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
-  const pagePath = join(rsbuild.distPath, 'main/index.html');
+  const pagePath = join(rsbuild.distPath, 'index/index.html');
 
   expect(fse.existsSync(pagePath)).toBeTruthy();
 
@@ -204,14 +197,11 @@ test('html.outputStructure', async ({ page }) => {
 test('tools.htmlPlugin', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'template'),
-    entry: {
-      main: join(join(fixtures, 'template'), 'src/index.ts'),
-    },
     runServer: true,
     rsbuildConfig: {
       tools: {
         htmlPlugin(config, { entryName }) {
-          if (entryName === 'main') {
+          if (entryName === 'index') {
             config.scriptLoading = 'module';
           }
         },
@@ -219,9 +209,9 @@ test('tools.htmlPlugin', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
-  const pagePath = join(rsbuild.distPath, 'main.html');
+  const pagePath = join(rsbuild.distPath, 'index.html');
   const content = await fse.readFile(pagePath, 'utf-8');
 
   const allScripts = /(<script [\s\S]*?>)/g.exec(content);

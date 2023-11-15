@@ -5,9 +5,6 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 test('should run top level await correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.ts'),
-    },
     runServer: true,
   });
 

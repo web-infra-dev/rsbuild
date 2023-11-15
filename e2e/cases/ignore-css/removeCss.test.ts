@@ -7,7 +7,6 @@ test('should ignore css content when build node target', async () => {
     cwd: __dirname,
 
     target: 'node',
-    entry: { index: path.resolve(__dirname, './src/index.js') },
   });
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -25,7 +24,6 @@ test('should ignore css content when build web-worker target', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     target: 'web-worker',
-    entry: { index: path.resolve(__dirname, './src/index.js') },
   });
   const files = await rsbuild.unwrapOutputJSON();
 

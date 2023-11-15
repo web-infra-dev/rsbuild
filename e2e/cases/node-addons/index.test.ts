@@ -5,7 +5,6 @@ import { build } from '@scripts/shared';
 test('should compile Node addons correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     target: 'node',
   });
   const files = await rsbuild.unwrapOutputJSON();

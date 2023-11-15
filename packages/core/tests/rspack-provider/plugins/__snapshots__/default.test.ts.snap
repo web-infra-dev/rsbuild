@@ -16,6 +16,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "hot": true,
   },
   "devtool": "cheap-module-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
     "rspackFuture": {
@@ -615,12 +620,39 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "plugins": [
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "filename": "index.html",
+        "inject": "head",
+        "minify": false,
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+      },
+      "version": 5,
+    },
     HtmlBasicPlugin {
       "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "info": {},
+        "info": {
+          "index.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
       },
     },
     DefinePlugin {
@@ -665,6 +697,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "hot": false,
   },
   "devtool": "hidden-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
     "rspackFuture": {
@@ -1283,12 +1320,58 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "plugins": [
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "filename": "index.html",
+        "inject": "head",
+        "minify": {
+          "collapseWhitespace": true,
+          "keepClosingSlash": true,
+          "minifyCSS": true,
+          "minifyJS": {
+            "format": {
+              "ascii_only": true,
+            },
+            "mangle": {
+              "safari10": true,
+            },
+          },
+          "minifyURLs": true,
+          "removeComments": false,
+          "removeEmptyAttributes": true,
+          "removeRedundantAttributes": true,
+          "removeScriptTypeAttributes": true,
+          "removeStyleLinkTypeAttributes": true,
+          "useShortDoctype": true,
+        },
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+      },
+      "version": 5,
+    },
     HtmlBasicPlugin {
       "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "info": {},
+        "info": {
+          "index.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
       },
     },
     DefinePlugin {
@@ -1344,6 +1427,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hot": false,
   },
   "devtool": "cheap-module-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
     "rspackFuture": {
@@ -1767,6 +1855,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "hot": true,
   },
   "devtool": "cheap-module-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
     "rspackFuture": {
@@ -2377,12 +2470,39 @@ exports[`tools.rspack > should match snapshot 1`] = `
     TestPlugin {
       "name": "TestPlugin",
     },
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "filename": "index.html",
+        "inject": "head",
+        "minify": false,
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+      },
+      "version": 5,
+    },
     HtmlBasicPlugin {
       "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "info": {},
+        "info": {
+          "index.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
       },
     },
     DefinePlugin {

@@ -9,9 +9,6 @@ const fixtures = __dirname;
 test.skip('enableAssetManifest', async () => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.jsx'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {

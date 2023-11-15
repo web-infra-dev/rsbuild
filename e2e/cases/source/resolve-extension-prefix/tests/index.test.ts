@@ -9,15 +9,12 @@ test.setTimeout(120000);
 test('resolve-extension-prefix', async ({ page }) => {
   const buildOpts = {
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.js'),
-    },
     runServer: true,
   };
 
   // ex.js take effect when not set resolveExtensionPrefix
   let rsbuild = await build(buildOpts);
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
   await expect(page.innerHTML('#test-el')).resolves.toBe('aaaaa');
 
   await rsbuild.close();
@@ -32,7 +29,7 @@ test('resolve-extension-prefix', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
   await expect(page.innerHTML('#test-el')).resolves.toBe('web');
 
   await rsbuild.close();

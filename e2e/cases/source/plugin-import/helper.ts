@@ -69,12 +69,12 @@ export function shareTest(
 ) {
   const setupConfig = {
     cwd: __dirname,
-    entry: {
-      index: entry,
-    },
   };
   const config: RsbuildConfig = {
     source: {
+      entries: {
+        index: entry,
+      },
       transformImport: [transformImport],
     },
     performance: {

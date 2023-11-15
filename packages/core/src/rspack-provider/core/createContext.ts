@@ -4,7 +4,6 @@ import {
   TS_CONFIG_FILE,
   createContextByConfig,
   type CreateRsbuildOptions,
-  type NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import { initHooks } from './initHooks';
 import { withDefaultConfig } from '../config/defaults';
@@ -21,8 +20,9 @@ export async function createContext(
   const rsbuildConfig = withDefaultConfig(userRsbuildConfig);
   const context = createContextByConfig(
     options,
-    rsbuildConfig.output as NormalizedOutputConfig,
     'rspack',
+    rsbuildConfig.source,
+    rsbuildConfig.output,
   );
 
   const tsconfigPath = join(context.rootPath, TS_CONFIG_FILE);

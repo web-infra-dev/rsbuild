@@ -8,9 +8,6 @@ const fixtures = resolve(__dirname, '../');
 test('externals', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.js'),
-    },
     runServer: true,
     plugins: [pluginReact()],
     rsbuildConfig: {
@@ -25,7 +22,7 @@ test('externals', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');
@@ -45,7 +42,6 @@ test('should not external dependencies when target is web worker', async () => {
   const rsbuild = await build({
     cwd: fixtures,
     target: 'web-worker',
-    entry: { index: resolve(fixtures, './src/index.js') },
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {

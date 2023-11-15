@@ -77,7 +77,7 @@ export const matchPlugin = (config: BundlerConfig, pluginName: string) => {
  */
 export async function createStubRsbuild<
   P extends ({ rsbuildConfig }: { rsbuildConfig: T }) => RsbuildProvider,
-  T,
+  T extends RsbuildConfig,
 >({
   rsbuildConfig = {} as T,
   plugins,
@@ -108,6 +108,14 @@ export async function createStubRsbuild<
     ...getCreateRsbuildDefaultOptions(),
     ...options,
   };
+
+  // mock default entry
+  if (!rsbuildConfig.source?.entries) {
+    rsbuildConfig.source ||= {};
+    rsbuildConfig.source.entries = {
+      index: './src/index.js',
+    };
+  }
 
   const provider = options.provider
     ? options.provider({ rsbuildConfig })

@@ -9,9 +9,6 @@ const fixtures = resolve(__dirname, '../');
 test('pug', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     plugins: [pluginReact(), pluginPug()],
     rsbuildConfig: {
@@ -21,7 +18,7 @@ test('pug', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const testPug = page.locator('#test-pug');
   await expect(testPug).toHaveText('Pug source code!');

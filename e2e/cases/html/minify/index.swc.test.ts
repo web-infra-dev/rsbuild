@@ -10,9 +10,6 @@ test('should minify template js & css correctly when use swc-plugin', async ({
 }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     plugins: [pluginSwc()],
     rsbuildConfig: {
@@ -27,7 +24,7 @@ test('should minify template js & css correctly when use swc-plugin', async ({
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const test = page.locator('#test');
 

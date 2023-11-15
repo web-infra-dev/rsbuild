@@ -30,9 +30,6 @@ async function validateSourceMap(
 test('source-map', async () => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.js'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {

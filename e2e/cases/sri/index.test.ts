@@ -7,7 +7,6 @@ import { pluginReact } from '@rsbuild/plugin-react';
 test.skip('security.sri', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     runServer: true,
     plugins: [pluginReact()],
     rsbuildConfig: {

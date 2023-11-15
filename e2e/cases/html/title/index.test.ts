@@ -5,7 +5,11 @@ import { build } from '@scripts/shared';
 test('should generate default title correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { foo: path.resolve(__dirname, './src/foo.js') },
+    rsbuildConfig: {
+      source: {
+        entries: { foo: path.resolve(__dirname, './src/foo.js') },
+      },
+    },
   });
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -17,8 +21,10 @@ test('should generate default title correctly', async () => {
 test('should generate title correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { foo: path.resolve(__dirname, './src/foo.js') },
     rsbuildConfig: {
+      source: {
+        entries: { foo: path.resolve(__dirname, './src/foo.js') },
+      },
       html: {
         title: 'foo',
       },
@@ -34,8 +40,10 @@ test('should generate title correctly', async () => {
 test('should generate title correctly when using custom HTML template', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { foo: path.resolve(__dirname, './src/foo.js') },
     rsbuildConfig: {
+      source: {
+        entries: { foo: path.resolve(__dirname, './src/foo.js') },
+      },
       html: {
         title: 'foo',
         template: path.resolve(__dirname, './src/empty.html'),
@@ -52,11 +60,13 @@ test('should generate title correctly when using custom HTML template', async ()
 test('should generate title via function correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      foo: path.resolve(__dirname, './src/foo.js'),
-      bar: path.resolve(__dirname, './src/foo.js'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          foo: path.resolve(__dirname, './src/foo.js'),
+          bar: path.resolve(__dirname, './src/foo.js'),
+        },
+      },
       html: {
         title({ entryName }) {
           return entryName;
@@ -79,11 +89,13 @@ test('should generate title via function correctly', async () => {
 test.skip('should generate title for MPA correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      foo: path.resolve(__dirname, './src/foo.js'),
-      bar: path.resolve(__dirname, './src/foo.js'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          foo: path.resolve(__dirname, './src/foo.js'),
+          bar: path.resolve(__dirname, './src/foo.js'),
+        },
+      },
       html: {
         title: 'default',
         // titleByEntries: {

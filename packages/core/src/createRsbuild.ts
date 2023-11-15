@@ -20,7 +20,6 @@ const getRspackProvider = async (rsbuildConfig: RsbuildConfig) => {
 export const getCreateRsbuildDefaultOptions =
   (): Required<CreateRsbuildOptions> => ({
     cwd: process.cwd(),
-    entry: {},
     target: ['web'],
     configPath: null,
   });

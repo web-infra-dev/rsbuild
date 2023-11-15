@@ -5,7 +5,6 @@ import { build } from '@scripts/shared';
 test('should emit local favicon to dist path', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       html: {
         favicon: './src/icon.png',
@@ -27,7 +26,6 @@ test('should emit local favicon to dist path', async () => {
 test('should apply asset prefix to favicon URL', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       html: {
         favicon: './src/icon.png',
@@ -50,7 +48,6 @@ test('should apply asset prefix to favicon URL', async () => {
 test('should allow favicon to be a CDN URL', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       html: {
         favicon: 'https://foo.com/icon.png',
@@ -68,11 +65,13 @@ test('should allow favicon to be a CDN URL', async () => {
 test('should generate favicon via function correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      foo: path.resolve(__dirname, './src/foo.js'),
-      bar: path.resolve(__dirname, './src/foo.js'),
-    },
     rsbuildConfig: {
+      source: {
+        entries: {
+          foo: path.resolve(__dirname, './src/foo.js'),
+          bar: path.resolve(__dirname, './src/foo.js'),
+        },
+      },
       html: {
         favicon({ entryName }) {
           const icons: Record<string, string> = {

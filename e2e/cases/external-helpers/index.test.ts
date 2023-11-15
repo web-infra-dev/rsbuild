@@ -7,8 +7,12 @@ import { pluginSwc } from '@rsbuild/plugin-swc';
 test('should externalHelpers by default', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/main.ts') },
     plugins: providerType === 'rspack' ? [] : [pluginSwc()],
+    rsbuildConfig: {
+      source: {
+        entries: { index: path.resolve(__dirname, './src/main.ts') },
+      },
+    },
   });
   const files = await rsbuild.unwrapOutputJSON(false);
 

@@ -14,6 +14,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
   },
@@ -592,12 +597,39 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "hints": false,
   },
   "plugins": [
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "filename": "index.html",
+        "inject": "head",
+        "minify": false,
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+      },
+      "version": 5,
+    },
     HtmlBasicPlugin {
       "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "info": {},
+        "info": {
+          "index.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
       },
     },
     DefinePlugin {
@@ -678,6 +710,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   },
   "context": "<ROOT>",
   "devtool": "hidden-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
   },
@@ -1303,12 +1340,58 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "hints": false,
   },
   "plugins": [
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "filename": "index.html",
+        "inject": "head",
+        "minify": {
+          "collapseWhitespace": true,
+          "keepClosingSlash": true,
+          "minifyCSS": true,
+          "minifyJS": {
+            "format": {
+              "ascii_only": true,
+            },
+            "mangle": {
+              "safari10": true,
+            },
+          },
+          "minifyURLs": true,
+          "removeComments": false,
+          "removeEmptyAttributes": true,
+          "removeRedundantAttributes": true,
+          "removeScriptTypeAttributes": true,
+          "removeStyleLinkTypeAttributes": true,
+          "useShortDoctype": true,
+        },
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+      },
+      "version": 5,
+    },
     HtmlBasicPlugin {
       "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "HtmlPlugin": [Function],
-        "info": {},
+        "info": {
+          "index.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
       },
     },
     DefinePlugin {
@@ -1377,6 +1460,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "context": "<ROOT>",
   "devtool": "source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
   },
@@ -1917,6 +2005,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "context": "<ROOT>",
   "devtool": "hidden-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
   },

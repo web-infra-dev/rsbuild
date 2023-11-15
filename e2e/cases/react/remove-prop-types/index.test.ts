@@ -10,13 +10,10 @@ const fixtures = __dirname;
 webpackOnlyTest('should remove prop-types by default', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.js'),
-    },
     runServer: true,
     plugins: [pluginReact()],
   });
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   expect(await page.evaluate('window.testAppPropTypes')).toBeUndefined();
   await rsbuild.close();

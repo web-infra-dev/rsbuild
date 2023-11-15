@@ -11,7 +11,6 @@ test('should compile nested npm import correctly', async () => {
 
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
   });
 
   const files = await rsbuild.unwrapOutputJSON();

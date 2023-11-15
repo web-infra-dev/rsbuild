@@ -6,9 +6,6 @@ import { pluginSwc } from '@rsbuild/plugin-swc';
 test('should optimize lodash bundle size when using SWC plugin', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.ts'),
-    },
     rsbuildConfig: {
       performance: {
         chunkSplit: {
@@ -33,9 +30,6 @@ test('should optimize lodash bundle size when using SWC plugin', async () => {
 test('should not optimize lodash bundle size when transformLodash is false and using SWC plugin', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.ts'),
-    },
     rsbuildConfig: {
       performance: {
         transformLodash: false,

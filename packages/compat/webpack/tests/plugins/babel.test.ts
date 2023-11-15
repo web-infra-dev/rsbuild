@@ -56,12 +56,14 @@ describe('plugin-babel', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginBabel()],
       rsbuildConfig: {
+        source: {
+          entries: {
+            main: './index.js',
+          },
+        },
         output: {
           polyfill: 'entry',
         },
-      },
-      entry: {
-        main: './index.js',
       },
     });
     const config = await rsbuild.unwrapWebpackConfig();
@@ -72,12 +74,14 @@ describe('plugin-babel', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginBabel()],
       rsbuildConfig: {
+        source: {
+          entries: {
+            main: './index.js',
+          },
+        },
         output: {
           polyfill: 'usage',
         },
-      },
-      entry: {
-        main: './index.js',
       },
     });
     const config = await rsbuild.unwrapWebpackConfig();

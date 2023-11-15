@@ -11,8 +11,6 @@ export type RsbuildMode = 'development' | 'production';
 export type CreateRsbuildOptions = {
   /** The root path of current project. */
   cwd?: string;
-  /** The entry points object. */
-  entry?: RsbuildEntry;
   /** Type of build target. */
   target?: RsbuildTarget | RsbuildTarget[];
   /** Absolute path to the config file of higher-level solutions. */

@@ -3,19 +3,39 @@ import { join } from 'path';
 import { logger } from './logger';
 import {
   Context,
+  SourceConfig,
+  OutputConfig,
   CreateRsbuildOptions,
-  NormalizedOutputConfig,
   BundlerType,
 } from './types';
-import { getAbsoluteDistPath } from './fs';
+import { findExists, getAbsoluteDistPath } from './fs';
+
+function getDefaultEntries(root: string) {
+  const files = ['ts', 'tsx', 'js', 'jsx'].map((ext) =>
+    join(root, `src/index.${ext}`),
+  );
+
+  const entryFile = findExists(files);
+
+  if (entryFile) {
+    return {
+      index: entryFile,
+    };
+  }
+
+  throw new Error(
+    'Could not find the entry file, please make sure that `src/index.(js|ts|tsx|jsx)` exists, or customize entry through the `source.entries` configuration.',
+  );
+}
 
 /**
  * Create context by config.
  */
 export function createContextByConfig(
   options: Required<CreateRsbuildOptions>,
-  outputConfig: NormalizedOutputConfig,
   bundlerType: BundlerType,
+  sourceConfig: SourceConfig = {},
+  outputConfig: OutputConfig = {},
 ): Context {
   const { cwd, target, configPath } = options;
   const rootPath = cwd;
@@ -25,7 +45,7 @@ export function createContextByConfig(
   const cachePath = join(rootPath, 'node_modules', '.cache');
 
   const context: Context = {
-    entry: options.entry,
+    entry: sourceConfig.entries || getDefaultEntries(rootPath),
     target,
     srcPath,
     rootPath,
