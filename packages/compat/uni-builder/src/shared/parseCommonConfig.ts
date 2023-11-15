@@ -34,7 +34,7 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   rsbuildConfig: B extends 'rspack'
     ? RsbuildRspackConfig
     : RsbuildWebpackConfig;
-  rsbuildPlugins: RsbuildPlugin[];
+  rsbuildPlugins: RsbuildPlugin<any>[];
 } {
   const rsbuildConfig = deepmerge({}, uniBuilderConfig);
   const { dev = {}, html = {}, output = {} } = rsbuildConfig;
