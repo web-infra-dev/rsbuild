@@ -56,6 +56,10 @@ The roles of each part are as follows:
 
 For easy identification, it is recommended that the plugin's `name` include the conventional `plugin-` prefix, such as `plugin-foo`, `@scope/plugin-bar`, etc.
 
+### Template Repository
+
+[rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template) is a minimal Rsbuild plugin template repository that you can use as a basis for developing your Rsbuild plugin.
+
 ## Lifetime Hooks
 
 Rsbuild uses lifetime planning work internally, and plugins can also register hooks to take part in any stage of the workflow and implement their own features.

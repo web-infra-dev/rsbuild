@@ -56,6 +56,10 @@ export default {
 
 为了便于识别，建议插件的 `name` 包含约定的 `plugin-` 前缀，例如 `plugin-foo`，`@scope/plugin-bar` 等。
 
+### 模板仓库
+
+[rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template) 是一个最小的 Rsbuild 插件模板仓库，你可以基于该仓库来开发你的 Rsbuild 插件。
+
 ## 生命周期钩子
 
 Rsbuild 在内部按照约定的生命周期进行任务调度，插件可以通过注册钩子来介入工作流程的任意阶段，并实现自己的功能。
