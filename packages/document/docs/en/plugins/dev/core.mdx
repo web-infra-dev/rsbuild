@@ -7,7 +7,7 @@ This section describes the core plugin types and APIs.
 The type of the plugin object. The plugin object contains the following properties:
 
 - `name`: The name of the plugin, a unique identifier.
-- `setup`: The setup function of the plugin, which can be an asynchronous function. This function will only be executed once when the plugin is initialized.
+- `setup`: The setup function of the plugin, which can be an asynchronous function. This function will only be executed once when the plugin is initialized. The plugin API provides the context info, utility functions and lifecycle hooks. For a complete introduction to lifecycle hooks, please read the [Plugin Hooks](/plugins/dev/hooks) chapter.
 - `pre`: Specifies the preceding plugins for the current plugin. You can pass an array of preceding plugin names, and the current plugin will be executed after these plugins.
 - `post`: Specifies the succeeding plugins for the current plugin. You can pass an array of succeeding plugin names, and the current plugin will be executed before these plugins.
 - `remove`: Specifies the plugins to be removed. You can pass an array of plugin names to be removed.
@@ -94,26 +94,6 @@ const pluginBar = {
 ```
 
 For example, if you register both the Foo and Bar plugins mentioned above, the Foo plugin will not take effect because the Bar plugin declares the removal of the Foo plugin.
-
-## RsbuildPluginAPI
-
-The type of plugin API. The plugin API provides the context info, utility functions and lifecycle hooks.
-
-For a complete introduction to lifecycle hooks, please read the [Plugin Hooks](/plugins/dev/hooks) chapter.
-
-```ts
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
-
-export default (): RsbuildPlugin<RsbuildPluginAPI> => ({
-  name: 'plugin-foo',
-
-  setup: api => {
-    api.modifyRspackConfig(config => {
-      config.devtool = false;
-    });
-  },
-});
-```
 
 ## api.context
 

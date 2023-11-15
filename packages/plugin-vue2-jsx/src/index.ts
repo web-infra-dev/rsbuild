@@ -1,4 +1,4 @@
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 type VueJSXPresetOptions = {
   compositionAPI?: boolean | string;
@@ -12,9 +12,7 @@ export type PluginVueOptions = {
   vueJsxOptions?: VueJSXPresetOptions;
 };
 
-export function pluginVue2Jsx(
-  options: PluginVueOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> {
+export function pluginVue2Jsx(options: PluginVueOptions = {}): RsbuildPlugin {
   return {
     name: 'plugin-vue2-jsx',
 

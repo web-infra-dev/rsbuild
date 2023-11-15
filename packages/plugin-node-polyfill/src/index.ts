@@ -1,4 +1,4 @@
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 const getResolveFallback = (nodeLibs: Record<string, any>) =>
   Object.keys(nodeLibs).reduce<Record<string, string | false>>(
@@ -24,14 +24,7 @@ const getProvideLibs = async () => {
   };
 };
 
-/**
- * Usage:
- *
- *   const { pluginNodePolyfill } = await import('@rsbuild/plugin-node-polyfill');
- *
- *   rsbuild.addPlugins([ pluginNodePolyfill() ]);
- */
-export function pluginNodePolyfill(): RsbuildPlugin<RsbuildPluginAPI> {
+export function pluginNodePolyfill(): RsbuildPlugin {
   return {
     name: 'plugin-node-polyfill',
 

@@ -7,6 +7,7 @@ export type {
   RsbuildConfig,
   NormalizedConfig,
   // Plugin Types
+  RsbuildPlugin,
   RsbuildPluginAPI,
 } from './types';
 

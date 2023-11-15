@@ -1,15 +1,13 @@
 import path from 'path';
 import { mergeChainedOptions } from '@rsbuild/shared';
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { Options as PugOptions } from 'pug';
 
 export type PluginPugOptions = {
   pugOptions?: PugOptions;
 };
 
-export const pluginPug = (
-  options: PluginPugOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> => ({
+export const pluginPug = (options: PluginPugOptions = {}): RsbuildPlugin => ({
   name: 'plugin-pug',
 
   setup(api) {

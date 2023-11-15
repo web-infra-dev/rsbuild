@@ -5,7 +5,6 @@ import {
   isUseCssSourceMap,
   mergeChainedOptions,
 } from '@rsbuild/shared';
-import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 
 type StylusOptions = {
   use?: string[];
@@ -23,9 +22,7 @@ type StylusLoaderOptions = {
 
 export type PluginStylusOptions = StylusLoaderOptions;
 
-export function pluginStylus(
-  options?: PluginStylusOptions,
-): RsbuildPlugin<RsbuildPluginAPI> {
+export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
   return {
     name: 'plugin-stylus',
 

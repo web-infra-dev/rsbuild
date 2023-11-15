@@ -28,12 +28,12 @@ const context: Context = rsbuild.context;
 
 ## RsbuildPlugin
 
-Rsbuild 插件的类型，需要配合 provider 中提供的 `RsbuildPluginAPI` 类型来使用。
+Rsbuild 插件的类型。
 
 ```ts
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
-const myPlugin: RsbuildPlugin<RsbuildPluginAPI> = {
+const myPlugin: RsbuildPlugin = {
   name: 'my-plugin',
   setup() {},
 };

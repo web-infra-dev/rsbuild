@@ -1,6 +1,5 @@
 import { JS_REGEX, TS_REGEX, applyScriptCondition } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 import type {
   LoaderOptions,
   MinifyPluginOptions,
@@ -13,7 +12,7 @@ export interface PluginEsbuildOptions {
 
 export function pluginEsbuild(
   userOptions: PluginEsbuildOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> {
+): RsbuildPlugin {
   return {
     name: 'plugin-esbuild',
 

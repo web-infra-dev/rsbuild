@@ -1,12 +1,12 @@
 import { getDistPath, isHtmlDisabled } from '@rsbuild/shared';
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { PluginAssetsRetryOptions } from './types';
 
 export type { PluginAssetsRetryOptions };
 
 export const pluginAssetsRetry = (
   options: PluginAssetsRetryOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> => ({
+): RsbuildPlugin => ({
   name: 'plugin-assets-retry',
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, target, HtmlPlugin }) => {

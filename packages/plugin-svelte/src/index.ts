@@ -1,6 +1,6 @@
 import path from 'path';
 import { logger, deepmerge } from '@rsbuild/shared';
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 export type PluginSvelteOptions = {
   /**
@@ -11,9 +11,7 @@ export type PluginSvelteOptions = {
   svelteLoaderOptions?: Record<string, any>;
 };
 
-export function pluginSvelte(
-  options: PluginSvelteOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> {
+export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
   return {
     name: 'plugin-svelte',
 

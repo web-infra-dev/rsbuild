@@ -4,17 +4,17 @@ export { mergeRsbuildConfig } from '@rsbuild/shared';
 export { defineConfig } from './cli';
 
 export type {
-  RsbuildPluginAPI,
-  RsbuildConfig,
   Rspack,
+  RsbuildConfig,
+  RsbuildPlugin,
+  RsbuildPluginAPI,
 } from './rspack-provider';
 
 export type {
+  Context,
   RsbuildMode,
   RsbuildEntry,
   RsbuildTarget,
-  RsbuildPlugin,
-  Context,
   RsbuildInstance,
   CreateRsbuildOptions,
   InspectConfigOptions,
