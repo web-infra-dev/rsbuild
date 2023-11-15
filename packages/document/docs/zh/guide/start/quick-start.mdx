@@ -44,38 +44,9 @@ Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令�
 
 请参考 [CLI 工具](/guide/basic/cli) 来了解所有可用的命令以及选项。
 
-## 构建入口
+## 入口模块
 
-Rsbuild CLI 默认会使用 `src/index.(js|ts|jsx|tsx)` 作为构建入口，你可以使用 `source.entries` 配置项来修改构建入口。
-
-- **类型：**
-
-```ts
-type Entries = Record<string, string>;
-```
-
-- **默认值：**
-
-```ts
-const defaultEntry = {
-  index: 'src/index.(js|ts|jsx|tsx)',
-};
-```
-
-- **示例：**
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
-  source: {
-    entries: {
-      foo: './src/pages/foo/index.ts',
-      bar: './src/pages/bar/index.ts',
-    },
-  },
-});
-```
+Rsbuild CLI 默认会使用 `src/index.(js|ts|jsx|tsx)` 作为入口模块，你可以使用 [source.entries](/config/options/source#sourceentries) 配置项来修改入口模块。
 
 ## 下一步
 
