@@ -12,9 +12,13 @@ test('tools.rspack', async ({ page }) => {
     },
     runServer: true,
     rsbuildConfig: {
-      source: {
-        define: {
-          ENABLE_TEST: JSON.stringify(true),
+      tools: {
+        rspack: (config, { rspack }) => {
+          config.plugins?.push(
+            new rspack.DefinePlugin({
+              ENABLE_TEST: JSON.stringify(true),
+            }),
+          );
         },
       },
     },
