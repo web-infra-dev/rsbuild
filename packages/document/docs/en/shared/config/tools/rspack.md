@@ -144,11 +144,11 @@ export default {
 
 #### rspack
 
-- **Type:** `typeof import('rspack')`
+- **Type:** `typeof import('@rspack/core')`
 
 The Rspack instance. For example:
 
-````js
+```js
 export default {
   tools: {
     rspack: (config, { rspack }) => {
@@ -157,6 +157,7 @@ export default {
     },
   },
 };
+```
 
 #### addRules
 
@@ -190,7 +191,7 @@ export default {
     },
   },
 };
-````
+```
 
 #### prependPlugins
 
