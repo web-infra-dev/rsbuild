@@ -18,4 +18,4 @@ export interface RsbuildPluginAPI
     RspackCompiler | RspackMultiCompiler
   > {}
 
-export type RsbuildPlugin = BaseRsbuildPlugin<RsbuildPluginAPI>;
+export type RsbuildPlugin<T = RsbuildPluginAPI> = BaseRsbuildPlugin<T>;

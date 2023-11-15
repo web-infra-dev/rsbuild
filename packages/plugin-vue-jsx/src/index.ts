@@ -1,13 +1,11 @@
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { VueJSXPluginOptions } from '@vue/babel-plugin-jsx';
 
 export type PluginVueJsxOptions = {
   vueJsxOptions?: VueJSXPluginOptions;
 };
 
-export function pluginVueJsx(
-  options: PluginVueJsxOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> {
+export function pluginVueJsx(options: PluginVueJsxOptions = {}): RsbuildPlugin {
   return {
     name: 'plugin-vue-jsx',
 

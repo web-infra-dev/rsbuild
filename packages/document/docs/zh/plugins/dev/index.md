@@ -22,7 +22,7 @@ export type PluginFooOptions = {
   message?: string;
 };
 
-export const pluginFoo = (options?: PluginFooOptions): RsbuildPlugin => ({
+export const pluginFoo = (options: PluginFooOptions = {}): RsbuildPlugin => ({
   name: 'plugin-foo',
 
   setup(api) {

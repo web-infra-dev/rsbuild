@@ -1,7 +1,7 @@
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { generateManifest } from '../../shared/manifest';
 
-export const pluginManifest = (): RsbuildPlugin<RsbuildPluginAPI> => ({
+export const pluginManifest = (): RsbuildPlugin => ({
   name: 'plugin-manifest',
 
   setup(api) {

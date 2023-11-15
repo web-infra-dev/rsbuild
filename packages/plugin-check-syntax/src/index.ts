@@ -1,10 +1,9 @@
 import {
   getBrowserslistWithDefault,
   type RsbuildTarget,
-  type RsbuildPlugin,
   type NormalizedConfig,
 } from '@rsbuild/shared';
-import type { RsbuildPluginAPI } from '@rsbuild/core/rspack-provider';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { CheckSyntaxOptions } from './types';
 
 export type PluginCheckSyntaxOptions = CheckSyntaxOptions;
@@ -23,7 +22,7 @@ async function getTargets(
 
 export function pluginCheckSyntax(
   options: PluginCheckSyntaxOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> {
+): RsbuildPlugin {
   return {
     name: 'plugin-check-syntax',
 

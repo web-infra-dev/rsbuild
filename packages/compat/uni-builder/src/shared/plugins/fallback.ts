@@ -9,7 +9,7 @@ import {
   setConfig,
   type Rspack,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 type RuleSetRule = Rspack.RuleSetRule;
 
@@ -66,7 +66,7 @@ const resourceRuleFallback = (
   return [...outerRules, { oneOf: [...innerRules, fileLoader] }];
 };
 
-export const pluginFallback = (): RsbuildPlugin<RsbuildPluginAPI> => ({
+export const pluginFallback = (): RsbuildPlugin => ({
   name: 'plugin-fallback',
 
   setup(api) {

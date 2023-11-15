@@ -1,15 +1,13 @@
 import { deepmerge } from '@rsbuild/shared';
 import { VueLoaderPlugin } from 'vue-loader';
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { VueLoaderOptions } from 'vue-loader';
 
 export type PluginVueOptions = {
   vueLoaderOptions?: VueLoaderOptions;
 };
 
-export function pluginVue(
-  options: PluginVueOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> {
+export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
   return {
     name: 'plugin-vue',
 

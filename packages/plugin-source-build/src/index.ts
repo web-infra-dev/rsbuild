@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { TS_CONFIG_FILE } from '@rsbuild/shared';
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { RsbuildPluginAPI as RsbuildWebpackPluginAPI } from '@rsbuild/webpack';
 import {
   filterByField,
@@ -34,7 +34,7 @@ export interface PluginSourceBuildOptions {
 
 export function pluginSourceBuild(
   options?: PluginSourceBuildOptions,
-): RsbuildPlugin<RsbuildPluginAPI> {
+): RsbuildPlugin {
   const {
     projectName,
     sourceField = 'source',

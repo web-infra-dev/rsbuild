@@ -1,9 +1,9 @@
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { pluginFallback } from '../src/shared/plugins/fallback';
-import { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
 import { createStubRsbuild } from '../../webpack/tests/helper';
 
 describe('plugin-fallback', () => {
-  const testPlugin: RsbuildPlugin<RsbuildPluginAPI> = {
+  const testPlugin: RsbuildPlugin = {
     name: 'test-plugin',
     setup(api) {
       api.modifyWebpackChain((chain) => {

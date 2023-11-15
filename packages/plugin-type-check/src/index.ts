@@ -1,4 +1,4 @@
-import { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   logger,
   CHAIN_ID,
@@ -19,7 +19,7 @@ export type PluginTypeCheckerOptions = {
 
 export const pluginTypeCheck = (
   options: PluginTypeCheckerOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> => {
+): RsbuildPlugin => {
   return {
     name: 'plugin-type-check',
 
