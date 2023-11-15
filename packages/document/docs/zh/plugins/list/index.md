@@ -1,19 +1,14 @@
 # 总览
 
+## 插件系统
+
+你可以阅读 [插件系统](/plugins/dev/index) 来了解 Rsbuild 插件的功能，以及如何开发一个 Rsbuild 插件。
+
 ## 使用插件
 
-你可以在 `rsbuild.config.ts` 中使用 `plugins` 选项来注册 Rsbuild 插件。
+你可以在 `rsbuild.config.ts` 中通过 `plugins` 选项来注册 Rsbuild 插件，详见 [plugins](/config/options/others#plugins)。
 
-比如注册 Vue 插件：
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginVue } from '@rsbuild/plugin-vue';
-
-export default defineConfig({
-  plugins: [pluginVue()],
-});
-```
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
 
 ## 官方插件
 

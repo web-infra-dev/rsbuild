@@ -1,0 +1,52 @@
+用于注册 Rsbuild 插件。
+
+- **类型：** `RsbuildPlugin[]`
+- **默认值：** `undefined`
+- **示例：** 注册 Stylus 插件。
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginStylus } from '@rsbuild/plugin-stylus';
+
+export default defineConfig({
+  plugins: [pluginStylus()],
+});
+```
+
+### 执行顺序
+
+默认情况下，插件会按照 `plugins` 数组的顺序依次执行，Rsbuild 内置插件的执行时机早于用户注册的插件。
+
+当插件内部使用了控制顺序的相关字段，比如 `pre`、`post` 时，执行顺序会基于它们进行调整，详见 [前置插件](/plugins/dev/core#前置插件)。
+
+### 本地插件
+
+如果本地代码仓库中包含了一些 Rsbuild 插件，你可以直接通过相对路径引入。
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginCustom } from './plugins/pluginCustom';
+
+export default defineConfig({
+  plugins: [pluginCustom()],
+});
+```
+
+### 插件选项
+
+如果插件提供了一些选项，你可以通过插件函数的参数传入配置。
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginStylus } from '@rsbuild/plugin-stylus';
+
+export default defineConfig({
+  plugins: [
+    pluginStylus({
+      stylusOptions: {
+        lineNumbers: false,
+      },
+    }),
+  ],
+});
+```

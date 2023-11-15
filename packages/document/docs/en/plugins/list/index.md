@@ -1,19 +1,14 @@
 # Plugin List
 
+## Plugin System
+
+You can read about the functionality of Rsbuild plugins and how to develop an Rsbuild plugin in the [Plugin System](/plugins/dev/index) documentation.
+
 ## Using Plugins
 
-You can register Rsbuild plugins using the `plugins` option in `rsbuild.config.ts`.
+You can register Rsbuild plugins in the `rsbuild.config.ts` file using the `plugins` option. For more details, refer to [plugins](/config/options/others#plugins).
 
-For example, to register a Vue plugin:
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginVue } from '@rsbuild/plugin-vue';
-
-export default defineConfig({
-  plugins: [pluginVue()],
-});
-```
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
 
 ## Official Plugins
 
