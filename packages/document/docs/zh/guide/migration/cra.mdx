@@ -18,7 +18,7 @@ import { PackageManagerTabs } from '@theme';
 
 ## 更新 npm scripts
 
-下一步，你需要把 `package.json` 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
+下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
 
 ```diff title="package.json"
 {
@@ -39,7 +39,7 @@ Rsbuild 未集成测试框架，因此没有提供用于替换 `react-scripts te
 
 ## 创建配置文件
 
-请在 `package.json` 的同级目录下创建 Rsbuild 的配置文件 `rsbuild.config.ts`，并添加以下内容：
+在 package.json 的同级目录下创建 Rsbuild 的配置文件 `rsbuild.config.ts`，并添加以下内容：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
