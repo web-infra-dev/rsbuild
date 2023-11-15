@@ -44,38 +44,9 @@ Rsbuild comes with a lightweight CLI that includes commands such as `dev` and `b
 
 Refer to the [CLI Tool](/guide/basic/cli) to learn about all available commands and options.
 
-## Build Entry
+## Entry Module
 
-By default, Rsbuild CLI uses `src/index.(js|ts|jsx|tsx)` as the build entry. You can modify the build entry using the `source.entries` configuration option.
-
-- **Type:**
-
-```ts
-type Entries = Record<string, string>;
-```
-
-- **Default:**
-
-```ts
-const defaultEntry = {
-  index: 'src/index.(js|ts|jsx|tsx)',
-};
-```
-
-- **Example:**
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
-  source: {
-    entries: {
-      foo: './src/pages/foo/index.ts',
-      bar: './src/pages/bar/index.ts',
-    },
-  },
-});
-```
+By default, Rsbuild CLI uses `src/index.(js|ts|jsx|tsx)` as the entry module. You can modify the entry module using the [source.entries](/config/options/source#sourceentries) option.
 
 ## Next Step
 
