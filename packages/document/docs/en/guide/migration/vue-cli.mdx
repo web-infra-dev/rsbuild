@@ -1,0 +1,68 @@
+# Vue CLI
+
+This chapter introduces how to migrate a  [Vue CLI](https://github.com/vuejs/vue-cli) project to Rsbuild.
+
+## Install Dependencies
+
+First, you need to replace the npm dependencies of Vue CLI with Rsbuild's dependencies.
+
+import { PackageManagerTabs } from '@theme';
+
+Remove Vue CLI dependencies:
+
+<PackageManagerTabs command="remove @vue/cli-service @vue/cli-plugin-babel @vue/cli-plugin-eslint core-js" />
+
+Install Rsbuild dependencies:
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-vue -D" />
+
+:::tip
+If your project is based on Vue 2, replace `@rsbuild/plugin-vue` with `@rsbuild/plugin-vue2`.
+:::
+
+## Update npm scripts
+
+Next, you need to update the npm scripts in the package.json file to Rsbuild's CLI commands.
+
+```json
+{
+  "scripts": {
+    "serve": "rsbuild dev",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  }
+}
+```
+
+:::tip
+Rsbuild does not integrate ESLint, so it does not provide a command to replace `vue-cli-service lint`. You can directly use ESLint's [CLI commands](https://eslint.org/docs/latest/use/command-line-interface) as an alternative.
+:::
+
+## Create Configuration File
+
+Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
+
+```typescript
+import { defineConfig } from '@rsbuild/core';
+import { pluginVue } from '@rsbuild/plugin-vue';
+
+export default defineConfig({
+  plugins: [pluginVue()],
+  source: {
+    // Specify the entry file
+    entry: {
+      index: './src/main.js',
+    },
+  },
+  html: {
+    // Set the id of the HTML root element to 'app'
+    mountId: 'app',
+  },
+});
+```
+
+:::tip
+If your project is based on Vue 2, use `import { pluginVue2 } from '@rsbuild/plugin-vue2';`.
+:::
+
+This completes the basic migration from Vue CLI to Rsbuild. You can now run the `npm run serve` command to try starting the development server.

@@ -18,7 +18,7 @@ Install Rsbuild dependencies:
 
 ## Updating npm scripts
 
-Next, you need to update the npm scripts in `package.json` to Rsbuild's CLI commands.
+Next, you need to update the npm scripts in package.json to Rsbuild's CLI commands.
 
 ```diff title="package.json"
 {
@@ -39,7 +39,7 @@ Rsbuild does not integrate testing frameworks, so it does not provide a command 
 
 ## Creating Configuration File
 
-Please create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as `package.json` and add the following content:
+Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json and add the following content:
 
 ```typescript title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -50,7 +50,7 @@ export default defineConfig({
 });
 ```
 
-With this, the basic migration from CRA to Rsbuild is complete. You can now run the `npm run start` command to try starting the development server.
+This completes the basic migration from CRA to Rsbuild. You can now run the `npm run start` command to try starting the development server.
 
 ## Using SVGR
 
