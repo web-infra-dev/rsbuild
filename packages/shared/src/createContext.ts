@@ -11,9 +11,16 @@ import {
 import { findExists, getAbsoluteDistPath } from './fs';
 
 function getDefaultEntry(root: string) {
-  const files = ['ts', 'tsx', 'js', 'jsx'].map((ext) =>
-    join(root, `src/index.${ext}`),
-  );
+  const files = [
+    // Most projects are using typescript now.
+    // So we put `.ts` as the first one to improve performance.
+    'ts',
+    'js',
+    'tsx',
+    'jsx',
+    '.mjs',
+    '.cjs',
+  ].map((ext) => join(root, `src/index.${ext}`));
 
   const entryFile = findExists(files);
 
@@ -24,7 +31,7 @@ function getDefaultEntry(root: string) {
   }
 
   throw new Error(
-    'Could not find the entry file, please make sure that `src/index.(js|ts|tsx|jsx)` exists, or customize entry through the `source.entry` configuration.',
+    'Could not find the entry file, please make sure that `src/index.(ts|js|tsx|jsx|mjs|cjs)` exists, or customize entry through the `source.entry` configuration.',
   );
 }
 

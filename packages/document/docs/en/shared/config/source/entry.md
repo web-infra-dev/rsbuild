@@ -8,7 +8,7 @@ type Entry = Record<string, string | string[]>;
 
 ```ts
 const defaultEntry = {
-  index: 'src/index.(js|ts|jsx|tsx)',
+  index: 'src/index.(ts|js|tsx|jsx|mjs|cjs)',
 };
 ```
 

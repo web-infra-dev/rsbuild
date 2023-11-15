@@ -34,7 +34,7 @@ export default {
     bundlerChain(chain) {
       chain.plugin('eslint-plugin').use(ESLintPlugin, [
         {
-          extensions: ['.js', '.ts', '.jsx', 'tsx', '.mjs'],
+          extensions: ['.js', '.ts', '.jsx', 'tsx', '.mjs', '.cjs'],
         },
       ]);
     },
