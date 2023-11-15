@@ -46,7 +46,10 @@ export function createContextByConfig(
 
   if (sourceConfig.entries) {
     logger.warn(
-      '[Rsbuild] The `source.entries` option has been renamed to `source.entry`, please update the Rsbuild config.',
+      '[Rsbuild] `source.entries` option has been renamed to `source.entry`, please update the Rsbuild config.',
+    );
+    logger.warn(
+      '[Rsbuild] `source.entries` option will be removed in Rsbuild v0.2.0.',
     );
   }
 
