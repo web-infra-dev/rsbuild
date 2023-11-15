@@ -1,48 +1,60 @@
 # Plugin System
 
-Rsbuild provides developers with a lightweight but powerful plugin system to build itself and any other plugins.
-Developing plugins to change the Rsbuild's behavior and introduce extra features. such as:
+Rsbuild provides a lightweight yet powerful plugin system to implement most of its functionality and allows for user extension.
 
-- Modify config of bundlers.
-- Resolve and handle new file types.
-- Modify and compile file modules.
-- Deploy your application.
+Plugins written by developers can modify the default behavior of Rsbuild and add various additional features, including but not limited to:
 
-Rsbuild can use Rspack as the bundler, expose unified Node.js API, and integrate into different frameworks. Users can painlessly switch between bundlers.
+- Modifying Rspack configurations
+- Processing new file types
+- Modifying or compiling files
+- Deploying artifacts
 
-## Write a plugin
+## Developing Plugins
 
-Plugin module should export an entry function just like `(options?: PluginOptions) => RsbuildPlugin`, It is recommended to name plugin functions `pluginXXX`.
+Plugins provide a function similar to `(options?: PluginOptions) => RsbuildPlugin` as an entry point. It is recommended to name the plugin function `pluginXXX` and export it by name.
 
-```ts
+### Plugin Example
+
+```ts title="pluginFoo.ts"
 import type { RsbuildPlugin } from '@rsbuild/core';
 
-export interface PluginFooOptions {
+export type PluginFooOptions = {
   message?: string;
-}
+};
 
 export const pluginFoo = (options?: PluginFooOptions): RsbuildPlugin => ({
   name: 'plugin-foo',
+
   setup(api) {
-    api.onExit(() => {
-      const msg = options.message || 'finish.';
+    api.onAfterStartDevServer(() => {
+      const msg = options.message || 'hello!';
       console.log(msg);
     });
   },
 });
-
-rsbuild.addPlugins([pluginFoo('some other message.')]);
 ```
 
-The function usually **takes an options object** and **returns the plugin instance**, which manages state through closures.
+Registering the plugin:
 
-Let's look at each part:
+```ts title="rsbuild.config.ts"
+import { pluginFoo } from './pluginFoo';
 
-- `name` is used to label the plugin
-- `setup` as the main entry point of plugins
-- `api` provides context object, lifetime hooks and utils.
+export default {
+  plugins: [pluginFoo({ message: 'world!' })],
+};
+```
 
-The package name of the plugin needs to contain the conventional `plugin-` prefix for identification, just like `plugin-foo`, `@scope/plugin-bar`, etc.
+### Plugin Structure
+
+Function-based plugins can **accept an options object** and **return a plugin instance**, managing internal state through closures.
+
+The roles of each part are as follows:
+
+- The `name` property is used to label the plugin's name.
+- `setup` serves as the main entry point for the plugin logic.
+- The `api` object contains various hooks and utility functions.
+
+For easy identification, it is recommended that the plugin's `name` include the conventional `plugin-` prefix, such as `plugin-foo`, `@scope/plugin-bar`, etc.
 
 ## Lifetime Hooks
 
@@ -132,25 +144,19 @@ Therefore, the best way to use configuration options is to
 - **Modify the config** with `api.modifyRsbuildConfig(config => {})`
 - Read `api.getNormalizedConfig()` as the **actual config used by the plugin** in the further lifetime.
 
-## Modify webpack Config
+## Modifying Rspack Configuration
 
-Plugins can handle webpack's config by:
+The Rsbuild plugin can modify the configuration of Rspack in various ways.
 
-- use `api.modifyWebpackChain(chain => {})` to modify webpack-chain.
-- use `api.modifyWebpackConfig(config => {})` to modify raw webpack config.
-- use `api.onAfterCreateCompiler(compiler => {})` to handle webpack instance directly.
+- `api.modifyRspackConfig(config => {})` modifies the final Rspack configuration.
+- `api.modifyBundlerChain(chain => {})` modifies the `bundler-chain`, usage is similar to [webpack-chain](https://github.com/neutrinojs/webpack-chain).
+- `api.onAfterCreateCompiler(compiler => {})` directly operates on the Rspack compiler instance.
 
-We recommend that you use [neutrinojs/webpack-chain](https://github.com/neutrinojs/webpack-chain)'s
-chained api to handle the config of webpack whenever possible.
+## Example References
 
-Rsbuild integrated a webpack5-compatible version,
-which can be found in [sorrycc/webpack-chain](https://github.com/sorrycc/webpack-chain).
+### Modifying Loader
 
-## Examples
-
-### Modify Loaders
-
-The webpack loaders can be used to load and transform various file types. For more information, see [concepts](https://webpack.js.org/concepts/loaders) and [loaders](https://webpack.js.org/loaders/).
+Loaders can read and process different types of file modules, refer to [concepts](https://webpack.js.org/concepts/loaders) and [loaders](https://webpack.js.org/loaders/).
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';
@@ -158,15 +164,15 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 export const pluginTypeScriptExt = (): RsbuildPlugin => ({
   name: 'plugin-typescript-ext',
   setup(api) {
-    api.modifyWebpackChain(async (chain) => {
-      // set ts-loader to recognize more files as typescript modules.
+    api.modifyBundlerChain(async (chain) => {
+      // Set ts-loader to recognize more files as typescript modules
       chain.module.rule(CHAIN_ID.RULE.TS).test(/\.(ts|mts|cts|tsx|tss|tsm)$/);
     });
   },
 });
 ```
 
-### Add Entry Points
+### Adding Module Entry
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';
@@ -174,16 +180,16 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 export const pluginAdminPanel = (): RsbuildPlugin => ({
   name: 'plugin-admin-panel',
   setup(api) {
-    api.modifyWebpackChain(async (chain) => {
+    api.modifyBundlerChain(async (chain) => {
       config.entry('admin-panel').add('src/admin/panel.js');
     });
   },
 });
 ```
 
-### Register Rspack or Webpack Plugin
+### Registering Rspack Plugin
 
-You can register Rspack or Webpack plugins in the Rsbuild plugin. For example, to register the `eslint-webpack-plugin`:
+You can register Rspack plugins within Rsbuild plugins, such as registering `eslint-webpack-plugin`:
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';

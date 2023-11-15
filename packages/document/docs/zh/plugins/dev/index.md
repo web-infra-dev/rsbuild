@@ -1,48 +1,60 @@
 # 插件系统
 
 Rsbuild 提供了一套轻量强大的插件系统，用以实现自身的大多数功能，并允许用户进行扩展。
-开发者编写的插件能够修改 Rsbuild 的默认行为并添加各类额外功能，包括但不限于：
 
-- 修改 bundler 配置
+开发者编写的插件能够修改 Rsbuild 的默认行为，并添加各类额外功能，包括但不限于：
+
+- 修改 Rspack 配置
 - 处理新的文件类型
 - 修改或编译文件
 - 部署产物
 
-Rsbuild 底层支持 webpack 和 Rspack 等 bundler，并提供统一的 Node.js API 来抹平插件开发的差异，进而接入不同的上层框架、降低用户对底层 bundler 切换的感知。
-
 ## 开发插件
 
-插件提供类似 `(options?: PluginOptions) => RsbuildPlugin` 的函数作为入口，建议将插件函数命名为 `pluginXXX`。
+插件提供类似 `(options?: PluginOptions) => RsbuildPlugin` 的函数作为入口，建议将插件函数命名为 `pluginXXX`，并通过具名导出。
 
-```ts
+### 插件示例
+
+```ts title="pluginFoo.ts"
 import type { RsbuildPlugin } from '@rsbuild/core';
 
-export interface PluginFooOptions {
+export type PluginFooOptions = {
   message?: string;
-}
+};
 
 export const pluginFoo = (options?: PluginFooOptions): RsbuildPlugin => ({
   name: 'plugin-foo',
+
   setup(api) {
-    api.onExit(() => {
-      const msg = options.message || 'finish.';
+    api.onAfterStartDevServer(() => {
+      const msg = options.message || 'hello!';
       console.log(msg);
     });
   },
 });
-
-rsbuild.addPlugins([pluginFoo({ message: 'some other message.' })]);
 ```
+
+注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginFoo } from './pluginFoo';
+
+export default {
+  plugins: [pluginFoo({ message: 'world!' })],
+};
+```
+
+### 插件结构
 
 函数形式的插件可以 **接受选项对象** 并 **返回插件实例**，并通过闭包机制管理内部状态。
 
 其中各部分的作用分别为：
 
-- `name` 属性用于标注插件名称
-- `setup` 作为插件逻辑的主入口
-- `api` 对象包含了各类钩子和工具函数
+- `name` 属性用于标注插件名称。
+- `setup` 作为插件逻辑的主入口。
+- `api` 对象包含了各类钩子和工具函数。
 
-为了便于识别，插件名称需要包含约定的 `plugin-` 前缀，例如 `plugin-foo` `@scope/plugin-bar` 等。
+为了便于识别，建议插件的 `name` 包含约定的 `plugin-` 前缀，例如 `plugin-foo`，`@scope/plugin-bar` 等。
 
 ## 生命周期钩子
 
@@ -128,17 +140,13 @@ type NormalizedConfig = {
 - 通过 `api.modifyRsbuildConfig(config => {})` 来**修改配置**
 - 在其后的生命周期中读取 `api.getNormalizedConfig()` 作为插件**实际使用的配置**
 
-## 修改 webpack 配置
+## 修改 Rspack 配置
 
-插件可以通过多种方式修改 webpack 的配置项。
+Rsbuild 插件可以通过多种方式修改 Rspack 的配置项。
 
-- `api.modifyWebpackChain(chain => {})` 修改 webpack-chain
-- `api.modifyWebpackConfig(config => {})` 修改最终的 webpack 配置
-- `api.onAfterCreateCompiler(compiler => {})` 直接操作 webpack 实例
-
-通常推荐使用 [neutrinojs/webpack-chain](https://github.com/neutrinojs/webpack-chain) 提供的链式 API 来修改 webpack 配置的工作。
-
-Rsbuild 使用的是兼容 webpack5 的修改版本：[sorrycc/webpack-chain](https://github.com/sorrycc/webpack-chain)。
+- `api.modifyRspackConfig(config => {})` 修改最终的 Rspack 配置。
+- `api.modifyBundlerChain(chain => {})` 修改 `bundler-chain`，用法与 [webpack-chain](https://github.com/neutrinojs/webpack-chain) 相同。
+- `api.onAfterCreateCompiler(compiler => {})` 直接操作 Rspack 的 compiler 实例。
 
 ## 参考范例
 
@@ -152,7 +160,7 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 export const pluginTypeScriptExt = (): RsbuildPlugin => ({
   name: 'plugin-typescript-ext',
   setup(api) {
-    api.modifyWebpackChain(async (chain) => {
+    api.modifyBundlerChain(async (chain) => {
       // 设置 ts-loader 将更多的文件识别为 typescript 模块
       chain.module.rule(CHAIN_ID.RULE.TS).test(/\.(ts|mts|cts|tsx|tss|tsm)$/);
     });
@@ -168,16 +176,16 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 export const pluginAdminPanel = (): RsbuildPlugin => ({
   name: 'plugin-admin-panel',
   setup(api) {
-    api.modifyWebpackChain(async (chain) => {
+    api.modifyBundlerChain(async (chain) => {
       config.entry('admin-panel').add('src/admin/panel.js');
     });
   },
 });
 ```
 
-### 注册 Rspack 或 Webpack 插件
+### 注册 Rspack 插件
 
-你可以在 Rsbuild 插件中注册 Rspack 或 Webpack 插件，比如注册 `eslint-webpack-plugin`：
+你可以在 Rsbuild 插件中注册 Rspack 插件，比如注册 `eslint-webpack-plugin`：
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';
