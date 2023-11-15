@@ -25,11 +25,18 @@ import { PackageManagerTabs } from '@theme';
 | svelte  | [Svelte](https://svelte.dev/)  | TypeScript |
 | vanilla | 原生 JavaScript                | TypeScript |
 
+## 从现有项目迁移
+
+如果你需要从一个现有项目迁移迁移到 Rsbuild，可以参考以下指南：
+
+- [从 Create React App 迁移](/guide/migration/cra)
+- [从 Vue CLI 迁移](/guide/migration/vue-cli)
+
 ## 命令行工具
 
 Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令。
 
-```json
+```json title="package.json"
 {
   "scripts": {
     // 启动开发服务器
