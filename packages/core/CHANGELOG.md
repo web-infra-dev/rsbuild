@@ -1,5 +1,23 @@
 # @rsbuild/core
 
+## 0.0.23
+
+### Patch Changes
+
+- e612b120: fix(server): compiler closed delay when calling server.close
+- 0aa061d: hotfix: can't get rspack util in tools.rspack
+- 2f124f6d: perf: prebundle gzip-size, rslog and more
+- 8d884d7: refactor: always use source.entries to set entry
+- 725941dd: perf: lazy load prodServer module
+- 0dbf692: refactor: rename source.entries to source.entry
+- 254b220: feat: support use index.cjs or index.mjs as the default entry
+- d796953: types: fix RsbuildPlugin do not provide API type by default
+- Updated dependencies [2f124f6d]
+- Updated dependencies [8d884d7]
+- Updated dependencies [0dbf692]
+- Updated dependencies [254b220]
+  - @rsbuild/shared@0.0.23
+
 ## 0.0.22
 
 ### Patch Changes

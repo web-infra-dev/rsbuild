@@ -1,5 +1,13 @@
 # @rsbuild/document
 
+## 0.0.23
+
+### Patch Changes
+
+- 8d884d7: refactor: always use source.entries to set entry
+- 0dbf692: refactor: rename source.entries to source.entry
+- d796953: types: fix RsbuildPlugin do not provide API type by default
+
 ## 0.0.22
 
 ### Patch Changes

@@ -1,5 +1,22 @@
 # @rsbuild/test-helper
 
+## 0.0.23
+
+### Patch Changes
+
+- 8d884d7: refactor: always use source.entries to set entry
+- 0dbf692: refactor: rename source.entries to source.entry
+- Updated dependencies [e612b120]
+- Updated dependencies [0aa061d]
+- Updated dependencies [2f124f6d]
+- Updated dependencies [8d884d7]
+- Updated dependencies [725941dd]
+- Updated dependencies [0dbf692]
+- Updated dependencies [254b220]
+- Updated dependencies [d796953]
+  - @rsbuild/core@0.0.23
+  - @rsbuild/shared@0.0.23
+
 ## 0.0.22
 
 ### Patch Changes
