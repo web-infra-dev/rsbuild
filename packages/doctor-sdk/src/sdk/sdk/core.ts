@@ -181,7 +181,6 @@ export abstract class SDKCore<T extends DoctorSDKOptions>
     await this.hooks.afterSaveManifest.promise({
       manifestWithShardingFiles: this.cloudData!,
       manifestDiskPath,
-      manifestCloudPath: '', // TODO: Delete the cloud path property.
     });
 
     return manifestDiskPath;

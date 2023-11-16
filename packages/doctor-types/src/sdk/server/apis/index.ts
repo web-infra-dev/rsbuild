@@ -108,7 +108,6 @@ export interface ResponseTypes
   [API.LoadDataByKey]: unknown;
   [API.BundleDiffManifest]: SDK.BuilderStoreData;
   [API.GetBundleDiffSummary]: {
-    cloudManifestUrl: string;
     root: string;
     hash: string;
     outputFilename: string;
