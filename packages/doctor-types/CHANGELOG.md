@@ -1,5 +1,11 @@
 # @rsbuild/doctor-types
 
+## 0.0.11
+
+### Patch Changes
+
+- ed966e0: fix(deps): bump Rspack 0.3.13 to fix new Class error
+
 ## 0.0.10
 
 ### Patch Changes
