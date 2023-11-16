@@ -37,20 +37,11 @@ English | [简体中文](./README.zh-CN.md)
 
 ## Position
 
-In addition to being used as a build tool, Rsbuild also provides universal build capabilities for higher-level solutions, such as Rspress and Modern.js. In fact, Rsbuild is a rebrand of the Modern.js Builder. It has been decoupled from Modern.js to provide greater flexibility and to meet the diverse needs of community users.
+In addition to being used as a build tool, Rsbuild also provides universal build capabilities for higher-level solutions, such as [Rspress](https://github.com/web-infra-dev/rspress) and [Modern.js](https://github.com/web-infra-dev/modern.js). In fact, Rsbuild is a rebrand of the Modern.js Builder. It has been decoupled from Modern.js to provide greater flexibility and to meet the diverse needs of community users.
 
 The following diagram illustrates the relationship between Rsbuild and other tools in the ecosystem:
 
 ![Rspack Ecosystem](https://github.com/web-infra-dev/rsbuild/assets/7237365/1ec93ad6-b8b1-475b-963f-cba1e7d79dec)
-
-## Features
-
-- 🚀 **Rspack Based**: Using Rspack to bring you the ultimate development experience.
-- 🦄 **Batteries Included**: Out-of-the-box integration with the most practical building features in the ecosystem.
-- 🎯 **Framework Agnostic**: Supports React, Vue, Svelte, and more frameworks.
-- 🛠️ **Deep Optimization**: Automatically optimize static assets to maximizing production performance.
-- 🎨 **Highly Pluggable**: Comes with a lightweight plugin system and a set of high quality plugins.
-- 🍭 **Easy to Configure**: Start with zero configuration and everything is configurable.
 
 ## Getting Started
 

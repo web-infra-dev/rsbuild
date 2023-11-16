@@ -152,8 +152,8 @@ export const pluginFileSize = (): DefaultRsbuildPlugin => ({
         try {
           await printFileSizes(stats, api.context.distPath);
         } catch (err) {
-          logger.error('Failed to print file size.');
-          logger.error(err as Error);
+          logger.warn('Failed to print file size.');
+          logger.warn(err as Error);
         }
       }
     });

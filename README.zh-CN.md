@@ -37,7 +37,7 @@
 
 ## 定位
 
-除了作为一个构建工具使用，Rsbuild 也为上层的解决方案提供通用的构建能力，比如 Rspress 和 Modern.js。实际上，Rsbuild 是由 Modern.js Builder 演化而来，它已经与 Modern.js 解耦，以提供更好的灵活性，并满足社区用户的多样化需求。
+除了作为一个构建工具使用，Rsbuild 也为上层的解决方案提供通用的构建能力，比如 [Rspress](https://github.com/web-infra-dev/rspress) 和 [Modern.js](https://github.com/web-infra-dev/modern.js) s。实际上，Rsbuild 是由 Modern.js Builder 演化而来，它已经与 Modern.js 解耦，以提供更好的灵活性，并满足社区用户的多样化需求。
 
 下图说明了 Rsbuild 与生态中其他工具之间的关系：
 
