@@ -1,16 +1,17 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { logger } from './logger';
-import {
+import type {
   Context,
   SourceConfig,
   OutputConfig,
   CreateRsbuildOptions,
   BundlerType,
+  RsbuildEntry,
 } from './types';
 import { findExists, getAbsoluteDistPath } from './fs';
 
-function getDefaultEntry(root: string) {
+function getDefaultEntry(root: string): RsbuildEntry {
   const files = [
     // Most projects are using typescript now.
     // So we put `.ts` as the first one to improve performance.
@@ -30,9 +31,7 @@ function getDefaultEntry(root: string) {
     };
   }
 
-  throw new Error(
-    'Could not find the entry file, please make sure that `src/index.(ts|js|tsx|jsx|mjs|cjs)` exists, or customize entry through the `source.entry` configuration.',
-  );
+  return {};
 }
 
 /**

@@ -108,10 +108,14 @@ export function pluginStartUrl(): DefaultRsbuildPlugin {
 
         if (startUrl === true || !startUrl) {
           const protocol = https ? 'https' : 'http';
-          // auto open the first one
-          urls.push(
-            normalizeUrl(`${protocol}://localhost:${port}/${routes[0].route}`),
-          );
+          if (routes.length) {
+            // auto open the first one
+            urls.push(
+              normalizeUrl(
+                `${protocol}://localhost:${port}/${routes[0].route}`,
+              ),
+            );
+          }
         } else {
           urls.push(
             ...castArray(startUrl).map((item) =>
