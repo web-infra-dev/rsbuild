@@ -1,0 +1,79 @@
+# Use Tailwind CSS
+
+[Tailwind CSS](https://tailwindcss.com/) is a CSS framework and design system based on utility class, which can quickly add common styles to components, and support flexible extension of theme styles.
+
+You can integrate Tailwind CSS in Rsbuild via PostCSS plugins.
+
+## Installing Tailwind CSS
+
+Only `tailwindcss` needs to be installed, no other npm packages are needed.
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add tailwindcss -D" />
+
+## Configuring PostCSS
+
+Register the `tailwindcss` plugin through [tools.postcss](/config/options/tools#toolspostcss).
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import tailwindcss from 'tailwindcss';
+
+export default defineConfig({
+  tools: {
+    postcss(config) {
+      config.postcssOptions?.plugins?.push(tailwindcss);
+    },
+  },
+});
+```
+
+## Configuring Tailwind CSS
+
+Create a `tailwind.config.js` file in the root directory of your project and add the following content:
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+:::tip
+The above configuration is for reference only and can be modified to suit the needs of your project.
+:::
+
+## Importing CSS
+
+Add the `@tailwind` directives in your CSS entry file:
+
+```css title="main.css"
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+Depending on your needs, you can selectively import the CSS styles provided by Tailwind CSS. Please refer to the [@tailwind documentation](https://tailwindcss.com/docs/functions-and-directives#tailwind) for detailed usage of the `@tailwind` directives.
+
+## Done
+
+You have now completed all the steps to integrate Tailwind CSS in Rsbuild!
+
+You can use Tailwind's utility classes in any component or HTML, such as:
+
+```html
+<h1 class="text-3xl font-bold underline">Hello world!</h1>
+```
+
+For more usage details, refer to the [Tailwind CSS documentation](https://tailwindcss.com/).
+
+## Autocompletion
+
+Tailwind CSS provides a [Tailwind CSS IntelliSense](https://github.com/tailwindlabs/tailwindcss-intellisense) plugin for VS Code to automatically complete Tailwind CSS class names, CSS functions, and directives.
+
+You can install this plugin in VS Code to enable the autocompletion feature.
