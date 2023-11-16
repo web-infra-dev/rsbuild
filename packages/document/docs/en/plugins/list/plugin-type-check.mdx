@@ -134,6 +134,7 @@ pluginTypeCheck({
 
 - `fork-ts-checker-webpack-plugin` does not support checking TypeScript code in `.vue` files.
 - If you have enabled `ts-loader` in your project and manually configured `compileOnly: false`, please disable the Type Check plugin to avoid duplicate type checking.
+- Some errors will be displayed as warnings in IDEs such as VS Code, but they will still be displayed as errors in the `fork-ts-checker-webpack-plugin` check. For details, please refer to: [Why are some errors reported as warnings?] (https://code.visualstudio.com/docs/typescript/typescript-compiling#_why-are-some-errors-reported-as-warnings).
 
 # Performance Optimization
 
