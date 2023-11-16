@@ -15,11 +15,13 @@ import type { PluginRemOptions } from '@rsbuild/plugin-rem';
 export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
   config: UniBuilderWebpackConfig;
+  frameworkConfigPath?: string;
 };
 
 export type CreateRspackBuilderOptions = {
   bundlerType: 'rspack';
   config: UniBuilderRspackConfig;
+  frameworkConfigPath?: string;
 };
 
 export type CreateUniBuilderOptions =

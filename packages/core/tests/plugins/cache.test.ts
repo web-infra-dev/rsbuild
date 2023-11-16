@@ -20,12 +20,6 @@ describe('plugin-cache', () => {
       name: 'should add cache config correctly',
     },
     {
-      name: 'should watch framework config change',
-      context: {
-        configPath: '/path/to/config.js',
-      },
-    },
-    {
       name: 'should watch tsconfig change',
       context: {
         tsconfigPath: '/path/to/tsconfig.json',

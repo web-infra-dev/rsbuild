@@ -15,6 +15,7 @@ import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import { pluginFallback } from './plugins/fallback';
 import { pluginGlobalVars } from './plugins/globalVars';
 import { pluginRuntimeChunk } from './plugins/runtimeChunk';
+import { pluginFrameworkConfig } from './plugins/frameworkConfig';
 
 const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
 
@@ -30,6 +31,7 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   uniBuilderConfig: B extends 'rspack'
     ? UniBuilderRspackConfig
     : UniBuilderWebpackConfig,
+  frameworkConfigPath?: string,
 ): {
   rsbuildConfig: B extends 'rspack'
     ? RsbuildRspackConfig
@@ -122,6 +124,10 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   // Note: fallback should be the last plugin
   if (uniBuilderConfig.output?.enableAssetFallback) {
     rsbuildPlugins.push(pluginFallback());
+  }
+
+  if (frameworkConfigPath) {
+    rsbuildPlugins.push(pluginFrameworkConfig(frameworkConfigPath));
   }
 
   return {

@@ -13,8 +13,6 @@ export type CreateRsbuildOptions = {
   cwd?: string;
   /** Type of build target. */
   target?: RsbuildTarget | RsbuildTarget[];
-  /** Absolute path to the config file of higher-level solutions. */
-  configPath?: string | null;
 };
 
 export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {

@@ -44,7 +44,7 @@ export function createContextByConfig(
   sourceConfig: SourceConfig = {},
   outputConfig: OutputConfig = {},
 ): Context {
-  const { cwd, target, configPath } = options;
+  const { cwd, target } = options;
   const rootPath = cwd;
 
   const distPath = getAbsoluteDistPath(cwd, outputConfig);
@@ -72,10 +72,6 @@ export function createContextByConfig(
     cachePath,
     bundlerType,
   };
-
-  if (configPath && existsSync(configPath)) {
-    context.configPath = configPath;
-  }
 
   return context;
 }

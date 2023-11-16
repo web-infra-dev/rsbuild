@@ -60,16 +60,6 @@ type DistPath = string;
 type CachePath = string;
 ```
 
-### rsbuild.context.configPath
-
-框架配置文件的绝对路径，对应调用 `createRsbuild` 时传入的 `configPath` 选项。
-
-- **类型**
-
-```ts
-type ConfigPath = string | undefined;
-```
-
 ### rsbuild.context.tsconfigPath
 
 tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件，则为 `undefined`。
