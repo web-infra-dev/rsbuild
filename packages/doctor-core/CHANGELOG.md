@@ -1,5 +1,13 @@
 # @rsbuild/doctor-core
 
+## 0.0.11
+
+### Patch Changes
+
+- ed966e0: fix(deps): bump Rspack 0.3.13 to fix new Class error
+  - @rsbuild/doctor-sdk@0.0.11
+  - @rsbuild/doctor-utils@0.0.11
+
 ## 0.0.10
 
 ### Patch Changes

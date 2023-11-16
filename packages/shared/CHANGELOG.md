@@ -1,5 +1,16 @@
 # @rsbuild/shared
 
+## 0.0.24
+
+### Patch Changes
+
+- 86e7b25: refactor: remove context.srcPath
+- 289dc9a: fix: should not print entry error when entry is set by plugins
+- e8c252f: fix: context should be updated after modifyRsbuildConfig hook
+- 53f8b52: fix: should register config.plugins when using JavaScript API
+- f5b397b: feat: handle errors when CLI command failed
+- ed966e0: fix(deps): bump Rspack 0.3.13 to fix new Class error
+
 ## 0.0.23
 
 ### Patch Changes

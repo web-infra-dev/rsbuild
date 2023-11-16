@@ -1,5 +1,12 @@
 # @rsbuild/document
 
+## 0.0.24
+
+### Patch Changes
+
+- 86e7b25: refactor: remove context.srcPath
+- f5b397b: feat: handle errors when CLI command failed
+
 ## 0.0.23
 
 ### Patch Changes

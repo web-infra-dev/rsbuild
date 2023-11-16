@@ -1,5 +1,22 @@
 # @rsbuild/webpack
 
+## 0.0.24
+
+### Patch Changes
+
+- e8c252f: fix: context should be updated after modifyRsbuildConfig hook
+- Updated dependencies [86e7b25]
+- Updated dependencies [289dc9a]
+- Updated dependencies [e8c252f]
+- Updated dependencies [53f8b52]
+- Updated dependencies [f5b397b]
+- Updated dependencies [ed966e0]
+  - @rsbuild/shared@0.0.24
+  - @rsbuild/core@0.0.24
+  - @rsbuild/babel-preset@0.0.24
+  - @rsbuild/plugin-babel@0.0.24
+  - @rsbuild/plugin-css-minimizer@0.0.24
+
 ## 0.0.23
 
 ### Patch Changes
