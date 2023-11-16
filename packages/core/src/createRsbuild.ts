@@ -21,7 +21,6 @@ export const getCreateRsbuildDefaultOptions =
   (): Required<CreateRsbuildOptions> => ({
     cwd: process.cwd(),
     target: ['web'],
-    configPath: null,
   });
 
 export async function createRsbuild<

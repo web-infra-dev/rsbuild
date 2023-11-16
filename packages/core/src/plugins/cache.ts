@@ -67,10 +67,6 @@ async function getBuildDependencies(context: Readonly<Context>) {
     buildDependencies.packageJson = [rootPackageJson];
   }
 
-  if (context.configPath) {
-    buildDependencies.config = [context.configPath];
-  }
-
   if (context.tsconfigPath) {
     buildDependencies.tsconfig = [context.tsconfigPath];
   }

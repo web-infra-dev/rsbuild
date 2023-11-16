@@ -11,12 +11,15 @@ import { pluginModuleScopes } from './plugins/moduleScopes';
 
 export async function parseConfig(
   uniBuilderConfig: UniBuilderWebpackConfig,
+  frameworkConfigPath?: string,
 ): Promise<{
   rsbuildConfig: RsbuildConfig;
   rsbuildPlugins: RsbuildPlugin[];
 }> {
-  const { rsbuildConfig, rsbuildPlugins } =
-    parseCommonConfig<'webpack'>(uniBuilderConfig);
+  const { rsbuildConfig, rsbuildPlugins } = parseCommonConfig<'webpack'>(
+    uniBuilderConfig,
+    frameworkConfigPath,
+  );
 
   if (uniBuilderConfig.output?.enableAssetManifest) {
     const { pluginManifest } = await import('./plugins/manifest');
@@ -44,7 +47,10 @@ export async function parseConfig(
 export async function createWebpackBuilder(
   options: CreateWebpackBuilderOptions,
 ): Promise<RsbuildInstance<WebpackProvider>> {
-  const { rsbuildConfig, rsbuildPlugins } = await parseConfig(options.config);
+  const { rsbuildConfig, rsbuildPlugins } = await parseConfig(
+    options.config,
+    options.frameworkConfigPath,
+  );
   const { webpackProvider } = await import('@rsbuild/webpack');
   const rsbuild = await createRsbuild({
     rsbuildConfig,
