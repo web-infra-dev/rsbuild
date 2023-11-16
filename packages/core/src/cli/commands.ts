@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { fse } from '@rsbuild/shared';
+import { fse, logger } from '@rsbuild/shared';
 import { program } from '../../compiled/commander';
 import type { RsbuildInstance, RsbuildMode } from '..';
 
@@ -24,23 +24,41 @@ export function setupProgram(rsbuild: RsbuildInstance) {
     .option(`--open`, 'open the page in browser on startup')
     .description('starting the dev server')
     .action(async (options: DevOptions) => {
-      await rsbuild.startDevServer({
-        open: options.open,
-      });
+      try {
+        await rsbuild.startDevServer({
+          open: options.open,
+        });
+      } catch (err) {
+        logger.error('Failed to start dev server, please check logs.');
+        logger.error(err);
+        process.exit(1);
+      }
     });
 
   program
     .command('build')
     .description('build the app for production')
     .action(async () => {
-      await rsbuild.build();
+      try {
+        await rsbuild.build();
+      } catch (err) {
+        logger.error('Failed to build, please check logs.');
+        logger.error(err);
+        process.exit(1);
+      }
     });
 
   program
     .command('preview')
     .description('preview the production build locally')
     .action(async () => {
-      await rsbuild.preview();
+      try {
+        await rsbuild.preview();
+      } catch (err) {
+        logger.error('Failed to start preview server, please check logs.');
+        logger.error(err);
+        process.exit(1);
+      }
     });
 
   program
@@ -50,12 +68,18 @@ export function setupProgram(rsbuild: RsbuildInstance) {
     .option('--output <output>', 'specify inspect content output path', '/')
     .option('--verbose', 'show full function definitions in output')
     .action(async (options: InspectOptions) => {
-      rsbuild.inspectConfig({
-        env: options.env,
-        verbose: options.verbose,
-        outputPath: join(rsbuild.context.distPath, options.output),
-        writeToDisk: true,
-      });
+      try {
+        await rsbuild.inspectConfig({
+          env: options.env,
+          verbose: options.verbose,
+          outputPath: join(rsbuild.context.distPath, options.output),
+          writeToDisk: true,
+        });
+      } catch (err) {
+        logger.error('Failed to inspect config, please check logs.');
+        logger.error(err);
+        process.exit(1);
+      }
     });
 
   program.parse();
