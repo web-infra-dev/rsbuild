@@ -3,11 +3,12 @@ import { join } from 'path';
 import { logger } from './logger';
 import type {
   Context,
+  BundlerType,
   SourceConfig,
   OutputConfig,
-  CreateRsbuildOptions,
-  BundlerType,
   RsbuildEntry,
+  NormalizedConfig,
+  CreateRsbuildOptions,
 } from './types';
 import { findExists, getAbsoluteDistPath } from './fs';
 
@@ -79,6 +80,17 @@ export function createContextByConfig(
   return context;
 }
 
+export function updateContextByNormalizedConfig(
+  context: Context,
+  config: NormalizedConfig,
+) {
+  context.distPath = getAbsoluteDistPath(context.rootPath, config.output);
+
+  if (config.source.entry) {
+    context.entry = config.source.entry;
+  }
+}
+
 export function createPublicContext(context: Context): Readonly<Context> {
   const exposedKeys = [
     'entry',
@@ -100,7 +112,7 @@ export function createPublicContext(context: Context): Readonly<Context> {
       }
       return undefined;
     },
-    set(target, prop: keyof Context) {
+    set(_, prop: keyof Context) {
       logger.error(
         `Context is readonly, you can not assign to the "context.${prop}" prop.`,
       );
