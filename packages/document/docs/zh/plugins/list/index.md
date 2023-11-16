@@ -6,7 +6,7 @@
 
 ## 使用插件
 
-你可以在 `rsbuild.config.ts` 中通过 `plugins` 选项来注册 Rsbuild 插件，详见 [plugins](/config/options/others#plugins)。
+你可以在 `rsbuild.config.ts` 中通过 `plugins` 选项来注册 Rsbuild 插件，详见 [plugins](/config/options/plugins)。
 
 如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
 
