@@ -4,6 +4,7 @@ import {
   castArray,
   initPlugins,
   mergeRsbuildConfig,
+  updateContextByNormalizedConfig,
   type PluginStore,
   type InspectConfigOptions,
   type CreateRsbuildOptions,
@@ -42,7 +43,10 @@ export async function initConfigs({
   });
 
   await modifyRsbuildConfig(context);
-  context.normalizedConfig = normalizeConfig(context.config);
+
+  const normalizedConfig = normalizeConfig(context.config);
+  context.normalizedConfig = normalizedConfig;
+  updateContextByNormalizedConfig(context, context.normalizedConfig);
 
   const targets = castArray(rsbuildOptions.target);
   const webpackConfigs = await Promise.all(
