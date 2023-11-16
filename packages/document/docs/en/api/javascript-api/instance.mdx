@@ -137,7 +137,17 @@ function Build(options?: BuildOptions): Promise<void>;
 - **Example**
 
 ```ts
+// build
 await rsbuild.build();
+
+// build and handle the error
+try {
+  await rsbuild.build();
+} catch (err) {
+  console.error('Failed to build, please check logs.');
+  console.error(err);
+  process.exit(1);
+}
 ```
 
 ### Development environment build
@@ -211,7 +221,17 @@ function StartDevServer(
 Start Dev Server:
 
 ```ts
+// Start dev server
 await rsbuild.startDevServer();
+
+// Start dev server and handle the error
+try {
+  await rsbuild.startDevServer();
+} catch (err) {
+  logger.error('Failed to start dev server, please check logs.');
+  logger.error(err);
+  process.exit(1);
+}
 ```
 
 After successfully starting Dev Server, you can see the following logs:
@@ -351,7 +371,17 @@ function server(): Promise<StartServerResult>;
 Start the server：
 
 ```ts
+// Start preview server
 await rsbuild.preview();
+
+// Start preview server and hanble the error
+try {
+  await rsbuild.preview();
+} catch (err) {
+  logger.error('Failed to start preview server, please check logs.');
+  logger.error(err);
+  process.exit(1);
+}
 ```
 
 `preview` returns the following parameters:

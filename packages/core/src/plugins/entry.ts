@@ -1,4 +1,4 @@
-import { castArray } from '@rsbuild/shared';
+import { castArray, color } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../rspack-provider/types';
 
 export const pluginEntry = (): RsbuildPlugin => ({
@@ -19,7 +19,11 @@ export const pluginEntry = (): RsbuildPlugin => ({
     api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
       if (bundlerConfigs.every((config) => !config.entry)) {
         throw new Error(
-          'Could not find any entry module, please make sure that `src/index.(ts|js|tsx|jsx|mjs|cjs)` exists, or customize entry through the `source.entry` configuration.',
+          `Could not find any entry module, please make sure that ${color.cyan(
+            `src/index.(ts|js|tsx|jsx|mjs|cjs)`,
+          )} exists, or customize entry through the ${color.cyan(
+            `source.entry`,
+          )} configuration.`,
         );
       }
     });
