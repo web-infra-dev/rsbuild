@@ -6,6 +6,12 @@ import Bundler from '@zh/shared/bundler.md';
 
 <Bundler />
 
+## CSR
+
+CSR 是 "Client-Side Rendering"（客户端渲染）的缩写。它表示页面是在浏览器中通过 JavaScript 渲染的，数据获取、模板和路由等逻辑都在浏览器端完成，而不是在服务器上。
+
+在 CSR 中，服务器会向浏览器端发送一个空的 HTML 外壳和一些 JavaScript 脚本，然后由浏览器端从服务器的 API 中拉取数据，并将动态内容渲染到页面中。
+
 ## Micro-frontend
 
 import MicroFrontend from '@zh/shared/micro-frontend.md';
@@ -18,18 +24,38 @@ import ModuleFederation from '@zh/shared/module-federation.md';
 
 <ModuleFederation />
 
+## Modern.js
+
+Modern.js 是字节跳动 Web 工程体系的开源版本，它提供多个解决方案，来帮助开发者解决不同研发场景下的问题。
+
+- [Modern.js 代码仓库](https://github.com/web-infra-dev/modern.js)。
+
 ## Rspack
 
 import Rspack from '@zh/shared/rspack.md';
 
 <Rspack />
 
-## #MODERNJS
+## Rspress
 
-#MODERNJS 是字节跳动 Web 工程体系的开源版本，它提供多个解决方案，来帮助开发者解决不同研发场景下的问题。
+Rspress 是一个基于 Rsbuild 的静态站点生成器。
 
-- [#MODERNJS 代码仓库](https://github.com/web-infra-dev/modern.js)。
+- [Rspress 代码仓库](https://github.com/web-infra-dev/rspress)。
 
-## EdenX
+## SSR
 
-字节跳动内部的 Web 工程方案，基于 #MODERNJS 实现。
+SSR 是 "Server-Side Rendering"（服务器端渲染）的缩写。它表示由服务器生成网页的 HTML，并将其发送给客户端，而不是只发送一个空的 HTML 外壳，并依赖 JavaScript 来生成页面内容。
+
+在传统的客户端渲染中，服务器会向客户端发送一个空的 HTML 外壳和一些 JavaScript 脚本，然后从服务器的 API 中获取数据，并用动态内容填充页面。这会导致页面的初始加载时间较慢，不利于用户体验和 SEO。
+
+使用 SSR 后，服务器会生成已经包含动态内容的 HTML，并将其发送给客户端。这使得首屏加载速度更快，并对 SEO 更加友好，因为搜索引擎可以爬取到渲染后的页面。
+
+## SWC
+
+SWC (Speedy Web Compiler) 是基于 Rust 语言编写的高性能 JavaScript 和 TypeScript 转译和压缩工具。在 Polyfill 和语法降级方面可以和 Babel 提供一致的能力，并且性能比 Babel 高出一个数量级。
+
+Rsbuild 默认支持 SWC 编译，可以为你的 web 应用提供语法降级、polyfill 以及代码压缩。
+
+## 更多
+
+访问 [Rspack - 术语表](https://rspack.dev/zh/guide/glossary) 查看更多名词解释。

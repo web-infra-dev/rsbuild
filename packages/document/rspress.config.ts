@@ -63,14 +63,6 @@ export default defineConfig({
       text: 'Edit this page on GitHub',
     },
   },
-  replaceRules: [
-    // Using "#MODERNJS" to display "Modern.js"
-    // and it will not be replaced in EdenX in the in-house document
-    {
-      search: /#MODERNJS/g,
-      replace: 'Modern.js',
-    },
-  ],
   builderConfig: {
     source: {
       alias: {
