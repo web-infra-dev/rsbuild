@@ -7,7 +7,7 @@ import {
   shouldSkipLoader,
 } from '../utils';
 import type { ProxyLoaderOptions } from '@/types';
-import type { LoaderContext } from 'webpack';
+import type { Plugin as PluginType } from '@rsbuild/doctor-types';
 
 const loaderModule: Plugin.LoaderDefinition<ProxyLoaderOptions, {}> = function (
   ...args
@@ -87,7 +87,9 @@ const loaderModule: Plugin.LoaderDefinition<ProxyLoaderOptions, {}> = function (
   this.callback(null, ...args);
 };
 
-loaderModule.pitch = function (this: LoaderContext<ProxyLoaderOptions>) {
+loaderModule.pitch = function (
+  this: PluginType.LoaderContext<ProxyLoaderOptions>,
+) {
   if (shouldSkipLoader(this)) {
     return;
   }

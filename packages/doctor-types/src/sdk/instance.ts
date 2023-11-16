@@ -76,9 +76,6 @@ export interface DoctorSDKInstance {
    */
   readonly outputDir: string;
 
-  /** manifest cloud path */
-  cloudManifestUrl: string;
-
   /** manifest local path */
   diskManifestPath: string;
 
@@ -120,9 +117,6 @@ export interface DoctorSdkInstance {
    * @default ".rsbuild-doctor"
    */
   readonly outputDir: string;
-
-  /** manifest cloud path */
-  cloudManifestUrl: string;
 
   /** manifest local path */
   diskManifestPath: string;

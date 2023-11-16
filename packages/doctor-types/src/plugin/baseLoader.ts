@@ -6,11 +6,16 @@ import type {
   Configuration as RspackConfiguration,
   RuleSetRule as RspackRuleSetRule,
 } from '@rspack/core';
-import {
-  SourceMap,
-  PitchLoaderDefinitionFunction as RspackPitchLoaderDefinitionFunction,
-  // @ts-expect-error
-} from '@rspack/core/dist/config/adapterRuleUse';
+
+export interface SourceMap {
+  version: number;
+  sources: string[];
+  mappings: string;
+  file?: string;
+  sourceRoot?: string;
+  sourcesContent?: string[];
+  names?: string[];
+}
 
 export type RuleSetRule = RspackRuleSetRule | WebpackRuleSetRule;
 export type Configuration = WebpackConfiguration | RspackConfiguration;
@@ -83,6 +88,18 @@ export interface LoaderContext<OptionsType = {}> {
   loaderIndex: number;
 }
 export declare interface PitchLoaderDefinitionFunction<
+  OptionsType = {},
+  ContextAdditions = {},
+> {
+  (
+    this: LoaderContext<OptionsType> & ContextAdditions,
+    remainingRequest: string,
+    previousRequest: string,
+    data: object,
+  ): string | void | Buffer | Promise<string | Buffer>;
+}
+
+export interface RspackPitchLoaderDefinitionFunction<
   OptionsType = {},
   ContextAdditions = {},
 > {

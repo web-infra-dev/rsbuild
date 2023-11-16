@@ -323,7 +323,7 @@ export class APIDataLoader {
               packageGraph,
               outputFilename,
               moduleCodeMap,
-              cloudManifestUrl: manifest.cloudManifestUrl,
+              cloudManifestUrl: '', // TODO: Delete the cloud path property.
             } as R;
           },
         );

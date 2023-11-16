@@ -7,27 +7,42 @@
     "directory": "packages/doctor-core"
   },
   "license": "MIT",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/type/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "types": "./dist/type/index.d.ts",
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js"
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.js"
     },
-    "./utils": {
-      "types": "./dist/type/build-utils/index.d.ts",
-      "require": "./dist/cjs/build-utils/index.js",
-      "import": "./dist/esm/build-utils/index.js"
+    "./build-utils": {
+      "types": "./dist/build-utils/build/index.d.ts",
+      "require": "./dist/build-utils/build/index.js",
+      "import": "./dist/build-utils/build/index.js"
+    },
+    "./common-utils": {
+      "types": "./dist/build-utils/common/index.d.ts",
+      "require": "./dist/build-utils/common/index.js",
+      "import": "./dist/build-utils/common/index.js"
+    },
+    "./plugins": {
+      "types": "./dist/inner-plugins/index.d.ts",
+      "require": "./dist/inner-plugins/index.js",
+      "import": "./dist/inner-plugins/index.js"
     },
     "./rules": {
-      "types": "./dist/type/rules/index.d.ts",
-      "require": "./dist/cjs/rues/index.js",
-      "import": "./dist/esm/rules/index.js"
+      "types": "./dist/rules/index.d.ts",
+      "require": "./dist/rules/index.js",
+      "import": "./dist/rules/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "require": "./dist/types/index.js",
+      "import": "./dist/types/index.js"
     }
   },
   "scripts": {
@@ -45,7 +60,6 @@
     "enhanced-resolve": "5.12.0",
     "loader-utils": "^2.0.4",
     "lodash": "^4.17.21",
-    "memfs": "3.4.10",
     "node-fetch": "^3.3.2",
     "path-browserify": "1.0.1",
     "semver": "^7.5.4",
@@ -54,6 +68,7 @@
   },
   "devDependencies": {
     "@rsbuild/doctor-types": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
     "@types/bytes": "3.1.1",
     "@types/loader-utils": "^2.0.5",
     "@types/lodash": "^4.14.200",
