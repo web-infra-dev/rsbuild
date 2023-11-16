@@ -15,7 +15,6 @@ export interface DoctorManifest {
 export interface DoctorManifestSeriesData {
   name: string;
   path: string;
-  cloudUrl: string;
   stage: number;
   origin?: string;
 }

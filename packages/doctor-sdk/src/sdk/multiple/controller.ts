@@ -28,7 +28,6 @@ export class DoctorSDKController {
         name: item.name,
         path: item.diskManifestPath,
         stage: item.stage,
-        cloudUrl: '', // TODO: Delete the cloud path property.
       };
 
       if (serverUrl) {

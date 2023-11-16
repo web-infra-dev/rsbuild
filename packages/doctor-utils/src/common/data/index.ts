@@ -323,7 +323,6 @@ export class APIDataLoader {
               packageGraph,
               outputFilename,
               moduleCodeMap,
-              cloudManifestUrl: '', // TODO: Delete the cloud path property.
             } as R;
           },
         );

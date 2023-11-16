@@ -10,7 +10,6 @@ export interface Hooks {
       {
         manifestWithShardingFiles: DoctorManifestWithShardingFiles;
         manifestDiskPath: string;
-        manifestCloudPath: string;
       },
     ]
   >;

@@ -24,13 +24,11 @@ describe('test hooks of sdk/core.ts', () => {
     expect(fn1).toHaveBeenCalledWith({
       manifestWithShardingFiles: target.sdk.cloudData,
       manifestDiskPath: target.sdk.diskManifestPath,
-      manifestCloudPath: '',
     });
     expect(fn2).toBeCalledTimes(1);
     expect(fn2).toHaveBeenCalledWith({
       manifestWithShardingFiles: target.sdk.cloudData,
       manifestDiskPath: target.sdk.diskManifestPath,
-      manifestCloudPath: '',
     });
   });
 });

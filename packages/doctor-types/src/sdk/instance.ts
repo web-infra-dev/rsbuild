@@ -17,7 +17,7 @@ import { PlainObject } from '../common';
 import { EmoCheckData } from '../emo';
 import { Hooks } from './hooks';
 
-export type WriteStoreOptionsType = { userManifestCloudName?: string };
+export type WriteStoreOptionsType = {};
 export interface DoctorBuilderSDKInstance extends DoctorSDKInstance {
   readonly server: DoctorServerInstance;
   /** Report configuration information */
