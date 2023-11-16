@@ -10,8 +10,6 @@ export type Context = {
   target: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
   rootPath: string;
-  /** Absolute path of source files. */
-  srcPath: string;
   /** Absolute path of output files. */
   distPath: string;
   /** Absolute path of cache files. */
