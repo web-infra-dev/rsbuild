@@ -1,14 +1,10 @@
 import fs from 'fs';
 import jiti from 'jiti';
 import { join } from 'path';
-import type {
-  RsbuildPlugin,
-  RsbuildConfig as BaseRsbuildConfig,
-} from '@rsbuild/shared';
+import type { RsbuildConfig as BaseRsbuildConfig } from '@rsbuild/shared';
 import { restartDevServer } from '../server/restart';
 
 export type RsbuildConfig = BaseRsbuildConfig & {
-  plugins?: RsbuildPlugin[];
   /**
    * @private only for testing
    */

@@ -26,7 +26,7 @@ export const getCreateRsbuildDefaultOptions =
 
 export async function createRsbuild<
   P extends ({ rsbuildConfig }: { rsbuildConfig: T }) => RsbuildProvider,
-  T = RsbuildConfig,
+  T extends RsbuildConfig,
 >(
   options: CreateRsbuildOptions & {
     rsbuildConfig: T;
@@ -65,7 +65,7 @@ export async function createRsbuild<
   await applyDefaultPlugins(pluginStore);
   debug('add default plugins done');
 
-  return {
+  const rsbuild = {
     ...pick(pluginStore, ['addPlugins', 'removePlugins', 'isPluginExists']),
     ...pick(pluginAPI, [
       'onBeforeBuild',
@@ -88,4 +88,10 @@ export async function createRsbuild<
     startDevServer,
     context: publicContext,
   };
+
+  if (rsbuildConfig.plugins) {
+    rsbuild.addPlugins(rsbuildConfig.plugins);
+  }
+
+  return rsbuild;
 }

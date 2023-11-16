@@ -4,7 +4,6 @@ import { loadConfig } from './config';
 
 type RunCliOptions = {
   isRestart?: boolean;
-  defaultPlugins?: RsbuildPlugin[];
 };
 
 export async function runCli(options: RunCliOptions = {}) {
@@ -14,14 +13,6 @@ export async function runCli(options: RunCliOptions = {}) {
     rsbuildConfig: config,
     provider: config.provider,
   });
-
-  if (options.defaultPlugins) {
-    rsbuild.addPlugins(options.defaultPlugins);
-  }
-
-  if (config.plugins) {
-    rsbuild.addPlugins(config.plugins);
-  }
 
   if (!options.isRestart) {
     setupProgram(rsbuild);
