@@ -45,7 +45,6 @@ export function createContextByConfig(
 ): Context {
   const { cwd, target, configPath } = options;
   const rootPath = cwd;
-  const srcPath = join(rootPath, 'src');
 
   const distPath = getAbsoluteDistPath(cwd, outputConfig);
   const cachePath = join(rootPath, 'node_modules', '.cache');
@@ -67,7 +66,6 @@ export function createContextByConfig(
       sourceConfig.entries ||
       getDefaultEntry(rootPath),
     target,
-    srcPath,
     rootPath,
     distPath,
     cachePath,
@@ -85,7 +83,6 @@ export function createPublicContext(context: Context): Readonly<Context> {
   const exposedKeys = [
     'entry',
     'target',
-    'srcPath',
     'rootPath',
     'distPath',
     'devServer',
