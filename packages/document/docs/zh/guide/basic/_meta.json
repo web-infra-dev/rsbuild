@@ -9,5 +9,6 @@
   "configure-rspack",
   "html-template",
   "css-modules",
-  "typescript"
+  "typescript",
+  "tailwindcss"
 ]

@@ -1,0 +1,79 @@
+# 使用 Tailwind CSS
+
+[Tailwind CSS](https://tailwindcss.com/) 是一个以 Utility Class 为基础的 CSS 框架和设计系统，可以快速地为组件添加常用样式，同时支持主题样式的灵活扩展。
+
+你可以通过 PostCSS 插件来在 Rsbuild 中接入 Tailwind CSS。
+
+## 安装 Tailwind CSS
+
+只需要安装 `tailwindcss` 即可，无须安装其他 npm 包。
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add tailwindcss -D" />
+
+## 配置 PostCSS
+
+通过 [tools.postcss](/config/options/tools#toolspostcss) 来注册 `tailwindcss` 插件。
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import tailwindcss from 'tailwindcss';
+
+export default defineConfig({
+  tools: {
+    postcss(config) {
+      config.postcssOptions?.plugins?.push(tailwindcss);
+    },
+  },
+});
+```
+
+## 配置 Tailwind CSS
+
+在当前项目的根目录创建 `tailwind.config.js` 文件，并添加以下内容：
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+:::tip
+上述配置仅供参考，你可以根据项目需要进行调整。
+:::
+
+## 引入 CSS
+
+在 CSS 入口文件中添加 `@tailwind` 指令：
+
+```css title="main.css"
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+根据需求不同，你可以选择性地导入 Tailwind CSS 提供的 CSS 样式。请参考 [@tailwind 文档](https://tailwindcss.com/docs/functions-and-directives#tailwind) 来了解 `@tailwind` 指令的详细用法。
+
+## 完成
+
+你已经完成了在 Rsbuild 中接入 Tailwind CSS 的全部步骤！
+
+你可以在任意组件或 HTML 中使用 Tailwind 的 utility classes，比如：
+
+```html
+<h1 class="text-3xl font-bold underline">Hello world!</h1>
+```
+
+更多用法请参考 [Tailwind CSS 文档](https://tailwindcss.com/)。
+
+## 自动补全
+
+Tailwind CSS 提供了 [Tailwind CSS IntelliSense](https://github.com/tailwindlabs/tailwindcss-intellisense) 插件，用于在 VS Code 中自动补全 Tailwind CSS 的 class names、CSS functions 和 directives。
+
+你可以在 VS Code 中安装该插件，即可开启自动补全功能。
