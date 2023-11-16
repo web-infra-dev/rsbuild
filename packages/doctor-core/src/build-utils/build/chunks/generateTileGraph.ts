@@ -36,7 +36,6 @@ export async function generateTileGraph(
 ) {
   try {
     const tileReportHtmlDir = path.join(buildOutputPath, DoctorOutputFolder);
-    console.log(tileReportHtmlDir);
     if (!fs.existsSync(tileReportHtmlDir)) {
       fs.mkdirSync(tileReportHtmlDir);
     }

@@ -48,3 +48,4 @@ export function createSnapshotSerializer(options?: SnapshotSerializerOptions) {
 }
 
 export * from './rsbuild';
+export * from './doctor-kits';

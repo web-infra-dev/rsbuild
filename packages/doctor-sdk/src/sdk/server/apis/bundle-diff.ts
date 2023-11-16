@@ -34,7 +34,7 @@ export class BundleDiffAPI extends BaseAPI {
       packageGraph,
       outputFilename,
       moduleCodeMap,
-      cloudManifestUrl: sdk.cloudManifestUrl,
+      cloudManifestUrl: '', // TODO: Delete the cloud path property.
     };
   }
 

@@ -4,14 +4,6 @@ import { StoreData } from './sdk';
 export interface DoctorManifest {
   client: DoctorManifestClient;
   data: DoctorManifestData;
-  /**
-   * manifest url in tos
-   */
-  cloudManifestUrl?: string;
-  /**
-   * manifest data shareding file urls in tos
-   */
-  cloudData?: Record<keyof DoctorManifestData, string[] | string>;
   /** current build name */
   name?: string;
   /**

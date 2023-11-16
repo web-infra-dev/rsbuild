@@ -1,60 +1,8 @@
 import { ModuleGraph } from '@rsbuild/doctor-sdk/graph';
-import path, { relative } from 'path';
-import Webpack from 'webpack';
-import { createFsFromVolume, Volume } from 'memfs';
+import { relative } from 'path';
 
 export function removeAbsModulePath(graph: ModuleGraph, root: string) {
   for (const mod of graph.getModules()) {
     (mod as any).path = relative(root, mod.path);
   }
-}
-export function compileByWebpack5(
-  absPath: Webpack.Configuration['entry'],
-  options: Webpack.Configuration = {},
-) {
-  const compiler = Webpack({
-    entry: absPath,
-    mode: 'none',
-    output: {
-      path: path.resolve(__dirname),
-      filename: 'bundle.js',
-    },
-    stats: 'normal',
-    cache: false,
-    ...options,
-    optimization: {
-      minimize: false,
-      concatenateModules: true,
-      ...options.optimization,
-    },
-  });
-
-  compiler.outputFileSystem = createFsFromVolume(new Volume());
-  compiler.outputFileSystem.join = path.join.bind(path);
-
-  return promisifyCompilerRun(compiler);
-}
-
-function promisifyCompilerRun<
-  T extends Webpack.Compiler,
-  P = Webpack.StatsCompilation,
->(compiler: T): Promise<P> {
-  return new Promise((resolve, reject) => {
-    compiler.run((err, stats) => {
-      if (err) {
-        reject(err);
-      }
-
-      if (!stats) {
-        reject('Stats is Empty!');
-        return;
-      }
-
-      if (stats.hasErrors()) {
-        reject(stats.toJson().errors);
-      }
-
-      resolve(stats.toJson() as P);
-    });
-  });
 }

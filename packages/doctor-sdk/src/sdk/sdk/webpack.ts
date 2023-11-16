@@ -417,7 +417,6 @@ export class DoctorWebpackSDK<
 
         return t;
       }, {} as Common.PlainObject) as unknown as Manifest.DoctorManifestWithShardingFiles['data'],
-      cloudManifestUrl: this.cloudManifestUrl,
       __LOCAL__SERVER__: true,
       __SOCKET__URL__: this.server.socketUrl,
     };

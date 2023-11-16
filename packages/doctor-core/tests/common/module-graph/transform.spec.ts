@@ -3,7 +3,8 @@ import path from 'path';
 import fs from 'fs';
 import { ModuleGraph } from '@/build-utils/common';
 import { Chunks } from '@/build-utils/build';
-import { compileByWebpack5, removeAbsModulePath } from '../utils';
+import { removeAbsModulePath } from '../utils';
+import { compileByWebpack5 } from '@rsbuild/test-helper';
 
 const resolveFixture = (...paths: string[]) => {
   return path.resolve(__dirname, '../../fixtures', ...paths);

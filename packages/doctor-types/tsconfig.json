@@ -1,6 +1,8 @@
 {
   "extends": "@rsbuild/tsconfig/base",
   "compilerOptions": {
+    "module": "Node16",
+    "moduleResolution": "Node16",
     "declaration": true,
     "outDir": "./dist",
     "baseUrl": "./",

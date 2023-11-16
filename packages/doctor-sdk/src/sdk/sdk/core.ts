@@ -34,8 +34,6 @@ export abstract class SDKCore<T extends DoctorSDKOptions>
 
   private _outputDir: string;
 
-  public cloudManifestUrl = '';
-
   public diskManifestPath = '';
 
   public cloudData?: Manifest.DoctorManifestWithShardingFiles;
@@ -168,9 +166,7 @@ export abstract class SDKCore<T extends DoctorSDKOptions>
       '[SDKCore.writeManifest]',
     );
 
-    await Promise.all([
-      File.fse.writeFile(diskManifestPath, dataStr), // TODO:: Promise.all to fix;
-    ]);
+    await Promise.all([File.fse.writeFile(diskManifestPath, dataStr)]);
 
     return diskManifestPath;
   }
@@ -185,7 +181,7 @@ export abstract class SDKCore<T extends DoctorSDKOptions>
     await this.hooks.afterSaveManifest.promise({
       manifestWithShardingFiles: this.cloudData!,
       manifestDiskPath,
-      manifestCloudPath: this.cloudManifestUrl,
+      manifestCloudPath: '', // TODO: Delete the cloud path property.
     });
 
     return manifestDiskPath;

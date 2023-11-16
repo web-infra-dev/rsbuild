@@ -1,3 +1,3 @@
-import { configWithEsm } from '../../scripts/modern.base.config';
+import { baseBuildConfig } from '../../scripts/modern.base.config';
 
-export default configWithEsm;
+export default baseBuildConfig;

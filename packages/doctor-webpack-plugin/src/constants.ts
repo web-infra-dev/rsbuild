@@ -1,6 +1,6 @@
 import type { Tap } from 'tapable';
 
-export const pluginTapName = 'RsbuildDoctorWebpackPlugin';
+export const pluginTapName = 'DoctorWebpackPlugin';
 
 export const pluginTapPostOptions: Tap = {
   name: pluginTapName,

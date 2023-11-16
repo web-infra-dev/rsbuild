@@ -181,7 +181,7 @@ export class DoctorServer implements SDK.DoctorServerInstance {
     const url = this.getClientUrl(
       ...(args as Parameters<SDK.DoctorServerInstance['getClientUrl']>),
     );
-    await open(url);
+    // await open(url); // TODO: after add rsbuild doctor client will open this, now will throw error.
     console.log(`Web Doctor analyze run at: ${url}`);
   }
 
