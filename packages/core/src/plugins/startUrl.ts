@@ -1,12 +1,8 @@
 import { join } from 'path';
-import {
-  logger,
-  castArray,
-  type DefaultRsbuildPlugin,
-  normalizeUrl,
-} from '@rsbuild/shared';
+import { logger, castArray, normalizeUrl } from '@rsbuild/shared';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import type { RsbuildPlugin } from '../types';
 
 const execAsync = promisify(exec);
 
@@ -89,7 +85,7 @@ export const replacePlaceholder = (url: string, port: number) =>
 
 const openedURLs: string[] = [];
 
-export function pluginStartUrl(): DefaultRsbuildPlugin {
+export function pluginStartUrl(): RsbuildPlugin {
   return {
     name: 'plugin-start-url',
     setup(api) {

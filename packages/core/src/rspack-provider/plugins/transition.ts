@@ -1,5 +1,5 @@
 import { setConfig } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
+import type { RsbuildPlugin } from '../../types';
 
 /**
  * Provide some temporary configurations for Rspack early transition

@@ -4,10 +4,10 @@ import {
   findUpSync,
   getDistPath,
   getSharedPkgCompiledPath,
-  type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginNodeAddons = (): DefaultRsbuildPlugin => ({
+export const pluginNodeAddons = (): RsbuildPlugin => ({
   name: 'plugin-node-addons',
 
   setup(api) {

@@ -1,4 +1,5 @@
-import { getDistPath, type DefaultRsbuildPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import { getDistPath } from '@rsbuild/shared';
 import { cloneDeep } from '@rsbuild/shared';
 import type { PluginRemOptions, PxToRemOptions } from './types';
 
@@ -9,9 +10,7 @@ const defaultOptions: PluginRemOptions = {
 
 export type { PluginRemOptions };
 
-export const pluginRem = (
-  options: PluginRemOptions = {},
-): DefaultRsbuildPlugin => ({
+export const pluginRem = (options: PluginRemOptions = {}): RsbuildPlugin => ({
   name: 'plugin-rem',
 
   pre: ['plugin-css', 'plugin-less', 'plugin-sass', 'plugin-stylus'],

@@ -7,8 +7,7 @@ import {
   IMAGE_EXTENSIONS,
   chainStaticAssetRule,
 } from '@rsbuild/shared';
-
-import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
 export function getRegExpForExts(exts: string[]): RegExp {
   const matcher = exts
@@ -22,7 +21,7 @@ export function getRegExpForExts(exts: string[]): RegExp {
   );
 }
 
-export const pluginAsset = (): DefaultRsbuildPlugin => ({
+export const pluginAsset = (): RsbuildPlugin => ({
   name: 'plugin-asset',
 
   setup(api) {

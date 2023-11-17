@@ -3,12 +3,16 @@ export { mergeRsbuildConfig } from '@rsbuild/shared';
 
 export { defineConfig } from './cli';
 
+export type { Rspack } from './rspack-provider';
+
 export type {
-  Rspack,
+  // Config Types
   RsbuildConfig,
+  NormalizedConfig,
+  // Plugin Types
   RsbuildPlugin,
   RsbuildPluginAPI,
-} from './rspack-provider';
+} from './types';
 
 export type {
   Context,

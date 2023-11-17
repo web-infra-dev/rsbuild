@@ -1,9 +1,7 @@
-import {
-  HtmlNetworkPerformancePlugin,
-  type DefaultRsbuildPlugin,
-} from '@rsbuild/shared';
+import { HtmlNetworkPerformancePlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginNetworkPerformance = (): DefaultRsbuildPlugin => ({
+export const pluginNetworkPerformance = (): RsbuildPlugin => ({
   name: `plugin-network-performance`,
 
   setup(api) {

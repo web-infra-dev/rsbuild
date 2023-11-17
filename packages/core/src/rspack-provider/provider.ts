@@ -16,7 +16,7 @@ import {
   isSatisfyRspackMinimumVersion,
   supportedRspackMinimumVersion,
 } from './shared/rspackVersion';
-import type { RsbuildConfig, NormalizedConfig } from './types';
+import type { RsbuildConfig, NormalizedConfig } from '../types';
 
 export type RspackProvider = RsbuildProvider<
   RsbuildConfig,

@@ -1,8 +1,5 @@
-import type {
-  DefaultRsbuildPlugin,
-  BundlerChain,
-  NormalizedConfig,
-} from '@rsbuild/shared';
+import type { BundlerChain, NormalizedConfig } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
 function applyProfile({
   chain,
@@ -22,7 +19,7 @@ function applyProfile({
 /**
  * Apply some configs of Rsbuild performance
  */
-export const pluginPerformance = (): DefaultRsbuildPlugin => ({
+export const pluginPerformance = (): RsbuildPlugin => ({
   name: 'plugin-performance',
 
   setup(api) {

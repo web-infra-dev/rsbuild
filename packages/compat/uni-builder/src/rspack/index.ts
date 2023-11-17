@@ -1,9 +1,10 @@
 import { createRsbuild } from '@rsbuild/core';
-import type { RsbuildInstance, RsbuildPlugin } from '@rsbuild/core';
 import type {
   RsbuildConfig,
-  RspackProvider,
-} from '@rsbuild/core/rspack-provider';
+  RsbuildPlugin,
+  RsbuildInstance,
+} from '@rsbuild/core';
+import type { RspackProvider } from '@rsbuild/core/rspack-provider';
 import type { UniBuilderRspackConfig } from '../types';
 import type { CreateRspackBuilderOptions } from '../types';
 import { parseCommonConfig } from '../shared/parseCommonConfig';

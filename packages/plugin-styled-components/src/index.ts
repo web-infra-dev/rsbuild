@@ -1,9 +1,9 @@
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   isServerTarget,
   mergeChainedOptions,
   getDefaultStyledComponentsConfig,
   type ChainedConfig,
-  type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
 
 /**
@@ -24,7 +24,7 @@ type StyledComponentsOptions = {
 
 export const pluginStyledComponents = (
   userConfig: ChainedConfig<StyledComponentsOptions> = {},
-): DefaultRsbuildPlugin => ({
+): RsbuildPlugin => ({
   name: 'plugin-styled-components',
 
   setup(api) {

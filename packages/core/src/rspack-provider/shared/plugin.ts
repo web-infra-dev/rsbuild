@@ -1,4 +1,4 @@
-import { RsbuildPlugin } from '../types';
+import { RsbuildPlugin } from '../../types';
 import { awaitableGetter, Plugins } from '@rsbuild/shared';
 
 export const applyDefaultPlugins = (plugins: Plugins) =>

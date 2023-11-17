@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '../types';
+import type { RsbuildPlugin } from '../../types';
 import {
   isUseCssSourceMap,
   LESS_REGEX,

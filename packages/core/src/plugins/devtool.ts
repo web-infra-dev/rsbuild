@@ -1,6 +1,7 @@
-import { isUseJsSourceMap, DefaultRsbuildPlugin } from '@rsbuild/shared';
+import { isUseJsSourceMap } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginDevtool = (): DefaultRsbuildPlugin => ({
+export const pluginDevtool = (): RsbuildPlugin => ({
   name: 'plugin-devtool',
 
   setup(api) {

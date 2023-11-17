@@ -4,7 +4,7 @@ import {
   getHTMLPathByEntry,
   type PluginStore,
 } from '@rsbuild/shared';
-import type { Context, RsbuildPluginAPI } from '../types';
+import type { Context, RsbuildPluginAPI } from '../../types';
 
 export function getPluginAPI({
   context,

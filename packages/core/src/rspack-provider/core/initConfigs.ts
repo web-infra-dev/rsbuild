@@ -12,7 +12,7 @@ import {
 import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
 import { normalizeConfig } from '../config/normalize';
-import type { Context } from '../types';
+import type { Context } from '../../types';
 
 async function modifyRsbuildConfig(context: Context) {
   debug('modify Rsbuild config');

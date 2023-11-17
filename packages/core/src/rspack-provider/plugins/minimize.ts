@@ -3,7 +3,7 @@ import {
   type BundlerChain,
   type RspackBuiltinsConfig,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin, NormalizedConfig } from '../types';
+import type { RsbuildPlugin, NormalizedConfig } from '../../types';
 import {
   SwcJsMinimizerRspackPlugin,
   SwcCssMinimizerRspackPlugin,

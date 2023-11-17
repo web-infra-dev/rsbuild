@@ -1,19 +1,19 @@
 import {
   createAsyncHook,
-  OnExitFn,
-  OnAfterBuildFn,
-  OnBeforeBuildFn,
-  OnDevCompileDoneFn,
-  ModifyRsbuildConfigFn,
-  OnAfterStartDevServerFn,
-  OnBeforeStartDevServerFn,
-  OnAfterCreateCompilerFn,
-  OnBeforeCreateCompilerFn,
-  ModifyBundlerChainFn,
+  type OnExitFn,
+  type OnAfterBuildFn,
+  type OnBeforeBuildFn,
+  type OnDevCompileDoneFn,
+  type ModifyRsbuildConfigFn,
+  type OnAfterStartDevServerFn,
+  type OnBeforeStartDevServerFn,
+  type OnAfterCreateCompilerFn,
+  type OnBeforeCreateCompilerFn,
+  type ModifyBundlerChainFn,
   type RspackConfig,
   type ModifyRspackConfigFn,
 } from '@rsbuild/shared';
-import type { RsbuildConfig } from '../types';
+import type { RsbuildConfig } from '../../types';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 
 export function initHooks() {

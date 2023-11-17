@@ -8,7 +8,7 @@ import {
   getDefaultSecurityConfig,
   getDefaultPerformanceConfig,
 } from '@rsbuild/shared';
-import type { RsbuildConfig } from '../types';
+import type { RsbuildConfig } from '../../types';
 
 export const createDefaultConfig = (): RsbuildConfig => ({
   dev: getDefaultDevConfig(),

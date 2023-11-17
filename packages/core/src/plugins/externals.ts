@@ -1,6 +1,7 @@
-import { DefaultRsbuildPlugin, BundlerConfig } from '@rsbuild/shared';
+import type { BundlerConfig } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export function pluginExternals(): DefaultRsbuildPlugin {
+export function pluginExternals(): RsbuildPlugin {
   return {
     name: 'plugin-externals',
     setup(api) {

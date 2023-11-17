@@ -20,7 +20,7 @@ import type {
   RsbuildPlugin,
   NormalizedConfig,
   NormalizedSourceConfig,
-} from '../types';
+} from '../../types';
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
 

@@ -15,7 +15,6 @@ import type {
   MetaOptions,
   NormalizedConfig,
   HTMLPluginOptions,
-  DefaultRsbuildPlugin,
   HtmlTagsPluginOptions,
   SharedRsbuildPluginAPI,
   NormalizedOutputConfig,
@@ -25,6 +24,7 @@ import {
   HtmlBasicPlugin,
   type HtmlInfo,
 } from '../rspack-plugins/HtmlBasicPlugin';
+import type { RsbuildPlugin } from '../types';
 
 export function getTitle(entryName: string, config: NormalizedConfig) {
   return mergeChainedOptions({
@@ -190,7 +190,7 @@ export const applyInjectTags = (api: SharedRsbuildPluginAPI) => {
   });
 };
 
-export const pluginHtml = (): DefaultRsbuildPlugin => ({
+export const pluginHtml = (): RsbuildPlugin => ({
   name: 'plugin-html',
 
   setup(api) {

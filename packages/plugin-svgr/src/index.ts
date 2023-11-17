@@ -6,8 +6,8 @@ import {
   getDistPath,
   getFilename,
   chainStaticAssetRule,
-  DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 export type SvgDefaultExport = 'component' | 'url';
 
@@ -36,9 +36,7 @@ function getSvgoDefaultConfig() {
   };
 }
 
-export const pluginSvgr = (
-  options: PluginSvgrOptions = {},
-): DefaultRsbuildPlugin => ({
+export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
   name: 'plugin-svgr',
 
   setup(api) {

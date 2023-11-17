@@ -1,4 +1,4 @@
-import { DefaultRsbuildPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { SCRIPT_REGEX } from '@rsbuild/shared';
 import { cloneDeep } from 'lodash';
 import { applyUserBabelConfig, type BabelConfig } from './helper';
@@ -19,7 +19,7 @@ export const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
 
 export const pluginBabel = (
   options: PluginBabelOptions = {},
-): DefaultRsbuildPlugin => ({
+): RsbuildPlugin => ({
   name: 'plugin-babel',
 
   setup(api) {

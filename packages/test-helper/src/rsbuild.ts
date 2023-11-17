@@ -6,8 +6,10 @@ import type {
   CreateRsbuildOptions,
   BundlerPluginInstance,
 } from '@rsbuild/shared';
-import { getCreateRsbuildDefaultOptions } from '@rsbuild/core';
-import type { RsbuildConfig } from '@rsbuild/core/rspack-provider';
+import {
+  getCreateRsbuildDefaultOptions,
+  type RsbuildConfig,
+} from '@rsbuild/core';
 
 const getRspackProvider = async (rsbuildConfig: RsbuildConfig) => {
   const { rspackProvider } = await import('@rsbuild/core/rspack-provider');

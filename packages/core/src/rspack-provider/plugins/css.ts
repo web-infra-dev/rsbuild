@@ -18,7 +18,7 @@ import {
   type RuleSetRule,
   type ModifyBundlerChainUtils,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin, NormalizedConfig } from '../types';
+import type { RsbuildPlugin, NormalizedConfig } from '../../types';
 import { getCompiledPath } from '../shared';
 
 export const enableNativeCss = (config: NormalizedConfig) =>
@@ -226,7 +226,7 @@ export const pluginCss = (): RsbuildPlugin => {
         // TODO: there is no switch to turn off experiments.css sourcemap in rspack, so we manually remove css sourcemap in Rsbuild
         if (!enableSourceMap && enableExtractCSS) {
           const { RemoveCssSourcemapPlugin } = await import(
-            '../rspackPlugin/removeCssSourcemapPlugin'
+            '../../rspack-plugins/RemoveCssSourcemapPlugin'
           );
           chain
             .plugin('remove-css-sourcemap')

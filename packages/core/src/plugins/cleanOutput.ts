@@ -1,5 +1,5 @@
-import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
 const emptyDir = async (dir: string) => {
   if (await fse.pathExists(dir)) {
@@ -7,7 +7,7 @@ const emptyDir = async (dir: string) => {
   }
 };
 
-export const pluginCleanOutput = (): DefaultRsbuildPlugin => ({
+export const pluginCleanOutput = (): RsbuildPlugin => ({
   name: 'plugin-clean-output',
 
   setup(api) {
