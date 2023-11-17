@@ -28,12 +28,6 @@ export function applyResolvePlugin(api: SharedRsbuildPluginAPI) {
       rootPath: api.context.rootPath,
     });
 
-    applyMainFields({
-      chain,
-      config,
-      target,
-    });
-
     applyFullySpecified({ chain, config, CHAIN_ID });
   });
 }
@@ -115,38 +109,4 @@ function applyAlias({
       formattedValues.length === 1 ? formattedValues[0] : formattedValues,
     );
   });
-}
-
-function applyMainFields({
-  chain,
-  config,
-  target,
-}: {
-  chain: BundlerChain;
-  config: NormalizedConfig;
-  target: RsbuildTarget;
-}) {
-  const { resolveMainFields } = config.source;
-  if (!resolveMainFields) {
-    return;
-  }
-
-  const mainFields = Array.isArray(resolveMainFields)
-    ? resolveMainFields
-    : resolveMainFields[target];
-
-  if (mainFields) {
-    mainFields
-      .reduce((result: string[], fields) => {
-        if (Array.isArray(fields)) {
-          result.push(...fields);
-        } else {
-          result.push(fields);
-        }
-        return result;
-      }, [] as string[])
-      .forEach((field) => {
-        chain.resolve.mainFields.add(field);
-      });
-  }
 }

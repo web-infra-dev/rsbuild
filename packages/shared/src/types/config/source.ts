@@ -6,8 +6,6 @@ export type Alias = Record<string, string | false | (string | false)[]>;
 // Use a loose type to compat webpack
 export type Define = Record<string, any>;
 
-export type MainFields = (string | string[])[];
-
 export type AliasStrategy = 'prefer-tsconfig' | 'prefer-alias';
 
 export interface SourceConfig {
@@ -45,11 +43,6 @@ export interface SourceConfig {
    * It can be used to execute global logics, such as polyfill injection.
    */
   preEntry?: string | string[];
-  /**
-   * This configuration will determine which field of `package.json` you use to import the `npm` module.
-   * Same as the [resolve.mainFields](https://webpack.js.org/configuration/resolve/#resolvemainfields) config of webpack.
-   */
-  resolveMainFields?: MainFields | Partial<Record<RsbuildTarget, MainFields>>;
   /**
    * Add a prefix to [resolve.extensions](https://webpack.js.org/configuration/resolve/#resolveextensions).
    */
