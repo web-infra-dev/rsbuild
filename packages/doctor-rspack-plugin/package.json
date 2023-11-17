@@ -1,0 +1,44 @@
+{
+  "name": "@rsbuild/doctor-rspack-plugin",
+  "version": "0.0.8",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/doctor-webpack-plugin"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "npm run start",
+    "start": "modern build -w",
+    "build": "modern build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@rsbuild/doctor-core": "workspace:*",
+    "@rsbuild/doctor-sdk": "workspace:*",
+    "@rsbuild/doctor-utils": "workspace:*",
+    "@rspack/core": "0.3.14",
+    "lodash": "^4.17.21",
+    "webpack": "^5.89.0"
+  },
+  "devDependencies": {
+    "@rsbuild/doctor-types": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
+    "@types/lodash": "^4.14.200",
+    "@types/node": "^16",
+    "@types/tapable": "2.2.2",
+    "@types/webpack": "5.28.0",
+    "tslib": "2.4.1",
+    "typescript": "^5.2.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}
