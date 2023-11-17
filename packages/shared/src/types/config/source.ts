@@ -44,10 +44,6 @@ export interface SourceConfig {
    */
   preEntry?: string | string[];
   /**
-   * Add a prefix to [resolve.extensions](https://webpack.js.org/configuration/resolve/#resolveextensions).
-   */
-  resolveExtensionPrefix?: string | Partial<Record<RsbuildTarget, string>>;
-  /**
    * Used to replaces variables in your code with other values or expressions at compile time.
    */
   define?: Define;
