@@ -48,7 +48,7 @@
   "dependencies": {
     "@rsbuild/doctor-sdk": "workspace:*",
     "@rsbuild/doctor-utils": "workspace:*",
-    "@rspack/core": "0.3.13",
+    "@rspack/core": "0.3.14",
     "axios": "^1.6.1",
     "bytes": "3.1.2",
     "enhanced-resolve": "5.12.0",
