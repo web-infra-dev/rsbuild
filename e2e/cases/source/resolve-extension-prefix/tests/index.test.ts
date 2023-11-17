@@ -6,7 +6,8 @@ const fixtures = resolve(__dirname, '../');
 
 test.setTimeout(120000);
 
-test('resolve-extension-prefix', async ({ page }) => {
+// TODO uni-builder
+test.skip('resolve-extension-prefix', async ({ page }) => {
   const buildOpts = {
     cwd: fixtures,
     runServer: true,
@@ -24,7 +25,7 @@ test('resolve-extension-prefix', async ({ page }) => {
     ...buildOpts,
     rsbuildConfig: {
       source: {
-        resolveExtensionPrefix: '.web',
+        // resolveExtensionPrefix: '.web',
       },
     },
   });

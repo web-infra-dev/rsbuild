@@ -214,43 +214,6 @@ export const setConfig = <T extends Record<string, any>, P extends string>(
   _.set(config, path, value);
 };
 
-export function getExtensions({
-  target = 'web',
-  resolveExtensionPrefix,
-  isTsProject,
-}: {
-  target?: RsbuildTarget;
-  resolveExtensionPrefix?: NormalizedSourceConfig['resolveExtensionPrefix'];
-  isTsProject?: boolean;
-} = {}) {
-  let extensions = [
-    // only resolve .ts(x) files if it's a ts project
-    // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
-    ...(isTsProject ? ['.ts', '.tsx'] : []),
-    '.js',
-    '.jsx',
-    '.mjs',
-    '.json',
-  ];
-
-  // add an extra prefix to all extensions
-  if (resolveExtensionPrefix) {
-    const extensionPrefix =
-      typeof resolveExtensionPrefix === 'string'
-        ? resolveExtensionPrefix
-        : resolveExtensionPrefix[target];
-
-    if (extensionPrefix) {
-      extensions = extensions.reduce<string[]>(
-        (ret, ext) => [...ret, extensionPrefix + ext, ext],
-        [],
-      );
-    }
-  }
-
-  return extensions;
-}
-
 type MinifyOptions = NonNullable<Parameters<typeof minify>[1]>;
 
 export async function getMinify(isProd: boolean, config: NormalizedConfig) {

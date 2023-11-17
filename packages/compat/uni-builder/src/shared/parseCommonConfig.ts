@@ -17,6 +17,7 @@ import { pluginGlobalVars } from './plugins/globalVars';
 import { pluginRuntimeChunk } from './plugins/runtimeChunk';
 import { pluginFrameworkConfig } from './plugins/frameworkConfig';
 import { pluginMainFields } from './plugins/mainFields';
+import { pluginExtensionPrefix } from './plugins/extensionPrefix';
 
 const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
 
@@ -108,6 +109,12 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   if (uniBuilderConfig.source?.resolveMainFields) {
     rsbuildPlugins.push(
       pluginMainFields(uniBuilderConfig.source?.resolveMainFields),
+    );
+  }
+
+  if (uniBuilderConfig.source?.resolveExtensionPrefix) {
+    rsbuildPlugins.push(
+      pluginExtensionPrefix(uniBuilderConfig.source?.resolveExtensionPrefix),
     );
   }
 

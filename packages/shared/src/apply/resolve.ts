@@ -1,14 +1,12 @@
-import { getExtensions } from '../config';
 import _ from 'lodash';
 import { castArray, ensureAbsolutePath } from '../utils';
 import type { ChainIdentifier } from '../chain';
 import { mergeChainedOptions } from '../mergeChainedOptions';
 import {
-  RsbuildTarget,
   BundlerChain,
   ChainedConfig,
-  SharedRsbuildPluginAPI,
   NormalizedConfig,
+  SharedRsbuildPluginAPI,
 } from '../types';
 
 export function applyResolvePlugin(api: SharedRsbuildPluginAPI) {
@@ -17,8 +15,6 @@ export function applyResolvePlugin(api: SharedRsbuildPluginAPI) {
     const isTsProject = Boolean(api.context.tsconfigPath);
     applyExtensions({
       chain,
-      config,
-      target,
       isTsProject,
     });
 
@@ -50,20 +46,20 @@ function applyFullySpecified({
 
 function applyExtensions({
   chain,
-  config,
-  target,
   isTsProject,
 }: {
   chain: BundlerChain;
-  config: NormalizedConfig;
-  target: RsbuildTarget;
   isTsProject: boolean;
 }) {
-  const extensions = getExtensions({
-    target,
-    isTsProject,
-    resolveExtensionPrefix: config.source.resolveExtensionPrefix,
-  });
+  const extensions = [
+    // only resolve .ts(x) files if it's a ts project
+    // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
+    ...(isTsProject ? ['.ts', '.tsx'] : []),
+    '.js',
+    '.jsx',
+    '.mjs',
+    '.json',
+  ];
 
   chain.resolve.extensions.merge(extensions);
 }

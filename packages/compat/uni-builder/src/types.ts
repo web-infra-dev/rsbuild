@@ -62,6 +62,10 @@ export type UniBuilderExtraConfig = {
      * Same as the [resolve.mainFields](https://webpack.js.org/configuration/resolve/#resolvemainfields) config of webpack.
      */
     resolveMainFields?: MainFields | Partial<Record<RsbuildTarget, MainFields>>;
+    /**
+     * Add a prefix to [resolve.extensions](https://webpack.js.org/configuration/resolve/#resolveextensions).
+     */
+    resolveExtensionPrefix?: string | Partial<Record<RsbuildTarget, string>>;
   };
   output?: {
     /**
