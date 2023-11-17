@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/test-helper",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "The vitest helpers of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {

@@ -1,5 +1,14 @@
 # @rsbuild/plugin-swc
 
+## 0.0.25
+
+### Patch Changes
+
+- Updated dependencies [4608604]
+- Updated dependencies [c1a5e24]
+- Updated dependencies [8c698e4]
+  - @rsbuild/shared@0.0.25
+
 ## 0.0.24
 
 ### Patch Changes

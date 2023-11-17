@@ -1,5 +1,11 @@
 # @rsbuild/document
 
+## 0.0.25
+
+### Patch Changes
+
+- 4608604: refactor: move resolveMainFields option to uni-builder
+
 ## 0.0.24
 
 ### Patch Changes

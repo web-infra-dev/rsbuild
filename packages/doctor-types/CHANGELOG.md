@@ -1,5 +1,13 @@
 # @rsbuild/doctor-types
 
+## 0.0.12
+
+### Patch Changes
+
+- f4f45d7f: feat: Rsbuild doctor add webpack entry plugin @rsbuild/doctor-webpack-plugin
+- 8c698e4: chore(deps): bump Rspack v0.3.14
+- 2d9f5c28: fix: rsbuild doctor delete the cloudurl property
+
 ## 0.0.11
 
 ### Patch Changes

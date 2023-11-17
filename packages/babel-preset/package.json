@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/babel-preset",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "The babel config of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {

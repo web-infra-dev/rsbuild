@@ -1,5 +1,17 @@
 # @rsbuild/test-helper
 
+## 0.0.25
+
+### Patch Changes
+
+- 60ca3b2: feat(rsbuild-doctor):add entry plugin for rsbuild or rspack builder
+- Updated dependencies [ddff9133]
+- Updated dependencies [4608604]
+- Updated dependencies [c1a5e24]
+- Updated dependencies [8c698e4]
+  - @rsbuild/core@0.0.25
+  - @rsbuild/shared@0.0.25
+
 ## 0.0.24
 
 ### Patch Changes
