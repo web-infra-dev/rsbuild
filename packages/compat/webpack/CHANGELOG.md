@@ -1,5 +1,20 @@
 # @rsbuild/webpack
 
+## 0.0.25
+
+### Patch Changes
+
+- 4608604: refactor: move resolveMainFields option to uni-builder
+- Updated dependencies [ddff9133]
+- Updated dependencies [4608604]
+- Updated dependencies [c1a5e24]
+- Updated dependencies [8c698e4]
+  - @rsbuild/core@0.0.25
+  - @rsbuild/shared@0.0.25
+  - @rsbuild/plugin-babel@0.0.25
+  - @rsbuild/plugin-css-minimizer@0.0.25
+  - @rsbuild/babel-preset@0.0.25
+
 ## 0.0.24
 
 ### Patch Changes

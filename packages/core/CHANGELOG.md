@@ -1,5 +1,18 @@
 # @rsbuild/core
 
+## 0.0.25
+
+### Patch Changes
+
+- ddff9133: chore: adjust file size error to warning
+- 4608604: refactor: move resolveMainFields option to uni-builder
+- c1a5e24: refactor: move configPath option to uni-builder
+- 8c698e4: chore(deps): bump Rspack v0.3.14
+- Updated dependencies [4608604]
+- Updated dependencies [c1a5e24]
+- Updated dependencies [8c698e4]
+  - @rsbuild/shared@0.0.25
+
 ## 0.0.24
 
 ### Patch Changes

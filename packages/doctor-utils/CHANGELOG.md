@@ -1,5 +1,11 @@
 # @rsbuild/doctor-utils
 
+## 0.0.12
+
+### Patch Changes
+
+- 2d9f5c28: fix: rsbuild doctor delete the cloudurl property
+
 ## 0.0.11
 
 ## 0.0.10

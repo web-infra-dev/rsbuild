@@ -1,5 +1,13 @@
 # @rsbuild/shared
 
+## 0.0.25
+
+### Patch Changes
+
+- 4608604: refactor: move resolveMainFields option to uni-builder
+- c1a5e24: refactor: move configPath option to uni-builder
+- 8c698e4: chore(deps): bump Rspack v0.3.14
+
 ## 0.0.24
 
 ### Patch Changes

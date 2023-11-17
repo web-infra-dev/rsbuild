@@ -1,5 +1,13 @@
 # @rsbuild/doctor-sdk
 
+## 0.0.12
+
+### Patch Changes
+
+- 2d9f5c28: fix: rsbuild doctor delete the cloudurl property
+- Updated dependencies [2d9f5c28]
+  - @rsbuild/doctor-utils@0.0.12
+
 ## 0.0.11
 
 ### Patch Changes

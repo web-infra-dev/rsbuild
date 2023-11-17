@@ -1,5 +1,16 @@
 # @rsbuild/doctor-core
 
+## 0.0.12
+
+### Patch Changes
+
+- f4f45d7f: feat: Rsbuild doctor add webpack entry plugin @rsbuild/doctor-webpack-plugin
+- 8c698e4: chore(deps): bump Rspack v0.3.14
+- 179b09b: fix: optimize the rsbuild/doctor-core's exports config
+- Updated dependencies [2d9f5c28]
+  - @rsbuild/doctor-utils@0.0.12
+  - @rsbuild/doctor-sdk@0.0.12
+
 ## 0.0.11
 
 ### Patch Changes
