@@ -961,6 +961,52 @@ importers:
         specifier: ^5.89.0
         version: 5.89.0
 
+  packages/doctor-rspack-plugin:
+    dependencies:
+      '@rsbuild/doctor-core':
+        specifier: workspace:*
+        version: link:../doctor-core
+      '@rsbuild/doctor-sdk':
+        specifier: workspace:*
+        version: link:../doctor-sdk
+      '@rsbuild/doctor-utils':
+        specifier: workspace:*
+        version: link:../doctor-utils
+      '@rspack/core':
+        specifier: 0.3.14
+        version: 0.3.14
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      webpack:
+        specifier: ^5.89.0
+        version: 5.89.0
+    devDependencies:
+      '@rsbuild/doctor-types':
+        specifier: workspace:*
+        version: link:../doctor-types
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
+      '@types/lodash':
+        specifier: ^4.14.200
+        version: 4.14.200
+      '@types/node':
+        specifier: ^16
+        version: 16.18.59
+      '@types/tapable':
+        specifier: 2.2.2
+        version: 2.2.2
+      '@types/webpack':
+        specifier: 5.28.0
+        version: 5.28.0
+      tslib:
+        specifier: 2.4.1
+        version: 2.4.1
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
   packages/doctor-sdk:
     dependencies:
       '@rsbuild/doctor-utils':
@@ -1840,6 +1886,9 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      '@rspack/core':
+        specifier: 0.3.14
+        version: 0.3.14
       '@types/lodash':
         specifier: ^4.14.200
         version: 4.14.200

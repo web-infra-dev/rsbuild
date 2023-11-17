@@ -22,7 +22,7 @@
     "new": "modern new",
     "prepare": "pnpm run build && husky install",
     "release": "modern release",
-    "test": "pnpm run ut",
+    "test": "cross-env NODE_OPTIONS=--max-old-space-size=8192 pnpm run ut",
     "update-modern": "cd ./scripts/update-packages && pnpm start:modern",
     "update-rspack": "cd ./scripts/update-packages && pnpm start:rspack",
     "update-rspress": "cd ./scripts/update-packages && pnpm start:rspress",

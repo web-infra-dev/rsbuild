@@ -27,6 +27,7 @@
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/shared": "workspace:*",
+    "@rspack/core": "0.3.14",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "lodash": "^4.17.21",
