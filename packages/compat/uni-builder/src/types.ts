@@ -44,6 +44,8 @@ export type ChainedGlobalVars = ChainedConfigWithUtils<
 
 export type ModuleScopes = Array<string | RegExp>;
 
+export type MainFields = (string | string[])[];
+
 export type UniBuilderExtraConfig = {
   source?: {
     /**
@@ -55,6 +57,11 @@ export type UniBuilderExtraConfig = {
      * the specific paths, and import code from other paths is not allowed.
      */
     moduleScopes?: ChainedConfig<ModuleScopes>;
+    /**
+     * This configuration will determine which field of `package.json` you use to import the `npm` module.
+     * Same as the [resolve.mainFields](https://webpack.js.org/configuration/resolve/#resolvemainfields) config of webpack.
+     */
+    resolveMainFields?: MainFields | Partial<Record<RsbuildTarget, MainFields>>;
   };
   output?: {
     /**

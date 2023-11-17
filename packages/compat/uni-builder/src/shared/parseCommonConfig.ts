@@ -16,6 +16,7 @@ import { pluginFallback } from './plugins/fallback';
 import { pluginGlobalVars } from './plugins/globalVars';
 import { pluginRuntimeChunk } from './plugins/runtimeChunk';
 import { pluginFrameworkConfig } from './plugins/frameworkConfig';
+import { pluginMainFields } from './plugins/mainFields';
 
 const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
 
@@ -103,6 +104,12 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   const rsbuildPlugins: RsbuildPlugin[] = [
     pluginGlobalVars(uniBuilderConfig.source?.globalVars),
   ];
+
+  if (uniBuilderConfig.source?.resolveMainFields) {
+    rsbuildPlugins.push(
+      pluginMainFields(uniBuilderConfig.source?.resolveMainFields),
+    );
+  }
 
   if (uniBuilderConfig.output?.assetsRetry) {
     rsbuildPlugins.push(
