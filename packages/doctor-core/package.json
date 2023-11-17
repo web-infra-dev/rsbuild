@@ -16,33 +16,27 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.js",
-      "import": "./dist/index.js"
+      "default": "./dist/index.js"
     },
     "./build-utils": {
       "types": "./dist/build-utils/build/index.d.ts",
-      "require": "./dist/build-utils/build/index.js",
-      "import": "./dist/build-utils/build/index.js"
+      "default": "./dist/build-utils/build/index.js"
     },
     "./common-utils": {
       "types": "./dist/build-utils/common/index.d.ts",
-      "require": "./dist/build-utils/common/index.js",
-      "import": "./dist/build-utils/common/index.js"
+      "default": "./dist/build-utils/common/index.js"
     },
     "./plugins": {
       "types": "./dist/inner-plugins/index.d.ts",
-      "require": "./dist/inner-plugins/index.js",
-      "import": "./dist/inner-plugins/index.js"
+      "default": "./dist/inner-plugins/index.js"
     },
     "./rules": {
       "types": "./dist/rules/index.d.ts",
-      "require": "./dist/rules/index.js",
-      "import": "./dist/rules/index.js"
+      "default": "./dist/rules/index.js"
     },
     "./types": {
       "types": "./dist/types/index.d.ts",
-      "require": "./dist/types/index.js",
-      "import": "./dist/types/index.js"
+      "default": "./dist/types/index.js"
     }
   },
   "scripts": {
