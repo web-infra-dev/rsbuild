@@ -97,7 +97,7 @@
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@rspack/core": "0.3.13",
+    "@rspack/core": "0.3.14",
     "caniuse-lite": "^1.0.30001559",
     "json5": "^2.2.3",
     "line-diff": "2.1.1",
@@ -106,7 +106,7 @@
     "semver": "^7.5.4"
   },
   "devDependencies": {
-    "@rspack/core": "0.3.13",
+    "@rspack/core": "0.3.14",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "@types/semver": "^7.5.4",
