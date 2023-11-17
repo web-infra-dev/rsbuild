@@ -7,7 +7,7 @@ import {
 } from '@rsbuild/shared';
 import { initHooks } from './initHooks';
 import { withDefaultConfig } from '../config/defaults';
-import type { Context, RsbuildConfig } from '../types';
+import type { Context, RsbuildConfig } from '../../types';
 
 /**
  * Generate the actual context used in the build,

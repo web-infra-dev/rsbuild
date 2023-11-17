@@ -6,7 +6,7 @@ import type {
   ChainedConfig,
   ChainedConfigWithUtils,
 } from '@rsbuild/shared';
-import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core/rspack-provider';
+import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import type { LazyCompilationOptions } from './webpack/plugins/lazyCompilation';

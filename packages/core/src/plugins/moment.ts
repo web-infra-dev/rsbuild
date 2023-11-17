@@ -1,5 +1,5 @@
-import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
 import type { RspackPluginInstance, Compiler } from '@rspack/core';
+import type { RsbuildPlugin } from '../types';
 
 type IgnorePluginOptions = {
   /**
@@ -55,7 +55,7 @@ class IgnorePlugin implements RspackPluginInstance {
   }
 }
 
-export const pluginMoment = (): DefaultRsbuildPlugin => ({
+export const pluginMoment = (): RsbuildPlugin => ({
   name: 'plugin-moment',
 
   setup(api) {

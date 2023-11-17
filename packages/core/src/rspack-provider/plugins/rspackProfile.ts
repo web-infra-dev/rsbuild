@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '../types';
+import type { RsbuildPlugin } from '../../types';
 import path from 'path';
 import {
   experimental_registerGlobalTrace as registerGlobalTrace,

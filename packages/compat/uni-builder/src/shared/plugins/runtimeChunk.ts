@@ -1,7 +1,7 @@
-import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { RUNTIME_CHUNK_NAME } from '../constants';
 
-export const pluginRuntimeChunk = (): DefaultRsbuildPlugin => ({
+export const pluginRuntimeChunk = (): RsbuildPlugin => ({
   name: 'plugin-runtime-chunk',
 
   setup(api) {

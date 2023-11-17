@@ -1,9 +1,7 @@
-import {
-  HTMLPreloadOrPrefetchPlugin,
-  type DefaultRsbuildPlugin,
-} from '@rsbuild/shared';
+import { HTMLPreloadOrPrefetchPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginPreloadOrPrefetch = (): DefaultRsbuildPlugin => ({
+export const pluginPreloadOrPrefetch = (): RsbuildPlugin => ({
   name: `plugin-preload-or-prefetch`,
 
   setup(api) {

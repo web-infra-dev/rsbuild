@@ -7,8 +7,8 @@ import {
   type SplitChunks,
   type ForceSplitting,
   type RsbuildChunkSplit,
-  type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
 // We expose the three-layer to specify webpack chunk-split ability:
 // 1. By strategy.There some best practice integrated in our internal strategy.
@@ -218,7 +218,7 @@ const SPLIT_STRATEGY_DISPATCHER: Record<
   'single-vendor': singleVendor,
 };
 
-export function pluginSplitChunks(): DefaultRsbuildPlugin {
+export function pluginSplitChunks(): RsbuildPlugin {
   return {
     name: 'plugin-split-chunks',
     setup(api) {

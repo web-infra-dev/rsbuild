@@ -7,7 +7,7 @@ import {
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
 import { plugins } from './plugins';
-import type { RsbuildConfig } from './rspack-provider';
+import type { RsbuildConfig } from './types';
 
 const getRspackProvider = async (rsbuildConfig: RsbuildConfig) => {
   const { rspackProvider } = await import('./rspack-provider');

@@ -3,11 +3,11 @@ import { isAbsolute, join } from 'path';
 import { fse } from '@rsbuild/shared';
 import {
   findExists,
-  BuildCacheOptions,
-  Context,
   isFileExists,
-  DefaultRsbuildPlugin,
+  type Context,
+  type BuildCacheOptions,
 } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
 async function validateCache(
   cacheDirectory: string,
@@ -88,7 +88,7 @@ async function getBuildDependencies(context: Readonly<Context>) {
   return buildDependencies;
 }
 
-export const pluginCache = (): DefaultRsbuildPlugin => ({
+export const pluginCache = (): RsbuildPlugin => ({
   name: 'plugin-cache',
 
   setup(api) {

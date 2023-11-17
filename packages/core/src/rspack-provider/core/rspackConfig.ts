@@ -12,7 +12,7 @@ import {
   type ModifyRspackConfigUtils,
 } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
-import type { Context } from '../types';
+import type { Context } from '../../types';
 
 async function modifyRspackConfig(
   context: Context,

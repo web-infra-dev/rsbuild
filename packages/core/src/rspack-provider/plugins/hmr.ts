@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '../types';
+import type { RsbuildPlugin } from '../../types';
 
 import { setConfig, isUsingHMR } from '@rsbuild/shared';
 

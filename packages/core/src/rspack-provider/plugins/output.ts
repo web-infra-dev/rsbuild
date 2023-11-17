@@ -1,6 +1,6 @@
 import { posix } from 'path';
 import { getDistPath, getFilename, applyOutputPlugin } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
+import type { RsbuildPlugin } from '../../types';
 
 export const pluginOutput = (): RsbuildPlugin => ({
   name: 'plugin-output',

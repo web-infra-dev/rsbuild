@@ -5,12 +5,8 @@
 import path from 'path';
 import { fse } from '@rsbuild/shared';
 import { color, logger } from '@rsbuild/shared';
-import type {
-  DefaultRsbuildPlugin,
-  Stats,
-  MultiStats,
-  StatsAsset,
-} from '@rsbuild/shared';
+import type { Stats, MultiStats, StatsAsset } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
 /** Filter source map and license files */
 export const filterAsset = (asset: string) =>
@@ -141,7 +137,7 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
   logger.log(`\n  ${totalSizeLabel}\n  ${gzippedSizeLabel}\n`);
 }
 
-export const pluginFileSize = (): DefaultRsbuildPlugin => ({
+export const pluginFileSize = (): RsbuildPlugin => ({
   name: 'plugin-file-size',
 
   setup(api) {

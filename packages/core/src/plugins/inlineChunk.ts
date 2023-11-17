@@ -3,11 +3,11 @@ import {
   JS_REGEX,
   CSS_REGEX,
   isHtmlDisabled,
-  DefaultRsbuildPlugin,
   type InlineChunkTest,
 } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginInlineChunk = (): DefaultRsbuildPlugin => ({
+export const pluginInlineChunk = (): RsbuildPlugin => ({
   name: 'plugin-inline-chunk',
 
   setup(api) {

@@ -1,10 +1,7 @@
-import {
-  removeTailSlash,
-  type Define,
-  type DefaultRsbuildPlugin,
-} from '@rsbuild/shared';
+import { removeTailSlash, type Define } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginDefine = (): DefaultRsbuildPlugin => ({
+export const pluginDefine = (): RsbuildPlugin => ({
   name: 'plugin-define',
 
   setup(api) {

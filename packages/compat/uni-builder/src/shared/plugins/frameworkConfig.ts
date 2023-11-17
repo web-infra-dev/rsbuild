@@ -1,8 +1,7 @@
-import { fse, type DefaultRsbuildPlugin } from '@rsbuild/shared';
+import { fse } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
-export const pluginFrameworkConfig = (
-  configPath: string,
-): DefaultRsbuildPlugin => ({
+export const pluginFrameworkConfig = (configPath: string): RsbuildPlugin => ({
   name: 'plugin-framework-config',
 
   setup(api) {

@@ -1,5 +1,5 @@
 import { mergeRsbuildConfig } from '@rsbuild/shared';
-import { RsbuildConfig, NormalizedConfig } from '../types';
+import { RsbuildConfig, NormalizedConfig } from '../../types';
 import { createDefaultConfig } from './defaults';
 
 /** #__PURE__

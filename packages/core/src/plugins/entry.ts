@@ -1,5 +1,5 @@
 import { castArray, color } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../rspack-provider/types';
+import type { RsbuildPlugin } from '../types';
 
 export const pluginEntry = (): RsbuildPlugin => ({
   name: 'plugin-entry',

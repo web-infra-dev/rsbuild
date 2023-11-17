@@ -1,3 +1,4 @@
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   isProd,
   mergeChainedOptions,
@@ -5,7 +6,6 @@ import {
   type BundlerChain,
   type ChainedConfig,
   type ChainIdentifier,
-  type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
 import type CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
@@ -48,7 +48,7 @@ export async function applyCSSMinimizer(
 
 export const pluginCssMinimizer = (
   options?: PluginCssMinimizerOptions,
-): DefaultRsbuildPlugin => ({
+): RsbuildPlugin => ({
   name: 'plugin-css-minimizer',
 
   setup(api) {

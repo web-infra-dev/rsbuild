@@ -1,9 +1,7 @@
-import {
-  DefaultRsbuildPlugin,
-  getSharedPkgCompiledPath,
-} from '@rsbuild/shared';
+import { getSharedPkgCompiledPath } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginToml = (): DefaultRsbuildPlugin => ({
+export const pluginToml = (): RsbuildPlugin => ({
   name: 'plugin-toml',
 
   setup(api) {

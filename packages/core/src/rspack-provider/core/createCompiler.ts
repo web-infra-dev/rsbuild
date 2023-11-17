@@ -11,7 +11,7 @@ import { type RspackCompiler, type RspackMultiCompiler } from '@rsbuild/shared';
 import { getDevMiddleware } from './devMiddleware';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 
-import type { Context } from '../types';
+import type { Context } from '../../types';
 
 export async function createCompiler({
   context,
