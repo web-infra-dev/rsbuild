@@ -4,7 +4,6 @@ import { pluginBasic } from '@/plugins/basic';
 import { createStubRsbuild, fixturesDir } from './helper';
 import { createCompiler } from '@/core/createCompiler';
 import { createPrimaryContext } from '@/core/createContext';
-import { getCreateRsbuildDefaultOptions } from '@rsbuild/core';
 
 describe('build hooks', () => {
   test('should call onBeforeBuild hook before build', async () => {
@@ -56,13 +55,19 @@ describe('build hooks', () => {
   });
 
   const createDefaultContext = () =>
-    createPrimaryContext(getCreateRsbuildDefaultOptions(), {
-      source: {
-        entry: {
-          index: './src/index.js',
+    createPrimaryContext(
+      {
+        cwd: process.cwd(),
+        target: ['web'],
+      },
+      {
+        source: {
+          entry: {
+            index: './src/index.js',
+          },
         },
       },
-    });
+    );
 
   test('should return Compiler when passing single webpack config', async () => {
     const compiler = await createCompiler({

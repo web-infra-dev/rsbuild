@@ -1,10 +1,15 @@
-export { createRsbuild, getCreateRsbuildDefaultOptions } from './createRsbuild';
-export { mergeRsbuildConfig } from '@rsbuild/shared';
+/**
+ * The methods and types exported from this file are considered as
+ * the public API of @rsbuild/core.
+ */
 
+// Methods
+export { createRsbuild } from './createRsbuild';
+export { mergeRsbuildConfig } from '@rsbuild/shared';
 export { defineConfig } from './cli';
 
+// Types
 export type { Rspack } from './rspack-provider';
-
 export type {
   // Config Types
   RsbuildConfig,
@@ -13,16 +18,13 @@ export type {
   RsbuildPlugin,
   RsbuildPluginAPI,
 } from './types';
-
 export type {
-  Context,
   RsbuildMode,
   RsbuildEntry,
   RsbuildTarget,
   RsbuildInstance,
   CreateRsbuildOptions,
   InspectConfigOptions,
-
   // Hook Callback Types
   OnExitFn,
   OnAfterBuildFn,
