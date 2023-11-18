@@ -6,10 +6,7 @@ import type {
   CreateRsbuildOptions,
   BundlerPluginInstance,
 } from '@rsbuild/shared';
-import {
-  getCreateRsbuildDefaultOptions,
-  type RsbuildConfig,
-} from '@rsbuild/core';
+import type { RsbuildConfig } from '@rsbuild/core';
 
 const getRspackProvider = async (rsbuildConfig: RsbuildConfig) => {
   const { rspackProvider } = await import('@rsbuild/core/rspack-provider');
@@ -106,8 +103,9 @@ export async function createStubRsbuild<
   }
 > {
   const { pick, createPluginStore } = await import('@rsbuild/shared');
-  const rsbuildOptions = {
-    ...getCreateRsbuildDefaultOptions(),
+  const rsbuildOptions: Required<CreateRsbuildOptions> = {
+    cwd: process.cwd(),
+    target: ['web'],
     ...options,
   };
 

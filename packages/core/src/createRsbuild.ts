@@ -17,12 +17,6 @@ const getRspackProvider = async (rsbuildConfig: RsbuildConfig) => {
   });
 };
 
-export const getCreateRsbuildDefaultOptions =
-  (): Required<CreateRsbuildOptions> => ({
-    cwd: process.cwd(),
-    target: ['web'],
-  });
-
 export async function createRsbuild<
   P extends ({ rsbuildConfig }: { rsbuildConfig: T }) => RsbuildProvider,
   T extends RsbuildConfig,
@@ -38,8 +32,9 @@ export async function createRsbuild<
     ? options.provider({ rsbuildConfig })
     : await getRspackProvider(rsbuildConfig as RsbuildConfig);
 
-  const rsbuildOptions = {
-    ...getCreateRsbuildDefaultOptions(),
+  const rsbuildOptions: Required<CreateRsbuildOptions> = {
+    cwd: process.cwd(),
+    target: ['web'],
     ...options,
   };
 
