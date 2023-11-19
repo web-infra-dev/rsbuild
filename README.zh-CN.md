@@ -54,6 +54,7 @@
 - 🦀 [Rspack](https://github.com/web-infra-dev/rspack): Rsbuild 的底层打包工具。
 - 🐹 [Rspress](https://github.com/web-infra-dev/rspress): 基于 Rsbuild 的静态站点生成器。
 - 🦄 [Modern.js](https://github.com/web-infra-dev/modern.js): 基于 Rsbuild 的渐进式 React 框架。
+- 👓 [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rspack 和 Rsbuild 相关的精彩内容列表。
 
 ## 参与贡献
 
