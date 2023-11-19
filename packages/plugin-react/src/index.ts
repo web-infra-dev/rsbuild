@@ -4,6 +4,8 @@ import { applyArcoSupport } from './arco';
 import { applySplitChunksRule } from './splitChunks';
 import { applyBasicReactSupport } from './react';
 
+export { isBeyondReact17 } from './utils';
+
 export const pluginReact = (): RsbuildPlugin => ({
   name: 'plugin-react',
 
