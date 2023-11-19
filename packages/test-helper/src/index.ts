@@ -50,7 +50,7 @@ export function createSnapshotSerializer(options?: SnapshotSerializerOptions) {
     { mark: 'root', match: cwd },
     { mark: 'workspace', match: workspace },
     ...customMatchers,
-    ...createDefaultPathMatchers(workspace),
+    ...createDefaultPathMatchers(),
   ];
 
   pathMatchers

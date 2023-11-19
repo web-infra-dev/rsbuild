@@ -1,4 +1,4 @@
-import type { RsbuildEntry, RsbuildTarget } from '../rsbuild';
+import type { RsbuildEntry } from '../rsbuild';
 import type { ChainedConfig } from '../utils';
 
 export type Alias = Record<string, string | false | (string | false)[]>;

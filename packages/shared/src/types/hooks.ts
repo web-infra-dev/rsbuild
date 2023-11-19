@@ -4,7 +4,6 @@ import { NodeEnv, PromiseOrNot } from './utils';
 import { RsbuildTarget } from './rsbuild';
 import { BundlerChain } from './bundlerConfig';
 import { mergeRsbuildConfig } from '../mergeRsbuildConfig';
-import type { RspackPluginInstance } from '@rspack/core';
 
 export type OnBeforeBuildFn<BundlerConfig = unknown> = (params: {
   bundlerConfigs?: BundlerConfig[];

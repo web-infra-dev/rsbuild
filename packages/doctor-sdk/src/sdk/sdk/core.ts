@@ -113,7 +113,7 @@ export abstract class SDKCore<T extends DoctorSDKOptions>
   /** Upload analysis data pieces */
   protected async writePieces(
     storeData: Common.PlainObject,
-    options?: SDK.WriteStoreOptionsType,
+    _options?: SDK.WriteStoreOptionsType,
   ) {
     const { outputDir } = this;
     const manifest = path.resolve(outputDir, Constants.DoctorOutputManifest);

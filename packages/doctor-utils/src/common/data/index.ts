@@ -188,7 +188,6 @@ export class APIDataLoader {
         ]).then((res) => {
           const { moduleId } =
             body as SDK.ServerAPI.InferRequestBodyType<SDK.ServerAPI.API.GetModuleDetails>;
-          const { chunks = [] } = res[0] || {};
           const { modules = [], dependencies = [] } = res[1] || {};
           return Graph.getModuleDetails(moduleId, modules, dependencies) as R;
         });
@@ -297,7 +296,7 @@ export class APIDataLoader {
           this.loader.loadData('configs'),
         ]).then(
           ([
-            manifest,
+            _manifest,
             root = '',
             hash = '',
             errors = {},

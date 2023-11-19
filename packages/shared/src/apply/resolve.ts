@@ -10,7 +10,7 @@ import {
 } from '../types';
 
 export function applyResolvePlugin(api: SharedRsbuildPluginAPI) {
-  api.modifyBundlerChain((chain, { target, CHAIN_ID }) => {
+  api.modifyBundlerChain((chain, { CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
     const isTsProject = Boolean(api.context.tsconfigPath);
     applyExtensions({

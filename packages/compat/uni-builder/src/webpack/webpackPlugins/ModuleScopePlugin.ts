@@ -44,7 +44,7 @@ export class ModuleScopePlugin {
       this;
     resolver.hooks.file.tapAsync(
       'ModuleScopePlugin',
-      (request: any, contextResolver: any, callback: any) => {
+      (request: any, _context: unknown, callback: any) => {
         const { issuer } = request.context;
 
         // Unknown issuer, probably webpack internals

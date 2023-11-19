@@ -38,7 +38,6 @@ export async function applyBaseCSSRule({
   importLoaders?: number;
 }) {
   // 1. Check user config
-  const enableExtractCSS = isUseCssExtract(config, target);
   const enableSourceMap = isUseCssSourceMap(config);
   const enableCSSModuleTS = Boolean(config.output.enableCssModuleTSDeclaration);
 
@@ -47,8 +46,6 @@ export async function applyBaseCSSRule({
     config,
     target,
   );
-
-  const enableCssMinify = !enableExtractCSS && isProd;
 
   // when disableExtractCSS, use css-loader + style-loader
   if (!enableNativeCss(config)) {
@@ -130,7 +127,6 @@ export async function applyBaseCSSRule({
       enableSourceMap,
       browserslist,
       config,
-      enableCssMinify,
     });
 
     rule

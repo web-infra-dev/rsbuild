@@ -9,6 +9,7 @@ let globalController: DoctorSDKController | undefined;
 export class RsbuildDoctorWebpackMultiplePlugin<
   Rules extends Linter.ExtendRuleData[],
 > extends RsbuildDoctorWebpackPlugin<Rules> {
+  // @ts-expect-error
   private controller: DoctorSDKController;
 
   constructor(options: DoctorWebpackMultiplePluginOptions<Rules> = {}) {

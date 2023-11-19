@@ -5,7 +5,6 @@ import deepmerge from '../compiled/deepmerge';
 import { getSharedPkgCompiledPath as getCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
-  CssModules,
   RsbuildTarget,
   CSSLoaderOptions,
   NormalizedConfig,
@@ -70,12 +69,10 @@ export const getCssnanoDefaultOptions = (): CssNanoOptions => ({
 });
 
 export const getPostcssConfig = ({
-  enableCssMinify,
   enableSourceMap,
   browserslist,
   config,
 }: {
-  enableCssMinify: boolean;
   enableSourceMap: boolean;
   browserslist: string[];
   config: NormalizedConfig;
