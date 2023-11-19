@@ -3,7 +3,7 @@ import { Server } from '@rsbuild/doctor-utils/build';
 import { Bundle } from '@rsbuild/doctor-utils/common';
 import assert from 'assert';
 import bodyParser from 'body-parser';
-import open from 'open';
+// import open from 'open';
 import ip from 'ip';
 import cors from 'cors';
 import { PassThrough } from 'stream';

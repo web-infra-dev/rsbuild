@@ -39,8 +39,6 @@ export async function applyBaseCSSRule({
 
   // 1. Check user config
   const enableExtractCSS = isUseCssExtract(config, target);
-  const enableCssMinify = !enableExtractCSS && isProd;
-
   const enableSourceMap = isUseCssSourceMap(config);
   const enableCSSModuleTS = Boolean(config.output.enableCssModuleTSDeclaration);
 
@@ -122,7 +120,6 @@ export async function applyBaseCSSRule({
       enableSourceMap,
       browserslist,
       config,
-      enableCssMinify,
     });
 
     rule

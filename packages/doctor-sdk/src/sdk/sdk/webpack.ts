@@ -425,7 +425,7 @@ export class DoctorWebpackSDK<
   }
 
   public getRuleContext(
-    options: SDK.RuntimeContextOptions,
+    _options: SDK.RuntimeContextOptions,
   ): SDK.RuntimeContext {
     this.createPackageGraph();
 

@@ -178,7 +178,7 @@ export class DoctorResolverPlugin implements ResolvePluginInstance {
       }
     });
 
-    resolver.hooks.resolveStep.tap(this.tapOptions, (hook, request) => {
+    resolver.hooks.resolveStep.tap(this.tapOptions, (_, request) => {
       const { context } = request as unknown as ResolveRequestWithContext;
       if (context.issuer && !this.contextMap.has(context.issuer)) {
         this.contextMap.set(context.issuer, [Date.now(), process.hrtime()]);

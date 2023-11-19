@@ -16,7 +16,6 @@ import {
   DEFAULT_ASSET_PREFIX,
 } from './constants';
 import type {
-  RsbuildTarget,
   BundlerChainRule,
   RsbuildConfig,
   InspectConfigOptions,

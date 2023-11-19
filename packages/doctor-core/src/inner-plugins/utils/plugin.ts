@@ -9,7 +9,7 @@ export function reportPluginData(
   tapName: string,
   start: number,
   type: SDK.PluginHookData['type'],
-  res: unknown,
+  _res: unknown,
   err?: Error,
 ) {
   const end = Date.now();

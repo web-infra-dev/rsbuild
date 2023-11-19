@@ -1,4 +1,4 @@
-import type { ChainedConfig, ChainedConfigWithUtils } from '@rsbuild/shared';
+import type { ChainedConfigWithUtils } from '@rsbuild/shared';
 import type {
   PluginItem as BabelPlugin,
   PluginOptions as BabelPluginOptions,
