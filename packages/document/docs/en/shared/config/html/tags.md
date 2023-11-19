@@ -14,7 +14,7 @@ export interface HtmlInjectTag {
   hash?: boolean | string | ((url: string, hash: string) => string);
   /** @default true */
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
-  /** @default false */
+  /** @default true */
   append?: boolean;
   /**
    * Enable by default only for elements that are allowed to be included in the `head` tag.
