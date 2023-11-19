@@ -28,32 +28,3 @@ exports[`test rspack-plugin src/plugin.ts > test plugin interceptor > rspack dat
   "variables": [],
 }
 `;
-
-exports[`test rspack-plugin src/plugin.ts test plugin interceptor rspack data store 1`] = `
-{
-  "dependencies": [],
-  "exports": [],
-  "moduleGraphModules": [],
-  "modules": [
-    {
-      "chunks": [
-        "main",
-      ],
-      "dependencies": [],
-      "id": 1,
-      "imported": [],
-      "isPreferSource": false,
-      "kind": 0,
-      "path": "tests/fixtures/a.js",
-      "size": {
-        "parsedSize": 0,
-        "sourceSize": 33,
-        "transformedSize": 33,
-      },
-      "webpackId": "",
-    },
-  ],
-  "sideEffects": [],
-  "variables": [],
-}
-`;
