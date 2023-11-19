@@ -24,7 +24,7 @@ exports[`plugin-css > should apply custom css-modules-typescript-loader when ena
             "type": "css/module",
             "use": [
               {
-                "loader": "<ROOT>/packages/core/src/rspack-provider/rspackLoader/css-modules-typescript-pre-loader",
+                "loader": "<ROOT>/packages/core/src/rspack-provider/css-modules-typescript-pre-loader",
                 "options": {
                   "modules": {
                     "auto": true,
@@ -73,7 +73,7 @@ exports[`plugin-css > should apply custom css-modules-typescript-loader when ena
             "type": "css",
             "use": [
               {
-                "loader": "<ROOT>/packages/core/src/rspack-provider/rspackLoader/css-modules-typescript-pre-loader",
+                "loader": "<ROOT>/packages/core/src/rspack-provider/css-modules-typescript-pre-loader",
                 "options": {
                   "modules": {
                     "auto": true,
