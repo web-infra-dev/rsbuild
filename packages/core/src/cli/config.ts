@@ -1,7 +1,11 @@
 import fs from 'fs';
 import jiti from 'jiti';
-import { join } from 'path';
-import type { RsbuildConfig as BaseRsbuildConfig } from '@rsbuild/shared';
+import { isAbsolute, join } from 'path';
+import {
+  color,
+  logger,
+  type RsbuildConfig as BaseRsbuildConfig,
+} from '@rsbuild/shared';
 import { restartDevServer } from '../server/restart';
 
 export type RsbuildConfig = BaseRsbuildConfig & {
@@ -13,7 +17,19 @@ export type RsbuildConfig = BaseRsbuildConfig & {
 
 export const defineConfig = (config: RsbuildConfig) => config;
 
-const resolveConfigPath = () => {
+const resolveConfigPath = (customConfig?: string) => {
+  const root = process.cwd();
+
+  if (customConfig) {
+    const customConfigPath = isAbsolute(customConfig)
+      ? customConfig
+      : join(root, customConfig);
+    if (fs.existsSync(customConfigPath)) {
+      return customConfigPath;
+    }
+    logger.warn(`Cannot find config file: ${color.dim(customConfigPath)}\n`);
+  }
+
   const CONFIG_FILES = [
     'rsbuild.config.ts',
     'rsbuild.config.js',
@@ -22,8 +38,6 @@ const resolveConfigPath = () => {
     'rsbuild.config.mts',
     'rsbuild.config.cts',
   ];
-
-  const root = process.cwd();
 
   for (const file of CONFIG_FILES) {
     const configFile = join(root, file);
@@ -48,8 +62,10 @@ async function watchConfig(configFile: string) {
   watcher.on('unlink', callback);
 }
 
-export async function loadConfig(): Promise<ReturnType<typeof defineConfig>> {
-  const configFile = resolveConfigPath();
+export async function loadConfig(
+  customConfig?: string,
+): Promise<ReturnType<typeof defineConfig>> {
+  const configFile = resolveConfigPath(customConfig);
 
   if (configFile) {
     const loadConfig = jiti(__filename, {

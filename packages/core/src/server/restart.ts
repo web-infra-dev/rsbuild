@@ -1,6 +1,6 @@
 import path from 'path';
 import { color, logger } from '@rsbuild/shared';
-import { runCli } from '../cli/run';
+import { init } from '../cli/commands';
 
 type Cleaner = () => Promise<unknown> | unknown;
 
@@ -29,9 +29,7 @@ export const restartDevServer = async ({ filePath }: { filePath: string }) => {
     await cleaner();
   }
 
-  const rsbuild = await runCli({
-    isRestart: true,
-  });
+  const rsbuild = await init();
 
   await rsbuild.startDevServer();
 };
