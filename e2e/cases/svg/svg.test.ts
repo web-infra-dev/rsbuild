@@ -1,4 +1,5 @@
-import { join } from 'path';
+import fs from 'fs';
+import path, { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -136,6 +137,16 @@ test('svgr (query url)', async ({ page }) => {
 
 // It's an old bug when use svgr in css and external react.
 test('svgr (external react)', async ({ page }) => {
+  const nodeModulesPath = path.join(__dirname, '../../node_modules');
+  const reactCode = fs.readFileSync(
+    path.join(nodeModulesPath, 'react/umd/react.production.min.js'),
+    'utf-8',
+  );
+  const reactDomCode = fs.readFileSync(
+    path.join(nodeModulesPath, 'react-dom/umd/react-dom.production.min.js'),
+    'utf-8',
+  );
+
   const rsbuild = await build({
     cwd: join(fixtures, 'svg-external-react'),
     runServer: true,
@@ -153,6 +164,20 @@ test('svgr (external react)', async ({ page }) => {
         },
       },
       html: {
+        tags: [
+          {
+            tag: 'script',
+            head: true,
+            append: false,
+            children: reactCode,
+          },
+          {
+            tag: 'script',
+            head: true,
+            append: false,
+            children: reactDomCode,
+          },
+        ],
         template: './static/index.html',
       },
     },
