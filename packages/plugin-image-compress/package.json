@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-image-compress",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Image compress plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {

@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-css-minimizer",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "CSS minimizer for Rsbuild",
   "repository": {
     "type": "git",

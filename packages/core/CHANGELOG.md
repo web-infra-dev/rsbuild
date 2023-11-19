@@ -1,5 +1,19 @@
 # @rsbuild/core
 
+## 0.0.26
+
+### Patch Changes
+
+- b09444e: perf(deps): prebundle sirv and jiti
+- d81757d5: fix(cli): fix version and improve perf
+- 6822ca4: feat: add context.version property
+- d8027fc1: perf(cli): using define to inject version
+- 47f06ced: feat(cli): support specify config file path
+- Updated dependencies [b09444e]
+- Updated dependencies [d81757d5]
+- Updated dependencies [6822ca4]
+  - @rsbuild/shared@0.0.26
+
 ## 0.0.25
 
 ### Patch Changes
