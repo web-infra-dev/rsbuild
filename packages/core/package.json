@@ -26,8 +26,8 @@
       "default": "./dist/client/*.js"
     },
     "./cli": {
-      "types": "./dist/cli/index.d.ts",
-      "default": "./dist/cli/index.js"
+      "types": "./dist/cli/commands.d.ts",
+      "default": "./dist/cli/commands.js"
     },
     "./plugins/*": {
       "types": "./dist/plugins/*.d.ts",

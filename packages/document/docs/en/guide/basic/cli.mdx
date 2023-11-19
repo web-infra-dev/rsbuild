@@ -13,6 +13,7 @@ Usage: rsbuild dev [options]
 
 Options:
   --open                open the page in browser on startup
+  -c --config <config>  specify the configuration file, can be a relative or absolute path
   -h, --help            display help for command
 ```
 
@@ -24,6 +25,7 @@ The `rsbuild build` command will build the outputs for production in the `dist/`
 Usage: rsbuild build [options]
 
 Options:
+  -c --config <config>  specify the configuration file, can be a relative or absolute path
   -h, --help            display help for command
 ```
 
@@ -35,6 +37,7 @@ The `rsbuild preview` command is used to preview the production build outputs lo
 Usage: rsbuild preview [options]
 
 Options:
+  -c --config <config>  specify the configuration file, can be a relative or absolute path
   -h, --help            display help for command
 ```
 
@@ -49,7 +52,7 @@ Options:
   --env <env>           view the configuration in the target environment (default: "development")
   --output <output>     Specify the path to output in the dist (default: "/")
   --verbose             Show the full function in the result
-  -c --config <config>  specify the configuration file, which can be a relative or absolute path
+  -c --config <config>  specify the configuration file, can be a relative or absolute path
   -h, --help            show command help
 ```
 

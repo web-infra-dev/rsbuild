@@ -6,7 +6,7 @@
 // Methods
 export { createRsbuild } from './createRsbuild';
 export { mergeRsbuildConfig } from '@rsbuild/shared';
-export { defineConfig } from './cli';
+export { defineConfig } from './cli/config';
 
 // Types
 export type { Rspack } from './rspack-provider';
