@@ -14,7 +14,7 @@ export interface HtmlInjectTag {
   hash?: boolean | string | ((url: string, hash: string) => string);
   /** @default true */
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
-  /** @default false */
+  /** @default true */
   append?: boolean;
   /**
    * 仅对于允许包含在 head 中的元素会默认启用
