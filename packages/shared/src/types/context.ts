@@ -4,6 +4,8 @@ export type BundlerType = 'rspack' | 'webpack';
 
 /** The public context */
 export type Context = {
+  /** The Rsbuild core version. */
+  version: string;
   /** The entry points object. */
   entry: RsbuildEntry;
   /** The build target type. */
