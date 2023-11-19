@@ -99,7 +99,6 @@
   "dependencies": {
     "@rspack/core": "0.3.14",
     "caniuse-lite": "^1.0.30001559",
-    "json5": "^2.2.3",
     "line-diff": "2.1.1",
     "lodash": "^4.17.21",
     "postcss": "8.4.31",

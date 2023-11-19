@@ -2,7 +2,7 @@ import type { ListenOptions } from 'net';
 import { createServer, Server } from 'http';
 import connect from '@rsbuild/shared/connect';
 import { join } from 'path';
-import sirv from 'sirv';
+import sirv from '../../compiled/sirv';
 import {
   Context,
   RsbuildConfig,

@@ -67,7 +67,7 @@ export async function loadConfig(
   const configFile = resolveConfigPath(customConfig);
 
   if (configFile) {
-    const { default: jiti } = await import('jiti');
+    const { default: jiti } = await import('../../compiled/jiti');
     const loadConfig = jiti(__filename, {
       esmResolve: true,
       // disable require cache to support restart CLI and read the new config
