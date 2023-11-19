@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-vue-jsx",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Vue 3 JSX plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -37,7 +37,7 @@
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.0.25"
+    "@rsbuild/core": "workspace:^0.0.26"
   },
   "publishConfig": {
     "access": "public",

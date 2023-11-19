@@ -1,5 +1,11 @@
 # @rsbuild/document
 
+## 0.0.26
+
+### Patch Changes
+
+- 47f06ced: feat(cli): support specify config file path
+
 ## 0.0.25
 
 ### Patch Changes
