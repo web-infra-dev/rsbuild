@@ -1,14 +1,13 @@
 import {
   color,
   pickRsbuildConfig,
-  createPublicContext,
   type RsbuildProvider,
   type RspackConfig,
   type RspackCompiler,
   type RspackMultiCompiler,
   type PreviewServerOptions,
 } from '@rsbuild/shared';
-import { createContext } from './core/createContext';
+import { createContext, createPublicContext } from './core/createContext';
 import { initConfigs } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
 import {

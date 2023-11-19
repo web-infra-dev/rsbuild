@@ -1,10 +1,10 @@
 import {
   pickRsbuildConfig,
-  createPublicContext,
   type RsbuildProvider,
   type PreviewServerOptions,
 } from '@rsbuild/shared';
 import { startProdServer, startDevServer } from '@rsbuild/core/server';
+import { createPublicContext } from '@rsbuild/core/rspack-provider';
 import { createContext } from './core/createContext';
 import { applyDefaultPlugins } from './shared/plugin';
 import { RsbuildConfig, NormalizedConfig, WebpackConfig } from './types';

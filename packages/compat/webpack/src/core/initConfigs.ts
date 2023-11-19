@@ -4,11 +4,11 @@ import {
   castArray,
   initPlugins,
   mergeRsbuildConfig,
-  updateContextByNormalizedConfig,
   type PluginStore,
   type InspectConfigOptions,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
+import { updateContextByNormalizedConfig } from '@rsbuild/core/rspack-provider';
 import { inspectConfig } from './inspectConfig';
 import { generateWebpackConfig } from './webpackConfig';
 import { normalizeConfig } from '../config/normalize';

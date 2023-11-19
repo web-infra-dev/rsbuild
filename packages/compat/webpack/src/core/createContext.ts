@@ -3,9 +3,9 @@ import {
   debug,
   isFileExists,
   TS_CONFIG_FILE,
-  createContextByConfig,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
+import { createContextByConfig } from '@rsbuild/core/rspack-provider';
 import { initHooks } from './initHooks';
 import { withDefaultConfig } from '../config/defaults';
 import type { Context, RsbuildConfig } from '../types';
