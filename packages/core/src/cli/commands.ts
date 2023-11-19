@@ -2,7 +2,6 @@ import { join } from 'path';
 import { logger } from '@rsbuild/shared';
 import { program } from '../../compiled/commander';
 import { loadConfig } from './config';
-import { createRsbuild } from '../createRsbuild';
 import type { RsbuildMode } from '..';
 
 export type CommonOptions = {
@@ -27,6 +26,8 @@ export async function init(options?: CommonOptions) {
   }
 
   const config = await loadConfig(commonOpts.config);
+  const { createRsbuild } = await import('../createRsbuild');
+
   return await createRsbuild({
     rsbuildConfig: config,
     provider: config.provider,
