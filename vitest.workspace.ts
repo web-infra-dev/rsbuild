@@ -13,6 +13,11 @@ global.console.Console = Console;
 export default defineWorkspace([
   {
     plugins: [tsconfigPaths()],
+    define: {
+      RSBUILD_VERSION: JSON.stringify(
+        require('./packages/core/package.json').version,
+      ),
+    },
     test: {
       name: 'node',
       globals: true,
