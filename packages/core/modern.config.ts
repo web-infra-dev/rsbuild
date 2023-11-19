@@ -1,11 +1,15 @@
+import { defineConfig } from '@modern-js/module-tools';
 import { baseBuildConfig } from '../../scripts/modern.base.config';
 
-export default {
+export default defineConfig({
   ...baseBuildConfig,
   buildConfig: [
     {
       ...baseBuildConfig.buildConfig,
       input: ['src', '!src/client'],
+      define: {
+        RSBUILD_VERSION: JSON.stringify(require('./package.json').version),
+      },
     },
     {
       buildType: 'bundle',
@@ -25,4 +29,4 @@ export default {
       autoExternal: false,
     },
   ],
-};
+});
