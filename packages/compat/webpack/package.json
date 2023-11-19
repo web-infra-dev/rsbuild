@@ -41,6 +41,7 @@
     "@rsbuild/babel-preset": "workspace:*",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
+    "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-css-minimizer": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "babel-loader": "9.1.3",

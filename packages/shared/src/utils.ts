@@ -5,8 +5,6 @@ import type {
 } from './types';
 import path from 'path';
 import fse from '../compiled/fs-extra';
-import semver from 'semver';
-import { findUp } from './fs';
 import deepmerge from '../compiled/deepmerge';
 
 export { deepmerge };
@@ -143,27 +141,6 @@ export const isPackageInstalled = (
   } catch (err) {
     return false;
   }
-};
-
-// TODO: move to react plugin
-export const isBeyondReact17 = async (cwd: string) => {
-  const pkgPath = await findUp({ cwd, filename: 'package.json' });
-
-  if (!pkgPath) {
-    return false;
-  }
-
-  const pkgInfo = JSON.parse(fse.readFileSync(pkgPath, 'utf8'));
-  const deps = {
-    ...pkgInfo.devDependencies,
-    ...pkgInfo.dependencies,
-  };
-
-  if (typeof deps.react !== 'string') {
-    return false;
-  }
-
-  return semver.satisfies(semver.minVersion(deps.react)!, '>=17.0.0');
 };
 
 export const camelCase = (input: string): string =>

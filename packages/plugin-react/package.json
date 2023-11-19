@@ -27,12 +27,14 @@
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
     "@rspack/plugin-react-refresh": "0.3.14",
-    "react-refresh": "^0.14.0"
+    "react-refresh": "^0.14.0",
+    "semver": "^7.5.4"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
     "@types/node": "^16",
+    "@types/semver": "^7.5.4",
     "typescript": "^5.2.2"
   },
   "publishConfig": {

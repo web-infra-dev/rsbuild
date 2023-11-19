@@ -1,4 +1,5 @@
-import { isBeyondReact17, isProd, isUsingHMR } from '@rsbuild/shared';
+import { isBeyondReact17 } from '@rsbuild/plugin-react';
+import { isProd, isUsingHMR } from '@rsbuild/shared';
 import type { RsbuildPlugin, RsbuildConfig } from '../types';
 
 export const pluginReactWebpack = (): RsbuildPlugin => ({

@@ -462,6 +462,9 @@ importers:
       '@modern-js/swc-plugins':
         specifier: 0.6.5
         version: 0.6.5(@swc/helpers@0.5.3)
+      '@rsbuild/plugin-react':
+        specifier: workspace:*
+        version: link:../../plugin-react
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../../shared
@@ -570,6 +573,9 @@ importers:
       '@rsbuild/plugin-css-minimizer':
         specifier: workspace:*
         version: link:../../plugin-css-minimizer
+      '@rsbuild/plugin-react':
+        specifier: workspace:*
+        version: link:../../plugin-react
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../../shared
@@ -1537,6 +1543,9 @@ importers:
       react-refresh:
         specifier: ^0.14.0
         version: 0.14.0
+      semver:
+        specifier: ^7.5.4
+        version: 7.5.4
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1547,6 +1556,9 @@ importers:
       '@types/node':
         specifier: ^16
         version: 16.18.59
+      '@types/semver':
+        specifier: ^7.5.4
+        version: 7.5.4
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1837,9 +1849,6 @@ importers:
       postcss:
         specifier: 8.4.31
         version: 8.4.31
-      semver:
-        specifier: ^7.5.4
-        version: 7.5.4
     devDependencies:
       '@types/lodash':
         specifier: ^4.14.200
@@ -1847,9 +1856,6 @@ importers:
       '@types/node':
         specifier: ^16
         version: 16.18.59
-      '@types/semver':
-        specifier: ^7.5.4
-        version: 7.5.4
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.5.5
         version: /html-rspack-plugin@5.5.5
