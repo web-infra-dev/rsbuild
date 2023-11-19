@@ -2,7 +2,7 @@ import {
   isSatisfyRspackMinimumVersion,
   supportedRspackMinimumVersion,
   getRspackVersion,
-} from '@/shared/rspackVersion';
+} from '@/shared';
 
 describe('rspack version', () => {
   it('isSatisfyRspackMinimumVersion', async () => {

@@ -112,12 +112,7 @@ export async function applyBaseCSSRule({
       const { cssModules } = config.output;
       rule
         .use(CHAIN_ID.USE.CSS_MODULES_TS)
-        .loader(
-          path.resolve(
-            __dirname,
-            '../rspackLoader/css-modules-typescript-pre-loader',
-          ),
-        )
+        .loader(path.resolve(__dirname, '../css-modules-typescript-pre-loader'))
         .options({
           modules: {
             exportLocalsConvention: cssModules.exportLocalsConvention,
