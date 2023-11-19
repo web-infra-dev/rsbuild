@@ -8,7 +8,7 @@ export default defineConfig({
       ...baseBuildConfig.buildConfig,
       input: ['src', '!src/client'],
       define: {
-        RSBUILD_VERSION: JSON.stringify(require('./package.json').version),
+        RSBUILD_VERSION: require('./package.json').version,
       },
     },
     {

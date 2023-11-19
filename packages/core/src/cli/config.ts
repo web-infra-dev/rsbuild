@@ -1,5 +1,4 @@
 import fs from 'fs';
-import jiti from 'jiti';
 import { isAbsolute, join } from 'path';
 import {
   color,
@@ -68,6 +67,7 @@ export async function loadConfig(
   const configFile = resolveConfigPath(customConfig);
 
   if (configFile) {
+    const { default: jiti } = await import('jiti');
     const loadConfig = jiti(__filename, {
       esmResolve: true,
       // disable require cache to support restart CLI and read the new config

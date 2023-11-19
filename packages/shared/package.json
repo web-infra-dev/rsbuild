@@ -19,7 +19,7 @@
       "default": "./dist/formatStats.js"
     },
     "./rslog": {
-      "types": "./compiled/rslog/dist/types/index.d.ts",
+      "types": "./compiled/rslog/dist/index.d.ts",
       "default": "./compiled/rslog/index.js"
     },
     "./gzip-size": {
