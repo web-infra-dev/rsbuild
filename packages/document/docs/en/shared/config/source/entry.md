@@ -12,7 +12,9 @@ const defaultEntry = {
 };
 ```
 
-Used to set the entry modules for building, the usage is the as same the [entry](https://rspack.dev/config/entry) option in Rspack.
+Used to set the entry modules for building.
+
+The usage of `source.entry` is similar to the `entry` option in [Rspack](https://rspack.dev/config/entry). The main difference is that Rsbuild will register [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) for each entry in `source.entry` to generate the corresponding HTML files.
 
 - **Example:**
 
@@ -25,4 +27,19 @@ export default {
     },
   },
 };
+```
+
+The generated directory structure is as follows:
+
+```text
+.
+├── foo.html
+├── bar.html
+└── static
+    ├── css
+    │   ├── foo.css
+    │   └── bar.css
+    └── js
+        ├── foo.js
+        └── bar.js
 ```
