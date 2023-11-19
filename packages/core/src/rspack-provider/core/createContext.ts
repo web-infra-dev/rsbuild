@@ -6,7 +6,7 @@ import {
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
 import { initHooks } from './initHooks';
-import { withDefaultConfig } from '../config/defaults';
+import { withDefaultConfig } from '../config';
 import type { Context, RsbuildConfig } from '../../types';
 
 /**

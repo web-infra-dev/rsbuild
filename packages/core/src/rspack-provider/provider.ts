@@ -11,11 +11,11 @@ import {
 import { createContext } from './core/createContext';
 import { initConfigs } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
-import { applyDefaultPlugins } from './shared/plugin';
 import {
+  applyDefaultPlugins,
   isSatisfyRspackMinimumVersion,
   supportedRspackMinimumVersion,
-} from './shared/rspackVersion';
+} from './shared';
 import type { RsbuildConfig, NormalizedConfig } from '../types';
 
 export type RspackProvider = RsbuildProvider<

@@ -11,7 +11,7 @@ import {
 } from '@rsbuild/shared';
 import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
-import { normalizeConfig } from '../config/normalize';
+import { normalizeConfig } from '../config';
 import type { Context } from '../../types';
 
 async function modifyRsbuildConfig(context: Context) {
