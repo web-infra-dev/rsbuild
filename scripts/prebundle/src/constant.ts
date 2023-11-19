@@ -1,6 +1,7 @@
 import path, { join } from 'path';
 import type { TaskConfig } from './types';
 import fs from 'fs-extra';
+import { replaceFileContent } from './helper';
 
 export const ROOT_DIR = join(__dirname, '..', '..', '..');
 export const PACKAGES_DIR = join(ROOT_DIR, 'packages');
@@ -31,7 +32,21 @@ export const TASKS: TaskConfig[] = [
     packageName: '@rsbuild/core',
     dependencies: [
       'open',
+      'jiti',
       'commander',
+      {
+        name: 'sirv',
+        afterBundle(task) {
+          replaceFileContent(
+            join(task.distPath, 'sirv.d.ts'),
+            (content) =>
+              `${content.replace(
+                "declare module 'sirv'",
+                'declare namespace sirv',
+              )}\nexport = sirv;`,
+          );
+        },
+      },
       {
         name: 'http-compression',
         ignoreDts: true,
@@ -56,6 +71,7 @@ export const TASKS: TaskConfig[] = [
       'connect',
       'browserslist',
       'gzip-size',
+      'json5',
       {
         name: 'webpack-sources',
         ignoreDts: true,
@@ -63,6 +79,13 @@ export const TASKS: TaskConfig[] = [
       {
         name: 'postcss-value-parser',
         ignoreDts: true,
+      },
+      {
+        name: 'loader-utils2',
+        ignoreDts: true,
+        externals: {
+          json5: '../json5',
+        },
       },
       {
         name: 'picocolors',
