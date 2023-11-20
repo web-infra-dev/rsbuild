@@ -21,9 +21,16 @@
 
 [English](./README.md) | 简体中文
 
-## 介绍
+## 💡 什么是 Rsbuild？
 
-**Rsbuild 是一个基于 Rspack 的 web 构建工具**，它具备以下特性：
+- Rsbuild 是一个基于 Rspack 的 web 构建工具。
+- Rsbuild 是一个增强版的 Rspack CLI，更易用、更强大。
+- Rsbuild 是 Rspack 团队对于 web 构建最佳实践的探索和实现。
+- Rsbuild 是从 Webpack 应用迁移到 Rspack 的最佳方案，减少 90% 配置，构建快 10 倍。
+
+## 🔥 特性
+
+Rsbuild 具备以下特性：
 
 - **易于配置**：Rsbuild 的目标之一，是为 Rspack 用户提供开箱即用的构建能力，使开发者能够在零配置的情况下开发 web 项目。同时，Rsbuild 提供一套语义化的构建配置，以降低 Rspack 配置的学习成本。
 
@@ -35,7 +42,7 @@
 
 - **框架无关**：Rsbuild 不与前端 UI 框架耦合，并通过插件来支持 React、Vue 3、Vue 2、Svelte、Lit 等框架，未来也计划支持社区中更多的 UI 框架。
 
-## 定位
+## 🎯 定位
 
 除了作为一个构建工具使用，Rsbuild 也为上层的解决方案提供通用的构建能力，比如 [Rspress](https://github.com/web-infra-dev/rspress) 和 [Modern.js](https://github.com/web-infra-dev/modern.js) s。实际上，Rsbuild 是由 Modern.js Builder 演化而来，它已经与 Modern.js 解耦，以提供更好的灵活性，并满足社区用户的多样化需求。
 
@@ -43,36 +50,36 @@
 
 ![Rspack Ecosystem](https://github.com/web-infra-dev/rsbuild/assets/7237365/1ec93ad6-b8b1-475b-963f-cba1e7d79dec)
 
-## 快速上手
+## 📚 快速上手
 
 你可以参考 [快速上手](https://rsbuild.dev/zh/guide/start/quick-start) 来开始体验 Rsbuild。
 
 注意 Rsbuild 项目正在积极开发中，我们仍在持续进行重构和优化，并且文档尚未完全准备就绪。
 
-## 生态
+## 🦀 Ecosystem
 
-- 🦀 [Rspack](https://github.com/web-infra-dev/rspack): Rsbuild 的底层打包工具。
-- 🐹 [Rspress](https://github.com/web-infra-dev/rspress): 基于 Rsbuild 的静态站点生成器。
-- 🦄 [Modern.js](https://github.com/web-infra-dev/modern.js): 基于 Rsbuild 的渐进式 React 框架。
-- 👓 [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rspack 和 Rsbuild 相关的精彩内容列表。
+- [Rspack](https://github.com/web-infra-dev/rspack): the underlying bundler of Rsbuild.
+- [Rspress](https://github.com/web-infra-dev/rspress): A fast static site generator based on Rsbuild.
+- [Modern.js](https://github.com/web-infra-dev/modern.js): A progressive React framework based on Rsbuild.
+- [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rspack and Rsbuild.
 
-## 参与贡献
+## 🤝 参与贡献
 
 > 欢迎参与 Rsbuild 贡献！
 
 请阅读 [贡献指南](https://github.com/web-infra-dev/rsbuild/blob/main/CONTRIBUTING.md) 来共同参与 Rsbuild 的建设。
 
-## 社区
+## 🧑‍💻 社区
 
 欢迎加入我们的 [Discord](https://discord.gg/dfJnVWaG) 交流频道！Rspack / Rsbuild 团队和用户都在那里活跃，并且我们一直期待着各种贡献。
 
 你也可以加入 [飞书群](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=3c3vca77-bfc0-4ef5-b62b-9c5c9c92f1b4) 与大家一起交流。
 
-### 行为准则
+## 🙌 行为准则
 
 本仓库采纳了字节跳动的开源项目行为准则。请点击 [行为准则](./CODE_OF_CONDUCT.md) 查看更多的信息。
 
-## 致谢
+## 🤗 致谢
 
 Rsbuild 的一些实现参考了社区中杰出的项目，对他们表示感谢：
 
@@ -80,6 +87,6 @@ Rsbuild 的一些实现参考了社区中杰出的项目，对他们表示感谢
 - 部分 util 函数参考了 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)。
 - 部分 API 的设计参考了 [vite](https://github.com/vitejs/vite)。
 
-## License
+## 📖 License
 
-Rsbuild 项目基于 [MIT 协议](https://github.com/web-infra-dev/modern.js/blob/main/LICENSE)，请自由地享受和参与开源。
+Rsbuild 项目基于 [MIT 协议](https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE)，请自由地享受和参与开源。
