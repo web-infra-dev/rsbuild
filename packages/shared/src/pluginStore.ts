@@ -24,7 +24,9 @@ export function createPluginStore(): PluginStore {
         );
       }
       if (plugins.find((item) => item.name === newPlugin.name)) {
-        logger.warn(`Plugin "${newPlugin.name}" already exists.`);
+        logger.warn(
+          `Rsbuild plugin "${newPlugin.name}" registered multiple times.`,
+        );
       } else if (before) {
         const index = plugins.findIndex((item) => item.name === before);
         if (index === -1) {
