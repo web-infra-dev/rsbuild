@@ -6,12 +6,14 @@ import {
   formatStats,
   TARGET_ID_MAP,
   type RspackConfig,
+  type RspackCompiler,
+  type RspackMultiCompiler,
 } from '@rsbuild/shared';
-import { type RspackCompiler, type RspackMultiCompiler } from '@rsbuild/shared';
 import { getDevMiddleware } from './devMiddleware';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 
 import type { Context } from '../../types';
+import { Stats, MultiStats, StatsCompilation } from '@rspack/core';
 
 export async function createCompiler({
   context,
@@ -19,7 +21,7 @@ export async function createCompiler({
 }: {
   context: Context;
   rspackConfigs: RspackConfig[];
-}) {
+}): Promise<RspackCompiler | RspackMultiCompiler> {
   debug('create compiler');
   await context.hooks.onBeforeCreateCompilerHook.call({
     bundlerConfigs: rspackConfigs,
@@ -27,7 +29,10 @@ export async function createCompiler({
 
   const { rspack } = await import('@rspack/core');
 
-  const compiler = rspack(rspackConfigs);
+  const compiler =
+    rspackConfigs.length === 1
+      ? rspack(rspackConfigs[0])
+      : rspack(rspackConfigs);
 
   let isFirstCompile = true;
 
@@ -35,23 +40,31 @@ export async function createCompiler({
     logger.start('Compiling...');
   });
 
-  compiler.hooks.done.tap('rsbuild:done', async (stats) => {
+  compiler.hooks.done.tap('rsbuild:done', async (stats: Stats | MultiStats) => {
     const obj = stats.toJson({
       all: false,
       timings: true,
     });
 
-    if (!stats.hasErrors() && obj.children) {
-      obj.children.forEach((c, index) => {
-        if (c.time) {
-          const time = prettyTime(c.time / 1000);
-          const target = Array.isArray(context.target)
-            ? context.target[index]
-            : context.target;
-          const name = TARGET_ID_MAP[target || 'web'];
-          logger.ready(`${name} compiled in ${time}`);
-        }
-      });
+    const printTime = (c: StatsCompilation, index: number) => {
+      if (c.time) {
+        const time = prettyTime(c.time / 1000);
+        const target = Array.isArray(context.target)
+          ? context.target[index]
+          : context.target;
+        const name = TARGET_ID_MAP[target || 'web'];
+        logger.ready(`${name} compiled in ${time}`);
+      }
+    };
+
+    if (!stats.hasErrors()) {
+      if (obj.children) {
+        obj.children.forEach((c, index) => {
+          printTime(c, index);
+        });
+      } else {
+        printTime(obj, 0);
+      }
     }
 
     const { message, level } = formatStats(stats);
