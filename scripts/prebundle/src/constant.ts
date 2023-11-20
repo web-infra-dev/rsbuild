@@ -120,11 +120,6 @@ export const TASKS: TaskConfig[] = [
           // express is a peer dependency, no need to provide express type
           express: 'express',
         },
-        // beforeBundle(task) {
-        //   const content = fs.readFileSync(task.depEntry, 'utf-8');
-        //   console.log(content);
-        //   content.
-        // },
       },
     ],
   },
