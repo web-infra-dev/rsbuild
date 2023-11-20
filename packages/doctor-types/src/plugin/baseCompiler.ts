@@ -13,7 +13,7 @@ import type {
   RuleSetRules,
 } from '@rspack/core';
 
-export type BaseCompiler = Compiler | RspackCompiler;
+export type BaseCompiler = (Compiler | RspackCompiler) & { webpack: any };
 
 export type BaseCompilation = RspackCompilation | Compilation;
 

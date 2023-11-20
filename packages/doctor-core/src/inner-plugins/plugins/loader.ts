@@ -134,7 +134,7 @@ export class InternalLoaderPlugin<
     ) {
       // webpack5 or rspack
       compiler.webpack.NormalModule.getCompilationHooks(
-        compilation as any, // TODO: compatible the @rspack/core@0.3.14-canary-f95d6cb-20231120024209
+        compilation,
       ).loader.intercept(interceptor);
     } else if ('normalModuleLoader' in compilation.hooks) {
       // webpack4
