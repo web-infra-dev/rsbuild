@@ -66,7 +66,6 @@
     "@rspack/core": "0.3.14",
     "core-js": "~3.32.2",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
-    "http-proxy-middleware": "^2.0.1",
     "postcss": "8.4.31",
     "semver": "^7.5.4",
     "ws": "^8.2.0"

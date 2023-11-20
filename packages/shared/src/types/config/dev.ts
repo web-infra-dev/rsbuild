@@ -1,6 +1,6 @@
 import type { ArrayOrNot } from '../utils';
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { Options as ProxyOptions } from 'http-proxy-middleware';
+import type { Options as ProxyOptions } from '../../../compiled/http-proxy-middleware';
 
 export type DevServerHttpsOptions = boolean | { key: string; cert: string };
 

@@ -81,6 +81,10 @@
     "./webpack-merge": {
       "types": "./compiled/webpack-merge/types/index.d.ts",
       "default": "./compiled/webpack-merge/index.js"
+    },
+    "./http-proxy-middleware": {
+      "types": "./compiled/http-proxy-middleware/types/index.d.ts",
+      "default": "./compiled/http-proxy-middleware/index.js"
     }
   },
   "main": "./dist/index.js",

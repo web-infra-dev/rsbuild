@@ -114,6 +114,13 @@ export const TASKS: TaskConfig[] = [
           'postcss-value-parser': '../postcss-value-parser',
         },
       },
+      {
+        name: 'http-proxy-middleware',
+        externals: {
+          // express is a peer dependency, no need to provide express type
+          express: 'express',
+        },
+      },
     ],
   },
 ];
