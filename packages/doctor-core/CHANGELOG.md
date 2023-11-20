@@ -1,5 +1,13 @@
 # @rsbuild/doctor-core
 
+## 0.0.13
+
+### Patch Changes
+
+- 2588681: fix: sbuild doctor temporarily compatible with rspack canary version.
+  - @rsbuild/doctor-sdk@0.0.13
+  - @rsbuild/doctor-utils@0.0.13
+
 ## 0.0.12
 
 ### Patch Changes

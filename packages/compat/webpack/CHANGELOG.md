@@ -1,5 +1,24 @@
 # @rsbuild/webpack
 
+## 0.0.27
+
+### Patch Changes
+
+- 780c859: perf: bump html-rspack-plugin v5.5.7 to reduce deps
+- Updated dependencies [18b2220]
+- Updated dependencies [e7b5c5b1]
+- Updated dependencies [bd31bae2]
+- Updated dependencies [8c9b66d]
+- Updated dependencies [cd05514]
+- Updated dependencies [780c859]
+- Updated dependencies [83f572b]
+  - @rsbuild/core@0.0.27
+  - @rsbuild/plugin-react@0.0.27
+  - @rsbuild/shared@0.0.27
+  - @rsbuild/plugin-css-minimizer@0.0.27
+  - @rsbuild/plugin-babel@0.0.27
+  - @rsbuild/babel-preset@0.0.27
+
 ## 0.0.26
 
 ### Patch Changes

@@ -1,5 +1,22 @@
 # @rsbuild/core
 
+## 0.0.27
+
+### Patch Changes
+
+- 18b2220: fix(devServer): should render html success when set output.publicPath
+- bd31bae2: types: simplify BundlerChain and BundlerConfig
+- 8c9b66d: refactor(plugin-react): move component chunks to uni-builder
+- cd05514: refactor: prebundle http-proxy-middleware and adjust implementation
+- 780c859: perf: bump html-rspack-plugin v5.5.7 to reduce deps
+- 83f572b: perf: create Compiler instead of MultiCompiler when target length is 1
+- Updated dependencies [e7b5c5b1]
+- Updated dependencies [bd31bae2]
+- Updated dependencies [8c9b66d]
+- Updated dependencies [cd05514]
+- Updated dependencies [780c859]
+  - @rsbuild/shared@0.0.27
+
 ## 0.0.26
 
 ### Patch Changes

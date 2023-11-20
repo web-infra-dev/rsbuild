@@ -1,5 +1,23 @@
 # @rsbuild/uni-builder
 
+## 0.0.27
+
+### Patch Changes
+
+- 8c9b66d: refactor(plugin-react): move component chunks to uni-builder
+- Updated dependencies [18b2220]
+- Updated dependencies [e7b5c5b1]
+- Updated dependencies [bd31bae2]
+- Updated dependencies [8c9b66d]
+- Updated dependencies [cd05514]
+- Updated dependencies [780c859]
+- Updated dependencies [83f572b]
+  - @rsbuild/core@0.0.27
+  - @rsbuild/shared@0.0.27
+  - @rsbuild/plugin-assets-retry@0.0.27
+  - @rsbuild/webpack@0.0.27
+  - @rsbuild/plugin-rem@0.0.27
+
 ## 0.0.26
 
 ### Patch Changes
