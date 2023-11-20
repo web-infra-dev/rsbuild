@@ -54,7 +54,7 @@ export type RsbuildDevServerOptions = {
   devMiddleware?: DevMiddleware;
   output: {
     distPath: string;
-    publicPaths: string[];
+    publicPath: string;
   };
 };
 

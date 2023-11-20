@@ -142,7 +142,7 @@ export class RsbuildDevServer {
     this.middlewares.use(
       getHtmlFallbackMiddleware({
         distPath: join(this.pwd, this.output.distPath),
-        publicPaths: this.output.publicPaths,
+        publicPath: this.output.publicPath,
         callback: devMiddleware.middleware,
       }),
     );
@@ -256,9 +256,9 @@ export async function startDevServer<
     customCompiler,
   );
 
-  const publicPaths = (compiler as RspackMultiCompiler).compilers
-    ? (compiler as RspackMultiCompiler).compilers.map(getPublicPathFromCompiler)
-    : [getPublicPathFromCompiler(compiler as RspackCompiler)];
+  const publicPath = (compiler as RspackMultiCompiler).compilers
+    ? getPublicPathFromCompiler((compiler as RspackMultiCompiler).compilers[0])
+    : getPublicPathFromCompiler(compiler as RspackCompiler);
 
   const server = new RsbuildDevServer({
     pwd: options.context.rootPath,
@@ -266,7 +266,7 @@ export async function startDevServer<
     dev: devServerConfig,
     output: {
       distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
-      publicPaths,
+      publicPath,
     },
   });
 
