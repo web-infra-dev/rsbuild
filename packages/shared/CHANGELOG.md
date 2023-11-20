@@ -1,5 +1,15 @@
 # @rsbuild/shared
 
+## 0.0.27
+
+### Patch Changes
+
+- e7b5c5b1: fix(react): failed to split react chunks if override chunkSplit
+- bd31bae2: types: simplify BundlerChain and BundlerConfig
+- 8c9b66d: refactor(plugin-react): move component chunks to uni-builder
+- cd05514: refactor: prebundle http-proxy-middleware and adjust implementation
+- 780c859: perf: bump html-rspack-plugin v5.5.7 to reduce deps
+
 ## 0.0.26
 
 ### Patch Changes
