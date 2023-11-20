@@ -1,4 +1,3 @@
-import path from 'path';
 import { expect } from '@playwright/test';
 import { webpackOnlyTest } from '@scripts/helper';
 import { build } from '@scripts/shared';

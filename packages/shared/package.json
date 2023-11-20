@@ -107,7 +107,7 @@
     "@rspack/core": "0.3.14",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.5",
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
     "http-proxy-middleware": "^2.0.1",
     "terser": "5.19.2",
     "terser-webpack-plugin": "5.3.9",

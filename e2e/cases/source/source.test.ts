@@ -43,31 +43,6 @@ test.describe('source configure multi', () => {
   });
 });
 
-// TODO: move to uni-builder
-test.skip('global-vars', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: join(fixtures, 'global-vars'),
-    runServer: true,
-    rsbuildConfig: {
-      source: {
-        entry: {
-          index: join(fixtures, 'global-vars/src/index.ts'),
-        },
-        // globalVars: {
-        //   ENABLE_TEST: true,
-        // },
-      },
-    },
-  });
-
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
-
-  const testEl = page.locator('#test-el');
-  await expect(testEl).toHaveText('aaaaa');
-
-  await rsbuild.close();
-});
-
 test('define', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'global-vars'),

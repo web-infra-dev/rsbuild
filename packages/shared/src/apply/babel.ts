@@ -1,10 +1,5 @@
 import { NODE_MODULES_REGEX, TS_AND_JSX_REGEX } from '../constants';
-import type {
-  WebpackChainRule,
-  BundlerChainRule,
-  NormalizedConfig,
-  Context,
-} from '../types';
+import type { BundlerChainRule, NormalizedConfig, Context } from '../types';
 
 export function applyScriptCondition({
   rule,
@@ -13,7 +8,7 @@ export function applyScriptCondition({
   includes,
   excludes,
 }: {
-  rule: BundlerChainRule | WebpackChainRule;
+  rule: BundlerChainRule;
   config: NormalizedConfig;
   context: Context;
   includes: (string | RegExp)[];

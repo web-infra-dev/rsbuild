@@ -4,7 +4,6 @@ import { build, getHrefByEntryName } from '@scripts/shared';
 
 const fixtures = __dirname;
 
-// TODO run with uni-builder
 test.skip('module-scopes', async ({ page }) => {
   const buildOpts = {
     cwd: join(fixtures, 'module-scopes'),

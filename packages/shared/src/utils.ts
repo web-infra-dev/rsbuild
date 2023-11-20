@@ -1,4 +1,5 @@
 import type {
+  CacheGroup,
   NormalizedConfig,
   RsbuildTarget,
   SharedCompiledPkgNames,
@@ -147,3 +148,35 @@ export const camelCase = (input: string): string =>
   input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
 
 export const cloneDeep = <T>(value: T): T => deepmerge({}, value);
+
+const DEP_MATCH_TEMPLATE = /[\\/]node_modules[\\/](<SOURCES>)[\\/]/.source;
+
+/** Expect to match path just like "./node_modules/react-router/" */
+export const createDependenciesRegExp = (
+  ...dependencies: (string | RegExp)[]
+) => {
+  const sources = dependencies.map((d) =>
+    typeof d === 'string' ? d : d.source,
+  );
+  const expr = DEP_MATCH_TEMPLATE.replace('<SOURCES>', sources.join('|'));
+  return new RegExp(expr);
+};
+
+export function createCacheGroups(
+  group: Record<string, (string | RegExp)[]>,
+): CacheGroup {
+  const experienceCacheGroup: CacheGroup = {};
+
+  Object.entries(group).forEach(([name, pkgs]) => {
+    const key = `lib-${name}`;
+
+    experienceCacheGroup[key] = {
+      test: createDependenciesRegExp(...pkgs),
+      priority: 0,
+      name: key,
+      reuseExistingChunk: true,
+    };
+  });
+
+  return experienceCacheGroup;
+}

@@ -1,20 +1,5 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
-import {
-  pluginSplitChunks,
-  createDependenciesRegExp,
-} from '@src/plugins/splitChunks';
-
-test('createDependenciesRegExp', () => {
-  const cases = {
-    'react,react-dom,history':
-      /[\\/]node_modules[\\/](react|react-dom|history)[\\/]/,
-    '@babel/runtime': /[\\/]node_modules[\\/](@babel\/runtime)[\\/]/,
-  };
-  for (const [deps, expected] of Object.entries(cases)) {
-    const actual = createDependenciesRegExp(...deps.split(','));
-    expect(actual).toEqual(expected);
-  }
-});
+import { pluginSplitChunks } from '@src/plugins/splitChunks';
 
 describe('plugin-split-chunks', () => {
   const cases = [

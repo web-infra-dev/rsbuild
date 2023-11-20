@@ -15,7 +15,7 @@ import type {
   CheckSyntaxExclude,
   AcornParseError,
 } from './types';
-import type { Rspack } from '@rsbuild/core/rspack-provider';
+import type { Rspack } from '@rsbuild/core';
 
 type Compiler = Rspack.Compiler;
 type Compilation = Rspack.Compilation;

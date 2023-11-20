@@ -52,9 +52,7 @@ Rsbuild 默认采用 `split-by-experience` 策略，这是我们根据经验制�
 - `lib-react.js`：包含 `react`，`react-dom`，`scheduler`。
 - `lib-router.js`：包含 `react-router`，`react-router-dom`，`history`，`@remix-run/router`。
 - `lib-lodash.js`：包含 `lodash`，`lodash-es`。
-- `lib-antd.js`：包含 `antd`。
-- `lib-arco.js`：包含 `@arco-design/web-react`。
-- `lib-semi.js`：包含 `@douyinfe/semi-ui`。
+- `lib-axios.js`：包含 `axios` 以及相关的包。
 
 :::tip
 如果项目中没有安装或引用以上 npm 包，则不会生成相应的 chunk。

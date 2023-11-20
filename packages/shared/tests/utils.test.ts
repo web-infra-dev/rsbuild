@@ -1,4 +1,4 @@
-import { awaitableGetter, camelCase } from '../src';
+import { awaitableGetter, camelCase, createDependenciesRegExp } from '../src';
 
 describe('awaitableGetter', () => {
   it('should work', async () => {
@@ -30,4 +30,16 @@ describe('camelCase', () => {
   test('should handle single-word input', () => {
     expect(camelCase('single')).toBe('single');
   });
+});
+
+test('createDependenciesRegExp', () => {
+  const cases = {
+    'react,react-dom,history':
+      /[\\/]node_modules[\\/](react|react-dom|history)[\\/]/,
+    '@babel/runtime': /[\\/]node_modules[\\/](@babel\/runtime)[\\/]/,
+  };
+  for (const [deps, expected] of Object.entries(cases)) {
+    const actual = createDependenciesRegExp(...deps.split(','));
+    expect(actual).toEqual(expected);
+  }
 });

@@ -3,18 +3,6 @@
 exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is installed 1`] = `
 {
   "cacheGroups": {
-    "lib-antd": {
-      "name": "lib-antd",
-      "priority": 0,
-      "reuseExistingChunk": true,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
-    },
-    "lib-arco": {
-      "name": "lib-arco",
-      "priority": 0,
-      "reuseExistingChunk": true,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
-    },
     "lib-axios": {
       "name": "lib-axios",
       "priority": 0,
@@ -44,12 +32,6 @@ exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is i
       "priority": 0,
       "reuseExistingChunk": true,
       "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
-    },
-    "lib-semi": {
-      "name": "lib-semi",
-      "priority": 0,
-      "reuseExistingChunk": true,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\(ies\\|douyinfe\\)\\[\\\\\\\\/\\]semi-\\.\\*\\)\\[\\\\\\\\/\\]/,
     },
   },
   "chunks": "all",
