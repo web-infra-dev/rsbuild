@@ -155,7 +155,9 @@ await rsbuild.build({
 个别情况下，你可能希望使用自定义的 compiler：
 
 ```ts
-const compiler = webpack({
+import { rspack } from '@rspack/core';
+
+const compiler = rspack({
   // ...
 });
 await rsbuild.build({
@@ -276,7 +278,9 @@ await rsbuild.startDevServer({
 个别情况下，你可能希望使用自定义的 compiler：
 
 ```ts
-const compiler = webpack({
+import { rspack } from '@rspack/core';
+
+const compiler = rspack({
   // ...
 });
 await rsbuild.startDevServer({

@@ -128,7 +128,7 @@ After adding the type declaration, if the type error still exists, you can try t
 
 ## Extend Asset Types
 
-If the built-in asset types in Rsbuild cannot meet your requirements, you can modify the built-in webpack/Rspack configuration and extend the asset types you need using [tools.bundlerChain](/config/options/tools.html#toolsbundlerchain).
+If the built-in asset types in Rsbuild cannot meet your requirements, you can modify the built-in Rspack configuration and extend the asset types you need using [tools.bundlerChain](/config/options/tools.html#toolsbundlerchain).
 
 For example, if you want to treat `*.pdf` files as assets and directly output them to the dist directory, you can add the following configuration:
 
