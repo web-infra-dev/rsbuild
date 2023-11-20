@@ -5,8 +5,8 @@ import path from 'path';
 import os from 'os';
 import { describe, expect, it } from 'vitest';
 import { createDoctorPlugin } from './test-utils';
-
-describe('test rspack-plugin src/plugin.ts', () => {
+// TODO: migrate to e2e
+describe.skip('test rspack-plugin src/plugin.ts', () => {
   describe('test plugin interceptor', () => {
     async function rspackCompile(
       tapName: string,

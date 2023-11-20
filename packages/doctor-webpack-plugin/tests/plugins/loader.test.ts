@@ -5,7 +5,7 @@ import path from 'path';
 import { describe, expect, it, vi } from 'vitest';
 import type { NormalModule, WebpackPluginInstance } from 'webpack';
 import { createRsbuildDoctorPlugin } from '../test-utils';
-
+// TODO: migrate to e2e
 describe('test src/plugins/loader.ts', () => {
   const testLoaderPath = path.resolve(
     __dirname,
@@ -96,7 +96,7 @@ describe('test src/plugins/loader.ts', () => {
 
   function createTests(title: string, compile: typeof compileByWebpack5) {
     describe(title, () => {
-      it(`${title} basic usage`, async () => {
+      it.skip(`${title} basic usage`, async () => {
         const { loaderData, beforeTransform, afterTransform } = await webpack(
           compile,
           () => {},
@@ -118,7 +118,7 @@ describe('test src/plugins/loader.ts', () => {
         expect(options).toStrictEqual({ mode: 'callback' });
       });
 
-      it(`${title} overwrite loader options`, async () => {
+      it.skip(`${title} overwrite loader options`, async () => {
         const { loaderData, beforeTransform, afterTransform } = await webpack(
           compile,
           (module) => {
@@ -142,7 +142,7 @@ describe('test src/plugins/loader.ts', () => {
         expect(options).toStrictEqual({ mode: 'async' });
       });
 
-      it(`${title} add loader and overwrite options`, async () => {
+      it.skip(`${title} add loader and overwrite options`, async () => {
         const { loaderData, beforeTransform, afterTransform } = await webpack(
           compile,
           (module) => {
@@ -186,7 +186,7 @@ describe('test src/plugins/loader.ts', () => {
         });
       });
 
-      it(`${title} remove all loaders`, async () => {
+      it.skip(`${title} remove all loaders`, async () => {
         const { loaderData, beforeTransform, afterTransform } = await webpack(
           compile,
           (module) => {

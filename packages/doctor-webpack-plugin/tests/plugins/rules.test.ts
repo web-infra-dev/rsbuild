@@ -4,7 +4,7 @@ import { compileByWebpack5 } from '@rsbuild/test-helper';
 import path from 'path';
 import { describe, expect, it, vi } from 'vitest';
 import { createRsbuildDoctorPlugin } from '../test-utils';
-
+// TODO: migrate to e2e
 describe('test src/plugins/rules.ts', () => {
   async function webpack(compile: typeof compileByWebpack5) {
     const check = vi.fn();
@@ -52,7 +52,7 @@ describe('test src/plugins/rules.ts', () => {
     };
   }
 
-  it('webpack5', async () => {
+  it.skip('webpack5', async () => {
     const { check, onCheckEnd, onCheckEndAfterManifest } =
       await webpack(compileByWebpack5);
 

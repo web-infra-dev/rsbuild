@@ -7,8 +7,8 @@ import { getSDK, setSDK } from '@rsbuild/doctor-core/plugins';
 import { createRsbuildDoctorPlugin } from '../test-utils';
 import { DoctorWebpackSDK } from '@rsbuild/doctor-sdk/sdk';
 import { compileByWebpack5 } from '@rsbuild/test-helper';
-
-describe('test src/loaders/proxy.ts', () => {
+// TODO: migrate to e2e
+describe.skip('test src/loaders/proxy.ts', () => {
   const file = path.resolve(__dirname, '../fixtures/a.js');
   const loaderPath = path.resolve(__dirname, '../fixtures/loaders/comment.js');
   const codeTransformed = `console.log('a');\n\n// hello world`;

@@ -9,7 +9,7 @@ import { compileByWebpack5 } from '@rsbuild/test-helper';
 const resolveFixture = (...paths: string[]) => {
   return path.resolve(__dirname, '../../fixtures', ...paths);
 };
-
+// TODO: migrate to e2e
 describe('module graph transform from stats', () => {
   it('normal module in multi concatenation module', async () => {
     const fixtureName = 'normal-module-in-multi-concatenation';

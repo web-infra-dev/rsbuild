@@ -5,7 +5,7 @@ import qs from 'querystring';
 import { getSDK } from '@rsbuild/doctor-core/plugins';
 import { createRsbuildDoctorPlugin } from '../test-utils';
 import { compileByWebpack5 } from '@rsbuild/test-helper';
-
+// TODO: migrate to e2e
 describe('test src/loaders/proxy.ts', () => {
   const file = path.resolve(__dirname, '../fixtures/a.js');
   const loaderPath = path.resolve(
