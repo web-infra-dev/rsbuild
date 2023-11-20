@@ -1,6 +1,7 @@
 import assert from 'assert';
 import {
   NODE_MODULES_REGEX,
+  createDependenciesRegExp,
   getPackageNameFromModulePath,
   type Polyfill,
   type CacheGroup,
@@ -63,19 +64,6 @@ function getUserDefinedCacheGroups(forceSplitting: ForceSplitting): CacheGroup {
 
   return cacheGroups;
 }
-
-const DEPENDENCY_MATCH_TEMPL = /[\\/]node_modules[\\/](<SOURCES>)[\\/]/.source;
-
-/** Expect to match path just like "./node_modules/react-router/" */
-export const createDependenciesRegExp = (
-  ...dependencies: (string | RegExp)[]
-) => {
-  const sources = dependencies.map((d) =>
-    typeof d === 'string' ? d : d.source,
-  );
-  const expr = DEPENDENCY_MATCH_TEMPL.replace('<SOURCES>', sources.join('|'));
-  return new RegExp(expr);
-};
 
 function splitByExperience(ctx: SplitChunksContext): SplitChunks {
   const { override, polyfill, defaultConfig, userDefinedCacheGroups } = ctx;

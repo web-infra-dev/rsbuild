@@ -18,6 +18,7 @@ import { pluginRuntimeChunk } from './plugins/runtimeChunk';
 import { pluginFrameworkConfig } from './plugins/frameworkConfig';
 import { pluginMainFields } from './plugins/mainFields';
 import { pluginExtensionPrefix } from './plugins/extensionPrefix';
+import { pluginSplitChunks } from './plugins/splitChunk';
 
 const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
 
@@ -103,6 +104,7 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
   rsbuildConfig.output = output;
 
   const rsbuildPlugins: RsbuildPlugin[] = [
+    pluginSplitChunks(),
     pluginGlobalVars(uniBuilderConfig.source?.globalVars),
   ];
 

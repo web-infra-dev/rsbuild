@@ -1,9 +1,9 @@
-import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
 // Skipped
 // we should find a better way to test it without installing antd
+// TODO: uni-builder
 test.skip('should import arco correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
