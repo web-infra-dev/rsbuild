@@ -280,7 +280,7 @@ test('should access /html/main success when entry is main and outputPath is /htm
   await rsbuild.server.close();
 });
 
-test.only('should access /main success when modify publicPath in compiler', async ({
+test('should access /main success when modify publicPath in compiler', async ({
   page,
 }) => {
   const rsbuild = await dev({
