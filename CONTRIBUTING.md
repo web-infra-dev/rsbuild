@@ -224,6 +224,16 @@ feat(plugin-swc): Add `xxx` config
 
 ---
 
+## Benchmarking
+
+You can input `!bench` in the comment area of ​​the PR to do benchmarking on `rsbuild` (you need to have Collaborator and above permissions).
+
+You can focus on metrics related to build time and bundle size based on the comparison table output by comments to assist you in making relevant performance judgments and decisions.
+
+Dependencies installation-related metrics base on publishing process, so the data is relatively lagging and is for reference only.
+
+---
+
 ## Publishing
 
 We use **Modern.js Monorepo Solution** to manage version and changelog.
