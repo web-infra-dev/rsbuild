@@ -31,7 +31,7 @@ export class InternalProgressPlugin<
           });
         },
       });
-      progress.apply(compiler);
+      progress.apply(compiler as any); // TODO: compatible the @rspack/core@0.3.14-canary-f95d6cb-20231120024209
     }
   }
 }
