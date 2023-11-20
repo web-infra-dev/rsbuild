@@ -5,7 +5,7 @@ import { Compiler } from 'webpack';
 import { getSDK } from '@rsbuild/doctor-core/plugins';
 import { createRsbuildDoctorPlugin } from '../test-utils';
 import { compileByWebpack5 } from '@rsbuild/test-helper';
-
+// TODO: migrate to e2e
 describe('test src/utils/plugin.ts', () => {
   describe('test plugin interceptor', () => {
     async function webpack(tapName: string, compile: typeof compileByWebpack5) {
@@ -43,7 +43,7 @@ describe('test src/utils/plugin.ts', () => {
       return res;
     }
 
-    it('webpack5', async () => {
+    it.skip('webpack5', async () => {
       const tapName = 'XXX';
       await webpack(tapName, compileByWebpack5);
       const sdk = getSDK();

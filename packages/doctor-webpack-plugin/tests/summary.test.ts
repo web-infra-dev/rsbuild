@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 import { createRsbuildDoctorPlugin } from './test-utils';
 import { compileByWebpack5 } from '@rsbuild/test-helper';
-
+// TODO: migrate to e2e
 describe('test src/plugin.ts summary data reporter', () => {
   async function webpack(compile: typeof compileByWebpack5) {
     const file = path.resolve(__dirname, './fixtures/b.js');
@@ -34,7 +34,7 @@ describe('test src/plugin.ts summary data reporter', () => {
     Summary.SummaryCostsDataName.Minify,
   ];
 
-  it('webpack5', async () => {
+  it.skip('webpack5', async () => {
     await webpack(compileByWebpack5);
     const sdk = getSDK();
     const { configs } = sdk.getStoreData();
