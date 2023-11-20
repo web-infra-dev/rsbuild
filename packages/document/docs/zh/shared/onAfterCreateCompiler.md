@@ -2,8 +2,8 @@
 
 你可以通过 `compiler` 参数获取到 Compiler 实例对象:
 
-- 如果当前打包工具为 webpack，则获取到的是 webpack Compiler 对象。
 - 如果当前打包工具为 Rspack，则获取到的是 Rspack Compiler 对象。
+- 如果当前打包工具为 webpack，则获取到的是 webpack Compiler 对象。
 
 - **类型**
 

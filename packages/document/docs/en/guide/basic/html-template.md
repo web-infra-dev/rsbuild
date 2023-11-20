@@ -103,8 +103,7 @@ type DefaultParameters = {
   mountId: string; // corresponding to html.mountId config
   entryName: string; // entry name
   assetPrefix: string; // corresponding to output.assetPrefix config
-  compilation: webpack.Compilation; // Compilation object corresponding to webpack
-  webpackConfig: config; // webpack config
+  compilation: Compilation; // Compilation object corresponding to Rspack
   // htmlWebpackPlugin built-in parameters
   // See https://github.com/jantimon/html-webpack-plugin for details
   htmlWebpackPlugin: {

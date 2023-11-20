@@ -1,31 +1,5 @@
 # Exceptions FAQ
 
-### 'compilation' argument error when webpack compiling?
-
-If the following error occurs when compiling, it is usually caused by installing the wrong version of webpack in the project, or installing multiple versions of webpack:
-
-```bash
-TypeError: The 'compilation' argument must be an instance of Compilation
-```
-
-The webpack version problem has the following situations:
-
-1. The webpack dependency is directly declared in the project's package.json, and the version range of the webpack that the Rsbuild depends on is different and cannot match the same version.
-2. Multiple npm packages installed in the project all depend on webpack, and the webpack version ranges they depend on are different and cannot match the same version.
-3. Due to the lock mechanism of the package manager, multiple webpack versions are generated in the lock file.
-
-In the first case, it is recommended to remove the webpack dependency from the project's package.json. Because Rsbuild encapsulates webpack-related capabilities by default, and will pass in the webpack object in the [tools.webpack](/config/options/tools.html#toolswebpack) configuration option. Therefore, in most cases, it is not recommended to install additional webpack dependencies in the project.
-
-In the second case, it is recommended to see if you can upgrade an npm package so that its dependent webpack version range is consistent with the Rsbuild. It is also possible to manually unify versions through the ability of the package manager, e.g. using [yarn resolutions](https://classic.yarnpkg.com/lang/en/docs/selective-version-resolutions/) or [pnpm overrides](https ://pnpm.io/package_json#pnpmoverrides).
-
-If it is the third case, you can use the two methods mentioned in the second case, or you can try to delete the lock file and reinstall it to solve it.
-
-:::tip
-Deleting the lock file will automatically upgrade the dependency version in the project to the latest version under the specified scope, please test it thoroughly.
-:::
-
----
-
 ### Find ESNext code in the compiled files?
 
 By default, Rsbuild does not compile JavaScript files under `node_modules`. If an npm package used in the project contains ESNext syntax, it will be bundled into the output.
@@ -133,74 +107,6 @@ export default {
 However, it is important to contact the developer of the third-party dependency immediately to fix the issue.
 
 > You can refer to the webpack documentation for more details on [module.parser.javascript.exportsPresence](https://webpack.js.org/configuration/module/#moduleparserjavascriptexportspresence).
-
----
-
-### The compilation progress bar is stuck, but there is no Error log in the terminal?
-
-When the compilation progress bar is stuck, but there is no Error log on the terminal, it is usually because an exception occurred during the compilation. In some cases, when Error is caught by webpack or other modules, the error log can not be output correctly. The most common scenario is that there is an exception in the Babel config, which is caught by webpack, and webpack swallows the Error in some cases.
-
-**Solution:**
-
-If this problem occurs after you modify the Babel config, it is recommended to check for the following incorrect usages:
-
-1. You have configured a plugin or preset that does not exist, maybe the name is misspelled, or it is not installed correctly.
-
-```ts
-// wrong example
-export default {
-  tools: {
-    babel(config, { addPlugins }) {
-      // The plugin has the wrong name or is not installed
-      addPlugins('babel-plugin-not-exists');
-    },
-  },
-};
-```
-
-2. Whether multiple babel-plugin-imports are configured, but the name of each babel-plugin-import is not declared in the third item of the array.
-
-```ts
-// wrong example
-export default {
-  tools: {
-    babel(config, { addPlugins }) {
-      addPlugins([
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd', libraryDirectory: 'es' },
-        ],
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd-mobile', libraryDirectory: 'es' },
-        ],
-      ]);
-    },
-  },
-};
-```
-
-```ts
-// correct example
-export default {
-  tools: {
-    babel(config, { addPlugins }) {
-      addPlugins([
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd', libraryDirectory: 'es' },
-          'antd',
-        ],
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd-mobile', libraryDirectory: 'es' },
-          'antd-mobile',
-        ],
-      ]);
-    },
-  },
-};
-```
 
 ---
 

@@ -198,7 +198,7 @@ export default {
 除了 `chunkSplit` 配置，使用 dynamic import 拆包也是一项重要的优化手段，它可以有效减少首屏的包体积。
 
 :::tip 关于 dynamic import
-Dynamic import 是 ECMAScript 2020 引入的一个新特性，它允许你动态地加载一些 JavaScript 模块。Rsbuild 底层的 Rspack / webpack 默认支持 dynamic import，所以你可以直接在代码中使用它。
+Dynamic import 是 ECMAScript 2020 引入的一个新特性，它允许你动态地加载一些 JavaScript 模块。Rsbuild 底层的 Rspack 默认支持 dynamic import，所以你可以直接在代码中使用它。
 :::
 
 当打包工具遇到 `import()` 语法时，它会自动将相关的代码分割成一个新的 chunk，并在运行时按需加载。

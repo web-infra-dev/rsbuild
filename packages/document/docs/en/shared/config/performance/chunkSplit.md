@@ -124,7 +124,7 @@ export default {
 };
 ```
 
-This is an easier way than configuring webpack's splitChunks directly.
+This is an easier way than configuring Rspack's splitChunks directly.
 
 :::tip
 Chunks split using the `forceSplitting` configuration will be inserted into the HTML file as resources requested for the initial screen using `<script>` tags. Therefore, please split them appropriately based on the actual scenario to avoid excessive size of initial screen resources.
@@ -132,7 +132,7 @@ Chunks split using the `forceSplitting` configuration will be inserted into the 
 
 ### chunkSplit.splitChunks
 
-When `performance.chunkSplit.strategy` is `custom`, you can specify the custom webpack chunk splitting config via `performance.chunkSplit.splitChunks`. This config will be merged with the webpack splitChunks config (the `cacheGroups` config will also be merged). For example:
+When `performance.chunkSplit.strategy` is `custom`, you can specify the custom Rspack chunk splitting config via `performance.chunkSplit.splitChunks`. This config will be merged with the Rspack splitChunks config (the `cacheGroups` config will also be merged). For example:
 
 ```js
 export default {
@@ -155,7 +155,7 @@ export default {
 
 ### chunkSplit.override
 
-When `performance.chunkSplit.strategy` is `split-by-experience`, `split-by-module`, `split-by-size` or `single-vendor`, you can specify the custom webpack chunk splitting config via `performance.chunkSplit.override`. This config will be merged with the webpack splitChunks config (the `cacheGroups` config will also be merged). For example:
+When `performance.chunkSplit.strategy` is `split-by-experience`, `split-by-module`, `split-by-size` or `single-vendor`, you can specify the custom Rspack chunk splitting config via `performance.chunkSplit.override`. This config will be merged with the Rspack splitChunks config (the `cacheGroups` config will also be merged). For example:
 
 ```js
 export default {

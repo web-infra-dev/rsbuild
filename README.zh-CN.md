@@ -26,7 +26,7 @@
 - Rsbuild 是一个基于 Rspack 的 web 构建工具。
 - Rsbuild 是一个增强版的 Rspack CLI，更易用、更强大。
 - Rsbuild 是 Rspack 团队对于 web 构建最佳实践的探索和实现。
-- Rsbuild 是从 Webpack 应用迁移到 Rspack 的最佳方案，减少 90% 配置，构建快 10 倍。
+- Rsbuild 是 Webpack 应用迁移到 Rspack 的最佳方案，减少 90% 配置，构建快 10 倍。
 
 ## 🔥 特性
 
@@ -56,12 +56,12 @@ Rsbuild 具备以下特性：
 
 注意 Rsbuild 项目正在积极开发中，我们仍在持续进行重构和优化，并且文档尚未完全准备就绪。
 
-## 🦀 Ecosystem
+## 🦀 生态
 
-- [Rspack](https://github.com/web-infra-dev/rspack): the underlying bundler of Rsbuild.
-- [Rspress](https://github.com/web-infra-dev/rspress): A fast static site generator based on Rsbuild.
-- [Modern.js](https://github.com/web-infra-dev/modern.js): A progressive React framework based on Rsbuild.
-- [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rspack and Rsbuild.
+- [Rspack](https://github.com/web-infra-dev/rspack): Rsbuild 的底层打包工具。
+- [Rspress](https://github.com/web-infra-dev/rspress): 基于 Rsbuild 的静态站点生成器。
+- [Modern.js](https://github.com/web-infra-dev/modern.js): 基于 Rsbuild 的渐进式 React 框架。
+- [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rspack 和 Rsbuild 相关的精彩内容列表。
 
 ## 🤝 参与贡献
 

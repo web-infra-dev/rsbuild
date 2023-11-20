@@ -155,7 +155,9 @@ await rsbuild.build({
 In some cases, you may want to use a custom compiler:
 
 ```ts
-const compiler = webpack({
+import { rspack } from '@rspack/core';
+
+const compiler = rspack({
   // ...
 });
 await rsbuild.build({
@@ -276,7 +278,9 @@ await rsbuild.startDevServer({
 In some cases, you may want to use a custom compiler:
 
 ```ts
-const compiler = webpack({
+import { rspack } from '@rspack/core';
+
+const compiler = rspack({
   // ...
 });
 await rsbuild.startDevServer({

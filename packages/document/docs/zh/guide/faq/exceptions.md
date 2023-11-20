@@ -1,31 +1,5 @@
 # 异常类问题
 
-### webpack 编译出现 'compilation' argument 报错？
-
-如果编译时出现以下报错，通常是由于项目中安装了错误的 webpack 版本，或者安装了多个 webpack 版本引起：
-
-```bash
-TypeError: The 'compilation' argument must be an instance of Compilation
-```
-
-webpack 版本问题有以下几种情况：
-
-1. 项目的 package.json 中直接声明了 webpack 依赖，并且与 Rsbuild 依赖的 webpack 版本范围不同，无法匹配到同一个版本。
-2. 项目里安装的多个 npm 包都依赖了 webpack，并且它们依赖的 webpack 版本范围不同，无法匹配到同一个版本。
-3. 由于包管理器的 lock 机制，导致 lock 文件中产生了多个 webpack 版本。
-
-如果是第一种情况，建议从项目的 package.json 中移除 webpack 依赖。因为 Rsbuild 默认封装了 webpack 相关能力，并且会在 [tools.webpack](/config/options/tools.html#toolswebpack) 配置项中传入 webpack 对象。因此在大多数情况下，不建议在项目中额外安装 webpack 依赖。
-
-如果是第二种情况，建议看看能否升级某个 npm 包，使其依赖的 webpack 版本范围与 Rsbuild 保持一致。也可以通过包管理器的能力来手动统一版本，比如使用 [yarn resolutions](https://classic.yarnpkg.com/lang/en/docs/selective-version-resolutions/) 或 [pnpm overrides](https://pnpm.io/package_json#pnpmoverrides)。
-
-如果是第三种情况，可以使用第二种情况中提到的两种方法，也可以尝试删除 lock 文件后重新安装来解决。
-
-:::tip
-删除 lock 文件会使项目中的依赖版本自动升级到指定范围下的最新版，请进行充分的测试。
-:::
-
----
-
 ### 编译产物中存在未编译的 ESNext 代码？
 
 默认情况下，Rsbuild 不会编译 `node_modules` 下的 JavaScript 文件。如果项目引入的 npm 包中含有 ESNext 语法，会被打包进产物中。
@@ -133,74 +107,6 @@ export default {
 同时，你需要尽快联系第三方依赖的开发者来修复相应的问题。
 
 > 你可以查看 webpack 的文档来了解 [module.parser.javascript.exportsPresence](https://webpack.js.org/configuration/module/#moduleparserjavascriptexportspresence) 的更多细节。
-
----
-
-### 编译进度条卡死，但终端无 Error 日志？
-
-当编译进度条卡死，但终端无 Error 日志时，通常是因为编译过程中出现了异常。在某些情况下，当 Error 被 webpack 或其他模块捕获后，错误日志不会被正确输出。最为常见的场景是 Babel 配置出现异常，抛出 Error 后被 webpack 捕获，而 webpack 在个别情况下吞掉了 Error。
-
-**解决方法：**
-
-如果你修改 Babel 配置后出现此问题，建议检查是否有以下错误用法：
-
-1. 配置了一个不存在的 plugin 或 preset，可能是名称拼写错误，或是未正确安装。
-
-```ts
-// 错误示例
-export default {
-  tools: {
-    babel(config, { addPlugins }) {
-      // 该插件名称错误，或者未安装
-      addPlugins('babel-plugin-not-exists');
-    },
-  },
-};
-```
-
-2. 是否配置了多个 babel-plugin-import，但是没有在数组的第三项声明每一个 babel-plugin-import 的名称。
-
-```ts
-// 错误示例
-export default {
-  tools: {
-    babel(config, { addPlugins }) {
-      addPlugins([
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd', libraryDirectory: 'es' },
-        ],
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd-mobile', libraryDirectory: 'es' },
-        ],
-      ]);
-    },
-  },
-};
-```
-
-```ts
-// 正确示例
-export default {
-  tools: {
-    babel(config, { addPlugins }) {
-      addPlugins([
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd', libraryDirectory: 'es' },
-          'antd',
-        ],
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd-mobile', libraryDirectory: 'es' },
-          'antd-mobile',
-        ],
-      ]);
-    },
-  },
-};
-```
 
 ---
 
