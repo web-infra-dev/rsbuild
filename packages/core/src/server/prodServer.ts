@@ -16,6 +16,7 @@ import {
   ROOT_DIST_DIR,
   PreviewServerOptions,
   isFunction,
+  ServerConfig,
 } from '@rsbuild/shared';
 import { faviconFallbackMiddleware } from './middlewares';
 
@@ -25,6 +26,7 @@ type RsbuildProdServerOptions = {
     path: string;
     assetPrefix?: string;
   };
+  serverConfig: ServerConfig;
 };
 export class RsbuildProdServer {
   private app!: Server;
@@ -43,6 +45,16 @@ export class RsbuildProdServer {
   }
 
   private async applyDefaultMiddlewares() {
+    const { headers } = this.options.serverConfig;
+    if (headers) {
+      this.middlewares.use((_req, res, next) => {
+        for (const [key, value] of Object.entries(headers)) {
+          res.setHeader(key, value);
+        }
+        next();
+      });
+    }
+
     this.applyStaticAssetMiddleware();
 
     this.middlewares.use(faviconFallbackMiddleware);
@@ -116,6 +128,7 @@ export async function startProdServer(
       path: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
       assetPrefix: rsbuildConfig.output?.assetPrefix,
     },
+    serverConfig: rsbuildConfig.server || {},
   });
 
   const httpServer = await server.createHTTPServer();

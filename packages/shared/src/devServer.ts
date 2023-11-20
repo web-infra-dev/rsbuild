@@ -97,7 +97,10 @@ export const mergeDevOptions = ({
 
   devServerConfig.port = port;
 
-  return devServerConfig;
+  return {
+    ...rsbuildConfig.server,
+    ...devServerConfig,
+  };
 };
 
 export const getDevOptions = async ({

@@ -2,6 +2,7 @@ import { Server } from 'http';
 import { EventEmitter } from 'events';
 import type {
   DevConfig,
+  ServerConfig,
   DevMiddlewareAPI,
   DevMiddleware as CustomDevMiddleware,
 } from '@rsbuild/shared';
@@ -33,7 +34,7 @@ function getHMRClientPath(client: DevConfig['client']) {
 export default class DevMiddleware extends EventEmitter {
   public middleware?: DevMiddlewareAPI;
 
-  private devOptions: DevConfig;
+  private devOptions: DevConfig & ServerConfig;
 
   private devMiddleware?: CustomDevMiddleware;
 

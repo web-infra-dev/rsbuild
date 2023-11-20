@@ -90,7 +90,6 @@ export interface DevConfig {
     outputFileSystem?: Record<string, any>;
   };
   proxy?: RsbuildProxyOptions;
-  headers?: Record<string, string | string[]>;
   /** see https://github.com/bripkens/connect-history-api-fallback */
   historyApiFallback?:
     | boolean
