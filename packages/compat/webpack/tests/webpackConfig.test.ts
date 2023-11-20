@@ -134,7 +134,7 @@ describe('webpackConfig', () => {
     await createStubRsbuild({
       rsbuildConfig: {
         tools: {
-          webpack(config, utils) {
+          webpack(_config, utils) {
             expect(utils.HtmlPlugin.version).toEqual(5);
             expect(utils.HtmlWebpackPlugin.version).toEqual(5);
           },
@@ -147,7 +147,7 @@ describe('webpackConfig', () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {
         tools: {
-          webpack(config, utils) {
+          webpack(_config, utils) {
             utils.appendPlugins([new utils.webpack.DefinePlugin({ foo: '1' })]);
             utils.prependPlugins([
               new utils.webpack.DefinePlugin({ foo: '2' }),
@@ -165,7 +165,7 @@ describe('webpackConfig', () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {
         tools: {
-          webpack(config, utils) {
+          webpack(_config, utils) {
             utils.appendPlugins([new utils.webpack.DefinePlugin({ foo: '1' })]);
             utils.prependPlugins([
               new utils.webpack.DefinePlugin({ foo: '2' }),
@@ -190,7 +190,7 @@ describe('webpackConfig', () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {
         tools: {
-          webpack(config, utils) {
+          webpack(_config, utils) {
             utils.addRules(newRule);
           },
         },
