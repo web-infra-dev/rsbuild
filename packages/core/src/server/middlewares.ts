@@ -18,9 +18,9 @@ export const notFoundMiddleware: Middleware = (_req, res, _next) => {
 
 export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
-  assetPrefix: string;
+  publicPath: string;
   callback?: Middleware;
-}) => Middleware = ({ assetPrefix, distPath, callback }) => {
+}) => Middleware = ({ publicPath, distPath, callback }) => {
   /**
    * support access page without suffix and support fallback in some edge cases
    */
@@ -60,7 +60,7 @@ export const getHtmlFallbackMiddleware: (params: {
     const tryRewrite = (filePath: string, newUrl: string) => {
       if (outputFileSystem.existsSync(filePath) && callback) {
         // we need add assetPrefix(output.publicPath) for html, otherwise webpack-dev-middleware cannot find the file
-        newUrl = urlJoin(assetPrefix, newUrl);
+        newUrl = urlJoin(publicPath, newUrl);
 
         debug?.(`Rewriting ${req.method} ${req.url} to ${newUrl}`);
 
@@ -86,7 +86,7 @@ export const getHtmlFallbackMiddleware: (params: {
       const filePath = path.join(distPath, pathname + '.html');
       tryRewrite(filePath, newUrl);
     } else {
-      // when user set assetPrefix, webpack-dev-middleware can't get html file directly.
+      // when user set publicPath, webpack-dev-middleware can't get html file directly.
       tryRewrite(path.join(distPath, pathname), url);
     }
 

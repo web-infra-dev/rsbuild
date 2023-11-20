@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse, Server } from 'http';
 import { DevConfig, NextFunction } from './config/dev';
 import type { Logger } from '../logger';
+import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 
 type Middleware = (
   req: IncomingMessage,
@@ -41,6 +42,11 @@ export type DevMiddlewareOptions = {
  */
 export type DevMiddleware = (options: DevMiddlewareOptions) => DevMiddlewareAPI;
 
+export type CreateDevMiddlewareReturns = {
+  devMiddleware: (options: DevMiddlewareOptions) => DevMiddlewareAPI;
+  compiler: RspackCompiler | RspackMultiCompiler;
+};
+
 export type RsbuildDevServerOptions = {
   pwd: string;
   /** Rsbuild devConfig */
@@ -48,7 +54,7 @@ export type RsbuildDevServerOptions = {
   devMiddleware?: DevMiddleware;
   output: {
     distPath: string;
-    assetPrefix: string;
+    publicPath: string;
   };
 };
 

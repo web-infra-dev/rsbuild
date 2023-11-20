@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { dev } from '@scripts/shared';
+import fs from 'fs';
 
 const fixtures = __dirname;
 
@@ -275,6 +276,57 @@ test('should access /html/main success when entry is main and outputPath is /htm
   const res = await page.goto(url1.href);
 
   expect(res?.status()).toBe(404);
+
+  await rsbuild.server.close();
+});
+
+test('should access /main success when modify publicPath in compiler', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: join(fixtures, 'basic'),
+    rsbuildConfig: {
+      source: {
+        entry: {
+          main: join(fixtures, 'basic', 'src/index.ts'),
+        },
+      },
+      output: {
+        distPath: {
+          root: 'dist-html-fallback-6',
+        },
+      },
+      dev: {
+        devMiddleware: {
+          writeToDisk: true,
+        },
+      },
+    },
+    plugins: [
+      {
+        name: 'foo',
+        setup(api: any) {
+          api.modifyBundlerChain((chain: any) => {
+            chain.output.publicPath('/aaaa/');
+          });
+        },
+      },
+    ],
+  });
+
+  const url = new URL(`http://localhost:${rsbuild.port}/main`);
+
+  await page.goto(url.href);
+
+  const locator = page.locator('#test');
+  await expect(locator).toHaveText('Hello Rsbuild!');
+
+  const content = fs.readFileSync(
+    join(fixtures, 'basic', 'dist-html-fallback-6', 'main.html'),
+    'utf-8',
+  );
+
+  expect(content.includes('/aaaa/static/js/main.js')).toBeTruthy();
 
   await rsbuild.server.close();
 });
