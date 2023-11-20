@@ -1,4 +1,3 @@
-import type { BundlerConfig } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export function pluginExternals(): RsbuildPlugin {
@@ -13,7 +12,7 @@ export function pluginExternals(): RsbuildPlugin {
       });
 
       api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
-        (bundlerConfigs as BundlerConfig[]).forEach((config) => {
+        bundlerConfigs.forEach((config) => {
           const isWebWorker = Array.isArray(config.target)
             ? config.target.includes('webworker')
             : config.target === 'webworker';
