@@ -1,9 +1,11 @@
 import { createDependenciesRegExp } from '@rsbuild/core/plugins/splitChunks';
+import type { RsbuildPluginAPI } from '@rsbuild/core';
 import {
   isProd,
   isPackageInstalled,
+  isPlainObject,
   type CacheGroup,
-  type SharedRsbuildPluginAPI,
+  type SplitChunks,
 } from '@rsbuild/shared';
 
 export async function splitByExperience(rootPath: string): Promise<CacheGroup> {
@@ -54,23 +56,26 @@ export async function splitByExperience(rootPath: string): Promise<CacheGroup> {
   return experienceCacheGroup;
 }
 
-export const applySplitChunksRule = (api: SharedRsbuildPluginAPI) => {
-  api.modifyRsbuildConfig(async (rsbuildConfig) => {
-    const { chunkSplit } = rsbuildConfig.performance || {};
+export const applySplitChunksRule = (api: RsbuildPluginAPI) => {
+  api.modifyBundlerChain(async (chain) => {
+    const config = api.getNormalizedConfig();
+    const { chunkSplit } = config.performance || {};
 
     if (chunkSplit?.strategy !== 'split-by-experience') {
       return;
     }
 
-    const cacheGroups = await splitByExperience(api.context.rootPath);
-    const override = rsbuildConfig.performance!.chunkSplit!.override;
+    const currentConfig = chain.optimization.splitChunks.values();
 
-    rsbuildConfig.performance!.chunkSplit!.override = {
-      cacheGroups: {
-        ...cacheGroups,
-        ...(override ? override.cacheGroups : {}),
-      },
-      ...(override || {}),
-    };
+    if (isPlainObject(currentConfig)) {
+      const extraGroups = await splitByExperience(api.context.rootPath);
+      chain.optimization.splitChunks({
+        ...currentConfig,
+        cacheGroups: {
+          ...(currentConfig as SplitChunks).cacheGroups,
+          ...extraGroups,
+        },
+      });
+    }
   });
 };

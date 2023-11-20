@@ -165,19 +165,7 @@ export interface BundlerChain
     | 'ignoreWarnings'
   > {
   toConfig: () => BundlerConfig;
-  optimization: PickAndModifyThis<
-    WebpackChain['optimization'],
-    | 'splitChunks'
-    | 'runtimeChunk'
-    | 'minimize'
-    | 'minimizer'
-    | 'chunkIds'
-    | 'moduleIds'
-    | 'sideEffects'
-    | 'realContentHash'
-    | 'removeEmptyChunks'
-    | 'removeAvailableModules'
-  >;
+  optimization: WebpackChain['optimization'];
   externals: (value: Externals) => BundlerChain;
   resolve: PickAndModifyThis<
     WebpackChain['resolve'],
