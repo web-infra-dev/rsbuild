@@ -179,7 +179,7 @@ test('hmr should work when setting dev.port & client', async ({ page }) => {
 });
 
 // need devcert
-test('dev.https', async () => {
+test.skip('dev.https', async () => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     rsbuildConfig: {
