@@ -601,8 +601,8 @@ importers:
         specifier: ^11.1.0
         version: 11.1.0
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.5.5
-        version: /html-rspack-plugin@5.5.5
+        specifier: npm:html-rspack-plugin@5.5.7
+        version: /html-rspack-plugin@5.5.7
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -662,8 +662,8 @@ importers:
         specifier: ~3.32.2
         version: 3.32.2
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.5.5
-        version: /html-rspack-plugin@5.5.5
+        specifier: npm:html-rspack-plugin@5.5.7
+        version: /html-rspack-plugin@5.5.7
       http-proxy-middleware:
         specifier: ^2.0.1
         version: 2.0.6
@@ -1355,8 +1355,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.4
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.5.5
-        version: /html-rspack-plugin@5.5.5
+        specifier: npm:html-rspack-plugin@5.5.7
+        version: /html-rspack-plugin@5.5.7
       terser:
         specifier: 5.19.2
         version: 5.19.2
@@ -1579,8 +1579,8 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.5.5
-        version: /html-rspack-plugin@5.5.5
+        specifier: npm:html-rspack-plugin@5.5.7
+        version: /html-rspack-plugin@5.5.7
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1857,8 +1857,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.5.5
-        version: /html-rspack-plugin@5.5.5
+        specifier: npm:html-rspack-plugin@5.5.7
+        version: /html-rspack-plugin@5.5.7
       http-proxy-middleware:
         specifier: ^2.0.1
         version: 2.0.6
@@ -7609,12 +7609,6 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /clean-css@5.3.2:
-    resolution: {integrity: sha512-JVJbM+f3d3Q704rF4bqQ5UUyTtuJ0JRKNbTKVEeujCCBoMdkEi+V+e8oktO9qGQNSvHrFTM6JZRXrUvGR1czww==}
-    engines: {node: '>= 10.0'}
-    dependencies:
-      source-map: 0.6.1
-
   /clean-stack@2.2.0:
     resolution: {integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==}
     engines: {node: '>=6'}
@@ -7726,6 +7720,7 @@ packages:
   /commander@10.0.1:
     resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
     engines: {node: '>=14'}
+    dev: true
 
   /commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
@@ -9926,23 +9921,10 @@ packages:
   /html-entities@2.4.0:
     resolution: {integrity: sha512-igBTJcNNNhvZFRtm8uA6xMY6xYleeDwn3PeBCkDz7tHttv4F2hsDI2aPgNERWzvRcNYHNT3ymRaQzllmXj4YsQ==}
 
-  /html-minifier-terser@7.2.0:
-    resolution: {integrity: sha512-tXgn3QfqPIpGl9o+K5tpcj3/MN4SfLtsx2GWwBC3SSd0tXQGyF3gsSqad8loJgKZGM3ZxbYDd5yhiBIdWpmvLA==}
-    engines: {node: ^14.13.1 || >=16.0.0}
-    dependencies:
-      camel-case: 4.1.2
-      clean-css: 5.3.2
-      commander: 10.0.1
-      entities: 4.5.0
-      param-case: 3.0.4
-      relateurl: 0.2.7
-      terser: 5.19.2
-
-  /html-rspack-plugin@5.5.5:
-    resolution: {integrity: sha512-IXwQK2HcH2GYdqlW4lwzhXStXNqhvOjd0fwOto7H4wBE+xN8F2b9aVCR2zkhxTxs1G09b4tBqehD7cOWiAhNeQ==}
+  /html-rspack-plugin@5.5.7:
+    resolution: {integrity: sha512-7dNAURj9XBHWoYg59F8VU6hT7J7w+od4Lr5hc/rrgN6sy6QfqVpoPqW9Qw4IGFOgit8Pul7iQp1yysBSIhOlsg==}
     engines: {node: '>=10.13.0'}
     dependencies:
-      html-minifier-terser: 7.2.0
       lodash: 4.17.21
       tapable: 2.2.1
 
@@ -13318,10 +13300,6 @@ packages:
       hast-util-to-html: 8.0.4
       unified: 10.1.2
     dev: true
-
-  /relateurl@0.2.7:
-    resolution: {integrity: sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==}
-    engines: {node: '>= 0.10'}
 
   /remark-gfm@3.0.1:
     resolution: {integrity: sha512-lEFDoi2PICJyNrACFOfDD3JlLkuSbOa5Wd8EPt06HUdptv8Gn0bxYTdbU/XXQ3swAPkEaGxxPN9cbnMHvVu1Ig==}
