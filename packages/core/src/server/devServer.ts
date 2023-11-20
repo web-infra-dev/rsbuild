@@ -125,8 +125,7 @@ export class RsbuildDevServer {
 
     // dev proxy handler, each proxy has own handler
     if (dev.proxy) {
-      const { middlewares, handleUpgrade } = createProxyMiddleware(dev.proxy);
-      app && handleUpgrade(app);
+      const { middlewares } = createProxyMiddleware(dev.proxy, app);
       middlewares.forEach((middleware) => {
         this.middlewares.use(middleware);
       });
