@@ -65,5 +65,8 @@ export async function createDevMiddleware(
     });
   }
 
-  return getDevMiddleware(compiler);
+  return {
+    devMiddleware: getDevMiddleware(compiler),
+    compiler,
+  };
 }

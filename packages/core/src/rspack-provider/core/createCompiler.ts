@@ -6,6 +6,7 @@ import {
   formatStats,
   TARGET_ID_MAP,
   type RspackConfig,
+  CreateDevMiddlewareReturns,
 } from '@rsbuild/shared';
 import { type RspackCompiler, type RspackMultiCompiler } from '@rsbuild/shared';
 import { getDevMiddleware } from './devMiddleware';
@@ -81,7 +82,7 @@ export async function createCompiler({
 export async function createDevMiddleware(
   options: InitConfigsOptions,
   customCompiler?: RspackCompiler | RspackMultiCompiler,
-) {
+): Promise<CreateDevMiddlewareReturns> {
   let compiler: RspackCompiler | RspackMultiCompiler;
   if (customCompiler) {
     compiler = customCompiler;
@@ -93,5 +94,8 @@ export async function createDevMiddleware(
     });
   }
 
-  return getDevMiddleware(compiler);
+  return {
+    devMiddleware: getDevMiddleware(compiler),
+    compiler,
+  };
 }

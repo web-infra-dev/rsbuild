@@ -7,7 +7,7 @@ import {
   RequestHandler,
   ExposeServerApis,
   RsbuildDevServerOptions,
-  CreateDevServerOptions,
+  CreateDevMiddlewareReturns,
   logger as defaultLogger,
   DevServerContext,
   StartDevServerOptions,
@@ -18,8 +18,10 @@ import {
   StartServerResult,
   getDevOptions,
   ROOT_DIST_DIR,
-  isURL,
   formatRoutes,
+  getPublicPathFromCompiler,
+  RspackMultiCompiler,
+  RspackCompiler,
 } from '@rsbuild/shared';
 import DevMiddleware from './dev-middleware';
 import connect from '@rsbuild/shared/connect';
@@ -140,7 +142,7 @@ export class RsbuildDevServer {
     this.middlewares.use(
       getHtmlFallbackMiddleware({
         distPath: join(this.pwd, this.output.distPath),
-        assetPrefix: this.output.assetPrefix,
+        publicPaths: this.output.publicPaths,
         callback: devMiddleware.middleware,
       }),
     );
@@ -209,10 +211,10 @@ export async function startDevServer<
   createDevMiddleware: (
     options: Options,
     compiler: StartDevServerOptions['compiler'],
-  ) => Promise<CreateDevServerOptions['devMiddleware']>,
+  ) => Promise<CreateDevMiddlewareReturns>,
   {
     open,
-    compiler,
+    compiler: customCompiler,
     printURLs = true,
     strictPort = false,
     logger: customLogger,
@@ -249,7 +251,14 @@ export async function startDevServer<
 
   debug('create dev server');
 
-  const devMiddleware = await createDevMiddleware(options, compiler);
+  const { devMiddleware, compiler } = await createDevMiddleware(
+    options,
+    customCompiler,
+  );
+
+  const publicPaths = (compiler as RspackMultiCompiler).compilers
+    ? (compiler as RspackMultiCompiler).compilers.map(getPublicPathFromCompiler)
+    : [getPublicPathFromCompiler(compiler as RspackCompiler)];
 
   const server = new RsbuildDevServer({
     pwd: options.context.rootPath,
@@ -257,11 +266,7 @@ export async function startDevServer<
     dev: devServerConfig,
     output: {
       distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
-      assetPrefix:
-        typeof devServerConfig.assetPrefix === 'string' &&
-        !isURL(devServerConfig.assetPrefix)
-          ? devServerConfig.assetPrefix
-          : '',
+      publicPaths,
     },
   });
 
