@@ -2,7 +2,6 @@ import {
   debug,
   CHAIN_ID,
   castArray,
-  BundlerConfig,
   modifyBundlerChain,
   mergeChainedOptions,
   type NodeEnv,
@@ -104,24 +103,13 @@ async function getChainUtils(target: RsbuildTarget): Promise<ModifyChainUtils> {
   };
 }
 
-/**
- * BundlerConfig type is similar to WebpackConfig.
- *
- * The type is not strictly compatible with rspack, such as devtool (string or const).
- *
- * There is no need to consider it in Rsbuild, and it is handed over to rspack for verification
- */
-const convertToRspackConfig = (config: BundlerConfig): RspackConfig => {
-  return config as unknown as RspackConfig;
-};
-
 export async function generateRspackConfig({
   target,
   context,
 }: {
   target: RsbuildTarget;
   context: Context;
-}) {
+}): Promise<RspackConfig> {
   const chainUtils = await getChainUtils(target);
   const { BannerPlugin, DefinePlugin, ProvidePlugin } = await import(
     '@rspack/core'
@@ -136,7 +124,7 @@ export async function generateRspackConfig({
     },
   });
 
-  let rspackConfig = convertToRspackConfig(chain.toConfig());
+  let rspackConfig = chain.toConfig();
 
   rspackConfig = await modifyRspackConfig(
     context,

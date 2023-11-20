@@ -1,7 +1,7 @@
 import type {
+  RspackConfig,
   RsbuildProvider,
   RsbuildPlugin,
-  BundlerConfig,
   RsbuildInstance,
   CreateRsbuildOptions,
   BundlerPluginInstance,
@@ -27,7 +27,7 @@ export function matchLoader({
   loader,
   testFile,
 }: {
-  config: BundlerConfig;
+  config: RspackConfig;
   loader: string;
   testFile: string;
 }): boolean {
@@ -59,7 +59,7 @@ export function matchLoader({
 }
 
 /** Match plugin by constructor name. */
-export const matchPlugin = (config: BundlerConfig, pluginName: string) => {
+export const matchPlugin = (config: RspackConfig, pluginName: string) => {
   const result = config.plugins?.filter(
     (item) => item?.constructor.name === pluginName,
   );
@@ -151,7 +151,7 @@ export async function createStubRsbuild<
   const matchBundlerPlugin = async (pluginName: string) => {
     const config = await unwrapConfig();
 
-    return matchPlugin(config as BundlerConfig, pluginName);
+    return matchPlugin(config, pluginName) as BundlerPluginInstance;
   };
 
   return {

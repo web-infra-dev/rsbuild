@@ -5,6 +5,7 @@ import {
   initPlugins,
   mergeRsbuildConfig,
   type PluginStore,
+  type RspackConfig,
   type InspectConfigOptions,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
@@ -35,7 +36,9 @@ export async function initConfigs({
   context,
   pluginStore,
   rsbuildOptions,
-}: InitConfigsOptions) {
+}: InitConfigsOptions): Promise<{
+  rspackConfigs: RspackConfig[];
+}> {
   await initPlugins({
     pluginAPI: context.pluginAPI,
     pluginStore,

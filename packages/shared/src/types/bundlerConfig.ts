@@ -13,107 +13,6 @@ export interface BundlerPluginInstance {
   }) => void;
 }
 
-type SplitChunks = Configuration extends {
-  optimization?: {
-    splitChunks?: infer P;
-  };
-}
-  ? P
-  : never;
-
-type WebpackOptimization = NonNullable<Configuration['optimization']>;
-type WebpackResolve = NonNullable<Configuration['resolve']>;
-type WebpackOutput = NonNullable<Configuration['output']>;
-type WebpackInfrastructureLogging = NonNullable<
-  Configuration['infrastructureLogging']
->;
-
-// fork from the @rspack/core
-type RspackResolve = {
-  preferRelative?: boolean;
-  extensions?: string[];
-  mainFiles?: string[];
-  mainFields?: string[];
-  browserField?: boolean;
-  conditionNames?: string[];
-  alias?: Record<string, false | string | string[]>;
-  tsConfigPath?: string;
-  modules?: string[];
-  fallback?: Record<string, false | string>;
-};
-
-// fork from the @rspack/core
-type RspackOutput = {
-  libraryTarget?: string;
-  path?: string;
-  publicPath?: string;
-  assetModuleFilename?: string;
-  filename?: string;
-  chunkFilename?: string;
-  uniqueName?: string;
-  hashFunction?: string;
-  cssFilename?: string;
-  cssChunkFilename?: string;
-  library?: string;
-  chunkLoadingGlobal?: string;
-  crossOriginLoading?: false | 'anonymous' | 'use-credentials';
-};
-
-// fork from the @rspack/core
-type FilterTypes = FilterItemTypes[] | FilterItemTypes;
-type FilterItemTypes = RegExp | string | ((value: string) => boolean);
-export interface RspackInfrastructureLogging {
-  appendOnly?: boolean;
-  colors?: boolean;
-  console?: Console;
-  debug?: boolean | FilterTypes;
-  level?: 'none' | 'error' | 'warn' | 'info' | 'log' | 'verbose';
-  stream?: NodeJS.WritableStream;
-}
-
-type Overlap<
-  T extends Record<string, any>,
-  E extends Record<string, any>,
-  Key extends Extract<keyof T, keyof E> = Extract<keyof T, keyof E>,
-> = {
-  [key in Key]: Extract<E[key], T[key]>;
-};
-
-type Resolve = Overlap<WebpackResolve, RspackResolve>;
-type Output = Overlap<WebpackOutput, RspackOutput>;
-type InfrastructureLogging = Overlap<
-  WebpackInfrastructureLogging,
-  RspackInfrastructureLogging
->;
-
-type Externals = Configuration['externals'];
-
-/** The intersection of webpack and Rspack */
-export type BundlerConfig = {
-  name?: string;
-  entry?: Record<string, string | string[]>;
-  context?: Configuration['context'];
-  plugins?: BundlerPluginInstance[];
-  module?: Configuration['module'];
-  target?: Configuration['target'];
-  mode?: Configuration['mode'];
-  externals?: Externals;
-  externalsType?: Configuration['externalsType'];
-  externalsPresets?: Configuration['externalsPresets'];
-  output?: Output;
-  resolve?: Resolve;
-  devtool?: Configuration['devtool'];
-  infrastructureLogging?: InfrastructureLogging;
-  //   stats?: StatsOptions;
-  //   snapshot?: Snapshot;
-  cache?: Configuration['cache'];
-  optimization?: {
-    splitChunks: SplitChunks;
-    runtimeChunk?: WebpackOptimization['runtimeChunk'];
-  };
-  //   experiments?: RawExperiments;
-};
-
 // excludeAny: any extends boolean/string/xxx ? A : B  => A | B;
 type ExtendsExcludeAny<T, E> = T extends any
   ? T extends E
@@ -155,50 +54,22 @@ export interface BundlerChain
     | 'plugins'
     | 'entryPoints'
     | 'mode'
+    | 'module'
     | 'context'
+    | 'externals'
     | 'externalsType'
     | 'externalsPresets'
     | 'entry'
     | 'get'
+    | 'output'
+    | 'resolve'
+    | 'optimization'
     | 'experiments'
     | 'profile'
     | 'ignoreWarnings'
+    | 'infrastructureLogging'
   > {
-  toConfig: () => BundlerConfig;
-  optimization: WebpackChain['optimization'];
-  externals: (value: Externals) => BundlerChain;
-  resolve: PickAndModifyThis<
-    WebpackChain['resolve'],
-    | Extract<
-        Extract<keyof WebpackResolve, keyof RspackResolve>,
-        keyof WebpackChain['resolve']
-      >
-    | 'merge'
-    | 'get'
-  >;
-  output: PickAndModifyThis<
-    WebpackChain['output'],
-    | Extract<
-        Extract<keyof WebpackOutput, keyof RspackOutput>,
-        keyof WebpackChain['output']
-      >
-    | 'get'
-    | 'merge'
-  >;
-  infrastructureLogging: PickAndModifyThis<
-    WebpackChain['infrastructureLogging'],
-    Extract<
-      Extract<
-        keyof WebpackInfrastructureLogging,
-        keyof RspackInfrastructureLogging
-      >,
-      keyof WebpackChain['infrastructureLogging']
-    >
-  >;
-  module: PickAndModifyThis<
-    WebpackChain['module'],
-    'rules' | 'rule' | 'delete' | 'parser'
-  >;
+  toConfig: () => Configuration;
 }
 
 export type WebpackChainRule = WebpackChain.Rule;

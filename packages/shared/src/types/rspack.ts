@@ -1,12 +1,25 @@
 import type * as Rspack from '@rspack/core';
 
-type RspackOptions = Rspack.RspackOptions;
+export type { Rspack };
+
+type BuiltinsOptions = NonNullable<Rspack.RspackOptions['builtins']>;
+
+export type RspackConfig = Rspack.RspackOptions & {
+  builtins?: Omit<BuiltinsOptions, 'html'>;
+};
 export type RspackCompiler = Rspack.Compiler;
 export type RspackMultiCompiler = Rspack.MultiCompiler;
 
-export type { Rspack };
+/** T[] => T */
+type GetElementType<T extends any[]> = T extends (infer U)[] ? U : never;
 
-type BuiltinsOptions = NonNullable<RspackOptions['builtins']>;
+export type RspackRule = GetElementType<
+  NonNullable<NonNullable<RspackConfig['module']>['rules']>
+>;
+export type RuleSetRule = Rspack.RuleSetRule;
+export type RspackPluginInstance = GetElementType<
+  NonNullable<RspackConfig['plugins']>
+>;
 
 export type RspackBuiltinsConfig = Omit<
   BuiltinsOptions,
@@ -116,32 +129,3 @@ export type BuiltinSwcLoaderOptions = {
     };
   };
 };
-
-export interface RspackConfig extends RspackOptions {
-  /** multi type is useless in Rsbuild and make get value difficult */
-  entry?: Record<string, string | string[]>;
-  /**
-   * `builtins.react / pluginImport / decorator / presetEnv / emotion / relay` are no longer supported by Rspack,
-   * please migrate to [builtin:swc-loader options](https://rsbuild.dev/guide/advanced/rspack-start.html#5-swc-configuration-support)
-   *
-   * `builtins.html` are no longer supported by Rspack, please use [tools.htmlPlugin](https://rsbuild.dev/api/config-tools.html#toolshtmlplugin) instead.
-   */
-  builtins?: Omit<BuiltinsOptions, 'html'>;
-  /** rspack-dev-server is not used in rsbuild */
-  devServer?: {
-    hot?: boolean;
-  };
-}
-
-/** T[] => T */
-type GetElementType<T extends any[]> = T extends (infer U)[] ? U : never;
-
-export type RspackRule = GetElementType<
-  NonNullable<NonNullable<RspackConfig['module']>['rules']>
->;
-
-export type RuleSetRule = Rspack.RuleSetRule;
-
-export type RspackPluginInstance = GetElementType<
-  NonNullable<RspackConfig['plugins']>
->;

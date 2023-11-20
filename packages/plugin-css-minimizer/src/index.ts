@@ -38,12 +38,7 @@ export async function applyCSSMinimizer(
 
   chain.optimization
     .minimizer(CHAIN_ID.MINIMIZER.CSS)
-    .use(CssMinimizerPlugin, [
-      // Due to css-minimizer-webpack-plugin has changed the type of class, which using a generic type in
-      // constructor, leading auto inference of parameters of plugin constructor is not possible
-      // @ts-expect-error
-      mergedOptions,
-    ])
+    .use(CssMinimizerPlugin, [mergedOptions])
     .end();
 }
 
