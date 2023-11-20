@@ -160,33 +160,6 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  e2e/cases/import-antd-v4:
-    dependencies:
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-
-  e2e/cases/import-antd-v5:
-    dependencies:
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-
-  e2e/cases/import-arco:
-    dependencies:
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-
   e2e/cases/moment:
     dependencies:
       moment:
@@ -273,6 +246,33 @@ importers:
       vue:
         specifier: ^2.7.14
         version: 2.7.14
+
+  e2e/uni-builder/import-antd-v4:
+    dependencies:
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+
+  e2e/uni-builder/import-antd-v5:
+    dependencies:
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+
+  e2e/uni-builder/import-arco:
+    dependencies:
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
 
   examples/lit:
     devDependencies:

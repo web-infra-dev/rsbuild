@@ -1,8 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
-// TODO: uni-builder
-test.skip('should handle unknown modules with fallback rule', async () => {
+test('should handle unknown modules with fallback rule', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
