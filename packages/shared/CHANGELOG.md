@@ -1,5 +1,11 @@
 # @rsbuild/shared
 
+## 0.0.28
+
+### Patch Changes
+
+- 0f95693: perf: reduce aggregateTimeout to speed up HMR
+
 ## 0.0.27
 
 ### Patch Changes

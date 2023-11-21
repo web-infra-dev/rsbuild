@@ -1,5 +1,14 @@
 # @rsbuild/doctor-rspack-plugin
 
+## 0.0.14
+
+### Patch Changes
+
+- Updated dependencies [25f1922]
+  - @rsbuild/doctor-core@0.0.14
+  - @rsbuild/doctor-sdk@0.0.14
+  - @rsbuild/doctor-utils@0.0.14
+
 ## 0.0.13
 
 ### Patch Changes

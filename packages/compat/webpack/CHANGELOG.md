@@ -1,5 +1,20 @@
 # @rsbuild/webpack
 
+## 0.0.28
+
+### Patch Changes
+
+- 0f95693: perf: reduce aggregateTimeout to speed up HMR
+- Updated dependencies [0f95693]
+- Updated dependencies [1afd033]
+- Updated dependencies [2b267b5]
+  - @rsbuild/plugin-react@0.0.28
+  - @rsbuild/shared@0.0.28
+  - @rsbuild/core@0.0.28
+  - @rsbuild/babel-preset@0.0.28
+  - @rsbuild/plugin-babel@0.0.28
+  - @rsbuild/plugin-css-minimizer@0.0.28
+
 ## 0.0.27
 
 ### Patch Changes
