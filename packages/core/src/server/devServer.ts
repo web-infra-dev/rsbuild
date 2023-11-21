@@ -32,7 +32,7 @@ import {
   getHtmlFallbackMiddleware,
   notFoundMiddleware,
 } from './middlewares';
-import { join } from 'path';
+import { join, isAbsolute } from 'path';
 import { registerCleaner } from './restart';
 
 export class RsbuildDevServer {
@@ -139,9 +139,11 @@ export class RsbuildDevServer {
 
     devMiddleware.middleware && this.middlewares.use(devMiddleware.middleware);
 
+    const { distPath } = this.output;
+
     this.middlewares.use(
       getHtmlFallbackMiddleware({
-        distPath: join(this.pwd, this.output.distPath),
+        distPath: isAbsolute(distPath) ? distPath : join(this.pwd, distPath),
         publicPath: this.output.publicPath,
         callback: devMiddleware.middleware,
       }),

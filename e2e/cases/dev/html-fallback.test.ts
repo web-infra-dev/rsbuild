@@ -330,3 +330,33 @@ test('should access /main success when modify publicPath in compiler', async ({
 
   await rsbuild.server.close();
 });
+
+test('should access /main success when distPath is absolute', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: join(fixtures, 'basic'),
+    rsbuildConfig: {
+      source: {
+        entry: {
+          main: join(fixtures, 'basic', 'src/index.ts'),
+        },
+      },
+      output: {
+        distPath: {
+          root: join(fixtures, 'basic', 'dist-html-fallback-7'),
+        },
+      },
+    },
+  });
+
+  // access /main success
+  const url = new URL(`http://localhost:${rsbuild.port}/main`);
+
+  await page.goto(url.href);
+
+  const locator = page.locator('#test');
+  await expect(locator).toHaveText('Hello Rsbuild!');
+
+  await rsbuild.server.close();
+});
