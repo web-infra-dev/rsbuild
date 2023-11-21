@@ -28,6 +28,16 @@
 - Rsbuild 是 Rspack 团队对于 web 构建最佳实践的探索和实现。
 - Rsbuild 是 Webpack 应用迁移到 Rspack 的最佳方案，减少 90% 配置，构建快 10 倍。
 
+## 🚀 性能
+
+Rsbuild 的构建性能与原生 Rspack 处于同一水平。由于 Rsbuild 内置了更多开箱即用的功能，因此性能数据会略微低于 Rspack。
+
+以下是构建 1000 个 React 组件的时间：
+
+![benchmark-11211243](https://github.com/web-infra-dev/rsbuild/assets/7237365/d14dcdcd-ec08-4213-85d0-ab055db053ee)
+
+> 以上数据基于 Farm 团队搭建的 benchmark，更多信息请参考 [performance-compare](https://github.com/rspack-contrib/performance-compare)。
+
 ## 🔥 特性
 
 Rsbuild 具备以下特性：
