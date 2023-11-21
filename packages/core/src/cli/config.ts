@@ -3,6 +3,7 @@ import { isAbsolute, join } from 'path';
 import {
   color,
   logger,
+  debounce,
   type RsbuildConfig as BaseRsbuildConfig,
 } from '@rsbuild/shared';
 import { restartDevServer } from '../server/restart';
@@ -51,11 +52,20 @@ const resolveConfigPath = (customConfig?: string) => {
 
 async function watchConfig(configFile: string) {
   const chokidar = await import('@rsbuild/shared/chokidar');
-  const watcher = chokidar.watch(configFile, {});
-  const callback = async () => {
-    watcher.close();
-    await restartDevServer({ filePath: configFile });
-  };
+
+  const watcher = chokidar.watch(configFile, {
+    // If watching fails due to read permissions, the errors will be suppressed silently.
+    ignorePermissionErrors: true,
+  });
+
+  const callback = debounce(
+    async () => {
+      watcher.close();
+      await restartDevServer({ filePath: configFile });
+    },
+    // set 300ms debounce to avoid restart frequently
+    300,
+  );
 
   watcher.on('change', callback);
   watcher.on('unlink', callback);
