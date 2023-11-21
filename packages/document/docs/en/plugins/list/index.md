@@ -37,6 +37,12 @@ Plugins available for the Svelte framework:
 
 - [Svelte Plugin](/plugins/list/plugin-svelte): Provides support for Svelte components (`.svelte` files).
 
+### For Solid
+
+Plugins available for the Solid framework:
+
+- [Solid Plugin](/plugins/list/plugin-solid): Provides support for Solid.
+
 ### Common
 
 The following are common framework-agnostic plugins:

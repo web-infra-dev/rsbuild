@@ -35,7 +35,13 @@
 
 适用于 Svelte 框架的插件有：
 
-- [Svelte 插件](/plugins/list/plugin-svelte)：提供对 Svelte 组件（`.svelte` 文件）的支持
+- [Svelte 插件](/plugins/list/plugin-svelte)：提供对 Svelte 组件（`.svelte` 文件）的支持。
+
+### Solid
+
+适用于 Solid 框架的插件有：
+
+- [Solid 插件](/plugins/list/plugin-solid)：提供对 Solid 的支持。
 
 ### 通用插件
 
