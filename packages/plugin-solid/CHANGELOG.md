@@ -1,0 +1,1 @@
+# @rsbuild/plugin-solid

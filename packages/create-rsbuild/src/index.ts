@@ -17,13 +17,13 @@ function formatTargetDir(targetDir: string) {
 }
 
 function pkgFromUserAgent(userAgent: string | undefined) {
-  if (!userAgent) return undefined
-  const pkgSpec = userAgent.split(' ')[0]
-  const pkgSpecArr = pkgSpec.split('/')
+  if (!userAgent) return undefined;
+  const pkgSpec = userAgent.split(' ')[0];
+  const pkgSpecArr = pkgSpec.split('/');
   return {
     name: pkgSpecArr[0],
     version: pkgSpecArr[1],
-  }
+  };
 }
 
 async function main() {
@@ -32,7 +32,7 @@ async function main() {
 
   const cwd = process.cwd();
   const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
-  const pkgManager = pkgInfo ? pkgInfo.name : 'npm'
+  const pkgManager = pkgInfo ? pkgInfo.name : 'npm';
   const packageRoot = path.resolve(__dirname, '..');
   const packageJsonPath = path.join(packageRoot, 'package.json');
   const { version } = require(packageJsonPath);
@@ -62,6 +62,7 @@ async function main() {
       { value: 'vue2', label: 'Vue 2' },
       { value: 'lit', label: 'Lit' },
       { value: 'svelte', label: 'Svelte' },
+      { value: 'solid', label: 'Solid' },
       { value: 'vanilla', label: 'Vanilla' },
     ],
   })) as string;
@@ -85,7 +86,11 @@ async function main() {
   copyFolder(commonFolder, distFolder, version);
   copyFolder(srcFolder, distFolder, version);
 
-  const nextSteps = [`cd ${targetDir}`, `${pkgManager} i`, `${pkgManager} run dev`];
+  const nextSteps = [
+    `cd ${targetDir}`,
+    `${pkgManager} i`,
+    `${pkgManager} run dev`,
+  ];
 
   note(nextSteps.join('\n'), 'Next steps');
 

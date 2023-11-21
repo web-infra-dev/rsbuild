@@ -1,0 +1,55 @@
+# Solid Plugin
+
+The Solid plugin provides support for Solid features. The plugin internally integrates [babel-preset-solid](https://github.com/solidjs/solid/tree/main/packages/babel-preset-solid).
+
+:::tip
+The Solid plugin relies on Babel transpilation and requires an additional [Babel Plugin](/plugins/list/plugin-babel). At the same time, adding the Babel plugin will cause additional compilation overhead.
+:::
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-solid -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+
+export default {
+  plugins: [pluginBabel(), pluginSolid()],
+};
+```
+
+After registering the plugin, you can directly develop Solid.
+
+## Options
+
+If you need to customize the compilation behavior of Solid, you can use the following configs.
+
+### solidPresetOptions
+
+Options passed to `babel-preset-solid`, please refer to the [babel-preset-solid documentation](https://github.com/solidjs/solid/tree/main/packages/babel-preset-solid) for detailed usage.
+
+- **Type:** `Object`
+
+- **Default:** `{}`
+
+- **Example:**
+
+```ts
+pluginSolid({
+  solidPresetOptions: {
+    generate: 'ssr',
+    hydratable: true,
+  },
+});
+```

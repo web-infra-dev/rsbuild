@@ -1,0 +1,47 @@
+{
+  "name": "@rsbuild/plugin-solid",
+  "version": "0.0.28",
+  "description": "Solid plugin for Rsbuild",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/plugin-solid"
+  },
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "modern build",
+    "dev": "modern build --watch"
+  },
+  "dependencies": {
+    "babel-preset-solid": "^1.8.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/plugin-babel": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
+    "@rsbuild/webpack": "workspace:*",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": "workspace:^0.0.28"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}
