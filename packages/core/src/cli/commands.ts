@@ -20,18 +20,32 @@ export type DevOptions = CommonOptions & {
 
 let commonOpts: CommonOptions = {};
 
-export async function init(options?: CommonOptions) {
-  if (options) {
-    commonOpts = options;
+export async function init({
+  cliOptions,
+  isRestart,
+}: {
+  cliOptions?: CommonOptions;
+  isRestart?: boolean;
+}) {
+  if (cliOptions) {
+    commonOpts = cliOptions;
   }
 
-  const config = await loadConfig(commonOpts.config);
-  const { createRsbuild } = await import('../createRsbuild');
+  try {
+    const config = await loadConfig(commonOpts.config);
+    const { createRsbuild } = await import('../createRsbuild');
 
-  return await createRsbuild({
-    rsbuildConfig: config,
-    provider: config.provider,
-  });
+    return await createRsbuild({
+      rsbuildConfig: config,
+      provider: config.provider,
+    });
+  } catch (err) {
+    if (isRestart) {
+      logger.error(err);
+    } else {
+      throw err;
+    }
+  }
 }
 
 export function runCli() {
@@ -47,8 +61,8 @@ export function runCli() {
     .description('starting the dev server')
     .action(async (options: DevOptions) => {
       try {
-        const rsbuild = await init(options);
-        await rsbuild.startDevServer({
+        const rsbuild = await init({ cliOptions: options });
+        await rsbuild?.startDevServer({
           open: options.open,
         });
       } catch (err) {
@@ -67,8 +81,8 @@ export function runCli() {
     .description('build the app for production')
     .action(async (options: CommonOptions) => {
       try {
-        const rsbuild = await init(options);
-        await rsbuild.build();
+        const rsbuild = await init({ cliOptions: options });
+        await rsbuild?.build();
       } catch (err) {
         logger.error('Failed to build, please check logs.');
         logger.error(err);
@@ -85,8 +99,8 @@ export function runCli() {
     .description('preview the production build locally')
     .action(async (options: CommonOptions) => {
       try {
-        const rsbuild = await init(options);
-        await rsbuild.preview();
+        const rsbuild = await init({ cliOptions: options });
+        await rsbuild?.preview();
       } catch (err) {
         logger.error('Failed to start preview server, please check logs.');
         logger.error(err);
@@ -106,8 +120,8 @@ export function runCli() {
     )
     .action(async (options: InspectOptions) => {
       try {
-        const rsbuild = await init(options);
-        await rsbuild.inspectConfig({
+        const rsbuild = await init({ cliOptions: options });
+        await rsbuild?.inspectConfig({
           env: options.env,
           verbose: options.verbose,
           outputPath: join(rsbuild.context.distPath, options.output),
