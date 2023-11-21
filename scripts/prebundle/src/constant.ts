@@ -33,6 +33,8 @@ export const TASKS: TaskConfig[] = [
     dependencies: [
       'open',
       'jiti',
+      'dotenv',
+      'dotenv-expand',
       'commander',
       {
         name: 'sirv',
