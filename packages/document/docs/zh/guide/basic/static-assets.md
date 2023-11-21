@@ -78,8 +78,8 @@ console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 
 当静态资源被引用后，会自动被输出到构建产物的目录下，你可以：
 
-- 通过 [output.filename](/config/options/output.html#outputfilename) 来修改产物的文件名。
-- 通过 [output.distPath](/config/options/output.html#outputdistpath) 来修改产物的输出路径。
+- 通过 [output.filename](/config/options/output#outputfilename) 来修改产物的文件名。
+- 通过 [output.distPath](/config/options/output#outputdistpath) 来修改产物的输出路径。
 
 请阅读 [构建产物目录](/guide/basic/output-files) 来了解更多细节。
 
@@ -87,8 +87,8 @@ console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 
 引用静态资源后返回的 URL 中会自动包含路径前缀：
 
-- 在开发环境下，通过 [dev.assetPrefix](/config/options/dev.html#devassetprefix) 设置路径前缀。
-- 在生产环境下，通过 [output.assetPrefix](/config/options/output.html#outputassetprefix) 设置路径前缀。
+- 在开发环境下，通过 [dev.assetPrefix](/config/options/dev#devassetprefix) 设置路径前缀。
+- 在生产环境下，通过 [output.assetPrefix](/config/options/output#outputassetprefix) 设置路径前缀。
 
 比如将 `output.assetPrefix` 设置为 `https://modern.com`：
 
@@ -128,7 +128,7 @@ declare module '*.png' {
 
 ## 扩展静态资源类型
 
-如果 Rsbuild 内置的静态资源类型不能满足你的需求，那么你可以通过 [tools.bundlerChain](/config/options/tools.html#toolsbundlerchain) 来修改内置的 Rspack 配置，并扩展你需要的静态资源类型。
+如果 Rsbuild 内置的静态资源类型不能满足你的需求，那么你可以通过 [tools.bundlerChain](/config/options/tools#toolsbundlerchain) 来修改内置的 Rspack 配置，并扩展你需要的静态资源类型。
 
 比如，你需要把 `*.pdf` 文件当做静态资源直接输出到产物目录，可以添加以下配置：
 
@@ -155,7 +155,7 @@ console.log(myFile); // "/static/myFile.6c12aba3.pdf"
 
 关于以上配置的更多介绍，请参考：
 
-- [Rspack 文档 - Asset modules](https://rspack.dev/guide/asset-module.html#asset-modules)
+- [Rspack 文档 - Asset modules](https://rspack.dev/guide/asset-module#asset-modules)
 - [webpack 文档 - Asset modules](https://webpack.js.org/guides/asset-modules/)
 
 ## 图片格式

@@ -23,7 +23,7 @@
 - 如果有，说明 Web Socket 连接正常，请继续检查后续步骤。
 - 如果没有，请打开 Chrome 的 Network 面板，查看 `ws://[host]:[port]/rsbuild-hmr` 的请求状态，若请求异常，说明热更新失败的原因是 Web Socket 请求没有建立成功。
 
-Web Socket 请求没有建立成功的原因可能有很多种，例如开启了网络代理，导致 Web Socket 请求没有正确发送到开发服务器。你可以检查 Web Socket 请求的地址是否为你的开发服务器地址，如果不是，则可以通过 [dev.client](/config/options/dev.html#devclient) 来配置 Web Socket 请求的地址。
+Web Socket 请求没有建立成功的原因可能有很多种，例如开启了网络代理，导致 Web Socket 请求没有正确发送到开发服务器。你可以检查 Web Socket 请求的地址是否为你的开发服务器地址，如果不是，则可以通过 [dev.client](/config/options/dev#devclient) 来配置 Web Socket 请求的地址。
 
 #### 2. 检查 hot-update 请求
 
@@ -58,7 +58,7 @@ export default {
 
 为了解决该问题，你需要引用 React 的开发环境产物，或者在开发环境下不配置 `externals`。
 
-如果你不确定当前使用的 React 产物类型，可以参考：[React 官方文档 - Use the Production Build](https://legacy.reactjs.org/docs/optimizing-performance.html#use-the-production-build)
+如果你不确定当前使用的 React 产物类型，可以参考：[React 官方文档 - Use the Production Build](https://legacy.reactjs.org/docs/optimizing-performance#use-the-production-build)
 
 ---
 

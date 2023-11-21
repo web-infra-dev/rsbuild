@@ -30,7 +30,7 @@ When you use the CLI of Rsbuild, Rsbuild will automatically read the configurati
 
 We recommend using the `.ts` format for the configuration file and importing the `defineConfig` utility function from `@rsbuild/core`. It provides friendly TypeScript type hints and autocompletion, which can help you avoid errors in the configuration.
 
-For example, in `rsbuild.config.ts`, you can define the Rsbuild [source.alias](/config/options/source.html#sourcealias) configuration:
+For example, in `rsbuild.config.ts`, you can define the Rsbuild [source.alias](/config/options/source#sourcealias) configuration:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -77,7 +77,7 @@ export default defineConfig({
 
 ## Merge Configurations
 
-You can use the [mergeRsbuildConfig](/api/javascript-api/core.html#mergersbuildconfig) function exported by `@rspack/core` to merge multiple configurations.
+You can use the [mergeRsbuildConfig](/api/javascript-api/core#mergersbuildconfig) function exported by `@rspack/core` to merge multiple configurations.
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig, mergeRsbuildConfig } from '@rsbuild/core';

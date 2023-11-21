@@ -28,7 +28,7 @@ After registering the plugin, you can directly develop React.
 
 ## Import component library on demand
 
-The on-demand import capability of the React component library comes from [source.transformImport](/config/options/source.html#sourcetransformimport).
+The on-demand import capability of the React component library comes from [source.transformImport](/config/options/source#sourcetransformimport).
 
 When the [Ant Design component library](https://npmjs.com/package/antd) &lt;= 4.x version is installed in the project, Rsbuild will automatically add on-demand import capabilities, and the default configuration is as follows:
 
@@ -59,7 +59,7 @@ const defaultArcoConfig = [
 ```
 
 :::tip
-When you add configurations for `antd` or `@arco-design/web-react` in [source.transformImport](/config/options/source.html#sourcetransformimport), the priority will be higher than the default configurations mentioned above.
+When you add configurations for `antd` or `@arco-design/web-react` in [source.transformImport](/config/options/source#sourcetransformimport), the priority will be higher than the default configurations mentioned above.
 
 At the same time, the above default behavior can be turned off by manually setting `transformImport: false`.
 :::

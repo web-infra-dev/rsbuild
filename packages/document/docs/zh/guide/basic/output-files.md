@@ -38,11 +38,11 @@ dist
 
 Rsbuild 提供了多个配置项来修改产物目录和产物名称，你可以：
 
-- 通过 [output.filename](/config/options/output.html#outputfilename) 来修改产物的文件名。
-- 通过 [output.distPath](/config/options/output.html#outputdistpath) 来修改产物的输出路径。
-- 通过 [output.legalComments](/config/options/output.html#outputlegalcomments) 来修改 License 文件的生成方式。
-- 通过 [output.disableSourceMap](/config/options/output.html#outputdisablesourcemap) 来移除 Source Map 文件。
-- 通过 [html.outputStructure](/config/options/html.html#outputstructure) 来修改 HTML 产物对应的文件夹结构。
+- 通过 [output.filename](/config/options/output#outputfilename) 来修改产物的文件名。
+- 通过 [output.distPath](/config/options/output#outputdistpath) 来修改产物的输出路径。
+- 通过 [output.legalComments](/config/options/output#outputlegalcomments) 来修改 License 文件的生成方式。
+- 通过 [output.disableSourceMap](/config/options/output#outputdisablesourcemap) 来移除 Source Map 文件。
+- 通过 [html.outputStructure](/config/options/html#outputstructure) 来修改 HTML 产物对应的文件夹结构。
 
 ## 静态资源
 
@@ -64,7 +64,7 @@ dist
         └── qux.[hash].mp4
 ```
 
-你可以通过 [output.distPath](/config/options/output.html#outputdistpath) 配置项将这些静态资源统一输入到单个目录下，比如输出到 `assets` 目录：
+你可以通过 [output.distPath](/config/options/output#outputdistpath) 配置项将这些静态资源统一输入到单个目录下，比如输出到 `assets` 目录：
 
 ```ts
 export default {
@@ -104,7 +104,7 @@ dist
 
 Node.js 产物通常只包含 JS 文件，不包含 HTML、CSS 等文件。此外，Node 产物的 JS 文件名称也不会自动生成哈希值。
 
-你可以通过 [output.distPath.server](/config/options/output.html#outputdistpath) 配置项来修改 Node 产物的输出路径。
+你可以通过 [output.distPath.server](/config/options/output#outputdistpath) 配置项来修改 Node 产物的输出路径。
 
 比如，将 Node.js 产物输出到 `server` 目录：
 

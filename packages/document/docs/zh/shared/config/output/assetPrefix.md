@@ -33,7 +33,7 @@ export default {
 `output.assetPrefix` 对应以下原生配置：
 
 - webpack 的 [output.publicPath](https://webpack.js.org/guides/public-path/) 配置。
-- Rspack 的 [output.publicPath](https://rspack.dev/zh/config/output.html#outputpublicpath) 配置。
+- Rspack 的 [output.publicPath](https://rspack.dev/zh/config/output#outputpublicpath) 配置。
 
 它与原生配置的区别在于：
 

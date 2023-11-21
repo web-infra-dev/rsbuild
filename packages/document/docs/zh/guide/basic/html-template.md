@@ -6,7 +6,7 @@ Rsbuild 提供了一些配置项来对 HTML 模板进行设置。通过本章节
 
 ## 设置模板文件
 
-在 Rsbuild 中，你可以使用 [html.template](/config/options/html.html#htmltemplate) 配置项来设置自定义的 HTML 模板文件。
+在 Rsbuild 中，你可以使用 [html.template](/config/options/html#htmltemplate) 配置项来设置自定义的 HTML 模板文件。
 
 ```ts
 export default {
@@ -18,7 +18,7 @@ export default {
 
 ## 设置页面标题
 
-你可以通过 [html.title](/config/options/html.html#htmltitle) 配置项来设置 HTML 的 `<title>` 标签。
+你可以通过 [html.title](/config/options/html#htmltitle) 配置项来设置 HTML 的 `<title>` 标签。
 
 当你的项目中只有一个页面时，直接使用 `html.title` 设置即可：
 
@@ -50,7 +50,7 @@ export default {
 
 Rsbuild 支持设置 [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) 图标 和 iOS 系统下的 [apple-touch-icon](https://webhint.io/docs/user-guide/hints/hint-apple-touch-icons/) 图标。
 
-你可以通过 [html.favicon](/config/options/html.html#htmlfavicon) 配置项来设置 favicon 图标。
+你可以通过 [html.favicon](/config/options/html#htmlfavicon) 配置项来设置 favicon 图标。
 
 ```ts
 export default {
@@ -60,7 +60,7 @@ export default {
 };
 ```
 
-也可以通过 [html.appIcon](/config/options/html.html#htmlappicon) 配置项来设置 iOS 系统下的 apple-touch-icon 图标。
+也可以通过 [html.appIcon](/config/options/html#htmlappicon) 配置项来设置 iOS 系统下的 apple-touch-icon 图标。
 
 ```ts
 export default {
@@ -72,7 +72,7 @@ export default {
 
 ## 设置 meta 标签
 
-你可以通过 [html.meta](/config/options/html.html#htmlmeta) 配置项来设置 HTML 的 `<meta>` 标签。
+你可以通过 [html.meta](/config/options/html#htmlmeta) 配置项来设置 HTML 的 `<meta>` 标签。
 
 比如设置 description：
 
@@ -114,7 +114,7 @@ type DefaultParameters = {
 };
 ```
 
-你也可以通过 [html.templateParameters](/config/options/html.html#htmltemplateparameters) 配置项来传入自定义的模板参数。
+你也可以通过 [html.templateParameters](/config/options/html#htmltemplateparameters) 配置项来传入自定义的模板参数。
 
 比如：
 
@@ -164,7 +164,7 @@ Rsbuild 支持 [Lodash Template](https://lodashjs.com/docs/lodash.template)、[E
 
 当模板文件的后缀为 `.ejs` 时，Rsbuild 会使用 EJS 模板引擎对模板进行编译。EJS 是一套简单的模板语言，支持直接在标签内书写简单、直白的 JavaScript 代码，并通过 JavaScript 输出最终所需的 HTML。
 
-例如，你可以先通过 [html.template](/config/options/html.html#htmltemplate) 配置项来引用一个 `.ejs` 模板文件：
+例如，你可以先通过 [html.template](/config/options/html#htmltemplate) 配置项来引用一个 `.ejs` 模板文件：
 
 ```ts
 export default {
@@ -213,7 +213,7 @@ Rsbuild 通过 Pug 插件来支持 Pug 模板引擎，请阅读 [Pug 插件文�
 </html>
 ```
 
-`html.tags` 的作用就是调整这些模板变量进而修改 HTML，配置的具体定义参考 [API References](/config/options/html.html#htmltags)。
+`html.tags` 的作用就是调整这些模板变量进而修改 HTML，配置的具体定义参考 [API References](/config/options/html#htmltags)。
 
 ### 对象形式
 

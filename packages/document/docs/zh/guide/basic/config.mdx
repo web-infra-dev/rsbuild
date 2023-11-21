@@ -30,7 +30,7 @@ Rsbuild 中的配置可以分为以下几类：
 
 我们推荐使用 `.ts` 格式的配置文件，并从 `@rsbuild/core` 中导入 `defineConfig` 工具函数, 它提供了友好的 TypeScript 类型推导和自动补全，可以帮助你避免配置中的错误。
 
-比如在 `rsbuild.config.ts` 中，你可以定义 Rsbuild 的 [source.alias](/config/options/source.html#sourcealias) 配置：
+比如在 `rsbuild.config.ts` 中，你可以定义 Rsbuild 的 [source.alias](/config/options/source#sourcealias) 配置：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -77,7 +77,7 @@ export default defineConfig({
 
 ## 合并配置
 
-你可以使用 `@rspack/core` 导出的 [mergeRsbuildConfig](/api/javascript-api/core.html#mergersbuildconfig) 函数来合并多个配置。
+你可以使用 `@rspack/core` 导出的 [mergeRsbuildConfig](/api/javascript-api/core#mergersbuildconfig) 函数来合并多个配置。
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig, mergeRsbuildConfig } from '@rsbuild/core';

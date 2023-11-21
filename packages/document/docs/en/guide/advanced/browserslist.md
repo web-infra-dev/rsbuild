@@ -54,7 +54,7 @@ When you are building multiple targets at the same time, for example if the targ
 
 ### Use output.overrideBrowserslist config
 
-In addition to the above standard usage, Rsbuild also provides [output.overrideBrowserslist](/config/options/output.html#outputoverridebrowserslist) config, which can also set the value of Browserslist.
+In addition to the above standard usage, Rsbuild also provides [output.overrideBrowserslist](/config/options/output#outputoverridebrowserslist) config, which can also set the value of Browserslist.
 
 `overrideBrowserslist` can be set to an array, which is written in the same way as the `browserslistrc` configuration, but has a higher priority than `browserslistrc`.
 

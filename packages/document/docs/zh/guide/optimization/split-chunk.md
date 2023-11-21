@@ -6,7 +6,7 @@
 
 ## 拆包策略
 
-> Rsbuild 的拆包配置集中在 [performance.chunkSplit](/config/options/performance.html#performancechunksplit) 中。
+> Rsbuild 的拆包配置集中在 [performance.chunkSplit](/config/options/performance#performancechunksplit) 中。
 
 Rsbuild 支持设置以下几种拆包策略：
 
@@ -188,7 +188,7 @@ export default {
 };
 ```
 
-其中 `override` 中的配置会和 bundler 的配置进行合并，具体配置项请参考 [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) 或 [Rspack - splitChunks](https://rspack.dev/zh/config/optimization.html#optimization-splitchunks)。
+其中 `override` 中的配置会和 bundler 的配置进行合并，具体配置项请参考 [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) 或 [Rspack - splitChunks](https://rspack.dev/zh/config/optimization#optimization-splitchunks)。
 
 ## 使用 Dynamic Import 拆包
 

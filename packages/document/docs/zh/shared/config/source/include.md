@@ -14,7 +14,7 @@ const defaultInclude = [
 
 为了避免二次编译，默认情况下，Rsbuild 只会编译当前目录下的 JavaScript 文件，以及所有目录下的 TypeScript 和 JSX 文件，不会编译 node_modules 下的 JavaScript 文件。
 
-通过 `source.include` 配置项，可以指定需要 Rsbuild 额外进行编译的目录或模块。`source.include` 的用法与 Rspack 中的 [Rule.include](https://rspack.dev/zh/config/module.html#ruleinclude) 一致，支持传入字符串或正则表达式来匹配模块的路径。
+通过 `source.include` 配置项，可以指定需要 Rsbuild 额外进行编译的目录或模块。`source.include` 的用法与 Rspack 中的 [Rule.include](https://rspack.dev/zh/config/module#ruleinclude) 一致，支持传入字符串或正则表达式来匹配模块的路径。
 
 比如:
 

@@ -8,7 +8,7 @@ export function getMemoryUsage() {
 export function getMemoryUsageMessage() {
   const usage = getMemoryUsage();
 
-  // https://nodejs.org/api/process.html#processmemoryusage
+  // https://nodejs.org/api/process#processmemoryusage
   const msgs = [
     `RSS: ${bytes(usage.rss)}`,
     `Heap Total: ${bytes(usage.heapTotal)}`,

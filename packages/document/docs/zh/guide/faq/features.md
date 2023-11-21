@@ -2,7 +2,7 @@
 
 ### 如何配置组件库按需引入？
 
-如果需要配置组件库的按需引入，你可以通过 [source.transformImport](/config/options/source.html#sourcetransformimport) 配置，这个配置的能力等价于 [babel-plugin-import](https://npmjs.com/package/babel-plugin-import)。
+如果需要配置组件库的按需引入，你可以通过 [source.transformImport](/config/options/source#sourcetransformimport) 配置，这个配置的能力等价于 [babel-plugin-import](https://npmjs.com/package/babel-plugin-import)。
 
 ```ts
 export default {
@@ -48,7 +48,7 @@ export default {
 
 ### 如何配置静态资源的 CDN 路径？
 
-如果需要将 JS、CSS 等静态资源上传到 CDN 使用，那么可以通过 [output.assetPrefix](/config/options/output.html#outputassetprefix) 配置来设置静态资源的 URL 前缀。
+如果需要将 JS、CSS 等静态资源上传到 CDN 使用，那么可以通过 [output.assetPrefix](/config/options/output#outputassetprefix) 配置来设置静态资源的 URL 前缀。
 
 ```js
 export default {
@@ -76,7 +76,7 @@ rm -rf ./node_modules/.cache
 
 在生产环境构建时，我们可以移除代码中的 `console`，从而避免开发环境的日志被输出到生产环境。
 
-Rsbuild 默认提供了移除 console 的配置项，请查看 [performance.removeConsole](/config/options/performance.html#performanceremoveconsole)。
+Rsbuild 默认提供了移除 console 的配置项，请查看 [performance.removeConsole](/config/options/performance#performanceremoveconsole)。
 
 ---
 

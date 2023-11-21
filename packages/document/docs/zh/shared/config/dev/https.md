@@ -56,7 +56,7 @@ https 代理自动安装证书需要获取 root 权限, 请根据提示输入密
 
 你也可以在 `dev.https` 选项中手动传入 HTTPS 服务器所需要的证书和对应的私钥，这个参数将直接传递给 Node.js 中 https 模块的 createServer。
 
-具体可以参考 [https.createServer](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener)。
+具体可以参考 [https.createServer](https://nodejs.org/api/https#https_https_createserver_options_requestlistener)。
 
 ```ts
 import fs from 'fs';
