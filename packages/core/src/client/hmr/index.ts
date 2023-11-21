@@ -201,7 +201,7 @@ function tryApplyUpdates() {
     }
   }
 
-  // https://webpack.github.io/docs/hot-module-replacement.html#check
+  // https://webpack.js.org/concepts/hot-module-replacement
   const result = module.hot.check(/* autoApply */ true, handleApplyUpdates);
 
   // // webpack 2 returns a Promise instead of invoking a callback

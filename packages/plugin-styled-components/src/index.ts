@@ -7,7 +7,7 @@ import {
 } from '@rsbuild/shared';
 
 /**
- * the options of [babel-plugin-styled-components](https://github.com/styled-components/babel-plugin-styled-components) or [rspackExperiments.styledComponents](https://rspack.dev/guide/loader.html#optionsrspackexperimentsstyledcomponents).
+ * the options of [babel-plugin-styled-components](https://github.com/styled-components/babel-plugin-styled-components) or [rspackExperiments.styledComponents](https://rspack.dev/guide/loader#optionsrspackexperimentsstyledcomponents).
  */
 type StyledComponentsOptions = {
   displayName?: boolean;
