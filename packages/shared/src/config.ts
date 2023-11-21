@@ -20,6 +20,7 @@ import type {
   RsbuildConfig,
   InspectConfigOptions,
   CreateRsbuildOptions,
+  NormalizedServerConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
   NormalizedOutputConfig,
@@ -48,6 +49,8 @@ export const getDefaultDevConfig = (): NormalizedDevConfig => ({
   startUrl: false,
   host: DEFAULT_DEV_HOST,
 });
+
+export const getDefaultServerConfig = (): NormalizedServerConfig => ({});
 
 export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
   alias: {},
@@ -317,6 +320,7 @@ export const pickRsbuildConfig = (
 ): RsbuildConfig => {
   const keys: Array<keyof RsbuildConfig> = [
     'dev',
+    'server',
     'html',
     'tools',
     'source',

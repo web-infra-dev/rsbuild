@@ -3,12 +3,14 @@ import type { NormalizedToolsConfig, ToolsConfig } from './tools';
 
 import type {
   DevConfig,
+  ServerConfig,
   HtmlConfig,
   SourceConfig,
   OutputConfig,
   SecurityConfig,
   PerformanceConfig,
   NormalizedDevConfig,
+  NormalizedServerConfig,
   NormalizedHtmlConfig,
   NormalizedSourceConfig,
   NormalizedOutputConfig,
@@ -36,6 +38,7 @@ export * from './tools';
 /** The Rsbuild config when using Webpack as the bundler */
 export interface RsbuildConfig {
   dev?: DevConfig;
+  server?: ServerConfig;
   html?: HtmlConfig;
   tools?: ToolsConfig;
   source?: SourceConfig;
@@ -46,6 +49,7 @@ export interface RsbuildConfig {
 
 export type NormalizedConfig = DeepReadonly<{
   dev: NormalizedDevConfig;
+  server: NormalizedServerConfig;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
   source: NormalizedSourceConfig;

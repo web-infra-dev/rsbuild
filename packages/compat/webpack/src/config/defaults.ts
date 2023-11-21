@@ -1,5 +1,6 @@
 import {
   mergeRsbuildConfig,
+  getDefaultServerConfig,
   getDefaultDevConfig,
   getDefaultOutputConfig,
   getDefaultHtmlConfig,
@@ -12,6 +13,7 @@ import type { RsbuildConfig } from '../types';
 
 export const createDefaultConfig = (): RsbuildConfig => ({
   dev: getDefaultDevConfig(),
+  server: getDefaultServerConfig(),
   html: getDefaultHtmlConfig(),
   tools: {
     ...getDefaultToolsConfig(),

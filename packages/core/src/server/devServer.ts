@@ -4,6 +4,7 @@ import type { ListenOptions } from 'net';
 import url from 'url';
 import {
   DevConfig,
+  ServerConfig,
   RequestHandler,
   ExposeServerApis,
   RsbuildDevServerOptions,
@@ -35,7 +36,7 @@ import { join } from 'path';
 import { registerCleaner } from './restart';
 
 export class RsbuildDevServer {
-  private readonly dev: DevConfig;
+  private readonly dev: DevConfig & ServerConfig;
   private readonly devMiddleware: DevMiddleware;
   private pwd: string;
   private app!: Server;
