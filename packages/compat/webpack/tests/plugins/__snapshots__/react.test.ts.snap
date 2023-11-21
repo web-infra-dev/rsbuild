@@ -963,5 +963,8 @@ exports[`plugins/react > should work with ts-loader 1`] = `
     "web",
     "es5",
   ],
+  "watchOptions": {
+    "aggregateTimeout": 5,
+  },
 }
 `;

@@ -15,5 +15,13 @@ export function applyBasicPlugin(api: SharedRsbuildPluginAPI) {
         level: 'error',
       },
     });
+
+    if (!isProd) {
+      chain.watchOptions({
+        // The default aggregateTimeout of WatchPack is 200ms,
+        // using smaller values can improve hmr performance
+        aggregateTimeout: 5,
+      });
+    }
   });
 }
