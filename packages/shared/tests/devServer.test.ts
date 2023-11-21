@@ -257,7 +257,6 @@ describe('test dev server', () => {
         "devMiddleware": {
           "writeToDisk": [Function],
         },
-        "port": 8080,
       }
     `);
 
@@ -266,8 +265,6 @@ describe('test dev server', () => {
         rsbuildConfig: {
           dev: {
             hmr: false,
-            https: true,
-            port: 8080,
             client: {
               host: '',
               path: '',
@@ -289,8 +286,6 @@ describe('test dev server', () => {
           "writeToDisk": [Function],
         },
         "hmr": false,
-        "https": true,
-        "port": 8081,
       }
     `);
   });
