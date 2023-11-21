@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { logger } from '@rsbuild/shared';
 import { program } from '../../compiled/commander';
+import { loadEnv } from '../loadEnv';
 import { loadConfig } from './config';
 import type { RsbuildMode } from '..';
 
@@ -32,6 +33,7 @@ export async function init({
   }
 
   try {
+    await loadEnv();
     const config = await loadConfig(commonOpts.config);
     const { createRsbuild } = await import('../createRsbuild');
 

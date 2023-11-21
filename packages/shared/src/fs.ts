@@ -2,7 +2,7 @@ import path, { isAbsolute, join } from 'path';
 import fse from '../compiled/fs-extra';
 import { MODULE_PATH_REGEX } from './constants';
 import { removeLeadingSlash } from './utils';
-import { promises, constants, existsSync, statSync } from 'fs';
+import { promises, constants, statSync } from 'fs';
 import type {
   HtmlConfig,
   OutputConfig,
@@ -40,6 +40,14 @@ export async function isFileExists(file: string) {
     .catch(() => false);
 }
 
+export const isFileSync = (filePath: string) => {
+  try {
+    return statSync(filePath, { throwIfNoEntry: false })?.isFile();
+  } catch (_) {
+    return false;
+  }
+};
+
 /**
  * Find first already exists file.
  * @param files - Absolute file paths with extension.
@@ -47,7 +55,7 @@ export async function isFileExists(file: string) {
  */
 export const findExists = (files: string[]): string | false => {
   for (const file of files) {
-    if (existsSync(file) && statSync(file).isFile()) {
+    if (isFileSync(file)) {
       return file;
     }
   }
@@ -150,8 +158,7 @@ export function findUpSync({
     const filePath = path.join(dir, filename);
 
     try {
-      const stats = statSync(filePath, { throwIfNoEntry: false });
-      if (stats?.isFile()) {
+      if (isFileSync(filePath)) {
         return filePath;
       }
     } catch {}
