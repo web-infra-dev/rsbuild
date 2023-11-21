@@ -34,7 +34,7 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "typescript": "^5.2.2",
+    "typescript": "^5.3.0",
     "webpack": "^5.89.0"
   },
   "peerDependencies": {

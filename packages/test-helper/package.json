@@ -32,7 +32,7 @@
     "@types/node": "^16",
     "lodash": "^4.17.21",
     "memfs": "3.4.10",
-    "typescript": "^5.2.2",
+    "typescript": "^5.3.0",
     "upath": "2.0.1",
     "webpack": "^5.89.0"
   },

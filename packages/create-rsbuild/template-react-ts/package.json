@@ -16,6 +16,6 @@
     "@rsbuild/plugin-react": "workspace:*",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.0"
   }
 }

@@ -33,7 +33,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.0"
   },
   "publishConfig": {
     "access": "public",

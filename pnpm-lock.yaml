@@ -10,10 +10,10 @@ importers:
     devDependencies:
       '@modern-js/module-tools':
         specifier: ^2.40.0
-        version: 2.40.0(typescript@5.2.2)
+        version: 2.40.0(typescript@5.3.2)
       '@modern-js/monorepo-tools':
         specifier: ^2.40.0
-        version: 2.40.0(typescript@5.2.2)
+        version: 2.40.0(typescript@5.3.2)
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:packages/test-helper
@@ -43,7 +43,7 @@ importers:
         version: 3.0.3
       vite-tsconfig-paths:
         specifier: 4.2.1
-        version: 4.2.1(typescript@5.2.2)
+        version: 4.2.1(typescript@5.3.2)
       vitest:
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1
@@ -160,8 +160,8 @@ importers:
         specifier: 1.33.0
         version: 1.33.0
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   e2e/cases/moment:
     dependencies:
@@ -292,8 +292,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   examples/react:
     dependencies:
@@ -311,8 +311,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-react
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   examples/react-webpack:
     dependencies:
@@ -333,8 +333,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   examples/solid:
     dependencies:
@@ -378,8 +378,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compat/uni-builder
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   examples/vanilla:
     devDependencies:
@@ -387,8 +387,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/babel-preset:
     dependencies:
@@ -442,8 +442,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/compat/plugin-esbuild:
     dependencies:
@@ -467,8 +467,8 @@ importers:
         specifier: workspace:*
         version: link:../webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/compat/plugin-swc:
     dependencies:
@@ -528,8 +528,8 @@ importers:
         specifier: ^0.7.4
         version: 0.7.4
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
       webpack:
         specifier: ^5.89.0
         version: 5.89.0(@swc/core@1.3.42)
@@ -569,8 +569,8 @@ importers:
         version: 5.1.0(webpack@5.89.0)
     devDependencies:
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/compat/webpack:
     dependencies:
@@ -648,7 +648,7 @@ importers:
         version: 5.3.9(webpack@5.89.0)
       ts-loader:
         specifier: 9.4.4
-        version: 9.4.4(typescript@5.2.2)(webpack@5.89.0)
+        version: 9.4.4(typescript@5.3.2)(webpack@5.89.0)
       tsconfig-paths-webpack-plugin:
         specifier: 4.1.0
         version: 4.1.0
@@ -672,8 +672,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/core:
     dependencies:
@@ -709,8 +709,8 @@ importers:
         specifier: ^8.2.0
         version: 8.5.8
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild:
     dependencies:
@@ -725,8 +725,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-lit-js:
     devDependencies:
@@ -746,8 +746,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-react-js:
     dependencies:
@@ -787,8 +787,8 @@ importers:
         specifier: ^18
         version: 18.2.14
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-solid-js:
     dependencies:
@@ -822,8 +822,8 @@ importers:
         specifier: workspace:*
         version: link:../../plugin-solid
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-svelte-js:
     dependencies:
@@ -851,8 +851,8 @@ importers:
         specifier: workspace:*
         version: link:../../plugin-svelte
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-vanilla-js:
     devDependencies:
@@ -866,8 +866,8 @@ importers:
         specifier: workspace:*
         version: link:../../core
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-vue2-js:
     dependencies:
@@ -895,8 +895,8 @@ importers:
         specifier: workspace:*
         version: link:../../plugin-vue2
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-vue3-js:
     dependencies:
@@ -924,8 +924,8 @@ importers:
         specifier: workspace:*
         version: link:../../plugin-vue
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/doctor-core:
     dependencies:
@@ -1012,8 +1012,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
       webpack:
         specifier: ^5.89.0
         version: 5.89.0
@@ -1061,8 +1061,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/doctor-sdk:
     dependencies:
@@ -1152,8 +1152,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/doctor-types:
     dependencies:
@@ -1186,8 +1186,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/doctor-utils:
     dependencies:
@@ -1262,8 +1262,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/doctor-webpack-plugin:
     dependencies:
@@ -1335,8 +1335,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/document:
     devDependencies:
@@ -1381,8 +1381,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-assets-retry:
     dependencies:
@@ -1418,8 +1418,8 @@ importers:
         specifier: 5.19.2
         version: 5.19.2
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-babel:
     dependencies:
@@ -1458,8 +1458,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-check-syntax:
     dependencies:
@@ -1489,8 +1489,8 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-css-minimizer:
     dependencies:
@@ -1514,8 +1514,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-image-compress:
     dependencies:
@@ -1542,8 +1542,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
       webpack:
         specifier: ^5.89.0
         version: 5.89.0
@@ -1564,8 +1564,8 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-pug:
     dependencies:
@@ -1586,8 +1586,8 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-react:
     dependencies:
@@ -1617,8 +1617,8 @@ importers:
         specifier: ^7.5.4
         version: 7.5.4
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-rem:
     dependencies:
@@ -1639,8 +1639,8 @@ importers:
         specifier: npm:html-rspack-plugin@5.5.7
         version: /html-rspack-plugin@5.5.7
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-solid:
     dependencies:
@@ -1664,8 +1664,8 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-source-build:
     dependencies:
@@ -1689,8 +1689,8 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-styled-components:
     dependencies:
@@ -1717,8 +1717,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-stylus:
     dependencies:
@@ -1742,8 +1742,8 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
       webpack:
         specifier: ^5.89.0
         version: 5.89.0
@@ -1758,7 +1758,7 @@ importers:
         version: 3.1.9(svelte@4.2.2)
       svelte-preprocess:
         specifier: ^5.0.4
-        version: 5.0.4(@babel/core@7.23.2)(postcss@8.4.31)(svelte@4.2.2)(typescript@5.2.2)
+        version: 5.0.4(@babel/core@7.23.2)(postcss@8.4.31)(svelte@4.2.2)(typescript@5.3.2)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1770,8 +1770,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-svgr:
     dependencies:
@@ -1780,7 +1780,7 @@ importers:
         version: link:../shared
       '@svgr/webpack':
         specifier: 8.0.1
-        version: 8.0.1(typescript@5.2.2)
+        version: 8.0.1(typescript@5.3.2)
       url-loader:
         specifier: 4.1.1
         version: 4.1.1(webpack@5.89.0)
@@ -1795,8 +1795,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-type-check:
     dependencies:
@@ -1805,7 +1805,7 @@ importers:
         version: link:../shared
       fork-ts-checker-webpack-plugin:
         specifier: 9.0.0
-        version: 9.0.0(typescript@5.2.2)(webpack@5.89.0)
+        version: 9.0.0(typescript@5.3.2)(webpack@5.89.0)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1814,8 +1814,8 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-vue:
     dependencies:
@@ -1836,8 +1836,8 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-vue-jsx:
     dependencies:
@@ -1861,8 +1861,8 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-vue2:
     dependencies:
@@ -1883,8 +1883,8 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-vue2-jsx:
     dependencies:
@@ -1911,8 +1911,8 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/shared:
     dependencies:
@@ -1951,8 +1951,8 @@ importers:
         specifier: 5.3.9
         version: 5.3.9(webpack@5.89.0)
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
       webpack:
         specifier: ^5.89.0
         version: 5.89.0
@@ -1981,8 +1981,8 @@ importers:
         specifier: 3.4.10
         version: 3.4.10
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
       upath:
         specifier: 2.0.1
         version: 2.0.1
@@ -2033,8 +2033,8 @@ importers:
         specifier: 8.4.31
         version: 8.4.31
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
     devDependencies:
       '@types/connect':
         specifier: 3.4.35
@@ -2121,7 +2121,7 @@ importers:
         version: 1.1.3
       '@modern-js/generator-utils':
         specifier: ^3.2.8
-        version: 3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+        version: 3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
       fs-extra:
         specifier: ^11.1.1
         version: 11.1.1
@@ -4304,7 +4304,7 @@ packages:
       '@formily/shared': 2.2.30
       '@formily/validator': 2.2.30
 
-  /@formily/json-schema@2.2.30(typescript@5.2.2):
+  /@formily/json-schema@2.2.30(typescript@5.3.2):
     resolution: {integrity: sha512-J21wb5rdlhfMRyMyHOXsnzTJP/k4r6k//V+zN9GQ4noVNu9Qp+s6l+gm++0QFGom13Cg3+L7xB1FpLF1f4RQxg==}
     engines: {npm: '>=3.0.0'}
     peerDependencies:
@@ -4313,7 +4313,7 @@ packages:
       '@formily/core': 2.2.30
       '@formily/reactive': 2.2.30
       '@formily/shared': 2.2.30
-      typescript: 5.2.2
+      typescript: 5.3.2
 
   /@formily/path@2.2.30:
     resolution: {integrity: sha512-VR8ohgsXtAa71EEYHmYZyMD+m5M3I6LxSNabcsG/hArmpxKfmxAXJlGKvpfImbcsINEDDwDnqK4r9QfRsdRppw==}
@@ -4481,12 +4481,12 @@ packages:
       react: 18.2.0
     dev: true
 
-  /@modern-js/codesmith-formily@2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
+  /@modern-js/codesmith-formily@2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.3.2):
     resolution: {integrity: sha512-9YaG+iumS3+kyfwCKdGCKCWMgok0RyeZpwXWdz5Ky7qHuTzyz+QrUgvHs0L+KvY2akjGRZOX0dBbdr0srREvQA==}
     peerDependencies:
       '@modern-js/codesmith': ^2.3.0
     dependencies:
-      '@formily/json-schema': 2.2.30(typescript@5.2.2)
+      '@formily/json-schema': 2.2.30(typescript@5.3.2)
       '@formily/validator': 2.2.30
       '@modern-js/codesmith': 2.3.0
       '@modern-js/utils': 2.40.0
@@ -4514,10 +4514,10 @@ packages:
       '@swc/helpers': 0.5.1
     dev: true
 
-  /@modern-js/generator-common@3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
+  /@modern-js/generator-common@3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.3.2):
     resolution: {integrity: sha512-g1K5rpgTpuzJmBogv2uSLyxZEWSuR8SZGswE7xfm1DWuVHR0PF9QH2yhyekNqWjf1n+NoHCzX9/iM1uccLXstw==}
     dependencies:
-      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
       '@modern-js/plugin-i18n': 2.39.2
       '@swc/helpers': 0.5.1
     transitivePeerDependencies:
@@ -4525,10 +4525,10 @@ packages:
       - typescript
     dev: false
 
-  /@modern-js/generator-common@3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
+  /@modern-js/generator-common@3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.3.2):
     resolution: {integrity: sha512-652WVsqGUwFvO5hJrkQL/lauQK2jP3Pns9SIWHBcz5eMyEm5vo07ZxfAjGNktRoLotSZnOX4GHTuQdgKN1fxxg==}
     dependencies:
-      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
       '@modern-js/plugin-i18n': 2.40.0
       '@swc/helpers': 0.5.1
     transitivePeerDependencies:
@@ -4536,10 +4536,10 @@ packages:
       - typescript
     dev: true
 
-  /@modern-js/generator-utils@3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
+  /@modern-js/generator-utils@3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.3.2):
     resolution: {integrity: sha512-X+Z24CAsvZRLX9hY524wAR9f9ERL782avYULJeI0c6wnvRyITj+7LkAQZzDQ0eLUl80Fu58yDz9yELdj2EegaQ==}
     dependencies:
-      '@modern-js/generator-common': 3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+      '@modern-js/generator-common': 3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
       '@modern-js/plugin-i18n': 2.39.2
       '@modern-js/utils': 2.39.2
       '@swc/helpers': 0.5.1
@@ -4548,10 +4548,10 @@ packages:
       - typescript
     dev: false
 
-  /@modern-js/generator-utils@3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
+  /@modern-js/generator-utils@3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.3.2):
     resolution: {integrity: sha512-++stOE3UbMt5usxTriOv/c//NdKQBJKdKrz0a/L/FG1OPrwEVCIEeCw2yF+tWNC7uuSJPl0coVEIdkMmSiHkWQ==}
     dependencies:
-      '@modern-js/generator-common': 3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+      '@modern-js/generator-common': 3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
       '@modern-js/plugin-i18n': 2.40.0
       '@modern-js/utils': 2.40.0
       '@swc/helpers': 0.5.1
@@ -4560,7 +4560,7 @@ packages:
       - typescript
     dev: true
 
-  /@modern-js/module-tools@2.40.0(typescript@5.2.2):
+  /@modern-js/module-tools@2.40.0(typescript@5.3.2):
     resolution: {integrity: sha512-/bpqJb1SlpfVY42l2+vKvcfRKZeHZyhPVOdC+8y4tN7ZybSjKj3RluHI0dzv+WZI/Ddg1ZOi8ZplBnCjUivFzw==}
     engines: {node: '>=14.0.0'}
     hasBin: true
@@ -4577,7 +4577,7 @@ packages:
       '@babel/traverse': 7.23.2
       '@babel/types': 7.23.0
       '@modern-js/core': 2.40.0
-      '@modern-js/new-action': 2.40.0(typescript@5.2.2)
+      '@modern-js/new-action': 2.40.0(typescript@5.3.2)
       '@modern-js/plugin': 2.40.0
       '@modern-js/plugin-changeset': 2.40.0
       '@modern-js/plugin-i18n': 2.40.0
@@ -4587,9 +4587,9 @@ packages:
       '@modern-js/upgrade': 2.40.0
       '@modern-js/utils': 2.40.0
       '@rollup/pluginutils': 4.1.1
-      '@svgr/core': 8.0.0(typescript@5.2.2)
+      '@svgr/core': 8.0.0(typescript@5.3.2)
       '@svgr/plugin-jsx': 8.0.1(@svgr/core@8.0.0)
-      '@svgr/plugin-svgo': 8.0.1(@svgr/core@8.0.0)(typescript@5.2.2)
+      '@svgr/plugin-svgo': 8.0.1(@svgr/core@8.0.0)(typescript@5.3.2)
       '@swc/helpers': 0.5.1
       convert-source-map: 1.8.0
       enhanced-resolve: 5.8.3
@@ -4604,17 +4604,17 @@ packages:
       tapable: 2.2.1
       terser: 5.19.2
       tsconfig-paths-webpack-plugin: 4.1.0
-      typescript: 5.2.2
+      typescript: 5.3.2
     transitivePeerDependencies:
       - debug
       - supports-color
     dev: true
 
-  /@modern-js/monorepo-tools@2.40.0(typescript@5.2.2):
+  /@modern-js/monorepo-tools@2.40.0(typescript@5.3.2):
     resolution: {integrity: sha512-0VRrKSfG35w1sZTUBZqP0VKqT9A66seo1HdyGagZuWsb8AmCeqetG0NYfNqvJE6mkOrpWYoUeeCocwSuO1yjcw==}
     dependencies:
       '@modern-js/core': 2.40.0
-      '@modern-js/new-action': 2.40.0(typescript@5.2.2)
+      '@modern-js/new-action': 2.40.0(typescript@5.3.2)
       '@modern-js/plugin': 2.40.0
       '@modern-js/plugin-changeset': 2.40.0
       '@modern-js/plugin-i18n': 2.40.0
@@ -4633,13 +4633,13 @@ packages:
       - typescript
     dev: true
 
-  /@modern-js/new-action@2.40.0(typescript@5.2.2):
+  /@modern-js/new-action@2.40.0(typescript@5.3.2):
     resolution: {integrity: sha512-bNX2WXqwQ5vJo/02GeMZmggdogHrOV1XFsUKi0bqw8q8PuL3X7a3YyH4icVvXsp96l2bL+BsLdmtOYDi8dsiyg==}
     dependencies:
       '@modern-js/codesmith': 2.3.0
-      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
-      '@modern-js/generator-common': 3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
-      '@modern-js/generator-utils': 3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
+      '@modern-js/generator-common': 3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
+      '@modern-js/generator-utils': 3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
       '@modern-js/utils': 2.40.0
       '@swc/helpers': 0.5.1
     transitivePeerDependencies:
@@ -5760,14 +5760,14 @@ packages:
       '@svgr/babel-plugin-transform-react-native-svg': 8.0.0(@babel/core@7.23.2)
       '@svgr/babel-plugin-transform-svg-component': 8.0.0(@babel/core@7.23.2)
 
-  /@svgr/core@8.0.0(typescript@5.2.2):
+  /@svgr/core@8.0.0(typescript@5.3.2):
     resolution: {integrity: sha512-aJKtc+Pie/rFYsVH/unSkDaZGvEeylNv/s2cP+ta9/rYWxRVvoV/S4Qw65Kmrtah4CBK5PM6ISH9qUH7IJQCng==}
     engines: {node: '>=14'}
     dependencies:
       '@babel/core': 7.23.2
       '@svgr/babel-preset': 8.0.0(@babel/core@7.23.2)
       camelcase: 6.3.0
-      cosmiconfig: 8.3.6(typescript@5.2.2)
+      cosmiconfig: 8.3.6(typescript@5.3.2)
       snake-case: 3.0.4
     transitivePeerDependencies:
       - supports-color
@@ -5788,26 +5788,26 @@ packages:
     dependencies:
       '@babel/core': 7.23.2
       '@svgr/babel-preset': 8.0.0(@babel/core@7.23.2)
-      '@svgr/core': 8.0.0(typescript@5.2.2)
+      '@svgr/core': 8.0.0(typescript@5.3.2)
       '@svgr/hast-util-to-babel-ast': 8.0.0
       svg-parser: 2.0.4
     transitivePeerDependencies:
       - supports-color
 
-  /@svgr/plugin-svgo@8.0.1(@svgr/core@8.0.0)(typescript@5.2.2):
+  /@svgr/plugin-svgo@8.0.1(@svgr/core@8.0.0)(typescript@5.3.2):
     resolution: {integrity: sha512-29OJ1QmJgnohQHDAgAuY2h21xWD6TZiXji+hnx+W635RiXTAlHTbjrZDktfqzkN0bOeQEtNe+xgq73/XeWFfSg==}
     engines: {node: '>=14'}
     peerDependencies:
       '@svgr/core': '*'
     dependencies:
-      '@svgr/core': 8.0.0(typescript@5.2.2)
-      cosmiconfig: 8.3.6(typescript@5.2.2)
+      '@svgr/core': 8.0.0(typescript@5.3.2)
+      cosmiconfig: 8.3.6(typescript@5.3.2)
       deepmerge: 4.3.1
       svgo: 3.0.2
     transitivePeerDependencies:
       - typescript
 
-  /@svgr/webpack@8.0.1(typescript@5.2.2):
+  /@svgr/webpack@8.0.1(typescript@5.3.2):
     resolution: {integrity: sha512-zSoeKcbCmfMXjA11uDuCJb+1LWNb3vy6Qw/VHj0Nfcl3UuqwuoZWknHsBIhCWvi4wU9vPui3aq054qjVyZqY4A==}
     engines: {node: '>=14'}
     dependencies:
@@ -5816,9 +5816,9 @@ packages:
       '@babel/preset-env': 7.23.2(@babel/core@7.23.2)
       '@babel/preset-react': 7.22.15(@babel/core@7.23.2)
       '@babel/preset-typescript': 7.23.2(@babel/core@7.23.2)
-      '@svgr/core': 8.0.0(typescript@5.2.2)
+      '@svgr/core': 8.0.0(typescript@5.3.2)
       '@svgr/plugin-jsx': 8.0.1(@svgr/core@8.0.0)
-      '@svgr/plugin-svgo': 8.0.1(@svgr/core@8.0.0)(typescript@5.2.2)
+      '@svgr/plugin-svgo': 8.0.1(@svgr/core@8.0.0)(typescript@5.3.2)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -8161,7 +8161,7 @@ packages:
       yaml: 1.10.2
     dev: false
 
-  /cosmiconfig@8.3.6(typescript@5.2.2):
+  /cosmiconfig@8.3.6(typescript@5.3.2):
     resolution: {integrity: sha512-kcZ6+W5QzcJ3P1Mt+83OUv/oHFqZHIx8DuxG6eZ5RGMERoLqp4BuGjhHLYGK+Kf5XVkQvqBSmAy/nGWN3qDgEA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -8174,7 +8174,7 @@ packages:
       js-yaml: 4.1.0
       parse-json: 5.2.0
       path-type: 4.0.0
-      typescript: 5.2.2
+      typescript: 5.3.2
 
   /create-ecdh@4.0.4:
     resolution: {integrity: sha512-mf+TCx8wWc9VpuxfP2ht0iSISLZnt0JgWlrOKZiNqyUZWnjIaCIVNQArMHnCZKfEYRg6IM7A+NeJoN8gf/Ws0A==}
@@ -9465,7 +9465,7 @@ packages:
       is-callable: 1.2.7
     dev: true
 
-  /fork-ts-checker-webpack-plugin@9.0.0(typescript@5.2.2)(webpack@5.89.0):
+  /fork-ts-checker-webpack-plugin@9.0.0(typescript@5.3.2)(webpack@5.89.0):
     resolution: {integrity: sha512-Kw3JjsfGs0piB0V2Em8gCuo51O3p4KyCOK0Tn8X57oq2mSNBrMmONALRBw5frcmWsOVU7iELXXsJ+FVxJeQuhA==}
     engines: {node: '>=12.13.0', yarn: '>=1.0.0'}
     peerDependencies:
@@ -9484,7 +9484,7 @@ packages:
       schema-utils: 3.3.0
       semver: 7.5.4
       tapable: 2.2.1
-      typescript: 5.2.2
+      typescript: 5.3.2
       webpack: 5.89.0
     dev: false
 
@@ -14347,7 +14347,7 @@ packages:
       svelte-hmr: 0.14.12(svelte@4.2.2)
     dev: false
 
-  /svelte-preprocess@5.0.4(@babel/core@7.23.2)(postcss@8.4.31)(svelte@4.2.2)(typescript@5.2.2):
+  /svelte-preprocess@5.0.4(@babel/core@7.23.2)(postcss@8.4.31)(svelte@4.2.2)(typescript@5.3.2):
     resolution: {integrity: sha512-ABia2QegosxOGsVlsSBJvoWeXy1wUKSfF7SWJdTjLAbx/Y3SrVevvvbFNQqrSJw89+lNSsM58SipmZJ5SRi5iw==}
     engines: {node: '>= 14.10.0'}
     requiresBuild: true
@@ -14393,7 +14393,7 @@ packages:
       sorcery: 0.11.0
       strip-indent: 3.0.0
       svelte: 4.2.2
-      typescript: 5.2.2
+      typescript: 5.3.2
     dev: false
 
   /svelte@4.2.2:
@@ -14726,7 +14726,7 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: true
 
-  /ts-loader@9.4.4(typescript@5.2.2)(webpack@5.89.0):
+  /ts-loader@9.4.4(typescript@5.3.2)(webpack@5.89.0):
     resolution: {integrity: sha512-MLukxDHBl8OJ5Dk3y69IsKVFRA/6MwzEqBgh+OXMPB/OD01KQuWPFd1WAQP8a5PeSCAxfnkhiuWqfmFJzJQt9w==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -14737,11 +14737,11 @@ packages:
       enhanced-resolve: 5.15.0
       micromatch: 4.0.5
       semver: 7.5.4
-      typescript: 5.2.2
+      typescript: 5.3.2
       webpack: 5.89.0
     dev: false
 
-  /tsconfck@2.1.2(typescript@5.2.2):
+  /tsconfck@2.1.2(typescript@5.3.2):
     resolution: {integrity: sha512-ghqN1b0puy3MhhviwO2kGF8SeMDNhEbnKxjK7h6+fvY9JAxqvXi8y5NAHSQv687OVboS2uZIByzGd45/YxrRHg==}
     engines: {node: ^14.13.1 || ^16 || >=18}
     hasBin: true
@@ -14751,7 +14751,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      typescript: 5.2.2
+      typescript: 5.3.2
     dev: true
 
   /tsconfig-paths-webpack-plugin@4.1.0:
@@ -14886,9 +14886,10 @@ packages:
     resolution: {integrity: sha512-KNNZtayBCtmnNmbo5mG47p1XsCyrx6iVqomjcZnec/1Y5GGARaxPs6r49RnSPeUP3YjNYiU9sQHAtY4BBvnZwg==}
     dev: false
 
-  /typescript@5.2.2:
-    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
+  /typescript@5.3.2:
+    resolution: {integrity: sha512-6l+RyNy7oAHDfxC4FzSJcz9vnjTKxrLpDG5M2Vu4SHRVNg6xzqZp6LYSR9zjqQTu8DU/f5xwxUdADOkbrIX2gQ==}
     engines: {node: '>=14.17'}
+    hasBin: true
 
   /ufo@1.3.1:
     resolution: {integrity: sha512-uY/99gMLIOlJPwATcMVYfqDSxUR9//AUcgZMzwfSTJPDKzA1S8mX4VLqa+fiAtveraQUBCz4FFcwVZBGbwBXIw==}
@@ -15164,7 +15165,7 @@ packages:
       - terser
     dev: true
 
-  /vite-tsconfig-paths@4.2.1(typescript@5.2.2):
+  /vite-tsconfig-paths@4.2.1(typescript@5.3.2):
     resolution: {integrity: sha512-GNUI6ZgPqT3oervkvzU+qtys83+75N/OuDaQl7HmOqFTb0pjZsuARrRipsyJhJ3enqV8beI1xhGbToR4o78nSQ==}
     peerDependencies:
       vite: '*'
@@ -15174,7 +15175,7 @@ packages:
     dependencies:
       debug: 4.3.4
       globrex: 0.1.2
-      tsconfck: 2.1.2(typescript@5.2.2)
+      tsconfck: 2.1.2(typescript@5.3.2)
     transitivePeerDependencies:
       - supports-color
       - typescript
