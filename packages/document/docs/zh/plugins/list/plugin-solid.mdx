@@ -1,0 +1,55 @@
+# Solid 插件
+
+Solid 插件提供了对 Solid 的支持，插件内部集成了 [babel-preset-solid](https://github.com/solidjs/solid/tree/main/packages/babel-preset-solid)。
+
+:::tip
+Solid 插件依赖 Babel 编译，需要额外添加 [Babel 插件](/plugins/list/plugin-babel)，同时，添加 Babel 插件会产生额外的编译开销。
+:::
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-solid -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+
+export default {
+  plugins: [pluginBabel(), pluginSolid()],
+};
+```
+
+注册完插件后，你可以直接进行 Solid 开发。
+
+## 选项
+
+如果你需要自定义 Solid 的编译行为，可以使用以下配置项。
+
+### solidPresetOptions
+
+传递给 `babel-preset-solid` 的选项，请查阅 [babel-preset-solid 文档](https://github.com/solidjs/solid/tree/main/packages/babel-preset-solid) 来了解具体用法。
+
+- **类型：** `Object`
+
+- **默认值：** `{}`
+
+- **示例：**
+
+```ts
+pluginSolid({
+  solidPresetOptions: {
+    generate: 'ssr',
+    hydratable: true,
+  },
+});
+```

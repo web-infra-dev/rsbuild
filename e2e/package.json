@@ -29,6 +29,7 @@
     "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-rem": "workspace:*",
     "@rsbuild/plugin-stylus": "workspace:*",
+    "@rsbuild/plugin-solid": "workspace:*",
     "@rsbuild/plugin-source-build": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-svgr": "workspace:*",
