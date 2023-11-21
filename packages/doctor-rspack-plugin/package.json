@@ -34,7 +34,7 @@
     "@types/tapable": "2.2.2",
     "@types/webpack": "5.28.0",
     "tslib": "2.4.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.0"
   },
   "publishConfig": {
     "access": "public",
