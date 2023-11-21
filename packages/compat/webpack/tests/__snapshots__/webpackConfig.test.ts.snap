@@ -117,6 +117,9 @@ exports[`webpackConfig > should allow to use tools.webpackChain to modify config
   "performance": {
     "hints": false,
   },
+  "watchOptions": {
+    "aggregateTimeout": 5,
+  },
 }
 `;
 
@@ -138,6 +141,9 @@ exports[`webpackConfig > should allow tools.webpack to be an array 1`] = `
   "name": "Client",
   "performance": {
     "hints": false,
+  },
+  "watchOptions": {
+    "aggregateTimeout": 5,
   },
 }
 `;
@@ -161,6 +167,9 @@ exports[`webpackConfig > should allow tools.webpack to be an object 1`] = `
   "performance": {
     "hints": false,
   },
+  "watchOptions": {
+    "aggregateTimeout": 5,
+  },
 }
 `;
 
@@ -182,6 +191,9 @@ exports[`webpackConfig > should allow tools.webpack to modify config object 1`] 
   "name": "Client",
   "performance": {
     "hints": false,
+  },
+  "watchOptions": {
+    "aggregateTimeout": 5,
   },
 }
 `;
@@ -205,6 +217,9 @@ exports[`webpackConfig > should allow tools.webpack to return config 1`] = `
   "performance": {
     "hints": false,
   },
+  "watchOptions": {
+    "aggregateTimeout": 5,
+  },
 }
 `;
 
@@ -226,6 +241,9 @@ exports[`webpackConfig > should allow tools.webpackChain to be an array 1`] = `
   "name": "Client",
   "performance": {
     "hints": false,
+  },
+  "watchOptions": {
+    "aggregateTimeout": 5,
   },
 }
 `;
@@ -586,6 +604,9 @@ exports[`webpackConfig > should provide mergeConfig util in tools.webpack functi
   "name": "Client",
   "performance": {
     "hints": false,
+  },
+  "watchOptions": {
+    "aggregateTimeout": 5,
   },
 }
 `;

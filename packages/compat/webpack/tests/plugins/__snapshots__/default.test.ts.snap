@@ -693,6 +693,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "web",
     "es5",
   ],
+  "watchOptions": {
+    "aggregateTimeout": 5,
+  },
 }
 `;
 
