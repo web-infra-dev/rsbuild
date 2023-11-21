@@ -50,7 +50,9 @@ export const getDefaultDevConfig = (): NormalizedDevConfig => ({
   host: DEFAULT_DEV_HOST,
 });
 
-export const getDefaultServerConfig = (): NormalizedServerConfig => ({});
+export const getDefaultServerConfig = (): NormalizedServerConfig => ({
+  htmlFallback: 'index',
+});
 
 export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
   alias: {},
