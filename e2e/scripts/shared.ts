@@ -61,10 +61,12 @@ const updateConfigForTest = <BundlerType>(
     : RspackRsbuildConfig,
 ) => {
   // make devPort random to avoid port conflict
-  config.dev = {
-    ...(config.dev || {}),
-    port: getRandomPort(config.dev?.port),
+  config.server = {
+    ...(config.server || {}),
+    port: getRandomPort(config.server?.port),
   };
+
+  config.dev ??= {};
 
   config.dev!.progressBar = config.dev!.progressBar || false;
 

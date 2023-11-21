@@ -21,6 +21,8 @@ export type StartDevServerOptions = {
 
 export type PreviewServerOptions = {
   printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
+  strictPort?: boolean;
+  getPortSilently?: boolean;
 };
 
 export type BuildOptions = {
