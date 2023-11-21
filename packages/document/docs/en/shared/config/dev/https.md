@@ -55,7 +55,7 @@ The https proxy automatically installs the certificate and needs root authority,
 
 You can also manually pass in the certificate and the private key required in the `dev.https` option. This parameter will be directly passed to the createServer method of the https module in Node.js.
 
-For details, please refer to [https.createServer](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener).
+For details, please refer to [https.createServer](https://nodejs.org/api/https#https_https_createserver_options_requestlistener).
 
 ```ts
 import fs from 'fs';

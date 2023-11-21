@@ -32,7 +32,7 @@ export default (): RsbuildPlugin => ({
 
   pre: ['plugin-bar'],
 
-  setup: api => {
+  setup: (api) => {
     api.onAfterBuild(() => {
       console.log('after build!');
     });
@@ -97,7 +97,7 @@ const pluginBar = {
 
 `api.context` 是一个只读对象，提供一些上下文信息。
 
-`api.context` 的内容与 `rsbuild.context` 完全一致，请参考 [rsbuild.context](/api/javascript-api/instance.html#rsbuild-context)。
+`api.context` 的内容与 `rsbuild.context` 完全一致，请参考 [rsbuild.context](/api/javascript-api/instance#rsbuild-context)。
 
 - **Example**
 
@@ -153,7 +153,7 @@ import IsPluginExists from '@zh/shared/isPluginExists.md';
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     console.log(api.isPluginExists('plugin-foo'));
   },
 });

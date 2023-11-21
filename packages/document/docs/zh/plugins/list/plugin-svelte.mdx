@@ -24,7 +24,6 @@ export default {
 };
 ```
 
-
 注册完插件后，你可以直接在代码中引入 `*.svelte` 单文件组件。
 
 ## 选项
@@ -46,7 +45,7 @@ const defaultOptions = {
   preprocess: require('svelte-preprocess')(),
   emitCss: !rsbuildConfig.output.disableCssExtract,
   hotReload: !isProd && rsbuildConfig.dev.hmr,
-}
+};
 ```
 
 - **示例：**

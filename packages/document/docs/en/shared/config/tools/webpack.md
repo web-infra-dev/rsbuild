@@ -299,4 +299,4 @@ export default {
 
 - **Type:** `(name: string) => string`
 
-Get the path to the Rsbuild built-in dependencies, same as [webpackChain#getCompiledPath](https://rsbuild.dev/config/options/tools.html#toolswebpackchain).
+Get the path to the Rsbuild built-in dependencies, same as [webpackChain#getCompiledPath](https://rsbuild.dev/config/options/tools#toolswebpackchain).

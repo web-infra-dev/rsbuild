@@ -4,7 +4,7 @@ Rsbuild supports directly modifying the Rspack configuration object, and also su
 
 ## Modify Rspack Configuration Object
 
-You can use the `tools.rspack` option of Rsbuild to modify the Rspack configuration object. Please refer to the [tools.rspack documentation](/config/options/tools.html#toolsrspack) for complete usage.
+You can use the `tools.rspack` option of Rsbuild to modify the Rspack configuration object. Please refer to the [tools.rspack documentation](/config/options/tools#toolsrspack) for complete usage.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -34,7 +34,7 @@ Rsbuild provides the `tools.bundlerChain` configuration option to modify the bun
 The value of `tools.bundlerChain` is a `Function` type that accepts two parameters:
 
 - The first parameter is the `bundler-chain` instance, which can be used to modify the default bundler configuration.
-- The second parameter is a [toolbox](/config/options/tools.html#toolbox-2) that includes `env`, `isProd`, `CHAIN_ID`, and more.
+- The second parameter is a [toolbox](/config/options/tools#toolbox-2) that includes `env`, `isProd`, `CHAIN_ID`, and more.
 
 Here's a basic example:
 

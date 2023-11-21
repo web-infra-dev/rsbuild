@@ -41,4 +41,4 @@ export default {
 };
 ```
 
-> 请查看 [Polyfill 方案](/guide/advanced/browser-compatibility.html#polyfill-mode) 了解详细内容。
+> 请查看 [Polyfill 方案](/guide/advanced/browser-compatibility#polyfill-mode) 了解详细内容。
