@@ -1,5 +1,11 @@
 # @rsbuild/doctor-types
 
+## 0.0.14
+
+### Patch Changes
+
+- 25f1922: fix: rsbuild doctor compatible with rspack canary version
+
 ## 0.0.13
 
 ## 0.0.12

@@ -1,5 +1,15 @@
 # @rsbuild/core
 
+## 0.0.28
+
+### Patch Changes
+
+- 0f95693: perf: reduce aggregateTimeout to speed up HMR
+- 1afd033: feat(server): init server config and support server.headers
+- 2b267b5: fix(server): should fallback success when distPath is absolute
+- Updated dependencies [0f95693]
+  - @rsbuild/shared@0.0.28
+
 ## 0.0.27
 
 ### Patch Changes
