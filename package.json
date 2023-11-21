@@ -17,6 +17,7 @@
     "e2e": "cd ./e2e && pnpm test",
     "e2e:rspack": "cd ./e2e && pnpm test:rspack",
     "e2e:webpack": "cd ./e2e && pnpm test:webpack",
+    "e2e:doctor": "cd ./e2e && cross-env NODE_OPTIONS=--max-old-space-size=8192 pnpm test:doctor",
     "gen-release-note": "modern gen-release-note",
     "lint": "echo todo",
     "new": "modern new",
