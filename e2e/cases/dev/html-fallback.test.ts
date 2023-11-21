@@ -5,7 +5,9 @@ import fs from 'fs';
 
 const fixtures = __dirname;
 
-test('should access / success when entry is index', async ({ page }) => {
+test('should access / success and htmlFallback success by default', async ({
+  page,
+}) => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
     rsbuildConfig: {
@@ -28,6 +30,42 @@ test('should access / success when entry is index', async ({ page }) => {
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
+
+  // should fallback to index by default
+  const url1 = new URL(`http://localhost:${rsbuild.port}/aaaaa`);
+
+  await page.goto(url1.href);
+
+  await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
+
+  await rsbuild.server.close();
+});
+
+test('should return 404 when htmlFallback false', async ({ page }) => {
+  const rsbuild = await dev({
+    cwd: join(fixtures, 'basic'),
+    rsbuildConfig: {
+      dev: {
+        devMiddleware: {
+          writeToDisk: true,
+        },
+      },
+      server: {
+        htmlFallback: false,
+      },
+      output: {
+        distPath: {
+          root: 'dist-html-fallback-0-1',
+        },
+      },
+    },
+  });
+
+  const url = new URL(`http://localhost:${rsbuild.port}/aaaaa`);
+
+  const res = await page.goto(url.href);
+
+  expect(res?.status()).toBe(404);
 
   await rsbuild.server.close();
 });

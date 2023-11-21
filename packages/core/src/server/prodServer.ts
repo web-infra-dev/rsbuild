@@ -63,13 +63,15 @@ export class RsbuildProdServer {
   private applyStaticAssetMiddleware() {
     const {
       output: { path, assetPrefix },
+      serverConfig: { htmlFallback },
       pwd,
     } = this.options;
 
     const assetMiddleware = sirv(join(pwd, path), {
       etag: true,
       dev: true,
-      ignores: false,
+      ignores: ['favicon.ico'],
+      single: htmlFallback === 'index',
     });
 
     this.middlewares.use((req, res, next) => {
