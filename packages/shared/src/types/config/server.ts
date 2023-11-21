@@ -4,7 +4,7 @@ export interface ServerConfig {
    */
   port?: number;
   /**
-   * After configuring this option, you can enable HTTPS Dev Server, and disabling the HTTP Dev Server.
+   * After configuring this option, you can enable HTTPS Server, and disabling the HTTP Server.
    */
   https?: { key: string; cert: string };
   /**

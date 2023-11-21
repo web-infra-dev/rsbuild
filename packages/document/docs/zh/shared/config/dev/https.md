@@ -1,7 +1,7 @@
 - **类型：** `boolean | { key: string; cert: string }`
 - **默认值：** `false`
 
-配置该选项后，可以开启 Dev Server 对 HTTPS 的支持，同时会禁用 HTTP 服务器。
+配置该选项后，可以开启 Rsbuild Server 对 HTTPS 的支持，同时会禁用 HTTP 服务器。
 
 开启前：
 
