@@ -1,6 +1,7 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 export type PluginSolidPresetOptions = {
+  // TODO: complete the type declaration
   solidPresetOptions?: any;
 };
 

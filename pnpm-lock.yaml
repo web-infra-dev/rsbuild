@@ -184,16 +184,6 @@ importers:
       solid-js:
         specifier: ^1.8.5
         version: 1.8.5
-    devDependencies:
-      less:
-        specifier: ^4.2.0
-        version: 4.2.0
-      sass:
-        specifier: ^1.69.5
-        version: 1.69.5
-      stylus:
-        specifier: 0.59.0
-        version: 0.59.0
 
   e2e/cases/source-build/app:
     dependencies:
