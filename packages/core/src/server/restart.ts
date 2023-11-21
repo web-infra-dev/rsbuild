@@ -29,7 +29,13 @@ export const restartDevServer = async ({ filePath }: { filePath: string }) => {
     await cleaner();
   }
 
-  const rsbuild = await init();
+  const rsbuild = await init({ isRestart: true });
+
+  // Skip the following logic if restart failed,
+  // maybe user is editing config file and write some invalid config
+  if (!rsbuild) {
+    return;
+  }
 
   await rsbuild.startDevServer();
 };
