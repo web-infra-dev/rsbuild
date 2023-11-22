@@ -84,12 +84,12 @@ Excluding assets from inlining will increase the number of assets that the Web A
 
 In addition to inlining static assets into JS files, Rsbuild also supports inlining JS files into HTML files.
 
-Just enable the [output.enableInlineScripts](/config/options/output#outputenableinlinescripts) config, and the generated JS files will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
+Just enable the [output.inlineScripts](/config/options/output#outputinlinescripts) config, and the generated JS files will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
 
 ```ts
 export default {
   output: {
-    enableInlineScripts: true,
+    inlineScripts: true,
   },
 };
 ```
@@ -102,12 +102,12 @@ Inline JS files may cause the single HTML file to be too large, and it will brea
 
 You can also inline CSS files into HTML files.
 
-Just enable the [output.enableInlineStyles](/config/options/output#outputenableinlinestyles) config, the generated CSS file will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
+Just enable the [output.inlineStyles](/config/options/output#outputinlinestyles) config, the generated CSS file will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
 
 ```ts
 export default {
   output: {
-    enableInlineStyles: true,
+    inlineStyles: true,
   },
 };
 ```

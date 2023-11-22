@@ -22,24 +22,20 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         const { InlineChunkHtmlPlugin } = await import('@rsbuild/shared');
 
         const {
-          enableInlineStyles,
-          // todo: not support enableInlineScripts in Rspack yet, which will take unknown build error
-          enableInlineScripts,
+          inlineStyles,
+          // todo: not support inlineScripts in Rspack yet, which will take unknown build error
+          inlineScripts,
         } = config.output;
 
         const scriptTests: InlineChunkTest[] = [];
         const styleTests: InlineChunkTest[] = [];
 
-        if (enableInlineScripts) {
-          scriptTests.push(
-            enableInlineScripts === true ? JS_REGEX : enableInlineScripts,
-          );
+        if (inlineScripts) {
+          scriptTests.push(inlineScripts === true ? JS_REGEX : inlineScripts);
         }
 
-        if (enableInlineStyles) {
-          styleTests.push(
-            enableInlineStyles === true ? CSS_REGEX : enableInlineStyles,
-          );
+        if (inlineStyles) {
+          styleTests.push(inlineStyles === true ? CSS_REGEX : inlineStyles);
         }
 
         if (!scriptTests.length && !styleTests.length) {

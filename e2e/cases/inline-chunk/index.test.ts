@@ -32,7 +32,7 @@ webpackOnlyTest(
           },
         },
         output: {
-          enableInlineScripts: true,
+          inlineScripts: true,
         },
         tools: toolsConfig,
       },
@@ -67,7 +67,7 @@ test('using RegExp to inline scripts', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       output: {
-        enableInlineScripts: /\/index\.\w+\.js$/,
+        inlineScripts: /\/index\.\w+\.js$/,
       },
       tools: toolsConfig,
     },
@@ -93,7 +93,7 @@ test('inline scripts by filename and file size', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       output: {
-        enableInlineScripts({ size, name }) {
+        inlineScripts({ size, name }) {
           return name.includes('index') && size < 10000;
         },
       },
@@ -121,7 +121,7 @@ test('using RegExp to inline styles', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       output: {
-        enableInlineStyles: /\/index\.\w+\.css$/,
+        inlineStyles: /\/index\.\w+\.css$/,
       },
       tools: toolsConfig,
     },
@@ -141,7 +141,7 @@ test('inline styles by filename and file size', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       output: {
-        enableInlineStyles({ size, name }) {
+        inlineStyles({ size, name }) {
           return name.includes('index') && size < 1000;
         },
       },

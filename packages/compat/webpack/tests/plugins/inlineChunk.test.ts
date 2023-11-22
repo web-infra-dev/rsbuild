@@ -21,12 +21,12 @@ describe('plugin-inline-chunk', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should use proper plugin options when enableInlineScripts is true', async () => {
+  it('should use proper plugin options when inlineScripts is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
       rsbuildConfig: {
         output: {
-          enableInlineScripts: true,
+          inlineScripts: true,
         },
       },
     });
@@ -35,12 +35,12 @@ describe('plugin-inline-chunk', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should use proper plugin options when enableInlineStyles is true', async () => {
+  it('should use proper plugin options when inlineStyles is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
       rsbuildConfig: {
         output: {
-          enableInlineStyles: true,
+          inlineStyles: true,
         },
       },
     });
