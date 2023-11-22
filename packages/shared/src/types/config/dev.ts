@@ -2,8 +2,6 @@ import type { ArrayOrNot } from '../utils';
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Options as ProxyOptions } from '../../../compiled/http-proxy-middleware';
 
-export type DevServerHttpsOptions = boolean | { key: string; cert: string };
-
 export type ProgressBarConfig = {
   id?: string;
 };
@@ -44,14 +42,6 @@ export interface DevConfig {
    */
   hmr?: boolean;
   /**
-   * Specify a port number for Dev Server to listen.
-   */
-  port?: number;
-  /**
-   * After configuring this option, you can enable HTTPS Dev Server, and disabling the HTTP Dev Server.
-   */
-  https?: DevServerHttpsOptions;
-  /**
    * Used to set the page URL to open automatically when the Dev Server starts.
    * By default, no page will be opened.
    */
@@ -70,10 +60,6 @@ export interface DevConfig {
    * Whether to display progress bar during compilation.
    */
   progressBar?: boolean | ProgressBarConfig;
-  /**
-   * Used to set the host of Dev Server.
-   */
-  host?: string;
 
   /** config of hmr client. */
   client?: {
@@ -120,9 +106,4 @@ export interface DevConfig {
 }
 
 export type NormalizedDevConfig = DevConfig &
-  Required<
-    Pick<
-      DevConfig,
-      'hmr' | 'port' | 'https' | 'startUrl' | 'assetPrefix' | 'host'
-    >
-  >;
+  Required<Pick<DevConfig, 'hmr' | 'startUrl' | 'assetPrefix'>>;

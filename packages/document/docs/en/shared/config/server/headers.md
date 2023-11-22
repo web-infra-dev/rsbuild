@@ -5,7 +5,7 @@ Adds headers to all responses.
 
 ```js
 export default {
-  dev: {
+  server: {
     headers: {
       'X-Custom-Foo': 'bar',
     },

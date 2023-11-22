@@ -85,22 +85,37 @@ export const mergeDevOptions = ({
       protocol: '',
     },
     compress: true,
-    port,
     devMiddleware: {
       writeToDisk: (file: string) => !file.includes('.hot-update.'),
     },
   };
 
-  const devServerConfig = rsbuildConfig.dev
+  const devConfig = rsbuildConfig.dev
     ? deepmerge(defaultDevConfig, rsbuildConfig.dev)
     : defaultDevConfig;
 
-  devServerConfig.port = port;
+  return devConfig;
+};
 
-  return {
-    ...rsbuildConfig.server,
-    ...devServerConfig,
-  };
+export const getServerOptions = async ({
+  rsbuildConfig,
+  strictPort,
+  getPortSilently,
+}: {
+  rsbuildConfig: RsbuildConfig;
+  strictPort?: boolean;
+  getPortSilently?: boolean;
+}) => {
+  const port = await getPort(rsbuildConfig.server?.port || DEFAULT_PORT, {
+    strictPort,
+    silent: getPortSilently,
+  });
+
+  const host = rsbuildConfig.server?.host || DEFAULT_DEV_HOST;
+
+  const https = Boolean(rsbuildConfig.server?.https) || false;
+
+  return { port, host, https, serverConfig: rsbuildConfig.server || {} };
 };
 
 export const getDevOptions = async ({
@@ -112,18 +127,23 @@ export const getDevOptions = async ({
   strictPort?: boolean;
   getPortSilently?: boolean;
 }) => {
-  const port = await getPort(rsbuildConfig.dev?.port || DEFAULT_PORT, {
+  const { port, host, https, serverConfig } = await getServerOptions({
+    rsbuildConfig,
     strictPort,
-    silent: getPortSilently,
+    getPortSilently,
   });
 
-  const host = rsbuildConfig.dev?.host || DEFAULT_DEV_HOST;
+  const devConfig = mergeDevOptions({ rsbuildConfig, port });
 
-  const https = Boolean(rsbuildConfig.dev?.https) || false;
-
-  const devServerConfig = mergeDevOptions({ rsbuildConfig, port });
-
-  return { devServerConfig, port, host, https };
+  return {
+    devServerConfig: {
+      ...serverConfig,
+      ...devConfig,
+    },
+    port,
+    host,
+    https,
+  };
 };
 
 /** The context used by startDevServer. */

@@ -43,14 +43,13 @@ import { getJSMinifyOptions } from './minimize';
 
 export const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
-  https: false,
-  port: DEFAULT_PORT,
   assetPrefix: DEFAULT_ASSET_PREFIX,
   startUrl: false,
-  host: DEFAULT_DEV_HOST,
 });
 
 export const getDefaultServerConfig = (): NormalizedServerConfig => ({
+  port: DEFAULT_PORT,
+  host: DEFAULT_DEV_HOST,
   htmlFallback: 'index',
 });
 

@@ -1,22 +1,21 @@
 import type { ListenOptions } from 'net';
 import { createServer, Server } from 'http';
+import { createServer as createHttpsServer } from 'https';
 import connect from '@rsbuild/shared/connect';
 import { join } from 'path';
 import sirv from '../../compiled/sirv';
 import {
   Context,
   RsbuildConfig,
-  getPort,
-  DEFAULT_PORT,
   StartServerResult,
   getAddressUrls,
-  DEFAULT_DEV_HOST,
   printServerURLs,
   formatRoutes,
   ROOT_DIST_DIR,
   PreviewServerOptions,
   isFunction,
   ServerConfig,
+  getServerOptions,
 } from '@rsbuild/shared';
 import { faviconFallbackMiddleware } from './middlewares';
 
@@ -91,7 +90,13 @@ export class RsbuildProdServer {
   }
 
   public async createHTTPServer() {
-    return createServer(this.middlewares);
+    const { serverConfig } = this.options;
+    const httpsOption = serverConfig.https;
+    if (httpsOption) {
+      return createHttpsServer(httpsOption, this.middlewares);
+    } else {
+      return createServer(this.middlewares);
+    }
   }
 
   public listen(
@@ -117,20 +122,29 @@ export class RsbuildProdServer {
 export async function startProdServer(
   context: Context,
   rsbuildConfig: RsbuildConfig,
-  { printURLs = true }: PreviewServerOptions = {},
+  {
+    printURLs = true,
+    strictPort = false,
+    getPortSilently,
+  }: PreviewServerOptions = {},
 ) {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'production';
   }
 
-  const port = await getPort(rsbuildConfig.dev?.port || DEFAULT_PORT);
+  const { serverConfig, port, host, https } = await getServerOptions({
+    rsbuildConfig,
+    strictPort,
+    getPortSilently,
+  });
+
   const server = new RsbuildProdServer({
     pwd: context.rootPath,
     output: {
       path: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
       assetPrefix: rsbuildConfig.output?.assetPrefix,
     },
-    serverConfig: rsbuildConfig.server || {},
+    serverConfig,
   });
 
   const httpServer = await server.createHTTPServer();
@@ -140,11 +154,11 @@ export async function startProdServer(
   return new Promise<StartServerResult>((resolve) => {
     server.listen(
       {
-        host: DEFAULT_DEV_HOST,
+        host,
         port,
       },
       () => {
-        const urls = getAddressUrls('http', port);
+        const urls = getAddressUrls(https ? 'https' : 'http', port);
 
         if (printURLs) {
           const routes = formatRoutes(

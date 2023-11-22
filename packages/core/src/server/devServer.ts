@@ -176,9 +176,7 @@ export class RsbuildDevServer {
     const { dev } = this;
     const devHttpsOption = typeof dev === 'object' && dev.https;
     if (devHttpsOption) {
-      const { genHttpsOptions } = require('./https');
-      const httpsOptions = await genHttpsOptions(devHttpsOption, this.pwd);
-      return createHttpsServer(httpsOptions, this.middlewares);
+      return createHttpsServer(devHttpsOption, this.middlewares);
     } else {
       return createServer(this.middlewares);
     }
@@ -246,7 +244,7 @@ export async function startDevServer<
   };
 
   const protocol = https ? 'https' : 'http';
-  let urls = getAddressUrls(protocol, port, rsbuildConfig.dev?.host);
+  let urls = getAddressUrls(protocol, port, host);
   const routes = formatRoutes(
     options.context.entry,
     rsbuildConfig.output?.distPath?.html,
