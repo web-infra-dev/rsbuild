@@ -67,7 +67,7 @@ const resourceRuleFallback = (
 };
 
 export const pluginFallback = (): RsbuildPlugin => ({
-  name: 'plugin-fallback',
+  name: 'uni-builder:fallback',
 
   setup(api) {
     if (api.context.bundlerType === 'webpack') {

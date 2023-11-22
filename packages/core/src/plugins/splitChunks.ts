@@ -208,7 +208,7 @@ const SPLIT_STRATEGY_DISPATCHER: Record<
 
 export function pluginSplitChunks(): RsbuildPlugin {
   return {
-    name: 'plugin-split-chunks',
+    name: 'rsbuild:split-chunks',
     setup(api) {
       api.modifyBundlerChain(
         async (chain, { isServer, isWebWorker, isServiceWorker }) => {

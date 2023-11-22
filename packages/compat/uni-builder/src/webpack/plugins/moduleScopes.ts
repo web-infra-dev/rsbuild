@@ -28,7 +28,7 @@ export const applyScopeChain = (
 export const pluginModuleScopes = (
   moduleScopes?: ChainedConfig<ModuleScopes>,
 ): RsbuildPlugin => ({
-  name: 'plugin-module-scopes',
+  name: 'uni-builder:module-scopes',
 
   setup(api) {
     api.modifyWebpackChain(async (chain, { CHAIN_ID }) => {

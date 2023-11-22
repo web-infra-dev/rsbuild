@@ -61,10 +61,12 @@ const updateConfigForTest = <BundlerType>(
     : RspackRsbuildConfig,
 ) => {
   // make devPort random to avoid port conflict
-  config.dev = {
-    ...(config.dev || {}),
-    port: getRandomPort(config.dev?.port),
+  config.server = {
+    ...(config.server || {}),
+    port: getRandomPort(config.server?.port),
   };
+
+  config.dev ??= {};
 
   config.dev!.progressBar = config.dev!.progressBar || false;
 
@@ -72,6 +74,13 @@ const updateConfigForTest = <BundlerType>(
     config.performance = {
       ...(config.performance || {}),
       buildCache: false,
+    };
+  }
+
+  if (config.performance?.printFileSize === undefined) {
+    config.performance = {
+      ...(config.performance || {}),
+      printFileSize: false,
     };
   }
 
@@ -126,8 +135,6 @@ export async function build<BundlerType = 'rspack'>({
   updateConfigForTest(rsbuildConfig);
 
   const rsbuild = await createRsbuild(options, rsbuildConfig);
-
-  rsbuild.removePlugins(['plugin-file-size']);
 
   if (plugins) {
     rsbuild.addPlugins(plugins);

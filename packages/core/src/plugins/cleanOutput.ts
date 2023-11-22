@@ -8,7 +8,7 @@ const emptyDir = async (dir: string) => {
 };
 
 export const pluginCleanOutput = (): RsbuildPlugin => ({
-  name: 'plugin-clean-output',
+  name: 'rsbuild:clean-output',
 
   setup(api) {
     const clean = async () => {

@@ -3,7 +3,7 @@ import type { CopyPluginOptions } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginCopy = (): RsbuildPlugin => ({
-  name: 'plugin-copy',
+  name: 'rsbuild-webpack:copy',
 
   setup(api) {
     api.modifyWebpackChain(async (chain, { CHAIN_ID }) => {

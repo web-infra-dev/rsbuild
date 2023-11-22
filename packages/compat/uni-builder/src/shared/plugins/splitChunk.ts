@@ -7,7 +7,7 @@ import {
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 export const pluginSplitChunks = (): RsbuildPlugin => ({
-  name: 'uni-builder:plugin-split-chunks',
+  name: 'uni-builder:split-chunks',
 
   setup(api) {
     api.modifyBundlerChain((chain) => {

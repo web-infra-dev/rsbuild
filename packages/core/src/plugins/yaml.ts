@@ -2,7 +2,7 @@ import { getSharedPkgCompiledPath } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginYaml = (): RsbuildPlugin => ({
-  name: 'plugin-yaml',
+  name: 'rsbuild:yaml',
 
   setup(api) {
     api.modifyBundlerChain((chain, { CHAIN_ID }) => {

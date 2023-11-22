@@ -9,7 +9,7 @@ import {
 import type { RsbuildPlugin } from '../types';
 
 export const pluginOutput = (): RsbuildPlugin => ({
-  name: 'plugin-output',
+  name: 'rsbuild-webpack:output',
 
   setup(api) {
     applyOutputPlugin(api);

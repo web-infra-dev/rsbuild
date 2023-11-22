@@ -11,9 +11,9 @@ const defaultOptions: PluginRemOptions = {
 export type { PluginRemOptions };
 
 export const pluginRem = (options: PluginRemOptions = {}): RsbuildPlugin => ({
-  name: 'plugin-rem',
+  name: 'rsbuild:rem',
 
-  pre: ['plugin-css', 'plugin-less', 'plugin-sass', 'plugin-stylus'],
+  pre: ['rsbuild:css', 'rsbuild:less', 'rsbuild:sass', 'rsbuild:stylus'],
 
   setup(api) {
     api.modifyBundlerChain(

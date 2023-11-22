@@ -5,7 +5,7 @@
 
 ```js
 export default {
-  dev: {
+  server: {
     headers: {
       'X-Custom-Foo': 'bar',
     },

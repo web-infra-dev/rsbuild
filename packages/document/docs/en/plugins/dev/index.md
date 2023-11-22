@@ -11,7 +11,7 @@ Plugins written by developers can modify the default behavior of Rsbuild and add
 
 ## Developing Plugins
 
-Plugins provide a function similar to `(options?: PluginOptions) => RsbuildPlugin` as an entry point. It is recommended to name the plugin function `pluginXXX` and export it by name.
+Plugins provide a function similar to `(options?: PluginOptions) => RsbuildPlugin` as an entry point.
 
 ### Plugin Example
 
@@ -54,7 +54,27 @@ The roles of each part are as follows:
 - `setup` serves as the main entry point for the plugin logic.
 - The `api` object contains various hooks and utility functions.
 
-For easy identification, it is recommended that the plugin's `name` include the conventional `plugin-` prefix, such as `plugin-foo`, `@scope/plugin-bar`, etc.
+### Naming Convention
+
+The naming convention for plugins is as follows:
+
+- The function of the plugin is named `pluginXXX` and exported by name.
+- The `name` of the plugin follows the format `scope:foo-bar` or `plugin-foo-bar`, adding `scope:` can avoid naming conflicts with other plugins.
+
+Here is an example:
+
+```ts title="pluginFooBar.ts"
+import type { RsbuildPlugin } from '@rsbuild/core';
+
+export const pluginFooBar = (): RsbuildPlugin => ({
+  name: 'xxx:foo-bar',
+  setup() {},
+});
+```
+
+:::tip
+The `name` of official Rsbuild plugins uniformly uses `rsbuild:` as a prefix, for example, `rsbuild:react` corresponds to `@rsbuild/plugin-react`.
+:::
 
 ### Template Repository
 

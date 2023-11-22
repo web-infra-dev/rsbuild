@@ -10,7 +10,7 @@ import {
   type ExtraMonorepoStrategies,
 } from '@rsbuild/monorepo-utils';
 
-export const pluginName = 'plugin-source-build';
+export const pluginName = 'rsbuild:source-build';
 
 export const getSourceInclude = async (options: {
   projects: Project[];

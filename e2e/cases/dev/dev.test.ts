@@ -94,7 +94,7 @@ test('dev.port & output.distPath', async ({ page }) => {
     cwd: join(fixtures, 'basic'),
     plugins: [pluginReact()],
     rsbuildConfig: {
-      dev: {
+      server: {
         port: 3000,
       },
       output: {
@@ -143,8 +143,10 @@ test('hmr should work when setting dev.port & client', async ({ page }) => {
           root: 'dist-hmr-1',
         },
       },
-      dev: {
+      server: {
         port: 3001,
+      },
+      dev: {
         client: {
           host: '',
         },
@@ -188,7 +190,7 @@ test.skip('dev.https', async () => {
           root: 'dist-https',
         },
       },
-      dev: {
+      server: {
         https: true,
       },
     },

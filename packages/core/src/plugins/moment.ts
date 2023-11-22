@@ -56,7 +56,7 @@ class IgnorePlugin implements RspackPluginInstance {
 }
 
 export const pluginMoment = (): RsbuildPlugin => ({
-  name: 'plugin-moment',
+  name: 'rsbuild:moment',
 
   setup(api) {
     api.modifyBundlerChain(async (chain) => {

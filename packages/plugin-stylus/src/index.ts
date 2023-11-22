@@ -24,7 +24,7 @@ export type PluginStylusOptions = StylusLoaderOptions;
 
 export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
   return {
-    name: 'plugin-stylus',
+    name: 'rsbuild:stylus',
 
     setup(api) {
       const { bundlerType } = api.context;
