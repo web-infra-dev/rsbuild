@@ -1,6 +1,6 @@
 # @rsbuild/plugin-source-build
 
-## 1.0.0
+## 0.1.0
 
 ### Patch Changes
 

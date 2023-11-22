@@ -1,6 +1,6 @@
 # @rsbuild/plugin-vue2-jsx
 
-## 1.0.0
+## 0.1.0
 
 ### Patch Changes
 
