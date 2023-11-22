@@ -10,7 +10,7 @@ When this happens, you can specify directories or modules that need to be compil
 
 ### Compile error `Error: [object Object] is not a PostCSS plugin` ?
 
-Currently, Modern.js is using PostCSS v8. If you encounter the `Error: [object Object] is not a PostCSS plugin` error during the compilation process, it is usually caused by referencing the wrong version of PostCSS, for example, the version of `postcss` (peerDependencies) in `cssnano` does not meet expectations.
+Currently, Rsbuild is using PostCSS v8. If you encounter the `Error: [object Object] is not a PostCSS plugin` error during the compilation process, it is usually caused by referencing the wrong version of PostCSS, for example, the version of `postcss` (peerDependencies) in `cssnano` does not meet expectations.
 
 You can find the dependencies of `UNMET PEER DEPENDENCY` through `npm ls postcss`, and then install the correct version of dependencies by specifying the PostCSS version in package.json.
 
@@ -110,40 +110,13 @@ However, it is important to contact the developer of the third-party dependency 
 
 ---
 
-### The webpack cache does not work?
-
-Rsbuild enables webpack's persistent cache by default.
-
-After the first compilation is completed, the cache file will be automatically generated and output to the `./node_modules/.cache/webpack` directory. When the second compilation is performed, the cache is hit and the compilation speed is greatly improved.
-
-When configuration files such as `package.json` are modified, the cache is automatically invalidated.
-
-If the webpack compilation cache in the project has not taken effect, you can add the following configuration for troubleshooting:
-
-```ts
-export default {
-  tools: {
-    webpack(config) {
-      config.infrastructureLogging = {
-        ...config.infrastructureLogging,
-        debug: /webpack\.cache/,
-      };
-    },
-  },
-};
-```
-
-After adding the above configuration, webpack will output logs for debugging. Please refer to the logs related to `PackFileCacheStrategy` to understand the cause of cache invalidation.
-
----
-
 ### Tree shaking does not take effect?
 
-Rsbuild will enable the tree shaking function of webpack by default during production construction. Whether tree shaking can take effect depends on whether the business code can meet the tree shaking conditions of webpack.
+Rsbuild will enable the tree shaking function of Rspack by default during production construction. Whether tree shaking can take effect depends on whether the business code can meet the tree shaking conditions of Rspack.
 
 If you encounter the problem that tree shaking does not take effect, you can check whether the `sideEffects` configuration of the relevant npm package is correct. If you don't know what `sideEffects` is, or are interested in the principles behind tree shaking, you can read the following two documents:
 
-- [webpack official documentation - Tree Shaking](https://webpack.docschina.org/guides/tree-shaking/)
+- [Rspack official documentation - Tree Shaking](https://www.rspack.dev/guide/tree-shaking)
 - [Tree Shaking Troubleshooting Guide](https://bytedance.feishu.cn/docs/doccn8E1ldDct5uv1EEDQs8Ycwe)
 
 ---
@@ -154,18 +127,18 @@ This error indicates that there is a memory overflow problem during the packagin
 
 In case of OOM issues, the easiest way to fix this is by increasing the memory cap, Node.js provides the `--max-old-space-size` option to set this. You can set this parameter by adding [NODE_OPTIONS](https://nodejs.org/api/cli#node_optionsoptions) before the CLI command.
 
-For example, add parameters before the `modern build` command:
+For example, add parameters before the `rsbuild build` command:
 
 ```diff title="package.json"
 {
    "scripts": {
-- "build": "modern build"
-+ "build": "NODE_OPTIONS=--max_old_space_size=16384 modern build"
+- "build": "rsbuild build"
++ "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build"
    }
 }
 ```
 
-If you are executing other commands, such as `modern deploy`, please add parameters before the corresponding command.
+If you are executing other commands, such as `rsbuild dev`, please add parameters before the corresponding command.
 
 The value of the `max_old_space_size` parameter represents the upper limit of the memory size (MB). Generally, it can be set to `16384` (16GB).
 

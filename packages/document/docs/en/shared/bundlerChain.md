@@ -1,3 +1,3 @@
-Bundler chain is a subset of webpack chain, which contains part of the webpack chain API that you can use to modify both webpack and Rspack configuration.
+Bundler chain is a subset of webpack chain, which contains part of the webpack chain API that you can use to modify both Rspack and webpack configuration.
 
-Configurations modified via bundler chain will work on both webpack and Rspack builds. Note that the bundler chain only supports modifying the configuration of the non-differentiated parts of webpack and Rspack. For example, modifying the devtool configuration option (webpack and Rspack have the same devtool property value type), or adding an [Rspack-compatible](https://rspack.dev/guide/plugin-compat) webpack plugin.
+Configurations modified via bundler chain will work on both Rspack and webpack builds. Note that the bundler chain only supports modifying the configuration of the non-differentiated parts of Rspack and webpack. For example, modifying the devtool configuration option (Rspack and webpack have the same devtool property value type), or adding an [Rspack-compatible](https://rspack.dev/guide/plugin-compat) webpack plugin.

@@ -26,7 +26,7 @@ You may need an additional loader to handle the result of these loaders.
 
 ### 编译时报错 `Error: [object Object] is not a PostCSS plugin` ?
 
-目前，Modern.js 使用的是 v8 版本的 PostCSS。如果编译过程中遇到了 `Error: [object Object] is not a PostCSS plugin` 报错提示，通常是由于引用到了错误的 PostCSS 版本导致，常见的如 `cssnano` 中 `postcss` (peerDependencies) 版本不符合预期。
+目前，Rsbuild 使用的是 v8 版本的 PostCSS。如果编译过程中遇到了 `Error: [object Object] is not a PostCSS plugin` 报错提示，通常是由于引用到了错误的 PostCSS 版本导致，常见的如 `cssnano` 中 `postcss` (peerDependencies) 版本不符合预期。
 
 可以通过 `npm ls postcss` 查找 `UNMET PEER DEPENDENCY` 的依赖，然后在 package.json 中通过指定 PostCSS 版本等方式安装正确的依赖版本即可。
 
@@ -110,40 +110,13 @@ export default {
 
 ---
 
-### webpack 编译缓存未生效，应该如何排查？
-
-Rsbuild 默认开启了 webpack 的持久化缓存。
-
-首次编译完成后，会自动生成缓存文件，并输出到 `./node_modules/.cache/webpack` 目录下。执行第二次编译时，会命中缓存，并大幅度提高编译速度。
-
-当 `package.json` 等配置文件被修改时，缓存会自动失效。
-
-如果项目中 webpack 编译缓存一直未生效，可以添加以下配置进行排查：
-
-```ts
-export default {
-  tools: {
-    webpack(config) {
-      config.infrastructureLogging = {
-        ...config.infrastructureLogging,
-        debug: /webpack\.cache/,
-      };
-    },
-  },
-};
-```
-
-添加以上配置后，webpack 会输出日志用于 debug，请参考 `PackFileCacheStrategy` 相关的日志来了解缓存失效的原因。
-
----
-
 ### 打包后发现 tree shaking 没有生效？
 
-Rsbuild 在生产构建时会默认开启 webpack 的 tree shaking 功能，tree shaking 是否能够生效，取决于业务代码能否满足 webpack 的 tree shaking 条件。
+Rsbuild 在生产构建时会默认开启 Rspack 的 tree shaking 功能，tree shaking 是否能够生效，取决于业务代码能否满足 Rspack 的 tree shaking 条件。
 
 如果你遇到了 tree shaking 不生效的问题，可以检查下相关 npm 包的 `sideEffects` 配置是否正确，如果你不了解 `sideEffects` 的作用，或是对 tree shaking 背后的原理感兴趣，可以阅读以下两篇文档：
 
-- [webpack 官方文档 - Tree Shaking](https://webpack.docschina.org/guides/tree-shaking/)
+- [Rspack 官方文档 - Tree Shaking](https://www.rspack.dev/zh/guide/tree-shaking)
 - [Tree Shaking 问题排查指南](https://bytedance.feishu.cn/docs/doccn8E1ldDct5uv1EEDQs8Ycwe)
 
 如果你是 npm 包的开发者，可以阅读这篇文章：
@@ -158,18 +131,18 @@ Rsbuild 在生产构建时会默认开启 webpack 的 tree shaking 功能，tree
 
 如果出现 OOM 问题，最简单的方法是通过增加内存上限来解决，Node.js 提供了 `--max-old-space-size` 选项来对此进行设置。你可以在 CLI 命令前添加 [NODE_OPTIONS](https://nodejs.org/api/cli#node_optionsoptions) 来设置此参数。
 
-比如，在 `modern build` 命令前添加参数：
+比如，在 `rsbuild build` 命令前添加参数：
 
 ```diff title="package.json"
 {
   "scripts": {
--   "build": "modern build"
-+   "build": "NODE_OPTIONS=--max_old_space_size=16384 modern build"
+-   "build": "rsbuild build"
++   "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build"
   }
 }
 ```
 
-如果你执行的是其他命令，比如 `modern deploy`，请在对应的命令前添加参数。
+如果你执行的是其他命令，比如 `rsbuild dev`，请在对应的命令前添加参数。
 
 `max_old_space_size` 参数的值代表内存上限大小（MB)，一般情况下设置为 `16384`（16GB）即可。
 

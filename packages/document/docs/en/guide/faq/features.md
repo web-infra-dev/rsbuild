@@ -60,18 +60,6 @@ export default {
 
 ---
 
-### How to clear the webpack cache?
-
-By default, Rsbuild's webpack cache is generated in the `./node_modules/.cache/webpack` directory.
-
-If you need to clear the local webpack cache, you can execute the following command:
-
-```bash
-rm -rf ./node_modules/.cache
-```
-
----
-
 ### How to remove console after production build?
 
 When the production environment is built, we can remove the `console` from the code, so as to avoid the log of the development environment being output to the production environment.
