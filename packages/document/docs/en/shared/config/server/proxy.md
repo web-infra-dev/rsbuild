@@ -3,6 +3,8 @@
 
 Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
 
+### Example
+
 ```js
 export default {
   server: {
@@ -13,9 +15,23 @@ export default {
 };
 ```
 
-A request to /api/users will now proxy the request to http://localhost:3000/api/users.
+A request to `/api/users` will now proxy the request to http://localhost:3000/api/users.
 
-If you don't want /api to be passed along, we need to rewrite the path:
+You can also proxy to an online domain name, such as:
+
+```js
+export default {
+  server: {
+    proxy: {
+      '/api': 'https://nodejs.org',
+    },
+  },
+};
+```
+
+### Path Rewrite
+
+If you don't want `/api` to be passed along, we need to rewrite the path:
 
 ```js
 export default {
@@ -29,6 +45,8 @@ export default {
   },
 };
 ```
+
+### Options
 
 The DevServer Proxy makes use of the [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) package. Check out its documentation for more advanced usages.
 
@@ -59,7 +77,6 @@ In addition to the http-proxy-middleware option, we also support the bypass and 
   - Return `null` or `undefined` to continue processing the request with proxy.
   - Return `false` to produce a 404 error for the request.
   - Return a path to serve from, instead of continuing to proxy the request.
-- context: If you want to proxy multiple, specific paths to the same target, you can use an array of one or more objects with a context property.
 
 ```js
 // custom bypass
@@ -79,6 +96,8 @@ export default {
   },
 };
 ```
+
+- context: If you want to proxy multiple, specific paths to the same target, you can use an array of one or more objects with a context property.
 
 ```js
 // proxy multiple
