@@ -50,7 +50,7 @@ test('should minify template js & css', async ({ page }) => {
 });
 
 webpackOnlyTest(
-  'should minify template success when enableInlineScripts & enableInlineStyles',
+  'should minify template success when inlineScripts & inlineStyles',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: fixtures,
@@ -62,8 +62,8 @@ webpackOnlyTest(
           inject: 'body',
         },
         output: {
-          enableInlineScripts: true,
-          enableInlineStyles: true,
+          inlineScripts: true,
+          inlineStyles: true,
         },
       },
     });

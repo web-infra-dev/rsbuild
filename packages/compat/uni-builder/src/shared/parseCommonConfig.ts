@@ -62,6 +62,16 @@ export function parseCommonConfig<B = 'rspack' | 'webpack'>(
     delete output.cssModuleLocalIdentName;
   }
 
+  if (uniBuilderConfig.output?.enableInlineScripts) {
+    output.inlineScripts = uniBuilderConfig.output?.enableInlineScripts;
+    delete output.enableInlineScripts;
+  }
+
+  if (uniBuilderConfig.output?.enableInlineStyles) {
+    output.inlineStyles = uniBuilderConfig.output?.enableInlineStyles;
+    delete output.enableInlineStyles;
+  }
+
   const extraConfig: RsbuildRspackConfig | RsbuildWebpackConfig = {};
   extraConfig.html ||= {};
 

@@ -196,3 +196,27 @@ exports[`parseCommonConfig > output.disableCssModuleExtension 1`] = `
   },
 }
 `;
+
+exports[`parseCommonConfig > output.enableInlineScripts 1`] = `
+{
+  "dev": {
+    "progressBar": true,
+  },
+  "html": {},
+  "output": {
+    "inlineScripts": true,
+  },
+}
+`;
+
+exports[`parseCommonConfig > output.enableInlineStyles 1`] = `
+{
+  "dev": {
+    "progressBar": true,
+  },
+  "html": {},
+  "output": {
+    "inlineStyles": true,
+  },
+}
+`;

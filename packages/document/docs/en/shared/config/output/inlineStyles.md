@@ -1,7 +1,7 @@
 - **Type:**
 
 ```ts
-type EnableInlineStyles =
+type InlineStyles =
   | boolean
   | RegExp
   | ((params: { size: number; name: string }) => boolean);
@@ -23,12 +23,12 @@ dist/static/css/style.css
 dist/static/js/main.js
 ```
 
-After turn on the `output.enableInlineStyles` option:
+After turn on the `output.inlineStyles` option:
 
 ```js
 export default {
   output: {
-    enableInlineStyles: true,
+    inlineStyles: true,
   },
 };
 ```
@@ -55,14 +55,14 @@ And `dist/static/css/style.css` will be inlined in `index.html`:
 
 ### Using RegExp
 
-If you need to inline part of the CSS files, you can set `enableInlineStyles` to a regular expression that matches the URL of the CSS file that needs to be inlined.
+If you need to inline part of the CSS files, you can set `inlineStyles` to a regular expression that matches the URL of the CSS file that needs to be inlined.
 
 For example, to inline `main.css` into HTML, you can add the following configuration:
 
 ```js
 export default {
   output: {
-    enableInlineStyles: /\/main\.\w+\.css$/,
+    inlineStyles: /\/main\.\w+\.css$/,
   },
 };
 ```
@@ -73,7 +73,7 @@ The production filename includes a hash value by default, such as `static/css/ma
 
 ### Using Function
 
-You can also set `output.enableInlineStyles` to a function that accepts the following parameters:
+You can also set `output.inlineStyles` to a function that accepts the following parameters:
 
 - `name`: The filename, such as `static/css/main.18a568e5.css`.
 - `size`: The file size in bytes.
@@ -83,7 +83,7 @@ For example, if we want to inline assets that are smaller than 10KB, we can add 
 ```js
 export default {
   output: {
-    enableInlineStyles({ size }) {
+    inlineStyles({ size }) {
       return size < 10 * 1000;
     },
   },

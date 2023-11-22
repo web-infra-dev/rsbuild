@@ -5,6 +5,7 @@ import type {
   RsbuildTarget,
   ChainedConfig,
   ChainedConfigWithUtils,
+  InlineChunkTest,
 } from '@rsbuild/shared';
 import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
@@ -97,6 +98,14 @@ export type UniBuilderExtraConfig = {
      * Otherwise, an exception will be thrown.
      */
     enableAssetFallback?: boolean;
+    /**
+     * @deprecated use `output.inlineScripts` instead
+     */
+    enableInlineScripts?: boolean | InlineChunkTest;
+    /**
+     * @deprecated use `output.inlineStyles` instead
+     */
+    enableInlineStyles?: boolean | InlineChunkTest;
   };
   html?: {
     /**

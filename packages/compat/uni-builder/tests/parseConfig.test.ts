@@ -188,4 +188,24 @@ describe('parseCommonConfig', () => {
       }).rsbuildPlugins.some((item) => item.name === 'rsbuild:assets-retry'),
     ).toBeTruthy();
   });
+
+  test('output.enableInlineScripts', () => {
+    expect(
+      parseCommonConfig({
+        output: {
+          enableInlineScripts: true,
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+  });
+
+  test('output.enableInlineStyles', () => {
+    expect(
+      parseCommonConfig({
+        output: {
+          enableInlineStyles: true,
+        },
+      }).rsbuildConfig,
+    ).toMatchSnapshot();
+  });
 });
