@@ -5,17 +5,18 @@ import connect from '@rsbuild/shared/connect';
 import { join } from 'path';
 import sirv from '../../compiled/sirv';
 import {
-  Context,
-  RsbuildConfig,
-  StartServerResult,
   getAddressUrls,
   printServerURLs,
   formatRoutes,
   ROOT_DIST_DIR,
-  PreviewServerOptions,
   isFunction,
-  ServerConfig,
   getServerOptions,
+  type Context,
+  type ServerConfig,
+  type RsbuildConfig,
+  type RequestHandler,
+  type StartServerResult,
+  type PreviewServerOptions,
 } from '@rsbuild/shared';
 import { faviconFallbackMiddleware } from './middlewares';
 import { createProxyMiddleware } from './proxy';
@@ -28,6 +29,7 @@ type RsbuildProdServerOptions = {
   };
   serverConfig: ServerConfig;
 };
+
 export class RsbuildProdServer {
   private app!: Server;
   private options: RsbuildProdServerOptions;
@@ -45,7 +47,7 @@ export class RsbuildProdServer {
   }
 
   private async applyDefaultMiddlewares() {
-    const { headers, proxy } = this.options.serverConfig;
+    const { headers, proxy, historyApiFallback } = this.options.serverConfig;
     if (headers) {
       this.middlewares.use((_req, res, next) => {
         for (const [key, value] of Object.entries(headers)) {
@@ -63,6 +65,20 @@ export class RsbuildProdServer {
     }
 
     this.applyStaticAssetMiddleware();
+
+    if (historyApiFallback) {
+      const { default: connectHistoryApiFallback } = await import(
+        '../../compiled/connect-history-api-fallback'
+      );
+      const historyApiFallbackMiddleware = connectHistoryApiFallback(
+        historyApiFallback === true ? {} : historyApiFallback,
+      ) as RequestHandler;
+
+      this.middlewares.use(historyApiFallbackMiddleware);
+
+      // ensure fallback request can be handled by sirv
+      this.applyStaticAssetMiddleware();
+    }
 
     this.middlewares.use(faviconFallbackMiddleware);
   }

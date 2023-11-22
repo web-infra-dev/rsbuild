@@ -154,21 +154,18 @@ export class RsbuildDevServer {
       const { default: connectHistoryApiFallback } = await import(
         '../../compiled/connect-history-api-fallback'
       );
-
       const historyApiFallbackMiddleware = connectHistoryApiFallback(
-        typeof dev.historyApiFallback === 'boolean'
-          ? {}
-          : dev.historyApiFallback,
+        dev.historyApiFallback === true ? {} : dev.historyApiFallback,
       ) as RequestHandler;
 
       this.middlewares.use(historyApiFallbackMiddleware);
 
+      // ensure fallback request can be handled by webpack-dev-middleware
       devMiddleware.middleware &&
         this.middlewares.use(devMiddleware.middleware);
     }
 
     this.middlewares.use(faviconFallbackMiddleware);
-
     this.middlewares.use(notFoundMiddleware);
   }
 
