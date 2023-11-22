@@ -45,7 +45,10 @@ npm add cssnano -D
 export default {
   tools: {
     postcss: (opts) => {
-      opts.postcssOptions.plugins.push(require('cssnano'));
+      // apply cssnano in production build
+      if (process.env.NODE_ENV === 'production') {
+        opts.postcssOptions?.plugins?.push(require('cssnano'));
+      }
     },
   },
 };
