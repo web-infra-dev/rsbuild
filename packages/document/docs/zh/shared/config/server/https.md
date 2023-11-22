@@ -19,7 +19,7 @@
 
 #### 手动设置证书
 
-你也可以在 `server.https` 选项中手动传入 HTTPS 服务器所需要的证书和对应的私钥，这个参数将直接传递给 Node.js 中 https 模块的 createServer。
+你可以在 `server.https` 选项中手动传入 HTTPS 服务器所需要的证书和对应的私钥，这个参数将直接传递给 Node.js 中 https 模块的 createServer。
 
 具体可以参考 [https.createServer](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener)。
 
