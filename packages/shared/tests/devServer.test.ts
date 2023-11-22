@@ -254,9 +254,7 @@ describe('test dev server', () => {
           "protocol": "",
         },
         "compress": true,
-        "devMiddleware": {
-          "writeToDisk": [Function],
-        },
+        "writeToDisk": [Function],
       }
     `);
 
@@ -282,10 +280,8 @@ describe('test dev server', () => {
           "protocol": "",
         },
         "compress": true,
-        "devMiddleware": {
-          "writeToDisk": [Function],
-        },
         "hmr": false,
+        "writeToDisk": [Function],
       }
     `);
   });

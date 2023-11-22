@@ -85,9 +85,7 @@ export const mergeDevOptions = ({
       protocol: '',
     },
     compress: true,
-    devMiddleware: {
-      writeToDisk: (file: string) => !file.includes('.hot-update.'),
-    },
+    writeToDisk: (file: string) => !file.includes('.hot-update.'),
   };
 
   const devConfig = rsbuildConfig.dev
