@@ -11,13 +11,15 @@ import { parseCommonConfig } from '../shared/parseCommonConfig';
 
 export async function parseConfig(
   uniBuilderConfig: UniBuilderRspackConfig,
+  cwd: string,
   frameworkConfigPath?: string,
 ): Promise<{
   rsbuildConfig: RsbuildConfig;
   rsbuildPlugins: RsbuildPlugin[];
 }> {
-  const { rsbuildConfig, rsbuildPlugins } = parseCommonConfig<'rspack'>(
+  const { rsbuildConfig, rsbuildPlugins } = await parseCommonConfig<'rspack'>(
     uniBuilderConfig,
+    cwd,
     frameworkConfigPath,
   );
 
@@ -37,6 +39,7 @@ export async function createRspackBuilder(
 ): Promise<RsbuildInstance<RspackProvider>> {
   const { rsbuildConfig, rsbuildPlugins } = await parseConfig(
     options.config,
+    options.cwd,
     options.frameworkConfigPath,
   );
   const rsbuild = await createRsbuild({

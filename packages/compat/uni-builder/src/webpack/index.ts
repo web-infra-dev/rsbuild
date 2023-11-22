@@ -11,13 +11,15 @@ import { pluginModuleScopes } from './plugins/moduleScopes';
 
 export async function parseConfig(
   uniBuilderConfig: UniBuilderWebpackConfig,
+  cwd: string,
   frameworkConfigPath?: string,
 ): Promise<{
   rsbuildConfig: RsbuildConfig;
   rsbuildPlugins: RsbuildPlugin[];
 }> {
-  const { rsbuildConfig, rsbuildPlugins } = parseCommonConfig<'webpack'>(
+  const { rsbuildConfig, rsbuildPlugins } = await parseCommonConfig<'webpack'>(
     uniBuilderConfig,
+    cwd,
     frameworkConfigPath,
   );
 
@@ -49,6 +51,7 @@ export async function createWebpackBuilder(
 ): Promise<RsbuildInstance<WebpackProvider>> {
   const { rsbuildConfig, rsbuildPlugins } = await parseConfig(
     options.config,
+    options.cwd,
     options.frameworkConfigPath,
   );
   const { webpackProvider } = await import('@rsbuild/webpack');
