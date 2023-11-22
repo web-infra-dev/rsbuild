@@ -52,8 +52,6 @@ export interface DevConfig {
     host?: string;
     protocol?: string;
   };
-  /** Whether to enable gzip compression */
-  compress?: boolean;
   /** see https://github.com/webpack/webpack-dev-middleware */
   devMiddleware?: {
     writeToDisk?: boolean | ((filename: string) => boolean);

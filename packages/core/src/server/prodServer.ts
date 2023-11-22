@@ -47,7 +47,22 @@ export class RsbuildProdServer {
   }
 
   private async applyDefaultMiddlewares() {
-    const { headers, proxy, historyApiFallback } = this.options.serverConfig;
+    const { headers, proxy, historyApiFallback, compress } =
+      this.options.serverConfig;
+
+    // compression should be the first middleware
+    if (compress) {
+      const { default: compression } = await import(
+        '../../compiled/http-compression'
+      );
+      this.middlewares.use((req, res, next) => {
+        compression({
+          gzip: true,
+          brotli: false,
+        })(req, res, next);
+      });
+    }
+
     if (headers) {
       this.middlewares.use((_req, res, next) => {
         for (const [key, value] of Object.entries(headers)) {
