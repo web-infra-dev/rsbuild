@@ -32,6 +32,10 @@ export type HistoryApiFallbackOptions = {
 
 export interface ServerConfig {
   /**
+   * Whether to enable gzip compression
+   */
+  compress?: boolean;
+  /**
    * Specify a port number for Dev Server to listen.
    */
   port?: number;

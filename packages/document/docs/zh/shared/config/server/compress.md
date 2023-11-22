@@ -7,7 +7,7 @@
 
 ```ts
 export default {
-  dev: {
+  server: {
     compress: false,
   },
 };
