@@ -279,12 +279,10 @@ Get the path to the Rsbuild built-in dependencies, such as:
 - sass-loader
 - less
 - less-loader
-- babel-loader
 - url-loader
-- file-loader
 - ...
 
-This method is usually used when you need to reuse the same dependency with the rsbuild.
+This method is usually used when you need to reuse the same dependency with the Rsbuild.
 
 :::tip
 Rsbuild built-in dependencies are subject to change with version iterations, e.g. generate large version break changes. Please avoid using this API if it is not necessary.

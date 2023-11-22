@@ -111,8 +111,6 @@ export const CHAIN_ID = {
     PUG: 'pug',
     /** vue-loader */
     VUE: 'vue',
-    /** file-loader */
-    FILE: 'file',
     /** @svgr/webpack */
     SVGR: 'svgr',
     /** yaml-loader */
@@ -122,7 +120,7 @@ export const CHAIN_ID = {
     /** html-loader */
     HTML: 'html',
     /** node-loader */
-    NODE: 'html',
+    NODE: 'node',
     /** babel-loader */
     BABEL: 'babel',
     /** esbuild-loader */
