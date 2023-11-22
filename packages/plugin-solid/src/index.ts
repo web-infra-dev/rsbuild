@@ -9,9 +9,9 @@ export function pluginSolid(
   options: PluginSolidPresetOptions = {},
 ): RsbuildPlugin {
   return {
-    name: 'plugin-solid',
+    name: 'rsbuild:solid',
 
-    pre: ['plugin-babel'],
+    pre: ['rsbuild:babel', 'rsbuild-webpack:babel'],
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {

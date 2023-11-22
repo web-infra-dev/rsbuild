@@ -2,7 +2,7 @@ import { removeTailSlash, type Define } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginDefine = (): RsbuildPlugin => ({
-  name: 'plugin-define',
+  name: 'rsbuild:define',
 
   setup(api) {
     api.modifyBundlerChain((chain, { CHAIN_ID, bundler }) => {

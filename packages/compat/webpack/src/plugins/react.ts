@@ -3,7 +3,7 @@ import { isProd, isUsingHMR } from '@rsbuild/shared';
 import type { RsbuildPlugin, RsbuildConfig } from '../types';
 
 export const pluginReactWebpack = (): RsbuildPlugin => ({
-  name: 'plugin-react-webpack',
+  name: 'rsbuild-webpack:react',
 
   setup(api) {
     api.modifyRsbuildConfig(async (config, { mergeRsbuildConfig }) => {

@@ -21,7 +21,7 @@ export const pluginTypeCheck = (
   options: PluginTypeCheckerOptions = {},
 ): RsbuildPlugin => {
   return {
-    name: 'plugin-type-check',
+    name: 'rsbuild:type-check',
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { target }) => {

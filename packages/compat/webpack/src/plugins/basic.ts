@@ -6,7 +6,7 @@ import { applyBasicPlugin } from '@rsbuild/shared';
  * Provide some basic configs of webpack
  */
 export const pluginBasic = (): RsbuildPlugin => ({
-  name: 'plugin-basic',
+  name: 'rsbuild-webpack:basic',
 
   setup(api) {
     applyBasicPlugin(api);

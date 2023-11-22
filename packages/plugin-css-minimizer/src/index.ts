@@ -48,7 +48,7 @@ export async function applyCSSMinimizer(
 export const pluginCssMinimizer = (
   options?: PluginCssMinimizerOptions,
 ): RsbuildPlugin => ({
-  name: 'plugin-css-minimizer',
+  name: 'rsbuild:css-minimizer',
 
   setup(api) {
     if (api.context.bundlerType === 'webpack') {

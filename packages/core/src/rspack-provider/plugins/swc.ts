@@ -56,7 +56,7 @@ export async function getDefaultSwcConfig(
  * Provide some swc configs of rspack
  */
 export const pluginSwc = (): RsbuildPlugin => ({
-  name: 'plugin-swc',
+  name: 'rsbuild:swc',
 
   setup(api) {
     api.modifyBundlerChain(

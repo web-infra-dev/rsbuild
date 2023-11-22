@@ -9,7 +9,7 @@ export type PluginVueOptions = {
 
 export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
   return {
-    name: 'plugin-vue',
+    name: 'rsbuild:vue',
 
     setup(api) {
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {

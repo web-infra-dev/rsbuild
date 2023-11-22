@@ -2,7 +2,7 @@ import type { RsbuildPlugin } from '../types';
 
 export function pluginBundleAnalyzer(): RsbuildPlugin {
   return {
-    name: 'plugin-bundle-analyzer',
+    name: 'rsbuild:bundle-analyzer',
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
         const config = api.getNormalizedConfig();

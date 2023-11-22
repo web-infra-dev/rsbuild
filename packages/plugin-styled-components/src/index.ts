@@ -25,7 +25,7 @@ type StyledComponentsOptions = {
 export const pluginStyledComponents = (
   userConfig: ChainedConfig<StyledComponentsOptions> = {},
 ): RsbuildPlugin => ({
-  name: 'plugin-styled-components',
+  name: 'rsbuild:styled-components',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {

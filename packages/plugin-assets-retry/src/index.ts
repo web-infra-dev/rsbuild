@@ -7,7 +7,7 @@ export type { PluginAssetsRetryOptions };
 export const pluginAssetsRetry = (
   options: PluginAssetsRetryOptions = {},
 ): RsbuildPlugin => ({
-  name: 'plugin-assets-retry',
+  name: 'rsbuild:assets-retry',
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, target, HtmlPlugin }) => {
       const config = api.getNormalizedConfig();

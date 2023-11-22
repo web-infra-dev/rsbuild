@@ -50,7 +50,7 @@ const getMainFields = (chain: WebpackChain, target: RsbuildTarget) => {
 };
 
 export const pluginResolve = (): RsbuildPlugin => ({
-  name: 'plugin-resolve',
+  name: 'rsbuild-webpack:resolve',
 
   setup(api) {
     applyResolvePlugin(api);

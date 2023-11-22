@@ -2,7 +2,7 @@ import type { RsbuildPlugin } from '@rsbuild/webpack';
 import { generateManifest } from '../../shared/manifest';
 
 export const pluginManifest = (): RsbuildPlugin => ({
-  name: 'plugin-manifest',
+  name: 'uni-builder:manifest',
 
   setup(api) {
     api.modifyWebpackChain(async (chain, { CHAIN_ID }) => {

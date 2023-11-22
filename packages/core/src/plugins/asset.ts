@@ -22,7 +22,7 @@ export function getRegExpForExts(exts: string[]): RegExp {
 }
 
 export const pluginAsset = (): RsbuildPlugin => ({
-  name: 'plugin-asset',
+  name: 'rsbuild:asset',
 
   setup(api) {
     api.modifyBundlerChain((chain, { isProd }) => {

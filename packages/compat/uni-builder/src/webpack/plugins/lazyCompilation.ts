@@ -10,7 +10,7 @@ export type LazyCompilationOptions =
 export const pluginLazyCompilation = (
   options: LazyCompilationOptions,
 ): RsbuildPlugin => ({
-  name: 'plugin-lazy-compilation',
+  name: 'uni-builder:lazy-compilation',
 
   setup(api) {
     api.modifyWebpackChain((chain, { isProd, isServer, isWebWorker }) => {

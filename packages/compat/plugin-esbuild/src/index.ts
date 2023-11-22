@@ -14,7 +14,7 @@ export function pluginEsbuild(
   userOptions: PluginEsbuildOptions = {},
 ): RsbuildPlugin {
   return {
-    name: 'plugin-esbuild',
+    name: 'rsbuild-webpack:esbuild',
 
     setup(api) {
       api.modifyWebpackChain(async (chain, { CHAIN_ID, isProd, target }) => {

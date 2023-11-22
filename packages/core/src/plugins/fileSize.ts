@@ -138,7 +138,7 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
 }
 
 export const pluginFileSize = (): RsbuildPlugin => ({
-  name: 'plugin-file-size',
+  name: 'rsbuild:file-size',
 
   setup(api) {
     api.onAfterBuild(async ({ stats }) => {

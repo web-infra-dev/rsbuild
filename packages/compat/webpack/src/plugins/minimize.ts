@@ -18,7 +18,7 @@ async function applyJSMinimizer(chain: BundlerChain, config: NormalizedConfig) {
 }
 
 export const pluginMinimize = (): RsbuildPlugin => ({
-  name: 'plugin-minimize',
+  name: 'rsbuild-webpack:minimize',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { isProd, CHAIN_ID }) => {
