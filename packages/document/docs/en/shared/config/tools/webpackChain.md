@@ -272,4 +272,4 @@ For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is regist
 
 ### Examples
 
-For usage examples, please refer to: [WebpackChain usage examples](https://rsbuild.dev/guide/advanced/custom-webpack-config.html#webpack-chain-basics).
+For usage examples, please refer to: [WebpackChain usage examples](https://rsbuild.dev/guide/advanced/custom-webpack-config#webpack-chain-basics).

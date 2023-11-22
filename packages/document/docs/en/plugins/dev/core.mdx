@@ -34,7 +34,7 @@ export default (): RsbuildPlugin => ({
 
   pre: ['plugin-bar'],
 
-  setup: api => {
+  setup: (api) => {
     api.onAfterBuild(() => {
       console.log('after build!');
     });
@@ -99,7 +99,7 @@ For example, if you register both the Foo and Bar plugins mentioned above, the F
 
 `api.context` is a read-only object that provides some context information.
 
-The content of `api.context` is exactly the same as `rsbuild.context`, please refer to [rsbuild.context](/api/javascript-api/instance.html#rsbuild-context).
+The content of `api.context` is exactly the same as `rsbuild.context`, please refer to [rsbuild.context](/api/javascript-api/instance#rsbuild-context).
 
 - **Example**
 
@@ -155,7 +155,7 @@ import IsPluginExists from '@en/shared/isPluginExists.md';
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     console.log(api.isPluginExists('plugin-foo'));
   },
 });

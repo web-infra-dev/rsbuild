@@ -50,6 +50,7 @@ export const getDefaultDevConfig = (): NormalizedDevConfig => ({
 export const getDefaultServerConfig = (): NormalizedServerConfig => ({
   port: DEFAULT_PORT,
   host: DEFAULT_DEV_HOST,
+  htmlFallback: 'index',
 });
 
 export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({

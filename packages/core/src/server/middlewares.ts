@@ -1,4 +1,9 @@
-import { RequestHandler as Middleware, debug, urlJoin } from '@rsbuild/shared';
+import {
+  RequestHandler as Middleware,
+  debug,
+  urlJoin,
+  HtmlFallback,
+} from '@rsbuild/shared';
 import path from 'path';
 import fs from 'fs';
 
@@ -20,7 +25,8 @@ export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
   publicPath: string;
   callback?: Middleware;
-}) => Middleware = ({ publicPath, distPath, callback }) => {
+  htmlFallback?: HtmlFallback;
+}) => Middleware = ({ htmlFallback, publicPath, distPath, callback }) => {
   /**
    * support access page without suffix and support fallback in some edge cases
    */
@@ -38,7 +44,8 @@ export const getHtmlFallbackMiddleware: (params: {
         req.headers.accept.includes('text/html') ||
         req.headers.accept.includes('*/*')
       ) ||
-      !req.url
+      !req.url ||
+      ['/favicon.ico'].includes(req.url)
     ) {
       return next();
     }
@@ -57,19 +64,19 @@ export const getHtmlFallbackMiddleware: (params: {
       outputFileSystem = devMiddleware.outputFileSystem;
     }
 
-    const tryRewrite = (filePath: string, newUrl: string) => {
-      if (outputFileSystem.existsSync(filePath) && callback) {
-        // we need add assetPrefix(output.publicPath) for html, otherwise webpack-dev-middleware cannot find the file
-        newUrl = urlJoin(publicPath, newUrl);
+    const rewrite = (newUrl: string) => {
+      // we need add assetPrefix(output.publicPath) for html, otherwise webpack-dev-middleware cannot find the file
+      newUrl = urlJoin(publicPath, newUrl);
+      debug?.(`Rewriting ${req.method} ${req.url} to ${newUrl}`);
 
-        debug?.(`Rewriting ${req.method} ${req.url} to ${newUrl}`);
+      req.url = newUrl;
 
-        req.url = newUrl;
-
+      if (callback) {
         return callback(req, res, (...args) => {
-          req.url = url;
           next(...args);
         });
+      } else {
+        return next();
       }
     };
 
@@ -77,17 +84,31 @@ export const getHtmlFallbackMiddleware: (params: {
     if (pathname.endsWith('/')) {
       const newUrl = url + 'index.html';
       const filePath = path.join(distPath, pathname, 'index.html');
-      tryRewrite(filePath, newUrl);
+
+      if (outputFileSystem.existsSync(filePath)) {
+        return rewrite(newUrl);
+      }
     } else if (
       // '/main' => '/main.html'
       !pathname.endsWith('.html')
     ) {
       const newUrl = url + '.html';
       const filePath = path.join(distPath, pathname + '.html');
-      tryRewrite(filePath, newUrl);
+
+      if (outputFileSystem.existsSync(filePath)) {
+        return rewrite(newUrl);
+      }
     } else {
       // when user set publicPath, webpack-dev-middleware can't get html file directly.
-      tryRewrite(path.join(distPath, pathname), url);
+      if (outputFileSystem.existsSync(path.join(distPath, pathname))) {
+        return rewrite(url);
+      }
+    }
+
+    if (htmlFallback === 'index') {
+      if (outputFileSystem.existsSync(path.join(distPath, 'index.html'))) {
+        return rewrite('/index.html');
+      }
     }
 
     next();

@@ -146,6 +146,7 @@ export class RsbuildDevServer {
         distPath: isAbsolute(distPath) ? distPath : join(this.pwd, distPath),
         publicPath: this.output.publicPath,
         callback: devMiddleware.middleware,
+        htmlFallback: this.dev.htmlFallback,
       }),
     );
 

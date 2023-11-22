@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/uni-builder",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "Unified builder for Modern.js",
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "webpack-subresource-integrity": "5.1.0"
   },
   "devDependencies": {
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.0"
   },
   "publishConfig": {
     "access": "public",

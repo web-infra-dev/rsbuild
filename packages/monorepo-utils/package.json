@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/monorepo-utils",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "The monorepo utils of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@types/node": "^16",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.0"
   },
   "publishConfig": {
     "access": "public",

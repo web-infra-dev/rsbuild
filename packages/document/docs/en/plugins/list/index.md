@@ -8,7 +8,7 @@ You can read about the functionality of Rsbuild plugins and how to develop an Rs
 
 You can register Rsbuild plugins in the `rsbuild.config.ts` file using the `plugins` option. For more details, refer to [plugins](/config/options/plugins).
 
-If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance#rsbuildaddplugins) method.
 
 ## Official Plugins
 
@@ -36,6 +36,12 @@ Plugins available for the Vue framework:
 Plugins available for the Svelte framework:
 
 - [Svelte Plugin](/plugins/list/plugin-svelte): Provides support for Svelte components (`.svelte` files).
+
+### For Solid
+
+Plugins available for the Solid framework:
+
+- [Solid Plugin](/plugins/list/plugin-solid): Provides support for Solid.
 
 ### Common
 

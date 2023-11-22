@@ -8,7 +8,7 @@
 
 你可以在 `rsbuild.config.ts` 中通过 `plugins` 选项来注册 Rsbuild 插件，详见 [plugins](/config/options/plugins)。
 
-如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
+如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance#rsbuildaddplugins) 方法来注册插件。
 
 ## 官方插件
 
@@ -35,7 +35,13 @@
 
 适用于 Svelte 框架的插件有：
 
-- [Svelte 插件](/plugins/list/plugin-svelte)：提供对 Svelte 组件（`.svelte` 文件）的支持
+- [Svelte 插件](/plugins/list/plugin-svelte)：提供对 Svelte 组件（`.svelte` 文件）的支持。
+
+### Solid
+
+适用于 Solid 框架的插件有：
+
+- [Solid 插件](/plugins/list/plugin-solid)：提供对 Solid 的支持。
 
 ### 通用插件
 

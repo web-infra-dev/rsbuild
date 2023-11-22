@@ -6,7 +6,7 @@ Rsbuild provides some configs to set the HTML template. Through this chapter, yo
 
 ## Set Template
 
-In Rsbuild, you can use [html.template](/config/options/html.html#htmltemplate) config to define the path to the custom HTML template.
+In Rsbuild, you can use [html.template](/config/options/html#htmltemplate) config to define the path to the custom HTML template.
 
 ```ts
 export default {
@@ -18,7 +18,7 @@ export default {
 
 ## Set Page Title
 
-You can set the HTML `<title>` tag through the [html.title](/config/options/html.html#htmltitle) config.
+You can set the HTML `<title>` tag through the [html.title](/config/options/html#htmltitle) config.
 
 When there is only one page in your project, just use the `html.title` setting directly:
 
@@ -50,7 +50,7 @@ export default {
 
 Rsbuild supports setting [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) icon and [apple-touch-icon](https://webhint.io/docs/user-guide/hints/hint-apple-touch-icons/) icon.
 
-You can set the favicon through the [html.favicon](/config/options/html.html#htmlfavicon) config.
+You can set the favicon through the [html.favicon](/config/options/html#htmlfavicon) config.
 
 ```ts
 export default {
@@ -60,7 +60,7 @@ export default {
 };
 ```
 
-You can also set the apple-touch-icon for iOS system through the [html.appIcon](/config/options/html.html#htmlappicon) config.
+You can also set the apple-touch-icon for iOS system through the [html.appIcon](/config/options/html#htmlappicon) config.
 
 ```ts
 export default {
@@ -72,7 +72,7 @@ export default {
 
 ## Set Meta Tags
 
-You can set the meta tags through the [html.meta](/config/options/html.html#htmlmeta) config.
+You can set the meta tags through the [html.meta](/config/options/html#htmlmeta) config.
 
 For example to setting description:
 
@@ -114,7 +114,7 @@ type DefaultParameters = {
 };
 ```
 
-You can also use the [html.templateParameters](/config/options/html.html#htmltemplateparameters) config to pass in custom template parameters.
+You can also use the [html.templateParameters](/config/options/html#htmltemplateparameters) config to pass in custom template parameters.
 
 For example:
 
@@ -164,7 +164,7 @@ Please read the [Lodash Template](https://lodashjs.com/docs/lodash.template) doc
 
 When the suffix of the template is `.ejs`, Rsbuild will use the EJS template engine to compile it. EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.
 
-For example, you can first refer to a `.ejs` template through the [html.template](/config/options/html.html#htmltemplate) config:
+For example, you can first refer to a `.ejs` template through the [html.template](/config/options/html#htmltemplate) config:
 
 ```ts
 export default {
@@ -213,7 +213,7 @@ All tags that need to be injected into HTML can be accessed in the template file
 </html>
 ```
 
-The purpose of `html.tags` is to adjust these template variables and thus modify the HTML, as defined in [API References](/config/options/html.html#htmltags).
+The purpose of `html.tags` is to adjust these template variables and thus modify the HTML, as defined in [API References](/config/options/html#htmltags).
 
 ### Tag Object
 

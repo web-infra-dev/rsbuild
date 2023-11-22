@@ -50,7 +50,7 @@ The script URL will be:
 `dev.assetPrefix` corresponds to the following native configurations:
 
 - [output.publicPath](https://webpack.js.org/guides/public-path/) configuration in webpack.
-- [output.publicPath](https://rspack.dev/config/output.html#outputpublicpath) configuration in Rspack.
+- [output.publicPath](https://rspack.dev/config/output#outputpublicpath) configuration in Rspack.
 
 The differences from the native configuration are as follows:
 

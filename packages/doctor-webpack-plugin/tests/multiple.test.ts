@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest';
-import path from 'path';
 
 /**
  * create sandbox to load src/multiple.ts to avoid sdk save in global variable between different test cases.

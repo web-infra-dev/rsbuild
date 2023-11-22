@@ -8,13 +8,13 @@ Rsbuild 内置多种常用的样式资源处理方式，包括 Less / Sass 预�
 
 Rsbuild 内置了社区流行的 CSS 预处理器，包括 Less 和 Sass。
 
-默认情况下，你不需要对 Less 和 Sass 进行任何配置。如果你有自定义 loader 配置的需求，可以通过配置 [tools.less](/config/options/tools.html#toolsless)、[tools.sass](/config/options/tools.html#toolssass) 来进行设置。
+默认情况下，你不需要对 Less 和 Sass 进行任何配置。如果你有自定义 loader 配置的需求，可以通过配置 [tools.less](/config/options/tools#toolsless)、[tools.sass](/config/options/tools#toolssass) 来进行设置。
 
 你也可以在 Rsbuild 中使用 Stylus，只需要安装 Rsbuild 提供的 Stylus 插件即可，使用方式请参考 [Stylus 插件](/plugins/list/plugin-stylus)。
 
 ## 使用 PostCSS
 
-Rsbuild 内置了 [PostCSS](https://postcss.org/) 来转换 CSS 代码。你可以通过 [tools.postcss](/config/options/tools.html#toolspostcss) 来配置 postcss-loader。
+Rsbuild 内置了 [PostCSS](https://postcss.org/) 来转换 CSS 代码。你可以通过 [tools.postcss](/config/options/tools#toolspostcss) 来配置 postcss-loader。
 
 ```ts
 export default {
@@ -52,7 +52,7 @@ Rsbuild 默认使用 Rspack 内置的 `SwcCssMinimizerRspackPlugin` 插件，在
 
 默认情况下，Rsbuild 会把 CSS 提取为独立的 `.css` 文件，并输出到构建产物目录。
 
-如果你希望将样式内联到 JS 文件中，可以将 [output.disableCssExtract](/config/options/output.html#outputdisablecssextract) 设置为 `true` 来禁用 CSS 提取逻辑。当浏览器请求到 JS 文件后，JS 将动态地向 HTML 插入 `<style>` 标签，以此加载 CSS 样式。
+如果你希望将样式内联到 JS 文件中，可以将 [output.disableCssExtract](/config/options/output#outputdisablecssextract) 设置为 `true` 来禁用 CSS 提取逻辑。当浏览器请求到 JS 文件后，JS 将动态地向 HTML 插入 `<style>` 标签，以此加载 CSS 样式。
 
 ```ts
 export default {

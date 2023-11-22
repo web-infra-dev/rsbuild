@@ -19,7 +19,7 @@ type Config =
     }>;
 ```
 
-- **默认值：** 当你使用 [React 插件](/plugins/list/plugin-react)时，自动支持 [React 组件库的按需引入](/plugins/list/plugin-react.html#组件库按需引入)。
+- **默认值：** 当你使用 [React 插件](/plugins/list/plugin-react)时，自动支持 [React 组件库的按需引入](/plugins/list/plugin-react#组件库按需引入)。
 
 ### 示例
 

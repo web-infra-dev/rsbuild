@@ -6,7 +6,7 @@ A variety of chunk splitting strategies are built into Rsbuild, which can meet t
 
 ## Splitting Strategies
 
-> The chunk splitting config of Rsbuild is in [performance.chunkSplit](/config/options/performance.html#performancechunksplit).
+> The chunk splitting config of Rsbuild is in [performance.chunkSplit](/config/options/performance#performancechunksplit).
 
 Rsbuild supports the following chunk splitting strategies:
 
@@ -192,7 +192,7 @@ export default {
 };
 ```
 
-The config in `override` will be merged with the bundler config. For specific config details, please refer to [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) or [Rspack - splitChunks](https://rspack.dev/config/optimization.html#optimization-splitchunks).
+The config in `override` will be merged with the bundler config. For specific config details, please refer to [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) or [Rspack - splitChunks](https://rspack.dev/config/optimization#optimization-splitchunks).
 
 ## Using Dynamic Import for Code Splitting
 

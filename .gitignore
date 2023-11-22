@@ -17,3 +17,5 @@ tsconfig.tsbuildinfo
 .idea/
 .nx/
 .history/
+.env.local
+.env.*.local

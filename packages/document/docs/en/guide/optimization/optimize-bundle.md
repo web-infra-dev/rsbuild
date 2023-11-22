@@ -36,7 +36,7 @@ If you want to find out the large libraries in the project, you can add the `BUN
 BUNDLE_ANALYZE=true pnpm build
 ```
 
-See the [performance.bundleAnalyze](/config/options/performance.html#performancebundleanalyze) configuration for details.
+See the [performance.bundleAnalyze](/config/options/performance#performancebundleanalyze) configuration for details.
 
 ## Adjust Browserslist
 
@@ -60,7 +60,7 @@ Please read the [Browserslist](/guide/advanced/browserslist) chapter to know mor
 
 ## Usage polyfill
 
-When it is clear that third-party dependencies do not require additional polyfill, you can set [output.polyfill](/config/options/output.html#outputpolyfill) to `usage`.
+When it is clear that third-party dependencies do not require additional polyfill, you can set [output.polyfill](/config/options/output#outputpolyfill) to `usage`.
 
 In `usage` mode, Rsbuild analyzes the syntax used in the source code and injects the required polyfill code on demand to reduce the size of polyfill.
 

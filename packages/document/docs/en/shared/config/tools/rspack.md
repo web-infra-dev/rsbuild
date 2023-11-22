@@ -163,7 +163,7 @@ export default {
 
 - **Type:** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
-Add additional [Rspack rules](https://rspack.dev/config/module.html#modulerules).
+Add additional [Rspack rules](https://rspack.dev/config/module#modulerules).
 
 For example:
 

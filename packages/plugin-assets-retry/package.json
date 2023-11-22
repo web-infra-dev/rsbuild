@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-assets-retry",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "Assets retry plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -38,7 +38,7 @@
     "@types/serialize-javascript": "^5.0.1",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
     "terser": "5.19.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.0"
   },
   "publishConfig": {
     "access": "public",

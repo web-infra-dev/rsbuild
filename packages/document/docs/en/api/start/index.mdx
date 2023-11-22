@@ -24,13 +24,13 @@ import { createRsbuild } from '@rsbuild/core';
 const rsbuild = await createRsbuild();
 ```
 
-The `createRsbuild` method provides some options, which you can learn more about in the [API - createRsbuild](/api/javascript-api/core.html#creatersbuild).
+The `createRsbuild` method provides some options, which you can learn more about in the [API - createRsbuild](/api/javascript-api/core#creatersbuild).
 
 ### 3. Call Rsbuild Instance Method
 
 The Rsbuild instance provides some methods, which you can use it according to the usage scenarios.
 
-To start local development, it is recommended to use the [rsbuild.startDevServer](/api/javascript-api/instance.html#rsbuild-startdevserver) method, which will start a local Dev Server.
+To start local development, it is recommended to use the [rsbuild.startDevServer](/api/javascript-api/instance#rsbuild-startdevserver) method, which will start a local Dev Server.
 
 ```ts
 await rsbuild.startDevServer();
@@ -43,7 +43,7 @@ After successfully starting Dev Server, you can see the following logs:
   > Network:  http://192.168.0.1:8081
 ```
 
-To deploy the App to production environment, it is recommended to use the [rsbuild.build](/api/javascript-api/instance.html#rsbuild-build) method, which will build the production outputs.
+To deploy the App to production environment, it is recommended to use the [rsbuild.build](/api/javascript-api/instance#rsbuild-build) method, which will build the production outputs.
 
 ```ts
 await rsbuild.build();

@@ -4,7 +4,7 @@
 
 默认情况下，Rsbuild 不会编译 `node_modules` 下的 JavaScript 文件。如果项目引入的 npm 包中含有 ESNext 语法，会被打包进产物中。
 
-遇到这种情况时，可以通过 [source.include](/config/options/source.html#sourceinclude) 配置项来指定需要额外进行编译的目录或模块。
+遇到这种情况时，可以通过 [source.include](/config/options/source#sourceinclude) 配置项来指定需要额外进行编译的目录或模块。
 
 ---
 
@@ -156,7 +156,7 @@ Rsbuild 在生产构建时会默认开启 webpack 的 tree shaking 功能，tree
 
 该报错表示打包过程中出现了内存溢出问题，大多数情况下是由于打包的内容较多，超出了 Node.js 默认的内存上限。
 
-如果出现 OOM 问题，最简单的方法是通过增加内存上限来解决，Node.js 提供了 `--max-old-space-size` 选项来对此进行设置。你可以在 CLI 命令前添加 [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) 来设置此参数。
+如果出现 OOM 问题，最简单的方法是通过增加内存上限来解决，Node.js 提供了 `--max-old-space-size` 选项来对此进行设置。你可以在 CLI 命令前添加 [NODE_OPTIONS](https://nodejs.org/api/cli#node_optionsoptions) 来设置此参数。
 
 比如，在 `modern build` 命令前添加参数：
 
@@ -175,8 +175,8 @@ Rsbuild 在生产构建时会默认开启 webpack 的 tree shaking 功能，tree
 
 Node.js 官方文档中有对以下参数更详细的解释：
 
-- [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions)
-- [--max-old-space-size](https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes)
+- [NODE_OPTIONS](https://nodejs.org/api/cli#node_optionsoptions)
+- [--max-old-space-size](https://nodejs.org/api/cli#--max-old-space-sizesize-in-megabytes)
 
 除了增加内存上限，通过开启一些编译策略来提升构建效率也是一个解决方案，请参考 [提升构建性能](/guide/optimization/build-performance)。
 

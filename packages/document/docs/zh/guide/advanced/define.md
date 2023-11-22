@@ -38,11 +38,11 @@ if (false) {
 
 你可以在运行时代码中使用 `process.env.ASSET_PREFIX` 来访问静态资源的前缀。
 
-- 在开发环境下，它等同于 [dev.assetPrefix](/config/options/dev.html#dev-assetprefix) 设置的值。
-- 在生产环境下，它等同于 [output.assetPrefix](/config/options/output.html#output-assetprefix) 设置的值。
+- 在开发环境下，它等同于 [dev.assetPrefix](/config/options/dev#dev-assetprefix) 设置的值。
+- 在生产环境下，它等同于 [output.assetPrefix](/config/options/output#output-assetprefix) 设置的值。
 - Rsbuild 会自动移除 `assetPrefix` 尾部的斜线符号，以便于进行字符串拼接。
 
-比如，我们通过 [output.copy](/config/options/output.html#output-copy) 配置，将 `static/icon.png` 图片拷贝到 `dist` 目录下：
+比如，我们通过 [output.copy](/config/options/output#output-copy) 配置，将 `static/icon.png` 图片拷贝到 `dist` 目录下：
 
 ```ts
 export default {
@@ -76,7 +76,7 @@ const Image = <img src={`https://example.com/static/icon.png`} />;
 
 ## 使用 define 配置项
 
-通过配置 [source.define](/config/options/source.html#sourcedefine) 选项，你可以在构建时将代码中的变量替换成其它值或者表达式。
+通过配置 [source.define](/config/options/source#sourcedefine) 选项，你可以在构建时将代码中的变量替换成其它值或者表达式。
 
 define 类似于其它一些语言提供的宏定义能力，但得益于 JavaScript 强大的运行时表达能力，通常不需要像那些语言一样将其用作复杂代码的生成器。它常用于在构建环境向运行时传递环境变量等简单信息，或是辅助 Rsbuild 进行 Tree Shaking 等操作。
 
@@ -100,7 +100,7 @@ export default {
 
 同理 `{ foo: "bar" }` 也应该被转换成 `"{\"foo\":\"bar\"}"`，如果直接传入原始对象则意味着把表达式 `process.env.NODE_ENV.foo` 替换为标识符 `bar`。
 
-`source.define` 的具体行为请参考 [API 文档](/config/options/source.html#sourcedefine)。
+`source.define` 的具体行为请参考 [API 文档](/config/options/source#sourcedefine)。
 
 :::tip
 以上例子中的环境变量 `NODE_ENV` 已经由 Rsbuild 自动注入，通常你不需要手动配置它的值。

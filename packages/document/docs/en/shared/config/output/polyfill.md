@@ -41,4 +41,4 @@ export default {
 };
 ```
 
-> Please refer to the [Polyfill Mode](/guide/advanced/browser-compatibility.html#polyfill-mode) for more details.
+> Please refer to the [Polyfill Mode](/guide/advanced/browser-compatibility#polyfill-mode) for more details.

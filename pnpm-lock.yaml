@@ -10,10 +10,10 @@ importers:
     devDependencies:
       '@modern-js/module-tools':
         specifier: ^2.40.0
-        version: 2.40.0(typescript@5.2.2)
+        version: 2.40.0(typescript@5.3.2)
       '@modern-js/monorepo-tools':
         specifier: ^2.40.0
-        version: 2.40.0(typescript@5.2.2)
+        version: 2.40.0(typescript@5.3.2)
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:packages/test-helper
@@ -43,7 +43,7 @@ importers:
         version: 3.0.3
       vite-tsconfig-paths:
         specifier: 4.2.1
-        version: 4.2.1(typescript@5.2.2)
+        version: 4.2.1(typescript@5.3.2)
       vitest:
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1
@@ -75,6 +75,24 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@rsbuild/doctor-core':
+        specifier: workspace:*
+        version: link:../packages/doctor-core
+      '@rsbuild/doctor-rspack-plugin':
+        specifier: workspace:*
+        version: link:../packages/doctor-rspack-plugin
+      '@rsbuild/doctor-sdk':
+        specifier: workspace:*
+        version: link:../packages/doctor-sdk
+      '@rsbuild/doctor-types':
+        specifier: workspace:*
+        version: link:../packages/doctor-types
+      '@rsbuild/doctor-utils':
+        specifier: workspace:*
+        version: link:../packages/doctor-utils
+      '@rsbuild/doctor-webpack-plugin':
+        specifier: workspace:*
+        version: link:../packages/doctor-webpack-plugin
       '@rsbuild/plugin-assets-retry':
         specifier: workspace:*
         version: link:../packages/plugin-assets-retry
@@ -102,6 +120,9 @@ importers:
       '@rsbuild/plugin-rem':
         specifier: workspace:*
         version: link:../packages/plugin-rem
+      '@rsbuild/plugin-solid':
+        specifier: workspace:*
+        version: link:../packages/plugin-solid
       '@rsbuild/plugin-source-build':
         specifier: workspace:*
         version: link:../packages/plugin-source-build
@@ -135,9 +156,15 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../packages/shared
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../packages/test-helper
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../packages/compat/webpack
+      '@rspack/core':
+        specifier: 0.3.14
+        version: 0.3.14
       '@types/lodash':
         specifier: ^4.14.200
         version: 4.14.200
@@ -150,6 +177,9 @@ importers:
       '@types/react-dom':
         specifier: ^18
         version: 18.2.14
+      '@types/webpack':
+        specifier: 5.28.0
+        version: 5.28.0
       fast-glob:
         specifier: ^3.3.1
         version: 3.3.1
@@ -157,8 +187,8 @@ importers:
         specifier: 1.33.0
         version: 1.33.0
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   e2e/cases/moment:
     dependencies:
@@ -175,6 +205,12 @@ importers:
       '@types/prop-types':
         specifier: ^15
         version: 15.7.9
+
+  e2e/cases/solid:
+    dependencies:
+      solid-js:
+        specifier: ^1.8.5
+        version: 1.8.5
 
   e2e/cases/source-build/app:
     dependencies:
@@ -283,8 +319,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   examples/react:
     dependencies:
@@ -302,8 +338,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-react
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   examples/react-webpack:
     dependencies:
@@ -324,8 +360,24 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
+
+  examples/solid:
+    dependencies:
+      solid-js:
+        specifier: ^1.8.5
+        version: 1.8.5
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../../packages/plugin-babel
+      '@rsbuild/plugin-solid':
+        specifier: workspace:*
+        version: link:../../packages/plugin-solid
 
   examples/svelte:
     dependencies:
@@ -353,8 +405,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compat/uni-builder
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   examples/vanilla:
     devDependencies:
@@ -362,8 +414,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/babel-preset:
     dependencies:
@@ -417,8 +469,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/compat/plugin-esbuild:
     dependencies:
@@ -442,8 +494,8 @@ importers:
         specifier: workspace:*
         version: link:../webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/compat/plugin-swc:
     dependencies:
@@ -503,8 +555,8 @@ importers:
         specifier: ^0.7.4
         version: 0.7.4
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
       webpack:
         specifier: ^5.89.0
         version: 5.89.0(@swc/core@1.3.42)
@@ -544,8 +596,8 @@ importers:
         version: 5.1.0(webpack@5.89.0)
     devDependencies:
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/compat/webpack:
     dependencies:
@@ -623,7 +675,7 @@ importers:
         version: 5.3.9(webpack@5.89.0)
       ts-loader:
         specifier: 9.4.4
-        version: 9.4.4(typescript@5.2.2)(webpack@5.89.0)
+        version: 9.4.4(typescript@5.3.2)(webpack@5.89.0)
       tsconfig-paths-webpack-plugin:
         specifier: 4.1.0
         version: 4.1.0
@@ -647,8 +699,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/core:
     dependencies:
@@ -684,8 +736,8 @@ importers:
         specifier: ^8.2.0
         version: 8.5.8
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild:
     dependencies:
@@ -700,8 +752,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-lit-js:
     devDependencies:
@@ -721,8 +773,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-react-js:
     dependencies:
@@ -762,8 +814,43 @@ importers:
         specifier: ^18
         version: 18.2.14
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
+
+  packages/create-rsbuild/template-solid-js:
+    dependencies:
+      solid-js:
+        specifier: ^1.8.5
+        version: 1.8.5
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../core
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../../plugin-babel
+      '@rsbuild/plugin-solid':
+        specifier: workspace:*
+        version: link:../../plugin-solid
+
+  packages/create-rsbuild/template-solid-ts:
+    dependencies:
+      solid-js:
+        specifier: ^1.8.5
+        version: 1.8.5
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../core
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../../plugin-babel
+      '@rsbuild/plugin-solid':
+        specifier: workspace:*
+        version: link:../../plugin-solid
+      typescript:
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-svelte-js:
     dependencies:
@@ -791,8 +878,8 @@ importers:
         specifier: workspace:*
         version: link:../../plugin-svelte
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-vanilla-js:
     devDependencies:
@@ -806,8 +893,8 @@ importers:
         specifier: workspace:*
         version: link:../../core
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-vue2-js:
     dependencies:
@@ -835,8 +922,8 @@ importers:
         specifier: workspace:*
         version: link:../../plugin-vue2
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/create-rsbuild/template-vue3-js:
     dependencies:
@@ -864,8 +951,8 @@ importers:
         specifier: workspace:*
         version: link:../../plugin-vue
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/doctor-core:
     dependencies:
@@ -952,8 +1039,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
       webpack:
         specifier: ^5.89.0
         version: 5.89.0
@@ -1001,8 +1088,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/doctor-sdk:
     dependencies:
@@ -1092,8 +1179,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/doctor-types:
     dependencies:
@@ -1126,8 +1213,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/doctor-utils:
     dependencies:
@@ -1202,8 +1289,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/doctor-webpack-plugin:
     dependencies:
@@ -1275,14 +1362,14 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/document:
     devDependencies:
       '@rspress/shared':
-        specifier: ^1.7.0
-        version: 1.7.0
+        specifier: ^1.7.1
+        version: 1.7.1
       '@types/node':
         specifier: ^16
         version: 16.18.59
@@ -1293,8 +1380,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       rspress:
-        specifier: ^1.7.0
-        version: 1.7.0(webpack@5.89.0)
+        specifier: ^1.7.1
+        version: 1.7.1(webpack@5.89.0)
 
   packages/monorepo-utils:
     dependencies:
@@ -1321,8 +1408,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-assets-retry:
     dependencies:
@@ -1358,8 +1445,8 @@ importers:
         specifier: 5.19.2
         version: 5.19.2
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-babel:
     dependencies:
@@ -1398,8 +1485,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-check-syntax:
     dependencies:
@@ -1429,8 +1516,8 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-css-minimizer:
     dependencies:
@@ -1454,8 +1541,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-image-compress:
     dependencies:
@@ -1482,8 +1569,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
       webpack:
         specifier: ^5.89.0
         version: 5.89.0
@@ -1504,8 +1591,8 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-pug:
     dependencies:
@@ -1526,8 +1613,8 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-react:
     dependencies:
@@ -1557,8 +1644,8 @@ importers:
         specifier: ^7.5.4
         version: 7.5.4
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-rem:
     dependencies:
@@ -1579,8 +1666,33 @@ importers:
         specifier: npm:html-rspack-plugin@5.5.7
         version: /html-rspack-plugin@5.5.7
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
+
+  packages/plugin-solid:
+    dependencies:
+      babel-preset-solid:
+        specifier: ^1.8.4
+        version: 1.8.4(@babel/core@7.23.2)
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.23.2
+        version: 7.23.2
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../plugin-babel
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
+      '@rsbuild/webpack':
+        specifier: workspace:*
+        version: link:../compat/webpack
+      typescript:
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-source-build:
     dependencies:
@@ -1604,8 +1716,8 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-styled-components:
     dependencies:
@@ -1632,8 +1744,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-stylus:
     dependencies:
@@ -1657,8 +1769,8 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
       webpack:
         specifier: ^5.89.0
         version: 5.89.0
@@ -1673,7 +1785,7 @@ importers:
         version: 3.1.9(svelte@4.2.2)
       svelte-preprocess:
         specifier: ^5.0.4
-        version: 5.0.4(@babel/core@7.23.2)(postcss@8.4.31)(svelte@4.2.2)(typescript@5.2.2)
+        version: 5.0.4(@babel/core@7.23.2)(postcss@8.4.31)(svelte@4.2.2)(typescript@5.3.2)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1685,8 +1797,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-svgr:
     dependencies:
@@ -1695,7 +1807,7 @@ importers:
         version: link:../shared
       '@svgr/webpack':
         specifier: 8.0.1
-        version: 8.0.1(typescript@5.2.2)
+        version: 8.0.1(typescript@5.3.2)
       url-loader:
         specifier: 4.1.1
         version: 4.1.1(webpack@5.89.0)
@@ -1710,8 +1822,8 @@ importers:
         specifier: ^16
         version: 16.18.59
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-type-check:
     dependencies:
@@ -1720,7 +1832,7 @@ importers:
         version: link:../shared
       fork-ts-checker-webpack-plugin:
         specifier: 9.0.0
-        version: 9.0.0(typescript@5.2.2)(webpack@5.89.0)
+        version: 9.0.0(typescript@5.3.2)(webpack@5.89.0)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1729,8 +1841,8 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-vue:
     dependencies:
@@ -1751,8 +1863,8 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-vue-jsx:
     dependencies:
@@ -1776,8 +1888,8 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-vue2:
     dependencies:
@@ -1798,8 +1910,8 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/plugin-vue2-jsx:
     dependencies:
@@ -1826,8 +1938,8 @@ importers:
         specifier: workspace:*
         version: link:../compat/webpack
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
 
   packages/shared:
     dependencies:
@@ -1866,8 +1978,8 @@ importers:
         specifier: 5.3.9
         version: 5.3.9(webpack@5.89.0)
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
       webpack:
         specifier: ^5.89.0
         version: 5.89.0
@@ -1896,8 +2008,8 @@ importers:
         specifier: 3.4.10
         version: 3.4.10
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
       upath:
         specifier: 2.0.1
         version: 2.0.1
@@ -1948,8 +2060,8 @@ importers:
         specifier: 8.4.31
         version: 8.4.31
       typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
+        specifier: ^5.3.0
+        version: 5.3.2
     devDependencies:
       '@types/connect':
         specifier: 3.4.35
@@ -1978,6 +2090,12 @@ importers:
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
+      dotenv:
+        specifier: 16.3.1
+        version: 16.3.1
+      dotenv-expand:
+        specifier: 10.0.0
+        version: 10.0.0
       gzip-size:
         specifier: ^6.0.0
         version: 6.0.0
@@ -2036,7 +2154,7 @@ importers:
         version: 1.1.3
       '@modern-js/generator-utils':
         specifier: ^3.2.8
-        version: 3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+        version: 3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
       fs-extra:
         specifier: ^11.1.1
         version: 11.1.1
@@ -2276,6 +2394,13 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/types': 7.23.0
+
+  /@babel/helper-module-imports@7.18.6:
+    resolution: {integrity: sha512-0NFvs3VkuSYbFi1x2Vd6tKrywq+z/cLeYC/RJNFrIX/30Bf5aiGYbtvGXolEktzJH8o5E5KJ3tT+nkxuuZFVlA==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/types': 7.23.0
+    dev: false
 
   /@babel/helper-module-imports@7.22.15:
     resolution: {integrity: sha512-0pYVBnDKZO2fnSPCrgM/6WMc7eS20Fbok+0r88fp+YtWVLZrp4CkafFGIp+W0VKw4a22sgebPT99y+FDNMdP4w==}
@@ -4212,7 +4337,7 @@ packages:
       '@formily/shared': 2.2.30
       '@formily/validator': 2.2.30
 
-  /@formily/json-schema@2.2.30(typescript@5.2.2):
+  /@formily/json-schema@2.2.30(typescript@5.3.2):
     resolution: {integrity: sha512-J21wb5rdlhfMRyMyHOXsnzTJP/k4r6k//V+zN9GQ4noVNu9Qp+s6l+gm++0QFGom13Cg3+L7xB1FpLF1f4RQxg==}
     engines: {npm: '>=3.0.0'}
     peerDependencies:
@@ -4221,7 +4346,7 @@ packages:
       '@formily/core': 2.2.30
       '@formily/reactive': 2.2.30
       '@formily/shared': 2.2.30
-      typescript: 5.2.2
+      typescript: 5.3.2
 
   /@formily/path@2.2.30:
     resolution: {integrity: sha512-VR8ohgsXtAa71EEYHmYZyMD+m5M3I6LxSNabcsG/hArmpxKfmxAXJlGKvpfImbcsINEDDwDnqK4r9QfRsdRppw==}
@@ -4389,12 +4514,12 @@ packages:
       react: 18.2.0
     dev: true
 
-  /@modern-js/codesmith-formily@2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
+  /@modern-js/codesmith-formily@2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.3.2):
     resolution: {integrity: sha512-9YaG+iumS3+kyfwCKdGCKCWMgok0RyeZpwXWdz5Ky7qHuTzyz+QrUgvHs0L+KvY2akjGRZOX0dBbdr0srREvQA==}
     peerDependencies:
       '@modern-js/codesmith': ^2.3.0
     dependencies:
-      '@formily/json-schema': 2.2.30(typescript@5.2.2)
+      '@formily/json-schema': 2.2.30(typescript@5.3.2)
       '@formily/validator': 2.2.30
       '@modern-js/codesmith': 2.3.0
       '@modern-js/utils': 2.40.0
@@ -4422,10 +4547,10 @@ packages:
       '@swc/helpers': 0.5.1
     dev: true
 
-  /@modern-js/generator-common@3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
+  /@modern-js/generator-common@3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.3.2):
     resolution: {integrity: sha512-g1K5rpgTpuzJmBogv2uSLyxZEWSuR8SZGswE7xfm1DWuVHR0PF9QH2yhyekNqWjf1n+NoHCzX9/iM1uccLXstw==}
     dependencies:
-      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
       '@modern-js/plugin-i18n': 2.39.2
       '@swc/helpers': 0.5.1
     transitivePeerDependencies:
@@ -4433,10 +4558,10 @@ packages:
       - typescript
     dev: false
 
-  /@modern-js/generator-common@3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
+  /@modern-js/generator-common@3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.3.2):
     resolution: {integrity: sha512-652WVsqGUwFvO5hJrkQL/lauQK2jP3Pns9SIWHBcz5eMyEm5vo07ZxfAjGNktRoLotSZnOX4GHTuQdgKN1fxxg==}
     dependencies:
-      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
       '@modern-js/plugin-i18n': 2.40.0
       '@swc/helpers': 0.5.1
     transitivePeerDependencies:
@@ -4444,10 +4569,10 @@ packages:
       - typescript
     dev: true
 
-  /@modern-js/generator-utils@3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
+  /@modern-js/generator-utils@3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.3.2):
     resolution: {integrity: sha512-X+Z24CAsvZRLX9hY524wAR9f9ERL782avYULJeI0c6wnvRyITj+7LkAQZzDQ0eLUl80Fu58yDz9yELdj2EegaQ==}
     dependencies:
-      '@modern-js/generator-common': 3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+      '@modern-js/generator-common': 3.2.10(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
       '@modern-js/plugin-i18n': 2.39.2
       '@modern-js/utils': 2.39.2
       '@swc/helpers': 0.5.1
@@ -4456,10 +4581,10 @@ packages:
       - typescript
     dev: false
 
-  /@modern-js/generator-utils@3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.2.2):
+  /@modern-js/generator-utils@3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.3.2):
     resolution: {integrity: sha512-++stOE3UbMt5usxTriOv/c//NdKQBJKdKrz0a/L/FG1OPrwEVCIEeCw2yF+tWNC7uuSJPl0coVEIdkMmSiHkWQ==}
     dependencies:
-      '@modern-js/generator-common': 3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+      '@modern-js/generator-common': 3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
       '@modern-js/plugin-i18n': 2.40.0
       '@modern-js/utils': 2.40.0
       '@swc/helpers': 0.5.1
@@ -4468,7 +4593,7 @@ packages:
       - typescript
     dev: true
 
-  /@modern-js/module-tools@2.40.0(typescript@5.2.2):
+  /@modern-js/module-tools@2.40.0(typescript@5.3.2):
     resolution: {integrity: sha512-/bpqJb1SlpfVY42l2+vKvcfRKZeHZyhPVOdC+8y4tN7ZybSjKj3RluHI0dzv+WZI/Ddg1ZOi8ZplBnCjUivFzw==}
     engines: {node: '>=14.0.0'}
     hasBin: true
@@ -4485,7 +4610,7 @@ packages:
       '@babel/traverse': 7.23.2
       '@babel/types': 7.23.0
       '@modern-js/core': 2.40.0
-      '@modern-js/new-action': 2.40.0(typescript@5.2.2)
+      '@modern-js/new-action': 2.40.0(typescript@5.3.2)
       '@modern-js/plugin': 2.40.0
       '@modern-js/plugin-changeset': 2.40.0
       '@modern-js/plugin-i18n': 2.40.0
@@ -4495,9 +4620,9 @@ packages:
       '@modern-js/upgrade': 2.40.0
       '@modern-js/utils': 2.40.0
       '@rollup/pluginutils': 4.1.1
-      '@svgr/core': 8.0.0(typescript@5.2.2)
+      '@svgr/core': 8.0.0(typescript@5.3.2)
       '@svgr/plugin-jsx': 8.0.1(@svgr/core@8.0.0)
-      '@svgr/plugin-svgo': 8.0.1(@svgr/core@8.0.0)(typescript@5.2.2)
+      '@svgr/plugin-svgo': 8.0.1(@svgr/core@8.0.0)(typescript@5.3.2)
       '@swc/helpers': 0.5.1
       convert-source-map: 1.8.0
       enhanced-resolve: 5.8.3
@@ -4512,17 +4637,17 @@ packages:
       tapable: 2.2.1
       terser: 5.19.2
       tsconfig-paths-webpack-plugin: 4.1.0
-      typescript: 5.2.2
+      typescript: 5.3.2
     transitivePeerDependencies:
       - debug
       - supports-color
     dev: true
 
-  /@modern-js/monorepo-tools@2.40.0(typescript@5.2.2):
+  /@modern-js/monorepo-tools@2.40.0(typescript@5.3.2):
     resolution: {integrity: sha512-0VRrKSfG35w1sZTUBZqP0VKqT9A66seo1HdyGagZuWsb8AmCeqetG0NYfNqvJE6mkOrpWYoUeeCocwSuO1yjcw==}
     dependencies:
       '@modern-js/core': 2.40.0
-      '@modern-js/new-action': 2.40.0(typescript@5.2.2)
+      '@modern-js/new-action': 2.40.0(typescript@5.3.2)
       '@modern-js/plugin': 2.40.0
       '@modern-js/plugin-changeset': 2.40.0
       '@modern-js/plugin-i18n': 2.40.0
@@ -4541,13 +4666,13 @@ packages:
       - typescript
     dev: true
 
-  /@modern-js/new-action@2.40.0(typescript@5.2.2):
+  /@modern-js/new-action@2.40.0(typescript@5.3.2):
     resolution: {integrity: sha512-bNX2WXqwQ5vJo/02GeMZmggdogHrOV1XFsUKi0bqw8q8PuL3X7a3YyH4icVvXsp96l2bL+BsLdmtOYDi8dsiyg==}
     dependencies:
       '@modern-js/codesmith': 2.3.0
-      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
-      '@modern-js/generator-common': 3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
-      '@modern-js/generator-utils': 3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.2.2)
+      '@modern-js/codesmith-formily': 2.3.0(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
+      '@modern-js/generator-common': 3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
+      '@modern-js/generator-utils': 3.2.11(@modern-js/codesmith@2.3.0)(typescript@5.3.2)
       '@modern-js/utils': 2.40.0
       '@swc/helpers': 0.5.1
     transitivePeerDependencies:
@@ -5152,7 +5277,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@rspack/binding-darwin-x64@0.3.14:
@@ -5160,7 +5284,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@rspack/binding-linux-arm64-gnu@0.3.14:
@@ -5168,7 +5291,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@rspack/binding-linux-arm64-musl@0.3.14:
@@ -5176,7 +5298,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@rspack/binding-linux-x64-gnu@0.3.14:
@@ -5184,7 +5305,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@rspack/binding-linux-x64-musl@0.3.14:
@@ -5192,7 +5312,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@rspack/binding-win32-arm64-msvc@0.3.14:
@@ -5200,7 +5319,6 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@rspack/binding-win32-ia32-msvc@0.3.14:
@@ -5208,7 +5326,6 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@rspack/binding-win32-x64-msvc@0.3.14:
@@ -5216,7 +5333,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@rspack/binding@0.3.14:
@@ -5231,7 +5347,6 @@ packages:
       '@rspack/binding-win32-arm64-msvc': 0.3.14
       '@rspack/binding-win32-ia32-msvc': 0.3.14
       '@rspack/binding-win32-x64-msvc': 0.3.14
-    dev: false
 
   /@rspack/core@0.3.14:
     resolution: {integrity: sha512-B76vRdbKXMi/Xjd8Q0f/4xrlqp4mFELH2w+6ROoAscGVgS8eDsWmJHa7ddIB3FELizzDvI3BjGfBeGftZjSg3g==}
@@ -5252,7 +5367,6 @@ packages:
       webpack-sources: 3.2.3
       zod: 3.22.4
       zod-validation-error: 1.2.0(zod@3.22.4)
-    dev: false
 
   /@rspack/plugin-react-refresh@0.3.14(react-refresh@0.14.0)(webpack@5.89.0):
     resolution: {integrity: sha512-xHMDOHpQdI7aTJHdVUJMDyE5KM+5bGNcDCY+kptITTrIfiL4RtpIQYa0w0kSZR+/JqgFgviZgqJLW8gnnS1b8Q==}
@@ -5274,8 +5388,8 @@ packages:
       - webpack-plugin-serve
     dev: false
 
-  /@rspress/core@1.7.0(webpack@5.89.0):
-    resolution: {integrity: sha512-L9SK/hQyrXKUZ3GDIVXN+mqJz8H+zIqmClExi90pDS8t6/yw353slaK+JFIPqe7xHJT75gQHlroVv5iUhtyPXw==}
+  /@rspress/core@1.7.1(webpack@5.89.0):
+    resolution: {integrity: sha512-P2RDAE5TjJC/uhT6EcxGw40xo+XHEEawd67n22/GI4njmsXKiDec9vBQl8DRt4nEegCU/1wo3BsUuydKTChsBA==}
     engines: {node: '>=14.17.6'}
     dependencies:
       '@loadable/component': 5.15.2(react@18.2.0)
@@ -5287,13 +5401,13 @@ packages:
       '@rsbuild/plugin-react': link:packages/plugin-react
       '@rsbuild/plugin-svgr': link:packages/plugin-svgr
       '@rspress/mdx-rs': 0.4.1
-      '@rspress/plugin-auto-nav-sidebar': 1.7.0
-      '@rspress/plugin-container-syntax': 1.7.0
-      '@rspress/plugin-last-updated': 1.7.0
-      '@rspress/plugin-medium-zoom': 1.7.0(@rspress/runtime@1.7.0)
-      '@rspress/runtime': 1.7.0
-      '@rspress/shared': 1.7.0
-      '@rspress/theme-default': 1.7.0(postcss@8.4.21)(webpack@5.89.0)
+      '@rspress/plugin-auto-nav-sidebar': 1.7.1
+      '@rspress/plugin-container-syntax': 1.7.1
+      '@rspress/plugin-last-updated': 1.7.1
+      '@rspress/plugin-medium-zoom': 1.7.1(@rspress/runtime@1.7.1)
+      '@rspress/runtime': 1.7.1
+      '@rspress/shared': 1.7.1
+      '@rspress/theme-default': 1.7.1(postcss@8.4.21)(webpack@5.89.0)
       '@types/compression': 1.7.4
       '@types/polka': 0.5.6
       autoprefixer: 10.4.13(postcss@8.4.21)
@@ -5445,51 +5559,51 @@ packages:
       '@rspress/mdx-rs-win32-x64-msvc': 0.4.1
     dev: true
 
-  /@rspress/plugin-auto-nav-sidebar@1.7.0:
-    resolution: {integrity: sha512-2fcl1HMvtgJh8lDvlynFdXTEXfPiPNq0nNiB8+9ytbQzh6ePQcBRCTPersLiXO2+bmr4YdZ33pqutTzMttx/ZQ==}
+  /@rspress/plugin-auto-nav-sidebar@1.7.1:
+    resolution: {integrity: sha512-pO8T2bzwMaK9JYscToAP1Gor+Aw7/1iof35Fm5TPGI8fFYJ/YhuWfpKueGGT09w0AN79FxwKWLJqgOvn/SG2og==}
     engines: {node: '>=14.17.6'}
     dependencies:
       '@modern-js/utils': 2.40.0
-      '@rspress/shared': 1.7.0
+      '@rspress/shared': 1.7.1
     dev: true
 
-  /@rspress/plugin-container-syntax@1.7.0:
-    resolution: {integrity: sha512-+IAUaUR3BzMAt2xPys7eYSQFNhX0TkvmYzInVyNaaewVZt3XfSxVJE4kEk/CQEqZTrnzwObr3bz0Bzlfe7515w==}
+  /@rspress/plugin-container-syntax@1.7.1:
+    resolution: {integrity: sha512-kAQeETLZJvPvxcmYhjQHyWcezI9zHX3GkAt3swSNZgTExDamxyBYr3WK0HA2BvBEZM35KFzgvUS6QbF27+tV0w==}
     engines: {node: '>=14.17.6'}
     dependencies:
-      '@rspress/shared': 1.7.0
+      '@rspress/shared': 1.7.1
     dev: true
 
-  /@rspress/plugin-last-updated@1.7.0:
-    resolution: {integrity: sha512-k4+C4VucBh09xeJz71WLRC3P1LY8fVBHvAFhWb4itlg/TGOOlj5baiTLbOrEYTmrIsceOh0HeXUmoM8nMF1W1Q==}
+  /@rspress/plugin-last-updated@1.7.1:
+    resolution: {integrity: sha512-STNjBITtcrtlLWCqNF+AwePbds8RjWCzKVL5H48Md1ks0ySVYiNdnyQF2xEW32ekbb8b+Uh8CgROFMTez0Nh5A==}
     engines: {node: '>=14.17.6'}
     dependencies:
       '@modern-js/utils': 2.40.0
     dev: true
 
-  /@rspress/plugin-medium-zoom@1.7.0(@rspress/runtime@1.7.0):
-    resolution: {integrity: sha512-YVbtFtxPeYNPbldwijwq06StHYeDdn6Mb2Zt7mry2yE7nV7PCIAPG1LY8UzU+cDZ8FwoJGKoXjPvuzD9um1JoA==}
+  /@rspress/plugin-medium-zoom@1.7.1(@rspress/runtime@1.7.1):
+    resolution: {integrity: sha512-6+ukjoO61CXHq29a6RBcItZu8CCReHpUp085i2QBZ2bnO8JJh5Um1hj2pujGA/7fpxJqrJzahSb4hZLdPSTQAA==}
     engines: {node: '>=14.17.6'}
     peerDependencies:
       '@rspress/runtime': ^1.0.2
     dependencies:
-      '@rspress/runtime': 1.7.0
+      '@rspress/runtime': 1.7.1
       medium-zoom: 1.0.8
     dev: true
 
-  /@rspress/runtime@1.7.0:
-    resolution: {integrity: sha512-JPGlExyBRTHdfQyvfyJWgC0mQfx4LdS6fRCo5fQsksKmkbrqiATU25z7OOeG/gu5rDe4DM+/Ubxl7VIOCMY0Eg==}
+  /@rspress/runtime@1.7.1:
+    resolution: {integrity: sha512-q4uaPxK2phqAHF5q83yA/p+nKrJSQMYyNRFmQlUN6JQn/ZVmgvHnqWPaKhYi6zcrSyfcR2drpNQ6E2DxXez6Jg==}
     engines: {node: '>=14.17.6'}
     dependencies:
-      '@rspress/shared': 1.7.0
+      '@rspress/shared': 1.7.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-helmet-async: 1.3.0(react-dom@18.2.0)(react@18.2.0)
       react-router-dom: 6.17.0(react-dom@18.2.0)(react@18.2.0)
     dev: true
 
-  /@rspress/shared@1.7.0:
-    resolution: {integrity: sha512-r/2qGV/3fJrVRYRMxTPaYJA6HXH78vlajfTjNho4GjA6frc3hNBFRZp66So9+QvbHhU44Oph8BHoiNfex0d0Sg==}
+  /@rspress/shared@1.7.1:
+    resolution: {integrity: sha512-PX7PJEkI0C9epYe84nfjqm7SmvN3X+9AWC56Vg8KqiEmxyxgW1UnuAXI2ZpPwQT/Ot2TvWjYHYyWTutW6vikJg==}
     dependencies:
       '@rsbuild/core': link:packages/core
       chalk: 4.1.2
@@ -5497,13 +5611,13 @@ packages:
       unified: 10.1.2
     dev: true
 
-  /@rspress/theme-default@1.7.0(postcss@8.4.21)(webpack@5.89.0):
-    resolution: {integrity: sha512-vDAJQQJASMFY/y6zWv4qmQi6xLRIwyYnFW2tg/gb6n0wa3gcYWB+VBWZJwoZuXz2zcUFvi+Xgj5AigekYtGssQ==}
+  /@rspress/theme-default@1.7.1(postcss@8.4.21)(webpack@5.89.0):
+    resolution: {integrity: sha512-VoEPjvDT6wDwpfsehgNs1EV+/fhm5kGYdg5cKeTgYxfEskSCMOJrfQgscTvMyUAPjudekenQu+ILFzMH5bi9Mw==}
     engines: {node: '>=14.17.6'}
     dependencies:
       '@mdx-js/react': 2.2.1(react@18.2.0)
-      '@rspress/runtime': 1.7.0
-      '@rspress/shared': 1.7.0
+      '@rspress/runtime': 1.7.1
+      '@rspress/shared': 1.7.1
       body-scroll-lock: 4.0.0-beta.0
       copy-to-clipboard: 3.3.3
       flexsearch: 0.6.32
@@ -5668,14 +5782,14 @@ packages:
       '@svgr/babel-plugin-transform-react-native-svg': 8.0.0(@babel/core@7.23.2)
       '@svgr/babel-plugin-transform-svg-component': 8.0.0(@babel/core@7.23.2)
 
-  /@svgr/core@8.0.0(typescript@5.2.2):
+  /@svgr/core@8.0.0(typescript@5.3.2):
     resolution: {integrity: sha512-aJKtc+Pie/rFYsVH/unSkDaZGvEeylNv/s2cP+ta9/rYWxRVvoV/S4Qw65Kmrtah4CBK5PM6ISH9qUH7IJQCng==}
     engines: {node: '>=14'}
     dependencies:
       '@babel/core': 7.23.2
       '@svgr/babel-preset': 8.0.0(@babel/core@7.23.2)
       camelcase: 6.3.0
-      cosmiconfig: 8.3.6(typescript@5.2.2)
+      cosmiconfig: 8.3.6(typescript@5.3.2)
       snake-case: 3.0.4
     transitivePeerDependencies:
       - supports-color
@@ -5696,26 +5810,26 @@ packages:
     dependencies:
       '@babel/core': 7.23.2
       '@svgr/babel-preset': 8.0.0(@babel/core@7.23.2)
-      '@svgr/core': 8.0.0(typescript@5.2.2)
+      '@svgr/core': 8.0.0(typescript@5.3.2)
       '@svgr/hast-util-to-babel-ast': 8.0.0
       svg-parser: 2.0.4
     transitivePeerDependencies:
       - supports-color
 
-  /@svgr/plugin-svgo@8.0.1(@svgr/core@8.0.0)(typescript@5.2.2):
+  /@svgr/plugin-svgo@8.0.1(@svgr/core@8.0.0)(typescript@5.3.2):
     resolution: {integrity: sha512-29OJ1QmJgnohQHDAgAuY2h21xWD6TZiXji+hnx+W635RiXTAlHTbjrZDktfqzkN0bOeQEtNe+xgq73/XeWFfSg==}
     engines: {node: '>=14'}
     peerDependencies:
       '@svgr/core': '*'
     dependencies:
-      '@svgr/core': 8.0.0(typescript@5.2.2)
-      cosmiconfig: 8.3.6(typescript@5.2.2)
+      '@svgr/core': 8.0.0(typescript@5.3.2)
+      cosmiconfig: 8.3.6(typescript@5.3.2)
       deepmerge: 4.3.1
       svgo: 3.0.2
     transitivePeerDependencies:
       - typescript
 
-  /@svgr/webpack@8.0.1(typescript@5.2.2):
+  /@svgr/webpack@8.0.1(typescript@5.3.2):
     resolution: {integrity: sha512-zSoeKcbCmfMXjA11uDuCJb+1LWNb3vy6Qw/VHj0Nfcl3UuqwuoZWknHsBIhCWvi4wU9vPui3aq054qjVyZqY4A==}
     engines: {node: '>=14'}
     dependencies:
@@ -5724,9 +5838,9 @@ packages:
       '@babel/preset-env': 7.23.2(@babel/core@7.23.2)
       '@babel/preset-react': 7.22.15(@babel/core@7.23.2)
       '@babel/preset-typescript': 7.23.2(@babel/core@7.23.2)
-      '@svgr/core': 8.0.0(typescript@5.2.2)
+      '@svgr/core': 8.0.0(typescript@5.3.2)
       '@svgr/plugin-jsx': 8.0.1(@svgr/core@8.0.0)
-      '@svgr/plugin-svgo': 8.0.1(@svgr/core@8.0.0)(typescript@5.2.2)
+      '@svgr/plugin-svgo': 8.0.1(@svgr/core@8.0.0)(typescript@5.3.2)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -7135,6 +7249,19 @@ packages:
       '@babel/helper-module-imports': 7.22.15
     dev: false
 
+  /babel-plugin-jsx-dom-expressions@0.37.8(@babel/core@7.23.2):
+    resolution: {integrity: sha512-nVHH6g7541aaAQJAsyWHvjH7GCXZ+8tuF3Qu4y9W9aKwonRbcJL+yyMatDJLvjC54iIuGowiiZM6Rm3AVJczGg==}
+    peerDependencies:
+      '@babel/core': ^7.20.12
+    dependencies:
+      '@babel/core': 7.23.2
+      '@babel/helper-module-imports': 7.18.6
+      '@babel/plugin-syntax-jsx': 7.22.5(@babel/core@7.23.2)
+      '@babel/types': 7.23.0
+      html-entities: 2.3.3
+      validate-html-nesting: 1.2.2
+    dev: false
+
   /babel-plugin-polyfill-corejs2@0.4.6(@babel/core@7.23.2):
     resolution: {integrity: sha512-jhHiWVZIlnPbEUKSSNb9YoWcQGdlTLq7z1GHL4AjFxaoOUMuuEVJ+Y4pAaQUGOGk93YsVCKPbqbfw3m0SM6H8Q==}
     peerDependencies:
@@ -7186,6 +7313,15 @@ packages:
 
   /babel-plugin-transform-react-remove-prop-types@0.4.24:
     resolution: {integrity: sha512-eqj0hVcJUR57/Ug2zE1Yswsw4LhuqqHhD+8v120T1cl3kjg76QwtyBrdIk4WVwK+lAhBJVYCd/v+4nc4y+8JsA==}
+    dev: false
+
+  /babel-preset-solid@1.8.4(@babel/core@7.23.2):
+    resolution: {integrity: sha512-TfI09EOFHsbhVqoM+svop3zY4zOUIBlZsGU16Rgd4NsYVXw6lv2VEn7dmlpczMMQy0IeO3PFiXlMQZWutB+uAQ==}
+    peerDependencies:
+      '@babel/core': ^7.0.0
+    dependencies:
+      '@babel/core': 7.23.2
+      babel-plugin-jsx-dom-expressions: 0.37.8(@babel/core@7.23.2)
     dev: false
 
   /babel-walk@3.0.0-canary-5:
@@ -7752,7 +7888,6 @@ packages:
 
   /compare-versions@6.0.0-rc.1:
     resolution: {integrity: sha512-cFhkjbGY1jLFWIV7KegECbfuyYPxSGvgGkdkfM+ibboQDoPwg2FRHm5BSNTOApiauRBzJIQH7qvOJs2sW5ueKQ==}
-    dev: false
 
   /compressible@2.0.18:
     resolution: {integrity: sha512-AF3r7P5dWxL8MxyITRMlORQNaOA2IkAFaTr4k7BUumjPtRpGDTZpl0Pb1XCO6JeDCBdp126Cgs9sMxqSjgYyRg==}
@@ -8047,7 +8182,7 @@ packages:
       yaml: 1.10.2
     dev: false
 
-  /cosmiconfig@8.3.6(typescript@5.2.2):
+  /cosmiconfig@8.3.6(typescript@5.3.2):
     resolution: {integrity: sha512-kcZ6+W5QzcJ3P1Mt+83OUv/oHFqZHIx8DuxG6eZ5RGMERoLqp4BuGjhHLYGK+Kf5XVkQvqBSmAy/nGWN3qDgEA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -8060,7 +8195,7 @@ packages:
       js-yaml: 4.1.0
       parse-json: 5.2.0
       path-type: 4.0.0
-      typescript: 5.2.2
+      typescript: 5.3.2
 
   /create-ecdh@4.0.4:
     resolution: {integrity: sha512-mf+TCx8wWc9VpuxfP2ht0iSISLZnt0JgWlrOKZiNqyUZWnjIaCIVNQArMHnCZKfEYRg6IM7A+NeJoN8gf/Ws0A==}
@@ -8794,6 +8929,7 @@ packages:
 
   /errno@0.1.8:
     resolution: {integrity: sha512-dJ6oBr5SQ1VSd9qkk7ByRgb/1SH4JZjCHSW/mr63/QcXO9zLVxvJ6Oy13nio03rxpSnVDDjFor75SjVeZWPW/A==}
+    hasBin: true
     requiresBuild: true
     dependencies:
       prr: 1.0.1
@@ -9220,7 +9356,6 @@ packages:
 
   /fast-decode-uri-component@1.0.1:
     resolution: {integrity: sha512-WKgKWg5eUxvRZGwW8FvfbaH7AXSh2cL+3j5fMGzUMCxWBJ3dV3a7Wz8y2f/uQ0e3B6WmodD3oS54jTQ9HVTIIg==}
-    dev: false
 
   /fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
@@ -9242,7 +9377,6 @@ packages:
     resolution: {integrity: sha512-g6KuKWmFXc0fID8WWH0jit4g0AGBoJhCkJMb1RmbsSEUNvQ+ZC8D6CUZ+GtF8nMzSPXnhiePyyqqipzNNEnHjg==}
     dependencies:
       fast-decode-uri-component: 1.0.1
-    dev: false
 
   /fastq@1.15.0:
     resolution: {integrity: sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==}
@@ -9350,7 +9484,7 @@ packages:
       is-callable: 1.2.7
     dev: true
 
-  /fork-ts-checker-webpack-plugin@9.0.0(typescript@5.2.2)(webpack@5.89.0):
+  /fork-ts-checker-webpack-plugin@9.0.0(typescript@5.3.2)(webpack@5.89.0):
     resolution: {integrity: sha512-Kw3JjsfGs0piB0V2Em8gCuo51O3p4KyCOK0Tn8X57oq2mSNBrMmONALRBw5frcmWsOVU7iELXXsJ+FVxJeQuhA==}
     engines: {node: '>=12.13.0', yarn: '>=1.0.0'}
     peerDependencies:
@@ -9369,7 +9503,7 @@ packages:
       schema-utils: 3.3.0
       semver: 7.5.4
       tapable: 2.2.1
-      typescript: 5.2.2
+      typescript: 5.3.2
       webpack: 5.89.0
     dev: false
 
@@ -9662,7 +9796,6 @@ packages:
 
   /graceful-fs@4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
-    dev: false
 
   /graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
@@ -9920,6 +10053,10 @@ packages:
       whatwg-encoding: 2.0.0
     dev: true
 
+  /html-entities@2.3.3:
+    resolution: {integrity: sha512-DV5Ln36z34NNTDgnz0EWGBLZENelNAtkiFA4kyNOG2tDI6Mz1uSWiq1wAKdyjnJwyDiDO7Fa2SO1CTxPXL8VxA==}
+    dev: false
+
   /html-entities@2.4.0:
     resolution: {integrity: sha512-igBTJcNNNhvZFRtm8uA6xMY6xYleeDwn3PeBCkDz7tHttv4F2hsDI2aPgNERWzvRcNYHNT3ymRaQzllmXj4YsQ==}
 
@@ -10117,6 +10254,7 @@ packages:
   /image-size@0.5.5:
     resolution: {integrity: sha512-6TDAlDPZxUFCv+fuOkIoXT/V/f3Qbq8e37p+YOiYrUv3v9cc3/6x78VdfPgFVaB9dZYeLUfKgHRebpkm/oP2VQ==}
     engines: {node: '>=0.10.0'}
+    hasBin: true
     requiresBuild: true
     dev: true
     optional: true
@@ -10609,6 +10747,7 @@ packages:
 
   /jsesc@0.5.0:
     resolution: {integrity: sha512-uZz5UnB7u4T9LvwmFqXii7pZSouaRPorGs5who1Ip7VO0wxanFvBL7GkM6dTHlgX+jhBApRetaWpnDabOeTcnA==}
+    hasBin: true
 
   /jsesc@2.5.2:
     resolution: {integrity: sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==}
@@ -10624,7 +10763,6 @@ packages:
   /json-parse-even-better-errors@3.0.0:
     resolution: {integrity: sha512-iZbGHafX/59r39gPwVPRBGw0QQKnA7tte5pSMrhWOW7swGsVvVTjmfyAV9pNqk8YGT7tRCdxRu8uzcgZwoDooA==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
-    dev: false
 
   /json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
@@ -11630,6 +11768,7 @@ packages:
   /mime@1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
     engines: {node: '>=4'}
+    hasBin: true
 
   /mimic-fn@2.1.0:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
@@ -11790,6 +11929,7 @@ packages:
   /needle@3.2.0:
     resolution: {integrity: sha512-oUvzXnyLiVyVGoianLijF9O/RecZUf7TkBfimjGrLM4eQhXyeJwM6GeAWccwfQ9aa4gMCZKqhAOuLaMIcQxajQ==}
     engines: {node: '>= 4.4.x'}
+    hasBin: true
     requiresBuild: true
     dependencies:
       debug: 3.2.7
@@ -13102,7 +13242,6 @@ packages:
   /react-refresh@0.14.0:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
     engines: {node: '>=0.10.0'}
-    dev: false
 
   /react-router-dom@6.17.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-qWHkkbXQX+6li0COUUPKAUkxjNNqPJuiBd27dVwQGDNsuFBdMbrS6UZ0CLYc4CsbdLYTckn4oB4tGDuPZpPhaQ==}
@@ -13492,13 +13631,13 @@ packages:
       fs-extra: 11.1.1
     dev: true
 
-  /rspress@1.7.0(webpack@5.89.0):
-    resolution: {integrity: sha512-Edz7ONB948j3OPCSbeMb6zblHTYTaeothV2W9lb4lAvTiV0Ti1+uDACjEEm/vhOeNE/D7NtNAhAs3QbLEtqAVg==}
+  /rspress@1.7.1(webpack@5.89.0):
+    resolution: {integrity: sha512-4aksPaw/6RhK9yomPJpH7WaxD5X12rYWfwj4pA7rNW6Am7zgV//KD2F9tVpD2WGuuv/sz7iZ/KEp84ELY0E88g==}
     hasBin: true
     dependencies:
       '@modern-js/node-bundle-require': 2.40.0
-      '@rspress/core': 1.7.0(webpack@5.89.0)
-      '@rspress/shared': 1.7.0
+      '@rspress/core': 1.7.1(webpack@5.89.0)
+      '@rspress/shared': 1.7.1
       cac: 6.7.14
       chalk: 5.3.0
       chokidar: 3.5.3
@@ -13676,6 +13815,11 @@ packages:
     dependencies:
       randombytes: 2.1.0
 
+  /seroval@0.12.4:
+    resolution: {integrity: sha512-JIsZHp98o+okpYN8HEPyI9Blr0gxAUPIGvg3waXrEMFjPz9obiLYMz0uFiUGezKiCK8loosYbn8WsqO8WtAJUA==}
+    engines: {node: '>=10'}
+    dev: false
+
   /serve-static@1.15.0:
     resolution: {integrity: sha512-XGuRDNjXUijsUL0vl6nSD7cwURuzEgglbOaFuZM9g3kwDXOWVTck0jLzjPzGD+TazWbboZYu52/9/XPdUgne9g==}
     engines: {node: '>= 0.8.0'}
@@ -13843,6 +13987,13 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
+    dev: false
+
+  /solid-js@1.8.5:
+    resolution: {integrity: sha512-xvtJvzJzWbsn35oKFhW9kNwaxG1Z/YLMsDp4tLVcYZTMPzvzQ8vEZuyDQ6nt7xDArVgZJ7TUFrJUwrui/oq53A==}
+    dependencies:
+      csstype: 3.1.2
+      seroval: 0.12.4
     dev: false
 
   /sorcery@0.11.0:
@@ -14182,7 +14333,6 @@ packages:
     dependencies:
       has-flag: 4.0.0
       supports-color: 7.2.0
-    dev: false
 
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
@@ -14212,7 +14362,7 @@ packages:
       svelte-hmr: 0.14.12(svelte@4.2.2)
     dev: false
 
-  /svelte-preprocess@5.0.4(@babel/core@7.23.2)(postcss@8.4.31)(svelte@4.2.2)(typescript@5.2.2):
+  /svelte-preprocess@5.0.4(@babel/core@7.23.2)(postcss@8.4.31)(svelte@4.2.2)(typescript@5.3.2):
     resolution: {integrity: sha512-ABia2QegosxOGsVlsSBJvoWeXy1wUKSfF7SWJdTjLAbx/Y3SrVevvvbFNQqrSJw89+lNSsM58SipmZJ5SRi5iw==}
     engines: {node: '>= 14.10.0'}
     requiresBuild: true
@@ -14258,7 +14408,7 @@ packages:
       sorcery: 0.11.0
       strip-indent: 3.0.0
       svelte: 4.2.2
-      typescript: 5.2.2
+      typescript: 5.3.2
     dev: false
 
   /svelte@4.2.2:
@@ -14384,7 +14534,6 @@ packages:
     dependencies:
       ansi-escapes: 4.3.2
       supports-hyperlinks: 2.3.0
-    dev: false
 
   /terser-webpack-plugin@5.3.9(@swc/core@1.3.42)(webpack@5.89.0):
     resolution: {integrity: sha512-ZuXsqE07EcggTWQjXUj+Aot/OMcD0bMKGgF63f7UxYcu5/AJF53aIpK1YoP5xR9l6s/Hy2b+t1AM0bLNPRuhwA==}
@@ -14591,7 +14740,7 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: true
 
-  /ts-loader@9.4.4(typescript@5.2.2)(webpack@5.89.0):
+  /ts-loader@9.4.4(typescript@5.3.2)(webpack@5.89.0):
     resolution: {integrity: sha512-MLukxDHBl8OJ5Dk3y69IsKVFRA/6MwzEqBgh+OXMPB/OD01KQuWPFd1WAQP8a5PeSCAxfnkhiuWqfmFJzJQt9w==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -14602,11 +14751,11 @@ packages:
       enhanced-resolve: 5.15.0
       micromatch: 4.0.5
       semver: 7.5.4
-      typescript: 5.2.2
+      typescript: 5.3.2
       webpack: 5.89.0
     dev: false
 
-  /tsconfck@2.1.2(typescript@5.2.2):
+  /tsconfck@2.1.2(typescript@5.3.2):
     resolution: {integrity: sha512-ghqN1b0puy3MhhviwO2kGF8SeMDNhEbnKxjK7h6+fvY9JAxqvXi8y5NAHSQv687OVboS2uZIByzGd45/YxrRHg==}
     engines: {node: ^14.13.1 || ^16 || >=18}
     hasBin: true
@@ -14616,7 +14765,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      typescript: 5.2.2
+      typescript: 5.3.2
     dev: true
 
   /tsconfig-paths-webpack-plugin@4.1.0:
@@ -14751,9 +14900,10 @@ packages:
     resolution: {integrity: sha512-KNNZtayBCtmnNmbo5mG47p1XsCyrx6iVqomjcZnec/1Y5GGARaxPs6r49RnSPeUP3YjNYiU9sQHAtY4BBvnZwg==}
     dev: false
 
-  /typescript@5.2.2:
-    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
+  /typescript@5.3.2:
+    resolution: {integrity: sha512-6l+RyNy7oAHDfxC4FzSJcz9vnjTKxrLpDG5M2Vu4SHRVNg6xzqZp6LYSR9zjqQTu8DU/f5xwxUdADOkbrIX2gQ==}
     engines: {node: '>=14.17'}
+    hasBin: true
 
   /ufo@1.3.1:
     resolution: {integrity: sha512-uY/99gMLIOlJPwATcMVYfqDSxUR9//AUcgZMzwfSTJPDKzA1S8mX4VLqa+fiAtveraQUBCz4FFcwVZBGbwBXIw==}
@@ -14965,6 +15115,10 @@ packages:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
 
+  /validate-html-nesting@1.2.2:
+    resolution: {integrity: sha512-hGdgQozCsQJMyfK5urgFcWEqsSSrK63Awe0t/IMR0bZ0QMtnuaiHzThW81guu3qx9abLi99NEuiaN6P9gVYsNg==}
+    dev: false
+
   /validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
     dependencies:
@@ -15025,7 +15179,7 @@ packages:
       - terser
     dev: true
 
-  /vite-tsconfig-paths@4.2.1(typescript@5.2.2):
+  /vite-tsconfig-paths@4.2.1(typescript@5.3.2):
     resolution: {integrity: sha512-GNUI6ZgPqT3oervkvzU+qtys83+75N/OuDaQl7HmOqFTb0pjZsuARrRipsyJhJ3enqV8beI1xhGbToR4o78nSQ==}
     peerDependencies:
       vite: '*'
@@ -15035,7 +15189,7 @@ packages:
     dependencies:
       debug: 4.3.4
       globrex: 0.1.2
-      tsconfck: 2.1.2(typescript@5.2.2)
+      tsconfck: 2.1.2(typescript@5.3.2)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -15783,11 +15937,9 @@ packages:
       zod: ^3.18.0
     dependencies:
       zod: 3.22.4
-    dev: false
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
-    dev: false
 
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}

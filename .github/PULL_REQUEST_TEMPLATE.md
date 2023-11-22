@@ -1,9 +1,8 @@
 ## Summary
 
+## Related Links
 
-## Related Issue
-
-<!--- Provide link of related issues -->
+<!--- Provide links of related issues or pages -->
 
 ## Checklist
 

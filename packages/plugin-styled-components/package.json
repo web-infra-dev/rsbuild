@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-styled-components",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "styled-components plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@types/node": "^16",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.0"
   },
   "publishConfig": {
     "access": "public",

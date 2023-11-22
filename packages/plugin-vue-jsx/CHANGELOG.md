@@ -1,5 +1,14 @@
 # @rsbuild/plugin-vue-jsx
 
+## 0.0.28
+
+### Patch Changes
+
+- Updated dependencies [0f95693]
+- Updated dependencies [1afd033]
+- Updated dependencies [2b267b5]
+  - @rsbuild/core@0.0.28
+
 ## 0.0.27
 
 ### Patch Changes

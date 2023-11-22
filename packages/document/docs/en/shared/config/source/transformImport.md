@@ -19,7 +19,7 @@ type Config =
     }>;
 ```
 
-- **Default:** When you use [React plugin](/plugins/list/plugin-react), [React component library on-demand import](/plugins/list/plugin-react.html#import-component-library-on-demand) is automatically supported.
+- **Default:** When you use [React plugin](/plugins/list/plugin-react), [React component library on-demand import](/plugins/list/plugin-react#import-component-library-on-demand) is automatically supported.
 
 ### Example
 
