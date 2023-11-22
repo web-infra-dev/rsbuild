@@ -2,7 +2,7 @@ import { fse } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 export const pluginFrameworkConfig = (configPath: string): RsbuildPlugin => ({
-  name: 'plugin-framework-config',
+  name: 'uni-builder:framework-config',
 
   setup(api) {
     api.modifyBundlerChain((chain) => {

@@ -13,7 +13,7 @@ export type PluginSvelteOptions = {
 
 export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
   return {
-    name: 'plugin-svelte',
+    name: 'rsbuild:svelte',
 
     setup(api) {
       let sveltePath: string = '';

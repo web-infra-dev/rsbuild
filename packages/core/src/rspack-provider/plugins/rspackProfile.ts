@@ -27,7 +27,7 @@ export const stopProfiler = (
 // Reference rspack-cli
 // https://github.com/modern-js-dev/rspack/blob/509abcfc523bc20125459f5d428dc1645751700c/packages/rspack-cli/src/utils/profile.ts
 export const pluginRspackProfile = (): RsbuildPlugin => ({
-  name: 'plugin-rspack-profile',
+  name: 'rsbuild:rspack-profile',
 
   setup(api) {
     /**

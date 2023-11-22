@@ -2,7 +2,7 @@ import { isUseJsSourceMap } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginDevtool = (): RsbuildPlugin => ({
-  name: 'plugin-devtool',
+  name: 'rsbuild:devtool',
 
   setup(api) {
     api.modifyBundlerChain((chain, { isProd, isServer }) => {

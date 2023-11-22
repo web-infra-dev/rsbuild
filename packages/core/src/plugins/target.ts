@@ -2,7 +2,7 @@ import { getBrowserslist } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginTarget = (): RsbuildPlugin => ({
-  name: 'plugin-target',
+  name: 'rsbuild:target',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { target }) => {

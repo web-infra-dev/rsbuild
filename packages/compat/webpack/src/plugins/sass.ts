@@ -8,7 +8,7 @@ import type { RsbuildPlugin } from '../types';
 
 export function pluginSass(): RsbuildPlugin {
   return {
-    name: 'plugin-sass',
+    name: 'rsbuild-webpack:sass',
     setup(api) {
       api.onAfterCreateCompiler(({ compiler }) => {
         patchCompilerGlobalLocation(compiler);

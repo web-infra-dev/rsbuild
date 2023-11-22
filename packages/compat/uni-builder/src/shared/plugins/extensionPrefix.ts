@@ -4,7 +4,7 @@ import type { RsbuildTarget } from '@rsbuild/shared';
 export const pluginExtensionPrefix = (
   prefixInfo: string | Partial<Record<RsbuildTarget, string>>,
 ): RsbuildPlugin => ({
-  name: 'plugin-extension-prefix',
+  name: 'uni-builder:extension-prefix',
 
   setup(api) {
     api.modifyBundlerChain((chain, { target }) => {

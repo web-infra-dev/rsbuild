@@ -8,7 +8,7 @@ import {
 import type { RsbuildPlugin } from '../types';
 
 export const pluginInlineChunk = (): RsbuildPlugin => ({
-  name: 'plugin-inline-chunk',
+  name: 'rsbuild:inline-chunk',
 
   setup(api) {
     api.modifyBundlerChain(

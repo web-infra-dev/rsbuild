@@ -37,7 +37,7 @@ const normalizeOptions = (options: Options[]) => {
 export const pluginImageCompress: IPluginImageCompress = (
   ...args
 ): RsbuildPlugin => ({
-  name: 'plugin-image-compress',
+  name: 'rsbuild:image-compress',
   setup(api) {
     const opts = normalizeOptions(castOptions(args));
 

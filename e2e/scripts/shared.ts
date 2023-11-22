@@ -77,6 +77,13 @@ const updateConfigForTest = <BundlerType>(
     };
   }
 
+  if (config.performance?.printFileSize === undefined) {
+    config.performance = {
+      ...(config.performance || {}),
+      printFileSize: false,
+    };
+  }
+
   // disable polyfill to make the tests faster
   if (config.output?.polyfill === undefined) {
     config.output = {
@@ -128,8 +135,6 @@ export async function build<BundlerType = 'rspack'>({
   updateConfigForTest(rsbuildConfig);
 
   const rsbuild = await createRsbuild(options, rsbuildConfig);
-
-  rsbuild.removePlugins(['plugin-file-size']);
 
   if (plugins) {
     rsbuild.addPlugins(plugins);

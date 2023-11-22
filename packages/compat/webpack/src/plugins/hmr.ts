@@ -2,7 +2,7 @@ import type { RsbuildPlugin } from '../types';
 import { isUsingHMR } from '@rsbuild/shared';
 
 export const pluginHMR = (): RsbuildPlugin => ({
-  name: 'plugin-hmr',
+  name: 'rsbuild-webpack:hmr',
 
   setup(api) {
     api.modifyWebpackChain((chain, utils) => {

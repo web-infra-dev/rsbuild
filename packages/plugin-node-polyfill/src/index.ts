@@ -26,7 +26,7 @@ const getProvideLibs = async () => {
 
 export function pluginNodePolyfill(): RsbuildPlugin {
   return {
-    name: 'plugin-node-polyfill',
+    name: 'rsbuild:node-polyfill',
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID, isServer, bundler }) => {
