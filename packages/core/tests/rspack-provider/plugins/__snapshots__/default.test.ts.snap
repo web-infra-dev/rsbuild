@@ -463,9 +463,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
       },
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -1147,9 +1144,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
       },
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -2316,9 +2310,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
       },
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
