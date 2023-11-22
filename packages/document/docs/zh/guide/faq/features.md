@@ -60,18 +60,6 @@ export default {
 
 ---
 
-### 如何清空 webpack 编译缓存？
-
-默认情况下，Rsbuild 的 webpack 编译缓存生成在 `./node_modules/.cache/webpack` 目录下。
-
-如果需要清空本地的编译缓存，可以执行以下命令：
-
-```bash
-rm -rf ./node_modules/.cache
-```
-
----
-
 ### 如何移除代码中的 console？
 
 在生产环境构建时，我们可以移除代码中的 `console`，从而避免开发环境的日志被输出到生产环境。
