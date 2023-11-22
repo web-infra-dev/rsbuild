@@ -7,10 +7,10 @@ import {
   logger,
   type ProxyDetail,
   type RequestHandler as Middleware,
-  type RsbuildProxyOptions,
+  type ProxyOptions,
 } from '@rsbuild/shared';
 
-export function formatProxyOptions(proxyOptions: RsbuildProxyOptions) {
+export function formatProxyOptions(proxyOptions: ProxyOptions) {
   const ret: ProxyDetail[] = [];
 
   if (Array.isArray(proxyOptions)) {
@@ -45,7 +45,7 @@ export function formatProxyOptions(proxyOptions: RsbuildProxyOptions) {
 export type HttpUpgradeHandler = NonNullable<RequestHandler['upgrade']>;
 
 export const createProxyMiddleware = (
-  proxyOptions: RsbuildProxyOptions,
+  proxyOptions: ProxyOptions,
   app: http.Server,
 ) => {
   // If it is not an array, it may be an object that uses the context attribute

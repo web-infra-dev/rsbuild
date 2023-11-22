@@ -1,11 +1,11 @@
 - **Type:** `Record<string, string> | Record<string, ProxyDetail>`
 - **Default:** `undefined`
 
-Proxying some URLs.
+Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
 
 ```js
 export default {
-  dev: {
+  server: {
     proxy: {
       '/api': 'http://localhost:3000',
     },
@@ -19,7 +19,7 @@ If you don't want /api to be passed along, we need to rewrite the path:
 
 ```js
 export default {
-  dev: {
+  server: {
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
@@ -64,7 +64,7 @@ In addition to the http-proxy-middleware option, we also support the bypass and 
 ```js
 // custom bypass
 export default {
-  dev: {
+  server: {
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
@@ -83,7 +83,7 @@ export default {
 ```js
 // proxy multiple
 export default {
-  dev: {
+  server: {
     proxy: [
       {
         context: ['/auth', '/api'],

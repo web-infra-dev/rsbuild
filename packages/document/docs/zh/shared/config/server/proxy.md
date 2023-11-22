@@ -1,11 +1,11 @@
 - **类型：** `Record<string, string> | Record<string, ProxyDetail>`
 - **默认值：** `undefined`
 
-代理请求到指定的服务上。
+为开发服务器或预览服务器配置代理规则，将请求代理到指定的服务上。
 
 ```js
 export default {
-  dev: {
+  server: {
     proxy: {
       '/api': 'http://localhost:3000',
     },
@@ -19,7 +19,7 @@ export default {
 
 ```js
 export default {
-  dev: {
+  server: {
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
@@ -64,7 +64,7 @@ type ProxyOptions =
 ```js
 // 自定义 bypass 方法
 export default {
-  dev: {
+  server: {
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
@@ -83,7 +83,7 @@ export default {
 ```js
 // 代理多个路径到同一个目标
 export default {
-  dev: {
+  server: {
     proxy: [
       {
         context: ['/auth', '/api'],
