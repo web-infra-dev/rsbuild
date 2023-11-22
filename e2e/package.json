@@ -49,7 +49,7 @@
     "@rsbuild/shared": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@rspack/core": "0.3.14",
+    "@rspack/core": "0.4.0",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "@types/react": "^18",

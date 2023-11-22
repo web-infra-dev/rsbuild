@@ -21,7 +21,7 @@
     "@rsbuild/doctor-core": "workspace:*",
     "@rsbuild/doctor-sdk": "workspace:*",
     "@rsbuild/doctor-utils": "workspace:*",
-    "@rspack/core": "0.3.14",
+    "@rspack/core": "0.4.0",
     "lodash": "^4.17.21",
     "webpack": "^5.89.0"
   },
