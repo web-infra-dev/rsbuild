@@ -14,8 +14,8 @@
 - Updated dependencies [67a79efd]
 - Updated dependencies [06cc01e7]
 - Updated dependencies [b2831a5]
-  - @rsbuild/plugin-react@1.0.0
-  - @rsbuild/shared@1.0.0
+  - @rsbuild/plugin-react@0.1.0
+  - @rsbuild/shared@0.1.0
 
 ## 0.0.28
 

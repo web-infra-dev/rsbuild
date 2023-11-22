@@ -19,11 +19,11 @@
 - Updated dependencies [06cc01e7]
 - Updated dependencies [fee4e4e6]
 - Updated dependencies [b2831a5]
-  - @rsbuild/shared@1.0.0
-  - @rsbuild/core@1.0.0
-  - @rsbuild/webpack@1.0.0
-  - @rsbuild/plugin-assets-retry@1.0.0
-  - @rsbuild/plugin-rem@1.0.0
+  - @rsbuild/shared@0.1.0
+  - @rsbuild/core@0.1.0
+  - @rsbuild/webpack@0.1.0
+  - @rsbuild/plugin-assets-retry@0.1.0
+  - @rsbuild/plugin-rem@0.1.0
 
 ## 0.0.28
 

@@ -19,12 +19,12 @@
 - Updated dependencies [06cc01e7]
 - Updated dependencies [fee4e4e6]
 - Updated dependencies [b2831a5]
-  - @rsbuild/plugin-react@1.0.0
-  - @rsbuild/shared@1.0.0
-  - @rsbuild/core@1.0.0
-  - @rsbuild/plugin-css-minimizer@1.0.0
-  - @rsbuild/plugin-babel@1.0.0
-  - @rsbuild/babel-preset@1.0.0
+  - @rsbuild/plugin-react@0.1.0
+  - @rsbuild/shared@0.1.0
+  - @rsbuild/core@0.1.0
+  - @rsbuild/plugin-css-minimizer@0.1.0
+  - @rsbuild/plugin-babel@0.1.0
+  - @rsbuild/babel-preset@0.1.0
 
 ## 0.0.28
 

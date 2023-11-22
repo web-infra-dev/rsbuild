@@ -28,7 +28,7 @@
 - Updated dependencies [0454cae8]
 - Updated dependencies [67a79efd]
 - Updated dependencies [b2831a5]
-  - @rsbuild/shared@1.0.0
+  - @rsbuild/shared@0.1.0
 
 ## 0.0.28
 
