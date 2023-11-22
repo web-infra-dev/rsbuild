@@ -52,11 +52,6 @@ export interface DevConfig {
     host?: string;
     protocol?: string;
   };
-  /** see https://github.com/webpack/webpack-dev-middleware */
-  devMiddleware?: {
-    writeToDisk?: boolean | ((filename: string) => boolean);
-    outputFileSystem?: Record<string, any>;
-  };
   /** Provides the ability to execute a custom function and apply custom middlewares */
   setupMiddlewares?: Array<
     (
@@ -70,6 +65,10 @@ export interface DevConfig {
       server: ExposeServerApis,
     ) => void
   >;
+  /**
+   * Used to control whether the build artifacts of the development environment are written to the disk.
+   */
+  writeToDisk?: boolean | ((filename: string) => boolean);
 }
 
 export type NormalizedDevConfig = DevConfig &
