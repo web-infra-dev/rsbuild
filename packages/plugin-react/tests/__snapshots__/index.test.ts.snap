@@ -480,9 +480,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
         "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
       },
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [

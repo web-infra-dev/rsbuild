@@ -44,7 +44,6 @@ exports[`plugins/babel > babel-loader addIncludes & addExcludes should works 1`]
 exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] = `
 {
   "exclude": [
-    "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     "src/example",
   ],
   "include": [

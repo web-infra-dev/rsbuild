@@ -58,9 +58,6 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
 
 exports[`plugins/styled-components > should enable ssr when target contain node 2`] = `
 {
-  "exclude": [
-    "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-  ],
   "include": [
     {
       "and": [
@@ -123,9 +120,6 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
 
 exports[`plugins/styled-components > should works in rspack mode 1`] = `
 {
-  "exclude": [
-    "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-  ],
   "include": [
     {
       "and": [

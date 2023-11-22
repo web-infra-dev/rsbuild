@@ -463,9 +463,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
       },
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
