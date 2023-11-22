@@ -84,7 +84,6 @@ export const mergeDevOptions = ({
       // By default it is set to "location.protocol === 'https:' ? 'wss' : 'ws'""
       protocol: '',
     },
-    compress: true,
     writeToDisk: (file: string) => !file.includes('.hot-update.'),
   };
 

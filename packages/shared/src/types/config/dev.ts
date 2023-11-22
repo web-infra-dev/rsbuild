@@ -52,11 +52,7 @@ export interface DevConfig {
     host?: string;
     protocol?: string;
   };
-  /** Whether to enable gzip compression */
-  compress?: boolean;
-  /**
-   * Provides the ability to execute a custom function and apply custom middlewares
-   */
+  /** Provides the ability to execute a custom function and apply custom middlewares */
   setupMiddlewares?: Array<
     (
       /** Order: `unshift` => internal middlewares => `push` */
