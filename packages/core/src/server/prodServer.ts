@@ -18,6 +18,7 @@ import {
   getServerOptions,
 } from '@rsbuild/shared';
 import { faviconFallbackMiddleware } from './middlewares';
+import { createProxyMiddleware } from './proxy';
 
 type RsbuildProdServerOptions = {
   pwd: string;
@@ -44,13 +45,20 @@ export class RsbuildProdServer {
   }
 
   private async applyDefaultMiddlewares() {
-    const { headers } = this.options.serverConfig;
+    const { headers, proxy } = this.options.serverConfig;
     if (headers) {
       this.middlewares.use((_req, res, next) => {
         for (const [key, value] of Object.entries(headers)) {
           res.setHeader(key, value);
         }
         next();
+      });
+    }
+
+    if (proxy) {
+      const { middlewares } = createProxyMiddleware(proxy, this.app);
+      middlewares.forEach((middleware) => {
+        this.middlewares.use(middleware);
       });
     }
 

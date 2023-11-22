@@ -14,9 +14,9 @@ export type PluginVueOptions = {
 
 export function pluginVue2Jsx(options: PluginVueOptions = {}): RsbuildPlugin {
   return {
-    name: 'plugin-vue2-jsx',
+    name: 'rsbuild:vue2-jsx',
 
-    pre: ['plugin-babel'],
+    pre: ['rsbuild:babel', 'rsbuild-webpack:babel'],
 
     setup(api) {
       api.modifyBundlerChain((chain, { CHAIN_ID }) => {

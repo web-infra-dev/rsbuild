@@ -9,7 +9,7 @@ export type PluginVueOptions = {
 
 export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
   return {
-    name: 'plugin-vue2',
+    name: 'rsbuild:vue2',
 
     setup(api) {
       api.modifyBundlerChain((chain, { CHAIN_ID }) => {

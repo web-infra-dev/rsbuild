@@ -12,7 +12,7 @@ export type LessLoaderUtils = {
 
 export function pluginLess(): RsbuildPlugin {
   return {
-    name: 'plugin-less',
+    name: 'rsbuild-webpack:less',
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();

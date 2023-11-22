@@ -7,9 +7,9 @@ import { applyBasicReactSupport } from './react';
 export { isBeyondReact17 } from './utils';
 
 export const pluginReact = (): RsbuildPlugin => ({
-  name: 'plugin-react',
+  name: 'rsbuild:react',
 
-  pre: ['plugin-swc'],
+  pre: ['rsbuild:swc'],
 
   setup(api) {
     if (api.context.bundlerType === 'rspack') {

@@ -196,7 +196,7 @@ export const applyCSSModuleRule = (
 
 export const pluginCss = (): RsbuildPlugin => {
   return {
-    name: 'plugin-css',
+    name: 'rsbuild:css',
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();

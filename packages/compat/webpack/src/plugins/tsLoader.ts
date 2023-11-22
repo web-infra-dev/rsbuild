@@ -13,7 +13,7 @@ import type { RsbuildPlugin } from '../types';
 
 export const pluginTsLoader = (): RsbuildPlugin => {
   return {
-    name: 'plugin-ts-loader',
+    name: 'rsbuild-webpack:ts-loader',
     setup(api) {
       api.modifyWebpackChain(async (chain, { target, CHAIN_ID }) => {
         const config = api.getNormalizedConfig();

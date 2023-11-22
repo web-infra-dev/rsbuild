@@ -3,7 +3,7 @@ import type { RsbuildPlugin } from '../../types';
 import { setConfig, isUsingHMR } from '@rsbuild/shared';
 
 export const pluginHMR = (): RsbuildPlugin => ({
-  name: 'plugin-hmr',
+  name: 'rsbuild:hmr',
 
   setup(api) {
     api.modifyRspackConfig((rspackConfig, utils) => {

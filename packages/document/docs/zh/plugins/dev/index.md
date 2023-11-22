@@ -11,7 +11,7 @@ Rsbuild 提供了一套轻量强大的插件系统，用以实现自身的大多
 
 ## 开发插件
 
-插件提供类似 `(options?: PluginOptions) => RsbuildPlugin` 的函数作为入口，建议将插件函数命名为 `pluginXXX`，并通过具名导出。
+插件提供类似 `(options?: PluginOptions) => RsbuildPlugin` 的函数作为入口。
 
 ### 插件示例
 
@@ -54,7 +54,27 @@ export default {
 - `setup` 作为插件逻辑的主入口。
 - `api` 对象包含了各类钩子和工具函数。
 
-为了便于识别，建议插件的 `name` 包含约定的 `plugin-` 前缀，例如 `plugin-foo`，`@scope/plugin-bar` 等。
+### 命名规范
+
+插件的命名规范如下：
+
+- 插件的函数命名为 `pluginXXX`，并通过具名导出。
+- 插件的 `name` 采用 `scope:foo-bar` 或 `plugin-foo-bar` 格式，添加 `scope:` 可以避免和其他插件产生命名冲突。
+
+下面是一个例子：
+
+```ts title="pluginFooBar.ts"
+import type { RsbuildPlugin } from '@rsbuild/core';
+
+export const pluginFooBar = (): RsbuildPlugin => ({
+  name: 'xxx:foo-bar',
+  setup() {},
+});
+```
+
+:::tip
+Rsbuild 官方插件的 `name` 统一使用 `rsbuild:` 作为前缀，比如 `rsbuild:react` 对应 `@rsbuild/plugin-react`。
+:::
 
 ### 模板仓库
 

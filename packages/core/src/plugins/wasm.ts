@@ -3,7 +3,7 @@ import { getDistPath } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginWasm = (): RsbuildPlugin => ({
-  name: 'plugin-wasm',
+  name: 'rsbuild:wasm',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {

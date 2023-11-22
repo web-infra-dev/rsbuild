@@ -139,7 +139,7 @@ export async function applyBaseCSSRule({
 
 export const pluginCss = (): RsbuildPlugin => {
   return {
-    name: 'plugin-css',
+    name: 'rsbuild-webpack:css',
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);

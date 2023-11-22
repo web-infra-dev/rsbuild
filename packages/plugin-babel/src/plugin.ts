@@ -20,7 +20,7 @@ export const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
 export const pluginBabel = (
   options: PluginBabelOptions = {},
 ): RsbuildPlugin => ({
-  name: 'plugin-babel',
+  name: 'rsbuild:babel',
 
   setup(api) {
     if (api.context.bundlerType === 'webpack') {

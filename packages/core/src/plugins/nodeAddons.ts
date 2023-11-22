@@ -8,7 +8,7 @@ import {
 import type { RsbuildPlugin } from '../types';
 
 export const pluginNodeAddons = (): RsbuildPlugin => ({
-  name: 'plugin-node-addons',
+  name: 'rsbuild:node-addons',
 
   setup(api) {
     api.modifyBundlerChain(

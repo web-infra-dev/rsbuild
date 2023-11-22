@@ -2,7 +2,7 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 import { RUNTIME_CHUNK_NAME } from '../constants';
 
 export const pluginRuntimeChunk = (): RsbuildPlugin => ({
-  name: 'plugin-runtime-chunk',
+  name: 'uni-builder:runtime-chunk',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { target }) => {

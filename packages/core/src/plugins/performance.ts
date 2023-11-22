@@ -20,7 +20,7 @@ function applyProfile({
  * Apply some configs of Rsbuild performance
  */
 export const pluginPerformance = (): RsbuildPlugin => ({
-  name: 'plugin-performance',
+  name: 'rsbuild:performance',
 
   setup(api) {
     api.modifyRsbuildConfig((rsbuildConfig) => {

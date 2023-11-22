@@ -2,7 +2,7 @@ import type { RsbuildPlugin } from '../types';
 
 export function pluginExternals(): RsbuildPlugin {
   return {
-    name: 'plugin-externals',
+    name: 'rsbuild:externals',
     setup(api) {
       api.modifyBundlerChain((chain) => {
         const { externals } = api.getNormalizedConfig().output;

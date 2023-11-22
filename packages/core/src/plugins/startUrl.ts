@@ -87,7 +87,7 @@ const openedURLs: string[] = [];
 
 export function pluginStartUrl(): RsbuildPlugin {
   return {
-    name: 'plugin-start-url',
+    name: 'rsbuild:start-url',
     setup(api) {
       api.onAfterStartDevServer(async (params) => {
         const { port, routes } = params;

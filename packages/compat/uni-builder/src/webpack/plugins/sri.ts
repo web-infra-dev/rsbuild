@@ -3,7 +3,7 @@ import type { RsbuildPlugin } from '@rsbuild/webpack';
 import type { SriOptions } from '../../types';
 
 export const pluginSRI = (options: SriOptions | boolean): RsbuildPlugin => ({
-  name: 'plugin-sri',
+  name: 'uni-builder:sri',
 
   setup(api) {
     api.modifyWebpackChain((chain, { CHAIN_ID }) => {

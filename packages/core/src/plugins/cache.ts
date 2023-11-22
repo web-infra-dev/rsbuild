@@ -89,7 +89,7 @@ async function getBuildDependencies(context: Readonly<Context>) {
 }
 
 export const pluginCache = (): RsbuildPlugin => ({
-  name: 'plugin-cache',
+  name: 'rsbuild:cache',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { target, env }) => {

@@ -5,7 +5,7 @@ import type { RsbuildTarget } from '@rsbuild/shared';
 export const pluginMainFields = (
   resolveMainFields: MainFields | Partial<Record<RsbuildTarget, MainFields>>,
 ): RsbuildPlugin => ({
-  name: 'plugin-main-fields',
+  name: 'uni-builder:main-fields',
 
   setup(api) {
     api.modifyBundlerChain((chain, { target }) => {

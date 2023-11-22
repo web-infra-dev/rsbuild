@@ -24,7 +24,7 @@ export function pluginCheckSyntax(
   options: PluginCheckSyntaxOptions = {},
 ): RsbuildPlugin {
   return {
-    name: 'plugin-check-syntax',
+    name: 'rsbuild:check-syntax',
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { isProd, target }) => {

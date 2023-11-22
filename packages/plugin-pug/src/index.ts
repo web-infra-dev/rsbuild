@@ -8,7 +8,7 @@ export type PluginPugOptions = {
 };
 
 export const pluginPug = (options: PluginPugOptions = {}): RsbuildPlugin => ({
-  name: 'plugin-pug',
+  name: 'rsbuild:pug',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {

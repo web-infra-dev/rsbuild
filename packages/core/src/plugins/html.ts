@@ -191,7 +191,7 @@ export const applyInjectTags = (api: SharedRsbuildPluginAPI) => {
 };
 
 export const pluginHtml = (): RsbuildPlugin => ({
-  name: 'plugin-html',
+  name: 'rsbuild:html',
 
   setup(api) {
     api.modifyBundlerChain(

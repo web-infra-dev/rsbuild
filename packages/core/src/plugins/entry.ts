@@ -2,7 +2,7 @@ import { castArray, color } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginEntry = (): RsbuildPlugin => ({
-  name: 'plugin-entry',
+  name: 'rsbuild:entry',
 
   setup(api) {
     api.modifyBundlerChain(async (chain) => {

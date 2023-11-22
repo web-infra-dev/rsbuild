@@ -3,7 +3,7 @@ import { getDistPath, getFilename, applyOutputPlugin } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../../types';
 
 export const pluginOutput = (): RsbuildPlugin => ({
-  name: 'plugin-output',
+  name: 'rsbuild:output',
 
   setup(api) {
     applyOutputPlugin(api);

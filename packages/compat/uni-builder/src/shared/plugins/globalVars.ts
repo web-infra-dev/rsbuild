@@ -5,7 +5,7 @@ import type { ChainedGlobalVars } from '../../types';
 export const pluginGlobalVars = (
   options?: ChainedGlobalVars,
 ): RsbuildPlugin => ({
-  name: 'plugin-global-vars',
+  name: 'uni-builder:global-vars',
 
   setup(api) {
     api.modifyBundlerChain((chain, { env, target, bundler }) => {
