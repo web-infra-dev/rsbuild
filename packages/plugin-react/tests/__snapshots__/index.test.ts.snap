@@ -42,7 +42,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableTransformByDefault": true,
-      "newResolver": true,
     },
   },
   "infrastructureLogging": {
