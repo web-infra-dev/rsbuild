@@ -3,4 +3,4 @@
 '@rsbuild/core': patch
 ---
 
-refactor: rename `server.compress`` to support preview server
+refactor: rename `server.compress` to support preview server
