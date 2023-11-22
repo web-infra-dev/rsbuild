@@ -1,27 +1,11 @@
 import type { ArrayOrNot } from '../utils';
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { Options as ProxyOptions } from '../../../compiled/http-proxy-middleware';
 
 export type ProgressBarConfig = {
   id?: string;
 };
 
 export type NextFunction = () => void;
-
-export type ProxyDetail = ProxyOptions & {
-  bypass?: (
-    req: IncomingMessage,
-    res: ServerResponse,
-    proxyOptions: RsbuildProxyOptions,
-  ) => string | undefined | null | false;
-  context?: string | string[];
-};
-
-export type RsbuildProxyOptions =
-  | Record<string, string>
-  | Record<string, ProxyDetail>
-  | ProxyDetail[]
-  | ProxyDetail;
 
 export type RequestHandler = (
   req: IncomingMessage,
@@ -75,7 +59,6 @@ export interface DevConfig {
     writeToDisk?: boolean | ((filename: string) => boolean);
     outputFileSystem?: Record<string, any>;
   };
-  proxy?: RsbuildProxyOptions;
   /** see https://github.com/bripkens/connect-history-api-fallback */
   historyApiFallback?:
     | boolean
