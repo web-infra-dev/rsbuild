@@ -49,7 +49,7 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
   const { default: gzipSize } = await import('@rsbuild/shared/gzip-size');
 
   const formatAsset = (asset: StatsAsset) => {
-    const fileName = asset.name;
+    const fileName = asset.name.split('?')[0];
     const contents = fse.readFileSync(path.join(distPath, fileName));
     const size = contents.length;
     const gzippedSize = gzipSize.sync(contents);
