@@ -1,5 +1,22 @@
 # @rsbuild/shared
 
+## 0.1.0
+
+### Minor Changes
+
+- b2eeaed: feat(deps): bump Rspack v0.4.0
+
+### Patch Changes
+
+- a59d099: refactor: rename output.enableInlineStyles to output.inlineStyles
+- 12bc79ba: feat: add basic support for env files
+- f08e2f1: refactor: rename `server.compress` to support preview server
+- 686987d: refactor: rename `server.historyApiFallback` to support preview server
+- 6d19338: feat: support uppercase debug flags
+- 0454cae8: refactor: rename `dev.proxy` to `server.proxy` to support preview server
+- 67a79efd: feat(cli): set 300ms debounce to avoid restart frequently
+- b2831a5: refactor: rename `dev.devMiddleware` to `dev.writeToDisk`
+
 ## 0.0.28
 
 ### Patch Changes

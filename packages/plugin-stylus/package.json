@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-stylus",
-  "version": "0.0.28",
+  "version": "0.1.0",
   "description": "Stylus plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -38,7 +38,7 @@
     "webpack": "^5.89.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.0.28"
+    "@rsbuild/core": "0.x"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {

@@ -1,5 +1,35 @@
 # @rsbuild/core
 
+## 0.1.0
+
+### Minor Changes
+
+- b2eeaed: feat(deps): bump Rspack v0.4.0
+
+### Patch Changes
+
+- a59d099: refactor: rename output.enableInlineStyles to output.inlineStyles
+- 12bc79ba: feat: add basic support for env files
+- f08e2f1: refactor: rename `server.compress` to support preview server
+- 805181ea: refactor: move dev.port/host/https to server
+- 9d5557a0: feat(server): support htmlFallback
+- 686987d: refactor: rename `server.historyApiFallback` to support preview server
+- 0454cae8: refactor: rename `dev.proxy` to `server.proxy` to support preview server
+- 67a79efd: feat(cli): set 300ms debounce to avoid restart frequently
+- 06cc01e7: refactor: standardize the naming of official plugins
+- fee4e4e6: fix(cli): should not exit process when editing config file
+- b2831a5: refactor: rename `dev.devMiddleware` to `dev.writeToDisk`
+- Updated dependencies [b2eeaed]
+- Updated dependencies [a59d099]
+- Updated dependencies [12bc79ba]
+- Updated dependencies [f08e2f1]
+- Updated dependencies [686987d]
+- Updated dependencies [6d19338]
+- Updated dependencies [0454cae8]
+- Updated dependencies [67a79efd]
+- Updated dependencies [b2831a5]
+  - @rsbuild/shared@0.1.0
+
 ## 0.0.28
 
 ### Patch Changes
