@@ -59,20 +59,6 @@ export interface DevConfig {
     writeToDisk?: boolean | ((filename: string) => boolean);
     outputFileSystem?: Record<string, any>;
   };
-  /** see https://github.com/bripkens/connect-history-api-fallback */
-  historyApiFallback?:
-    | boolean
-    | {
-        index?: string;
-        verbose?: boolean;
-        logger?: typeof console.log;
-        htmlAcceptHeaders?: string[];
-        disableDotRule?: true;
-        rewrites?: Array<{
-          from: RegExp;
-          to: string | RegExp | Function;
-        }>;
-      };
   /** Provides the ability to execute a custom function and apply custom middlewares */
   setupMiddlewares?: Array<
     (
