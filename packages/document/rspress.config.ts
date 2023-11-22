@@ -37,7 +37,7 @@ export default defineConfig({
       {
         icon: 'discord',
         mode: 'link',
-        content: 'https://discord.gg/dfJnVWaG',
+        content: 'https://discord.gg/mScJfeeT',
       },
     ],
     locales: [

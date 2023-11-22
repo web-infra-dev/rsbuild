@@ -5,7 +5,7 @@
 # Rsbuild
 
 <p>
-  <a href="https://discord.gg/dfJnVWaG">
+  <a href="https://discord.gg/mScJfeeT">
     <img src="https://img.shields.io/discord/977448667919286283?logo=discord&label=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
   </a>
   <a href="https://npmjs.com/package/@rsbuild/shared?activeTab=readme">
@@ -79,7 +79,7 @@ Rsbuild 具备以下特性：
 
 ## 🧑‍💻 社区
 
-欢迎加入我们的 [Discord](https://discord.gg/dfJnVWaG) 交流频道！Rspack / Rsbuild 团队和用户都在那里活跃，并且我们一直期待着各种贡献。
+欢迎加入我们的 [Discord](https://discord.gg/mScJfeeT) 交流频道！Rspack / Rsbuild 团队和用户都在那里活跃，并且我们一直期待着各种贡献。
 
 你也可以加入 [飞书群](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=3c3vca77-bfc0-4ef5-b62b-9c5c9c92f1b4) 与大家一起交流。
 
