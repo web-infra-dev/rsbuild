@@ -5,7 +5,7 @@
 # Rsbuild
 
 <p>
-  <a href="https://discord.gg/dfJnVWaG">
+  <a href="https://discord.gg/mScJfeeT">
     <img src="https://img.shields.io/discord/977448667919286283?logo=discord&label=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
   </a>
   <a href="https://npmjs.com/package/@rsbuild/shared?activeTab=readme">
@@ -79,7 +79,7 @@ Please read the [Contributing Guide](https://github.com/web-infra-dev/rsbuild/bl
 
 ## 🧑‍💻 Community
 
-Come and chat with us on [Discord](https://discord.gg/dfJnVWaG)! The Rspack / Rsbuild team and users are active there, and we're always looking for contributions.
+Come and chat with us on [Discord](https://discord.gg/mScJfeeT)! The Rspack / Rsbuild team and users are active there, and we're always looking for contributions.
 
 ## 🙌 Code of Conduct
 
