@@ -15,6 +15,12 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
         ],
         "filename": "index.html",
         "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": {
           "collapseWhitespace": true,
           "keepClosingSlash": true,
@@ -48,15 +54,6 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
         "HtmlPlugin": [Function],
         "info": {
           "index.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
         },
@@ -94,6 +91,12 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
         ],
         "filename": "index.html",
         "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": {
           "collapseWhitespace": true,
           "keepClosingSlash": true,
@@ -127,15 +130,6 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
         "HtmlPlugin": [Function],
         "info": {
           "index.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
         },

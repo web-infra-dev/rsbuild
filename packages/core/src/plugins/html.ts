@@ -132,13 +132,12 @@ export async function getMetaTags(
   entryName: string,
   config: { html: HtmlConfig; output: NormalizedOutputConfig },
 ) {
-  const merged = mergeChainedOptions({
+  return mergeChainedOptions({
     defaults: {},
     options: config.html.meta,
     utils: { entryName },
     useObjectParam: true,
   });
-  return generateMetaTags(merged);
 }
 
 function getTemplateParameters(
@@ -268,7 +267,10 @@ export const pluginHtml = (): RsbuildPlugin => ({
               assetPrefix,
             );
 
+            const metaTags = await getMetaTags(entryName, config);
+
             const pluginOptions: HTMLPluginOptions = {
+              meta: metaTags,
               chunks,
               inject,
               minify,
@@ -288,11 +290,6 @@ export const pluginHtml = (): RsbuildPlugin => ({
             const title = getTitle(entryName, config);
             if (title) {
               htmlInfo.title = title;
-            }
-
-            const metaTags = await getMetaTags(entryName, config);
-            if (metaTags.length) {
-              htmlInfo.meta = metaTags;
             }
 
             const favicon = getFavicon(entryName, config);
