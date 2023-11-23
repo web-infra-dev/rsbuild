@@ -309,4 +309,33 @@ describe('parseCommonConfig', () => {
       ).rsbuildConfig,
     ).toMatchSnapshot();
   });
+  test('output.enableInlineScripts', async () => {
+    expect(
+      (
+        await parseCommonConfig(
+          {
+            output: {
+              enableInlineScripts: true,
+            },
+          },
+          __dirname,
+        )
+      ).rsbuildConfig,
+    ).toMatchSnapshot();
+  });
+
+  test('output.enableInlineStyles', async () => {
+    expect(
+      (
+        await parseCommonConfig(
+          {
+            output: {
+              enableInlineStyles: true,
+            },
+          },
+          __dirname,
+        )
+      ).rsbuildConfig,
+    ).toMatchSnapshot();
+  });
 });

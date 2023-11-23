@@ -85,12 +85,12 @@ export default function Foo() {
 
 除了将静态资源文件内联到 JS 文件里，Rsbuild 也支持将 JS 文件内联到 HTML 文件中。
 
-只需要开启 [output.enableInlineScripts](/config/options/output#outputenableinlinescripts) 配置项，构建生成的 JS 文件将不会被写入产物目录下，而是会直接内联到对应的 HTML 文件中。
+只需要开启 [output.inlineScripts](/config/options/output#outputinlinescripts) 配置项，构建生成的 JS 文件将不会被写入产物目录下，而是会直接内联到对应的 HTML 文件中。
 
 ```ts
 export default {
   output: {
-    enableInlineScripts: true,
+    inlineScripts: true,
   },
 };
 ```
@@ -103,12 +103,12 @@ export default {
 
 你也可以将 CSS 文件内联到 HTML 文件中。
 
-只需要开启 [output.enableInlineStyles](/config/options/output#outputenableinlinestyles) 配置项，构建生成的 CSS 文件将不会被写入产物目录下，而是会直接内联到对应的 HTML 文件中。
+只需要开启 [output.inlineStyles](/config/options/output#outputinlinestyles) 配置项，构建生成的 CSS 文件将不会被写入产物目录下，而是会直接内联到对应的 HTML 文件中。
 
 ```ts
 export default {
   output: {
-    enableInlineStyles: true,
+    inlineStyles: true,
   },
 };
 ```

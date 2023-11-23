@@ -98,7 +98,7 @@ export default class DevMiddleware extends EventEmitter {
         ? getHMRClientPath(devOptions.client)
         : undefined,
       serverSideRender: true,
-      ...devOptions.devMiddleware,
+      writeToDisk: devOptions.writeToDisk,
     });
 
     return middleware;

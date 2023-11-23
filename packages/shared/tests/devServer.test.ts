@@ -253,10 +253,7 @@ describe('test dev server', () => {
           "port": "8080",
           "protocol": "",
         },
-        "compress": true,
-        "devMiddleware": {
-          "writeToDisk": [Function],
-        },
+        "writeToDisk": [Function],
       }
     `);
 
@@ -281,11 +278,8 @@ describe('test dev server', () => {
           "port": "8081",
           "protocol": "",
         },
-        "compress": true,
-        "devMiddleware": {
-          "writeToDisk": [Function],
-        },
         "hmr": false,
+        "writeToDisk": [Function],
       }
     `);
   });

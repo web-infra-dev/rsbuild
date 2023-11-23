@@ -28,8 +28,8 @@ export const pluginRuntimeChunk = (): RsbuildPlugin => ({
       // matches bundler-runtime.js and bundler-runtime.123456.js
       const regexp = new RegExp(`${RUNTIME_CHUNK_NAME}([.].+)?\\.js$`);
 
-      if (!config.output.enableInlineScripts) {
-        config.output.enableInlineScripts = regexp;
+      if (!config.output.inlineScripts) {
+        config.output.inlineScripts = regexp;
       }
     });
   },

@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/uni-builder",
-  "version": "0.0.28",
+  "version": "0.1.0",
   "description": "Unified builder for Modern.js",
   "repository": {
     "type": "git",

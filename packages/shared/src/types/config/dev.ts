@@ -52,27 +52,6 @@ export interface DevConfig {
     host?: string;
     protocol?: string;
   };
-  /** Whether to enable gzip compression */
-  compress?: boolean;
-  /** see https://github.com/webpack/webpack-dev-middleware */
-  devMiddleware?: {
-    writeToDisk?: boolean | ((filename: string) => boolean);
-    outputFileSystem?: Record<string, any>;
-  };
-  /** see https://github.com/bripkens/connect-history-api-fallback */
-  historyApiFallback?:
-    | boolean
-    | {
-        index?: string;
-        verbose?: boolean;
-        logger?: typeof console.log;
-        htmlAcceptHeaders?: string[];
-        disableDotRule?: true;
-        rewrites?: Array<{
-          from: RegExp;
-          to: string | RegExp | Function;
-        }>;
-      };
   /** Provides the ability to execute a custom function and apply custom middlewares */
   setupMiddlewares?: Array<
     (
@@ -86,6 +65,10 @@ export interface DevConfig {
       server: ExposeServerApis,
     ) => void
   >;
+  /**
+   * Used to control whether the build artifacts of the development environment are written to the disk.
+   */
+  writeToDisk?: boolean | ((filename: string) => boolean);
 }
 
 export type NormalizedDevConfig = DevConfig &

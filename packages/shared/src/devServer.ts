@@ -84,10 +84,7 @@ export const mergeDevOptions = ({
       // By default it is set to "location.protocol === 'https:' ? 'wss' : 'ws'""
       protocol: '',
     },
-    compress: true,
-    devMiddleware: {
-      writeToDisk: (file: string) => !file.includes('.hot-update.'),
-    },
+    writeToDisk: (file: string) => !file.includes('.hot-update.'),
   };
 
   const devConfig = rsbuildConfig.dev

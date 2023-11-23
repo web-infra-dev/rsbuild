@@ -8,10 +8,10 @@ export const isOverriddenConfigKey = (key: string) =>
   [
     // performance.removeConsole
     'removeConsole',
-    // output.enableInlineScripts
-    'enableInlineScripts',
-    // output.enableInlineStyles
-    'enableInlineStyles',
+    // output.inlineScripts
+    'inlineScripts',
+    // output.inlineStyles
+    'inlineStyles',
     // cssModules.auto
     'auto',
   ].includes(key);

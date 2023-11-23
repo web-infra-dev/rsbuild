@@ -48,9 +48,9 @@ export default {
 
 ### 选项
 
-DevServer Proxy 基于 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) 实现。你可以使用 http-proxy-middleware 的所有配置项，具体可以查看文档。
+Rsbuild Server Proxy 基于 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) 实现。你可以使用 http-proxy-middleware 的所有配置项，具体可以查看文档。
 
-DevServer Proxy 完整类型定义为：
+Rsbuild Server Proxy 完整类型定义为：
 
 ```ts
 import type { Options as HttpProxyOptions } from 'http-proxy-middleware';

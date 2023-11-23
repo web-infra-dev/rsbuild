@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/doctor-rspack-plugin",
-  "version": "0.0.14",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
@@ -21,7 +21,7 @@
     "@rsbuild/doctor-core": "workspace:*",
     "@rsbuild/doctor-sdk": "workspace:*",
     "@rsbuild/doctor-utils": "workspace:*",
-    "@rspack/core": "0.3.14",
+    "@rspack/core": "0.4.0",
     "lodash": "^4.17.21",
     "webpack": "^5.89.0"
   },

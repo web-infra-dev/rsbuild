@@ -111,18 +111,14 @@ export const CHAIN_ID = {
     PUG: 'pug',
     /** vue-loader */
     VUE: 'vue',
-    /** file-loader */
-    FILE: 'file',
     /** @svgr/webpack */
     SVGR: 'svgr',
     /** yaml-loader */
     YAML: 'yaml',
     /** toml-loader */
     TOML: 'toml',
-    /** html-loader */
-    HTML: 'html',
     /** node-loader */
-    NODE: 'html',
+    NODE: 'node',
     /** babel-loader */
     BABEL: 'babel',
     /** esbuild-loader */
@@ -162,14 +158,12 @@ export const CHAIN_ID = {
     IGNORE: 'ignore',
     /** BannerPlugin */
     BANNER: 'banner',
-    /** Webpackbar */
+    /** ProgressPlugin */
     PROGRESS: 'progress',
     /** Inspector */
     INSPECTOR: 'inspector',
     /** AppIconPlugin */
     APP_ICON: 'app-icon',
-    /** FaviconUrlPlugin */
-    FAVICON_URL: 'favicon-url',
     /** WebpackManifestPlugin */
     MANIFEST: 'webpack-manifest',
     /** ForkTsCheckerWebpackPlugin */

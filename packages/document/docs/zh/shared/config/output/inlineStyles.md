@@ -1,7 +1,7 @@
 - **类型：**
 
 ```ts
-type EnableInlineStyles =
+type InlineStyles =
   | boolean
   | RegExp
   | ((params: { size: number; name: string }) => boolean);
@@ -23,12 +23,12 @@ dist/static/css/style.css
 dist/static/js/main.js
 ```
 
-开启 `output.enableInlineStyles` 选项后：
+开启 `output.inlineStyles` 选项后：
 
 ```js
 export default {
   output: {
-    enableInlineStyles: true,
+    inlineStyles: true,
   },
 };
 ```
@@ -55,14 +55,14 @@ dist/static/js/main.js
 
 ### 通过正则匹配
 
-当你需要内联产物中的一部分 CSS 文件时，你可以将 `enableInlineStyles` 设置为一个正则表达式，匹配需要内联的 CSS 文件的 URL。
+当你需要内联产物中的一部分 CSS 文件时，你可以将 `inlineStyles` 设置为一个正则表达式，匹配需要内联的 CSS 文件的 URL。
 
 比如，将产物中的 `main.css` 内联到 HTML 中，你可以添加如下配置：
 
 ```js
 export default {
   output: {
-    enableInlineStyles: /\/main\.\w+\.css$/,
+    inlineStyles: /\/main\.\w+\.css$/,
   },
 };
 ```
@@ -73,7 +73,7 @@ export default {
 
 ### 通过函数匹配
 
-你也可以将 `output.enableInlineStyles` 设置为一个函数，函数接收以下参数：
+你也可以将 `output.inlineStyles` 设置为一个函数，函数接收以下参数：
 
 - `name`：文件名，比如 `static/css/main.18a568e5.css`。
 - `size`：文件大小，单位为 byte。
@@ -83,7 +83,7 @@ export default {
 ```js
 export default {
   output: {
-    enableInlineStyles({ size }) {
+    inlineStyles({ size }) {
       return size < 10 * 1000;
     },
   },

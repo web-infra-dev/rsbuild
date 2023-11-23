@@ -5,7 +5,7 @@
 # Rsbuild
 
 <p>
-  <a href="https://discord.gg/dfJnVWaG">
+  <a href="https://discord.gg/mScJfeeT">
     <img src="https://img.shields.io/discord/977448667919286283?logo=discord&label=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
   </a>
   <a href="https://npmjs.com/package/@rsbuild/shared?activeTab=readme">
@@ -50,7 +50,7 @@ Rsbuild has the following features:
 
 - **Stable Artifacts**: Rsbuild is designed with a strong focus on the stability of build artifacts. It ensures high consistency between artifacts in the development environment and production builds, and automatically completes syntax downgrading and polyfill injection. Rsbuild also provides plugins for type checking and artifact syntax validation to prevent quality and compatibility issues in production code.
 
-- **Framework Agnostic**: Rsbuild is not coupled with any front-end UI framework. It supports frameworks like React, Vue 3, Vue 2, Svelte, and Lit through plugins, and plans to support more UI frameworks from the community in the future.
+- **Framework Agnostic**: Rsbuild is not coupled with any front-end UI framework. It supports frameworks like React, Vue 3, Vue 2, Svelte, Solid, and Lit through plugins, and plans to support more UI frameworks from the community in the future.
 
 ## 🎯 Position
 
@@ -79,7 +79,7 @@ Please read the [Contributing Guide](https://github.com/web-infra-dev/rsbuild/bl
 
 ## 🧑‍💻 Community
 
-Come and chat with us on [Discord](https://discord.gg/dfJnVWaG)! The Rspack / Rsbuild team and users are active there, and we're always looking for contributions.
+Come and chat with us on [Discord](https://discord.gg/mScJfeeT)! The Rspack / Rsbuild team and users are active there, and we're always looking for contributions.
 
 ## 🙌 Code of Conduct
 

@@ -51,6 +51,7 @@ export const getDefaultServerConfig = (): NormalizedServerConfig => ({
   port: DEFAULT_PORT,
   host: DEFAULT_DEV_HOST,
   htmlFallback: 'index',
+  compress: true,
 });
 
 export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
@@ -126,8 +127,8 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   disableFilenameHash: false,
   enableLatestDecorators: false,
   enableCssModuleTSDeclaration: false,
-  enableInlineScripts: false,
-  enableInlineStyles: false,
+  inlineScripts: false,
+  inlineStyles: false,
   cssModules: {
     auto: true,
     exportLocalsConvention: 'camelCase',

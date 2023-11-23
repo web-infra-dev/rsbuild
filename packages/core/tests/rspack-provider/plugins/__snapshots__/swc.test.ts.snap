@@ -15,9 +15,6 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
   "module": {
     "rules": [
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -137,9 +134,6 @@ exports[`plugin-swc > should add browserslist 1`] = `
   "module": {
     "rules": [
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -253,9 +247,6 @@ exports[`plugin-swc > should add browserslist 2`] = `
   "module": {
     "rules": [
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -369,9 +360,6 @@ exports[`plugin-swc > should add pluginImport 1`] = `
   "module": {
     "rules": [
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -505,9 +493,6 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
   "module": {
     "rules": [
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -839,9 +824,6 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
   "module": {
     "rules": [
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -959,9 +941,6 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
   "module": {
     "rules": [
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -1081,9 +1060,6 @@ exports[`plugin-swc > should has correct core-js 1`] = `
   "module": {
     "rules": [
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -1201,9 +1177,6 @@ exports[`plugin-swc > should has correct core-js 2`] = `
   "module": {
     "rules": [
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -1423,9 +1396,6 @@ exports[`plugin-swc > should'n override browserslist when target platform is not
   "module": {
     "rules": [
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [

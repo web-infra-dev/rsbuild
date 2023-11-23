@@ -18,7 +18,23 @@ export type ProxyOptions =
   | ProxyDetail[]
   | ProxyDetail;
 
+export type HistoryApiFallbackOptions = {
+  index?: string;
+  verbose?: boolean;
+  logger?: typeof console.log;
+  htmlAcceptHeaders?: string[];
+  disableDotRule?: true;
+  rewrites?: Array<{
+    from: RegExp;
+    to: string | RegExp | Function;
+  }>;
+};
+
 export interface ServerConfig {
+  /**
+   * Whether to enable gzip compression
+   */
+  compress?: boolean;
   /**
    * Specify a port number for Dev Server to listen.
    */
@@ -36,6 +52,11 @@ export interface ServerConfig {
    */
   headers?: Record<string, string | string[]>;
   htmlFallback?: HtmlFallback;
+  /**
+   * Provide alternative pages for some 404 responses or other requests.
+   * see https://github.com/bripkens/connect-history-api-fallback
+   */
+  historyApiFallback?: boolean | HistoryApiFallbackOptions;
   /**
    * Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
    */

@@ -1,7 +1,7 @@
 - **Type:**
 
 ```ts
-type EnableInlineScripts =
+type InlineScripts =
   | boolean
   | RegExp
   | ((params: { size: number; name: string }) => boolean);
@@ -24,12 +24,12 @@ dist/static/css/style.css
 dist/static/js/main.js
 ```
 
-After turn on the `output.enableInlineScripts` option:
+After turn on the `output.inlineScripts` option:
 
 ```js
 export default {
   output: {
-    enableInlineScripts: true,
+    inlineScripts: true,
   },
 };
 ```
@@ -55,14 +55,14 @@ And `dist/static/js/main.js` will be inlined in `index.html`:
 
 ### Using RegExp
 
-If you need to inline part of the JS files, you can set `enableInlineScripts` to a regular expression that matches the URL of the JS file that needs to be inlined.
+If you need to inline part of the JS files, you can set `inlineScripts` to a regular expression that matches the URL of the JS file that needs to be inlined.
 
 For example, to inline `main.js` into HTML, you can add the following configuration:
 
 ```js
 export default {
   output: {
-    enableInlineScripts: /\/main\.\w+\.js$/,
+    inlineScripts: /\/main\.\w+\.js$/,
   },
 };
 ```
@@ -73,7 +73,7 @@ The production filename includes a hash value by default, such as `static/js/mai
 
 ### Using Function
 
-You can also set `output.enableInlineScripts` to a function that accepts the following parameters:
+You can also set `output.inlineScripts` to a function that accepts the following parameters:
 
 - `name`: The filename, such as `static/js/main.18a568e5.js`.
 - `size`: The file size in bytes.
@@ -83,7 +83,7 @@ For example, if we want to inline assets that are smaller than 10KB, we can add 
 ```js
 export default {
   output: {
-    enableInlineScripts({ size }) {
+    inlineScripts({ size }) {
       return size < 10 * 1000;
     },
   },

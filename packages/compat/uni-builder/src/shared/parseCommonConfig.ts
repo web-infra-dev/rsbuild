@@ -105,19 +105,15 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     delete output.cssModuleLocalIdentName;
   }
 
-  const server: ServerConfig = isProd()
-    ? {}
-    : {
-        https: dev.https ? await genHttpsOptions(dev.https, cwd) : undefined,
-        port: dev.port,
-        host: dev.host,
-      };
+  if (uniBuilderConfig.output?.enableInlineScripts) {
+    output.inlineScripts = uniBuilderConfig.output?.enableInlineScripts;
+    delete output.enableInlineScripts;
+  }
 
-  delete dev.https;
-  delete dev.port;
-  delete dev.host;
-
-  rsbuildConfig.server = server;
+  if (uniBuilderConfig.output?.enableInlineStyles) {
+    output.inlineStyles = uniBuilderConfig.output?.enableInlineStyles;
+    delete output.enableInlineStyles;
+  }
 
   const extraConfig: RsbuildRspackConfig | RsbuildWebpackConfig = {};
   extraConfig.html ||= {};
@@ -155,6 +151,20 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
       html.templateParametersByEntries![entryName];
     delete html.templateParametersByEntries;
   }
+
+  const server: ServerConfig = isProd()
+    ? {}
+    : {
+        https: dev.https ? await genHttpsOptions(dev.https, cwd) : undefined,
+        port: dev.port,
+        host: dev.host,
+      };
+
+  delete dev.https;
+  delete dev.port;
+  delete dev.host;
+
+  rsbuildConfig.server = server;
 
   rsbuildConfig.dev = dev;
   rsbuildConfig.html = html;

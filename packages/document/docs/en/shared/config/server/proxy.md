@@ -48,9 +48,9 @@ export default {
 
 ### Options
 
-The DevServer Proxy makes use of the [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) package. Check out its documentation for more advanced usages.
+The Rsbuild Server Proxy makes use of the [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) package. Check out its documentation for more advanced usages.
 
-The full type definition of DevServer Proxy is:
+The full type definition of Rsbuild Server Proxy is:
 
 ```ts
 import type { Options as HttpProxyOptions } from 'http-proxy-middleware';

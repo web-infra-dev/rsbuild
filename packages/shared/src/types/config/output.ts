@@ -165,11 +165,11 @@ export interface OutputConfig {
   /**
    * Whether to inline output scripts files (.js files) into HTML with `<script>` tags.
    */
-  enableInlineScripts?: boolean | InlineChunkTest;
+  inlineScripts?: boolean | InlineChunkTest;
   /**
    * Whether to inline output style files (.css files) into html with `<style>` tags.
    */
-  enableInlineStyles?: boolean | InlineChunkTest;
+  inlineStyles?: boolean | InlineChunkTest;
   /**
    * Specifies the range of target browsers that the project is compatible with.
    * This value will be used by [@babel/preset-env](https://babeljs.io/docs/en/babel-preset-env) and
@@ -200,8 +200,8 @@ export interface NormalizedOutputConfig extends OutputConfig {
   disableFilenameHash: boolean;
   enableLatestDecorators: boolean;
   enableCssModuleTSDeclaration: boolean;
-  enableInlineScripts: boolean | InlineChunkTest;
-  enableInlineStyles: boolean | InlineChunkTest;
+  inlineScripts: boolean | InlineChunkTest;
+  inlineStyles: boolean | InlineChunkTest;
   cssModules: {
     localIdentName?: string;
     exportLocalsConvention: CssModuleLocalsConvention;

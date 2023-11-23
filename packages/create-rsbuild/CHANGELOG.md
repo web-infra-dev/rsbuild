@@ -1,5 +1,11 @@
 # create-rsbuild
 
+## 0.1.0
+
+### Patch Changes
+
+- 1090e387: feat(create-rsbuild): bump typescript to v5.3.0
+
 ## 0.0.28
 
 ## 0.0.27

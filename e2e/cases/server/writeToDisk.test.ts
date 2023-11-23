@@ -34,9 +34,7 @@ test('writeToDisk false', async ({ page }) => {
         },
       },
       dev: {
-        devMiddleware: {
-          writeToDisk: false,
-        },
+        writeToDisk: false,
       },
     },
   });
@@ -59,9 +57,7 @@ test('writeToDisk true', async ({ page }) => {
         },
       },
       dev: {
-        devMiddleware: {
-          writeToDisk: true,
-        },
+        writeToDisk: true,
       },
     },
   });

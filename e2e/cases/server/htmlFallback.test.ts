@@ -12,9 +12,7 @@ test('should access / success and htmlFallback success by default', async ({
     cwd: join(fixtures, 'basic'),
     rsbuildConfig: {
       dev: {
-        devMiddleware: {
-          writeToDisk: true,
-        },
+        writeToDisk: true,
       },
       output: {
         distPath: {
@@ -46,9 +44,7 @@ test('should return 404 when htmlFallback false', async ({ page }) => {
     cwd: join(fixtures, 'basic'),
     rsbuildConfig: {
       dev: {
-        devMiddleware: {
-          writeToDisk: true,
-        },
+        writeToDisk: true,
       },
       server: {
         htmlFallback: false,
@@ -87,9 +83,7 @@ test('should access /main.html success when entry is main', async ({
         },
       },
       dev: {
-        devMiddleware: {
-          writeToDisk: true,
-        },
+        writeToDisk: true,
       },
     },
   });
@@ -119,9 +113,7 @@ test('should access /main success when entry is main', async ({ page }) => {
         },
       },
       dev: {
-        devMiddleware: {
-          writeToDisk: true,
-        },
+        writeToDisk: true,
       },
     },
   });
@@ -155,9 +147,7 @@ test('should access /main success when entry is main and use memoryFs', async ({
         },
       },
       dev: {
-        devMiddleware: {
-          writeToDisk: false,
-        },
+        writeToDisk: true,
       },
     },
   });
@@ -189,9 +179,7 @@ test('should access /main success when entry is main and set assetPrefix', async
         },
       },
       dev: {
-        devMiddleware: {
-          writeToDisk: true,
-        },
+        writeToDisk: true,
         assetPrefix: '/aaaa/',
       },
     },
@@ -227,9 +215,7 @@ test('should access /main success when entry is main and outputPath is /main/ind
         outputStructure: 'nested',
       },
       dev: {
-        devMiddleware: {
-          writeToDisk: true,
-        },
+        writeToDisk: true,
       },
     },
   });
@@ -259,9 +245,7 @@ test('should return 404 when page is not found', async ({ page }) => {
         },
       },
       dev: {
-        devMiddleware: {
-          writeToDisk: true,
-        },
+        writeToDisk: true,
       },
     },
   });
@@ -293,9 +277,7 @@ test('should access /html/main success when entry is main and outputPath is /htm
         },
       },
       dev: {
-        devMiddleware: {
-          writeToDisk: true,
-        },
+        writeToDisk: true,
       },
     },
   });
@@ -335,9 +317,7 @@ test('should access /main success when modify publicPath in compiler', async ({
         },
       },
       dev: {
-        devMiddleware: {
-          writeToDisk: true,
-        },
+        writeToDisk: true,
       },
     },
     plugins: [

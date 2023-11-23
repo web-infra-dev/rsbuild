@@ -146,9 +146,7 @@ export default {
 - less
 - less-loader
 - css-loader
-- babel-loader
 - url-loader
-- file-loader
 - ...
 
 该方法通常在需要与 Rsbuild 复用同一份依赖时会被用到。
@@ -226,7 +224,6 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 | `USE.TOML`                        | 对应 `toml-loader`                    |
 | `USE.YAML`                        | 对应 `yaml-loader`                    |
 | `USE.NODE`                        | 对应 `node-loader`                    |
-| `USE.FILE`                        | 对应 `file-loader`                    |
 | `USE.URL`                         | 对应 `url-loader`                     |
 | `USE.SVGR`                        | 对应 `@svgr/webpack`                  |
 | `USE.BABEL`                       | 对应 `babel-loader`                   |

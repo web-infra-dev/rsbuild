@@ -1,5 +1,16 @@
 # @rsbuild/doctor-core
 
+## 0.1.0
+
+### Minor Changes
+
+- b2eeaed: feat(deps): bump Rspack v0.4.0
+
+### Patch Changes
+
+- @rsbuild/doctor-sdk@0.1.0
+- @rsbuild/doctor-utils@0.1.0
+
 ## 0.0.14
 
 ### Patch Changes

@@ -12,7 +12,6 @@ import {
   type Polyfill,
   type BundlerChain,
   type RsbuildTarget,
-  type BundlerChainRule,
   type BuiltinSwcLoaderOptions,
 } from '@rsbuild/shared';
 import * as path from 'path';
@@ -102,7 +101,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           } else {
             swcConfig.env!.mode = polyfillMode;
             /* Apply core-js version and path alias and exclude core-js */
-            await applyCoreJs(swcConfig, chain, rule, polyfillMode);
+            await applyCoreJs(swcConfig, chain, polyfillMode);
           }
         }
 
@@ -143,7 +142,6 @@ export const pluginSwc = (): RsbuildPlugin => ({
 async function applyCoreJs(
   swcConfig: BuiltinSwcLoaderOptions,
   chain: BundlerChain,
-  rule: BundlerChainRule,
   polyfillMode: Polyfill,
 ) {
   const coreJsPath = require.resolve('core-js/package.json');
@@ -161,8 +159,6 @@ async function applyCoreJs(
   chain.resolve.alias.merge({
     'core-js': coreJsDir,
   });
-
-  rule.exclude.add(coreJsDir);
 }
 
 function applyTransformImport(
