@@ -10,5 +10,6 @@
   "html-template",
   "css-modules",
   "typescript",
-  "tailwindcss"
+  "tailwindcss",
+  "unocss"
 ]
