@@ -17,12 +17,16 @@ export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
   config: UniBuilderWebpackConfig;
   frameworkConfigPath?: string;
+  /** The root path of current project. */
+  cwd: string;
 };
 
 export type CreateRspackBuilderOptions = {
   bundlerType: 'rspack';
   config: UniBuilderRspackConfig;
   frameworkConfigPath?: string;
+  /** The root path of current project. */
+  cwd: string;
 };
 
 export type CreateUniBuilderOptions =
@@ -47,7 +51,23 @@ export type ModuleScopes = Array<string | RegExp>;
 
 export type MainFields = (string | string[])[];
 
+export type DevServerHttpsOptions = boolean | { key: string; cert: string };
+
 export type UniBuilderExtraConfig = {
+  dev?: {
+    /**
+     * Used to set the host of Dev Server.
+     */
+    host?: string;
+    /**
+     * After configuring this option, you can enable HTTPS Dev Server, and disabling the HTTP Dev Server.
+     */
+    https?: DevServerHttpsOptions;
+    /**
+     * Specify a port number for Dev Server to listen.
+     */
+    port?: number;
+  };
   source?: {
     /**
      * Define global variables. It can replace expressions like `process.env.FOO` in your code after compile.

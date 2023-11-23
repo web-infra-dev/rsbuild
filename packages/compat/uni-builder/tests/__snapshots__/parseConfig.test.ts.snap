@@ -1,5 +1,34 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`parseCommonConfig > dev.xxx 1`] = `
+{
+  "dev": {
+    "progressBar": true,
+  },
+  "html": {},
+  "output": {},
+  "server": {
+    "host": "xxx.xxx",
+    "https": {
+      "cert": "xxx",
+      "key": "xxxx",
+    },
+    "port": 8081,
+  },
+}
+`;
+
+exports[`parseCommonConfig > dev.xxx 2`] = `
+{
+  "dev": {
+    "progressBar": true,
+  },
+  "html": {},
+  "output": {},
+  "server": {},
+}
+`;
+
 exports[`parseCommonConfig > html.faviconByEntries 1`] = `
 {
   "dev": {
@@ -9,6 +38,11 @@ exports[`parseCommonConfig > html.faviconByEntries 1`] = `
     "favicon": [Function],
   },
   "output": {},
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -24,6 +58,11 @@ exports[`parseCommonConfig > html.faviconByEntries 2`] = `
     ],
   },
   "output": {},
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -36,6 +75,11 @@ exports[`parseCommonConfig > html.faviconByEntries 3`] = `
     "inject": [Function],
   },
   "output": {},
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -51,6 +95,11 @@ exports[`parseCommonConfig > html.faviconByEntries 4`] = `
     ],
   },
   "output": {},
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -63,6 +112,11 @@ exports[`parseCommonConfig > html.metaByEntries 1`] = `
     "meta": [Function],
   },
   "output": {},
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -82,6 +136,11 @@ exports[`parseCommonConfig > html.metaByEntries 2`] = `
     ],
   },
   "output": {},
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -94,6 +153,11 @@ exports[`parseCommonConfig > html.templateByEntries 1`] = `
     "template": [Function],
   },
   "output": {},
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -109,6 +173,11 @@ exports[`parseCommonConfig > html.templateByEntries 2`] = `
     ],
   },
   "output": {},
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -121,6 +190,11 @@ exports[`parseCommonConfig > html.templateParametersByEntries 1`] = `
     "templateParameters": [Function],
   },
   "output": {},
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -138,6 +212,11 @@ exports[`parseCommonConfig > html.templateParametersByEntries 2`] = `
     ],
   },
   "output": {},
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -150,6 +229,11 @@ exports[`parseCommonConfig > html.titleByEntries 1`] = `
     "title": [Function],
   },
   "output": {},
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -165,6 +249,11 @@ exports[`parseCommonConfig > html.titleByEntries 2`] = `
     ],
   },
   "output": {},
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -178,6 +267,11 @@ exports[`parseCommonConfig > output.cssModuleLocalIdentName 1`] = `
     "cssModules": {
       "localIdentName": "[local]-[hash:base64:6]",
     },
+  },
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
   },
 }
 `;
@@ -194,6 +288,11 @@ exports[`parseCommonConfig > output.disableCssModuleExtension 1`] = `
     },
     "disableCssModuleExtension": true,
   },
+  "server": {
+    "host": undefined,
+    "https": undefined,
+    "port": undefined,
+  },
 }
 `;
 
@@ -206,6 +305,7 @@ exports[`parseCommonConfig > output.enableInlineScripts 1`] = `
   "output": {
     "inlineScripts": true,
   },
+  "server": {},
 }
 `;
 
@@ -218,5 +318,6 @@ exports[`parseCommonConfig > output.enableInlineStyles 1`] = `
   "output": {
     "inlineStyles": true,
   },
+  "server": {},
 }
 `;
