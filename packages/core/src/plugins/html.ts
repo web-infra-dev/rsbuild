@@ -1,4 +1,4 @@
-import path from 'path';
+import path, { isAbsolute } from 'path';
 import {
   color,
   isURL,
@@ -48,7 +48,11 @@ export function getInject(entryName: string, config: NormalizedConfig) {
 
 const existTemplatePath: string[] = [];
 
-export function getTemplatePath(entryName: string, config: NormalizedConfig) {
+export function getTemplatePath(
+  entryName: string,
+  config: NormalizedConfig,
+  rootPath: string,
+) {
   const DEFAULT_TEMPLATE = path.resolve(
     __dirname,
     '../../static/template.html',
@@ -60,25 +64,30 @@ export function getTemplatePath(entryName: string, config: NormalizedConfig) {
     useObjectParam: true,
   });
 
-  if (
-    templatePath === DEFAULT_TEMPLATE ||
-    existTemplatePath.includes(templatePath)
-  ) {
+  if (templatePath === DEFAULT_TEMPLATE) {
     return templatePath;
   }
 
+  const absolutePath = isAbsolute(templatePath)
+    ? templatePath
+    : path.resolve(rootPath, templatePath);
+
+  if (existTemplatePath.includes(absolutePath)) {
+    return absolutePath;
+  }
+
   // Check if custom template exists
-  if (!isFileSync(templatePath)) {
+  if (!isFileSync(absolutePath)) {
     throw new Error(
       `Failed to resolve HTML template, please check if the file exists: ${color.cyan(
-        templatePath,
+        absolutePath,
       )}`,
     );
   }
 
-  existTemplatePath.push(templatePath);
+  existTemplatePath.push(absolutePath);
 
-  return templatePath;
+  return absolutePath;
 }
 
 export function getFavicon(
@@ -242,7 +251,11 @@ export const pluginHtml = (): RsbuildPlugin => ({
             const chunks = getChunks(entryName, entryValue);
             const inject = getInject(entryName, config);
             const filename = htmlPaths[entryName];
-            const template = getTemplatePath(entryName, config);
+            const template = getTemplatePath(
+              entryName,
+              config,
+              api.context.rootPath,
+            );
             const templateParameters = getTemplateParameters(
               entryName,
               config,
