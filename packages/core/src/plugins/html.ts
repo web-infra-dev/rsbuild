@@ -13,9 +13,7 @@ import {
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import type {
-  MetaAttrs,
   HtmlConfig,
-  MetaOptions,
   NormalizedConfig,
   HTMLPluginOptions,
   HtmlTagsPluginOptions,
@@ -109,24 +107,6 @@ export function getFavicon(
     useObjectParam: true,
   });
 }
-
-export const generateMetaTags = (metaOptions?: MetaOptions): MetaAttrs[] => {
-  if (!metaOptions) {
-    return [];
-  }
-
-  return Object.keys(metaOptions)
-    .map((metaName) => {
-      const metaTagContent = metaOptions[metaName];
-      return typeof metaTagContent === 'string'
-        ? {
-            name: metaName,
-            content: metaTagContent,
-          }
-        : metaTagContent;
-    })
-    .filter(Boolean) as MetaAttrs[];
-};
 
 export async function getMetaTags(
   entryName: string,
