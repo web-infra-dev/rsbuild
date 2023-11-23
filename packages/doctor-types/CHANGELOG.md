@@ -1,5 +1,11 @@
 # @rsbuild/doctor-types
 
+## 0.1.1
+
+### Patch Changes
+
+- b66b66e: feat: rsbuild doctor supply tree-shaking funtions
+
 ## 0.1.0
 
 ### Minor Changes

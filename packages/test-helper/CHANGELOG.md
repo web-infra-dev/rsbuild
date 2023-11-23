@@ -1,5 +1,19 @@
 # @rsbuild/test-helper
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies [c3843417]
+- Updated dependencies [d0970bf5]
+- Updated dependencies [576d983]
+- Updated dependencies [c1951553]
+- Updated dependencies [77f64c88]
+- Updated dependencies [8fee69b]
+- Updated dependencies [9c436c58]
+  - @rsbuild/shared@0.1.1
+  - @rsbuild/core@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes

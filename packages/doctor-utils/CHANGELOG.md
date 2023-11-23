@@ -1,5 +1,11 @@
 # @rsbuild/doctor-utils
 
+## 0.1.1
+
+### Patch Changes
+
+- 737a5178: fix: rsbuild doctor migrate error utils to doctor-utils
+
 ## 0.1.0
 
 ## 0.0.14

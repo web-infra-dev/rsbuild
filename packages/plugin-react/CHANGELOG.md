@@ -1,5 +1,14 @@
 # @rsbuild/plugin-react
 
+## 0.1.1
+
+### Patch Changes
+
+- 576d983: chore: inject meta tags via html-rspack-plugin
+- Updated dependencies [c3843417]
+- Updated dependencies [576d983]
+  - @rsbuild/shared@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
