@@ -5,4 +5,4 @@
 '@rsbuild/core': patch
 ---
 
-fix(core): should not inject duplicated meta tags
+chore: inject meta tags via html-rspack-plugin
