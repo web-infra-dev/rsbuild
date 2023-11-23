@@ -21,7 +21,7 @@ import type {
 } from '@rsbuild/doctor-core/types';
 import { ChunkGraph, ModuleGraph } from '@rsbuild/doctor-sdk/graph';
 import { DoctorWebpackSDK } from '@rsbuild/doctor-sdk/sdk';
-import { Constants, Linter, Plugin } from '@rsbuild/doctor-types';
+import { Constants, Linter, Manifest, Plugin } from '@rsbuild/doctor-types';
 import { Process } from '@rsbuild/doctor-utils';
 import { debug } from '@rsbuild/doctor-utils/logger';
 import type { Node } from '@rsbuild/doctor-utils/ruleUtils';
@@ -239,13 +239,20 @@ export class RsbuildDoctorWebpackPlugin<Rules extends Linter.ExtendRuleData[]>
         debug(Process.getMemoryUsageMessage, '[After Generate ModuleGraph]');
 
         /** Tree Shaking */
-        // TODO: Add Tree Shaking functions
-        // if (this.options.features.treeShaking) {
-        //   this.modulesGraph = ModuleGraphBuildUtils.appendTreeShaking(this.modulesGraph, stats.compilation);
-        //   this.sdk.addClientRoutes([Manifest.DoctorManifestClientRoutes.TreeShaking]);
+        if (this.options.features.treeShaking) {
+          this.modulesGraph = ModuleGraphBuildUtils.appendTreeShaking(
+            this.modulesGraph,
+            stats.compilation,
+          );
+          this.sdk.addClientRoutes([
+            Manifest.DoctorManifestClientRoutes.TreeShaking,
+          ]);
 
-        //   debug(Process.getMemoryUsageMessage, '[After AppendTreeShaking to ModuleGraph]');
-        // }
+          debug(
+            Process.getMemoryUsageMessage,
+            '[After AppendTreeShaking to ModuleGraph]',
+          );
+        }
 
         /** transform modules graph */
         await this.getModulesInfosByStats(

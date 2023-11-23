@@ -10,7 +10,7 @@ export * from './context';
 export * from './config';
 export * from './server';
 export * from './statement';
-export * from './tree-shaking';
+export * from './treeShaking';
 export * from './envinfo';
 export * from './instance';
 export * from './hooks';

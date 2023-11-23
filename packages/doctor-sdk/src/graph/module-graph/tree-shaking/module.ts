@@ -1,7 +1,7 @@
 import { SDK } from '@rsbuild/doctor-types';
 import { Module } from '../module';
 import { ExportInfo } from './export';
-import { SideEffect } from './side-effect';
+import { SideEffect } from './sideEffect';
 import { Variable } from './variable';
 import type { ModuleGraph } from '../graph';
 
