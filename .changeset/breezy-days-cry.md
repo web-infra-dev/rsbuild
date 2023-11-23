@@ -2,4 +2,4 @@
 '@rsbuild/core': patch
 ---
 
-chore(server): compat html publicPath by warp dev-middleware
+chore(server): compat html without publicPath by warp dev-middleware
