@@ -1,7 +1,7 @@
 import { SDK } from '@rsbuild/doctor-types';
 import { Statement } from '../statement';
 import { Variable } from './variable';
-import type { SideEffect } from './side-effect';
+import type { SideEffect } from './sideEffect';
 
 let id = 1;
 

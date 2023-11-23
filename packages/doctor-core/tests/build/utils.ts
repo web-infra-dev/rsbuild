@@ -56,6 +56,7 @@ export class ModuleGraphTestPlugin {
       },
     );
     this.modulesGraph = this.modulesGraph;
+    this.modulesGraph = ModuleGraphBuildUtils.appendTreeShaking(this.modulesGraph, stats.compilation);
   }
 
   toData() {

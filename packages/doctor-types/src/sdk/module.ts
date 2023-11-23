@@ -13,7 +13,7 @@ import type {
   SideEffectInstance,
   VariableData,
   VariableInstance,
-} from './tree-shaking';
+} from './treeShaking';
 
 export enum DependencyKind {
   Unknown,
