@@ -3,11 +3,17 @@
 exports[`parseCommonConfig > dev.xxx 1`] = `
 {
   "dev": {
+    "hmr": false,
     "progressBar": true,
   },
   "html": {},
   "output": {},
   "server": {
+    "compress": false,
+    "headers": {
+      "X-Custom-Foo": "bar",
+    },
+    "historyApiFallback": true,
     "host": "xxx.xxx",
     "https": {
       "cert": "xxx",
@@ -15,6 +21,7 @@ exports[`parseCommonConfig > dev.xxx 1`] = `
     },
     "port": 8081,
   },
+  "tools": {},
 }
 `;
 
@@ -26,6 +33,7 @@ exports[`parseCommonConfig > dev.xxx 2`] = `
   "html": {},
   "output": {},
   "server": {},
+  "tools": {},
 }
 `;
 
@@ -38,11 +46,7 @@ exports[`parseCommonConfig > html.faviconByEntries 1`] = `
     "favicon": [Function],
   },
   "output": {},
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -58,11 +62,7 @@ exports[`parseCommonConfig > html.faviconByEntries 2`] = `
     ],
   },
   "output": {},
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -75,11 +75,7 @@ exports[`parseCommonConfig > html.faviconByEntries 3`] = `
     "inject": [Function],
   },
   "output": {},
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -95,11 +91,7 @@ exports[`parseCommonConfig > html.faviconByEntries 4`] = `
     ],
   },
   "output": {},
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -112,11 +104,7 @@ exports[`parseCommonConfig > html.metaByEntries 1`] = `
     "meta": [Function],
   },
   "output": {},
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -136,11 +124,7 @@ exports[`parseCommonConfig > html.metaByEntries 2`] = `
     ],
   },
   "output": {},
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -153,11 +137,7 @@ exports[`parseCommonConfig > html.templateByEntries 1`] = `
     "template": [Function],
   },
   "output": {},
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -173,11 +153,7 @@ exports[`parseCommonConfig > html.templateByEntries 2`] = `
     ],
   },
   "output": {},
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -190,11 +166,7 @@ exports[`parseCommonConfig > html.templateParametersByEntries 1`] = `
     "templateParameters": [Function],
   },
   "output": {},
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -212,11 +184,7 @@ exports[`parseCommonConfig > html.templateParametersByEntries 2`] = `
     ],
   },
   "output": {},
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -229,11 +197,7 @@ exports[`parseCommonConfig > html.titleByEntries 1`] = `
     "title": [Function],
   },
   "output": {},
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -249,11 +213,7 @@ exports[`parseCommonConfig > html.titleByEntries 2`] = `
     ],
   },
   "output": {},
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -268,11 +228,7 @@ exports[`parseCommonConfig > output.cssModuleLocalIdentName 1`] = `
       "localIdentName": "[local]-[hash:base64:6]",
     },
   },
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 
@@ -288,11 +244,7 @@ exports[`parseCommonConfig > output.disableCssModuleExtension 1`] = `
     },
     "disableCssModuleExtension": true,
   },
-  "server": {
-    "host": undefined,
-    "https": undefined,
-    "port": undefined,
-  },
+  "server": {},
 }
 `;
 

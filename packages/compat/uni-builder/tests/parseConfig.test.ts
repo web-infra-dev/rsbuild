@@ -284,6 +284,16 @@ describe('parseCommonConfig', () => {
               port: 8081,
               host: 'xxx.xxx',
             },
+            tools: {
+              devServer: {
+                compress: false,
+                hot: false,
+                headers: {
+                  'X-Custom-Foo': 'bar',
+                },
+                historyApiFallback: true,
+              },
+            },
           },
           __dirname,
         )
@@ -303,12 +313,18 @@ describe('parseCommonConfig', () => {
               port: 8081,
               host: 'xxx.xxx',
             },
+            tools: {
+              devServer: {
+                historyApiFallback: true,
+              },
+            },
           },
           __dirname,
         )
       ).rsbuildConfig,
     ).toMatchSnapshot();
   });
+
   test('output.enableInlineScripts', async () => {
     expect(
       (

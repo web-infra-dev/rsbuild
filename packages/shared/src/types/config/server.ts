@@ -36,7 +36,7 @@ export interface ServerConfig {
    */
   compress?: boolean;
   /**
-   * Specify a port number for Dev Server to listen.
+   * Specify a port number for Rsbuild Server to listen.
    */
   port?: number;
   /**
@@ -44,7 +44,7 @@ export interface ServerConfig {
    */
   https?: { key: string; cert: string };
   /**
-   * Used to set the host of Dev Server.
+   * Used to set the host of Rsbuild Server.
    */
   host?: string;
   /**

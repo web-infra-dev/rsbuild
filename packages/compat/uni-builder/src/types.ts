@@ -1,11 +1,14 @@
 import type {
   NodeEnv,
   MetaOptions,
+  ServerConfig,
   ScriptInject,
   RsbuildTarget,
   ChainedConfig,
   ChainedConfigWithUtils,
   InlineChunkTest,
+  DevConfig,
+  RequestHandler,
 } from '@rsbuild/shared';
 import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
@@ -54,6 +57,23 @@ export type MainFields = (string | string[])[];
 export type DevServerHttpsOptions = boolean | { key: string; cert: string };
 
 export type UniBuilderExtraConfig = {
+  tools?: {
+    devServer?: {
+      before?: RequestHandler[];
+      after?: RequestHandler[];
+      client?: DevConfig['client'];
+      compress?: ServerConfig['compress'];
+      devMiddleware?: {
+        writeToDisk: DevConfig['writeToDisk'];
+      };
+      headers?: ServerConfig['headers'];
+      historyApiFallback?: ServerConfig['historyApiFallback'];
+      hot?: boolean;
+      https?: DevServerHttpsOptions;
+      setupMiddlewares?: DevConfig['setupMiddlewares'];
+      proxy?: ServerConfig['proxy'];
+    };
+  };
   dev?: {
     /**
      * Used to set the host of Dev Server.
