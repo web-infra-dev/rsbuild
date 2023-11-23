@@ -98,8 +98,6 @@ In HTML templates, you can use a variety of template parameters. The template pa
 
 ```ts
 type DefaultParameters = {
-  meta: string; // corresponding to html.meta config
-  title: string; // corresponding to html.title config
   mountId: string; // corresponding to html.mountId config
   entryName: string; // entry name
   assetPrefix: string; // corresponding to output.assetPrefix config
