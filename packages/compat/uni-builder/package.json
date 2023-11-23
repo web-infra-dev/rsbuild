@@ -26,16 +26,19 @@
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
+    "@rsbuild/plugin-styled-components": "workspace:*",
     "@rsbuild/plugin-rem": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
+    "babel-plugin-styled-components": "1.13.3",
     "rspack-manifest-plugin": "5.0.0-alpha0",
     "webpack": "^5.89.0",
     "webpack-manifest-plugin": "5.0.0",
     "webpack-subresource-integrity": "5.1.0"
   },
   "devDependencies": {
-    "typescript": "^5.3.0"
+    "typescript": "^5.3.0",
+    "@rsbuild/plugin-swc": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

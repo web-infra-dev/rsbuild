@@ -8,6 +8,7 @@ import type { RspackProvider } from '@rsbuild/core/rspack-provider';
 import type { UniBuilderRspackConfig } from '../types';
 import type { CreateRspackBuilderOptions } from '../types';
 import { parseCommonConfig } from '../shared/parseCommonConfig';
+import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
 
 export async function parseConfig(
   uniBuilderConfig: UniBuilderRspackConfig,
@@ -27,6 +28,10 @@ export async function parseConfig(
     const { pluginManifest } = await import('./plugins/manifest');
     rsbuildPlugins.push(pluginManifest());
   }
+
+  rsbuildPlugins.push(
+    pluginStyledComponents(uniBuilderConfig.tools?.styledComponents),
+  );
 
   return {
     rsbuildConfig,

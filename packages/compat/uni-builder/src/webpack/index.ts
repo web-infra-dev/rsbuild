@@ -8,6 +8,7 @@ import type { UniBuilderWebpackConfig } from '../types';
 import type { CreateWebpackBuilderOptions } from '../types';
 import { parseCommonConfig } from '../shared/parseCommonConfig';
 import { pluginModuleScopes } from './plugins/moduleScopes';
+import { pluginStyledComponents } from './plugins/styledComponents';
 
 export async function parseConfig(
   uniBuilderConfig: UniBuilderWebpackConfig,
@@ -39,6 +40,10 @@ export async function parseConfig(
       pluginLazyCompilation(uniBuilderConfig.experiments?.lazyCompilation),
     );
   }
+
+  rsbuildPlugins.push(
+    pluginStyledComponents(uniBuilderConfig.tools?.styledComponents),
+  );
 
   return {
     rsbuildConfig,

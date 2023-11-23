@@ -1,7 +1,8 @@
 import { expect, describe, it } from 'vitest';
-import { pluginStyledComponents } from '../src';
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { pluginStyledComponents } from '../src/webpack/plugins/styledComponents';
+import { createStubRsbuild } from '../../webpack/tests/helper';
 import { SCRIPT_REGEX } from '@rsbuild/shared';
+import { pluginSwc } from '@rsbuild/plugin-swc';
 
 describe('plugins/styled-components', () => {
   it('should enable ssr when target contain node', async () => {
@@ -22,7 +23,7 @@ describe('plugins/styled-components', () => {
     }
   });
 
-  it('should works in rspack mode', async () => {
+  it('should works in webpack babel mode', async () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {},
     });
@@ -32,7 +33,22 @@ describe('plugins/styled-components', () => {
 
     expect(
       config.module.rules.find(
-        (r) => r.test.toString() === SCRIPT_REGEX.toString(),
+        (r) => r.test && r.test.toString() === SCRIPT_REGEX.toString(),
+      ),
+    ).toMatchSnapshot();
+  });
+
+  it('should works in webpack swc mode', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {},
+    });
+
+    rsbuild.addPlugins([pluginSwc(), pluginStyledComponents()]);
+    const config = await rsbuild.unwrapConfig();
+
+    expect(
+      config.module.rules.find(
+        (r) => r.test && r.test.toString() === SCRIPT_REGEX.toString(),
       ),
     ).toMatchSnapshot();
   });

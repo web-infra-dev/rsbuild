@@ -25,14 +25,11 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
-    "babel-plugin-styled-components": "1.13.3"
+    "@rsbuild/shared": "workspace:*"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/plugin-swc": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
-    "@rsbuild/webpack": "workspace:*",
     "@types/node": "^16",
     "typescript": "^5.3.0"
   },
