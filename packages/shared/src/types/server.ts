@@ -3,7 +3,7 @@ import { DevConfig, NextFunction } from './config/dev';
 import type { Logger } from '../logger';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 
-type Middleware = (
+export type Middleware = (
   req: IncomingMessage,
   res: ServerResponse,
   next: NextFunction,
@@ -21,6 +21,7 @@ export type MiddlewareCallbacks = {
 export type DevMiddlewareOptions = {
   /** To ensure HMR works, the devMiddleware need inject the hmr client path into page when HMR enable. */
   hmrClientPath?: string;
+  publicPath?: string;
 
   /** The options need by compiler middleware (like webpackMiddleware) */
   headers?: Record<string, string | string[]>;
@@ -54,7 +55,7 @@ export type RsbuildDevServerOptions = {
   devMiddleware?: DevMiddleware;
   output: {
     distPath: string;
-    publicPath: string;
+    publicPaths: string[];
   };
 };
 

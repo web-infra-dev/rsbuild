@@ -1,7 +1,6 @@
 import {
   RequestHandler as Middleware,
   debug,
-  urlJoin,
   HtmlFallback,
 } from '@rsbuild/shared';
 import path from 'path';
@@ -23,10 +22,9 @@ export const notFoundMiddleware: Middleware = (_req, res, _next) => {
 
 export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
-  publicPath: string;
   callback?: Middleware;
   htmlFallback?: HtmlFallback;
-}) => Middleware = ({ htmlFallback, publicPath, distPath, callback }) => {
+}) => Middleware = ({ htmlFallback, distPath, callback }) => {
   /**
    * support access page without suffix and support fallback in some edge cases
    */
@@ -65,8 +63,6 @@ export const getHtmlFallbackMiddleware: (params: {
     }
 
     const rewrite = (newUrl: string) => {
-      // we need add assetPrefix(output.publicPath) for html, otherwise webpack-dev-middleware cannot find the file
-      newUrl = urlJoin(publicPath, newUrl);
       debug?.(`Rewriting ${req.method} ${req.url} to ${newUrl}`);
 
       req.url = newUrl;
@@ -97,11 +93,6 @@ export const getHtmlFallbackMiddleware: (params: {
 
       if (outputFileSystem.existsSync(filePath)) {
         return rewrite(newUrl);
-      }
-    } else {
-      // when user set publicPath, webpack-dev-middleware can't get html file directly.
-      if (outputFileSystem.existsSync(path.join(distPath, pathname))) {
-        return rewrite(url);
       }
     }
 
