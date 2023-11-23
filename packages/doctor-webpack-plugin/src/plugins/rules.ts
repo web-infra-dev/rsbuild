@@ -1,6 +1,6 @@
 import { InternalBasePlugin } from '@rsbuild/doctor-core/plugins';
 import { Linter } from '@rsbuild/doctor-core/rules';
-import { DevToolError } from '@rsbuild/doctor-sdk/error';
+import { DevToolError } from '@rsbuild/doctor-utils/error';
 import { isArray, pull } from 'lodash';
 import type { Compilation, Compiler, Stats, WebpackError } from 'webpack';
 
