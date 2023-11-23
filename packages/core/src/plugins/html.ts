@@ -67,6 +67,7 @@ export function getTemplatePath(entryName: string, config: NormalizedConfig) {
     return templatePath;
   }
 
+  // Check if custom template exists
   if (!isFileSync(templatePath)) {
     throw new Error(
       `Failed to resolve HTML template, please check if the file exists: ${color.cyan(
