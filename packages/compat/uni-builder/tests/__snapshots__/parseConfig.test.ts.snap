@@ -305,6 +305,7 @@ exports[`parseCommonConfig > output.enableInlineScripts 1`] = `
   "output": {
     "inlineScripts": true,
   },
+  "server": {},
 }
 `;
 
@@ -317,5 +318,6 @@ exports[`parseCommonConfig > output.enableInlineStyles 1`] = `
   "output": {
     "inlineStyles": true,
   },
+  "server": {},
 }
 `;
