@@ -1,8 +1,10 @@
 import path from 'path';
 import {
+  color,
   isURL,
   castArray,
   getMinify,
+  isFileSync,
   getDistPath,
   isPlainObject,
   isHtmlDisabled,
@@ -44,17 +46,38 @@ export function getInject(entryName: string, config: NormalizedConfig) {
   });
 }
 
+const existTemplatePath: string[] = [];
+
 export function getTemplatePath(entryName: string, config: NormalizedConfig) {
   const DEFAULT_TEMPLATE = path.resolve(
     __dirname,
     '../../static/template.html',
   );
-  return mergeChainedOptions({
+  const templatePath = mergeChainedOptions({
     defaults: DEFAULT_TEMPLATE,
     options: config.html.template,
     utils: { entryName },
     useObjectParam: true,
   });
+
+  if (
+    templatePath === DEFAULT_TEMPLATE ||
+    existTemplatePath.includes(templatePath)
+  ) {
+    return templatePath;
+  }
+
+  if (!isFileSync(templatePath)) {
+    throw new Error(
+      `Failed to resolve HTML template, please check if the file exists: ${color.cyan(
+        templatePath,
+      )}`,
+    );
+  }
+
+  existTemplatePath.push(templatePath);
+
+  return templatePath;
 }
 
 export function getFavicon(

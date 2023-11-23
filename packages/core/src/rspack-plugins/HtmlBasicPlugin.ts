@@ -6,6 +6,7 @@ export type HtmlInfo = {
   meta?: MetaAttrs[];
   title?: string;
   favicon?: string;
+  // template: string;
 };
 
 export type HtmlBasicPluginOptions = {

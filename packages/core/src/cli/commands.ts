@@ -68,7 +68,7 @@ export function runCli() {
           open: options.open,
         });
       } catch (err) {
-        logger.error('Failed to start dev server, please check logs.');
+        logger.error('Failed to start dev server.');
         logger.error(err);
         process.exit(1);
       }
@@ -86,7 +86,7 @@ export function runCli() {
         const rsbuild = await init({ cliOptions: options });
         await rsbuild?.build();
       } catch (err) {
-        logger.error('Failed to build, please check logs.');
+        logger.error('Failed to build.');
         logger.error(err);
         process.exit(1);
       }
@@ -104,7 +104,7 @@ export function runCli() {
         const rsbuild = await init({ cliOptions: options });
         await rsbuild?.preview();
       } catch (err) {
-        logger.error('Failed to start preview server, please check logs.');
+        logger.error('Failed to start preview server.');
         logger.error(err);
         process.exit(1);
       }
@@ -130,7 +130,7 @@ export function runCli() {
           writeToDisk: true,
         });
       } catch (err) {
-        logger.error('Failed to inspect config, please check logs.');
+        logger.error('Failed to inspect config.');
         logger.error(err);
         process.exit(1);
       }
