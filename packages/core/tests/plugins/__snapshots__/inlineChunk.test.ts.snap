@@ -1,0 +1,159 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugin-inline-chunk > should use proper plugin options when inlineScripts is true 1`] = `
+{
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
+  "plugins": [
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "filename": "index.html",
+        "inject": "head",
+        "minify": {
+          "collapseWhitespace": true,
+          "keepClosingSlash": true,
+          "minifyCSS": true,
+          "minifyJS": {
+            "format": {
+              "ascii_only": true,
+            },
+            "mangle": {
+              "safari10": true,
+            },
+          },
+          "minifyURLs": true,
+          "removeComments": false,
+          "removeEmptyAttributes": true,
+          "removeRedundantAttributes": true,
+          "removeScriptTypeAttributes": true,
+          "removeStyleLinkTypeAttributes": true,
+          "useShortDoctype": true,
+        },
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+      },
+      "version": 5,
+    },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "index.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
+      },
+    },
+    InlineChunkHtmlPlugin {
+      "distPath": {
+        "css": "static/css",
+        "js": "static/js",
+      },
+      "htmlPlugin": [Function],
+      "inlinedAssets": Set {},
+      "name": "InlineChunkHtmlPlugin",
+      "scriptTests": [
+        /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
+      ],
+      "styleTests": [],
+    },
+  ],
+}
+`;
+
+exports[`plugin-inline-chunk > should use proper plugin options when inlineStyles is true 1`] = `
+{
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
+  "plugins": [
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "filename": "index.html",
+        "inject": "head",
+        "minify": {
+          "collapseWhitespace": true,
+          "keepClosingSlash": true,
+          "minifyCSS": true,
+          "minifyJS": {
+            "format": {
+              "ascii_only": true,
+            },
+            "mangle": {
+              "safari10": true,
+            },
+          },
+          "minifyURLs": true,
+          "removeComments": false,
+          "removeEmptyAttributes": true,
+          "removeRedundantAttributes": true,
+          "removeScriptTypeAttributes": true,
+          "removeStyleLinkTypeAttributes": true,
+          "useShortDoctype": true,
+        },
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+      },
+      "version": 5,
+    },
+    HtmlBasicPlugin {
+      "HtmlPlugin": [Function],
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "HtmlPlugin": [Function],
+        "info": {
+          "index.html": {
+            "meta": [
+              {
+                "charset": "UTF-8",
+              },
+              {
+                "content": "width=device-width, initial-scale=1.0",
+                "name": "viewport",
+              },
+            ],
+            "title": "Rsbuild App",
+          },
+        },
+      },
+    },
+    InlineChunkHtmlPlugin {
+      "distPath": {
+        "css": "static/css",
+        "js": "static/js",
+      },
+      "htmlPlugin": [Function],
+      "inlinedAssets": Set {},
+      "name": "InlineChunkHtmlPlugin",
+      "scriptTests": [],
+      "styleTests": [
+        /\\\\\\.css\\$/,
+      ],
+    },
+  ],
+}
+`;
