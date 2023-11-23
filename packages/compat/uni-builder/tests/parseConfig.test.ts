@@ -252,7 +252,7 @@ describe('parseCommonConfig', () => {
   test('output.assetsRetry', async () => {
     expect(
       (await parseCommonConfig({}, __dirname)).rsbuildPlugins.some(
-        (item) => item.name === 'plugin-assets-retry',
+        (item) => item.name === 'rsbuild:assets-retry',
       ),
     ).toBeFalsy();
 
@@ -266,7 +266,7 @@ describe('parseCommonConfig', () => {
           },
           __dirname,
         )
-      ).rsbuildPlugins.some((item) => item.name === 'plugin-assets-retry'),
+      ).rsbuildPlugins.some((item) => item.name === 'rsbuild:assets-retry'),
     ).toBeTruthy();
   });
 
