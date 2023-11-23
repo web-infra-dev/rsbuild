@@ -2,6 +2,14 @@ import { pluginEntry } from '@src/plugins/entry';
 import { pluginHtml } from '@src/plugins/html';
 import { createStubRsbuild, matchPlugin } from '@rsbuild/test-helper';
 
+vi.mock('@rsbuild/shared', async (importOriginal) => {
+  const mod = await importOriginal<any>();
+  return {
+    ...mod,
+    isFileSync: () => true,
+  };
+});
+
 describe('plugin-html', () => {
   it('should register html plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
