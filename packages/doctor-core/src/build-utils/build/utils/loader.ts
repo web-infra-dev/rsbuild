@@ -88,7 +88,7 @@ export function mapEachRules<T extends Plugin.BuildRuleSetRule>(
       } as unknown as T;
     }
 
-    if (rule.use) {
+    if (rule.use && (!Array.isArray(rule.use) || rule.use.length !== 0)) {
       if (typeof rule.use === 'string') {
         return {
           ...rule,

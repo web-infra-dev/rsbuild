@@ -1,6 +1,6 @@
 import { Rule, Err, Plugin } from '@rsbuild/doctor-types';
 import { InternalBasePlugin } from './base';
-import { DevToolError } from '@rsbuild/doctor-sdk/error';
+import { DevToolError } from '@rsbuild/doctor-utils/error';
 
 export class InternalErrorReporterPlugin<
   T extends Plugin.BaseCompiler,

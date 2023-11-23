@@ -1,11 +1,11 @@
-import { Chalk, Instance } from 'chalk';
-import { isNil } from 'lodash';
 import { codeFrameColumns } from '@babel/code-frame';
-import deepEql from 'deep-eql';
-import stripAnsi from 'strip-ansi';
 import { Err, Rule } from '@rsbuild/doctor-types';
+import { Chalk, Instance } from 'chalk';
+import deepEql from 'deep-eql';
+import { isNil } from 'lodash';
+import stripAnsi from 'strip-ansi';
 import { transform } from './transform';
-import { toLevel, insertSpace } from './utils';
+import { insertSpace, toLevel } from './utils';
 
 let id = 1;
 
