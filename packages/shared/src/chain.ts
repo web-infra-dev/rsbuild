@@ -117,8 +117,6 @@ export const CHAIN_ID = {
     YAML: 'yaml',
     /** toml-loader */
     TOML: 'toml',
-    /** html-loader */
-    HTML: 'html',
     /** node-loader */
     NODE: 'node',
     /** babel-loader */
@@ -160,14 +158,12 @@ export const CHAIN_ID = {
     IGNORE: 'ignore',
     /** BannerPlugin */
     BANNER: 'banner',
-    /** Webpackbar */
+    /** ProgressPlugin */
     PROGRESS: 'progress',
     /** Inspector */
     INSPECTOR: 'inspector',
     /** AppIconPlugin */
     APP_ICON: 'app-icon',
-    /** FaviconUrlPlugin */
-    FAVICON_URL: 'favicon-url',
     /** WebpackManifestPlugin */
     MANIFEST: 'webpack-manifest',
     /** ForkTsCheckerWebpackPlugin */
