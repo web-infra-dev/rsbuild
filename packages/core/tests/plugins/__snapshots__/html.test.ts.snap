@@ -501,19 +501,3 @@ exports[`plugin-html > should support multi entry 1`] = `
   ],
 }
 `;
-
-exports[`should generate meta tags correctly 1`] = `
-{
-  "bar": "bar",
-  "description": "This is basic meta",
-  "foo": "foo",
-}
-`;
-
-exports[`should generate meta tags correctly 2`] = `
-{
-  "bar": "bar",
-  "description": "This is basic meta",
-  "foo": "foo",
-}
-`;
