@@ -1108,9 +1108,6 @@ importers:
       dayjs:
         specifier: 1.11.6
         version: 1.11.6
-      deep-eql:
-        specifier: 4.1.0
-        version: 4.1.0
       ip:
         specifier: 1.1.8
         version: 1.1.8
@@ -1142,15 +1139,9 @@ importers:
         specifier: 2.2.1
         version: 2.2.1
     devDependencies:
-      '@babel/code-frame':
-        specifier: 7.18.6
-        version: 7.18.6
       '@rsbuild/doctor-types':
         specifier: workspace:*
         version: link:../doctor-types
-      '@types/babel__code-frame':
-        specifier: 7.0.3
-        version: 7.0.3
       '@types/body-parser':
         specifier: 1.19.2
         version: 1.19.2
@@ -1242,6 +1233,9 @@ importers:
       connect:
         specifier: 3.7.0
         version: 3.7.0
+      deep-eql:
+        specifier: 4.1.0
+        version: 4.1.0
       envinfo:
         specifier: 7.8.1
         version: 7.8.1
@@ -1267,12 +1261,18 @@ importers:
       '@rsbuild/doctor-types':
         specifier: workspace:*
         version: link:../doctor-types
+      '@types/babel__code-frame':
+        specifier: 7.0.3
+        version: 7.0.3
       '@types/bytes':
         specifier: 3.1.1
         version: 3.1.1
       '@types/connect':
         specifier: 3.4.35
         version: 3.4.35
+      '@types/deep-eql':
+        specifier: 4.0.0
+        version: 4.0.0
       '@types/envinfo':
         specifier: 7.8.1
         version: 7.8.1

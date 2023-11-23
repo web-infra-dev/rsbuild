@@ -11,7 +11,7 @@ import { debug } from '@rsbuild/doctor-utils/logger';
 import { Loader } from '@rsbuild/doctor-utils/common';
 import { Time } from '@rsbuild/doctor-utils';
 import { SDK, Plugin } from '@rsbuild/doctor-types';
-import { DevToolError } from '@rsbuild/doctor-sdk/error';
+import { DevToolError } from '@rsbuild/doctor-utils/error';
 
 import { getSDK } from './sdk';
 import { checkCirclePath } from './circleDetect';

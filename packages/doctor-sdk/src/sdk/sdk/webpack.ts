@@ -1,4 +1,4 @@
-import { DevToolError } from '../../error';
+import { DevToolError } from '@rsbuild/doctor-utils/error';
 import { Common, Manifest, SDK } from '@rsbuild/doctor-types';
 import { File } from '@rsbuild/doctor-utils/build';
 import { RawSourceMap, SourceMapConsumer } from 'source-map';
