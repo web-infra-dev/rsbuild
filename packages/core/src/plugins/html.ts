@@ -1,11 +1,12 @@
 import path, { isAbsolute } from 'path';
 import {
+  fse,
   color,
   isURL,
   castArray,
   getMinify,
-  isFileSync,
   getDistPath,
+  isFileExists,
   isPlainObject,
   isHtmlDisabled,
   removeTailSlash,
@@ -48,15 +49,16 @@ export function getInject(entryName: string, config: NormalizedConfig) {
 
 const existTemplatePath: string[] = [];
 
-export function getTemplatePath(
+export async function getTemplate(
   entryName: string,
   config: NormalizedConfig,
   rootPath: string,
-) {
+): Promise<{ templatePath: string; templateContent?: string }> {
   const DEFAULT_TEMPLATE = path.resolve(
     __dirname,
     '../../static/template.html',
   );
+
   const templatePath = mergeChainedOptions({
     defaults: DEFAULT_TEMPLATE,
     options: config.html.template,
@@ -65,29 +67,33 @@ export function getTemplatePath(
   });
 
   if (templatePath === DEFAULT_TEMPLATE) {
-    return templatePath;
+    return {
+      templatePath: templatePath,
+    };
   }
 
   const absolutePath = isAbsolute(templatePath)
     ? templatePath
     : path.resolve(rootPath, templatePath);
 
-  if (existTemplatePath.includes(absolutePath)) {
-    return absolutePath;
+  if (!existTemplatePath.includes(absolutePath)) {
+    // Check if custom template exists
+    if (!(await isFileExists(absolutePath))) {
+      throw new Error(
+        `Failed to resolve HTML template, please check if the file exists: ${color.cyan(
+          absolutePath,
+        )}`,
+      );
+    }
+
+    existTemplatePath.push(absolutePath);
   }
 
-  // Check if custom template exists
-  if (!isFileSync(absolutePath)) {
-    throw new Error(
-      `Failed to resolve HTML template, please check if the file exists: ${color.cyan(
-        absolutePath,
-      )}`,
-    );
-  }
-
-  existTemplatePath.push(absolutePath);
-
-  return absolutePath;
+  const templateContent = await fse.readFile(absolutePath, 'utf-8');
+  return {
+    templatePath: absolutePath,
+    templateContent,
+  };
 }
 
 export function getFavicon(
@@ -251,7 +257,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
             const chunks = getChunks(entryName, entryValue);
             const inject = getInject(entryName, config);
             const filename = htmlPaths[entryName];
-            const template = getTemplatePath(
+            const { templatePath, templateContent } = await getTemplate(
               entryName,
               config,
               api.context.rootPath,
@@ -267,13 +273,17 @@ export const pluginHtml = (): RsbuildPlugin => ({
               inject,
               minify,
               filename,
-              template,
+              template: templatePath,
               templateParameters,
               scriptLoading: config.html.scriptLoading,
             };
 
             const htmlInfo: HtmlInfo = {};
             htmlInfoMap[filename] = htmlInfo;
+
+            if (templateContent) {
+              htmlInfo.templateContent = templateContent;
+            }
 
             const title = getTitle(entryName, config);
             if (title) {

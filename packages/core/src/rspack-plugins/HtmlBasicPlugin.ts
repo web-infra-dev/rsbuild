@@ -6,12 +6,16 @@ export type HtmlInfo = {
   meta?: MetaAttrs[];
   title?: string;
   favicon?: string;
+  templateContent?: string;
 };
 
 export type HtmlBasicPluginOptions = {
   info: Record<string, HtmlInfo>;
   HtmlPlugin: typeof HtmlWebpackPlugin;
 };
+
+export const hasTitle = (html?: string): boolean =>
+  html ? /<title/i.test(html) && /<\/title/i.test(html) : false;
 
 export class HtmlBasicPlugin {
   readonly name: string;
@@ -84,7 +88,12 @@ export class HtmlBasicPlugin {
         this.name,
         (data) => {
           const { headTags, outputName } = data;
-          addTitleTag(headTags, outputName);
+          const { templateContent } = this.options.info[outputName];
+
+          if (!hasTitle(templateContent)) {
+            addTitleTag(headTags, outputName);
+          }
+
           addMetaTag(headTags, outputName);
           addFavicon(headTags, outputName);
           return data;

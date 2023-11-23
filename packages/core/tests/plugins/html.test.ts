@@ -6,7 +6,7 @@ vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();
   return {
     ...mod,
-    isFileSync: () => true,
+    isFileExists: async () => true,
   };
 });
 
@@ -187,7 +187,7 @@ describe('plugin-html', () => {
         },
         html: {
           template({ entryName }) {
-            return entryName === 'main' ? 'foo' : 'bar';
+            expect(['main', 'foo'].includes(entryName)).toBeTruthy();
           },
         },
       },

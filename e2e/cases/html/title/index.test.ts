@@ -84,3 +84,23 @@ test('should generate title via function correctly', async () => {
     files[Object.keys(files).find((file) => file.endsWith('bar.html'))!];
   expect(barHtml).toContain('<title>bar</title>');
 });
+
+test('should not inject title if template already contains a title', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      source: {
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
+      },
+      html: {
+        title: 'Hello',
+        template: './src/title.html',
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const html =
+    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  expect(html).toContain('<title>Page Title</title>');
+});
