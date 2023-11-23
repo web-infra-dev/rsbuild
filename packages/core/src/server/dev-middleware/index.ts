@@ -1,14 +1,16 @@
-import { Server } from 'http';
+import type { IncomingMessage, ServerResponse, Server } from 'http';
 import { EventEmitter } from 'events';
 import type {
   DevConfig,
   ServerConfig,
   DevMiddlewareAPI,
+  NextFunction,
   DevMiddleware as CustomDevMiddleware,
 } from '@rsbuild/shared';
 import SocketServer from './socketServer';
 
 type Options = {
+  publicPaths: string[];
   dev: DevConfig;
   devMiddleware?: CustomDevMiddleware;
 };
@@ -38,12 +40,15 @@ export default class DevMiddleware extends EventEmitter {
 
   private devMiddleware?: CustomDevMiddleware;
 
+  private publicPaths: string[];
+
   private socketServer: SocketServer;
 
-  constructor({ dev, devMiddleware }: Options) {
+  constructor({ dev, devMiddleware, publicPaths }: Options) {
     super();
 
     this.devOptions = dev;
+    this.publicPaths = publicPaths;
 
     // init socket server
     this.socketServer = new SocketServer(dev);
@@ -54,7 +59,10 @@ export default class DevMiddleware extends EventEmitter {
   public init(app: Server) {
     if (this.devMiddleware) {
       // start compiling
-      this.middleware = this.setupDevMiddleware(this.devMiddleware);
+      this.middleware = this.setupDevMiddleware(
+        this.devMiddleware,
+        this.publicPaths,
+      );
     }
 
     app.on('listening', () => {
@@ -75,7 +83,10 @@ export default class DevMiddleware extends EventEmitter {
     this.socketServer.sockWrite(type, data);
   }
 
-  private setupDevMiddleware(devMiddleware: CustomDevMiddleware) {
+  private setupDevMiddleware(
+    devMiddleware: CustomDevMiddleware,
+    publicPaths: string[],
+  ): DevMiddlewareAPI {
     const { devOptions } = this;
 
     const callbacks = {
@@ -92,6 +103,7 @@ export default class DevMiddleware extends EventEmitter {
 
     const middleware = devMiddleware({
       headers: devOptions.headers,
+      publicPath: '/',
       stats: false,
       callbacks,
       hmrClientPath: enableHMR
@@ -101,6 +113,32 @@ export default class DevMiddleware extends EventEmitter {
       writeToDisk: devOptions.writeToDisk,
     });
 
-    return middleware;
+    const warp = async (
+      req: IncomingMessage,
+      res: ServerResponse,
+      next: NextFunction,
+    ) => {
+      const url = req.url;
+      const assetPrefix =
+        url && publicPaths.find((prefix) => url.startsWith(prefix));
+
+      // slice publicPath, static asset have publicPath but html does not.
+      if (assetPrefix && assetPrefix !== '/') {
+        req.url = url.slice(assetPrefix.length - 1);
+
+        middleware(req, res, (...args) => {
+          req.url = url;
+          next(...args);
+        });
+      } else {
+        middleware(req, res, next);
+      }
+    };
+
+    warp.close = middleware.close;
+
+    // warp webpack-dev-middleware to handle html file（without publicPath）
+    // maybe we should serve html file by sirv
+    return warp;
   }
 }
