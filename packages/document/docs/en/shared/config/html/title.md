@@ -3,6 +3,10 @@
 
 Set the title tag of the HTML page.
 
+:::tip
+If the HTML template used in the current project already includes the `<title>` tag, the `html.title` will not take effect.
+:::
+
 ### String Usage
 
 `html.title` can be directly set as a string:
