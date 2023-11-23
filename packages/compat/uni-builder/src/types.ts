@@ -13,6 +13,7 @@ import type {
 import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core';
 import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
+import type { PluginStyledComponentsOptions } from '@rsbuild/plugin-styled-components';
 import type { LazyCompilationOptions } from './webpack/plugins/lazyCompilation';
 import type { PluginRemOptions } from '@rsbuild/plugin-rem';
 
@@ -58,6 +59,7 @@ export type DevServerHttpsOptions = boolean | { key: string; cert: string };
 
 export type UniBuilderExtraConfig = {
   tools?: {
+    styledComponents?: PluginStyledComponentsOptions;
     devServer?: {
       before?: RequestHandler[];
       after?: RequestHandler[];

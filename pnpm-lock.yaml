@@ -310,6 +310,12 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
 
+  e2e/uni-builder/styled-component:
+    dependencies:
+      styled-components:
+        specifier: ^6.0.0
+        version: 6.1.0(react-dom@18.2.0)(react@18.2.0)
+
   examples/lit:
     devDependencies:
       '@rsbuild/core':
@@ -576,12 +582,18 @@ importers:
       '@rsbuild/plugin-rem':
         specifier: workspace:*
         version: link:../../plugin-rem
+      '@rsbuild/plugin-styled-components':
+        specifier: workspace:*
+        version: link:../../plugin-styled-components
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../../shared
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
+      babel-plugin-styled-components:
+        specifier: 1.13.3
+        version: 1.13.3(styled-components@6.1.0)
       rspack-manifest-plugin:
         specifier: 5.0.0-alpha0
         version: 5.0.0-alpha0(webpack@5.89.0)
@@ -595,6 +607,9 @@ importers:
         specifier: 5.1.0
         version: 5.1.0(webpack@5.89.0)
     devDependencies:
+      '@rsbuild/plugin-swc':
+        specifier: workspace:*
+        version: link:../plugin-swc
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
@@ -1724,22 +1739,13 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
-      babel-plugin-styled-components:
-        specifier: 1.13.3
-        version: 1.13.3(styled-components@6.1.0)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rsbuild/plugin-swc':
-        specifier: workspace:*
-        version: link:../compat/plugin-swc
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../compat/webpack
       '@types/node':
         specifier: ^16
         version: 16.18.59
