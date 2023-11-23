@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/monorepo-utils",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The monorepo utils of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {

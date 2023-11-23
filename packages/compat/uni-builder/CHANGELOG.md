@@ -1,5 +1,28 @@
 # @rsbuild/uni-builder
 
+## 0.1.1
+
+### Patch Changes
+
+- e4d8f5ad: feat: compat dev config in uni-builder
+- c3147ab: fix: compat tools.devServer in uni-builder
+- 1bd9568: feat(uni-builder): compat tools.styledComponents
+- 4235be54: fix(uni-builder): generate manifest correctly when targets contain node
+- Updated dependencies [c3843417]
+- Updated dependencies [d0970bf5]
+- Updated dependencies [576d983]
+- Updated dependencies [c1951553]
+- Updated dependencies [77f64c88]
+- Updated dependencies [1bd9568]
+- Updated dependencies [8fee69b]
+- Updated dependencies [9c436c58]
+  - @rsbuild/shared@0.1.1
+  - @rsbuild/core@0.1.1
+  - @rsbuild/webpack@0.1.1
+  - @rsbuild/plugin-styled-components@0.1.1
+  - @rsbuild/plugin-assets-retry@0.1.1
+  - @rsbuild/plugin-rem@0.1.1
+
 ## 0.1.0
 
 ### Patch Changes

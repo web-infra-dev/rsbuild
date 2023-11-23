@@ -1,5 +1,12 @@
 # @rsbuild/shared
 
+## 0.1.1
+
+### Patch Changes
+
+- c3843417: chore(shared): remove unused CHAIN_ID
+- 576d983: chore: inject meta tags via html-rspack-plugin
+
 ## 0.1.0
 
 ### Minor Changes

@@ -1,5 +1,18 @@
 # @rsbuild/doctor-webpack-plugin
 
+## 0.1.1
+
+### Patch Changes
+
+- b66b66e: feat: rsbuild doctor supply tree-shaking funtions
+- 737a5178: fix: rsbuild doctor migrate error utils to doctor-utils
+- Updated dependencies [bcd6cd5a]
+- Updated dependencies [b66b66e]
+- Updated dependencies [737a5178]
+  - @rsbuild/doctor-core@0.1.1
+  - @rsbuild/doctor-sdk@0.1.1
+  - @rsbuild/doctor-utils@0.1.1
+
 ## 0.1.0
 
 ### Patch Changes

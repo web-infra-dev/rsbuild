@@ -1,5 +1,14 @@
 # @rsbuild/plugin-styled-components
 
+## 0.1.1
+
+### Patch Changes
+
+- 1bd9568: feat(uni-builder): compat tools.styledComponents
+- Updated dependencies [c3843417]
+- Updated dependencies [576d983]
+  - @rsbuild/shared@0.1.1
+
 ## 0.1.0
 
 ### Patch Changes

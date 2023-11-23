@@ -1,5 +1,19 @@
 # @rsbuild/core
 
+## 0.1.1
+
+### Patch Changes
+
+- d0970bf5: chore(server): compat html without publicPath by warp dev-middleware
+- 576d983: chore: inject meta tags via html-rspack-plugin
+- c1951553: chore: no need to set newResolver config
+- 77f64c88: fix: no need to exclude core-js
+- 8fee69b: fix(core): not inject title if template already contains title
+- 9c436c58: fix: printFileSize throw err when set output.filename query
+- Updated dependencies [c3843417]
+- Updated dependencies [576d983]
+  - @rsbuild/shared@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
