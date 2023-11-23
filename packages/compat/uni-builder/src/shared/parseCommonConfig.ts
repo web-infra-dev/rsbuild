@@ -72,6 +72,14 @@ const genHttpsOptions = async (
   return httpsOptions as { key: string; cert: string };
 };
 
+function removeUndefinedKey(obj: { [key: string]: any }) {
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] === undefined) delete obj[key];
+  });
+
+  return obj;
+}
+
 export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   uniBuilderConfig: B extends 'rspack'
     ? UniBuilderRspackConfig
@@ -85,7 +93,7 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   rsbuildPlugins: RsbuildPlugin<any>[];
 }> {
   const rsbuildConfig = deepmerge({}, uniBuilderConfig);
-  const { dev = {}, html = {}, output = {} } = rsbuildConfig;
+  const { dev = {}, html = {}, output = {}, tools = {} } = rsbuildConfig;
 
   // enable progress bar by default
   if (dev.progressBar === undefined) {
@@ -155,18 +163,47 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   const server: ServerConfig = isProd()
     ? {}
     : {
-        https: dev.https ? await genHttpsOptions(dev.https, cwd) : undefined,
+        https:
+          tools.devServer?.https || dev.https
+            ? await genHttpsOptions((tools.devServer?.https || dev.https)!, cwd)
+            : undefined,
         port: dev.port,
         host: dev.host,
+        compress: tools.devServer?.compress,
+        headers: tools.devServer?.headers,
+        historyApiFallback: tools.devServer?.historyApiFallback,
+        proxy: tools.devServer?.proxy,
       };
 
+  dev.client = tools.devServer?.client;
+  dev.writeToDisk = tools.devServer?.devMiddleware?.writeToDisk;
+
+  if (tools.devServer?.hot === false) {
+    dev.hmr = false;
+  }
+
+  if (tools.devServer?.before?.length || tools.devServer?.after?.length) {
+    dev.setupMiddlewares = [
+      ...(tools.devServer?.setupMiddlewares || []),
+      (middlewares) => {
+        // the order: devServer.before => setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push => devServer.after.
+        middlewares.unshift(...(tools.devServer?.before || []));
+
+        middlewares.push(...(tools.devServer?.after || []));
+      },
+    ];
+  } else if (tools.devServer?.setupMiddlewares) {
+    dev.setupMiddlewares = tools.devServer?.setupMiddlewares;
+  }
+
+  delete tools.devServer;
   delete dev.https;
   delete dev.port;
   delete dev.host;
 
-  rsbuildConfig.server = server;
+  rsbuildConfig.server = removeUndefinedKey(server);
 
-  rsbuildConfig.dev = dev;
+  rsbuildConfig.dev = removeUndefinedKey(dev);
   rsbuildConfig.html = html;
   rsbuildConfig.output = output;
 
