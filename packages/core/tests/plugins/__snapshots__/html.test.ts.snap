@@ -18,6 +18,12 @@ exports[`plugin-html > should add one tags plugin instance 1`] = `
         ],
         "filename": "main.html",
         "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": false,
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
@@ -32,6 +38,12 @@ exports[`plugin-html > should add one tags plugin instance 1`] = `
         ],
         "filename": "foo.html",
         "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": false,
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
@@ -46,27 +58,9 @@ exports[`plugin-html > should add one tags plugin instance 1`] = `
         "HtmlPlugin": [Function],
         "info": {
           "foo.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
           "main.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
         },
@@ -114,6 +108,12 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
         ],
         "filename": "main.html",
         "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": false,
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
@@ -128,6 +128,12 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
         ],
         "filename": "foo.html",
         "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": false,
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
@@ -142,27 +148,9 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
         "HtmlPlugin": [Function],
         "info": {
           "foo.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
           "main.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
         },
@@ -239,15 +227,6 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
         "HtmlPlugin": [Function],
         "info": {
           "index.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
         },
@@ -273,6 +252,12 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
         "favicon": "src/favicon.ico",
         "filename": "index.html",
         "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": false,
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
@@ -287,15 +272,6 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
         "HtmlPlugin": [Function],
         "info": {
           "index.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
         },
@@ -320,6 +296,12 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
         ],
         "filename": "index.html",
         "inject": "body",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": false,
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
@@ -334,15 +316,6 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
         "HtmlPlugin": [Function],
         "info": {
           "index.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
         },
@@ -367,6 +340,12 @@ exports[`plugin-html > should enable minify in production 1`] = `
         ],
         "filename": "index.html",
         "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": {
           "collapseWhitespace": true,
           "keepClosingSlash": true,
@@ -400,15 +379,6 @@ exports[`plugin-html > should enable minify in production 1`] = `
         "HtmlPlugin": [Function],
         "info": {
           "index.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
         },
@@ -433,6 +403,12 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         ],
         "filename": "index.html",
         "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": false,
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
@@ -447,15 +423,6 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         "HtmlPlugin": [Function],
         "info": {
           "index.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
         },
@@ -483,6 +450,12 @@ exports[`plugin-html > should support multi entry 1`] = `
         ],
         "filename": "main.html",
         "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": false,
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
@@ -497,6 +470,12 @@ exports[`plugin-html > should support multi entry 1`] = `
         ],
         "filename": "foo.html",
         "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": false,
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
@@ -511,27 +490,9 @@ exports[`plugin-html > should support multi entry 1`] = `
         "HtmlPlugin": [Function],
         "info": {
           "foo.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
           "main.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
         },
@@ -539,38 +500,4 @@ exports[`plugin-html > should support multi entry 1`] = `
     },
   ],
 }
-`;
-
-exports[`should generate meta tags correctly 1`] = `
-[
-  {
-    "content": "This is basic meta",
-    "name": "description",
-  },
-  {
-    "content": "bar",
-    "name": "bar",
-  },
-  {
-    "content": "foo",
-    "name": "foo",
-  },
-]
-`;
-
-exports[`should generate meta tags correctly 2`] = `
-[
-  {
-    "content": "This is basic meta",
-    "name": "description",
-  },
-  {
-    "content": "bar",
-    "name": "bar",
-  },
-  {
-    "content": "foo",
-    "name": "foo",
-  },
-]
 `;

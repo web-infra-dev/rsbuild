@@ -56,5 +56,7 @@ test('should set inject via function correctly', async () => {
 
   const indexHtml =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
-  expect(indexHtml).toContain('</title><script defer="defer"');
+  expect(indexHtml).toContain(
+    'content="width=device-width,initial-scale=1"><script defer="defer"',
+  );
 });

@@ -1,9 +1,7 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
-import type { MetaAttrs } from '@rsbuild/shared';
 
 export type HtmlInfo = {
-  meta?: MetaAttrs[];
   title?: string;
   favicon?: string;
   templateContent?: string;
@@ -47,23 +45,6 @@ export class HtmlBasicPlugin {
       }
     };
 
-    const addMetaTag = (
-      headTags: HtmlWebpackPlugin.HtmlTagObject[],
-      outputName: string,
-    ) => {
-      const { meta } = this.options.info[outputName];
-      if (meta) {
-        headTags.unshift(
-          ...meta.map((attr) => ({
-            tagName: 'meta',
-            attributes: attr,
-            meta: {},
-            voidTag: true,
-          })),
-        );
-      }
-    };
-
     const addFavicon = (
       headTags: HtmlWebpackPlugin.HtmlTagObject[],
       outputName: string,
@@ -94,7 +75,6 @@ export class HtmlBasicPlugin {
             addTitleTag(headTags, outputName);
           }
 
-          addMetaTag(headTags, outputName);
           addFavicon(headTags, outputName);
           return data;
         },

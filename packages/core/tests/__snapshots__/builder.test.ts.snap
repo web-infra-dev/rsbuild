@@ -623,6 +623,12 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         ],
         "filename": "index.html",
         "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
         "minify": false,
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
@@ -637,15 +643,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "HtmlPlugin": [Function],
         "info": {
           "index.html": {
-            "meta": [
-              {
-                "charset": "UTF-8",
-              },
-              {
-                "content": "width=device-width, initial-scale=1.0",
-                "name": "viewport",
-              },
-            ],
             "title": "Rsbuild App",
           },
         },

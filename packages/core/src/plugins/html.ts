@@ -13,9 +13,7 @@ import {
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import type {
-  MetaAttrs,
   HtmlConfig,
-  MetaOptions,
   NormalizedConfig,
   HTMLPluginOptions,
   HtmlTagsPluginOptions,
@@ -110,35 +108,16 @@ export function getFavicon(
   });
 }
 
-export const generateMetaTags = (metaOptions?: MetaOptions): MetaAttrs[] => {
-  if (!metaOptions) {
-    return [];
-  }
-
-  return Object.keys(metaOptions)
-    .map((metaName) => {
-      const metaTagContent = metaOptions[metaName];
-      return typeof metaTagContent === 'string'
-        ? {
-            name: metaName,
-            content: metaTagContent,
-          }
-        : metaTagContent;
-    })
-    .filter(Boolean) as MetaAttrs[];
-};
-
 export async function getMetaTags(
   entryName: string,
   config: { html: HtmlConfig; output: NormalizedOutputConfig },
 ) {
-  const merged = mergeChainedOptions({
+  return mergeChainedOptions({
     defaults: {},
     options: config.html.meta,
     utils: { entryName },
     useObjectParam: true,
   });
-  return generateMetaTags(merged);
 }
 
 function getTemplateParameters(
@@ -268,7 +247,10 @@ export const pluginHtml = (): RsbuildPlugin => ({
               assetPrefix,
             );
 
+            const metaTags = await getMetaTags(entryName, config);
+
             const pluginOptions: HTMLPluginOptions = {
+              meta: metaTags,
               chunks,
               inject,
               minify,
@@ -288,11 +270,6 @@ export const pluginHtml = (): RsbuildPlugin => ({
             const title = getTitle(entryName, config);
             if (title) {
               htmlInfo.title = title;
-            }
-
-            const metaTags = await getMetaTags(entryName, config);
-            if (metaTags.length) {
-              htmlInfo.meta = metaTags;
             }
 
             const favicon = getFavicon(entryName, config);

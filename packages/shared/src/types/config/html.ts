@@ -23,7 +23,7 @@ export type MetaOptions = {
    * name content pair
    * e.g. { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' }`
    * */
-  [name: string]: string | false | MetaAttrs | undefined;
+  [name: string]: string | false | MetaAttrs;
 };
 
 export interface HtmlInjectTag {
