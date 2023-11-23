@@ -182,18 +182,19 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     dev.hmr = false;
   }
 
-  dev.setupMiddlewares =
-    tools.devServer?.before?.length || tools.devServer?.after?.length
-      ? [
-          ...(tools.devServer?.setupMiddlewares || []),
-          (middlewares) => {
-            // the order: devServer.before => setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push => devServer.after.
-            middlewares.unshift(...(tools.devServer?.before || []));
+  if (tools.devServer?.before?.length || tools.devServer?.after?.length) {
+    dev.setupMiddlewares = [
+      ...(tools.devServer?.setupMiddlewares || []),
+      (middlewares) => {
+        // the order: devServer.before => setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push => devServer.after.
+        middlewares.unshift(...(tools.devServer?.before || []));
 
-            middlewares.push(...(tools.devServer?.after || []));
-          },
-        ]
-      : tools.devServer?.setupMiddlewares;
+        middlewares.push(...(tools.devServer?.after || []));
+      },
+    ];
+  } else if (tools.devServer?.setupMiddlewares) {
+    dev.setupMiddlewares = tools.devServer?.setupMiddlewares;
+  }
 
   delete tools.devServer;
   delete dev.https;
