@@ -13,13 +13,13 @@ jobs:
         with:
           github-token: ${{ secrets.REPO_SCOPED_TOKEN }}
           script: |
-            const issue = context.issue
+            const title = context.payload.issue.title
 
-            if (issue.title.startsWith('Benchmark')) {
+            if (title.startsWith('Benchmark')) {
               await github.rest.issues.addLabels({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: issue.number,
+                issue_number: context.issue.number,
                 labels: ['benchmark']
               })
             }
