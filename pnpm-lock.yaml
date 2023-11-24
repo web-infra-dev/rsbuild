@@ -737,9 +737,6 @@ importers:
       semver:
         specifier: ^7.5.4
         version: 7.5.4
-      ws:
-        specifier: ^8.2.0
-        version: 8.14.2
     devDependencies:
       '@types/node':
         specifier: ^16
@@ -747,9 +744,6 @@ importers:
       '@types/semver':
         specifier: ^7.5.4
         version: 7.5.4
-      '@types/ws':
-        specifier: ^8.2.0
-        version: 8.5.8
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
@@ -2050,6 +2044,9 @@ importers:
       '@types/node':
         specifier: ^16
         version: 16.18.59
+      '@types/ws':
+        specifier: ^8.5.10
+        version: 8.5.10
       '@vercel/ncc':
         specifier: 0.33.3
         version: 0.33.3
@@ -2150,6 +2147,9 @@ importers:
       webpack-sources:
         specifier: ^3.2.3
         version: 3.2.3
+      ws:
+        specifier: ^8.14.2
+        version: 8.14.2
 
   scripts/tsconfig: {}
 
@@ -6356,11 +6356,11 @@ packages:
       - uglify-js
       - webpack-cli
 
-  /@types/ws@8.5.8:
-    resolution: {integrity: sha512-flUksGIQCnJd6sZ1l5dqCEG/ksaoAg/eUwiLAGTJQcfgvZJKF++Ta4bJA6A5aPSJmsr+xlseHn4KLgVlNnvPTg==}
+  /@types/ws@8.5.10:
+    resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
     dependencies:
       '@types/node': 16.18.59
-    dev: true
+    dev: false
 
   /@types/yargs-parser@21.0.2:
     resolution: {integrity: sha512-5qcvofLPbfjmBfKaLfj/+f+Sbd6pN4zl7w7VSVI5uz7m9QZTuB2aZAa2uo1wHFBNN2x6g/SoTkXmd8mQnQF2Cw==}
@@ -15728,6 +15728,7 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+    dev: true
 
   /xml-name-validator@4.0.0:
     resolution: {integrity: sha512-ICP2e+jsHvAj2E2lIHxa5tjXRlKDJo4IdvPvCXbXQGdzSfmSpNVyIKMvoZHjDY9DP0zV17iI85o90vRFXNccRw==}
