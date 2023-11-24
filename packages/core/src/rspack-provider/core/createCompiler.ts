@@ -1,12 +1,13 @@
 import {
   isDev,
+  isProd,
   debug,
   logger,
   prettyTime,
   formatStats,
   TARGET_ID_MAP,
-  type RspackConfig,
   CreateDevMiddlewareReturns,
+  type RspackConfig,
   type RspackCompiler,
   type RspackMultiCompiler,
 } from '@rsbuild/shared';
@@ -44,9 +45,11 @@ export async function createCompiler({
     logger.start('Compiling...');
   });
 
-  compiler.hooks.run.tap('rsbuild:run', () => {
-    logger.start(`Use Rspack v${rspack.rspackVersion}`);
-  });
+  if (isProd()) {
+    compiler.hooks.run.tap('rsbuild:run', () => {
+      logger.start(`Use Rspack v${rspack.rspackVersion}`);
+    });
+  }
 
   compiler.hooks.done.tap('rsbuild:done', async (stats: Stats | MultiStats) => {
     const obj = stats.toJson({
