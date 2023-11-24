@@ -1,20 +1,20 @@
 import {
   isDev,
+  isProd,
   debug,
   logger,
   prettyTime,
   formatStats,
   TARGET_ID_MAP,
-  type RspackConfig,
   CreateDevMiddlewareReturns,
+  type RspackConfig,
   type RspackCompiler,
   type RspackMultiCompiler,
 } from '@rsbuild/shared';
 import { getDevMiddleware } from './devMiddleware';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
-
 import type { Context } from '../../types';
-import { Stats, MultiStats, StatsCompilation } from '@rspack/core';
+import type { Stats, MultiStats, StatsCompilation } from '@rspack/core';
 
 export async function createCompiler({
   context,
@@ -38,8 +38,17 @@ export async function createCompiler({
   let isFirstCompile = true;
 
   compiler.hooks.watchRun.tap('rsbuild:compiling', () => {
+    if (isFirstCompile) {
+      logger.start(`Use Rspack v${rspack.rspackVersion}`);
+    }
     logger.start('Compiling...');
   });
+
+  if (isProd()) {
+    compiler.hooks.run.tap('rsbuild:run', () => {
+      logger.start(`Use Rspack v${rspack.rspackVersion}`);
+    });
+  }
 
   compiler.hooks.done.tap('rsbuild:done', async (stats: Stats | MultiStats) => {
     const obj = stats.toJson({
