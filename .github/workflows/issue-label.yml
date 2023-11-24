@@ -1,0 +1,25 @@
+name: Label Issues
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Label issues
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.REPO_SCOPED_TOKEN }}
+          script: |
+            const issue = context.issue
+
+            if (issue.title.startsWith('Benchmark')) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: ['benchmark']
+              })
+            }
