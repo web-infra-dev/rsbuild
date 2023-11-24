@@ -14,6 +14,10 @@ const defaultMeta = {
 
 配置 HTML 页面的 `<meta>` 标签。
 
+:::tip
+如果当前项目使用的 HTML 模板中已经包含了 `charset` 或 `viewport` meta 标签，那么 HTML 模板中的标签优先级更高。
+:::
+
 ### String 类型
 
 - **类型：**
