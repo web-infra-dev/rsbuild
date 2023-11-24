@@ -33,7 +33,7 @@ export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
     shims: true,
     esbuildOptions: (option) => {
       let { inject } = option;
-      const filepath = path.join(__dirname, 'require_shims.js');
+      const filepath = path.join(__dirname, 'requireShims.js');
       if (inject) {
         inject.push(filepath);
       } else {

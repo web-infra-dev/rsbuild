@@ -36,6 +36,7 @@ export const TASKS: TaskConfig[] = [
       'dotenv',
       'dotenv-expand',
       'commander',
+      'ws',
       {
         name: 'sirv',
         afterBundle(task) {
