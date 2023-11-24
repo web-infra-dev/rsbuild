@@ -661,6 +661,8 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",

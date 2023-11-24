@@ -680,6 +680,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   ],
   "resolve": {
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
@@ -1430,6 +1432,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   ],
   "resolve": {
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
@@ -1978,6 +1982,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   ],
   "resolve": {
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
@@ -2544,6 +2550,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   ],
   "resolve": {
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",

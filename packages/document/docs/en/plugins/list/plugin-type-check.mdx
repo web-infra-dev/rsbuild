@@ -33,6 +33,28 @@ export default {
 };
 ```
 
+### Configuring tsconfig.json
+
+The Type Check plugin by default performs checks based on the `tsconfig.json` file in the root directory of the current project. Below is an example of a `tsconfig.json` file, which you can also adjust according to the needs of your project.
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["DOM", "ES2020"],
+    "module": "ESNext",
+    "strict": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler"
+  },
+  "include": ["src"]
+}
+```
+
+Please note that the fields in `tsconfig.json` will not affect the compilation behavior and output of Rsbuild, but will only affect the results of type checking.
+
 ## Options
 
 ### enable

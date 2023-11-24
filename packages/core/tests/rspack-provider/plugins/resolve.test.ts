@@ -26,6 +26,8 @@ describe('plugin-resolve', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0].resolve?.extensions).toEqual([
+      '.ts',
+      '.tsx',
       '.js',
       '.jsx',
       '.mjs',
