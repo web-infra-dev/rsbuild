@@ -423,6 +423,32 @@ importers:
         specifier: ^5.3.0
         version: 5.3.2
 
+  examples/vue2:
+    dependencies:
+      vue:
+        specifier: ^2.7.14
+        version: 2.7.14
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@rsbuild/plugin-vue2':
+        specifier: workspace:*
+        version: link:../../packages/plugin-vue2
+
+  examples/vue3:
+    dependencies:
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.4
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@rsbuild/plugin-vue':
+        specifier: workspace:*
+        version: link:../../packages/plugin-vue
+
   packages/babel-preset:
     dependencies:
       '@babel/core':
