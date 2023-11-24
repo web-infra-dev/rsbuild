@@ -13,9 +13,8 @@ import {
 } from '@rsbuild/shared';
 import { getDevMiddleware } from './devMiddleware';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
-
 import type { Context } from '../../types';
-import { Stats, MultiStats, StatsCompilation } from '@rspack/core';
+import type { Stats, MultiStats, StatsCompilation } from '@rspack/core';
 
 export async function createCompiler({
   context,
