@@ -32,7 +32,7 @@
     "ut:watch": "vitest"
   },
   "nano-staged": {
-    "*.{md,json,css,less,scss}": "prettier --write",
+    "*.{md,mdx,json,css,less,scss}": "prettier --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
       "prettier --write"
     ],
