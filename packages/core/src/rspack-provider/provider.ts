@@ -1,5 +1,4 @@
 import {
-  color,
   pickRsbuildConfig,
   type RsbuildProvider,
   type RspackConfig,
@@ -10,11 +9,7 @@ import {
 import { createContext, createPublicContext } from './core/createContext';
 import { initConfigs } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
-import {
-  applyDefaultPlugins,
-  isSatisfyRspackMinimumVersion,
-  supportedRspackMinimumVersion,
-} from './shared';
+import { applyDefaultPlugins } from './shared';
 import type { RsbuildConfig, NormalizedConfig } from '../types';
 
 export type RspackProvider = RsbuildProvider<
@@ -32,14 +27,6 @@ export function rspackProvider({
   const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
 
   return async ({ pluginStore, rsbuildOptions, plugins }) => {
-    if (!(await isSatisfyRspackMinimumVersion())) {
-      throw new Error(
-        `The current Rspack version does not meet the requirements, the minimum supported version of Rspack is ${color.green(
-          supportedRspackMinimumVersion,
-        )}`,
-      );
-    }
-
     const context = await createContext(rsbuildOptions, rsbuildConfig);
     const pluginAPI = getPluginAPI({ context, pluginStore });
 

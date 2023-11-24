@@ -1,30 +1,24 @@
 import {
-  isSatisfyRspackMinimumVersion,
-  supportedRspackMinimumVersion,
+  rspackMinVersion,
   getRspackVersion,
+  isSatisfyRspackVersion,
 } from '@/shared';
 
 describe('rspack version', () => {
-  it('isSatisfyRspackMinimumVersion', async () => {
-    expect(await isSatisfyRspackMinimumVersion()).toBeTruthy();
+  it('isSatisfyRspackVersion', async () => {
+    expect(await isSatisfyRspackVersion('0.1.0')).toBeFalsy();
 
-    expect(await isSatisfyRspackMinimumVersion('0.1.0')).toBeFalsy();
+    expect(await isSatisfyRspackVersion(rspackMinVersion)).toBeTruthy();
 
-    expect(
-      await isSatisfyRspackMinimumVersion(supportedRspackMinimumVersion),
-    ).toBeTruthy();
-
-    expect(await isSatisfyRspackMinimumVersion('1.0.0')).toBeTruthy();
+    expect(await isSatisfyRspackVersion('1.0.0')).toBeTruthy();
 
     expect(
-      await isSatisfyRspackMinimumVersion(
-        '0.2.7-canary-efa0dc6-20230817005622',
-      ),
+      await isSatisfyRspackVersion('0.2.7-canary-efa0dc6-20230817005622'),
     ).toBeFalsy();
 
     expect(
-      await isSatisfyRspackMinimumVersion(
-        `${supportedRspackMinimumVersion}-canary-efa0dc6-20230817005622`,
+      await isSatisfyRspackVersion(
+        `${rspackMinVersion}-canary-efa0dc6-20230817005622`,
       ),
     ).toBeTruthy();
   });
