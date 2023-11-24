@@ -54,10 +54,7 @@ export function applyOutputPlugin(api: SharedRsbuildPluginAPI) {
         const workerPath = getDistPath(config.output, 'worker');
         const filename = posix.join(workerPath, `[name].js`);
 
-        chain.output
-          .filename(filename)
-          .chunkFilename(filename)
-          .libraryTarget('commonjs2');
+        chain.output.filename(filename).chunkFilename(filename);
       }
     },
   );
