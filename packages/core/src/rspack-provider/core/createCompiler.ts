@@ -16,6 +16,16 @@ import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import type { Context } from '../../types';
 import { Stats, MultiStats, StatsCompilation } from '@rspack/core';
 
+const logRspackVersion = () => {
+  try {
+    const rspackPkg = require.resolve('@rspack/core/package.json');
+    const { version } = require(rspackPkg);
+    if (version) {
+      logger.start(`Use Rspack v${version}`);
+    }
+  } catch (err) {}
+};
+
 export async function createCompiler({
   context,
   rspackConfigs,
@@ -38,8 +48,13 @@ export async function createCompiler({
   let isFirstCompile = true;
 
   compiler.hooks.watchRun.tap('rsbuild:compiling', () => {
+    if (isFirstCompile) {
+      logRspackVersion();
+    }
     logger.start('Compiling...');
   });
+
+  compiler.hooks.run.tap('rsbuild:run', logRspackVersion);
 
   compiler.hooks.done.tap('rsbuild:done', async (stats: Stats | MultiStats) => {
     const obj = stats.toJson({
