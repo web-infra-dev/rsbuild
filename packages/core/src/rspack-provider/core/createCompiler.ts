@@ -2,19 +2,21 @@ import {
   isDev,
   isProd,
   debug,
+  color,
   logger,
   prettyTime,
   formatStats,
   TARGET_ID_MAP,
-  CreateDevMiddlewareReturns,
   type RspackConfig,
   type RspackCompiler,
   type RspackMultiCompiler,
+  type CreateDevMiddlewareReturns,
 } from '@rsbuild/shared';
 import { getDevMiddleware } from './devMiddleware';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import type { Context } from '../../types';
 import type { Stats, MultiStats, StatsCompilation } from '@rspack/core';
+import { isSatisfyRspackVersion, rspackMinVersion } from '../shared';
 
 export async function createCompiler({
   context,
@@ -29,6 +31,14 @@ export async function createCompiler({
   });
 
   const { rspack } = await import('@rspack/core');
+
+  if (!(await isSatisfyRspackVersion(rspack.rspackVersion))) {
+    throw new Error(
+      `The current Rspack version does not meet the requirements, the minimum supported version of Rspack is ${color.green(
+        rspackMinVersion,
+      )}`,
+    );
+  }
 
   const compiler =
     rspackConfigs.length === 1
