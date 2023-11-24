@@ -6,30 +6,6 @@ Rsbuild supports TypeScript by default, allowing you to directly use `.ts` and `
 
 Rsbuild uses SWC by default for transpiling TypeScript code, and it also supports switching to Babel for transpilation.
 
-### Configuring tsconfig.json
-
-When a `tsconfig.json` file is present in the root directory of the project, Rsbuild will enable the transpilation of TypeScript files. If there is no `tsconfig.json` file in the current project, Rsbuild will throw an exception when compiling TS files.
-
-Below is an example of a `tsconfig.json` file, which you can also adjust according to the needs of your project:
-
-```json title="tsconfig.json"
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["DOM", "ES2020"],
-    "module": "ESNext",
-    "strict": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "resolveJsonModule": true,
-    "moduleResolution": "bundler"
-  },
-  "include": ["src"]
-}
-```
-
-Please note that the fields in `tsconfig.json` will not affect the compilation behavior and output of Rsbuild, but will only affect the results of type checking.
-
 ### isolatedModules
 
 Unlike the native TypeScript compiler, tools like SWC and Babel compile each file separately and cannot determine whether an imported name is a type or a value. Therefore, when using TypeScript in Rsbuild, you need to enable the [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) option in your `tsconfig.json` file:

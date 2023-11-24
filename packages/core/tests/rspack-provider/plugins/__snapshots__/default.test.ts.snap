@@ -661,6 +661,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
@@ -1387,6 +1389,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
@@ -1817,6 +1821,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       "node",
     ],
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
@@ -2502,6 +2508,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",

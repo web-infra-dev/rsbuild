@@ -12,11 +12,8 @@ import {
 export function applyResolvePlugin(api: SharedRsbuildPluginAPI) {
   api.modifyBundlerChain((chain, { CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
-    const isTsProject = Boolean(api.context.tsconfigPath);
-    applyExtensions({
-      chain,
-      isTsProject,
-    });
+
+    applyExtensions({ chain });
 
     applyAlias({
       chain,
@@ -44,17 +41,11 @@ function applyFullySpecified({
     .resolve.set('fullySpecified', false);
 }
 
-function applyExtensions({
-  chain,
-  isTsProject,
-}: {
-  chain: BundlerChain;
-  isTsProject: boolean;
-}) {
+function applyExtensions({ chain }: { chain: BundlerChain }) {
   const extensions = [
-    // only resolve .ts(x) files if it's a ts project
     // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
-    ...(isTsProject ? ['.ts', '.tsx'] : []),
+    '.ts',
+    '.tsx',
     '.js',
     '.jsx',
     '.mjs',

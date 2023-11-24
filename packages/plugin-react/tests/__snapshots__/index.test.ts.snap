@@ -706,6 +706,8 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
