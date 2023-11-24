@@ -108,16 +108,28 @@ export function getFavicon(
   });
 }
 
-export async function getMetaTags(
+export function getMetaTags(
   entryName: string,
   config: { html: HtmlConfig; output: NormalizedOutputConfig },
+  templateContent?: string,
 ) {
-  return mergeChainedOptions({
+  const metaTags = mergeChainedOptions({
     defaults: {},
     options: config.html.meta,
     utils: { entryName },
     useObjectParam: true,
   });
+
+  // `html.meta` will add charset meta by default.
+  // If the custom HTML template already contains charset meta, Rsbuild should not inject it again.
+  if (templateContent && metaTags.charset) {
+    const charsetRegExp = /<meta[^>]+charset=["'][^>]*>/i;
+    if (charsetRegExp.test(templateContent)) {
+      delete metaTags.charset;
+    }
+  }
+
+  return metaTags;
 }
 
 function getTemplateParameters(
@@ -247,7 +259,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
               assetPrefix,
             );
 
-            const metaTags = await getMetaTags(entryName, config);
+            const metaTags = getMetaTags(entryName, config, templateContent);
 
             const pluginOptions: HTMLPluginOptions = {
               meta: metaTags,

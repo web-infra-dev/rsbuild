@@ -14,6 +14,10 @@ const defaultMeta = {
 
 Configure the `<meta>` tag of the HTML.
 
+:::tip
+If the HTML template used in the current project already contains the charset or viewport meta tags, then the tags in the HTML template take precedence.
+:::
+
 ### String Type
 
 - **Type:**
