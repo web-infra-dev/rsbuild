@@ -9,6 +9,10 @@ export type CommonOptions = {
   config?: string;
 };
 
+export type BuildOptions = CommonOptions & {
+  watch?: boolean;
+};
+
 export type InspectOptions = CommonOptions & {
   env: RsbuildMode;
   output: string;
@@ -76,15 +80,18 @@ export function runCli() {
 
   program
     .command('build')
+    .option(`-w --watch`, 'turn on watch mode, watch for changes and rebuild')
     .option(
       '-c --config <config>',
       'specify the configuration file, can be a relative or absolute path',
     )
     .description('build the app for production')
-    .action(async (options: CommonOptions) => {
+    .action(async (options: BuildOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
-        await rsbuild?.build();
+        await rsbuild?.build({
+          watch: options.watch,
+        });
       } catch (err) {
         logger.error('Failed to build.');
         logger.error(err);
