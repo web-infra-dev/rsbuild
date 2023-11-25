@@ -76,6 +76,47 @@ export default defineConfig({
 });
 ```
 
+## 导出配置函数
+
+Rsbuild 支持在配置文件中导出一个函数，你可以在函数中动态计算配置，并返回给 Rsbuild。
+
+```js title="rsbuild.config.js"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig(({ env, command }) => ({
+  source: {
+    alias: {
+      '@foo': env === 'development' ? './src/foo.dev.ts' : './src/foo.prod.ts',
+    },
+  },
+}));
+```
+
+该函数接受以下入参：
+
+- `env`：对应 `process.env.NODE_ENV` 的值。
+  - 当运行 `rsbuild dev` 时，`env` 的值为 `development`。
+  - 当运行 `rsbuild build` 或 `rsbuild preview` 时，`env` 的值为 `production`。
+- `command`：对应当前运行的命令，如 `dev`、`build`、`preview`。
+
+## 导出异步函数
+
+Rsbuild 也支持在配置文件中导出一个异步函数，你可以在函数中进行一些异步操作：
+
+```js title="rsbuild.config.js"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig(async ({ env, command }) => {
+  const result = await someAsyncFunction();
+
+  return {
+    html: {
+      title: result,
+    },
+  };
+});
+```
+
 ## 合并配置
 
 你可以使用 `@rspack/core` 导出的 [mergeRsbuildConfig](/api/javascript-api/core#mergersbuildconfig) 函数来合并多个配置。
