@@ -1,5 +1,11 @@
 # @rsbuild/plugin-svelte
 
+## 0.1.2
+
+### Patch Changes
+
+- @rsbuild/shared@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

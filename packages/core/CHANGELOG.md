@@ -1,5 +1,17 @@
 # @rsbuild/core
 
+## 0.1.2
+
+### Patch Changes
+
+- 5b82dde: feat: resolve ts files by default
+- 2e4e22b: perf(deps): prebundle ws to reduce dependency
+- ad96408: perf: make rspack version check 3x faster
+- d7dd9519: fix: should not inject duplicated charset meta tag
+- 54eae8f: feat(core): log the current used Rspack version
+- 0a91687: feat(cli): support build --watch option
+  - @rsbuild/shared@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes
