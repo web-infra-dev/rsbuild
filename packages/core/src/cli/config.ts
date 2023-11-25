@@ -15,7 +15,20 @@ export type RsbuildConfig = BaseRsbuildConfig & {
   provider?: any;
 };
 
-export const defineConfig = (config: RsbuildConfig) => config;
+export type ConfigParams = {
+  env: string;
+  command: string;
+};
+
+export type UserConfigExport =
+  | RsbuildConfig
+  | ((env: ConfigParams) => RsbuildConfig | Promise<RsbuildConfig>);
+
+/**
+ * This function helps you to autocomplete configuration types.
+ * It accepts a Rsbuild config object, or a function that returns a config.
+ */
+export const defineConfig = (config: UserConfigExport) => config;
 
 const resolveConfigPath = (customConfig?: string) => {
   const root = process.cwd();
@@ -73,30 +86,41 @@ async function watchConfig(configFile: string) {
 
 export async function loadConfig(
   customConfig?: string,
-): Promise<ReturnType<typeof defineConfig>> {
+): Promise<RsbuildConfig> {
   const configFile = resolveConfigPath(customConfig);
 
-  if (configFile) {
-    try {
-      const { default: jiti } = await import('../../compiled/jiti');
-      const loadConfig = jiti(__filename, {
-        esmResolve: true,
-        // disable require cache to support restart CLI and read the new config
-        requireCache: false,
-        interopDefault: true,
-      });
-
-      const command = process.argv[2];
-      if (command === 'dev') {
-        watchConfig(configFile);
-      }
-
-      return loadConfig(configFile);
-    } catch (err) {
-      logger.error(`Failed to load file: ${color.dim(configFile)}`);
-      throw err;
-    }
+  if (!configFile) {
+    return {};
   }
 
-  return {};
+  try {
+    const { default: jiti } = await import('../../compiled/jiti');
+    const loadConfig = jiti(__filename, {
+      esmResolve: true,
+      // disable require cache to support restart CLI and read the new config
+      requireCache: false,
+      interopDefault: true,
+    });
+
+    const command = process.argv[2];
+    if (command === 'dev') {
+      watchConfig(configFile);
+    }
+
+    const configExport = loadConfig(configFile) as UserConfigExport;
+
+    if (typeof configExport === 'function') {
+      const params: ConfigParams = {
+        env: process.env.NODE_ENV!,
+        command,
+      };
+
+      return (await configExport(params)) || {};
+    }
+
+    return configExport;
+  } catch (err) {
+    logger.error(`Failed to load file: ${color.dim(configFile)}`);
+    throw err;
+  }
 }

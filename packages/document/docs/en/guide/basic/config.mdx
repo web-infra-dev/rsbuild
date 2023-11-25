@@ -76,6 +76,47 @@ export default defineConfig({
 });
 ```
 
+## Export Function
+
+Rsbuild supports the export of a function in the config file, where you can dynamically compute the config and return it to Rsbuild.
+
+```js title="rsbuild.config.js"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig(({ env, command }) => ({
+  source: {
+    alias: {
+      '@foo': env === 'development' ? './src/foo.dev.ts' : './src/foo.prod.ts',
+    },
+  },
+}));
+```
+
+The function accepts the following parameters:
+
+- `env`: the value of `process.env.NODE_ENV`.
+  - When running `rsbuild dev`, the value of `env` is `development`.
+  - When running `rsbuild build` or `rsbuild preview`, the value of `env` is `production`.
+- `command`: the current command being run, such as `dev`, `build`, `preview`.
+
+## Export Async Function
+
+Rsbuild also supports the export of an async function in the config file, where you can perform some async operations:
+
+```js title="rsbuild.config.js"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig(async ({ env, command }) => {
+  const result = await someAsyncFunction();
+
+  return {
+    html: {
+      title: result,
+    },
+  };
+});
+```
+
 ## Merge Configurations
 
 You can use the [mergeRsbuildConfig](/api/javascript-api/core#mergersbuildconfig) function exported by `@rspack/core` to merge multiple configurations.
