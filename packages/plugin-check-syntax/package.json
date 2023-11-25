@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-check-syntax",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Check syntax plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {

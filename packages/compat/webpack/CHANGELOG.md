@@ -1,5 +1,22 @@
 # @rsbuild/webpack
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [5b82dde]
+- Updated dependencies [2e4e22b]
+- Updated dependencies [ad96408]
+- Updated dependencies [d7dd9519]
+- Updated dependencies [54eae8f]
+- Updated dependencies [0a91687]
+  - @rsbuild/core@0.1.2
+  - @rsbuild/plugin-babel@0.1.2
+  - @rsbuild/plugin-css-minimizer@0.1.2
+  - @rsbuild/plugin-react@0.1.2
+  - @rsbuild/babel-preset@0.1.2
+  - @rsbuild/shared@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes
