@@ -46,3 +46,7 @@ On MacOS, you can open the specified browser when Dev Server starts, by set envi
 - Brave Browser
 - Vivaldi
 - Chromium
+
+:::tip
+It is recommended to set it in the local `.env.local` file.
+:::

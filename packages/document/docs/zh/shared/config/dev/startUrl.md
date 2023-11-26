@@ -47,4 +47,6 @@ export default {
 - Vivaldi
 - Chromium
 
-建议设置在 `.env.local` 文件中。
+:::tip
+建议设置在本地的 `.env.local` 文件中。
+:::
