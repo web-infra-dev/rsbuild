@@ -18,7 +18,6 @@ const write = (str: string) => {
 const plugin: RsbuildPlugin = {
   name: 'test-plugin',
   setup(api) {
-    api.onDevCompileDone(() => write('DevCompileDone'));
     api.onBeforeStartDevServer(() => write('BeforeStartDevServer'));
     api.onAfterStartDevServer(() => write('AfterStartDevServer'));
     api.onBeforeCreateCompiler(() => write('BeforeCreateCompiler'));
