@@ -275,6 +275,30 @@ export default () => ({
 });
 ```
 
+### onDevCompileDone
+
+import OnDevCompileDone from '@en/shared/onDevCompileDone.md';
+
+<OnDevCompileDone />
+
+- **Example**
+
+```ts
+export default () => ({
+  setup: (api) => {
+    api.onDevCompileDone(({ isFirstCompile }) => {
+      if (isFirstCompile) {
+        console.log('first compile!');
+      } else {
+        console.log('re-compile!');
+      }
+    });
+  },
+});
+```
+
+## Prod Server Hooks
+
 ### onBeforeStartProdServer
 
 import OnBeforeStartProdServer from '@en/shared/onBeforeStartProdServer.md';
@@ -306,28 +330,6 @@ export default () => ({
   setup: (api) => {
     api.onAfterStartProdServer(({ port }) => {
       console.log('this port is: ', port);
-    });
-  },
-});
-```
-
-### onDevCompileDone
-
-import OnDevCompileDone from '@en/shared/onDevCompileDone.md';
-
-<OnDevCompileDone />
-
-- **Example**
-
-```ts
-export default () => ({
-  setup: (api) => {
-    api.onDevCompileDone(({ isFirstCompile }) => {
-      if (isFirstCompile) {
-        console.log('first compile!');
-      } else {
-        console.log('re-compile!');
-      }
     });
   },
 });
