@@ -11,7 +11,6 @@ export type Bundler = 'rspack' | 'webpack';
 export type CreateCompilerOptions = { watch?: boolean };
 
 export type StartDevServerOptions = {
-  open?: boolean;
   compiler?: Compiler | MultiCompiler;
   printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
   logger?: Logger;

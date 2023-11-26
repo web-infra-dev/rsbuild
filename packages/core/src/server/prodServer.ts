@@ -199,18 +199,18 @@ export async function startProdServer(
         port,
       },
       async () => {
+        const routes = formatRoutes(
+          context.entry,
+          rsbuildConfig.output?.distPath?.html,
+        );
         await context.hooks.onAfterStartProdServerHook.call({
           port,
+          routes,
         });
 
         const urls = getAddressUrls(https ? 'https' : 'http', port);
 
         if (printURLs) {
-          const routes = formatRoutes(
-            context.entry,
-            rsbuildConfig.output?.distPath?.html,
-          );
-
           printServerURLs(
             isFunction(printURLs) ? printURLs(urls) : urls,
             routes,

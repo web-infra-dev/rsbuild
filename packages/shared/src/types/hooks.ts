@@ -33,6 +33,7 @@ export type OnAfterStartDevServerFn = (params: {
 
 export type OnAfterStartProdServerFn = (params: {
   port: number;
+  routes: Routes;
 }) => PromiseOrNot<void>;
 
 export type OnBeforeCreateCompilerFn<BundlerConfig = unknown> = (params: {

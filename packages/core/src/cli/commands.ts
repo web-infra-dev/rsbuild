@@ -7,6 +7,7 @@ import type { RsbuildMode } from '..';
 
 export type CommonOptions = {
   config?: string;
+  open?: boolean;
 };
 
 export type BuildOptions = CommonOptions & {
@@ -19,9 +20,9 @@ export type InspectOptions = CommonOptions & {
   verbose?: boolean;
 };
 
-export type DevOptions = CommonOptions & {
-  open?: boolean;
-};
+export type DevOptions = CommonOptions;
+
+export type PreviewOptions = CommonOptions;
 
 let commonOpts: CommonOptions = {};
 
@@ -41,6 +42,11 @@ export async function init({
     const config = await loadConfig(commonOpts.config);
     const { createRsbuild } = await import('../createRsbuild');
 
+    if (commonOpts.open && !config.dev?.startUrl) {
+      config.dev ||= {};
+      config.dev.startUrl = true;
+    }
+
     return await createRsbuild({
       rsbuildConfig: config,
       provider: config.provider,
@@ -59,7 +65,7 @@ export function runCli() {
 
   program
     .command('dev')
-    .option(`--open`, 'open the page in browser on startup')
+    .option('--open', 'open the page in browser on startup')
     .option(
       '-c --config <config>',
       'specify the configuration file, can be a relative or absolute path',
@@ -68,9 +74,7 @@ export function runCli() {
     .action(async (options: DevOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
-        await rsbuild?.startDevServer({
-          open: options.open,
-        });
+        await rsbuild?.startDevServer();
       } catch (err) {
         logger.error('Failed to start dev server.');
         logger.error(err);
@@ -101,12 +105,13 @@ export function runCli() {
 
   program
     .command('preview')
+    .option('--open', 'open the page in browser on startup')
     .option(
       '-c --config <config>',
       'specify the configuration file, can be a relative or absolute path',
     )
     .description('preview the production build locally')
-    .action(async (options: CommonOptions) => {
+    .action(async (options: PreviewOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
         await rsbuild?.preview();
