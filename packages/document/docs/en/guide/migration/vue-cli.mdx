@@ -67,6 +67,30 @@ If your project is based on Vue 2, use `import { pluginVue2 } from '@rsbuild/plu
 
 This completes the basic migration from Vue CLI to Rsbuild. You can now run the `npm run serve` command to try starting the development server.
 
+## Configuration Migration
+
+Here is the corresponding Rsbuild configuration for Vue CLI configuration:
+
+| Vue CLI                                                                                                                                 | Rsbuild                                                                                                                                                                                     |
+| --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [publicPath](https://cli.vuejs.org/config/#publicpath)                                                                                  | [dev.assetPrefix](/config/options/dev#devassetprefix) / [output.assetPrefix](/config/options/output#outputassetprefix)                                                                      |
+| [outputDir](https://cli.vuejs.org/config/#outputdir) / [assetsDir](https://cli.vuejs.org/config/#assetsdir)                             | [output.distPath](/config/options/output#outputdistpath)                                                                                                                                    |
+| [filenameHashing](https://cli.vuejs.org/config/#filenamehashing)                                                                        | [output.disableFilenameHash](/config/options/output#outputdisablefilenamehash)                                                                                                              |
+| [pages](https://cli.vuejs.org/config/#pages)                                                                                            | [source.entry](/config/options/source#sourceentry) / [html.template](/config/options/html#htmltemplate) / [html.title](/config/options/html#htmltitle)                                      |
+| [transpileDependencies](https://cli.vuejs.org/config/#transpiledependencies)                                                            | [source.include](/config/options/source#sourceinclude)                                                                                                                                      |
+| [productionSourceMap](https://cli.vuejs.org/config/#productionsourcemap) / [css.sourceMap](https://cli.vuejs.org/config/#css-sourcemap) | [output.disableSourceMap](/config/options/output#outputdisablesourcemap)                                                                                                                    |
+| [crossorigin](https://cli.vuejs.org/config/#crossorigin)                                                                                | [html.crossorigin](/config/options/html#htmlcrossorigin)                                                                                                                                    |
+| [configureWebpack](https://cli.vuejs.org/config/#configurewebpack)                                                                      | [tools.rspack](/config/options/tools#toolsrspack)                                                                                                                                           |
+| [chainWebpack](https://cli.vuejs.org/config/#chainwebpack)                                                                              | [tools.bundlerChain](/config/options/tools#toolsbundlerchain)                                                                                                                               |
+| [css.extract](https://cli.vuejs.org/config/#css-extract)                                                                                | [output.disableCssExtract](/config/options/output#outputdisablecssextract)                                                                                                                  |
+| [css.loaderOptions](https://cli.vuejs.org/config/#css-loaderoptions)                                                                    | [tools.cssLoader](/config/options/tools#toolscssloader) / [less](/config/options/tools#toolsless) / [sass](/config/options/tools#toolssass) / [postcss](/config/options/tools#toolspostcss) |
+| [devServer.proxy](https://cli.vuejs.org/config/#devserver-proxy)                                                                        | [server.proxy](/config/options/server#serverproxy)                                                                                                                                          |
+
+Notes:
+
+- When migrating `configureWebpack`, note that most of the Webpack and Rsbuild configs are the same, but there are also some differences or functionalities not implemented in Rsbuild.
+- The above table does not cover all configurations of Vue CLI, feel free to add more.
+
 ## Contents Supplement
 
 The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
