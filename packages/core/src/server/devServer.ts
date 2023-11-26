@@ -211,7 +211,6 @@ export async function startDevServer<
     compiler: StartDevServerOptions['compiler'],
   ) => Promise<CreateDevMiddlewareReturns>,
   {
-    open,
     compiler: customCompiler,
     printURLs = true,
     strictPort = false,
@@ -237,7 +236,6 @@ export async function startDevServer<
     hostname: host,
     port,
     https,
-    open,
   };
 
   const protocol = https ? 'https' : 'http';

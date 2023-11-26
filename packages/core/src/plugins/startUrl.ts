@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { logger, castArray, normalizeUrl } from '@rsbuild/shared';
+import { logger, castArray, normalizeUrl, type Routes } from '@rsbuild/shared';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import type { RsbuildPlugin } from '../types';
@@ -89,12 +89,15 @@ export function pluginStartUrl(): RsbuildPlugin {
   return {
     name: 'rsbuild:start-url',
     setup(api) {
-      api.onAfterStartDevServer(async (params) => {
+      const onStartServer = async (params: {
+        port: number;
+        routes: Routes;
+      }) => {
         const { port, routes } = params;
         const config = api.getNormalizedConfig();
         const { startUrl, beforeStartUrl } = config.dev;
-        const { open, https } = api.context.devServer || {};
-        const shouldOpen = Boolean(startUrl) || open;
+        const { https } = api.context.devServer || {};
+        const shouldOpen = Boolean(startUrl);
 
         if (!shouldOpen) {
           return;
@@ -140,7 +143,10 @@ export function pluginStartUrl(): RsbuildPlugin {
         } else {
           openUrls();
         }
-      });
+      };
+
+      api.onAfterStartDevServer(onStartServer);
+      api.onAfterStartProdServer(onStartServer);
     },
   };
 }

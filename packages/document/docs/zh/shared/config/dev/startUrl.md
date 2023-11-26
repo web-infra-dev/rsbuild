@@ -1,9 +1,11 @@
 - **类型：** `boolean | string | string[] | undefined`
 - **默认值：** `undefined`
 
-`dev.startUrl` 用于设置 Dev Server 启动时自动在浏览器中打开的页面 URL。
+`dev.startUrl` 用于设置 Server 启动时自动在浏览器中打开的页面 URL。
 
-默认情况下，Dev Server 启动时不会打开任何页面。
+默认情况下，当 dev server 或 preview server 启动时，不会自动打开任何页面，你可以通过 `dev.startUrl` 或 CLI 的 `--open` 参数来设置自动打开页面。
+
+### 示例
 
 你可以设置为如下的值：
 
@@ -45,4 +47,6 @@ export default {
 - Vivaldi
 - Chromium
 
-建议设置在`.env.local`文件中。
+:::tip
+建议设置在本地的 `.env.local` 文件中。
+:::

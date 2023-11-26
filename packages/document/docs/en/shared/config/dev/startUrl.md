@@ -1,9 +1,11 @@
 - **Type:** `boolean | string | string[] | undefined`
 - **Default:** `undefined`
 
-`dev.startUrl` is used to set the URL of the page that automatically opens in the browser when Dev Server starts.
+The `dev.startUrl` is used to set the URL of the page that will be automatically opened in the browser when the server starts.
 
-By default, no page will be opened.
+By default, when the dev server or preview server starts, no page will be automatically opened. You can use `dev.startUrl` or the `--open` CLI param to set the automatic opening of a page.
+
+### Example
 
 You can set it to the following values:
 
@@ -44,3 +46,7 @@ On MacOS, you can open the specified browser when Dev Server starts, by set envi
 - Brave Browser
 - Vivaldi
 - Chromium
+
+:::tip
+It is recommended to set it in the local `.env.local` file.
+:::

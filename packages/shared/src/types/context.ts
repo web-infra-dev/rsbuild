@@ -20,7 +20,6 @@ export type Context = {
   tsconfigPath?: string;
   /** Info of dev server  */
   devServer?: {
-    open?: boolean;
     hostname: string;
     port: number;
     https: boolean;
