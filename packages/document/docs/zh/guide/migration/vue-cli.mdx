@@ -69,6 +69,30 @@ export default defineConfig({
 
 这样就完成了从 Vue CLI 到 Rsbuild 的基本迁移，此时你可以执行 `npm run serve` 命令来尝试启动开发服务器。
 
+## 配置迁移
+
+以下是 Vue CLI 配置对应的 Rsbuild 配置：
+
+| Vue CLI                                                                                                                                 | Rsbuild                                                                                                                                                                                     |
+| --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [publicPath](https://cli.vuejs.org/config/#publicpath)                                                                                  | [dev.assetPrefix](/config/options/dev#devassetprefix) / [output.assetPrefix](/config/options/output#outputassetprefix)                                                                      |
+| [outputDir](https://cli.vuejs.org/config/#outputdir) / [assetsDir](https://cli.vuejs.org/config/#assetsdir)                             | [output.distPath](/config/options/output#outputdistpath)                                                                                                                                    |
+| [filenameHashing](https://cli.vuejs.org/config/#filenamehashing)                                                                        | [output.disableFilenameHash](/config/options/output#outputdisablefilenamehash)                                                                                                              |
+| [pages](https://cli.vuejs.org/config/#pages)                                                                                            | [source.entry](/config/options/source#sourceentry) / [html.template](/config/options/html#htmltemplate) / [html.title](/config/options/html#htmltitle)                                      |
+| [transpileDependencies](https://cli.vuejs.org/config/#transpiledependencies)                                                            | [source.include](/config/options/source#sourceinclude)                                                                                                                                      |
+| [productionSourceMap](https://cli.vuejs.org/config/#productionsourcemap) / [css.sourceMap](https://cli.vuejs.org/config/#css-sourcemap) | [output.disableSourceMap](/config/options/output#outputdisablesourcemap)                                                                                                                    |
+| [crossorigin](https://cli.vuejs.org/config/#crossorigin)                                                                                | [html.crossorigin](/config/options/html#htmlcrossorigin)                                                                                                                                    |
+| [configureWebpack](https://cli.vuejs.org/config/#configurewebpack)                                                                      | [tools.rspack](/config/options/tools#toolsrspack)                                                                                                                                           |
+| [chainWebpack](https://cli.vuejs.org/config/#chainwebpack)                                                                              | [tools.bundlerChain](/config/options/tools#toolsbundlerchain)                                                                                                                               |
+| [css.extract](https://cli.vuejs.org/config/#css-extract)                                                                                | [output.disableCssExtract](/config/options/output#outputdisablecssextract)                                                                                                                  |
+| [css.loaderOptions](https://cli.vuejs.org/config/#css-loaderoptions)                                                                    | [tools.cssLoader](/config/options/tools#toolscssloader) / [less](/config/options/tools#toolsless) / [sass](/config/options/tools#toolssass) / [postcss](/config/options/tools#toolspostcss) |
+| [devServer.proxy](https://cli.vuejs.org/config/#devserver-proxy)                                                                        | [server.proxy](/config/options/server#serverproxy)                                                                                                                                          |
+
+说明：
+
+- 在迁移 configureWebpack 时，注意大部分 Webpack 和 Rspack 配置是相同的，但也存在一些差异或 Rspack 未实现的功能。
+- 上述表格尚未覆盖到 Vue CLI 的所有配置，欢迎补充。
+
 ## 内容补充
 
 当前文档只涵盖了迁移过程的部分事项，如果你发现有合适的内容可以补充，欢迎通过 pull request 来完善文档 🤝。
