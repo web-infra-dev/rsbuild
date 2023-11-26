@@ -78,7 +78,12 @@ export function webpackProvider({
       },
 
       async preview(options?: PreviewServerOptions) {
-        return startProdServer(context, context.config, options);
+        return startProdServer(
+          // @ts-expect-error context type mismatch
+          context,
+          context.config,
+          options,
+        );
       },
 
       async build(options) {
