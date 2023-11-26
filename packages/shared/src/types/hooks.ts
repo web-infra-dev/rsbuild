@@ -19,6 +19,8 @@ export type OnDevCompileDoneFn = (params: {
 
 export type OnBeforeStartDevServerFn = () => PromiseOrNot<void>;
 
+export type OnBeforeStartProdServerFn = () => PromiseOrNot<void>;
+
 export type Routes = Array<{
   name: string;
   route: string;
@@ -27,6 +29,10 @@ export type Routes = Array<{
 export type OnAfterStartDevServerFn = (params: {
   port: number;
   routes: Routes;
+}) => PromiseOrNot<void>;
+
+export type OnAfterStartProdServerFn = (params: {
+  port: number;
 }) => PromiseOrNot<void>;
 
 export type OnBeforeCreateCompilerFn<BundlerConfig = unknown> = (params: {

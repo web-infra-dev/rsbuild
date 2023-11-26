@@ -4,7 +4,7 @@
 
 ## 概览
 
-**通用钩子**
+**Common Hooks**
 
 - `modifyRsbuildConfig`：修改传递给 Rsbuild 的配置项。
 - `modifyBundlerChain`：通过 chain api 修改 Rspack / webpack 配置。
@@ -14,22 +14,27 @@
 - `onBeforeCreateCompiler`：在创建 compiler 实例前调用。
 - `onAfterCreateCompiler`：在创建 compiler 实例后、执行构建前调用。
 
-**构建钩子**：仅在执行 build 方法构建生产环境产物时调用。
+**Build Hooks**：仅在执行 build 方法构建生产环境产物时调用。
 
 - `onBeforeBuild`：在执行生产环境构建前调用。
 - `onAfterBuild`：在执行生产环境构建后调用，可以获取到构建结果信息。
 
-**开发服务钩子**：仅在执行 startDevServer 方法运行开发服务器时调用。
+**Dev Server Hooks**：仅在执行 startDevServer 方法运行开发服务器时调用。
 
 - `onBeforeStartDevServer`：在启动开发服务器前调用。
 - `onAfterStartDevServer`：在启动开发服务器后调用。
 - `onDevCompileDone`：在每次开发环境构建结束后调用。
 
-**其他钩子**
+**Prod Server Hooks**：仅在执行 preview 方法运行生产预览服务器时调用。
+
+- `onBeforeStartProdServer`：在启动开发服务器前调用。
+- `onAfterStartProdServer`：在启动开发服务器后调用。
+
+**Other Hooks**
 
 - `onExit`：在进程即将退出时调用。
 
-## 通用钩子
+## Common Hooks
 
 ### modifyRsbuildConfig
 
@@ -197,7 +202,7 @@ export default () => ({
 });
 ```
 
-## 构建钩子
+## Build Hooks
 
 ### onBeforeBuild
 
@@ -235,7 +240,7 @@ export default () => ({
 });
 ```
 
-## 开发服务钩子
+## Dev Server Hooks
 
 ### onBeforeStartDevServer
 
@@ -295,7 +300,45 @@ export default () => ({
 });
 ```
 
-## 其他钩子
+## Prod Server Hooks
+
+### onBeforeStartProdServer
+
+import OnBeforeStartProdServer from '@zh/shared/onBeforeStartProdServer.md';
+
+<OnBeforeStartProdServer />
+
+- **Example**
+
+```ts
+export default () => ({
+  setup: (api) => {
+    api.onBeforeStartProdServer(() => {
+      console.log('before start!');
+    });
+  },
+});
+```
+
+### onAfterStartProdServer
+
+import OnAfterStartProdServer from '@zh/shared/onAfterStartProdServer.md';
+
+<OnAfterStartProdServer />
+
+- **Example**
+
+```ts
+export default () => ({
+  setup: (api) => {
+    api.onAfterStartProdServer(({ port }) => {
+      console.log('this port is: ', port);
+    });
+  },
+});
+```
+
+## Other Hooks
 
 ### onExit
 

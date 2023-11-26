@@ -7,6 +7,8 @@ import {
   type ModifyRsbuildConfigFn,
   type OnAfterStartDevServerFn,
   type OnBeforeStartDevServerFn,
+  type OnAfterStartProdServerFn,
+  type OnBeforeStartProdServerFn,
   type OnAfterCreateCompilerFn,
   type OnBeforeCreateCompilerFn,
   type ModifyBundlerChainFn,
@@ -23,6 +25,8 @@ export function initHooks() {
     onDevCompileDoneHook: createAsyncHook<OnDevCompileDoneFn>(),
     onAfterStartDevServerHook: createAsyncHook<OnAfterStartDevServerFn>(),
     onBeforeStartDevServerHook: createAsyncHook<OnBeforeStartDevServerFn>(),
+    onAfterStartProdServerHook: createAsyncHook<OnAfterStartProdServerFn>(),
+    onBeforeStartProdServerHook: createAsyncHook<OnBeforeStartProdServerFn>(),
 
     /** parameters are bundler-related */
     onAfterBuildHook: createAsyncHook<OnAfterBuildFn>(),

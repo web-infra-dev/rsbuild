@@ -42,6 +42,9 @@ export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {
   onBeforeStartDevServer: Awaited<
     ReturnType<P>
   >['pluginAPI']['onBeforeStartDevServer'];
+  onBeforeStartProdServer: Awaited<
+    ReturnType<P>
+  >['pluginAPI']['onBeforeStartProdServer'];
   onAfterBuild: Awaited<ReturnType<P>>['pluginAPI']['onAfterBuild'];
   onAfterCreateCompiler: Awaited<
     ReturnType<P>
@@ -49,6 +52,9 @@ export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {
   onAfterStartDevServer: Awaited<
     ReturnType<P>
   >['pluginAPI']['onAfterStartDevServer'];
+  onAfterStartProdServer: Awaited<
+    ReturnType<P>
+  >['pluginAPI']['onAfterStartProdServer'];
   onDevCompileDone: Awaited<ReturnType<P>>['pluginAPI']['onDevCompileDone'];
   onExit: Awaited<ReturnType<P>>['pluginAPI']['onExit'];
 };

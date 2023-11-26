@@ -605,6 +605,34 @@ rsbuild.onAfterStartDevServer(({ port }) => {
 });
 ```
 
+## rsbuild.onBeforeStartProdServer
+
+import OnBeforeStartProdServer from '@zh/shared/onBeforeStartProdServer.md';
+
+<OnBeforeStartProdServer />
+
+- **Example**
+
+```ts
+rsbuild.onBeforeStartProdServer(() => {
+  console.log('before start!');
+});
+```
+
+## rsbuild.onAfterStartProdServer
+
+import OnAfterStartProdServer from '@zh/shared/onAfterStartProdServer.md';
+
+<OnAfterStartProdServer />
+
+- **Example**
+
+```ts
+rsbuild.onAfterStartProdServer(({ port }) => {
+  console.log('this port is: ', port);
+});
+```
+
 ## rsbuild.onDevCompileDone
 
 import OnDevCompileDone from '@zh/shared/onDevCompileDone.md';

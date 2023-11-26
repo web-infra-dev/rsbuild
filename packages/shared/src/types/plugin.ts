@@ -6,6 +6,8 @@ import type {
   OnDevCompileDoneFn,
   OnAfterStartDevServerFn,
   OnBeforeStartDevServerFn,
+  OnAfterStartProdServerFn,
+  OnBeforeStartProdServerFn,
   OnAfterCreateCompilerFn,
   OnBeforeCreateCompilerFn,
   ModifyRsbuildConfigFn,
@@ -131,6 +133,8 @@ export type DefaultRsbuildPluginAPI<
   onDevCompileDone: (fn: OnDevCompileDoneFn) => void;
   onAfterStartDevServer: (fn: OnAfterStartDevServerFn) => void;
   onBeforeStartDevServer: (fn: OnBeforeStartDevServerFn) => void;
+  onAfterStartProdServer: (fn: OnAfterStartProdServerFn) => void;
+  onBeforeStartProdServer: (fn: OnBeforeStartProdServerFn) => void;
   onAfterCreateCompiler: (fn: OnAfterCreateCompilerFn<Compiler>) => void;
   onBeforeCreateCompiler: (fn: OnBeforeCreateCompilerFn<BundlerConfig>) => void;
 

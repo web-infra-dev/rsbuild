@@ -25,6 +25,11 @@ This section describes the lifetime hooks provided by Rsbuild plugin.
 - `onAfterStartDevServer`: Called after starting the development server.
 - `onDevCompileDone`: Called after each development compile.
 
+**Prod Server Hooks**: Called only when the preview method is executed to run the production preview server.
+
+- `onBeforeStartProdServer`: Called before starting the production server.
+- `onAfterStartProdServer`: Called after starting the production server.
+
 **Other Hooks**
 
 - `onExit`: Called when the process is going to exit.
@@ -287,6 +292,44 @@ export default () => ({
       } else {
         console.log('re-compile!');
       }
+    });
+  },
+});
+```
+
+## Prod Server Hooks
+
+### onBeforeStartProdServer
+
+import OnBeforeStartProdServer from '@en/shared/onBeforeStartProdServer.md';
+
+<OnBeforeStartProdServer />
+
+- **Example**
+
+```ts
+export default () => ({
+  setup: (api) => {
+    api.onBeforeStartProdServer(() => {
+      console.log('before start!');
+    });
+  },
+});
+```
+
+### onAfterStartProdServer
+
+import OnAfterStartProdServer from '@en/shared/onAfterStartProdServer.md';
+
+<OnAfterStartProdServer />
+
+- **Example**
+
+```ts
+export default () => ({
+  setup: (api) => {
+    api.onAfterStartProdServer(({ port }) => {
+      console.log('this port is: ', port);
     });
   },
 });

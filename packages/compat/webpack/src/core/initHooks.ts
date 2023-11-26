@@ -9,6 +9,8 @@ import {
   ModifyRsbuildConfigFn,
   OnAfterStartDevServerFn,
   OnBeforeStartDevServerFn,
+  OnAfterStartProdServerFn,
+  OnBeforeStartProdServerFn,
   OnAfterCreateCompilerFn,
   OnBeforeCreateCompilerFn,
 } from '@rsbuild/shared';
@@ -32,6 +34,8 @@ export function initHooks() {
       createAsyncHook<OnBeforeCreateCompilerFn<WebpackConfig>>(),
     onAfterStartDevServerHook: createAsyncHook<OnAfterStartDevServerFn>(),
     onBeforeStartDevServerHook: createAsyncHook<OnBeforeStartDevServerFn>(),
+    onAfterStartProdServerHook: createAsyncHook<OnAfterStartProdServerFn>(),
+    onBeforeStartProdServerHook: createAsyncHook<OnBeforeStartProdServerFn>(),
     modifyBundlerChainHook: createAsyncHook<ModifyBundlerChainFn>(),
   };
 }

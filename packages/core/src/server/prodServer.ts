@@ -11,7 +11,6 @@ import {
   ROOT_DIST_DIR,
   isFunction,
   getServerOptions,
-  type Context,
   type ServerConfig,
   type RsbuildConfig,
   type RequestHandler,
@@ -20,6 +19,7 @@ import {
 } from '@rsbuild/shared';
 import { faviconFallbackMiddleware } from './middlewares';
 import { createProxyMiddleware } from './proxy';
+import type { Context } from '../types';
 
 type RsbuildProdServerOptions = {
   pwd: string;
@@ -140,7 +140,7 @@ export class RsbuildProdServer {
 
   public listen(
     options?: number | ListenOptions | undefined,
-    listener?: () => void,
+    listener?: () => Promise<void>,
   ) {
     const callback = () => {
       listener?.();
@@ -186,6 +186,8 @@ export async function startProdServer(
     serverConfig,
   });
 
+  await context.hooks.onBeforeStartProdServerHook.call();
+
   const httpServer = await server.createHTTPServer();
 
   await server.onInit(httpServer);
@@ -196,7 +198,11 @@ export async function startProdServer(
         host,
         port,
       },
-      () => {
+      async () => {
+        await context.hooks.onAfterStartProdServerHook.call({
+          port,
+        });
+
         const urls = getAddressUrls(https ? 'https' : 'http', port);
 
         if (printURLs) {

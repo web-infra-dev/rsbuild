@@ -68,6 +68,8 @@ export function getPluginAPI({
     onBeforeCreateCompiler: hooks.onBeforeCreateCompilerHook.tap,
     onAfterStartDevServer: hooks.onAfterStartDevServerHook.tap,
     onBeforeStartDevServer: hooks.onBeforeStartDevServerHook.tap,
+    onAfterStartProdServer: hooks.onAfterStartProdServerHook.tap,
+    onBeforeStartProdServer: hooks.onBeforeStartProdServerHook.tap,
     modifyRspackConfig: () => {},
   };
 }
