@@ -10,7 +10,6 @@ import {
   RsbuildDevServerOptions,
   CreateDevMiddlewareReturns,
   logger as defaultLogger,
-  DevServerContext,
   StartDevServerOptions,
   getAddressUrls,
   printServerURLs,
@@ -34,6 +33,7 @@ import {
 } from './middlewares';
 import { join, isAbsolute } from 'path';
 import { registerCleaner } from './restart';
+import type { Context } from '../types';
 
 export class RsbuildDevServer {
   private readonly dev: DevConfig & ServerConfig;
@@ -202,7 +202,7 @@ export class RsbuildDevServer {
 
 export async function startDevServer<
   Options extends {
-    context: DevServerContext;
+    context: Context;
   },
 >(
   options: Options,

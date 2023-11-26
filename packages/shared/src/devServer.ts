@@ -1,19 +1,15 @@
 import type {
-  RsbuildConfig,
-  Context,
-  OnAfterStartDevServerFn,
-  OnBeforeStartDevServerFn,
-  CompilerTapFn,
+  Routes,
   DevConfig,
   RsbuildEntry,
-  Routes,
+  RsbuildConfig,
+  CompilerTapFn,
 } from './types';
 import { getPort } from './port';
 import deepmerge from '../compiled/deepmerge';
 import { color } from './color';
 import { logger as defaultLogger, Logger } from './logger';
 import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
-import { createAsyncHook } from './createHook';
 import type { Compiler } from '@rspack/core';
 import { normalizeUrl } from './url';
 
@@ -141,19 +137,6 @@ export const getDevOptions = async ({
     host,
     https,
   };
-};
-
-/** The context used by startDevServer. */
-export type DevServerContext = Context & {
-  hooks: {
-    onBeforeStartDevServerHook: ReturnType<
-      typeof createAsyncHook<OnBeforeStartDevServerFn>
-    >;
-    onAfterStartDevServerHook: ReturnType<
-      typeof createAsyncHook<OnAfterStartDevServerFn>
-    >;
-  };
-  config: Readonly<RsbuildConfig>;
 };
 
 type ServerCallbacks = {
