@@ -3,8 +3,10 @@ import {
   type RsbuildProvider,
   type PreviewServerOptions,
 } from '@rsbuild/shared';
-import { startProdServer, startDevServer } from '@rsbuild/core/server';
-import { createPublicContext } from '@rsbuild/core/rspack-provider';
+import {
+  createPublicContext,
+  initRsbuildConfig,
+} from '@rsbuild/core/rspack-provider';
 import { createContext } from './core/createContext';
 import { applyDefaultPlugins } from './shared/plugin';
 import { RsbuildConfig, NormalizedConfig, WebpackConfig } from './types';
@@ -64,7 +66,13 @@ export function webpackProvider({
       },
 
       async startDevServer(options) {
+        const { startDevServer } = await import('@rsbuild/core/server');
         const { createDevMiddleware } = await import('./core/createCompiler');
+        await initRsbuildConfig({
+          // @ts-expect-error context type mismatch
+          context,
+          pluginStore,
+        });
         return startDevServer(
           {
             // @ts-expect-error context type mismatch
@@ -78,6 +86,12 @@ export function webpackProvider({
       },
 
       async preview(options?: PreviewServerOptions) {
+        const { startProdServer } = await import('@rsbuild/core/server');
+        await initRsbuildConfig({
+          // @ts-expect-error context type mismatch
+          context,
+          pluginStore,
+        });
         return startProdServer(
           // @ts-expect-error context type mismatch
           context,
