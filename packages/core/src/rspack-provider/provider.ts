@@ -7,7 +7,7 @@ import {
   type PreviewServerOptions,
 } from '@rsbuild/shared';
 import { createContext, createPublicContext } from './core/createContext';
-import { initConfigs } from './core/initConfigs';
+import { initConfigs, initRsbuildConfig } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
 import { applyDefaultPlugins } from './shared';
 import type { RsbuildConfig, NormalizedConfig } from '../types';
@@ -61,6 +61,7 @@ export function rspackProvider({
       async startDevServer(options) {
         const { startDevServer } = await import('../server/devServer');
         const { createDevMiddleware } = await import('./core/createCompiler');
+        await initRsbuildConfig({ context, pluginStore });
         return startDevServer(
           { context, pluginStore, rsbuildOptions },
           createDevMiddleware,
@@ -70,6 +71,7 @@ export function rspackProvider({
 
       async preview(options?: PreviewServerOptions) {
         const { startProdServer } = await import('../server/prodServer');
+        await initRsbuildConfig({ context, pluginStore });
         return startProdServer(context, context.config, options);
       },
 

@@ -1,7 +1,7 @@
 import { join } from 'path';
-import { fse } from '@rsbuild/shared';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
+import { RsbuildPlugin } from '@rsbuild/core';
 
 test('should preview dist files correctly', async ({ page }) => {
   const cwd = join(__dirname, 'basic');
@@ -18,6 +18,36 @@ test('should preview dist files correctly', async ({ page }) => {
   await expect(rootEl).toHaveText('Hello Rsbuild!');
 
   await server.close();
+});
 
-  await fse.remove(join(cwd, 'dist-1'));
+test('should allow plugin to modify preview server config', async ({
+  page,
+}) => {
+  const cwd = join(__dirname, 'basic');
+  const PORT = 51288;
+
+  const plugin: RsbuildPlugin = {
+    name: 'test',
+    setup: (api) => {
+      api.modifyRsbuildConfig((config) => {
+        config.server ||= {};
+        config.server.port = PORT;
+        return config;
+      });
+    },
+  };
+
+  const { instance } = await build({
+    cwd,
+    plugins: [plugin],
+  });
+
+  const { port, server } = await instance.preview();
+
+  expect(port).toEqual(PORT);
+
+  await page.goto(getHrefByEntryName('index', port));
+  const rootEl = page.locator('#root');
+  await expect(rootEl).toHaveText('Hello Rsbuild!');
+  await server.close();
 });

@@ -32,13 +32,15 @@ export type InitConfigsOptions = {
   rsbuildOptions: Required<CreateRsbuildOptions>;
 };
 
-export async function initConfigs({
+export async function initRsbuildConfig({
   context,
   pluginStore,
-  rsbuildOptions,
-}: InitConfigsOptions): Promise<{
-  rspackConfigs: RspackConfig[];
-}> {
+}: Pick<InitConfigsOptions, 'context' | 'pluginStore'>): Promise<void> {
+  // inited
+  if (context.normalizedConfig) {
+    return;
+  }
+
   await initPlugins({
     pluginAPI: context.pluginAPI,
     pluginStore,
@@ -47,6 +49,16 @@ export async function initConfigs({
   await modifyRsbuildConfig(context);
   context.normalizedConfig = normalizeConfig(context.config);
   updateContextByNormalizedConfig(context, context.normalizedConfig);
+}
+
+export async function initConfigs({
+  context,
+  pluginStore,
+  rsbuildOptions,
+}: InitConfigsOptions): Promise<{
+  rspackConfigs: RspackConfig[];
+}> {
+  await initRsbuildConfig({ context, pluginStore });
 
   const targets = castArray(rsbuildOptions.target);
   const rspackConfigs = await Promise.all(
