@@ -16,6 +16,7 @@ export default defineConfig({
     checkDeadLinks: true,
   },
   route: {
+    cleanUrls: true,
     // exclude document fragments from routes
     exclude: ['**/zh/shared/**', '**/en/shared/**'],
   },
