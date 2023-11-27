@@ -5,6 +5,8 @@ import type { RsbuildPlugin, RsbuildConfig } from '../types';
 export const pluginReactWebpack = (): RsbuildPlugin => ({
   name: 'rsbuild-webpack:react',
 
+  pre: ['rsbuild-webpack:babel'],
+
   setup(api) {
     api.modifyRsbuildConfig(async (config, { mergeRsbuildConfig }) => {
       const isNewJsx = await isBeyondReact17(api.context.rootPath);
@@ -40,7 +42,7 @@ export const pluginReactWebpack = (): RsbuildPlugin => ({
       return mergeRsbuildConfig(babelConfig, config);
     });
 
-    api.modifyWebpackChain(async (chain, utils) => {
+    api.modifyBundlerChain(async (chain, utils) => {
       const config = api.getNormalizedConfig();
 
       if (!isUsingHMR(config, utils)) {

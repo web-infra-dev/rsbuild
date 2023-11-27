@@ -4,7 +4,7 @@ import type { RsbuildPlugin } from '../types';
 export const pluginProgress = (): RsbuildPlugin => ({
   name: 'rsbuild-webpack:progress',
   setup(api) {
-    api.modifyWebpackChain(async (chain, { target, CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { target, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
       // enable progress bar for webpack by default
       const options = config.dev.progressBar ?? true;

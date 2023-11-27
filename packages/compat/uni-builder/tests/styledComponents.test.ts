@@ -17,7 +17,7 @@ describe('plugins/styled-components', () => {
     for (const config of configs) {
       expect(
         config.module.rules.find(
-          (r) => r.test.toString() === SCRIPT_REGEX.toString(),
+          (r) => r.test?.toString() === SCRIPT_REGEX.toString(),
         ),
       ).toMatchSnapshot();
     }

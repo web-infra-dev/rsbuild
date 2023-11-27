@@ -7,6 +7,24 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "foo": "2",
     },
   },
+  MiniCssExtractPlugin {
+    "_sortedModulesCache": WeakMap {},
+    "options": {
+      "chunkFilename": "static/css/async/[name].css",
+      "experimentalUseImportModule": undefined,
+      "filename": "static/css/[name].css",
+      "ignoreOrder": true,
+      "runtime": true,
+    },
+    "runtimeOptions": {
+      "attributes": undefined,
+      "insert": undefined,
+      "linkType": "text/css",
+    },
+  },
+  HotModuleReplacementPlugin {
+    "options": {},
+  },
   HtmlWebpackPlugin {
     "userOptions": {
       "chunks": [
@@ -45,33 +63,6 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "process.env.NODE_ENV": ""test"",
     },
   },
-  MiniCssExtractPlugin {
-    "_sortedModulesCache": WeakMap {},
-    "options": {
-      "chunkFilename": "static/css/async/[name].css",
-      "experimentalUseImportModule": undefined,
-      "filename": "static/css/[name].css",
-      "ignoreOrder": true,
-      "runtime": true,
-    },
-    "runtimeOptions": {
-      "attributes": undefined,
-      "insert": undefined,
-      "linkType": "text/css",
-    },
-  },
-  HotModuleReplacementPlugin {
-    "options": {},
-  },
-  ReactRefreshPlugin {
-    "options": {
-      "exclude": [
-        /node_modules/,
-      ],
-      "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
-      "overlay": false,
-    },
-  },
   ProgressPlugin {
     "compileTime": null,
     "dependenciesCount": 10000,
@@ -86,6 +77,15 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
     "showDependencies": true,
     "showEntries": true,
     "showModules": true,
+  },
+  ReactRefreshPlugin {
+    "options": {
+      "exclude": [
+        /node_modules/,
+      ],
+      "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
+      "overlay": false,
+    },
   },
   DefinePlugin {
     "definitions": {

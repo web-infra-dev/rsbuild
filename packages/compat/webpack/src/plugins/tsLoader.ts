@@ -15,7 +15,7 @@ export const pluginTsLoader = (): RsbuildPlugin => {
   return {
     name: 'rsbuild-webpack:ts-loader',
     setup(api) {
-      api.modifyWebpackChain(async (chain, { target, CHAIN_ID }) => {
+      api.modifyBundlerChain(async (chain, { target, CHAIN_ID }) => {
         const config = api.getNormalizedConfig();
         if (!config.tools.tsLoader) {
           return;

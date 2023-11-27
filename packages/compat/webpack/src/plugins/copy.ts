@@ -6,7 +6,7 @@ export const pluginCopy = (): RsbuildPlugin => ({
   name: 'rsbuild-webpack:copy',
 
   setup(api) {
-    api.modifyWebpackChain(async (chain, { CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
       const { copy } = config.output;
 

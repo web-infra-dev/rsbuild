@@ -14,7 +14,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
   setup(api) {
     applyOutputPlugin(api);
 
-    api.modifyWebpackChain(async (chain, { isProd, target, CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { isProd, target, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
 
       const cssPath = getDistPath(config.output, 'css');

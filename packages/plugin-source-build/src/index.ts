@@ -79,7 +79,7 @@ export function pluginSourceBuild(
       });
 
       if (api.context.bundlerType === 'webpack') {
-        api.modifyWebpackChain((chain, { CHAIN_ID }) => {
+        api.modifyBundlerChain((chain, { CHAIN_ID }) => {
           const {
             tools: { tsLoader },
           } = (api as unknown as RsbuildWebpackPluginAPI).getNormalizedConfig();

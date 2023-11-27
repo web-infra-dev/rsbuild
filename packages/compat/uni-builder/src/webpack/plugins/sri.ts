@@ -6,7 +6,7 @@ export const pluginSRI = (options: SriOptions | boolean): RsbuildPlugin => ({
   name: 'uni-builder:sri',
 
   setup(api) {
-    api.modifyWebpackChain((chain, { CHAIN_ID }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID }) => {
       chain.output.crossOriginLoading('anonymous');
       chain
         .plugin(CHAIN_ID.PLUGIN.SUBRESOURCE_INTEGRITY)

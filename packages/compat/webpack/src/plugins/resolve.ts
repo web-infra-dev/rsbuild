@@ -4,8 +4,9 @@ import {
   applyResolvePlugin,
   type RsbuildTarget,
   type ChainIdentifier,
+  type BundlerChain,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin, WebpackChain } from '../types';
+import type { RsbuildPlugin } from '../types';
 import path from 'path';
 
 async function applyTsConfigPathsPlugin({
@@ -15,7 +16,7 @@ async function applyTsConfigPathsPlugin({
   mainFields,
   extensions,
 }: {
-  chain: WebpackChain;
+  chain: BundlerChain;
   CHAIN_ID: ChainIdentifier;
   cwd: string;
   mainFields: (string | string[])[];
@@ -35,7 +36,7 @@ async function applyTsConfigPathsPlugin({
     ]);
 }
 
-const getMainFields = (chain: WebpackChain, target: RsbuildTarget) => {
+const getMainFields = (chain: BundlerChain, target: RsbuildTarget) => {
   const mainFields = chain.resolve.mainFields.values();
 
   if (mainFields.length) {
@@ -55,7 +56,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
   setup(api) {
     applyResolvePlugin(api);
 
-    api.modifyWebpackChain(async (chain, { CHAIN_ID, target }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
       const config = api.getNormalizedConfig();
       const isTsProject = Boolean(api.context.tsconfigPath);
 
