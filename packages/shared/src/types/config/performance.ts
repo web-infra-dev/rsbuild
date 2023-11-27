@@ -10,6 +10,11 @@ export type BuildCacheOptions = {
   cacheDigest?: Array<string | undefined>;
 };
 
+export type PrintFileSizeOptions = {
+  total?: boolean;
+  detail?: boolean;
+};
+
 export interface PreconnectOption {
   href: string;
   crossorigin?: boolean;
@@ -58,7 +63,7 @@ export interface PerformanceConfig {
   /**
    * Whether to print the file sizes after production build.
    */
-  printFileSize?: boolean;
+  printFileSize?: PrintFileSizeOptions | boolean;
   /**
    * Configure the chunk splitting strategy.
    */
@@ -105,7 +110,7 @@ export interface PerformanceConfig {
 }
 
 export interface NormalizedPerformanceConfig extends PerformanceConfig {
-  printFileSize: boolean;
+  printFileSize: PrintFileSizeOptions | boolean;
   buildCache: BuildCacheOptions | boolean;
   chunkSplit: RsbuildChunkSplit;
 }
