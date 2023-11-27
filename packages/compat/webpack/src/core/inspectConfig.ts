@@ -35,7 +35,7 @@ export async function inspectConfig({
 
   const rsbuildDebugConfig = {
     ...context.config,
-    plugins: pluginStore.plugins.map((p) => p.name),
+    pluginNames: pluginStore.plugins.map((p) => p.name),
   };
 
   const rawRsbuildConfig = await stringifyConfig(

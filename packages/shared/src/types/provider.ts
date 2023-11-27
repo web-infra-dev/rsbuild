@@ -83,7 +83,9 @@ export type ProviderInstance<
     rsbuildConfig: string;
     bundlerConfigs: string[];
     origin: {
-      rsbuildConfig: RsbuildConfig;
+      rsbuildConfig: RsbuildConfig & {
+        pluginNames: string[];
+      };
       bundlerConfigs: BundlerConfig[];
     };
   }>;

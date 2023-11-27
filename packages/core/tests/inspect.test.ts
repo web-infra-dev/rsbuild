@@ -17,6 +17,6 @@ describe('inspectConfig', () => {
       origin: { rsbuildConfig },
     } = await rsbuild.inspectConfig();
 
-    expect(rsbuildConfig.plugins).toMatchSnapshot();
+    expect(rsbuildConfig.pluginNames).toMatchSnapshot();
   });
 });
