@@ -17,7 +17,7 @@ export function pluginEsbuild(
     name: 'rsbuild-webpack:esbuild',
 
     setup(api) {
-      api.modifyWebpackChain(async (chain, { CHAIN_ID, isProd, target }) => {
+      api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
         const rsbuildConfig = api.getNormalizedConfig();
         const esbuildLoaderPath = require.resolve('../compiled/esbuild-loader');
 

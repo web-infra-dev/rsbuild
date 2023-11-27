@@ -71,7 +71,7 @@ export const pluginFallback = (): RsbuildPlugin => ({
 
   setup(api) {
     if (api.context.bundlerType === 'webpack') {
-      api.modifyWebpackChain((chain, { isProd }) => {
+      api.modifyBundlerChain((chain, { isProd }) => {
         const rsbuildConfig = api.getNormalizedConfig();
         const distDir = getDistPath(rsbuildConfig.output, 'media');
         const filename = getFilename(rsbuildConfig.output, 'media', isProd);

@@ -27,8 +27,12 @@ export const pluginTsLoader = (
   return {
     name: 'uni-builder:ts-loader',
 
+    pre: ['rsbuild-webpack:babel'],
+
+    post: ['rsbuild-webpack:react'],
+
     setup(api) {
-      api.modifyWebpackChain(async (chain, { target, CHAIN_ID }) => {
+      api.modifyBundlerChain(async (chain, { target, CHAIN_ID }) => {
         const config = api.getNormalizedConfig();
         const { rootPath } = api.context;
         const browserslist = await getBrowserslistWithDefault(

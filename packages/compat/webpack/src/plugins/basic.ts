@@ -11,7 +11,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
   setup(api) {
     applyBasicPlugin(api);
 
-    api.modifyWebpackChain(async (chain, { env }) => {
+    api.modifyBundlerChain(async (chain, { env }) => {
       // Disable webpack performance hints.
       // These logs are too complex
       chain.performance.hints(false);

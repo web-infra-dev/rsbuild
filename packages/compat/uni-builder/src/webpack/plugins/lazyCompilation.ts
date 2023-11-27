@@ -13,7 +13,7 @@ export const pluginLazyCompilation = (
   name: 'uni-builder:lazy-compilation',
 
   setup(api) {
-    api.modifyWebpackChain((chain, { isProd, isServer, isWebWorker }) => {
+    api.modifyBundlerChain((chain, { isProd, isServer, isWebWorker }) => {
       if (isProd || isServer || isWebWorker || !options) {
         return;
       }

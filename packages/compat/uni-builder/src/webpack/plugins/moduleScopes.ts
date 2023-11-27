@@ -31,7 +31,7 @@ export const pluginModuleScopes = (
   name: 'uni-builder:module-scopes',
 
   setup(api) {
-    api.modifyWebpackChain(async (chain, { CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       if (!moduleScopes) {
         return;
       }

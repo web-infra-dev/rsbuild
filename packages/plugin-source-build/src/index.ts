@@ -78,7 +78,7 @@ export function pluginSourceBuild(
       });
 
       if (api.context.bundlerType === 'webpack') {
-        api.modifyWebpackChain((chain, { CHAIN_ID }) => {
+        api.modifyBundlerChain((chain, { CHAIN_ID }) => {
           [CHAIN_ID.RULE.TS, CHAIN_ID.RULE.JS].forEach((ruleId) => {
             if (chain.module.rules.get(ruleId)) {
               const rule = chain.module.rule(ruleId);

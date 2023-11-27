@@ -5,7 +5,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
   name: 'uni-builder:manifest',
 
   setup(api) {
-    api.modifyWebpackChain(async (chain, { target, CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { target, CHAIN_ID }) => {
       const { WebpackManifestPlugin } = await import('webpack-manifest-plugin');
       const publicPath = chain.output.get('publicPath');
 

@@ -82,6 +82,7 @@ export type ModifyBundlerChainUtils = ModifyChainUtils & {
     BannerPlugin: PluginInstance;
     DefinePlugin: PluginInstance;
     ProvidePlugin: PluginInstance;
+    HotModuleReplacementPlugin: PluginInstance;
   };
 };
 
