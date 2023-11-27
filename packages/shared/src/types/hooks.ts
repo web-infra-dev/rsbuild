@@ -4,6 +4,7 @@ import { NodeEnv, PromiseOrNot } from './utils';
 import { RsbuildTarget } from './rsbuild';
 import { BundlerChain } from './bundlerConfig';
 import { mergeRsbuildConfig } from '../mergeRsbuildConfig';
+import type { Rspack } from './rspack';
 
 export type OnBeforeBuildFn<BundlerConfig = unknown> = (params: {
   bundlerConfigs?: BundlerConfig[];
@@ -40,9 +41,9 @@ export type OnBeforeCreateCompilerFn<BundlerConfig = unknown> = (params: {
   bundlerConfigs: BundlerConfig[];
 }) => PromiseOrNot<void>;
 
-export type OnAfterCreateCompilerFn<Compiler = unknown> = (params: {
-  compiler: Compiler;
-}) => PromiseOrNot<void>;
+export type OnAfterCreateCompilerFn<
+  Compiler = Rspack.Compiler | Rspack.MultiCompiler,
+> = (params: { compiler: Compiler }) => PromiseOrNot<void>;
 
 export type OnExitFn = () => void;
 

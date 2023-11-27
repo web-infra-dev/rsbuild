@@ -12,13 +12,11 @@ import { applyDefaultPlugins } from './shared/plugin';
 import { RsbuildConfig, NormalizedConfig, WebpackConfig } from './types';
 import { initConfigs } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
-import type { Compiler, MultiCompiler } from 'webpack';
 
 export type WebpackProvider = RsbuildProvider<
   RsbuildConfig,
   WebpackConfig,
-  NormalizedConfig,
-  Compiler | MultiCompiler
+  NormalizedConfig
 >;
 
 export function webpackProvider({

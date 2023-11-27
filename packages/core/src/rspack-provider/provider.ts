@@ -2,8 +2,6 @@ import {
   pickRsbuildConfig,
   type RsbuildProvider,
   type RspackConfig,
-  type RspackCompiler,
-  type RspackMultiCompiler,
   type PreviewServerOptions,
 } from '@rsbuild/shared';
 import { createContext, createPublicContext } from './core/createContext';
@@ -15,8 +13,7 @@ import type { RsbuildConfig, NormalizedConfig } from '../types';
 export type RspackProvider = RsbuildProvider<
   RsbuildConfig,
   RspackConfig,
-  NormalizedConfig,
-  RspackCompiler | RspackMultiCompiler
+  NormalizedConfig
 >;
 
 export function rspackProvider({
