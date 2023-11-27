@@ -2,7 +2,29 @@
   "extends": "@rsbuild/tsconfig/base",
   "compilerOptions": {
     "outDir": "./dist",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "rootDir": "src",
+    "composite": true
   },
+  "references": [
+    {
+      "path": "../../core"
+    },
+    {
+      "path": "../../shared"
+    },
+    {
+      "path": "../../plugin-babel"
+    },
+    {
+      "path": "../../plugin-react"
+    },
+    {
+      "path": "../../babel-preset"
+    },
+    {
+      "path": "../../plugin-css-minimizer"
+    }
+  ],
   "include": ["src"]
 }

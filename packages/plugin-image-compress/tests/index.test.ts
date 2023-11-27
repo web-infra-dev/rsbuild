@@ -5,25 +5,12 @@ import { pluginImageCompress } from '../src';
 
 process.env.NODE_ENV = 'production';
 
-const ASSET_EXTS = [
-  'png',
-  'jpg',
-  'jpeg',
-  'gif',
-  'bmp',
-  'webp',
-  'ico',
-  'apng',
-  'avif',
-  'tiff',
-];
-
 describe('plugin-image-compress', () => {
   it('should generate correct options', async () => {
     const rsbuild = await createStubRsbuild({
       provider: webpackProvider,
       rsbuildConfig: {},
-      plugins: [pluginAsset('image', ASSET_EXTS), pluginImageCompress()],
+      plugins: [pluginAsset(), pluginImageCompress()],
     });
     expect(await rsbuild.unwrapConfig()).toMatchSnapshot();
   });
@@ -32,10 +19,7 @@ describe('plugin-image-compress', () => {
     const rsbuild = await createStubRsbuild({
       provider: webpackProvider,
       rsbuildConfig: {},
-      plugins: [
-        pluginAsset('image', ASSET_EXTS),
-        pluginImageCompress('jpeg', { use: 'png' }),
-      ],
+      plugins: [pluginAsset(), pluginImageCompress('jpeg', { use: 'png' })],
     });
     const config = await rsbuild.unwrapConfig();
     expect(config.optimization?.minimizer).toMatchInlineSnapshot(`
@@ -62,10 +46,7 @@ describe('plugin-image-compress', () => {
     const rsbuild = await createStubRsbuild({
       provider: webpackProvider,
       rsbuildConfig: {},
-      plugins: [
-        pluginAsset('image', ASSET_EXTS),
-        pluginImageCompress(['jpeg', { use: 'png' }]),
-      ],
+      plugins: [pluginAsset(), pluginImageCompress(['jpeg', { use: 'png' }])],
     });
     const config = await rsbuild.unwrapConfig();
     expect(config.optimization?.minimizer).toMatchInlineSnapshot(`
