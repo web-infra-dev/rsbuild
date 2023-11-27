@@ -20,15 +20,21 @@ export type ConfigParams = {
   command: string;
 };
 
-export type UserConfigExport =
-  | RsbuildConfig
-  | ((env: ConfigParams) => RsbuildConfig | Promise<RsbuildConfig>);
+export type RsbuildConfigFn = (
+  env: ConfigParams,
+) => RsbuildConfig | Promise<RsbuildConfig>;
+
+export type RsbuildConfigExport = RsbuildConfig | RsbuildConfigFn;
 
 /**
  * This function helps you to autocomplete configuration types.
  * It accepts a Rsbuild config object, or a function that returns a config.
  */
-export const defineConfig = (config: UserConfigExport) => config;
+export function defineConfig(config: RsbuildConfig): RsbuildConfig;
+export function defineConfig(config: RsbuildConfigFn): RsbuildConfigFn;
+export function defineConfig(config: RsbuildConfigExport) {
+  return config;
+}
 
 const resolveConfigPath = (customConfig?: string) => {
   const root = process.cwd();
@@ -107,7 +113,7 @@ export async function loadConfig(
       watchConfig(configFile);
     }
 
-    const configExport = loadConfig(configFile) as UserConfigExport;
+    const configExport = loadConfig(configFile) as RsbuildConfigExport;
 
     if (typeof configExport === 'function') {
       const params: ConfigParams = {
