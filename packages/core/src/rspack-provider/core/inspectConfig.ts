@@ -22,6 +22,10 @@ export async function inspectConfig({
   } else if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'development';
   }
+  const rsbuildDebugConfig = {
+    ...context.config,
+    pluginNames: pluginStore.plugins.map((p) => p.name),
+  };
 
   const rspackConfigs =
     bundlerConfigs ||
@@ -34,7 +38,7 @@ export async function inspectConfig({
     ).rspackConfigs;
 
   const rawRsbuildConfig = await stringifyConfig(
-    context.config,
+    rsbuildDebugConfig,
     inspectOptions.verbose,
   );
   const rawBundlerConfigs = await Promise.all(
@@ -65,7 +69,7 @@ export async function inspectConfig({
     rsbuildConfig: rawRsbuildConfig,
     bundlerConfigs: rawBundlerConfigs,
     origin: {
-      rsbuildConfig: context.config,
+      rsbuildConfig: rsbuildDebugConfig,
       bundlerConfigs: rspackConfigs,
     },
   };
