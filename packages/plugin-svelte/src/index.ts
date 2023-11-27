@@ -41,12 +41,11 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
         chain.resolve.alias
           .set('svelte', path.join(sveltePath, 'src/runtime'))
           .end()
-          // TODO: change to use `...` wildcard
           .extensions.add('.svelte')
           .end()
           .mainFields.prepend('svelte')
           .end()
-          .set('conditionNames', ['svelte', 'browser', 'import']);
+          .set('conditionNames', ['svelte', '...']);
 
         const loaderPath = require.resolve('svelte-loader');
 
