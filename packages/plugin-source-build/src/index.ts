@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import { TS_CONFIG_FILE } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { RsbuildPluginAPI as RsbuildWebpackPluginAPI } from '@rsbuild/webpack';
 import {
   filterByField,
   getDependentProjects,
@@ -80,24 +79,20 @@ export function pluginSourceBuild(
 
       if (api.context.bundlerType === 'webpack') {
         api.modifyWebpackChain((chain, { CHAIN_ID }) => {
-          const {
-            tools: { tsLoader },
-          } = (api as unknown as RsbuildWebpackPluginAPI).getNormalizedConfig();
+          [CHAIN_ID.RULE.TS, CHAIN_ID.RULE.JS].forEach((ruleId) => {
+            if (chain.module.rules.get(ruleId)) {
+              const rule = chain.module.rule(ruleId);
 
-          const useTsLoader = Boolean(tsLoader);
-          // webpack.js.org/configuration/module/#ruleresolve
-          chain.module
-            .rule(useTsLoader ? CHAIN_ID.RULE.TS : CHAIN_ID.RULE.JS)
-            // source > webpack default mainFields.
-            // when source is not exist, other mainFields will effect.
-            .resolve.mainFields.merge([sourceField, '...']);
+              // webpack.js.org/configuration/module/#ruleresolve
+              rule.resolve.mainFields // when source is not exist, other mainFields will effect. // source > webpack default mainFields.
+                .merge([sourceField, '...']);
 
-          // webpack chain not support resolve.conditionNames
-          chain.module
-            .rule(useTsLoader ? CHAIN_ID.RULE.TS : CHAIN_ID.RULE.JS)
-            .resolve.merge({
-              conditionNames: ['...', sourceField],
-            });
+              // webpack chain not support resolve.conditionNames
+              rule.resolve.merge({
+                conditionNames: ['...', sourceField],
+              });
+            }
+          });
 
           const { TS_CONFIG_PATHS } = CHAIN_ID.RESOLVE_PLUGIN;
 

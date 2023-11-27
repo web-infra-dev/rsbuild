@@ -1,5 +1,9 @@
 import { isAbsolute, normalize, sep } from 'path';
-import { castArray, mergeChainedOptions } from '@rsbuild/shared';
+import {
+  castArray,
+  mergeChainedOptions,
+  type NormalizedConfig,
+} from '@rsbuild/shared';
 import upath from 'upath';
 import type {
   BabelPlugin,
@@ -165,4 +169,12 @@ export const applyUserBabelConfig = (
   }
 
   return defaultOptions;
+};
+
+export const getUseBuiltIns = (config: NormalizedConfig) => {
+  const { polyfill } = config.output;
+  if (polyfill === 'ua' || polyfill === 'off') {
+    return false;
+  }
+  return polyfill;
 };

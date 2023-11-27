@@ -1,26 +1,35 @@
+import _ from 'lodash';
 import {
   TS_REGEX,
+  JS_REGEX,
   castArray,
   mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
+  type FileFilterUtil,
+  type ChainedConfigWithUtils,
 } from '@rsbuild/shared';
-import { getBabelUtils } from '@rsbuild/plugin-babel';
-import _ from 'lodash';
+import { getBabelUtils, getUseBuiltIns } from '@rsbuild/plugin-babel';
 import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
-import { getUseBuiltIns } from './babel';
-import type { RsbuildPlugin } from '../types';
+import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { Options as RawTSLoaderOptions } from 'ts-loader';
 
-export const pluginTsLoader = (): RsbuildPlugin => {
+export type TSLoaderOptions = Partial<RawTSLoaderOptions>;
+
+export type PluginTsLoaderOptions = ChainedConfigWithUtils<
+  TSLoaderOptions,
+  { addIncludes: FileFilterUtil; addExcludes: FileFilterUtil }
+>;
+
+export const pluginTsLoader = (
+  options?: PluginTsLoaderOptions,
+): RsbuildPlugin => {
   return {
-    name: 'rsbuild-webpack:ts-loader',
+    name: 'uni-builder:ts-loader',
+
     setup(api) {
       api.modifyWebpackChain(async (chain, { target, CHAIN_ID }) => {
         const config = api.getNormalizedConfig();
-        if (!config.tools.tsLoader) {
-          return;
-        }
-
         const { rootPath } = api.context;
         const browserslist = await getBrowserslistWithDefault(
           rootPath,
@@ -66,7 +75,7 @@ export const pluginTsLoader = (): RsbuildPlugin => {
         const tsLoaderOptions = mergeChainedOptions({
           defaults: tsLoaderDefaultOptions,
           // @ts-expect-error ts-loader has incorrect types for compilerOptions
-          options: config.tools.tsLoader,
+          options,
           utils: tsLoaderUtils,
         });
         const rule = chain.module.rule(CHAIN_ID.RULE.TS);
@@ -78,6 +87,9 @@ export const pluginTsLoader = (): RsbuildPlugin => {
           includes,
           excludes,
         });
+
+        // adjust babel rule to only handle JS files
+        chain.module.rule(CHAIN_ID.RULE.JS).test(JS_REGEX);
 
         rule
           .test(TS_REGEX)

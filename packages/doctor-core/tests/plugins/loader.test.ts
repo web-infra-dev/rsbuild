@@ -11,7 +11,7 @@ describe('test src/utils/loader.ts', () => {
     const tsLoader = 'ts-loader';
     const resolvedBabelLoader = require.resolve(babelLoader);
     const resolvedStringLoader = require.resolve(stringLoader);
-    const exampleWebpackPath = path.resolve(__dirname, '../../../compat/webpack');
+    const exampleWebpackPath = path.resolve(__dirname, '../../../compat/uni-builder');
     const resolvedTsLoader = require.resolve(tsLoader, {
       paths: [exampleWebpackPath],
     });
