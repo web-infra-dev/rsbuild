@@ -41,20 +41,16 @@ export type RsbuildProvider<
   RsbuildConfig extends Record<string, any> = Record<string, any>,
   BundlerConfig extends Record<string, any> = Record<string, any>,
   NormalizedConfig extends Record<string, any> = Record<string, any>,
-  Compiler extends Record<string, any> = Record<string, any>,
 > = (options: {
   pluginStore: PluginStore;
   rsbuildOptions: Required<CreateRsbuildOptions>;
   plugins: Plugins;
-}) => Promise<
-  ProviderInstance<RsbuildConfig, BundlerConfig, NormalizedConfig, Compiler>
->;
+}) => Promise<ProviderInstance<RsbuildConfig, BundlerConfig, NormalizedConfig>>;
 
 export type ProviderInstance<
   RsbuildConfig extends Record<string, any> = Record<string, any>,
   BundlerConfig extends Record<string, any> = Record<string, any>,
   NormalizedConfig extends Record<string, any> = Record<string, any>,
-  CommonCompiler extends Record<string, any> = Record<string, any>,
 > = {
   readonly bundler: Bundler;
 
@@ -63,8 +59,7 @@ export type ProviderInstance<
   pluginAPI: DefaultRsbuildPluginAPI<
     RsbuildConfig,
     NormalizedConfig,
-    BundlerConfig,
-    CommonCompiler
+    BundlerConfig
   >;
 
   applyDefaultPlugins: (pluginStore: PluginStore) => Promise<void>;

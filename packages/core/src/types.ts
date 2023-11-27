@@ -6,18 +6,13 @@ import type {
   RsbuildPlugin as BaseRsbuildPlugin,
 } from '@rsbuild/shared';
 import type { Hooks } from './rspack-provider/core/initHooks';
-import type {
-  RspackConfig,
-  RspackCompiler,
-  RspackMultiCompiler,
-} from '@rsbuild/shared';
+import type { RspackConfig } from '@rsbuild/shared';
 
 export interface RsbuildPluginAPI
   extends DefaultRsbuildPluginAPI<
     RsbuildConfig,
     NormalizedConfig,
-    RspackConfig,
-    RspackCompiler | RspackMultiCompiler
+    RspackConfig
   > {}
 
 export type RsbuildPlugin<T = RsbuildPluginAPI> = BaseRsbuildPlugin<T>;

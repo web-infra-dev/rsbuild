@@ -15,7 +15,6 @@ import {
   OnBeforeCreateCompilerFn,
 } from '@rsbuild/shared';
 import type { ModifyBundlerChainFn } from '@rsbuild/shared';
-import type { Compiler, MultiCompiler } from 'webpack';
 import type { WebpackConfig, RsbuildConfig } from '../types';
 
 export function initHooks() {
@@ -28,8 +27,7 @@ export function initHooks() {
     modifyWebpackConfigHook: createAsyncHook<ModifyWebpackConfigFn>(),
     modifyRsbuildConfigHook:
       createAsyncHook<ModifyRsbuildConfigFn<RsbuildConfig>>(),
-    onAfterCreateCompilerHook:
-      createAsyncHook<OnAfterCreateCompilerFn<Compiler | MultiCompiler>>(),
+    onAfterCreateCompilerHook: createAsyncHook<OnAfterCreateCompilerFn>(),
     onBeforeCreateCompilerHook:
       createAsyncHook<OnBeforeCreateCompilerFn<WebpackConfig>>(),
     onAfterStartDevServerHook: createAsyncHook<OnAfterStartDevServerFn>(),

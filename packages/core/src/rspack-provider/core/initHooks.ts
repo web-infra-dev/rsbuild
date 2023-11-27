@@ -16,7 +16,6 @@ import {
   type ModifyRspackConfigFn,
 } from '@rsbuild/shared';
 import type { RsbuildConfig } from '../../types';
-import type { Compiler, MultiCompiler } from '@rspack/core';
 
 export function initHooks() {
   return {
@@ -34,8 +33,7 @@ export function initHooks() {
     modifyRspackConfigHook: createAsyncHook<ModifyRspackConfigFn>(),
     modifyRsbuildConfigHook:
       createAsyncHook<ModifyRsbuildConfigFn<RsbuildConfig>>(),
-    onAfterCreateCompilerHook:
-      createAsyncHook<OnAfterCreateCompilerFn<Compiler | MultiCompiler>>(),
+    onAfterCreateCompilerHook: createAsyncHook<OnAfterCreateCompilerFn>(),
     onBeforeCreateCompilerHook:
       createAsyncHook<OnBeforeCreateCompilerFn<RspackConfig>>(),
 

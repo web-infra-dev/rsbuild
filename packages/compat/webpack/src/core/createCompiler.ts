@@ -1,4 +1,11 @@
-import { isDev, logger, debug, formatStats, type Stats } from '@rsbuild/shared';
+import {
+  isDev,
+  logger,
+  debug,
+  formatStats,
+  type Stats,
+  type Rspack,
+} from '@rsbuild/shared';
 import type { Context, WebpackConfig } from '../types';
 import { initConfigs, InitConfigsOptions } from './initConfigs';
 import type { Compiler, MultiCompiler } from 'webpack';
@@ -44,7 +51,9 @@ export async function createCompiler({
     isFirstCompile = false;
   });
 
-  await context.hooks.onAfterCreateCompilerHook.call({ compiler });
+  await context.hooks.onAfterCreateCompilerHook.call({
+    compiler: compiler as unknown as Rspack.Compiler | Rspack.MultiCompiler,
+  });
   debug('create compiler done');
 
   return compiler;

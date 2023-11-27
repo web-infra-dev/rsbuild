@@ -122,7 +122,6 @@ export type DefaultRsbuildPluginAPI<
   Config extends Record<string, any> = Record<string, any>,
   NormalizedConfig extends Record<string, any> = Record<string, any>,
   BundlerConfig = unknown,
-  Compiler = unknown,
 > = {
   context: Readonly<Context>;
   isPluginExists: PluginStore['isPluginExists'];
@@ -135,7 +134,7 @@ export type DefaultRsbuildPluginAPI<
   onBeforeStartDevServer: (fn: OnBeforeStartDevServerFn) => void;
   onAfterStartProdServer: (fn: OnAfterStartProdServerFn) => void;
   onBeforeStartProdServer: (fn: OnBeforeStartProdServerFn) => void;
-  onAfterCreateCompiler: (fn: OnAfterCreateCompilerFn<Compiler>) => void;
+  onAfterCreateCompiler: (fn: OnAfterCreateCompilerFn) => void;
   onBeforeCreateCompiler: (fn: OnBeforeCreateCompilerFn<BundlerConfig>) => void;
 
   /**
