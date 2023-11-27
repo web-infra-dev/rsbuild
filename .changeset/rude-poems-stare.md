@@ -3,4 +3,4 @@
 '@rsbuild/core': patch
 ---
 
-chore: print rsbuild plugins when inspect config
+feat: print rsbuild plugins when inspect config
