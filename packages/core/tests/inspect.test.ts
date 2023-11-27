@@ -1,7 +1,7 @@
 import { createRsbuild } from '../src';
 
-describe('should print plugin names when inspect config', () => {
-  it('apply rspack correctly', async () => {
+describe('inspectConfig', () => {
+  it('should print plugin names when inspect config', async () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
       rsbuildConfig: {

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`should print plugin names when inspect config > apply rspack correctly 1`] = `
+exports[`inspectConfig > should print plugin names when inspect config 1`] = `
 [
   "rsbuild:transition",
   "rsbuild:basic",
