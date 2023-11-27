@@ -1,27 +1,23 @@
 import { join } from 'path';
-import { expect } from '@playwright/test';
-import { webpackOnlyTest } from '@scripts/helper';
+import { test, expect } from '@playwright/test';
 import { dev, getHrefByEntryName } from '@scripts/shared';
 import { pluginSourceBuild } from '@rsbuild/plugin-source-build';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixture = join(__dirname, 'app');
 
-webpackOnlyTest(
-  'should build succeed with source build plugin',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: fixture,
-      plugins: [pluginSourceBuild(), pluginReact()],
-    });
+test('should build succeed with source build plugin', async ({ page }) => {
+  const rsbuild = await dev({
+    cwd: fixture,
+    plugins: [pluginSourceBuild(), pluginReact()],
+  });
 
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
-    const locator = page.locator('#root');
-    await expect(locator).toHaveText(
-      'Card Comp Title: AppCARD COMP CONTENT:hello world',
-    );
+  const locator = page.locator('#root');
+  await expect(locator).toHaveText(
+    'Card Comp Title: AppCARD COMP CONTENT:hello world',
+  );
 
-    await rsbuild.server.close();
-  },
-);
+  await rsbuild.server.close();
+});

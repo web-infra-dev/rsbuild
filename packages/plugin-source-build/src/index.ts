@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { TS_CONFIG_FILE } from '@rsbuild/shared';
+import { setConfig, TS_CONFIG_FILE } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   filterByField,
@@ -46,18 +46,6 @@ export function pluginSourceBuild(
     setup(api) {
       const projectRootPath = api.context.rootPath;
 
-      // TODO: when rspack support tsconfig paths functionality, this comment will remove
-      // if (api.context.bundlerType === 'rspack') {
-      //   (api as RspackBuilderPluginAPI).modifyRspackConfig(async config => {
-      //     // when support chain.resolve.conditionNames API, remove this logic
-      //     setConfig(config, 'resolve.conditionNames', [
-      //       '...', // Special syntax: retain the original value
-      //       sourceField,
-      //       ...(config.resolve?.conditionNames ?? []),
-      //     ]);
-      //   });
-      // }
-
       let projects: Project[] = [];
 
       api.modifyRsbuildConfig(async (config) => {
@@ -77,39 +65,48 @@ export function pluginSourceBuild(
         config.source.include = [...(config.source.include ?? []), ...includes];
       });
 
-      if (api.context.bundlerType === 'webpack') {
+      api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+        [CHAIN_ID.RULE.TS, CHAIN_ID.RULE.JS].forEach((ruleId) => {
+          if (chain.module.rules.get(ruleId)) {
+            const rule = chain.module.rule(ruleId);
+
+            // https://rspack.dev/config/resolve
+            // when source is not exist, other mainFields will effect. // source > webpack default mainFields.
+            rule.resolve.mainFields.merge([sourceField, '...']);
+
+            // bundler-chain do not support resolve.conditionNames
+            rule.resolve.merge({
+              conditionNames: ['...', sourceField],
+            });
+          }
+        });
+      });
+
+      const getReferences = () =>
+        projects
+          .map((project) => path.join(project.dir, TS_CONFIG_FILE))
+          .filter((filePath) => fs.existsSync(filePath));
+
+      if (api.context.bundlerType === 'rspack') {
+        api.modifyRspackConfig((config) => {
+          setConfig(config, 'resolve.tsConfig.references', getReferences());
+        });
+      } else {
         api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-          [CHAIN_ID.RULE.TS, CHAIN_ID.RULE.JS].forEach((ruleId) => {
-            if (chain.module.rules.get(ruleId)) {
-              const rule = chain.module.rule(ruleId);
-
-              // webpack.js.org/configuration/module/#ruleresolve
-              rule.resolve.mainFields // when source is not exist, other mainFields will effect. // source > webpack default mainFields.
-                .merge([sourceField, '...']);
-
-              // webpack chain not support resolve.conditionNames
-              rule.resolve.merge({
-                conditionNames: ['...', sourceField],
-              });
-            }
-          });
-
           const { TS_CONFIG_PATHS } = CHAIN_ID.RESOLVE_PLUGIN;
+
+          if (!chain.resolve.plugins.has(TS_CONFIG_PATHS)) {
+            return;
+          }
 
           // set references config
           // https://github.com/dividab/tsconfig-paths-webpack-plugin#options
-          if (chain.resolve.plugins.has(TS_CONFIG_PATHS)) {
-            chain.resolve.plugin(TS_CONFIG_PATHS).tap((options) => {
-              const references = projects
-                .map((project) => path.join(project.dir, TS_CONFIG_FILE))
-                .filter((filePath) => fs.existsSync(filePath));
-
-              return options.map((option) => ({
-                ...option,
-                references,
-              }));
-            });
-          }
+          chain.resolve.plugin(TS_CONFIG_PATHS).tap((options) =>
+            options.map((option) => ({
+              ...option,
+              references: getReferences(),
+            })),
+          );
         });
       }
     },
