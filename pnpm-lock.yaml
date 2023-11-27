@@ -218,14 +218,6 @@ importers:
         specifier: workspace:*
         version: link:../components
 
-  e2e/cases/source-build/app-ts-loader:
-    dependencies:
-      '@e2e/source-build-common':
-        specifier: workspace:*
-        version: link:../common
-
-  e2e/cases/source-build/common: {}
-
   e2e/cases/source-build/components:
     dependencies:
       '@e2e/source-build-utils':
@@ -309,6 +301,14 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+
+  e2e/uni-builder/source-build/app-ts-loader:
+    dependencies:
+      '@e2e/source-build-common':
+        specifier: workspace:*
+        version: link:../common
+
+  e2e/uni-builder/source-build/common: {}
 
   e2e/uni-builder/styled-component:
     dependencies:
@@ -1759,9 +1759,6 @@ importers:
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../compat/webpack
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
