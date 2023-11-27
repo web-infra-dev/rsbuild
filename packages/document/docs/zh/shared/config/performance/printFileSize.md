@@ -4,7 +4,7 @@
 type PrintFileSizeOptions =
   | {
       /**
-       * 是否输出所有静态资源文件的体积和
+       * 是否输出所有静态资源文件的总体积
        */
       total?: boolean;
       /**
