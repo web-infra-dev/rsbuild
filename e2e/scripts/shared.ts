@@ -43,7 +43,9 @@ export const createRsbuild = async (
 
 const portMap = new Map();
 
-function getRandomPort(defaultPort = Math.ceil(Math.random() * 10000) + 10000) {
+export function getRandomPort(
+  defaultPort = Math.ceil(Math.random() * 10000) + 10000,
+) {
   let port = defaultPort;
   while (true) {
     if (!portMap.get(port)) {
