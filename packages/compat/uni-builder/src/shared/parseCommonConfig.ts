@@ -20,6 +20,7 @@ import type {
 } from '../types';
 import { pluginRem } from '@rsbuild/plugin-rem';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
+import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginFallback } from './plugins/fallback';
 import { pluginGlobalVars } from './plugins/globalVars';
 import { pluginRuntimeChunk } from './plugins/runtimeChunk';
@@ -240,6 +241,8 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   if (!uniBuilderConfig.output?.disableInlineRuntimeChunk) {
     rsbuildPlugins.push(pluginRuntimeChunk());
   }
+
+  rsbuildPlugins.push(pluginReact());
 
   // Note: fallback should be the last plugin
   if (uniBuilderConfig.output?.enableAssetFallback) {

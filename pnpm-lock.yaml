@@ -623,6 +623,9 @@ importers:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
         version: link:../../plugin-babel
+      '@rsbuild/plugin-react':
+        specifier: workspace:*
+        version: link:../../plugin-react
       '@rsbuild/plugin-rem':
         specifier: workspace:*
         version: link:../../plugin-rem
