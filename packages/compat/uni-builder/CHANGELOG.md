@@ -1,5 +1,34 @@
 # @rsbuild/uni-builder
 
+## 0.1.3
+
+### Patch Changes
+
+- a45d4b6: refactor(webpack): use modifyBundlerChain instead of modifyWebpackChain
+- 92cb743: feat: support react plugin in uni-builder
+- 1fd4fa8: feat: support svgr in uni-builder
+- Updated dependencies [c4bebdc0]
+- Updated dependencies [a45d4b6]
+- Updated dependencies [90c1534]
+- Updated dependencies [5045dcb4]
+- Updated dependencies [da1a825]
+- Updated dependencies [3cd288a5]
+- Updated dependencies [9230ba53]
+- Updated dependencies [7bdc4e4]
+- Updated dependencies [80b23b7]
+- Updated dependencies [0832fadc]
+- Updated dependencies [e2e80482]
+  - @rsbuild/shared@0.1.3
+  - @rsbuild/core@0.1.3
+  - @rsbuild/webpack@0.1.3
+  - @rsbuild/plugin-assets-retry@0.1.3
+  - @rsbuild/plugin-rem@0.1.3
+  - @rsbuild/babel-preset@0.1.3
+  - @rsbuild/plugin-babel@0.1.3
+  - @rsbuild/plugin-react@0.1.3
+  - @rsbuild/plugin-styled-components@0.1.3
+  - @rsbuild/plugin-svgr@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @rsbuild/plugin-esbuild
 
+## 0.1.3
+
+### Patch Changes
+
+- a45d4b6: refactor(webpack): use modifyBundlerChain instead of modifyWebpackChain
+- Updated dependencies [c4bebdc0]
+- Updated dependencies [90c1534]
+- Updated dependencies [5045dcb4]
+- Updated dependencies [da1a825]
+- Updated dependencies [0832fadc]
+- Updated dependencies [e2e80482]
+  - @rsbuild/shared@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes
