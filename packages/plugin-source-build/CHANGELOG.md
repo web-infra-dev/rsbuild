@@ -1,5 +1,20 @@
 # @rsbuild/plugin-source-build
 
+## 0.1.3
+
+### Patch Changes
+
+- a45d4b6: refactor(webpack): use modifyBundlerChain instead of modifyWebpackChain
+- d7a101d: fix(plugin-source-build): not work when use Rspack
+- Updated dependencies [c4bebdc0]
+- Updated dependencies [90c1534]
+- Updated dependencies [5045dcb4]
+- Updated dependencies [da1a825]
+- Updated dependencies [0832fadc]
+- Updated dependencies [e2e80482]
+  - @rsbuild/shared@0.1.3
+  - @rsbuild/monorepo-utils@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes

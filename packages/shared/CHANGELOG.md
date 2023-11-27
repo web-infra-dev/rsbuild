@@ -1,5 +1,16 @@
 # @rsbuild/shared
 
+## 0.1.3
+
+### Patch Changes
+
+- c4bebdc0: feat(cli): support preview --open option
+- 90c1534: feat(core): support printFileSize.detail and printFileSize.total
+- 5045dcb4: types: unify compiler type, use Rspack compiler by default
+- da1a825: fix: preload resource cannot be used when crossOrigin attr does not match
+- 0832fadc: perf(plugin-rem): use define to inject version
+- e2e80482: feat: add plugins hooks for prod server
+
 ## 0.1.2
 
 ## 0.1.1

@@ -1,5 +1,25 @@
 # @rsbuild/core
 
+## 0.1.3
+
+### Patch Changes
+
+- c4bebdc0: feat(cli): support preview --open option
+- 90c1534: feat(core): support printFileSize.detail and printFileSize.total
+- 5045dcb4: types: unify compiler type, use Rspack compiler by default
+- 3cd288a5: feat: support config file export function
+- 9230ba53: fix: failed to modify server port in plugins
+- 7bdc4e4: feat: print rsbuild plugins when inspect config
+- 80b23b7: types: improve defineConfig typing
+- e2e80482: feat: add plugins hooks for prod server
+- Updated dependencies [c4bebdc0]
+- Updated dependencies [90c1534]
+- Updated dependencies [5045dcb4]
+- Updated dependencies [da1a825]
+- Updated dependencies [0832fadc]
+- Updated dependencies [e2e80482]
+  - @rsbuild/shared@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes
