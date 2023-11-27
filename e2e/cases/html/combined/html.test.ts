@@ -27,7 +27,6 @@ test.describe('should combine multiple html config correctly', () => {
             description: 'a description of the page',
           },
           inject: 'body',
-          crossorigin: 'anonymous',
           appIcon: './src/assets/icon.png',
           favicon: './src/assets/icon.png',
         },
@@ -90,14 +89,6 @@ test.describe('should combine multiple html config correctly', () => {
       /<meta name="description" content="a description of the page">/.test(
         mainContent,
       ),
-    ).toBeTruthy();
-  });
-
-  test('custom crossorigin', async () => {
-    const allScripts = /(<script [\s\S]*?>)/g.exec(mainContent);
-
-    expect(
-      allScripts?.every((data) => data.includes('crossorigin="anonymous"')),
     ).toBeTruthy();
   });
 });
