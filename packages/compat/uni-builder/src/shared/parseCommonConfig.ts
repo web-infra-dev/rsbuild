@@ -20,6 +20,7 @@ import type {
 } from '../types';
 import { pluginRem } from '@rsbuild/plugin-rem';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
+import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginFallback } from './plugins/fallback';
 import { pluginGlobalVars } from './plugins/globalVars';
 import { pluginRuntimeChunk } from './plugins/runtimeChunk';
@@ -27,6 +28,7 @@ import { pluginFrameworkConfig } from './plugins/frameworkConfig';
 import { pluginMainFields } from './plugins/mainFields';
 import { pluginExtensionPrefix } from './plugins/extensionPrefix';
 import { pluginSplitChunks } from './plugins/splitChunk';
+import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
 const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
 
@@ -212,6 +214,17 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     pluginGlobalVars(uniBuilderConfig.source?.globalVars),
   ];
 
+  if (!uniBuilderConfig.output?.disableSvgr) {
+    rsbuildPlugins.push(
+      pluginSvgr({
+        svgDefaultExport: uniBuilderConfig.output?.svgDefaultExport,
+      }),
+    );
+
+    delete output.disableSvgr;
+    delete output.svgDefaultExport;
+  }
+
   if (uniBuilderConfig.source?.resolveMainFields) {
     rsbuildPlugins.push(
       pluginMainFields(uniBuilderConfig.source?.resolveMainFields),
@@ -240,6 +253,8 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   if (!uniBuilderConfig.output?.disableInlineRuntimeChunk) {
     rsbuildPlugins.push(pluginRuntimeChunk());
   }
+
+  rsbuildPlugins.push(pluginReact());
 
   // Note: fallback should be the last plugin
   if (uniBuilderConfig.output?.enableAssetFallback) {

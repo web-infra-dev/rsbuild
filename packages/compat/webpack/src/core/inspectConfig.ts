@@ -33,8 +33,13 @@ export async function inspectConfig({
       })
     ).webpackConfigs;
 
+  const rsbuildDebugConfig = {
+    ...context.config,
+    pluginNames: pluginStore.plugins.map((p) => p.name),
+  };
+
   const rawRsbuildConfig = await stringifyConfig(
-    context.config,
+    rsbuildDebugConfig,
     inspectOptions.verbose,
   );
   const rawBundlerConfigs = await Promise.all(
@@ -65,7 +70,7 @@ export async function inspectConfig({
     rsbuildConfig: rawRsbuildConfig,
     bundlerConfigs: rawBundlerConfigs,
     origin: {
-      rsbuildConfig: context.config,
+      rsbuildConfig: rsbuildDebugConfig,
       bundlerConfigs: webpackConfigs,
     },
   };
