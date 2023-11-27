@@ -32,8 +32,7 @@ exports[`plugin-svelte > should add svelte loader properly 1`] = `
     },
     "conditionNames": [
       "svelte",
-      "browser",
-      "import",
+      "...",
     ],
     "extensions": [
       ".svelte",
@@ -78,8 +77,7 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
     },
     "conditionNames": [
       "svelte",
-      "browser",
-      "import",
+      "...",
     ],
     "extensions": [
       ".svelte",
@@ -128,8 +126,7 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
     },
     "conditionNames": [
       "svelte",
-      "browser",
-      "import",
+      "...",
     ],
     "extensions": [
       ".svelte",
@@ -178,8 +175,7 @@ exports[`plugin-svelte > should turn off hmr by hand correctly 1`] = `
     },
     "conditionNames": [
       "svelte",
-      "browser",
-      "import",
+      "...",
     ],
     "extensions": [
       ".svelte",
