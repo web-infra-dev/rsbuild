@@ -12,6 +12,5 @@ export { HTMLPreloadOrPrefetchPlugin } from './HtmlPreloadOrPrefetchPlugin';
 export {
   COMPILATION_PROCESS_STAGE,
   generateScriptTag,
-  getRsbuildVersion,
   getPublicPathFromCompiler,
 } from './util';

@@ -7,9 +7,6 @@ export default defineConfig({
     {
       ...baseBuildConfig.buildConfig,
       input: ['src', '!src/client'],
-      define: {
-        RSBUILD_VERSION: require('./package.json').version,
-      },
     },
     {
       buildType: 'bundle',

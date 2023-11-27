@@ -5,12 +5,19 @@ import {
 } from '@modern-js/module-tools';
 import path from 'path';
 
+const define = {
+  RSBUILD_VERSION: require('../packages/core/package.json').version,
+};
+
+const BUILD_TARGET = 'es2020' as const;
+
 export const baseBuildConfig = {
   plugins: [moduleTools()],
   buildConfig: {
     buildType: 'bundleless' as const,
     format: 'cjs' as const,
-    target: 'es2019' as const,
+    target: BUILD_TARGET,
+    define,
   },
 };
 
@@ -19,7 +26,8 @@ export default defineConfig(baseBuildConfig);
 export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
   {
     format: 'cjs',
-    target: 'es2019',
+    target: BUILD_TARGET,
+    define,
     autoExtension: true,
     dts: {
       respectExternal: false,
@@ -27,8 +35,9 @@ export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
   },
   {
     format: 'esm',
-    target: 'es2020',
+    target: BUILD_TARGET,
     dts: false,
+    define,
     autoExtension: true,
     shims: true,
     esbuildOptions: (option) => {
@@ -58,7 +67,7 @@ export const configWithEsm = defineConfig({
     {
       buildType: 'bundleless',
       format: 'cjs',
-      target: 'es2019',
+      target: BUILD_TARGET,
       outDir: './dist/cjs',
       dts: {
         distPath: '../type',
@@ -67,7 +76,7 @@ export const configWithEsm = defineConfig({
     {
       buildType: 'bundleless',
       format: 'esm',
-      target: 'es2019',
+      target: BUILD_TARGET,
       outDir: './dist/esm',
       dts: false,
     },

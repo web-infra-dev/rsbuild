@@ -4,7 +4,6 @@ import {
   fse,
   withPublicPath,
   generateScriptTag,
-  getRsbuildVersion,
   getPublicPathFromCompiler,
   COMPILATION_PROCESS_STAGE,
   type Rspack,
@@ -56,8 +55,10 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
 
   async getScriptPath() {
     if (!this.scriptPath) {
-      const version = await getRsbuildVersion();
-      this.scriptPath = path.join(this.distDir, `assets-retry.${version}.js`);
+      this.scriptPath = path.join(
+        this.distDir,
+        `assets-retry.${RSBUILD_VERSION}.js`,
+      );
     }
     return this.scriptPath;
   }
