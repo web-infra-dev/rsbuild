@@ -3,7 +3,6 @@ import {
   logger,
   withPublicPath,
   generateScriptTag,
-  getRsbuildVersion,
   getPublicPathFromCompiler,
   COMPILATION_PROCESS_STAGE,
   type Rspack,
@@ -82,8 +81,10 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
 
   async getScriptPath() {
     if (!this.scriptPath) {
-      const version = await getRsbuildVersion();
-      this.scriptPath = path.join(this.distDir, `convert-rem.${version}.js`);
+      this.scriptPath = path.join(
+        this.distDir,
+        `convert-rem.${RSBUILD_VERSION}.js`,
+      );
     }
 
     return this.scriptPath;

@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, getRandomPort, getHrefByEntryName } from '@scripts/shared';
 import { RsbuildPlugin } from '@rsbuild/core';
 
 test('should preview dist files correctly', async ({ page }) => {
@@ -24,7 +24,7 @@ test('should allow plugin to modify preview server config', async ({
   page,
 }) => {
   const cwd = join(__dirname, 'basic');
-  const PORT = 51288;
+  const PORT = getRandomPort();
 
   const plugin: RsbuildPlugin = {
     name: 'test',

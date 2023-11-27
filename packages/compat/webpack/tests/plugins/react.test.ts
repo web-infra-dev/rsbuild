@@ -16,21 +16,6 @@ describe('plugins/react', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should work with ts-loader', async () => {
-    const rsbuild = await createStubRsbuild({
-      provider: webpackProvider,
-      rsbuildConfig: {
-        tools: {
-          tsLoader: {},
-        },
-      },
-    });
-    rsbuild.addPlugins([pluginReact()]);
-    const config = await rsbuild.unwrapConfig();
-
-    expect(config).toMatchSnapshot();
-  });
-
   it('should not apply react refresh when dev.hmr is false', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginReact()],

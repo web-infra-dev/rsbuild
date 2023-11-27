@@ -1,5 +1,3 @@
-import path from 'path';
-import fse from '../../compiled/fs-extra';
 import type { Compiler } from '@rspack/core';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
 import { addTrailingSlash } from '../utils';
@@ -29,12 +27,4 @@ export const getPublicPathFromCompiler = (compiler: Compiler) => {
   }
   // publicPath function is not supported yet
   return DEFAULT_ASSET_PREFIX;
-};
-
-// TODO: use define to inject version
-export const getRsbuildVersion = async (): Promise<string> => {
-  const pkgJson = await fse.readJSON(
-    path.join(__dirname, '../../package.json'),
-  );
-  return pkgJson.version.replace(/\./g, '_');
 };

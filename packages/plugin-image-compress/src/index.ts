@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import assert from 'assert';
 import { ModernJsImageMinimizerPlugin } from './minimizer';
 import { withDefaultOptions } from './shared/utils';
