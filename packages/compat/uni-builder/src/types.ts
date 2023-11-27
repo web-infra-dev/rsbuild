@@ -17,6 +17,7 @@ import type { PluginStyledComponentsOptions } from '@rsbuild/plugin-styled-compo
 import type { LazyCompilationOptions } from './webpack/plugins/lazyCompilation';
 import type { PluginRemOptions } from '@rsbuild/plugin-rem';
 import type { PluginTsLoaderOptions } from './webpack/plugins/tsLoader';
+import type { SvgDefaultExport } from '@rsbuild/plugin-svgr';
 
 export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
@@ -149,6 +150,14 @@ export type UniBuilderExtraConfig = {
      * @deprecated use `output.inlineStyles` instead
      */
     enableInlineStyles?: boolean | InlineChunkTest;
+    /**
+     * Configure the default export type of SVG files.
+     */
+    svgDefaultExport?: SvgDefaultExport;
+    /**
+     * Whether to transform SVGs into React components. If true, will treat all .svg files as assets.
+     */
+    disableSvgr?: boolean;
   };
   html?: {
     /**

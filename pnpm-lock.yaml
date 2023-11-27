@@ -632,6 +632,9 @@ importers:
       '@rsbuild/plugin-styled-components':
         specifier: workspace:*
         version: link:../../plugin-styled-components
+      '@rsbuild/plugin-svgr':
+        specifier: workspace:*
+        version: link:../../plugin-svgr
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../../shared
