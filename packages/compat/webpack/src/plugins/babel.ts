@@ -3,7 +3,6 @@ import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
 import { getBabelConfigForNode } from '@rsbuild/babel-preset/node';
 import type { BabelConfig } from '@rsbuild/babel-preset';
 import {
-  JS_REGEX,
   SCRIPT_REGEX,
   addCoreJsEntry,
   mergeChainedOptions,
@@ -11,18 +10,10 @@ import {
   getBrowserslistWithDefault,
   type TransformImport,
 } from '@rsbuild/shared';
-import { getBabelUtils } from '@rsbuild/plugin-babel';
+import { getBabelUtils, getUseBuiltIns } from '@rsbuild/plugin-babel';
 import { getCompiledPath } from '../shared';
 
 import type { RsbuildPlugin, NormalizedConfig } from '../types';
-
-export const getUseBuiltIns = (config: NormalizedConfig) => {
-  const { polyfill } = config.output;
-  if (polyfill === 'ua' || polyfill === 'off') {
-    return false;
-  }
-  return polyfill;
-};
 
 export const pluginBabel = (): RsbuildPlugin => ({
   name: 'rsbuild-webpack:babel',
@@ -119,7 +110,6 @@ export const pluginBabel = (): RsbuildPlugin => ({
         };
 
         const { babelOptions, includes, excludes } = getBabelOptions(config);
-        const useTsLoader = Boolean(config.tools.tsLoader);
         const rule = chain.module.rule(CHAIN_ID.RULE.JS);
 
         applyScriptCondition({
@@ -131,7 +121,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
         });
 
         rule
-          .test(useTsLoader ? JS_REGEX : SCRIPT_REGEX)
+          .test(SCRIPT_REGEX)
           .use(CHAIN_ID.USE.BABEL)
           .loader(require.resolve('babel-loader'))
           .options(babelOptions);

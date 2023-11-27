@@ -51,12 +51,17 @@ export const pluginReactWebpack = (): RsbuildPlugin => ({
       const { default: ReactFastRefreshPlugin } = await import(
         '@pmmmwh/react-refresh-webpack-plugin'
       );
-      const useTsLoader = Boolean(config.tools.tsLoader);
-      const rule = useTsLoader
-        ? chain.module.rule(CHAIN_ID.RULE.TS)
-        : chain.module.rule(CHAIN_ID.RULE.JS);
 
-      if (rule.uses.get(CHAIN_ID.USE.BABEL)) {
+      [CHAIN_ID.RULE.TS, CHAIN_ID.RULE.JS].forEach((ruleId) => {
+        if (!chain.module.rules.get(ruleId)) {
+          return;
+        }
+        const rule = chain.module.rule(ruleId);
+
+        if (!rule.uses.get(CHAIN_ID.USE.BABEL)) {
+          return;
+        }
+
         rule.use(CHAIN_ID.USE.BABEL).tap((options) => ({
           ...options,
           plugins: [
@@ -64,7 +69,7 @@ export const pluginReactWebpack = (): RsbuildPlugin => ({
             [require.resolve('react-refresh/babel'), { skipEnvCheck: true }],
           ],
         }));
-      }
+      });
 
       chain
         .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)

@@ -41,6 +41,11 @@ export async function parseConfig(
     );
   }
 
+  if (uniBuilderConfig.tools?.tsLoader) {
+    const { pluginTsLoader } = await import('./plugins/tsLoader');
+    rsbuildPlugins.push(pluginTsLoader(uniBuilderConfig.tools.tsLoader));
+  }
+
   rsbuildPlugins.push(
     pluginStyledComponents(uniBuilderConfig.tools?.styledComponents),
   );

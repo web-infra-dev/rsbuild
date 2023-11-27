@@ -1,7 +1,6 @@
 import type {
   ArrayOrNot,
   ChainedConfig,
-  FileFilterUtil,
   TerserPluginOptions,
   ToolsConfig as BaseToolsConfig,
   ChainedConfigWithUtils,
@@ -16,17 +15,11 @@ import type { PluginCssMinimizerOptions } from '@rsbuild/plugin-css-minimizer';
 import type {
   WebpackChain,
   WebpackConfig,
-  TSLoaderOptions,
   CSSExtractOptions,
 } from '../thirdParty';
 import type { NormalizedCSSExtractOptions } from '../thirdParty/css';
 
 export type ToolsTerserConfig = ChainedConfig<TerserPluginOptions>;
-
-export type ToolsTSLoaderConfig = ChainedConfigWithUtils<
-  TSLoaderOptions,
-  { addIncludes: FileFilterUtil; addExcludes: FileFilterUtil }
->;
 
 export type ToolsCssExtractConfig =
   | CSSExtractOptions
@@ -58,11 +51,6 @@ export interface ToolsConfig extends BaseToolsConfig {
    * Modify the options of [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin).
    */
   terser?: ToolsTerserConfig;
-  /**
-   * Modify the options of [ts-loader](https://github.com/TypeStrong/ts-loader).
-   * When `tools.tsLoader` is not undefined, Rsbuild will use ts-loader instead of babel-loader to compile TypeScript code.
-   */
-  tsLoader?: ToolsTSLoaderConfig;
   /**
    * Modify the options of [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin).
    */

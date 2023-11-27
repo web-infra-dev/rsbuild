@@ -16,6 +16,7 @@ import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import type { PluginStyledComponentsOptions } from '@rsbuild/plugin-styled-components';
 import type { LazyCompilationOptions } from './webpack/plugins/lazyCompilation';
 import type { PluginRemOptions } from '@rsbuild/plugin-rem';
+import type { PluginTsLoaderOptions } from './webpack/plugins/tsLoader';
 
 export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
@@ -194,6 +195,13 @@ export type UniBuilderWebpackConfig = RsbuildWebpackConfig &
     };
     experiments?: {
       lazyCompilation?: LazyCompilationOptions;
+    };
+    tools?: {
+      /**
+       * Modify the options of [ts-loader](https://github.com/TypeStrong/ts-loader).
+       * When `tools.tsLoader` is not undefined, Rsbuild will use ts-loader instead of babel-loader to compile TypeScript code.
+       */
+      tsLoader?: PluginTsLoaderOptions;
     };
   };
 
