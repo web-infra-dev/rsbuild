@@ -20,6 +20,7 @@ import type { PluginTsLoaderOptions } from './webpack/plugins/tsLoader';
 import type { SvgDefaultExport } from '@rsbuild/plugin-svgr';
 import type { PluginCssMinimizerOptions } from '@rsbuild/plugin-css-minimizer';
 import type { PluginTypeCheckerOptions } from '@rsbuild/plugin-type-check';
+import type { PluginCheckSyntaxOptions } from '@rsbuild/plugin-check-syntax';
 
 export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
@@ -194,6 +195,12 @@ export type UniBuilderExtraConfig = {
      * @deprecated use `html.templateParameters` instead
      */
     templateParametersByEntries?: Record<string, Record<string, unknown>>;
+  };
+  security?: {
+    /**
+     * Analyze the build artifacts to identify advanced syntax that is incompatible with the current browser scope.
+     */
+    checkSyntax?: boolean | PluginCheckSyntaxOptions;
   };
 };
 

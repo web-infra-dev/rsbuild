@@ -30,6 +30,7 @@ import { pluginMainFields } from './plugins/mainFields';
 import { pluginExtensionPrefix } from './plugins/extensionPrefix';
 import { pluginSplitChunks } from './plugins/splitChunk';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
+import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 
 const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
 
@@ -214,6 +215,18 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     pluginSplitChunks(),
     pluginGlobalVars(uniBuilderConfig.source?.globalVars),
   ];
+
+  const checkSyntaxOptions = uniBuilderConfig.output?.checkSyntax;
+
+  if (checkSyntaxOptions) {
+    rsbuildPlugins.push(
+      pluginCheckSyntax(
+        typeof checkSyntaxOptions === 'boolean' ? {} : checkSyntaxOptions,
+      ),
+    );
+
+    delete output.checkSyntax;
+  }
 
   if (!uniBuilderConfig.output?.disableTsChecker) {
     rsbuildPlugins.push(
