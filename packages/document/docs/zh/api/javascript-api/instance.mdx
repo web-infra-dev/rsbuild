@@ -175,8 +175,6 @@ await rsbuild.build({
 type StartDevServerOptions = {
   // 是否输出 URL 信息，默认为 true
   printURLs?: boolean | Function;
-  // 是否在端口被占用时抛出异常，默认为 false
-  strictPort?: boolean;
   // 自定义 Compiler 对象
   compiler?: Compiler | MultiCompiler;
   // 是否在启动时静默获取端口号，默认为 false
@@ -256,18 +254,6 @@ await rsbuild.startDevServer({
       url: `${url}/path`,
     }));
   },
-});
-```
-
-### 严格限制端口
-
-当端口被占用时，Rsbuild 会自动递增端口号，直至找到一个可用端口。
-
-如果你希望在端口被占用时抛出异常，可以将 `strictPort` 设置为 `true`。
-
-```ts
-await rsbuild.startDevServer({
-  strictPort: true,
 });
 ```
 

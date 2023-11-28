@@ -92,17 +92,18 @@ export const mergeDevOptions = ({
 
 export const getServerOptions = async ({
   rsbuildConfig,
-  strictPort,
   getPortSilently,
 }: {
   rsbuildConfig: RsbuildConfig;
-  strictPort?: boolean;
   getPortSilently?: boolean;
 }) => {
-  const port = await getPort(rsbuildConfig.server?.port || DEFAULT_PORT, {
-    strictPort,
-    silent: getPortSilently,
-  });
+  const port = await getPort(
+    rsbuildConfig.server?.port || DEFAULT_PORT,
+    rsbuildConfig.server?.strictPort || false,
+    {
+      silent: getPortSilently,
+    },
+  );
 
   const host = rsbuildConfig.server?.host || DEFAULT_DEV_HOST;
 
@@ -113,16 +114,13 @@ export const getServerOptions = async ({
 
 export const getDevOptions = async ({
   rsbuildConfig,
-  strictPort,
   getPortSilently,
 }: {
   rsbuildConfig: RsbuildConfig;
-  strictPort?: boolean;
   getPortSilently?: boolean;
 }) => {
   const { port, host, https, serverConfig } = await getServerOptions({
     rsbuildConfig,
-    strictPort,
     getPortSilently,
   });
 

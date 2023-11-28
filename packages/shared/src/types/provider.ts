@@ -14,13 +14,11 @@ export type StartDevServerOptions = {
   compiler?: Compiler | MultiCompiler;
   printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
   logger?: Logger;
-  strictPort?: boolean;
   getPortSilently?: boolean;
 };
 
 export type PreviewServerOptions = {
   printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
-  strictPort?: boolean;
   getPortSilently?: boolean;
 };
 
