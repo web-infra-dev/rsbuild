@@ -14,6 +14,11 @@ test.describe('performance configure multi', () => {
       cwd: basicFixtures,
       plugins: [pluginReact()],
       rsbuildConfig: {
+        output: {
+          distPath: {
+            root: 'dist-1',
+          },
+        },
         performance: {
           bundleAnalyze: {},
           chunkSplit: {
