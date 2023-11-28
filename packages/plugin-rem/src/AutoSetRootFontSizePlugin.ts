@@ -1,6 +1,6 @@
 import path from 'path';
+import { logger } from '@rsbuild/core';
 import {
-  logger,
   withPublicPath,
   generateScriptTag,
   getPublicPathFromCompiler,

@@ -1,6 +1,5 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
+import { logger, type RsbuildPlugin } from '@rsbuild/core';
 import {
-  logger,
   CHAIN_ID,
   deepmerge,
   mergeChainedOptions,

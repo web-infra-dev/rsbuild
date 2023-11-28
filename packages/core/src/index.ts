@@ -3,10 +3,12 @@
  * the public API of @rsbuild/core.
  */
 
-// Methods
+// Core Methods
 export { createRsbuild } from './createRsbuild';
-export { mergeRsbuildConfig } from '@rsbuild/shared';
 export { defineConfig } from './cli/config';
+
+// Helpers
+export { logger, mergeRsbuildConfig } from '@rsbuild/shared';
 
 // Types
 export type { Rspack } from './rspack-provider';

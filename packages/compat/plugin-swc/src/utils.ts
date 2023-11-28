@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import type { NormalizedConfig } from '@rsbuild/webpack';
+import { logger } from '@rsbuild/core';
 import { isBeyondReact17 } from '@rsbuild/plugin-react';
 import {
-  logger,
   isUsingHMR,
   getCoreJsVersion,
   getBrowserslistWithDefault,
