@@ -623,6 +623,9 @@ importers:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
         version: link:../../plugin-babel
+      '@rsbuild/plugin-check-syntax':
+        specifier: workspace:*
+        version: link:../../plugin-check-syntax
       '@rsbuild/plugin-css-minimizer':
         specifier: workspace:*
         version: link:../../plugin-css-minimizer
