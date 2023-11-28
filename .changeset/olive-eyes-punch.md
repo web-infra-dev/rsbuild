@@ -3,4 +3,4 @@
 '@rsbuild/plugin-solid': patch
 ---
 
-support solid-js hmr
+feat: support solid-js HMR
