@@ -51,6 +51,12 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                ],
+                [
+                  [Function],
+                ],
               ],
               "presets": [
                 [
@@ -136,6 +142,12 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
                 [
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                ],
+                [
+                  [Function],
                 ],
               ],
               "presets": [
@@ -238,6 +250,12 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                ],
+                [
+                  [Function],
+                ],
               ],
               "presets": [
                 [
@@ -320,6 +338,12 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
                 [
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                ],
+                [
+                  [Function],
                 ],
               ],
               "presets": [
@@ -419,6 +443,12 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                ],
+                [
+                  [Function],
+                ],
               ],
               "presets": [
                 [
@@ -501,6 +531,12 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
                 [
                   "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
                   {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                ],
+                [
+                  [Function],
                 ],
               ],
               "presets": [
