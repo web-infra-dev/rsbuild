@@ -216,7 +216,7 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     pluginGlobalVars(uniBuilderConfig.source?.globalVars),
   ];
 
-  const checkSyntaxOptions = uniBuilderConfig.output?.checkSyntax;
+  const checkSyntaxOptions = uniBuilderConfig.security?.checkSyntax;
 
   if (checkSyntaxOptions) {
     rsbuildPlugins.push(
@@ -224,8 +224,6 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
         typeof checkSyntaxOptions === 'boolean' ? {} : checkSyntaxOptions,
       ),
     );
-
-    delete output.checkSyntax;
   }
 
   if (!uniBuilderConfig.output?.disableTsChecker) {
