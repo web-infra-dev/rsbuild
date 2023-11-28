@@ -18,6 +18,7 @@ import type { LazyCompilationOptions } from './webpack/plugins/lazyCompilation';
 import type { PluginRemOptions } from '@rsbuild/plugin-rem';
 import type { PluginTsLoaderOptions } from './webpack/plugins/tsLoader';
 import type { SvgDefaultExport } from '@rsbuild/plugin-svgr';
+import type { PluginCssMinimizerOptions } from '@rsbuild/plugin-css-minimizer';
 import type { PluginTypeCheckerOptions } from '@rsbuild/plugin-type-check';
 
 export type CreateWebpackBuilderOptions = {
@@ -224,7 +225,14 @@ export type UniBuilderWebpackConfig = RsbuildWebpackConfig &
   };
 
 export type UniBuilderRspackConfig = RsbuildRspackConfig &
-  UniBuilderExtraConfig;
+  UniBuilderExtraConfig & {
+    tools?: {
+      /**
+       * Modify the options of [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
+       */
+      minifyCss?: PluginCssMinimizerOptions['pluginOptions'];
+    };
+  };
 
 export type BuilderConfig<B = 'rspack'> = B extends 'rspack'
   ? UniBuilderRspackConfig
