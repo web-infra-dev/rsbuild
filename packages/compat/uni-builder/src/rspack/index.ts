@@ -9,6 +9,7 @@ import type { UniBuilderRspackConfig } from '../types';
 import type { CreateRspackBuilderOptions } from '../types';
 import { parseCommonConfig } from '../shared/parseCommonConfig';
 import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 
 export async function parseConfig(
   uniBuilderConfig: UniBuilderRspackConfig,
@@ -31,6 +32,12 @@ export async function parseConfig(
 
   rsbuildPlugins.push(
     pluginStyledComponents(uniBuilderConfig.tools?.styledComponents),
+  );
+
+  rsbuildPlugins.push(
+    pluginCssMinimizer({
+      pluginOptions: uniBuilderConfig.tools?.minifyCss,
+    }),
   );
 
   return {

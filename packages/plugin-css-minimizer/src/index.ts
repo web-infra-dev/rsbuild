@@ -1,6 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import {
-  isProd,
   mergeChainedOptions,
   getCssnanoDefaultOptions,
   type BundlerChain,
@@ -21,10 +20,6 @@ export async function applyCSSMinimizer(
   CHAIN_ID: ChainIdentifier,
   options: PluginCssMinimizerOptions = {},
 ) {
-  if (!isProd()) {
-    return;
-  }
-
   const { default: CssMinimizerPlugin } = await import(
     'css-minimizer-webpack-plugin'
   );
@@ -55,8 +50,13 @@ export const pluginCssMinimizer = (
       return;
     }
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-      await applyCSSMinimizer(chain, CHAIN_ID, options);
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
+      const config = api.getNormalizedConfig();
+      const isMinimize = isProd && !config.output.disableMinimize;
+
+      if (isMinimize) {
+        await applyCSSMinimizer(chain, CHAIN_ID, options);
+      }
     });
   },
 });
