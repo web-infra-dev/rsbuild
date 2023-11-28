@@ -39,6 +39,33 @@ exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is i
 }
 `;
 
+exports[`splitChunks > should apply splitChunks.react/router plugin option when strategy is split-by-experience 1`] = `
+{
+  "cacheGroups": {
+    "lib-axios": {
+      "name": "lib-axios",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
+    },
+    "lib-lodash": {
+      "name": "lib-lodash",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
+    },
+    "lib-polyfill": {
+      "name": "lib-polyfill",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+    },
+  },
+  "chunks": "all",
+  "enforceSizeThreshold": 50000,
+}
+`;
+
 exports[`splitChunks > should not apply splitChunks rule when strategy is not split-by-experience 1`] = `
 {
   "cacheGroups": {

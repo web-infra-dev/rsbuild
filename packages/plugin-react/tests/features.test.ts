@@ -43,6 +43,31 @@ describe('splitChunks', () => {
 
     expect(config.optimization.splitChunks).toMatchSnapshot();
   });
+
+  it('should apply splitChunks.react/router plugin option when strategy is split-by-experience', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        performance: {
+          chunkSplit: {
+            strategy: 'split-by-experience',
+          },
+        },
+      },
+    });
+
+    rsbuild.addPlugins([
+      pluginReact({
+        splitChunks: {
+          react: false,
+          router: false,
+        },
+      }),
+    ]);
+
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config.optimization.splitChunks).toMatchSnapshot();
+  });
 });
 
 describe('transformImport', () => {

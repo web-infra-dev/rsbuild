@@ -63,3 +63,43 @@ const defaultArcoConfig = [
 
 同时，可通过手动设置 `transformImport: false` 来关掉以上默认行为。
 :::
+
+## 选项
+
+### splitChunks
+
+在 [chunkSplit.strategy](/config/options/performance#chunksplitstrategy) 设置为 `split-by-experience` 时，Rsbuild 默认会自动将 `react` 和 `router` 相关的包拆分为单独的 chunk:
+
+- `lib-react.js`：包含 `react`，`react-dom`，`scheduler`。
+- `lib-router.js`：包含 `react-router`，`react-router-dom`，`history`，`@remix-run/router`。
+
+该选项用于控制这一行为，决定是否需要将 `react` 和 `router` 相关的包拆分为单独的 chunk。
+
+- **类型：**
+
+```ts
+type SplitReactChunkOptions = {
+  react?: boolean;
+  router?: boolean;
+};
+```
+
+- **默认值：**
+
+```ts
+const defaultOptions = {
+  react: true,
+  router: true,
+};
+```
+
+- **示例：**
+
+```ts
+pluginReact({
+  splitChunks: {
+    react: false,
+    router: false,
+  },
+});
+```

@@ -6,7 +6,17 @@ import { applyBasicReactSupport } from './react';
 
 export { isBeyondReact17 } from './utils';
 
-export const pluginReact = (): RsbuildPlugin => ({
+export type splitReactChunkOptions = {
+  react?: boolean;
+  router?: boolean;
+};
+export type PluginReactOptions = {
+  splitChunks?: splitReactChunkOptions;
+};
+
+export const pluginReact = (
+  options: PluginReactOptions = {},
+): RsbuildPlugin => ({
   name: 'rsbuild:react',
 
   pre: ['rsbuild:swc'],
@@ -17,6 +27,6 @@ export const pluginReact = (): RsbuildPlugin => ({
     }
     applyAntdSupport(api);
     applyArcoSupport(api);
-    applySplitChunksRule(api);
+    applySplitChunksRule(api, options?.splitChunks);
   },
 });
