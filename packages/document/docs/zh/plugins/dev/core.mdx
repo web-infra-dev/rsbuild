@@ -170,9 +170,9 @@ import GetHTMLPaths from '@zh/shared/getHTMLPaths.md';
 ```ts
 const pluginFoo = () => ({
   setup(api) {
-    api.modifyWebpackChain(() => {
+    api.modifyRspackConfig(() => {
       const htmlPaths = api.getHTMLPaths();
-      console.log(htmlPaths); // { main: 'html/main/index.html' };
+      console.log(htmlPaths); // { index: 'index.html' };
     });
   },
 });
