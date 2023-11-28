@@ -21,6 +21,7 @@ import type { SvgDefaultExport } from '@rsbuild/plugin-svgr';
 import type { PluginCssMinimizerOptions } from '@rsbuild/plugin-css-minimizer';
 import type { PluginTypeCheckerOptions } from '@rsbuild/plugin-type-check';
 import type { PluginCheckSyntaxOptions } from '@rsbuild/plugin-check-syntax';
+import type { PluginPugOptions } from '@rsbuild/plugin-pug';
 
 export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
@@ -80,6 +81,10 @@ export type UniBuilderExtraConfig = {
       setupMiddlewares?: DevConfig['setupMiddlewares'];
       proxy?: ServerConfig['proxy'];
     };
+    /**
+     * Configure the [Pug](https://pugjs.org/) template engine.
+     */
+    pug?: true | PluginPugOptions['pugOptions'];
     /**
      * Modify the options of [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin).
      */
