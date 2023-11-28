@@ -17,7 +17,7 @@ test('should compile CSS modules correctly', async () => {
 
   if (rsbuild.providerType === 'rspack') {
     expect(content).toEqual(
-      '.the-a-class{color:red}.the-b-class-_6773e{color:blue}.the-c-class-c855fd{color:yellow}.the-d-class{color:green}',
+      '.the-a-class{color:red}.the-b-class-_1c322{color:blue}.the-c-class-bc0a68{color:yellow}.the-d-class{color:green}',
     );
   } else {
     expect(content).toEqual(
@@ -47,7 +47,7 @@ test('should compile CSS modules follow by output.cssModules', async () => {
 
   if (rsbuild.providerType === 'rspack') {
     expect(content).toEqual(
-      '.the-a-class{color:red}.the-b-class-_6773e{color:blue}.the-c-class{color:yellow}.the-d-class{color:green}',
+      '.the-a-class{color:red}.the-b-class-_1c322{color:blue}.the-c-class{color:yellow}.the-d-class{color:green}',
     );
   } else {
     expect(content).toEqual(
