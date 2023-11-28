@@ -5,8 +5,12 @@ import {
   createCacheGroups,
   type SplitChunks,
 } from '@rsbuild/shared';
+import { splitReactChunkOptions } from 'src';
 
-export const applySplitChunksRule = (api: RsbuildPluginAPI) => {
+export const applySplitChunksRule = (
+  api: RsbuildPluginAPI,
+  options: splitReactChunkOptions | undefined,
+) => {
   api.modifyBundlerChain((chain) => {
     const config = api.getNormalizedConfig();
     const { chunkSplit } = config.performance || {};
@@ -15,34 +19,50 @@ export const applySplitChunksRule = (api: RsbuildPluginAPI) => {
       return;
     }
 
+    if (!options) {
+      options = {
+        react: true,
+        router: true,
+      };
+    }
+
     const currentConfig = chain.optimization.splitChunks.values();
 
     if (!isPlainObject(currentConfig)) {
       return;
     }
 
-    const extraGroups = createCacheGroups({
-      react: [
+    const extraGroups: Record<string, (string | RegExp)[]> = {};
+
+    if (options.react !== false) {
+      extraGroups.react = [
         'react',
         'react-dom',
         'scheduler',
         ...(isProd()
           ? []
           : ['react-refresh', '@pmmmwh/react-refresh-webpack-plugin']),
-      ],
-      router: [
+      ];
+    }
+
+    if (options.router !== false) {
+      extraGroups.router = [
         'react-router',
         'react-router-dom',
         '@remix-run/router',
         'history',
-      ],
-    });
+      ];
+    }
+
+    if (!Object.keys(extraGroups).length) {
+      return;
+    }
 
     chain.optimization.splitChunks({
       ...currentConfig,
       cacheGroups: {
         ...(currentConfig as SplitChunks).cacheGroups,
-        ...extraGroups,
+        ...createCacheGroups(extraGroups),
       },
     });
   });
