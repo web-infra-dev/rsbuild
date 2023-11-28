@@ -1,5 +1,11 @@
 # @rsbuild/shared
 
+## 0.1.4
+
+### Patch Changes
+
+- 5b980ce: feat(core): add new server.strictPort config
+
 ## 0.1.3
 
 ### Patch Changes

@@ -1,5 +1,35 @@
 # @rsbuild/uni-builder
 
+## 0.1.4
+
+### Patch Changes
+
+- 8caa9339: feat(uni-builder): apply css-minimizer-webpack-plugin
+- 64455dc8: feat(uni-builder): support ts-checker
+- e59c887: feat(uni-builder): support tools.pug
+- 4c9c6ed6: feat(uni-builder): support checkSyntax
+- Updated dependencies [b43956c]
+- Updated dependencies [8caa9339]
+- Updated dependencies [5b980ce]
+- Updated dependencies [28d028d]
+- Updated dependencies [6a287112]
+- Updated dependencies [6f3175a]
+- Updated dependencies [80acdfe]
+  - @rsbuild/core@0.1.4
+  - @rsbuild/plugin-css-minimizer@0.1.4
+  - @rsbuild/shared@0.1.4
+  - @rsbuild/plugin-react@0.1.4
+  - @rsbuild/webpack@0.1.4
+  - @rsbuild/plugin-assets-retry@0.1.4
+  - @rsbuild/plugin-babel@0.1.4
+  - @rsbuild/plugin-check-syntax@0.1.4
+  - @rsbuild/plugin-pug@0.1.4
+  - @rsbuild/plugin-rem@0.1.4
+  - @rsbuild/plugin-styled-components@0.1.4
+  - @rsbuild/plugin-svgr@0.1.4
+  - @rsbuild/plugin-type-check@0.1.4
+  - @rsbuild/babel-preset@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes

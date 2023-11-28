@@ -1,5 +1,13 @@
 # @rsbuild/plugin-css-minimizer
 
+## 0.1.4
+
+### Patch Changes
+
+- 8caa9339: feat(uni-builder): apply css-minimizer-webpack-plugin
+- Updated dependencies [5b980ce]
+  - @rsbuild/shared@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes
