@@ -1,7 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
-import { webpackOnlyTest } from '@scripts/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
@@ -122,56 +121,53 @@ test('should generate prefetch link with filter', async () => {
   ).toBeTruthy();
 });
 
-webpackOnlyTest(
-  'should generate prefetch link by config (distinguish html)',
-  async () => {
-    const rsbuild = await build({
-      cwd: fixtures,
-      plugins: [pluginReact()],
-      rsbuildConfig: {
-        source: {
-          entry: {
-            page1: join(fixtures, 'src/page1/index.ts'),
-            page2: join(fixtures, 'src/page2/index.ts'),
-          },
-        },
-        performance: {
-          prefetch: {
-            type: 'all-chunks',
-          },
+test('should generate prefetch link by config (distinguish html)', async () => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    plugins: [pluginReact()],
+    rsbuildConfig: {
+      source: {
+        entry: {
+          page1: join(fixtures, 'src/page1/index.ts'),
+          page2: join(fixtures, 'src/page2/index.ts'),
         },
       },
-    });
+      performance: {
+        prefetch: {
+          type: 'all-chunks',
+        },
+      },
+    },
+  });
 
-    const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
-    const [, content] = Object.entries(files).find(([name]) =>
-      name.endsWith('page1.html'),
-    )!;
+  const [, content] = Object.entries(files).find(([name]) =>
+    name.endsWith('page1.html'),
+  )!;
 
-    // icon.png、test.js、test.css、test.png
-    expect(content.match(/rel="prefetch"/g)?.length).toBe(4);
+  // icon.png、test.js、test.css、test.png
+  expect(content.match(/rel="prefetch"/g)?.length).toBe(4);
 
-    const assetFileName = Object.keys(files).find((file) =>
-      file.includes('/static/image/'),
-    )!;
+  const assetFileName = Object.keys(files).find((file) =>
+    file.includes('/static/image/'),
+  )!;
 
-    expect(
-      content.includes(
-        `<link href="${assetFileName.slice(
-          assetFileName.indexOf('/static/image/'),
-        )}" rel="prefetch">`,
-      ),
-    ).toBeTruthy();
+  expect(
+    content.includes(
+      `<link href="${assetFileName.slice(
+        assetFileName.indexOf('/static/image/'),
+      )}" rel="prefetch">`,
+    ),
+  ).toBeTruthy();
 
-    const [, content2] = Object.entries(files).find(([name]) =>
-      name.endsWith('page2.html'),
-    )!;
+  const [, content2] = Object.entries(files).find(([name]) =>
+    name.endsWith('page2.html'),
+  )!;
 
-    // test.js、test.css、test.png
-    expect(content2.match(/rel="prefetch"/g)?.length).toBe(3);
-  },
-);
+  // test.js、test.css、test.png
+  expect(content2.match(/rel="prefetch"/g)?.length).toBe(3);
+});
 
 test('should generate preload link when preload is defined', async () => {
   const rsbuild = await build({
