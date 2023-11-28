@@ -11,13 +11,12 @@ import { logger } from './logger';
  */
 export const getPort = async (
   port: string | number,
+  strictPort: boolean = false,
   {
     tryLimits = 20,
-    strictPort = false,
     silent = false,
   }: {
     tryLimits?: number;
-    strictPort?: boolean;
     silent?: boolean;
   } = {},
 ): Promise<number> => {

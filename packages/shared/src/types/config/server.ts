@@ -61,6 +61,10 @@ export interface ServerConfig {
    * Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
    */
   proxy?: ProxyOptions;
+  /**
+   * Whether to throw an error when the port is occupied.
+   */
+  strictPort?: boolean;
 }
 
 export type NormalizedServerConfig = ServerConfig &

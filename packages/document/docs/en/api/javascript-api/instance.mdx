@@ -175,8 +175,6 @@ Start the local dev server.
 type StartDevServerOptions = {
   // Whether to output URL infos, the default is true
   printURLs?: boolean | Function;
-  // Whether to throw an exception when the port is occupied, the default is false
-  strictPort?: boolean;
   // custom Compiler object
   compiler?: Compiler | MultiCompiler;
   // Whether to get the port silently, the default is false
@@ -256,18 +254,6 @@ await rsbuild.startDevServer({
       url: `${url}/path`,
     }));
   },
-});
-```
-
-### Strict Port
-
-When a port is occupied, Rsbuild will automatically increment the port number until an available port is found.
-
-Set `strictPort` to `true` and Rsbuild will throw an exception when the port is occupied.
-
-```ts
-await rsbuild.startDevServer({
-  strictPort: true,
 });
 ```
 
