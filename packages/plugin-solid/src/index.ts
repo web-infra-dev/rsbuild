@@ -1,4 +1,3 @@
-import renameImport from './rename-import';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 export type PluginSolidPresetOptions = {
@@ -35,7 +34,12 @@ export function pluginSolid(
                   babelConfig.plugins.push([
                     require.resolve('solid-refresh/babel'),
                   ]);
-                  babelConfig.plugins.push([renameImport]);
+
+                  chain.resolve.alias.merge({
+                    'solid-refresh': require.resolve(
+                      'solid-refresh/dist/solid-refresh.mjs',
+                    ),
+                  });
                 }
 
                 return babelConfig;
