@@ -19,6 +19,7 @@ import type { PluginRemOptions } from '@rsbuild/plugin-rem';
 import type { PluginTsLoaderOptions } from './webpack/plugins/tsLoader';
 import type { SvgDefaultExport } from '@rsbuild/plugin-svgr';
 import type { PluginCssMinimizerOptions } from '@rsbuild/plugin-css-minimizer';
+import type { PluginTypeCheckerOptions } from '@rsbuild/plugin-type-check';
 
 export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
@@ -78,6 +79,10 @@ export type UniBuilderExtraConfig = {
       setupMiddlewares?: DevConfig['setupMiddlewares'];
       proxy?: ServerConfig['proxy'];
     };
+    /**
+     * Modify the options of [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin).
+     */
+    tsChecker?: PluginTypeCheckerOptions['forkTsCheckerOptions'];
   };
   dev?: {
     /**
@@ -143,6 +148,10 @@ export type UniBuilderExtraConfig = {
      * Otherwise, an exception will be thrown.
      */
     enableAssetFallback?: boolean;
+    /**
+     * Whether to disable TypeScript Type Checker.
+     */
+    disableTsChecker?: boolean;
     /**
      * @deprecated use `output.inlineScripts` instead
      */
