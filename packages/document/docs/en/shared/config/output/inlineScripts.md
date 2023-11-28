@@ -8,7 +8,6 @@ type InlineScripts =
 ```
 
 - **Default:** `false`
-- **Bundler:** `only support webpack`
 
 Whether to inline output scripts files (.js files) into HTML with `<script>` tags in production mode.
 
