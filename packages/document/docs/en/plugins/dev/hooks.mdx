@@ -7,10 +7,8 @@ This section describes the lifetime hooks provided by Rsbuild plugin.
 **Common Hooks**
 
 - `modifyRsbuildConfig`: Modify raw config of Rsbuild.
-- `modifyBundlerChain`: Modify config of Rspack or webpack via the bundler chain api.
-- `modifyWebpackChain`: Modify webpack-chain.
-- `modifyWebpackConfig`: Modify raw config of webpack.
 - `modifyRspackConfig`: Modify raw config of Rspack.
+- `modifyBundlerChain`: Modify config of Rspack or webpack via the bundler chain api.
 - `onBeforeCreateCompiler`: Called before creating compiler instance.
 - `onAfterCreateCompiler`: Called after the compiler object is created, but before the build is executed.
 
@@ -43,14 +41,14 @@ Modify the config passed to the Rsbuild, you can directly modify the config obje
 - **Type**
 
 ```ts
-type ModifyWebpackChainUtils = {
+type ModifyRsbuildConfigUtils = {
   mergeRsbuildConfig: typeof mergeRsbuildConfig;
 };
 
 function ModifyRsbuildConfig(
   callback: (
     config: RsbuildConfig,
-    utils: ModifyWebpackChainUtils,
+    utils: ModifyRsbuildConfigUtils,
   ) => PromiseOrNot<RsbuildConfig | void>,
 ): void;
 ```
@@ -66,6 +64,45 @@ export default () => ({
       return mergeRsbuildConfig(config, {
         source: { preEntry: 'foo.js' },
       });
+    });
+  },
+});
+```
+
+### modifyRspackConfig
+
+To modify the final Rspack config object, you can directly modify the config object, or return a new object to replace the previous object.
+
+- **Type**
+
+```ts
+type ModifyRspackConfigUtils = {
+  env: NodeEnv;
+  isProd: boolean;
+  target: RsbuildTarget;
+  isServer: boolean;
+  isWebWorker: boolean;
+  getCompiledPath: (name: string) => string;
+  rspack: typeof import('@rspack/core');
+};
+
+function ModifyRspackConfig(
+  callback: (
+    config: RspackConfig,
+    utils: ModifyRspackConfigUtils,
+  ) => Promise<RspackConfig | void> | RspackConfig | void,
+): void;
+```
+
+- **Example**
+
+```ts
+export default () => ({
+  setup: (api) => {
+    api.modifyRspackConfig((config, utils) => {
+      if (utils.env === 'development') {
+        config.devtool = 'eval';
+      }
     });
   },
 });
@@ -119,45 +156,6 @@ export default () => ({
       }
 
       chain.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
-    });
-  },
-});
-```
-
-### modifyRspackConfig
-
-To modify the final Rspack config object, you can directly modify the config object, or return a new object to replace the previous object.
-
-- **Type**
-
-```ts
-type ModifyRspackConfigUtils = {
-  env: NodeEnv;
-  isProd: boolean;
-  target: RsbuildTarget;
-  isServer: boolean;
-  isWebWorker: boolean;
-  getCompiledPath: (name: string) => string;
-  rspack: typeof import('@rspack/core');
-};
-
-function ModifyRspackConfig(
-  callback: (
-    config: RspackConfig,
-    utils: ModifyRspackConfigUtils,
-  ) => Promise<RspackConfig | void> | RspackConfig | void,
-): void;
-```
-
-- **Example**
-
-```ts
-export default () => ({
-  setup: (api) => {
-    api.modifyRspackConfig((config, utils) => {
-      if (utils.env === 'development') {
-        config.devtool = 'eval';
-      }
     });
   },
 });
