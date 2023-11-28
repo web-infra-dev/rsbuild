@@ -26,14 +26,16 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "babel-preset-solid": "^1.8.4"
+    "@rsbuild/shared": "workspace:*",
+    "babel-preset-solid": "^1.8.6",
+    "solid-refresh": "^0.6.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
+    "@types/babel__core": "^7.20.3",
     "typescript": "^5.3.0"
   },
   "peerDependencies": {
