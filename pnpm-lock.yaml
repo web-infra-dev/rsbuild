@@ -574,6 +574,9 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../core
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack

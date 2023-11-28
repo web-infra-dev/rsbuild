@@ -1,4 +1,5 @@
-import { color, logger } from '@rsbuild/shared';
+import { logger } from '@rsbuild/core';
+import { color } from '@rsbuild/shared';
 import type { SyntaxError } from '../types';
 
 type Error = {
