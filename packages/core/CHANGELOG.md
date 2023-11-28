@@ -1,5 +1,17 @@
 # @rsbuild/core
 
+## 0.1.4
+
+### Patch Changes
+
+- b43956c: feat: support output.inlineScripts
+- 5b980ce: feat(core): add new server.strictPort config
+- 28d028d: feat(cli): cli support `dev --port/--host` and `preview --port/--host`
+- 6a287112: feat(core): export logger module as a helper
+- 6f3175a: fix: bump rspack and update snapshot to fix rspack ecosystem-ci failed
+- Updated dependencies [5b980ce]
+  - @rsbuild/shared@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @rsbuild/plugin-image-compress
 
+## 0.1.4
+
+### Patch Changes
+
+- 73093610: fix(rsbuild): plugin-image-compress can not work with filename query
+- Updated dependencies [5b980ce]
+  - @rsbuild/shared@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes
