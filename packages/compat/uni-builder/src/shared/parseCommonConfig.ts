@@ -20,6 +20,7 @@ import type {
 } from '../types';
 import { pluginRem } from '@rsbuild/plugin-rem';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
+import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginFallback } from './plugins/fallback';
 import { pluginGlobalVars } from './plugins/globalVars';
@@ -213,6 +214,17 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     pluginSplitChunks(),
     pluginGlobalVars(uniBuilderConfig.source?.globalVars),
   ];
+
+  if (!uniBuilderConfig.output?.disableTsChecker) {
+    rsbuildPlugins.push(
+      pluginTypeCheck({
+        forkTsCheckerOptions: uniBuilderConfig.tools?.tsChecker,
+      }),
+    );
+
+    delete output.disableTsChecker;
+    delete tools.tsChecker;
+  }
 
   if (!uniBuilderConfig.output?.disableSvgr) {
     rsbuildPlugins.push(

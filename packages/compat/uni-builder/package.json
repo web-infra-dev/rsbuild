@@ -32,6 +32,7 @@
     "@rsbuild/plugin-svgr": "workspace:*",
     "@rsbuild/plugin-rem": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
+    "@rsbuild/plugin-type-check": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "babel-plugin-styled-components": "1.13.3",

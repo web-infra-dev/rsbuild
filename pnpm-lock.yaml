@@ -635,6 +635,9 @@ importers:
       '@rsbuild/plugin-svgr':
         specifier: workspace:*
         version: link:../../plugin-svgr
+      '@rsbuild/plugin-type-check':
+        specifier: workspace:*
+        version: link:../../plugin-type-check
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../../shared
