@@ -19,6 +19,7 @@ import type {
   DevServerHttpsOptions,
 } from '../types';
 import { pluginRem } from '@rsbuild/plugin-rem';
+import { pluginPug } from '@rsbuild/plugin-pug';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -278,6 +279,19 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   }
 
   rsbuildPlugins.push(pluginReact());
+
+  const pugOptions = uniBuilderConfig.tools?.pug;
+  if (pugOptions) {
+    rsbuildPlugins.push(
+      pluginPug(
+        typeof pugOptions === 'boolean'
+          ? {}
+          : {
+              pugOptions,
+            },
+      ),
+    );
+  }
 
   // Note: fallback should be the last plugin
   if (uniBuilderConfig.output?.enableAssetFallback) {

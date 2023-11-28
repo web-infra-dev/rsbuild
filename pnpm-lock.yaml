@@ -632,6 +632,9 @@ importers:
       '@rsbuild/plugin-css-minimizer':
         specifier: workspace:*
         version: link:../../plugin-css-minimizer
+      '@rsbuild/plugin-pug':
+        specifier: workspace:*
+        version: link:../../plugin-pug
       '@rsbuild/plugin-react':
         specifier: workspace:*
         version: link:../../plugin-react
