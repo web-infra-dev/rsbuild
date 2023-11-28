@@ -101,14 +101,14 @@
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@rspack/core": "0.4.0",
+    "@rspack/core": "0.4.0-canary-d45e3e0-20231128075052",
     "caniuse-lite": "^1.0.30001559",
     "line-diff": "2.1.1",
     "lodash": "^4.17.21",
     "postcss": "8.4.31"
   },
   "devDependencies": {
-    "@rspack/core": "0.4.0",
+    "@rspack/core": "0.4.0-canary-d45e3e0-20231128075052",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
