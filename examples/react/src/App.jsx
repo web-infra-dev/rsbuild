@@ -1,7 +1,5 @@
 import './App.css';
 
-console.log(process.env.PUBLIC_NAME);
-
 const App = () => {
   return (
     <div className="content">
