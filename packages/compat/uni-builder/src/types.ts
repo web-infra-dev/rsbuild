@@ -22,6 +22,7 @@ import type { PluginCssMinimizerOptions } from '@rsbuild/plugin-css-minimizer';
 import type { PluginTypeCheckerOptions } from '@rsbuild/plugin-type-check';
 import type { PluginCheckSyntaxOptions } from '@rsbuild/plugin-check-syntax';
 import type { PluginPugOptions } from '@rsbuild/plugin-pug';
+import type { PluginBabelOptions } from '@rsbuild/plugin-babel';
 
 export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
@@ -239,6 +240,10 @@ export type UniBuilderWebpackConfig = RsbuildWebpackConfig &
 export type UniBuilderRspackConfig = RsbuildRspackConfig &
   UniBuilderExtraConfig & {
     tools?: {
+      /**
+       * Modify the options of [babel-loader](https://github.com/babel/babel-loader)
+       */
+      babel?: PluginBabelOptions;
       /**
        * Modify the options of [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
        */

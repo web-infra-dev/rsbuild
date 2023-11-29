@@ -30,6 +30,11 @@ export async function parseConfig(
     rsbuildPlugins.push(pluginManifest());
   }
 
+  if (uniBuilderConfig.tools?.babel) {
+    const { pluginBabel } = await import('@rsbuild/plugin-babel');
+    rsbuildPlugins.push(pluginBabel(uniBuilderConfig.tools?.babel));
+  }
+
   rsbuildPlugins.push(
     pluginStyledComponents(uniBuilderConfig.tools?.styledComponents),
   );
