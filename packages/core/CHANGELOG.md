@@ -1,5 +1,15 @@
 # @rsbuild/core
 
+## 0.1.5
+
+### Patch Changes
+
+- ca87f86f: feat(deps): bump Rspack to v0.4.1
+- 706468b: feat: auto inject public env vars to client
+- 49d9457: feat(cli): support reload .env files and restart dev server
+- Updated dependencies [ca87f86f]
+  - @rsbuild/shared@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

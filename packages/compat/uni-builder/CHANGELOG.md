@@ -1,5 +1,31 @@
 # @rsbuild/uni-builder
 
+## 0.1.5
+
+### Patch Changes
+
+- ae38844: feat(uni-builder): support experiments.sourceBuild
+- c3bbe1f: feat(uni-builder): support tools.babel in rspack mode
+- Updated dependencies [ca87f86f]
+- Updated dependencies [706468b]
+- Updated dependencies [49d9457]
+- Updated dependencies [c3bbe1f]
+  - @rsbuild/webpack@0.1.5
+  - @rsbuild/plugin-react@0.1.5
+  - @rsbuild/shared@0.1.5
+  - @rsbuild/core@0.1.5
+  - @rsbuild/plugin-babel@0.1.5
+  - @rsbuild/babel-preset@0.1.5
+  - @rsbuild/plugin-assets-retry@0.1.5
+  - @rsbuild/plugin-check-syntax@0.1.5
+  - @rsbuild/plugin-css-minimizer@0.1.5
+  - @rsbuild/plugin-pug@0.1.5
+  - @rsbuild/plugin-rem@0.1.5
+  - @rsbuild/plugin-source-build@0.1.5
+  - @rsbuild/plugin-styled-components@0.1.5
+  - @rsbuild/plugin-svgr@0.1.5
+  - @rsbuild/plugin-type-check@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

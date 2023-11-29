@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-esbuild",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Esbuild plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
