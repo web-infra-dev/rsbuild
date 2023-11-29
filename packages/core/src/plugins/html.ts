@@ -21,7 +21,7 @@ import type {
   HtmlInjectTagDescriptor,
 } from '@rsbuild/shared';
 import type { HtmlTagsPluginOptions } from '../rspack-plugins/HtmlTagsPlugin';
-import { type HtmlInfo } from '../rspack-plugins/HtmlBasicPlugin';
+import type { HtmlInfo } from '../rspack-plugins/HtmlBasicPlugin';
 import type { RsbuildPlugin } from '../types';
 
 export function getTitle(entryName: string, config: NormalizedConfig) {
