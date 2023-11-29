@@ -6,25 +6,31 @@
 
 `rsbuild.context` 是一个只读对象，提供一些上下文信息。
 
-### rsbuild.context.version
+### context.version
 
 当前使用的 `@rsbuild/core` 版本。
 
-### rsbuild.context.entry
+- **类型：**
+
+```ts
+type Version = string;
+```
+
+### context.entry
 
 构建入口对象，对应 `source.entry` 选项。
 
-- **类型**
+- **类型：**
 
 ```ts
 type RsbuildEntry = Record<string, string | string[]>;
 ```
 
-### rsbuild.context.target
+### context.target
 
 构建产物类型，对应调用 `createRsbuild` 时传入的 `target` 选项。
 
-- **类型**
+- **类型：**
 
 ```ts
 type RsbuildTarget = 'web' | 'node' | 'web-worker';
@@ -34,51 +40,51 @@ type Context = {
 };
 ```
 
-### rsbuild.context.rootPath
+### context.rootPath
 
 当前执行构建的根路径，对应调用 `createRsbuild` 时传入的 `cwd` 选项。
 
-- **类型**
+- **类型：**
 
 ```ts
 type RootPath = string;
 ```
 
-### rsbuild.context.distPath
+### context.distPath
 
 构建产物输出目录的绝对路径，对应 `RsbuildConfig` 中的 `output.distPath.root` 配置项。
 
-- **类型**
+- **类型：**
 
 ```ts
 type DistPath = string;
 ```
 
-### rsbuild.context.cachePath
+### context.cachePath
 
 构建过程中生成的缓存文件所在的绝对路径。
 
-- **类型**
+- **类型：**
 
 ```ts
 type CachePath = string;
 ```
 
-### rsbuild.context.tsconfigPath
+### context.tsconfigPath
 
 tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件，则为 `undefined`。
 
-- **类型**
+- **类型：**
 
 ```ts
 type TsconfigPath = string | undefined;
 ```
 
-### rsbuild.context.devServer
+### context.devServer
 
 Dev Server 相关信息，包含了当前 Dev Server 的 hostname 和端口号。
 
-- **类型**
+- **类型：**
 
 ```ts
 type DevServer = {
@@ -87,11 +93,11 @@ type DevServer = {
 };
 ```
 
-### rsbuild.context.bundlerType
+### context.bundlerType
 
 当前执行构建的构建工具类型。
 
-- **类型**
+- **类型：**
 
 ```ts
 type bundlerType = 'rspack' | 'webpack';
@@ -101,7 +107,7 @@ type bundlerType = 'rspack' | 'webpack';
 
 调用 build 方法时，会执行一次生产环境构建。
 
-- **类型**
+- **类型：**
 
 ```ts
 type BuildOptions = {
@@ -114,7 +120,7 @@ type BuildOptions = {
 function Build(options?: BuildOptions): Promise<void>;
 ```
 
-- **Example**
+- **示例：**
 
 ```ts
 // build
@@ -169,7 +175,7 @@ await rsbuild.build({
 
 启动本地 dev server。
 
-- **类型**
+- **类型：**
 
 ```ts
 type StartDevServerOptions = {
@@ -194,7 +200,7 @@ function StartDevServer(
 ): Promise<StartServerResult>;
 ```
 
-- **Example**
+- **示例：**
 
 启动 Dev Server：
 
@@ -322,7 +328,7 @@ await rsbuild.startDevServer({
 
 在本地启动 Server 来预览生产环境构建的产物，需要在 `rsbuild.build` 方法之后执行。
 
-- **类型**
+- **类型：**
 
 ```ts
 type StartServerResult = {
@@ -334,7 +340,7 @@ type StartServerResult = {
 function server(): Promise<StartServerResult>;
 ```
 
-- **Example**
+- **示例：**
 
 启动 Server：
 
@@ -373,13 +379,13 @@ await server.close();
 
 当 `createRsbuild` 的 `target` 选项包含一个值时，返回值为 `Compiler`；当 `target` 包含多个值时，返回值为 `MultiCompiler`。
 
-- **类型**
+- **类型：**
 
 ```ts
 function CreateCompiler(): Promise<Compiler | MultiCompiler>;
 ```
 
-- **Example**
+- **示例：**
 
 ```ts
 const compiler = await rsbuild.createCompiler();
@@ -393,7 +399,7 @@ const compiler = await rsbuild.createCompiler();
 
 该方法需要在开始编译前调用，如果在开始编译之后调用，则不会影响编译结果。
 
-- **类型**
+- **类型：**
 
 ```ts
 type AddPluginsOptions = { before?: string } | { after?: string };
@@ -404,7 +410,7 @@ function AddPlugins(
 ): Promise<void>;
 ```
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.addPlugins([pluginFoo(), pluginBar()]);
@@ -422,13 +428,13 @@ rsbuild.addPlugins([pluginFoo()], { after: 'bar' });
 
 该方法需要在开始编译前调用，如果在开始编译之后调用，则不会影响编译结果。
 
-- **类型**
+- **类型：**
 
 ```ts
 function RemovePlugins(pluginNames: string[]): void;
 ```
 
-- **Example**
+- **示例：**
 
 ```ts
 // 添加插件
@@ -445,7 +451,7 @@ import IsPluginExists from '@zh/shared/isPluginExists.md';
 
 <IsPluginExists />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.addPlugins([pluginFoo()]);
@@ -463,7 +469,7 @@ rsbuild.isPluginExists(pluginFoo().name); // true
 当你需要在构建过程中查看完整的 Rsbuild 和 bundler 配置时，可以使用 [调试模式](/guide/debug/debug-mode)，也可以通过 `onBeforeBuild`、`onBeforeCreateCompile` 等钩子函数来获取。
 :::
 
-- **类型**
+- **类型：**
 
 ```ts
 type InspectConfigOptions = {
@@ -487,7 +493,7 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
 }>;
 ```
 
-- **Example**
+- **示例：**
 
 拿到字符串格式的 Config 内容：
 
@@ -511,7 +517,7 @@ import OnBeforeCreateCompiler from '@zh/shared/onBeforeCreateCompiler.md';
 
 <OnBeforeCreateCompiler />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onBeforeCreateCompiler(({ bundlerConfigs }) => {
@@ -525,7 +531,7 @@ import OnAfterCreateCompiler from '@zh/shared/onAfterCreateCompiler.md';
 
 <OnAfterCreateCompiler />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onAfterCreateCompiler(({ compiler }) => {
@@ -539,7 +545,7 @@ import OnBeforeBuild from '@zh/shared/onBeforeBuild.md';
 
 <OnBeforeBuild />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onBeforeBuild(({ bundlerConfigs }) => {
@@ -553,7 +559,7 @@ import OnAfterBuild from '@zh/shared/onAfterBuild.md';
 
 <OnAfterBuild />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onAfterBuild(({ stats }) => {
@@ -567,7 +573,7 @@ import OnBeforeStartDevServer from '@zh/shared/onBeforeStartDevServer.md';
 
 <OnBeforeStartDevServer />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onBeforeStartDevServer(() => {
@@ -581,7 +587,7 @@ import OnAfterStartDevServer from '@zh/shared/onAfterStartDevServer.md';
 
 <OnAfterStartDevServer />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onAfterStartDevServer(({ port }) => {
@@ -595,7 +601,7 @@ import OnBeforeStartProdServer from '@zh/shared/onBeforeStartProdServer.md';
 
 <OnBeforeStartProdServer />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onBeforeStartProdServer(() => {
@@ -609,7 +615,7 @@ import OnAfterStartProdServer from '@zh/shared/onAfterStartProdServer.md';
 
 <OnAfterStartProdServer />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onAfterStartProdServer(({ port }) => {
@@ -623,7 +629,7 @@ import OnDevCompileDone from '@zh/shared/onDevCompileDone.md';
 
 <OnDevCompileDone />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onDevCompileDone(({ isFirstCompile }) => {
@@ -641,7 +647,7 @@ import OnExit from '@zh/shared/onExit.md';
 
 <OnExit />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onExit(() => {
@@ -655,7 +661,7 @@ import GetRsbuildConfig from '@zh/shared/getRsbuildConfig.md';
 
 <GetRsbuildConfig />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onBeforeBuild(() => {
@@ -670,7 +676,7 @@ import GetNormalizedConfig from '@zh/shared/getNormalizedConfig.md';
 
 <GetNormalizedConfig />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onBeforeBuild(() => {
@@ -685,7 +691,7 @@ import GetHTMLPaths from '@zh/shared/getHTMLPaths.md';
 
 <GetHTMLPaths />
 
-- **Example**
+- **示例：**
 
 ```ts
 rsbuild.onBeforeBuild(() => {
