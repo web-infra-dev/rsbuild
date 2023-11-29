@@ -8,7 +8,7 @@ Rsbuild supports injecting environment variables or expressions into the code du
 
 By default, Rsbuild will automatically set the `process.env.NODE_ENV` environment variable to `'development'` in development mode and `'production'` in production mode.
 
-You can use `process.env.NODE_ENV` directly in Node.js and in the runtime code.
+You can use `process.env.NODE_ENV` directly in Node.js and in the client code.
 
 ```ts
 if (process.env.NODE_ENV === 'development') {
@@ -36,7 +36,7 @@ After code minification, `if (false) { ... }` will be recognized as invalid code
 
 ### process.env.ASSET_PREFIX
 
-You can use `process.env.ASSET_PREFIX` in the runtime code to access the URL prefix of static assets.
+You can use `process.env.ASSET_PREFIX` in the client code to access the URL prefix of static assets.
 
 - In development, it is equivalent to the value set by [dev.assetPrefix](/config/options/dev#dev-assetprefix).
 - In production, it is equivalent to the value set by [output.assetPrefix](/config/options/output#output-assetprefix).
@@ -56,7 +56,7 @@ export default {
 };
 ```
 
-Then we can access the image URL in the runtime code:
+Then we can access the image URL in the client code:
 
 ```jsx
 const Image = <img src={`${process.env.ASSET_PREFIX}/static/icon.png`} />;
@@ -122,11 +122,31 @@ console.log(process.env.FOO); // 'hello'
 console.log(process.env.BAR); // '2'
 ```
 
+## Public Variables
+
+All environment variables starting with `PUBLIC_` will be automatically injected into the client code. For example, if the following variables are defined:
+
+```bash title=".env"
+PUBLIC_NAME=jack
+PASSWORD=123
+```
+
+In the source files of the client code, public variables can be accessed as follows:
+
+```ts title="src/index.ts"
+console.log(process.env.PUBLIC_NAME); // -> 'jack'
+console.log(process.env.PASSWORD); // -> undefined
+```
+
+:::tip
+Public variables are injected into the client code through [source.define](/config/options/source#sourcedefine). Please read the following content to understand the principles and notes of define.
+:::
+
 ## Using define config
 
 By configuring the [source.define](/config/options/source#sourcedefine), you can replace expressions with other expressions or values in compile time.
 
-`Define` looks like macro definitions in other programming languages. But JavaScript has powerful runtime capabilities, so you don't need to use it as a complicated code generator. You can use it to pass simple data, such as environment variables, from compile time to runtime. Almost there, it can be used to work with Rsbuild to shake trees.
+`Define` looks like macro definitions in other programming languages. But JavaScript has powerful runtime capabilities, so you don't need to use it as a complicated code generator. You can use it to pass simple data, such as environment variables, from compile time to client code. Almost there, it can be used to work with Rsbuild to shake trees.
 
 ### Replace Expressions
 

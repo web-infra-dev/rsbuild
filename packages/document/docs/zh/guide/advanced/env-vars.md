@@ -8,7 +8,7 @@ Rsbuild 支持在编译过程中向代码中注入环境变量或表达式，这
 
 默认情况下，Rsbuild 会自动设置 `process.env.NODE_ENV` 环境变量，在开发模式为 `'development'`，生产模式为 `'production'`。
 
-你可以在 Node.js 和运行时代码中直接使用 `process.env.NODE_ENV`。
+你可以在 Node.js 和 client 代码中直接使用 `process.env.NODE_ENV`。
 
 ```ts
 if (process.env.NODE_ENV === 'development') {
@@ -36,7 +36,7 @@ if (false) {
 
 ### process.env.ASSET_PREFIX
 
-你可以在运行时代码中使用 `process.env.ASSET_PREFIX` 来访问静态资源的前缀。
+你可以在 client 代码中使用 `process.env.ASSET_PREFIX` 来访问静态资源的前缀。
 
 - 在开发环境下，它等同于 [dev.assetPrefix](/config/options/dev#dev-assetprefix) 设置的值。
 - 在生产环境下，它等同于 [output.assetPrefix](/config/options/output#output-assetprefix) 设置的值。
@@ -122,11 +122,31 @@ console.log(process.env.FOO); // 'hello'
 console.log(process.env.BAR); // '2'
 ```
 
-## 使用 define 配置项
+## public 变量
+
+所有以 `PUBLIC_` 开头的环境变量将被自动注入到 client 代码中，比如定义了以下变量：
+
+```bash title=".env"
+PUBLIC_NAME=jack
+PASSWORD=123
+```
+
+在 client 代码的源文件中，可以通过以下方式访问 public 变量：
+
+```ts title="src/index.ts"
+console.log(process.env.PUBLIC_NAME); // -> 'jack'
+console.log(process.env.PASSWORD); // -> undefined
+```
+
+:::tip
+public 变量是通过 [source.define](/config/options/source#sourcedefine) 注入到 client 代码的，请阅读下方内容来了解 define 的原理和注意事项。
+:::
+
+## 使用 define 配置
 
 通过配置 [source.define](/config/options/source#sourcedefine) 选项，你可以在构建时将代码中的变量替换成其它值或者表达式。
 
-define 类似于其它一些语言提供的宏定义能力，但得益于 JavaScript 强大的运行时表达能力，通常不需要像那些语言一样将其用作复杂代码的生成器。它常用于在构建环境向运行时传递环境变量等简单信息，或是辅助 Rsbuild 进行 Tree Shaking 等操作。
+define 类似于其它一些语言提供的宏定义能力，但得益于 JavaScript 强大的运行时表达能力，通常不需要像那些语言一样将其用作复杂代码的生成器。它常用于在构建环境向 client 代码传递环境变量等信息，或是辅助进行 Tree Shaking 等操作。
 
 ### 替换表达式
 
