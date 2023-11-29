@@ -5,11 +5,11 @@ import {
   createCacheGroups,
   type SplitChunks,
 } from '@rsbuild/shared';
-import { splitReactChunkOptions } from 'src';
+import { SplitReactChunkOptions } from 'src';
 
 export const applySplitChunksRule = (
   api: RsbuildPluginAPI,
-  options: splitReactChunkOptions | undefined,
+  options: SplitReactChunkOptions | undefined,
 ) => {
   api.modifyBundlerChain((chain) => {
     const config = api.getNormalizedConfig();
