@@ -62,15 +62,37 @@ export const getRspackVersion = async (): Promise<string> => {
 // apply builtin:swc-loader
 export const rspackMinVersion = '0.3.6';
 
-export const isSatisfyRspackVersion = async (version: string) => {
-  const semver = await import('semver');
+const compareSemver = (version1: string, version2: string) => {
+  const parts1 = version1.split('.').map(Number);
+  const parts2 = version2.split('.').map(Number);
+  const len = Math.max(parts1.length, parts2.length);
 
+  for (let i = 0; i < len; i++) {
+    const item1 = parts1[i] ?? 0;
+    const item2 = parts2[i] ?? 0;
+    if (item1 > item2) {
+      return 1;
+    }
+    if (item1 < item2) {
+      return -1;
+    }
+  }
+
+  return 0;
+};
+
+export const isSatisfyRspackVersion = async (version: string) => {
   // The nightly version of rspack is to append `-canary-xxx` to the current version
   if (version.includes('-canary')) {
     version = version.split('-canary')[0];
   }
 
-  return version ? semver.lte(rspackMinVersion, version) : true;
+  if (version && /^[\d\.]+$/.test(version)) {
+    return compareSemver(version, rspackMinVersion) >= 0;
+  }
+
+  // ignore other unstable versions
+  return true;
 };
 
 export const getCompiledPath = (packageName: string) => {
