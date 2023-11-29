@@ -21,8 +21,9 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # ======== ut ========
-  ut-ubuntu:
-    runs-on: ubuntu-latest
+  ut-mac:
+    # run ut in MacOS, as SWC cases will fail in Ubuntu CI
+    runs-on: macos-latest
     strategy:
       matrix:
         # Rsbuild need to compat Node.js 16

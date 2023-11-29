@@ -25,14 +25,7 @@ export default defineWorkspace([
       testTimeout: 30000,
       restoreMocks: true,
       include: ['packages/**/*.test.ts'],
-      exclude: isCI
-        ? [
-            // TODO: failed in Ubuntu
-            'packages/plugin-image-compress/**/*.test.ts',
-            'packages/compat/plugin-swc/**/*.test.ts',
-            '**/node_modules/**',
-          ]
-        : ['**/node_modules/**'],
+      exclude: ['**/node_modules/**'],
       setupFiles: ['./scripts/vitest.setup.ts'],
     },
   },
