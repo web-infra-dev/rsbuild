@@ -1318,7 +1318,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "force": false,
             "from": "public",
             "globOptions": {},
-            "noErrorOnMissing": false,
+            "noErrorOnMissing": true,
             "priority": 0,
             "to": "",
           },

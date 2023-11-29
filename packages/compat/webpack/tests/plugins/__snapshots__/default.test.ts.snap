@@ -1359,6 +1359,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       "patterns": [
         {
           "from": "public",
+          "noErrorOnMissing": true,
           "to": "",
         },
       ],
@@ -1969,6 +1970,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       "patterns": [
         {
           "from": "public",
+          "noErrorOnMissing": true,
           "to": "",
         },
       ],
@@ -2546,6 +2548,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       "patterns": [
         {
           "from": "public",
+          "noErrorOnMissing": true,
           "to": "",
         },
       ],

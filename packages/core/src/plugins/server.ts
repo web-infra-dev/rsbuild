@@ -14,6 +14,7 @@ export const pluginServer = (): RsbuildPlugin => ({
           {
             from: rsbuildConfig.server?.publicDir,
             to: '',
+            noErrorOnMissing: true,
           },
         ];
 
