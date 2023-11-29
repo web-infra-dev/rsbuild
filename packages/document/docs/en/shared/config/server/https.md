@@ -35,3 +35,5 @@ export default {
   },
 };
 ```
+
+The certificates used for local development are typically generated using [mkcert](https://github.com/FiloSottile/mkcert). Please read ["How to use HTTPS for local development"](https://web.dev/articles/how-to-use-local-https?hl=en) to learn how to use it.

@@ -35,3 +35,7 @@ export default {
   },
 };
 ```
+
+:::tip
+本地开发所使用的证书通常使用 [mkcert](https://github.com/FiloSottile/mkcert) 生成，请阅读 ["如何使用 HTTPS 进行本地开发"](https://web.dev/articles/how-to-use-local-https?hl=zh-cn) 来了解如何使用。
+:::
