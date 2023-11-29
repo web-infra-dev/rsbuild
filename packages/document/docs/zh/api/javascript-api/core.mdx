@@ -46,6 +46,43 @@ type CreateRsbuildOptions = {
 - `provider`: 用于切换底层的打包工具。
 - `rsbuildConfig`：Rsbuild 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制，你可以在 [配置](/config/) 中找到所有可用的配置项。
 
+## loadEnv
+
+加载 `.env` 文件，并返回所有以 prefixes 开头的环境变量。
+
+- **类型：**
+
+```ts
+function loadEnv(params: {
+  // 默认为 process.cwd()
+  dir?: string;
+  // 默认为 ['PUBLIC_']
+  prefixes?: string[];
+}): Promise<{
+  // .env 文件包含的所有环境变量
+  parsed: Record<string, string>;
+  // 以 prefixes 开头的环境变量
+  publicVars: Record<string, string>;
+}>;
+```
+
+- **示例：**
+
+```ts
+const { parsed, publicVars } = await loadEnv();
+
+mergeRsbuildConfig(
+  {
+    source: {
+      define: publicVars,
+    },
+  },
+  userConfig,
+);
+```
+
+该方法也会加载 `.env.local` 和 `.env.[mode]` 等文件，详见 [环境变量](/guide/advanced/env-vars)。
+
 ## mergeRsbuildConfig
 
 用于合并多份 Rsbuild 配置对象。
