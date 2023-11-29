@@ -74,6 +74,54 @@ In the production environment, the above code will be compiled as:
 const Image = <img src={`https://example.com/static/icon.png`} />;
 ```
 
+## `.env` File
+
+When a `.env` file exists in the project root directory, Rsbuild will automatically use [dotenv](https://npmjs.com/package/dotenv) to load these environment variables and add them to the current Node.js process.
+
+### File Types
+
+Rsbuild supports reading the following types of env files:
+
+| File Name                | Description                                                                |
+| ------------------------ | -------------------------------------------------------------------------- |
+| `.env`                   | Loaded by default in all scenarios.                                        |
+| `.env.local`             | Local usage of the `.env` file, should be added to .gitignore.             |
+| `.env.development`       | Read when `process.env.NODE_ENV` is `'development'`.                       |
+| `.env.production`        | Read when `process.env.NODE_ENV` is `'production'`.                        |
+| `.env.development.local` | Local usage of the `.env.development` file, should be added to .gitignore. |
+| `.env.production.local`  | Local usage of the `.env.production` file, should be added to .gitignore.  |
+
+If several of the above files exist at the same time, they will all be loaded, with the files listed at the bottom of the table having higher priority.
+
+### Example
+
+For example, create a `.env` file and add the following contents:
+
+```shell title=".env"
+FOO=hello
+BAR=1
+```
+
+Then in the `rsbuild.config.ts` file, you can directly access the above environment variables:
+
+```ts title="rsbuild.config.ts"
+console.log(process.env.FOO); // 'hello'
+console.log(process.env.BAR); // '1'
+```
+
+Now, create a `.env.local` file and add the following contents:
+
+```shell title=".env.local"
+BAR=2
+```
+
+The value of `process.env.BAR` is overwritten to `'2'`:
+
+```ts title="rsbuild.config.ts"
+console.log(process.env.FOO); // 'hello'
+console.log(process.env.BAR); // '2'
+```
+
 ## Using define config
 
 By configuring the [source.define](/config/options/source#sourcedefine), you can replace expressions with other expressions or values in compile time.
