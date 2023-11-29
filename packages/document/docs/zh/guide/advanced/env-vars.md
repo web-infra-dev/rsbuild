@@ -74,6 +74,54 @@ const Image = <img src={`/static/icon.png`} />;
 const Image = <img src={`https://example.com/static/icon.png`} />;
 ```
 
+## `.env` 文件
+
+当项目根目录存在 `.env` 文件时，Rsbuild 会自动使用 [dotenv](https://npmjs.com/package/dotenv) 来加载这些环境变量，并添加到当前 Node.js 进程中。
+
+### 文件类型
+
+Rsbuild 支持读取以下 env 文件：
+
+| 文件名                   | 描述                                                          |
+| ------------------------ | ------------------------------------------------------------- |
+| `.env`                   | 在所有场景下默认加载。                                        |
+| `.env.local`             | `.env` 文件的本地用法，需要添加到 .gitignore 中。             |
+| `.env.development`       | 当 `process.env.NODE_ENV` 为 `'development'` 时读取。         |
+| `.env.production`        | 当 `process.env.NODE_ENV` 为 `'production'` 时读取。          |
+| `.env.development.local` | `.env.development` 文件的本地用法，需要添加到 .gitignore 中。 |
+| `.env.production.local`  | `.env.production` 文件的本地用法，需要添加到 .gitignore 中。  |
+
+如果同时存在上述的多个文件，那么多个文件都会被读取，并且表格下方的文件具有更高的优先级。
+
+### 示例
+
+比如创建 `.env` 文件并添加以下内容：
+
+```shell title=".env"
+FOO=hello
+BAR=1
+```
+
+然后在 `rsbuild.config.ts` 文件中，可以直接访问到上述环境变量：
+
+```ts title="rsbuild.config.ts"
+console.log(process.env.FOO); // 'hello'
+console.log(process.env.BAR); // '1'
+```
+
+此时在创建 `.env.local` 文件，添加以下内容：
+
+```shell title=".env.local"
+BAR=2
+```
+
+此时 `process.env.BAR` 的值被覆盖为 `'2'`：
+
+```ts title="rsbuild.config.ts"
+console.log(process.env.FOO); // 'hello'
+console.log(process.env.BAR); // '2'
+```
+
 ## 使用 define 配置项
 
 通过配置 [source.define](/config/options/source#sourcedefine) 选项，你可以在构建时将代码中的变量替换成其它值或者表达式。
