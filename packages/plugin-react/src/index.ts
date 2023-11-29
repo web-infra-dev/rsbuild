@@ -6,12 +6,12 @@ import { applyBasicReactSupport } from './react';
 
 export { isBeyondReact17 } from './utils';
 
-export type splitReactChunkOptions = {
+export type SplitReactChunkOptions = {
   react?: boolean;
   router?: boolean;
 };
 export type PluginReactOptions = {
-  splitChunks?: splitReactChunkOptions;
+  splitChunks?: SplitReactChunkOptions;
 };
 
 export const pluginReact = (
