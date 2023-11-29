@@ -10,9 +10,9 @@ test('should restart dev server when .env file is changed', async () => {
   const configFile = path.join(__dirname, 'rsbuild.config.mjs');
   const envLocalFile = path.join(__dirname, '.env.local');
   const distIndex = path.join(dist, 'static/js/index.js');
-  await fse.remove(dist);
-  await fse.remove(configFile);
-  await fse.remove(envLocalFile);
+  fse.removeSync(dist);
+  fse.removeSync(configFile);
+  fse.removeSync(envLocalFile);
 
   fse.writeFileSync(
     configFile,
@@ -33,7 +33,7 @@ test('should restart dev server when .env file is changed', async () => {
 
   await awaitFileExists(distIndex);
   expect(fse.readFileSync(distIndex, 'utf-8')).not.toContain('jack');
-  await fse.remove(distIndex);
+  fse.removeSync(distIndex);
 
   fse.writeFileSync(envLocalFile, `PUBLIC_NAME=jack`);
   await awaitFileExists(distIndex);
