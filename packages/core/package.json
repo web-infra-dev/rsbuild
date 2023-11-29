@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/core": "0.4.0-canary-d45e3e0-20231128075052",
+    "@rspack/core": "0.4.1",
     "core-js": "~3.32.2",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
     "postcss": "8.4.31",
