@@ -36,6 +36,10 @@ export interface ServerConfig {
    */
   compress?: boolean;
   /**
+   * Serving static files from the directory (by default 'public' directory)
+   */
+  publicDir?: string | false;
+  /**
    * Specify a port number for Rsbuild Server to listen.
    */
   port?: number;
@@ -68,4 +72,4 @@ export interface ServerConfig {
 }
 
 export type NormalizedServerConfig = ServerConfig &
-  Required<Pick<ServerConfig, 'htmlFallback' | 'port' | 'host'>>;
+  Required<Pick<ServerConfig, 'htmlFallback' | 'port' | 'host' | 'publicDir'>>;

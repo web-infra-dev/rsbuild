@@ -37,4 +37,5 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.performance(),
     plugins.networkPerformance(),
     plugins.preloadOrPrefetch(),
+    plugins.server(),
   ]);
