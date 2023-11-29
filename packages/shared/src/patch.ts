@@ -1,6 +1,6 @@
 import path from 'path';
 import { pathToFileURL } from 'url';
-import { CompilerTapFn } from './types';
+import type { CompilerTapFn } from './types';
 
 const GLOBAL_PATCHED_SYMBOL: unique symbol = Symbol('GLOBAL_PATCHED_SYMBOL');
 
@@ -11,7 +11,7 @@ declare global {
 }
 
 /** fix issue about dart2js: https://github.com/dart-lang/sdk/issues/27979 */
-export function patchGlobalLocation() {
+function patchGlobalLocation() {
   if (!global.location) {
     const href = pathToFileURL(process.cwd()).href + path.sep;
     const location = Object.freeze({ [GLOBAL_PATCHED_SYMBOL]: true, href });
@@ -19,7 +19,7 @@ export function patchGlobalLocation() {
   }
 }
 
-export function unpatchGlobalLocation() {
+function unpatchGlobalLocation() {
   if (global.location?.[GLOBAL_PATCHED_SYMBOL]) {
     // @ts-expect-error
     delete global.location;

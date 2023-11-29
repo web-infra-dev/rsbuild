@@ -1,11 +1,11 @@
-import { join } from 'path';
+import { join, isAbsolute } from 'path';
 import {
   logger,
   findExists,
+  getDistPath,
   isFileExists,
   RsbuildConfig,
   TS_CONFIG_FILE,
-  getAbsoluteDistPath,
   type Context as BaseContext,
   type BundlerType,
   type SourceConfig,
@@ -13,6 +13,7 @@ import {
   type RsbuildEntry,
   type NormalizedConfig,
   type CreateRsbuildOptions,
+  type NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import type { Context } from '../../types';
 import { initHooks } from './initHooks';
@@ -39,6 +40,14 @@ function getDefaultEntry(root: string): RsbuildEntry {
   }
 
   return {};
+}
+
+function getAbsoluteDistPath(
+  cwd: string,
+  outputConfig: OutputConfig | NormalizedOutputConfig,
+) {
+  const root = getDistPath(outputConfig, 'root');
+  return isAbsolute(root) ? root : join(cwd, root);
 }
 
 /**

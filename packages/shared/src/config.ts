@@ -30,13 +30,11 @@ import type {
   NormalizedToolsConfig,
   NormalizedConfig,
 } from './types';
-import { pick } from './pick';
 import { logger } from './logger';
 import { join } from 'path';
-import { color } from './color';
 import type { minify } from 'terser';
 import fse from '../compiled/fs-extra';
-import { upperFirst } from './utils';
+import { pick, color, upperFirst } from './utils';
 
 import _ from 'lodash';
 import { DEFAULT_DEV_HOST } from './constants';
