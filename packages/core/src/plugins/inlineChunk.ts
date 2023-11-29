@@ -21,11 +21,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
 
         const { InlineChunkHtmlPlugin } = await import('@rsbuild/shared');
 
-        const {
-          inlineStyles,
-          // todo: not support inlineScripts in Rspack yet, which will take unknown build error
-          inlineScripts,
-        } = config.output;
+        const { inlineStyles, inlineScripts } = config.output;
 
         const scriptTests: InlineChunkTest[] = [];
         const styleTests: InlineChunkTest[] = [];

@@ -718,8 +718,5 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "web",
     "es5",
   ],
-  "watchOptions": {
-    "aggregateTimeout": 5,
-  },
 }
 `;

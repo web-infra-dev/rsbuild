@@ -213,7 +213,6 @@ export async function startDevServer<
   {
     compiler: customCompiler,
     printURLs = true,
-    strictPort = false,
     logger: customLogger,
     getPortSilently,
   }: StartDevServerOptions & {
@@ -228,7 +227,6 @@ export async function startDevServer<
   const logger = customLogger ?? defaultLogger;
   const { devServerConfig, port, host, https } = await getDevOptions({
     rsbuildConfig,
-    strictPort,
     getPortSilently,
   });
 

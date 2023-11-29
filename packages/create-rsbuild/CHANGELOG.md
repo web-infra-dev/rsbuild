@@ -1,5 +1,11 @@
 # create-rsbuild
 
+## 0.1.4
+
+### Patch Changes
+
+- 8d09c89: feat: support solid-js HMR
+
 ## 0.1.3
 
 ## 0.1.2

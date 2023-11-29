@@ -1,5 +1,12 @@
 # @rsbuild/document
 
+## 0.1.4
+
+### Patch Changes
+
+- b43956c: feat: support output.inlineScripts
+- 4d6643c: feat: support performance.preload、prefetch in MPA scenario
+
 ## 0.1.3
 
 ## 0.1.2

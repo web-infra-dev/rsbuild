@@ -1,5 +1,13 @@
 # @rsbuild/plugin-react
 
+## 0.1.4
+
+### Patch Changes
+
+- 80acdfe: feat(plugin-react): allow to enable/disable the React chunk splitting
+- Updated dependencies [5b980ce]
+  - @rsbuild/shared@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes

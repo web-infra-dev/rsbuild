@@ -673,9 +673,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "web",
     "es5",
   ],
-  "watchOptions": {
-    "aggregateTimeout": 5,
-  },
 }
 `;
 
@@ -1830,9 +1827,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     ],
   },
   "target": "node",
-  "watchOptions": {
-    "aggregateTimeout": 5,
-  },
 }
 `;
 
@@ -2520,8 +2514,5 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "web",
     "es5",
   ],
-  "watchOptions": {
-    "aggregateTimeout": 5,
-  },
 }
 `;

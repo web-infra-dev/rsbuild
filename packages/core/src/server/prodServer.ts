@@ -161,11 +161,7 @@ export class RsbuildProdServer {
 export async function startProdServer(
   context: Context,
   rsbuildConfig: RsbuildConfig,
-  {
-    printURLs = true,
-    strictPort = false,
-    getPortSilently,
-  }: PreviewServerOptions = {},
+  { printURLs = true, getPortSilently }: PreviewServerOptions = {},
 ) {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'production';
@@ -173,7 +169,6 @@ export async function startProdServer(
 
   const { serverConfig, port, host, https } = await getServerOptions({
     rsbuildConfig,
-    strictPort,
     getPortSilently,
   });
 

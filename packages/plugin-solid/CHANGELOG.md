@@ -1,5 +1,13 @@
 # @rsbuild/plugin-solid
 
+## 0.1.4
+
+### Patch Changes
+
+- 8d09c89: feat: support solid-js HMR
+- Updated dependencies [5b980ce]
+  - @rsbuild/shared@0.1.4
+
 ## 0.1.3
 
 ## 0.1.2
