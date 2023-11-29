@@ -22,7 +22,7 @@ on:
 jobs:
   # ======== ut ========
   ut-mac:
-  # run ut in MacOS, as SWC cases will fail in Ubuntu CI
+    # run ut in MacOS, as SWC cases will fail in Ubuntu CI
     runs-on: macos-latest
     strategy:
       matrix:
