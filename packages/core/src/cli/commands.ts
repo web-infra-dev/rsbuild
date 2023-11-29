@@ -40,9 +40,15 @@ export async function init({
   }
 
   try {
-    await loadEnv();
+    const { publicVars } = await loadEnv();
     const config = await loadConfig(commonOpts.config);
     const { createRsbuild } = await import('../createRsbuild');
+
+    config.source ||= {};
+    config.source.define = {
+      ...publicVars,
+      ...config.source.define,
+    };
 
     if (commonOpts.open && !config.dev?.startUrl) {
       config.dev ||= {};
