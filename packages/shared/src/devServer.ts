@@ -7,7 +7,7 @@ import type {
 } from './types';
 import { getPort } from './port';
 import deepmerge from '../compiled/deepmerge';
-import { color } from './color';
+import { color } from './utils';
 import { logger as defaultLogger, Logger } from './logger';
 import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import type { Compiler } from '@rspack/core';
