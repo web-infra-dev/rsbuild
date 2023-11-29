@@ -1,7 +1,7 @@
 - **Type:** `string | false`
 - **Default:** `'public'`
 
-Directory to serve as static assets (by default 'public' directory),files in this directory will be served at `/`.
+Directory to serve as static assets (by default 'public' directory), files in this directory will be served at `/`.
 
 Note that:
 
