@@ -46,6 +46,43 @@ Description:
 - `provider`: Used to switch the underlying bundler.
 - `rsbuildConfig`: Rsbuild configuration object. Rsbuild provides a rich set of configuration options that allow you to customize the build behavior flexibly. You can find all available configuration options in the [Configuration](/config/) section.
 
+## loadEnv
+
+Load the `.env` file and return all environment variables starting with the specified prefixes.
+
+- **Type:**
+
+```ts
+function loadEnv(params: {
+  // Default is process.cwd()
+  dir?: string;
+  // Default is ['PUBLIC_']
+  prefixes?: string[];
+}): Promise<{
+  // All environment variables in the .env file
+  parsed: Record<string, string>;
+  // Environment variables starting with the specified prefixes
+  publicVars: Record<string, string>;
+}>;
+```
+
+- **Example:**
+
+```ts
+const { parsed, publicVars } = await loadEnv();
+
+mergeRsbuildConfig(
+  {
+    source: {
+      define: publicVars,
+    },
+  },
+  userConfig,
+);
+```
+
+This method will also load files such as `.env.local` and `.env.[mode]`, see [Environment Variables](/guide/advanced/env-vars) for details.
+
 ## mergeRsbuildConfig
 
 Used to merge multiple Rsbuild configuration objects.
