@@ -166,7 +166,9 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   }
 
   const server: ServerConfig = isProd()
-    ? {}
+    ? {
+        publicDir: false,
+      }
     : {
         https:
           tools.devServer?.https || dev.https
@@ -178,6 +180,7 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
         headers: tools.devServer?.headers,
         historyApiFallback: tools.devServer?.historyApiFallback,
         proxy: tools.devServer?.proxy,
+        publicDir: false,
       };
 
   dev.client = tools.devServer?.client;

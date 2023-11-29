@@ -7,7 +7,6 @@ Note that:
 
 - You should always reference public assets using root absolute path. For example, `public/icon.png` should be referenced in source code as `/icon.png`.
 - Assets in this directory will be copied to the root of dist during build.Therefore, care should be taken not to conflict with other dist file names.
-- Assets in public cannot be imported from JavaScript.
 
 To disable set it to `false`:
 
