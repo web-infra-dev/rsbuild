@@ -14,6 +14,7 @@ test('should restart dev server when .env file is changed', async () => {
   fse.removeSync(configFile);
   fse.removeSync(envLocalFile);
 
+  fse.writeFileSync(envLocalFile, ``);
   fse.writeFileSync(
     configFile,
     `export default {
