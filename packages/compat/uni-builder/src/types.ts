@@ -207,6 +207,12 @@ export type UniBuilderExtraConfig = {
      */
     checkSyntax?: boolean | PluginCheckSyntaxOptions;
   };
+  experiments?: {
+    /**
+     * Enable the ability for source code building
+     */
+    sourceBuild?: boolean;
+  };
 };
 
 export type SriOptions = {

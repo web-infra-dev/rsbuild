@@ -31,6 +31,7 @@
     "@rsbuild/plugin-css-minimizer": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-pug": "workspace:*",
+    "@rsbuild/plugin-source-build": "workspace:*",
     "@rsbuild/plugin-styled-components": "workspace:*",
     "@rsbuild/plugin-svgr": "workspace:*",
     "@rsbuild/plugin-rem": "workspace:*",

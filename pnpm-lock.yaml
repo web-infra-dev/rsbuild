@@ -641,6 +641,9 @@ importers:
       '@rsbuild/plugin-rem':
         specifier: workspace:*
         version: link:../../plugin-rem
+      '@rsbuild/plugin-source-build':
+        specifier: workspace:*
+        version: link:../../plugin-source-build
       '@rsbuild/plugin-styled-components':
         specifier: workspace:*
         version: link:../../plugin-styled-components
