@@ -278,6 +278,12 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     rsbuildPlugins.push(pluginRuntimeChunk());
   }
 
+  if (uniBuilderConfig.experiments?.sourceBuild) {
+    const { pluginSourceBuild } = await import('@rsbuild/plugin-source-build');
+
+    rsbuildPlugins.push(pluginSourceBuild());
+  }
+
   rsbuildPlugins.push(pluginReact());
 
   const pugOptions = uniBuilderConfig.tools?.pug;
