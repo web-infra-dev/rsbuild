@@ -2,6 +2,11 @@ import fs from 'fs';
 import { join } from 'path';
 import { isFileSync } from '@rsbuild/shared';
 
+export const getEnvFiles = () => {
+  const { NODE_ENV } = process.env;
+  return ['.env', '.env.local', `.env.${NODE_ENV}`, `.env.${NODE_ENV}.local`];
+};
+
 export async function loadEnv({
   dir = process.cwd(),
   prefixes = ['PUBLIC_'],
@@ -9,15 +14,7 @@ export async function loadEnv({
   const { parse } = await import('../compiled/dotenv');
   const { expand } = await import('../compiled/dotenv-expand');
 
-  const { NODE_ENV } = process.env;
-  const files = [
-    '.env',
-    '.env.local',
-    `.env.${NODE_ENV}`,
-    `.env.${NODE_ENV}.local`,
-  ];
-
-  const envPaths = files
+  const envPaths = getEnvFiles()
     .map((filename) => join(dir, filename))
     .filter(isFileSync);
 

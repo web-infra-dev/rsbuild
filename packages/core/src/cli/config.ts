@@ -6,6 +6,7 @@ import {
   debounce,
   type RsbuildConfig as BaseRsbuildConfig,
 } from '@rsbuild/shared';
+import { getEnvFiles } from '../loadEnv';
 import { restartDevServer } from '../server/restart';
 
 export type RsbuildConfig = BaseRsbuildConfig & {
@@ -36,9 +37,7 @@ export function defineConfig(config: RsbuildConfigExport) {
   return config;
 }
 
-const resolveConfigPath = (customConfig?: string) => {
-  const root = process.cwd();
-
+const resolveConfigPath = (root: string, customConfig?: string) => {
   if (customConfig) {
     const customConfigPath = isAbsolute(customConfig)
       ? customConfig
@@ -69,31 +68,36 @@ const resolveConfigPath = (customConfig?: string) => {
   return null;
 };
 
-async function watchConfig(configFile: string) {
+async function watchConfig(root: string, configFile: string) {
   const chokidar = await import('@rsbuild/shared/chokidar');
+  const envFiles = getEnvFiles().map((filename) => join(root, filename));
 
-  const watcher = chokidar.watch(configFile, {
+  const watcher = chokidar.watch([configFile, ...envFiles], {
+    // do not trigger add for initial files
+    ignoreInitial: true,
     // If watching fails due to read permissions, the errors will be suppressed silently.
     ignorePermissionErrors: true,
   });
 
   const callback = debounce(
-    async () => {
+    async (filePath) => {
       watcher.close();
-      await restartDevServer({ filePath: configFile });
+      await restartDevServer({ filePath });
     },
     // set 300ms debounce to avoid restart frequently
     300,
   );
 
+  watcher.on('add', callback);
   watcher.on('change', callback);
   watcher.on('unlink', callback);
 }
 
 export async function loadConfig(
+  root: string,
   customConfig?: string,
 ): Promise<RsbuildConfig> {
-  const configFile = resolveConfigPath(customConfig);
+  const configFile = resolveConfigPath(root, customConfig);
 
   if (!configFile) {
     return {};
@@ -110,7 +114,7 @@ export async function loadConfig(
 
     const command = process.argv[2];
     if (command === 'dev') {
-      watchConfig(configFile);
+      watchConfig(root, configFile);
     }
 
     const configExport = loadConfig(configFile) as RsbuildConfigExport;

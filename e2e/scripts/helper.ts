@@ -45,6 +45,6 @@ export const awaitFileExists = async (dir: string, checks = 0) => {
     await new Promise((resolve) => setTimeout(resolve, interval));
     await awaitFileExists(dir, checks);
   } else {
-    expect(false).toBe(true);
+    throw new Error('awaitFileExists failed: ' + dir);
   }
 };
