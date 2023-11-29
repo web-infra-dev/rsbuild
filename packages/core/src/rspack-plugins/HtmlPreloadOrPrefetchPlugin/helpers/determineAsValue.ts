@@ -18,7 +18,7 @@
 
 import path from 'path';
 import { URL } from 'url';
-import { As } from './type';
+import type { As } from './type';
 
 export function determineAsValue({
   href,

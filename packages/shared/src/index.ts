@@ -15,7 +15,6 @@ export * from './config';
 export * from './format';
 export * from './devServer';
 export * from './chain';
-export * from './plugins';
 export * from './apply';
 export * from './getLoaderOptions';
 export * from './patch';

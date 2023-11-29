@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
-import WebpackSources from '../../compiled/webpack-sources';
-import { COMPILATION_PROCESS_STAGE } from './util';
+import WebpackSources from '@rsbuild/shared/webpack-sources';
+import { COMPILATION_PROCESS_STAGE } from '@rsbuild/shared';
 
 type AppIconOptions = {
   distDir: string;
