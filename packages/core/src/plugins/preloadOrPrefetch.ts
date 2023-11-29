@@ -1,4 +1,3 @@
-import { HTMLPreloadOrPrefetchPlugin } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginPreloadOrPrefetch = (): RsbuildPlugin => ({
@@ -20,6 +19,10 @@ export const pluginPreloadOrPrefetch = (): RsbuildPlugin => ({
         }
 
         const HTMLCount = chain.entryPoints.values().length;
+
+        const { HTMLPreloadOrPrefetchPlugin } = await import(
+          '../rspack-plugins/HtmlPreloadOrPrefetchPlugin'
+        );
 
         if (prefetch) {
           chain

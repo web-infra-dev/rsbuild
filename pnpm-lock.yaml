@@ -821,6 +821,9 @@ importers:
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
+      webpack:
+        specifier: ^5.89.0
+        version: 5.89.0
 
   packages/create-rsbuild:
     dependencies:

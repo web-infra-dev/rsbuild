@@ -18,9 +18,8 @@
 import { ChunkGroup } from './extractChunks';
 import type { Compilation } from '@rspack/core';
 import type { Chunk } from 'webpack';
-import { PreloadOrPreFetchOption } from '../../../types';
+import type { PreloadOrPreFetchOption } from '@rsbuild/shared';
 import { BeforeAssetTagGenerationHtmlPluginData } from './type';
-import { uniq } from 'lodash';
 
 interface DoesChunkBelongToHtmlOptions {
   chunk: Chunk;
@@ -45,11 +44,11 @@ function recursiveChunkEntryNames(chunk: Chunk): string[] {
     Boolean(name);
 
   const [...chunkGroups] = chunk.groupsIterable;
-  return uniq(
-    chunkGroups
-      .flatMap((chunkGroup) => recursiveChunkGroup(chunkGroup))
-      .filter(isChunkName),
-  );
+  const names = chunkGroups
+    .flatMap((chunkGroup) => recursiveChunkGroup(chunkGroup))
+    .filter(isChunkName);
+
+  return [...new Set(names)];
 }
 
 // modify from html-webpack-plugin/index.js `filterChunks`

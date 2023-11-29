@@ -1,12 +1,14 @@
-import _ from 'lodash';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler } from '@rspack/core';
-import { withPublicPath } from '../url';
 import {
-  HtmlInjectTag,
-  HtmlInjectTagDescriptor,
-  HtmlInjectTagUtils,
-} from '../types';
+  partition,
+  isFunction,
+  withPublicPath,
+  type HtmlInjectTag,
+  type HtmlInjectTagHandler,
+  type HtmlInjectTagDescriptor,
+  type HtmlInjectTagUtils,
+} from '@rsbuild/shared';
 
 export interface HtmlTagsPluginOptions {
   hash?: HtmlInjectTag['hash'];
@@ -155,22 +157,34 @@ export class HtmlTagsPlugin {
         };
 
         // create tag list from html-webpack-plugin and options.
-        const [handlers, records] = _.partition(this.ctx.tags, _.isFunction);
-
+        const handlers: HtmlInjectTagHandler[] = [];
         let tags = [
           ...fromWebpackTags(params.headTags, { head: true }),
           ...fromWebpackTags(params.bodyTags, { head: false }),
-          ...records,
         ];
-        // apply tag handler callbacks.
-        tags = _.sortBy(tags, (tag) => {
-          let priority = 0;
-          const head = tag.head ?? HEAD_TAGS.includes(tag.tag);
-          const append = tag.append ?? this.ctx.append;
-          priority += head ? -2 : 2;
-          typeof append === 'boolean' && (priority += append ? 1 : -1);
-          return priority;
+
+        this.ctx.tags.forEach((tag) => {
+          if (isFunction(tag)) {
+            handlers.push(tag);
+          } else {
+            tags.push(tag);
+          }
         });
+
+        const getPriority = (tag: HtmlInjectTag) => {
+          const head = tag.head ?? HEAD_TAGS.includes(tag.tag);
+          let priority = head ? -2 : 2;
+
+          const append = tag.append ?? this.ctx.append;
+          if (typeof append === 'boolean') {
+            priority += append ? 1 : -1;
+          }
+
+          return priority;
+        };
+
+        // apply tag handler callbacks.
+        tags = tags.sort((tag1, tag2) => getPriority(tag1) - getPriority(tag2));
 
         const utils: HtmlInjectTagUtils = {
           outputName: params.outputName,
@@ -182,7 +196,7 @@ export class HtmlTagsPlugin {
         }
 
         // apply to html-webpack-plugin.
-        const [headTags, bodyTags] = _.partition(
+        const [headTags, bodyTags] = partition(
           tags,
           (tag) => tag.head ?? HEAD_TAGS.includes(tag.tag),
         );

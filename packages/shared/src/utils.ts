@@ -1,3 +1,4 @@
+import type { Compiler } from '@rspack/core';
 import type {
   CacheGroup,
   NormalizedConfig,
@@ -7,6 +8,7 @@ import type {
 import path from 'path';
 import fse from '../compiled/fs-extra';
 import deepmerge from '../compiled/deepmerge';
+import { DEFAULT_ASSET_PREFIX } from './constants';
 
 export { deepmerge };
 
@@ -196,4 +198,52 @@ export function debounce<T extends (...args: any[]) => void>(
       func(...args);
     }, wait);
   };
+}
+
+export const upperFirst = (str: string) =>
+  str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+
+/** The intersection of webpack and Rspack */
+export const COMPILATION_PROCESS_STAGE = {
+  PROCESS_ASSETS_STAGE_ADDITIONAL: -2000,
+  PROCESS_ASSETS_STAGE_PRE_PROCESS: -1000,
+  PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE: 700,
+  PROCESS_ASSETS_STAGE_SUMMARIZE: 1000,
+  PROCESS_ASSETS_STAGE_REPORT: 5000,
+};
+
+export const generateScriptTag = () => ({
+  tagName: 'script',
+  attributes: {
+    type: 'text/javascript',
+  },
+  voidTag: false,
+  meta: {},
+});
+
+export const getPublicPathFromCompiler = (compiler: Compiler) => {
+  const { publicPath } = compiler.options.output;
+  if (typeof publicPath === 'string' && publicPath !== 'auto') {
+    return addTrailingSlash(publicPath);
+  }
+  // publicPath function is not supported yet
+  return DEFAULT_ASSET_PREFIX;
+};
+
+export function partition<T>(
+  array: T[],
+  predicate: (value: T) => boolean,
+): [T[], T[]] {
+  const truthy: T[] = [];
+  const falsy: T[] = [];
+
+  for (const value of array) {
+    if (predicate(value)) {
+      truthy.push(value);
+    } else {
+      falsy.push(value);
+    }
+  }
+
+  return [truthy, falsy];
 }

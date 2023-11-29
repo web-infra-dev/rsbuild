@@ -1,4 +1,3 @@
-import type { InlineChunkTest } from '../../plugins/InlineChunkHtmlPlugin';
 import type { RsbuildTarget } from '../rsbuild';
 import type { Builtins, Externals } from '@rspack/core';
 
@@ -85,6 +84,13 @@ export type CssModules = {
 };
 
 export type CopyPluginOptions = NonNullable<Builtins['copy']>;
+
+export type InlineChunkTestFunction = (params: {
+  size: number;
+  name: string;
+}) => boolean;
+
+export type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
 export interface OutputConfig {
   /**

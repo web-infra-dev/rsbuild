@@ -1,5 +1,5 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { CrossOrigin } from '../types';
+import type { CrossOrigin } from '@rsbuild/shared';
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
 
 type CrossOriginOptions = {
