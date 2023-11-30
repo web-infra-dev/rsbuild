@@ -1,6 +1,6 @@
 # Page Route
 
-This chapter describes how to access pages during local development and preview.
+This chapter will introduces how to access pages during local development and preview.
 
 ### Default
 
