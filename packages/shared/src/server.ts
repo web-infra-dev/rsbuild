@@ -4,6 +4,7 @@ import type {
   RsbuildEntry,
   RsbuildConfig,
   CompilerTapFn,
+  OutputStructure,
 } from './types';
 import { getPort } from './port';
 import deepmerge from '../compiled/deepmerge';
@@ -16,12 +17,19 @@ import { normalizeUrl } from './url';
 /*
  * format route by entry and adjust the index route to be the first
  */
-export const formatRoutes = (entry: RsbuildEntry, prefix?: string): Routes => {
+export const formatRoutes = (
+  entry: RsbuildEntry,
+  prefix: string | undefined,
+  outputStructure: OutputStructure | undefined,
+): Routes => {
   return (
     Object.keys(entry)
       .map((name) => ({
         name,
-        route: (prefix ? `${prefix}/` : '') + (name === 'index' ? '' : name),
+        route:
+          (prefix ? `${prefix}/` : '') +
+          // fix case: /html/index/index.html
+          (name === 'index' && outputStructure !== 'nested' ? '' : name),
       }))
       // adjust the index route to be the first
       .sort((a) => (a.name === 'index' ? -1 : 1))

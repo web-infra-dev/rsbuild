@@ -9,11 +9,15 @@ import {
 
 test('formatRoutes', () => {
   expect(
-    formatRoutes({
-      index: 'src/index.ts',
-      foo: 'src/index.ts',
-      bar: 'src/index.ts',
-    }),
+    formatRoutes(
+      {
+        index: 'src/index.ts',
+        foo: 'src/index.ts',
+        bar: 'src/index.ts',
+      },
+      undefined,
+      undefined,
+    ),
   ).toEqual([
     {
       name: 'index',
@@ -30,11 +34,15 @@ test('formatRoutes', () => {
   ]);
 
   expect(
-    formatRoutes({
-      foo: 'src/index.ts',
-      bar: 'src/index.ts',
-      index: 'src/index.ts',
-    }),
+    formatRoutes(
+      {
+        foo: 'src/index.ts',
+        bar: 'src/index.ts',
+        index: 'src/index.ts',
+      },
+      undefined,
+      undefined,
+    ),
   ).toEqual([
     {
       name: 'index',
@@ -51,9 +59,13 @@ test('formatRoutes', () => {
   ]);
 
   expect(
-    formatRoutes({
-      foo: 'src/index.ts',
-    }),
+    formatRoutes(
+      {
+        foo: 'src/index.ts',
+      },
+      undefined,
+      undefined,
+    ),
   ).toEqual([
     {
       name: 'foo',
@@ -69,6 +81,7 @@ test('formatRoutes', () => {
         bar: 'src/index.ts',
       },
       'html',
+      undefined,
     ),
   ).toEqual([
     {
@@ -82,6 +95,21 @@ test('formatRoutes', () => {
     {
       name: 'bar',
       route: 'html/bar',
+    },
+  ]);
+
+  expect(
+    formatRoutes(
+      {
+        index: 'src/index.ts',
+      },
+      'html',
+      'nested',
+    ),
+  ).toEqual([
+    {
+      name: 'index',
+      route: 'html/index',
     },
   ]);
 });
