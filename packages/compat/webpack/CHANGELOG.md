@@ -1,5 +1,16 @@
 # @rsbuild/webpack
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies [9613e0b9]
+  - @rsbuild/core@0.1.6
+  - @rsbuild/plugin-babel@0.1.6
+  - @rsbuild/plugin-react@0.1.6
+  - @rsbuild/babel-preset@0.1.6
+  - @rsbuild/shared@0.1.6
+
 ## 0.1.5
 
 ### Patch Changes

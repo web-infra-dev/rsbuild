@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-type-check",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "TS checker plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
