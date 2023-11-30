@@ -13,6 +13,18 @@ import type {
   AcceptedPlugin,
   SourceMapOptions,
 } from 'postcss';
+import type { Configuration as WebpackConfig } from 'webpack';
+import type {
+  PluginOptions as MiniCSSExtractPluginOptions,
+  LoaderOptions as MiniCSSExtractLoaderOptions,
+} from 'mini-css-extract-plugin';
+
+export interface CSSExtractOptions {
+  pluginOptions?: MiniCSSExtractPluginOptions;
+  loaderOptions?: MiniCSSExtractLoaderOptions;
+}
+
+export type { WebpackConfig };
 
 export type TerserPluginOptions = TerserPlugin.BasePluginOptions &
   TerserPlugin.DefinedDefaultMinimizerAndOptions<TerserPlugin.TerserOptions>;
