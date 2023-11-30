@@ -21,9 +21,6 @@
     },
     {
       "path": "../../babel-preset"
-    },
-    {
-      "path": "../../plugin-css-minimizer"
     }
   ],
   "include": ["src"]
