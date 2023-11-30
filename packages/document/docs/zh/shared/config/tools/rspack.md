@@ -195,7 +195,7 @@ export default {
 
 #### prependPlugins
 
-- **类型：** `(plugins: RspackPluginInstance | RspackPluginInstance[]) => void`
+- **类型：** `(plugins: BundlerPluginInstance | BundlerPluginInstance[]) => void`
 
 在内部 Rspack 插件数组头部添加额外的插件，数组头部的插件会优先执行。
 
@@ -215,7 +215,7 @@ export default {
 
 #### appendPlugins
 
-- **类型：** `(plugins: RspackPluginInstance | RspackPluginInstance[]) => void`
+- **类型：** `(plugins: BundlerPluginInstance | BundlerPluginInstance[]) => void`
 
 在内部 Rspack 插件数组尾部添加额外的插件，数组尾部的插件会在最后执行。
 
