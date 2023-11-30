@@ -4,11 +4,12 @@ import { NodeEnv, PromiseOrNot } from './utils';
 import { RsbuildTarget } from './rsbuild';
 import { BundlerChain } from './bundlerConfig';
 import { mergeRsbuildConfig } from '../mergeRsbuildConfig';
-import type { Rspack } from './rspack';
-import { RsbuildConfig } from '.';
+import type { Rspack, RspackConfig } from './rspack';
+import type { RsbuildConfig } from './config';
+import type { WebpackConfig } from './thirdParty';
 
-export type OnBeforeBuildFn<BundlerConfig = unknown> = (params: {
-  bundlerConfigs?: BundlerConfig[];
+export type OnBeforeBuildFn<B = 'rspack'> = (params: {
+  bundlerConfigs?: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
 }) => PromiseOrNot<void>;
 
 export type OnAfterBuildFn = (params: {
@@ -38,8 +39,8 @@ export type OnAfterStartProdServerFn = (params: {
   routes: Routes;
 }) => PromiseOrNot<void>;
 
-export type OnBeforeCreateCompilerFn<BundlerConfig = unknown> = (params: {
-  bundlerConfigs: BundlerConfig[];
+export type OnBeforeCreateCompilerFn<B = 'rspack'> = (params: {
+  bundlerConfigs: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
 }) => PromiseOrNot<void>;
 
 export type OnAfterCreateCompilerFn<

@@ -1,5 +1,4 @@
-import { TARGET_ID_MAP } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
+import { TARGET_ID_MAP, type RsbuildPlugin } from '@rsbuild/shared';
 
 export const pluginProgress = (): RsbuildPlugin => ({
   name: 'rsbuild-webpack:progress',

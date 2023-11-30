@@ -15,7 +15,7 @@ import {
   getUseBuiltIns,
 } from '@rsbuild/plugin-babel';
 import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
-import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { Options as RawTSLoaderOptions } from 'ts-loader';
 
 export type TSLoaderOptions = Partial<RawTSLoaderOptions>;

@@ -5,6 +5,7 @@ import {
   formatStats,
   type Stats,
   type Rspack,
+  type RspackConfig,
 } from '@rsbuild/shared';
 import type { Context, WebpackConfig } from '../types';
 import { initConfigs, InitConfigsOptions } from './initConfigs';
@@ -20,7 +21,7 @@ export async function createCompiler({
 }) {
   debug('create compiler');
   await context.hooks.onBeforeCreateCompilerHook.call({
-    bundlerConfigs: webpackConfigs,
+    bundlerConfigs: webpackConfigs as RspackConfig[],
   });
 
   const { default: webpack } = await import('webpack');

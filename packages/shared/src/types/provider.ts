@@ -1,11 +1,11 @@
-import type { PluginStore, Plugins, DefaultRsbuildPluginAPI } from './plugin';
+import type { PluginStore, Plugins, RsbuildPluginAPI } from './plugin';
 import type { Context } from './context';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
 import { StartServerResult } from './server';
 import type { AddressUrl } from '../url';
 import type { Logger } from '../logger';
-import { RsbuildConfig } from '.';
+import { RsbuildConfig, RspackConfig, WebpackConfig } from '.';
 
 export type Bundler = 'rspack' | 'webpack';
 
@@ -36,22 +36,19 @@ export type InspectConfigOptions = {
   writeToDisk?: boolean;
 };
 
-export type RsbuildProvider<
-  BundlerConfig extends Record<string, any> = Record<string, any>,
-> = (options: {
-  pluginStore: PluginStore;
-  rsbuildOptions: Required<CreateRsbuildOptions>;
-  plugins: Plugins;
-}) => Promise<ProviderInstance<BundlerConfig>>;
+export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
+  (options: {
+    pluginStore: PluginStore;
+    rsbuildOptions: Required<CreateRsbuildOptions>;
+    plugins: Plugins;
+  }) => Promise<ProviderInstance<B>>;
 
-export type ProviderInstance<
-  BundlerConfig extends Record<string, any> = Record<string, any>,
-> = {
+export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   readonly bundler: Bundler;
 
   readonly publicContext: Readonly<Context>;
 
-  pluginAPI: DefaultRsbuildPluginAPI<BundlerConfig>;
+  pluginAPI: RsbuildPluginAPI;
 
   applyDefaultPlugins: (pluginStore: PluginStore) => Promise<void>;
 
@@ -67,7 +64,9 @@ export type ProviderInstance<
 
   build: (options?: BuildOptions) => Promise<void>;
 
-  initConfigs: () => Promise<BundlerConfig[]>;
+  initConfigs: () => Promise<
+    B extends 'rspack' ? RspackConfig[] : WebpackConfig[]
+  >;
 
   inspectConfig: (options?: InspectConfigOptions) => Promise<{
     rsbuildConfig: string;
@@ -76,7 +75,7 @@ export type ProviderInstance<
       rsbuildConfig: RsbuildConfig & {
         pluginNames: string[];
       };
-      bundlerConfigs: BundlerConfig[];
+      bundlerConfigs: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
     };
   }>;
 };

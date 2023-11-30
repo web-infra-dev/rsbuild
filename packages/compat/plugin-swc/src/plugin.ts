@@ -1,6 +1,10 @@
 import * as path from 'path';
-import type { RsbuildPluginAPI, RsbuildPlugin } from '@rsbuild/webpack';
-import { SCRIPT_REGEX, DEFAULT_BROWSERSLIST } from '@rsbuild/shared';
+import {
+  SCRIPT_REGEX,
+  DEFAULT_BROWSERSLIST,
+  type RsbuildPlugin,
+  type RsbuildPluginAPI,
+} from '@rsbuild/shared';
 import type { PluginSwcOptions, TransformConfig } from './types';
 import {
   applyPluginConfig,

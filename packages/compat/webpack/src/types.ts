@@ -1,10 +1,13 @@
+import type webpack from 'webpack';
+import type { WebpackChain } from '@rsbuild/shared';
+import type { Configuration as WebpackConfig } from 'webpack';
 import type {
   Context as BaseContext,
   RsbuildConfig,
   NormalizedConfig,
+  RsbuildPluginAPI,
 } from '@rsbuild/shared';
-import type { Hooks } from '../core/initHooks';
-import type { RsbuildPluginAPI } from './plugin';
+import type { Hooks } from './core/initHooks';
 
 /** The inner context. */
 export type Context = BaseContext & {
@@ -19,3 +22,5 @@ export type Context = BaseContext & {
   /** The plugin API. */
   pluginAPI?: RsbuildPluginAPI;
 };
+
+export type { webpack, WebpackChain, WebpackConfig };

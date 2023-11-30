@@ -1,5 +1,5 @@
 import path from 'path';
-import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { ensureAbsolutePath, type ChainedConfig } from '@rsbuild/shared';
 import type { ModuleScopes } from '../../types';
 

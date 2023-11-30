@@ -1,10 +1,10 @@
 import {
   SASS_REGEX,
+  getResolveUrlJoinFn,
   getSassLoaderOptions,
   patchCompilerGlobalLocation,
-  getResolveUrlJoinFn,
+  type RsbuildPlugin,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
 
 export function pluginSass(): RsbuildPlugin {
   return {

@@ -9,6 +9,7 @@ import {
   mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
+  type RsbuildPlugin,
   type TransformImport,
   type NormalizedConfig,
 } from '@rsbuild/shared';
@@ -17,7 +18,6 @@ import {
   getUseBuiltIns,
   type PluginBabelOptions,
 } from '@rsbuild/plugin-babel';
-import type { RsbuildPlugin } from '@rsbuild/webpack';
 
 export const pluginBabel = (options?: PluginBabelOptions): RsbuildPlugin => ({
   name: 'uni-builder:babel',

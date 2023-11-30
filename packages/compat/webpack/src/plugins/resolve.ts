@@ -1,13 +1,13 @@
+import path from 'path';
 import {
   isWebTarget,
   TS_CONFIG_FILE,
   applyResolvePlugin,
-  type RsbuildTarget,
-  type ChainIdentifier,
   type BundlerChain,
+  type RsbuildTarget,
+  type RsbuildPlugin,
+  type ChainIdentifier,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
-import path from 'path';
 
 async function applyTsConfigPathsPlugin({
   chain,

@@ -1,7 +1,6 @@
 import {
   createAsyncHook,
   type OnExitFn,
-  type RspackConfig,
   type OnAfterBuildFn,
   type OnBeforeBuildFn,
   type OnDevCompileDoneFn,
@@ -28,12 +27,11 @@ export function initHooks() {
 
     /** parameters are bundler-related */
     onAfterBuildHook: createAsyncHook<OnAfterBuildFn>(),
-    onBeforeBuildHook: createAsyncHook<OnBeforeBuildFn<RspackConfig>>(),
+    onBeforeBuildHook: createAsyncHook<OnBeforeBuildFn>(),
     modifyRspackConfigHook: createAsyncHook<ModifyRspackConfigFn>(),
     modifyRsbuildConfigHook: createAsyncHook<ModifyRsbuildConfigFn>(),
     onAfterCreateCompilerHook: createAsyncHook<OnAfterCreateCompilerFn>(),
-    onBeforeCreateCompilerHook:
-      createAsyncHook<OnBeforeCreateCompilerFn<RspackConfig>>(),
+    onBeforeCreateCompilerHook: createAsyncHook<OnBeforeCreateCompilerFn>(),
 
     modifyBundlerChainHook: createAsyncHook<ModifyBundlerChainFn>(),
   };

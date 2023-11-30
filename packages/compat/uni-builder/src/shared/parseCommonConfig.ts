@@ -93,7 +93,7 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   frameworkConfigPath?: string,
 ): Promise<{
   rsbuildConfig: RsbuildConfig;
-  rsbuildPlugins: RsbuildPlugin<any>[];
+  rsbuildPlugins: RsbuildPlugin[];
 }> {
   const rsbuildConfig = deepmerge({}, uniBuilderConfig);
   const { dev = {}, html = {}, output = {}, tools = {} } = rsbuildConfig;

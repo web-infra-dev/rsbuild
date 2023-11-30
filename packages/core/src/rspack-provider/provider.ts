@@ -1,7 +1,6 @@
 import {
   pickRsbuildConfig,
   type RsbuildProvider,
-  type RspackConfig,
   type PreviewServerOptions,
 } from '@rsbuild/shared';
 import { createContext, createPublicContext } from './core/createContext';
@@ -10,13 +9,11 @@ import { getPluginAPI } from './core/initPlugins';
 import { applyDefaultPlugins } from './shared';
 import type { RsbuildConfig } from '../types';
 
-export type RspackProvider = RsbuildProvider<RspackConfig>;
-
 export function rspackProvider({
   rsbuildConfig: originalRsbuildConfig,
 }: {
   rsbuildConfig: RsbuildConfig;
-}): RspackProvider {
+}): RsbuildProvider {
   const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
 
   return async ({ pluginStore, rsbuildOptions, plugins }) => {

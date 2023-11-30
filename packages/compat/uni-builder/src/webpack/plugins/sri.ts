@@ -1,5 +1,5 @@
 import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
-import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { SriOptions } from '../../types';
 
 export const pluginSRI = (options: SriOptions | boolean): RsbuildPlugin => ({
