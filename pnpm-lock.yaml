@@ -2039,6 +2039,9 @@ importers:
       http-proxy-middleware:
         specifier: ^2.0.1
         version: 2.0.6
+      mini-css-extract-plugin:
+        specifier: 2.7.6
+        version: 2.7.6(webpack@5.89.0)
       terser:
         specifier: 5.19.2
         version: 5.19.2
@@ -11911,7 +11914,6 @@ packages:
     dependencies:
       schema-utils: 4.2.0
       webpack: 5.89.0
-    dev: false
 
   /minimalistic-assert@1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}

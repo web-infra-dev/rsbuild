@@ -81,7 +81,12 @@ export const getDefaultSecurityConfig = (): NormalizedSecurityConfig => ({
   nonce: '',
 });
 
-export const getDefaultToolsConfig = (): NormalizedToolsConfig => ({});
+export const getDefaultToolsConfig = (): NormalizedToolsConfig => ({
+  cssExtract: {
+    loaderOptions: {},
+    pluginOptions: {},
+  },
+});
 
 export const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
   profile: false,

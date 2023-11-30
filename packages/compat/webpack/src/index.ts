@@ -28,6 +28,4 @@ export type {
   webpack,
   WebpackChain,
   WebpackConfig,
-  CSSExtractOptions,
-  HTMLPluginOptions,
 } from './types';

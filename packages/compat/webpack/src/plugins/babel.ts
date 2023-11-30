@@ -31,9 +31,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
         );
 
         const getBabelOptions = (config: NormalizedConfig) => {
-          // 1. Get styled-components options
-
-          // 2. Create babel util function about include/exclude
+          // Create babel util function about include/exclude
           const includes: Array<string | RegExp> = [];
           const excludes: Array<string | RegExp> = [];
 
@@ -88,7 +86,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
             },
           });
 
-          // 3. Compute final babel config
+          // Compute final babel config
           const finalOptions: BabelConfig = {
             babelrc: false,
             configFile: false,

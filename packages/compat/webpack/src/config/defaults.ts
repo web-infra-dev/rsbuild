@@ -15,13 +15,7 @@ export const createDefaultConfig = (): RsbuildConfig => ({
   dev: getDefaultDevConfig(),
   server: getDefaultServerConfig(),
   html: getDefaultHtmlConfig(),
-  tools: {
-    ...getDefaultToolsConfig(),
-    cssExtract: {
-      loaderOptions: {},
-      pluginOptions: {},
-    },
-  },
+  tools: getDefaultToolsConfig(),
   source: getDefaultSourceConfig(),
   output: getDefaultOutputConfig(),
   security: getDefaultSecurityConfig(),

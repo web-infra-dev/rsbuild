@@ -11,12 +11,9 @@ import {
   getCssModuleLocalIdentName,
   type Context,
   type BundlerChainRule,
+  type CSSExtractOptions,
 } from '@rsbuild/shared';
-import type {
-  RsbuildPlugin,
-  CSSExtractOptions,
-  NormalizedConfig,
-} from '../types';
+import type { RsbuildPlugin, NormalizedConfig } from '../types';
 
 export async function applyBaseCSSRule({
   rule,

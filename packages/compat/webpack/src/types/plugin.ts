@@ -3,7 +3,7 @@ import type {
   RsbuildPlugin as BaseRsbuildPlugin,
 } from '@rsbuild/shared';
 import type { RsbuildConfig, NormalizedConfig } from './config';
-import type { WebpackConfig } from './thirdParty';
+import type { WebpackConfig } from '..';
 
 export interface RsbuildPluginAPI
   extends DefaultRsbuildPluginAPI<
