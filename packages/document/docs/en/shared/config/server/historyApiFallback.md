@@ -1,21 +1,29 @@
 - **Type:** `boolean | ConnectHistoryApiFallbackOptions`
 - **Default:** `false`
 
-If the default `server.htmlFallback` configuration of Rsbuild does not meet your requirements, and you need to provide alternative pages for some 404 responses or other requests, you can set it up using `server.historyApiFallback`.
+When Rsbuild's default [page route](/guide/basic/page-route) logic cannot meet your needs, for example, if you want to be able to access `main.html` when accessing `/`, you can set it up using `server.historyApiFallback`.
 
 ### Example
 
-When `historyApiFallback` is set to `true`, requests that require fallback will be rewrite to `/index.html`.
+Set `historyApiFallback.index` to `main.html`, then `main.html` can be accessed when accessing `/` or other routes that would otherwise 404.
 
 ```js
 export default {
+  source: {
+    entry: {
+      main: './src/index.ts',
+    },
+  },
   server: {
-    historyApiFallback: true,
+    htmlFallback: false,
+    historyApiFallback: {
+      index: '/main.html',
+    },
   },
 };
 ```
 
-You can also set more complex rules using the `rewrites` option:
+When your application contains multiple entries, you may want different visits to fallback to different pages. At this point, you can set more complex rules via the `rewrites` option:
 
 ```js
 export default {
