@@ -8,7 +8,7 @@ Rsbuild Server 会根据 [source.entry](/config/options/source#sourceentry) 配�
 
 当 entry 为 index 时，可通过 `/` 访问页面；当 entry 为 foo 时，可通过 `/foo` 访问该页面。
 
-```ts file=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     entry: {
