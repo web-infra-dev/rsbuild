@@ -2,9 +2,22 @@
   <a href="https://rsbuild.dev" target="blank"><img src="https://github.com/web-infra-dev/rsbuild/assets/7237365/84abc13e-b620-468f-a90b-dbf28e7e9427" alt="Rsbuild Logo" /></a>
 </p>
 
-# Rsbuild
+# @rsbuild/webpack
 
-Unleash the power of Rspack with the out-of-the-box build tool.
+This package can be used to switch Rsbuild's bundler from "Rspack" to "Webpack".
+
+Note that this package is mainly used for compatibility with Modern.js and Rsbuild internal testing. We do not recommend you to use this package in a Rsbuild project. The API of the current package may change over iterations.
+
+## Usage
+
+```ts
+import { defineConfig } from '@rsbuild/core';
+import { webpackProvider } from '@rsbuild/webpack';
+
+export default defineConfig({
+  provider: webpackProvider,
+});
+```
 
 ## Documentation
 
