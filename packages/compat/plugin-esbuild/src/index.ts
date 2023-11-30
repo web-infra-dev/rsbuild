@@ -16,6 +16,8 @@ export function pluginEsbuild(
   return {
     name: 'rsbuild-webpack:esbuild',
 
+    pre: ['rsbuild:babel', 'uni-builder:babel'],
+
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
         const rsbuildConfig = api.getNormalizedConfig();

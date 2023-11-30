@@ -1,6 +1,5 @@
 import { pluginBasic } from '@/plugins/basic';
 import { createStubRsbuild } from './helper';
-import { pluginBabel } from '@/plugins/babel';
 
 describe('webpackConfig', () => {
   it('should allow tools.webpack to return config', async () => {
@@ -200,65 +199,5 @@ describe('webpackConfig', () => {
 
     const config = await rsbuild.unwrapWebpackConfig();
     expect(config.module?.rules).toEqual([newRule]);
-  });
-
-  it('should set proper pluginImport option in Babel', async () => {
-    // camelToDashComponentName
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel()],
-      rsbuildConfig: {
-        source: {
-          transformImport: [
-            {
-              libraryName: 'foo',
-              camelToDashComponentName: true,
-            },
-          ],
-        },
-      },
-    });
-    const config = await rsbuild.unwrapWebpackConfig();
-
-    const babelRules = config.module!.rules?.filter((item) => {
-      // @ts-expect-error item has use
-      return item?.use?.[0].loader.includes('babel-loader');
-    });
-
-    expect(babelRules).toMatchSnapshot();
-  });
-
-  it('should not set default pluginImport for Babel', async () => {
-    // camelToDashComponentName
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel()],
-    });
-    const config = await rsbuild.unwrapWebpackConfig();
-
-    const babelRules = config.module!.rules?.filter((item) => {
-      // @ts-expect-error item has use
-      return item?.use?.[0].loader.includes('babel-loader');
-    });
-
-    expect(babelRules).toMatchSnapshot();
-  });
-
-  it('should not have any pluginImport in Babel', async () => {
-    // camelToDashComponentName
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel()],
-      rsbuildConfig: {
-        source: {
-          transformImport: false,
-        },
-      },
-    });
-    const config = await rsbuild.unwrapWebpackConfig();
-
-    const babelRules = config.module!.rules?.filter((item) => {
-      // @ts-expect-error item has use
-      return item?.use?.[0].loader.includes('babel-loader');
-    });
-
-    expect(babelRules).toMatchSnapshot();
   });
 });

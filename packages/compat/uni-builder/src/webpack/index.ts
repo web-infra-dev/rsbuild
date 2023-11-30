@@ -9,6 +9,8 @@ import type { CreateWebpackBuilderOptions } from '../types';
 import { parseCommonConfig } from '../shared/parseCommonConfig';
 import { pluginModuleScopes } from './plugins/moduleScopes';
 import { pluginStyledComponents } from './plugins/styledComponents';
+import { pluginBabel } from './plugins/babel';
+import { pluginReact } from './plugins/react';
 
 export async function parseConfig(
   uniBuilderConfig: UniBuilderWebpackConfig,
@@ -23,6 +25,19 @@ export async function parseConfig(
     cwd,
     frameworkConfigPath,
   );
+
+  rsbuildPlugins.push(pluginBabel(uniBuilderConfig.tools?.babel));
+  rsbuildPlugins.push(pluginReact());
+
+  if (uniBuilderConfig.tools?.tsLoader) {
+    const { pluginTsLoader } = await import('./plugins/tsLoader');
+    rsbuildPlugins.push(
+      pluginTsLoader(
+        uniBuilderConfig.tools.tsLoader,
+        uniBuilderConfig.tools.babel,
+      ),
+    );
+  }
 
   if (uniBuilderConfig.output?.enableAssetManifest) {
     const { pluginManifest } = await import('./plugins/manifest');
@@ -39,11 +54,6 @@ export async function parseConfig(
     rsbuildPlugins.push(
       pluginLazyCompilation(uniBuilderConfig.experiments?.lazyCompilation),
     );
-  }
-
-  if (uniBuilderConfig.tools?.tsLoader) {
-    const { pluginTsLoader } = await import('./plugins/tsLoader');
-    rsbuildPlugins.push(pluginTsLoader(uniBuilderConfig.tools.tsLoader));
   }
 
   rsbuildPlugins.push(

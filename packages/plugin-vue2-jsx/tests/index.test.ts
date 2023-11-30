@@ -1,6 +1,6 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { webpackProvider } from '@rsbuild/webpack';
-import { pluginBabel } from '@rsbuild/webpack/plugin-babel';
+import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginVue2Jsx } from '../src';
 
 describe('plugin-vue2-jsx', () => {

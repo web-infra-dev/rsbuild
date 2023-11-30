@@ -1,6 +1,6 @@
 import { pluginEntry } from '@rsbuild/core/plugins/entry';
-import { pluginBabel } from '@/plugins/babel';
-import { createStubRsbuild } from '../helper';
+import { pluginBabel } from '../src/webpack/plugins/babel';
+import { createStubRsbuild } from '../../webpack/tests/helper';
 
 describe('plugin-babel', () => {
   it('should set babel-loader', async () => {
@@ -22,16 +22,13 @@ describe('plugin-babel', () => {
 
   it('should set include/exclude', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel()],
-      rsbuildConfig: {
-        tools: {
-          babel(options, { addIncludes, addExcludes }) {
-            addIncludes(['src/**/*.ts']);
-            addExcludes(['src/**/*.js']);
-            return options;
-          },
-        },
-      },
+      plugins: [
+        pluginBabel((options, { addIncludes, addExcludes }) => {
+          addIncludes(['src/**/*.ts']);
+          addExcludes(['src/**/*.js']);
+          return options;
+        }),
+      ],
     });
     const config = await rsbuild.unwrapWebpackConfig();
 
@@ -126,5 +123,62 @@ describe('plugin-babel', () => {
     const config = await rsbuild.unwrapWebpackConfig();
 
     expect(config).toMatchSnapshot();
+  });
+
+  it('should set proper pluginImport option in Babel', async () => {
+    // camelToDashComponentName
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginBabel()],
+      rsbuildConfig: {
+        source: {
+          transformImport: [
+            {
+              libraryName: 'foo',
+              camelToDashComponentName: true,
+            },
+          ],
+        },
+      },
+    });
+    const config = await rsbuild.unwrapWebpackConfig();
+
+    const babelRules = config.module!.rules?.filter((item: any) => {
+      return item?.use?.[0].loader.includes('babel-loader');
+    });
+
+    expect(babelRules).toMatchSnapshot();
+  });
+
+  it('should not set default pluginImport for Babel', async () => {
+    // camelToDashComponentName
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginBabel()],
+    });
+    const config = await rsbuild.unwrapWebpackConfig();
+
+    const babelRules = config.module!.rules?.filter((item: any) => {
+      return item?.use?.[0].loader.includes('babel-loader');
+    });
+
+    expect(babelRules).toMatchSnapshot();
+  });
+
+  it('should not have any pluginImport in Babel', async () => {
+    // camelToDashComponentName
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginBabel()],
+      rsbuildConfig: {
+        source: {
+          transformImport: false,
+        },
+      },
+    });
+    const config = await rsbuild.unwrapWebpackConfig();
+
+    const babelRules = config.module!.rules?.filter((item: any) => {
+      return item?.use?.[0].loader.includes('babel-loader');
+    });
+
+    expect(babelRules).toMatchSnapshot();
   });
 });

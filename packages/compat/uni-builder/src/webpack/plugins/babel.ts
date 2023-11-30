@@ -2,6 +2,7 @@ import lodash from 'lodash';
 import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
 import { getBabelConfigForNode } from '@rsbuild/babel-preset/node';
 import type { BabelConfig } from '@rsbuild/babel-preset';
+import { isBeyondReact17 } from '@rsbuild/plugin-react';
 import {
   SCRIPT_REGEX,
   addCoreJsEntry,
@@ -10,13 +11,15 @@ import {
   getBrowserslistWithDefault,
   type TransformImport,
 } from '@rsbuild/shared';
-import { getBabelUtils, getUseBuiltIns } from '@rsbuild/plugin-babel';
-import { getCompiledPath } from '../shared';
+import {
+  getBabelUtils,
+  getUseBuiltIns,
+  type PluginBabelOptions,
+} from '@rsbuild/plugin-babel';
+import type { RsbuildPlugin, NormalizedConfig } from '@rsbuild/webpack';
 
-import type { RsbuildPlugin, NormalizedConfig } from '../types';
-
-export const pluginBabel = (): RsbuildPlugin => ({
-  name: 'rsbuild-webpack:babel',
+export const pluginBabel = (options?: PluginBabelOptions): RsbuildPlugin => ({
+  name: 'uni-builder:babel',
   setup(api) {
     api.modifyBundlerChain(
       async (
@@ -29,6 +32,7 @@ export const pluginBabel = (): RsbuildPlugin => ({
           config,
           target,
         );
+        const isNewJsx = await isBeyondReact17(api.context.rootPath);
 
         const getBabelOptions = (config: NormalizedConfig) => {
           // Create babel util function about include/exclude
@@ -77,9 +81,29 @@ export const pluginBabel = (): RsbuildPlugin => ({
             config.performance.transformLodash,
           );
 
+          const presetReactOptions = {
+            development: !isProd,
+            // Will use the native built-in instead of trying to polyfill
+            useBuiltIns: true,
+            useSpread: false,
+            runtime: isNewJsx ? 'automatic' : 'classic',
+          };
+
+          baseBabelConfig.presets?.push([
+            require.resolve('@babel/preset-react'),
+            presetReactOptions,
+          ]);
+
+          if (isProd) {
+            baseBabelConfig.plugins?.push([
+              require.resolve('babel-plugin-transform-react-remove-prop-types'),
+              { removeImport: true },
+            ]);
+          }
+
           const babelConfig = mergeChainedOptions({
             defaults: baseBabelConfig,
-            options: config.tools.babel,
+            options,
             utils: {
               ...getBabelUtils(baseBabelConfig),
               ...babelUtils,
@@ -148,7 +172,10 @@ export const pluginBabel = (): RsbuildPlugin => ({
 
 function applyPluginLodash(config: BabelConfig, transformLodash?: boolean) {
   if (transformLodash) {
-    config.plugins?.push([getCompiledPath('babel-plugin-lodash'), {}]);
+    config.plugins?.push([
+      require.resolve('../../../compiled/babel-plugin-lodash'),
+      {},
+    ]);
   }
 }
 

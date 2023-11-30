@@ -23,10 +23,6 @@ export const pluginBabel = (
   name: 'rsbuild:babel',
 
   setup(api) {
-    if (api.context.bundlerType === 'webpack') {
-      return;
-    }
-
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
       const getBabelOptions = () => {
         // 1. Create babel utils function about include/exclude,

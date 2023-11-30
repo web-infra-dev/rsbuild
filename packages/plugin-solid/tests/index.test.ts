@@ -1,6 +1,6 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { webpackProvider } from '@rsbuild/webpack';
-import { pluginBabel } from '@rsbuild/webpack/plugin-babel';
+import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '../src';
 
 describe('plugin-solid', () => {

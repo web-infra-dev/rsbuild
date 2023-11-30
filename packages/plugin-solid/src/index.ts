@@ -11,7 +11,7 @@ export function pluginSolid(
   return {
     name: 'rsbuild:solid',
 
-    pre: ['rsbuild:babel', 'rsbuild-webpack:babel'],
+    pre: ['rsbuild:babel'],
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
