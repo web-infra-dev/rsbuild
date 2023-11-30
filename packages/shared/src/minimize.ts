@@ -62,7 +62,6 @@ export async function getJSMinifyOptions(config: NormalizedConfig) {
 
   const mergedOptions = mergeChainedOptions({
     defaults: DEFAULT_OPTIONS,
-    // @ts-expect-error
     options: config.tools.terser,
   });
 
