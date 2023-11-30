@@ -3,7 +3,7 @@
  */
 import path from 'path';
 import fs from 'fs-extra';
-import { getPackageVersion } from '@modern-js/generator-utils';
+import { getPackageVersion } from './utils';
 
 const versionMap = new Map();
 
