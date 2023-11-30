@@ -62,15 +62,15 @@ export function getPluginAPI({
     onBeforeBuild: hooks.onBeforeBuildHook.tap,
     onDevCompileDone: hooks.onDevCompileDoneHook.tap,
     modifyBundlerChain: hooks.modifyBundlerChainHook.tap,
+    modifyRspackConfig: hooks.modifyRspackConfigHook.tap,
     modifyWebpackChain: hooks.modifyWebpackChainHook.tap,
     modifyWebpackConfig: hooks.modifyWebpackConfigHook.tap,
     modifyRsbuildConfig: hooks.modifyRsbuildConfigHook.tap,
     onAfterCreateCompiler: hooks.onAfterCreateCompilerHook.tap,
-    onBeforeCreateCompiler: hooks.onBeforeCreateCompilerHook.tap,
     onAfterStartDevServer: hooks.onAfterStartDevServerHook.tap,
+    onBeforeCreateCompiler: hooks.onBeforeCreateCompilerHook.tap,
     onBeforeStartDevServer: hooks.onBeforeStartDevServerHook.tap,
     onAfterStartProdServer: hooks.onAfterStartProdServerHook.tap,
     onBeforeStartProdServer: hooks.onBeforeStartProdServerHook.tap,
-    modifyRspackConfig: () => {},
   };
 }

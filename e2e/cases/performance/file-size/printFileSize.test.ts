@@ -1,8 +1,7 @@
-import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
-const cwd = join(__dirname, 'basic');
+const cwd = __dirname;
 
 test.describe('should print file size correctly', async () => {
   let originalLog = console.log;

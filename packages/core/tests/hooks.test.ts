@@ -1,5 +1,5 @@
 import { initHooks } from '@/core/initHooks';
-import { createStubRsbuild } from './helper';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 
 describe('initHooks', () => {
   test('should init hooks correctly', async () => {
@@ -30,7 +30,7 @@ describe('onExit hook', () => {
         },
       ],
     });
-    await rsbuild.unwrapWebpackConfig();
+    await rsbuild.unwrapConfig();
 
     exitCbs.forEach((cb) => cb());
 
