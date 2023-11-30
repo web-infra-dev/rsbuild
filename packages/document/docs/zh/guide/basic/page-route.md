@@ -55,7 +55,7 @@ export default {
 
 通常情况下，`/` 指向 dist 产物根目录， 而 HTML 文件输出到 dist 根目录下，此时可通过 `/xxx` 访问对应的 HTML 页面。
 
-若通过修改 [output.distPath.html](/config/options/output#outputdistpath) 将 HTML 文件输出到其他子目录下，此时需通过 `/htmlPath/xxx` 访问对应的 HTML 页面。
+若通过修改 [output.distPath.html](/config/options/output#outputdistpath) 将 HTML 文件输出到其他子目录下，此时需通过 `/[htmlPath]/xxx` 访问对应的 HTML 页面。
 
 例如，设置将 HTML 文件输出到 `HTML` 目录下，此时将通过 `/html/` 访问到 index.html，通过 `/html/foo` 访问到 foo.html。
 
