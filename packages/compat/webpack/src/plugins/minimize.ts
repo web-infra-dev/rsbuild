@@ -1,5 +1,10 @@
-import { CHAIN_ID, BundlerChain, getJSMinifyOptions } from '@rsbuild/shared';
-import type { RsbuildPlugin, NormalizedConfig } from '../types';
+import {
+  CHAIN_ID,
+  BundlerChain,
+  getJSMinifyOptions,
+  type NormalizedConfig,
+} from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
 async function applyJSMinimizer(chain: BundlerChain, config: NormalizedConfig) {
   const { default: TerserPlugin } = await import('terser-webpack-plugin');

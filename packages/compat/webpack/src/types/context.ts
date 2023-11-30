@@ -1,6 +1,9 @@
-import type { Context as BaseContext } from '@rsbuild/shared';
+import type {
+  Context as BaseContext,
+  RsbuildConfig,
+  NormalizedConfig,
+} from '@rsbuild/shared';
 import type { Hooks } from '../core/initHooks';
-import type { RsbuildConfig, NormalizedConfig } from './config';
 import type { RsbuildPluginAPI } from './plugin';
 
 /** The inner context. */

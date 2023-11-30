@@ -119,11 +119,7 @@ export type Plugins = {
 /**
  * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
-export type DefaultRsbuildPluginAPI<
-  Config extends Record<string, any> = Record<string, any>,
-  NormalizedConfig extends Record<string, any> = Record<string, any>,
-  BundlerConfig = unknown,
-> = {
+export type DefaultRsbuildPluginAPI<BundlerConfig = unknown> = {
   context: Readonly<Context>;
   isPluginExists: PluginStore['isPluginExists'];
 
@@ -143,10 +139,10 @@ export type DefaultRsbuildPluginAPI<
    * The key is entry name and the value is path.
    */
   getHTMLPaths: () => Record<string, string>;
-  getRsbuildConfig: () => Readonly<Config>;
+  getRsbuildConfig: () => Readonly<RsbuildConfig>;
   getNormalizedConfig: () => NormalizedConfig;
 
-  modifyRsbuildConfig: (fn: ModifyRsbuildConfigFn<Config>) => void;
+  modifyRsbuildConfig: (fn: ModifyRsbuildConfigFn) => void;
   modifyBundlerChain: (fn: ModifyBundlerChainFn) => void;
 
   /** Only works when bundler is Rspack */
@@ -157,9 +153,6 @@ export type DefaultRsbuildPluginAPI<
   modifyWebpackConfig: (fn: ModifyWebpackConfigFn) => void;
 };
 
-export type SharedRsbuildPluginAPI = DefaultRsbuildPluginAPI<
-  RsbuildConfig,
-  NormalizedConfig
->;
+export type SharedRsbuildPluginAPI = DefaultRsbuildPluginAPI;
 
 export type DefaultRsbuildPlugin = RsbuildPlugin<SharedRsbuildPluginAPI>;

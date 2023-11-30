@@ -1,5 +1,6 @@
 import {
   pickRsbuildConfig,
+  type RsbuildConfig,
   type RsbuildProvider,
   type PreviewServerOptions,
 } from '@rsbuild/shared';
@@ -9,15 +10,11 @@ import {
 } from '@rsbuild/core/rspack-provider';
 import { createContext } from './core/createContext';
 import { applyDefaultPlugins } from './shared/plugin';
-import { RsbuildConfig, NormalizedConfig, WebpackConfig } from './types';
+import type { WebpackConfig } from './types';
 import { initConfigs } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
 
-export type WebpackProvider = RsbuildProvider<
-  RsbuildConfig,
-  WebpackConfig,
-  NormalizedConfig
->;
+export type WebpackProvider = RsbuildProvider<WebpackConfig>;
 
 export function webpackProvider({
   rsbuildConfig: originalRsbuildConfig,

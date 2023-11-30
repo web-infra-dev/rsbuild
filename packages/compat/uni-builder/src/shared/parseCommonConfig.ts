@@ -10,9 +10,8 @@ import {
 import {
   mergeRsbuildConfig,
   type RsbuildPlugin,
-  type RsbuildConfig as RsbuildRspackConfig,
+  type RsbuildConfig,
 } from '@rsbuild/core';
-import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 import type {
   UniBuilderRspackConfig,
   UniBuilderWebpackConfig,
@@ -93,9 +92,7 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   cwd: string,
   frameworkConfigPath?: string,
 ): Promise<{
-  rsbuildConfig: B extends 'rspack'
-    ? RsbuildRspackConfig
-    : RsbuildWebpackConfig;
+  rsbuildConfig: RsbuildConfig;
   rsbuildPlugins: RsbuildPlugin<any>[];
 }> {
   const rsbuildConfig = deepmerge({}, uniBuilderConfig);
@@ -129,7 +126,7 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     delete output.enableInlineStyles;
   }
 
-  const extraConfig: RsbuildRspackConfig | RsbuildWebpackConfig = {};
+  const extraConfig: RsbuildConfig = {};
   extraConfig.html ||= {};
 
   if (html.metaByEntries) {

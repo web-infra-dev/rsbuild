@@ -9,11 +9,7 @@ import type { Hooks } from './rspack-provider/core/initHooks';
 import type { RspackConfig } from '@rsbuild/shared';
 
 export interface RsbuildPluginAPI
-  extends DefaultRsbuildPluginAPI<
-    RsbuildConfig,
-    NormalizedConfig,
-    RspackConfig
-  > {}
+  extends DefaultRsbuildPluginAPI<RspackConfig> {}
 
 export type RsbuildPlugin<T = RsbuildPluginAPI> = BaseRsbuildPlugin<T>;
 

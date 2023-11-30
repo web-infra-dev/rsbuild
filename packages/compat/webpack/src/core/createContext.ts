@@ -3,12 +3,15 @@ import {
   debug,
   isFileExists,
   TS_CONFIG_FILE,
+  type RsbuildConfig,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
-import { createContextByConfig } from '@rsbuild/core/rspack-provider';
+import {
+  withDefaultConfig,
+  createContextByConfig,
+} from '@rsbuild/core/rspack-provider';
 import { initHooks } from './initHooks';
-import { withDefaultConfig } from '../config/defaults';
-import type { Context, RsbuildConfig } from '../types';
+import type { Context } from '../types';
 
 /**
  * Create primary context.

@@ -5,6 +5,7 @@ import { RsbuildTarget } from './rsbuild';
 import { BundlerChain } from './bundlerConfig';
 import { mergeRsbuildConfig } from '../mergeRsbuildConfig';
 import type { Rspack } from './rspack';
+import { RsbuildConfig } from '.';
 
 export type OnBeforeBuildFn<BundlerConfig = unknown> = (params: {
   bundlerConfigs?: BundlerConfig[];
@@ -52,7 +53,7 @@ export type ModifyRsbuildConfigUtils = {
   mergeRsbuildConfig: typeof mergeRsbuildConfig;
 };
 
-export type ModifyRsbuildConfigFn<RsbuildConfig> = (
+export type ModifyRsbuildConfigFn = (
   config: RsbuildConfig,
   utils: ModifyRsbuildConfigUtils,
 ) => PromiseOrNot<RsbuildConfig | void>;

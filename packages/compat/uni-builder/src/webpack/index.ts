@@ -1,9 +1,9 @@
-import { RsbuildInstance, createRsbuild } from '@rsbuild/core';
-import type {
-  RsbuildConfig,
-  RsbuildPlugin,
-  WebpackProvider,
-} from '@rsbuild/webpack';
+import {
+  createRsbuild,
+  type RsbuildConfig,
+  type RsbuildInstance,
+} from '@rsbuild/core';
+import type { RsbuildPlugin, WebpackProvider } from '@rsbuild/webpack';
 import type { UniBuilderWebpackConfig } from '../types';
 import type { CreateWebpackBuilderOptions } from '../types';
 import { parseCommonConfig } from '../shared/parseCommonConfig';

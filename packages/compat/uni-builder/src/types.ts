@@ -10,8 +10,7 @@ import type {
   DevConfig,
   RequestHandler,
 } from '@rsbuild/shared';
-import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core';
-import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
+import type { RsbuildConfig } from '@rsbuild/core';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import type { PluginStyledComponentsOptions } from '@rsbuild/plugin-styled-components';
 import type { LazyCompilationOptions } from './webpack/plugins/lazyCompilation';
@@ -43,10 +42,6 @@ export type CreateRspackBuilderOptions = {
 export type CreateUniBuilderOptions =
   | CreateWebpackBuilderOptions
   | CreateRspackBuilderOptions;
-
-export type RsbuildConfig<B = 'rspack'> = B extends 'rspack'
-  ? RsbuildRspackConfig
-  : RsbuildWebpackConfig;
 
 export type GlobalVars = Record<string, any>;
 
@@ -233,7 +228,7 @@ export type SriOptions = {
   hashLoading?: 'eager' | 'lazy';
 };
 
-export type UniBuilderWebpackConfig = RsbuildWebpackConfig &
+export type UniBuilderWebpackConfig = RsbuildConfig &
   UniBuilderExtraConfig & {
     security?: {
       /**
@@ -254,8 +249,7 @@ export type UniBuilderWebpackConfig = RsbuildWebpackConfig &
     };
   };
 
-export type UniBuilderRspackConfig = RsbuildRspackConfig &
-  UniBuilderExtraConfig;
+export type UniBuilderRspackConfig = RsbuildConfig & UniBuilderExtraConfig;
 
 export type BuilderConfig<B = 'rspack'> = B extends 'rspack'
   ? UniBuilderRspackConfig
