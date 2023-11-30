@@ -6,7 +6,9 @@ exports[`parseCommonConfig > dev.xxx 1`] = `
     "hmr": false,
     "progressBar": true,
   },
-  "html": {},
+  "html": {
+    "outputStructure": "nested",
+  },
   "output": {},
   "server": {
     "compress": false,
@@ -31,7 +33,9 @@ exports[`parseCommonConfig > dev.xxx 2`] = `
   "dev": {
     "progressBar": true,
   },
-  "html": {},
+  "html": {
+    "outputStructure": "nested",
+  },
   "output": {},
   "server": {
     "publicDir": false,
@@ -47,6 +51,7 @@ exports[`parseCommonConfig > html.faviconByEntries 1`] = `
   },
   "html": {
     "favicon": [Function],
+    "outputStructure": "nested",
   },
   "output": {},
   "server": {
@@ -65,6 +70,7 @@ exports[`parseCommonConfig > html.faviconByEntries 2`] = `
       "/https/www.foo.com/default.ico",
       [Function],
     ],
+    "outputStructure": "nested",
   },
   "output": {},
   "server": {
@@ -80,6 +86,7 @@ exports[`parseCommonConfig > html.faviconByEntries 3`] = `
   },
   "html": {
     "inject": [Function],
+    "outputStructure": "nested",
   },
   "output": {},
   "server": {
@@ -98,6 +105,7 @@ exports[`parseCommonConfig > html.faviconByEntries 4`] = `
       "body",
       [Function],
     ],
+    "outputStructure": "nested",
   },
   "output": {},
   "server": {
@@ -113,6 +121,7 @@ exports[`parseCommonConfig > html.metaByEntries 1`] = `
   },
   "html": {
     "meta": [Function],
+    "outputStructure": "nested",
   },
   "output": {},
   "server": {
@@ -135,6 +144,7 @@ exports[`parseCommonConfig > html.metaByEntries 2`] = `
       },
       [Function],
     ],
+    "outputStructure": "nested",
   },
   "output": {},
   "server": {
@@ -149,6 +159,7 @@ exports[`parseCommonConfig > html.templateByEntries 1`] = `
     "progressBar": true,
   },
   "html": {
+    "outputStructure": "nested",
     "template": [Function],
   },
   "output": {},
@@ -164,6 +175,7 @@ exports[`parseCommonConfig > html.templateByEntries 2`] = `
     "progressBar": true,
   },
   "html": {
+    "outputStructure": "nested",
     "template": [
       "static/index.html",
       [Function],
@@ -182,6 +194,7 @@ exports[`parseCommonConfig > html.templateParametersByEntries 1`] = `
     "progressBar": true,
   },
   "html": {
+    "outputStructure": "nested",
     "templateParameters": [Function],
   },
   "output": {},
@@ -197,6 +210,7 @@ exports[`parseCommonConfig > html.templateParametersByEntries 2`] = `
     "progressBar": true,
   },
   "html": {
+    "outputStructure": "nested",
     "templateParameters": [
       {
         "name": "jack",
@@ -217,6 +231,7 @@ exports[`parseCommonConfig > html.titleByEntries 1`] = `
     "progressBar": true,
   },
   "html": {
+    "outputStructure": "nested",
     "title": [Function],
   },
   "output": {},
@@ -232,6 +247,7 @@ exports[`parseCommonConfig > html.titleByEntries 2`] = `
     "progressBar": true,
   },
   "html": {
+    "outputStructure": "nested",
     "title": [
       "Default",
       [Function],
@@ -249,7 +265,9 @@ exports[`parseCommonConfig > output.cssModuleLocalIdentName 1`] = `
   "dev": {
     "progressBar": true,
   },
-  "html": {},
+  "html": {
+    "outputStructure": "nested",
+  },
   "output": {
     "cssModules": {
       "localIdentName": "[local]-[hash:base64:6]",
@@ -266,7 +284,9 @@ exports[`parseCommonConfig > output.disableCssModuleExtension 1`] = `
   "dev": {
     "progressBar": true,
   },
-  "html": {},
+  "html": {
+    "outputStructure": "nested",
+  },
   "output": {
     "cssModules": {
       "auto": [Function],
@@ -284,7 +304,9 @@ exports[`parseCommonConfig > output.enableInlineScripts 1`] = `
   "dev": {
     "progressBar": true,
   },
-  "html": {},
+  "html": {
+    "outputStructure": "nested",
+  },
   "output": {
     "inlineScripts": true,
   },
@@ -299,7 +321,9 @@ exports[`parseCommonConfig > output.enableInlineStyles 1`] = `
   "dev": {
     "progressBar": true,
   },
-  "html": {},
+  "html": {
+    "outputStructure": "nested",
+  },
   "output": {
     "inlineStyles": true,
   },
