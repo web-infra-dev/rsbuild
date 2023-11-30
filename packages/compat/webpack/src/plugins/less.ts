@@ -1,10 +1,10 @@
 import {
-  isUseCssSourceMap,
   LESS_REGEX,
   FileFilterUtil,
+  isUseCssSourceMap,
   getLessLoaderOptions,
+  type RsbuildPlugin,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
 
 export type LessLoaderUtils = {
   addExcludes: FileFilterUtil;

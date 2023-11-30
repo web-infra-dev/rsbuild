@@ -13,12 +13,12 @@
 - `remove`：指定需要移除的插件，可以传入插件 name 的数组。
 
 ```ts
-type RsbuildPlugin<API = RsbuildPluginAPI> = {
+type RsbuildPlugin = {
   name: string;
   pre?: string[];
   post?: string[];
   remove?: string[];
-  setup: (api: API) => Promise<void> | void;
+  setup: (api: RsbuildPluginAPI) => Promise<void> | void;
 };
 ```
 

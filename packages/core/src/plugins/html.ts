@@ -14,9 +14,9 @@ import {
 } from '@rsbuild/shared';
 import type {
   HtmlConfig,
+  RsbuildPluginAPI,
   NormalizedConfig,
   HTMLPluginOptions,
-  SharedRsbuildPluginAPI,
   NormalizedOutputConfig,
   HtmlInjectTagDescriptor,
 } from '@rsbuild/shared';
@@ -167,7 +167,7 @@ function getChunks(entryName: string, entryValue: string | string[]) {
   return [...dependOn, entryName];
 }
 
-export const applyInjectTags = (api: SharedRsbuildPluginAPI) => {
+export const applyInjectTags = (api: RsbuildPluginAPI) => {
   api.modifyBundlerChain(async (chain, { HtmlPlugin, CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
 

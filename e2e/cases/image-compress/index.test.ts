@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
 import { providerType } from '@scripts/helper';
 import { build } from '@scripts/shared';
-import { SharedRsbuildPluginAPI } from '@rsbuild/shared';
+import type { RsbuildPluginAPI } from '@rsbuild/shared';
 
 test('should compress image with use plugin-image-compress', async () => {
   let assets: any[];
@@ -15,7 +15,7 @@ test('should compress image with use plugin-image-compress', async () => {
         {
           name: 'plugin-file-size',
 
-          setup(api: SharedRsbuildPluginAPI) {
+          setup(api: RsbuildPluginAPI) {
             api.onAfterBuild(async ({ stats }) => {
               const res = stats?.toJson({
                 all: false,

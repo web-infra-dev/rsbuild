@@ -15,20 +15,18 @@ import type {
   OnBeforeStartProdServerFn,
   OnBeforeCreateCompilerFn,
 } from '@rsbuild/shared';
-import type { WebpackConfig } from '../types';
 
 export function initHooks() {
   return {
     onExitHook: createAsyncHook<OnExitFn>(),
     onAfterBuildHook: createAsyncHook<OnAfterBuildFn>(),
-    onBeforeBuildHook: createAsyncHook<OnBeforeBuildFn<WebpackConfig>>(),
+    onBeforeBuildHook: createAsyncHook<OnBeforeBuildFn>(),
     onDevCompileDoneHook: createAsyncHook<OnDevCompileDoneFn>(),
     modifyWebpackChainHook: createAsyncHook<ModifyWebpackChainFn>(),
     modifyWebpackConfigHook: createAsyncHook<ModifyWebpackConfigFn>(),
     modifyRsbuildConfigHook: createAsyncHook<ModifyRsbuildConfigFn>(),
     onAfterCreateCompilerHook: createAsyncHook<OnAfterCreateCompilerFn>(),
-    onBeforeCreateCompilerHook:
-      createAsyncHook<OnBeforeCreateCompilerFn<WebpackConfig>>(),
+    onBeforeCreateCompilerHook: createAsyncHook<OnBeforeCreateCompilerFn>(),
     onAfterStartDevServerHook: createAsyncHook<OnAfterStartDevServerFn>(),
     onBeforeStartDevServerHook: createAsyncHook<OnBeforeStartDevServerFn>(),
     onAfterStartProdServerHook: createAsyncHook<OnAfterStartProdServerFn>(),

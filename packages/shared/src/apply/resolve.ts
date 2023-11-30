@@ -1,14 +1,14 @@
 import { castArray, ensureAbsolutePath } from '../utils';
-import type { ChainIdentifier } from '../chain';
 import { mergeChainedOptions } from '../mergeChainedOptions';
-import {
+import type { ChainIdentifier } from '../chain';
+import type {
   BundlerChain,
   ChainedConfig,
   NormalizedConfig,
-  SharedRsbuildPluginAPI,
+  RsbuildPluginAPI,
 } from '../types';
 
-export function applyResolvePlugin(api: SharedRsbuildPluginAPI) {
+export function applyResolvePlugin(api: RsbuildPluginAPI) {
   api.modifyBundlerChain((chain, { CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
 

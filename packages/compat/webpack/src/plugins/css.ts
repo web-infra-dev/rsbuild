@@ -10,11 +10,11 @@ import {
   getBrowserslistWithDefault,
   getCssModuleLocalIdentName,
   type Context,
+  type RsbuildPlugin,
   type NormalizedConfig,
   type BundlerChainRule,
   type CSSExtractOptions,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
 
 export async function applyBaseCSSRule({
   rule,

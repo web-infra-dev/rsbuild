@@ -2,9 +2,10 @@ import {
   onExitProcess,
   getHTMLPathByEntry,
   type PluginStore,
+  type RsbuildPluginAPI,
 } from '@rsbuild/shared';
 import { createPublicContext } from './createContext';
-import type { Context, RsbuildPluginAPI } from '../../types';
+import type { Context } from '../../types';
 
 export function getPluginAPI({
   context,

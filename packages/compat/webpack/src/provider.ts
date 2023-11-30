@@ -10,17 +10,14 @@ import {
 } from '@rsbuild/core/rspack-provider';
 import { createContext } from './core/createContext';
 import { applyDefaultPlugins } from './shared/plugin';
-import type { WebpackConfig } from './types';
 import { initConfigs } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
-
-export type WebpackProvider = RsbuildProvider<WebpackConfig>;
 
 export function webpackProvider({
   rsbuildConfig: originalRsbuildConfig,
 }: {
   rsbuildConfig: RsbuildConfig;
-}): WebpackProvider {
+}): RsbuildProvider {
   const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
 
   // @ts-expect-error compiler type mismatch
