@@ -30,6 +30,22 @@ export type HistoryApiFallbackOptions = {
   }>;
 };
 
+export type PublicDir =
+  | string
+  | false
+  | {
+      /**
+       * Directory to serve as static assets
+       * @default 'public'
+       */
+      name?: string;
+      /**
+       * Whether copy files from the publicDir into the distDir on build
+       * @default true
+       */
+      copyOnBuild?: boolean;
+    };
+
 export interface ServerConfig {
   /**
    * Whether to enable gzip compression
@@ -38,7 +54,7 @@ export interface ServerConfig {
   /**
    * Serving static files from the directory (by default 'public' directory)
    */
-  publicDir?: string | false;
+  publicDir?: PublicDir;
   /**
    * Specify a port number for Rsbuild Server to listen.
    */

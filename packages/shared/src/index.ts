@@ -13,7 +13,7 @@ export * from './pick';
 export * from './types';
 export * from './config';
 export * from './format';
-export * from './devServer';
+export * from './server';
 export * from './chain';
 export * from './plugins';
 export * from './apply';

@@ -1,4 +1,4 @@
-import { isProd } from '@rsbuild/shared';
+import { isProd, formatPublicDirConfig } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 // For Rsbuild Server Config
@@ -9,10 +9,18 @@ export const pluginServer = (): RsbuildPlugin => ({
     api.modifyRsbuildConfig((rsbuildConfig, { mergeRsbuildConfig }) => {
       // copy publicDir to dist when build
       if (isProd() && rsbuildConfig.server?.publicDir) {
+        const { name, copyOnBuild } = formatPublicDirConfig(
+          rsbuildConfig.server?.publicDir,
+        );
+
+        if (!copyOnBuild) {
+          return;
+        }
+
         const { copy } = rsbuildConfig.output || {};
         const publicPattern = [
           {
-            from: rsbuildConfig.server?.publicDir,
+            from: name,
             to: '',
             noErrorOnMissing: true,
           },
