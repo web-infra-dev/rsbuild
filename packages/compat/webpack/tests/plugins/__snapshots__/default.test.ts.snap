@@ -1280,26 +1280,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
         },
       },
-      CssMinimizerPlugin {
-        "options": {
-          "exclude": undefined,
-          "include": undefined,
-          "minimizer": {
-            "implementation": [Function],
-            "options": {
-              "preset": [
-                "default",
-                {
-                  "mergeLonghand": false,
-                },
-              ],
-            },
-          },
-          "parallel": true,
-          "test": /\\\\\\.css\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-          "warningsFilter": [Function],
-        },
-      },
     ],
     "splitChunks": {
       "cacheGroups": {
@@ -1928,26 +1908,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
         },
       },
-      CssMinimizerPlugin {
-        "options": {
-          "exclude": undefined,
-          "include": undefined,
-          "minimizer": {
-            "implementation": [Function],
-            "options": {
-              "preset": [
-                "default",
-                {
-                  "mergeLonghand": false,
-                },
-              ],
-            },
-          },
-          "parallel": true,
-          "test": /\\\\\\.css\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-          "warningsFilter": [Function],
-        },
-      },
     ],
     "splitChunks": false,
   },
@@ -2505,26 +2465,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
           "parallel": true,
           "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-        },
-      },
-      CssMinimizerPlugin {
-        "options": {
-          "exclude": undefined,
-          "include": undefined,
-          "minimizer": {
-            "implementation": [Function],
-            "options": {
-              "preset": [
-                "default",
-                {
-                  "mergeLonghand": false,
-                },
-              ],
-            },
-          },
-          "parallel": true,
-          "test": /\\\\\\.css\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-          "warningsFilter": [Function],
         },
       },
     ],
