@@ -1,5 +1,12 @@
 # @rsbuild/core
 
+## 0.1.6
+
+### Patch Changes
+
+- 9613e0b9: feat: support serving public assets in the public dir
+  - @rsbuild/shared@0.1.6
+
 ## 0.1.5
 
 ### Patch Changes
