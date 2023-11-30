@@ -195,7 +195,7 @@ export default {
 
 #### prependPlugins
 
-- **Type:** `(plugins: RspackPluginInstance | RspackPluginInstance[]) => void`
+- **Type:** `(plugins: BundlerPluginInstance | BundlerPluginInstance[]) => void`
 
 Add additional plugins to the head of the internal Rspack plugins array, and the plugin will be executed first.
 
@@ -215,7 +215,7 @@ export default {
 
 #### appendPlugins
 
-- **Type:** `(plugins: RspackPluginInstance | RspackPluginInstance[]) => void`
+- **Type:** `(plugins: BundlerPluginInstance | BundlerPluginInstance[]) => void`
 
 Add additional plugins at the end of the internal Rspack plugins array, the plugin will be executed last.
 

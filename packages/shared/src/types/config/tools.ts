@@ -15,8 +15,9 @@ import type {
 } from '../thirdParty';
 import type { BundlerChain } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
-import type { RspackConfig, RspackRule, RspackPluginInstance } from '../rspack';
+import type { RspackConfig, RspackRule } from '../rspack';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+import type { BundlerPluginInstance } from '../bundlerConfig';
 
 export type { HTMLPluginOptions };
 
@@ -56,10 +57,10 @@ export type ToolsHtmlPluginConfig = ChainedConfigWithUtils<
 export type ModifyRspackConfigUtils = ModifyChainUtils & {
   addRules: (rules: RspackRule | RspackRule[]) => void;
   prependPlugins: (
-    plugins: RspackPluginInstance | RspackPluginInstance[],
+    plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;
   appendPlugins: (
-    plugins: RspackPluginInstance | RspackPluginInstance[],
+    plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
   mergeConfig: typeof import('../../../compiled/webpack-merge').merge;
