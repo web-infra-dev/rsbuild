@@ -1,8 +1,7 @@
-import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
-const cwd = join(__dirname, 'removeConsole');
+const cwd = __dirname;
 
 const expectConsoleType = async (
   rsbuild: Awaited<ReturnType<typeof build>>,

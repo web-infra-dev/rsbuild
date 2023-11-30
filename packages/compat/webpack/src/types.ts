@@ -7,7 +7,7 @@ import type {
   NormalizedConfig,
   RsbuildPluginAPI,
 } from '@rsbuild/shared';
-import type { Hooks } from './core/initHooks';
+import type { Hooks } from '@rsbuild/core/rspack-provider';
 
 /** The inner context. */
 export type Context = BaseContext & {

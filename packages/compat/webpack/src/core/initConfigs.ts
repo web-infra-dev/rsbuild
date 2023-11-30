@@ -24,7 +24,6 @@ export async function initConfigs({
   webpackConfigs: WebpackConfig[];
 }> {
   await initRsbuildConfig({
-    // @ts-expect-error context type mismatch
     context,
     pluginStore,
   });
