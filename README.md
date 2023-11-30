@@ -60,6 +60,12 @@ The following diagram illustrates the relationship between Rsbuild and other too
 
 ![Rspack Ecosystem](https://github.com/web-infra-dev/rsbuild/assets/7237365/1ec93ad6-b8b1-475b-963f-cba1e7d79dec)
 
+## 📍 Roadmap
+
+- Q4 2023: release several minor versions of Rsbuild 0.x (based on Rspack 0.x).
+- Q1 2024: release Rsbuild 1.0 beta version (based on Rspack 1.0 beta).
+- Q2 2024: release Rsbuild 1.0 stable version (based on Rspack 1.0 stable).
+
 ## 📚 Getting Started
 
 To get started with Rsbuild, see the [Quick Start](https://rsbuild.dev/guide/start/quick-start).
