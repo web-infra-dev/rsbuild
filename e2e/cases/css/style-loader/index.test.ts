@@ -1,4 +1,3 @@
-import { join } from 'path';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';

@@ -62,9 +62,9 @@ The following diagram illustrates the relationship between Rsbuild and other too
 
 ## 📍 Roadmap
 
-- Q4 2023: release several minor versions of Rsbuild 0.x (based on Rspack 0.x).
-- Q1 2024: release Rsbuild 1.0 beta version (based on Rspack 1.0 beta).
-- Q2 2024: release Rsbuild 1.0 stable version (based on Rspack 1.0 stable).
+- **Q4 2023**: release several minor versions of Rsbuild 0.x (based on Rspack 0.x).
+- **Q1 2024**: release Rsbuild 1.0 beta version (based on Rspack 1.0 beta).
+- **Q2 2024**: release Rsbuild 1.0 stable version (based on Rspack 1.0 stable).
 
 ## 📚 Getting Started
 

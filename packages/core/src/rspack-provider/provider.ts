@@ -48,11 +48,10 @@ export function rspackProvider({
           rsbuildOptions,
         });
 
-        // todo: compiler type declaration
         return createCompiler({
           context,
           rspackConfigs,
-        }) as any;
+        });
       },
 
       async startDevServer(options) {

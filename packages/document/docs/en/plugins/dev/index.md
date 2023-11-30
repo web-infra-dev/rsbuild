@@ -125,7 +125,8 @@ export const pluginUploadDist = (): RsbuildPlugin => ({
     api.onAfterBuild(() => {
       const config = api.getNormalizedConfig();
       const distRoot = config.output.distPath.root;
-      // TODO: upload all files in `distRoot`.
+
+      // upload all files in `distRoot`...
     });
   },
 });

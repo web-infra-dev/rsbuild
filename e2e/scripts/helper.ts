@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
 import glob, { Options as GlobOptions } from 'fast-glob';
 

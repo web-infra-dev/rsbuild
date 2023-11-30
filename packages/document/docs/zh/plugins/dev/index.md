@@ -123,7 +123,8 @@ export const pluginUploadDist = (): RsbuildPlugin => ({
     api.onAfterBuild(() => {
       const config = api.getNormalizedConfig();
       const distRoot = config.output.distPath.root;
-      // TODO: 上传 `distRoot` 目录下所有产物文件
+
+      // 上传 `distRoot` 目录下所有产物文件...
     });
   },
 });
