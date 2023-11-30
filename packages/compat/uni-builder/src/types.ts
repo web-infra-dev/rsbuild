@@ -94,6 +94,13 @@ export type UniBuilderExtraConfig = {
      * Modify the options of [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
      */
     minifyCss?: PluginCssMinimizerOptions['pluginOptions'];
+    /**
+     * Modify the options of [babel-loader](https://github.com/babel/babel-loader)
+     * When `tools.babel`'s type is Function，the default babel config will be passed in as the first parameter, the config object can be modified directly, or a value can be returned as the final result.
+     * When `tools.babel`'s type is `Object`, the config will be shallow merged with default config by `Object.assign`.
+     * Note that `Object.assign` is a shallow copy and will completely overwrite the built-in `presets` or `plugins` array, please use it with caution.
+     */
+    babel?: PluginBabelOptions;
   };
   dev?: {
     /**
@@ -248,14 +255,7 @@ export type UniBuilderWebpackConfig = RsbuildWebpackConfig &
   };
 
 export type UniBuilderRspackConfig = RsbuildRspackConfig &
-  UniBuilderExtraConfig & {
-    tools?: {
-      /**
-       * Modify the options of [babel-loader](https://github.com/babel/babel-loader)
-       */
-      babel?: PluginBabelOptions;
-    };
-  };
+  UniBuilderExtraConfig;
 
 export type BuilderConfig<B = 'rspack'> = B extends 'rspack'
   ? UniBuilderRspackConfig

@@ -1,7 +1,7 @@
 import { expect, describe, it } from 'vitest';
-import { pluginReact } from '../../../../plugin-react/src';
-import { webpackProvider } from '../../src';
-import { pluginBabel } from '../../src/plugins/babel';
+import { pluginReact } from '../src/webpack/plugins/react';
+import { webpackProvider } from '../../webpack/src';
+import { pluginBabel } from '../src/webpack/plugins/babel';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 
 describe('plugins/react', () => {

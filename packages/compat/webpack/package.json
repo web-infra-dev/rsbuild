@@ -37,7 +37,6 @@
     "@babel/core": "^7.23.2",
     "@babel/preset-react": "^7.22.15",
     "@babel/types": "^7.23.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.5.10",
     "@rsbuild/babel-preset": "workspace:*",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",

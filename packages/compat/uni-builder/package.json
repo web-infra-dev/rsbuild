@@ -24,6 +24,7 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "0.5.10",
     "@rsbuild/babel-preset": "workspace:*",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",

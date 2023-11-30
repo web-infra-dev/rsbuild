@@ -21,6 +21,8 @@ const PLUGIN_NAME = 'plugin-swc';
 export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_NAME,
 
+  pre: ['rsbuild:babel', 'uni-builder:babel'],
+
   setup(api: RsbuildPluginAPI) {
     if (api.context.bundlerType === 'rspack') {
       return;

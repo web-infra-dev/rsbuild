@@ -9,7 +9,11 @@ import {
   type FileFilterUtil,
   type ChainedConfigWithUtils,
 } from '@rsbuild/shared';
-import { getBabelUtils, getUseBuiltIns } from '@rsbuild/plugin-babel';
+import {
+  PluginBabelOptions,
+  getBabelUtils,
+  getUseBuiltIns,
+} from '@rsbuild/plugin-babel';
 import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
 import type { RsbuildPlugin } from '@rsbuild/webpack';
 import type { Options as RawTSLoaderOptions } from 'ts-loader';
@@ -23,13 +27,14 @@ export type PluginTsLoaderOptions = ChainedConfigWithUtils<
 
 export const pluginTsLoader = (
   options?: PluginTsLoaderOptions,
+  babelOptions?: PluginBabelOptions,
 ): RsbuildPlugin => {
   return {
     name: 'uni-builder:ts-loader',
 
-    pre: ['rsbuild-webpack:babel'],
+    pre: ['uni-builder:babel'],
 
-    post: ['rsbuild-webpack:react'],
+    post: ['uni-builder:react'],
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { target, CHAIN_ID }) => {
@@ -52,7 +57,7 @@ export const pluginTsLoader = (
 
         const babelLoaderOptions = mergeChainedOptions({
           defaults: baseBabelConfig,
-          options: config.tools.babel,
+          options: babelOptions,
           utils: babelUtils,
         });
 

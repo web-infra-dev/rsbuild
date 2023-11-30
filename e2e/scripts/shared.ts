@@ -1,13 +1,15 @@
 import { URL } from 'url';
 import assert from 'assert';
 import { join } from 'path';
-import { fse } from '@rsbuild/shared';
+import { RsbuildPlugin, fse } from '@rsbuild/shared';
 import { globContentJSON } from '@scripts/helper';
 import type {
   CreateRsbuildOptions,
   RsbuildConfig as RspackRsbuildConfig,
 } from '@rsbuild/core';
 import type { RsbuildConfig as WebpackRsbuildConfig } from '@rsbuild/webpack';
+import { pluginBabel } from '../../packages/compat/uni-builder/src/webpack/plugins/babel';
+import { pluginReact } from '../../packages/compat/uni-builder/src/webpack/plugins/react';
 import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
@@ -24,14 +26,21 @@ const noop = async () => {};
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions,
   rsbuildConfig: WebpackRsbuildConfig | RspackRsbuildConfig = {},
+  plugins: RsbuildPlugin[] = [],
 ) => {
   const { createRsbuild } = await import('@rsbuild/core');
 
   if (process.env.PROVIDE_TYPE === 'rspack') {
-    return createRsbuild({
+    const rsbuild = await createRsbuild({
       ...rsbuildOptions,
       rsbuildConfig,
     });
+
+    if (plugins) {
+      rsbuild.addPlugins(plugins);
+    }
+
+    return rsbuild;
   }
 
   const { webpackProvider } = await import('@rsbuild/webpack');
@@ -41,8 +50,27 @@ export const createRsbuild = async (
     provider: webpackProvider,
   });
 
-  // @rsbuild/webpack has no built-in CSS minimizer,
-  rsbuild.addPlugins([pluginCssMinimizer()]);
+  if (plugins) {
+    rsbuild.addPlugins(plugins);
+  }
+
+  const babel = pluginBabel();
+  if (!rsbuild.isPluginExists(babel.name)) {
+    // @rsbuild/webpack has no built-in transformer
+    rsbuild.addPlugins([babel]);
+  }
+
+  const react = pluginReact();
+  if (!rsbuild.isPluginExists(react.name)) {
+    // @rsbuild/webpack has no built-in transformer
+    rsbuild.addPlugins([react]);
+  }
+
+  const cssMinimizer = pluginCssMinimizer();
+  if (!rsbuild.isPluginExists(cssMinimizer.name)) {
+    // @rsbuild/webpack has no built-in CSS minimizer
+    rsbuild.addPlugins([cssMinimizer]);
+  }
 
   return rsbuild;
 };
@@ -115,11 +143,7 @@ export async function dev<BundlerType = 'rspack'>({
 
   updateConfigForTest(rsbuildConfig);
 
-  const rsbuild = await createRsbuild(options, rsbuildConfig);
-
-  if (plugins) {
-    rsbuild.addPlugins(plugins);
-  }
+  const rsbuild = await createRsbuild(options, rsbuildConfig, plugins);
 
   return rsbuild.startDevServer({
     printURLs: false,
@@ -142,11 +166,7 @@ export async function build<BundlerType = 'rspack'>({
 
   updateConfigForTest(rsbuildConfig);
 
-  const rsbuild = await createRsbuild(options, rsbuildConfig);
-
-  if (plugins) {
-    rsbuild.addPlugins(plugins);
-  }
+  const rsbuild = await createRsbuild(options, rsbuildConfig, plugins);
 
   await rsbuild.build();
 
