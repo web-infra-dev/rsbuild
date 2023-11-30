@@ -1,5 +1,13 @@
 # @rsbuild/plugin-react
 
+## 0.1.5
+
+### Patch Changes
+
+- ca87f86f: feat(deps): bump Rspack to v0.4.1
+- Updated dependencies [ca87f86f]
+  - @rsbuild/shared@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

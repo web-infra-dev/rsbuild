@@ -6,25 +6,31 @@ This section describes all the properties and methods on the Rsbuild instance ob
 
 `rsbuild.context` is a read-only object that provides some context infos.
 
-### rsbuild.context.version
+### context.version
 
 The version of `@rsbuild/core` currently in use.
 
-### rsbuild.context.entry
+- **Type:**
+
+```ts
+type Version = string;
+```
+
+### context.entry
 
 The entry object from the `source.entry` option.
 
-- **Type**
+- **Type:**
 
 ```ts
 type RsbuildEntry = Record<string, string | string[]>;
 ```
 
-### rsbuild.context.target
+### context.target
 
 Build target type, corresponding to the `target` option of `createRsbuild` method.
 
-- **Type**
+- **Type:**
 
 ```ts
 type RsbuildTarget = 'web' | 'node' | 'web-worker';
@@ -34,51 +40,51 @@ type Context = {
 };
 ```
 
-### rsbuild.context.rootPath
+### context.rootPath
 
 The root path of current build, corresponding to the `cwd` option of `createRsbuild` method.
 
-- **Type**
+- **Type:**
 
 ```ts
 type RootPath = string;
 ```
 
-### rsbuild.context.distPath
+### context.distPath
 
 The absolute path of the output directory, corresponding to the `output.distPath.root` config in `RsbuildConfig`.
 
-- **Type**
+- **Type:**
 
 ```ts
 type DistPath = string;
 ```
 
-### rsbuild.context.cachePath
+### context.cachePath
 
 The absolute path of the build cache files.
 
-- **Type**
+- **Type:**
 
 ```ts
 type CachePath = string;
 ```
 
-### rsbuild.context.tsconfigPath
+### context.tsconfigPath
 
 The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json file does not exist in current project.
 
-- **Type**
+- **Type:**
 
 ```ts
 type TsconfigPath = string | undefined;
 ```
 
-### rsbuild.context.devServer
+### context.devServer
 
 Dev Server information, including the current Dev Server hostname and port number.
 
-- **Type**
+- **Type:**
 
 ```ts
 type DevServer = {
@@ -87,11 +93,11 @@ type DevServer = {
 };
 ```
 
-### rsbuild.context.bundlerType
+### context.bundlerType
 
 The bundler type of current build.
 
-- **Type**
+- **Type:**
 
 ```ts
 type bundlerType = 'rspack' | 'webpack';
@@ -101,7 +107,7 @@ type bundlerType = 'rspack' | 'webpack';
 
 Perform a production build.
 
-- **Type**
+- **Type:**
 
 ```ts
 type BuildOptions = {
@@ -114,7 +120,7 @@ type BuildOptions = {
 function Build(options?: BuildOptions): Promise<void>;
 ```
 
-- **Example**
+- **Example:**
 
 ```ts
 // build
@@ -169,7 +175,7 @@ await rsbuild.build({
 
 Start the local dev server.
 
-- **Type**
+- **Type:**
 
 ```ts
 type StartDevServerOptions = {
@@ -194,7 +200,7 @@ function StartDevServer(
 ): Promise<StartServerResult>;
 ```
 
-- **Example**
+- **Example:**
 
 Start Dev Server:
 
@@ -322,7 +328,7 @@ Then Rsbuild will use the custom logger to output logs.
 
 Start a server to preview the production build locally. This method should be executed after `rsbuild.build`.
 
-- **Type**
+- **Type:**
 
 ```ts
 type StartServerResult = {
@@ -334,7 +340,7 @@ type StartServerResult = {
 function server(): Promise<StartServerResult>;
 ```
 
-- **Example**
+- **Example:**
 
 Start the server：
 
@@ -373,13 +379,13 @@ Create a Compiler object.
 
 When the `target` option of `createRsbuild` contains only one value, the return value is `Compiler`; when `target` contains multiple values, the return value is `MultiCompiler`.
 
-- **Type**
+- **Type:**
 
 ```ts
 function CreateCompiler(): Promise<Compiler | MultiCompiler>;
 ```
 
-- **Example**
+- **Example:**
 
 ```ts
 const compiler = await rsbuild.createCompiler();
@@ -393,7 +399,7 @@ Register one or more Rsbuild plugins, which can be called multiple times.
 
 This method needs to be called before compiling. If it is called after compiling, it will not affect the compilation result.
 
-- **Type**
+- **Type:**
 
 ```ts
 type AddPluginsOptions = { before?: string } | { after?: string };
@@ -404,7 +410,7 @@ function AddPlugins(
 ): Promise<void>;
 ```
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.addPlugins([pluginFoo(), pluginBar()]);
@@ -422,13 +428,13 @@ Removes one or more Rsbuild plugins, which can be called multiple times.
 
 This method needs to be called before compiling. If it is called after compiling, it will not affect the compilation result.
 
-- **Type**
+- **Type:**
 
 ```ts
 function RemovePlugins(pluginNames: string[]): void;
 ```
 
-- **Example**
+- **Example:**
 
 ```ts
 // add plugin
@@ -445,7 +451,7 @@ import IsPluginExists from '@en/shared/isPluginExists.md';
 
 <IsPluginExists />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.addPlugins([pluginFoo()]);
@@ -463,7 +469,7 @@ The `inspectConfig` method does not support simultaneous use with the `startDevS
 When you need to view the complete Rsbuild and bundler configurations during the build process, you can use the [debug mode](/guide/debug/debug-mode) or obtain them through hooks such as `onBeforeBuild` and `onBeforeCreateCompile`.
 :::
 
-- **Type**
+- **Type:**
 
 ```ts
 type InspectConfigOptions = {
@@ -487,7 +493,7 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
 }>;
 ```
 
-- **Example**
+- **Example:**
 
 Get the config content in string format:
 
@@ -511,7 +517,7 @@ import OnBeforeCreateCompiler from '@en/shared/onBeforeCreateCompiler.md';
 
 <OnBeforeCreateCompiler />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onBeforeCreateCompiler(({ bundlerConfigs }) => {
@@ -525,7 +531,7 @@ import OnAfterCreateCompiler from '@en/shared/onAfterCreateCompiler.md';
 
 <OnAfterCreateCompiler />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onAfterCreateCompiler(({ compiler }) => {
@@ -539,7 +545,7 @@ import OnBeforeBuild from '@en/shared/onBeforeBuild.md';
 
 <OnBeforeBuild />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onBeforeBuild(({ bundlerConfigs }) => {
@@ -553,7 +559,7 @@ import OnAfterBuild from '@en/shared/onAfterBuild.md';
 
 <OnAfterBuild />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onAfterBuild(({ stats }) => {
@@ -567,7 +573,7 @@ import OnBeforeStartDevServer from '@en/shared/onBeforeStartDevServer.md';
 
 <OnBeforeStartDevServer />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onBeforeStartDevServer(() => {
@@ -581,7 +587,7 @@ import OnAfterStartDevServer from '@en/shared/onAfterStartDevServer.md';
 
 <OnAfterStartDevServer />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onAfterStartDevServer(({ port }) => {
@@ -595,7 +601,7 @@ import OnBeforeStartProdServer from '@en/shared/onBeforeStartProdServer.md';
 
 <OnBeforeStartProdServer />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onBeforeStartProdServer(() => {
@@ -609,7 +615,7 @@ import OnAfterStartProdServer from '@en/shared/onAfterStartProdServer.md';
 
 <OnAfterStartProdServer />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onAfterStartProdServer(({ port }) => {
@@ -623,7 +629,7 @@ import OnDevCompileDone from '@en/shared/onDevCompileDone.md';
 
 <OnDevCompileDone />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onDevCompileDone(({ isFirstCompile }) => {
@@ -641,7 +647,7 @@ import OnExit from '@en/shared/onExit.md';
 
 <OnExit />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onExit(() => {
@@ -655,7 +661,7 @@ import GetRsbuildConfig from '@en/shared/getRsbuildConfig.md';
 
 <GetRsbuildConfig />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onBeforeBuild(() => {
@@ -670,7 +676,7 @@ import GetNormalizedConfig from '@en/shared/getNormalizedConfig.md';
 
 <GetNormalizedConfig />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onBeforeBuild(() => {
@@ -685,7 +691,7 @@ import GetHTMLPaths from '@en/shared/getHTMLPaths.md';
 
 <GetHTMLPaths />
 
-- **Example**
+- **Example:**
 
 ```ts
 rsbuild.onBeforeBuild(() => {

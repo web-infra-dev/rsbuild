@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { castArray, ensureAbsolutePath } from '../utils';
 import type { ChainIdentifier } from '../chain';
 import { mergeChainedOptions } from '../mergeChainedOptions';

@@ -51,23 +51,6 @@ export const isCssModules = (filename: string, modules: CssLoaderModules) => {
   return true;
 };
 
-type CssNanoOptions = {
-  configFile?: string | undefined;
-  preset?: [string, object] | string | undefined;
-};
-
-export const getCssnanoDefaultOptions = (): CssNanoOptions => ({
-  preset: [
-    'default',
-    {
-      // merge longhand will break safe-area-inset-top, so disable it
-      // https://github.com/cssnano/cssnano/issues/803
-      // https://github.com/cssnano/cssnano/issues/967
-      mergeLonghand: false,
-    },
-  ],
-});
-
 export const getPostcssConfig = ({
   enableSourceMap,
   browserslist,

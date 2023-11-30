@@ -35,16 +35,18 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
   return ret;
 };
 
-export const awaitFileExists = async (dir: string, checks = 0) => {
+export const awaitFileExists = async (dir: string) => {
   const maxChecks = 100;
   const interval = 100;
-  if (fse.existsSync(dir)) {
-    expect(true).toBe(true);
-  } else if (checks < maxChecks) {
+  let checks = 0;
+
+  while (checks < maxChecks) {
+    if (fse.existsSync(dir)) {
+      return;
+    }
     checks++;
     await new Promise((resolve) => setTimeout(resolve, interval));
-    await awaitFileExists(dir, checks);
-  } else {
-    expect(false).toBe(true);
   }
+
+  throw new Error('awaitFileExists failed: ' + dir);
 };

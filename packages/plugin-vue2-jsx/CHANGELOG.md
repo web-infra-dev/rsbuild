@@ -1,5 +1,12 @@
 # @rsbuild/plugin-vue2-jsx
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies [ca87f86f]
+  - @rsbuild/shared@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Unleash the power of Rspack with the out-of-the-box build tool.",
   "homepage": "https://rsbuild.dev",
   "bugs": {
@@ -66,13 +66,12 @@
     "@rspack/core": "0.4.1",
     "core-js": "~3.32.2",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
-    "postcss": "8.4.31",
-    "semver": "^7.5.4"
+    "postcss": "8.4.31"
   },
   "devDependencies": {
     "@types/node": "^16",
-    "@types/semver": "^7.5.4",
-    "typescript": "^5.3.0"
+    "typescript": "^5.3.0",
+    "webpack": "^5.89.0"
   },
   "engines": {
     "node": ">=14.0.0"

@@ -3,6 +3,7 @@ import { exec } from 'child_process';
 import { test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
 import { awaitFileExists } from '@scripts/helper';
+import { getRandomPort } from '@scripts/shared';
 
 test('should restart dev server and reload config when config file changed', async () => {
   const dist1 = path.join(__dirname, 'dist');
@@ -20,6 +21,7 @@ test('should restart dev server and reload config when config file changed', asy
           root: 'dist',
         },
       },
+      server: { port: ${getRandomPort()} }
     };`,
   );
 
@@ -37,6 +39,7 @@ test('should restart dev server and reload config when config file changed', asy
           root: 'dist-2',
         },
       },
+      server: { port: ${getRandomPort()} }
     };`,
   );
 

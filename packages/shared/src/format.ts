@@ -1,4 +1,4 @@
-import { color } from './color';
+import { color } from './utils';
 import type { Stats, MultiStats } from './types';
 import { formatStatsMessages } from './formatStats';
 

@@ -4,7 +4,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import { getPackages } from '@manypkg/get-packages';
-import { getPackageVersion } from '@modern-js/generator-utils';
+import { getPackageVersion } from './utils';
 
 async function run() {
   const rspackVersion = process.env.RSPACK_VERSION || 'latest';

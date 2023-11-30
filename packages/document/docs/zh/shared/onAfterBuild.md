@@ -3,7 +3,7 @@
 - 如果当前打包工具为 Rspack，则获取到的是 Rspack Stats。
 - 如果当前打包工具为 webpack，则获取到的是 webpack Stats。
 
-- **类型**
+- **类型：**
 
 ```ts
 function OnAfterBuild(

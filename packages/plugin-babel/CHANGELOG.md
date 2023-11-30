@@ -1,5 +1,13 @@
 # @rsbuild/plugin-babel
 
+## 0.1.5
+
+### Patch Changes
+
+- c3bbe1f: feat(uni-builder): support tools.babel in rspack mode
+- Updated dependencies [ca87f86f]
+  - @rsbuild/shared@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

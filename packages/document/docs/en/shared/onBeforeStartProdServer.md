@@ -1,6 +1,6 @@
 Called before starting the production preview server.
 
-- **Type**
+- **Type:**
 
 ```ts
 function OnBeforeStartProdServer(callback: () => Promise<void> | void): void;

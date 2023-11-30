@@ -4,7 +4,7 @@
 - If the current bundler is webpack, you will get a webpack configuration array.
 - The configuration array can contain one or more configurations, depending on the current `target` config of Rsbuild.
 
-- **Type**
+- **Type:**
 
 ```ts
 function OnBeforeBuild(

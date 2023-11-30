@@ -1,4 +1,4 @@
-import path, { isAbsolute, join } from 'path';
+import path from 'path';
 import fse from '../compiled/fs-extra';
 import { MODULE_PATH_REGEX } from './constants';
 import { removeLeadingSlash } from './utils';
@@ -12,14 +12,6 @@ import type {
 } from './types';
 
 export { fse };
-
-export function getAbsoluteDistPath(
-  cwd: string,
-  outputConfig: OutputConfig | NormalizedOutputConfig,
-) {
-  const root = getDistPath(outputConfig, 'root');
-  return isAbsolute(root) ? root : join(cwd, root);
-}
 
 export const getDistPath = (
   outputConfig: OutputConfig | NormalizedOutputConfig,

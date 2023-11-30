@@ -16,9 +16,13 @@
  */
 
 import type { Compiler, RspackPluginInstance, Compilation } from '@rspack/core';
-import { upperFirst } from 'lodash';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import { PreloadOrPreFetchOption } from '../../types';
+import {
+  upperFirst,
+  withPublicPath,
+  getPublicPathFromCompiler,
+  type PreloadOrPreFetchOption,
+} from '@rsbuild/shared';
 import {
   extractChunks,
   doesChunkBelongToHtml,
@@ -26,8 +30,6 @@ import {
   type BeforeAssetTagGenerationHtmlPluginData,
   type As,
 } from './helpers';
-import { getPublicPathFromCompiler } from '../util';
-import { withPublicPath } from '../../url';
 
 const defaultOptions = {
   type: 'async-chunks' as const,

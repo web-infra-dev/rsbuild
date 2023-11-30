@@ -6,17 +6,16 @@
  * modified from https://github.com/facebook/create-react-app/blob/master/packages/react-dev-utils/InlineChunkHtmlPlugin.js
  */
 import { join } from 'path';
-import { isFunction, addTrailingSlash } from '../utils';
+import {
+  isFunction,
+  addTrailingSlash,
+  COMPILATION_PROCESS_STAGE,
+  getPublicPathFromCompiler,
+  type InlineChunkTest,
+} from '@rsbuild/shared';
 import type { Compiler, Compilation } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
-import { COMPILATION_PROCESS_STAGE, getPublicPathFromCompiler } from './util';
-
-export type InlineChunkTestFunction = (params: {
-  size: number;
-  name: string;
-}) => boolean;
-export type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
 export type InlineChunkHtmlPluginOptions = {
   styleTests: InlineChunkTest[];

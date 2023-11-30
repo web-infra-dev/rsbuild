@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/uni-builder",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Unified builder for Modern.js",
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "@rsbuild/plugin-css-minimizer": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-pug": "workspace:*",
+    "@rsbuild/plugin-source-build": "workspace:*",
     "@rsbuild/plugin-styled-components": "workspace:*",
     "@rsbuild/plugin-svgr": "workspace:*",
     "@rsbuild/plugin-rem": "workspace:*",

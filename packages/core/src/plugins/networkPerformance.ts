@@ -1,4 +1,3 @@
-import { HtmlNetworkPerformancePlugin } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginNetworkPerformance = (): RsbuildPlugin => ({
@@ -18,6 +17,10 @@ export const pluginNetworkPerformance = (): RsbuildPlugin => ({
         if (isServer || isWebWorker || isServiceWorker) {
           return;
         }
+
+        const { HtmlNetworkPerformancePlugin } = await import(
+          '../rspack-plugins/HtmlNetworkPerformancePlugin'
+        );
 
         if (dnsPrefetch) {
           chain

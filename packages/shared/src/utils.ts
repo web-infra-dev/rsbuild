@@ -1,28 +1,44 @@
+import path from 'path';
+import type { Compiler } from '@rspack/core';
 import type {
   CacheGroup,
-  NormalizedConfig,
   RsbuildTarget,
+  NormalizedConfig,
   SharedCompiledPkgNames,
 } from './types';
-import path from 'path';
 import fse from '../compiled/fs-extra';
 import deepmerge from '../compiled/deepmerge';
+import color from '../compiled/picocolors';
+import { DEFAULT_ASSET_PREFIX } from './constants';
 
-export { deepmerge };
+export { color, deepmerge };
+
+export type Colors = Omit<
+  keyof typeof color,
+  'createColor' | 'isColorSupported'
+>;
 
 export const isDev = (): boolean => process.env.NODE_ENV === 'development';
+
 export const isProd = (): boolean => process.env.NODE_ENV === 'production';
+
 export const isTest = () => process.env.NODE_ENV === 'test';
+
 export const isString = (str: unknown): str is string =>
   typeof str === 'string';
+
 export const isUndefined = (obj: unknown): obj is undefined =>
   typeof obj === 'undefined';
+
 export const isFunction = (func: unknown): func is (...args: any[]) => any =>
   typeof func === 'function';
+
 export const isObject = (obj: unknown): obj is Record<string, any> =>
   obj !== null && typeof obj === 'object';
+
 export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
   isObject(obj) && Object.prototype.toString.call(obj) === '[object Object]';
+
 export const isRegExp = (obj: any): obj is RegExp =>
   Object.prototype.toString.call(obj) === '[object RegExp]';
 
@@ -196,4 +212,95 @@ export function debounce<T extends (...args: any[]) => void>(
       func(...args);
     }, wait);
   };
+}
+
+export const upperFirst = (str: string) =>
+  str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+
+/** The intersection of webpack and Rspack */
+export const COMPILATION_PROCESS_STAGE = {
+  PROCESS_ASSETS_STAGE_ADDITIONAL: -2000,
+  PROCESS_ASSETS_STAGE_PRE_PROCESS: -1000,
+  PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE: 700,
+  PROCESS_ASSETS_STAGE_SUMMARIZE: 1000,
+  PROCESS_ASSETS_STAGE_REPORT: 5000,
+};
+
+export const generateScriptTag = () => ({
+  tagName: 'script',
+  attributes: {
+    type: 'text/javascript',
+  },
+  voidTag: false,
+  meta: {},
+});
+
+export const getPublicPathFromCompiler = (compiler: Compiler) => {
+  const { publicPath } = compiler.options.output;
+  if (typeof publicPath === 'string' && publicPath !== 'auto') {
+    return addTrailingSlash(publicPath);
+  }
+  // publicPath function is not supported yet
+  return DEFAULT_ASSET_PREFIX;
+};
+
+export function partition<T>(
+  array: T[],
+  predicate: (value: T) => boolean,
+): [T[], T[]] {
+  const truthy: T[] = [];
+  const falsy: T[] = [];
+
+  for (const value of array) {
+    if (predicate(value)) {
+      truthy.push(value);
+    } else {
+      falsy.push(value);
+    }
+  }
+
+  return [truthy, falsy];
+}
+
+export function pick<T, U extends keyof T>(obj: T, keys: ReadonlyArray<U>) {
+  return keys.reduce(
+    (ret, key) => {
+      if (obj[key] !== undefined) {
+        ret[key] = obj[key];
+      }
+      return ret;
+    },
+    {} as Pick<T, U>,
+  );
+}
+
+export const prettyTime = (seconds: number) => {
+  const format = (time: string) => color.bold(Number(time));
+
+  if (seconds < 1) {
+    const digits = seconds >= 0.01 ? 2 : 3;
+    return `${format(seconds.toFixed(digits))} s`;
+  }
+
+  if (seconds < 60) {
+    return `${format(seconds.toFixed(1))} s`;
+  }
+
+  const minutes = seconds / 60;
+  return `${format(minutes.toFixed(2))} m`;
+};
+
+const colorList: Colors[] = ['green', 'cyan', 'yellow', 'blue', 'magenta'];
+
+export const getProgressColor = (index: number) =>
+  colorList[index % colorList.length];
+
+export function onExitProcess(listener: NodeJS.ExitListener) {
+  process.on('exit', listener);
+
+  // listen to 'SIGINT' and trigger a exit
+  // 'SIGINT' from the terminal is supported on all platforms, and can usually be generated with Ctrl + C
+  process.on('SIGINT', () => {
+    process.exit(0);
+  });
 }
