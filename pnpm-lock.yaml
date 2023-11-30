@@ -53,6 +53,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      moment:
+        specifier: ^2
+        version: 2.29.4
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -186,12 +189,6 @@ importers:
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
-
-  e2e/cases/moment:
-    dependencies:
-      moment:
-        specifier: ^2
-        version: 2.29.4
 
   e2e/cases/react/remove-prop-types:
     dependencies:

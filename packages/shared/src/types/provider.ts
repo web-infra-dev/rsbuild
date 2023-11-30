@@ -62,7 +62,6 @@ export type ProviderInstance<
 
   applyDefaultPlugins: (pluginStore: PluginStore) => Promise<void>;
 
-  // TODO using common compiler type
   createCompiler: (
     options?: CreateCompilerOptions,
   ) => Promise<Compiler | MultiCompiler>;

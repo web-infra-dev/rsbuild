@@ -1,10 +1,7 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { build, getHrefByEntryName } from '@scripts/shared';
-import { pluginReact } from '@rsbuild/plugin-react';
-
-const fixtures = __dirname;
+import { build } from '@scripts/shared';
 
 test.describe('should combine multiple html config correctly', () => {
   let rsbuild: Awaited<ReturnType<typeof build>>;
