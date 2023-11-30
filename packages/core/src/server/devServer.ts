@@ -140,6 +140,19 @@ export class RsbuildDevServer {
 
     devMiddleware.middleware && this.middlewares.use(devMiddleware.middleware);
 
+    if (dev.publicDir && dev.publicDir.name) {
+      const { default: sirv } = await import('../../compiled/sirv');
+      const { name } = dev.publicDir;
+      const publicDir = isAbsolute(name) ? name : join(this.pwd, name);
+
+      const assetMiddleware = sirv(publicDir, {
+        etag: true,
+        dev: true,
+      });
+
+      this.middlewares.use(assetMiddleware);
+    }
+
     const { distPath } = this.output;
 
     this.middlewares.use(

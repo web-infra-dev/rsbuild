@@ -20,6 +20,7 @@ exports[`parseCommonConfig > dev.xxx 1`] = `
       "key": "xxxx",
     },
     "port": 8081,
+    "publicDir": false,
   },
   "tools": {},
 }
@@ -32,7 +33,9 @@ exports[`parseCommonConfig > dev.xxx 2`] = `
   },
   "html": {},
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
   "tools": {},
 }
 `;
@@ -46,7 +49,9 @@ exports[`parseCommonConfig > html.faviconByEntries 1`] = `
     "favicon": [Function],
   },
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -62,7 +67,9 @@ exports[`parseCommonConfig > html.faviconByEntries 2`] = `
     ],
   },
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -75,7 +82,9 @@ exports[`parseCommonConfig > html.faviconByEntries 3`] = `
     "inject": [Function],
   },
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -91,7 +100,9 @@ exports[`parseCommonConfig > html.faviconByEntries 4`] = `
     ],
   },
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -104,7 +115,9 @@ exports[`parseCommonConfig > html.metaByEntries 1`] = `
     "meta": [Function],
   },
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -124,7 +137,9 @@ exports[`parseCommonConfig > html.metaByEntries 2`] = `
     ],
   },
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -137,7 +152,9 @@ exports[`parseCommonConfig > html.templateByEntries 1`] = `
     "template": [Function],
   },
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -153,7 +170,9 @@ exports[`parseCommonConfig > html.templateByEntries 2`] = `
     ],
   },
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -166,7 +185,9 @@ exports[`parseCommonConfig > html.templateParametersByEntries 1`] = `
     "templateParameters": [Function],
   },
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -184,7 +205,9 @@ exports[`parseCommonConfig > html.templateParametersByEntries 2`] = `
     ],
   },
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -197,7 +220,9 @@ exports[`parseCommonConfig > html.titleByEntries 1`] = `
     "title": [Function],
   },
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -213,7 +238,9 @@ exports[`parseCommonConfig > html.titleByEntries 2`] = `
     ],
   },
   "output": {},
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -228,7 +255,9 @@ exports[`parseCommonConfig > output.cssModuleLocalIdentName 1`] = `
       "localIdentName": "[local]-[hash:base64:6]",
     },
   },
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -244,7 +273,9 @@ exports[`parseCommonConfig > output.disableCssModuleExtension 1`] = `
     },
     "disableCssModuleExtension": true,
   },
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -257,7 +288,9 @@ exports[`parseCommonConfig > output.enableInlineScripts 1`] = `
   "output": {
     "inlineScripts": true,
   },
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;
 
@@ -270,6 +303,8 @@ exports[`parseCommonConfig > output.enableInlineStyles 1`] = `
   "output": {
     "inlineStyles": true,
   },
-  "server": {},
+  "server": {
+    "publicDir": false,
+  },
 }
 `;

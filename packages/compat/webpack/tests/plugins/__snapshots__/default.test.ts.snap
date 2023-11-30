@@ -1354,6 +1354,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "linkType": "text/css",
       },
     },
+    CopyPlugin {
+      "options": {},
+      "patterns": [
+        {
+          "from": "public",
+          "noErrorOnMissing": true,
+          "to": "",
+        },
+      ],
+    },
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
@@ -1955,6 +1965,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
+    CopyPlugin {
+      "options": {},
+      "patterns": [
+        {
+          "from": "public",
+          "noErrorOnMissing": true,
+          "to": "",
+        },
+      ],
+    },
     DefinePlugin {
       "definitions": {
         "process.env.ASSET_PREFIX": """",
@@ -2523,6 +2543,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
+    CopyPlugin {
+      "options": {},
+      "patterns": [
+        {
+          "from": "public",
+          "noErrorOnMissing": true,
+          "to": "",
+        },
+      ],
+    },
     DefinePlugin {
       "definitions": {
         "process.env.ASSET_PREFIX": """",

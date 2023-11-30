@@ -10,7 +10,7 @@ export * from './mergeRsbuildConfig';
 export * from './types';
 export * from './config';
 export * from './format';
-export * from './devServer';
+export * from './server';
 export * from './chain';
 export * from './apply';
 export * from './getLoaderOptions';

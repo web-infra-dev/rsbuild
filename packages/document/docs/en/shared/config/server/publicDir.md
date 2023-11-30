@@ -1,0 +1,60 @@
+- **Type:** `false | object`
+- **Default:**
+
+```js
+{
+  /** Directory to serve as static assets */
+  name: 'public',
+  /** Whether copy files from the publicDir into the distDir on build */
+  copyOnBuild: true,
+}
+```
+
+By default, Rsbuild will use the `public` directory as the directory for serving public assets, files in this directory will be served at `/`.
+
+Note that:
+
+- You should always reference public assets using root absolute path. For example, `public/icon.png` should be referenced in source code as `/icon.png`.
+- Assets in this directory will be copied to the root of dist on build.Therefore, care should be taken not to conflict with other dist file names. (This behavior can be disabled by setting `copyOnBuild` to false)
+
+### Boolean Type
+
+The ability to serve public assets can be disabled by setting `publicDir` to `false`:
+
+```ts
+export default {
+  server: {
+    publicDir: false,
+  },
+};
+```
+
+### Object Type
+
+When the value of `publicDir` is of object type, Rsbuild will merge based on the current configuration and the default configuration.
+
+```js
+{
+  /** Directory to serve as static assets
+   * @default 'public'
+   */
+  name?: string,
+  /** Whether copy files from the publicDir into the distDir on build
+   * @default true
+   */
+  copyOnBuild?: boolean,
+}
+```
+
+It should be noted that setting `copyOnBuild` to false will result in the inability to access the corresponding public asset files when previewing the production environment.
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      name: 'static',
+      copyOnBuild: false,
+    },
+  },
+};
+```

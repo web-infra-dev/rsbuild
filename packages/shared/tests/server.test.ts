@@ -5,7 +5,7 @@ import {
   mergeDevOptions,
   formatRoutes,
   printServerURLs,
-} from '../src/devServer';
+} from '../src/server';
 
 test('formatRoutes', () => {
   expect(
