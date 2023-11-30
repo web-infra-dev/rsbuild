@@ -21,9 +21,12 @@ export default {
 
 ### 默认 Fallback 逻辑
 
-当请求的页面找不到时，默认会回退到 index.html。
+当请求满足以下条件且未找到对应资源时，会被 `server.htmlFallback` 处理，默认会回退到 index.html。
 
-```ts file=rsbuild.config.ts
+- 当前请求是 GET 或 HEAD 请求
+- 当前请求头接受 `text/html` (请求头 accept 类型为 `text/html` 或 `*/*`)
+
+```ts title=rsbuild.config.ts
 export default {
   server: {
     htmlFallback: 'index',
@@ -35,7 +38,7 @@ export default {
 
 当 Rsbuild 默认的 [server.htmlFallback](/config/options/server#serverhtmlfallback) 配置无法满足你的需求，例如，希望在访问 `/` 时可以访问 `main.html`，可通过 [server.historyApiFallback](/config/options/server#serverhistoryapifallback) 进行设置。
 
-```ts file=rsbuild.config.ts
+```ts title=rsbuild.config.ts
 export default {
   source: {
     entry: {

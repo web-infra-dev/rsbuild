@@ -8,7 +8,7 @@ Rsbuild Server will generate the corresponding page route based on the [source.e
 
 When entry is index, the page can be accessed through `/`; when entry is foo, the page can be accessed through `/foo`.
 
-```ts file=rsbuild.config.ts
+```ts title=rsbuild.config.ts
 export default {
   source: {
     entry: {
@@ -21,9 +21,12 @@ export default {
 
 ### Default fallback logic
 
-When the requested page is not found, it will fallback to `index.html` by default.
+By default, when the request meets the following conditions and the corresponding resource is not found, it will fallback to `index.html`:
 
-```ts file=rsbuild.config.ts
+- The request is a `GET` or `HEAD` request
+- Which accepts `text/html` (the request header accept type is `text/html` or `*/*`)
+
+```ts title=rsbuild.config.ts
 export default {
   server: {
     htmlFallback: 'index',
@@ -35,7 +38,7 @@ export default {
 
 When Rsbuild's default [server.htmlFallback](/config/options/server#serverhtmlfallback) configuration cannot meet your needs, for example, if you want to be able to access `main.html` when accessing `/`, you can set it up using [server.historyApiFallback] (/config/options/server#serverhistoryapifallback).
 
-```ts file=rsbuild.config.ts
+```ts title=rsbuild.config.ts
 export default {
   source: {
     entry: {
