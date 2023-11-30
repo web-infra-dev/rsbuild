@@ -808,16 +808,10 @@ importers:
       postcss:
         specifier: 8.4.31
         version: 8.4.31
-      semver:
-        specifier: ^7.5.4
-        version: 7.5.4
     devDependencies:
       '@types/node':
         specifier: ^16
         version: 16.18.59
-      '@types/semver':
-        specifier: ^7.5.4
-        version: 7.5.4
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
