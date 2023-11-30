@@ -90,6 +90,10 @@ export type UniBuilderExtraConfig = {
      * Modify the options of [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin).
      */
     tsChecker?: PluginTypeCheckerOptions['forkTsCheckerOptions'];
+    /**
+     * Modify the options of [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
+     */
+    minifyCss?: PluginCssMinimizerOptions['pluginOptions'];
   };
   dev?: {
     /**
@@ -250,10 +254,6 @@ export type UniBuilderRspackConfig = RsbuildRspackConfig &
        * Modify the options of [babel-loader](https://github.com/babel/babel-loader)
        */
       babel?: PluginBabelOptions;
-      /**
-       * Modify the options of [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
-       */
-      minifyCss?: PluginCssMinimizerOptions['pluginOptions'];
     };
   };
 

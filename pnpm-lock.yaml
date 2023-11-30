@@ -353,6 +353,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@rsbuild/plugin-css-minimizer':
+        specifier: workspace:*
+        version: link:../../packages/plugin-css-minimizer
       '@rsbuild/plugin-react':
         specifier: workspace:*
         version: link:../../packages/plugin-react
@@ -708,9 +711,6 @@ importers:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
         version: link:../../plugin-babel
-      '@rsbuild/plugin-css-minimizer':
-        specifier: workspace:*
-        version: link:../../plugin-css-minimizer
       '@rsbuild/plugin-react':
         specifier: workspace:*
         version: link:../../plugin-react

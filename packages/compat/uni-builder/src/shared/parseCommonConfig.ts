@@ -32,6 +32,7 @@ import { pluginExtensionPrefix } from './plugins/extensionPrefix';
 import { pluginSplitChunks } from './plugins/splitChunk';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 
 const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
 
@@ -310,6 +311,12 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   if (frameworkConfigPath) {
     rsbuildPlugins.push(pluginFrameworkConfig(frameworkConfigPath));
   }
+
+  rsbuildPlugins.push(
+    pluginCssMinimizer({
+      pluginOptions: uniBuilderConfig.tools?.minifyCss,
+    }),
+  );
 
   return {
     rsbuildConfig: mergeRsbuildConfig(rsbuildConfig, extraConfig),

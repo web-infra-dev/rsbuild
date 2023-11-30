@@ -24,26 +24,6 @@ exports[`plugin-minimize > should apply minimizer in production 1`] = `
         "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
       },
     },
-    CssMinimizerPlugin {
-      "options": {
-        "exclude": undefined,
-        "include": undefined,
-        "minimizer": {
-          "implementation": [Function],
-          "options": {
-            "preset": [
-              "default",
-              {
-                "mergeLonghand": false,
-              },
-            ],
-          },
-        },
-        "parallel": true,
-        "test": /\\\\\\.css\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-        "warningsFilter": [Function],
-      },
-    },
   ],
 }
 `;

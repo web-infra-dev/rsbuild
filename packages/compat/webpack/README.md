@@ -13,9 +13,15 @@ Note that this package is mainly used for compatibility with Modern.js and Rsbui
 ```ts
 import { defineConfig } from '@rsbuild/core';
 import { webpackProvider } from '@rsbuild/webpack';
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 
 export default defineConfig({
   provider: webpackProvider,
+  plugins: [
+    // @rsbuild/webpack has no built-in CSS minimizer,
+    // so you need to register the plugin-css-minimizer.
+    pluginCssMinimizer(),
+  ],
 });
 ```
 
