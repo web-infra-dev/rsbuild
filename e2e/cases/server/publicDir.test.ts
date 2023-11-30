@@ -43,7 +43,9 @@ test('should serve custom publicDir for dev server correctly', async ({
         },
       },
       server: {
-        publicDir: 'public1',
+        publicDir: {
+          name: 'public1',
+        },
       },
       output: {
         distPath: {
