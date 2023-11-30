@@ -8,9 +8,11 @@ import type {
   RsbuildConfig as RspackRsbuildConfig,
 } from '@rsbuild/core';
 import type { RsbuildConfig as WebpackRsbuildConfig } from '@rsbuild/webpack';
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+
+// TODO should not depend on uni-builder plugins
 import { pluginBabel } from '../../packages/compat/uni-builder/src/webpack/plugins/babel';
 import { pluginReact } from '../../packages/compat/uni-builder/src/webpack/plugins/react';
-import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
   const baseUrl = new URL(`http://localhost:${port}`);
