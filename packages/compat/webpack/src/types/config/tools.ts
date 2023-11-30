@@ -11,7 +11,6 @@ import type {
   BabelTransformOptions,
   BabelConfigUtils,
 } from '@rsbuild/plugin-babel';
-import type { PluginCssMinimizerOptions } from '@rsbuild/plugin-css-minimizer';
 import type {
   WebpackChain,
   WebpackConfig,
@@ -63,10 +62,6 @@ export interface ToolsConfig extends BaseToolsConfig {
    * Configure webpack by [webpack-chain](https://github.com/neutrinojs/webpack-chain).
    */
   webpackChain?: ToolsWebpackChainConfig;
-  /**
-   * Modify the options of [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
-   */
-  minifyCss?: PluginCssMinimizerOptions['pluginOptions'];
 }
 
 export interface NormalizedToolsConfig extends ToolsConfig {

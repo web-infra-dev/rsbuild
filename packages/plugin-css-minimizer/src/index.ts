@@ -62,10 +62,6 @@ export const pluginCssMinimizer = (
   name: 'rsbuild:css-minimizer',
 
   setup(api) {
-    if (api.context.bundlerType === 'webpack') {
-      return;
-    }
-
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
       const config = api.getNormalizedConfig();
       const isMinimize = isProd && !config.output.disableMinimize;

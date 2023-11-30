@@ -8,6 +8,7 @@ import type {
   RsbuildConfig as RspackRsbuildConfig,
 } from '@rsbuild/core';
 import type { RsbuildConfig as WebpackRsbuildConfig } from '@rsbuild/webpack';
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
   const baseUrl = new URL(`http://localhost:${port}`);
@@ -34,11 +35,16 @@ export const createRsbuild = async (
   }
 
   const { webpackProvider } = await import('@rsbuild/webpack');
-  return createRsbuild({
+  const rsbuild = await createRsbuild({
     ...rsbuildOptions,
     rsbuildConfig: rsbuildConfig as WebpackRsbuildConfig,
     provider: webpackProvider,
   });
+
+  // @rsbuild/webpack has no built-in CSS minimizer,
+  rsbuild.addPlugins([pluginCssMinimizer()]);
+
+  return rsbuild;
 };
 
 const portMap = new Map();
