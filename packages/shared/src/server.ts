@@ -4,7 +4,6 @@ import type {
   RsbuildEntry,
   RsbuildConfig,
   CompilerTapFn,
-  PublicDir,
 } from './types';
 import { getPort } from './port';
 import deepmerge from '../compiled/deepmerge';
