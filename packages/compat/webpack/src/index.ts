@@ -1,7 +1,6 @@
 export { webpackProvider } from './provider';
 export type { WebpackProvider } from './provider';
 export { webpackBuild } from './core/build';
-export { createDefaultConfig } from './config/defaults';
 export type {
   LessLoaderOptions,
   SassLoaderOptions,
@@ -12,18 +11,6 @@ export type {
 export type {
   RsbuildPlugin,
   RsbuildPluginAPI,
-
-  // Config Types
-  DevConfig,
-  HtmlConfig,
-  ToolsConfig,
-  OutputConfig,
-  SourceConfig,
-  RsbuildConfig,
-  SecurityConfig,
-  NormalizedConfig,
-  PerformanceConfig,
-
   // Third Party Types
   webpack,
   WebpackChain,

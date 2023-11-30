@@ -3,8 +3,10 @@ import { pluginSwc } from '../src';
 import { pluginBabel } from '../../uni-builder/src/webpack/plugins/babel';
 import { webpackProvider } from '@rsbuild/webpack';
 import { applyPluginConfig } from '../src/utils';
-import type { NormalizedConfig } from '@rsbuild/webpack';
-import type { ModifyWebpackChainUtils } from '@rsbuild/shared';
+import type {
+  NormalizedConfig,
+  ModifyWebpackChainUtils,
+} from '@rsbuild/shared';
 
 const TEST_BUILDER_CONFIG = {
   output: {},

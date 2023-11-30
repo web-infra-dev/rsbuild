@@ -6,4 +6,5 @@ export {
   createPublicContext,
   createContextByConfig,
 } from './core/createContext';
+export { withDefaultConfig } from './config';
 export { initRsbuildConfig } from './core/initConfigs';

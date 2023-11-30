@@ -5,6 +5,7 @@ import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
 import { StartServerResult } from './server';
 import type { AddressUrl } from '../url';
 import type { Logger } from '../logger';
+import { RsbuildConfig } from '.';
 
 export type Bundler = 'rspack' | 'webpack';
 
@@ -36,29 +37,21 @@ export type InspectConfigOptions = {
 };
 
 export type RsbuildProvider<
-  RsbuildConfig extends Record<string, any> = Record<string, any>,
   BundlerConfig extends Record<string, any> = Record<string, any>,
-  NormalizedConfig extends Record<string, any> = Record<string, any>,
 > = (options: {
   pluginStore: PluginStore;
   rsbuildOptions: Required<CreateRsbuildOptions>;
   plugins: Plugins;
-}) => Promise<ProviderInstance<RsbuildConfig, BundlerConfig, NormalizedConfig>>;
+}) => Promise<ProviderInstance<BundlerConfig>>;
 
 export type ProviderInstance<
-  RsbuildConfig extends Record<string, any> = Record<string, any>,
   BundlerConfig extends Record<string, any> = Record<string, any>,
-  NormalizedConfig extends Record<string, any> = Record<string, any>,
 > = {
   readonly bundler: Bundler;
 
   readonly publicContext: Readonly<Context>;
 
-  pluginAPI: DefaultRsbuildPluginAPI<
-    RsbuildConfig,
-    NormalizedConfig,
-    BundlerConfig
-  >;
+  pluginAPI: DefaultRsbuildPluginAPI<BundlerConfig>;
 
   applyDefaultPlugins: (pluginStore: PluginStore) => Promise<void>;
 

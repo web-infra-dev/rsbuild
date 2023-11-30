@@ -8,13 +8,9 @@ import { createContext, createPublicContext } from './core/createContext';
 import { initConfigs, initRsbuildConfig } from './core/initConfigs';
 import { getPluginAPI } from './core/initPlugins';
 import { applyDefaultPlugins } from './shared';
-import type { RsbuildConfig, NormalizedConfig } from '../types';
+import type { RsbuildConfig } from '../types';
 
-export type RspackProvider = RsbuildProvider<
-  RsbuildConfig,
-  RspackConfig,
-  NormalizedConfig
->;
+export type RspackProvider = RsbuildProvider<RspackConfig>;
 
 export function rspackProvider({
   rsbuildConfig: originalRsbuildConfig,

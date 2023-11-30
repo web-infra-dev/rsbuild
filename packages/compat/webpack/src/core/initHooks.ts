@@ -1,21 +1,21 @@
-import {
-  createAsyncHook,
+import { createAsyncHook } from '@rsbuild/shared';
+import type {
   OnExitFn,
   OnAfterBuildFn,
   OnBeforeBuildFn,
   OnDevCompileDoneFn,
+  ModifyBundlerChainFn,
   ModifyWebpackChainFn,
   ModifyWebpackConfigFn,
   ModifyRsbuildConfigFn,
+  OnAfterCreateCompilerFn,
   OnAfterStartDevServerFn,
   OnBeforeStartDevServerFn,
   OnAfterStartProdServerFn,
   OnBeforeStartProdServerFn,
-  OnAfterCreateCompilerFn,
   OnBeforeCreateCompilerFn,
 } from '@rsbuild/shared';
-import type { ModifyBundlerChainFn } from '@rsbuild/shared';
-import type { WebpackConfig, RsbuildConfig } from '../types';
+import type { WebpackConfig } from '../types';
 
 export function initHooks() {
   return {
@@ -25,8 +25,7 @@ export function initHooks() {
     onDevCompileDoneHook: createAsyncHook<OnDevCompileDoneFn>(),
     modifyWebpackChainHook: createAsyncHook<ModifyWebpackChainFn>(),
     modifyWebpackConfigHook: createAsyncHook<ModifyWebpackConfigFn>(),
-    modifyRsbuildConfigHook:
-      createAsyncHook<ModifyRsbuildConfigFn<RsbuildConfig>>(),
+    modifyRsbuildConfigHook: createAsyncHook<ModifyRsbuildConfigFn>(),
     onAfterCreateCompilerHook: createAsyncHook<OnAfterCreateCompilerFn>(),
     onBeforeCreateCompilerHook:
       createAsyncHook<OnBeforeCreateCompilerFn<WebpackConfig>>(),
