@@ -29,9 +29,6 @@ importers:
       husky:
         specifier: ^8.0.3
         version: 8.0.3
-      is-ci:
-        specifier: ^3.0.1
-        version: 3.0.1
       nano-staged:
         specifier: ^0.8.0
         version: 0.8.0

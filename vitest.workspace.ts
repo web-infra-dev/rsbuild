@@ -1,7 +1,6 @@
 import { defineWorkspace } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { Console } from 'console';
-import isCI from 'is-ci';
 
 // Disable color in test
 process.env.NO_COLOR = '1';
