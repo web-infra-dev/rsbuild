@@ -31,7 +31,6 @@ export type HistoryApiFallbackOptions = {
 };
 
 export type PublicDir =
-  | string
   | false
   | {
       /**

@@ -22,7 +22,6 @@ import {
   getPublicPathFromCompiler,
   RspackMultiCompiler,
   RspackCompiler,
-  formatPublicDirConfig,
 } from '@rsbuild/shared';
 import DevMiddleware from './dev-middleware';
 import connect from '@rsbuild/shared/connect';
@@ -141,9 +140,9 @@ export class RsbuildDevServer {
 
     devMiddleware.middleware && this.middlewares.use(devMiddleware.middleware);
 
-    if (dev.publicDir) {
+    if (dev.publicDir && dev.publicDir.name) {
       const { default: sirv } = await import('../../compiled/sirv');
-      const { name } = formatPublicDirConfig(dev.publicDir);
+      const { name } = dev.publicDir;
       const publicDir = isAbsolute(name) ? name : join(this.pwd, name);
 
       const assetMiddleware = sirv(publicDir, {

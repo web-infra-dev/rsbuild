@@ -14,16 +14,6 @@ import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
 import type { Compiler } from '@rspack/core';
 import { normalizeUrl } from './url';
 
-export const formatPublicDirConfig = (publicDir: Exclude<PublicDir, false>) => {
-  const { name = 'public', copyOnBuild = true } =
-    typeof publicDir === 'string' ? { name: publicDir } : publicDir;
-
-  return {
-    name,
-    copyOnBuild,
-  };
-};
-
 /*
  * format route by entry and adjust the index route to be the first
  */

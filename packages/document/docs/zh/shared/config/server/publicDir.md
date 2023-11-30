@@ -1,4 +1,4 @@
-- **类型：** `string | false | object`
+- **类型：** `false | object`
 - **默认值：**
 
 ```js
@@ -27,17 +27,6 @@ export default {
     publicDir: false,
   },
 };
-```
-
-### String 类型
-
-当设置 `publicDir` 类型为 string 时，代表静态资源服务的文件夹名称，相当于以下配置的语法糖：
-
-```ts
-{
-  name: 'xxx',
-  copyOnBuild: true,
-}
 ```
 
 ### Object 类型

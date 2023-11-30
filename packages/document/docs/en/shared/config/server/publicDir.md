@@ -1,4 +1,4 @@
-- **Type:** `string | false | object`
+- **Type:** `false | object`
 - **Default:**
 
 ```js
@@ -27,17 +27,6 @@ export default {
     publicDir: false,
   },
 };
-```
-
-### String Type
-
-When the `publicDir` type is set to string, it represents the directory name of the public assets, which is equivalent to the following configuration:
-
-```ts
-{
-  name: 'xxx',
-  copyOnBuild: true,
-}
 ```
 
 ### Object Type
