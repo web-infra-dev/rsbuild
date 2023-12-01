@@ -6,8 +6,7 @@
     "test": "pnpm run test:rspack && pnpm run test:webpack",
     "test:webpack": "PROVIDE_TYPE=webpack playwright test",
     "test:rspack": "playwright test",
-    "test:webpack-swc": "PROVIDE_TYPE=webpack playwright test swc",
-    "test:doctor": "playwright test -c playwright.config.doctor.ts"
+    "test:webpack-swc": "PROVIDE_TYPE=webpack playwright test swc"
   },
   "dependencies": {
     "devcert": "1.2.2",
@@ -21,12 +20,6 @@
   "devDependencies": {
     "@playwright/test": "1.33.0",
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/doctor-core": "workspace:*",
-    "@rsbuild/doctor-rspack-plugin": "workspace:*",
-    "@rsbuild/doctor-sdk": "workspace:*",
-    "@rsbuild/doctor-types": "workspace:*",
-    "@rsbuild/doctor-utils": "workspace:*",
-    "@rsbuild/doctor-webpack-plugin": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/plugin-check-syntax": "workspace:*",
