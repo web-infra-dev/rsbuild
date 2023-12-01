@@ -219,56 +219,41 @@ DEBUG=rsbuild pnpm build
 
 ```ts
 // 错误示例
-export default {
-  tools: {
-    babel(config, { addPlugins }) {
-      // 该插件名称错误，或者未安装
-      addPlugins('babel-plugin-not-exists');
-    },
-  },
-};
+pluginBabel((config, { addPlugins }) => {
+  // 该插件名称错误，或者未安装
+  addPlugins('babel-plugin-not-exists');
+});
 ```
 
 2. 是否配置了多个 babel-plugin-import，但是没有在数组的第三项声明每一个 babel-plugin-import 的名称。
 
 ```ts
 // 错误示例
-export default {
-  tools: {
-    babel(config, { addPlugins }) {
-      addPlugins([
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd', libraryDirectory: 'es' },
-        ],
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd-mobile', libraryDirectory: 'es' },
-        ],
-      ]);
-    },
-  },
-};
+pluginBabel((config, { addPlugins }) => {
+  addPlugins([
+    ['babel-plugin-import', { libraryName: 'antd', libraryDirectory: 'es' }],
+    [
+      'babel-plugin-import',
+      { libraryName: 'antd-mobile', libraryDirectory: 'es' },
+    ],
+  ]);
+});
 ```
 
 ```ts
 // 正确示例
-export default {
-  tools: {
-    babel(config, { addPlugins }) {
-      addPlugins([
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd', libraryDirectory: 'es' },
-          'antd',
-        ],
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd-mobile', libraryDirectory: 'es' },
-          'antd-mobile',
-        ],
-      ]);
-    },
-  },
-};
+pluginBabel((config, { addPlugins }) => {
+  addPlugins([
+    [
+      'babel-plugin-import',
+      { libraryName: 'antd', libraryDirectory: 'es' },
+      'antd',
+    ],
+    [
+      'babel-plugin-import',
+      { libraryName: 'antd-mobile', libraryDirectory: 'es' },
+      'antd-mobile',
+    ],
+  ]);
+});
 ```
