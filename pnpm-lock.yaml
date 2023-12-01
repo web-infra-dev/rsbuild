@@ -683,6 +683,9 @@ importers:
       babel-plugin-transform-react-remove-prop-types:
         specifier: 0.4.24
         version: 0.4.24
+      glob:
+        specifier: ^9.3.5
+        version: 9.3.5
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -732,9 +735,6 @@ importers:
       fast-glob:
         specifier: ^3.3.1
         version: 3.3.1
-      glob:
-        specifier: ^9.3.5
-        version: 9.3.5
       globby:
         specifier: ^11.1.0
         version: 11.1.0
