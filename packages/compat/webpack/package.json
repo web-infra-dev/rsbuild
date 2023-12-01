@@ -16,10 +16,6 @@
     "./plugin-css": {
       "types": "./dist/plugins/css.d.ts",
       "default": "./dist/plugins/css.js"
-    },
-    "./plugin-babel": {
-      "types": "./dist/plugins/babel.d.ts",
-      "default": "./dist/plugins/babel.js"
     }
   },
   "main": "./dist/index.js",
@@ -50,9 +46,6 @@
     "@rsbuild/test-helper": "workspace:*",
     "@types/node": "^16",
     "typescript": "^5.3.0"
-  },
-  "engines": {
-    "node": ">=14.0.0"
   },
   "publishConfig": {
     "access": "public",
