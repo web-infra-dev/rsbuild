@@ -33,10 +33,6 @@
       "types": "./dist/plugins/*.d.ts",
       "default": "./dist/plugins/*.js"
     },
-    "./rspack-plugin-css": {
-      "types": "./dist/provider/plugins/css.d.ts",
-      "default": "./dist/provider/plugins/css.js"
-    },
     "./provider": {
       "types": "./dist/provider/index.d.ts",
       "default": "./dist/provider/index.js"
