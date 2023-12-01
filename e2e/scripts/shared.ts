@@ -1,14 +1,14 @@
 import { URL } from 'url';
 import assert from 'assert';
 import { join } from 'path';
-import { RsbuildPlugin, fse } from '@rsbuild/shared';
+import { fse } from '@rsbuild/shared';
 import { globContentJSON } from '@scripts/helper';
-import type {
-  CreateRsbuildOptions,
-  RsbuildConfig as RspackRsbuildConfig,
-} from '@rsbuild/core';
-import type { RsbuildConfig as WebpackRsbuildConfig } from '@rsbuild/webpack';
 import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+import type {
+  RsbuildConfig,
+  RsbuildPlugin,
+  CreateRsbuildOptions,
+} from '@rsbuild/core';
 
 // TODO should not depend on uni-builder plugins
 import { pluginBabel } from '../../packages/compat/uni-builder/src/webpack/plugins/babel';
@@ -27,7 +27,7 @@ const noop = async () => {};
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions,
-  rsbuildConfig: WebpackRsbuildConfig | RspackRsbuildConfig = {},
+  rsbuildConfig: RsbuildConfig = {},
   plugins: RsbuildPlugin[] = [],
 ) => {
   const { createRsbuild } = await import('@rsbuild/core');
@@ -48,7 +48,7 @@ export const createRsbuild = async (
   const { webpackProvider } = await import('@rsbuild/webpack');
   const rsbuild = await createRsbuild({
     ...rsbuildOptions,
-    rsbuildConfig: rsbuildConfig as WebpackRsbuildConfig,
+    rsbuildConfig,
     provider: webpackProvider,
   });
 
@@ -93,11 +93,7 @@ export function getRandomPort(
   }
 }
 
-const updateConfigForTest = <BundlerType>(
-  config: BundlerType extends 'webpack'
-    ? WebpackRsbuildConfig
-    : RspackRsbuildConfig,
-) => {
+const updateConfigForTest = (config: RsbuildConfig) => {
   // make devPort random to avoid port conflict
   config.server = {
     ...(config.server || {}),
@@ -131,15 +127,13 @@ const updateConfigForTest = <BundlerType>(
   }
 };
 
-export async function dev<BundlerType = 'rspack'>({
+export async function dev({
   plugins,
   rsbuildConfig = {},
   ...options
 }: CreateRsbuildOptions & {
-  plugins?: any[];
-  rsbuildConfig?: BundlerType extends 'webpack'
-    ? WebpackRsbuildConfig
-    : RspackRsbuildConfig;
+  plugins?: RsbuildPlugin[];
+  rsbuildConfig?: RsbuildConfig;
 }) {
   process.env.NODE_ENV = 'development';
 
@@ -152,17 +146,15 @@ export async function dev<BundlerType = 'rspack'>({
   });
 }
 
-export async function build<BundlerType = 'rspack'>({
+export async function build({
   plugins,
   runServer = false,
   rsbuildConfig = {},
   ...options
 }: CreateRsbuildOptions & {
-  plugins?: any[];
+  plugins?: RsbuildPlugin[];
   runServer?: boolean;
-  rsbuildConfig?: BundlerType extends 'webpack'
-    ? WebpackRsbuildConfig
-    : RspackRsbuildConfig;
+  rsbuildConfig?: RsbuildConfig;
 }) {
   process.env.NODE_ENV = 'production';
 
