@@ -1592,9 +1592,6 @@ importers:
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.5.7
         version: /html-rspack-plugin@5.5.7
-      http-proxy-middleware:
-        specifier: ^2.0.1
-        version: 2.0.6
       mini-css-extract-plugin:
         specifier: 2.7.6
         version: 2.7.6(webpack@5.89.0)
@@ -1727,7 +1724,7 @@ importers:
         specifier: 1.0.6
         version: 1.0.6
       http-proxy-middleware:
-        specifier: ^2.0.1
+        specifier: ^2.0.6
         version: 2.0.6
       jiti:
         specifier: ^1.20.0
