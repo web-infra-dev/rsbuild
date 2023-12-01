@@ -254,6 +254,7 @@ export async function startDevServer<
   const routes = formatRoutes(
     options.context.entry,
     rsbuildConfig.output?.distPath?.html,
+    rsbuildConfig.html?.outputStructure,
   );
 
   debug('create dev server');

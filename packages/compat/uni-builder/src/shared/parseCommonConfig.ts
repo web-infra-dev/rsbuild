@@ -129,6 +129,9 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   const extraConfig: RsbuildConfig = {};
   extraConfig.html ||= {};
 
+  extraConfig.html.outputStructure = html.disableHtmlFolder ? 'flat' : 'nested';
+  delete html.disableHtmlFolder;
+
   if (html.metaByEntries) {
     extraConfig.html.meta = ({ entryName }) => html.metaByEntries![entryName];
     delete html.metaByEntries;

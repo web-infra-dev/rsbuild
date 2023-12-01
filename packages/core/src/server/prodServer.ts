@@ -197,6 +197,7 @@ export async function startProdServer(
         const routes = formatRoutes(
           context.entry,
           rsbuildConfig.output?.distPath?.html,
+          rsbuildConfig.html?.outputStructure,
         );
         await context.hooks.onAfterStartProdServerHook.call({
           port,
