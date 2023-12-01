@@ -12,15 +12,6 @@
     },
     {
       "path": "../../shared"
-    },
-    {
-      "path": "../../plugin-babel"
-    },
-    {
-      "path": "../../plugin-react"
-    },
-    {
-      "path": "../../babel-preset"
     }
   ],
   "include": ["src"]

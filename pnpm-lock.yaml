@@ -614,6 +614,15 @@ importers:
 
   packages/compat/uni-builder:
     dependencies:
+      '@babel/core':
+        specifier: ^7.23.2
+        version: 7.23.2
+      '@babel/preset-react':
+        specifier: ^7.22.15
+        version: 7.22.15(@babel/core@7.23.2)
+      '@babel/types':
+        specifier: ^7.23.0
+        version: 7.23.0
       '@pmmmwh/react-refresh-webpack-plugin':
         specifier: 0.5.10
         version: 0.5.10(react-refresh@0.14.0)(webpack@5.89.0)
@@ -662,12 +671,27 @@ importers:
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
+      babel-loader:
+        specifier: 9.1.3
+        version: 9.1.3(@babel/core@7.23.2)(webpack@5.89.0)
+      babel-plugin-import:
+        specifier: 1.13.5
+        version: 1.13.5
       babel-plugin-styled-components:
         specifier: 1.13.3
         version: 1.13.3(styled-components@6.1.0)
+      babel-plugin-transform-react-remove-prop-types:
+        specifier: 0.4.24
+        version: 0.4.24
+      glob:
+        specifier: ^9.3.5
+        version: 9.3.5
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      react-refresh:
+        specifier: ^0.14.0
+        version: 0.14.0
       rspack-manifest-plugin:
         specifier: 5.0.0-alpha0
         version: 5.0.0-alpha0(webpack@5.89.0)
@@ -690,72 +714,39 @@ importers:
       '@types/lodash':
         specifier: ^4.14.200
         version: 4.14.200
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
 
   packages/compat/webpack:
     dependencies:
-      '@babel/core':
-        specifier: ^7.23.2
-        version: 7.23.2
-      '@babel/preset-react':
-        specifier: ^7.22.15
-        version: 7.22.15(@babel/core@7.23.2)
-      '@babel/types':
-        specifier: ^7.23.0
-        version: 7.23.0
-      '@rsbuild/babel-preset':
-        specifier: workspace:*
-        version: link:../../babel-preset
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../core
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../../plugin-babel
-      '@rsbuild/plugin-react':
-        specifier: workspace:*
-        version: link:../../plugin-react
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../../shared
-      babel-loader:
-        specifier: 9.1.3
-        version: 9.1.3(@babel/core@7.23.2)(webpack@5.89.0)
-      babel-plugin-import:
-        specifier: 1.13.5
-        version: 1.13.5
-      babel-plugin-transform-react-remove-prop-types:
-        specifier: 0.4.24
-        version: 0.4.24
-      caniuse-lite:
-        specifier: ^1.0.30001559
-        version: 1.0.30001559
       fast-glob:
         specifier: ^3.3.1
         version: 3.3.1
-      glob:
-        specifier: ^9.3.5
-        version: 9.3.5
       globby:
         specifier: ^11.1.0
         version: 11.1.0
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.5.7
         version: /html-rspack-plugin@5.5.7
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       mini-css-extract-plugin:
         specifier: 2.7.6
         version: 2.7.6(webpack@5.89.0)
       postcss:
         specifier: 8.4.31
         version: 8.4.31
-      react-refresh:
-        specifier: ^0.14.0
-        version: 0.14.0
       style-loader:
         specifier: 3.3.3
         version: 3.3.3(webpack@5.89.0)
@@ -772,18 +763,9 @@ importers:
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../../test-helper
-      '@types/lodash':
-        specifier: ^4.14.200
-        version: 4.14.200
       '@types/node':
         specifier: ^16
         version: 16.18.59
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
