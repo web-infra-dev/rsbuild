@@ -1,5 +1,5 @@
 import { Console } from 'console';
-import patchConsole from '../../../compiled/patch-console/build';
+import patchConsole from '../../../compiled/patch-console';
 import cliTruncate from '../../../compiled/cli-truncate';
 import type { Props } from './type';
 import { FULL_WIDTH, renderBar } from './bar';
