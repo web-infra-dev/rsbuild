@@ -11,7 +11,7 @@ import {
   withDefaultConfig,
   createContextByConfig,
   type Context,
-} from '@rsbuild/core/rspack-provider';
+} from '@rsbuild/core/provider';
 
 /**
  * Create primary context.

@@ -10,7 +10,7 @@ import {
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
 } from '@rsbuild/shared';
-import type { Context } from '@rsbuild/core/rspack-provider';
+import type { Context } from '@rsbuild/core/provider';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 
