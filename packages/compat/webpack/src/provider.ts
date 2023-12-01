@@ -5,13 +5,13 @@ import {
   type PreviewServerOptions,
 } from '@rsbuild/shared';
 import {
+  getPluginAPI,
   createPublicContext,
   initRsbuildConfig,
 } from '@rsbuild/core/rspack-provider';
 import { createContext } from './core/createContext';
-import { applyDefaultPlugins } from './shared/plugin';
+import { applyDefaultPlugins } from './shared';
 import { initConfigs } from './core/initConfigs';
-import { getPluginAPI } from './core/initPlugins';
 
 export function webpackProvider({
   rsbuildConfig: originalRsbuildConfig,

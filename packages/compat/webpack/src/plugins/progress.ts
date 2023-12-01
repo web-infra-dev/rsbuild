@@ -13,7 +13,7 @@ export const pluginProgress = (): RsbuildPlugin => ({
       }
 
       const { ProgressPlugin } = await import(
-        '../webpackPlugins/ProgressPlugin/ProgressPlugin'
+        '../ProgressPlugin/ProgressPlugin'
       );
       chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(ProgressPlugin, [
         {
