@@ -8,7 +8,7 @@ import {
   getPluginAPI,
   createPublicContext,
   initRsbuildConfig,
-} from '@rsbuild/core/rspack-provider';
+} from '@rsbuild/core/provider';
 import { createContext } from './core/createContext';
 import { applyDefaultPlugins } from './shared';
 import { initConfigs } from './core/initConfigs';

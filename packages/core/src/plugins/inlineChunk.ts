@@ -20,7 +20,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         }
 
         const { InlineChunkHtmlPlugin } = await import(
-          '../rspack-plugins/InlineChunkHtmlPlugin'
+          '../rspack/InlineChunkHtmlPlugin'
         );
 
         const { inlineStyles, inlineScripts } = config.output;

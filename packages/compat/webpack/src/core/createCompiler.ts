@@ -7,7 +7,7 @@ import {
   type Rspack,
   type RspackConfig,
 } from '@rsbuild/shared';
-import type { Context } from '@rsbuild/core/rspack-provider';
+import type { Context } from '@rsbuild/core/provider';
 import type { WebpackConfig } from '../types';
 import { initConfigs, InitConfigsOptions } from './initConfigs';
 import type { Compiler, MultiCompiler } from 'webpack';

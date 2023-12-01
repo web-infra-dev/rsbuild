@@ -19,7 +19,7 @@ export const pluginNetworkPerformance = (): RsbuildPlugin => ({
         }
 
         const { HtmlNetworkPerformancePlugin } = await import(
-          '../rspack-plugins/HtmlNetworkPerformancePlugin'
+          '../rspack/HtmlNetworkPerformancePlugin'
         );
 
         if (dnsPrefetch) {
