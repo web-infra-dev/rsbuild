@@ -10,8 +10,8 @@ import {
   initHooks,
   withDefaultConfig,
   createContextByConfig,
+  type Context,
 } from '@rsbuild/core/rspack-provider';
-import type { Context } from '../types';
 
 /**
  * Create primary context.

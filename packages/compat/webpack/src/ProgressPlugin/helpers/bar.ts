@@ -1,4 +1,4 @@
-import cliTruncate from '../../../../compiled/cli-truncate';
+import cliTruncate from '../../../compiled/cli-truncate';
 import type { Props } from './type';
 import { clamp } from './utils';
 import { color as colors } from '@rsbuild/shared';
