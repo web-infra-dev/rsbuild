@@ -138,7 +138,6 @@
 
 ### Patch Changes
 
-- 60ca3b2: feat(rsbuild-doctor):add entry plugin for rsbuild or rspack builder
 - Updated dependencies [ddff9133]
 - Updated dependencies [4608604]
 - Updated dependencies [c1a5e24]
