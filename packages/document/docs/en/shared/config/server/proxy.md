@@ -55,13 +55,15 @@ The full type definition of Rsbuild Server Proxy is:
 ```ts
 import type { Options as HttpProxyOptions } from 'http-proxy-middleware';
 
+type Filter = string | string[] | ((pathname: string, req: Request) => boolean);
+
 type ProxyDetail = HttpProxyOptions & {
   bypass?: (
     req: IncomingMessage,
     res: ServerResponse,
     proxyOptions: ProxyOptions,
   ) => string | undefined | null | false;
-  context?: string | string[];
+  context?: Filter;
 };
 
 type ProxyOptions =
