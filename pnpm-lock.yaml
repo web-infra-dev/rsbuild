@@ -108,6 +108,9 @@ importers:
       '@rsbuild/plugin-source-build':
         specifier: workspace:*
         version: link:../packages/plugin-source-build
+      '@rsbuild/plugin-styled-components':
+        specifier: workspace:*
+        version: link:../packages/plugin-styled-components
       '@rsbuild/plugin-stylus':
         specifier: workspace:*
         version: link:../packages/plugin-stylus
