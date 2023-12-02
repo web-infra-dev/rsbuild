@@ -1,5 +1,26 @@
 # @rsbuild/uni-builder
 
+## 0.1.7
+
+### Patch Changes
+
+- 1ceca5a: feat(uni-builder): support disableHtmlFolder and outputStructure default 'nested'
+  - @rsbuild/babel-preset@0.1.7
+  - @rsbuild/webpack@0.1.7
+  - @rsbuild/core@0.1.7
+  - @rsbuild/plugin-assets-retry@0.1.7
+  - @rsbuild/plugin-babel@0.1.7
+  - @rsbuild/plugin-check-syntax@0.1.7
+  - @rsbuild/plugin-css-minimizer@0.1.7
+  - @rsbuild/plugin-pug@0.1.7
+  - @rsbuild/plugin-react@0.1.7
+  - @rsbuild/plugin-rem@0.1.7
+  - @rsbuild/plugin-source-build@0.1.7
+  - @rsbuild/plugin-styled-components@0.1.7
+  - @rsbuild/plugin-svgr@0.1.7
+  - @rsbuild/plugin-type-check@0.1.7
+  - @rsbuild/shared@0.1.7
+
 ## 0.1.6
 
 ### Patch Changes
