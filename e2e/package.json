@@ -32,6 +32,7 @@
     "@rsbuild/plugin-stylus": "workspace:*",
     "@rsbuild/plugin-solid": "workspace:*",
     "@rsbuild/plugin-source-build": "workspace:*",
+    "@rsbuild/plugin-styled-components": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-svgr": "workspace:*",
     "@rsbuild/plugin-swc": "workspace:*",
