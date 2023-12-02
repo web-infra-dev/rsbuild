@@ -1095,9 +1095,6 @@ importers:
       babel-loader:
         specifier: 9.1.3
         version: 9.1.3(@babel/core@7.23.2)(webpack@5.89.0)
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       upath:
         specifier: 2.0.1
         version: 2.0.1
@@ -1108,9 +1105,6 @@ importers:
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
-      '@types/lodash':
-        specifier: ^4.14.200
-        version: 4.14.200
       '@types/node':
         specifier: ^16
         version: 16.18.59
