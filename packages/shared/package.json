@@ -18,6 +18,10 @@
       "types": "./dist/formatStats.d.ts",
       "default": "./dist/formatStats.js"
     },
+    "./jiti": {
+      "types": "./compiled/jiti/types/jiti.d.ts",
+      "default": "./compiled/jiti/index.js"
+    },
     "./rslog": {
       "types": "./compiled/rslog/dist/index.d.ts",
       "default": "./compiled/rslog/index.js"

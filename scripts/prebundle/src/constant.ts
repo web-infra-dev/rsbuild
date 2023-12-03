@@ -23,6 +23,7 @@ export const DEFAULT_EXTERNALS = {
   '../package.json': './package.json',
   '../../package.json': './package.json',
   postcss: 'postcss',
+  typescript: 'typescript',
   '@babel/core': '@babel/core',
 };
 
@@ -32,7 +33,6 @@ export const TASKS: TaskConfig[] = [
     packageName: '@rsbuild/core',
     dependencies: [
       'open',
-      'jiti',
       'dotenv',
       'dotenv-expand',
       'commander',
@@ -64,6 +64,7 @@ export const TASKS: TaskConfig[] = [
     packageDir: 'shared',
     packageName: '@rsbuild/shared',
     dependencies: [
+      'jiti',
       'rslog',
       'deepmerge',
       'url-join',
@@ -76,7 +77,19 @@ export const TASKS: TaskConfig[] = [
       'gzip-size',
       'json5',
       {
+        name: 'semver',
+        ignoreDts: true,
+      },
+      {
         name: 'webpack-sources',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-loader',
+        externals: {
+          jiti: '../jiti',
+          semver: '../semver',
+        },
         ignoreDts: true,
       },
       {
