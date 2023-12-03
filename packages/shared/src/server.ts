@@ -54,11 +54,14 @@ export function printServerURLs(
       .join('');
   } else {
     const maxNameLength = Math.max(...routes.map((r) => r.name.length));
-    urls.forEach(({ label, url }) => {
-      message += `  ${color.bold(`> ${label}`)}\n`;
+    urls.forEach(({ label, url }, index) => {
+      if (index > 0) {
+        message += '\n';
+      }
+      message += `  ${`> ${label}`}\n`;
       routes.forEach((r) => {
-        message += `    ${color.yellow('○')}  ${color.yellow(
-          r.name.padEnd(maxNameLength + 8),
+        message += `  ${color.dim('-')} ${color.dim(
+          r.name.padEnd(maxNameLength + 4),
         )}${color.cyan(normalizeUrl(`${url}/${r.route}`))}\n`;
       });
     });
