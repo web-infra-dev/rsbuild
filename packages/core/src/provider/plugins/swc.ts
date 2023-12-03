@@ -1,6 +1,5 @@
 import {
   logger,
-  setConfig,
   cloneDeep,
   isWebTarget,
   SCRIPT_REGEX,
@@ -127,15 +126,6 @@ export const pluginSwc = (): RsbuildPlugin => ({
           .options(cloneDeep(swcConfig));
       },
     );
-
-    api.modifyRspackConfig(async (config) => {
-      // will default in rspack 0.4.0 / 0.5.0
-      setConfig(
-        config,
-        'experiments.rspackFuture.disableTransformByDefault',
-        true,
-      );
-    });
   },
 });
 
