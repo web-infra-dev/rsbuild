@@ -85,15 +85,49 @@ export const TASKS: TaskConfig[] = [
         ignoreDts: true,
       },
       {
+        name: 'postcss-value-parser',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-modules-local-by-default',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-modules-extract-imports',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-modules-scope',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-modules-values',
+        ignoreDts: true,
+      },
+      {
+        name: 'icss-utils',
+        ignoreDts: true,
+      },
+      {
+        name: 'css-loader',
+        ignoreDts: true,
+        externals: {
+          semver: '../semver',
+          'postcss-modules-local-by-default':
+            '../postcss-modules-local-by-default',
+          'postcss-modules-extract-imports':
+            '../postcss-modules-extract-imports',
+          'postcss-modules-scope': '../postcss-modules-scope',
+          'postcss-modules-values': '../postcss-modules-values',
+          'icss-utils': '../icss-utils',
+        },
+      },
+      {
         name: 'postcss-loader',
         externals: {
           jiti: '../jiti',
           semver: '../semver',
         },
-        ignoreDts: true,
-      },
-      {
-        name: 'postcss-value-parser',
         ignoreDts: true,
       },
       {
