@@ -61,7 +61,7 @@ export const getRspackVersion = async (): Promise<string> => {
 };
 
 // apply builtin:swc-loader
-export const rspackMinVersion = '0.3.6';
+export const rspackMinVersion = '0.4.0';
 
 const compareSemver = (version1: string, version2: string) => {
   const parts1 = version1.split('.').map(Number);
