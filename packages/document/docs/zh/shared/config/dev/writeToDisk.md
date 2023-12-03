@@ -15,7 +15,9 @@ export default {
 };
 ```
 
-你也可以将 `dev.writeToDisk` 设置为函数，来匹配一部分文件。
+你也可以将 `dev.writeToDisk` 设置为函数来匹配一部分文件，函数返回 `false` 时不会写入文件，返回值 `true` 时会将文件写入磁盘。
+
+例如：
 
 ```ts
 export default {
@@ -24,3 +26,7 @@ export default {
   },
 };
 ```
+
+:::tip
+`writeToDisk: true` 用于在开发环境下查看构建产物，它不会改变 webpack-dev-middleware 的行为，通过浏览器访问文件时，dev server 仍将从内存中读取文件内容。
+:::
