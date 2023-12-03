@@ -17,6 +17,8 @@ export default {
 
 You can also set `dev.writeToDisk` as a function to match part of the files. When the function returns `false`, it will not write to the disk, and when it returns `true`, it will write the file to the disk.
 
+For example:
+
 ```ts
 export default {
   dev: {
