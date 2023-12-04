@@ -21,6 +21,7 @@ export const getDefaultSourceConfig = (): UniBuilderRspackConfig['source'] => ({
   aliasStrategy: 'prefer-tsconfig',
   preEntry: [],
   globalVars: {},
+  define: {},
 });
 
 export const getDefaultHtmlConfig = (): UniBuilderRspackConfig['html'] => ({
@@ -38,6 +39,10 @@ export const getDefaultSecurityConfig = () => ({
 
 export const getDefaultToolsConfig = () => ({
   tsChecker: {},
+});
+
+export const getDefaultExperimentsConfig = () => ({
+  sourceBuild: false,
 });
 
 export const getDefaultPerformanceConfig =

@@ -6,6 +6,7 @@ import {
   getDefaultSourceConfig,
   getDefaultSecurityConfig,
   getDefaultPerformanceConfig,
+  getDefaultExperimentsConfig,
 } from '../shared/defaults';
 import { mergeRsbuildConfig } from '@rsbuild/shared';
 import type { UniBuilderWebpackConfig } from '../types';
@@ -20,18 +21,15 @@ export const createDefaultConfig = (): UniBuilderWebpackConfig => ({
       pluginOptions: {},
     },
   },
-  source: {
-    ...getDefaultSourceConfig(),
-    define: {},
-  },
+  source: getDefaultSourceConfig(),
   output: getDefaultOutputConfig(),
   security: {
     ...getDefaultSecurityConfig(),
     sri: false,
   },
   experiments: {
+    ...getDefaultExperimentsConfig(),
     lazyCompilation: false,
-    sourceBuild: false,
   },
   performance: getDefaultPerformanceConfig(),
 });
