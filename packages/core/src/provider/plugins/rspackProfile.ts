@@ -1,9 +1,5 @@
 import type { RsbuildPlugin } from '../../types';
 import path from 'path';
-import {
-  experimental_registerGlobalTrace as registerGlobalTrace,
-  experimental_cleanupGlobalTrace as cleanupGlobalTrace,
-} from '@rspack/core';
 import inspector from 'inspector';
 import { fse } from '@rsbuild/shared';
 import { logger } from '@rsbuild/shared';
@@ -29,7 +25,7 @@ export const stopProfiler = (
 export const pluginRspackProfile = (): RsbuildPlugin => ({
   name: 'rsbuild:rspack-profile',
 
-  setup(api) {
+  async setup(api) {
     /**
      * RSPACK_PROFILE=ALL
      * RSPACK_PROFILE=TRACE|CPU|LOGGING
@@ -39,6 +35,11 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     if (!RSPACK_PROFILE) {
       return;
     }
+
+    const {
+      experimental_registerGlobalTrace: registerGlobalTrace,
+      experimental_cleanupGlobalTrace: cleanupGlobalTrace,
+    } = await import('@rspack/core');
 
     const timestamp = Date.now();
     const profileDir = path.join(
