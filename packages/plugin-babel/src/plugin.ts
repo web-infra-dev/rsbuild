@@ -1,3 +1,4 @@
+import path from 'path';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { cloneDeep, SCRIPT_REGEX } from '@rsbuild/shared';
 import { applyUserBabelConfig, type BabelConfig } from './helper';
@@ -93,7 +94,7 @@ export const pluginBabel = (
         .test(SCRIPT_REGEX)
         .use(CHAIN_ID.USE.BABEL)
         .after(CHAIN_ID.USE.SWC)
-        .loader(require.resolve('../compiled/babel-loader'))
+        .loader(path.resolve(__dirname, '../compiled/babel-loader/index.js'))
         .options(babelOptions);
     });
   },
