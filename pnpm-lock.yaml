@@ -1098,9 +1098,6 @@ importers:
       '@types/babel__core':
         specifier: ^7.20.3
         version: 7.20.3
-      babel-loader:
-        specifier: 9.1.3
-        version: 9.1.3(@babel/core@7.23.2)(webpack@5.89.0)
       upath:
         specifier: 2.0.1
         version: 2.0.1
@@ -1693,6 +1690,9 @@ importers:
       autoprefixer:
         specifier: 10.4.16
         version: 10.4.16(postcss@8.4.31)
+      babel-loader:
+        specifier: 9.1.3
+        version: 9.1.3(@babel/core@7.23.2)(webpack@5.89.0)
       browserslist:
         specifier: 4.22.1
         version: 4.22.1
@@ -6685,7 +6685,6 @@ packages:
       find-cache-dir: 4.0.0
       schema-utils: 4.2.0
       webpack: 5.89.0
-    dev: false
 
   /babel-plugin-dynamic-import-node@2.3.3:
     resolution: {integrity: sha512-jZVI+s9Zg3IqA/kdi0i6UDCybUI3aSBLnglhYbSSjKlV7yF1F/5LWv8MakQmvYpnbJDS6fcBL2KzHSxNCMtWSQ==}
@@ -7361,7 +7360,6 @@ packages:
 
   /common-path-prefix@3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==}
-    dev: false
 
   /compare-versions@6.0.0-rc.1:
     resolution: {integrity: sha512-cFhkjbGY1jLFWIV7KegECbfuyYPxSGvgGkdkfM+ibboQDoPwg2FRHm5BSNTOApiauRBzJIQH7qvOJs2sW5ueKQ==}
@@ -8772,7 +8770,6 @@ packages:
     dependencies:
       common-path-prefix: 3.0.0
       pkg-dir: 7.0.0
-    dev: false
 
   /find-up@4.1.0:
     resolution: {integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==}
@@ -8794,7 +8791,6 @@ packages:
     dependencies:
       locate-path: 7.2.0
       path-exists: 5.0.0
-    dev: false
 
   /find-value@1.0.12:
     resolution: {integrity: sha512-OCpo8LTk8eZ2sdDCwbU2Lc3ivYsdM6yod6jP2jHcNEFcjPhkgH0+POzTIol7xx1LZgtbI5rkO5jqxsG5MWtPjQ==}
@@ -10307,7 +10303,6 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       p-locate: 6.0.0
-    dev: false
 
   /lodash-es@4.17.21:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
@@ -11589,7 +11584,6 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       p-limit: 4.0.0
-    dev: false
 
   /p-map@2.1.0:
     resolution: {integrity: sha512-y3b8Kpd8OAN444hxfBbFfj1FY/RjtTd8tzYwhUqNYXx0fXx2iX4maP4Qr6qhIKbQXI02wTLAda4fYUbDagTUFw==}
@@ -11717,7 +11711,6 @@ packages:
   /path-exists@5.0.0:
     resolution: {integrity: sha512-RjhtfwJOxzcFmNOi6ltcbcu4Iu+FL3zEj83dk4kAS+fVpTxXLO1b38RvJgT/0QwvV/L3aY9TAnyv0EOqW4GoMQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dev: false
 
   /path-is-absolute@1.0.1:
     resolution: {integrity: sha512-AVbw3UJ2e9bq64vSaS9Am0fje1Pa8pbGqTTsmXfaIiMpnr5DlDhfJOuLj9Sf95ZPVDAUerDfEk88MPmPe7UCQg==}
@@ -11817,7 +11810,6 @@ packages:
     engines: {node: '>=14.16'}
     dependencies:
       find-up: 6.3.0
-    dev: false
 
   /pkg-types@1.0.3:
     resolution: {integrity: sha512-nN7pYi0AQqJnoLPC9eHFQ8AcyaixBUOwvqc5TDnIKCMEE6I0y8P7OKA7fPexsXGCGxQDl/cmrLAp26LhcwxZ4A==}

@@ -93,7 +93,7 @@ export const pluginBabel = (
         .test(SCRIPT_REGEX)
         .use(CHAIN_ID.USE.BABEL)
         .after(CHAIN_ID.USE.SWC)
-        .loader(require.resolve('babel-loader'))
+        .loader(require.resolve('../compiled/babel-loader'))
         .options(babelOptions);
     });
   },

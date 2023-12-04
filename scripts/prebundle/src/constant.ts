@@ -173,4 +173,14 @@ export const TASKS: TaskConfig[] = [
       },
     ],
   },
+  {
+    packageDir: 'plugin-babel',
+    packageName: '@rsbuild/plugin-babel',
+    dependencies: [
+      {
+        name: 'babel-loader',
+        ignoreDts: true,
+      },
+    ],
+  },
 ];
