@@ -12,7 +12,6 @@ import {
   type RspackMultiCompiler,
   type CreateDevMiddlewareReturns,
 } from '@rsbuild/shared';
-import { getDevMiddleware } from './devMiddleware';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import type { Context } from '../../types';
 import type { Stats, MultiStats, StatsCompilation } from '@rspack/core';
@@ -126,6 +125,7 @@ export async function createDevMiddleware(
     });
   }
 
+  const { getDevMiddleware } = await import('./devMiddleware');
   return {
     devMiddleware: getDevMiddleware(compiler),
     compiler,
