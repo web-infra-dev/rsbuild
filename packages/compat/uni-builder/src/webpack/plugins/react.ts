@@ -1,5 +1,5 @@
 import { isUsingHMR } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 export const pluginReact = (): RsbuildPlugin => ({
   name: 'uni-builder:react',

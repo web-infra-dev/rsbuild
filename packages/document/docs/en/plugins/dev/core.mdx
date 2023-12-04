@@ -15,12 +15,12 @@ The type of the plugin object. The plugin object contains the following properti
 The type of the plugin object, which contains the following properties:
 
 ```ts
-export type RsbuildPlugin<API = RsbuildPluginAPI> = {
+export type RsbuildPlugin = {
   name: string;
   pre?: string[];
   post?: string[];
   remove?: string[];
-  setup: (api: API) => Promise<void> | void;
+  setup: (api: RsbuildPluginAPI) => Promise<void> | void;
 };
 ```
 

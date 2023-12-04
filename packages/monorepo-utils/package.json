@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/monorepo-utils",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "description": "The monorepo utils of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -9,6 +9,7 @@
     "directory": "packages/monorepo-utils"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

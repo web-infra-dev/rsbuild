@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-vue-jsx",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "description": "Vue 3 JSX plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -9,6 +9,7 @@
     "directory": "packages/plugin-vue-jsx"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

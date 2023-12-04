@@ -14,14 +14,14 @@ import {
 } from '@rsbuild/shared';
 import type {
   HtmlConfig,
+  RsbuildPluginAPI,
   NormalizedConfig,
   HTMLPluginOptions,
-  SharedRsbuildPluginAPI,
   NormalizedOutputConfig,
   HtmlInjectTagDescriptor,
 } from '@rsbuild/shared';
-import type { HtmlTagsPluginOptions } from '../rspack-plugins/HtmlTagsPlugin';
-import type { HtmlInfo } from '../rspack-plugins/HtmlBasicPlugin';
+import type { HtmlTagsPluginOptions } from '../rspack/HtmlTagsPlugin';
+import type { HtmlInfo } from '../rspack/HtmlBasicPlugin';
 import type { RsbuildPlugin } from '../types';
 
 export function getTitle(entryName: string, config: NormalizedConfig) {
@@ -167,7 +167,7 @@ function getChunks(entryName: string, entryValue: string | string[]) {
   return [...dependOn, entryName];
 }
 
-export const applyInjectTags = (api: SharedRsbuildPluginAPI) => {
+export const applyInjectTags = (api: RsbuildPluginAPI) => {
   api.modifyBundlerChain(async (chain, { HtmlPlugin, CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
 
@@ -186,7 +186,7 @@ export const applyInjectTags = (api: SharedRsbuildPluginAPI) => {
       return;
     }
 
-    const { HtmlTagsPlugin } = await import('../rspack-plugins/HtmlTagsPlugin');
+    const { HtmlTagsPlugin } = await import('../rspack/HtmlTagsPlugin');
 
     // create shared options used for entry without specified options.
     const sharedOptions: HtmlTagsPluginOptions = {
@@ -306,9 +306,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
           }),
         );
 
-        const { HtmlBasicPlugin } = await import(
-          '../rspack-plugins/HtmlBasicPlugin'
-        );
+        const { HtmlBasicPlugin } = await import('../rspack/HtmlBasicPlugin');
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
@@ -319,7 +317,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
           if (nonce) {
             const { HtmlNoncePlugin } = await import(
-              '../rspack-plugins/HtmlNoncePlugin'
+              '../rspack/HtmlNoncePlugin'
             );
 
             chain
@@ -333,7 +331,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
           if (crossorigin) {
             const { HtmlCrossOriginPlugin } = await import(
-              '../rspack-plugins/HtmlCrossOriginPlugin'
+              '../rspack/HtmlCrossOriginPlugin'
             );
 
             const formattedCrossorigin =
@@ -350,7 +348,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
           if (appIcon) {
             const { HtmlAppIconPlugin } = await import(
-              '../rspack-plugins/HtmlAppIconPlugin'
+              '../rspack/HtmlAppIconPlugin'
             );
 
             const distDir = getDistPath(config.output, 'image');

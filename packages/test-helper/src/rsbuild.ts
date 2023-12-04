@@ -9,7 +9,7 @@ import type {
 import type { RsbuildConfig } from '@rsbuild/core';
 
 const getRspackProvider = async (rsbuildConfig: RsbuildConfig) => {
-  const { rspackProvider } = await import('@rsbuild/core/rspack-provider');
+  const { rspackProvider } = await import('@rsbuild/core/provider');
 
   return rspackProvider({
     rsbuildConfig,

@@ -93,7 +93,7 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   frameworkConfigPath?: string,
 ): Promise<{
   rsbuildConfig: RsbuildConfig;
-  rsbuildPlugins: RsbuildPlugin<any>[];
+  rsbuildPlugins: RsbuildPlugin[];
 }> {
   const rsbuildConfig = deepmerge({}, uniBuilderConfig);
   const { dev = {}, html = {}, output = {}, tools = {} } = rsbuildConfig;
@@ -128,6 +128,9 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
 
   const extraConfig: RsbuildConfig = {};
   extraConfig.html ||= {};
+
+  extraConfig.html.outputStructure = html.disableHtmlFolder ? 'flat' : 'nested';
+  delete html.disableHtmlFolder;
 
   if (html.metaByEntries) {
     extraConfig.html.meta = ({ entryName }) => html.metaByEntries![entryName];

@@ -5,22 +5,19 @@ import {
   type PreviewServerOptions,
 } from '@rsbuild/shared';
 import {
+  getPluginAPI,
   createPublicContext,
   initRsbuildConfig,
-} from '@rsbuild/core/rspack-provider';
+} from '@rsbuild/core/provider';
 import { createContext } from './core/createContext';
-import { applyDefaultPlugins } from './shared/plugin';
-import type { WebpackConfig } from './types';
+import { applyDefaultPlugins } from './shared';
 import { initConfigs } from './core/initConfigs';
-import { getPluginAPI } from './core/initPlugins';
-
-export type WebpackProvider = RsbuildProvider<WebpackConfig>;
 
 export function webpackProvider({
   rsbuildConfig: originalRsbuildConfig,
 }: {
   rsbuildConfig: RsbuildConfig;
-}): WebpackProvider {
+}): RsbuildProvider {
   const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
 
   // @ts-expect-error compiler type mismatch
@@ -64,17 +61,16 @@ export function webpackProvider({
         const { startDevServer } = await import('@rsbuild/core/server');
         const { createDevMiddleware } = await import('./core/createCompiler');
         await initRsbuildConfig({
-          // @ts-expect-error context type mismatch
           context,
           pluginStore,
         });
         return startDevServer(
           {
-            // @ts-expect-error context type mismatch
             context,
             pluginStore,
             rsbuildOptions,
           },
+          // @ts-expect-error compile type mismatch
           createDevMiddleware,
           options,
         );
@@ -83,16 +79,10 @@ export function webpackProvider({
       async preview(options?: PreviewServerOptions) {
         const { startProdServer } = await import('@rsbuild/core/server');
         await initRsbuildConfig({
-          // @ts-expect-error context type mismatch
           context,
           pluginStore,
         });
-        return startProdServer(
-          // @ts-expect-error context type mismatch
-          context,
-          context.config,
-          options,
-        );
+        return startProdServer(context, context.config, options);
       },
 
       async build(options) {

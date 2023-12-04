@@ -5,8 +5,8 @@ import {
   isUseCssExtract,
   applyOutputPlugin,
   mergeChainedOptions,
+  type RsbuildPlugin,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
 
 export const pluginOutput = (): RsbuildPlugin => ({
   name: 'rsbuild-webpack:output',

@@ -1,5 +1,4 @@
-import type { RsbuildPlugin } from '../types';
-import { isUsingHMR } from '@rsbuild/shared';
+import { isUsingHMR, type RsbuildPlugin } from '@rsbuild/shared';
 
 export const pluginHMR = (): RsbuildPlugin => ({
   name: 'rsbuild-webpack:hmr',

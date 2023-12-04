@@ -9,11 +9,15 @@ import {
 
 test('formatRoutes', () => {
   expect(
-    formatRoutes({
-      index: 'src/index.ts',
-      foo: 'src/index.ts',
-      bar: 'src/index.ts',
-    }),
+    formatRoutes(
+      {
+        index: 'src/index.ts',
+        foo: 'src/index.ts',
+        bar: 'src/index.ts',
+      },
+      undefined,
+      undefined,
+    ),
   ).toEqual([
     {
       name: 'index',
@@ -30,11 +34,15 @@ test('formatRoutes', () => {
   ]);
 
   expect(
-    formatRoutes({
-      foo: 'src/index.ts',
-      bar: 'src/index.ts',
-      index: 'src/index.ts',
-    }),
+    formatRoutes(
+      {
+        foo: 'src/index.ts',
+        bar: 'src/index.ts',
+        index: 'src/index.ts',
+      },
+      undefined,
+      undefined,
+    ),
   ).toEqual([
     {
       name: 'index',
@@ -51,9 +59,13 @@ test('formatRoutes', () => {
   ]);
 
   expect(
-    formatRoutes({
-      foo: 'src/index.ts',
-    }),
+    formatRoutes(
+      {
+        foo: 'src/index.ts',
+      },
+      undefined,
+      undefined,
+    ),
   ).toEqual([
     {
       name: 'foo',
@@ -69,6 +81,7 @@ test('formatRoutes', () => {
         bar: 'src/index.ts',
       },
       'html',
+      undefined,
     ),
   ).toEqual([
     {
@@ -82,6 +95,21 @@ test('formatRoutes', () => {
     {
       name: 'bar',
       route: 'html/bar',
+    },
+  ]);
+
+  expect(
+    formatRoutes(
+      {
+        index: 'src/index.ts',
+      },
+      'html',
+      'nested',
+    ),
+  ).toEqual([
+    {
+      name: 'index',
+      route: 'html/index',
     },
   ]);
 });
@@ -152,13 +180,14 @@ test('printServerURLs', () => {
 
   expect(message!).toMatchInlineSnapshot(`
     "  > local
-        ○  index        http:/localhost:8080/
-        ○  foo          http:/localhost:8080/html/foo
-        ○  bar          http:/localhost:8080/bar
+      - index    http:/localhost:8080/
+      - foo      http:/localhost:8080/html/foo
+      - bar      http:/localhost:8080/bar
+
       > network
-        ○  index        http:/10.94.62.193:8080/
-        ○  foo          http:/10.94.62.193:8080/html/foo
-        ○  bar          http:/10.94.62.193:8080/bar
+      - index    http:/10.94.62.193:8080/
+      - foo      http:/10.94.62.193:8080/html/foo
+      - bar      http:/10.94.62.193:8080/bar
     "
   `);
 });

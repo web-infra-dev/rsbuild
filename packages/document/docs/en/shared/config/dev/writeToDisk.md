@@ -15,7 +15,9 @@ export default {
 };
 ```
 
-You can also set `dev.writeToDisk` as a function to match part of the files.
+You can also set `dev.writeToDisk` as a function to match part of the files. When the function returns `false`, it will not write to the disk, and when it returns `true`, it will write the file to the disk.
+
+For example:
 
 ```ts
 export default {
@@ -24,3 +26,7 @@ export default {
   },
 };
 ```
+
+:::tip
+The `writeToDisk: true` option is used to view the build artifacts in the development environment. It does not change the behavior of webpack-dev-middleware. When accessing files through the browser, the dev server will still read the file content from memory.
+:::

@@ -1,7 +1,7 @@
-import { SharedRsbuildPluginAPI } from '../types';
+import type { RsbuildPluginAPI } from '../types';
 import { TARGET_ID_MAP } from '../constants';
 
-export function applyBasicPlugin(api: SharedRsbuildPluginAPI) {
+export function applyBasicPlugin(api: RsbuildPluginAPI) {
   api.modifyBundlerChain((chain, { isProd, target }) => {
     chain.name(TARGET_ID_MAP[target]);
     // The base directory for resolving entry points and loaders from the configuration.

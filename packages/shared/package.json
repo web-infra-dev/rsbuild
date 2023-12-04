@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/shared",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "description": "The internal shared modules and dependencies of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -9,6 +9,7 @@
     "directory": "packages/shared"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -17,6 +18,10 @@
     "./format-stats": {
       "types": "./dist/formatStats.d.ts",
       "default": "./dist/formatStats.js"
+    },
+    "./jiti": {
+      "types": "./compiled/jiti/types/jiti.d.ts",
+      "default": "./compiled/jiti/index.js"
     },
     "./rslog": {
       "types": "./compiled/rslog/dist/index.d.ts",
@@ -111,7 +116,6 @@
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
-    "http-proxy-middleware": "^2.0.1",
     "mini-css-extract-plugin": "2.7.6",
     "terser": "5.19.2",
     "terser-webpack-plugin": "5.3.9",

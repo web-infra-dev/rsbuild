@@ -1,6 +1,5 @@
 import path from 'path';
-import type { RsbuildPlugin } from '../types';
-import { applyBasicPlugin } from '@rsbuild/shared';
+import { applyBasicPlugin, type RsbuildPlugin } from '@rsbuild/shared';
 
 /**
  * Provide some basic configs of webpack

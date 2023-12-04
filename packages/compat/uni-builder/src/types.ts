@@ -184,6 +184,11 @@ export type UniBuilderExtraConfig = {
   };
   html?: {
     /**
+     * Remove the folder of the HTML files.
+     * When this option is enabled, the generated HTML file path will change from `[name]/index.html` to `[name].html`.
+     */
+    disableHtmlFolder?: boolean;
+    /**
      * @deprecated use `html.meta` instead
      */
     metaByEntries?: Record<string, MetaOptions>;

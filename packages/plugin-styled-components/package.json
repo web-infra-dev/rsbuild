@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-styled-components",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "description": "styled-components plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -8,6 +8,7 @@
     "directory": "packages/plugin-styled-components"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

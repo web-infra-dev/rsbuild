@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 export type LazyCompilationOptions =
   | boolean

@@ -103,7 +103,7 @@ async function printFileSizes(
     return;
   }
 
-  assets.sort((a, b) => b.size - a.size);
+  assets.sort((a, b) => a.size - b.size);
 
   logger.info(`Production file sizes:\n`);
 

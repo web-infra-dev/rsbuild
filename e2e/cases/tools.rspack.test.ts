@@ -5,7 +5,7 @@ import { build, getHrefByEntryName } from '../scripts/shared';
 const fixtures = __dirname;
 
 test('tools.rspack', async ({ page }) => {
-  const rsbuild = await build<'rspack'>({
+  const rsbuild = await build({
     cwd: join(fixtures, 'source/global-vars'),
     runServer: true,
     rsbuildConfig: {

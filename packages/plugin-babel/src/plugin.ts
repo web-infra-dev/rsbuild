@@ -1,6 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { SCRIPT_REGEX } from '@rsbuild/shared';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, SCRIPT_REGEX } from '@rsbuild/shared';
 import { applyUserBabelConfig, type BabelConfig } from './helper';
 import type { PluginBabelOptions } from './types';
 

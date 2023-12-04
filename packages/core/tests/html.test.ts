@@ -1,4 +1,4 @@
-import { hasTitle } from '@src/rspack-plugins/HtmlBasicPlugin';
+import { hasTitle } from '@src/rspack/HtmlBasicPlugin';
 
 test('should detect HTML title via "hasTitle" correctly', () => {
   expect(hasTitle()).toEqual(false);

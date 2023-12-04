@@ -1,10 +1,10 @@
 import {
   isServerTarget,
   isPackageInstalled,
-  type SharedRsbuildPluginAPI,
+  type RsbuildPluginAPI,
 } from '@rsbuild/shared';
 
-export const applyArcoSupport = (api: SharedRsbuildPluginAPI) => {
+export const applyArcoSupport = (api: RsbuildPluginAPI) => {
   const ARCO_NAME = '@arco-design/web-react';
   const ARCO_ICON = `${ARCO_NAME}/icon`;
 

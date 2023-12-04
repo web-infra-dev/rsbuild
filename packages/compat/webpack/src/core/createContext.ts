@@ -7,11 +7,11 @@ import {
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
 import {
+  initHooks,
   withDefaultConfig,
   createContextByConfig,
-} from '@rsbuild/core/rspack-provider';
-import { initHooks } from './initHooks';
-import type { Context } from '../types';
+  type Context,
+} from '@rsbuild/core/provider';
 
 /**
  * Create primary context.

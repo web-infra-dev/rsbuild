@@ -1,5 +1,8 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { Options as BaseProxyOptions } from '../../../compiled/http-proxy-middleware';
+import type {
+  Options as BaseProxyOptions,
+  Filter as ProxyFilter,
+} from '../../../compiled/http-proxy-middleware';
 
 export type HtmlFallback = false | 'index';
 
@@ -9,7 +12,7 @@ export type ProxyDetail = BaseProxyOptions & {
     res: ServerResponse,
     proxyOptions: ProxyOptions,
   ) => string | undefined | null | false;
-  context?: string | string[];
+  context?: ProxyFilter;
 };
 
 export type ProxyOptions =

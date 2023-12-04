@@ -11,7 +11,7 @@ export { defineConfig } from './cli/config';
 export { logger, mergeRsbuildConfig } from '@rsbuild/shared';
 
 // Types
-export type { Rspack } from './rspack-provider';
+export type { Rspack } from './provider';
 export type {
   // Config Types
   RsbuildConfig,

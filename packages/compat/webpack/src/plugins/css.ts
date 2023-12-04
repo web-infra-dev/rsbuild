@@ -9,18 +9,19 @@ import {
   getCssLoaderOptions,
   getBrowserslistWithDefault,
   getCssModuleLocalIdentName,
+  getSharedPkgCompiledPath,
   type Context,
+  type RsbuildPlugin,
   type NormalizedConfig,
   type BundlerChainRule,
   type CSSExtractOptions,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
 
 export async function applyBaseCSSRule({
   rule,
   config,
   context,
-  utils: { target, isProd, isServer, CHAIN_ID, isWebWorker, getCompiledPath },
+  utils: { target, isProd, isServer, CHAIN_ID, isWebWorker },
   importLoaders = 1,
 }: {
   rule: BundlerChainRule;
@@ -109,7 +110,7 @@ export async function applyBaseCSSRule({
 
   rule
     .use(CHAIN_ID.USE.CSS)
-    .loader(getCompiledPath('css-loader'))
+    .loader(getSharedPkgCompiledPath('css-loader'))
     .options(cssLoaderOptions)
     .end();
 
@@ -122,7 +123,7 @@ export async function applyBaseCSSRule({
 
     rule
       .use(CHAIN_ID.USE.POSTCSS)
-      .loader(getCompiledPath('postcss-loader'))
+      .loader(getSharedPkgCompiledPath('postcss-loader'))
       .options(postcssLoaderOptions)
       .end();
   }

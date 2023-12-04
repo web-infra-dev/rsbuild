@@ -1,5 +1,4 @@
-import { TARGET_ID_MAP } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
+import { TARGET_ID_MAP, type RsbuildPlugin } from '@rsbuild/shared';
 
 export const pluginProgress = (): RsbuildPlugin => ({
   name: 'rsbuild-webpack:progress',
@@ -14,7 +13,7 @@ export const pluginProgress = (): RsbuildPlugin => ({
       }
 
       const { ProgressPlugin } = await import(
-        '../webpackPlugins/ProgressPlugin/ProgressPlugin'
+        '../ProgressPlugin/ProgressPlugin'
       );
       chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(ProgressPlugin, [
         {

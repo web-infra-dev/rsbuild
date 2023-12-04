@@ -23,6 +23,7 @@ export const DEFAULT_EXTERNALS = {
   '../package.json': './package.json',
   '../../package.json': './package.json',
   postcss: 'postcss',
+  typescript: 'typescript',
   '@babel/core': '@babel/core',
 };
 
@@ -32,7 +33,6 @@ export const TASKS: TaskConfig[] = [
     packageName: '@rsbuild/core',
     dependencies: [
       'open',
-      'jiti',
       'dotenv',
       'dotenv-expand',
       'commander',
@@ -64,6 +64,7 @@ export const TASKS: TaskConfig[] = [
     packageDir: 'shared',
     packageName: '@rsbuild/shared',
     dependencies: [
+      'jiti',
       'rslog',
       'deepmerge',
       'url-join',
@@ -76,11 +77,57 @@ export const TASKS: TaskConfig[] = [
       'gzip-size',
       'json5',
       {
+        name: 'semver',
+        ignoreDts: true,
+      },
+      {
         name: 'webpack-sources',
         ignoreDts: true,
       },
       {
         name: 'postcss-value-parser',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-modules-local-by-default',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-modules-extract-imports',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-modules-scope',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-modules-values',
+        ignoreDts: true,
+      },
+      {
+        name: 'icss-utils',
+        ignoreDts: true,
+      },
+      {
+        name: 'css-loader',
+        ignoreDts: true,
+        externals: {
+          semver: '../semver',
+          'postcss-modules-local-by-default':
+            '../postcss-modules-local-by-default',
+          'postcss-modules-extract-imports':
+            '../postcss-modules-extract-imports',
+          'postcss-modules-scope': '../postcss-modules-scope',
+          'postcss-modules-values': '../postcss-modules-values',
+          'icss-utils': '../icss-utils',
+        },
+      },
+      {
+        name: 'postcss-loader',
+        externals: {
+          jiti: '../jiti',
+          semver: '../semver',
+        },
         ignoreDts: true,
       },
       {

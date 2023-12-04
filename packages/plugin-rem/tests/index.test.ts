@@ -1,8 +1,8 @@
 import { pluginRem } from '../src';
 import { createStubRsbuild, matchPlugin } from '@rsbuild/test-helper';
-import { pluginCss } from '../../core/src/rspack-provider/plugins/css';
-import { pluginLess } from '../../core/src/rspack-provider/plugins/less';
-import { pluginSass } from '../../core/src/rspack-provider/plugins/sass';
+import { pluginCss } from '../../core/src/provider/plugins/css';
+import { pluginLess } from '../../core/src/provider/plugins/less';
+import { pluginSass } from '../../core/src/provider/plugins/sass';
 
 describe('plugin-rem', () => {
   it('should run rem plugin with default config', async () => {

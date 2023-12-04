@@ -1,9 +1,5 @@
 import { logger, debug } from './logger';
-import type {
-  PluginStore,
-  RsbuildPlugin,
-  DefaultRsbuildPluginAPI,
-} from './types';
+import type { PluginStore, RsbuildPlugin, RsbuildPluginAPI } from './types';
 
 export function createPluginStore(): PluginStore {
   let plugins: RsbuildPlugin[] = [];
@@ -131,7 +127,7 @@ export async function initPlugins({
   pluginAPI,
   pluginStore,
 }: {
-  pluginAPI?: DefaultRsbuildPluginAPI;
+  pluginAPI?: RsbuildPluginAPI;
   pluginStore: PluginStore;
 }) {
   debug('init plugins');
@@ -149,7 +145,7 @@ export async function initPlugins({
     if (removedPlugins.includes(plugin.name)) {
       continue;
     }
-    await plugin.setup(pluginAPI);
+    await plugin.setup(pluginAPI!);
   }
 
   debug('init plugins done');

@@ -10,22 +10,22 @@ import { plugins } from './plugins';
 import type { RsbuildConfig } from './types';
 
 const getRspackProvider = async (rsbuildConfig: RsbuildConfig) => {
-  const { rspackProvider } = await import('./rspack-provider');
-
+  const { rspackProvider } = await import('./provider');
   return rspackProvider({
     rsbuildConfig,
   });
 };
 
-export async function createRsbuild<
-  P extends ({ rsbuildConfig }: { rsbuildConfig: T }) => RsbuildProvider,
-  T extends RsbuildConfig,
->(
+export async function createRsbuild(
   options: CreateRsbuildOptions & {
-    rsbuildConfig: T;
-    provider?: P;
+    rsbuildConfig: RsbuildConfig;
+    provider?: ({
+      rsbuildConfig,
+    }: {
+      rsbuildConfig: RsbuildConfig;
+    }) => RsbuildProvider;
   },
-): Promise<RsbuildInstance<ReturnType<P>>> {
+): Promise<RsbuildInstance> {
   const { rsbuildConfig } = options;
 
   const provider = options.provider

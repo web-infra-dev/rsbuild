@@ -219,56 +219,41 @@ If this problem occurs after you modify the Babel config, it is recommended to c
 
 ```ts
 // wrong example
-export default {
-  tools: {
-    babel(config, { addPlugins }) {
-      // The plugin has the wrong name or is not installed
-      addPlugins('babel-plugin-not-exists');
-    },
-  },
-};
+pluginBabel((config, { addPlugins }) => {
+  // The plugin has the wrong name or is not installed
+  addPlugins('babel-plugin-not-exists');
+});
 ```
 
 2. Whether multiple babel-plugin-imports are configured, but the name of each babel-plugin-import is not declared in the third item of the array.
 
 ```ts
 // wrong example
-export default {
-  tools: {
-    babel(config, { addPlugins }) {
-      addPlugins([
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd', libraryDirectory: 'es' },
-        ],
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd-mobile', libraryDirectory: 'es' },
-        ],
-      ]);
-    },
-  },
-};
+pluginBabel((config, { addPlugins }) => {
+  addPlugins([
+    ['babel-plugin-import', { libraryName: 'antd', libraryDirectory: 'es' }],
+    [
+      'babel-plugin-import',
+      { libraryName: 'antd-mobile', libraryDirectory: 'es' },
+    ],
+  ]);
+});
 ```
 
 ```ts
 // correct example
-export default {
-  tools: {
-    babel(config, { addPlugins }) {
-      addPlugins([
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd', libraryDirectory: 'es' },
-          'antd',
-        ],
-        [
-          'babel-plugin-import',
-          { libraryName: 'antd-mobile', libraryDirectory: 'es' },
-          'antd-mobile',
-        ],
-      ]);
-    },
-  },
-};
+pluginBabel((config, { addPlugins }) => {
+  addPlugins([
+    [
+      'babel-plugin-import',
+      { libraryName: 'antd', libraryDirectory: 'es' },
+      'antd',
+    ],
+    [
+      'babel-plugin-import',
+      { libraryName: 'antd-mobile', libraryDirectory: 'es' },
+      'antd-mobile',
+    ],
+  ]);
+});
 ```
