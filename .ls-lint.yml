@@ -3,6 +3,7 @@ ls:
   packages/{*,compat/*}/src:
     .js: camelCase
     .ts: camelCase | PascalCase
+    .dir: kebab-case
     .d.ts: camelCase
 
 ignore:
