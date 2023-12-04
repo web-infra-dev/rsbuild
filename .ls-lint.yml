@@ -1,10 +1,15 @@
 ls:
-  # .dir: kebab-case
-  packages/{*,compat/*}/src:
-    .js: camelCase
+  packages/{*,compat/*}/{src,tests,static}:
+    .js: camelCase | PascalCase
     .ts: camelCase | PascalCase
-    .dir: kebab-case
+    .test.ts: camelCase | PascalCase
+    .dir: kebab-case | regex:__snapshots__
     .d.ts: camelCase
+
+  packages/document/docs:
+    .md: kebab-case | camelCase
+    .mdx: kebab-case | camelCase
+    .dir: kebab-case
 
 ignore:
   - .git
@@ -15,3 +20,4 @@ ignore:
   - .changeset
   - compiled
   - node_modules
+  - __snapshots__
