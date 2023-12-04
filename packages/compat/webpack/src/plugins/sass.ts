@@ -2,6 +2,7 @@ import {
   SASS_REGEX,
   getResolveUrlJoinFn,
   getSassLoaderOptions,
+  getSharedPkgCompiledPath,
   patchCompilerGlobalLocation,
   type RsbuildPlugin,
 } from '@rsbuild/shared';
@@ -42,7 +43,7 @@ export function pluginSass(): RsbuildPlugin {
 
         rule
           .use(utils.CHAIN_ID.USE.RESOLVE_URL_LOADER_FOR_SASS)
-          .loader(utils.getCompiledPath('resolve-url-loader'))
+          .loader(getSharedPkgCompiledPath('resolve-url-loader'))
           .options({
             join: await getResolveUrlJoinFn(),
             // 'resolve-url-loader' relies on 'adjust-sourcemap-loader',
@@ -52,7 +53,7 @@ export function pluginSass(): RsbuildPlugin {
           })
           .end()
           .use(utils.CHAIN_ID.USE.SASS)
-          .loader(utils.getCompiledPath('sass-loader'))
+          .loader(getSharedPkgCompiledPath('sass-loader'))
           .options(options);
       });
     },

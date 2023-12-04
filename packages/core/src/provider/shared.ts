@@ -100,9 +100,8 @@ export const getCompiledPath = (packageName: string) => {
   const providerCompilerPath = join(__dirname, '../../compiled', packageName);
   if (fse.existsSync(providerCompilerPath)) {
     return providerCompilerPath;
-  } else {
-    return getSharedPkgCompiledPath(packageName as SharedCompiledPkgNames);
   }
+  return getSharedPkgCompiledPath(packageName as SharedCompiledPkgNames);
 };
 
 export const BUILTIN_LOADER = 'builtin:';
