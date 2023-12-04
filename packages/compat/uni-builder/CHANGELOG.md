@@ -1,5 +1,26 @@
 # @rsbuild/uni-builder
 
+## 0.1.9
+
+### Patch Changes
+
+- Updated dependencies [74b0bab9]
+  - @rsbuild/core@0.1.9
+  - @rsbuild/webpack@0.1.9
+  - @rsbuild/plugin-assets-retry@0.1.9
+  - @rsbuild/plugin-babel@0.1.9
+  - @rsbuild/plugin-check-syntax@0.1.9
+  - @rsbuild/plugin-css-minimizer@0.1.9
+  - @rsbuild/plugin-pug@0.1.9
+  - @rsbuild/plugin-react@0.1.9
+  - @rsbuild/plugin-rem@0.1.9
+  - @rsbuild/plugin-source-build@0.1.9
+  - @rsbuild/plugin-styled-components@0.1.9
+  - @rsbuild/plugin-svgr@0.1.9
+  - @rsbuild/plugin-type-check@0.1.9
+  - @rsbuild/babel-preset@0.1.9
+  - @rsbuild/shared@0.1.9
+
 ## 0.1.8
 
 ### Patch Changes
