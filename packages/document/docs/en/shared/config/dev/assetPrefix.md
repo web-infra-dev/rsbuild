@@ -56,4 +56,4 @@ The differences from the native configuration are as follows:
 
 - `dev.assetPrefix` only takes effect in the development environment.
 - `dev.assetPrefix` automatically appends a trailing `/` by default.
-- The value of `dev.assetPrefix` is written to the `process.env.ASSET_PREFIX` environment variable.
+- The value of `dev.assetPrefix` is written to the `process.env.ASSET_PREFIX` environment variable (can only be accessed in client code).

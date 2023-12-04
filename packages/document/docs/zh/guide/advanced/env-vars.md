@@ -56,7 +56,7 @@ export default {
 };
 ```
 
-此时，我们可以在前端代码中通过以下方式来拼接图片 URL：
+此时，我们可以在 client 代码中通过以下方式来拼接图片 URL：
 
 ```jsx
 const Image = <img src={`${process.env.ASSET_PREFIX}/static/icon.png`} />;
