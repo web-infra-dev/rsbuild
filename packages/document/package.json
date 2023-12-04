@@ -21,11 +21,11 @@
     "preview": "rspress preview"
   },
   "devDependencies": {
-    "@rspress/shared": "^1.7.5",
+    "@rspress/shared": "^1.8.0",
     "@types/node": "^16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rspress": "^1.7.5"
+    "rspress": "^1.8.0"
   },
   "publishConfig": {
     "access": "public",
