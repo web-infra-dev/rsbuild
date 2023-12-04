@@ -22,7 +22,18 @@ export type TSLoaderOptions = Partial<RawTSLoaderOptions>;
 
 export type PluginTsLoaderOptions = ChainedConfigWithUtils<
   TSLoaderOptions,
-  { addIncludes: FileFilterUtil; addExcludes: FileFilterUtil }
+  {
+    /**
+     * use `source.include` instead
+     * @deprecated
+     */
+    addIncludes: FileFilterUtil;
+    /**
+     * use `source.exclude` instead
+     * @deprecated
+     */
+    addExcludes: FileFilterUtil;
+  }
 >;
 
 export const pluginTsLoader = (
