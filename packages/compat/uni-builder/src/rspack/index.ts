@@ -9,6 +9,7 @@ import type { UniBuilderRspackConfig } from '../types';
 import type { CreateRspackBuilderOptions } from '../types';
 import { parseCommonConfig } from '../shared/parseCommonConfig';
 import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
+import { withDefaultConfig } from './defaults';
 
 export async function parseConfig(
   uniBuilderConfig: UniBuilderRspackConfig,
@@ -48,7 +49,7 @@ export async function createRspackBuilder(
   options: CreateRspackBuilderOptions,
 ): Promise<RsbuildInstance<RspackProvider>> {
   const { rsbuildConfig, rsbuildPlugins } = await parseConfig(
-    options.config,
+    withDefaultConfig(options.config),
     options.cwd,
     options.frameworkConfigPath,
   );
