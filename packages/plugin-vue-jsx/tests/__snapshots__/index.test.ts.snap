@@ -8,7 +8,7 @@ exports[`plugin-vue-jsx > should allow to configure jsx babel plugin options 1`]
         "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
+            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
@@ -50,7 +50,7 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly 1`] = `
         "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
+            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
@@ -90,7 +90,7 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly in rspack mode
         "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
+            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
