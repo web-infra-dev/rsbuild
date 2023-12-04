@@ -166,10 +166,8 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   let overrideBrowserslist: RsbuildOverrideBrowserslist = {};
 
   for (const target of targets) {
-    const rsbuildTarget = target === 'modern-web' ? 'web' : target;
-
     // Incompatible with the scenario where target contains both 'web' and 'modern-web'
-    overrideBrowserslist[rsbuildTarget] = await getBrowserslistWithDefault(
+    overrideBrowserslist[target] = await getBrowserslistWithDefault(
       cwd,
       uniBuilderConfig,
       target,
