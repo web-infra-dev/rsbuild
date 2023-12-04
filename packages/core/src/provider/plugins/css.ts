@@ -12,6 +12,7 @@ import {
   getCssModuleLocalIdentName,
   resolvePackage,
   mergeChainedOptions,
+  getSharedPkgCompiledPath,
   type BundlerChain,
   type Context,
   type RspackRule,
@@ -19,7 +20,6 @@ import {
   type ModifyBundlerChainUtils,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin, NormalizedConfig } from '../../types';
-import { getCompiledPath } from '../shared';
 
 export const enableNativeCss = (config: NormalizedConfig) =>
   !config.output.disableCssExtract;
@@ -100,7 +100,7 @@ export async function applyBaseCSSRule({
 
     rule
       .use(CHAIN_ID.USE.CSS)
-      .loader(getCompiledPath('css-loader'))
+      .loader(getSharedPkgCompiledPath('css-loader'))
       .options(cssLoaderOptions)
       .end();
   } else {
@@ -131,7 +131,7 @@ export async function applyBaseCSSRule({
 
     rule
       .use(CHAIN_ID.USE.POSTCSS)
-      .loader(getCompiledPath('postcss-loader'))
+      .loader(getSharedPkgCompiledPath('postcss-loader'))
       .options(postcssLoaderOptions)
       .end();
   }

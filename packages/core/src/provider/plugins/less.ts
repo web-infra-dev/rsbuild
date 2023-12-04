@@ -3,6 +3,7 @@ import {
   isUseCssSourceMap,
   LESS_REGEX,
   getLessLoaderOptions,
+  getSharedPkgCompiledPath,
 } from '@rsbuild/shared';
 
 export function pluginLess(): RsbuildPlugin {
@@ -43,7 +44,7 @@ export function pluginLess(): RsbuildPlugin {
 
         rule
           .use(utils.CHAIN_ID.USE.LESS)
-          .loader(utils.getCompiledPath('less-loader'))
+          .loader(getSharedPkgCompiledPath('less-loader'))
           .options(options);
       });
 
