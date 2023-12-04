@@ -5,15 +5,19 @@ import type {
   RsbuildInstance,
 } from '@rsbuild/core';
 import type { RsbuildProvider } from '@rsbuild/shared';
-import type { UniBuilderRspackConfig } from '../types';
+import type { UniBuilderRspackConfig, BuilderTarget } from '../types';
 import type { CreateRspackBuilderOptions } from '../types';
-import { parseCommonConfig } from '../shared/parseCommonConfig';
+import {
+  parseCommonConfig,
+  getRsbuildTarget,
+} from '../shared/parseCommonConfig';
 import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
 
 export async function parseConfig(
   uniBuilderConfig: UniBuilderRspackConfig,
   cwd: string,
   frameworkConfigPath?: string,
+  target?: BuilderTarget | BuilderTarget[],
 ): Promise<{
   rsbuildConfig: RsbuildConfig;
   rsbuildPlugins: RsbuildPlugin[];
@@ -22,6 +26,7 @@ export async function parseConfig(
     uniBuilderConfig,
     cwd,
     frameworkConfigPath,
+    target,
   );
 
   if (uniBuilderConfig.output?.enableAssetManifest) {
@@ -51,9 +56,11 @@ export async function createRspackBuilder(
     options.config,
     options.cwd,
     options.frameworkConfigPath,
+    options.target,
   );
   const rsbuild = await createRsbuild({
     rsbuildConfig,
+    target: getRsbuildTarget(options.target),
   });
 
   rsbuild.addPlugins(rsbuildPlugins);
