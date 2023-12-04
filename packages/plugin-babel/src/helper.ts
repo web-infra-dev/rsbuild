@@ -10,9 +10,10 @@ import type {
   BabelConfigUtils,
   PresetEnvOptions,
   PresetReactOptions,
-  BabelPluginOptions,
   BabelTransformOptions,
+  PluginBabelOptions,
 } from './types';
+import type { PluginOptions as BabelPluginOptions } from '@babel/core';
 
 const normalizeToPosixPath = (p: string | undefined) =>
   upath
@@ -124,6 +125,7 @@ export const getBabelUtils = (
 ): BabelConfigUtils => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const noop = () => {};
+
   return {
     addPlugins: (plugins: BabelPlugin[]) => addPlugins(plugins, config),
     addPresets: (presets: BabelPlugin[]) => addPresets(presets, config),
@@ -135,7 +137,7 @@ export const getBabelUtils = (
     // It can be overridden by `extraBabelUtils`.
     addIncludes: noop,
     addExcludes: noop,
-    // Compat `presetEnvOptions` and `presetReactOptions` in Eden.
+    // Compat `presetEnvOptions` and `presetReactOptions` in Modern.js
     modifyPresetEnvOptions: (options: PresetEnvOptions) =>
       modifyPresetOptions('@babel/preset-env', options, config.presets || []),
     modifyPresetReactOptions: (options: PresetReactOptions) =>
@@ -143,16 +145,9 @@ export const getBabelUtils = (
   };
 };
 
-export type BabelConfig =
-  | BabelTransformOptions
-  | ((
-      config: BabelTransformOptions,
-      utils: BabelConfigUtils,
-    ) => BabelTransformOptions | void);
-
 export const applyUserBabelConfig = (
   defaultOptions: BabelTransformOptions,
-  userBabelConfig?: BabelConfig | BabelConfig[],
+  userBabelConfig?: PluginBabelOptions['babelLoaderOptions'],
   extraBabelUtils?: Partial<BabelConfigUtils>,
 ): BabelTransformOptions => {
   if (userBabelConfig) {
