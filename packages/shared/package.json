@@ -9,6 +9,7 @@
     "directory": "packages/shared"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

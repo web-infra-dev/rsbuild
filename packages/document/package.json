@@ -9,6 +9,7 @@
     "directory": "packages/document"
   },
   "license": "MIT",
+  "type": "commonjs",
   "files": [
     "docs",
     "src",

@@ -9,6 +9,7 @@
     "directory": "packages/test-helper"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.js",

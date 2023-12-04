@@ -9,6 +9,7 @@
     "directory": "packages/compat/plugin-esbuild"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

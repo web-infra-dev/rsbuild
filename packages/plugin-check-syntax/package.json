@@ -9,6 +9,7 @@
     "directory": "packages/plugin-check-syntax"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

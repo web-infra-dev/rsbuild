@@ -9,6 +9,7 @@
     "directory": "packages/plugin-source-build"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
