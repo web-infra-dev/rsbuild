@@ -9,6 +9,7 @@
     "directory": "packages/plugin-type-check"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

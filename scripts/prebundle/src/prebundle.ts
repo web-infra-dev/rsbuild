@@ -136,6 +136,9 @@ function renameDistFolder(task: ParsedTask) {
     }
   });
 
+  // compiled packages are always use commonjs
+  pkgJson.type = 'commonjs';
+
   fs.writeJSONSync(pkgPath, pkgJson);
 }
 
