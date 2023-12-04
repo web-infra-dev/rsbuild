@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@ls-lint/ls-lint':
+        specifier: ^2.2.2
+        version: 2.2.2
       '@modern-js/module-tools':
         specifier: ^2.41.0
         version: 2.41.0(typescript@5.3.2)
@@ -4090,6 +4093,13 @@ packages:
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
       react-is: 16.13.1
+    dev: true
+
+  /@ls-lint/ls-lint@2.2.2:
+    resolution: {integrity: sha512-gdolCgwveSHZczfKtoVFkf+NZJjd7KRQs9QnLVEiMFEJLK4H7nBrZuC/ASl/AYMZvFmtCocRt3d5E0UF/34vCQ==}
+    cpu: [x64, arm64, s390x]
+    os: [darwin, linux, win32]
+    hasBin: true
     dev: true
 
   /@manypkg/find-root@1.1.0:
