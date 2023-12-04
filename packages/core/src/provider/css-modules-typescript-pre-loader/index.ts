@@ -1,7 +1,7 @@
 import cssModulesTypescriptLoader from '@rsbuild/shared/css-modules-typescript-loader';
 import { isCssModules, isInNodeModules, CssModules } from '@rsbuild/shared';
 import type { LoaderContext } from '@rspack/core';
-import type { PostcssParsePluginOptions } from './postcss-icss-extract-plugin';
+import type { PostcssParsePluginOptions } from './postcssIcssExtractPlugin';
 import type { CssModuleLocalsConvention } from '@rsbuild/shared';
 
 async function processCss(
@@ -23,7 +23,7 @@ async function processCss(
   );
 
   const { default: postcssICSSExtractPlugin } = await import(
-    './postcss-icss-extract-plugin'
+    './postcssIcssExtractPlugin'
   );
 
   const { default: extractImports } = await import(

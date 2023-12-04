@@ -12,9 +12,7 @@ export const pluginProgress = (): RsbuildPlugin => ({
         return;
       }
 
-      const { ProgressPlugin } = await import(
-        '../ProgressPlugin/ProgressPlugin'
-      );
+      const { ProgressPlugin } = await import('../progress/ProgressPlugin');
       chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(ProgressPlugin, [
         {
           id: TARGET_ID_MAP[target],

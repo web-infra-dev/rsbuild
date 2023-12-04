@@ -1,0 +1,17 @@
+ls:
+  # .dir: kebab-case
+  packages/{*,compat/*}/src:
+    .js: camelCase
+    .ts: camelCase | PascalCase
+    .dir: kebab-case
+    .d.ts: camelCase
+
+ignore:
+  - .git
+  - .nx
+  - .husky
+  - .vscode
+  - .github
+  - .changeset
+  - compiled
+  - node_modules
