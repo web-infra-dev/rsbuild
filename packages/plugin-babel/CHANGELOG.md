@@ -1,5 +1,11 @@
 # @rsbuild/plugin-babel
 
+## 0.1.9
+
+### Patch Changes
+
+- @rsbuild/shared@0.1.9
+
 ## 0.1.8
 
 ### Patch Changes
