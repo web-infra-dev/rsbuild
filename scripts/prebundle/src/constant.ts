@@ -150,9 +150,19 @@ export const TASKS: TaskConfig[] = [
       {
         name: 'webpack-dev-middleware',
         externals: {
+          'schema-utils': './schema-utils',
           'schema-utils/declarations/validate':
             'schema-utils/declarations/validate',
           'mime-types': '../mime-types',
+        },
+        afterBundle(task) {
+          // The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
+          // So we skip the validation and let TypeScript to ensure type safety.
+          const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
+          fs.outputFileSync(
+            schemaUtilsPath,
+            'module.exports.validate = () => {};',
+          );
         },
       },
       {
