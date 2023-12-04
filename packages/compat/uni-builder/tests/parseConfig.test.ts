@@ -366,7 +366,7 @@ describe('parseCommonConfig', () => {
           },
           __dirname,
         )
-      ).rsbuildConfig.output.overrideBrowserslist,
+      ).rsbuildConfig!.output!.overrideBrowserslist,
     ).toMatchInlineSnapshot(`
       {
         "web": [
@@ -384,32 +384,9 @@ describe('parseCommonConfig', () => {
           },
           __dirname,
           '',
-          ['modern-web'],
-        )
-      ).rsbuildConfig.output.overrideBrowserslist,
-    ).toMatchInlineSnapshot(`
-      {
-        "web": [
-          "chrome >= 61",
-          "edge >= 16",
-          "firefox >= 60",
-          "safari >= 11",
-          "ios_saf >= 11",
-        ],
-      }
-    `);
-
-    expect(
-      (
-        await parseCommonConfig(
-          {
-            output: {},
-          },
-          __dirname,
-          '',
           ['web', 'node', 'web-worker'],
         )
-      ).rsbuildConfig.output.overrideBrowserslist,
+      ).rsbuildConfig!.output!.overrideBrowserslist,
     ).toMatchInlineSnapshot(`
       {
         "node": [

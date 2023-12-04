@@ -2,4 +2,4 @@
 '@rsbuild/uni-builder': patch
 ---
 
-feat(uni-builder): compat builder default browserslist and modern-web target
+feat(uni-builder): compat builder default browserslist

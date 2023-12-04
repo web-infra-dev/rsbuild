@@ -27,23 +27,16 @@ export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
   config: UniBuilderWebpackConfig;
   frameworkConfigPath?: string;
-  target?: BuilderTarget | BuilderTarget[];
+  target?: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
   cwd: string;
 };
-
-export type BuilderTarget =
-  | 'web'
-  | 'node'
-  | 'modern-web'
-  | 'web-worker'
-  | 'service-worker';
 
 export type CreateRspackBuilderOptions = {
   bundlerType: 'rspack';
   config: UniBuilderRspackConfig;
   frameworkConfigPath?: string;
-  target?: BuilderTarget | BuilderTarget[];
+  target?: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
   cwd: string;
 };
@@ -70,7 +63,7 @@ export type DevServerHttpsOptions = boolean | { key: string; cert: string };
 
 export type OverrideBrowserslist =
   | string[]
-  | Partial<Record<BuilderTarget, string[]>>;
+  | Partial<Record<RsbuildTarget, string[]>>;
 
 export type UniBuilderExtraConfig = {
   tools?: {

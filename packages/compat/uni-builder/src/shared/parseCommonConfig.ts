@@ -20,7 +20,6 @@ import type {
   UniBuilderWebpackConfig,
   DevServerHttpsOptions,
   OverrideBrowserslist,
-  BuilderTarget,
 } from '../types';
 import { pluginRem } from '@rsbuild/plugin-rem';
 import { pluginPug } from '@rsbuild/plugin-pug';
@@ -91,24 +90,17 @@ function removeUndefinedKey(obj: { [key: string]: any }) {
 }
 const DEFAULT_WEB_BROWSERSLIST = ['> 0.01%', 'not dead', 'not op_mini all'];
 
-const DEFAULT_BROWSERSLIST: Record<BuilderTarget, string[]> = {
+const DEFAULT_BROWSERSLIST: Record<RsbuildTarget, string[]> = {
   web: DEFAULT_WEB_BROWSERSLIST,
   node: ['node >= 14'],
   'web-worker': DEFAULT_WEB_BROWSERSLIST,
   'service-worker': DEFAULT_WEB_BROWSERSLIST,
-  'modern-web': [
-    'chrome >= 61',
-    'edge >= 16',
-    'firefox >= 60',
-    'safari >= 11',
-    'ios_saf >= 11',
-  ],
 };
 
 async function getBrowserslistWithDefault(
   path: string,
   config: { output?: { overrideBrowserslist?: OverrideBrowserslist } },
-  target: BuilderTarget,
+  target: RsbuildTarget,
 ): Promise<string[]> {
   const { overrideBrowserslist: overrides = {} } = config?.output || {};
 
@@ -133,24 +125,13 @@ async function getBrowserslistWithDefault(
   return DEFAULT_BROWSERSLIST[target];
 }
 
-export const getRsbuildTarget = (target?: BuilderTarget | BuilderTarget[]) => {
-  let rsbuildTarget: RsbuildTarget | RsbuildTarget[] = 'web';
-  if (typeof target === 'string') {
-    rsbuildTarget = target === 'modern-web' ? 'web' : target;
-  } else if (Array.isArray(target)) {
-    rsbuildTarget = target.map((t) => (t === 'modern-web' ? 'web' : t));
-  }
-
-  return rsbuildTarget;
-};
-
 export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   uniBuilderConfig: B extends 'rspack'
     ? UniBuilderRspackConfig
     : UniBuilderWebpackConfig,
   cwd: string,
   frameworkConfigPath?: string,
-  target: BuilderTarget | BuilderTarget[] = 'web',
+  target: RsbuildTarget | RsbuildTarget[] = 'web',
 ): Promise<{
   rsbuildConfig: RsbuildConfig;
   rsbuildPlugins: RsbuildPlugin[];
