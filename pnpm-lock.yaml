@@ -1009,12 +1009,18 @@ importers:
 
   packages/document:
     devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
       '@rspress/shared':
         specifier: ^1.8.0
         version: 1.8.0
       '@types/node':
         specifier: ^16
         version: 16.18.59
+      fast-glob:
+        specifier: ^3.3.1
+        version: 3.3.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
