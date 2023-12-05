@@ -1,5 +1,16 @@
 # hmr
 
-import Hmr from '@zh/shared/config/dev/hmr.md';
+- **类型：** `boolean`
+- **默认值：** `true`
 
-<Hmr />
+是否开启 Hot Module Replacement 热更新能力。
+
+当 `hmr` 设置为 `false` 时，将不再提供热更新和 react-refresh 功能。
+
+```js
+export default {
+  dev: {
+    hmr: false,
+  },
+};
+```
