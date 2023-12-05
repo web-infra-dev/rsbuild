@@ -5,12 +5,12 @@ import {
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
 import { RsbuildPlugin } from '../types';
-import { awaitableGetter, Plugins } from '@rsbuild/shared';
+import { awaitableGetter, type Plugins } from '@rsbuild/shared';
 
 export const applyDefaultPlugins = (plugins: Plugins) =>
   awaitableGetter<RsbuildPlugin>([
     import('./plugins/transition').then((m) => m.pluginTransition()),
-    import('./plugins/basic').then((m) => m.pluginBasic()),
+    plugins.basic(),
     plugins.entry(),
     // plugins.cache(),
     plugins.target(),
@@ -43,22 +43,9 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.networkPerformance(),
     plugins.preloadOrPrefetch(),
     plugins.performance(),
-    plugins.server(),
+    import('./plugins/server').then((m) => m.pluginServer()),
     import('./plugins/rspackProfile').then((m) => m.pluginRspackProfile()),
   ]);
-
-export const getRspackVersion = async (): Promise<string> => {
-  try {
-    const core = require.resolve('@rspack/core');
-    const pkg = await import(join(core, '../../package.json'));
-
-    return pkg?.version;
-  } catch (err) {
-    // don't block build process
-    console.error(err);
-    return '';
-  }
-};
 
 // apply builtin:swc-loader
 export const rspackMinVersion = '0.4.0';

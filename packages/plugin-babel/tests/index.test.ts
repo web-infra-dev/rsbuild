@@ -10,7 +10,7 @@ describe('plugins/babel', () => {
     });
 
     rsbuild.addPlugins([
-      pluginBabel((_config: any, { addExcludes, addIncludes }: any) => {
+      pluginBabel((_config, { addExcludes, addIncludes }) => {
         addIncludes(/\/node_modules\/query-string\//);
         addExcludes('src/example');
       }),
@@ -39,8 +39,8 @@ describe('plugins/babel', () => {
   it('should set babel-loader when config is add', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [
-        pluginBabel((config: any) => {
-          config.plugins.push([
+        pluginBabel((config) => {
+          config.plugins?.push([
             'babel-plugin-import',
             {
               libraryName: 'xxx-components',
@@ -61,7 +61,7 @@ describe('plugins/babel', () => {
   it('babel-loader addIncludes & addExcludes should works', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [
-        pluginBabel((_config: any, { addExcludes, addIncludes }: any) => {
+        pluginBabel((_config, { addExcludes, addIncludes }) => {
           addIncludes(/\/node_modules\/query-string\//);
           addExcludes('src/example');
         }),

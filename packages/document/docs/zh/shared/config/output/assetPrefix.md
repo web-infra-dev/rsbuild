@@ -39,4 +39,4 @@ export default {
 
 - `output.assetPrefix` 仅在生产环境下生效。
 - `output.assetPrefix` 默认会自动补全尾部的 `/`。
-- `output.assetPrefix` 的值会写入 `process.env.ASSET_PREFIX` 环境变量。
+- `output.assetPrefix` 的值会写入 `process.env.ASSET_PREFIX` 环境变量（只能在 client 代码中访问）。

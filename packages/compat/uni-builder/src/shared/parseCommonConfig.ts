@@ -6,6 +6,9 @@ import {
   ServerConfig,
   logger,
   color,
+  RsbuildTarget,
+  OverrideBrowserslist,
+  getBrowserslist,
 } from '@rsbuild/shared';
 import {
   mergeRsbuildConfig,
@@ -84,6 +87,42 @@ function removeUndefinedKey(obj: { [key: string]: any }) {
 
   return obj;
 }
+const DEFAULT_WEB_BROWSERSLIST = ['> 0.01%', 'not dead', 'not op_mini all'];
+
+const DEFAULT_BROWSERSLIST: Record<RsbuildTarget, string[]> = {
+  web: DEFAULT_WEB_BROWSERSLIST,
+  node: ['node >= 14'],
+  'web-worker': DEFAULT_WEB_BROWSERSLIST,
+  'service-worker': DEFAULT_WEB_BROWSERSLIST,
+};
+
+async function getBrowserslistWithDefault(
+  path: string,
+  config: { output?: { overrideBrowserslist?: OverrideBrowserslist } },
+  target: RsbuildTarget,
+): Promise<string[]> {
+  const { overrideBrowserslist: overrides = {} } = config?.output || {};
+
+  if (target === 'web' || target === 'web-worker') {
+    if (Array.isArray(overrides)) {
+      return overrides;
+    }
+    if (overrides[target]) {
+      return overrides[target]!;
+    }
+
+    const browserslistrc = await getBrowserslist(path);
+    if (browserslistrc) {
+      return browserslistrc;
+    }
+  }
+
+  if (!Array.isArray(overrides) && overrides[target]) {
+    return overrides[target]!;
+  }
+
+  return DEFAULT_BROWSERSLIST[target];
+}
 
 export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   uniBuilderConfig: B extends 'rspack'
@@ -91,6 +130,7 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     : UniBuilderWebpackConfig,
   cwd: string,
   frameworkConfigPath?: string,
+  target: RsbuildTarget | RsbuildTarget[] = 'web',
 ): Promise<{
   rsbuildConfig: RsbuildConfig;
   rsbuildPlugins: RsbuildPlugin[];
@@ -120,6 +160,19 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     output.inlineScripts = uniBuilderConfig.output?.enableInlineScripts;
     delete output.enableInlineScripts;
   }
+
+  const targets = typeof target === 'string' ? [target] : target;
+  let overrideBrowserslist: OverrideBrowserslist = {};
+
+  for (const target of targets) {
+    // Incompatible with the scenario where target contains both 'web' and 'modern-web'
+    overrideBrowserslist[target] = await getBrowserslistWithDefault(
+      cwd,
+      uniBuilderConfig,
+      target,
+    );
+  }
+  output.overrideBrowserslist = overrideBrowserslist;
 
   if (uniBuilderConfig.output?.enableInlineStyles) {
     output.inlineStyles = uniBuilderConfig.output?.enableInlineStyles;

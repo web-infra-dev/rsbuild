@@ -1,4 +1,3 @@
-export { getRspackVersion } from './shared';
 export { rspackProvider } from './provider';
 export type { Rspack, RspackConfig } from '@rsbuild/shared';
 export {

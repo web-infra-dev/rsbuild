@@ -43,9 +43,11 @@ export const isCssModules = (filename: string, modules: CssLoaderModules) => {
 
   if (typeof auto === 'boolean') {
     return auto && CSS_MODULES_REGEX.test(filename);
-  } else if (auto instanceof RegExp) {
+  }
+  if (auto instanceof RegExp) {
     return auto.test(filename);
-  } else if (typeof auto === 'function') {
+  }
+  if (typeof auto === 'function') {
     return auto(filename);
   }
   return true;

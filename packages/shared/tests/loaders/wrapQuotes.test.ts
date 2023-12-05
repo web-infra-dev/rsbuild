@@ -1,4 +1,4 @@
-import { wrapQuotes } from '../../src/loaders/css-modules-typescript-loader';
+import { wrapQuotes } from '../../src/loaders/cssModulesTypescriptLoader';
 
 it('should wrap key correctly', () => {
   // do not need wrap

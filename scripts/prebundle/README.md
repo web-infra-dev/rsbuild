@@ -2,6 +2,14 @@
 
 This package is used to prebundle 3rd party dependencies, based on [ncc](https://github.com/vercel/ncc) and `dts-packer`.
 
+## Motivation
+
+Prebundle is used to:
+
+- Reduce dependencies of core packages, install faster.
+- Improve stability by locking the sub-dependency version .
+- Fix peer dependency warning of some packages.
+
 ## Command
 
 Run following command to prebundle all dependencies:

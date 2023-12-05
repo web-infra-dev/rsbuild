@@ -39,4 +39,4 @@ The differences from the native configuration are as follows:
 
 - `output.assetPrefix` only takes effect in the production environment.
 - `output.assetPrefix` automatically appends a trailing `/` by default.
-- The value of `output.assetPrefix` is written to the `process.env.ASSET_PREFIX` environment variable.
+- The value of `output.assetPrefix` is written to the `process.env.ASSET_PREFIX` environment variable (can only be accessed in client code).

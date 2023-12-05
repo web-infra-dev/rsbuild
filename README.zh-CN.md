@@ -89,11 +89,15 @@ Rsbuild 具备以下特性：
 
 你也可以加入 [飞书群](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=3c3vca77-bfc0-4ef5-b62b-9c5c9c92f1b4) 与大家一起交流。
 
+## 🌟 质量
+
+Rsbuild 通过 [Web Infra QoS](https://web-infra-dev.github.io/web-infra-QoS/index?product=rsbuild&metrics=bundle-size) 来观测核心指标的变化情况，比如 bundle size、compile speed 和 install size。
+
 ## 🙌 行为准则
 
 本仓库采纳了字节跳动的开源项目行为准则。请点击 [行为准则](./CODE_OF_CONDUCT.md) 查看更多的信息。
 
-## 🤗 致谢
+## 🙏 致谢
 
 Rsbuild 的一些实现参考了社区中杰出的项目，对他们表示感谢：
 

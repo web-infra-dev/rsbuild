@@ -1,8 +1,4 @@
-import {
-  rspackMinVersion,
-  getRspackVersion,
-  isSatisfyRspackVersion,
-} from '@/shared';
+import { rspackMinVersion, isSatisfyRspackVersion } from '@/shared';
 
 describe('rspack version', () => {
   it('isSatisfyRspackVersion', async () => {
@@ -21,9 +17,5 @@ describe('rspack version', () => {
         `${rspackMinVersion}-canary-efa0dc6-20230817005622`,
       ),
     ).toBeTruthy();
-  });
-
-  it('getRspackVersion', async () => {
-    expect(await getRspackVersion()).toBeDefined();
   });
 });
