@@ -57,7 +57,7 @@ export async function createRspackBuilder(
   );
   const rsbuild = await createRsbuild({
     rsbuildConfig,
-    target: options.target,
+    target: options.target || 'web',
   });
 
   rsbuild.addPlugins(rsbuildPlugins);

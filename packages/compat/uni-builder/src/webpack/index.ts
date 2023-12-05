@@ -83,7 +83,7 @@ export async function createWebpackBuilder(
   const rsbuild = await createRsbuild({
     rsbuildConfig,
     provider: webpackProvider,
-    target: options.target,
+    target: options.target || 'web',
   });
 
   rsbuild.addPlugins([
