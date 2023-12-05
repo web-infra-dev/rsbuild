@@ -190,6 +190,18 @@ export const TASKS: TaskConfig[] = [
       {
         name: 'babel-loader',
         ignoreDts: true,
+        externals: {
+          'schema-utils': './schema-utils',
+        },
+        afterBundle(task) {
+          // The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
+          // So we skip the validation and let TypeScript to ensure type safety.
+          const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
+          fs.outputFileSync(
+            schemaUtilsPath,
+            'module.exports.validate = () => {};',
+          );
+        },
       },
     ],
   },
