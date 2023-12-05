@@ -29,6 +29,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "mode": "development",
   "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
     "rules": [
       {
         "resolve": {
@@ -605,12 +610,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "chunkFilename": "static/js/async/[name].js",
     "cssChunkFilename": "static/css/async/[name].css",
     "cssFilename": "static/css/[name].css",
+    "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
     "path": "<ROOT>/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+  },
+  "performance": {
+    "hints": false,
   },
   "plugins": [
     HtmlWebpackPlugin {
@@ -702,6 +711,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "mode": "production",
   "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
     "rules": [
       {
         "resolve": {
@@ -1304,6 +1318,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
+  "performance": {
+    "hints": false,
+  },
   "plugins": [
     HtmlWebpackPlugin {
       "userOptions": {
@@ -1424,6 +1441,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "mode": "development",
   "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
     "rules": [
       {
         "resolve": {
@@ -1794,6 +1816,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
+  "performance": {
+    "hints": false,
+  },
   "plugins": [
     DefinePlugin {
       "_options": {
@@ -1850,6 +1875,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "mode": "development",
   "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
     "rules": [
       {
         "test": /\\\\\\.test\\$/,
@@ -2434,12 +2464,16 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "chunkFilename": "static/js/async/[name].js",
     "cssChunkFilename": "static/css/async/[name].css",
     "cssFilename": "static/css/[name].css",
+    "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
     "path": "<ROOT>/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+  },
+  "performance": {
+    "hints": false,
   },
   "plugins": [
     TestPlugin {

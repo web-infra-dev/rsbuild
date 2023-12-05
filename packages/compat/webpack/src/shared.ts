@@ -12,7 +12,7 @@ import {
 
 export const applyDefaultPlugins = (plugins: Plugins) =>
   awaitableGetter<RsbuildPlugin>([
-    import('./plugins/basic').then((m) => m.pluginBasic()),
+    plugins.basic?.(),
     plugins.entry?.(),
     plugins.cache?.(),
     plugins.target?.(),

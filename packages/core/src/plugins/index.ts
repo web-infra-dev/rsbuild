@@ -1,6 +1,7 @@
 import type { Plugins } from '@rsbuild/shared';
 
 export const plugins: Plugins = {
+  basic: () => import('./basic').then((m) => m.pluginBasic()),
   html: () => import('./html').then((m) => m.pluginHtml()),
   cleanOutput: () => import('./cleanOutput').then((m) => m.pluginCleanOutput()),
   startUrl: () => import('./startUrl').then((m) => m.pluginStartUrl()),

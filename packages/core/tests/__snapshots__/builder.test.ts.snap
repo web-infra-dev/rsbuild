@@ -29,6 +29,11 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   },
   "mode": "development",
   "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
     "rules": [
       {
         "resolve": {
@@ -605,12 +610,16 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     "chunkFilename": "static/js/async/[name].js",
     "cssChunkFilename": "static/css/async/[name].css",
     "cssFilename": "static/css/[name].css",
+    "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
     "path": "<ROOT>/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+  },
+  "performance": {
+    "hints": false,
   },
   "plugins": [
     HtmlWebpackPlugin {

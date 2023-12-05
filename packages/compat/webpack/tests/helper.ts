@@ -1,5 +1,8 @@
-import { type CreateRsbuildOptions } from '@rsbuild/shared';
-import type { RsbuildPlugin, RsbuildConfig } from '@/types';
+import type {
+  RsbuildPlugin,
+  RsbuildConfig,
+  CreateRsbuildOptions,
+} from '@rsbuild/shared';
 import assert from 'assert';
 import { webpackProvider } from '@/provider';
 import { join } from 'path';
