@@ -91,6 +91,7 @@ type PluginsFn<T = void> = T extends void
   : (arg: T) => Promise<RsbuildPlugin>;
 
 export type Plugins = {
+  basic: PluginsFn;
   cleanOutput: PluginsFn;
   startUrl: PluginsFn;
   fileSize: PluginsFn;

@@ -46,6 +46,11 @@ exports[`plugins/react > should work with swc-loader 1`] = `
   },
   "mode": "development",
   "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
     "rules": [
       {
         "resolve": {
@@ -650,6 +655,9 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+  },
+  "performance": {
+    "hints": false,
   },
   "plugins": [
     HtmlWebpackPlugin {
