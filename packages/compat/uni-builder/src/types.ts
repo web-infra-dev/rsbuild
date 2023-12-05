@@ -27,6 +27,7 @@ export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
   config: UniBuilderWebpackConfig;
   frameworkConfigPath?: string;
+  target?: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
   cwd: string;
 };
@@ -35,6 +36,7 @@ export type CreateRspackBuilderOptions = {
   bundlerType: 'rspack';
   config: UniBuilderRspackConfig;
   frameworkConfigPath?: string;
+  target?: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
   cwd: string;
 };

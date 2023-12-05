@@ -4,6 +4,7 @@ import {
   type RsbuildPlugin,
   type RsbuildInstance,
 } from '@rsbuild/core';
+import type { RsbuildTarget } from '@rsbuild/shared';
 import type { UniBuilderWebpackConfig } from '../types';
 import type { CreateWebpackBuilderOptions } from '../types';
 import { parseCommonConfig } from '../shared/parseCommonConfig';
@@ -16,6 +17,7 @@ export async function parseConfig(
   uniBuilderConfig: UniBuilderWebpackConfig,
   cwd: string,
   frameworkConfigPath?: string,
+  target?: RsbuildTarget | RsbuildTarget[],
 ): Promise<{
   rsbuildConfig: RsbuildConfig;
   rsbuildPlugins: RsbuildPlugin[];
@@ -24,6 +26,7 @@ export async function parseConfig(
     uniBuilderConfig,
     cwd,
     frameworkConfigPath,
+    target,
   );
 
   rsbuildPlugins.push(pluginBabel(uniBuilderConfig.tools?.babel));
@@ -73,11 +76,14 @@ export async function createWebpackBuilder(
     options.config,
     options.cwd,
     options.frameworkConfigPath,
+    options.target,
   );
+
   const { webpackProvider } = await import('@rsbuild/webpack');
   const rsbuild = await createRsbuild({
     rsbuildConfig,
     provider: webpackProvider,
+    target: options.target || 'web',
   });
 
   rsbuild.addPlugins([

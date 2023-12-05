@@ -9,7 +9,15 @@ exports[`parseCommonConfig > dev.xxx 1`] = `
   "html": {
     "outputStructure": "nested",
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "compress": false,
     "headers": {
@@ -36,7 +44,15 @@ exports[`parseCommonConfig > dev.xxx 2`] = `
   "html": {
     "outputStructure": "nested",
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -53,7 +69,15 @@ exports[`parseCommonConfig > html.faviconByEntries 1`] = `
     "favicon": [Function],
     "outputStructure": "nested",
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -72,7 +96,15 @@ exports[`parseCommonConfig > html.faviconByEntries 2`] = `
     ],
     "outputStructure": "nested",
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -88,7 +120,15 @@ exports[`parseCommonConfig > html.faviconByEntries 3`] = `
     "inject": [Function],
     "outputStructure": "nested",
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -107,7 +147,15 @@ exports[`parseCommonConfig > html.faviconByEntries 4`] = `
     ],
     "outputStructure": "nested",
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -123,7 +171,15 @@ exports[`parseCommonConfig > html.metaByEntries 1`] = `
     "meta": [Function],
     "outputStructure": "nested",
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -146,7 +202,15 @@ exports[`parseCommonConfig > html.metaByEntries 2`] = `
     ],
     "outputStructure": "nested",
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -162,7 +226,15 @@ exports[`parseCommonConfig > html.templateByEntries 1`] = `
     "outputStructure": "nested",
     "template": [Function],
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -181,7 +253,15 @@ exports[`parseCommonConfig > html.templateByEntries 2`] = `
       [Function],
     ],
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -197,7 +277,15 @@ exports[`parseCommonConfig > html.templateParametersByEntries 1`] = `
     "outputStructure": "nested",
     "templateParameters": [Function],
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -218,7 +306,15 @@ exports[`parseCommonConfig > html.templateParametersByEntries 2`] = `
       [Function],
     ],
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -234,7 +330,15 @@ exports[`parseCommonConfig > html.titleByEntries 1`] = `
     "outputStructure": "nested",
     "title": [Function],
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -253,7 +357,15 @@ exports[`parseCommonConfig > html.titleByEntries 2`] = `
       [Function],
     ],
   },
-  "output": {},
+  "output": {
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
+  },
   "server": {
     "publicDir": false,
   },
@@ -271,6 +383,13 @@ exports[`parseCommonConfig > output.cssModuleLocalIdentName 1`] = `
   "output": {
     "cssModules": {
       "localIdentName": "[local]-[hash:base64:6]",
+    },
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
     },
   },
   "server": {
@@ -292,6 +411,13 @@ exports[`parseCommonConfig > output.disableCssModuleExtension 1`] = `
       "auto": [Function],
     },
     "disableCssModuleExtension": true,
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
   },
   "server": {
     "publicDir": false,
@@ -309,6 +435,13 @@ exports[`parseCommonConfig > output.enableInlineScripts 1`] = `
   },
   "output": {
     "inlineScripts": true,
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
   },
   "server": {
     "publicDir": false,
@@ -326,6 +459,13 @@ exports[`parseCommonConfig > output.enableInlineStyles 1`] = `
   },
   "output": {
     "inlineStyles": true,
+    "overrideBrowserslist": {
+      "web": [
+        "> 0.01%",
+        "not dead",
+        "not op_mini all",
+      ],
+    },
   },
   "server": {
     "publicDir": false,
