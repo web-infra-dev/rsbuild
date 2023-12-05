@@ -1,5 +1,16 @@
 # headers
 
-import Headers from '@en/shared/config/server/headers.md';
+- **Type:** `Record<string, string>`
+- **Default:** `undefined`
 
-<Headers />
+Adds headers to all responses.
+
+```js
+export default {
+  server: {
+    headers: {
+      'X-Custom-Foo': 'bar',
+    },
+  },
+};
+```
