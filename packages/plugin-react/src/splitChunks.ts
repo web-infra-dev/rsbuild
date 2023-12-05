@@ -5,47 +5,38 @@ import {
   createCacheGroups,
   type SplitChunks,
 } from '@rsbuild/shared';
-import { SplitReactChunkOptions } from 'src';
+import type { SplitReactChunkOptions } from '.';
 
 export const applySplitChunksRule = (
   api: RsbuildPluginAPI,
-  options: SplitReactChunkOptions | undefined,
+  options: SplitReactChunkOptions = {
+    react: true,
+    router: true,
+  },
 ) => {
   api.modifyBundlerChain((chain) => {
     const config = api.getNormalizedConfig();
-    const { chunkSplit } = config.performance || {};
-
-    if (chunkSplit?.strategy !== 'split-by-experience') {
+    if (config.performance.chunkSplit.strategy !== 'split-by-experience') {
       return;
     }
 
-    if (!options) {
-      options = {
-        react: true,
-        router: true,
-      };
-    }
-
     const currentConfig = chain.optimization.splitChunks.values();
-
     if (!isPlainObject(currentConfig)) {
       return;
     }
 
     const extraGroups: Record<string, (string | RegExp)[]> = {};
 
-    if (options.react !== false) {
+    if (options.react) {
       extraGroups.react = [
         'react',
         'react-dom',
         'scheduler',
-        ...(isProd()
-          ? []
-          : ['react-refresh', '@pmmmwh/react-refresh-webpack-plugin']),
+        ...(isProd() ? [] : ['react-refresh', '@rspack/plugin-react-refresh']),
       ];
     }
 
-    if (options.router !== false) {
+    if (options.router) {
       extraGroups.router = [
         'react-router',
         'react-router-dom',
