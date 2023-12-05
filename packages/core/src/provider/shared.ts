@@ -43,7 +43,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.networkPerformance(),
     plugins.preloadOrPrefetch(),
     plugins.performance(),
-    plugins.server(),
+    import('./plugins/server').then((m) => m.pluginServer()),
     import('./plugins/rspackProfile').then((m) => m.pluginRspackProfile()),
   ]);
 
