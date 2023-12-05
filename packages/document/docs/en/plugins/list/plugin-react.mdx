@@ -70,8 +70,8 @@ At the same time, the above default behavior can be turned off by manually setti
 
 When [chunkSplit.strategy](/config/options/performance#chunksplitstrategy) set to `split-by-experience`, Rsbuild will automatically split `react` and `router` related packages into separate chunks by default:
 
-- `lib-react.js`: includes `react`, `react-dom`, `scheduler`.
-- `lib-router.js`: includes `react-router`, `react-router-dom`, `history`, `@remix-run/router`.
+- `lib-react.js`: includes react, react-dom, and react's sub-dependencies (scheduler).
+- `lib-router.js`: includes react-router, react-router-dom, and react-router's sub-dependencies (history, @remix-run/router).
 
 This option is used to control this behavior and determine whether the `react` and `router` related packages need to be split into separate chunks.
 

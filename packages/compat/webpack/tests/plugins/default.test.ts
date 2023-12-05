@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '../helper';
-import type { RsbuildPlugin } from '@/types';
+import type { RsbuildPlugin } from '@rsbuild/shared';
 
 describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctly', async () => {

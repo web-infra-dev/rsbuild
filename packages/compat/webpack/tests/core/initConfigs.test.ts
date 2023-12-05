@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '../helper';
-import { RsbuildConfig, RsbuildPluginAPI } from '@/types';
+import { RsbuildConfig, RsbuildPluginAPI } from '@rsbuild/shared';
 
 describe('modifyRsbuildConfig', () => {
   it.skip('should not allow to modify Rsbuild config', async () => {
@@ -26,7 +26,7 @@ describe('modifyRsbuildConfig', () => {
       origin: { rsbuildConfig },
     } = await rsbuild.inspectConfig();
 
-    expect(rsbuildConfig.server.port).toBe(8080);
+    expect(rsbuildConfig.server?.port).toBe(8080);
   });
 
   it('should modify config by utils', async () => {

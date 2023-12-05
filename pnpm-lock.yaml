@@ -71,6 +71,9 @@ importers:
       vue:
         specifier: ^3.3.4
         version: 3.3.4
+      vue-router:
+        specifier: ^4.2.5
+        version: 4.2.5(vue@3.3.4)
     devDependencies:
       '@playwright/test':
         specifier: 1.33.0
@@ -6154,6 +6157,10 @@ packages:
       - velocityjs
       - walrus
       - whiskers
+    dev: false
+
+  /@vue/devtools-api@6.5.1:
+    resolution: {integrity: sha512-+KpckaAQyfbvshdDW5xQylLni1asvNSGme1JFs8I1+/H5pHEhqUKMEQD/qn3Nx5+/nycBq11qAEi8lk+LXI2dA==}
     dev: false
 
   /@vue/reactivity-transform@3.3.4:
@@ -14860,6 +14867,15 @@ packages:
       hash-sum: 2.0.0
       watchpack: 2.4.0
       webpack: 5.89.0
+    dev: false
+
+  /vue-router@4.2.5(vue@3.3.4):
+    resolution: {integrity: sha512-DIUpKcyg4+PTQKfFPX88UWhlagBEBEfJ5A8XDXRJLUnZOvcpMF8o/dnL90vpVkGaPbjvXazV/rC1qBKrZlFugw==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      '@vue/devtools-api': 6.5.1
+      vue: 3.3.4
     dev: false
 
   /vue-style-loader@4.1.3:
