@@ -46,5 +46,5 @@ export default {
 ```
 
 :::tip Disable code minification
-If you need to disable code minification, you can use the [output.disableMinimize](https://rsbuild.dev/config/options/output#outputdisableminimize) configuration.
+If you need to disable code minification, you can use the [output.disableMinimize](https://rsbuild.dev/config/output/disable-minimize) configuration.
 :::

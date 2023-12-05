@@ -28,7 +28,7 @@ export default {
 
 ## 组件库按需引入
 
-React 组件库的按需引入能力来自 [source.transformImport](/config/options/source#sourcetransformimport)。
+React 组件库的按需引入能力来自 [source.transformImport](/config/source/transform-import)。
 
 当项目中安装了 [Ant Design 组件库](https://npmjs.com/package/antd) &lt;= 4.x 版本时，Rsbuild 会自动添加按需引入能力，默认配置如下：
 
@@ -59,7 +59,7 @@ const defaultArcoConfig = [
 ```
 
 :::tip
-当你在 [source.transformImport](/config/options/source#sourcetransformimport) 中添加了 `antd` 或 `@arco-design/web-react` 相关的配置时，优先级会高于上述默认配置。
+当你在 [source.transformImport](/config/source/transform-import) 中添加了 `antd` 或 `@arco-design/web-react` 相关的配置时，优先级会高于上述默认配置。
 
 同时，可通过手动设置 `transformImport: false` 来关掉以上默认行为。
 :::
@@ -68,7 +68,7 @@ const defaultArcoConfig = [
 
 ### splitChunks
 
-在 [chunkSplit.strategy](/config/options/performance#chunksplitstrategy) 设置为 `split-by-experience` 时，Rsbuild 默认会自动将 `react` 和 `router` 相关的包拆分为单独的 chunk:
+在 [chunkSplit.strategy](/config/performance/chunk-split) 设置为 `split-by-experience` 时，Rsbuild 默认会自动将 `react` 和 `router` 相关的包拆分为单独的 chunk:
 
 - `lib-react.js`：包含 react，react-dom，以及 react 的子依赖（scheduler）。
 - `lib-router.js`：包含 react-router，react-router-dom，以及 react-router 的子依赖（history，@remix-run/router）。

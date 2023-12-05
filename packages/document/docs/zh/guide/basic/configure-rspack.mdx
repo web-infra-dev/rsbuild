@@ -4,7 +4,7 @@ Rsbuild 支持直接修改 Rspack 配置对象，也支持通过 bundler-chain �
 
 ## 修改 Rspack 配置对象
 
-你可以使用 Rsbuild 的 `tools.rspack` 选项来修改 Rspack 配置对象，请查看 [tools.rspack 文档](/config/options/tools#toolsrspack) 来了解完整用法。
+你可以使用 Rsbuild 的 `tools.rspack` 选项来修改 Rspack 配置对象，请查看 [tools.rspack 文档](/config/tools/rspack) 来了解完整用法。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -29,12 +29,12 @@ import BundlerChain from '@zh/shared/bundlerChain.md';
 
 ### tools.bundlerChain
 
-Rsbuild 提供了 [tools.bundlerChain](/config/options/tools#toolsbundlerChain) 配置项来修改 bundler-chain。
+Rsbuild 提供了 [tools.bundlerChain](/config/tools/bundler-chain) 配置项来修改 bundler-chain。
 
 `tools.bundlerChain` 的值为 `Function` 类型，接收两个参数：
 
 - 第一个参数为 `bundler-chain` 实例对象，你可以通过这个实例来修改默认的 bundler 配置。
-- 第二个参数为一个[工具集合](/config/options/tools#工具集合-2)，包括 `env`、`isProd`、`CHAIN_ID` 等。
+- 第二个参数为一个[工具集合](/config/tools/bundler-chain#工具集合)，包括 `env`、`isProd`、`CHAIN_ID` 等。
 
 下面是一个基本示例：
 

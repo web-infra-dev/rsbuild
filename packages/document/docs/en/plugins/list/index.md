@@ -6,7 +6,7 @@ You can read about the functionality of Rsbuild plugins and how to develop an Rs
 
 ## Using Plugins
 
-You can register Rsbuild plugins in the `rsbuild.config.ts` file using the `plugins` option. For more details, refer to [plugins](/config/options/plugins).
+You can register Rsbuild plugins in the `rsbuild.config.ts` file using the `plugins` option. For more details, refer to [plugins](/config/plugins).
 
 If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance#rsbuildaddplugins) method.
 

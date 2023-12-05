@@ -15,5 +15,5 @@ export default {
 ```
 
 :::tip
-When htmlFallback cannot meet your needs, you can use [server.historyApiFallback](/config/options/server#serverhistoryapifallback) for more flexible settings.
+When htmlFallback cannot meet your needs, you can use [server.historyApiFallback](/config/server/history-api-fallback) for more flexible settings.
 :::

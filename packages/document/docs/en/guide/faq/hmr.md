@@ -23,7 +23,7 @@ Open the browser console and check for the presence of the `[HMR] connected.` lo
 - If it is present, the WebSocket connection is working correctly. You can continue with the following steps.
 - If it is not present, open the Network panel in Chrome and check the status of the `ws://[host]:[port]/rsbuild-hmr` request. If the request is failed, this indicates that the HMR failed because the WebSocket connection was not successfully established.
 
-There can be various reasons why the WebSocket connection fails to establish, such as using a network proxy that prevents the WebSocket request from reaching the development server. You can check whether the WebSocket request address matches your development server address. If it does not match, you can configure the WebSocket request address using [dev.client](/config/options/dev#devclient).
+There can be various reasons why the WebSocket connection fails to establish, such as using a network proxy that prevents the WebSocket request from reaching the development server. You can check whether the WebSocket request address matches your development server address. If it does not match, you can configure the WebSocket request address using [dev.client](/config/dev/client).
 
 #### 2. Check the hot-update Requests
 

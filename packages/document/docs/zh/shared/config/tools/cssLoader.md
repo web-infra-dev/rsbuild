@@ -21,9 +21,9 @@
 ```
 
 :::tip
-在使用 Rspack 作为打包工具时，仅支持在 [disableCssExtract](https://rsbuild.dev/zh/config/options/output#outputdisablecssextract) 时使用该配置。
+在使用 Rspack 作为打包工具时，仅支持在 [disableCssExtract](https://rsbuild.dev/zh/config/output/disable-css-extract) 时使用该配置。
 
-修改 CSS Modules 相关配置，推荐使用 [output.cssModules](https://rsbuild.dev/zh/config/options/output#outputcssmodules) 配置项。
+修改 CSS Modules 相关配置，推荐使用 [output.cssModules](https://rsbuild.dev/zh/config/output/css-modules) 配置项。
 :::
 
 ### Object 类型

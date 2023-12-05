@@ -4,7 +4,7 @@ This chapter will introduces how to access pages during local development and pr
 
 ### Default
 
-Rsbuild Server will generate the corresponding page route based on the [source.entry](/config/options/source#sourceentry) configuration.
+Rsbuild Server will generate the corresponding page route based on the [source.entry](/config/source/entry) configuration.
 
 When entry is index, the page can be accessed through `/`; when entry is foo, the page can be accessed through `/foo`.
 
@@ -36,7 +36,7 @@ export default {
 
 #### Custom fallback logic
 
-When Rsbuild's default [server.htmlFallback](/config/options/server#serverhtmlfallback) configuration cannot meet your needs, for example, if you want to be able to access `main.html` when accessing `/`, you can set it up using [server.historyApiFallback] (/config/options/server#serverhistoryapifallback).
+When Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration cannot meet your needs, for example, if you want to be able to access `main.html` when accessing `/`, you can set it up using [server.historyApiFallback] (/config/server/history-api-fallback).
 
 ```ts title=rsbuild.config.ts
 export default {
@@ -58,7 +58,7 @@ export default {
 
 Normally, `/` points to the dist root directory, and the HTML file is output to the dist root directory. At this time, the corresponding HTML page can be accessed through `/xxx`.
 
-If you output HTML files to other subdirectories by modifying [output.distPath.html](/config/options/output#outputdistpath), you need to access the corresponding HTML page through `/htmlPath/xxx`.
+If you output HTML files to other subdirectories by modifying [output.distPath.html](/config/output/dist-path), you need to access the corresponding HTML page through `/htmlPath/xxx`.
 
 For example, if you set the HTML file to be output to the `HTML` directory, index.html will be accessed through `/html/`, and foo.html will be accessed through `/html/foo`.
 

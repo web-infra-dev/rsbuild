@@ -28,7 +28,7 @@ After registering the plugin, you can directly develop React.
 
 ## Import component library on demand
 
-The on-demand import capability of the React component library comes from [source.transformImport](/config/options/source#sourcetransformimport).
+The on-demand import capability of the React component library comes from [source.transformImport](/config/source/transform-import).
 
 When the [Ant Design component library](https://npmjs.com/package/antd) &lt;= 4.x version is installed in the project, Rsbuild will automatically add on-demand import capabilities, and the default configuration is as follows:
 
@@ -59,7 +59,7 @@ const defaultArcoConfig = [
 ```
 
 :::tip
-When you add configurations for `antd` or `@arco-design/web-react` in [source.transformImport](/config/options/source#sourcetransformimport), the priority will be higher than the default configurations mentioned above.
+When you add configurations for `antd` or `@arco-design/web-react` in [source.transformImport](/config/source/transform-import), the priority will be higher than the default configurations mentioned above.
 
 At the same time, the above default behavior can be turned off by manually setting `transformImport: false`.
 :::
@@ -68,7 +68,7 @@ At the same time, the above default behavior can be turned off by manually setti
 
 ### splitChunks
 
-When [chunkSplit.strategy](/config/options/performance#chunksplitstrategy) set to `split-by-experience`, Rsbuild will automatically split `react` and `router` related packages into separate chunks by default:
+When [chunkSplit.strategy](/config/performance/chunk-split) set to `split-by-experience`, Rsbuild will automatically split `react` and `router` related packages into separate chunks by default:
 
 - `lib-react.js`: includes react, react-dom, and react's sub-dependencies (scheduler).
 - `lib-router.js`: includes react-router, react-router-dom, and react-router's sub-dependencies (history, @remix-run/router).

@@ -4,9 +4,40 @@
     "name": "index",
     "label": "Overview"
   },
+  "plugins",
   {
     "type": "dir",
-    "name": "options",
-    "label": "Options"
+    "name": "dev",
+    "label": "dev"
+  },
+  {
+    "type": "dir",
+    "name": "source",
+    "label": "source"
+  },
+  {
+    "type": "dir",
+    "name": "output",
+    "label": "output"
+  },
+  {
+    "type": "dir",
+    "name": "html",
+    "label": "html"
+  },
+  {
+    "type": "dir",
+    "name": "server",
+    "label": "server"
+  },
+  {
+    "type": "dir",
+    "name": "tools",
+    "label": "tools"
+  },
+  {
+    "type": "dir",
+    "name": "performance",
+    "label": "performance"
   }
 ]
