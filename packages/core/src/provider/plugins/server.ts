@@ -1,5 +1,6 @@
 import type { RsbuildPlugin } from '../../types';
 import fs from 'fs';
+import { join, isAbsolute } from 'path';
 
 // For Rsbuild Server Config
 export const pluginServer = (): RsbuildPlugin => ({
@@ -16,15 +17,19 @@ export const pluginServer = (): RsbuildPlugin => ({
           return;
         }
 
+        const publicDir = isAbsolute(name)
+          ? name
+          : join(api.context.rootPath, name);
+
         const publicPattern = [
           {
-            from: name,
+            from: publicDir,
             to: '',
             noErrorOnMissing: true,
           },
         ];
 
-        if (!fs.existsSync(name)) {
+        if (!fs.existsSync(publicDir)) {
           return;
         }
 
