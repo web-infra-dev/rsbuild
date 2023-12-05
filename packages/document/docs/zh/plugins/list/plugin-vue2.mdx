@@ -62,7 +62,7 @@ Vue 2 插件使用的是 `vue-loader` v15 版本，请注意区分 v15 版本与
 
 ### splitChunks
 
-在 [chunkSplit.strategy](/config/options/performance#chunksplitstrategy) 设置为 `split-by-experience` 时，Rsbuild 默认会自动将 `vue` 和 `router` 相关的包拆分为单独的 chunk:
+在 [chunkSplit.strategy](/config/performance/chunk-split) 设置为 `split-by-experience` 时，Rsbuild 默认会自动将 `vue` 和 `router` 相关的包拆分为单独的 chunk:
 
 - `lib-vue.js`：包含 vue，vue-loader。
 - `lib-router.js`：包含 vue-router。

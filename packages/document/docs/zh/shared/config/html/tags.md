@@ -145,7 +145,7 @@ export default {
 
 #### 限制
 
-这个配置用于在 Rsbuild 构建完成后修改 HTML 产物的内容，并不会引入和解析新的模块。因此，它无法用于引入未编译的源码文件，也无法代替 [source.preEntry](https://rsbuild.dev/zh/config/options/source#source.preentry) 等配置。
+这个配置用于在 Rsbuild 构建完成后修改 HTML 产物的内容，并不会引入和解析新的模块。因此，它无法用于引入未编译的源码文件，也无法代替 [source.preEntry](https://rsbuild.dev/zh/config/source/.preentry) 等配置。
 
 例如对于以下项目：
 

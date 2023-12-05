@@ -38,11 +38,11 @@ In the filename, `[name]` represents the entry name corresponding to this file, 
 
 Rsbuild provides some configs to modify the directory or filename, you can:
 
-- Modify the filename through [output.filename](/config/options/output#outputfilename).
-- Modify the output path of through [output.distPath](/config/options/output#outputdistpath).
-- Modify the license file through [output.legalComments](/config/options/output#outputlegalcomments).
-- Remove Source Map file through [output.disableSourceMap](/config/options/output#outputdisablesourcemap).
-- Modify the output structure of the HTML files through [html.outputStructure](/config/options/html#outputstructure).
+- Modify the filename through [output.filename](/config/output/filename).
+- Modify the output path of through [output.distPath](/config/output/dist-path).
+- Modify the license file through [output.legalComments](/config/output/legal-comments).
+- Remove Source Map file through [output.disableSourceMap](/config/output/disable-source-map).
+- Modify the output structure of the HTML files through [html.outputStructure](/config/html/output-structure).
 
 ## Static Assets
 
@@ -64,7 +64,7 @@ dist
         └── qux.[hash].mp4
 ```
 
-You can use the [output.distPath](/config/options/output#outputdistpath) config to uniformly input these static assets into a directory, for example, output to the `assets` directory:
+You can use the [output.distPath](/config/output/dist-path) config to uniformly input these static assets into a directory, for example, output to the `assets` directory:
 
 ```ts
 export default {
@@ -104,7 +104,7 @@ dist
 
 Node.js files usually only contain JS files, no HTML or CSS. Also, JS file names will not contain hash.
 
-You can modify the output path of Node.js files through the [output.distPath.server](/config/options/output#outputdistpath) config.
+You can modify the output path of Node.js files through the [output.distPath.server](/config/output/dist-path) config.
 
 For example, output Node.js files to the `server` directory:
 
