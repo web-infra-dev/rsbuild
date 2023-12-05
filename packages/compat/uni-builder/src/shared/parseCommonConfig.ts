@@ -7,7 +7,7 @@ import {
   logger,
   color,
   RsbuildTarget,
-  OverrideBrowserslist as RsbuildOverrideBrowserslist,
+  OverrideBrowserslist,
   getBrowserslist,
 } from '@rsbuild/shared';
 import {
@@ -19,7 +19,6 @@ import type {
   UniBuilderRspackConfig,
   UniBuilderWebpackConfig,
   DevServerHttpsOptions,
-  OverrideBrowserslist,
 } from '../types';
 import { pluginRem } from '@rsbuild/plugin-rem';
 import { pluginPug } from '@rsbuild/plugin-pug';
@@ -163,7 +162,7 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   }
 
   const targets = typeof target === 'string' ? [target] : target;
-  let overrideBrowserslist: RsbuildOverrideBrowserslist = {};
+  let overrideBrowserslist: OverrideBrowserslist = {};
 
   for (const target of targets) {
     // Incompatible with the scenario where target contains both 'web' and 'modern-web'

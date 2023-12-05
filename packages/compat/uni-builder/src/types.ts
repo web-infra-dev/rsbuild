@@ -61,10 +61,6 @@ export type MainFields = (string | string[])[];
 
 export type DevServerHttpsOptions = boolean | { key: string; cert: string };
 
-export type OverrideBrowserslist =
-  | string[]
-  | Partial<Record<RsbuildTarget, string[]>>;
-
 export type UniBuilderExtraConfig = {
   tools?: {
     styledComponents?: PluginStyledComponentsOptions;
@@ -187,13 +183,6 @@ export type UniBuilderExtraConfig = {
      * Whether to transform SVGs into React components. If true, will treat all .svg files as assets.
      */
     disableSvgr?: boolean;
-    /**
-     * Specifies the range of target browsers that the project is compatible with.
-     * This value will be used by [@babel/preset-env](https://babeljs.io/docs/en/babel-preset-env) and
-     * [autoprefixer](https://github.com/postcss/autoprefixer) to identify the JavaScript syntax that
-     * need to be transformed and the CSS browser prefixes that need to be added.
-     */
-    overrideBrowserslist?: OverrideBrowserslist;
   };
   html?: {
     /**
