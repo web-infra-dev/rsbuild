@@ -50,7 +50,7 @@
     "nx": "^17.0.1",
     "prettier": "^3.0.3",
     "vite-tsconfig-paths": "4.2.1",
-    "vitest": "1.0.0-beta.1"
+    "vitest": "1.0.1"
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {
