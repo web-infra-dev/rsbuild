@@ -59,3 +59,41 @@ pluginVue2({
 :::tip
 The Vue 2 plugin is using the `vue-loader` v15. Please be aware that there may be configuration differences between v15 and the latest version.
 :::
+
+### splitChunks
+
+When [chunkSplit.strategy](/config/options/performance#chunksplitstrategy) set to `split-by-experience`, Rsbuild will automatically split `vue` and `router` related packages into separate chunks by default:
+
+- `lib-vue.js`: includes vue, vue-loader.
+- `lib-router.js`: includes vue-router.
+
+This option is used to control this behavior and determine whether the `vue` and `router` related packages need to be split into separate chunks.
+
+- **Type:**
+
+```ts
+type SplitVueChunkOptions = {
+  vue?: boolean;
+  router?: boolean;
+};
+```
+
+- **Default:**
+
+```ts
+const defaultOptions = {
+  vue: true,
+  router: true,
+};
+```
+
+- **Example:**
+
+```ts
+pluginVue({
+  splitChunks: {
+    vue: false,
+    router: false,
+  },
+});
+```

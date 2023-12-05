@@ -59,3 +59,41 @@ pluginVue2({
 :::tip
 Vue 2 插件使用的是 `vue-loader` v15 版本，请注意区分 v15 版本与最新版本之间可能存在配置差异。
 :::
+
+### splitChunks
+
+在 [chunkSplit.strategy](/config/options/performance#chunksplitstrategy) 设置为 `split-by-experience` 时，Rsbuild 默认会自动将 `vue` 和 `router` 相关的包拆分为单独的 chunk:
+
+- `lib-vue.js`：包含 vue，vue-loader。
+- `lib-router.js`：包含 vue-router。
+
+该选项用于控制这一行为，决定是否需要将 `vue` 和 `router` 相关的包拆分为单独的 chunk。
+
+- **类型：**
+
+```ts
+type SplitVueChunkOptions = {
+  vue?: boolean;
+  router?: boolean;
+};
+```
+
+- **默认值：**
+
+```ts
+const defaultOptions = {
+  vue: true,
+  router: true,
+};
+```
+
+- **示例：**
+
+```ts
+pluginVue({
+  splitChunks: {
+    vue: false,
+    router: false,
+  },
+});
+```
