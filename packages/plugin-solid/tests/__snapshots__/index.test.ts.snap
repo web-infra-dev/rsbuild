@@ -8,7 +8,7 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
         "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
+            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
@@ -59,7 +59,7 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
         "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
+            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
@@ -107,7 +107,7 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
         "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
+            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
             "options": {
               "babelrc": false,
               "compact": false,

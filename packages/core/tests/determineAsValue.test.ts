@@ -1,4 +1,4 @@
-import { determineAsValue } from '../../src/plugins/HtmlPreloadOrPrefetchPlugin/helpers/determineAsValue';
+import { determineAsValue } from '../src/rspack/preload/helpers';
 
 describe('determineAsValue test', () => {
   it('should return as attribute', () => {

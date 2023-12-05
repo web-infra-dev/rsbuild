@@ -1305,21 +1305,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "plugins": [
-    CopyRspackPlugin {
-      "_options": {
-        "patterns": [
-          {
-            "force": false,
-            "from": "public",
-            "globOptions": {},
-            "noErrorOnMissing": true,
-            "priority": 0,
-            "to": "",
-          },
-        ],
-      },
-      "name": "CopyRspackPlugin",
-    },
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [

@@ -54,12 +54,20 @@ export type PresetReactOptions =
 export type BabelConfigUtils = {
   addPlugins: (plugins: BabelPlugin[]) => void;
   addPresets: (presets: BabelPlugin[]) => void;
-  addIncludes: (includes: string | RegExp | (string | RegExp)[]) => void;
-  addExcludes: (excludes: string | RegExp | (string | RegExp)[]) => void;
   removePlugins: (plugins: string | string[]) => void;
   removePresets: (presets: string | string[]) => void;
   modifyPresetEnvOptions: (options: PresetEnvOptions) => void;
   modifyPresetReactOptions: (options: PresetReactOptions) => void;
+  /**
+   * use `source.include` instead
+   * @deprecated
+   */
+  addIncludes: (includes: string | RegExp | (string | RegExp)[]) => void;
+  /**
+   * use `source.exclude` instead
+   * @deprecated
+   */
+  addExcludes: (excludes: string | RegExp | (string | RegExp)[]) => void;
 };
 
 export type PluginBabelOptions = ChainedConfigWithUtils<

@@ -165,7 +165,7 @@ function generateLinks(
   return links;
 }
 
-export class HTMLPreloadOrPrefetchPlugin implements RspackPluginInstance {
+export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
   readonly options: PreloadOrPreFetchOption;
 
   resourceHints: HtmlWebpackPlugin.HtmlTagObject[] = [];

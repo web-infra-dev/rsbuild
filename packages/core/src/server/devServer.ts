@@ -25,7 +25,6 @@ import {
 } from '@rsbuild/shared';
 import DevMiddleware from './dev-middleware';
 import connect from '@rsbuild/shared/connect';
-import { createProxyMiddleware } from './proxy';
 import {
   faviconFallbackMiddleware,
   getHtmlFallbackMiddleware,
@@ -129,6 +128,7 @@ export class RsbuildDevServer {
 
     // dev proxy handler, each proxy has own handler
     if (dev.proxy) {
+      const { createProxyMiddleware } = await import('./proxy');
       const { middlewares } = createProxyMiddleware(dev.proxy, app);
       middlewares.forEach((middleware) => {
         this.middlewares.use(middleware);

@@ -169,11 +169,10 @@ Rsbuild 会根据[构建产物类型](/api/start/build-target)来设置不同的
 Web 产物的默认值如下所示：
 
 ```yaml
-chrome >= 61
-edge >= 16
-firefox >= 60
-safari >= 11
-ios_saf >= 11
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
 ```
 
 在该浏览器范围下，JavaScript 产物最低兼容到支持[原生 ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) 的浏览器。
