@@ -11,7 +11,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
       },
     },
   },
-  "context": "<ROOT>",
+  "context": "",
   "devServer": {
     "hot": true,
   },
@@ -459,7 +459,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -729,7 +729,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/dist",
+    "path": "dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -802,7 +802,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
       },
     },
   },
-  "context": "<ROOT>",
+  "context": "",
   "devServer": {
     "hot": false,
   },
@@ -1250,7 +1250,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -1554,7 +1554,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
     "cssFilename": "static/css/[name].[contenthash:8].css",
     "filename": "static/js/[name].[contenthash:8].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/dist",
+    "path": "dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1632,14 +1632,14 @@ exports[`uni-builder webpack > should generator webpack config correctly 1`] = `
   "cache": {
     "buildDependencies": {
       "packageJson": [
-        "<ROOT>/package.json",
+        "package.json",
       ],
     },
-    "cacheDirectory": "<ROOT>/node_modules/.cache/webpack",
+    "cacheDirectory": "node_modules/.cache/webpack",
     "name": "web-development",
     "type": "filesystem",
   },
-  "context": "<ROOT>",
+  "context": "",
   "devtool": "cheap-module-source-map",
   "experiments": {
     "asyncWebAssembly": true,
@@ -2159,7 +2159,7 @@ exports[`uni-builder webpack > should generator webpack config correctly 1`] = `
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -2313,7 +2313,7 @@ exports[`uni-builder webpack > should generator webpack config correctly 1`] = `
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/dist",
+    "path": "dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -2404,14 +2404,14 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
   "cache": {
     "buildDependencies": {
       "packageJson": [
-        "<ROOT>/package.json",
+        "package.json",
       ],
     },
-    "cacheDirectory": "<ROOT>/node_modules/.cache/webpack",
+    "cacheDirectory": "node_modules/.cache/webpack",
     "name": "web-production",
     "type": "filesystem",
   },
-  "context": "<ROOT>",
+  "context": "",
   "devtool": "hidden-source-map",
   "experiments": {
     "asyncWebAssembly": true,
@@ -2937,7 +2937,7 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -3132,7 +3132,7 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
     "chunkFilename": "static/js/async/[name].[contenthash:8].js",
     "filename": "static/js/[name].[contenthash:8].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/dist",
+    "path": "dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",

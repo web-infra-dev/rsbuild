@@ -38,7 +38,7 @@ export type CreateRspackBuilderOptions = {
   frameworkConfigPath?: string;
   target?: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
-  cwd: string;
+  cwd?: string;
 };
 
 export type CreateUniBuilderOptions =

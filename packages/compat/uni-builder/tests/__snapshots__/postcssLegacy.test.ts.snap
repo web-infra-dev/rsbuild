@@ -389,7 +389,7 @@ exports[`plugin-postcssLegacy > should register postcss plugin by browserslist 1
       "include": [
         {
           "and": [
-            "<ROOT>",
+            "",
             {
               "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
             },
