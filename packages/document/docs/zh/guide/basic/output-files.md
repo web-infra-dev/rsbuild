@@ -146,18 +146,18 @@ dist
 └── [name].html
 ```
 
-## 产物不写入磁盘
+## 产物写入磁盘
 
-默认情况下，Rsbuild 会将构建产物写入磁盘，以方便开发者查看产物的内容，或是配置静态资源的代理规则。
+默认情况下，Rsbuild 在开发环境不会将构建产物写入磁盘，而是将文件保存在 dev server 的内存中，从而减少文件操作产生的开销。
 
-在开发环境，你可以选择将构建产物保存在 Dev Server 的内存中，从而减少文件操作产生的开销。
+你可以选择将构建产物写入磁盘，这通常用于排查构建产物的内容，或是配置静态资源的代理规则。
 
-将 `dev.writeToDisk` 配置项设置为 `false` 即可：
+将 [dev.writeToDisk](/config/dev/write-to-disk) 配置项设置为 `true` 即可：
 
 ```ts
 export default {
   dev: {
-    writeToDisk: false,
+    writeToDisk: true,
   },
 };
 ```

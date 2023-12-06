@@ -94,6 +94,9 @@ test('dev.port & output.distPath', async ({ page }) => {
     cwd: join(fixtures, 'basic'),
     plugins: [pluginReact()],
     rsbuildConfig: {
+      dev: {
+        writeToDisk: true,
+      },
       server: {
         port: 3000,
       },
