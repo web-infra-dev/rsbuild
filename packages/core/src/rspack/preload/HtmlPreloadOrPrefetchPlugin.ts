@@ -16,7 +16,7 @@
  */
 
 import type { Compiler, RspackPluginInstance, Compilation } from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import {
   upperFirst,
   withPublicPath,
@@ -172,14 +172,11 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
 
   type: LinkType;
 
-  HtmlPlugin: typeof HtmlWebpackPlugin;
-
   HTMLCount: number;
 
   constructor(
     options: true | PreloadOrPreFetchOption,
     type: LinkType,
-    HtmlPlugin: typeof HtmlWebpackPlugin,
     HTMLCount: number,
   ) {
     this.options = {
@@ -187,14 +184,13 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
       ...(typeof options === 'boolean' ? {} : options),
     };
     this.type = type;
-    this.HtmlPlugin = HtmlPlugin;
     this.HTMLCount = HTMLCount;
   }
 
   apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(this.constructor.name, (compilation) => {
       // @ts-expect-error compilation type mismatch
-      this.HtmlPlugin.getHooks(compilation).beforeAssetTagGeneration.tap(
+      HtmlWebpackPlugin.getHooks(compilation).beforeAssetTagGeneration.tap(
         `HTML${upperFirst(this.type)}Plugin`,
         (htmlPluginData) => {
           this.resourceHints = generateLinks(
@@ -210,7 +206,7 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
       );
 
       // @ts-expect-error compilation type mismatch
-      this.HtmlPlugin.getHooks(compilation).alterAssetTags.tap(
+      HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tap(
         `HTML${upperFirst(this.type)}Plugin`,
         (htmlPluginData) => {
           if (this.resourceHints) {

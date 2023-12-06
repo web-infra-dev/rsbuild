@@ -11,44 +11,41 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
   name: 'rsbuild:inline-chunk',
 
   setup(api) {
-    api.modifyBundlerChain(
-      async (chain, { target, CHAIN_ID, isProd, HtmlPlugin }) => {
-        const config = api.getNormalizedConfig();
+    api.modifyBundlerChain(async (chain, { target, CHAIN_ID, isProd }) => {
+      const config = api.getNormalizedConfig();
 
-        if (isHtmlDisabled(config, target) || !isProd) {
-          return;
-        }
+      if (isHtmlDisabled(config, target) || !isProd) {
+        return;
+      }
 
-        const { InlineChunkHtmlPlugin } = await import(
-          '../rspack/InlineChunkHtmlPlugin'
-        );
+      const { InlineChunkHtmlPlugin } = await import(
+        '../rspack/InlineChunkHtmlPlugin'
+      );
 
-        const { inlineStyles, inlineScripts } = config.output;
+      const { inlineStyles, inlineScripts } = config.output;
 
-        const scriptTests: InlineChunkTest[] = [];
-        const styleTests: InlineChunkTest[] = [];
+      const scriptTests: InlineChunkTest[] = [];
+      const styleTests: InlineChunkTest[] = [];
 
-        if (inlineScripts) {
-          scriptTests.push(inlineScripts === true ? JS_REGEX : inlineScripts);
-        }
+      if (inlineScripts) {
+        scriptTests.push(inlineScripts === true ? JS_REGEX : inlineScripts);
+      }
 
-        if (inlineStyles) {
-          styleTests.push(inlineStyles === true ? CSS_REGEX : inlineStyles);
-        }
+      if (inlineStyles) {
+        styleTests.push(inlineStyles === true ? CSS_REGEX : inlineStyles);
+      }
 
-        if (!scriptTests.length && !styleTests.length) {
-          return;
-        }
+      if (!scriptTests.length && !styleTests.length) {
+        return;
+      }
 
-        chain.plugin(CHAIN_ID.PLUGIN.INLINE_HTML).use(InlineChunkHtmlPlugin, [
-          HtmlPlugin,
-          {
-            styleTests,
-            scriptTests,
-            distPath: pick(config.output.distPath, ['js', 'css']),
-          },
-        ]);
-      },
-    );
+      chain.plugin(CHAIN_ID.PLUGIN.INLINE_HTML).use(InlineChunkHtmlPlugin, [
+        {
+          styleTests,
+          scriptTests,
+          distPath: pick(config.output.distPath, ['js', 'css']),
+        },
+      ]);
+    });
   },
 });

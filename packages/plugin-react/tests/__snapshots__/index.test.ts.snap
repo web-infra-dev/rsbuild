@@ -681,10 +681,8 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {
           "index.html": {
             "title": "Rsbuild App",

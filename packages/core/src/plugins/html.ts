@@ -168,7 +168,7 @@ function getChunks(entryName: string, entryValue: string | string[]) {
 }
 
 export const applyInjectTags = (api: RsbuildPluginAPI) => {
-  api.modifyBundlerChain(async (chain, { HtmlPlugin, CHAIN_ID }) => {
+  api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
 
     const tags = castArray(config.html.tags).filter(Boolean);
@@ -190,7 +190,6 @@ export const applyInjectTags = (api: RsbuildPluginAPI) => {
 
     // create shared options used for entry without specified options.
     const sharedOptions: HtmlTagsPluginOptions = {
-      HtmlPlugin,
       append: true,
       hash: false,
       publicPath: true,
@@ -310,7 +309,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
-          .use(HtmlBasicPlugin, [{ HtmlPlugin, info: htmlInfoMap }]);
+          .use(HtmlBasicPlugin, [{ info: htmlInfoMap }]);
 
         if (config.security) {
           const { nonce } = config.security;
@@ -322,7 +321,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
             chain
               .plugin(CHAIN_ID.PLUGIN.HTML_NONCE)
-              .use(HtmlNoncePlugin, [{ nonce, HtmlPlugin }]);
+              .use(HtmlNoncePlugin, [{ nonce }]);
           }
         }
 
@@ -340,7 +339,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
             chain
               .plugin(CHAIN_ID.PLUGIN.HTML_CROSS_ORIGIN)
               .use(HtmlCrossOriginPlugin, [
-                { crossOrigin: formattedCrossorigin, HtmlPlugin },
+                { crossOrigin: formattedCrossorigin },
               ]);
 
             chain.output.crossOriginLoading(formattedCrossorigin);
@@ -358,7 +357,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
             chain
               .plugin(CHAIN_ID.PLUGIN.APP_ICON)
-              .use(HtmlAppIconPlugin, [{ iconPath, distDir, HtmlPlugin }]);
+              .use(HtmlAppIconPlugin, [{ iconPath, distDir }]);
           }
         }
       },
