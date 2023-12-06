@@ -16,6 +16,9 @@ test('should restart dev server and reload config when config file changed', asy
   fse.writeFileSync(
     configFile,
     `export default {
+      dev: {
+        writeToDisk: true,
+      },
       output: {
         distPath: {
           root: 'dist',
@@ -34,6 +37,9 @@ test('should restart dev server and reload config when config file changed', asy
   fse.writeFileSync(
     configFile,
     `export default {
+      dev: {
+        writeToDisk: true,
+      },
       output: {
         distPath: {
           root: 'dist-2',

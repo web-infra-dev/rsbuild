@@ -91,7 +91,7 @@ export const mergeDevOptions = ({
       // By default it is set to "location.protocol === 'https:' ? 'wss' : 'ws'""
       protocol: '',
     },
-    writeToDisk: (file: string) => !file.includes('.hot-update.'),
+    writeToDisk: false,
   };
 
   const devConfig = rsbuildConfig.dev

@@ -70,7 +70,9 @@ export type BabelConfigUtils = {
   addExcludes: (excludes: string | RegExp | (string | RegExp)[]) => void;
 };
 
-export type PluginBabelOptions = ChainedConfigWithUtils<
-  BabelTransformOptions,
-  BabelConfigUtils
->;
+export type PluginBabelOptions = {
+  babelLoaderOptions?: ChainedConfigWithUtils<
+    BabelTransformOptions,
+    BabelConfigUtils
+  >;
+};

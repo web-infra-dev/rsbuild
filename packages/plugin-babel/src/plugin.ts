@@ -59,7 +59,7 @@ export const pluginBabel = (
 
         const userBabelConfig = applyUserBabelConfig(
           cloneDeep(baseConfig),
-          options,
+          options.babelLoaderOptions,
           babelUtils,
         );
 

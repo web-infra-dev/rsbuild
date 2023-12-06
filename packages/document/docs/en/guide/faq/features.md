@@ -2,7 +2,7 @@
 
 ### How to import UI Component library on demand?
 
-If you need to configure the on-demand import of the component library, you can configure it through [source.transformImport](/config/options/source#sourcetransformimport), which is equivalent to [babel-plugin-import](https://npmjs.com/package/babel-plugin-import).
+If you need to configure the on-demand import of the component library, you can configure it through [source.transformImport](/config/source/transform-import), which is equivalent to [babel-plugin-import](https://npmjs.com/package/babel-plugin-import).
 
 ```ts
 export default {
@@ -48,7 +48,7 @@ export default {
 
 ### How to configure CDN path for static assets?
 
-If you need to upload static assets such as JS and CSS to CDN for use, you can set the URL prefix of static assets through the [output.assetPrefix](/config/options/output#outputassetprefix) configuration.
+If you need to upload static assets such as JS and CSS to CDN for use, you can set the URL prefix of static assets through the [output.assetPrefix](/config/output/asset-prefix) configuration.
 
 ```js
 export default {
@@ -64,7 +64,7 @@ export default {
 
 When the production environment is built, we can remove the `console` from the code, so as to avoid the log of the development environment being output to the production environment.
 
-Rsbuild provides a configuration option to remove console by default, please see [performance.removeConsole](/config/options/performance#performanceremoveconsole).
+Rsbuild provides a configuration option to remove console by default, please see [performance.removeConsole](/config/performance/remove-console).
 
 ---
 

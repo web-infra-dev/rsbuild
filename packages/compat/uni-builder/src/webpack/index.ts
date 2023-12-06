@@ -12,6 +12,7 @@ import { pluginModuleScopes } from './plugins/moduleScopes';
 import { pluginStyledComponents } from './plugins/styledComponents';
 import { pluginBabel } from './plugins/babel';
 import { pluginReact } from './plugins/react';
+import { withDefaultConfig } from './defaults';
 
 export async function parseConfig(
   uniBuilderConfig: UniBuilderWebpackConfig,
@@ -29,7 +30,11 @@ export async function parseConfig(
     target,
   );
 
-  rsbuildPlugins.push(pluginBabel(uniBuilderConfig.tools?.babel));
+  rsbuildPlugins.push(
+    pluginBabel({
+      babelLoaderOptions: uniBuilderConfig.tools?.babel,
+    }),
+  );
   rsbuildPlugins.push(pluginReact());
 
   if (uniBuilderConfig.tools?.tsLoader) {
@@ -72,18 +77,21 @@ export async function parseConfig(
 export async function createWebpackBuilder(
   options: CreateWebpackBuilderOptions,
 ): Promise<RsbuildInstance> {
+  const { cwd = process.cwd(), target = 'web' } = options;
+
   const { rsbuildConfig, rsbuildPlugins } = await parseConfig(
-    options.config,
-    options.cwd,
+    withDefaultConfig(options.config),
+    cwd,
     options.frameworkConfigPath,
-    options.target,
+    target,
   );
 
   const { webpackProvider } = await import('@rsbuild/webpack');
   const rsbuild = await createRsbuild({
     rsbuildConfig,
     provider: webpackProvider,
-    target: options.target || 'web',
+    target,
+    cwd,
   });
 
   rsbuild.addPlugins([

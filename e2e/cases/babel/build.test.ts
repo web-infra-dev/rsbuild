@@ -8,8 +8,10 @@ rspackOnlyTest('babel', async ({ page }) => {
     cwd: __dirname,
     runServer: true,
     plugins: [
-      pluginBabel((_, { addPlugins }) => {
-        addPlugins([require('./plugins/myBabelPlugin')]);
+      pluginBabel({
+        babelLoaderOptions: (_, { addPlugins }) => {
+          addPlugins([require('./plugins/myBabelPlugin')]);
+        },
       }),
     ],
   });
@@ -25,9 +27,11 @@ rspackOnlyTest('babel exclude', async ({ page }) => {
     cwd: __dirname,
     runServer: true,
     plugins: [
-      pluginBabel((_, { addPlugins, addExcludes }) => {
-        addPlugins([require('./plugins/myBabelPlugin')]);
-        addExcludes(/aa/);
+      pluginBabel({
+        babelLoaderOptions: (_, { addPlugins, addExcludes }) => {
+          addPlugins([require('./plugins/myBabelPlugin')]);
+          addExcludes(/aa/);
+        },
       }),
     ],
   });

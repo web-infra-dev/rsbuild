@@ -4,98 +4,98 @@
 
 ## JavaScript 编译
 
-| 功能            | 描述                                                             | 相关链接                                                                                                                                 |
-| --------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Rspack 打包     | 默认使用 Rspack 作为打包工具                                     | -                                                                                                                                        |
-| SWC 编译        | 默认通过 SWC 对 JavaScript 和 TypeScript 代码进行转译和压缩      | -                                                                                                                                        |
-| TS 编译         | 默认通过 SWC 编译 TS 文件                                        | <ul><li>[TypeScript 转译](/guide/basic/typescript#typescript-转译)</li></ul>                                                             |
-| JS 压缩         | 默认在生产环境构建时开启压缩                                     | <ul><li>[output.disableMinimize](/config/options/output#outputdisableminimize)</li></ul>                                                 |
-| Polyfill 注入   | 默认会注入 core-js 等 Polyfill                                   | <ul><li>[浏览器兼容性](/guide/advanced/browser-compatibility)</li><li>[output.polyfill](/config/options/output#outputpolyfill)</li></ul> |
-| SourceMap 生成  | 默认在生产环境构建时生成高质量 SourceMap                         | <ul><li>[output.disableSourceMap](/config/options/output#outputdisablesourcemap)</li></ul>                                               |
-| 文件别名        | 可选功能，通过 alias 设置文件别名                                | <ul><li>[路径别名](/guide/advanced/alias)</li><li>[source.alias](/config/options/source#sourcealias)</li></ul>                           |
-| Babel 编译      | 可选功能，通过 Babel 对 JavaScript 和 TypeScript 代码进行转译    | <ul><li>[Babel 插件](/plugins/list/plugin-babel)</li></ul>                                                                               |
-| Node 产物       | 可选功能，支持构建出运行在 Node.js 环境的 JavaScript 产物        | <ul><li>[Node 产物](/api/start/build-target#node-产物)</li></ul>                                                                         |
-| Web Worker 产物 | 可选功能，支持构建出运行在 Web Worker 环境的 JavaScript 产物     | <ul><li>[Web Worker 产物](/api/start/build-target#web-worker-产物)</li></ul>                                                             |
-| 浏览器范围      | 可选功能，通过 browserslist 来设置 Web 应用需要兼容的浏览器范围  | <ul><li>[浏览器范围](/guide/advanced/browserslist)</li></ul>                                                                             |
-| 兼容性检查      | 可选功能，分析构建产物中是否存在当前浏览器范围下不兼容的高级语法 | <ul><li>[Check Syntax 插件](/plugins/list/plugin-check-syntax)</li></ul>                                                                 |
-| 注入环境变量    | 可选功能，向代码中注入环境变量或表达式                           | <ul><li>[环境变量](/guide/advanced/define)</li></ul>                                                                                     |
-| Node polyfill   | 可选功能，在浏览器端注入 Node 核心模块的 polyfills               | <ul><li>[Node Polyfill 插件](/plugins/list/plugin-node-polyfill)</li></ul>                                                               |
-| TS 类型检查     | 可选功能，运行 type checker 检查代码中的类型问题                 | <ul><li>[类型检查](/guide/basic/typescript#类型检查)</li></ul>                                                                           |
+| 功能            | 描述                                                             | 相关链接                                                                                                                   |
+| --------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Rspack 打包     | 默认使用 Rspack 作为打包工具                                     | -                                                                                                                          |
+| SWC 编译        | 默认通过 SWC 对 JavaScript 和 TypeScript 代码进行转译和压缩      | -                                                                                                                          |
+| TS 编译         | 默认通过 SWC 编译 TS 文件                                        | <ul><li>[TypeScript 转译](/guide/basic/typescript#typescript-转译)</li></ul>                                               |
+| JS 压缩         | 默认在生产环境构建时开启压缩                                     | <ul><li>[output.disableMinimize](/config/output/disable-minimize)</li></ul>                                                |
+| Polyfill 注入   | 默认会注入 core-js 等 Polyfill                                   | <ul><li>[浏览器兼容性](/guide/advanced/browser-compatibility)</li><li>[output.polyfill](/config/output/polyfill)</li></ul> |
+| SourceMap 生成  | 默认在生产环境构建时生成高质量 SourceMap                         | <ul><li>[output.disableSourceMap](/config/output/disable-source-map)</li></ul>                                             |
+| 文件别名        | 可选功能，通过 alias 设置文件别名                                | <ul><li>[路径别名](/guide/advanced/alias)</li><li>[source.alias](/config/source/alias)</li></ul>                           |
+| Babel 编译      | 可选功能，通过 Babel 对 JavaScript 和 TypeScript 代码进行转译    | <ul><li>[Babel 插件](/plugins/list/plugin-babel)</li></ul>                                                                 |
+| Node 产物       | 可选功能，支持构建出运行在 Node.js 环境的 JavaScript 产物        | <ul><li>[Node 产物](/api/start/build-target#node-产物)</li></ul>                                                           |
+| Web Worker 产物 | 可选功能，支持构建出运行在 Web Worker 环境的 JavaScript 产物     | <ul><li>[Web Worker 产物](/api/start/build-target#web-worker-产物)</li></ul>                                               |
+| 浏览器范围      | 可选功能，通过 browserslist 来设置 Web 应用需要兼容的浏览器范围  | <ul><li>[浏览器范围](/guide/advanced/browserslist)</li></ul>                                                               |
+| 兼容性检查      | 可选功能，分析构建产物中是否存在当前浏览器范围下不兼容的高级语法 | <ul><li>[Check Syntax 插件](/plugins/list/plugin-check-syntax)</li></ul>                                                   |
+| 注入环境变量    | 可选功能，向代码中注入环境变量或表达式                           | <ul><li>[环境变量](/guide/advanced/env-vars)</li></ul>                                                                     |
+| Node polyfill   | 可选功能，在浏览器端注入 Node 核心模块的 polyfills               | <ul><li>[Node Polyfill 插件](/plugins/list/plugin-node-polyfill)</li></ul>                                                 |
+| TS 类型检查     | 可选功能，运行 type checker 检查代码中的类型问题                 | <ul><li>[类型检查](/guide/basic/typescript#类型检查)</li></ul>                                                             |
 
 ## CSS 编译
 
-| 功能                 | 描述                                                | 相关链接                                                                                                                                                                                   |
-| -------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| PostCSS 编译         | 默认开启 PostCSS 编译，内置 autoprefixer 等多个插件 | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.postcss](/config/options/tools#toolspostcss)</li><li>[tools.autoprefixer](/config/options/tools#toolsautoprefixer)</li></ul> |
-| Sass 预处理          | 默认支持编译 Sass/Scss 文件                         | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.sass](/config/options/tools#toolssass)</li></ul>                                                                             |
-| Less 预处理          | 默认支持编译 Less 文件                              | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.less](/config/options/tools#toolsless)</li></ul>                                                                             |
-| Stylus 预处理        | 可选功能，编译 Stylus 文件                          | <ul><li>[Stylus 插件](/plugins/list/plugin-stylus)</li></ul>                                                                                                                               |
-| CSS Modules 编译     | 默认支持编译 CSS Modules 文件                       | <ul><li>[使用 CSS Modules](/guide/basic/css-modules)</li><li>[tools.cssLoader](/config/options/tools#toolscssloader)</li></ul>                                                             |
-| CSS Modules 类型提示 | 可选功能，自动生成 CSS Modules 的类型定义文件       | <ul><li>[使用 CSS Modules](/guide/basic/css-modules)</li><li>[enableCssModuleTSDeclaration](/config/options/output#outputenablecssmoduletsdeclaration)</li></ul>                           |
-| CSS 压缩             | 默认在生产环境构建时开启压缩                        | <ul><li>[引用样式资源](/guide/basic/css-usage)</li></ul>                                                                                                                                   |
-| 抽取 CSS 文件        | 默认会将 CSS 抽取为独立的文件                       | <ul><li>[output.disableCssExtract](/config/options/output#outputdisablecssextract)</li></ul>                                                                                               |
-| Styled Components    | 可选功能，支持 styled-components 编译               | <ul><li>[Styled Components 插件](/plugins/list/plugin-styled-components)</li></ul>                                                                                                         |
-| 内联 CSS 到 JS 中    | 可选功能，将 CSS 文件内联到 JS 文件中               | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[output.disableCssExtract](/config/options/output#outputdisablecssextract)</li></ul>                                                |
-| rem 单位转换         | 可选功能，将 CSS 中的 px 转成 rem 单位              | <ul><li>[Rem 插件](/plugins/list/plugin-rem)</li></ul>                                                                                                                                     |
+| 功能                 | 描述                                                | 相关链接                                                                                                                                                         |
+| -------------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| PostCSS 编译         | 默认开启 PostCSS 编译，内置 autoprefixer 等多个插件 | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.postcss](/config/tools/postcss)</li><li>[tools.autoprefixer](/config/tools/autoprefixer)</li></ul> |
+| Sass 预处理          | 默认支持编译 Sass/Scss 文件                         | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.sass](/config/tools/sass)</li></ul>                                                                |
+| Less 预处理          | 默认支持编译 Less 文件                              | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.less](/config/tools/less)</li></ul>                                                                |
+| Stylus 预处理        | 可选功能，编译 Stylus 文件                          | <ul><li>[Stylus 插件](/plugins/list/plugin-stylus)</li></ul>                                                                                                     |
+| CSS Modules 编译     | 默认支持编译 CSS Modules 文件                       | <ul><li>[使用 CSS Modules](/guide/basic/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul>                                               |
+| CSS Modules 类型提示 | 可选功能，自动生成 CSS Modules 的类型定义文件       | <ul><li>[使用 CSS Modules](/guide/basic/css-modules)</li></ul>                                                                                                   |
+| CSS 压缩             | 默认在生产环境构建时开启压缩                        | <ul><li>[引用样式资源](/guide/basic/css-usage)</li></ul>                                                                                                         |
+| 抽取 CSS 文件        | 默认会将 CSS 抽取为独立的文件                       | <ul><li>[output.disableCssExtract](/config/output/disable-css-extract)</li></ul>                                                                                 |
+| Styled Components    | 可选功能，支持 styled-components 编译               | <ul><li>[Styled Components 插件](/plugins/list/plugin-styled-components)</li></ul>                                                                               |
+| 内联 CSS 到 JS 中    | 可选功能，将 CSS 文件内联到 JS 文件中               | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[output.disableCssExtract](/config/output/disable-css-extract)</li></ul>                                  |
+| rem 单位转换         | 可选功能，将 CSS 中的 px 转成 rem 单位              | <ul><li>[Rem 插件](/plugins/list/plugin-rem)</li></ul>                                                                                                           |
 
 ## HTML 编译
 
-| 功能              | 描述                            | 相关链接                                                                                                                                                   |
-| ----------------- | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 设置标题          | 设置 HTML 的 title 标签         | <ul><li>[设置页面标题](/guide/basic/html-template#设置页面标题)</li><li>[html.title](/config/options/html#htmltitle)</li></ul>                             |
-| 设置 meta         | 设置 HTML 的 meta 标签          | <ul><li>[设置 meta 标签](/guide/basic/html-template#设置-meta-标签)</li><li>[html.meta](/config/options/html#htmlmeta)</li></ul>                           |
-| 设置 favicon      | 设置页面的 favicon 图标         | <ul><li>[设置页面图标](/guide/basic/html-template#设置页面图标)</li><li>[html.favicon](/config/options/html#htmlfavicon)</li></ul>                         |
-| 设置 app 图标     | 设置 iOS 系统下的 apple icon    | <ul><li>[设置页面图标](/guide/basic/html-template#设置页面图标)</li><li>[html.appIcon](/config/options/html#htmlappicon)</li></ul>                         |
-| 使用 EJS 模板引擎 | 可选功能，使用 EJS 模板语法     | <ul><li>[模板引擎 - EJS](/guide/basic/html-template#ejs)</li></ul>                                                                                         |
-| 使用 Pug 模板引擎 | 可选功能，使用 Pug 模板语法     | <ul><li>[Pug 插件](/plugins/list/plugin-pug)</li></ul>                                                                                                     |
-| 内联 JS 文件      | 可选功能，将 JS 内联到 HTML 中  | <ul><li>[静态资源内联](/guide/optimization/inline-assets)</li><li>[output.inlineScripts](/config/options/output#outputinlinescripts)</li></ul> |
-| 内联 CSS 文件     | 可选功能，将 CSS 内联到 HTML 中 | <ul><li>[静态资源内联](/guide/optimization/inline-assets)</li><li>[output.inlineStyles](/config/options/output#outputinlinestyles)</li></ul>   |
+| 功能              | 描述                            | 相关链接                                                                                                                          |
+| ----------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| 设置标题          | 设置 HTML 的 title 标签         | <ul><li>[设置页面标题](/guide/basic/html-template#设置页面标题)</li><li>[html.title](/config/html/title)</li></ul>                |
+| 设置 meta         | 设置 HTML 的 meta 标签          | <ul><li>[设置 meta 标签](/guide/basic/html-template#设置-meta-标签)</li><li>[html.meta](/config/html/meta)</li></ul>              |
+| 设置 favicon      | 设置页面的 favicon 图标         | <ul><li>[设置页面图标](/guide/basic/html-template#设置页面图标)</li><li>[html.favicon](/config/html/favicon)</li></ul>            |
+| 设置 app 图标     | 设置 iOS 系统下的 apple icon    | <ul><li>[设置页面图标](/guide/basic/html-template#设置页面图标)</li><li>[html.appIcon](/config/html/app-icon)</li></ul>           |
+| 使用 EJS 模板引擎 | 可选功能，使用 EJS 模板语法     | <ul><li>[模板引擎 - EJS](/guide/basic/html-template#ejs)</li></ul>                                                                |
+| 使用 Pug 模板引擎 | 可选功能，使用 Pug 模板语法     | <ul><li>[Pug 插件](/plugins/list/plugin-pug)</li></ul>                                                                            |
+| 内联 JS 文件      | 可选功能，将 JS 内联到 HTML 中  | <ul><li>[静态资源内联](/guide/optimization/inline-assets)</li><li>[output.inlineScripts](/config/output/inline-scripts)</li></ul> |
+| 内联 CSS 文件     | 可选功能，将 CSS 内联到 HTML 中 | <ul><li>[静态资源内联](/guide/optimization/inline-assets)</li><li>[output.inlineStyles](/config/output/inline-styles)</li></ul>   |
 
 ## 开发预览相关
 
-| 功能         | 描述                                                     | 相关链接                                                             |
-| ------------ | -------------------------------------------------------- | -------------------------------------------------------------------- |
-| 自动打开页面 | 可选功能，在启动 Dev Server 时自动在浏览器中打开页面 URL | <ul><li>[dev.startUrl](/config/options/dev#devstarturl)</li></ul>    |
-| HTTPS Server | 可选功能，开启 Rsbuild Server 对 HTTPS 的支持            | <ul><li>[server.https](/config/options/server#serverhttps)</li></ul> |
+| 功能         | 描述                                                     | 相关链接                                                |
+| ------------ | -------------------------------------------------------- | ------------------------------------------------------- |
+| 自动打开页面 | 可选功能，在启动 Dev Server 时自动在浏览器中打开页面 URL | <ul><li>[dev.startUrl](/config/dev/start-url)</li></ul> |
+| HTTPS Server | 可选功能，开启 Rsbuild Server 对 HTTPS 的支持            | <ul><li>[server.https](/config/server/https)</li></ul>  |
 
 ## 前端框架相关
 
-| 功能              | 描述                                             | 相关链接                                                                                          |
-| ----------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
-| React             | 可选功能，开启后提供 React 语法支持              | <ul><li>[React 插件](/plugins/list/plugin-react)</li></ul>                                        |
-| React Refresh     | 开启 React 插件后，默认支持 React Refresh 热更新 | <ul><li>[模块热更新](/guide/advanced/hmr)</li><li>[dev.hmr](/config/options/dev#devhmr)</li></ul> |
-| SVG 转 React 组件 | 默认支持在 React 组件中引用 SVG 作为组件         | <ul><li>[SVGR 插件](/plugins/list/plugin-svgr)</li></ul>                                          |
-| Vue 3 SFC 编译    | 可选功能，开启 Vue 3 SFC 单文件组件编译          | <ul><li>[Vue 插件](/plugins/list/plugin-vue)</li></ul>                                            |
-| Vue 3 JSX 编译    | 可选功能，开启 Vue 3 JSX 语法编译                | <ul><li>[Vue JSX 插件](/plugins/list/plugin-vue-jsx)</li></ul>                                    |
-| Vue 2 SFC 编译    | 可选功能，开启 Vue 2 SFC 单文件组件编译          | <ul><li>[Vue 2 插件](/plugins/list/plugin-vue2)</li></ul>                                         |
-| Vue 2 JSX 编译    | 可选功能，开启 Vue 2 JSX 语法编译                | <ul><li>[Vue 2 JSX 插件](/plugins/list/plugin-vue2-jsx)</li></ul>                                 |
-| Svelte 编译       | 可选功能，开启 Svelte 组件编译                   | <ul><li>[Svelte 插件](/plugins/list/plugin-svelte)</li></ul>                                      |
+| 功能              | 描述                                             | 相关链接                                                                               |
+| ----------------- | ------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| React             | 可选功能，开启后提供 React 语法支持              | <ul><li>[React 插件](/plugins/list/plugin-react)</li></ul>                             |
+| React Refresh     | 开启 React 插件后，默认支持 React Refresh 热更新 | <ul><li>[模块热更新](/guide/advanced/hmr)</li><li>[dev.hmr](/config/dev/hmr)</li></ul> |
+| SVG 转 React 组件 | 默认支持在 React 组件中引用 SVG 作为组件         | <ul><li>[SVGR 插件](/plugins/list/plugin-svgr)</li></ul>                               |
+| Vue 3 SFC 编译    | 可选功能，开启 Vue 3 SFC 单文件组件编译          | <ul><li>[Vue 插件](/plugins/list/plugin-vue)</li></ul>                                 |
+| Vue 3 JSX 编译    | 可选功能，开启 Vue 3 JSX 语法编译                | <ul><li>[Vue JSX 插件](/plugins/list/plugin-vue-jsx)</li></ul>                         |
+| Vue 2 SFC 编译    | 可选功能，开启 Vue 2 SFC 单文件组件编译          | <ul><li>[Vue 2 插件](/plugins/list/plugin-vue2)</li></ul>                              |
+| Vue 2 JSX 编译    | 可选功能，开启 Vue 2 JSX 语法编译                | <ul><li>[Vue 2 JSX 插件](/plugins/list/plugin-vue2-jsx)</li></ul>                      |
+| Svelte 编译       | 可选功能，开启 Svelte 组件编译                   | <ul><li>[Svelte 插件](/plugins/list/plugin-svelte)</li></ul>                           |
 
 ## 静态资源相关
 
-| 功能             | 描述                                           | 相关链接                                                                                                                                     |
-| ---------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| 引用图片资源     | 支持在代码中引用图片资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets)</li></ul>                                                                                 |
-| 引用字体资源     | 支持在代码中引用字体资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets)</li></ul>                                                                                 |
-| 引用视频资源     | 支持在代码中引用视频资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets)</li></ul>                                                                                 |
-| 引用 Wasm 资源   | 支持在代码中引用 WebAssembly 资源              | <ul><li>[引用 Wasm 资源](/guide/basic/wasm-assets)</li></ul>                                                                                 |
-| 引用 node addons | 支持在代码中引用 Node.js addons                | -                                                                                                                                            |
-| 静态资源内联     | 默认将体积较小的图片等资源内联到 JS 中         | <ul><li>[静态资源内联](/guide/optimization/inline-assets)</li><li>[output.dataUriLimit](/config/options/output#outputdataurilimit)</li></ul> |
-| 清理静态资源     | 每次开始构建前，自动清理 dist 目录下的静态资源 | <ul><li>[output.cleanDistPath](/config/options/output#outputcleandistpath)</li></ul>                                                         |
-| 拷贝静态资源     | 可选功能，将静态资源拷贝到 dist 目录下         | <ul><li>[output.copy](/config/options/output#outputcopy)</li></ul>                                                                           |
+| 功能             | 描述                                           | 相关链接                                                                                                                         |
+| ---------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| 引用图片资源     | 支持在代码中引用图片资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets)</li></ul>                                                                     |
+| 引用字体资源     | 支持在代码中引用字体资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets)</li></ul>                                                                     |
+| 引用视频资源     | 支持在代码中引用视频资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets)</li></ul>                                                                     |
+| 引用 Wasm 资源   | 支持在代码中引用 WebAssembly 资源              | <ul><li>[引用 Wasm 资源](/guide/basic/wasm-assets)</li></ul>                                                                     |
+| 引用 node addons | 支持在代码中引用 Node.js addons                | -                                                                                                                                |
+| 静态资源内联     | 默认将体积较小的图片等资源内联到 JS 中         | <ul><li>[静态资源内联](/guide/optimization/inline-assets)</li><li>[output.dataUriLimit](/config/output/data-uri-limit)</li></ul> |
+| 清理静态资源     | 每次开始构建前，自动清理 dist 目录下的静态资源 | <ul><li>[output.cleanDistPath](/config/output/clean-dist-path)</li></ul>                                                         |
+| 拷贝静态资源     | 可选功能，将静态资源拷贝到 dist 目录下         | <ul><li>[output.copy](/config/output/copy)</li></ul>                                                                             |
 
 ## 性能相关
 
-| 功能                | 描述                                                           | 相关链接                                                                                                                                              |
-| ------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 产物自动拆包        | Rsbuild 中内置了多种拆包策略，自动将代码包拆分为体积适中的文件 | <ul><li>[拆包最佳实践](/guide/optimization/split-chunk)</li><li>[performance.chunkSplit](/config/options/performance#performancechunksplit)</li></ul> |
-| 展示产物体积        | 在生产环境构建后，默认展示所有静态资源的体积信息               | <ul><li>[performance.printFileSize](/config/options/performance#performanceprintfilesize)</li></ul>                                                   |
-| 分析产物体积        | 可选功能，通过 Bundle Analyzer 分析产物体积                    | <ul><li>[performance.bundleAnalyze](/config/options/performance#performancebundleanalyze)</li></ul>                                                   |
-| 移除 console        | 可选功能，移除代码中的 `console.xx`                            | <ul><li>[performance.removeConsole](/config/options/performance#performanceremoveconsole)</li></ul>                                                   |
-| 优化 moment.js 体积 | 可选功能，移除 moment.js 多余的 locale 文件                    | <ul><li>[performance.removeMomentLocale](/config/options/performance#performanceremovemomentlocale)</li></ul>                                         |
-| 组件库按需引入      | 可选功能，按需引入组件库的代码和样式                           | <ul><li>[source.transformImport](/config/options/source#sourcetransformimport)</li></ul>                                                              |
-| 图片压缩            | 可选功能，对引用的图片资源进行压缩处理                         | <ul><li>[Image Compress 插件](/plugins/list/plugin-image-compress)</li></ul>                                                                          |
-| Preload             | 可选功能，对资源进行预加载                                     | <ul><li>[performance.preload](/config/options/performance#performancepreload)</li></ul>                                                               |
-| Prefetch            | 可选功能，对资源进行预获取                                     | <ul><li>[performance.prefetch](/config/options/performance#performanceprefetch)</li></ul>                                                             |
-| Preconnect          | 可选功能，对资源进行预连接                                     | <ul><li>[performance.preconnect](/config/options/performance#performancepreconnect)</li></ul>                                                         |
-| DNS prefetch        | 可选功能，对资源进行 DNS 预获取                                | <ul><li>[performance.dnsPrefetch](/config/options/performance#performancednsprefetch)</li></ul>                                                       |
+| 功能                | 描述                                                           | 相关链接                                                                                                                            |
+| ------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| 产物自动拆包        | Rsbuild 中内置了多种拆包策略，自动将代码包拆分为体积适中的文件 | <ul><li>[拆包最佳实践](/guide/optimization/split-chunk)</li><li>[performance.chunkSplit](/config/performance/chunk-split)</li></ul> |
+| 展示产物体积        | 在生产环境构建后，默认展示所有静态资源的体积信息               | <ul><li>[performance.printFileSize](/config/performance/print-file-size)</li></ul>                                                  |
+| 分析产物体积        | 可选功能，通过 Bundle Analyzer 分析产物体积                    | <ul><li>[performance.bundleAnalyze](/config/performance/bundle-analyze)</li></ul>                                                   |
+| 移除 console        | 可选功能，移除代码中的 `console.xx`                            | <ul><li>[performance.removeConsole](/config/performance/remove-console)</li></ul>                                                   |
+| 优化 moment.js 体积 | 可选功能，移除 moment.js 多余的 locale 文件                    | <ul><li>[performance.removeMomentLocale](/config/performance/remove-moment-locale)</li></ul>                                        |
+| 组件库按需引入      | 可选功能，按需引入组件库的代码和样式                           | <ul><li>[source.transformImport](/config/source/transform-import)</li></ul>                                                         |
+| 图片压缩            | 可选功能，对引用的图片资源进行压缩处理                         | <ul><li>[Image Compress 插件](/plugins/list/plugin-image-compress)</li></ul>                                                        |
+| Preload             | 可选功能，对资源进行预加载                                     | <ul><li>[performance.preload](/config/performance/preload)</li></ul>                                                                |
+| Prefetch            | 可选功能，对资源进行预获取                                     | <ul><li>[performance.prefetch](/config/performance/prefetch)</li></ul>                                                              |
+| Preconnect          | 可选功能，对资源进行预连接                                     | <ul><li>[performance.preconnect](/config/performance/preconnect)</li></ul>                                                          |
+| DNS prefetch        | 可选功能，对资源进行 DNS 预获取                                | <ul><li>[performance.dnsPrefetch](/config/performance/dns-prefetch)</li></ul>                                                       |

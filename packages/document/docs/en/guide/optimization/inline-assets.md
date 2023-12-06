@@ -10,7 +10,7 @@ Rsbuild will automatically inline static assets that are less than 10KB, but som
 
 By default, Rsbuild will inline assets when the file size of is less than a threshold (the default is 10KB). When inlined, the asset will be converted to a Base64 encoded string and will no longer send a separate HTTP request. When the file size is greater than this threshold, it is loaded as a separate file with a separate HTTP request.
 
-The threshold can be modified with the [output.dataUriLimit](/config/options/output#outputdataurilimit) config. For example, set the threshold of images to 5000 Bytes, and set media assets not to be inlined:
+The threshold can be modified with the [output.dataUriLimit](/config/output/data-uri-limit) config. For example, set the threshold of images to 5000 Bytes, and set media assets not to be inlined:
 
 ```ts
 export default {
@@ -84,7 +84,7 @@ Excluding assets from inlining will increase the number of assets that the Web A
 
 In addition to inlining static assets into JS files, Rsbuild also supports inlining JS files into HTML files.
 
-Just enable the [output.inlineScripts](/config/options/output#outputinlinescripts) config, and the generated JS files will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
+Just enable the [output.inlineScripts](/config/output/inline-scripts) config, and the generated JS files will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
 
 ```ts
 export default {
@@ -102,7 +102,7 @@ Inline JS files may cause the single HTML file to be too large, and it will brea
 
 You can also inline CSS files into HTML files.
 
-Just enable the [output.inlineStyles](/config/options/output#outputinlinestyles) config, the generated CSS file will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
+Just enable the [output.inlineStyles](/config/output/inline-styles) config, the generated CSS file will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
 
 ```ts
 export default {

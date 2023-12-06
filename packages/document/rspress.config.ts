@@ -1,5 +1,6 @@
 import path from 'path';
 import { defineConfig } from 'rspress/config';
+import { rsbuildPluginOverview } from './src/rsbuildPluginOverview';
 
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
@@ -65,6 +66,7 @@ export default defineConfig({
     },
   },
   builderConfig: {
+    plugins: [rsbuildPluginOverview],
     source: {
       alias: {
         '@components': path.join(__dirname, 'src/components'),

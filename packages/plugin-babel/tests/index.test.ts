@@ -10,9 +10,11 @@ describe('plugins/babel', () => {
     });
 
     rsbuild.addPlugins([
-      pluginBabel((_config, { addExcludes, addIncludes }) => {
-        addIncludes(/\/node_modules\/query-string\//);
-        addExcludes('src/example');
+      pluginBabel({
+        babelLoaderOptions: (_config, { addExcludes, addIncludes }) => {
+          addIncludes(/\/node_modules\/query-string\//);
+          addExcludes('src/example');
+        },
       }),
     ]);
 
@@ -39,15 +41,17 @@ describe('plugins/babel', () => {
   it('should set babel-loader when config is add', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [
-        pluginBabel((config) => {
-          config.plugins?.push([
-            'babel-plugin-import',
-            {
-              libraryName: 'xxx-components',
-              libraryDirectory: 'es',
-              style: true,
-            },
-          ]);
+        pluginBabel({
+          babelLoaderOptions: (config) => {
+            config.plugins?.push([
+              'babel-plugin-import',
+              {
+                libraryName: 'xxx-components',
+                libraryDirectory: 'es',
+                style: true,
+              },
+            ]);
+          },
         }),
       ],
       rsbuildConfig: {},
@@ -61,9 +65,11 @@ describe('plugins/babel', () => {
   it('babel-loader addIncludes & addExcludes should works', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [
-        pluginBabel((_config, { addExcludes, addIncludes }) => {
-          addIncludes(/\/node_modules\/query-string\//);
-          addExcludes('src/example');
+        pluginBabel({
+          babelLoaderOptions: (_config, { addExcludes, addIncludes }) => {
+            addIncludes(/\/node_modules\/query-string\//);
+            addExcludes('src/example');
+          },
         }),
       ],
       rsbuildConfig: {},

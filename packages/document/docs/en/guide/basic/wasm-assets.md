@@ -39,7 +39,7 @@ console.log(wasmURL).pathname; // "/static/wasm/[hash].module.wasm"
 
 When a `.wasm` asset is imported, it will be output by Rsbuild to the `dist/static/wasm` directory by default.
 
-You can change the output directory of `.wasm` files via [output.distPath](/config/options/output#outputdistpath) config.
+You can change the output directory of `.wasm` files via [output.distPath](/config/output/dist-path) config.
 
 ```ts
 export default {
