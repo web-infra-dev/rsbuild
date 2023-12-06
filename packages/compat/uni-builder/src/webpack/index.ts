@@ -77,18 +77,21 @@ export async function parseConfig(
 export async function createWebpackBuilder(
   options: CreateWebpackBuilderOptions,
 ): Promise<RsbuildInstance> {
+  const { cwd = process.cwd(), target = 'web' } = options;
+
   const { rsbuildConfig, rsbuildPlugins } = await parseConfig(
     withDefaultConfig(options.config),
-    options.cwd,
+    cwd,
     options.frameworkConfigPath,
-    options.target,
+    target,
   );
 
   const { webpackProvider } = await import('@rsbuild/webpack');
   const rsbuild = await createRsbuild({
     rsbuildConfig,
     provider: webpackProvider,
-    target: options.target || 'web',
+    target,
+    cwd,
   });
 
   rsbuild.addPlugins([

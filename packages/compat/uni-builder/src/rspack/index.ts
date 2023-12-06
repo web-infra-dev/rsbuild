@@ -54,15 +54,18 @@ export async function parseConfig(
 export async function createRspackBuilder(
   options: CreateRspackBuilderOptions,
 ): Promise<RsbuildInstance<RsbuildProvider>> {
+  const { cwd = process.cwd(), target = 'web' } = options;
+
   const { rsbuildConfig, rsbuildPlugins } = await parseConfig(
     withDefaultConfig(options.config),
-    options.cwd,
+    cwd,
     options.frameworkConfigPath,
-    options.target,
+    target,
   );
   const rsbuild = await createRsbuild({
+    cwd,
     rsbuildConfig,
-    target: options.target || 'web',
+    target,
   });
 
   rsbuild.addPlugins(rsbuildPlugins);
