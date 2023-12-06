@@ -1483,6 +1483,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
           "format": "{"comments":false,"asciiOnly":true}",
           "include": undefined,
           "mangle": "{"keep_classnames":false,"keep_fnames":false}",
+          "module": undefined,
           "test": undefined,
         },
         "name": "SwcJsMinimizerRspackPlugin",
