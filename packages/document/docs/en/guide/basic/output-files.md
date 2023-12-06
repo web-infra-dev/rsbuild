@@ -146,18 +146,18 @@ dist
 └── [name].html
 ```
 
-## Not Written to Disk
+## Writing Outputs to Disk
 
-By default, Rsbuild will write the generated files to disk, so developers can view the file content or configure proxy rules for static assets.
+By default, Rsbuild does not write the output files to disk in the development environment. Instead, the files are stored in the memory of the dev server to reduce the overhead of file operations.
 
-In development, you can choose to keep the generated files in the Dev Server's memory to reduce the overhead of file operations.
+You can write the output files to disk, which is typically used for inspecting the contents of the build artifacts or configuring proxy rules for static assets.
 
-Just set the `dev.writeToDisk` config to `false`:
+Set the [dev.writeToDisk](/config/dev/write-to-disk) configuration option to `true` as follows:
 
 ```ts
 export default {
   dev: {
-    writeToDisk: false,
+    writeToDisk: true,
   },
 };
 ```

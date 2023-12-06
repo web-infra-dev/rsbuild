@@ -5,6 +5,7 @@ exports[`parseCommonConfig > dev.xxx 1`] = `
   "dev": {
     "hmr": false,
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "outputStructure": "nested",
@@ -40,6 +41,7 @@ exports[`parseCommonConfig > dev.xxx 2`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "outputStructure": "nested",
@@ -64,6 +66,7 @@ exports[`parseCommonConfig > html.faviconByEntries 1`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "favicon": [Function],
@@ -88,6 +91,7 @@ exports[`parseCommonConfig > html.faviconByEntries 2`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "favicon": [
@@ -115,6 +119,7 @@ exports[`parseCommonConfig > html.faviconByEntries 3`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "inject": [Function],
@@ -139,6 +144,7 @@ exports[`parseCommonConfig > html.faviconByEntries 4`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "inject": [
@@ -166,6 +172,7 @@ exports[`parseCommonConfig > html.metaByEntries 1`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "meta": [Function],
@@ -190,6 +197,7 @@ exports[`parseCommonConfig > html.metaByEntries 2`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "meta": [
@@ -221,6 +229,7 @@ exports[`parseCommonConfig > html.templateByEntries 1`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "outputStructure": "nested",
@@ -245,6 +254,7 @@ exports[`parseCommonConfig > html.templateByEntries 2`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "outputStructure": "nested",
@@ -272,6 +282,7 @@ exports[`parseCommonConfig > html.templateParametersByEntries 1`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "outputStructure": "nested",
@@ -296,6 +307,7 @@ exports[`parseCommonConfig > html.templateParametersByEntries 2`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "outputStructure": "nested",
@@ -325,6 +337,7 @@ exports[`parseCommonConfig > html.titleByEntries 1`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "outputStructure": "nested",
@@ -349,6 +362,7 @@ exports[`parseCommonConfig > html.titleByEntries 2`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "outputStructure": "nested",
@@ -376,6 +390,7 @@ exports[`parseCommonConfig > output.cssModuleLocalIdentName 1`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "outputStructure": "nested",
@@ -402,6 +417,7 @@ exports[`parseCommonConfig > output.disableCssModuleExtension 1`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "outputStructure": "nested",
@@ -429,6 +445,7 @@ exports[`parseCommonConfig > output.enableInlineScripts 1`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "outputStructure": "nested",
@@ -453,6 +470,7 @@ exports[`parseCommonConfig > output.enableInlineStyles 1`] = `
 {
   "dev": {
     "progressBar": true,
+    "writeToDisk": true,
   },
   "html": {
     "outputStructure": "nested",

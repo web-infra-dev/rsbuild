@@ -18,6 +18,9 @@ test('should restart dev server when .env file is changed', async () => {
   fse.writeFileSync(
     configFile,
     `export default {
+      dev: {
+        writeToDisk: true,
+      },
       output: {
         distPath: {
           root: 'dist',

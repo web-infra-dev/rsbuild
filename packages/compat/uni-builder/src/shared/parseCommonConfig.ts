@@ -238,7 +238,7 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
       };
 
   dev.client = tools.devServer?.client;
-  dev.writeToDisk = tools.devServer?.devMiddleware?.writeToDisk;
+  dev.writeToDisk = tools.devServer?.devMiddleware?.writeToDisk ?? true;
 
   if (tools.devServer?.hot === false) {
     dev.hmr = false;
