@@ -2,9 +2,16 @@ import { deepmerge } from '@rsbuild/shared';
 import { VueLoaderPlugin } from 'vue-loader';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { VueLoaderOptions } from 'vue-loader';
+import { applySplitChunksRule } from './splitChunks';
+
+export type SplitVueChunkOptions = {
+  vue?: boolean;
+  router?: boolean;
+};
 
 export type PluginVueOptions = {
   vueLoaderOptions?: VueLoaderOptions;
+  splitChunks?: SplitVueChunkOptions;
 };
 
 export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
@@ -46,6 +53,8 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
 
         chain.plugin(CHAIN_ID.PLUGIN.VUE_LOADER_PLUGIN).use(VueLoaderPlugin);
       });
+
+      applySplitChunksRule(api, options.splitChunks);
     },
   };
 }

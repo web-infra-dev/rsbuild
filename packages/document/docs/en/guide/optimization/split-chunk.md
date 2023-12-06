@@ -6,7 +6,7 @@ A variety of chunk splitting strategies are built into Rsbuild, which can meet t
 
 ## Splitting Strategies
 
-> The chunk splitting config of Rsbuild is in [performance.chunkSplit](/config/options/performance#performancechunksplit).
+> The chunk splitting config of Rsbuild is in [performance.chunkSplit](/config/performance/chunk-split).
 
 Rsbuild supports the following chunk splitting strategies:
 

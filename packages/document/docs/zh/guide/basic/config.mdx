@@ -8,13 +8,13 @@ Rsbuild 提供了丰富的配置项，并为每个配置项预设了一个通用
 
 Rsbuild 中的配置可以分为以下几类：
 
-- [Dev](/config/options/dev)：与本地开发有关的配置。
-- [Server](/config/options/server)：与 Rsbuild 服务器有关的配置，在本地开发和预览时都会生效。
-- [Html](/config/options/html)：与 HTML 有关的配置。
-- [Tools](/config/options/tools)：与底层工具有关的配置。
-- [Source](/config/options/source)：与源代码解析、编译方式相关的配置。
-- [Output](/config/options/output)：与构建产物有关的配置。
-- [Performance](/config/options/performance)：与编译性能、产物性能有关的配置。
+- Dev：与本地开发有关的配置。
+- Html：与 HTML 有关的配置。
+- Tools：与底层工具有关的配置。
+- Server：与 Rsbuild 服务器有关的配置，在本地开发和预览时都会生效。
+- Source：与源代码解析、编译方式相关的配置。
+- Output：与构建产物有关的配置。
+- Performance：与编译性能、产物性能有关的配置。
 
 你可以在 [配置](/config/) 页面找到所有配置项的详细说明。
 
@@ -31,7 +31,7 @@ Rsbuild 中的配置可以分为以下几类：
 
 我们推荐使用 `.ts` 格式的配置文件，并从 `@rsbuild/core` 中导入 `defineConfig` 工具函数, 它提供了友好的 TypeScript 类型推导和自动补全，可以帮助你避免配置中的错误。
 
-比如在 `rsbuild.config.ts` 中，你可以定义 Rsbuild 的 [source.alias](/config/options/source#sourcealias) 配置：
+比如在 `rsbuild.config.ts` 中，你可以定义 Rsbuild 的 [source.alias](/config/source/alias) 配置：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
