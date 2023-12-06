@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { dev, build } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-const cwd = join(__dirname, 'publicDir');
+const cwd = __dirname;
 
 test('should serve publicDir for dev server correctly', async ({ page }) => {
   const rsbuild = await dev({
