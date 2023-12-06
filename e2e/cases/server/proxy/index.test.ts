@@ -27,14 +27,15 @@ test('should apply basic proxy rules correctly', async ({ page }) => {
       },
       server: {
         proxy: {
-          '/main': `http://localhost:${rsbuild1.port}/`,
+          // https://stackoverflow.com/a/76727711/6219457
+          '/': `http://127.0.0.1:${rsbuild1.port}/`,
         },
       },
     },
   });
 
-  await page.goto(`http://localhost:${rsbuild2.port}/main/`);
-  expect(await page.innerHTML('body')).toContain('<div id="root">1<div>');
+  await page.goto(`http://localhost:${rsbuild2.port}/main`);
+  expect(await page.innerHTML('body')).toContain('<div id="root">1</div>');
 
   await rsbuild1.server.close();
   await rsbuild2.server.close();
