@@ -1,4 +1,3 @@
-import path from 'path';
 import { build } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { cases, shareTest, copyPkgToNodeModules, findEntry } from './helper';

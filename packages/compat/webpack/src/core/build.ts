@@ -1,6 +1,11 @@
 import { createCompiler } from './createCompiler';
 import { initConfigs, InitConfigsOptions } from './initConfigs';
-import { logger, type Stats, type BuildOptions } from '@rsbuild/shared';
+import {
+  logger,
+  type Stats,
+  type BuildOptions,
+  type RspackConfig,
+} from '@rsbuild/shared';
 import type {
   MultiStats,
   Compiler,
@@ -66,7 +71,7 @@ export const build = async (
   }
 
   await context.hooks.onBeforeBuildHook.call({
-    bundlerConfigs,
+    bundlerConfigs: bundlerConfigs as RspackConfig[],
   });
 
   if (watch) {

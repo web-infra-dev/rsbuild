@@ -1,4 +1,3 @@
-import path from 'path';
 import { build } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { pluginSwc } from '@rsbuild/plugin-swc';

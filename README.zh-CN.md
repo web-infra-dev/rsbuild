@@ -60,15 +60,21 @@ Rsbuild 具备以下特性：
 
 ![Rspack Ecosystem](https://github.com/web-infra-dev/rsbuild/assets/7237365/1ec93ad6-b8b1-475b-963f-cba1e7d79dec)
 
+## 📍 路线图
+
+- **2023 年第 4 季度**：发布若干个 Rsbuild 0.x 版本（基于 Rspack 0.x 版本）。
+- **2024 年第 1 季度**：发布 Rsbuild 1.0 测试版本（基于 Rspack 1.0 测试版本）。
+- **2024 年第 2 季度**：发布 Rsbuild 1.0 稳定版本（基于 Rspack 1.0 稳定版本）。
+
 ## 📚 快速上手
 
 你可以参考 [快速上手](https://rsbuild.dev/zh/guide/start/quick-start) 来开始体验 Rsbuild。
 
 ## 🦀 生态
 
-- [Rspack](https://github.com/web-infra-dev/rspack): Rsbuild 的底层打包工具。
-- [Rspress](https://github.com/web-infra-dev/rspress): 基于 Rsbuild 的静态站点生成器。
-- [Modern.js](https://github.com/web-infra-dev/modern.js): 基于 Rsbuild 的渐进式 React 框架。
+- [Rspack](https://github.com/web-infra-dev/rspack)：Rsbuild 的底层打包工具。
+- [Rspress](https://github.com/web-infra-dev/rspress)：基于 Rsbuild 的静态站点生成器。
+- [Modern.js](https://github.com/web-infra-dev/modern.js)：基于 Rsbuild 的渐进式 React 框架。
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rspack 和 Rsbuild 相关的精彩内容列表。
 
 ## 🤝 参与贡献
@@ -83,11 +89,15 @@ Rsbuild 具备以下特性：
 
 你也可以加入 [飞书群](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=3c3vca77-bfc0-4ef5-b62b-9c5c9c92f1b4) 与大家一起交流。
 
+## 🌟 质量
+
+Rsbuild 通过 [Web Infra QoS](https://web-infra-dev.github.io/web-infra-QoS/index?product=rsbuild&metrics=bundle-size) 来观测核心指标的变化情况，比如 bundle size、compile speed 和 install size。
+
 ## 🙌 行为准则
 
 本仓库采纳了字节跳动的开源项目行为准则。请点击 [行为准则](./CODE_OF_CONDUCT.md) 查看更多的信息。
 
-## 🤗 致谢
+## 🙏 致谢
 
 Rsbuild 的一些实现参考了社区中杰出的项目，对他们表示感谢：
 

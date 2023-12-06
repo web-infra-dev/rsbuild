@@ -3,11 +3,16 @@ import assert from 'assert';
 import { join } from 'path';
 import { fse } from '@rsbuild/shared';
 import { globContentJSON } from '@scripts/helper';
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 import type {
+  RsbuildConfig,
+  RsbuildPlugin,
   CreateRsbuildOptions,
-  RsbuildConfig as RspackRsbuildConfig,
 } from '@rsbuild/core';
-import type { RsbuildConfig as WebpackRsbuildConfig } from '@rsbuild/webpack';
+
+// TODO should not depend on uni-builder plugins
+import { pluginBabel } from '../../packages/compat/uni-builder/src/webpack/plugins/babel';
+import { pluginReact } from '../../packages/compat/uni-builder/src/webpack/plugins/react';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
   const baseUrl = new URL(`http://localhost:${port}`);
@@ -22,23 +27,54 @@ const noop = async () => {};
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions,
-  rsbuildConfig: WebpackRsbuildConfig | RspackRsbuildConfig = {},
+  rsbuildConfig: RsbuildConfig = {},
+  plugins: RsbuildPlugin[] = [],
 ) => {
   const { createRsbuild } = await import('@rsbuild/core');
 
   if (process.env.PROVIDE_TYPE === 'rspack') {
-    return createRsbuild({
+    const rsbuild = await createRsbuild({
       ...rsbuildOptions,
       rsbuildConfig,
     });
+
+    if (plugins) {
+      rsbuild.addPlugins(plugins);
+    }
+
+    return rsbuild;
   }
 
   const { webpackProvider } = await import('@rsbuild/webpack');
-  return createRsbuild({
+  const rsbuild = await createRsbuild({
     ...rsbuildOptions,
-    rsbuildConfig: rsbuildConfig as WebpackRsbuildConfig,
+    rsbuildConfig,
     provider: webpackProvider,
   });
+
+  if (plugins) {
+    rsbuild.addPlugins(plugins);
+  }
+
+  const babel = pluginBabel();
+  if (!rsbuild.isPluginExists(babel.name)) {
+    // @rsbuild/webpack has no built-in transformer
+    rsbuild.addPlugins([babel]);
+  }
+
+  const react = pluginReact();
+  if (!rsbuild.isPluginExists(react.name)) {
+    // @rsbuild/webpack has no built-in transformer
+    rsbuild.addPlugins([react]);
+  }
+
+  const cssMinimizer = pluginCssMinimizer();
+  if (!rsbuild.isPluginExists(cssMinimizer.name)) {
+    // @rsbuild/webpack has no built-in CSS minimizer
+    rsbuild.addPlugins([cssMinimizer]);
+  }
+
+  return rsbuild;
 };
 
 const portMap = new Map();
@@ -57,11 +93,7 @@ export function getRandomPort(
   }
 }
 
-const updateConfigForTest = <BundlerType>(
-  config: BundlerType extends 'webpack'
-    ? WebpackRsbuildConfig
-    : RspackRsbuildConfig,
-) => {
+const updateConfigForTest = (config: RsbuildConfig) => {
   // make devPort random to avoid port conflict
   config.server = {
     ...(config.server || {}),
@@ -95,52 +127,40 @@ const updateConfigForTest = <BundlerType>(
   }
 };
 
-export async function dev<BundlerType = 'rspack'>({
+export async function dev({
   plugins,
   rsbuildConfig = {},
   ...options
 }: CreateRsbuildOptions & {
-  plugins?: any[];
-  rsbuildConfig?: BundlerType extends 'webpack'
-    ? WebpackRsbuildConfig
-    : RspackRsbuildConfig;
+  plugins?: RsbuildPlugin[];
+  rsbuildConfig?: RsbuildConfig;
 }) {
   process.env.NODE_ENV = 'development';
 
   updateConfigForTest(rsbuildConfig);
 
-  const rsbuild = await createRsbuild(options, rsbuildConfig);
-
-  if (plugins) {
-    rsbuild.addPlugins(plugins);
-  }
+  const rsbuild = await createRsbuild(options, rsbuildConfig, plugins);
 
   return rsbuild.startDevServer({
     printURLs: false,
   });
 }
 
-export async function build<BundlerType = 'rspack'>({
+export async function build({
   plugins,
   runServer = false,
   rsbuildConfig = {},
   ...options
 }: CreateRsbuildOptions & {
-  plugins?: any[];
+  plugins?: RsbuildPlugin[];
   runServer?: boolean;
-  rsbuildConfig?: BundlerType extends 'webpack'
-    ? WebpackRsbuildConfig
-    : RspackRsbuildConfig;
+  rsbuildConfig?: RsbuildConfig;
 }) {
   process.env.NODE_ENV = 'production';
 
   updateConfigForTest(rsbuildConfig);
 
-  const rsbuild = await createRsbuild(options, rsbuildConfig);
-
-  if (plugins) {
-    rsbuild.addPlugins(plugins);
-  }
+  const rsbuild = await createRsbuild(options, rsbuildConfig, plugins);
 
   await rsbuild.build();
 

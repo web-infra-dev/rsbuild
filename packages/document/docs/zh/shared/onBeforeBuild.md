@@ -4,7 +4,7 @@
 - 如果当前打包工具为 webpack，则获取到的是 webpack 配置数组。
 - 配置数组中可能包含一份或多份配置，这取决于 Rsbuild 当前 target 配置的值。
 
-- **类型**
+- **类型：**
 
 ```ts
 function OnBeforeBuild(

@@ -1,19 +1,24 @@
-import { RsbuildInstance, createRsbuild } from '@rsbuild/core';
-import type {
-  RsbuildConfig,
-  RsbuildPlugin,
-  WebpackProvider,
-} from '@rsbuild/webpack';
+import {
+  createRsbuild,
+  type RsbuildConfig,
+  type RsbuildPlugin,
+  type RsbuildInstance,
+} from '@rsbuild/core';
+import type { RsbuildTarget } from '@rsbuild/shared';
 import type { UniBuilderWebpackConfig } from '../types';
 import type { CreateWebpackBuilderOptions } from '../types';
 import { parseCommonConfig } from '../shared/parseCommonConfig';
 import { pluginModuleScopes } from './plugins/moduleScopes';
 import { pluginStyledComponents } from './plugins/styledComponents';
+import { pluginBabel } from './plugins/babel';
+import { pluginReact } from './plugins/react';
+import { withDefaultConfig } from './defaults';
 
 export async function parseConfig(
   uniBuilderConfig: UniBuilderWebpackConfig,
   cwd: string,
   frameworkConfigPath?: string,
+  target?: RsbuildTarget | RsbuildTarget[],
 ): Promise<{
   rsbuildConfig: RsbuildConfig;
   rsbuildPlugins: RsbuildPlugin[];
@@ -22,7 +27,25 @@ export async function parseConfig(
     uniBuilderConfig,
     cwd,
     frameworkConfigPath,
+    target,
   );
+
+  rsbuildPlugins.push(
+    pluginBabel({
+      babelLoaderOptions: uniBuilderConfig.tools?.babel,
+    }),
+  );
+  rsbuildPlugins.push(pluginReact());
+
+  if (uniBuilderConfig.tools?.tsLoader) {
+    const { pluginTsLoader } = await import('./plugins/tsLoader');
+    rsbuildPlugins.push(
+      pluginTsLoader(
+        uniBuilderConfig.tools.tsLoader,
+        uniBuilderConfig.tools.babel,
+      ),
+    );
+  }
 
   if (uniBuilderConfig.output?.enableAssetManifest) {
     const { pluginManifest } = await import('./plugins/manifest');
@@ -41,11 +64,6 @@ export async function parseConfig(
     );
   }
 
-  if (uniBuilderConfig.tools?.tsLoader) {
-    const { pluginTsLoader } = await import('./plugins/tsLoader');
-    rsbuildPlugins.push(pluginTsLoader(uniBuilderConfig.tools.tsLoader));
-  }
-
   rsbuildPlugins.push(
     pluginStyledComponents(uniBuilderConfig.tools?.styledComponents),
   );
@@ -58,16 +76,22 @@ export async function parseConfig(
 
 export async function createWebpackBuilder(
   options: CreateWebpackBuilderOptions,
-): Promise<RsbuildInstance<WebpackProvider>> {
+): Promise<RsbuildInstance> {
+  const { cwd = process.cwd(), target = 'web' } = options;
+
   const { rsbuildConfig, rsbuildPlugins } = await parseConfig(
-    options.config,
-    options.cwd,
+    withDefaultConfig(options.config),
+    cwd,
     options.frameworkConfigPath,
+    target,
   );
+
   const { webpackProvider } = await import('@rsbuild/webpack');
   const rsbuild = await createRsbuild({
     rsbuildConfig,
     provider: webpackProvider,
+    target,
+    cwd,
   });
 
   rsbuild.addPlugins([

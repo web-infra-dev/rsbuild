@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/test-helper",
-  "version": "0.1.4",
+  "version": "0.1.9",
   "description": "The vitest helpers of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -9,6 +9,7 @@
     "directory": "packages/test-helper"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.js",
@@ -27,14 +28,12 @@
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/shared": "workspace:*",
-    "@rspack/core": "0.4.1",
+    "@rspack/core": "0.4.2",
     "@types/lodash": "^4.14.200",
     "@types/node": "^16",
     "lodash": "^4.17.21",
-    "memfs": "3.4.10",
     "typescript": "^5.3.0",
-    "upath": "2.0.1",
-    "webpack": "^5.89.0"
+    "upath": "2.0.1"
   },
   "publishConfig": {
     "access": "public",

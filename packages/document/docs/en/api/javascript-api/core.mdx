@@ -6,6 +6,14 @@ This section describes some of the core methods provided by Rsbuild.
 
 Create a Rsbuild instance object.
 
+- **Type:**
+
+```ts
+function createRsbuild(options: CreateRsbuildOptions): Promise<RsbuildInstance>;
+```
+
+- **Example:**
+
 ```ts
 import { createRsbuild } from '@rsbuild/core';
 
@@ -38,19 +46,56 @@ Description:
 - `provider`: Used to switch the underlying bundler.
 - `rsbuildConfig`: Rsbuild configuration object. Rsbuild provides a rich set of configuration options that allow you to customize the build behavior flexibly. You can find all available configuration options in the [Configuration](/config/) section.
 
+## loadEnv
+
+Load the `.env` file and return all environment variables starting with the specified prefixes.
+
+- **Type:**
+
+```ts
+function loadEnv(params: {
+  // Default is process.cwd()
+  dir?: string;
+  // Default is ['PUBLIC_']
+  prefixes?: string[];
+}): Promise<{
+  // All environment variables in the .env file
+  parsed: Record<string, string>;
+  // Environment variables starting with the specified prefixes
+  publicVars: Record<string, string>;
+}>;
+```
+
+- **Example:**
+
+```ts
+const { parsed, publicVars } = await loadEnv();
+
+mergeRsbuildConfig(
+  {
+    source: {
+      define: publicVars,
+    },
+  },
+  userConfig,
+);
+```
+
+This method will also load files such as `.env.local` and `.env.[mode]`, see [Environment Variables](/guide/advanced/env-vars) for details.
+
 ## mergeRsbuildConfig
 
 Used to merge multiple Rsbuild configuration objects.
 
 The `mergeRsbuildConfig` function takes multiple configuration objects as parameters. It deep merges each configuration object, automatically combining multiple function values into an array of sequentially executed functions, and returns a merged configuration object.
 
-- **Type**
+- **Type:**
 
 ```ts
 function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
 ```
 
-- **Example**
+- **Example:**
 
 ```ts
 import { mergeRsbuildConfig } from '@rsbuild/core';
@@ -77,7 +122,7 @@ console.log(mergedConfig); // { dev: { https: true } }
 
 Used to output log information in a unified format, based on [rslog](https://github.com/rspack-contrib/rslog).
 
-- **Example**
+- **Example:**
 
 ```ts
 import { logger } from '@rsbuild/core';

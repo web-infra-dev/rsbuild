@@ -8,7 +8,7 @@
 
 你可以通过 `bundlerConfigs` 参数获取到底层打包工具的最终配置对象。
 
-- **类型**
+- **类型：**
 
 ```ts
 function OnBeforeCreateCompiler(

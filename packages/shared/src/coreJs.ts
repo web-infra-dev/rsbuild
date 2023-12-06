@@ -1,12 +1,6 @@
 import type { WebpackChain, NormalizedConfig, BundlerChain } from './types';
 import { createVirtualModule } from './utils';
 
-const enableCoreJsEntry = (
-  config: NormalizedConfig,
-  isServer: boolean,
-  isServiceWorker: boolean,
-) => config.output.polyfill === 'entry' && !isServer && !isServiceWorker;
-
 /** Add core-js-entry to every entry. */
 export function addCoreJsEntry({
   chain,
@@ -19,7 +13,10 @@ export function addCoreJsEntry({
   isServer: boolean;
   isServiceWorker: boolean;
 }) {
-  if (enableCoreJsEntry(config, isServer, isServiceWorker)) {
+  const isEnable =
+    config.output.polyfill === 'entry' && !isServer && !isServiceWorker;
+
+  if (isEnable) {
     const entryPoints = Object.keys(chain.entryPoints.entries() || {});
     const coreJsEntry = createVirtualModule('import "core-js";');
 

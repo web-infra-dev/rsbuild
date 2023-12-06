@@ -6,13 +6,15 @@ import {
   ServerConfig,
   logger,
   color,
+  RsbuildTarget,
+  OverrideBrowserslist,
+  getBrowserslist,
 } from '@rsbuild/shared';
 import {
   mergeRsbuildConfig,
   type RsbuildPlugin,
-  type RsbuildConfig as RsbuildRspackConfig,
+  type RsbuildConfig,
 } from '@rsbuild/core';
-import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
 import type {
   UniBuilderRspackConfig,
   UniBuilderWebpackConfig,
@@ -32,6 +34,8 @@ import { pluginExtensionPrefix } from './plugins/extensionPrefix';
 import { pluginSplitChunks } from './plugins/splitChunk';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+import { pluginPostcssLegacy } from './plugins/postcssLegacy';
 
 const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
 
@@ -84,6 +88,42 @@ function removeUndefinedKey(obj: { [key: string]: any }) {
 
   return obj;
 }
+const DEFAULT_WEB_BROWSERSLIST = ['> 0.01%', 'not dead', 'not op_mini all'];
+
+const DEFAULT_BROWSERSLIST: Record<RsbuildTarget, string[]> = {
+  web: DEFAULT_WEB_BROWSERSLIST,
+  node: ['node >= 14'],
+  'web-worker': DEFAULT_WEB_BROWSERSLIST,
+  'service-worker': DEFAULT_WEB_BROWSERSLIST,
+};
+
+async function getBrowserslistWithDefault(
+  path: string,
+  config: { output?: { overrideBrowserslist?: OverrideBrowserslist } },
+  target: RsbuildTarget,
+): Promise<string[]> {
+  const { overrideBrowserslist: overrides = {} } = config?.output || {};
+
+  if (target === 'web' || target === 'web-worker') {
+    if (Array.isArray(overrides)) {
+      return overrides;
+    }
+    if (overrides[target]) {
+      return overrides[target]!;
+    }
+
+    const browserslistrc = await getBrowserslist(path);
+    if (browserslistrc) {
+      return browserslistrc;
+    }
+  }
+
+  if (!Array.isArray(overrides) && overrides[target]) {
+    return overrides[target]!;
+  }
+
+  return DEFAULT_BROWSERSLIST[target];
+}
 
 export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   uniBuilderConfig: B extends 'rspack'
@@ -91,11 +131,10 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     : UniBuilderWebpackConfig,
   cwd: string,
   frameworkConfigPath?: string,
+  target: RsbuildTarget | RsbuildTarget[] = 'web',
 ): Promise<{
-  rsbuildConfig: B extends 'rspack'
-    ? RsbuildRspackConfig
-    : RsbuildWebpackConfig;
-  rsbuildPlugins: RsbuildPlugin<any>[];
+  rsbuildConfig: RsbuildConfig;
+  rsbuildPlugins: RsbuildPlugin[];
 }> {
   const rsbuildConfig = deepmerge({}, uniBuilderConfig);
   const { dev = {}, html = {}, output = {}, tools = {} } = rsbuildConfig;
@@ -123,13 +162,29 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     delete output.enableInlineScripts;
   }
 
+  const targets = typeof target === 'string' ? [target] : target;
+  let overrideBrowserslist: OverrideBrowserslist = {};
+
+  for (const target of targets) {
+    // Incompatible with the scenario where target contains both 'web' and 'modern-web'
+    overrideBrowserslist[target] = await getBrowserslistWithDefault(
+      cwd,
+      uniBuilderConfig,
+      target,
+    );
+  }
+  output.overrideBrowserslist = overrideBrowserslist;
+
   if (uniBuilderConfig.output?.enableInlineStyles) {
     output.inlineStyles = uniBuilderConfig.output?.enableInlineStyles;
     delete output.enableInlineStyles;
   }
 
-  const extraConfig: RsbuildRspackConfig | RsbuildWebpackConfig = {};
+  const extraConfig: RsbuildConfig = {};
   extraConfig.html ||= {};
+
+  extraConfig.html.outputStructure = html.disableHtmlFolder ? 'flat' : 'nested';
+  delete html.disableHtmlFolder;
 
   if (html.metaByEntries) {
     extraConfig.html.meta = ({ entryName }) => html.metaByEntries![entryName];
@@ -166,7 +221,9 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   }
 
   const server: ServerConfig = isProd()
-    ? {}
+    ? {
+        publicDir: false,
+      }
     : {
         https:
           tools.devServer?.https || dev.https
@@ -178,10 +235,11 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
         headers: tools.devServer?.headers,
         historyApiFallback: tools.devServer?.historyApiFallback,
         proxy: tools.devServer?.proxy,
+        publicDir: false,
       };
 
   dev.client = tools.devServer?.client;
-  dev.writeToDisk = tools.devServer?.devMiddleware?.writeToDisk;
+  dev.writeToDisk = tools.devServer?.devMiddleware?.writeToDisk ?? true;
 
   if (tools.devServer?.hot === false) {
     dev.hmr = false;
@@ -278,6 +336,12 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     rsbuildPlugins.push(pluginRuntimeChunk());
   }
 
+  if (uniBuilderConfig.experiments?.sourceBuild) {
+    const { pluginSourceBuild } = await import('@rsbuild/plugin-source-build');
+
+    rsbuildPlugins.push(pluginSourceBuild());
+  }
+
   rsbuildPlugins.push(pluginReact());
 
   const pugOptions = uniBuilderConfig.tools?.pug;
@@ -301,6 +365,15 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   if (frameworkConfigPath) {
     rsbuildPlugins.push(pluginFrameworkConfig(frameworkConfigPath));
   }
+
+  rsbuildPlugins.push(
+    pluginCssMinimizer({
+      pluginOptions: uniBuilderConfig.tools?.minifyCss,
+    }),
+  );
+
+  targets.includes('web') &&
+    rsbuildPlugins.push(pluginPostcssLegacy(overrideBrowserslist['web']!));
 
   return {
     rsbuildConfig: mergeRsbuildConfig(rsbuildConfig, extraConfig),

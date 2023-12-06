@@ -38,7 +38,7 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
           ],
           "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-dynamic-import-node/lib/index.js",
           [
-            "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
+            "<ROOT>/packages/compat/uni-builder/compiled/babel-plugin-lodash/index.js",
             {},
           ],
           [
@@ -135,7 +135,7 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
           ],
           "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
           [
-            "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
+            "<ROOT>/packages/compat/uni-builder/compiled/babel-plugin-lodash/index.js",
             {},
           ],
           [
@@ -247,7 +247,7 @@ exports[`plugins/styled-components > should works in webpack babel mode 1`] = `
           ],
           "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
           [
-            "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
+            "<ROOT>/packages/compat/uni-builder/compiled/babel-plugin-lodash/index.js",
             {},
           ],
           [

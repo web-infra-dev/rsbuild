@@ -52,7 +52,7 @@ function formatMessage(stats: webpack.StatsError | string) {
 
   message = lines.join('\n');
 
-  // Smoosh syntax errors (commonly found in CSS)
+  // Smooth syntax errors (commonly found in CSS)
   message = message.replace(
     /SyntaxError\s+\((\d+):(\d+)\)\s*(.+?)\n/g,
     `${friendlySyntaxErrorLabel} $3 ($1:$2)\n`,
@@ -85,7 +85,7 @@ function formatMessage(stats: webpack.StatsError | string) {
   return message.trim();
 }
 
-function formatStatsMessages(
+export function formatStatsMessages(
   json?: Pick<StatsCompilation, 'errors' | 'warnings'>,
 ): {
   errors: string[];
@@ -112,5 +112,3 @@ function formatStatsMessages(
 
   return result;
 }
-
-export { formatStatsMessages };

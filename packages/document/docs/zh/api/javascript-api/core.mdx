@@ -6,6 +6,14 @@
 
 创建一个 Rsbuild 实例对象。
 
+- **类型：**
+
+```ts
+function createRsbuild(options: CreateRsbuildOptions): Promise<RsbuildInstance>;
+```
+
+- **示例：**
+
 ```ts
 import { createRsbuild } from '@rsbuild/core';
 
@@ -33,10 +41,47 @@ type CreateRsbuildOptions = {
 
 各个选项的作用：
 
-- `cwd`: 当前执行构建的根路径，默认值为 `process.cwd()`
-- `target`: 构建产物类型，默认值为 `['web']`，详见 [构建产物类型](/api/start/build-target) 章节。
-- `provider`: 用于切换底层的打包工具。
-- `rsbuildConfig`：Rsbuild 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制，你可以在 [配置](/config/) 中找到所有可用的配置项。
+- `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
+- `target`：构建产物类型，默认值为 `['web']`，详见[构建产物类型](/api/start/build-target)章节。
+- `provider`：用于切换底层的打包工具。
+- `rsbuildConfig`：Rsbuild 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制，你可以在[配置](/config/)中找到所有可用的配置项。
+
+## loadEnv
+
+加载 `.env` 文件，并返回所有以 prefixes 开头的环境变量。
+
+- **类型：**
+
+```ts
+function loadEnv(params: {
+  // 默认为 process.cwd()
+  dir?: string;
+  // 默认为 ['PUBLIC_']
+  prefixes?: string[];
+}): Promise<{
+  // .env 文件包含的所有环境变量
+  parsed: Record<string, string>;
+  // 以 prefixes 开头的环境变量
+  publicVars: Record<string, string>;
+}>;
+```
+
+- **示例：**
+
+```ts
+const { parsed, publicVars } = await loadEnv();
+
+mergeRsbuildConfig(
+  {
+    source: {
+      define: publicVars,
+    },
+  },
+  userConfig,
+);
+```
+
+该方法也会加载 `.env.local` 和 `.env.[mode]` 等文件，详见 [环境变量](/guide/advanced/env-vars)。
 
 ## mergeRsbuildConfig
 
@@ -44,13 +89,13 @@ type CreateRsbuildOptions = {
 
 `mergeRsbuildConfig` 函数接收多个配置对象作为参数，它会将每一个配置对象进行深层合并，自动将多个函数项合并为顺序执行的函数数组，返回一个合并后的配置对象。
 
-- **类型**
+- **类型：**
 
 ```ts
 function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
 ```
 
-- **Example**
+- **示例：**
 
 ```ts
 import { mergeRsbuildConfig } from '@rsbuild/core';
@@ -77,7 +122,7 @@ console.log(mergedConfig); // { dev: { https: true } }
 
 用于输出格式统一的日志信息，基于 [rslog](https://github.com/rspack-contrib/rslog)。
 
-- **Example**
+- **示例：**
 
 ```ts
 import { logger } from '@rsbuild/core';

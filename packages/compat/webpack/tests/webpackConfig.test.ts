@@ -1,11 +1,9 @@
-import { pluginBasic } from '@/plugins/basic';
 import { createStubRsbuild } from './helper';
-import { pluginBabel } from '@/plugins/babel';
 
 describe('webpackConfig', () => {
   it('should allow tools.webpack to return config', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpack(config) {
@@ -24,7 +22,7 @@ describe('webpackConfig', () => {
 
   it('should allow tools.webpack to modify config object', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpack(config) {
@@ -40,7 +38,7 @@ describe('webpackConfig', () => {
 
   it('should allow tools.webpack to be an object', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpack: {
@@ -56,7 +54,7 @@ describe('webpackConfig', () => {
 
   it('should allow tools.webpack to be an array', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpack: [
@@ -77,7 +75,7 @@ describe('webpackConfig', () => {
 
   it('should provide mergeConfig util in tools.webpack function', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpack: (config, { mergeConfig }) => {
@@ -95,7 +93,7 @@ describe('webpackConfig', () => {
 
   it('should allow to use tools.webpackChain to modify config', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpackChain(chain) {
@@ -111,7 +109,7 @@ describe('webpackConfig', () => {
 
   it('should allow tools.webpackChain to be an array', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpackChain: [
@@ -200,65 +198,5 @@ describe('webpackConfig', () => {
 
     const config = await rsbuild.unwrapWebpackConfig();
     expect(config.module?.rules).toEqual([newRule]);
-  });
-
-  it('should set proper pluginImport option in Babel', async () => {
-    // camelToDashComponentName
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel()],
-      rsbuildConfig: {
-        source: {
-          transformImport: [
-            {
-              libraryName: 'foo',
-              camelToDashComponentName: true,
-            },
-          ],
-        },
-      },
-    });
-    const config = await rsbuild.unwrapWebpackConfig();
-
-    const babelRules = config.module!.rules?.filter((item) => {
-      // @ts-expect-error item has use
-      return item?.use?.[0].loader.includes('babel-loader');
-    });
-
-    expect(babelRules).toMatchSnapshot();
-  });
-
-  it('should not set default pluginImport for Babel', async () => {
-    // camelToDashComponentName
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel()],
-    });
-    const config = await rsbuild.unwrapWebpackConfig();
-
-    const babelRules = config.module!.rules?.filter((item) => {
-      // @ts-expect-error item has use
-      return item?.use?.[0].loader.includes('babel-loader');
-    });
-
-    expect(babelRules).toMatchSnapshot();
-  });
-
-  it('should not have any pluginImport in Babel', async () => {
-    // camelToDashComponentName
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel()],
-      rsbuildConfig: {
-        source: {
-          transformImport: false,
-        },
-      },
-    });
-    const config = await rsbuild.unwrapWebpackConfig();
-
-    const babelRules = config.module!.rules?.filter((item) => {
-      // @ts-expect-error item has use
-      return item?.use?.[0].loader.includes('babel-loader');
-    });
-
-    expect(babelRules).toMatchSnapshot();
   });
 });

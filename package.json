@@ -17,9 +17,8 @@
     "e2e": "cd ./e2e && pnpm test",
     "e2e:rspack": "cd ./e2e && pnpm test:rspack",
     "e2e:webpack": "cd ./e2e && pnpm test:webpack",
-    "e2e:doctor": "cd ./e2e && cross-env NODE_OPTIONS=--max-old-space-size=8192 pnpm test:doctor",
     "gen-release-note": "modern gen-release-note",
-    "lint": "echo todo",
+    "lint": "ls-lint",
     "new": "modern new",
     "prepare": "pnpm run build && husky install",
     "release": "modern release",
@@ -39,6 +38,7 @@
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
+    "@ls-lint/ls-lint": "^2.2.2",
     "@modern-js/module-tools": "^2.41.0",
     "@modern-js/monorepo-tools": "^2.41.0",
     "@rsbuild/test-helper": "workspace:*",
@@ -46,12 +46,11 @@
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "husky": "^8.0.3",
-    "is-ci": "^3.0.1",
     "nano-staged": "^0.8.0",
     "nx": "^17.0.1",
     "prettier": "^3.0.3",
     "vite-tsconfig-paths": "4.2.1",
-    "vitest": "1.0.0-beta.1"
+    "vitest": "1.0.1"
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {

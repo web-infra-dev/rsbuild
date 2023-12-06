@@ -25,7 +25,6 @@ import {
 } from '@rsbuild/shared';
 import DevMiddleware from './dev-middleware';
 import connect from '@rsbuild/shared/connect';
-import { createProxyMiddleware } from './proxy';
 import {
   faviconFallbackMiddleware,
   getHtmlFallbackMiddleware,
@@ -129,6 +128,7 @@ export class RsbuildDevServer {
 
     // dev proxy handler, each proxy has own handler
     if (dev.proxy) {
+      const { createProxyMiddleware } = await import('./proxy');
       const { middlewares } = createProxyMiddleware(dev.proxy, app);
       middlewares.forEach((middleware) => {
         this.middlewares.use(middleware);
@@ -139,6 +139,19 @@ export class RsbuildDevServer {
     devMiddleware.init(app);
 
     devMiddleware.middleware && this.middlewares.use(devMiddleware.middleware);
+
+    if (dev.publicDir && dev.publicDir.name) {
+      const { default: sirv } = await import('../../compiled/sirv');
+      const { name } = dev.publicDir;
+      const publicDir = isAbsolute(name) ? name : join(this.pwd, name);
+
+      const assetMiddleware = sirv(publicDir, {
+        etag: true,
+        dev: true,
+      });
+
+      this.middlewares.use(assetMiddleware);
+    }
 
     const { distPath } = this.output;
 
@@ -241,6 +254,7 @@ export async function startDevServer<
   const routes = formatRoutes(
     options.context.entry,
     rsbuildConfig.output?.distPath?.html,
+    rsbuildConfig.html?.outputStructure,
   );
 
   debug('create dev server');

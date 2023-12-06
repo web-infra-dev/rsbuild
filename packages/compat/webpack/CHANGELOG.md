@@ -1,5 +1,54 @@
 # @rsbuild/webpack
 
+## 0.1.9
+
+### Patch Changes
+
+- Updated dependencies [74b0bab9]
+  - @rsbuild/core@0.1.9
+  - @rsbuild/shared@0.1.9
+
+## 0.1.8
+
+### Patch Changes
+
+- @rsbuild/core@0.1.8
+- @rsbuild/shared@0.1.8
+
+## 0.1.7
+
+### Patch Changes
+
+- @rsbuild/core@0.1.7
+- @rsbuild/shared@0.1.7
+
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies [9613e0b9]
+  - @rsbuild/core@0.1.6
+  - @rsbuild/plugin-babel@0.1.6
+  - @rsbuild/plugin-react@0.1.6
+  - @rsbuild/babel-preset@0.1.6
+  - @rsbuild/shared@0.1.6
+
+## 0.1.5
+
+### Patch Changes
+
+- ca87f86f: feat(deps): bump Rspack to v0.4.1
+- Updated dependencies [ca87f86f]
+- Updated dependencies [706468b]
+- Updated dependencies [49d9457]
+- Updated dependencies [c3bbe1f]
+  - @rsbuild/plugin-react@0.1.5
+  - @rsbuild/shared@0.1.5
+  - @rsbuild/core@0.1.5
+  - @rsbuild/plugin-babel@0.1.5
+  - @rsbuild/babel-preset@0.1.5
+  - @rsbuild/plugin-css-minimizer@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

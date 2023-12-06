@@ -5,10 +5,10 @@ import {
   type InspectConfigOptions,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
-import { initRsbuildConfig } from '@rsbuild/core/rspack-provider';
+import { initRsbuildConfig, type Context } from '@rsbuild/core/provider';
 import { inspectConfig } from './inspectConfig';
 import { generateWebpackConfig } from './webpackConfig';
-import type { Context, WebpackConfig } from '../types';
+import type { WebpackConfig } from '../types';
 
 export type InitConfigsOptions = {
   context: Context;
@@ -24,7 +24,6 @@ export async function initConfigs({
   webpackConfigs: WebpackConfig[];
 }> {
   await initRsbuildConfig({
-    // @ts-expect-error context type mismatch
     context,
     pluginStore,
   });

@@ -23,13 +23,15 @@ export const baseBuildConfig = {
 
 export default defineConfig(baseBuildConfig);
 
+const externals = ['@rsbuild/core', /[\\/]compiled[\\/]/];
+
 export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
   {
     format: 'cjs',
     target: BUILD_TARGET,
     define,
     autoExtension: true,
-    externals: ['@rsbuild/core'],
+    externals,
     dts: {
       respectExternal: false,
     },
@@ -41,7 +43,7 @@ export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
     define,
     autoExtension: true,
     shims: true,
-    externals: ['@rsbuild/core'],
+    externals,
     esbuildOptions: (option) => {
       let { inject } = option;
       const filepath = path.join(__dirname, 'requireShims.js');

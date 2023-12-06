@@ -12,18 +12,6 @@
     },
     {
       "path": "../../shared"
-    },
-    {
-      "path": "../../plugin-babel"
-    },
-    {
-      "path": "../../plugin-react"
-    },
-    {
-      "path": "../../babel-preset"
-    },
-    {
-      "path": "../../plugin-css-minimizer"
     }
   ],
   "include": ["src"]

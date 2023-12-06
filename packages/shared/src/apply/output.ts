@@ -1,9 +1,5 @@
 import { posix } from 'path';
-import type {
-  Context,
-  SharedRsbuildPluginAPI,
-  NormalizedConfig,
-} from '../types';
+import type { Context, RsbuildPluginAPI, NormalizedConfig } from '../types';
 import { getDistPath, getFilename } from '../fs';
 import {
   DEFAULT_PORT,
@@ -12,7 +8,7 @@ import {
 } from '../constants';
 import { addTrailingSlash } from '../utils';
 
-export function applyOutputPlugin(api: SharedRsbuildPluginAPI) {
+export function applyOutputPlugin(api: RsbuildPluginAPI) {
   api.modifyBundlerChain(
     async (chain, { isProd, isServer, isServiceWorker }) => {
       const config = api.getNormalizedConfig();

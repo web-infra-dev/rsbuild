@@ -1,22 +1,31 @@
 import type {
   ArrayOrNot,
+  WebpackChain,
   ChainedConfig,
   FileFilterUtil,
   ChainedConfigWithUtils,
 } from '../utils';
 import type {
-  AutoprefixerOptions,
-  SassLoaderOptions,
-  LessLoaderOptions,
-  PostCSSLoaderOptions,
+  WebpackConfig,
   PostCSSPlugin,
   CSSLoaderOptions,
+  SassLoaderOptions,
+  LessLoaderOptions,
+  CSSExtractOptions,
   StyleLoaderOptions,
+  AutoprefixerOptions,
+  PostCSSLoaderOptions,
+  TerserPluginOptions,
 } from '../thirdParty';
 import type { BundlerChain } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
-import type { RspackConfig, RspackRule, RspackPluginInstance } from '../rspack';
+import type { RspackConfig, RspackRule } from '../rspack';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+import type { BundlerPluginInstance } from '../bundlerConfig';
+import type {
+  ModifyWebpackChainUtils,
+  ModifyWebpackConfigUtils,
+} from '../plugin';
 
 export type { HTMLPluginOptions };
 
@@ -56,10 +65,10 @@ export type ToolsHtmlPluginConfig = ChainedConfigWithUtils<
 export type ModifyRspackConfigUtils = ModifyChainUtils & {
   addRules: (rules: RspackRule | RspackRule[]) => void;
   prependPlugins: (
-    plugins: RspackPluginInstance | RspackPluginInstance[],
+    plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;
   appendPlugins: (
-    plugins: RspackPluginInstance | RspackPluginInstance[],
+    plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
   mergeConfig: typeof import('../../../compiled/webpack-merge').merge;
@@ -70,6 +79,17 @@ export type ToolsRspackConfig = ChainedConfigWithUtils<
   RspackConfig,
   ModifyRspackConfigUtils
 >;
+
+export type ToolsWebpackConfig = ChainedConfigWithUtils<
+  WebpackConfig,
+  ModifyWebpackConfigUtils
+>;
+
+export type ToolsWebpackChainConfig = ArrayOrNot<
+  (chain: WebpackChain, utils: ModifyWebpackChainUtils) => void
+>;
+
+export type ToolsTerserConfig = ChainedConfig<TerserPluginOptions>;
 
 export interface ToolsConfig {
   /**
@@ -106,8 +126,31 @@ export interface ToolsConfig {
   htmlPlugin?: false | ToolsHtmlPluginConfig;
   /**
    * Configure Rspack.
+   * @requires rspack
    */
   rspack?: ToolsRspackConfig;
+  /**
+   * Modify the options of [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin).
+   * @requires webpack
+   */
+  cssExtract?: CSSExtractOptions;
+  /**
+   * Configure [webpack](https://webpack.js.org/).
+   * @requires webpack
+   */
+  webpack?: ToolsWebpackConfig;
+  /**
+   * Configure webpack by [webpack-chain](https://github.com/neutrinojs/webpack-chain).
+   * @requires webpack
+   */
+  webpackChain?: ToolsWebpackChainConfig;
+  /**
+   * Modify the options of [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin).
+   * @requires webpack
+   */
+  terser?: ToolsTerserConfig;
 }
 
-export type NormalizedToolsConfig = ToolsConfig;
+export type NormalizedToolsConfig = ToolsConfig & {
+  cssExtract: Required<CSSExtractOptions>;
+};

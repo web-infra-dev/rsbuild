@@ -1,6 +1,10 @@
 import * as path from 'path';
-import type { RsbuildPluginAPI, RsbuildPlugin } from '@rsbuild/webpack';
-import { SCRIPT_REGEX, DEFAULT_BROWSERSLIST } from '@rsbuild/shared';
+import {
+  SCRIPT_REGEX,
+  DEFAULT_BROWSERSLIST,
+  type RsbuildPlugin,
+  type RsbuildPluginAPI,
+} from '@rsbuild/shared';
 import type { PluginSwcOptions, TransformConfig } from './types';
 import {
   applyPluginConfig,
@@ -20,6 +24,8 @@ const PLUGIN_NAME = 'plugin-swc';
  */
 export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_NAME,
+
+  pre: ['rsbuild:babel', 'uni-builder:babel'],
 
   setup(api: RsbuildPluginAPI) {
     if (api.context.bundlerType === 'rspack') {

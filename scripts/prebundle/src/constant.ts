@@ -23,6 +23,7 @@ export const DEFAULT_EXTERNALS = {
   '../package.json': './package.json',
   '../../package.json': './package.json',
   postcss: 'postcss',
+  typescript: 'typescript',
   '@babel/core': '@babel/core',
 };
 
@@ -32,7 +33,6 @@ export const TASKS: TaskConfig[] = [
     packageName: '@rsbuild/core',
     dependencies: [
       'open',
-      'jiti',
       'dotenv',
       'dotenv-expand',
       'commander',
@@ -64,6 +64,7 @@ export const TASKS: TaskConfig[] = [
     packageDir: 'shared',
     packageName: '@rsbuild/shared',
     dependencies: [
+      'jiti',
       'rslog',
       'deepmerge',
       'url-join',
@@ -76,11 +77,57 @@ export const TASKS: TaskConfig[] = [
       'gzip-size',
       'json5',
       {
+        name: 'semver',
+        ignoreDts: true,
+      },
+      {
         name: 'webpack-sources',
         ignoreDts: true,
       },
       {
         name: 'postcss-value-parser',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-modules-local-by-default',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-modules-extract-imports',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-modules-scope',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-modules-values',
+        ignoreDts: true,
+      },
+      {
+        name: 'icss-utils',
+        ignoreDts: true,
+      },
+      {
+        name: 'css-loader',
+        ignoreDts: true,
+        externals: {
+          semver: '../semver',
+          'postcss-modules-local-by-default':
+            '../postcss-modules-local-by-default',
+          'postcss-modules-extract-imports':
+            '../postcss-modules-extract-imports',
+          'postcss-modules-scope': '../postcss-modules-scope',
+          'postcss-modules-values': '../postcss-modules-values',
+          'icss-utils': '../icss-utils',
+        },
+      },
+      {
+        name: 'postcss-loader',
+        externals: {
+          jiti: '../jiti',
+          semver: '../semver',
+        },
         ignoreDts: true,
       },
       {
@@ -103,9 +150,19 @@ export const TASKS: TaskConfig[] = [
       {
         name: 'webpack-dev-middleware',
         externals: {
+          'schema-utils': './schema-utils',
           'schema-utils/declarations/validate':
             'schema-utils/declarations/validate',
           'mime-types': '../mime-types',
+        },
+        afterBundle(task) {
+          // The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
+          // So we skip the validation and let TypeScript to ensure type safety.
+          const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
+          fs.outputFileSync(
+            schemaUtilsPath,
+            'module.exports.validate = () => {};',
+          );
         },
       },
       {
@@ -122,6 +179,28 @@ export const TASKS: TaskConfig[] = [
         externals: {
           // express is a peer dependency, no need to provide express type
           express: 'express',
+        },
+      },
+    ],
+  },
+  {
+    packageDir: 'plugin-babel',
+    packageName: '@rsbuild/plugin-babel',
+    dependencies: [
+      {
+        name: 'babel-loader',
+        ignoreDts: true,
+        externals: {
+          'schema-utils': './schema-utils',
+        },
+        afterBundle(task) {
+          // The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
+          // So we skip the validation and let TypeScript to ensure type safety.
+          const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
+          fs.outputFileSync(
+            schemaUtilsPath,
+            'module.exports.validate = () => {};',
+          );
         },
       },
     ],

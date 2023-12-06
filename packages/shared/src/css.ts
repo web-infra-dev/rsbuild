@@ -2,7 +2,7 @@ import assert from 'assert';
 import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import deepmerge from '../compiled/deepmerge';
-import { getSharedPkgCompiledPath as getCompiledPath } from './utils';
+import { getSharedPkgCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
   RsbuildTarget,
@@ -43,30 +43,15 @@ export const isCssModules = (filename: string, modules: CssLoaderModules) => {
 
   if (typeof auto === 'boolean') {
     return auto && CSS_MODULES_REGEX.test(filename);
-  } else if (auto instanceof RegExp) {
+  }
+  if (auto instanceof RegExp) {
     return auto.test(filename);
-  } else if (typeof auto === 'function') {
+  }
+  if (typeof auto === 'function') {
     return auto(filename);
   }
   return true;
 };
-
-type CssNanoOptions = {
-  configFile?: string | undefined;
-  preset?: [string, object] | string | undefined;
-};
-
-export const getCssnanoDefaultOptions = (): CssNanoOptions => ({
-  preset: [
-    'default',
-    {
-      // merge longhand will break safe-area-inset-top, so disable it
-      // https://github.com/cssnano/cssnano/issues/803
-      // https://github.com/cssnano/cssnano/issues/967
-      mergeLonghand: false,
-    },
-  ],
-});
 
 export const getPostcssConfig = ({
   enableSourceMap,
@@ -100,8 +85,8 @@ export const getPostcssConfig = ({
   const defaultPostcssConfig = {
     postcssOptions: {
       plugins: [
-        require(getCompiledPath('postcss-flexbugs-fixes')),
-        require(getCompiledPath('autoprefixer'))(autoprefixerOptions),
+        require(getSharedPkgCompiledPath('postcss-flexbugs-fixes')),
+        require(getSharedPkgCompiledPath('autoprefixer'))(autoprefixerOptions),
       ].filter(Boolean),
     },
     sourceMap: enableSourceMap,

@@ -40,9 +40,16 @@ export async function init({
   }
 
   try {
-    await loadEnv();
-    const config = await loadConfig(commonOpts.config);
+    const root = process.cwd();
+    const { publicVars } = await loadEnv({ dir: root });
+    const config = await loadConfig(root, commonOpts.config);
     const { createRsbuild } = await import('../createRsbuild');
+
+    config.source ||= {};
+    config.source.define = {
+      ...publicVars,
+      ...config.source.define,
+    };
 
     if (commonOpts.open && !config.dev?.startUrl) {
       config.dev ||= {};
@@ -60,6 +67,7 @@ export async function init({
     }
 
     return await createRsbuild({
+      cwd: root,
       rsbuildConfig: config,
       provider: config.provider,
     });

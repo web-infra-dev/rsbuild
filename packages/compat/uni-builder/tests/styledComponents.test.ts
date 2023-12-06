@@ -1,4 +1,6 @@
 import { expect, describe, it } from 'vitest';
+import { pluginBabel } from '../src/webpack/plugins/babel';
+import { pluginReact } from '../src/webpack/plugins/react';
 import { pluginStyledComponents } from '../src/webpack/plugins/styledComponents';
 import { createStubRsbuild } from '../../webpack/tests/helper';
 import { SCRIPT_REGEX } from '@rsbuild/shared';
@@ -11,7 +13,11 @@ describe('plugins/styled-components', () => {
       target: ['node', 'web'],
     });
 
-    rsbuild.addPlugins([pluginStyledComponents()]);
+    rsbuild.addPlugins([
+      pluginBabel(),
+      pluginReact(),
+      pluginStyledComponents(),
+    ]);
     const configs = await rsbuild.initConfigs();
 
     for (const config of configs) {
@@ -28,7 +34,11 @@ describe('plugins/styled-components', () => {
       rsbuildConfig: {},
     });
 
-    rsbuild.addPlugins([pluginStyledComponents()]);
+    rsbuild.addPlugins([
+      pluginBabel(),
+      pluginReact(),
+      pluginStyledComponents(),
+    ]);
     const config = await rsbuild.unwrapConfig();
 
     expect(
@@ -43,7 +53,12 @@ describe('plugins/styled-components', () => {
       rsbuildConfig: {},
     });
 
-    rsbuild.addPlugins([pluginSwc(), pluginStyledComponents()]);
+    rsbuild.addPlugins([
+      pluginBabel(),
+      pluginSwc(),
+      pluginReact(),
+      pluginStyledComponents(),
+    ]);
     const config = await rsbuild.unwrapConfig();
 
     expect(

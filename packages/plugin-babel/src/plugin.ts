@@ -1,6 +1,6 @@
+import path from 'path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { SCRIPT_REGEX } from '@rsbuild/shared';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, SCRIPT_REGEX } from '@rsbuild/shared';
 import { applyUserBabelConfig, type BabelConfig } from './helper';
 import type { PluginBabelOptions } from './types';
 
@@ -23,10 +23,6 @@ export const pluginBabel = (
   name: 'rsbuild:babel',
 
   setup(api) {
-    if (api.context.bundlerType === 'webpack') {
-      return;
-    }
-
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
       const getBabelOptions = () => {
         // 1. Create babel utils function about include/exclude,
@@ -63,7 +59,7 @@ export const pluginBabel = (
 
         const userBabelConfig = applyUserBabelConfig(
           cloneDeep(baseConfig),
-          options,
+          options.babelLoaderOptions,
           babelUtils,
         );
 
@@ -98,7 +94,7 @@ export const pluginBabel = (
         .test(SCRIPT_REGEX)
         .use(CHAIN_ID.USE.BABEL)
         .after(CHAIN_ID.USE.SWC)
-        .loader(require.resolve('babel-loader'))
+        .loader(path.resolve(__dirname, '../compiled/babel-loader/index.js'))
         .options(babelOptions);
     });
   },

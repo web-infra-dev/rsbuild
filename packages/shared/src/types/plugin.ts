@@ -75,12 +75,12 @@ export type PluginStore = {
   removePlugins: (pluginNames: string[]) => void;
   isPluginExists: (pluginName: string) => boolean;
   /** The plugin API. */
-  pluginAPI?: DefaultRsbuildPluginAPI;
+  pluginAPI?: RsbuildPluginAPI;
 };
 
-export type RsbuildPlugin<API = any> = {
+export type RsbuildPlugin = {
   name: string;
-  setup: (api: API) => PromiseOrNot<void>;
+  setup: (api: RsbuildPluginAPI) => PromiseOrNot<void>;
   pre?: string[];
   post?: string[];
   remove?: string[];
@@ -91,6 +91,7 @@ type PluginsFn<T = void> = T extends void
   : (arg: T) => Promise<RsbuildPlugin>;
 
 export type Plugins = {
+  basic: PluginsFn;
   cleanOutput: PluginsFn;
   startUrl: PluginsFn;
   fileSize: PluginsFn;
@@ -118,34 +119,30 @@ export type Plugins = {
 /**
  * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
-export type DefaultRsbuildPluginAPI<
-  Config extends Record<string, any> = Record<string, any>,
-  NormalizedConfig extends Record<string, any> = Record<string, any>,
-  BundlerConfig = unknown,
-> = {
+export type RsbuildPluginAPI = {
   context: Readonly<Context>;
   isPluginExists: PluginStore['isPluginExists'];
 
   onExit: (fn: OnExitFn) => void;
   onAfterBuild: (fn: OnAfterBuildFn) => void;
-  onBeforeBuild: (fn: OnBeforeBuildFn<BundlerConfig>) => void;
+  onBeforeBuild: (fn: OnBeforeBuildFn) => void;
   onDevCompileDone: (fn: OnDevCompileDoneFn) => void;
   onAfterStartDevServer: (fn: OnAfterStartDevServerFn) => void;
   onBeforeStartDevServer: (fn: OnBeforeStartDevServerFn) => void;
   onAfterStartProdServer: (fn: OnAfterStartProdServerFn) => void;
   onBeforeStartProdServer: (fn: OnBeforeStartProdServerFn) => void;
   onAfterCreateCompiler: (fn: OnAfterCreateCompilerFn) => void;
-  onBeforeCreateCompiler: (fn: OnBeforeCreateCompilerFn<BundlerConfig>) => void;
+  onBeforeCreateCompiler: (fn: OnBeforeCreateCompilerFn) => void;
 
   /**
    * Get the relative paths of generated HTML files.
    * The key is entry name and the value is path.
    */
   getHTMLPaths: () => Record<string, string>;
-  getRsbuildConfig: () => Readonly<Config>;
+  getRsbuildConfig: () => Readonly<RsbuildConfig>;
   getNormalizedConfig: () => NormalizedConfig;
 
-  modifyRsbuildConfig: (fn: ModifyRsbuildConfigFn<Config>) => void;
+  modifyRsbuildConfig: (fn: ModifyRsbuildConfigFn) => void;
   modifyBundlerChain: (fn: ModifyBundlerChainFn) => void;
 
   /** Only works when bundler is Rspack */
@@ -155,10 +152,3 @@ export type DefaultRsbuildPluginAPI<
   /** Only works when bundler is Webpack */
   modifyWebpackConfig: (fn: ModifyWebpackConfigFn) => void;
 };
-
-export type SharedRsbuildPluginAPI = DefaultRsbuildPluginAPI<
-  RsbuildConfig,
-  NormalizedConfig
->;
-
-export type DefaultRsbuildPlugin = RsbuildPlugin<SharedRsbuildPluginAPI>;

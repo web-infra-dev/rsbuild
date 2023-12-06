@@ -250,7 +250,7 @@ Currently, Assets Retry plugin cannot work on dynamically imported resources. Th
 
 Assets Retry plugin listens to the page error event to know whether the current resource fails to load and needs to be retried. Therefore, if the resource in the custom template is executed earlier than Assets Retry plugin, then Assets Retry plugin cannot listen to the event that the resource fails to load, so it will not be retried.
 
-If you want Assets Retry plugin to work on resources in custom templates, you can refer to [Custom Insertion Example](https://github.com/jantimon/html-webpack-plugin/tree/main/examples/custom-insertion-position) to modify [html.inject](/config/options/html#htmlinject) configuration and custom template.
+If you want Assets Retry plugin to work on resources in custom templates, you can refer to [Custom Insertion Example](https://github.com/jantimon/html-webpack-plugin/tree/main/examples/custom-insertion-position) to modify [html.inject](/config/html/inject) configuration and custom template.
 
 ```diff
 <!DOCTYPE html>

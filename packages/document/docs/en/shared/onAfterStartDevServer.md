@@ -1,6 +1,6 @@
 Called after starting the development server, you can get the port number through the `port` parameter.
 
-- **Type**
+- **Type:**
 
 ```ts
 function OnAfterStartDevServer(

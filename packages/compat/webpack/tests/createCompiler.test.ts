@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { pluginEntry } from '@rsbuild/core/plugins/entry';
-import { pluginBasic } from '@/plugins/basic';
+import { pluginBasic } from '@rsbuild/core/plugins/basic';
 import { createStubRsbuild, fixturesDir } from './helper';
 import { createCompiler } from '@/core/createCompiler';
 import { createPrimaryContext } from '@/core/createContext';

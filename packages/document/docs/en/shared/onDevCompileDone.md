@@ -1,6 +1,6 @@
 Called after each development environment build, you can use `isFirstCompile` to determine whether it is the first build.
 
-- **Type**
+- **Type:**
 
 ```ts
 function OnDevCompileDone(

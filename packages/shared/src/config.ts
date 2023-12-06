@@ -30,12 +30,11 @@ import type {
   NormalizedToolsConfig,
   NormalizedConfig,
 } from './types';
-import { pick } from './pick';
 import { logger } from './logger';
 import { join } from 'path';
-import { color } from './color';
 import type { minify } from 'terser';
 import fse from '../compiled/fs-extra';
+import { pick, color, upperFirst } from './utils';
 
 import _ from 'lodash';
 import { DEFAULT_DEV_HOST } from './constants';
@@ -52,6 +51,10 @@ export const getDefaultServerConfig = (): NormalizedServerConfig => ({
   host: DEFAULT_DEV_HOST,
   htmlFallback: 'index',
   compress: true,
+  publicDir: {
+    name: 'public',
+    copyOnBuild: true,
+  },
 });
 
 export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
@@ -78,7 +81,12 @@ export const getDefaultSecurityConfig = (): NormalizedSecurityConfig => ({
   nonce: '',
 });
 
-export const getDefaultToolsConfig = (): NormalizedToolsConfig => ({});
+export const getDefaultToolsConfig = (): NormalizedToolsConfig => ({
+  cssExtract: {
+    loaderOptions: {},
+    pluginOptions: {},
+  },
+});
 
 export const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
   profile: false,
@@ -171,7 +179,7 @@ export async function outputInspectConfigFiles({
 
       return {
         path: outputFilePath,
-        label: `${_.upperFirst(configType)} Config (${suffix})`,
+        label: `${upperFirst(configType)} Config (${suffix})`,
         content,
       };
     }),

@@ -1,21 +1,13 @@
 import type {
   Context as BaseContext,
   RsbuildConfig,
+  RsbuildPlugin,
   NormalizedConfig,
-  DefaultRsbuildPluginAPI,
-  RsbuildPlugin as BaseRsbuildPlugin,
+  RsbuildPluginAPI,
 } from '@rsbuild/shared';
-import type { Hooks } from './rspack-provider/core/initHooks';
-import type { RspackConfig } from '@rsbuild/shared';
+import type { Hooks } from './provider/core/initHooks';
 
-export interface RsbuildPluginAPI
-  extends DefaultRsbuildPluginAPI<
-    RsbuildConfig,
-    NormalizedConfig,
-    RspackConfig
-  > {}
-
-export type RsbuildPlugin<T = RsbuildPluginAPI> = BaseRsbuildPlugin<T>;
+export type { RsbuildPlugin, RsbuildPluginAPI };
 
 /** The inner context. */
 export type Context = BaseContext & {

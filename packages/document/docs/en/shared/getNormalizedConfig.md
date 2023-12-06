@@ -4,7 +4,7 @@ Compared with the `api.getRsbuildConfig` method, the config returned by this met
 
 It is recommended to use this method to get the Rsbuild config.
 
-- **Type**
+- **Type:**
 
 ```ts
 function GetNormalizedConfig(): Readonly<NormalizedConfig>;

@@ -1,5 +1,41 @@
 # @rsbuild/core
 
+## 0.1.9
+
+### Patch Changes
+
+- 74b0bab9: feat: optimize the order of print file size
+  - @rsbuild/shared@0.1.9
+
+## 0.1.8
+
+### Patch Changes
+
+- @rsbuild/shared@0.1.8
+
+## 0.1.7
+
+### Patch Changes
+
+- @rsbuild/shared@0.1.7
+
+## 0.1.6
+
+### Patch Changes
+
+- 9613e0b9: feat: support serving public assets in the public dir
+  - @rsbuild/shared@0.1.6
+
+## 0.1.5
+
+### Patch Changes
+
+- ca87f86f: feat(deps): bump Rspack to v0.4.1
+- 706468b: feat: auto inject public env vars to client
+- 49d9457: feat(cli): support reload .env files and restart dev server
+- Updated dependencies [ca87f86f]
+  - @rsbuild/shared@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

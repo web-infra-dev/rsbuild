@@ -1,5 +1,8 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { Options as BaseProxyOptions } from '../../../compiled/http-proxy-middleware';
+import type {
+  Options as BaseProxyOptions,
+  Filter as ProxyFilter,
+} from '../../../compiled/http-proxy-middleware';
 
 export type HtmlFallback = false | 'index';
 
@@ -9,7 +12,7 @@ export type ProxyDetail = BaseProxyOptions & {
     res: ServerResponse,
     proxyOptions: ProxyOptions,
   ) => string | undefined | null | false;
-  context?: string | string[];
+  context?: ProxyFilter;
 };
 
 export type ProxyOptions =
@@ -30,11 +33,30 @@ export type HistoryApiFallbackOptions = {
   }>;
 };
 
+export type PublicDir =
+  | false
+  | {
+      /**
+       * Directory to serve as static assets
+       * @default 'public'
+       */
+      name?: string;
+      /**
+       * Whether copy files from the publicDir into the distDir on build
+       * @default true
+       */
+      copyOnBuild?: boolean;
+    };
+
 export interface ServerConfig {
   /**
    * Whether to enable gzip compression
    */
   compress?: boolean;
+  /**
+   * Serving static files from the directory (by default 'public' directory)
+   */
+  publicDir?: PublicDir;
   /**
    * Specify a port number for Rsbuild Server to listen.
    */
@@ -68,4 +90,4 @@ export interface ServerConfig {
 }
 
 export type NormalizedServerConfig = ServerConfig &
-  Required<Pick<ServerConfig, 'htmlFallback' | 'port' | 'host'>>;
+  Required<Pick<ServerConfig, 'htmlFallback' | 'port' | 'host' | 'publicDir'>>;

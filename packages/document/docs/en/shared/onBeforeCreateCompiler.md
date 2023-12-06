@@ -5,7 +5,7 @@ You can access the Compiler instance object through the `compiler` parameter:
 - If the current bundler is Rspack, you will get the Rspack Compiler object.
 - If the current bundler is webpack, you will get the webpack Compiler object.
 
-- **Type**
+- **Type:**
 
 ```ts
 function OnBeforeCreateCompiler(

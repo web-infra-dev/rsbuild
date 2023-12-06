@@ -3,7 +3,7 @@
 - If the current bundler is Rspack, you will get Rspack Stats.
 - If the current bundler is webpack, you will get webpack Stats.
 
-- **Type**
+- **Type:**
 
 ```ts
 function OnAfterBuild(

@@ -6,4 +6,5 @@ export type {
   PresetEnvBuiltIns,
   BabelConfigUtils,
   BabelTransformOptions,
+  PluginBabelOptions,
 } from './types';

@@ -14,7 +14,7 @@ Rsbuild 支持多种构建产物类型，分别适用于不同的目标运行环
 
 除了 `'web'` 外，你还可以将 `target` 设置为以下值：
 
-- `'node'`: 构建出运行在 Node.js 环境的产物，通常用于 SSR 等场景。
+- `'node'`：构建出运行在 Node.js 环境的产物，通常用于 SSR 等场景。
 - `'web-worker'`：构建出运行在 Web Worker 里的产物。
 
 比如构建出适用于 Node.js 环境的产物：

@@ -1,10 +1,11 @@
 import {
-  isUseCssSourceMap,
   LESS_REGEX,
   FileFilterUtil,
+  isUseCssSourceMap,
   getLessLoaderOptions,
+  getSharedPkgCompiledPath,
+  type RsbuildPlugin,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
 
 export type LessLoaderUtils = {
   addExcludes: FileFilterUtil;
@@ -40,7 +41,7 @@ export function pluginLess(): RsbuildPlugin {
 
         rule
           .use(utils.CHAIN_ID.USE.LESS)
-          .loader(utils.getCompiledPath('less-loader'))
+          .loader(getSharedPkgCompiledPath('less-loader'))
           .options(options);
       });
     },

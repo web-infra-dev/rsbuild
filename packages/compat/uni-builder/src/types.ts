@@ -10,8 +10,7 @@ import type {
   DevConfig,
   RequestHandler,
 } from '@rsbuild/shared';
-import type { RsbuildConfig as RsbuildRspackConfig } from '@rsbuild/core';
-import type { RsbuildConfig as RsbuildWebpackConfig } from '@rsbuild/webpack';
+import type { RsbuildConfig } from '@rsbuild/core';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import type { PluginStyledComponentsOptions } from '@rsbuild/plugin-styled-components';
 import type { LazyCompilationOptions } from './webpack/plugins/lazyCompilation';
@@ -22,11 +21,13 @@ import type { PluginCssMinimizerOptions } from '@rsbuild/plugin-css-minimizer';
 import type { PluginTypeCheckerOptions } from '@rsbuild/plugin-type-check';
 import type { PluginCheckSyntaxOptions } from '@rsbuild/plugin-check-syntax';
 import type { PluginPugOptions } from '@rsbuild/plugin-pug';
+import type { PluginBabelOptions } from '@rsbuild/plugin-babel';
 
 export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
   config: UniBuilderWebpackConfig;
   frameworkConfigPath?: string;
+  target?: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
   cwd: string;
 };
@@ -35,17 +36,14 @@ export type CreateRspackBuilderOptions = {
   bundlerType: 'rspack';
   config: UniBuilderRspackConfig;
   frameworkConfigPath?: string;
+  target?: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
-  cwd: string;
+  cwd?: string;
 };
 
 export type CreateUniBuilderOptions =
   | CreateWebpackBuilderOptions
   | CreateRspackBuilderOptions;
-
-export type RsbuildConfig<B = 'rspack'> = B extends 'rspack'
-  ? RsbuildRspackConfig
-  : RsbuildWebpackConfig;
 
 export type GlobalVars = Record<string, any>;
 
@@ -89,6 +87,17 @@ export type UniBuilderExtraConfig = {
      * Modify the options of [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin).
      */
     tsChecker?: PluginTypeCheckerOptions['forkTsCheckerOptions'];
+    /**
+     * Modify the options of [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
+     */
+    minifyCss?: PluginCssMinimizerOptions['pluginOptions'];
+    /**
+     * Modify the options of [babel-loader](https://github.com/babel/babel-loader)
+     * When `tools.babel`'s type is Function，the default babel config will be passed in as the first parameter, the config object can be modified directly, or a value can be returned as the final result.
+     * When `tools.babel`'s type is `Object`, the config will be shallow merged with default config by `Object.assign`.
+     * Note that `Object.assign` is a shallow copy and will completely overwrite the built-in `presets` or `plugins` array, please use it with caution.
+     */
+    babel?: PluginBabelOptions['babelLoaderOptions'];
   };
   dev?: {
     /**
@@ -177,6 +186,11 @@ export type UniBuilderExtraConfig = {
   };
   html?: {
     /**
+     * Remove the folder of the HTML files.
+     * When this option is enabled, the generated HTML file path will change from `[name]/index.html` to `[name].html`.
+     */
+    disableHtmlFolder?: boolean;
+    /**
      * @deprecated use `html.meta` instead
      */
     metaByEntries?: Record<string, MetaOptions>;
@@ -207,6 +221,12 @@ export type UniBuilderExtraConfig = {
      */
     checkSyntax?: boolean | PluginCheckSyntaxOptions;
   };
+  experiments?: {
+    /**
+     * Enable the ability for source code building
+     */
+    sourceBuild?: boolean;
+  };
 };
 
 export type SriOptions = {
@@ -215,7 +235,7 @@ export type SriOptions = {
   hashLoading?: 'eager' | 'lazy';
 };
 
-export type UniBuilderWebpackConfig = RsbuildWebpackConfig &
+export type UniBuilderWebpackConfig = RsbuildConfig &
   UniBuilderExtraConfig & {
     security?: {
       /**
@@ -236,15 +256,7 @@ export type UniBuilderWebpackConfig = RsbuildWebpackConfig &
     };
   };
 
-export type UniBuilderRspackConfig = RsbuildRspackConfig &
-  UniBuilderExtraConfig & {
-    tools?: {
-      /**
-       * Modify the options of [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
-       */
-      minifyCss?: PluginCssMinimizerOptions['pluginOptions'];
-    };
-  };
+export type UniBuilderRspackConfig = RsbuildConfig & UniBuilderExtraConfig;
 
 export type BuilderConfig<B = 'rspack'> = B extends 'rspack'
   ? UniBuilderRspackConfig

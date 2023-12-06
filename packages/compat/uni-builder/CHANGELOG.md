@@ -1,5 +1,115 @@
 # @rsbuild/uni-builder
 
+## 0.1.9
+
+### Patch Changes
+
+- Updated dependencies [74b0bab9]
+  - @rsbuild/core@0.1.9
+  - @rsbuild/webpack@0.1.9
+  - @rsbuild/plugin-assets-retry@0.1.9
+  - @rsbuild/plugin-babel@0.1.9
+  - @rsbuild/plugin-check-syntax@0.1.9
+  - @rsbuild/plugin-css-minimizer@0.1.9
+  - @rsbuild/plugin-pug@0.1.9
+  - @rsbuild/plugin-react@0.1.9
+  - @rsbuild/plugin-rem@0.1.9
+  - @rsbuild/plugin-source-build@0.1.9
+  - @rsbuild/plugin-styled-components@0.1.9
+  - @rsbuild/plugin-svgr@0.1.9
+  - @rsbuild/plugin-type-check@0.1.9
+  - @rsbuild/babel-preset@0.1.9
+  - @rsbuild/shared@0.1.9
+
+## 0.1.8
+
+### Patch Changes
+
+- Updated dependencies [17c9da0]
+  - @rsbuild/plugin-babel@0.1.8
+  - @rsbuild/babel-preset@0.1.8
+  - @rsbuild/webpack@0.1.8
+  - @rsbuild/core@0.1.8
+  - @rsbuild/plugin-assets-retry@0.1.8
+  - @rsbuild/plugin-check-syntax@0.1.8
+  - @rsbuild/plugin-css-minimizer@0.1.8
+  - @rsbuild/plugin-pug@0.1.8
+  - @rsbuild/plugin-react@0.1.8
+  - @rsbuild/plugin-rem@0.1.8
+  - @rsbuild/plugin-source-build@0.1.8
+  - @rsbuild/plugin-styled-components@0.1.8
+  - @rsbuild/plugin-svgr@0.1.8
+  - @rsbuild/plugin-type-check@0.1.8
+  - @rsbuild/shared@0.1.8
+
+## 0.1.7
+
+### Patch Changes
+
+- 1ceca5a: feat(uni-builder): support disableHtmlFolder and outputStructure default 'nested'
+  - @rsbuild/babel-preset@0.1.7
+  - @rsbuild/webpack@0.1.7
+  - @rsbuild/core@0.1.7
+  - @rsbuild/plugin-assets-retry@0.1.7
+  - @rsbuild/plugin-babel@0.1.7
+  - @rsbuild/plugin-check-syntax@0.1.7
+  - @rsbuild/plugin-css-minimizer@0.1.7
+  - @rsbuild/plugin-pug@0.1.7
+  - @rsbuild/plugin-react@0.1.7
+  - @rsbuild/plugin-rem@0.1.7
+  - @rsbuild/plugin-source-build@0.1.7
+  - @rsbuild/plugin-styled-components@0.1.7
+  - @rsbuild/plugin-svgr@0.1.7
+  - @rsbuild/plugin-type-check@0.1.7
+  - @rsbuild/shared@0.1.7
+
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies [9613e0b9]
+  - @rsbuild/core@0.1.6
+  - @rsbuild/webpack@0.1.6
+  - @rsbuild/plugin-assets-retry@0.1.6
+  - @rsbuild/plugin-babel@0.1.6
+  - @rsbuild/plugin-check-syntax@0.1.6
+  - @rsbuild/plugin-css-minimizer@0.1.6
+  - @rsbuild/plugin-pug@0.1.6
+  - @rsbuild/plugin-react@0.1.6
+  - @rsbuild/plugin-rem@0.1.6
+  - @rsbuild/plugin-source-build@0.1.6
+  - @rsbuild/plugin-styled-components@0.1.6
+  - @rsbuild/plugin-svgr@0.1.6
+  - @rsbuild/plugin-type-check@0.1.6
+  - @rsbuild/babel-preset@0.1.6
+  - @rsbuild/shared@0.1.6
+
+## 0.1.5
+
+### Patch Changes
+
+- ae38844: feat(uni-builder): support experiments.sourceBuild
+- c3bbe1f: feat(uni-builder): support tools.babel in rspack mode
+- Updated dependencies [ca87f86f]
+- Updated dependencies [706468b]
+- Updated dependencies [49d9457]
+- Updated dependencies [c3bbe1f]
+  - @rsbuild/webpack@0.1.5
+  - @rsbuild/plugin-react@0.1.5
+  - @rsbuild/shared@0.1.5
+  - @rsbuild/core@0.1.5
+  - @rsbuild/plugin-babel@0.1.5
+  - @rsbuild/babel-preset@0.1.5
+  - @rsbuild/plugin-assets-retry@0.1.5
+  - @rsbuild/plugin-check-syntax@0.1.5
+  - @rsbuild/plugin-css-minimizer@0.1.5
+  - @rsbuild/plugin-pug@0.1.5
+  - @rsbuild/plugin-rem@0.1.5
+  - @rsbuild/plugin-source-build@0.1.5
+  - @rsbuild/plugin-styled-components@0.1.5
+  - @rsbuild/plugin-svgr@0.1.5
+  - @rsbuild/plugin-type-check@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

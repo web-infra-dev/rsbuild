@@ -1,7 +1,6 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   mergeChainedOptions,
-  getCssnanoDefaultOptions,
   type BundlerChain,
   type ChainedConfig,
   type ChainIdentifier,
@@ -14,6 +13,23 @@ export type CssMinimizerPluginOptions = CssMinimizerPlugin.BasePluginOptions &
 export type PluginCssMinimizerOptions = {
   pluginOptions?: ChainedConfig<CssMinimizerPluginOptions>;
 };
+
+type CssNanoOptions = {
+  configFile?: string | undefined;
+  preset?: [string, object] | string | undefined;
+};
+
+const getCssnanoDefaultOptions = (): CssNanoOptions => ({
+  preset: [
+    'default',
+    {
+      // merge longhand will break safe-area-inset-top, so disable it
+      // https://github.com/cssnano/cssnano/issues/803
+      // https://github.com/cssnano/cssnano/issues/967
+      mergeLonghand: false,
+    },
+  ],
+});
 
 export async function applyCSSMinimizer(
   chain: BundlerChain,
@@ -46,10 +62,6 @@ export const pluginCssMinimizer = (
   name: 'rsbuild:css-minimizer',
 
   setup(api) {
-    if (api.context.bundlerType === 'webpack') {
-      return;
-    }
-
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
       const config = api.getNormalizedConfig();
       const isMinimize = isProd && !config.output.disableMinimize;

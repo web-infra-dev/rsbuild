@@ -1,5 +1,45 @@
 # @rsbuild/test-helper
 
+## 0.1.9
+
+### Patch Changes
+
+- Updated dependencies [74b0bab9]
+  - @rsbuild/core@0.1.9
+  - @rsbuild/shared@0.1.9
+
+## 0.1.8
+
+### Patch Changes
+
+- @rsbuild/core@0.1.8
+- @rsbuild/shared@0.1.8
+
+## 0.1.7
+
+### Patch Changes
+
+- @rsbuild/core@0.1.7
+- @rsbuild/shared@0.1.7
+
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies [9613e0b9]
+  - @rsbuild/core@0.1.6
+  - @rsbuild/shared@0.1.6
+
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies [ca87f86f]
+- Updated dependencies [706468b]
+- Updated dependencies [49d9457]
+  - @rsbuild/shared@0.1.5
+  - @rsbuild/core@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes
@@ -120,7 +160,6 @@
 
 ### Patch Changes
 
-- 60ca3b2: feat(rsbuild-doctor):add entry plugin for rsbuild or rspack builder
 - Updated dependencies [ddff9133]
 - Updated dependencies [4608604]
 - Updated dependencies [c1a5e24]
