@@ -30,10 +30,6 @@ export interface SourceConfig {
    */
   entry?: RsbuildEntry;
   /**
-   * @default Use `source.entry` instead.
-   */
-  entries?: RsbuildEntry;
-  /**
    * Specifies that certain files that will be excluded from compilation.
    */
   exclude?: (string | RegExp)[];
