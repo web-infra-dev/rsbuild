@@ -35,6 +35,7 @@ import { pluginSplitChunks } from './plugins/splitChunk';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+import { pluginPostcssLegacy } from './plugins/postcssLegacy';
 
 const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
 
@@ -370,6 +371,9 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
       pluginOptions: uniBuilderConfig.tools?.minifyCss,
     }),
   );
+
+  targets.includes('web') &&
+    rsbuildPlugins.push(pluginPostcssLegacy(overrideBrowserslist['web']!));
 
   return {
     rsbuildConfig: mergeRsbuildConfig(rsbuildConfig, extraConfig),
