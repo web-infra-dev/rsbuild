@@ -1,9 +1,8 @@
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
 
 type NonceOptions = {
   nonce: string;
-  HtmlPlugin: typeof HtmlWebpackPlugin;
 };
 
 export class HtmlNoncePlugin implements RspackPluginInstance {
@@ -11,13 +10,10 @@ export class HtmlNoncePlugin implements RspackPluginInstance {
 
   readonly nonce: string;
 
-  readonly HtmlPlugin: typeof HtmlWebpackPlugin;
-
   constructor(options: NonceOptions) {
     const { nonce } = options;
     this.name = 'HtmlNoncePlugin';
     this.nonce = nonce;
-    this.HtmlPlugin = options.HtmlPlugin;
   }
 
   apply(compiler: Compiler): void {
@@ -27,7 +23,7 @@ export class HtmlNoncePlugin implements RspackPluginInstance {
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       // @ts-expect-error compilation type mismatch
-      this.HtmlPlugin.getHooks(compilation).alterAssetTags.tap(
+      HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tap(
         this.name,
         (alterAssetTags) => {
           const {

@@ -450,10 +450,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {
           "index.html": {
             "title": "Rsbuild App",
@@ -987,10 +985,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       "version": 5,
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {
           "index.html": {
             "title": "Rsbuild App",

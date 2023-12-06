@@ -6,7 +6,7 @@ import {
   type PreconnectOption,
   type DnsPrefetchOption,
 } from '@rsbuild/shared';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 type NetworkPerformanceType = 'preconnect' | 'dnsPrefetch';
 
@@ -35,16 +35,9 @@ export class HtmlNetworkPerformancePlugin implements RspackPluginInstance {
 
   readonly type: NetworkPerformanceType;
 
-  HtmlPlugin: typeof HtmlWebpackPlugin;
-
-  constructor(
-    options: DnsPrefetch | Preconnect,
-    type: NetworkPerformanceType,
-    HtmlPlugin: typeof HtmlWebpackPlugin,
-  ) {
+  constructor(options: DnsPrefetch | Preconnect, type: NetworkPerformanceType) {
     this.options = options;
     this.type = type;
-    this.HtmlPlugin = HtmlPlugin;
   }
 
   apply(compiler: Compiler): void {
@@ -52,7 +45,7 @@ export class HtmlNetworkPerformancePlugin implements RspackPluginInstance {
       `HTML${this.type}Plugin`,
       (compilation: Compilation) => {
         // @ts-expect-error compilation type mismatch
-        this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tap(
+        HtmlWebpackPlugin.getHooks(compilation).alterAssetTagGroups.tap(
           `HTML${upperFirst(this.type)}Plugin`,
           (htmlPluginData) => {
             const { headTags } = htmlPluginData;

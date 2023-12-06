@@ -221,7 +221,7 @@ export const pluginCss = (): RsbuildPlugin => {
           );
           chain
             .plugin('remove-css-sourcemap')
-            .use(RemoveCssSourcemapPlugin, [utils.HtmlPlugin]);
+            .use(RemoveCssSourcemapPlugin, []);
         }
       });
       api.modifyRspackConfig(

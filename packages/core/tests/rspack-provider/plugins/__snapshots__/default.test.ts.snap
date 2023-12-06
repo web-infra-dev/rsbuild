@@ -643,10 +643,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {
           "index.html": {
             "title": "Rsbuild App",
@@ -1363,10 +1361,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "version": 5,
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {
           "index.html": {
             "title": "Rsbuild App",
@@ -1382,7 +1378,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {
-      "htmlPlugin": [Function],
       "name": "RemoveCssSourcemapPlugin",
     },
     ProgressPlugin {
@@ -2501,10 +2496,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {
           "index.html": {
             "title": "Rsbuild App",

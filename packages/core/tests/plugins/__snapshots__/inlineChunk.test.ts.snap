@@ -48,10 +48,8 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
       "version": 5,
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {
           "index.html": {
             "title": "Rsbuild App",
@@ -64,7 +62,6 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
         "css": "static/css",
         "js": "static/js",
       },
-      "htmlPlugin": [Function],
       "inlinedAssets": Set {},
       "name": "InlineChunkHtmlPlugin",
       "scriptTests": [
@@ -124,10 +121,8 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
       "version": 5,
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {
           "index.html": {
             "title": "Rsbuild App",
@@ -140,7 +135,6 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
         "css": "static/css",
         "js": "static/js",
       },
-      "htmlPlugin": [Function],
       "inlinedAssets": Set {},
       "name": "InlineChunkHtmlPlugin",
       "scriptTests": [],

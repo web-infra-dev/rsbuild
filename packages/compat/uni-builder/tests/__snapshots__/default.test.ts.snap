@@ -739,10 +739,8 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
   },
   "plugins": [
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {},
       },
     },
@@ -1565,10 +1563,8 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
   },
   "plugins": [
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {},
       },
     },
@@ -1580,7 +1576,6 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {
-      "htmlPlugin": [Function],
       "name": "RemoveCssSourcemapPlugin",
     },
     ProgressPlugin {
@@ -1595,7 +1590,6 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
         "css": "static/css",
         "js": "static/js",
       },
-      "htmlPlugin": [Function],
       "inlinedAssets": Set {},
       "name": "InlineChunkHtmlPlugin",
       "scriptTests": [
@@ -2342,10 +2336,8 @@ exports[`uni-builder webpack > should generator webpack config correctly 1`] = `
       "options": {},
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {},
       },
     },
@@ -3158,10 +3150,8 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
       },
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {},
       },
     },
@@ -3191,7 +3181,6 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
         "css": "static/css",
         "js": "static/js",
       },
-      "htmlPlugin": [Function],
       "inlinedAssets": Set {},
       "name": "InlineChunkHtmlPlugin",
       "scriptTests": [

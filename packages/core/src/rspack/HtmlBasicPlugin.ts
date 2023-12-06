@@ -1,4 +1,4 @@
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
 
 export type HtmlInfo = {
@@ -9,7 +9,6 @@ export type HtmlInfo = {
 
 export type HtmlBasicPluginOptions = {
   info: Record<string, HtmlInfo>;
-  HtmlPlugin: typeof HtmlWebpackPlugin;
 };
 
 export const hasTitle = (html?: string): boolean =>
@@ -20,12 +19,9 @@ export class HtmlBasicPlugin {
 
   readonly options: HtmlBasicPluginOptions;
 
-  readonly HtmlPlugin: typeof HtmlWebpackPlugin;
-
   constructor(options: HtmlBasicPluginOptions) {
     this.name = 'HtmlBasicPlugin';
     this.options = options;
-    this.HtmlPlugin = options.HtmlPlugin;
   }
 
   apply(compiler: Compiler) {
@@ -65,7 +61,7 @@ export class HtmlBasicPlugin {
 
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       // @ts-expect-error compilation type mismatch
-      this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tap(
+      HtmlWebpackPlugin.getHooks(compilation).alterAssetTagGroups.tap(
         this.name,
         (data) => {
           const { headTags, outputName } = data;

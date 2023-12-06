@@ -14,7 +14,7 @@ import {
   type InlineChunkTest,
 } from '@rsbuild/shared';
 import type { Compiler, Compilation } from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
 
 export type InlineChunkHtmlPluginOptions = {
@@ -37,18 +37,16 @@ export class InlineChunkHtmlPlugin {
 
   inlinedAssets: Set<string>;
 
-  htmlPlugin: typeof HtmlWebpackPlugin;
-
-  constructor(
-    htmlPlugin: typeof HtmlWebpackPlugin,
-    { styleTests, scriptTests, distPath }: InlineChunkHtmlPluginOptions,
-  ) {
+  constructor({
+    styleTests,
+    scriptTests,
+    distPath,
+  }: InlineChunkHtmlPluginOptions) {
     this.name = 'InlineChunkHtmlPlugin';
     this.styleTests = styleTests;
     this.scriptTests = scriptTests;
     this.distPath = distPath;
     this.inlinedAssets = new Set();
-    this.htmlPlugin = htmlPlugin;
   }
 
   /**
@@ -226,7 +224,7 @@ export class InlineChunkHtmlPlugin {
         this.getInlinedTag(publicPath, tag, compilation);
 
       // @ts-expect-error compilation type mismatch
-      const hooks = this.htmlPlugin.getHooks(compilation);
+      const hooks = HtmlWebpackPlugin.getHooks(compilation);
 
       hooks.alterAssetTagGroups.tap(this.name, (assets) => {
         assets.headTags = assets.headTags.map(tagFunction);
