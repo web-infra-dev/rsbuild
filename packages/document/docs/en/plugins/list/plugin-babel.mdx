@@ -30,53 +30,53 @@ export default {
 
 ## Options
 
-The configurations of [babel-loader](https://github.com/babel/babel-loader) can be modified through the following configuration.
+### babelLoaderOptions
+
+Options passed to `babel-loader`, please refer to the [babel-loader documentation](https://github.com/babel/babel-loader) for detailed usage.
 
 - **Type:** `Object | Function`
 - **Default:**
 
 ```ts
-{
-  "babelrc": false,
-  "compact": false,
-  "configFile": false,
-  "plugins": [],
-  "presets": [
+const defaultOptions = {
+  babelrc: false,
+  compact: false,
+  configFile: false,
+  plugins: [],
+  presets: [
     [
-      "@babel/preset-typescript",
+      '@babel/preset-typescript',
       {
-        "allExtensions": true,
-        "allowDeclareFields": true,
-        "allowNamespaces": true,
-        "isTSX": true,
-        "optimizeConstEnums": true,
+        allExtensions: true,
+        allowDeclareFields: true,
+        allowNamespaces: true,
+        isTSX: true,
+        optimizeConstEnums: true,
       },
     ],
   ],
-}
+};
 ```
 
-### Function Type
+#### Function Type
 
 When configuration is of type `Function`, the default Babel configuration will be passed as the first parameter. You can directly modify the configuration object or return an object as the final `babel-loader` configuration.
 
 ```js
-export default {
-  plugins: [
-    pluginBabel((config) => {
-      // Add a Babel plugin
-      // note: the plugin have been added to the default config to support antd load on demand
-      config.plugins.push([
-        'babel-plugin-import',
-        {
-          libraryName: 'xxx-components',
-          libraryDirectory: 'es',
-          style: true,
-        },
-      ]);
-    }),
-  ],
-};
+pluginBabel({
+  babelLoaderOptions: (config) => {
+    // Add a Babel plugin
+    // note: the plugin have been added to the default config to support antd load on demand
+    config.plugins.push([
+      'babel-plugin-import',
+      {
+        libraryName: 'xxx-components',
+        libraryDirectory: 'es',
+        style: true,
+      },
+    ]);
+  },
+});
 ```
 
 The second parameter of the function provides some more convenient utility functions. Please continue reading the documentation below.
@@ -85,7 +85,7 @@ The second parameter of the function provides some more convenient utility funct
 The above example is just for reference, usually you don't need to manually configure `babel-plugin-import`, because the Rsbuild already provides a more general `source.transformImport` configuration.
 :::
 
-### Object Type
+#### Object Type
 
 When configuration's type is `Object`, the config will be shallow merged with default config by `Object.assign`.
 
@@ -94,102 +94,92 @@ Note that `Object.assign` is a shallow copy and will completely overwrite the bu
 :::
 
 ```js
-export default {
-  plugins: [
-    pluginBabel({
-      plugins: [
-        [
-          'babel-plugin-import',
-          {
-            libraryName: 'xxx-components',
-            libraryDirectory: 'es',
-            style: true,
-          },
-        ],
+pluginBabel({
+  babelLoaderOptions: {
+    plugins: [
+      [
+        'babel-plugin-import',
+        {
+          libraryName: 'xxx-components',
+          libraryDirectory: 'es',
+          style: true,
+        },
       ],
-    }),
-  ],
-};
+    ],
+  },
+});
 ```
 
-### Util Functions
+#### Util Functions
 
 When configuration is a Function, the tool functions available for the second parameter are as follows:
 
-#### addPlugins
+##### addPlugins
 
 - **Type:** `(plugins: BabelPlugin[]) => void`
 
 Add some Babel plugins. For example:
 
 ```js
-export default {
-  plugins: [
-    pluginBabel((config, { addPlugins }) => {
-      addPlugins([
-        [
-          'babel-plugin-import',
-          {
-            libraryName: 'xxx-components',
-            libraryDirectory: 'es',
-            style: true,
-          },
-        ],
-      ]);
-    }),
-  ],
-};
+pluginBabel({
+  babelLoaderOptions: (config, { addPlugins }) => {
+    addPlugins([
+      [
+        'babel-plugin-import',
+        {
+          libraryName: 'xxx-components',
+          libraryDirectory: 'es',
+          style: true,
+        },
+      ],
+    ]);
+  },
+});
 ```
 
-#### addPresets
+##### addPresets
 
 - **Type:** `(presets: BabelPlugin[]) => void`
 
 Add Babel preset configuration. (No need to add presets in most cases)
 
 ```js
-export default {
-  plugins: [
-    pluginBabel((config, { addPresets }) => {
-      addPresets(['@babel/preset-env']);
-    }),
-  ],
-};
+pluginBabel({
+  babelLoaderOptions: (config, { addPresets }) => {
+    addPresets(['@babel/preset-env']);
+  },
+});
 ```
 
-#### removePlugins
+##### removePlugins
 
 - **Type:** `(plugins: string | string[]) => void`
 
 To remove the Babel plugin, just pass in the name of the plugin to be removed, you can pass in a single string or an array of strings.
 
 ```js
-export default {
-  plugins: [
-    pluginBabel((config, { removePlugins }) => {
-      removePlugins('babel-plugin-import');
-    }),
-  ],
-};
+pluginBabel({
+  babelLoaderOptions: (config, { removePlugins }) => {
+    removePlugins('babel-plugin-import');
+  },
+});
 ```
 
-#### removePresets
+##### removePresets
 
 - **Type:** `(presets: string | string[]) => void`
 
 To remove the Babel preset configuration, pass in the name of the preset to be removed, you can pass in a single string or an array of strings.
 
 ```js
-export default {
-  plugins: [
-    pluginBabel((config, { removePresets }) => {
-      removePresets('@babel/preset-env');
-    }),
-  ],
-};
+pluginBabel({
+  babelLoaderOptions: (config, { removePresets }) => {
+    removePresets('@babel/preset-env');
+  },
+});
 ```
 
-### Debugging Babel Configuration
+#### Debugging Babel Configuration
 
 After modifying the `babel-loader` configuration, you can view the final generated configuration in [Rsbuild debug mode](https://rsbuild.dev/guide/debug/debug-mode).
 
@@ -219,9 +209,11 @@ If this problem occurs after you modify the Babel config, it is recommended to c
 
 ```ts
 // wrong example
-pluginBabel((config, { addPlugins }) => {
-  // The plugin has the wrong name or is not installed
-  addPlugins('babel-plugin-not-exists');
+pluginBabel({
+  babelLoaderOptions: (config, { addPlugins }) => {
+    // The plugin has the wrong name or is not installed
+    addPlugins('babel-plugin-not-exists');
+  },
 });
 ```
 
@@ -229,31 +221,35 @@ pluginBabel((config, { addPlugins }) => {
 
 ```ts
 // wrong example
-pluginBabel((config, { addPlugins }) => {
-  addPlugins([
-    ['babel-plugin-import', { libraryName: 'antd', libraryDirectory: 'es' }],
-    [
-      'babel-plugin-import',
-      { libraryName: 'antd-mobile', libraryDirectory: 'es' },
-    ],
-  ]);
+pluginBabel({
+  babelLoaderOptions: (config, { addPlugins }) => {
+    addPlugins([
+      ['babel-plugin-import', { libraryName: 'antd', libraryDirectory: 'es' }],
+      [
+        'babel-plugin-import',
+        { libraryName: 'antd-mobile', libraryDirectory: 'es' },
+      ],
+    ]);
+  },
 });
 ```
 
 ```ts
 // correct example
-pluginBabel((config, { addPlugins }) => {
-  addPlugins([
-    [
-      'babel-plugin-import',
-      { libraryName: 'antd', libraryDirectory: 'es' },
-      'antd',
-    ],
-    [
-      'babel-plugin-import',
-      { libraryName: 'antd-mobile', libraryDirectory: 'es' },
-      'antd-mobile',
-    ],
-  ]);
+pluginBabel({
+  babelLoaderOptions: (config, { addPlugins }) => {
+    addPlugins([
+      [
+        'babel-plugin-import',
+        { libraryName: 'antd', libraryDirectory: 'es' },
+        'antd',
+      ],
+      [
+        'babel-plugin-import',
+        { libraryName: 'antd-mobile', libraryDirectory: 'es' },
+        'antd-mobile',
+      ],
+    ]);
+  },
 });
 ```

@@ -34,7 +34,11 @@ export async function parseConfig(
 
   if (uniBuilderConfig.tools?.babel) {
     const { pluginBabel } = await import('@rsbuild/plugin-babel');
-    rsbuildPlugins.push(pluginBabel(uniBuilderConfig.tools?.babel));
+    rsbuildPlugins.push(
+      pluginBabel({
+        babelLoaderOptions: uniBuilderConfig.tools?.babel,
+      }),
+    );
   }
 
   rsbuildPlugins.push(
