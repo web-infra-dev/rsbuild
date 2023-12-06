@@ -65,22 +65,8 @@ export function createContextByConfig(
   const distPath = getAbsoluteDistPath(cwd, outputConfig);
   const cachePath = join(rootPath, 'node_modules', '.cache');
 
-  if (sourceConfig.entries) {
-    logger.warn(
-      '[Rsbuild] `source.entries` option has been renamed to `source.entry`, please update the Rsbuild config.',
-    );
-    logger.warn(
-      '[Rsbuild] `source.entries` option will be removed in Rsbuild v0.2.0.',
-    );
-  }
-
   const context: BaseContext = {
-    entry:
-      sourceConfig.entry ||
-      // TODO: remove sourceConfig.entries in v0.2.0
-      // compat with previous config
-      sourceConfig.entries ||
-      getDefaultEntry(rootPath),
+    entry: sourceConfig.entry || getDefaultEntry(rootPath),
     version: RSBUILD_VERSION,
     target,
     rootPath,

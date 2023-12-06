@@ -4,7 +4,7 @@
 
 默认情况下，Rsbuild 不会编译 `node_modules` 下的 JavaScript 文件。如果项目引入的 npm 包中含有 ESNext 语法，会被打包进产物中。
 
-遇到这种情况时，可以通过 [source.include](/config/options/source#sourceinclude) 配置项来指定需要额外进行编译的目录或模块。
+遇到这种情况时，可以通过 [source.include](/config/source/include) 配置项来指定需要额外进行编译的目录或模块。
 
 ---
 

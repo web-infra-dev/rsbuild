@@ -12,7 +12,7 @@ import {
 
 export const applyDefaultPlugins = (plugins: Plugins) =>
   awaitableGetter<RsbuildPlugin>([
-    import('./plugins/basic').then((m) => m.pluginBasic()),
+    plugins.basic?.(),
     plugins.entry?.(),
     plugins.cache?.(),
     plugins.target?.(),
@@ -44,7 +44,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.performance(),
     plugins.networkPerformance(),
     plugins.preloadOrPrefetch(),
-    plugins.server(),
+    import('./plugins/server').then((m) => m.pluginServer()),
   ]);
 
 export const getCompiledPath = (packageName: string) => {

@@ -4,7 +4,7 @@
 
 By default, Rsbuild does not compile JavaScript files under `node_modules`. If an npm package used in the project contains ESNext syntax, it will be bundled into the output.
 
-When this happens, you can specify directories or modules that need to be compiled additionally through the [source.include](/config/options/source#sourceinclude) configuration option.
+When this happens, you can specify directories or modules that need to be compiled additionally through the [source.include](/config/source/include) configuration option.
 
 ---
 

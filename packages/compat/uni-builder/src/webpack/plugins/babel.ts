@@ -104,7 +104,7 @@ export const pluginBabel = (options?: PluginBabelOptions): RsbuildPlugin => ({
 
           const babelConfig = mergeChainedOptions({
             defaults: baseBabelConfig,
-            options,
+            options: options?.babelLoaderOptions,
             utils: {
               ...getBabelUtils(baseBabelConfig),
               ...babelUtils,

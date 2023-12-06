@@ -18,7 +18,6 @@ import {
   type PreviewServerOptions,
 } from '@rsbuild/shared';
 import { faviconFallbackMiddleware } from './middlewares';
-import { createProxyMiddleware } from './proxy';
 import type { Context } from '../types';
 
 type RsbuildProdServerOptions = {
@@ -73,6 +72,7 @@ export class RsbuildProdServer {
     }
 
     if (proxy) {
+      const { createProxyMiddleware } = await import('./proxy');
       const { middlewares } = createProxyMiddleware(proxy, this.app);
       middlewares.forEach((middleware) => {
         this.middlewares.use(middleware);

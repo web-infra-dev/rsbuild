@@ -1,10 +1,9 @@
-import { pluginBasic } from '@/plugins/basic';
 import { createStubRsbuild } from './helper';
 
 describe('webpackConfig', () => {
   it('should allow tools.webpack to return config', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpack(config) {
@@ -23,7 +22,7 @@ describe('webpackConfig', () => {
 
   it('should allow tools.webpack to modify config object', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpack(config) {
@@ -39,7 +38,7 @@ describe('webpackConfig', () => {
 
   it('should allow tools.webpack to be an object', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpack: {
@@ -55,7 +54,7 @@ describe('webpackConfig', () => {
 
   it('should allow tools.webpack to be an array', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpack: [
@@ -76,7 +75,7 @@ describe('webpackConfig', () => {
 
   it('should provide mergeConfig util in tools.webpack function', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpack: (config, { mergeConfig }) => {
@@ -94,7 +93,7 @@ describe('webpackConfig', () => {
 
   it('should allow to use tools.webpackChain to modify config', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpackChain(chain) {
@@ -110,7 +109,7 @@ describe('webpackConfig', () => {
 
   it('should allow tools.webpackChain to be an array', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBasic()],
+      plugins: [],
       rsbuildConfig: {
         tools: {
           webpackChain: [

@@ -27,6 +27,7 @@ export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
   config: UniBuilderWebpackConfig;
   frameworkConfigPath?: string;
+  target?: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
   cwd: string;
 };
@@ -35,8 +36,9 @@ export type CreateRspackBuilderOptions = {
   bundlerType: 'rspack';
   config: UniBuilderRspackConfig;
   frameworkConfigPath?: string;
+  target?: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
-  cwd: string;
+  cwd?: string;
 };
 
 export type CreateUniBuilderOptions =
@@ -95,7 +97,7 @@ export type UniBuilderExtraConfig = {
      * When `tools.babel`'s type is `Object`, the config will be shallow merged with default config by `Object.assign`.
      * Note that `Object.assign` is a shallow copy and will completely overwrite the built-in `presets` or `plugins` array, please use it with caution.
      */
-    babel?: PluginBabelOptions;
+    babel?: PluginBabelOptions['babelLoaderOptions'];
   };
   dev?: {
     /**

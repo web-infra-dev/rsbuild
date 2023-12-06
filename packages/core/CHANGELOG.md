@@ -1,5 +1,12 @@
 # @rsbuild/core
 
+## 0.1.9
+
+### Patch Changes
+
+- 74b0bab9: feat: optimize the order of print file size
+  - @rsbuild/shared@0.1.9
+
 ## 0.1.8
 
 ### Patch Changes

@@ -10,6 +10,7 @@ export type SplitReactChunkOptions = {
   react?: boolean;
   router?: boolean;
 };
+
 export type PluginReactOptions = {
   splitChunks?: SplitReactChunkOptions;
 };

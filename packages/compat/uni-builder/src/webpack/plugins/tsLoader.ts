@@ -38,7 +38,7 @@ export type PluginTsLoaderOptions = ChainedConfigWithUtils<
 
 export const pluginTsLoader = (
   options?: PluginTsLoaderOptions,
-  babelOptions?: PluginBabelOptions,
+  babelOptions?: PluginBabelOptions['babelLoaderOptions'],
 ): RsbuildPlugin => {
   return {
     name: 'uni-builder:ts-loader',

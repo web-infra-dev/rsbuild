@@ -36,9 +36,7 @@ export const pluginModuleScopes = (
         return;
       }
 
-      const { ModuleScopePlugin } = await import(
-        '../webpackPlugins/ModuleScopePlugin'
-      );
+      const { ModuleScopePlugin } = await import('../ModuleScopePlugin');
 
       const scopes = applyScopeChain([], moduleScopes);
 

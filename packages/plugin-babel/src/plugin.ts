@@ -1,8 +1,8 @@
+import path from 'path';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { castArray, cloneDeep, SCRIPT_REGEX } from '@rsbuild/shared';
 import { applyUserBabelConfig } from './helper';
 import type { PluginBabelOptions } from './types';
-import path from 'path';
 
 /**
  * The `@babel/preset-typescript` default options.

@@ -87,11 +87,15 @@ Please read the [Contributing Guide](https://github.com/web-infra-dev/rsbuild/bl
 
 Come and chat with us on [Discord](https://discord.gg/mScJfeeT)! The Rspack / Rsbuild team and users are active there, and we're always looking for contributions.
 
+## 🌟 Quality
+
+Rsbuild uses [Web Infra QoS](https://web-infra-dev.github.io/web-infra-QoS/index?product=rsbuild&metrics=bundle-size) to observe the trend of key metrics, such as bundle size, compile speed and install size.
+
 ## 🙌 Code of Conduct
 
 This repo has adopted the ByteDance Open Source Code of Conduct. Please check [Code of Conduct](./CODE_OF_CONDUCT.md) for more details.
 
-## 🤗 Credits
+## 🙏 Credits
 
 Some of the implementations of Rsbuild have drawn inspiration from outstanding projects in the community. We would like to express our gratitude to them:
 
