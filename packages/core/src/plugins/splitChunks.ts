@@ -25,11 +25,11 @@ interface SplitChunksContext {
   /**
    * Default split config in webpack
    */
-  defaultConfig: SplitChunks;
+  defaultConfig: Exclude<SplitChunks, false>;
   /**
    * User webpack `splitChunks` config
    */
-  override: SplitChunks;
+  override: Exclude<SplitChunks, false>;
   /**
    * User Rsbuild `chunkSplit` config
    */
@@ -135,6 +135,7 @@ function splitBySize(ctx: SplitChunksContext): SplitChunks {
   const { override, userDefinedCacheGroups, defaultConfig, rsbuildConfig } =
     ctx;
   assert(rsbuildConfig.strategy === 'split-by-size');
+
   return {
     ...defaultConfig,
     minSize: rsbuildConfig.minSize ?? 0,
@@ -163,7 +164,6 @@ function splitCustom(ctx: SplitChunksContext): SplitChunks {
 
 function allInOne(_ctx: SplitChunksContext): SplitChunks {
   // Set false to avoid chunk split.
-  // @ts-expect-error Rspack type missing
   return false;
 }
 
@@ -228,7 +228,7 @@ export function pluginSplitChunks(): RsbuildPlugin {
           }
 
           const config = api.getNormalizedConfig();
-          const defaultConfig: SplitChunks = {
+          const defaultConfig: Exclude<SplitChunks, false> = {
             // Optimize both `initial` and `async` chunks
             chunks: 'all',
             // When chunk size >= 50000 bytes, split it into separate chunk
