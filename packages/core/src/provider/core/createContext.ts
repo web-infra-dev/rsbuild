@@ -82,6 +82,7 @@ export function updateContextByNormalizedConfig(
   context: BaseContext,
   config: NormalizedConfig,
 ) {
+  context.targets = config.output.targets;
   context.distPath = getAbsoluteDistPath(context.rootPath, config.output);
 
   if (config.source.entry) {

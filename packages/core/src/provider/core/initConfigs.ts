@@ -13,7 +13,7 @@ import { updateContextByNormalizedConfig } from './createContext';
 import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
 import { normalizeConfig } from '../config';
-import type { Context } from '../../types';
+import type { Context, NormalizedConfig } from '../../types';
 
 async function modifyRsbuildConfig(context: Context) {
   debug('modify Rsbuild config');
@@ -35,10 +35,13 @@ export type InitConfigsOptions = {
 export async function initRsbuildConfig({
   context,
   pluginStore,
-}: Pick<InitConfigsOptions, 'context' | 'pluginStore'>): Promise<void> {
+}: Pick<
+  InitConfigsOptions,
+  'context' | 'pluginStore'
+>): Promise<NormalizedConfig> {
   // inited
   if (context.normalizedConfig) {
-    return;
+    return context.normalizedConfig;
   }
 
   await initPlugins({
@@ -49,6 +52,8 @@ export async function initRsbuildConfig({
   await modifyRsbuildConfig(context);
   context.normalizedConfig = normalizeConfig(context.config);
   updateContextByNormalizedConfig(context, context.normalizedConfig);
+
+  return context.normalizedConfig;
 }
 
 export async function initConfigs({
@@ -58,9 +63,9 @@ export async function initConfigs({
 }: InitConfigsOptions): Promise<{
   rspackConfigs: RspackConfig[];
 }> {
-  await initRsbuildConfig({ context, pluginStore });
+  const normalizeConfig = await initRsbuildConfig({ context, pluginStore });
+  const { targets } = normalizeConfig.output;
 
-  const targets = castArray(rsbuildOptions.target);
   const rspackConfigs = await Promise.all(
     targets.map((target) => generateRspackConfig({ target, context })),
   );

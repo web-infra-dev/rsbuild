@@ -101,6 +101,7 @@ export const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
 });
 
 export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
+  targets: ['web'],
   distPath: {
     root: ROOT_DIST_DIR,
     js: JS_DIST_DIR,

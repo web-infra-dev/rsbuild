@@ -34,7 +34,6 @@ export async function createRsbuild(
 
   const rsbuildOptions: Required<CreateRsbuildOptions> = {
     cwd: process.cwd(),
-    target: ['web'],
     ...options,
   };
 
