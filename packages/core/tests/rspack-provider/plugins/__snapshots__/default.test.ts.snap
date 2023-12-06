@@ -23,6 +23,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "rspackFuture": {
+      "newTreeshaking": true,
+    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -705,6 +708,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "rspackFuture": {
+      "newTreeshaking": true,
+    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1436,6 +1442,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "rspackFuture": {
+      "newTreeshaking": true,
+    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1870,6 +1879,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "rspackFuture": {
+      "newTreeshaking": true,
+    },
   },
   "infrastructureLogging": {
     "level": "error",

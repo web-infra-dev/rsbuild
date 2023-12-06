@@ -18,6 +18,9 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
   "devtool": "cheap-module-source-map",
   "experiments": {
     "asyncWebAssembly": true,
+    "rspackFuture": {
+      "newTreeshaking": true,
+    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -809,6 +812,9 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
   "devtool": "hidden-source-map",
   "experiments": {
     "asyncWebAssembly": true,
+    "rspackFuture": {
+      "newTreeshaking": true,
+    },
   },
   "infrastructureLogging": {
     "level": "error",
