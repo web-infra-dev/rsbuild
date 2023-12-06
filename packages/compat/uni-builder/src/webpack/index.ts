@@ -30,7 +30,11 @@ export async function parseConfig(
     target,
   );
 
-  rsbuildPlugins.push(pluginBabel(uniBuilderConfig.tools?.babel));
+  rsbuildPlugins.push(
+    pluginBabel({
+      babelLoaderOptions: uniBuilderConfig.tools?.babel,
+    }),
+  );
   rsbuildPlugins.push(pluginReact());
 
   if (uniBuilderConfig.tools?.tsLoader) {

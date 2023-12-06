@@ -23,10 +23,12 @@ describe('plugin-babel', () => {
   it('should set include/exclude', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [
-        pluginBabel((options, { addIncludes, addExcludes }) => {
-          addIncludes(['src/**/*.ts']);
-          addExcludes(['src/**/*.js']);
-          return options;
+        pluginBabel({
+          babelLoaderOptions: (options, { addIncludes, addExcludes }) => {
+            addIncludes(['src/**/*.ts']);
+            addExcludes(['src/**/*.js']);
+            return options;
+          },
         }),
       ],
     });
