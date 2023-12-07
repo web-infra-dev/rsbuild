@@ -1,4 +1,4 @@
-import { pluginHtml, getMetaTags } from '@src/plugins/html';
+import { pluginHtml } from '@src/plugins/html';
 import { pluginEntry } from '@src/plugins/entry';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 
@@ -24,7 +24,11 @@ describe('plugin-html', () => {
   it('should not register html plugin when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      target: 'node',
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
     expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
   });
@@ -32,7 +36,11 @@ describe('plugin-html', () => {
   it('should not register html plugin when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      target: 'web-worker',
+      rsbuildConfig: {
+        output: {
+          targets: ['web-worker'],
+        },
+      },
     });
     expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
   });
@@ -40,7 +48,11 @@ describe('plugin-html', () => {
   it('should not register html plugin when target is service-worker', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
-      target: 'service-worker',
+      rsbuildConfig: {
+        output: {
+          targets: ['service-worker'],
+        },
+      },
     });
     expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
   });

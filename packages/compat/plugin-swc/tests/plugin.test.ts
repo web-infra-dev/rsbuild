@@ -164,8 +164,11 @@ describe('plugin-swc', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      target: ['node', 'service-worker', 'web', 'web-worker'],
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        output: {
+          targets: ['node', 'service-worker', 'web', 'web-worker'],
+        },
+      },
       provider: webpackProvider,
     });
     const configs = await rsbuild.initConfigs();

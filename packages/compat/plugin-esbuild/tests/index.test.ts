@@ -31,8 +31,11 @@ describe('plugin-esbuild', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEsbuild()],
-      rsbuildConfig: {},
-      target: 'node',
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
       provider: webpackProvider,
     });
     const config = await rsbuild.unwrapConfig();

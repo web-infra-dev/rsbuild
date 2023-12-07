@@ -17,7 +17,7 @@ export const pluginAssetsRetry = (
       }
 
       const { AssetsRetryPlugin } = await import('./AssetsRetryPlugin');
-      const distDir = getDistPath(config.output, 'js');
+      const distDir = getDistPath(config, 'js');
 
       // options.crossOrigin should be same as html.crossorigin by default
       if (options.crossOrigin === undefined) {

@@ -94,6 +94,10 @@ export type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
 export interface OutputConfig {
   /**
+   * Specify build targets to run in different target environments.
+   */
+  targets?: RsbuildTarget[];
+  /**
    * At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
    * For more information, please see: [webpack Externals](https://webpack.js.org/configuration/externals/)
    */
@@ -194,6 +198,7 @@ export type OverrideBrowserslist =
   | Partial<Record<RsbuildTarget, string[]>>;
 
 export interface NormalizedOutputConfig extends OutputConfig {
+  targets: RsbuildTarget[];
   filename: FilenameConfig;
   distPath: DistPathConfig;
   polyfill: Polyfill;

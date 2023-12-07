@@ -14,9 +14,9 @@ describe('plugin-output', () => {
   it('should allow to custom server directory with distPath.server', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      target: ['node'],
       rsbuildConfig: {
         output: {
+          targets: ['node'],
           distPath: {
             server: 'server',
           },

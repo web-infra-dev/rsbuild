@@ -11,8 +11,6 @@ export type RsbuildMode = 'development' | 'production';
 export type CreateRsbuildOptions = {
   /** The root path of current project. */
   cwd?: string;
-  /** Type of build target. */
-  target?: RsbuildTarget | RsbuildTarget[];
 };
 
 export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {

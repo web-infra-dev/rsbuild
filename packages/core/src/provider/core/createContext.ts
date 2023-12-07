@@ -8,12 +8,10 @@ import {
   TS_CONFIG_FILE,
   type Context as BaseContext,
   type BundlerType,
-  type SourceConfig,
-  type OutputConfig,
   type RsbuildEntry,
+  type RsbuildTarget,
   type NormalizedConfig,
   type CreateRsbuildOptions,
-  type NormalizedOutputConfig,
 } from '@rsbuild/shared';
 import type { Context } from '../../types';
 import { initHooks } from './initHooks';
@@ -44,9 +42,9 @@ function getDefaultEntry(root: string): RsbuildEntry {
 
 function getAbsoluteDistPath(
   cwd: string,
-  outputConfig: OutputConfig | NormalizedOutputConfig,
+  config: RsbuildConfig | NormalizedConfig,
 ) {
-  const root = getDistPath(outputConfig, 'root');
+  const root = getDistPath(config, 'root');
   return isAbsolute(root) ? root : join(cwd, root);
 }
 
@@ -56,19 +54,17 @@ function getAbsoluteDistPath(
 export function createContextByConfig(
   options: Required<CreateRsbuildOptions>,
   bundlerType: BundlerType,
-  sourceConfig: SourceConfig = {},
-  outputConfig: OutputConfig = {},
+  config: RsbuildConfig = {},
 ): BaseContext {
-  const { cwd, target } = options;
+  const { cwd } = options;
   const rootPath = cwd;
-
-  const distPath = getAbsoluteDistPath(cwd, outputConfig);
+  const distPath = getAbsoluteDistPath(cwd, config);
   const cachePath = join(rootPath, 'node_modules', '.cache');
 
   const context: BaseContext = {
-    entry: sourceConfig.entry || getDefaultEntry(rootPath),
+    entry: config.source?.entry || getDefaultEntry(rootPath),
+    targets: config.output?.targets || [],
     version: RSBUILD_VERSION,
-    target,
     rootPath,
     distPath,
     cachePath,
@@ -82,7 +78,8 @@ export function updateContextByNormalizedConfig(
   context: BaseContext,
   config: NormalizedConfig,
 ) {
-  context.distPath = getAbsoluteDistPath(context.rootPath, config.output);
+  context.targets = config.output.targets as RsbuildTarget[];
+  context.distPath = getAbsoluteDistPath(context.rootPath, config);
 
   if (config.source.entry) {
     context.entry = config.source.entry;
@@ -94,7 +91,7 @@ export function createPublicContext(
 ): Readonly<BaseContext> {
   const exposedKeys = [
     'entry',
-    'target',
+    'targets',
     'version',
     'rootPath',
     'distPath',
@@ -131,12 +128,7 @@ export async function createContext(
   userRsbuildConfig: RsbuildConfig,
 ): Promise<Context> {
   const rsbuildConfig = withDefaultConfig(userRsbuildConfig);
-  const context = createContextByConfig(
-    options,
-    'rspack',
-    rsbuildConfig.source,
-    rsbuildConfig.output,
-  );
+  const context = createContextByConfig(options, 'rspack', rsbuildConfig);
 
   const tsconfigPath = join(context.rootPath, TS_CONFIG_FILE);
 

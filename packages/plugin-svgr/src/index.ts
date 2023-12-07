@@ -46,8 +46,8 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
       const { svgDefaultExport = 'url' } = options;
       const assetType = 'svg';
 
-      const distDir = getDistPath(config.output, assetType);
-      const filename = getFilename(config.output, assetType, isProd);
+      const distDir = getDistPath(config, assetType);
+      const filename = getFilename(config, assetType, isProd);
       const outputName = path.posix.join(distDir, filename);
       const maxSize = config.output.dataUriLimit[assetType];
 

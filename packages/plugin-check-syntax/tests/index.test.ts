@@ -24,7 +24,11 @@ describe('plugin-check-syntax', () => {
   it('should not add check-syntax plugin when target node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCheckSyntax()],
-      target: 'node',
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     const config = await rsbuild.unwrapConfig();

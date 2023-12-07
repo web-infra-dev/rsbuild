@@ -32,10 +32,7 @@ export const pluginTypeCheck = (
 
         // If there is multiple target, only apply type checker to the first target
         // to avoid multiple type checker running at the same time
-        if (
-          Array.isArray(api.context.target) &&
-          target !== api.context.target[0]
-        ) {
+        if (target !== api.context.targets[0]) {
           return;
         }
 

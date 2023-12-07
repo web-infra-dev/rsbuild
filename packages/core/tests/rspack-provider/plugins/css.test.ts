@@ -150,9 +150,9 @@ describe('plugin-css disableCssExtract', () => {
   it('should apply ignoreCssLoader when disableCssExtract is true and target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      target: 'node',
       rsbuildConfig: {
         output: {
+          targets: ['node'],
           disableCssExtract: true,
         },
       },

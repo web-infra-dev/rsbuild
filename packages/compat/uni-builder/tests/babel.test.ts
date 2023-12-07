@@ -120,7 +120,11 @@ describe('plugin-babel', () => {
   it('should adjust browserslist when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      target: 'node',
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
     const config = await rsbuild.unwrapWebpackConfig();
 

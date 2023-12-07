@@ -6,7 +6,6 @@ describe('createCompiler', () => {
     createContext(
       {
         cwd: process.cwd(),
-        target: ['web'],
       },
       {
         source: {

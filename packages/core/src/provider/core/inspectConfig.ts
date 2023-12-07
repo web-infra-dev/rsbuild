@@ -60,13 +60,13 @@ export async function inspectConfig({
 
   if (inspectOptions.writeToDisk) {
     await outputInspectConfigFiles({
-      rsbuildConfig: rawRsbuildConfig,
+      rsbuildConfig: context.normalizedConfig!,
+      rawRsbuildConfig,
       bundlerConfigs: rawBundlerConfigs,
       inspectOptions: {
         ...inspectOptions,
         outputPath,
       },
-      rsbuildOptions,
       configType: 'rspack',
     });
   }

@@ -56,7 +56,11 @@ describe('plugin-rem', () => {
   it('should not run rem plugin when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
-      target: ['node'],
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
@@ -69,7 +73,11 @@ describe('plugin-rem', () => {
   it('should not run rem plugin when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
-      target: ['web-worker'],
+      rsbuildConfig: {
+        output: {
+          targets: ['web-worker'],
+        },
+      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();

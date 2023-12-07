@@ -14,7 +14,7 @@ export const pluginStyledComponents = (
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
-      const isSSR = isServerTarget(api.context.target);
+      const isSSR = isServerTarget(api.context.targets);
 
       const styledComponentsOptions = mergeChainedOptions({
         defaults: getDefaultStyledComponentsConfig(isProd, isSSR),
