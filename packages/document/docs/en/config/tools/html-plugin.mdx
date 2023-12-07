@@ -66,12 +66,32 @@ export default {
 
 ### Boolean Type
 
-The built-in `html-webpack-plugin` plugins can be disabled by set `tools.htmlPlugin` to `false`.
+The built-in `html-webpack-plugin` plugins can be disabled by set `tools.htmlPlugin` to `false`. After disabling, Rsbuild will no longer generate HTML files.
 
 ```js
 export default {
   tools: {
     htmlPlugin: false,
+  },
+};
+```
+
+## Example
+
+### Modify HTML File Name
+
+The `filename` option can be used to modify the file name of the HTML output.
+
+For example, during production environment builds, a `hash` can be added to the file name:
+
+```js
+export default {
+  tools: {
+    htmlPlugin(config, { entryName }) {
+      if (process.env.NODE_ENV === 'production') {
+        config.filename = `${entryName}.[contenthash:8].html`;
+      }
+    },
   },
 };
 ```

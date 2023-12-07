@@ -66,12 +66,32 @@ export default {
 
 ### Boolean 类型
 
-将 `tools.htmlPlugin` 配置为 `false`，可以禁用默认的 `html-webpack-plugin` 插件。
+将 `tools.htmlPlugin` 配置为 `false`，可以禁用默认的 `html-webpack-plugin` 插件。禁用后，Rsbuild 将不再生成 HTML 文件。
 
 ```js
 export default {
   tools: {
     htmlPlugin: false,
+  },
+};
+```
+
+## 示例
+
+### 修改 HTML 文件名
+
+通过 `filename` 选项可以修改 HTML 产物的文件名。
+
+例如，在生产环境构建时，可以在文件名上添加 `hash`：
+
+```js
+export default {
+  tools: {
+    htmlPlugin(config, { entryName }) {
+      if (process.env.NODE_ENV === 'production') {
+        config.filename = `${entryName}.[contenthash:8].html`;
+      }
+    },
   },
 };
 ```
