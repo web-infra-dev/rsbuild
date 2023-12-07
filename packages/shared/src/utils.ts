@@ -106,7 +106,7 @@ export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
   );
 }
 
-export function isServerTarget(target: RsbuildTarget | RsbuildTarget[]) {
+export function isServerTarget(target: RsbuildTarget[]) {
   return (Array.isArray(target) ? target : [target]).some((item) =>
     ['node', 'service-worker'].includes(item),
   );

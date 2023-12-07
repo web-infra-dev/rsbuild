@@ -68,9 +68,7 @@ export async function createCompiler({
     const printTime = (c: StatsCompilation, index: number) => {
       if (c.time) {
         const time = prettyTime(c.time / 1000);
-        const target = Array.isArray(context.target)
-          ? context.target[index]
-          : context.target;
+        const target = context.targets[index];
         const name = TARGET_ID_MAP[target || 'web'];
         logger.ready(`${name} compiled in ${time}`);
       }

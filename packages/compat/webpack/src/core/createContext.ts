@@ -23,12 +23,7 @@ export function createPrimaryContext(
   userRsbuildConfig: RsbuildConfig,
 ): Context {
   const rsbuildConfig = withDefaultConfig(userRsbuildConfig);
-  const context = createContextByConfig(
-    options,
-    'webpack',
-    rsbuildConfig.source,
-    rsbuildConfig.output,
-  );
+  const context = createContextByConfig(options, 'webpack', rsbuildConfig);
 
   return {
     ...context,

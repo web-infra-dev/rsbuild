@@ -1,6 +1,5 @@
 import {
   isDebug,
-  castArray,
   type PluginStore,
   type InspectConfigOptions,
   type CreateRsbuildOptions,

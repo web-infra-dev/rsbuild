@@ -35,7 +35,7 @@ export const pluginStyledComponents = (
         return;
       }
 
-      const isSSR = isServerTarget(api.context.target);
+      const isSSR = isServerTarget(api.context.targets);
 
       const styledComponentsOptions = mergeChainedOptions({
         defaults: getDefaultStyledComponentsConfig(isProd, isSSR),

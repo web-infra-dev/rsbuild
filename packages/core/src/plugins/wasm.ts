@@ -8,7 +8,7 @@ export const pluginWasm = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
-      const distPath = getDistPath(config.output, 'wasm');
+      const distPath = getDistPath(config, 'wasm');
 
       chain.experiments({
         ...chain.get('experiments'),

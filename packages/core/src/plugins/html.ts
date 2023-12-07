@@ -17,7 +17,6 @@ import type {
   RsbuildPluginAPI,
   NormalizedConfig,
   HTMLPluginOptions,
-  NormalizedOutputConfig,
   HtmlInjectTagDescriptor,
 } from '@rsbuild/shared';
 import type { HtmlTagsPluginOptions } from '../rspack/HtmlTagsPlugin';
@@ -107,7 +106,7 @@ export function getFavicon(
 
 export function getMetaTags(
   entryName: string,
-  config: { html: HtmlConfig; output: NormalizedOutputConfig },
+  config: { html: HtmlConfig },
   templateContent?: string,
 ) {
   const metaTags = mergeChainedOptions({
@@ -350,7 +349,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
               '../rspack/HtmlAppIconPlugin'
             );
 
-            const distDir = getDistPath(config.output, 'image');
+            const distDir = getDistPath(config, 'image');
             const iconPath = path.isAbsolute(appIcon)
               ? appIcon
               : path.join(api.context.rootPath, appIcon);

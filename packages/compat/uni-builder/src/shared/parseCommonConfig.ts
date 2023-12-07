@@ -131,7 +131,6 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     : UniBuilderWebpackConfig,
   cwd: string,
   frameworkConfigPath?: string,
-  target: RsbuildTarget | RsbuildTarget[] = 'web',
 ): Promise<{
   rsbuildConfig: RsbuildConfig;
   rsbuildPlugins: RsbuildPlugin[];
@@ -162,7 +161,7 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     delete output.enableInlineScripts;
   }
 
-  const targets = typeof target === 'string' ? [target] : target;
+  const targets = uniBuilderConfig.output?.targets || ['web'];
   let overrideBrowserslist: OverrideBrowserslist = {};
 
   for (const target of targets) {

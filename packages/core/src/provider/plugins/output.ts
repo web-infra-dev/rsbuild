@@ -23,8 +23,8 @@ export const pluginOutput = (): RsbuildPlugin => ({
     api.modifyRspackConfig(async (rspackConfig, { isProd }) => {
       const config = api.getNormalizedConfig();
 
-      const cssPath = getDistPath(config.output, 'css');
-      const cssFilename = getFilename(config.output, 'css', isProd);
+      const cssPath = getDistPath(config, 'css');
+      const cssFilename = getFilename(config, 'css', isProd);
 
       rspackConfig.output ||= {};
       rspackConfig.output.cssFilename = posix.join(cssPath, cssFilename);
