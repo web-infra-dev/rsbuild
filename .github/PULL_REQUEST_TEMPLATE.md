@@ -6,7 +6,7 @@
 
 ## Checklist
 
-<!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
+<!--- Check and mark with an "x" -->
 
-- [ ] I have updated the documentation.
-- [ ] I have added tests to cover my changes.
+- [ ] Tests updated.
+- [ ] Documentation updated.
