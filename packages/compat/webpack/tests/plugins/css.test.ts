@@ -89,9 +89,12 @@ describe('plugin-css', () => {
 
   it('should not apply mini-css-extract-plugin when target is node', async () => {
     const rsbuild = await createStubRsbuild({
-      target: ['node'],
       plugins: [pluginCss()],
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
@@ -104,9 +107,12 @@ describe('plugin-css', () => {
 
   it('should not apply mini-css-extract-plugin when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
-      target: ['web-worker'],
       plugins: [pluginCss()],
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        output: {
+          targets: ['web-worker'],
+        },
+      },
     });
 
     const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
@@ -119,10 +125,10 @@ describe('plugin-css', () => {
 
   it('should not apply style-loader when target is node', async () => {
     const rsbuild = await createStubRsbuild({
-      target: ['node'],
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
+          targets: ['node'],
           disableCssExtract: true,
         },
         tools: {
@@ -141,10 +147,10 @@ describe('plugin-css', () => {
 
   it('should not apply style-loader when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
-      target: ['web-worker'],
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
+          targets: ['web-worker'],
           disableCssExtract: true,
         },
         tools: {
@@ -182,7 +188,11 @@ describe('plugin-css', () => {
   it('should not apply postcss-loader when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      target: 'node',
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     const config = await rsbuild.unwrapWebpackConfig();

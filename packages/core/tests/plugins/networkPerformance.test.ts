@@ -34,8 +34,10 @@ describe('plugin-network-performance', () => {
           ],
           dnsPrefetch: ['http://aaa.com'],
         },
+        output: {
+          targets: ['service-worker'],
+        },
       },
-      target: 'service-worker',
     });
 
     const config = await rsbuild.unwrapConfig();

@@ -5,8 +5,11 @@ describe('plugin-node-addons', () => {
   it('should add node addons rule properly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginNodeAddons()],
-      rsbuildConfig: {},
-      target: 'node',
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     const config = await rsbuild.unwrapConfig();

@@ -36,7 +36,11 @@ describe('plugin-type-check', () => {
     const rsbuild = await createStubRsbuild({
       cwd: __dirname,
       plugins: [pluginTypeCheck()],
-      target: ['web', 'node'],
+      rsbuildConfig: {
+        output: {
+          targets: ['web', 'node'],
+        },
+      },
     });
 
     const configs = await rsbuild.unwrapConfig();

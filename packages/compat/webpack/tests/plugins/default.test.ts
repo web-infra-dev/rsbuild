@@ -30,7 +30,11 @@ describe('applyDefaultPlugins', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
-      target: ['web-worker'],
+      rsbuildConfig: {
+        output: {
+          targets: ['web-worker'],
+        },
+      },
     });
 
     const config = await rsbuild.unwrapWebpackConfig();
@@ -44,7 +48,11 @@ describe('applyDefaultPlugins', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
-      target: ['node'],
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     const config = await rsbuild.unwrapWebpackConfig();

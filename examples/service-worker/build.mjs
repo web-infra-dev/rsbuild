@@ -1,7 +1,6 @@
 import { createRsbuild } from '@rsbuild/core';
 
 const builder = await createRsbuild({
-  target: 'service-worker',
   rsbuildConfig: {
     source: {
       entry: { sw: './src/sw.ts' },
@@ -12,6 +11,7 @@ const builder = await createRsbuild({
         root: './dist',
         worker: './',
       },
+      targets: ['service-worker'],
       copy: ['./index.html'],
     },
   },

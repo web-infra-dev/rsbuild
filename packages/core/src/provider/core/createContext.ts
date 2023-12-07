@@ -91,7 +91,7 @@ export function createPublicContext(
 ): Readonly<BaseContext> {
   const exposedKeys = [
     'entry',
-    'target',
+    'targets',
     'version',
     'rootPath',
     'distPath',

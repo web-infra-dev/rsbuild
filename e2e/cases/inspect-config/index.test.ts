@@ -35,9 +35,12 @@ test('should generate bundler config for node when target contains node', async 
   const rsbuild = await createRsbuild(
     {
       cwd: __dirname,
-      target: ['web', 'node'],
     },
-    {},
+    {
+      output: {
+        targets: ['web', 'node'],
+      },
+    },
   );
   await rsbuild.inspectConfig({
     writeToDisk: true,

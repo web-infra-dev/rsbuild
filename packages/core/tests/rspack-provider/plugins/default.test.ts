@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
-import { RsbuildPlugin } from '@/types';
+import { RsbuildPlugin } from '@rsbuild/shared';
 import { BUILTIN_LOADER } from '@/shared';
 
 describe('applyDefaultPlugins', () => {
@@ -30,7 +30,11 @@ describe('applyDefaultPlugins', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'test';
     const rsbuild = await createStubRsbuild({
-      target: 'node',
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();

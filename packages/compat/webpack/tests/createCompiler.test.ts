@@ -58,7 +58,6 @@ describe('build hooks', () => {
     createPrimaryContext(
       {
         cwd: process.cwd(),
-        target: ['web'],
       },
       {
         source: {
