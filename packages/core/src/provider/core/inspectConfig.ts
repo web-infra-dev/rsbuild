@@ -4,6 +4,8 @@ import {
   stringifyConfig,
   outputInspectConfigFiles,
   type RspackConfig,
+  type NormalizedConfig,
+  type InspectConfigResult,
   type InspectConfigOptions,
 } from '@rsbuild/shared';
 
@@ -16,16 +18,12 @@ export async function inspectConfig({
 }: InitConfigsOptions & {
   inspectOptions?: InspectConfigOptions;
   bundlerConfigs?: RspackConfig[];
-}) {
+}): Promise<InspectConfigResult<'rspack'>> {
   if (inspectOptions.env) {
     process.env.NODE_ENV = inspectOptions.env;
   } else if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'development';
   }
-  const rsbuildDebugConfig = {
-    ...context.config,
-    pluginNames: pluginStore.plugins.map((p) => p.name),
-  };
 
   const rspackConfigs =
     bundlerConfigs ||
@@ -37,10 +35,18 @@ export async function inspectConfig({
       })
     ).rspackConfigs;
 
+  const rsbuildDebugConfig: NormalizedConfig & {
+    pluginNames: string[];
+  } = {
+    ...context.normalizedConfig!,
+    pluginNames: pluginStore.plugins.map((p) => p.name),
+  };
+
   const rawRsbuildConfig = await stringifyConfig(
     rsbuildDebugConfig,
     inspectOptions.verbose,
   );
+
   const rawBundlerConfigs = await Promise.all(
     rspackConfigs.map((config) =>
       stringifyConfig(config, inspectOptions.verbose),
