@@ -14,6 +14,8 @@ export const isOverriddenConfigKey = (key: string) =>
     'inlineStyles',
     // cssModules.auto
     'auto',
+    // output.targets
+    'targets',
   ].includes(key);
 
 export const mergeRsbuildConfig = <T>(...configs: T[]): T =>
