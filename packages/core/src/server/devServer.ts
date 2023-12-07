@@ -1,6 +1,4 @@
-import { createServer, Server } from 'http';
-import { createServer as createHttpsServer } from 'https';
-import type { ListenOptions } from 'net';
+import { Server } from 'http';
 import url from 'url';
 import {
   DevConfig,
@@ -33,12 +31,12 @@ import {
 import { join, isAbsolute } from 'path';
 import { registerCleaner } from './restart';
 import type { Context } from '../types';
+import { createHttpServer } from './httpServer';
 
 export class RsbuildDevServer {
   private readonly dev: DevConfig & ServerConfig;
   private readonly devMiddleware: DevMiddleware;
   private pwd: string;
-  private app!: Server;
   private output: RsbuildDevServerOptions['output'];
   public middlewares = connect();
 
@@ -80,8 +78,6 @@ export class RsbuildDevServer {
 
   // Complete the preparation of services
   public async onInit(app: Server) {
-    this.app = app;
-
     // Order: setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push
     const { before, after } = this.applySetupMiddlewares();
 
@@ -182,34 +178,8 @@ export class RsbuildDevServer {
     this.middlewares.use(notFoundMiddleware);
   }
 
-  public async createHTTPServer() {
-    const { dev } = this;
-    const devHttpsOption = typeof dev === 'object' && dev.https;
-    if (devHttpsOption) {
-      return createHttpsServer(devHttpsOption, this.middlewares);
-    } else {
-      return createServer(this.middlewares);
-    }
-  }
-
-  public listen(
-    options?: number | ListenOptions | undefined,
-    listener?: (err?: Error) => Promise<void>,
-  ) {
-    const callback = () => {
-      listener?.();
-    };
-
-    if (typeof options === 'object') {
-      this.app.listen(options, callback);
-    } else {
-      this.app.listen(options || 8080, callback);
-    }
-  }
-
   public close() {
     this.devMiddleware.close();
-    this.app.close();
   }
 }
 
@@ -282,8 +252,10 @@ export async function startDevServer<
 
   await options.context.hooks.onBeforeStartDevServerHook.call();
 
-  // TODO: support customApp
-  const httpServer = await server.createHTTPServer();
+  const httpServer = await createHttpServer({
+    https: devServerConfig.https,
+    middlewares: server.middlewares,
+  });
 
   // print url after http server created and before dev compile (just a short time interval)
   if (printURLs) {
@@ -303,7 +275,7 @@ export async function startDevServer<
   debug('listen dev server');
 
   return new Promise<StartServerResult>((resolve) => {
-    server.listen(
+    httpServer.listen(
       {
         host,
         port,
@@ -320,14 +292,19 @@ export async function startDevServer<
           routes,
         });
 
-        registerCleaner(() => server.close());
+        const onClose = () => {
+          server.close();
+          httpServer.close();
+        };
+
+        registerCleaner(onClose);
 
         resolve({
           port,
           urls: urls.map((item) => item.url),
           server: {
             close: async () => {
-              server.close();
+              onClose();
             },
           },
         });
