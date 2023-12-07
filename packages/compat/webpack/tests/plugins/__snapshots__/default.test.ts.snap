@@ -434,6 +434,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -453,7 +454,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
@@ -950,6 +951,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -988,7 +990,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },

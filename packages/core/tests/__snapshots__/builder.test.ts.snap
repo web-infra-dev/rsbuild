@@ -627,6 +627,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -646,7 +647,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },

@@ -16,6 +16,7 @@ exports[`plugin-html > should add one tags plugin instance 1`] = `
         "chunks": [
           "main",
         ],
+        "entryName": "main",
         "filename": "main.html",
         "inject": "head",
         "meta": {
@@ -36,6 +37,7 @@ exports[`plugin-html > should add one tags plugin instance 1`] = `
         "chunks": [
           "foo",
         ],
+        "entryName": "foo",
         "filename": "foo.html",
         "inject": "head",
         "meta": {
@@ -55,10 +57,10 @@ exports[`plugin-html > should add one tags plugin instance 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "foo.html": {
+          "foo": {
             "title": "Rsbuild App",
           },
-          "main.html": {
+          "main": {
             "title": "Rsbuild App",
           },
         },
@@ -103,6 +105,7 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
         "chunks": [
           "main",
         ],
+        "entryName": "main",
         "filename": "main.html",
         "inject": "head",
         "meta": {
@@ -123,6 +126,7 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
         "chunks": [
           "foo",
         ],
+        "entryName": "foo",
         "filename": "foo.html",
         "inject": "head",
         "meta": {
@@ -142,10 +146,10 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "foo.html": {
+          "foo": {
             "title": "Rsbuild App",
           },
-          "main.html": {
+          "main": {
             "title": "Rsbuild App",
           },
         },
@@ -217,7 +221,7 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
@@ -240,6 +244,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "favicon": "src/favicon.ico",
         "filename": "index.html",
         "inject": "head",
@@ -260,7 +265,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
@@ -283,6 +288,7 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "body",
         "meta": {
@@ -302,7 +308,7 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
@@ -325,6 +331,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -363,7 +370,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
@@ -386,6 +393,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -405,7 +413,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
@@ -431,6 +439,7 @@ exports[`plugin-html > should support multi entry 1`] = `
         "chunks": [
           "main",
         ],
+        "entryName": "main",
         "filename": "main.html",
         "inject": "head",
         "meta": {
@@ -451,6 +460,7 @@ exports[`plugin-html > should support multi entry 1`] = `
         "chunks": [
           "foo",
         ],
+        "entryName": "foo",
         "filename": "foo.html",
         "inject": "head",
         "meta": {
@@ -470,10 +480,10 @@ exports[`plugin-html > should support multi entry 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "foo.html": {
+          "foo": {
             "title": "Rsbuild App",
           },
-          "main.html": {
+          "main": {
             "title": "Rsbuild App",
           },
         },
