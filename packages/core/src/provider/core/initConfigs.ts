@@ -1,7 +1,6 @@
 import {
   debug,
   isDebug,
-  castArray,
   initPlugins,
   mergeRsbuildConfig,
   type PluginStore,
@@ -63,8 +62,8 @@ export async function initConfigs({
 }: InitConfigsOptions): Promise<{
   rspackConfigs: RspackConfig[];
 }> {
-  const normalizeConfig = await initRsbuildConfig({ context, pluginStore });
-  const { targets } = normalizeConfig.output;
+  const normalizedConfig = await initRsbuildConfig({ context, pluginStore });
+  const { targets } = normalizedConfig.output;
 
   const rspackConfigs = await Promise.all(
     targets.map((target) => generateRspackConfig({ target, context })),

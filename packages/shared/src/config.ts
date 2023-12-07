@@ -19,7 +19,6 @@ import type {
   BundlerChainRule,
   RsbuildConfig,
   InspectConfigOptions,
-  CreateRsbuildOptions,
   NormalizedServerConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
@@ -148,20 +147,18 @@ export async function outputInspectConfigFiles({
   rsbuildConfig,
   bundlerConfigs,
   inspectOptions,
-  rsbuildOptions,
   configType,
 }: {
   configType: string;
-  rsbuildConfig: string;
+  rsbuildConfig: NormalizedConfig;
+  rawRsbuildConfig: string;
   bundlerConfigs: string[];
   inspectOptions: InspectConfigOptions & {
     outputPath: string;
   };
-  rsbuildOptions: Required<CreateRsbuildOptions>;
 }) {
   const { outputPath } = inspectOptions;
 
-  const { target } = rsbuildOptions;
   const files = [
     {
       path: join(outputPath, 'rsbuild.config.js'),
@@ -169,7 +166,7 @@ export async function outputInspectConfigFiles({
       content: rsbuildConfig,
     },
     ...bundlerConfigs.map((content, index) => {
-      const suffix = Array.isArray(target) ? target[index] : target;
+      const suffix = rsbuildConfig.output.targets[index];
       const outputFile = `${configType}.config.${suffix}.js`;
       let outputFilePath = join(outputPath, outputFile);
 

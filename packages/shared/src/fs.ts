@@ -9,12 +9,16 @@ import type {
   DistPathConfig,
   FilenameConfig,
   NormalizedOutputConfig,
+  DeepReadonly,
 } from './types';
 
 export { fse };
 
 export const getDistPath = (
-  outputConfig: OutputConfig | NormalizedOutputConfig,
+  outputConfig:
+    | OutputConfig
+    | NormalizedOutputConfig
+    | DeepReadonly<NormalizedOutputConfig>,
   type: keyof DistPathConfig,
 ): string => {
   const { distPath } = outputConfig;
@@ -86,7 +90,7 @@ export function getHTMLPathByEntry(
 }
 
 export const getFilename = (
-  output: NormalizedOutputConfig,
+  output: NormalizedOutputConfig | DeepReadonly<NormalizedOutputConfig>,
   type: keyof FilenameConfig,
   isProd: boolean,
 ) => {
