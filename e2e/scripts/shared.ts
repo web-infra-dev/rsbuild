@@ -79,8 +79,10 @@ export const createRsbuild = async (
 
 const portMap = new Map();
 
+// Available port ranges: 1024 ～ 65535
+// `10080` is not available in CI, so we start with `11000`.
 export function getRandomPort(
-  defaultPort = Math.ceil(Math.random() * 10000) + 10000,
+  defaultPort = Math.ceil(Math.random() * 50000) + 11000,
 ) {
   let port = defaultPort;
   while (true) {
