@@ -30,6 +30,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "chunks": [
         "index",
       ],
+      "entryName": "index",
       "filename": "index.html",
       "inject": "head",
       "meta": {
@@ -49,7 +50,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
     "name": "HtmlBasicPlugin",
     "options": {
       "info": {
-        "index.html": {
+        "index": {
           "title": "Rsbuild App",
         },
       },

@@ -665,6 +665,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -684,7 +685,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },

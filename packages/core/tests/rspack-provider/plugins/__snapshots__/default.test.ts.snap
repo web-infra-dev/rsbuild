@@ -627,6 +627,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -646,7 +647,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
@@ -1326,6 +1327,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -1364,7 +1366,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
@@ -2480,6 +2482,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -2499,7 +2502,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },

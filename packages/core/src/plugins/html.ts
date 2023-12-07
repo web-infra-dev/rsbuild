@@ -263,12 +263,13 @@ export const pluginHtml = (): RsbuildPlugin => ({
               minify,
               filename,
               template: templatePath,
+              entryName,
               templateParameters,
               scriptLoading: config.html.scriptLoading,
             };
 
             const htmlInfo: HtmlInfo = {};
-            htmlInfoMap[filename] = htmlInfo;
+            htmlInfoMap[entryName] = htmlInfo;
 
             if (templateContent) {
               htmlInfo.templateContent = templateContent;

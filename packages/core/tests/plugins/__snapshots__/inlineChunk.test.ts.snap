@@ -13,6 +13,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -51,7 +52,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
@@ -86,6 +87,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -124,7 +126,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
