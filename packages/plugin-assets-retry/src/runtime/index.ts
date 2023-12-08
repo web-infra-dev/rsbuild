@@ -276,6 +276,7 @@ function resourceMonitor(
   }
 }
 
+// @ts-expect-error init is a global function, ignore ts(6133)
 function init(options: PluginAssetsRetryOptions) {
   const config = Object.assign({}, defaultConfig, options);
   // Normalize config
