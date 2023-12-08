@@ -1,8 +1,6 @@
 import { Server } from 'http';
 import url from 'url';
 import {
-  DevConfig,
-  ServerConfig,
   RequestHandler,
   ServerAPIs,
   RsbuildDevServerOptions,
@@ -21,7 +19,7 @@ import {
   RspackMultiCompiler,
   RspackCompiler,
 } from '@rsbuild/shared';
-import DevMiddleware from './dev-middleware';
+import DevMiddleware from './compiler-dev-middleware';
 import connect from '@rsbuild/shared/connect';
 import {
   faviconFallbackMiddleware,
@@ -34,7 +32,7 @@ import type { Context } from '../types';
 import { createHttpServer } from './httpServer';
 
 export class RsbuildDevServer {
-  private readonly dev: DevConfig & ServerConfig;
+  private readonly dev: RsbuildDevServerOptions['dev'];
   private readonly devMiddleware: DevMiddleware;
   private pwd: string;
   private output: RsbuildDevServerOptions['output'];
