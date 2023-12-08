@@ -42,7 +42,10 @@ export async function init({
   try {
     const root = process.cwd();
     const { publicVars } = await loadEnv({ cwd: root });
-    const config = await loadConfig(root, commonOpts.config);
+    const config = await loadConfig({
+      cwd: root,
+      path: commonOpts.config,
+    });
     const { createRsbuild } = await import('../createRsbuild');
 
     config.source ||= {};
