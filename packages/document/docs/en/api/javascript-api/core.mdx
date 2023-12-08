@@ -29,11 +29,8 @@ The first parameter of `createRsbuild` is a options object, you can pass in the 
 ```ts
 type RsbuildEntry = Record<string, string | string[]>;
 
-type RsbuildTarget = 'web' | 'node' | 'web-worker';
-
 type CreateRsbuildOptions = {
   cwd?: string;
-  target?: RsbuildTarget | RsbuildTarget[];
   provider?: RsbuildProvider;
   rsbuildConfig?: RsbuildConfig;
 };
@@ -42,7 +39,6 @@ type CreateRsbuildOptions = {
 Description:
 
 - `cwd`: The root path of the current build, the default value is `process.cwd()`.
-- `target`: Build target type, the default value is `['web']`, see chapter [Build Target](/api/start/build-target) for details.
 - `provider`: Used to switch the underlying bundler.
 - `rsbuildConfig`: Rsbuild configuration object. Rsbuild provides a rich set of configuration options that allow you to customize the build behavior flexibly. You can find all available configuration options in the [Configuration](/config/) section.
 

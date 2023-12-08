@@ -1,18 +1,29 @@
-# Build Target
+# targets
+
+- **Type:**
+
+```ts
+type RsbuildTarget = 'web' | 'node' | 'web-worker' | 'service-worker';
+
+type Targets = RsbuildTarget[];
+```
+
+- **Default:** `['web']`
+- **Version:** `>= 0.2.0`
+
+Used to set the build output type for Rsbuild.
 
 Rsbuild supports build multiple target types for running in different target environments. After setting the correct target type, Rsbuild will optimize the build results for the environment, and enable some plugins or configs for the target environment during the build process.
 
-You can set the type through the `target` parameter of the [createRsbuild](/api/javascript-api/core#creatersbuild) method.
-
 ## Default Target
 
-By default, the build target is `'web'`, and the build result can run in a browser environment.
+By default, the targets is `['web']`, and the build result can run in a browser environment.
 
-the Rsbuild will read the [Browserslist config](https://github.com/browserslist/browserslist) in the project to determine the range of browsers.
+Rsbuild will read the [Browserslist config](https://github.com/browserslist/browserslist) in the project to determine the range of browsers.
 
 ## Optional Targets
 
-`target` can also be set to the following values:
+Apart from `'web'`, `targets` can also include the following types:
 
 - `'node'`: Build for Node.js environment, usually used in SSR and other scenarios.
 - `'web-worker'`: Build for Web Worker environment.
@@ -20,21 +31,25 @@ the Rsbuild will read the [Browserslist config](https://github.com/browserslist/
 For example, to build for the Node.js environment:
 
 ```ts
-const rsbuild = await createRsbuild(provider, {
-  target: 'node',
-});
+export default {
+  output: {
+    targets: ['node'],
+  },
+};
 ```
 
 ## Multiple Targets
 
-When target is an array containing multiple values, Rsbuild will perform multiple builds at the same time.
+When targets containing multiple values, Rsbuild will perform multiple builds at the same time.
 
 For example, we can build a browser target and an node target at the same time:
 
 ```ts
-const rsbuild = await createRsbuild(provider, {
-  target: ['web', 'node'],
-});
+export default {
+  output: {
+    targets: ['web', 'node'],
+  },
+};
 ```
 
 ## Node Target
