@@ -82,21 +82,6 @@ export async function startDevServer<
     middlewares,
   });
 
-  const devMiddlewares = await getMiddlewares(
-    {
-      pwd: options.context.rootPath,
-      devMiddleware,
-      dev: devServerConfig,
-      output: {
-        distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
-        publicPaths,
-      },
-    },
-    httpServer,
-  );
-
-  devMiddlewares.middlewares.forEach((m) => middlewares.use(m));
-
   debug('create dev server done');
 
   await options.context.hooks.onBeforeStartDevServerHook.call();
@@ -113,6 +98,21 @@ export async function startDevServer<
 
     printServerURLs(urls, routes, logger);
   }
+
+  const devMiddlewares = await getMiddlewares(
+    {
+      pwd: options.context.rootPath,
+      devMiddleware,
+      dev: devServerConfig,
+      output: {
+        distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
+        publicPaths,
+      },
+    },
+    httpServer,
+  );
+
+  devMiddlewares.middlewares.forEach((m) => middlewares.use(m));
 
   debug('listen dev server');
 
