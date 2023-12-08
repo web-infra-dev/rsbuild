@@ -93,8 +93,9 @@ export async function startDevServer<
       },
     },
     httpServer,
-    middlewares,
   );
+
+  devMiddlewares.middlewares.forEach((m) => middlewares.use(m));
 
   debug('create dev server done');
 
