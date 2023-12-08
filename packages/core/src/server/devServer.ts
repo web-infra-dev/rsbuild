@@ -4,7 +4,7 @@ import {
   DevConfig,
   ServerConfig,
   RequestHandler,
-  ExposeServerApis,
+  ServerAPIs,
   RsbuildDevServerOptions,
   CreateDevMiddlewareReturns,
   logger as defaultLogger,
@@ -56,7 +56,7 @@ export class RsbuildDevServer {
   private applySetupMiddlewares() {
     const setupMiddlewares = this.dev.setupMiddlewares || [];
 
-    const serverOptions: ExposeServerApis = {
+    const serverAPIs: ServerAPIs = {
       sockWrite: (type, data) => this.devMiddleware.sockWrite(type, data),
     };
 
@@ -69,7 +69,7 @@ export class RsbuildDevServer {
           unshift: (...handlers) => before.unshift(...handlers),
           push: (...handlers) => after.push(...handlers),
         },
-        serverOptions,
+        serverAPIs,
       );
     });
 

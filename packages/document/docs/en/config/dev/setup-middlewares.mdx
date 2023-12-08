@@ -2,19 +2,21 @@
 
 - **Type:**
 
-```js
-Array<
+```ts
+type ServerAPIs = {
+  sockWrite: (
+    type: string,
+    data?: string | boolean | Record<string, any>,
+  ) => void;
+};
+
+type SetupMiddlewares = Array<
   (
     middlewares: {
       unshift: (...handlers: RequestHandler[]) => void;
       push: (...handlers: RequestHandler[]) => void;
     },
-    server: {
-      sockWrite: (
-        type: string,
-        data?: string | boolean | Record<string, any>,
-      ) => void;
-    },
+    server: ServerAPIs,
   ) => void
 >;
 ```
@@ -45,7 +47,7 @@ export default {
 
 It is possible to use some server api to meet special scenario requirements:
 
-- sockWrite. Allow send some message to hmr client, and then the hmr client will take different actions depending on the message type. If you send a "content changed" message, the page will reload.
+- sockWrite. Allow send some message to HMR client, and then the HMR client will take different actions depending on the message type. If you send a "content changed" message, the page will reload.
 
 ```js
 export default {
