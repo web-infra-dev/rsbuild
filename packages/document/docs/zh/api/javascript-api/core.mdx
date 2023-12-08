@@ -55,7 +55,7 @@ type CreateRsbuildOptions = {
 ```ts
 function loadEnv(params: {
   // 默认为 process.cwd()
-  dir?: string;
+  cwd?: string;
   // 默认为 ['PUBLIC_']
   prefixes?: string[];
 }): Promise<{

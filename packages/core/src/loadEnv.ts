@@ -8,14 +8,14 @@ export const getEnvFiles = () => {
 };
 
 export async function loadEnv({
-  dir = process.cwd(),
+  cwd = process.cwd(),
   prefixes = ['PUBLIC_'],
-}: { dir?: string; prefixes?: string[] } = {}) {
+}: { cwd?: string; prefixes?: string[] } = {}) {
   const { parse } = await import('../compiled/dotenv');
   const { expand } = await import('../compiled/dotenv-expand');
 
   const envPaths = getEnvFiles()
-    .map((filename) => join(dir, filename))
+    .map((filename) => join(cwd, filename))
     .filter(isFileSync);
 
   const parsed: Record<string, string> = {};

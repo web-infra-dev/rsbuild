@@ -55,7 +55,7 @@ Load the `.env` file and return all environment variables starting with the spec
 ```ts
 function loadEnv(params: {
   // Default is process.cwd()
-  dir?: string;
+  cwd?: string;
   // Default is ['PUBLIC_']
   prefixes?: string[];
 }): Promise<{
