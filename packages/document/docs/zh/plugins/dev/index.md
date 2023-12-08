@@ -136,7 +136,7 @@ export const pluginUploadDist = (): RsbuildPlugin => ({
 - `api.getRsbuildConfig()` 获取配置项
 - `api.getNormalizedConfig()` 获取归一化后的配置项
 
-归一化的配置项会再次合并默认值并移除大部分可选类型，对于 `PluginUploadDist` 的例子其部分类型定义为：
+归一化的配置项会再次合并默认值，并移除大部分可选类型，对于 `PluginUploadDist` 的例子，其部分类型定义为：
 
 ```ts
 api.modifyRsbuildConfig((config: RsbuildConfig) => {});

@@ -3,6 +3,7 @@ import {
   getHTMLPathByEntry,
   type PluginStore,
   type RsbuildPluginAPI,
+  type GetRsbuildConfig,
 } from '@rsbuild/shared';
 import { createPublicContext } from './createContext';
 import type { Context } from '../../types';
@@ -17,23 +18,26 @@ export function getPluginAPI({
   const { hooks } = context;
   const publicContext = createPublicContext(context);
 
-  const getRsbuildConfig = () => {
-    if (!context.normalizedConfig) {
-      throw new Error(
-        'Cannot access Rsbuild config until modifyRsbuildConfig is called.',
-      );
+  const getNormalizedConfig = () => {
+    if (context.normalizedConfig) {
+      return context.normalizedConfig;
     }
-    return context.config;
+    throw new Error(
+      'Cannot access normalized config until modifyRsbuildConfig is called.',
+    );
   };
 
-  const getNormalizedConfig = () => {
-    if (!context.normalizedConfig) {
-      throw new Error(
-        'Cannot access normalized config until modifyRsbuildConfig is called.',
-      );
+  const getRsbuildConfig = ((type = 'current') => {
+    switch (type) {
+      case 'original':
+        return context.originalConfig;
+      case 'current':
+        return context.config;
+      case 'normalized':
+        return getNormalizedConfig();
     }
-    return context.normalizedConfig;
-  };
+    throw new Error('`getRsbuildConfig` get an invalid type param.');
+  }) as GetRsbuildConfig;
 
   const getHTMLPaths = () => {
     return Object.keys(context.entry).reduce<Record<string, string>>(
