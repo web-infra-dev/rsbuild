@@ -27,10 +27,16 @@ const noop = async () => {};
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions,
-  rsbuildConfig: RsbuildConfig = {},
+  rsbuildConfig: RsbuildConfig,
   plugins: RsbuildPlugin[] = [],
 ) => {
-  const { createRsbuild } = await import('@rsbuild/core');
+  const { createRsbuild, loadConfig } = await import('@rsbuild/core');
+
+  if (!rsbuildConfig) {
+    rsbuildConfig = await loadConfig({
+      cwd: rsbuildOptions.cwd || process.cwd(),
+    });
+  }
 
   if (process.env.PROVIDE_TYPE === 'rspack') {
     const rsbuild = await createRsbuild({
