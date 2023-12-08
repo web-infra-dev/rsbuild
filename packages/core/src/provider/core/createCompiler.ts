@@ -45,18 +45,26 @@ export async function createCompiler({
       : rspack(rspackConfigs);
 
   let isFirstCompile = true;
+  let isVersionLogged = false;
+  let isCompiling = false;
+
+  const logRspackVersion = () => {
+    if (!isVersionLogged) {
+      logger.start(`Use Rspack v${rspack.rspackVersion}`);
+      isVersionLogged = true;
+    }
+  };
 
   compiler.hooks.watchRun.tap('rsbuild:compiling', () => {
-    if (isFirstCompile) {
-      logger.start(`Use Rspack v${rspack.rspackVersion}`);
+    logRspackVersion();
+    if (!isCompiling) {
+      logger.start('Compiling...');
     }
-    logger.start('Compiling...');
+    isCompiling = true;
   });
 
   if (isProd()) {
-    compiler.hooks.run.tap('rsbuild:run', () => {
-      logger.start(`Use Rspack v${rspack.rspackVersion}`);
-    });
+    compiler.hooks.run.tap('rsbuild:run', logRspackVersion);
   }
 
   compiler.hooks.done.tap('rsbuild:done', async (stats: Stats | MultiStats) => {
@@ -99,6 +107,7 @@ export async function createCompiler({
       });
     }
 
+    isCompiling = false;
     isFirstCompile = false;
   });
 
