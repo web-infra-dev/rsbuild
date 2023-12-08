@@ -1,5 +1,6 @@
 import type { IncomingMessage, ServerResponse, Server } from 'http';
 import { DevConfig, NextFunction } from './config/dev';
+import { ServerConfig } from './config/server';
 import type { Logger } from '../logger';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 
@@ -51,7 +52,16 @@ export type CreateDevMiddlewareReturns = {
 export type RsbuildDevServerOptions = {
   pwd: string;
   /** Rsbuild devConfig */
-  dev: DevConfig;
+  dev: Omit<
+    DevConfig & ServerConfig,
+    | 'beforeStartUrl'
+    | 'progressBar'
+    | 'startUrl'
+    | 'https'
+    | 'host'
+    | 'port'
+    | 'strictPort'
+  >;
   devMiddleware?: DevMiddleware;
   output: {
     distPath: string;
