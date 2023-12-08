@@ -49,7 +49,7 @@ export type CreateDevMiddlewareReturns = {
   compiler: RspackCompiler | RspackMultiCompiler;
 };
 
-export type RsbuildDevServerOptions = {
+export type RsbuildDevMiddlewareOptions = {
   pwd: string;
   /** Rsbuild devConfig */
   dev: Omit<
@@ -74,7 +74,7 @@ export type CreateDevServerOptions = {
     customApp?: Server;
     logger?: Logger;
   };
-} & RsbuildDevServerOptions;
+} & RsbuildDevMiddlewareOptions;
 
 export type ServerApi = {
   close: () => Promise<void>;
