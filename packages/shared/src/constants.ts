@@ -81,6 +81,6 @@ export const TS_CONFIG_FILE = 'tsconfig.json';
 export const TARGET_ID_MAP: Record<RsbuildTarget, string> = {
   web: 'Client',
   node: 'Server',
-  'service-worker': 'Server Worker',
   'web-worker': 'Web Worker',
+  'service-worker': 'Service Worker',
 };
