@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse, Server } from 'http';
 import { EventEmitter } from 'events';
 import type {
-  RsbuildDevServerOptions,
+  RsbuildDevMiddlewareOptions,
   DevMiddlewareAPI,
   NextFunction,
   DevMiddleware as CustomDevMiddleware,
@@ -10,7 +10,7 @@ import SocketServer from './socketServer';
 
 type Options = {
   publicPaths: string[];
-  dev: RsbuildDevServerOptions['dev'];
+  dev: RsbuildDevMiddlewareOptions['dev'];
   devMiddleware?: CustomDevMiddleware;
 };
 
@@ -18,7 +18,9 @@ const noop = () => {
   // noop
 };
 
-function getHMRClientPath(client: RsbuildDevServerOptions['dev']['client']) {
+function getHMRClientPath(
+  client: RsbuildDevMiddlewareOptions['dev']['client'],
+) {
   const protocol = client?.protocol ? `&protocol=${client.protocol}` : '';
   const host = client?.host ? `&host=${client.host}` : '';
   const path = client?.path ? `&path=${client.path}` : '';
@@ -35,7 +37,7 @@ function getHMRClientPath(client: RsbuildDevServerOptions['dev']['client']) {
 export default class DevMiddleware extends EventEmitter {
   public middleware?: DevMiddlewareAPI;
 
-  private devOptions: RsbuildDevServerOptions['dev'];
+  private devOptions: RsbuildDevMiddlewareOptions['dev'];
 
   private devMiddleware?: CustomDevMiddleware;
 
