@@ -26,17 +26,17 @@ The entry object from the `source.entry` option.
 type RsbuildEntry = Record<string, string | string[]>;
 ```
 
-### context.target
+### context.targets
 
-Build target type, corresponding to the `target` option of `createRsbuild` method.
+Build artifact type, corresponding to the output.targets option in the Rsbuild configuration.
 
 - **Type:**
 
 ```ts
-type RsbuildTarget = 'web' | 'node' | 'web-worker';
+type RsbuildTarget = 'web' | 'node' | 'web-worker' | 'service-worker';
 
 type Context = {
-  target: RsbuildTarget | RsbuildTarget[];
+  targets: RsbuildTarget[];
 };
 ```
 
