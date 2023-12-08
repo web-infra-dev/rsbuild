@@ -144,7 +144,7 @@ const applyDefaultMiddlewares = async ({
   middlewares.use(notFoundMiddleware);
 };
 
-export const initRsbuildDevMiddlewares = async (
+export const getMiddlewares = async (
   options: RsbuildDevMiddlewareOptions,
   app: Server,
   middlewares: connect.Server,

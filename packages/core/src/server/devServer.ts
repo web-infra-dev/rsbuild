@@ -18,7 +18,7 @@ import connect from '@rsbuild/shared/connect';
 import { registerCleaner } from './restart';
 import type { Context } from '../types';
 import { createHttpServer } from './httpServer';
-import { initRsbuildDevMiddlewares } from './devMiddlewares';
+import { getMiddlewares } from './devMiddlewares';
 
 export async function startDevServer<
   Options extends {
@@ -82,7 +82,7 @@ export async function startDevServer<
     middlewares,
   });
 
-  const devMiddlewares = await initRsbuildDevMiddlewares(
+  const devMiddlewares = await getMiddlewares(
     {
       pwd: options.context.rootPath,
       devMiddleware,
