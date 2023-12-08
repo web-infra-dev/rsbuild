@@ -27,7 +27,7 @@ const noop = async () => {};
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions,
-  rsbuildConfig: RsbuildConfig,
+  rsbuildConfig?: RsbuildConfig,
   plugins: RsbuildPlugin[] = [],
 ) => {
   const { createRsbuild, loadConfig } = await import('@rsbuild/core');
