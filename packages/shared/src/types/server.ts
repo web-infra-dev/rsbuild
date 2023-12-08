@@ -49,7 +49,7 @@ export type CreateDevMiddlewareReturns = {
   compiler: RspackCompiler | RspackMultiCompiler;
 };
 
-export type RsbuildDevMiddlewareOptions = {
+export type RsbuildDevServerOptions = {
   pwd: string;
   /** Rsbuild devConfig */
   dev: Omit<
@@ -62,7 +62,6 @@ export type RsbuildDevMiddlewareOptions = {
     | 'port'
     | 'strictPort'
   >;
-  enable404?: boolean;
   devMiddleware?: DevMiddleware;
   output: {
     distPath: string;
@@ -75,7 +74,7 @@ export type CreateDevServerOptions = {
     customApp?: Server;
     logger?: Logger;
   };
-} & RsbuildDevMiddlewareOptions;
+} & RsbuildDevServerOptions;
 
 export type ServerApi = {
   close: () => Promise<void>;

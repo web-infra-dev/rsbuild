@@ -3,7 +3,7 @@ import url from 'url';
 import {
   RequestHandler,
   ExposeServerApis,
-  RsbuildDevMiddlewareOptions,
+  RsbuildDevServerOptions,
   CreateDevMiddlewareReturns,
   logger as defaultLogger,
   StartDevServerOptions,
@@ -32,13 +32,13 @@ import type { Context } from '../types';
 import { createHttpServer } from './httpServer';
 
 export class RsbuildDevServer {
-  private readonly dev: RsbuildDevMiddlewareOptions['dev'];
+  private readonly dev: RsbuildDevServerOptions['dev'];
   private readonly devMiddleware: DevMiddleware;
   private pwd: string;
-  private output: RsbuildDevMiddlewareOptions['output'];
+  private output: RsbuildDevServerOptions['output'];
   public middlewares = connect();
 
-  constructor(options: RsbuildDevMiddlewareOptions) {
+  constructor(options: RsbuildDevServerOptions) {
     this.pwd = options.pwd;
     this.dev = options.dev;
     this.output = options.output;
