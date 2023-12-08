@@ -18,7 +18,7 @@ export const applyArcoSupport = (api: RsbuildPluginAPI) => {
       return;
     }
 
-    const isUseSSR = isServerTarget(api.context.target);
+    const isUseSSR = isServerTarget(api.context.targets);
 
     if (!transformImport?.some((item) => item.libraryName === ARCO_NAME)) {
       transformImport.push({
