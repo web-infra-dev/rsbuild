@@ -1,0 +1,42 @@
+{
+  "name": "@rsbuild/plugin-umd",
+  "version": "0.1.9",
+  "description": "UMD plugin for Rsbuild",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/plugin-umd"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "modern build",
+    "dev": "modern build --watch"
+  },
+  "dependencies": {
+    "@rsbuild/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/test-helper": "workspace:*",
+    "typescript": "^5.3.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}
