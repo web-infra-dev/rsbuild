@@ -12,13 +12,13 @@ type GetRsbuildConfig = {
 
 - **参数：**
 
-你可以通过 `type` 参数来指定需要获取的 Rsbuild 配置类型：
+你可以通过 `type` 参数来指定读取的 Rsbuild 配置类型：
 
 ```js
 // 获取用户定义的原始 Rsbuild 配置。
 getRsbuildConfig('original');
 
-// 获取当前最新的 Rsbuild 配置。
+// 获取当前的 Rsbuild 配置。
 // 在 Rsbuild 的不同执行阶段，该配置的内容会发生变化。
 // 比如 `modifyRsbuildConfig` 钩子执行后会修改当前 Rsbuild 配置的内容。
 getRsbuildConfig('current');
