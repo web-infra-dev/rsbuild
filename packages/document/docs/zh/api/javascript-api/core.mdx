@@ -46,6 +46,29 @@ type CreateRsbuildOptions = {
 - `provider`：用于切换底层的打包工具。
 - `rsbuildConfig`：Rsbuild 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制，你可以在[配置](/config/)中找到所有可用的配置项。
 
+## loadConfig
+
+加载 Rsbuild 配置文件。
+
+- **类型：**
+
+```ts
+function loadConfig(params: {
+  // 默认为 process.cwd()
+  cwd: string;
+  // 指定配置文件路径，可以为相对路径或绝对路径
+  path?: string;
+}): Promise<RsbuildConfig>;
+```
+
+- **示例：**
+
+```ts
+const config = await loadConfig();
+
+console.log(config); // -> RsbuildConfig
+```
+
 ## loadEnv
 
 加载 `.env` 文件，并返回所有以 prefixes 开头的环境变量。
