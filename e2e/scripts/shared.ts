@@ -95,7 +95,17 @@ export function getRandomPort(
   }
 }
 
-const updateConfigForTest = (config: RsbuildConfig) => {
+const updateConfigForTest = async (
+  config: RsbuildConfig,
+  cwd: string = process.cwd(),
+) => {
+  const { loadConfig, mergeRsbuildConfig } = await import('@rsbuild/core');
+  const loadedConfig = await loadConfig({
+    cwd,
+  });
+
+  config = mergeRsbuildConfig(loadedConfig, config);
+
   // make devPort random to avoid port conflict
   config.server = {
     ...(config.server || {}),
@@ -127,6 +137,8 @@ const updateConfigForTest = (config: RsbuildConfig) => {
       polyfill: 'off',
     };
   }
+
+  return config;
 };
 
 export async function dev({
@@ -139,7 +151,7 @@ export async function dev({
 }) {
   process.env.NODE_ENV = 'development';
 
-  updateConfigForTest(rsbuildConfig);
+  rsbuildConfig = await updateConfigForTest(rsbuildConfig, options.cwd);
 
   const rsbuild = await createRsbuild(options, rsbuildConfig, plugins);
 
@@ -160,7 +172,7 @@ export async function build({
 }) {
   process.env.NODE_ENV = 'production';
 
-  updateConfigForTest(rsbuildConfig);
+  rsbuildConfig = await updateConfigForTest(rsbuildConfig, options.cwd);
 
   const rsbuild = await createRsbuild(options, rsbuildConfig, plugins);
 
