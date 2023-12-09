@@ -4,7 +4,7 @@ import ws from '../../../compiled/ws';
 import {
   logger,
   type Stats,
-  type RsbuildDevServerOptions,
+  type RsbuildDevMiddlewareOptions,
 } from '@rsbuild/shared';
 
 interface ExtWebSocket extends ws {
@@ -16,7 +16,7 @@ export default class SocketServer {
 
   private readonly sockets: ws[] = [];
 
-  private readonly options: RsbuildDevServerOptions['dev'];
+  private readonly options: RsbuildDevMiddlewareOptions['dev'];
 
   private app?: Server;
 
@@ -24,7 +24,7 @@ export default class SocketServer {
 
   private timer: NodeJS.Timeout | null = null;
 
-  constructor(options: RsbuildDevServerOptions['dev']) {
+  constructor(options: RsbuildDevMiddlewareOptions['dev']) {
     this.options = options;
   }
 

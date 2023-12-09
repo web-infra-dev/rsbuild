@@ -1,9 +1,4 @@
-import { Server } from 'http';
-import url from 'url';
 import {
-  RequestHandler,
-  ServerAPIs,
-  RsbuildDevServerOptions,
   CreateDevMiddlewareReturns,
   logger as defaultLogger,
   StartDevServerOptions,
@@ -19,167 +14,11 @@ import {
   RspackMultiCompiler,
   RspackCompiler,
 } from '@rsbuild/shared';
-import DevMiddleware from './compiler-dev-middleware';
 import connect from '@rsbuild/shared/connect';
-import {
-  faviconFallbackMiddleware,
-  getHtmlFallbackMiddleware,
-  notFoundMiddleware,
-} from './middlewares';
-import { join, isAbsolute } from 'path';
 import { registerCleaner } from './restart';
 import type { Context } from '../types';
 import { createHttpServer } from './httpServer';
-
-export class RsbuildDevServer {
-  private readonly dev: RsbuildDevServerOptions['dev'];
-  private readonly devMiddleware: DevMiddleware;
-  private pwd: string;
-  private output: RsbuildDevServerOptions['output'];
-  public middlewares = connect();
-
-  constructor(options: RsbuildDevServerOptions) {
-    this.pwd = options.pwd;
-    this.dev = options.dev;
-    this.output = options.output;
-
-    // create dev middleware instance
-    this.devMiddleware = new DevMiddleware({
-      dev: this.dev,
-      publicPaths: options.output.publicPaths,
-      devMiddleware: options.devMiddleware,
-    });
-  }
-
-  private applySetupMiddlewares() {
-    const setupMiddlewares = this.dev.setupMiddlewares || [];
-
-    const serverAPIs: ServerAPIs = {
-      sockWrite: (type, data) => this.devMiddleware.sockWrite(type, data),
-    };
-
-    const before: RequestHandler[] = [];
-    const after: RequestHandler[] = [];
-
-    setupMiddlewares.forEach((handler) => {
-      handler(
-        {
-          unshift: (...handlers) => before.unshift(...handlers),
-          push: (...handlers) => after.push(...handlers),
-        },
-        serverAPIs,
-      );
-    });
-
-    return { before, after };
-  }
-
-  // Complete the preparation of services
-  public async onInit(app: Server) {
-    // Order: setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push
-    const { before, after } = this.applySetupMiddlewares();
-
-    before.forEach((fn) => this.middlewares.use(fn));
-
-    await this.applyDefaultMiddlewares(app);
-
-    after.forEach((fn) => this.middlewares.use(fn));
-  }
-
-  private async applyDefaultMiddlewares(app: Server) {
-    const { dev, devMiddleware } = this;
-
-    // compression should be the first middleware
-    if (dev.compress) {
-      const { default: compression } = await import(
-        '../../compiled/http-compression'
-      );
-      this.middlewares.use((req, res, next) => {
-        compression({
-          gzip: true,
-          brotli: false,
-        })(req, res, next);
-      });
-    }
-
-    this.middlewares.use((req, res, next) => {
-      // allow hmr request cross-domain, because the user may use global proxy
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      const path = req.url ? url.parse(req.url).pathname : '';
-      if (path?.includes('hot-update')) {
-        res.setHeader('Access-Control-Allow-Credentials', 'false');
-      }
-
-      // The headers configured by the user on devServer will not take effect on html requests. Add the following code to make the configured headers take effect on all requests.
-      const confHeaders = dev.headers;
-      if (confHeaders) {
-        for (const [key, value] of Object.entries(confHeaders)) {
-          res.setHeader(key, value);
-        }
-      }
-      next();
-    });
-
-    // dev proxy handler, each proxy has own handler
-    if (dev.proxy) {
-      const { createProxyMiddleware } = await import('./proxy');
-      const { middlewares } = createProxyMiddleware(dev.proxy, app);
-      middlewares.forEach((middleware) => {
-        this.middlewares.use(middleware);
-      });
-    }
-
-    // do webpack build / plugin apply / socket server when pass compiler instance
-    devMiddleware.init(app);
-
-    devMiddleware.middleware && this.middlewares.use(devMiddleware.middleware);
-
-    if (dev.publicDir && dev.publicDir.name) {
-      const { default: sirv } = await import('../../compiled/sirv');
-      const { name } = dev.publicDir;
-      const publicDir = isAbsolute(name) ? name : join(this.pwd, name);
-
-      const assetMiddleware = sirv(publicDir, {
-        etag: true,
-        dev: true,
-      });
-
-      this.middlewares.use(assetMiddleware);
-    }
-
-    const { distPath } = this.output;
-
-    this.middlewares.use(
-      getHtmlFallbackMiddleware({
-        distPath: isAbsolute(distPath) ? distPath : join(this.pwd, distPath),
-        callback: devMiddleware.middleware,
-        htmlFallback: this.dev.htmlFallback,
-      }),
-    );
-
-    if (dev.historyApiFallback) {
-      const { default: connectHistoryApiFallback } = await import(
-        '../../compiled/connect-history-api-fallback'
-      );
-      const historyApiFallbackMiddleware = connectHistoryApiFallback(
-        dev.historyApiFallback === true ? {} : dev.historyApiFallback,
-      ) as RequestHandler;
-
-      this.middlewares.use(historyApiFallbackMiddleware);
-
-      // ensure fallback request can be handled by webpack-dev-middleware
-      devMiddleware.middleware &&
-        this.middlewares.use(devMiddleware.middleware);
-    }
-
-    this.middlewares.use(faviconFallbackMiddleware);
-    this.middlewares.use(notFoundMiddleware);
-  }
-
-  public close() {
-    this.devMiddleware.close();
-  }
-}
+import { getMiddlewares } from './devMiddlewares';
 
 export async function startDevServer<
   Options extends {
@@ -236,24 +75,16 @@ export async function startDevServer<
     ? (compiler as RspackMultiCompiler).compilers.map(getPublicPathFromCompiler)
     : [getPublicPathFromCompiler(compiler as RspackCompiler)];
 
-  const server = new RsbuildDevServer({
-    pwd: options.context.rootPath,
-    devMiddleware,
-    dev: devServerConfig,
-    output: {
-      distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
-      publicPaths,
-    },
+  const middlewares = connect();
+
+  const httpServer = await createHttpServer({
+    https: devServerConfig.https,
+    middlewares,
   });
 
   debug('create dev server done');
 
   await options.context.hooks.onBeforeStartDevServerHook.call();
-
-  const httpServer = await createHttpServer({
-    https: devServerConfig.https,
-    middlewares: server.middlewares,
-  });
 
   // print url after http server created and before dev compile (just a short time interval)
   if (printURLs) {
@@ -268,7 +99,20 @@ export async function startDevServer<
     printServerURLs(urls, routes, logger);
   }
 
-  await server.onInit(httpServer);
+  const devMiddlewares = await getMiddlewares(
+    {
+      pwd: options.context.rootPath,
+      devMiddleware,
+      dev: devServerConfig,
+      output: {
+        distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
+        publicPaths,
+      },
+    },
+    httpServer,
+  );
+
+  devMiddlewares.middlewares.forEach((m) => middlewares.use(m));
 
   debug('listen dev server');
 
@@ -291,7 +135,7 @@ export async function startDevServer<
         });
 
         const onClose = () => {
-          server.close();
+          devMiddlewares.close();
           httpServer.close();
         };
 

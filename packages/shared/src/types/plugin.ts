@@ -116,6 +116,12 @@ export type Plugins = {
   define: PluginsFn;
 };
 
+export type GetRsbuildConfig = {
+  (): Readonly<RsbuildConfig>;
+  (type: 'original' | 'current'): Readonly<RsbuildConfig>;
+  (type: 'normalized'): NormalizedConfig;
+};
+
 /**
  * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
@@ -139,7 +145,7 @@ export type RsbuildPluginAPI = {
    * The key is entry name and the value is path.
    */
   getHTMLPaths: () => Record<string, string>;
-  getRsbuildConfig: () => Readonly<RsbuildConfig>;
+  getRsbuildConfig: GetRsbuildConfig;
   getNormalizedConfig: () => NormalizedConfig;
 
   modifyRsbuildConfig: (fn: ModifyRsbuildConfigFn) => void;
