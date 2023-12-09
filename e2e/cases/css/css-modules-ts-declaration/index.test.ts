@@ -23,7 +23,6 @@ test('should generator ts declaration correctly for css modules auto true', asyn
         entry: { index: resolve(testDir, 'index.js') },
       },
       output: {
-        disableSourceMap: true,
         enableCssModuleTSDeclaration: true,
       },
     },
@@ -57,7 +56,6 @@ test('should generator ts declaration correctly for css modules auto function', 
         entry: { index: resolve(testDir, 'index.js') },
       },
       output: {
-        disableSourceMap: true,
         enableCssModuleTSDeclaration: true,
         cssModules: {
           auto: (path) => {
@@ -87,7 +85,6 @@ test('should generator ts declaration correctly for css modules auto Regexp', as
         entry: { index: resolve(testDir, 'index.js') },
       },
       output: {
-        disableSourceMap: true,
         enableCssModuleTSDeclaration: true,
         cssModules: {
           auto: /\.module\./i,
@@ -115,7 +112,6 @@ test('should generator ts declaration correctly for custom exportLocalsConventio
         entry: { index: resolve(testDir, 'index.js') },
       },
       output: {
-        disableSourceMap: true,
         enableCssModuleTSDeclaration: true,
         cssModules: {
           auto: /\.module\./i,
