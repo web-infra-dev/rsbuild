@@ -1,3 +1,4 @@
+import { isProd } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 export type PluginUmdOptions = {
@@ -9,9 +10,23 @@ export const pluginUmd = (options: PluginUmdOptions): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+      const userConfig = api.getRsbuildConfig('original');
+
       return mergeRsbuildConfig(config, {
         output: {
-          disableFilenameHash: true,
+          distPath: {
+            js: userConfig.output?.distPath?.js ?? '',
+            css: userConfig.output?.distPath?.css ?? '',
+          },
+          disableFilenameHash: userConfig.output?.disableFilenameHash ?? true,
+        },
+        html: {
+          // allows to test the umd bundle in the browser
+          scriptLoading: userConfig.html?.scriptLoading ?? 'blocking',
+        },
+        tools: {
+          htmlPlugin:
+            userConfig.tools?.htmlPlugin ?? (isProd() ? false : undefined),
         },
       });
     });
