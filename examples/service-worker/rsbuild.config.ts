@@ -5,7 +5,6 @@ export default defineConfig({
     entry: { sw: './src/sw.ts' },
   },
   output: {
-    disableSourceMap: true,
     distPath: {
       root: './dist',
       worker: './',

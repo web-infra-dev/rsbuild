@@ -41,7 +41,7 @@ Rsbuild provides some configs to modify the directory or filename, you can:
 - Modify the filename through [output.filename](/config/output/filename).
 - Modify the output path of through [output.distPath](/config/output/dist-path).
 - Modify the license file through [output.legalComments](/config/output/legal-comments).
-- Remove Source Map file through [output.disableSourceMap](/config/output/disable-source-map).
+- Modify Source Map file through [output.sourceMap](/config/output/source-map).
 - Modify the output structure of the HTML files through [html.outputStructure](/config/html/output-structure).
 
 ## Static Assets

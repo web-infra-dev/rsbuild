@@ -156,7 +156,7 @@ export interface OutputConfig {
    */
   disableMinimize?: boolean;
   /**
-   * Configure source map type.
+   * Whether to generate source map files, and which format of source map to generate
    */
   sourceMap?: SourceMap;
   /**

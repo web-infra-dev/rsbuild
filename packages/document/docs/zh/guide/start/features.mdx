@@ -11,7 +11,7 @@
 | TS 编译         | 默认通过 SWC 编译 TS 文件                                        | <ul><li>[TypeScript 转译](/guide/basic/typescript#typescript-转译)</li></ul>                                               |
 | JS 压缩         | 默认在生产环境构建时开启压缩                                     | <ul><li>[output.disableMinimize](/config/output/disable-minimize)</li></ul>                                                |
 | Polyfill 注入   | 默认会注入 core-js 等 Polyfill                                   | <ul><li>[浏览器兼容性](/guide/advanced/browser-compatibility)</li><li>[output.polyfill](/config/output/polyfill)</li></ul> |
-| SourceMap 生成  | 默认在生产环境构建时生成高质量 SourceMap                         | <ul><li>[output.disableSourceMap](/config/output/disable-source-map)</li></ul>                                             |
+| SourceMap 生成  | 默认在开发环境生成 SourceMap                                     | <ul><li>[output.sourceMap](/config/output/source-map)</li></ul>                                                            |
 | 文件别名        | 可选功能，通过 alias 设置文件别名                                | <ul><li>[路径别名](/guide/advanced/alias)</li><li>[source.alias](/config/source/alias)</li></ul>                           |
 | Babel 编译      | 可选功能，通过 Babel 对 JavaScript 和 TypeScript 代码进行转译    | <ul><li>[Babel 插件](/plugins/list/plugin-babel)</li></ul>                                                                 |
 | Node 产物       | 可选功能，支持构建出运行在 Node.js 环境的 JavaScript 产物        | <ul><li>[Node 产物](/config/output/targets#node-target)</li></ul>                                                          |

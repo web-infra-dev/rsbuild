@@ -41,7 +41,7 @@ Rsbuild 提供了多个配置项来修改产物目录和产物名称，你可以
 - 通过 [output.filename](/config/output/filename) 来修改产物的文件名。
 - 通过 [output.distPath](/config/output/dist-path) 来修改产物的输出路径。
 - 通过 [output.legalComments](/config/output/legal-comments) 来修改 License 文件的生成方式。
-- 通过 [output.disableSourceMap](/config/output/disable-source-map) 来移除 Source Map 文件。
+- 通过 [output.sourceMap](/config/output/source-map) 来修改 Source Map 文件。
 - 通过 [html.outputStructure](/config/html/output-structure) 来修改 HTML 产物对应的文件夹结构。
 
 ## 静态资源

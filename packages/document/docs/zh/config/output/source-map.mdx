@@ -1,0 +1,71 @@
+# sourceMap
+
+- **类型：**
+
+```ts
+type SourceMap = {
+  js?: RspackConfig['devtool'];
+  css?: boolean;
+};
+```
+
+- **默认值：**
+
+```ts
+const defaultSourceMap = {
+  js: isDev ? 'cheap-module-source-map' : false,
+  css: false,
+};
+```
+
+- **版本：** `>= 0.2.0`
+
+用于设置是否生成 source map 文件，以及生成哪一种格式的 source map。
+
+:::tip 什么是 source map
+source map 是保存源代码映射关系的信息文件，它记录了编译后的代码的每一个位置，以及所对应的编译前的位置。通过 source map，可以在调试编译后的代码时，直接查看对应的源代码。
+:::
+
+## 默认行为
+
+默认情况下，Rsbuild 的 source map 生成规则如下：
+
+- 在开发环境构建时，会生成 JS 文件的 source map，便于进行开发调试；不会生成 CSS 文件的 source map。
+- 在生产环境构建时，不会生成 JS 和 CSS 文件的 source map，以提供最佳的构建性能。
+
+## JS Source Map
+
+JS 文件的 source map 通过 `sourceMap.js` 来控制，可以传入 Rspack [devtool](https://rspack.dev/zh/config/devtool) 选项支持的所有 source map 格式，设置为 `false` 为关闭。
+
+比如，如果需要在生产环境生成 JS 文件的 source map，可以设置为：
+
+```js
+export default {
+  output: {
+    sourceMap: {
+      js:
+        process.env.NODE_ENV === 'production'
+          ? // 开发环境使用性能更好的 source map 格式
+            'cheap-module-source-map'
+          : // 生产环境使用高质量的 source map 格式
+            'source-map',
+    },
+  },
+};
+```
+
+## CSS Source Map
+
+CSS 文件的 source map 通过 `sourceMap.css` 来控制，设置为 `true` 为开启，设置为 `false` 为关闭。
+
+比如，如果需要生成 CSS 文件的 source map，可以设置为：
+
+```js
+export default {
+  output: {
+    sourceMap: {
+      css: true,
+    },
+  },
+};
+```

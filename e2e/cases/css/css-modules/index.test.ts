@@ -4,11 +4,6 @@ import { build } from '@scripts/shared';
 test('should compile CSS modules correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    rsbuildConfig: {
-      output: {
-        disableSourceMap: true,
-      },
-    },
   });
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -36,7 +31,6 @@ test('should compile CSS modules follow by output.cssModules', async () => {
             return resource.includes('.scss');
           },
         },
-        disableSourceMap: true,
       },
     },
   });
