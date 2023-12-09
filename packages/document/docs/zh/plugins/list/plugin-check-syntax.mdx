@@ -56,6 +56,21 @@ error   [Syntax Checker] Find some syntax errors after production build:
 如果日志中没有显示对应的源码位置，可以尝试将 **output.disableMinimize** 设置为 true 后再重新构建。
 :::
 
+注意，展示源代码信息依赖 source map 文件，你可以配置 [output.sourceMap](/config/output/source-map) 选项，以在生产环境构建时生成 source map 文件。
+
+```js
+export default {
+  output: {
+    sourceMap: {
+      js:
+        process.env.NODE_ENV === 'production'
+            'cheap-module-source-map'
+            'source-map',
+    },
+  },
+};
+```
+
 ### 解决方法
 
 当检测到语法错误后，你可以通过以下方式来处理：
