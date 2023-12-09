@@ -11,4 +11,7 @@ export default defineConfig({
     template: './src/index.html',
     scriptLoading: 'blocking',
   },
+  tools: {
+    htmlPlugin: {},
+  },
 });
