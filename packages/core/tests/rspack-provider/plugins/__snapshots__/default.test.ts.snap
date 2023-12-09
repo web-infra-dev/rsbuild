@@ -195,7 +195,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -235,7 +235,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -281,7 +281,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -291,7 +291,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -331,7 +331,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -341,7 +341,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -387,7 +387,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -441,7 +441,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -660,6 +660,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       },
       "name": "DefinePlugin",
     },
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
+    },
   ],
   "resolve": {
     "alias": {
@@ -696,7 +699,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "devServer": {
     "hot": false,
   },
-  "devtool": "hidden-source-map",
+  "devtool": false,
   "entry": {
     "index": [
       "src/index.js",
@@ -1190,7 +1193,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
               },
               "minify": false,
-              "sourceMaps": true,
+              "sourceMaps": false,
             },
           },
         ],
@@ -1234,7 +1237,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
               },
               "minify": false,
-              "sourceMaps": true,
+              "sourceMaps": false,
             },
           },
         ],
@@ -1615,7 +1618,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -1634,7 +1637,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2047,7 +2050,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2087,7 +2090,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2133,7 +2136,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -2143,7 +2146,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2183,7 +2186,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -2193,7 +2196,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2239,7 +2242,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -2293,7 +2296,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -2514,6 +2517,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "process.env.NODE_ENV": ""development"",
       },
       "name": "DefinePlugin",
+    },
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
     },
   ],
   "resolve": {

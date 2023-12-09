@@ -67,30 +67,12 @@ export const awaitableGetter = <T>(
   return { then, promises };
 };
 
-export const isUseJsSourceMap = (config: NormalizedConfig) => {
-  const { disableSourceMap } = config.output || {};
-
-  if (typeof disableSourceMap === 'boolean') {
-    return !disableSourceMap;
+export const getJsSourceMap = (config: NormalizedConfig) => {
+  const { sourceMap } = config.output;
+  if (sourceMap.js === undefined) {
+    return isProd() ? false : 'cheap-module-source-map';
   }
-
-  return !disableSourceMap.js;
-};
-
-export const isUseCssSourceMap = (config: NormalizedConfig) => {
-  const { disableSourceMap } = config.output || {};
-
-  if (typeof disableSourceMap === 'boolean') {
-    return !disableSourceMap;
-  }
-
-  // If the disableSourceMap.css option is not specified, we will enable it in development mode.
-  // We do not need CSS Source Map in production mode.
-  if (disableSourceMap.css === undefined) {
-    return process.env.NODE_ENV !== 'production';
-  }
-
-  return !disableSourceMap.css;
+  return sourceMap.js;
 };
 
 export const getSharedPkgCompiledPath = (packageName: SharedCompiledPkgNames) =>

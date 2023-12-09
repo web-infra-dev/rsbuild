@@ -23,7 +23,7 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
@@ -54,13 +54,13 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
                   },
                 ],
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
             "options": {
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
         ],
@@ -93,7 +93,7 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
@@ -124,13 +124,13 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
                   },
                 ],
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
             "options": {
-              "sourceMap": true,
+              "sourceMap": false,
               "stylusOptions": {
                 "lineNumbers": false,
               },

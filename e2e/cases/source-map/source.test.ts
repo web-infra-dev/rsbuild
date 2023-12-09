@@ -32,6 +32,9 @@ test('source-map', async () => {
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
+        sourceMap: {
+          js: 'source-map',
+        },
         legalComments: 'none',
       },
       performance: {
@@ -79,8 +82,37 @@ test('source-map', async () => {
 
   expect(originalPositions[1]).toEqual({
     source: 'src/index.js',
-    line: 6,
+    line: 7,
     column: 0,
     name: 'window',
   });
+});
+
+test('should not generate source map by default', async () => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    plugins: [pluginReact()],
+    rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-3',
+        },
+        sourceMap: {
+          js: 'source-map',
+          css: true,
+        },
+      },
+    },
+  });
+
+  const files = await rsbuild.unwrapOutputJSON(false);
+
+  const jsMapFiles = Object.keys(files).filter((files) =>
+    files.endsWith('.js.map'),
+  );
+  const cssMapFiles = Object.keys(files).filter((files) =>
+    files.endsWith('.css.map'),
+  );
+  expect(jsMapFiles.length >= 1).toBeTruthy();
+  expect(cssMapFiles.length >= 1).toBeTruthy();
 });

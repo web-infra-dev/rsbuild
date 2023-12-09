@@ -1,3 +1,4 @@
+import type { RspackConfig } from '../rspack';
 import type { RsbuildTarget } from '../rsbuild';
 import type { Builtins, Externals } from '@rspack/core';
 
@@ -60,12 +61,10 @@ export type NormalizedDataUriLimit = Required<DataUriLimit>;
 
 export type Polyfill = 'usage' | 'entry' | 'ua' | 'off';
 
-export type DisableSourceMapOption =
-  | boolean
-  | {
-      js?: boolean;
-      css?: boolean;
-    };
+export type SourceMap = {
+  js?: RspackConfig['devtool'];
+  css?: boolean;
+};
 
 export type CssModuleLocalsConvention =
   | 'asIs'
@@ -157,9 +156,9 @@ export interface OutputConfig {
    */
   disableMinimize?: boolean;
   /**
-   * Whether to disable source map.
+   * Configure source map type.
    */
-  disableSourceMap?: DisableSourceMapOption;
+  sourceMap?: SourceMap;
   /**
    * Remove the hash from the name of static files after production build.
    */
@@ -202,12 +201,15 @@ export interface NormalizedOutputConfig extends OutputConfig {
   filename: FilenameConfig;
   distPath: DistPathConfig;
   polyfill: Polyfill;
+  sourceMap: {
+    js?: RspackConfig['devtool'];
+    css: boolean;
+  };
   assetPrefix: string;
   dataUriLimit: NormalizedDataUriLimit;
   cleanDistPath: boolean;
   disableCssExtract: boolean;
   disableMinimize: boolean;
-  disableSourceMap: DisableSourceMapOption;
   disableFilenameHash: boolean;
   enableLatestDecorators: boolean;
   enableCssModuleTSDeclaration: boolean;

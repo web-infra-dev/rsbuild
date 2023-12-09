@@ -54,11 +54,9 @@ export const isCssModules = (filename: string, modules: CssLoaderModules) => {
 };
 
 export const getPostcssConfig = ({
-  enableSourceMap,
   browserslist,
   config,
 }: {
-  enableSourceMap: boolean;
   browserslist: string[];
   config: NormalizedConfig;
 }): ProcessOptions => {
@@ -89,7 +87,7 @@ export const getPostcssConfig = ({
         require(getSharedPkgCompiledPath('autoprefixer'))(autoprefixerOptions),
       ].filter(Boolean),
     },
-    sourceMap: enableSourceMap,
+    sourceMap: config.output.sourceMap.css,
   };
 
   const mergedConfig = mergeChainedOptions({
@@ -143,14 +141,12 @@ export const normalizeCssLoaderOptions = (
 
 export const getCssLoaderOptions = ({
   config,
-  enableSourceMap,
   importLoaders,
   isServer,
   isWebWorker,
   localIdentName,
 }: {
   config: NormalizedConfig;
-  enableSourceMap: boolean;
   importLoaders: number;
   isServer: boolean;
   isWebWorker: boolean;
@@ -165,7 +161,7 @@ export const getCssLoaderOptions = ({
       exportLocalsConvention: cssModules.exportLocalsConvention,
       localIdentName,
     },
-    sourceMap: enableSourceMap,
+    sourceMap: config.output.sourceMap.css,
   };
 
   const mergedCssLoaderOptions = mergeChainedOptions({

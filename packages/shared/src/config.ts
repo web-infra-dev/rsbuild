@@ -128,9 +128,9 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   cleanDistPath: true,
   disableCssExtract: false,
   disableMinimize: false,
-  disableSourceMap: {
-    js: false,
-    css: undefined,
+  sourceMap: {
+    js: undefined,
+    css: false,
   },
   disableFilenameHash: false,
   enableLatestDecorators: false,

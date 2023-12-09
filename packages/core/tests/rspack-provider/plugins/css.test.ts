@@ -17,28 +17,30 @@ describe('plugin-css', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should disable source map when output.disableSourceMap is true', async () => {
+  it('should enable source map when output.sourceMap.css is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableSourceMap: true,
+          sourceMap: {
+            css: true,
+          },
         },
       },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(JSON.stringify(bundlerConfigs[0])).toContain('"sourceMap":false');
+    expect(JSON.stringify(bundlerConfigs[0])).toContain('"sourceMap":true');
   });
 
-  it('should disable source map when output.disableSourceMap is css: true', async () => {
+  it('should disable source map when output.sourceMap.css is false', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableSourceMap: {
-            css: true,
+          sourceMap: {
+            css: false,
           },
         },
       },
