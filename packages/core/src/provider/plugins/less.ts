@@ -1,6 +1,5 @@
 import type { RsbuildPlugin } from '../../types';
 import {
-  isUseCssSourceMap,
   LESS_REGEX,
   getLessLoaderOptions,
   getSharedPkgCompiledPath,
@@ -28,7 +27,7 @@ export function pluginLess(): RsbuildPlugin {
 
         const { excludes, options } = getLessLoaderOptions(
           config.tools.less,
-          isUseCssSourceMap(config),
+          config.output.sourceMap.css,
         );
 
         excludes.forEach((item) => {

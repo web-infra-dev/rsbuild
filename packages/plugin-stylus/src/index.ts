@@ -1,10 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import {
-  deepmerge,
-  STYLUS_REGEX,
-  isUseCssSourceMap,
-  mergeChainedOptions,
-} from '@rsbuild/shared';
+import { deepmerge, STYLUS_REGEX, mergeChainedOptions } from '@rsbuild/shared';
 
 type StylusOptions = {
   use?: string[];
@@ -33,7 +28,7 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
 
         const mergedOptions = mergeChainedOptions({
           defaults: {
-            sourceMap: isUseCssSourceMap(config),
+            sourceMap: config.output.sourceMap.css,
           },
           options,
           mergeFn: deepmerge,

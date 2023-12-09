@@ -2,7 +2,6 @@ import path from 'path';
 import {
   getBrowserslistWithDefault,
   isUseCssExtract,
-  isUseCssSourceMap,
   CSS_REGEX,
   CSS_MODULES_REGEX,
   getCssLoaderOptions,
@@ -38,7 +37,6 @@ export async function applyBaseCSSRule({
   importLoaders?: number;
 }) {
   // 1. Check user config
-  const enableSourceMap = isUseCssSourceMap(config);
   const enableCSSModuleTS = Boolean(config.output.enableCssModuleTSDeclaration);
 
   const browserslist = await getBrowserslistWithDefault(
@@ -53,7 +51,6 @@ export async function applyBaseCSSRule({
 
     const cssLoaderOptions = getCssLoaderOptions({
       config,
-      enableSourceMap,
       importLoaders,
       isServer,
       isWebWorker,
@@ -124,7 +121,6 @@ export async function applyBaseCSSRule({
 
   if (!isServer && !isWebWorker) {
     const postcssLoaderOptions = getPostcssConfig({
-      enableSourceMap,
       browserslist,
       config,
     });
@@ -211,11 +207,10 @@ export const pluginCss = (): RsbuildPlugin => {
           context: api.context,
         });
 
-        const enableSourceMap = isUseCssSourceMap(config);
         const enableExtractCSS = isUseCssExtract(config, utils.target);
 
         // TODO: there is no switch to turn off experiments.css sourcemap in rspack, so we manually remove css sourcemap in Rsbuild
-        if (!enableSourceMap && enableExtractCSS) {
+        if (!config.output.sourceMap.css && enableExtractCSS) {
           const { RemoveCssSourcemapPlugin } = await import(
             '../../rspack/RemoveCssSourcemapPlugin'
           );

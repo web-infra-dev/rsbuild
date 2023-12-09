@@ -95,7 +95,6 @@ export type Plugins = {
   cleanOutput: PluginsFn;
   startUrl: PluginsFn;
   fileSize: PluginsFn;
-  devtool: PluginsFn;
   target: PluginsFn;
   entry: PluginsFn;
   cache: PluginsFn;

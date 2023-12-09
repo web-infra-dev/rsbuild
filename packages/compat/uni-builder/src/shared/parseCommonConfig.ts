@@ -36,6 +36,7 @@ import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 import { pluginPostcssLegacy } from './plugins/postcssLegacy';
+import { pluginDevtool } from './plugins/devtools';
 
 const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
 
@@ -272,6 +273,9 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   const rsbuildPlugins: RsbuildPlugin[] = [
     pluginSplitChunks(),
     pluginGlobalVars(uniBuilderConfig.source?.globalVars),
+    pluginDevtool({
+      disableSourceMap: uniBuilderConfig.output?.disableSourceMap,
+    }),
   ];
 
   const checkSyntaxOptions = uniBuilderConfig.security?.checkSyntax;

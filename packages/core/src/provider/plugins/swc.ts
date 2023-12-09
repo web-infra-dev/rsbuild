@@ -3,8 +3,8 @@ import {
   cloneDeep,
   isWebTarget,
   SCRIPT_REGEX,
+  getJsSourceMap,
   addCoreJsEntry,
-  isUseJsSourceMap,
   getCoreJsVersion,
   applyScriptCondition,
   getBrowserslistWithDefault,
@@ -44,7 +44,7 @@ export async function getDefaultSwcConfig(
     env: {
       targets: await getBrowserslistWithDefault(rootPath, config, target),
     },
-    sourceMaps: isUseJsSourceMap(config),
+    sourceMaps: Boolean(getJsSourceMap(config)),
     exclude: [],
     inlineSourcesContent: true,
   };
