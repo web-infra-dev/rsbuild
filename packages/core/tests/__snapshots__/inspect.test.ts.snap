@@ -7,7 +7,6 @@ exports[`inspectConfig > should print plugin names when inspect config 1`] = `
   "rsbuild:entry",
   "rsbuild:target",
   "rsbuild:output",
-  "rsbuild:devtool",
   "rsbuild:resolve",
   "rsbuild:file-size",
   "rsbuild:clean-output",

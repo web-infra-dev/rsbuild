@@ -137,7 +137,7 @@ exports[`plugin-postcssLegacy > should register postcss plugin by browserslist 1
                     [Function],
                   ],
                 },
-                "sourceMap": true,
+                "sourceMap": false,
               },
             },
           ],
@@ -173,7 +173,7 @@ exports[`plugin-postcssLegacy > should register postcss plugin by browserslist 1
                     [Function],
                   ],
                 },
-                "sourceMap": true,
+                "sourceMap": false,
               },
             },
           ],
@@ -215,7 +215,7 @@ exports[`plugin-postcssLegacy > should register postcss plugin by browserslist 1
                     [Function],
                   ],
                 },
-                "sourceMap": true,
+                "sourceMap": false,
               },
             },
             {
@@ -225,7 +225,7 @@ exports[`plugin-postcssLegacy > should register postcss plugin by browserslist 1
                 "lessOptions": {
                   "javascriptEnabled": true,
                 },
-                "sourceMap": true,
+                "sourceMap": false,
               },
             },
           ],
@@ -261,7 +261,7 @@ exports[`plugin-postcssLegacy > should register postcss plugin by browserslist 1
                     [Function],
                   ],
                 },
-                "sourceMap": true,
+                "sourceMap": false,
               },
             },
             {
@@ -271,7 +271,7 @@ exports[`plugin-postcssLegacy > should register postcss plugin by browserslist 1
                 "lessOptions": {
                   "javascriptEnabled": true,
                 },
-                "sourceMap": true,
+                "sourceMap": false,
               },
             },
           ],
@@ -313,7 +313,7 @@ exports[`plugin-postcssLegacy > should register postcss plugin by browserslist 1
                     [Function],
                   ],
                 },
-                "sourceMap": true,
+                "sourceMap": false,
               },
             },
             {
@@ -363,7 +363,7 @@ exports[`plugin-postcssLegacy > should register postcss plugin by browserslist 1
                     [Function],
                   ],
                 },
-                "sourceMap": true,
+                "sourceMap": false,
               },
             },
             {

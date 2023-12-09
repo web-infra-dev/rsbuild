@@ -179,7 +179,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
@@ -210,7 +210,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   },
                 ],
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
         ],
@@ -234,7 +234,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
@@ -265,7 +265,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   },
                 ],
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
@@ -303,7 +303,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
@@ -334,7 +334,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   },
                 ],
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
@@ -344,7 +344,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "lessOptions": {
                 "javascriptEnabled": true,
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
         ],
@@ -512,7 +512,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "type": "filesystem",
   },
   "context": "<ROOT>",
-  "devtool": "hidden-source-map",
+  "devtool": false,
   "entry": {
     "index": [
       "src/index.js",
@@ -1048,7 +1048,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "type": "filesystem",
   },
   "context": "<ROOT>",
-  "devtool": "source-map",
+  "devtool": false,
   "entry": {
     "index": [
       "src/index.js",
@@ -1415,7 +1415,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "type": "filesystem",
   },
   "context": "<ROOT>",
-  "devtool": "hidden-source-map",
+  "devtool": false,
   "entry": {
     "index": [
       "src/index.js",

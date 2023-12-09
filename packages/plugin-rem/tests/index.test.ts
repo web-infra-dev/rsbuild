@@ -32,7 +32,6 @@ describe('plugin-rem', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].plugins?.length || 0).toBe(0);
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 

@@ -34,6 +34,9 @@ test('should add polyfill when set polyfill entry (default)', async ({
     rsbuildConfig: {
       output: {
         polyfill: 'entry',
+        sourceMap: {
+          js: 'source-map',
+        },
       },
     },
     runServer: true,
@@ -60,6 +63,9 @@ test('should add polyfill when set polyfill usage', async ({ page }) => {
     rsbuildConfig: {
       output: {
         polyfill: 'usage',
+        sourceMap: {
+          js: 'source-map',
+        },
       },
     },
     runServer: true,
