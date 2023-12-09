@@ -37,7 +37,19 @@ By default, the source map generation rules for Rsbuild are as follows:
 
 The source map for JS files is controlled by `sourceMap.js` and can be configured by passing in all the source map formats supported by Rspack's [devtool](https://rspack.dev/config/devtool) option. Setting it to `false` will disable the source map.
 
-For example, if you need to generate a source map for JS files in the production environment, you can set it as follows:
+For example, if you need to generate high-quality source maps in all environments, you can set it as follows:
+
+```js
+export default {
+  output: {
+    sourceMap: {
+      js: 'source-map',
+    },
+  },
+};
+```
+
+You can also set different source map formats based on the environment.
 
 ```js
 export default {
