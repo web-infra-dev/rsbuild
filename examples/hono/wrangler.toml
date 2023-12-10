@@ -1,0 +1,4 @@
+name = "hono-example-serve-static"
+compatibility_date = "2022-02-12"
+
+main = "dist/worker/index.js"
