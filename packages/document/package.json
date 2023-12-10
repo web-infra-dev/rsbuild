@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@types/node": "^16",
+    "@types/node": "16.x",
     "fast-glob": "^3.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

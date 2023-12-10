@@ -47,7 +47,7 @@
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@types/lodash": "^4.14.200",
-    "@types/node": "^16",
+    "@types/node": "16.x",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/webpack": "5.28.0",

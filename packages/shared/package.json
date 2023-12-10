@@ -114,7 +114,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.200",
-    "@types/node": "^16",
+    "@types/node": "16.x",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
     "mini-css-extract-plugin": "2.7.6",
     "terser": "5.19.2",
