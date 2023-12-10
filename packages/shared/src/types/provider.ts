@@ -69,7 +69,9 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
     options?: CreateCompilerOptions,
   ) => Promise<Compiler | MultiCompiler>;
 
-  createDevServer: (options?: StartDevServerOptions) => Promise<DevServerApi>;
+  createDevServer: (
+    options?: Omit<StartDevServerOptions, 'printURLs'>,
+  ) => Promise<DevServerApi>;
 
   startDevServer: (
     options?: StartDevServerOptions,
