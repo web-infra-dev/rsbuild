@@ -7,7 +7,6 @@ import manifestJSON from '__STATIC_CONTENT_MANIFEST';
 const manifest = JSON.parse(manifestJSON);
 
 interface Bindings extends Record<string, unknown> {
-  CDN_BASEURL: string;
   __STATIC_CONTENT: KVNamespace;
 }
 

@@ -34,13 +34,7 @@ export const pluginWrangler = (): RsbuildPlugin => ({
     api.onDevCompileDone(async ({ isFirstCompile }) => {
       if (!isFirstCompile) return;
       const entry = require.resolve('wrangler');
-      const { port } = api.context.devServer!;
-      const args = [
-        entry,
-        'dev',
-        '--var',
-        `CDN_BASEURL:http://localhost:${port}`,
-      ];
+      const args = [entry, 'dev'];
       wranglerProcess = spawn(process.execPath, args, { stdio: 'inherit' });
       wranglerProcess.on('error', process.exit);
     });
