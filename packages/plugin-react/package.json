@@ -34,7 +34,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
-    "@types/node": "^16",
+    "@types/node": "16.x",
     "@types/semver": "^7.5.4",
     "typescript": "^5.3.0"
   },

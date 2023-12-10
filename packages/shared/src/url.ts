@@ -1,29 +1,42 @@
 import os from 'os';
 import { URL } from 'url';
-import urlJoin from '../compiled/url-join';
+import { join as pathJoin } from 'path/posix';
 import { DEFAULT_DEV_HOST } from './constants';
-
-export { urlJoin };
 
 // remove repeat '/'
 export const normalizeUrl = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
 
+const urlJoin = (base: string, path: string) => {
+  const fullUrl = new URL(base);
+  fullUrl.pathname = pathJoin(fullUrl.pathname, path);
+  return fullUrl.toString();
+};
+
 export const withPublicPath = (str: string, base: string) => {
   // The use of an absolute URL without a protocol is technically legal,
-  // however it cannot be parsed as a URL instance.
-  // Just return it.
+  // however it cannot be parsed as a URL instance, just return it.
   // e.g. str is //example.com/foo.js
   if (str.startsWith('//')) {
     return str;
   }
 
+  // If str is an complete URL, just return it.
   // Only absolute url with hostname & protocol can be parsed into URL instance.
   // e.g. str is https://example.com/foo.js
   try {
     return new URL(str).toString();
   } catch {}
 
-  return urlJoin(base, str);
+  if (base.startsWith('http')) {
+    return urlJoin(base, str);
+  }
+
+  if (base.startsWith('//')) {
+    base = `https:${base}`;
+    return urlJoin(base, str).replace('https:', '');
+  }
+
+  return pathJoin(base, str);
 };
 
 export type AddressUrl = { label: string; url: string };

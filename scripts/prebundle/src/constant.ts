@@ -67,7 +67,6 @@ export const TASKS: TaskConfig[] = [
       'jiti',
       'rslog',
       'deepmerge',
-      'url-join',
       'fs-extra',
       'chokidar',
       'webpack-chain',

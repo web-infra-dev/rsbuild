@@ -34,7 +34,7 @@
     "p-map": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "^16",
+    "@types/node": "16.x",
     "typescript": "^5.3.0"
   },
   "publishConfig": {

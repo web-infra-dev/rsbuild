@@ -30,7 +30,7 @@
     "@rsbuild/shared": "workspace:*",
     "@rspack/core": "0.4.2",
     "@types/lodash": "^4.14.200",
-    "@types/node": "^16",
+    "@types/node": "16.x",
     "lodash": "^4.17.21",
     "typescript": "^5.3.0",
     "upath": "2.0.1"
