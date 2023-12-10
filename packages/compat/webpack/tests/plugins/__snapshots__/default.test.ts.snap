@@ -40,11 +40,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "test": /\\\\\\.m\\?js/,
       },
       {
-        "resolve": {
-          "fullySpecified": false,
-        },
-      },
-      {
         "oneOf": [
           {
             "generator": {
@@ -537,11 +532,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           "fullySpecified": false,
         },
         "test": /\\\\\\.m\\?js/,
-      },
-      {
-        "resolve": {
-          "fullySpecified": false,
-        },
       },
       {
         "oneOf": [
@@ -1075,11 +1065,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.m\\?js/,
       },
       {
-        "resolve": {
-          "fullySpecified": false,
-        },
-      },
-      {
         "oneOf": [
           {
             "generator": {
@@ -1441,11 +1426,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "fullySpecified": false,
         },
         "test": /\\\\\\.m\\?js/,
-      },
-      {
-        "resolve": {
-          "fullySpecified": false,
-        },
       },
       {
         "oneOf": [
