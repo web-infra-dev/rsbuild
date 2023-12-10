@@ -17,7 +17,11 @@ export function rspackProvider({
   const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
 
   return async ({ pluginStore, rsbuildOptions, plugins }) => {
-    const context = await createContext(rsbuildOptions, rsbuildConfig);
+    const context = await createContext(
+      rsbuildOptions,
+      rsbuildConfig,
+      'rspack',
+    );
     const pluginAPI = getPluginAPI({ context, pluginStore });
 
     context.pluginAPI = pluginAPI;

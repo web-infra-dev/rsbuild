@@ -14,6 +14,7 @@ describe('createCompiler', () => {
           },
         },
       },
+      'rspack',
     );
 
   test('should return Compiler when passing single rspack config', async () => {

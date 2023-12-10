@@ -38,6 +38,12 @@ function applyFullySpecified({
     .rule(CHAIN_ID.RULE.MJS)
     .test(/\.m?js/)
     .resolve.set('fullySpecified', false);
+
+  if (chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI)) {
+    chain.module
+      .rule(CHAIN_ID.RULE.JS_DATA_URI)
+      .resolve.set('fullySpecified', false);
+  }
 }
 
 function applyExtensions({ chain }: { chain: BundlerChain }) {
