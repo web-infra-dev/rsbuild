@@ -2,7 +2,7 @@ import type { PluginStore, Plugins, RsbuildPluginAPI } from './plugin';
 import type { Context } from './context';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
-import type { StartServerResult } from './server';
+import type { StartServerResult, DevServerApi } from './server';
 import type { AddressUrl } from '../url';
 import type { Logger } from '../logger';
 import type { NormalizedConfig } from './config';
@@ -68,6 +68,8 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   createCompiler: (
     options?: CreateCompilerOptions,
   ) => Promise<Compiler | MultiCompiler>;
+
+  createDevServer: (options?: StartDevServerOptions) => Promise<DevServerApi>;
 
   startDevServer: (
     options?: StartDevServerOptions,

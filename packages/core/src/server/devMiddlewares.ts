@@ -172,7 +172,7 @@ export const getMiddlewares = async (
   after.forEach((fn) => middlewares.push(fn));
 
   return {
-    close: () => {
+    close: async () => {
       devMiddleware.close();
     },
     middlewares,

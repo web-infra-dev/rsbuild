@@ -46,6 +46,7 @@ export async function createRsbuild(
     initConfigs,
     inspectConfig,
     createCompiler,
+    createDevServer,
     startDevServer,
     applyDefaultPlugins,
   } = await provider({
@@ -80,6 +81,7 @@ export async function createRsbuild(
     createCompiler,
     initConfigs,
     inspectConfig,
+    createDevServer,
     startDevServer,
     context: publicContext,
   };

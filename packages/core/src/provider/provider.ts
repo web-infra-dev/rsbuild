@@ -47,6 +47,17 @@ export function rspackProvider({
         });
       },
 
+      async createDevServer(options) {
+        const { createDevServer } = await import('../server/devServer');
+        const { createDevMiddleware } = await import('./core/createCompiler');
+        await initRsbuildConfig({ context, pluginStore });
+        return createDevServer(
+          { context, pluginStore, rsbuildOptions },
+          createDevMiddleware,
+          options,
+        );
+      },
+
       async startDevServer(options) {
         const { startDevServer } = await import('../server/devServer');
         const { createDevMiddleware } = await import('./core/createCompiler');
