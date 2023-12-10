@@ -88,6 +88,7 @@ export function getPluginAPI({
     onAfterStartDevServer: hooks.onAfterStartDevServerHook.tap,
     onBeforeCreateCompiler: hooks.onBeforeCreateCompilerHook.tap,
     onBeforeStartDevServer: hooks.onBeforeStartDevServerHook.tap,
+    onRestartDevServer: hooks.onRestartDevServerHook.tap,
     onAfterStartProdServer: hooks.onAfterStartProdServerHook.tap,
     onBeforeStartProdServer: hooks.onBeforeStartProdServerHook.tap,
   };

@@ -231,6 +231,7 @@ export async function startDevServer<
         const closeServer = async () => {
           await devMiddlewares.close();
           httpServer.close();
+          await options.context.hooks.onRestartDevServerHook.call();
         };
 
         onBeforeRestartServer(closeServer);

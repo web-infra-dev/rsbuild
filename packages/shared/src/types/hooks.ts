@@ -25,6 +25,8 @@ export type OnBeforeStartDevServerFn = () => PromiseOrNot<void>;
 
 export type OnBeforeStartProdServerFn = () => PromiseOrNot<void>;
 
+export type OnRestartDevServerFn = () => PromiseOrNot<void>;
+
 export type Routes = Array<{
   name: string;
   route: string;
