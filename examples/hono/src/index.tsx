@@ -1,32 +1,33 @@
-import { Hono } from 'hono';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import ReactDOMServer from 'react-dom/server';
 import App from './App';
 
-const Template: React.FC = () => (
-  <html>
-    <head></head>
-    <body>
-      <App />
-    </body>
-  </html>
-);
+export const serverRender = () => {
+  if (process.env.TARGET === 'service-worker') {
+    return ReactDOMServer.renderToString(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>,
+    );
+  } else {
+    throw new Error('serverRender is only available in service side.');
+  }
+};
 
-if (process.env.TARGET === 'service-worker') {
-  const app = new Hono();
-  const rendered = ReactDOMServer.renderToString(
-    <React.StrictMode>
-      <Template />
-    </React.StrictMode>,
-  );
-  app.get('/', (c) => c.html(rendered));
-  app.fire();
-} else {
-  ReactDOM.hydrateRoot(
-    window.document,
-    <React.StrictMode>
-      <Template />
-    </React.StrictMode>,
-  );
+export const clientRender = () => {
+  if (process.env.TARGET === 'web') {
+    ReactDOM.hydrateRoot(
+      document.querySelector('#root')!,
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>,
+    );
+  } else {
+    throw new Error('clientRender is only available in client side.');
+  }
+};
+
+if (process.env.TARGET === 'web') {
+  clientRender();
 }

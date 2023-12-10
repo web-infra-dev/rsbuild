@@ -3,8 +3,9 @@
   "private": true,
   "scripts": {
     "dev": "rsbuild dev",
-    "build": "rsbuild build",
-    "preview": "rsbuild preview"
+    "build": "pnpm run deploy --dry-run",
+    "preview": "rsbuild preview",
+    "deploy": "rsbuild build && wrangler deploy --outdir=build/worker"
   },
   "dependencies": {
     "hono": "^3.11.4",
@@ -12,8 +13,10 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231121.0",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
+    "@types/node": "^18",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "typescript": "^5.3.0",

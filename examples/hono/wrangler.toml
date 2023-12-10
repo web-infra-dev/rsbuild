@@ -1,4 +1,12 @@
 name = "hono-example-serve-static"
 compatibility_date = "2022-02-12"
 
-main = "dist/worker/index.js"
+main = "server/index.tsx"
+
+[dev]
+port = 8090
+
+[vars]
+
+[site]
+bucket = "./dist"
