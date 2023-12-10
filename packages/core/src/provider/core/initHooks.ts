@@ -15,6 +15,7 @@ import type {
   OnBeforeStartProdServerFn,
   OnAfterCreateCompilerFn,
   OnBeforeCreateCompilerFn,
+  OnRestartDevServerFn,
 } from '@rsbuild/shared';
 
 export function initHooks() {
@@ -26,6 +27,7 @@ export function initHooks() {
     onBeforeStartDevServerHook: createAsyncHook<OnBeforeStartDevServerFn>(),
     onAfterStartProdServerHook: createAsyncHook<OnAfterStartProdServerFn>(),
     onBeforeStartProdServerHook: createAsyncHook<OnBeforeStartProdServerFn>(),
+    onRestartDevServerHook: createAsyncHook<OnRestartDevServerFn>(),
 
     /** parameters are bundler-related */
     onAfterBuildHook: createAsyncHook<OnAfterBuildFn>(),

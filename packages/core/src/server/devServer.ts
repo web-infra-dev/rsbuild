@@ -134,9 +134,10 @@ export async function startDevServer<
           routes,
         });
 
-        const onClose = () => {
+        const onClose = async () => {
           devMiddlewares.close();
           httpServer.close();
+          await options.context.hooks.onRestartDevServerHook.call();
         };
 
         registerCleaner(onClose);

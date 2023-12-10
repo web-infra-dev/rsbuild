@@ -13,6 +13,7 @@ import type {
   ModifyRsbuildConfigFn,
   ModifyBundlerChainFn,
   ModifyChainUtils,
+  OnRestartDevServerFn,
 } from './hooks';
 import { Context } from './context';
 import {
@@ -134,6 +135,7 @@ export type RsbuildPluginAPI = {
   onDevCompileDone: (fn: OnDevCompileDoneFn) => void;
   onAfterStartDevServer: (fn: OnAfterStartDevServerFn) => void;
   onBeforeStartDevServer: (fn: OnBeforeStartDevServerFn) => void;
+  onRestartDevServer: (fn: OnRestartDevServerFn) => void;
   onAfterStartProdServer: (fn: OnAfterStartProdServerFn) => void;
   onBeforeStartProdServer: (fn: OnBeforeStartProdServerFn) => void;
   onAfterCreateCompiler: (fn: OnAfterCreateCompilerFn) => void;
