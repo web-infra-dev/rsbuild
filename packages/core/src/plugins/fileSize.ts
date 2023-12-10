@@ -10,6 +10,7 @@ import type {
   MultiStats,
   StatsAsset,
   PrintFileSizeOptions,
+  RsbuildPluginAPI,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
@@ -53,7 +54,7 @@ const calcFileSize = (len: number) => {
 async function printFileSizes(
   config: PrintFileSizeOptions,
   stats: Stats | MultiStats,
-  distPath: string,
+  api: RsbuildPluginAPI,
 ) {
   if (config.detail === false && config.total === false) {
     return;
@@ -62,14 +63,19 @@ async function printFileSizes(
   const { default: gzipSize } = await import('@rsbuild/shared/gzip-size');
 
   const formatAsset = (asset: StatsAsset) => {
-    const fileName = asset.name.split('?')[0];
-    const contents = fse.readFileSync(path.join(distPath, fileName));
+    const fileName = path.resolve(
+      api.context.rootPath,
+      api.context.distPath,
+      asset.name.split('?')[0],
+    );
+    const folder = path.relative(api.context.rootPath, path.dirname(fileName));
+    const contents = fse.readFileSync(fileName);
     const size = contents.length;
     const gzippedSize = gzipSize.sync(contents);
 
     return {
       size,
-      folder: path.join(path.basename(distPath), path.dirname(fileName)),
+      folder,
       name: path.basename(fileName),
       gzippedSize,
       sizeLabel: calcFileSize(size),
@@ -178,11 +184,7 @@ export const pluginFileSize = (): RsbuildPlugin => ({
 
       if (stats) {
         try {
-          await printFileSizes(
-            printFileSizeConfig,
-            stats,
-            api.context.distPath,
-          );
+          await printFileSizes(printFileSizeConfig, stats, api);
         } catch (err) {
           logger.warn('Failed to print file size.');
           logger.warn(err as Error);
