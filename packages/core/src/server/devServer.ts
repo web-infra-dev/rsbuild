@@ -15,7 +15,7 @@ import {
   RspackCompiler,
   RsbuildDevMiddlewareOptions,
   Routes,
-  DevServerApi,
+  DevServerAPI,
 } from '@rsbuild/shared';
 import type { Server } from 'http';
 import connect from '@rsbuild/shared/connect';
@@ -40,7 +40,7 @@ export async function createDevServer<
   }: StartDevServerOptions & {
     defaultPort?: number;
   } = {},
-): Promise<DevServerApi> {
+): Promise<DevServerAPI> {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'development';
   }

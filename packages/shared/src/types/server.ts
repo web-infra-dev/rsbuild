@@ -88,7 +88,7 @@ export type StartServerResult = {
   server: ServerApi;
 };
 
-export type DevServerApi = {
+export type DevServerAPI = {
   resolvedConfig: {
     devServerConfig: DevConfig & ServerConfig;
     port: number;
