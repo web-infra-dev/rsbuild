@@ -1,5 +1,4 @@
 import type { IncomingMessage, ServerResponse, Server } from 'http';
-import { EventEmitter } from 'events';
 import type {
   RsbuildDevMiddlewareOptions,
   DevMiddlewareAPI,
@@ -34,7 +33,7 @@ function getHMRClientPath(
   return clientEntry;
 }
 
-export default class DevMiddleware extends EventEmitter {
+export default class DevMiddleware {
   public middleware?: DevMiddlewareAPI;
 
   private devOptions: RsbuildDevMiddlewareOptions['dev'];
@@ -46,8 +45,6 @@ export default class DevMiddleware extends EventEmitter {
   private socketServer: SocketServer;
 
   constructor({ dev, devMiddleware, publicPaths }: Options) {
-    super();
-
     this.devOptions = dev;
     this.publicPaths = publicPaths;
 
@@ -96,7 +93,6 @@ export default class DevMiddleware extends EventEmitter {
       },
       onDone: (stats: any) => {
         this.socketServer.updateStats(stats);
-        this.emit('change', stats);
       },
     };
 
