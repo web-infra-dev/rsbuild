@@ -76,6 +76,10 @@ export const TASKS: TaskConfig[] = [
       'gzip-size',
       'json5',
       {
+        name: 'line-diff',
+        ignoreDts: true,
+      },
+      {
         name: 'semver',
         ignoreDts: true,
       },
