@@ -69,6 +69,37 @@ pluginUmd({
 });
 ```
 
+### export
+
+Specifies which export to use as the content of the UMD library. By default, `export` is undefined, which exports the whole namespace object.
+
+- **Type:** `string | string[]`
+- **Default:** `undefined`
+- **Example:** If `export` is configured as `default`, accessing `window.foo` will give you the content exported by `export default`.
+
+```js
+pluginUmd({
+  name: 'foo',
+  export: 'default',
+});
+```
+
+- **Example 2:** You can also pass an array to `output.library.export`, and the array will be interpreted as an access path.
+
+```js
+pluginUmd({
+  name: 'foo',
+  export: ['default', 'subModule'],
+});
+```
+
+```js title="src/index.js"
+export default {
+  // The value accessed through window.foo is 1
+  subModule: 1,
+};
+```
+
 ## Output Filename
 
 By default, the UMD plugin will output a `dist/index.js` file. You can modify the name of the output file through Rsbuild's [output.filename](/config/output/filename) option.
