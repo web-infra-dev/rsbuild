@@ -47,6 +47,7 @@ export async function createCompiler({
     if (isDev()) {
       await context.hooks.onDevCompileDoneHook.call({
         isFirstCompile,
+        stats: stats as Stats,
       });
     }
 
