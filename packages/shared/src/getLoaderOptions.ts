@@ -5,9 +5,8 @@ import {
   SassLoaderOptions,
   LessLoaderOptions,
 } from './types';
-import { castArray, getSharedPkgCompiledPath } from './utils';
+import { castArray, deepmerge, getSharedPkgCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
-import _ from 'lodash';
 
 export const getSassLoaderOptions = (
   rsbuildSassConfig: ToolsSassConfig | undefined,
@@ -23,10 +22,20 @@ export const getSassLoaderOptions = (
     defaults: SassLoaderOptions,
     userOptions: SassLoaderOptions,
   ) => {
+    const getSassOptions = () => {
+      if (defaults.sassOptions && userOptions.sassOptions) {
+        return deepmerge<SassLoaderOptions['sassOptions']>(
+          defaults.sassOptions,
+          userOptions.sassOptions,
+        );
+      }
+      return userOptions.sassOptions || defaults.sassOptions;
+    };
+
     return {
       ...defaults,
       ...userOptions,
-      sassOptions: _.merge(defaults.sassOptions, userOptions.sassOptions),
+      sassOptions: getSassOptions(),
     };
   };
 
@@ -68,10 +77,17 @@ export const getLessLoaderOptions = (
     defaults: LessLoaderOptions,
     userOptions: LessLoaderOptions,
   ): LessLoaderOptions => {
+    const getLessOptions = () => {
+      if (defaults.lessOptions && userOptions.lessOptions) {
+        return deepmerge(defaults.lessOptions, userOptions.lessOptions);
+      }
+      return userOptions.lessOptions || defaults.lessOptions;
+    };
+
     return {
       ...defaults,
       ...userOptions,
-      lessOptions: _.merge(defaults.lessOptions, userOptions.lessOptions),
+      lessOptions: getLessOptions(),
     };
   };
 
