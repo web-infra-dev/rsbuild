@@ -69,6 +69,37 @@ pluginUmd({
 });
 ```
 
+### export
+
+指定将哪一个导出作为 UMD library 的内容。在默认情况下，`export` 是 undefined，这将导出整个命名空间对象。
+
+- **类型：** `string | string[]`
+- **默认值：** `undefined`
+- **示例：** 将 `export` 配置为 `default`，那么通过 `window.foo` 访问的是 `export default` 导出的内容。
+
+```js
+pluginUmd({
+  name: 'foo',
+  export: 'default',
+});
+```
+
+- **示例二：** 你也可以将数组传递给 `output.library.export`，数组会被解析为一个访问路径。
+
+```js
+pluginUmd({
+  name: 'foo',
+  export: ['default', 'subModule'],
+});
+```
+
+```js title="src/index.js"
+export default {
+  // 通过 window.foo 访问的值为 1
+  subModule: 1,
+};
+```
+
 ## 产物名称
 
 默认情况下，UMD 插件会构建出 `dist/index.js` 文件，你可以通过 Rsbuild 的 [output.filename](/config/output/filename) 来修改产物文件的名称。
