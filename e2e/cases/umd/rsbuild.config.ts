@@ -9,7 +9,6 @@ export default defineConfig({
   ],
   html: {
     template: './src/index.html',
-    scriptLoading: 'blocking',
   },
   tools: {
     htmlPlugin: {},

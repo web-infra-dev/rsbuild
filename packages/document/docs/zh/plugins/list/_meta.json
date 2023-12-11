@@ -19,5 +19,6 @@
   "plugin-check-syntax",
   "plugin-css-minimizer",
   "plugin-pug",
-  "plugin-rem"
+  "plugin-rem",
+  "plugin-umd"
 ]

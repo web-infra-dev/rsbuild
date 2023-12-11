@@ -58,6 +58,7 @@ The following are common framework-agnostic plugins:
 - [CSS Minimizer Plugin](/plugins/list/plugin-css-minimizer): Used to customize CSS minimizer, switch to [cssnano](https://cssnano.co/) or other tools for CSS compression.
 - [Pug Plugin](/plugins/list/plugin-pug): Provides support for the Pug template engine.
 - [Rem Plugin](/plugins/list/plugin-rem): Implements the rem adaptive layout for mobile pages.
+- [UMD Plugin](/plugins/list/plugin-umd): Used to build outputs in UMD format.
 
 :::tip
 You can find the source code of all official plugins in the [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) repository.
