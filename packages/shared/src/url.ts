@@ -1,6 +1,6 @@
 import os from 'os';
 import { URL } from 'url';
-import { join as pathJoin } from 'path/posix';
+import { posix } from 'path';
 import { DEFAULT_DEV_HOST } from './constants';
 
 // remove repeat '/'
@@ -8,7 +8,7 @@ export const normalizeUrl = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
 
 const urlJoin = (base: string, path: string) => {
   const fullUrl = new URL(base);
-  fullUrl.pathname = pathJoin(fullUrl.pathname, path);
+  fullUrl.pathname = posix.join(fullUrl.pathname, path);
   return fullUrl.toString();
 };
 
@@ -36,7 +36,7 @@ export const withPublicPath = (str: string, base: string) => {
     return urlJoin(base, str).replace('https:', '');
   }
 
-  return pathJoin(base, str);
+  return posix.join(base, str);
 };
 
 export type AddressUrl = { label: string; url: string };
