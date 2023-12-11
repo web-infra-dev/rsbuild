@@ -192,6 +192,10 @@ export type UniBuilderExtraConfig = {
      * Whether to disable source map.
      */
     disableSourceMap?: DisableSourceMapOption;
+    /**
+     * @deprecated use `output.injectStyles` instead
+     */
+    disableCssExtract?: boolean;
   };
   html?: {
     /**
