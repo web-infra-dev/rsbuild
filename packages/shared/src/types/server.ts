@@ -4,6 +4,7 @@ import { ServerConfig } from './config/server';
 import type { Logger } from '../logger';
 import { Routes } from './hooks';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
+import { Stats } from './stats';
 
 export type Middleware = (
   req: IncomingMessage,
@@ -88,6 +89,11 @@ export type StartServerResult = {
   server: ServerApi;
 };
 
+export type DevMiddlewareHooks = {
+  /** Executed when the compilation has completed. */
+  onChange: (fn: (args: Stats) => void) => void;
+};
+
 export type DevServerAPI = {
   resolvedConfig: {
     devServerConfig: DevConfig & ServerConfig;
@@ -96,7 +102,6 @@ export type DevServerAPI = {
     https: boolean;
     defaultRoutes: Routes;
   };
-  // devMiddlewareEvents: EventEmitter;
   beforeStart: () => Promise<void>;
   afterStart: ({
     port,
@@ -111,5 +116,6 @@ export type DevServerAPI = {
   }) => Promise<{
     middlewares: RequestHandler[];
     close: () => Promise<void>;
+    hooks: DevMiddlewareHooks;
   }>;
 };

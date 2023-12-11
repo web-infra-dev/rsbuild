@@ -176,5 +176,6 @@ export const getMiddlewares = async (
       devMiddleware.close();
     },
     middlewares,
+    hooks: devMiddleware.hooks,
   };
 };

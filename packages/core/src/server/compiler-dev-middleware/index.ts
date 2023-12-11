@@ -5,6 +5,7 @@ import type {
   DevMiddlewareAPI,
   NextFunction,
   DevMiddleware as CustomDevMiddleware,
+  DevMiddlewareHooks,
 } from '@rsbuild/shared';
 import SocketServer from './socketServer';
 
@@ -34,8 +35,12 @@ function getHMRClientPath(
   return clientEntry;
 }
 
-export default class DevMiddleware extends EventEmitter {
+export default class DevMiddleware {
   public middleware?: DevMiddlewareAPI;
+
+  public hooks: DevMiddlewareHooks;
+
+  private eventEmitter: EventEmitter;
 
   private devOptions: RsbuildDevMiddlewareOptions['dev'];
 
@@ -46,8 +51,6 @@ export default class DevMiddleware extends EventEmitter {
   private socketServer: SocketServer;
 
   constructor({ dev, devMiddleware, publicPaths }: Options) {
-    super();
-
     this.devOptions = dev;
     this.publicPaths = publicPaths;
 
@@ -55,6 +58,14 @@ export default class DevMiddleware extends EventEmitter {
     this.socketServer = new SocketServer(dev);
 
     this.devMiddleware = devMiddleware;
+
+    this.eventEmitter = new EventEmitter();
+
+    this.hooks = {
+      onChange: (fn) => {
+        this.eventEmitter.on('change', fn);
+      },
+    };
   }
 
   public init(app: Server) {
@@ -96,7 +107,7 @@ export default class DevMiddleware extends EventEmitter {
       },
       onDone: (stats: any) => {
         this.socketServer.updateStats(stats);
-        this.emit('change', stats);
+        this.eventEmitter.emit('change', stats);
       },
     };
 
