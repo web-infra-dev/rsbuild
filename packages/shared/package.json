@@ -108,7 +108,6 @@
   "dependencies": {
     "@rspack/core": "0.4.2",
     "caniuse-lite": "^1.0.30001559",
-    "line-diff": "2.1.1",
     "lodash": "^4.17.21",
     "postcss": "8.4.31"
   },

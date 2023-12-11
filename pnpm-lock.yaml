@@ -1610,9 +1610,6 @@ importers:
       caniuse-lite:
         specifier: ^1.0.30001559
         version: 1.0.30001559
-      line-diff:
-        specifier: 2.1.1
-        version: 2.1.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1775,6 +1772,9 @@ importers:
       json5:
         specifier: ^2.2.3
         version: 2.2.3
+      line-diff:
+        specifier: 2.1.1
+        version: 2.1.1
       loader-utils2:
         specifier: npm:loader-utils@2.0.4
         version: /loader-utils@2.0.4
@@ -10401,7 +10401,7 @@ packages:
 
   /levdist@1.0.0:
     resolution: {integrity: sha512-YguwC2spb0pqpJM3a5OsBhih/GG2ZHoaSHnmBqhEI7997a36buhqcRTegEjozHxyxByIwLpZHZTVYMThq+Zd3g==}
-    dev: false
+    dev: true
 
   /lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
@@ -10416,7 +10416,7 @@ packages:
     resolution: {integrity: sha512-vswdynAI5AMPJacOo2o+JJ4caDJbnY2NEqms4MhMW0NJbjh3skP/brpVTAgBxrg55NRZ2Vtw88ef18hnagIpYQ==}
     dependencies:
       levdist: 1.0.0
-    dev: false
+    dev: true
 
   /lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
