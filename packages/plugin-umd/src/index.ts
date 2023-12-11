@@ -35,8 +35,12 @@ export const pluginUmd = (options: PluginUmdOptions): RsbuildPlugin => ({
       chain.output.library({
         name: options.name,
         type: 'umd',
+        // name the AMD module of the UMD build
         umdNamedDefine: true,
       });
+
+      // To make UMD build available on both browsers and Node.js
+      chain.output.globalObject('this');
 
       // disable split chunks to output a single chunk
       chain.optimization.splitChunks(false);
