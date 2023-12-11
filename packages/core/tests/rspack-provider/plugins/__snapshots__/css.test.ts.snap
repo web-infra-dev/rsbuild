@@ -333,7 +333,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
 }
 `;
 
-exports[`plugin-css disableCssExtract > should apply ignoreCssLoader when disableCssExtract is true and target is node 1`] = `
+exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyles is true and target is node 1`] = `
 {
   "experiments": {
     "css": false,
@@ -370,7 +370,7 @@ exports[`plugin-css disableCssExtract > should apply ignoreCssLoader when disabl
 }
 `;
 
-exports[`plugin-css disableCssExtract > should use css-loader + style-loader when disableCssExtract is true 1`] = `
+exports[`plugin-css injectStyles > should use css-loader + style-loader when injectStyles is true 1`] = `
 {
   "experiments": {
     "css": false,
@@ -555,7 +555,7 @@ exports[`plugin-less > should add less-loader 1`] = `
 }
 `;
 
-exports[`plugin-less > should add less-loader and css-loader when disableCssExtract 1`] = `
+exports[`plugin-less > should add less-loader and css-loader when injectStyles 1`] = `
 {
   "module": {
     "rules": [
@@ -991,7 +991,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
 }
 `;
 
-exports[`plugin-sass > should add sass-loader and css-loader when disableCssExtract 1`] = `
+exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1`] = `
 {
   "module": {
     "rules": [

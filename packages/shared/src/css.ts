@@ -182,9 +182,7 @@ export const isUseCssExtract = (
   config: NormalizedConfig,
   target: RsbuildTarget,
 ) =>
-  !config.output.disableCssExtract &&
-  target !== 'node' &&
-  target !== 'web-worker';
+  !config.output.injectStyles && target !== 'node' && target !== 'web-worker';
 
 /**
  * fix resolve-url-loader can't deal with resolve.alias config (such as @xxx、xxx)

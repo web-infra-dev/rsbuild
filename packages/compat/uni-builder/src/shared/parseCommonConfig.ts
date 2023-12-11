@@ -162,6 +162,11 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     delete output.enableInlineScripts;
   }
 
+  if (uniBuilderConfig.output?.disableCssExtract) {
+    output.injectStyles = uniBuilderConfig.output?.disableCssExtract;
+    delete output.disableCssExtract;
+  }
+
   const targets = uniBuilderConfig.output?.targets || ['web'];
   let overrideBrowserslist: OverrideBrowserslist = {};
 

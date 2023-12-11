@@ -21,7 +21,7 @@ import {
 import type { RsbuildPlugin, NormalizedConfig } from '../../types';
 
 export const enableNativeCss = (config: NormalizedConfig) =>
-  !config.output.disableCssExtract;
+  !config.output.injectStyles;
 
 export async function applyBaseCSSRule({
   rule,

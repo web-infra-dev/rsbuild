@@ -10,7 +10,7 @@ describe('plugin-css', () => {
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableCssExtract: true,
+          injectStyles: true,
         },
       },
     });
@@ -129,7 +129,7 @@ describe('plugin-css', () => {
       rsbuildConfig: {
         output: {
           targets: ['node'],
-          disableCssExtract: true,
+          injectStyles: true,
         },
         tools: {
           styleLoader: {},
@@ -151,7 +151,7 @@ describe('plugin-css', () => {
       rsbuildConfig: {
         output: {
           targets: ['web-worker'],
-          disableCssExtract: true,
+          injectStyles: true,
         },
         tools: {
           styleLoader: {},
@@ -172,7 +172,7 @@ describe('plugin-css', () => {
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableCssExtract: true,
+          injectStyles: true,
         },
       },
     });

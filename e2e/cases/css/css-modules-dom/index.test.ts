@@ -45,21 +45,21 @@ test('enableCssModuleTSDeclaration', async () => {
   ).toBeTruthy();
 });
 
-test('disableCssExtract', async ({ page }) => {
+test('injectStyles', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
     runServer: true,
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
-        disableCssExtract: true,
+        injectStyles: true,
       },
     },
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
 
-  // disableCssExtract worked
+  // injectStyles worked
   const files = await rsbuild.unwrapOutputJSON();
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
 

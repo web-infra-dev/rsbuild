@@ -148,10 +148,6 @@ export interface OutputConfig {
    */
   cssModules?: CssModules;
   /**
-   * Disable css extract and inline CSS files into the JS bundle.
-   */
-  disableCssExtract?: boolean;
-  /**
    * Whether to disable code minification in production build.
    */
   disableMinimize?: boolean;
@@ -179,6 +175,10 @@ export interface OutputConfig {
    * Whether to inline output style files (.css files) into html with `<style>` tags.
    */
   inlineStyles?: boolean | InlineChunkTest;
+  /**
+   * Whether to inject styles into the DOM via `style-loader`.
+   */
+  injectStyles?: boolean;
   /**
    * Specifies the range of target browsers that the project is compatible with.
    * This value will be used by [@babel/preset-env](https://babeljs.io/docs/en/babel-preset-env) and
@@ -208,13 +208,13 @@ export interface NormalizedOutputConfig extends OutputConfig {
   assetPrefix: string;
   dataUriLimit: NormalizedDataUriLimit;
   cleanDistPath: boolean;
-  disableCssExtract: boolean;
   disableMinimize: boolean;
   disableFilenameHash: boolean;
   enableLatestDecorators: boolean;
   enableCssModuleTSDeclaration: boolean;
   inlineScripts: boolean | InlineChunkTest;
   inlineStyles: boolean | InlineChunkTest;
+  injectStyles: boolean;
   cssModules: {
     localIdentName?: string;
     exportLocalsConvention: CssModuleLocalsConvention;
