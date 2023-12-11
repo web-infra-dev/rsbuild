@@ -1,0 +1,117 @@
+# UMD Plugin
+
+Used to build outputs in UMD format.
+
+:::tip What is UMD
+UMD stands for Universal Module Definition, which is a module specification that is compatible with AMD, CommonJS, and global variable definition. UMD outputs refer to modules that follow the UMD specification, allowing them to be loaded and used in different environments, including browser and Node.js.
+:::
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-umd -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginUmd } from '@rsbuild/plugin-umd';
+
+export default {
+  plugins: [pluginUmd({ name: 'myLib' })],
+};
+```
+
+## Example
+
+For instance, the project contains the following code:
+
+```js title="src/index.js"
+export function double(a) {
+  return a * 2;
+}
+```
+
+When using the UMD plugin, Rsbuild will generate a `dist/index.js` file in UMD format.
+
+- When loading this file in a browser, you can access the exported content through a global variable on the window object, for example:
+
+```js
+console.log(window.myLib.double(1)); // -> 2
+```
+
+- When loading in Node.js, you can import it directly using `require`, for example:
+
+```js
+const { double } = require('./dist/index.js');
+
+console.log(double(1)); // -> 2
+```
+
+## Options
+
+### name
+
+`name` is a required field used to specify the name of the UMD library, corresponding to Rspack's [output.library.name](https://rspack.dev/config/output#outputlibraryname) option.
+
+- **Type:** `string`
+- **Example:**
+
+```js
+pluginUmd({
+  name: 'foo', // accessed through window.foo
+});
+```
+
+## Output Filename
+
+By default, the UMD plugin will output a `dist/index.js` file. You can modify the name of the output file through Rsbuild's [output.filename](/config/output/filename) option.
+
+For example, output a `dist/myLib.js` file:
+
+```js
+export default {
+  output: {
+    filename: {
+      js: 'myLib.js',
+    },
+  },
+};
+```
+
+## Debugging in the Browser
+
+You can run the `rsbuild dev` command to debug UMD outputs in the browser.
+
+First, create `src/index.html` and add the following code:
+
+```html title="src/index.html"
+<!doctype html>
+<html>
+  <head></head>
+  <body>
+    <script>
+      console.log(window.myLib.double(1));
+    </script>
+  </body>
+</html>
+```
+
+Then, specify the `template` in `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  plugins: [pluginUmd({ name: 'myLib' })],
+  html: {
+    template: './src/index.html',
+  },
+};
+```
+
+Finally, run `npx rsbuild dev` to start.
