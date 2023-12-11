@@ -13,12 +13,98 @@ import {
   getPublicPathFromCompiler,
   RspackMultiCompiler,
   RspackCompiler,
+  RsbuildDevMiddlewareOptions,
+  Routes,
+  DevServerAPI,
 } from '@rsbuild/shared';
+import type { Server } from 'http';
 import connect from '@rsbuild/shared/connect';
 import { registerCleaner } from './restart';
 import type { Context } from '../types';
 import { createHttpServer } from './httpServer';
 import { getMiddlewares } from './devMiddlewares';
+
+export async function createDevServer<
+  Options extends {
+    context: Context;
+  },
+>(
+  options: Options,
+  createDevMiddleware: (
+    options: Options,
+    compiler: StartDevServerOptions['compiler'],
+  ) => Promise<CreateDevMiddlewareReturns>,
+  {
+    compiler: customCompiler,
+    getPortSilently,
+  }: StartDevServerOptions & {
+    defaultPort?: number;
+  } = {},
+): Promise<DevServerAPI> {
+  if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'development';
+  }
+
+  const rsbuildConfig = options.context.config;
+
+  const { devServerConfig, port, host, https } = await getDevOptions({
+    rsbuildConfig,
+    getPortSilently,
+  });
+
+  const defaultRoutes = formatRoutes(
+    options.context.entry,
+    rsbuildConfig.output?.distPath?.html,
+    rsbuildConfig.html?.outputStructure,
+  );
+
+  options.context.devServer = {
+    hostname: host,
+    port,
+    https,
+  };
+
+  const { devMiddleware, compiler } = await createDevMiddleware(
+    options,
+    customCompiler,
+  );
+
+  const publicPaths = (compiler as RspackMultiCompiler).compilers
+    ? (compiler as RspackMultiCompiler).compilers.map(getPublicPathFromCompiler)
+    : [getPublicPathFromCompiler(compiler as RspackCompiler)];
+
+  return {
+    resolvedConfig: { devServerConfig, port, host, https, defaultRoutes },
+    beforeStart: async () => {
+      await options.context.hooks.onBeforeStartDevServerHook.call();
+    },
+    afterStart: async ({ port, routes }: { port: number; routes: Routes }) => {
+      await options.context.hooks.onAfterStartDevServerHook.call({
+        port,
+        routes,
+      });
+    },
+    getMiddlewares: async ({
+      dev,
+      app,
+    }: {
+      app: Server;
+      dev: RsbuildDevMiddlewareOptions['dev'];
+    }) =>
+      await getMiddlewares(
+        {
+          pwd: options.context.rootPath,
+          devMiddleware,
+          dev,
+          output: {
+            distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
+            publicPaths,
+          },
+        },
+        app,
+      ),
+  };
+}
 
 export async function startDevServer<
   Options extends {
@@ -31,7 +117,7 @@ export async function startDevServer<
     compiler: StartDevServerOptions['compiler'],
   ) => Promise<CreateDevMiddlewareReturns>,
   {
-    compiler: customCompiler,
+    compiler,
     printURLs = true,
     logger: customLogger,
     getPortSilently,
@@ -39,41 +125,20 @@ export async function startDevServer<
     defaultPort?: number;
   } = {},
 ) {
-  if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'development';
-  }
+  debug('create dev server');
 
-  const rsbuildConfig = options.context.config;
-  const logger = customLogger ?? defaultLogger;
-  const { devServerConfig, port, host, https } = await getDevOptions({
-    rsbuildConfig,
+  const rsbuildServer = await createDevServer(options, createDevMiddleware, {
+    compiler,
+    printURLs,
+    logger: customLogger,
     getPortSilently,
   });
 
-  options.context.devServer = {
-    hostname: host,
-    port,
-    https,
-  };
+  const {
+    resolvedConfig: { devServerConfig, port, host, https, defaultRoutes },
+  } = rsbuildServer;
 
-  const protocol = https ? 'https' : 'http';
-  let urls = getAddressUrls(protocol, port, host);
-  const routes = formatRoutes(
-    options.context.entry,
-    rsbuildConfig.output?.distPath?.html,
-    rsbuildConfig.html?.outputStructure,
-  );
-
-  debug('create dev server');
-
-  const { devMiddleware, compiler } = await createDevMiddleware(
-    options,
-    customCompiler,
-  );
-
-  const publicPaths = (compiler as RspackMultiCompiler).compilers
-    ? (compiler as RspackMultiCompiler).compilers.map(getPublicPathFromCompiler)
-    : [getPublicPathFromCompiler(compiler as RspackCompiler)];
+  const logger = customLogger ?? defaultLogger;
 
   const middlewares = connect();
 
@@ -84,7 +149,10 @@ export async function startDevServer<
 
   debug('create dev server done');
 
-  await options.context.hooks.onBeforeStartDevServerHook.call();
+  await rsbuildServer.beforeStart();
+
+  const protocol = https ? 'https' : 'http';
+  let urls = getAddressUrls(protocol, port, host);
 
   // print url after http server created and before dev compile (just a short time interval)
   if (printURLs) {
@@ -96,21 +164,13 @@ export async function startDevServer<
       }
     }
 
-    printServerURLs(urls, routes, logger);
+    printServerURLs(urls, defaultRoutes, logger);
   }
 
-  const devMiddlewares = await getMiddlewares(
-    {
-      pwd: options.context.rootPath,
-      devMiddleware,
-      dev: devServerConfig,
-      output: {
-        distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
-        publicPaths,
-      },
-    },
-    httpServer,
-  );
+  const devMiddlewares = await rsbuildServer.getMiddlewares({
+    dev: devServerConfig,
+    app: httpServer,
+  });
 
   devMiddlewares.middlewares.forEach((m) => middlewares.use(m));
 
@@ -129,13 +189,13 @@ export async function startDevServer<
 
         debug('listen dev server done');
 
-        await options.context.hooks.onAfterStartDevServerHook.call({
+        await rsbuildServer.afterStart({
           port,
-          routes,
+          routes: defaultRoutes,
         });
 
-        const onClose = () => {
-          devMiddlewares.close();
+        const onClose = async () => {
+          await devMiddlewares.close();
           httpServer.close();
         };
 
@@ -146,7 +206,7 @@ export async function startDevServer<
           urls: urls.map((item) => item.url),
           server: {
             close: async () => {
-              onClose();
+              await onClose();
             },
           },
         });
