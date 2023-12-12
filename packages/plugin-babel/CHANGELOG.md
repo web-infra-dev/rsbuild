@@ -1,5 +1,12 @@
 # @rsbuild/plugin-babel
 
+## 0.2.2
+
+### Patch Changes
+
+- 11a1cef: feat(plugin-babel): add include and exclude option
+  - @rsbuild/shared@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes
