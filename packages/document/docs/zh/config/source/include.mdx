@@ -49,13 +49,17 @@ export default {
       // 方法二:
       // 通过正则表达式进行匹配
       // 所有包含 `/node_modules/query-string/` 的路径都会被匹配到
-      /\/node_modules\/query-string\//,
+      /[\\/]node_modules[\\/]query-string[\\/]/,
     ],
   },
 };
 ```
 
 上述两种方法分别通过 "路径前缀" 和 "正则表达式" 来匹配文件的绝对路径，值得留意的是，项目中所有被引用的模块都会经过匹配，因此你不能使用过于松散的值进行匹配，避免造成编译性能问题或编译异常。
+
+:::tip
+在上述正则表达式的例子中，我们使用 `[\\/]` 来匹配路径分隔符，这是因为不同的操作系统使用了不同的路径分隔符，使用 `[\\/]` 可以保证 macOS 和 Windows 的路径都被匹配到。
+:::
 
 ### 编译 npm 包的子依赖
 
@@ -67,8 +71,8 @@ export default {
 export default {
   source: {
     include: [
-      /\/node_modules\/query-string\//,
-      /\/node_modules\/decode-uri-component\//,
+      /[\\/]node_modules[\\/]query-string[\\/]/,
+      /[\\/]node_modules[\\/]decode-uri-component[\\/]/,
     ],
   },
 };
@@ -110,7 +114,7 @@ export default {
 ```ts
 export default {
   source: {
-    include: [/\/node_modules\//],
+    include: [/[\\/]node_modules[\\/]/],
   },
 };
 ```

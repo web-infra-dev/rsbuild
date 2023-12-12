@@ -104,7 +104,7 @@ export default {
     chunkSplit: {
       strategy: 'split-by-experience',
       forceSplitting: {
-        axios: /node_modules\/axios/,
+        axios: /node_modules[\\/]axios/,
       },
     },
   },

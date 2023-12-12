@@ -15,7 +15,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
       ],
     },
     /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-    /\\\\/node_modules\\\\/query-string\\\\//,
+    /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]query-string\\[\\\\\\\\/\\]/,
   ],
   "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",

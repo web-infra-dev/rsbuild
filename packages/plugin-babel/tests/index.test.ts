@@ -8,7 +8,7 @@ describe('plugins/babel', () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {
         source: {
-          include: [/\/node_modules\/query-string\//],
+          include: [/[\\/]node_modules[\\/]query-string[\\/]/],
           exclude: ['src/example'],
         },
       },
