@@ -7,6 +7,11 @@ webpackOnlyTest('removeMomentLocale false (default)', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
+      output: {
+        sourceMap: {
+          js: 'source-map',
+        },
+      },
       performance: {
         chunkSplit: {
           strategy: 'custom',
@@ -40,6 +45,11 @@ test('removeMomentLocale true', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
+      output: {
+        sourceMap: {
+          js: 'source-map',
+        },
+      },
       performance: {
         removeMomentLocale: true,
         chunkSplit: {

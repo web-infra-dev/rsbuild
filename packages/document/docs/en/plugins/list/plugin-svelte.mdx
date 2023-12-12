@@ -43,7 +43,7 @@ const defaultOptions = {
     dev: !isProd,
   },
   preprocess: require('svelte-preprocess')(),
-  emitCss: !rsbuildConfig.output.disableCssExtract,
+  emitCss: !rsbuildConfig.output.injectStyles,
   hotReload: !isProd && rsbuildConfig.dev.hmr,
 };
 ```

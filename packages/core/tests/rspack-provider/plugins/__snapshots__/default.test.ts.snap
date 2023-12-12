@@ -195,7 +195,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -235,7 +235,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -281,7 +281,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -291,7 +291,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -331,7 +331,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -341,7 +341,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -387,7 +387,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -441,7 +441,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -627,6 +627,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -643,12 +644,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
@@ -660,6 +659,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "process.env.NODE_ENV": ""development"",
       },
       "name": "DefinePlugin",
+    },
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
     },
   ],
   "resolve": {
@@ -697,7 +699,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "devServer": {
     "hot": false,
   },
-  "devtool": "hidden-source-map",
+  "devtool": false,
   "entry": {
     "index": [
       "src/index.js",
@@ -1191,7 +1193,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
               },
               "minify": false,
-              "sourceMaps": true,
+              "sourceMaps": false,
             },
           },
         ],
@@ -1235,7 +1237,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
               },
               "minify": false,
-              "sourceMaps": true,
+              "sourceMaps": false,
             },
           },
         ],
@@ -1273,6 +1275,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           "format": "{"comments":false,"asciiOnly":true}",
           "include": undefined,
           "mangle": "{"keep_classnames":false,"keep_fnames":false}",
+          "module": undefined,
           "test": undefined,
         },
         "name": "SwcJsMinimizerRspackPlugin",
@@ -1327,6 +1330,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -1362,12 +1366,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "version": 5,
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
@@ -1381,7 +1383,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {
-      "htmlPlugin": [Function],
       "name": "RemoveCssSourcemapPlugin",
     },
     ProgressPlugin {
@@ -1617,7 +1618,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -1636,7 +1637,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2049,7 +2050,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2089,7 +2090,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2135,7 +2136,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -2145,7 +2146,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2185,7 +2186,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -2195,7 +2196,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2241,7 +2242,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -2295,7 +2296,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -2484,6 +2485,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "chunks": [
           "index",
         ],
+        "entryName": "index",
         "filename": "index.html",
         "inject": "head",
         "meta": {
@@ -2500,12 +2502,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
         "info": {
-          "index.html": {
+          "index": {
             "title": "Rsbuild App",
           },
         },
@@ -2517,6 +2517,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "process.env.NODE_ENV": ""development"",
       },
       "name": "DefinePlugin",
+    },
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
     },
   ],
   "resolve": {

@@ -10,6 +10,9 @@ function getCommonBuildConfig(cwd: string): RsbuildConfig {
       exclude: [path.resolve(cwd, './src/test.js')],
     },
     output: {
+      sourceMap: {
+        js: 'source-map',
+      },
       overrideBrowserslist: ['ie 11'],
     },
     tools: {

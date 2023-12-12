@@ -6,10 +6,10 @@ import {
 } from '@rsbuild/shared';
 import {
   getPluginAPI,
-  createPublicContext,
+  createContext,
   initRsbuildConfig,
+  createPublicContext,
 } from '@rsbuild/core/provider';
-import { createContext } from './core/createContext';
 import { applyDefaultPlugins } from './shared';
 import { initConfigs } from './core/initConfigs';
 
@@ -22,7 +22,11 @@ export function webpackProvider({
 
   // @ts-expect-error compiler type mismatch
   return async ({ pluginStore, rsbuildOptions, plugins }) => {
-    const context = await createContext(rsbuildOptions, rsbuildConfig);
+    const context = await createContext(
+      rsbuildOptions,
+      rsbuildConfig,
+      'webpack',
+    );
     const pluginAPI = getPluginAPI({ context, pluginStore });
 
     context.pluginAPI = pluginAPI;
@@ -55,6 +59,18 @@ export function webpackProvider({
           rsbuildOptions,
         });
         return createCompiler({ context, webpackConfigs });
+      },
+
+      async createDevServer(options) {
+        const { createDevServer } = await import('@rsbuild/core/server');
+        const { createDevMiddleware } = await import('./core/createCompiler');
+        await initRsbuildConfig({ context, pluginStore });
+        return createDevServer(
+          { context, pluginStore, rsbuildOptions },
+          // @ts-expect-error compile type mismatch
+          createDevMiddleware,
+          options,
+        );
       },
 
       async startDevServer(options) {

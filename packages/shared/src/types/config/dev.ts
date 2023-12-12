@@ -13,7 +13,7 @@ export type RequestHandler = (
   next: NextFunction,
 ) => void;
 
-export type ExposeServerApis = {
+export type ServerAPIs = {
   sockWrite: (
     type: string,
     data?: string | boolean | Record<string, any>,
@@ -62,7 +62,7 @@ export interface DevConfig {
         /** Use the `push` method if you want to run a middleware after all other middlewares */
         push: (...handlers: RequestHandler[]) => void;
       },
-      server: ExposeServerApis,
+      server: ServerAPIs,
     ) => void
   >;
   /**

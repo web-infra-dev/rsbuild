@@ -5,10 +5,7 @@ export const pluginPreloadOrPrefetch = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      async (
-        chain,
-        { CHAIN_ID, isServer, isWebWorker, isServiceWorker, HtmlPlugin },
-      ) => {
+      async (chain, { CHAIN_ID, isServer, isWebWorker, isServiceWorker }) => {
         const config = api.getNormalizedConfig();
         const {
           performance: { preload, prefetch },
@@ -30,7 +27,6 @@ export const pluginPreloadOrPrefetch = (): RsbuildPlugin => ({
             .use(HtmlPreloadOrPrefetchPlugin, [
               prefetch,
               'prefetch',
-              HtmlPlugin,
               HTMLCount,
             ]);
         }
@@ -38,12 +34,7 @@ export const pluginPreloadOrPrefetch = (): RsbuildPlugin => ({
         if (preload) {
           chain
             .plugin(CHAIN_ID.PLUGIN.HTML_PRELOAD)
-            .use(HtmlPreloadOrPrefetchPlugin, [
-              preload,
-              'preload',
-              HtmlPlugin,
-              HTMLCount,
-            ]);
+            .use(HtmlPreloadOrPrefetchPlugin, [preload, 'preload', HTMLCount]);
         }
       },
     );

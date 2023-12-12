@@ -26,17 +26,17 @@ type Version = string;
 type RsbuildEntry = Record<string, string | string[]>;
 ```
 
-### context.target
+### context.targets
 
-构建产物类型，对应调用 `createRsbuild` 时传入的 `target` 选项。
+构建产物类型，对应调用 Rsbuild 配置里的 `output.targets` 选项。
 
 - **类型：**
 
 ```ts
-type RsbuildTarget = 'web' | 'node' | 'web-worker';
+type RsbuildTarget = 'web' | 'node' | 'web-worker' | 'service-worker';
 
 type Context = {
-  target: RsbuildTarget | RsbuildTarget[];
+  targets: RsbuildTarget[];
 };
 ```
 

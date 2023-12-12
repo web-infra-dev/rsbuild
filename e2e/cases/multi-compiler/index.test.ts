@@ -4,8 +4,12 @@ import { build, dev, getHrefByEntryName } from '@scripts/shared';
 test('multi compiler build', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    target: ['web', 'node'],
     runServer: true,
+    rsbuildConfig: {
+      output: {
+        targets: ['web', 'node'],
+      },
+    },
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
@@ -19,9 +23,9 @@ test('multi compiler build', async ({ page }) => {
 test('multi compiler dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
-    target: ['web', 'node'],
     rsbuildConfig: {
       output: {
+        targets: ['web', 'node'],
         distPath: {
           root: 'dist-dev',
         },

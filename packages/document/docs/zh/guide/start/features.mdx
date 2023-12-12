@@ -11,11 +11,11 @@
 | TS 编译         | 默认通过 SWC 编译 TS 文件                                        | <ul><li>[TypeScript 转译](/guide/basic/typescript#typescript-转译)</li></ul>                                               |
 | JS 压缩         | 默认在生产环境构建时开启压缩                                     | <ul><li>[output.disableMinimize](/config/output/disable-minimize)</li></ul>                                                |
 | Polyfill 注入   | 默认会注入 core-js 等 Polyfill                                   | <ul><li>[浏览器兼容性](/guide/advanced/browser-compatibility)</li><li>[output.polyfill](/config/output/polyfill)</li></ul> |
-| SourceMap 生成  | 默认在生产环境构建时生成高质量 SourceMap                         | <ul><li>[output.disableSourceMap](/config/output/disable-source-map)</li></ul>                                             |
+| SourceMap 生成  | 默认在开发环境生成 SourceMap                                     | <ul><li>[output.sourceMap](/config/output/source-map)</li></ul>                                                            |
 | 文件别名        | 可选功能，通过 alias 设置文件别名                                | <ul><li>[路径别名](/guide/advanced/alias)</li><li>[source.alias](/config/source/alias)</li></ul>                           |
 | Babel 编译      | 可选功能，通过 Babel 对 JavaScript 和 TypeScript 代码进行转译    | <ul><li>[Babel 插件](/plugins/list/plugin-babel)</li></ul>                                                                 |
-| Node 产物       | 可选功能，支持构建出运行在 Node.js 环境的 JavaScript 产物        | <ul><li>[Node 产物](/api/start/build-target#node-产物)</li></ul>                                                           |
-| Web Worker 产物 | 可选功能，支持构建出运行在 Web Worker 环境的 JavaScript 产物     | <ul><li>[Web Worker 产物](/api/start/build-target#web-worker-产物)</li></ul>                                               |
+| Node 产物       | 可选功能，支持构建出运行在 Node.js 环境的 JavaScript 产物        | <ul><li>[Node 产物](/config/output/targets#node-target)</li></ul>                                                          |
+| Web Worker 产物 | 可选功能，支持构建出运行在 Web Worker 环境的 JavaScript 产物     | <ul><li>[Web Worker 产物](/config/output/targets#web-worker-target)</li></ul>                                              |
 | 浏览器范围      | 可选功能，通过 browserslist 来设置 Web 应用需要兼容的浏览器范围  | <ul><li>[浏览器范围](/guide/advanced/browserslist)</li></ul>                                                               |
 | 兼容性检查      | 可选功能，分析构建产物中是否存在当前浏览器范围下不兼容的高级语法 | <ul><li>[Check Syntax 插件](/plugins/list/plugin-check-syntax)</li></ul>                                                   |
 | 注入环境变量    | 可选功能，向代码中注入环境变量或表达式                           | <ul><li>[环境变量](/guide/advanced/env-vars)</li></ul>                                                                     |
@@ -33,9 +33,8 @@
 | CSS Modules 编译     | 默认支持编译 CSS Modules 文件                       | <ul><li>[使用 CSS Modules](/guide/basic/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul>                                               |
 | CSS Modules 类型提示 | 可选功能，自动生成 CSS Modules 的类型定义文件       | <ul><li>[使用 CSS Modules](/guide/basic/css-modules)</li></ul>                                                                                                   |
 | CSS 压缩             | 默认在生产环境构建时开启压缩                        | <ul><li>[引用样式资源](/guide/basic/css-usage)</li></ul>                                                                                                         |
-| 抽取 CSS 文件        | 默认会将 CSS 抽取为独立的文件                       | <ul><li>[output.disableCssExtract](/config/output/disable-css-extract)</li></ul>                                                                                 |
 | Styled Components    | 可选功能，支持 styled-components 编译               | <ul><li>[Styled Components 插件](/plugins/list/plugin-styled-components)</li></ul>                                                                               |
-| 内联 CSS 到 JS 中    | 可选功能，将 CSS 文件内联到 JS 文件中               | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[output.disableCssExtract](/config/output/disable-css-extract)</li></ul>                                  |
+| 内联 CSS 到 JS 中    | 可选功能，将 CSS 文件内联到 JS 文件中               | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul>                                             |
 | rem 单位转换         | 可选功能，将 CSS 中的 px 转成 rem 单位              | <ul><li>[Rem 插件](/plugins/list/plugin-rem)</li></ul>                                                                                                           |
 
 ## HTML 编译

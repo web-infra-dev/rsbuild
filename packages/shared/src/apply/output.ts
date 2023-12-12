@@ -12,7 +12,7 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
   api.modifyBundlerChain(
     async (chain, { isProd, isServer, isServiceWorker }) => {
       const config = api.getNormalizedConfig();
-      const jsPath = getDistPath(config.output, 'js');
+      const jsPath = getDistPath(config, 'js');
 
       const publicPath = getPublicPath({
         config,
@@ -21,7 +21,7 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
       });
 
       // js output
-      const jsFilename = getFilename(config.output, 'js', isProd);
+      const jsFilename = getFilename(config, 'js', isProd);
 
       chain.output
         .path(api.context.distPath)
@@ -37,7 +37,7 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
         .hashFunction('xxhash64');
 
       if (isServer) {
-        const serverPath = getDistPath(config.output, 'server');
+        const serverPath = getDistPath(config, 'server');
         const filename = posix.join(serverPath, `[name].js`);
 
         chain.output
@@ -47,7 +47,7 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
       }
 
       if (isServiceWorker) {
-        const workerPath = getDistPath(config.output, 'worker');
+        const workerPath = getDistPath(config, 'worker');
         const filename = posix.join(workerPath, `[name].js`);
 
         chain.output.filename(filename).chunkFilename(filename);

@@ -29,12 +29,8 @@ const rsbuild = await createRsbuild({
 ```ts
 type RsbuildEntry = Record<string, string | string[]>;
 
-type RsbuildTarget = 'web' | 'node' | 'web-worker';
-
 type CreateRsbuildOptions = {
   cwd?: string;
-  target?: RsbuildTarget | RsbuildTarget[];
-  provider?: RsbuildProvider;
   rsbuildConfig?: RsbuildConfig;
 };
 ```
@@ -42,9 +38,31 @@ type CreateRsbuildOptions = {
 各个选项的作用：
 
 - `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
-- `target`：构建产物类型，默认值为 `['web']`，详见[构建产物类型](/api/start/build-target)章节。
 - `provider`：用于切换底层的打包工具。
 - `rsbuildConfig`：Rsbuild 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制，你可以在[配置](/config/)中找到所有可用的配置项。
+
+## loadConfig
+
+加载 Rsbuild 配置文件。
+
+- **类型：**
+
+```ts
+function loadConfig(params: {
+  // 默认为 process.cwd()
+  cwd: string;
+  // 指定配置文件路径，可以为相对路径或绝对路径
+  path?: string;
+}): Promise<RsbuildConfig>;
+```
+
+- **示例：**
+
+```ts
+const config = await loadConfig();
+
+console.log(config); // -> RsbuildConfig
+```
 
 ## loadEnv
 
@@ -55,7 +73,7 @@ type CreateRsbuildOptions = {
 ```ts
 function loadEnv(params: {
   // 默认为 process.cwd()
-  dir?: string;
+  cwd?: string;
   // 默认为 ['PUBLIC_']
   prefixes?: string[];
 }): Promise<{

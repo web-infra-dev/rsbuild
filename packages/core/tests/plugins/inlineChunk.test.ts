@@ -43,7 +43,11 @@ describe('plugin-inline-chunk', () => {
   it('should not apply InlineChunkHtmlPlugin when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
-      target: 'node',
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     expect(
@@ -54,7 +58,11 @@ describe('plugin-inline-chunk', () => {
   it('should not apply InlineChunkHtmlPlugin when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
-      target: 'web-worker',
+      rsbuildConfig: {
+        output: {
+          targets: ['web-worker'],
+        },
+      },
     });
 
     expect(

@@ -6,7 +6,6 @@ describe('createCompiler', () => {
     createContext(
       {
         cwd: process.cwd(),
-        target: ['web'],
       },
       {
         source: {
@@ -15,6 +14,7 @@ describe('createCompiler', () => {
           },
         },
       },
+      'rspack',
     );
 
   test('should return Compiler when passing single rspack config', async () => {

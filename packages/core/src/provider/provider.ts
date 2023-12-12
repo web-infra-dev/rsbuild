@@ -17,7 +17,11 @@ export function rspackProvider({
   const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
 
   return async ({ pluginStore, rsbuildOptions, plugins }) => {
-    const context = await createContext(rsbuildOptions, rsbuildConfig);
+    const context = await createContext(
+      rsbuildOptions,
+      rsbuildConfig,
+      'rspack',
+    );
     const pluginAPI = getPluginAPI({ context, pluginStore });
 
     context.pluginAPI = pluginAPI;
@@ -45,6 +49,17 @@ export function rspackProvider({
           context,
           rspackConfigs,
         });
+      },
+
+      async createDevServer(options) {
+        const { createDevServer } = await import('../server/devServer');
+        const { createDevMiddleware } = await import('./core/createCompiler');
+        await initRsbuildConfig({ context, pluginStore });
+        return createDevServer(
+          { context, pluginStore, rsbuildOptions },
+          createDevMiddleware,
+          options,
+        );
       },
 
       async startDevServer(options) {

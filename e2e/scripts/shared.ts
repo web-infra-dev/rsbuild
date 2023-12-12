@@ -27,16 +27,12 @@ const noop = async () => {};
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions,
-  rsbuildConfig: RsbuildConfig = {},
   plugins: RsbuildPlugin[] = [],
 ) => {
   const { createRsbuild } = await import('@rsbuild/core');
 
   if (process.env.PROVIDE_TYPE === 'rspack') {
-    const rsbuild = await createRsbuild({
-      ...rsbuildOptions,
-      rsbuildConfig,
-    });
+    const rsbuild = await createRsbuild(rsbuildOptions);
 
     if (plugins) {
       rsbuild.addPlugins(plugins);
@@ -48,7 +44,6 @@ export const createRsbuild = async (
   const { webpackProvider } = await import('@rsbuild/webpack');
   const rsbuild = await createRsbuild({
     ...rsbuildOptions,
-    rsbuildConfig,
     provider: webpackProvider,
   });
 
@@ -79,8 +74,10 @@ export const createRsbuild = async (
 
 const portMap = new Map();
 
+// Available port ranges: 1024 ～ 65535
+// `10080` is not available in CI, so we start with `11000`.
 export function getRandomPort(
-  defaultPort = Math.ceil(Math.random() * 10000) + 10000,
+  defaultPort = Math.ceil(Math.random() * 50000) + 11000,
 ) {
   let port = defaultPort;
   while (true) {
@@ -93,7 +90,17 @@ export function getRandomPort(
   }
 }
 
-const updateConfigForTest = (config: RsbuildConfig) => {
+const updateConfigForTest = async (
+  config: RsbuildConfig,
+  cwd: string = process.cwd(),
+) => {
+  const { loadConfig, mergeRsbuildConfig } = await import('@rsbuild/core');
+  const loadedConfig = await loadConfig({
+    cwd,
+  });
+
+  config = mergeRsbuildConfig(loadedConfig, config);
+
   // make devPort random to avoid port conflict
   config.server = {
     ...(config.server || {}),
@@ -125,21 +132,24 @@ const updateConfigForTest = (config: RsbuildConfig) => {
       polyfill: 'off',
     };
   }
+
+  return config;
 };
 
 export async function dev({
   plugins,
-  rsbuildConfig = {},
   ...options
 }: CreateRsbuildOptions & {
   plugins?: RsbuildPlugin[];
-  rsbuildConfig?: RsbuildConfig;
 }) {
   process.env.NODE_ENV = 'development';
 
-  updateConfigForTest(rsbuildConfig);
+  options.rsbuildConfig = await updateConfigForTest(
+    options.rsbuildConfig || {},
+    options.cwd,
+  );
 
-  const rsbuild = await createRsbuild(options, rsbuildConfig, plugins);
+  const rsbuild = await createRsbuild(options, plugins);
 
   return rsbuild.startDevServer({
     printURLs: false,
@@ -149,18 +159,19 @@ export async function dev({
 export async function build({
   plugins,
   runServer = false,
-  rsbuildConfig = {},
   ...options
 }: CreateRsbuildOptions & {
   plugins?: RsbuildPlugin[];
   runServer?: boolean;
-  rsbuildConfig?: RsbuildConfig;
 }) {
   process.env.NODE_ENV = 'production';
 
-  updateConfigForTest(rsbuildConfig);
+  options.rsbuildConfig = await updateConfigForTest(
+    options.rsbuildConfig || {},
+    options.cwd,
+  );
 
-  const rsbuild = await createRsbuild(options, rsbuildConfig, plugins);
+  const rsbuild = await createRsbuild(options, plugins);
 
   await rsbuild.build();
 

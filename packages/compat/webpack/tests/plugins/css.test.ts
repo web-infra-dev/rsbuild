@@ -10,7 +10,7 @@ describe('plugin-css', () => {
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableCssExtract: true,
+          injectStyles: true,
         },
       },
     });
@@ -89,9 +89,12 @@ describe('plugin-css', () => {
 
   it('should not apply mini-css-extract-plugin when target is node', async () => {
     const rsbuild = await createStubRsbuild({
-      target: ['node'],
       plugins: [pluginCss()],
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
@@ -104,9 +107,12 @@ describe('plugin-css', () => {
 
   it('should not apply mini-css-extract-plugin when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
-      target: ['web-worker'],
       plugins: [pluginCss()],
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        output: {
+          targets: ['web-worker'],
+        },
+      },
     });
 
     const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
@@ -119,11 +125,11 @@ describe('plugin-css', () => {
 
   it('should not apply style-loader when target is node', async () => {
     const rsbuild = await createStubRsbuild({
-      target: ['node'],
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableCssExtract: true,
+          targets: ['node'],
+          injectStyles: true,
         },
         tools: {
           styleLoader: {},
@@ -141,11 +147,11 @@ describe('plugin-css', () => {
 
   it('should not apply style-loader when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
-      target: ['web-worker'],
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableCssExtract: true,
+          targets: ['web-worker'],
+          injectStyles: true,
         },
         tools: {
           styleLoader: {},
@@ -166,7 +172,7 @@ describe('plugin-css', () => {
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableCssExtract: true,
+          injectStyles: true,
         },
       },
     });
@@ -182,7 +188,11 @@ describe('plugin-css', () => {
   it('should not apply postcss-loader when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      target: 'node',
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     const config = await rsbuild.unwrapWebpackConfig();
@@ -190,28 +200,30 @@ describe('plugin-css', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should disable source map when output.disableSourceMap is true', async () => {
+  it('should enable source map when output.sourceMap.css is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableSourceMap: true,
+          sourceMap: {
+            css: true,
+          },
         },
       },
     });
 
     const config = await rsbuild.unwrapWebpackConfig();
 
-    expect(JSON.stringify(config)).toContain('"sourceMap":false');
+    expect(JSON.stringify(config)).toContain('"sourceMap":true');
   });
 
-  it('should disable source map when output.disableSourceMap is css: true', async () => {
+  it('should disable source map when output.sourceMap.css is false', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableSourceMap: {
-            css: true,
+          sourceMap: {
+            css: false,
           },
         },
       },

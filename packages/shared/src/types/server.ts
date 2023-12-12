@@ -1,6 +1,8 @@
 import type { IncomingMessage, ServerResponse, Server } from 'http';
-import { DevConfig, NextFunction } from './config/dev';
+import { DevConfig, NextFunction, RequestHandler } from './config/dev';
+import { ServerConfig } from './config/server';
 import type { Logger } from '../logger';
+import { Routes } from './hooks';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 
 export type Middleware = (
@@ -48,10 +50,20 @@ export type CreateDevMiddlewareReturns = {
   compiler: RspackCompiler | RspackMultiCompiler;
 };
 
-export type RsbuildDevServerOptions = {
+export type DevMiddlewaresConfig = Omit<
+  DevConfig & ServerConfig,
+  | 'beforeStartUrl'
+  | 'progressBar'
+  | 'startUrl'
+  | 'https'
+  | 'host'
+  | 'port'
+  | 'strictPort'
+>;
+
+export type RsbuildDevMiddlewareOptions = {
   pwd: string;
-  /** Rsbuild devConfig */
-  dev: DevConfig;
+  dev: DevMiddlewaresConfig;
   devMiddleware?: DevMiddleware;
   output: {
     distPath: string;
@@ -64,7 +76,7 @@ export type CreateDevServerOptions = {
     customApp?: Server;
     logger?: Logger;
   };
-} & RsbuildDevServerOptions;
+} & RsbuildDevMiddlewareOptions;
 
 export type ServerApi = {
   close: () => Promise<void>;
@@ -74,4 +86,30 @@ export type StartServerResult = {
   urls: string[];
   port: number;
   server: ServerApi;
+};
+
+export type DevServerAPI = {
+  resolvedConfig: {
+    devServerConfig: DevConfig & ServerConfig;
+    port: number;
+    host: string;
+    https: boolean;
+    defaultRoutes: Routes;
+  };
+  // devMiddlewareEvents: EventEmitter;
+  beforeStart: () => Promise<void>;
+  afterStart: ({
+    port,
+    routes,
+  }: {
+    port: number;
+    routes: Routes;
+  }) => Promise<void>;
+  getMiddlewares: (options: {
+    dev: RsbuildDevMiddlewareOptions['dev'];
+    app: Server;
+  }) => Promise<{
+    middlewares: RequestHandler[];
+    close: () => Promise<void>;
+  }>;
 };

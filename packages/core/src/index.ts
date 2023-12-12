@@ -5,7 +5,7 @@
 
 // Core Methods
 export { createRsbuild } from './createRsbuild';
-export { defineConfig } from './cli/config';
+export { loadConfig, defineConfig } from './cli/config';
 
 // Helpers
 export { logger, mergeRsbuildConfig } from '@rsbuild/shared';

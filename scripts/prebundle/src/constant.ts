@@ -67,7 +67,6 @@ export const TASKS: TaskConfig[] = [
       'jiti',
       'rslog',
       'deepmerge',
-      'url-join',
       'fs-extra',
       'chokidar',
       'webpack-chain',
@@ -76,6 +75,10 @@ export const TASKS: TaskConfig[] = [
       'browserslist',
       'gzip-size',
       'json5',
+      {
+        name: 'line-diff',
+        ignoreDts: true,
+      },
       {
         name: 'semver',
         ignoreDts: true,

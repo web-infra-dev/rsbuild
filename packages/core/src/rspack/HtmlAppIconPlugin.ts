@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
 import WebpackSources from '@rsbuild/shared/webpack-sources';
 import { COMPILATION_PROCESS_STAGE } from '@rsbuild/shared';
@@ -8,7 +8,6 @@ import { COMPILATION_PROCESS_STAGE } from '@rsbuild/shared';
 type AppIconOptions = {
   distDir: string;
   iconPath: string;
-  HtmlPlugin: typeof HtmlWebpackPlugin;
 };
 
 export class HtmlAppIconPlugin {
@@ -18,13 +17,10 @@ export class HtmlAppIconPlugin {
 
   readonly iconPath: string;
 
-  readonly HtmlPlugin: typeof HtmlWebpackPlugin;
-
   constructor(options: AppIconOptions) {
     this.name = 'HtmlAppIconPlugin';
     this.distDir = options.distDir;
     this.iconPath = options.iconPath;
-    this.HtmlPlugin = options.HtmlPlugin;
   }
 
   apply(compiler: Compiler) {
@@ -42,7 +38,7 @@ export class HtmlAppIconPlugin {
     // add html asset tags
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       // @ts-expect-error compilation type mismatch
-      this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tap(
+      HtmlWebpackPlugin.getHooks(compilation).alterAssetTagGroups.tap(
         this.name,
         (data) => {
           const { publicPath } = compiler.options.output;

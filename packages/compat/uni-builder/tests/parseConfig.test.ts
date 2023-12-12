@@ -380,11 +380,12 @@ describe('parseCommonConfig', () => {
       (
         await parseCommonConfig(
           {
-            output: {},
+            output: {
+              targets: ['web', 'node', 'web-worker'],
+            },
           },
           __dirname,
           '',
-          ['web', 'node', 'web-worker'],
         )
       ).rsbuildConfig!.output!.overrideBrowserslist,
     ).toMatchInlineSnapshot(`

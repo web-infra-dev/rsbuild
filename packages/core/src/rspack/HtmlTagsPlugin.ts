@@ -1,4 +1,4 @@
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler } from '@rspack/core';
 import {
   partition,
@@ -16,15 +16,7 @@ export interface HtmlTagsPluginOptions {
   append?: HtmlInjectTag['append'];
   includes?: string[];
   tags?: HtmlInjectTagDescriptor[];
-  HtmlPlugin: typeof HtmlWebpackPlugin;
 }
-
-export interface AdditionalContext {
-  HtmlPlugin: Extract<HtmlTagsPluginOptions['HtmlPlugin'], Function>;
-}
-
-export type Context = Omit<HtmlTagsPluginOptions, keyof AdditionalContext> &
-  AdditionalContext;
 
 /** @see {@link https://developer.mozilla.org/en-US/docs/Glossary/Void_element} */
 export const VOID_TAGS = [
@@ -69,7 +61,7 @@ export class HtmlTagsPlugin {
 
   meta: Record<string, string> = { plugin: this.name };
 
-  ctx: Context;
+  ctx: HtmlTagsPluginOptions;
 
   constructor(opts: HtmlTagsPluginOptions) {
     this.ctx = {
@@ -82,7 +74,7 @@ export class HtmlTagsPlugin {
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       const compilationHash = compilation.hash || '';
       // @ts-expect-error compilation type mismatch
-      const hooks = this.ctx.HtmlPlugin.getHooks(compilation);
+      const hooks = HtmlWebpackPlugin.getHooks(compilation);
       hooks.alterAssetTagGroups.tap(this.name, (params) => {
         // skip unmatched file and empty tag list.
         const includesCurrentFile =

@@ -17,7 +17,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
     api.modifyBundlerChain(async (chain, { isProd, target, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
 
-      const cssPath = getDistPath(config.output, 'css');
+      const cssPath = getDistPath(config, 'css');
 
       // css output
       if (isUseCssExtract(config, target)) {
@@ -29,7 +29,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
           options: config.tools.cssExtract?.pluginOptions,
         });
 
-        const cssFilename = getFilename(config.output, 'css', isProd);
+        const cssFilename = getFilename(config, 'css', isProd);
 
         chain
           .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)

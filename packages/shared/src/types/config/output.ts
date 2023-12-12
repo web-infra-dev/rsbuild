@@ -1,3 +1,4 @@
+import type { RspackConfig } from '../rspack';
 import type { RsbuildTarget } from '../rsbuild';
 import type { Builtins, Externals } from '@rspack/core';
 
@@ -60,12 +61,10 @@ export type NormalizedDataUriLimit = Required<DataUriLimit>;
 
 export type Polyfill = 'usage' | 'entry' | 'ua' | 'off';
 
-export type DisableSourceMapOption =
-  | boolean
-  | {
-      js?: boolean;
-      css?: boolean;
-    };
+export type SourceMap = {
+  js?: RspackConfig['devtool'];
+  css?: boolean;
+};
 
 export type CssModuleLocalsConvention =
   | 'asIs'
@@ -93,6 +92,10 @@ export type InlineChunkTestFunction = (params: {
 export type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
 export interface OutputConfig {
+  /**
+   * Specify build targets to run in different target environments.
+   */
+  targets?: RsbuildTarget[];
   /**
    * At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
    * For more information, please see: [webpack Externals](https://webpack.js.org/configuration/externals/)
@@ -145,17 +148,13 @@ export interface OutputConfig {
    */
   cssModules?: CssModules;
   /**
-   * Disable css extract and inline CSS files into the JS bundle.
-   */
-  disableCssExtract?: boolean;
-  /**
    * Whether to disable code minification in production build.
    */
   disableMinimize?: boolean;
   /**
-   * Whether to disable source map.
+   * Whether to generate source map files, and which format of source map to generate
    */
-  disableSourceMap?: DisableSourceMapOption;
+  sourceMap?: SourceMap;
   /**
    * Remove the hash from the name of static files after production build.
    */
@@ -177,6 +176,10 @@ export interface OutputConfig {
    */
   inlineStyles?: boolean | InlineChunkTest;
   /**
+   * Whether to inject styles into the DOM via `style-loader`.
+   */
+  injectStyles?: boolean;
+  /**
    * Specifies the range of target browsers that the project is compatible with.
    * This value will be used by [@babel/preset-env](https://babeljs.io/docs/en/babel-preset-env) and
    * [autoprefixer](https://github.com/postcss/autoprefixer) to identify the JavaScript syntax that
@@ -194,20 +197,24 @@ export type OverrideBrowserslist =
   | Partial<Record<RsbuildTarget, string[]>>;
 
 export interface NormalizedOutputConfig extends OutputConfig {
+  targets: RsbuildTarget[];
   filename: FilenameConfig;
   distPath: DistPathConfig;
   polyfill: Polyfill;
+  sourceMap: {
+    js?: RspackConfig['devtool'];
+    css: boolean;
+  };
   assetPrefix: string;
   dataUriLimit: NormalizedDataUriLimit;
   cleanDistPath: boolean;
-  disableCssExtract: boolean;
   disableMinimize: boolean;
-  disableSourceMap: DisableSourceMapOption;
   disableFilenameHash: boolean;
   enableLatestDecorators: boolean;
   enableCssModuleTSDeclaration: boolean;
   inlineScripts: boolean | InlineChunkTest;
   inlineStyles: boolean | InlineChunkTest;
+  injectStyles: boolean;
   cssModules: {
     localIdentName?: string;
     exportLocalsConvention: CssModuleLocalsConvention;

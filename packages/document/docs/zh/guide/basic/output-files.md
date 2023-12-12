@@ -41,7 +41,7 @@ Rsbuild 提供了多个配置项来修改产物目录和产物名称，你可以
 - 通过 [output.filename](/config/output/filename) 来修改产物的文件名。
 - 通过 [output.distPath](/config/output/dist-path) 来修改产物的输出路径。
 - 通过 [output.legalComments](/config/output/legal-comments) 来修改 License 文件的生成方式。
-- 通过 [output.disableSourceMap](/config/output/disable-source-map) 来移除 Source Map 文件。
+- 通过 [output.sourceMap](/config/output/source-map) 来修改 Source Map 文件。
 - 通过 [html.outputStructure](/config/html/output-structure) 来修改 HTML 产物对应的文件夹结构。
 
 ## 静态资源
@@ -92,7 +92,7 @@ dist
 
 ## Node.js 产物目录
 
-当 Rsbuild 的 [构建产物类型](/api/start/build-target) 中包含 `'node'`，或者你在上层框架中开启了 SSR 等服务端功能时，Rsbuild 会在构建后生成一份 Node.js 产物，并输出到 `bundles` 目录下：
+当 Rsbuild 的 [output.targets](/config/output/targets) 中包含 `'node'`，或者你在上层框架中开启了 SSR 等服务端功能时，Rsbuild 会在构建后生成一份 Node.js 产物，并输出到 `bundles` 目录下：
 
 ```bash
 dist

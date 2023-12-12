@@ -1,20 +1,20 @@
-import { RsbuildTarget } from '@rsbuild/shared';
+import type { RsbuildConfig } from '@rsbuild/shared';
 import { pluginEntry } from '@src/plugins/entry';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginSwc } from '@/plugins/swc';
-import { RsbuildConfig } from '@/types';
 
 describe('plugin-swc', () => {
   it('should disable preset_env in target other than web', async () => {
-    await matchConfigSnapshot('node', {
+    await matchConfigSnapshot({
       output: {
         polyfill: 'entry',
+        targets: ['node'],
       },
     });
   });
 
   it('should disable preset_env mode', async () => {
-    await matchConfigSnapshot('web', {
+    await matchConfigSnapshot({
       output: {
         polyfill: 'off',
       },
@@ -22,7 +22,7 @@ describe('plugin-swc', () => {
   });
 
   it('should enable usage mode preset_env', async () => {
-    await matchConfigSnapshot('web', {
+    await matchConfigSnapshot({
       output: {
         polyfill: 'usage',
       },
@@ -30,7 +30,7 @@ describe('plugin-swc', () => {
   });
 
   it('should enable entry mode preset_env', async () => {
-    await matchConfigSnapshot('web', {
+    await matchConfigSnapshot({
       output: {
         polyfill: 'entry',
       },
@@ -38,13 +38,13 @@ describe('plugin-swc', () => {
   });
 
   it('should add browserslist', async () => {
-    await matchConfigSnapshot('web', {
+    await matchConfigSnapshot({
       output: {
         overrideBrowserslist: ['chrome 98'],
       },
     });
 
-    await matchConfigSnapshot('web', {
+    await matchConfigSnapshot({
       output: {
         overrideBrowserslist: {
           web: ['chrome 98'],
@@ -54,7 +54,7 @@ describe('plugin-swc', () => {
   });
 
   it("should'n override browserslist when target platform is not web", async () => {
-    await matchConfigSnapshot('web', {
+    await matchConfigSnapshot({
       output: {
         overrideBrowserslist: {
           node: ['chrome 98'],
@@ -64,21 +64,22 @@ describe('plugin-swc', () => {
   });
 
   it('should has correct core-js', async () => {
-    await matchConfigSnapshot('web', {
+    await matchConfigSnapshot({
       output: {
         polyfill: 'entry',
       },
     });
 
-    await matchConfigSnapshot(['web', 'node'], {
+    await matchConfigSnapshot({
       output: {
         polyfill: 'entry',
+        targets: ['node'],
       },
     });
   });
 
   it('should add pluginImport', async () => {
-    await matchConfigSnapshot('web', {
+    await matchConfigSnapshot({
       source: {
         transformImport: [
           {
@@ -91,7 +92,6 @@ describe('plugin-swc', () => {
 
   it('should disable all pluginImport', async () => {
     const rsbuild = await createStubRsbuild({
-      target: 'web',
       plugins: [pluginSwc(), pluginEntry()],
       rsbuildConfig: {
         source: {
@@ -112,7 +112,6 @@ describe('plugin-swc', () => {
 
   it('should add antd pluginImport', async () => {
     const rsbuild = await createStubRsbuild({
-      target: 'web',
       rsbuildConfig: {
         source: {
           entry: {
@@ -131,17 +130,13 @@ describe('plugin-swc', () => {
   });
 });
 
-async function matchConfigSnapshot(
-  target: RsbuildTarget | RsbuildTarget[],
-  rsbuildConfig: RsbuildConfig,
-) {
+async function matchConfigSnapshot(rsbuildConfig: RsbuildConfig) {
   rsbuildConfig.source ||= {};
   rsbuildConfig.source.entry = {
     main: './src/index.js',
   };
 
   const rsbuild = await createStubRsbuild({
-    target,
     plugins: [pluginSwc(), pluginEntry()],
     rsbuildConfig,
   });
@@ -150,7 +145,5 @@ async function matchConfigSnapshot(
     origin: { bundlerConfigs },
   } = await rsbuild.inspectConfig();
 
-  bundlerConfigs.forEach((bundlerConfig) => {
-    expect(bundlerConfig).toMatchSnapshot();
-  });
+  expect(bundlerConfigs).toMatchSnapshot();
 }

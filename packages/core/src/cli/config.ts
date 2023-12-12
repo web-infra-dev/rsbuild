@@ -93,11 +93,14 @@ async function watchConfig(root: string, configFile: string) {
   watcher.on('unlink', callback);
 }
 
-export async function loadConfig(
-  root: string,
-  customConfig?: string,
-): Promise<RsbuildConfig> {
-  const configFile = resolveConfigPath(root, customConfig);
+export async function loadConfig({
+  cwd,
+  path,
+}: {
+  cwd: string;
+  path?: string;
+}): Promise<RsbuildConfig> {
+  const configFile = resolveConfigPath(cwd, path);
 
   if (!configFile) {
     return {};
@@ -114,7 +117,7 @@ export async function loadConfig(
 
     const command = process.argv[2];
     if (command === 'dev') {
-      watchConfig(root, configFile);
+      watchConfig(cwd, configFile);
     }
 
     const configExport = loadConfig(configFile) as RsbuildConfigExport;

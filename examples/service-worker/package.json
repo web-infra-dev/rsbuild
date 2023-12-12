@@ -2,13 +2,12 @@
   "name": "@examples/service-worker",
   "private": true,
   "scripts": {
-    "dev": "WATCH=1 npm run build",
-    "build": "node build.mjs",
-    "preview": "serve dist"
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "typescript": "^5.3.0",
-    "serve": "^14.2.1"
+    "typescript": "^5.3.0"
   }
 }

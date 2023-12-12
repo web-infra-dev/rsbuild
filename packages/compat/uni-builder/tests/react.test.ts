@@ -34,8 +34,11 @@ describe('plugins/react', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginReact()],
       provider: webpackProvider,
-      target: 'node',
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     expect(await rsbuild.matchBundlerPlugin('ReactRefreshPlugin')).toBeFalsy();
@@ -45,8 +48,11 @@ describe('plugins/react', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginReact()],
       provider: webpackProvider,
-      target: 'web-worker',
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        output: {
+          targets: ['web-worker'],
+        },
+      },
     });
 
     expect(await rsbuild.matchBundlerPlugin('ReactRefreshPlugin')).toBeFalsy();

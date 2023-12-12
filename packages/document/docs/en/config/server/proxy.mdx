@@ -5,12 +5,16 @@
 
 Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
 
-### Example
+## Example
+
+### Basic Usage
 
 ```js
 export default {
   server: {
     proxy: {
+      // http://localhost:8080/api -> http://localhost:3000/api
+      // http://localhost:8080/api/foo -> http://localhost:3000/api/foo
       '/api': 'http://localhost:3000',
     },
   },
@@ -25,6 +29,8 @@ You can also proxy to an online domain name, such as:
 export default {
   server: {
     proxy: {
+      // http://localhost:8080/api -> https://nodejs.org/api
+      // http://localhost:8080/api/foo -> https://nodejs.org/foo
       '/api': 'https://nodejs.org',
     },
   },
@@ -39,6 +45,8 @@ If you don't want `/api` to be passed along, we need to rewrite the path:
 export default {
   server: {
     proxy: {
+      // http://localhost:8080/api -> http://localhost:3000
+      // http://localhost:8080/api/foo -> http://localhost:3000/foo
       '/api': {
         target: 'http://localhost:3000',
         pathRewrite: { '^/api': '' },
@@ -48,7 +56,7 @@ export default {
 };
 ```
 
-### Options
+## Options
 
 The Rsbuild Server Proxy makes use of the [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) package. Check out its documentation for more advanced usages.
 
@@ -75,12 +83,15 @@ type ProxyOptions =
   | ProxyDetail;
 ```
 
-In addition to the http-proxy-middleware option, we also support the bypass and context configuration:
+In addition to the http-proxy-middleware option, Rsbuild also support the bypass and context configuration.
 
-- bypass: bypass the proxy based on the return value of a function.
-  - Return `null` or `undefined` to continue processing the request with proxy.
-  - Return `false` to produce a 404 error for the request.
-  - Return a path to serve from, instead of continuing to proxy the request.
+### bypass
+
+Bypass the proxy based on the return value of a function.
+
+- Return `null` or `undefined` to continue processing the request with proxy.
+- Return `false` to produce a 404 error for the request.
+- Return a path to serve from, instead of continuing to proxy the request.
 
 ```js
 // custom bypass
@@ -101,7 +112,9 @@ export default {
 };
 ```
 
-- context: If you want to proxy multiple, specific paths to the same target, you can use an array of one or more objects with a context property.
+### context
+
+If you want to proxy multiple, specific paths to the same target, you can use an array of one or more objects with a context property.
 
 ```js
 // proxy multiple

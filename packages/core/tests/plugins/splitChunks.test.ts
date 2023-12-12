@@ -122,7 +122,11 @@ describe('plugin-split-chunks', () => {
     },
     {
       name: 'should not split chunks when target is not',
-      target: 'node',
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     },
   ];
 
@@ -139,7 +143,6 @@ describe('plugin-split-chunks', () => {
           polyfill: 'entry',
         },
       },
-      target: (item.target || 'web') as any,
     });
 
     const config = await rsbuild.unwrapConfig();

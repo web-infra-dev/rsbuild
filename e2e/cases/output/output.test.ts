@@ -55,19 +55,6 @@ test.describe('output configure multi', () => {
 
     expect(fse.existsSync(join(fixtures, 'rem/dist-1/aa/js'))).toBeTruthy();
   });
-
-  test('sourcemap', async () => {
-    const files = await rsbuild.unwrapOutputJSON(false);
-
-    const jsMapFiles = Object.keys(files).filter((files) =>
-      files.endsWith('.js.map'),
-    );
-    const cssMapFiles = Object.keys(files).filter((files) =>
-      files.endsWith('.css.map'),
-    );
-    expect(jsMapFiles.length).toBeGreaterThanOrEqual(1);
-    expect(cssMapFiles.length).toBe(0);
-  });
 });
 
 test('cleanDistPath disable', async () => {
@@ -98,30 +85,4 @@ test('cleanDistPath disable', async () => {
 
   await rsbuild.close();
   rsbuild.clean();
-});
-
-test('disableSourcemap', async () => {
-  const rsbuild = await build({
-    cwd: join(fixtures, 'rem'),
-    plugins: [pluginReact()],
-    rsbuildConfig: {
-      output: {
-        distPath: {
-          root: 'dist-3',
-        },
-        disableSourceMap: true,
-      },
-    },
-  });
-
-  const files = await rsbuild.unwrapOutputJSON(false);
-
-  const jsMapFiles = Object.keys(files).filter((files) =>
-    files.endsWith('.js.map'),
-  );
-  const cssMapFiles = Object.keys(files).filter((files) =>
-    files.endsWith('.css.map'),
-  );
-  expect(jsMapFiles.length).toBe(0);
-  expect(cssMapFiles.length).toBe(0);
 });

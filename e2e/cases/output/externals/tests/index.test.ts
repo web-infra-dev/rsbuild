@@ -41,10 +41,10 @@ test('externals', async ({ page }) => {
 test('should not external dependencies when target is web worker', async () => {
   const rsbuild = await build({
     cwd: fixtures,
-    target: 'web-worker',
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
+        targets: ['web-worker'],
         externals: {
           react: 'MyReact',
         },

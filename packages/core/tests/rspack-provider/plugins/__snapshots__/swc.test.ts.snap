@@ -115,347 +115,353 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
 `;
 
 exports[`plugin-swc > should add browserslist 1`] = `
-{
-  "entry": {
-    "main": [
-      "src/index.js",
-    ],
-  },
-  "module": {
-    "rules": [
-      {
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome 98",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
+[
+  {
+    "entry": {
+      "main": [
+        "src/index.js",
+      ],
+    },
+    "module": {
+      "rules": [
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
                 },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
+              ],
             },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
+            /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "usage",
+                  "shippedProposals": true,
+                  "targets": [
+                    "chrome 98",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
           ],
         },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome 98",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
           },
-        ],
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "usage",
+                  "shippedProposals": true,
+                  "targets": [
+                    "chrome 98",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "resolve": {
+      "alias": {
+        "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
       },
-    ],
-  },
-  "resolve": {
-    "alias": {
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
   },
-}
+]
 `;
 
 exports[`plugin-swc > should add browserslist 2`] = `
-{
-  "entry": {
-    "main": [
-      "src/index.js",
-    ],
-  },
-  "module": {
-    "rules": [
-      {
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome 98",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
+[
+  {
+    "entry": {
+      "main": [
+        "src/index.js",
+      ],
+    },
+    "module": {
+      "rules": [
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
                 },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
+              ],
             },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
+            /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "usage",
+                  "shippedProposals": true,
+                  "targets": [
+                    "chrome 98",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
           ],
         },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome 98",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
           },
-        ],
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "usage",
+                  "shippedProposals": true,
+                  "targets": [
+                    "chrome 98",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "resolve": {
+      "alias": {
+        "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
       },
-    ],
-  },
-  "resolve": {
-    "alias": {
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
   },
-}
+]
 `;
 
 exports[`plugin-swc > should add pluginImport 1`] = `
-{
-  "entry": {
-    "main": [
-      "src/index.js",
-    ],
-  },
-  "module": {
-    "rules": [
-      {
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
+[
+  {
+    "entry": {
+      "main": [
+        "src/index.js",
+      ],
+    },
+    "module": {
+      "rules": [
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
                 },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "rspackExperiments": {
-                "import": [
-                  {
-                    "libraryName": "foo",
-                  },
-                ],
-              },
-              "sourceMaps": true,
+              ],
             },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
+            /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "usage",
+                  "shippedProposals": true,
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "rspackExperiments": {
+                  "import": [
+                    {
+                      "libraryName": "foo",
+                    },
+                  ],
+                },
+                "sourceMaps": true,
+              },
+            },
           ],
         },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "rspackExperiments": {
-                "import": [
-                  {
-                    "libraryName": "foo",
-                  },
-                ],
-              },
-              "sourceMaps": true,
-            },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
           },
-        ],
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "usage",
+                  "shippedProposals": true,
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "rspackExperiments": {
+                  "import": [
+                    {
+                      "libraryName": "foo",
+                    },
+                  ],
+                },
+                "sourceMaps": true,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "resolve": {
+      "alias": {
+        "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
       },
-    ],
-  },
-  "resolve": {
-    "alias": {
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
   },
-}
+]
 `;
 
 exports[`plugin-swc > should disable all pluginImport 1`] = `
@@ -573,864 +579,766 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
 `;
 
 exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
-{
-  "entry": {
-    "main": [
-      "src/index.js",
-    ],
-  },
-  "module": {
-    "rules": [
-      {
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "targets": [
-                  "node >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
+[
+  {
+    "entry": {
+      "main": [
+        "src/index.js",
+      ],
+    },
+    "module": {
+      "rules": [
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
                 },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
+              ],
             },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
+            /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "targets": [
+                    "node >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
           ],
         },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "targets": [
-                  "node >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
           },
-        ],
-      },
-    ],
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "targets": [
+                    "node >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
+          ],
+        },
+      ],
+    },
   },
-}
+]
 `;
 
 exports[`plugin-swc > should disable preset_env mode 1`] = `
-{
-  "entry": {
-    "main": [
-      "src/index.js",
-    ],
-  },
-  "module": {
-    "rules": [
-      {
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "mode": undefined,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
+[
+  {
+    "entry": {
+      "main": [
+        "src/index.js",
+      ],
+    },
+    "module": {
+      "rules": [
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
                 },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
+              ],
             },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
+            /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "mode": undefined,
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
           ],
         },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "mode": undefined,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
           },
-        ],
-      },
-    ],
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "mode": undefined,
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
+          ],
+        },
+      ],
+    },
   },
-}
+]
 `;
 
 exports[`plugin-swc > should enable entry mode preset_env 1`] = `
-{
-  "entry": {
-    "main": [
-      "src/index.js",
-    ],
-  },
-  "module": {
-    "rules": [
-      {
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "entry",
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
+[
+  {
+    "entry": {
+      "main": [
+        "src/index.js",
+      ],
+    },
+    "module": {
+      "rules": [
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
                 },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
+              ],
             },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
+            /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "entry",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
           ],
         },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "entry",
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
           },
-        ],
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "entry",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "resolve": {
+      "alias": {
+        "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
       },
-    ],
-  },
-  "resolve": {
-    "alias": {
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
   },
-}
+]
 `;
 
 exports[`plugin-swc > should enable usage mode preset_env 1`] = `
-{
-  "entry": {
-    "main": [
-      "src/index.js",
-    ],
-  },
-  "module": {
-    "rules": [
-      {
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
+[
+  {
+    "entry": {
+      "main": [
+        "src/index.js",
+      ],
+    },
+    "module": {
+      "rules": [
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
                 },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
+              ],
             },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
+            /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "usage",
+                  "shippedProposals": true,
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
           ],
         },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
           },
-        ],
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "usage",
+                  "shippedProposals": true,
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "resolve": {
+      "alias": {
+        "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
       },
-    ],
-  },
-  "resolve": {
-    "alias": {
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
   },
-}
+]
 `;
 
 exports[`plugin-swc > should has correct core-js 1`] = `
-{
-  "entry": {
-    "main": [
-      "src/index.js",
-    ],
-  },
-  "module": {
-    "rules": [
-      {
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "entry",
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
+[
+  {
+    "entry": {
+      "main": [
+        "src/index.js",
+      ],
+    },
+    "module": {
+      "rules": [
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
                 },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
+              ],
             },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
+            /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "entry",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
           ],
         },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "entry",
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
           },
-        ],
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "entry",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "resolve": {
+      "alias": {
+        "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
       },
-    ],
-  },
-  "resolve": {
-    "alias": {
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
   },
-}
+]
 `;
 
 exports[`plugin-swc > should has correct core-js 2`] = `
-{
-  "entry": {
-    "main": [
-      "src/index.js",
-    ],
-  },
-  "module": {
-    "rules": [
-      {
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "entry",
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
+[
+  {
+    "entry": {
+      "main": [
+        "src/index.js",
+      ],
+    },
+    "module": {
+      "rules": [
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
                 },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
+              ],
             },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
+            /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "targets": [
+                    "node >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
           ],
         },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "entry",
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
           },
-        ],
-      },
-    ],
-  },
-  "resolve": {
-    "alias": {
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "targets": [
+                    "node >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
+          ],
+        },
+      ],
     },
   },
-}
-`;
-
-exports[`plugin-swc > should has correct core-js 3`] = `
-{
-  "entry": {
-    "main": [
-      "src/index.js",
-    ],
-  },
-  "module": {
-    "rules": [
-      {
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "targets": [
-                  "node >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
-          ],
-        },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "targets": [
-                  "node >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
-          },
-        ],
-      },
-    ],
-  },
-}
+]
 `;
 
 exports[`plugin-swc > should'n override browserslist when target platform is not web 1`] = `
-{
-  "entry": {
-    "main": [
-      "src/index.js",
-    ],
-  },
-  "module": {
-    "rules": [
-      {
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
+[
+  {
+    "entry": {
+      "main": [
+        "src/index.js",
+      ],
+    },
+    "module": {
+      "rules": [
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
                 },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
+              ],
             },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
+            /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "usage",
+                  "shippedProposals": true,
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
           ],
         },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
           },
-        ],
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.32",
+                  "mode": "usage",
+                  "shippedProposals": true,
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "exclude": [],
+                "inlineSourcesContent": true,
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                  },
+                },
+                "minify": false,
+                "sourceMaps": true,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "resolve": {
+      "alias": {
+        "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
       },
-    ],
-  },
-  "resolve": {
-    "alias": {
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
   },
-}
+]
 `;

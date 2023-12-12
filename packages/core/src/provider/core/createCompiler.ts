@@ -45,18 +45,26 @@ export async function createCompiler({
       : rspack(rspackConfigs);
 
   let isFirstCompile = true;
+  let isVersionLogged = false;
+  let isCompiling = false;
+
+  const logRspackVersion = () => {
+    if (!isVersionLogged) {
+      logger.start(`Use Rspack v${rspack.rspackVersion}`);
+      isVersionLogged = true;
+    }
+  };
 
   compiler.hooks.watchRun.tap('rsbuild:compiling', () => {
-    if (isFirstCompile) {
-      logger.start(`Use Rspack v${rspack.rspackVersion}`);
+    logRspackVersion();
+    if (!isCompiling) {
+      logger.start('Compiling...');
     }
-    logger.start('Compiling...');
+    isCompiling = true;
   });
 
   if (isProd()) {
-    compiler.hooks.run.tap('rsbuild:run', () => {
-      logger.start(`Use Rspack v${rspack.rspackVersion}`);
-    });
+    compiler.hooks.run.tap('rsbuild:run', logRspackVersion);
   }
 
   compiler.hooks.done.tap('rsbuild:done', async (stats: Stats | MultiStats) => {
@@ -68,9 +76,7 @@ export async function createCompiler({
     const printTime = (c: StatsCompilation, index: number) => {
       if (c.time) {
         const time = prettyTime(c.time / 1000);
-        const target = Array.isArray(context.target)
-          ? context.target[index]
-          : context.target;
+        const target = context.targets[index];
         const name = TARGET_ID_MAP[target || 'web'];
         logger.ready(`${name} compiled in ${time}`);
       }
@@ -98,9 +104,11 @@ export async function createCompiler({
     if (isDev()) {
       await context.hooks.onDevCompileDoneHook.call({
         isFirstCompile,
+        stats: stats,
       });
     }
 
+    isCompiling = false;
     isFirstCompile = false;
   });
 

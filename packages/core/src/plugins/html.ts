@@ -17,7 +17,6 @@ import type {
   RsbuildPluginAPI,
   NormalizedConfig,
   HTMLPluginOptions,
-  NormalizedOutputConfig,
   HtmlInjectTagDescriptor,
 } from '@rsbuild/shared';
 import type { HtmlTagsPluginOptions } from '../rspack/HtmlTagsPlugin';
@@ -107,7 +106,7 @@ export function getFavicon(
 
 export function getMetaTags(
   entryName: string,
-  config: { html: HtmlConfig; output: NormalizedOutputConfig },
+  config: { html: HtmlConfig },
   templateContent?: string,
 ) {
   const metaTags = mergeChainedOptions({
@@ -168,7 +167,7 @@ function getChunks(entryName: string, entryValue: string | string[]) {
 }
 
 export const applyInjectTags = (api: RsbuildPluginAPI) => {
-  api.modifyBundlerChain(async (chain, { HtmlPlugin, CHAIN_ID }) => {
+  api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
 
     const tags = castArray(config.html.tags).filter(Boolean);
@@ -190,7 +189,6 @@ export const applyInjectTags = (api: RsbuildPluginAPI) => {
 
     // create shared options used for entry without specified options.
     const sharedOptions: HtmlTagsPluginOptions = {
-      HtmlPlugin,
       append: true,
       hash: false,
       publicPath: true,
@@ -265,12 +263,13 @@ export const pluginHtml = (): RsbuildPlugin => ({
               minify,
               filename,
               template: templatePath,
+              entryName,
               templateParameters,
               scriptLoading: config.html.scriptLoading,
             };
 
             const htmlInfo: HtmlInfo = {};
-            htmlInfoMap[filename] = htmlInfo;
+            htmlInfoMap[entryName] = htmlInfo;
 
             if (templateContent) {
               htmlInfo.templateContent = templateContent;
@@ -310,7 +309,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
-          .use(HtmlBasicPlugin, [{ HtmlPlugin, info: htmlInfoMap }]);
+          .use(HtmlBasicPlugin, [{ info: htmlInfoMap }]);
 
         if (config.security) {
           const { nonce } = config.security;
@@ -322,7 +321,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
             chain
               .plugin(CHAIN_ID.PLUGIN.HTML_NONCE)
-              .use(HtmlNoncePlugin, [{ nonce, HtmlPlugin }]);
+              .use(HtmlNoncePlugin, [{ nonce }]);
           }
         }
 
@@ -340,7 +339,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
             chain
               .plugin(CHAIN_ID.PLUGIN.HTML_CROSS_ORIGIN)
               .use(HtmlCrossOriginPlugin, [
-                { crossOrigin: formattedCrossorigin, HtmlPlugin },
+                { crossOrigin: formattedCrossorigin },
               ]);
 
             chain.output.crossOriginLoading(formattedCrossorigin);
@@ -351,14 +350,14 @@ export const pluginHtml = (): RsbuildPlugin => ({
               '../rspack/HtmlAppIconPlugin'
             );
 
-            const distDir = getDistPath(config.output, 'image');
+            const distDir = getDistPath(config, 'image');
             const iconPath = path.isAbsolute(appIcon)
               ? appIcon
               : path.join(api.context.rootPath, appIcon);
 
             chain
               .plugin(CHAIN_ID.PLUGIN.APP_ICON)
-              .use(HtmlAppIconPlugin, [{ iconPath, distDir, HtmlPlugin }]);
+              .use(HtmlAppIconPlugin, [{ iconPath, distDir }]);
           }
         }
       },

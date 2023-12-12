@@ -5,12 +5,16 @@
 
 为开发服务器或预览服务器配置代理规则，将请求代理到指定的服务上。
 
-### 示例
+## 示例
+
+### 基础用法
 
 ```js
 export default {
   server: {
     proxy: {
+      // http://localhost:8080/api -> http://localhost:3000/api
+      // http://localhost:8080/api/foo -> http://localhost:3000/api/foo
       '/api': 'http://localhost:3000',
     },
   },
@@ -25,6 +29,8 @@ export default {
 export default {
   server: {
     proxy: {
+      // http://localhost:8080/api -> https://nodejs.org/api
+      // http://localhost:8080/api/foo -> https://nodejs.org/foo
       '/api': 'https://nodejs.org',
     },
   },
@@ -39,6 +45,8 @@ export default {
 export default {
   server: {
     proxy: {
+      // http://localhost:8080/api -> http://localhost:3000
+      // http://localhost:8080/api/foo -> http://localhost:3000/foo
       '/api': {
         target: 'http://localhost:3000',
         pathRewrite: { '^/api': '' },
@@ -48,7 +56,7 @@ export default {
 };
 ```
 
-### 选项
+## 选项
 
 Rsbuild Server Proxy 基于 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) 实现。你可以使用 http-proxy-middleware 的所有配置项，具体可以查看文档。
 
@@ -75,12 +83,15 @@ type ProxyOptions =
   | ProxyDetail;
 ```
 
-除了 http-proxy-middleware 的选项外，还支持 bypass 和 context 两个配置项：
+除了 http-proxy-middleware 的选项外，Rsbuild 还支持 bypass 和 context 两个配置项。
 
-- bypass：根据函数的返回值绕过代理。
-  - 返回 `null` 或 `undefined` 会继续用代理处理请求。
-  - 返回 `false` 会返回 404 错误。
-  - 返回一个具体的服务路径，将会使用此路径替代原请求路径。
+### bypass
+
+根据函数的返回值绕过代理。
+
+- 返回 `null` 或 `undefined` 会继续用代理处理请求。
+- 返回 `false` 会返回 404 错误。
+- 返回一个具体的服务路径，将会使用此路径替代原请求路径。
 
 ```js
 // 自定义 bypass 方法
@@ -101,7 +112,9 @@ export default {
 };
 ```
 
-- context：如果你想代理多个特定的路径到同一个目标，你可以使用 context 配置项。
+### context
+
+如果你想代理多个特定的路径到同一个目标，可以使用 context 配置项。
 
 ```js
 // 代理多个路径到同一个目标
