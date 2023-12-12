@@ -51,11 +51,11 @@ export function rspackProvider({
         });
       },
 
-      async createDevServer(options) {
-        const { createDevServer } = await import('../server/devServer');
+      async getServerAPIs(options) {
+        const { getServerAPIs } = await import('../server/devServer');
         const { createDevMiddleware } = await import('./core/createCompiler');
         await initRsbuildConfig({ context, pluginStore });
-        return createDevServer(
+        return getServerAPIs(
           { context, pluginStore, rsbuildOptions },
           createDevMiddleware,
           options,

@@ -1,4 +1,3 @@
-import http from 'http';
 import {
   createProxyMiddleware as baseCreateProxyMiddleware,
   RequestHandler,
@@ -8,6 +7,7 @@ import {
   type ProxyDetail,
   type RequestHandler as Middleware,
   type ProxyOptions,
+  type UpgradeEvent,
 } from '@rsbuild/shared';
 
 export function formatProxyOptions(proxyOptions: ProxyOptions) {
@@ -42,12 +42,7 @@ export function formatProxyOptions(proxyOptions: ProxyOptions) {
   return ret;
 }
 
-export type HttpUpgradeHandler = NonNullable<RequestHandler['upgrade']>;
-
-export const createProxyMiddleware = (
-  proxyOptions: ProxyOptions,
-  app: http.Server,
-) => {
+export const createProxyMiddleware = (proxyOptions: ProxyOptions) => {
   // If it is not an array, it may be an object that uses the context attribute
   // or an object in the form of { source: ProxyDetail }
   const formattedOptionsList = formatProxyOptions(proxyOptions);
@@ -76,7 +71,7 @@ export const createProxyMiddleware = (
     proxyMiddlewares.push(proxyMiddleware);
   }
 
-  const handleUpgrade: HttpUpgradeHandler = (req, socket, head) => {
+  const handleUpgrade: UpgradeEvent = (req, socket, head) => {
     for (const middleware of proxyMiddlewares) {
       if (typeof middleware.upgrade === 'function') {
         middleware.upgrade(req, socket, head);
@@ -84,7 +79,8 @@ export const createProxyMiddleware = (
     }
   };
 
-  app.on('upgrade', handleUpgrade);
-
-  return { middlewares };
+  return {
+    middlewares,
+    upgrade: handleUpgrade,
+  };
 };

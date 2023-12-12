@@ -72,10 +72,12 @@ export class RsbuildProdServer {
 
     if (proxy) {
       const { createProxyMiddleware } = await import('./proxy');
-      const { middlewares } = createProxyMiddleware(proxy, this.app);
+      const { middlewares, upgrade } = createProxyMiddleware(proxy);
       middlewares.forEach((middleware) => {
         this.middlewares.use(middleware);
       });
+
+      this.app.on('upgrade', upgrade);
     }
 
     this.applyStaticAssetMiddleware();

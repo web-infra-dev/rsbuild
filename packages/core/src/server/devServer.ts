@@ -15,16 +15,16 @@ import {
   RspackCompiler,
   RsbuildDevMiddlewareOptions,
   Routes,
-  DevServerAPI,
+  DevServerAPIs,
 } from '@rsbuild/shared';
-import type { Server } from 'http';
 import connect from '@rsbuild/shared/connect';
 import { registerCleaner } from './restart';
 import type { Context } from '../types';
 import { createHttpServer } from './httpServer';
 import { getMiddlewares } from './devMiddlewares';
+import { notFoundMiddleware } from './middlewares';
 
-export async function createDevServer<
+export async function getServerAPIs<
   Options extends {
     context: Context;
   },
@@ -40,7 +40,7 @@ export async function createDevServer<
   }: StartDevServerOptions & {
     defaultPort?: number;
   } = {},
-): Promise<DevServerAPI> {
+): Promise<DevServerAPIs> {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'development';
   }
@@ -74,35 +74,31 @@ export async function createDevServer<
     : [getPublicPathFromCompiler(compiler as RspackCompiler)];
 
   return {
-    resolvedConfig: { devServerConfig, port, host, https, defaultRoutes },
+    config: { devServerConfig, port, host, https, defaultRoutes },
     beforeStart: async () => {
       await options.context.hooks.onBeforeStartDevServerHook.call();
     },
-    afterStart: async ({ port, routes }: { port: number; routes: Routes }) => {
+    afterStart: async (params: { port?: number; routes?: Routes } = {}) => {
       await options.context.hooks.onAfterStartDevServerHook.call({
-        port,
-        routes,
+        port: params.port || port,
+        routes: params.routes || defaultRoutes,
       });
     },
-    getMiddlewares: async ({
-      dev,
-      app,
-    }: {
-      app: Server;
-      dev: RsbuildDevMiddlewareOptions['dev'];
-    }) =>
-      await getMiddlewares(
-        {
-          pwd: options.context.rootPath,
-          devMiddleware,
-          dev,
-          output: {
-            distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
-            publicPaths,
-          },
+    getMiddlewares: async (
+      overrides: RsbuildDevMiddlewareOptions['dev'] = {},
+    ) =>
+      await getMiddlewares({
+        pwd: options.context.rootPath,
+        devMiddleware,
+        dev: {
+          ...devServerConfig,
+          ...overrides,
         },
-        app,
-      ),
+        output: {
+          distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
+          publicPaths,
+        },
+      }),
   };
 }
 
@@ -127,7 +123,7 @@ export async function startDevServer<
 ) {
   debug('create dev server');
 
-  const rsbuildServer = await createDevServer(options, createDevMiddleware, {
+  const serverAPIs = await getServerAPIs(options, createDevMiddleware, {
     compiler,
     printURLs,
     logger: customLogger,
@@ -135,8 +131,8 @@ export async function startDevServer<
   });
 
   const {
-    resolvedConfig: { devServerConfig, port, host, https, defaultRoutes },
-  } = rsbuildServer;
+    config: { devServerConfig, port, host, https, defaultRoutes },
+  } = serverAPIs;
 
   const logger = customLogger ?? defaultLogger;
 
@@ -149,7 +145,7 @@ export async function startDevServer<
 
   debug('create dev server done');
 
-  await rsbuildServer.beforeStart();
+  await serverAPIs.beforeStart();
 
   const protocol = https ? 'https' : 'http';
   let urls = getAddressUrls(protocol, port, host);
@@ -167,14 +163,15 @@ export async function startDevServer<
     printServerURLs(urls, defaultRoutes, logger);
   }
 
-  const devMiddlewares = await rsbuildServer.getMiddlewares({
-    dev: devServerConfig,
-    app: httpServer,
-  });
+  const devMiddlewares = await serverAPIs.getMiddlewares();
 
   devMiddlewares.middlewares.forEach((m) => middlewares.use(m));
 
+  middlewares.use(notFoundMiddleware);
+
   debug('listen dev server');
+
+  httpServer.on('upgrade', devMiddlewares.onUpgrade);
 
   return new Promise<StartServerResult>((resolve) => {
     httpServer.listen(
@@ -189,10 +186,7 @@ export async function startDevServer<
 
         debug('listen dev server done');
 
-        await rsbuildServer.afterStart({
-          port,
-          routes: defaultRoutes,
-        });
+        await serverAPIs.afterStart();
 
         const onClose = async () => {
           await devMiddlewares.close();

@@ -28,7 +28,7 @@ export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {
   initConfigs: ProviderInstance['initConfigs'];
   inspectConfig: ProviderInstance['inspectConfig'];
   createCompiler: ProviderInstance['createCompiler'];
-  createDevServer: ProviderInstance['createDevServer'];
+  getServerAPIs: ProviderInstance['getServerAPIs'];
   startDevServer: ProviderInstance['startDevServer'];
 
   getHTMLPaths: Awaited<ReturnType<P>>['pluginAPI']['getHTMLPaths'];

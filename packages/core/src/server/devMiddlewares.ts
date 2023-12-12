@@ -1,15 +1,14 @@
-import { Server } from 'http';
 import url from 'url';
 import {
   RequestHandler,
   ServerAPIs,
   RsbuildDevMiddlewareOptions,
+  UpgradeEvent,
 } from '@rsbuild/shared';
 import DevMiddleware from './compiler-dev-middleware';
 import {
   faviconFallbackMiddleware,
   getHtmlFallbackMiddleware,
-  notFoundMiddleware,
 } from './middlewares';
 import { join, isAbsolute } from 'path';
 
@@ -40,7 +39,6 @@ const applySetupMiddlewares = (
 };
 
 const applyDefaultMiddlewares = async ({
-  app,
   middlewares,
   dev,
   devMiddleware,
@@ -49,11 +47,13 @@ const applyDefaultMiddlewares = async ({
 }: {
   output: RsbuildDevMiddlewareOptions['output'];
   pwd: RsbuildDevMiddlewareOptions['pwd'];
-  app: Server;
   middlewares: RequestHandler[];
   dev: RsbuildDevMiddlewareOptions['dev'];
   devMiddleware: DevMiddleware;
-}) => {
+}): Promise<{
+  onUpgrade: UpgradeEvent;
+}> => {
+  const upgradeEvents: UpgradeEvent[] = [];
   // compression should be the first middleware
   if (dev.compress) {
     const { default: compression } = await import(
@@ -88,19 +88,20 @@ const applyDefaultMiddlewares = async ({
   // dev proxy handler, each proxy has own handler
   if (dev.proxy) {
     const { createProxyMiddleware } = await import('./proxy');
-    const { middlewares: proxyMiddlewares } = createProxyMiddleware(
+    const { middlewares: proxyMiddlewares, upgrade } = createProxyMiddleware(
       dev.proxy,
-      app,
     );
+    upgradeEvents.push(upgrade);
     proxyMiddlewares.forEach((middleware) => {
       middlewares.push(middleware);
     });
   }
 
-  // do webpack build / plugin apply / socket server when pass compiler instance
-  devMiddleware.init(app);
-
+  // do rspack build / plugin apply / socket server when pass compiler instance
+  devMiddleware.init();
   devMiddleware.middleware && middlewares.push(devMiddleware.middleware);
+  // subscribe upgrade event to handle websocket
+  upgradeEvents.push(devMiddleware.upgrade.bind(devMiddleware));
 
   if (dev.publicDir && dev.publicDir.name) {
     const { default: sirv } = await import('../../compiled/sirv');
@@ -140,13 +141,15 @@ const applyDefaultMiddlewares = async ({
   }
 
   middlewares.push(faviconFallbackMiddleware);
-  middlewares.push(notFoundMiddleware);
+
+  return {
+    onUpgrade: (...args) => {
+      upgradeEvents.forEach((cb) => cb(...args));
+    },
+  };
 };
 
-export const getMiddlewares = async (
-  options: RsbuildDevMiddlewareOptions,
-  app: Server,
-) => {
+export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
   const middlewares: RequestHandler[] = [];
   // create dev middleware instance
   const devMiddleware = new DevMiddleware({
@@ -160,8 +163,7 @@ export const getMiddlewares = async (
 
   before.forEach((fn) => middlewares.push(fn));
 
-  await applyDefaultMiddlewares({
-    app,
+  const { onUpgrade } = await applyDefaultMiddlewares({
     middlewares,
     dev: options.dev,
     devMiddleware,
@@ -175,6 +177,7 @@ export const getMiddlewares = async (
     close: async () => {
       devMiddleware.close();
     },
+    onUpgrade,
     middlewares,
   };
 };

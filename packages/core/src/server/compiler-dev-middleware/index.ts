@@ -1,4 +1,5 @@
-import type { IncomingMessage, ServerResponse, Server } from 'http';
+import type { IncomingMessage, ServerResponse } from 'http';
+import type { Socket } from 'net';
 import type {
   RsbuildDevMiddlewareOptions,
   DevMiddlewareAPI,
@@ -54,7 +55,7 @@ export default class DevMiddleware {
     this.devMiddleware = devMiddleware;
   }
 
-  public init(app: Server) {
+  public init() {
     if (this.devMiddleware) {
       // start compiling
       this.middleware = this.setupDevMiddleware(
@@ -63,9 +64,11 @@ export default class DevMiddleware {
       );
     }
 
-    app.on('listening', () => {
-      this.socketServer.prepare(app);
-    });
+    this.socketServer.prepare();
+  }
+
+  public upgrade(req: IncomingMessage, sock: Socket, head: any) {
+    this.socketServer.upgrade(req, sock, head);
   }
 
   public close() {

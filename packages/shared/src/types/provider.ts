@@ -2,7 +2,7 @@ import type { PluginStore, Plugins, RsbuildPluginAPI } from './plugin';
 import type { Context } from './context';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
-import type { StartServerResult, DevServerAPI } from './server';
+import type { StartServerResult, DevServerAPIs } from './server';
 import type { AddressUrl } from '../url';
 import type { Logger } from '../logger';
 import type { NormalizedConfig } from './config';
@@ -69,10 +69,14 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
     options?: CreateCompilerOptions,
   ) => Promise<Compiler | MultiCompiler>;
 
-  /** It is designed for high-level frameworks that require a custom server */
-  createDevServer: (
+  /**
+   * This API is not stable
+   *
+   * It is designed for high-level frameworks that require a custom server
+   */
+  getServerAPIs: (
     options?: Omit<StartDevServerOptions, 'printURLs'>,
-  ) => Promise<DevServerAPI>;
+  ) => Promise<DevServerAPIs>;
 
   startDevServer: (
     options?: StartDevServerOptions,
