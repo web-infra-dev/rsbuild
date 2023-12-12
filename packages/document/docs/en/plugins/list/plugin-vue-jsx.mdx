@@ -2,10 +2,6 @@
 
 The Vue plugin provides support for Vue 3 JSX / TSX syntax. The plugin internally integrates [@vue/babel-plugin-jsx](https://github.com/vuejs/babel-plugin-jsx).
 
-:::tip
-The Vue JSX plugin relies on Babel transpilation and requires an additional [Babel Plugin](/plugins/list/plugin-babel). At the same time, adding the Babel plugin will cause additional compilation overhead.
-:::
-
 ## Quick Start
 
 ### Install Plugin
@@ -14,7 +10,7 @@ You can install the plugin using the following command:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsbuild/plugin-vue-jsx -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-vue-jsx -D" />
 
 ### Register Plugin
 
@@ -25,11 +21,24 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
 
 export default {
-  plugins: [pluginBabel(), pluginVueJsx()],
+  plugins: [
+    pluginBabel({
+      include: /\.(jsx|tsx)$/,
+      exclude: /[\\/]node_modules[\\/]/,
+    }),
+    pluginVueJsx(),
+  ],
 };
 ```
 
 After registering the plugin, you can use Vue's [JSX / TSX syntax](https://github.com/vuejs/babel-plugin-jsx) in your code.
+
+:::tip
+Since the Vue JSX plugin relies on Babel for compilation, you need to additionally add the [Babel plugin](/plugins/list/plugin-babel).
+
+Babel compilation will introduce extra overhead, in the example above, we use `include` to match `.jsx` and `.tsx` files, thereby reducing the performance cost brought by Babel.
+
+:::
 
 ## Options
 

@@ -14,7 +14,7 @@ You can install the plugin using the following command:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsbuild/plugin-solid -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
 
 ### Register Plugin
 
@@ -25,11 +25,24 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 
 export default {
-  plugins: [pluginBabel(), pluginSolid()],
+  plugins: [
+    pluginBabel({
+      include: /\.(jsx|tsx)$/,
+      exclude: /[\\/]node_modules[\\/]/,
+    }),
+    pluginSolid(),
+  ],
 };
 ```
 
 After registering the plugin, you can directly develop Solid.
+
+:::tip
+Since the Solid JSX relies on Babel for compilation, you need to additionally add the [Babel plugin](/plugins/list/plugin-babel).
+
+Babel compilation will introduce extra overhead, in the example above, we use `include` to match `.jsx` and `.tsx` files, thereby reducing the performance cost brought by Babel.
+
+:::
 
 ## Options
 

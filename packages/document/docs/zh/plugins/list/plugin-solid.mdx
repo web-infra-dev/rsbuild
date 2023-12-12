@@ -2,10 +2,6 @@
 
 Solid 插件提供了对 Solid 的支持，插件内部集成了 [babel-preset-solid](https://github.com/solidjs/solid/tree/main/packages/babel-preset-solid)。
 
-:::tip
-Solid 插件依赖 Babel 编译，需要额外添加 [Babel 插件](/plugins/list/plugin-babel)，同时，添加 Babel 插件会产生额外的编译开销。
-:::
-
 ## 快速开始
 
 ### 安装插件
@@ -14,7 +10,7 @@ Solid 插件依赖 Babel 编译，需要额外添加 [Babel 插件](/plugins/lis
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsbuild/plugin-solid -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
 
 ### 注册插件
 
@@ -25,11 +21,24 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 
 export default {
-  plugins: [pluginBabel(), pluginSolid()],
+  plugins: [
+    pluginBabel({
+      include: /\.(jsx|tsx)$/,
+      exclude: /[\\/]node_modules[\\/]/,
+    }),
+    pluginSolid(),
+  ],
 };
 ```
 
 注册完插件后，你可以直接进行 Solid 开发。
+
+:::tip
+由于 Solid 的 JSX 依赖 Babel 进行编译，因此你需要额外添加 [Babel 插件](/plugins/list/plugin-babel)。
+
+Babel 编译会产生额外的编译开销，在上述例子中，我们通过 `include` 来匹配 `.jsx` 和 `.tsx` 文件，从而减少 Babel 带来的性能开销。
+
+:::
 
 ## 选项
 
