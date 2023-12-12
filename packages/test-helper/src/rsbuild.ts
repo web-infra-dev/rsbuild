@@ -66,9 +66,8 @@ export const matchPlugin = (config: RspackConfig, pluginName: string) => {
 
   if (Array.isArray(result)) {
     return result[0] || null;
-  } else {
-    return result || null;
   }
+  return result || null;
 };
 
 /**
