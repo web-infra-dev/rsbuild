@@ -1,46 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/babel > babel-loader addIncludes & addExcludes should works 1`] = `
-{
-  "module": {
-    "rules": [
-      {
-        "exclude": [
-          "src/example",
-        ],
-        "include": [
-          /\\\\/node_modules\\\\/query-string\\\\//,
-        ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
-            "options": {
-              "babelrc": false,
-              "compact": false,
-              "configFile": false,
-              "plugins": [],
-              "presets": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-                  {
-                    "allExtensions": true,
-                    "allowDeclareFields": true,
-                    "allowNamespaces": true,
-                    "isTSX": true,
-                    "optimizeConstEnums": true,
-                  },
-                ],
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
-}
-`;
-
 exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] = `
 {
   "exclude": [

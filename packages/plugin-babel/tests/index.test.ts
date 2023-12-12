@@ -6,17 +6,15 @@ import { SCRIPT_REGEX } from '@rsbuild/shared';
 describe('plugins/babel', () => {
   it('babel-loader should works with builtin:swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        source: {
+          include: [/\/node_modules\/query-string\//],
+          exclude: ['src/example'],
+        },
+      },
     });
 
-    rsbuild.addPlugins([
-      pluginBabel({
-        babelLoaderOptions: (_config, { addExcludes, addIncludes }) => {
-          addIncludes(/\/node_modules\/query-string\//);
-          addExcludes('src/example');
-        },
-      }),
-    ]);
+    rsbuild.addPlugins([pluginBabel()]);
 
     const config = await rsbuild.unwrapConfig();
 
@@ -51,24 +49,6 @@ describe('plugins/babel', () => {
                 style: true,
               },
             ]);
-          },
-        }),
-      ],
-      rsbuildConfig: {},
-    });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    expect(bundlerConfigs[0]).toMatchSnapshot();
-  });
-
-  it('babel-loader addIncludes & addExcludes should works', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [
-        pluginBabel({
-          babelLoaderOptions: (_config, { addExcludes, addIncludes }) => {
-            addIncludes(/\/node_modules\/query-string\//);
-            addExcludes('src/example');
           },
         }),
       ],
