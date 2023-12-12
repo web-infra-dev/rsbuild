@@ -1322,6 +1322,9 @@ importers:
 
   packages/plugin-solid:
     dependencies:
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../plugin-babel
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
@@ -1335,9 +1338,6 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../plugin-babel
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
@@ -1529,6 +1529,9 @@ importers:
 
   packages/plugin-vue-jsx:
     dependencies:
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../plugin-babel
       '@vue/babel-plugin-jsx':
         specifier: 1.1.1
         version: 1.1.1(@babel/core@7.23.2)
@@ -1539,9 +1542,6 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../plugin-babel
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
@@ -1576,6 +1576,9 @@ importers:
 
   packages/plugin-vue2-jsx:
     dependencies:
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../plugin-babel
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
@@ -1589,9 +1592,6 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../plugin-babel
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
