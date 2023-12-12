@@ -19,12 +19,10 @@ export async function startDevServer(fixtures) {
   const rsbuildServer = await rsbuild.createDevServer();
 
   const {
-    resolvedConfig: { host, port, defaultRoutes, devServerConfig },
+    resolvedConfig: { host, port, defaultRoutes },
   } = rsbuildServer;
 
-  const { middlewares, close, upgrade } = await rsbuildServer.getMiddlewares({
-    dev: devServerConfig,
-  });
+  const { middlewares, close, upgrade } = await rsbuildServer.getMiddlewares();
 
   app.get('/aaa', (_req, res) => {
     res.send('Hello World!');

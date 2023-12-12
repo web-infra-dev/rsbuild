@@ -84,15 +84,16 @@ export async function createDevServer<
         routes,
       });
     },
-    getMiddlewares: async ({
-      dev,
-    }: {
-      dev: RsbuildDevMiddlewareOptions['dev'];
-    }) =>
+    getMiddlewares: async (
+      overrides: RsbuildDevMiddlewareOptions['dev'] = {},
+    ) =>
       await getMiddlewares({
         pwd: options.context.rootPath,
         devMiddleware,
-        dev,
+        dev: {
+          ...devServerConfig,
+          ...overrides,
+        },
         output: {
           distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
           publicPaths,
@@ -162,9 +163,7 @@ export async function startDevServer<
     printServerURLs(urls, defaultRoutes, logger);
   }
 
-  const devMiddlewares = await rsbuildServer.getMiddlewares({
-    dev: devServerConfig,
-  });
+  const devMiddlewares = await rsbuildServer.getMiddlewares();
 
   devMiddlewares.middlewares.forEach((m) => middlewares.use(m));
 

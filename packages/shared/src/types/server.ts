@@ -109,9 +109,9 @@ export type DevServerAPI = {
     port: number;
     routes: Routes;
   }) => Promise<void>;
-  getMiddlewares: (options: {
-    dev: RsbuildDevMiddlewareOptions['dev'];
-  }) => Promise<{
+  getMiddlewares: (
+    overridesConfig?: RsbuildDevMiddlewareOptions['dev'],
+  ) => Promise<{
     middlewares: RequestHandler[];
     close: () => Promise<void>;
     upgrade: UpgradeEvent;
