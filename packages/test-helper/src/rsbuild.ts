@@ -75,14 +75,16 @@ export const matchPlugin = (config: RspackConfig, pluginName: string) => {
  * different with rsbuild createRsbuild. support add custom plugins instead of applyDefaultPlugins.
  */
 export async function createStubRsbuild<
-  P extends ({ rsbuildConfig }: { rsbuildConfig: T }) => RsbuildProvider,
-  T extends RsbuildConfig,
+  P extends ({
+    rsbuildConfig,
+  }: {
+    rsbuildConfig: RsbuildConfig;
+  }) => RsbuildProvider,
 >({
-  rsbuildConfig = {} as T,
+  rsbuildConfig = {},
   plugins,
   ...options
 }: CreateRsbuildOptions & {
-  rsbuildConfig?: T;
   provider?: P;
   plugins?: RsbuildPlugin[];
 }): Promise<
@@ -105,6 +107,7 @@ export async function createStubRsbuild<
   const { pick, createPluginStore } = await import('@rsbuild/shared');
   const rsbuildOptions: Required<CreateRsbuildOptions> = {
     cwd: process.cwd(),
+    rsbuildConfig,
     ...options,
   };
 

@@ -27,16 +27,12 @@ const noop = async () => {};
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions,
-  rsbuildConfig: RsbuildConfig = {},
   plugins: RsbuildPlugin[] = [],
 ) => {
   const { createRsbuild } = await import('@rsbuild/core');
 
   if (process.env.PROVIDE_TYPE === 'rspack') {
-    const rsbuild = await createRsbuild({
-      ...rsbuildOptions,
-      rsbuildConfig,
-    });
+    const rsbuild = await createRsbuild(rsbuildOptions);
 
     if (plugins) {
       rsbuild.addPlugins(plugins);
@@ -48,7 +44,6 @@ export const createRsbuild = async (
   const { webpackProvider } = await import('@rsbuild/webpack');
   const rsbuild = await createRsbuild({
     ...rsbuildOptions,
-    rsbuildConfig,
     provider: webpackProvider,
   });
 
@@ -143,17 +138,18 @@ const updateConfigForTest = async (
 
 export async function dev({
   plugins,
-  rsbuildConfig = {},
   ...options
 }: CreateRsbuildOptions & {
   plugins?: RsbuildPlugin[];
-  rsbuildConfig?: RsbuildConfig;
 }) {
   process.env.NODE_ENV = 'development';
 
-  rsbuildConfig = await updateConfigForTest(rsbuildConfig, options.cwd);
+  options.rsbuildConfig = await updateConfigForTest(
+    options.rsbuildConfig || {},
+    options.cwd,
+  );
 
-  const rsbuild = await createRsbuild(options, rsbuildConfig, plugins);
+  const rsbuild = await createRsbuild(options, plugins);
 
   return rsbuild.startDevServer({
     printURLs: false,
@@ -163,18 +159,19 @@ export async function dev({
 export async function build({
   plugins,
   runServer = false,
-  rsbuildConfig = {},
   ...options
 }: CreateRsbuildOptions & {
   plugins?: RsbuildPlugin[];
   runServer?: boolean;
-  rsbuildConfig?: RsbuildConfig;
 }) {
   process.env.NODE_ENV = 'production';
 
-  rsbuildConfig = await updateConfigForTest(rsbuildConfig, options.cwd);
+  options.rsbuildConfig = await updateConfigForTest(
+    options.rsbuildConfig || {},
+    options.cwd,
+  );
 
-  const rsbuild = await createRsbuild(options, rsbuildConfig, plugins);
+  const rsbuild = await createRsbuild(options, plugins);
 
   await rsbuild.build();
 
