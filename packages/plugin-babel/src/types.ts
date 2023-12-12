@@ -63,12 +63,12 @@ export type BabelConfigUtils = {
    * use `source.include` instead
    * @deprecated
    */
-  addIncludes: (includes: RuleCondition[]) => void;
+  addIncludes: (includes: RuleCondition) => void;
   /**
    * use `source.exclude` instead
    * @deprecated
    */
-  addExcludes: (excludes: RuleCondition[]) => void;
+  addExcludes: (excludes: RuleCondition) => void;
 };
 
 export type PluginBabelOptions = {
