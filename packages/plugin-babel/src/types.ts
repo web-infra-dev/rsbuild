@@ -50,7 +50,7 @@ export type PresetReactOptions =
   | AutomaticRuntimePresetReactOptions
   | ClassicRuntimePresetReactOptions;
 
-export type RuleCondition = string | RegExp | (string | RegExp);
+export type RuleCondition = string | RegExp | (string | RegExp)[];
 
 export type BabelConfigUtils = {
   addPlugins: (plugins: BabelPlugin[]) => void;
@@ -63,12 +63,12 @@ export type BabelConfigUtils = {
    * use `source.include` instead
    * @deprecated
    */
-  addIncludes: (includes: RuleCondition[]) => void;
+  addIncludes: (includes: RuleCondition) => void;
   /**
    * use `source.exclude` instead
    * @deprecated
    */
-  addExcludes: (excludes: RuleCondition[]) => void;
+  addExcludes: (excludes: RuleCondition) => void;
 };
 
 export type PluginBabelOptions = {
