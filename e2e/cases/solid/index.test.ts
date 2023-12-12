@@ -9,7 +9,13 @@ import { build, dev, getHrefByEntryName } from '@scripts/shared';
 
 const buildFixture = (rootDir: string): ReturnType<typeof build> => {
   const root = path.join(__dirname, rootDir);
-  const plugins = [pluginBabel(), pluginSolid()];
+  const plugins = [
+    pluginBabel({
+      include: /\.(jsx|tsx)$/,
+      exclude: /[\\/]node_modules[\\/]/,
+    }),
+    pluginSolid(),
+  ];
 
   if (rootDir === 'stylus') plugins.push(pluginStylus());
 
@@ -44,7 +50,13 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
 
   const handle = await dev({
     cwd: root,
-    plugins: [pluginBabel(), pluginSolid()],
+    plugins: [
+      pluginBabel({
+        include: /\.(jsx|tsx)$/,
+        exclude: /[\\/]node_modules[\\/]/,
+      }),
+      pluginSolid(),
+    ],
   });
 
   await page.goto(getHrefByEntryName('index', handle.port));

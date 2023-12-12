@@ -2,10 +2,6 @@
 
 Vue2 JSX 插件提供了对 Vue 2 JSX / TSX 语法的支持，插件内部集成了 [@vue/babel-preset-jsx](https://github.com/vuejs/jsx-vue2)。
 
-:::tip
-Vue2 JSX 插件依赖 Babel 编译，需要额外添加 [Babel 插件](/plugins/list/plugin-babel)，同时，添加 Babel 插件会产生额外的编译开销。
-:::
-
 ## 快速开始
 
 ### 安装插件
@@ -14,7 +10,7 @@ Vue2 JSX 插件依赖 Babel 编译，需要额外添加 [Babel 插件](/plugins/
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsbuild/plugin-vue2-jsx -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-vue2-jsx -D" />
 
 ### 注册插件
 
@@ -25,11 +21,24 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginVue2Jsx } from '@rsbuild/plugin-vue2-jsx';
 
 export default {
-  plugins: [pluginBabel(), pluginVue2Jsx()],
+  plugins: [
+    pluginBabel({
+      include: /\.(jsx|tsx)$/,
+      exclude: /[\\/]node_modules[\\/]/,
+    }),
+    pluginVue2Jsx(),
+  ],
 };
 ```
 
 注册完插件后，你可以直接在代码中可以使用 Vue 的 [JSX / TSX 语法](https://github.com/vuejs/jsx-vue2)。
+
+:::tip
+由于 Vue 的 JSX 插件依赖 Babel 进行编译，因此你需要额外添加 [Babel 插件](/plugins/list/plugin-babel)。
+
+Babel 编译会产生额外的编译开销，在上述例子中，我们通过 `include` 来匹配 `.jsx` 和 `.tsx` 文件，从而减少 Babel 带来的性能开销。
+
+:::
 
 ## 选项
 
