@@ -50,7 +50,10 @@ export const pluginBabel = (
       };
 
       const babelOptions = getBabelOptions();
-      const babelLoader = path.resolve(__dirname, '../compiled/babel-loader');
+      const babelLoader = path.resolve(
+        __dirname,
+        '../compiled/babel-loader/index.js',
+      );
       const { include, exclude } = options;
 
       if (include || exclude) {
