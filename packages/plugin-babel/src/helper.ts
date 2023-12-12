@@ -15,6 +15,8 @@ import type {
 } from './types';
 import type { PluginOptions as BabelPluginOptions } from '@babel/core';
 
+export const BABEL_JS_RULE = 'babel-js';
+
 const normalizeToPosixPath = (p: string | undefined) =>
   upath
     .normalizeSafe(normalize(p || ''))

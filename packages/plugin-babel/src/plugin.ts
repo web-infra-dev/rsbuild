@@ -1,7 +1,7 @@
 import path from 'path';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { castArray, cloneDeep, SCRIPT_REGEX } from '@rsbuild/shared';
-import { applyUserBabelConfig } from './helper';
+import { applyUserBabelConfig, BABEL_JS_RULE } from './helper';
 import type { PluginBabelOptions } from './types';
 
 /**
@@ -54,7 +54,7 @@ export const pluginBabel = (
       const { include, exclude } = options;
 
       if (include || exclude) {
-        const rule = chain.module.rule('babel-js');
+        const rule = chain.module.rule(BABEL_JS_RULE);
 
         if (include) {
           castArray(include).forEach((condition) => {
