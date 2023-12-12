@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { getHrefByEntryName } from '@scripts/shared';
 import { startDevServer } from './scripts/server.mjs';
 
-test('custom app', async ({ page }) => {
+test('custom server', async ({ page }) => {
   const { resolvedConfig, close } = await startDevServer(__dirname);
 
   await page.goto(getHrefByEntryName('index', resolvedConfig.port));

@@ -8,31 +8,26 @@ export async function startDevServer(fixtures) {
     cwd: fixtures,
     rsbuildConfig: {
       plugins: [pluginReact()],
-      source: {
-        entry: {
-          index: join(fixtures, 'src/index.js'),
-        },
-      },
       server: {
         htmlFallback: false,
       },
     },
   });
 
-  const rsbuildServer = await rsbuild.createDevServer();
-
   const app = express();
+
+  const rsbuildServer = await rsbuild.createDevServer();
 
   const {
     resolvedConfig: { host, port, defaultRoutes, devServerConfig },
   } = rsbuildServer;
 
-  app.get('/aaa', (_req, res) => {
-    res.send('Hello World!');
-  });
-
   const { middlewares, close, upgrade } = await rsbuildServer.getMiddlewares({
     dev: devServerConfig,
+  });
+
+  app.get('/aaa', (_req, res) => {
+    res.send('Hello World!');
   });
 
   app.use(middlewares);
