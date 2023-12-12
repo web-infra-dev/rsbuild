@@ -1,4 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
+import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
 
 type VueJSXPresetOptions = {
   compositionAPI?: boolean | string;
@@ -20,25 +21,20 @@ export function pluginVue2Jsx(options: PluginVueOptions = {}): RsbuildPlugin {
 
     setup(api) {
       api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-        [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI].forEach((ruleId) => {
-          if (chain.module.rules.has(ruleId)) {
-            const rule = chain.module.rule(ruleId);
-
-            if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
-              // add babel preset
-              rule.use(CHAIN_ID.USE.BABEL).tap((babelConfig) => {
-                babelConfig.presets ??= [];
-                babelConfig.presets.push([
-                  require.resolve('@vue/babel-preset-jsx'),
-                  {
-                    injectH: true,
-                    ...options.vueJsxOptions,
-                  },
-                ]);
-                return babelConfig;
-              });
-            }
-          }
+        modifyBabelLoaderOptions({
+          chain,
+          CHAIN_ID,
+          modifier: (babelOptions) => {
+            babelOptions.presets ??= [];
+            babelOptions.presets.push([
+              require.resolve('@vue/babel-preset-jsx'),
+              {
+                injectH: true,
+                ...options.vueJsxOptions,
+              },
+            ]);
+            return babelOptions;
+          },
         });
       });
     },

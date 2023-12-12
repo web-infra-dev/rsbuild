@@ -27,12 +27,12 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
+    "@rsbuild/plugin-babel": "workspace:*",
     "@vue/babel-plugin-jsx": "1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "typescript": "^5.3.0"
