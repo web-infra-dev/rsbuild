@@ -49,13 +49,17 @@ export default {
       // Method 2:
       // Match by regular expression
       // All paths containing `/node_modules/query-string/` will be matched
-      /\/node_modules\/query-string\//,
+      /[\\/]node_modules[\\/]query-string[\\/]/,
     ],
   },
 };
 ```
 
 The above two methods match the absolute paths of files using "path prefixes" and "regular expressions" respectively. It is worth noting that all referenced modules in the project will be matched. Therefore, you should avoid using overly loose values for matching to prevent compilation performance issues or compilation errors.
+
+:::tip
+In the regular expression example above, we use `[\\/]` to match the path separator because different operating systems use different path separators. Using `[\\/]` ensures that the paths will match in both MacOS and Windows.
+:::
 
 ### Compile Sub Dependencies
 
@@ -67,8 +71,8 @@ Take `query-string` for example, it depends on the `decode-uri-component` packag
 export default {
   source: {
     include: [
-      /\/node_modules\/query-string\//,
-      /\/node_modules\/decode-uri-component\//,
+      /[\\/]node_modules[\\/]query-string[\\/]/,
+      /[\\/]node_modules[\\/]decode-uri-component[\\/]/,
     ],
   },
 };
