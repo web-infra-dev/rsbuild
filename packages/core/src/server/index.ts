@@ -1,2 +1,2 @@
-export { startDevServer, createDevServer } from './devServer';
+export { startDevServer, getServerAPIs } from './devServer';
 export { startProdServer } from './prodServer';

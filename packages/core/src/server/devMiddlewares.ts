@@ -51,7 +51,7 @@ const applyDefaultMiddlewares = async ({
   dev: RsbuildDevMiddlewareOptions['dev'];
   devMiddleware: DevMiddleware;
 }): Promise<{
-  upgrade: UpgradeEvent;
+  onUpgrade: UpgradeEvent;
 }> => {
   const upgradeEvents: UpgradeEvent[] = [];
   // compression should be the first middleware
@@ -143,7 +143,7 @@ const applyDefaultMiddlewares = async ({
   middlewares.push(faviconFallbackMiddleware);
 
   return {
-    upgrade: (...args) => {
+    onUpgrade: (...args) => {
       upgradeEvents.forEach((cb) => cb(...args));
     },
   };
@@ -163,7 +163,7 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
 
   before.forEach((fn) => middlewares.push(fn));
 
-  const { upgrade } = await applyDefaultMiddlewares({
+  const { onUpgrade } = await applyDefaultMiddlewares({
     middlewares,
     dev: options.dev,
     devMiddleware,
@@ -177,7 +177,7 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
     close: async () => {
       devMiddleware.close();
     },
-    upgrade,
+    onUpgrade,
     middlewares,
   };
 };

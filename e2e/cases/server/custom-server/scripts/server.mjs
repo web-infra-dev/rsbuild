@@ -16,13 +16,13 @@ export async function startDevServer(fixtures) {
 
   const app = express();
 
-  const rsbuildServer = await rsbuild.createDevServer();
+  const serverAPIs = await rsbuild.getServerAPIs();
 
   const {
-    resolvedConfig: { host, port, defaultRoutes },
-  } = rsbuildServer;
+    config: { host, port },
+  } = serverAPIs;
 
-  const { middlewares, close, upgrade } = await rsbuildServer.getMiddlewares();
+  const { middlewares, close, onUpgrade } = await serverAPIs.getMiddlewares();
 
   app.get('/aaa', (_req, res) => {
     res.send('Hello World!');
@@ -34,20 +34,17 @@ export async function startDevServer(fixtures) {
     res.send('Hello Express!');
   });
 
-  await rsbuildServer.beforeStart();
+  await serverAPIs.beforeStart();
 
   const httpServer = app.listen({ host, port }, async () => {
-    await rsbuildServer.afterStart({
-      port,
-      routes: defaultRoutes,
-    });
+    await serverAPIs.afterStart();
   });
 
   // subscribe the server's http upgrade event to handle WebSocket upgrade
-  httpServer.on('upgrade', upgrade);
+  httpServer.on('upgrade', onUpgrade);
 
   return {
-    resolvedConfig: rsbuildServer.resolvedConfig,
+    config: serverAPIs.config,
     close: async () => {
       await close();
       httpServer.close();

@@ -61,11 +61,11 @@ export function webpackProvider({
         return createCompiler({ context, webpackConfigs });
       },
 
-      async createDevServer(options) {
-        const { createDevServer } = await import('@rsbuild/core/server');
+      async getServerAPIs(options) {
+        const { getServerAPIs } = await import('@rsbuild/core/server');
         const { createDevMiddleware } = await import('./core/createCompiler');
         await initRsbuildConfig({ context, pluginStore });
-        return createDevServer(
+        return getServerAPIs(
           { context, pluginStore, rsbuildOptions },
           // @ts-expect-error compile type mismatch
           createDevMiddleware,
