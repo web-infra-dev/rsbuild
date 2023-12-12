@@ -1,5 +1,6 @@
 import type { Context } from './context';
 import type { PluginStore } from './plugin';
+import type { RsbuildConfig } from './config';
 import type { RsbuildProvider, ProviderInstance } from './provider';
 
 export type RsbuildTarget = 'web' | 'node' | 'web-worker' | 'service-worker';
@@ -11,6 +12,8 @@ export type RsbuildMode = 'development' | 'production';
 export type CreateRsbuildOptions = {
   /** The root path of current project. */
   cwd?: string;
+  /** Configurations of Rsbuild. */
+  rsbuildConfig?: RsbuildConfig;
 };
 
 export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {
