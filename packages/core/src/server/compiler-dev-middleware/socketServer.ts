@@ -1,4 +1,4 @@
-import type { Server } from 'http';
+import type { IncomingMessage } from 'http';
 import type { Socket } from 'net';
 import ws from '../../../compiled/ws';
 import {
@@ -18,8 +18,6 @@ export default class SocketServer {
 
   private readonly options: RsbuildDevMiddlewareOptions['dev'];
 
-  private app?: Server;
-
   private stats?: Stats;
 
   private timer: NodeJS.Timeout | null = null;
@@ -28,24 +26,23 @@ export default class SocketServer {
     this.options = options;
   }
 
-  // create socket, install socket handler, bind socket event
-  public prepare(app: Server) {
-    this.app = app;
+  public upgrade(req: IncomingMessage, sock: Socket, head: any) {
+    // subscribe upgrade event to handle socket
 
+    if (!this.wsServer.shouldHandle(req)) {
+      return;
+    }
+
+    this.wsServer.handleUpgrade(req, sock, head, (connection) => {
+      this.wsServer.emit('connection', connection, req);
+    });
+  }
+
+  // create socket, install socket handler, bind socket event
+  public prepare() {
     this.wsServer = new ws.Server({
       noServer: true,
       path: this.options.client?.path,
-    });
-
-    // listen upgrade event to handle socket
-    this.app.on('upgrade', (req, sock, head) => {
-      if (!this.wsServer.shouldHandle(req)) {
-        return;
-      }
-
-      this.wsServer.handleUpgrade(req, sock as Socket, head, (connection) => {
-        this.wsServer.emit('connection', connection, req);
-      });
     });
 
     this.wsServer.on('error', (err: Error) => {

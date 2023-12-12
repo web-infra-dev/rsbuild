@@ -1,4 +1,5 @@
 import type { IncomingMessage, ServerResponse, Server } from 'http';
+import type { Socket } from 'net';
 import { DevConfig, NextFunction, RequestHandler } from './config/dev';
 import { ServerConfig } from './config/server';
 import type { Logger } from '../logger';
@@ -78,15 +79,19 @@ export type CreateDevServerOptions = {
   };
 } & RsbuildDevMiddlewareOptions;
 
-export type ServerApi = {
-  close: () => Promise<void>;
-};
-
 export type StartServerResult = {
   urls: string[];
   port: number;
-  server: ServerApi;
+  server: {
+    close: () => Promise<void>;
+  };
 };
+
+export type UpgradeEvent = (
+  req: IncomingMessage,
+  socket: Socket,
+  head: any,
+) => void;
 
 export type DevServerAPI = {
   resolvedConfig: {
@@ -96,7 +101,6 @@ export type DevServerAPI = {
     https: boolean;
     defaultRoutes: Routes;
   };
-  // devMiddlewareEvents: EventEmitter;
   beforeStart: () => Promise<void>;
   afterStart: ({
     port,
@@ -107,9 +111,9 @@ export type DevServerAPI = {
   }) => Promise<void>;
   getMiddlewares: (options: {
     dev: RsbuildDevMiddlewareOptions['dev'];
-    app: Server;
   }) => Promise<{
     middlewares: RequestHandler[];
     close: () => Promise<void>;
+    upgrade: UpgradeEvent;
   }>;
 };

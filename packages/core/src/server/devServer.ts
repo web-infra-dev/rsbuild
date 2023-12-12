@@ -17,12 +17,12 @@ import {
   Routes,
   DevServerAPI,
 } from '@rsbuild/shared';
-import type { Server } from 'http';
 import connect from '@rsbuild/shared/connect';
 import { registerCleaner } from './restart';
 import type { Context } from '../types';
 import { createHttpServer } from './httpServer';
 import { getMiddlewares } from './devMiddlewares';
+import { notFoundMiddleware } from './middlewares';
 
 export async function createDevServer<
   Options extends {
@@ -86,23 +86,18 @@ export async function createDevServer<
     },
     getMiddlewares: async ({
       dev,
-      app,
     }: {
-      app: Server;
       dev: RsbuildDevMiddlewareOptions['dev'];
     }) =>
-      await getMiddlewares(
-        {
-          pwd: options.context.rootPath,
-          devMiddleware,
-          dev,
-          output: {
-            distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
-            publicPaths,
-          },
+      await getMiddlewares({
+        pwd: options.context.rootPath,
+        devMiddleware,
+        dev,
+        output: {
+          distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
+          publicPaths,
         },
-        app,
-      ),
+      }),
   };
 }
 
@@ -169,12 +164,15 @@ export async function startDevServer<
 
   const devMiddlewares = await rsbuildServer.getMiddlewares({
     dev: devServerConfig,
-    app: httpServer,
   });
 
   devMiddlewares.middlewares.forEach((m) => middlewares.use(m));
 
+  middlewares.use(notFoundMiddleware);
+
   debug('listen dev server');
+
+  httpServer.on('upgrade', devMiddlewares.upgrade);
 
   return new Promise<StartServerResult>((resolve) => {
     httpServer.listen(
