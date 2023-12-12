@@ -69,7 +69,11 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
     options?: CreateCompilerOptions,
   ) => Promise<Compiler | MultiCompiler>;
 
-  /** It is designed for high-level frameworks that require a custom server */
+  /**
+   * This API is not stable
+   *
+   * It is designed for high-level frameworks that require a custom server
+   */
   getServerAPIs: (
     options?: Omit<StartDevServerOptions, 'printURLs'>,
   ) => Promise<DevServerAPIs>;
