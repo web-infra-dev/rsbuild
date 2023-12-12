@@ -1,5 +1,9 @@
 export { pluginBabel } from './plugin';
-export { getBabelUtils, getUseBuiltIns } from './helper';
+export {
+  getBabelUtils,
+  getUseBuiltIns,
+  modifyBabelLoaderOptions,
+} from './helper';
 export type {
   PresetEnvOptions,
   PresetEnvTargets,

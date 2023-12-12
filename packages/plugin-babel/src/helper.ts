@@ -2,6 +2,8 @@ import { isAbsolute, normalize, sep } from 'path';
 import {
   castArray,
   mergeChainedOptions,
+  type BundlerChain,
+  type ChainIdentifier,
   type NormalizedConfig,
 } from '@rsbuild/shared';
 import upath from 'upath';
@@ -177,4 +179,25 @@ export const getUseBuiltIns = (config: NormalizedConfig) => {
     return false;
   }
   return polyfill;
+};
+
+export const modifyBabelLoaderOptions = ({
+  chain,
+  CHAIN_ID,
+  modifier,
+}: {
+  chain: BundlerChain;
+  CHAIN_ID: ChainIdentifier;
+  modifier: (config: BabelTransformOptions) => BabelTransformOptions;
+}) => {
+  const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI];
+
+  ruleIds.forEach((ruleId) => {
+    if (chain.module.rules.has(ruleId)) {
+      const rule = chain.module.rule(ruleId);
+      if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
+        rule.use(CHAIN_ID.USE.BABEL).tap(modifier);
+      }
+    }
+  });
 };
