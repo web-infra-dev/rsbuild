@@ -178,7 +178,41 @@ pluginBabel({
 });
 ```
 
-#### 调试 Babel 配置
+### include
+
+- **类型：** `string | RegExp | (string | RegExp)[]`
+- **默认值：** `undefined`
+
+用于指定需要 Babel 编译的文件。
+
+由于 Babel 编译存在性能开销，通过 `include` 来匹配部分文件可以减少 Babel 编译的模块数量，从而提升构建性能。
+
+比如，只对 `.custom.js` 文件进行编译，并忽略 `node_modules` 下的文件：
+
+```js
+pluginBabel({
+  include: /\.custom\.js$/,
+  // 建议 exclude node_modules 目录以提升构建性能
+  exclude: /[\\/]node_modules[\\/]/,
+});
+```
+
+:::tip
+当你配置 `include` 或 `exclude` 选项时，Rsbuild 会创建一条单独的 Rspack rule 来应用 babel-loader 和 swc-loader。
+
+这条单独的 rule 与 Rsbuild 内置的 SWC rule 是完全独立的，并且不会受到 [source.include](/config/source/include) 和 [source.exclude](/config/source/exclude) 的作用。
+:::
+
+### exclude
+
+- **类型：** `string | RegExp | (string | RegExp)[]`
+- **默认值：** `undefined`
+
+用于指定不需要 Babel 编译的文件。
+
+由于 Babel 编译存在性能开销，通过 `exclude` 来排除部分文件可以减少 Babel 编译的模块数量，从而提升构建性能。
+
+## 调试配置
 
 当你通过配置项修改 `babel-loader` 配置后，可以在 [Rsbuild 调试模式](/guide/debug/debug-mode) 下查看最终生成的配置。
 
@@ -196,9 +230,9 @@ DEBUG=rsbuild pnpm build
 
 ## 常见问题
 
-### 使用 Babel 时编译卡死？
+### 编译卡死
 
-当编译进度条卡死，但终端无 Error 日志时，通常是因为编译过程中出现了异常。在某些情况下，当 Error 被 webpack 或其他模块捕获后，错误日志不会被正确输出。最为常见的场景是 Babel 配置出现异常，抛出 Error 后被 webpack 捕获，而 webpack 在个别情况下吞掉了 Error。
+在使用 Babel 插件后，如果编译进度条卡死，但终端无 Error 日志时，通常是因为编译过程中出现了异常。在某些情况下，当 Error 被 webpack 或其他模块捕获后，错误日志不会被正确输出。最为常见的场景是 Babel 配置出现异常，抛出 Error 后被 webpack 捕获，而 webpack 在个别情况下吞掉了 Error。
 
 **解决方法：**
 
