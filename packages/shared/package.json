@@ -106,7 +106,7 @@
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@rspack/core": "0.4.2",
+    "@rspack/core": "0.4.3",
     "caniuse-lite": "^1.0.30001559",
     "lodash": "^4.17.21",
     "postcss": "8.4.31"
