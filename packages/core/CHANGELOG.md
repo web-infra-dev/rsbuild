@@ -1,5 +1,12 @@
 # @rsbuild/core
 
+## 0.2.3
+
+### Patch Changes
+
+- 44d8087: fix: clear the assigned env vars for reloading
+  - @rsbuild/shared@0.2.3
+
 ## 0.2.2
 
 ### Patch Changes

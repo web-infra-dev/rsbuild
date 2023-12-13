@@ -1,5 +1,11 @@
 # @rsbuild/plugin-node-polyfill
 
+## 0.2.3
+
+### Patch Changes
+
+- @rsbuild/shared@0.2.3
+
 ## 0.2.2
 
 ### Patch Changes
