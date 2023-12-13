@@ -1,5 +1,6 @@
 import { logger, type RsbuildPlugin } from '@rsbuild/core';
 import {
+  fse,
   CHAIN_ID,
   deepmerge,
   mergeChainedOptions,
@@ -23,7 +24,7 @@ export const pluginTypeCheck = (
     name: 'rsbuild:type-check',
 
     setup(api) {
-      api.modifyBundlerChain(async (chain, { target }) => {
+      api.modifyBundlerChain(async (chain, { target, isProd }) => {
         const { enable = true, forkTsCheckerOptions } = options;
 
         if (!api.context.tsconfigPath || enable === false) {
@@ -35,10 +36,6 @@ export const pluginTypeCheck = (
         if (target !== api.context.targets[0]) {
           return;
         }
-
-        const { default: ForkTsCheckerWebpackPlugin } = await import(
-          'fork-ts-checker-webpack-plugin'
-        );
 
         // use typescript of user project
         let typescriptPath: string;
@@ -53,12 +50,28 @@ export const pluginTypeCheck = (
           return;
         }
 
-        const defaultOptions = {
+        const { default: ForkTsCheckerWebpackPlugin } = await import(
+          'fork-ts-checker-webpack-plugin'
+        );
+
+        const { default: json5 } = await import('@rsbuild/shared/json5');
+        const { references } = json5.parse(
+          fse.readFileSync(api.context.tsconfigPath, 'utf-8'),
+        );
+        const useReference = Array.isArray(references) && references.length > 0;
+
+        const defaultOptions: ForkTsCheckerOptions = {
           typescript: {
+            // set 'readonly' to avoid emitting tsbuildinfo,
+            // as the generated tsbuildinfo will break fork-ts-checker
+            mode: 'readonly',
+            // enable build when using project reference
+            build: useReference,
             // avoid OOM issue
             memoryLimit: 8192,
             // use tsconfig of user project
             configFile: api.context.tsconfigPath,
+            // use typescript of user project
             typescriptPath,
           },
           issue: {
@@ -84,10 +97,7 @@ export const pluginTypeCheck = (
           mergeFn: deepmerge,
         });
 
-        if (
-          api.context.bundlerType === 'rspack' &&
-          chain.get('mode') === 'production'
-        ) {
+        if (api.context.bundlerType === 'rspack' && isProd) {
           logger.info('Ts checker running...');
           logger.info(
             'Ts checker is running slowly and will block builds until it is complete, please be patient and wait.',
