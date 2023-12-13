@@ -1,11 +1,11 @@
 import url from 'url';
-import {
-  RequestHandler,
+import type {
   ServerAPIs,
-  RsbuildDevMiddlewareOptions,
   UpgradeEvent,
+  RequestHandler,
+  RsbuildDevMiddlewareOptions,
 } from '@rsbuild/shared';
-import DevMiddleware from './compiler-dev-middleware';
+import { DevMiddleware } from './devMiddleware';
 import {
   faviconFallbackMiddleware,
   getHtmlFallbackMiddleware,

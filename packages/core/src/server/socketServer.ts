@@ -1,6 +1,6 @@
 import type { IncomingMessage } from 'http';
 import type { Socket } from 'net';
-import ws from '../../../compiled/ws';
+import ws from '../../compiled/ws';
 import {
   logger,
   type Stats,
@@ -11,7 +11,7 @@ interface ExtWebSocket extends ws {
   isAlive: boolean;
 }
 
-export default class SocketServer {
+export class SocketServer {
   private wsServer!: ws.Server;
 
   private readonly sockets: ws[] = [];
@@ -179,11 +179,11 @@ export default class SocketServer {
 
     if (stats.errors && stats.errors.length > 0) {
       return this.sockWrite('errors', stats.errors);
-    } else if (stats.warnings && stats.warnings.length > 0) {
-      return this.sockWrite('warnings', stats.warnings);
-    } else {
-      return this.sockWrite('ok');
     }
+    if (stats.warnings && stats.warnings.length > 0) {
+      return this.sockWrite('warnings', stats.warnings);
+    }
+    return this.sockWrite('ok');
   }
 
   // send message to connecting socket
