@@ -7,6 +7,8 @@ export const getEnvFiles = () => {
   return ['.env', '.env.local', `.env.${NODE_ENV}`, `.env.${NODE_ENV}.local`];
 };
 
+let lastParsed: Record<string, string>;
+
 export async function loadEnv({
   cwd = process.cwd(),
   prefixes = ['PUBLIC_'],
@@ -23,6 +25,15 @@ export async function loadEnv({
     Object.assign(parsed, parse(fs.readFileSync(envPath)));
   });
 
+  // clear the assigned env vars for reloading
+  if (lastParsed) {
+    Object.keys(lastParsed).forEach((key) => {
+      if (process.env[key] === lastParsed[key]) {
+        delete process.env[key];
+      }
+    });
+  }
+
   expand({ parsed });
 
   const publicVars: Record<string, string> = {};
@@ -33,6 +44,8 @@ export async function loadEnv({
       publicVars[`process.env.${key}`] = JSON.stringify(val);
     }
   });
+
+  lastParsed = parsed;
 
   return {
     parsed,
