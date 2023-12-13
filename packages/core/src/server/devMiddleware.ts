@@ -6,7 +6,7 @@ import type {
   NextFunction,
   DevMiddleware as CustomDevMiddleware,
 } from '@rsbuild/shared';
-import SocketServer from './socketServer';
+import { SocketServer } from './socketServer';
 
 type Options = {
   publicPaths: string[];
@@ -34,7 +34,7 @@ function getHMRClientPath(
   return clientEntry;
 }
 
-export default class DevMiddleware {
+export class DevMiddleware {
   public middleware?: DevMiddlewareAPI;
 
   private devOptions: RsbuildDevMiddlewareOptions['dev'];
@@ -118,7 +118,7 @@ export default class DevMiddleware {
       res: ServerResponse,
       next: NextFunction,
     ) => {
-      const url = req.url;
+      const { url } = req;
       const assetPrefix =
         url && publicPaths.find((prefix) => url.startsWith(prefix));
 
