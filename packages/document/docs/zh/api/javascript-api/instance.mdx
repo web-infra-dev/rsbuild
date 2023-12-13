@@ -186,7 +186,7 @@ type StartDevServerOptions = {
   // 自定义 Compiler 对象
   compiler?: Compiler | MultiCompiler;
   // 是否在启动时静默获取端口号，默认为 false
-  getPortSliently?: boolean;
+  getPortSilently?: boolean;
   // 自定义日志输出对象
   logger?: Logger;
 };
@@ -284,11 +284,11 @@ await rsbuild.startDevServer({
 
 ### 静默获取端口号
 
-某些情况下，默认启动的端口号已经被占用，此时 Rsbuild 会自动递增端口号，直至找到一个可用端口。这个过程会输出提示日志，如果你不希望这段日志，可以将 `getPortSliently` 设置为 `true`。
+某些情况下，默认启动的端口号已经被占用，此时 Rsbuild 会自动递增端口号，直至找到一个可用端口。这个过程会输出提示日志，如果你不希望这段日志，可以将 `getPortSilently` 设置为 `true`。
 
 ```ts
 await rsbuild.startDevServer({
-  getPortSliently: true,
+  getPortSilently: true,
 });
 ```
 

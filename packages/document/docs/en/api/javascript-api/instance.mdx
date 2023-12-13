@@ -186,7 +186,7 @@ type StartDevServerOptions = {
   // custom Compiler object
   compiler?: Compiler | MultiCompiler;
   // Whether to get the port silently, the default is false
-  getPortSliently?: boolean;
+  getPortSilently?: boolean;
   // custom logger
   logger?: Logger;
 };
@@ -284,11 +284,11 @@ await rsbuild.startDevServer({
 
 ### Get Port Silently
 
-In some cases, the default startup port number is already occupied. In this situation, Rsbuild will automatically increment the port number until it finds an available one. This process will output a prompt log. If you do not want this log, you can set `getPortSliently` to `true`.
+In some cases, the default startup port number is already occupied. In this situation, Rsbuild will automatically increment the port number until it finds an available one. This process will output a prompt log. If you do not want this log, you can set `getPortSilently` to `true`.
 
 ```ts
 await rsbuild.startDevServer({
-  getPortSliently: true,
+  getPortSilently: true,
 });
 ```
 
