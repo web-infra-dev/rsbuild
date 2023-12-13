@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { expect } from '@playwright/test';
-import { dev, getHrefByEntryName } from '@scripts/shared';
+import { build, getHrefByEntryName } from '@scripts/shared';
 import { rspackOnlyTest } from '@scripts/helper';
 
 const fixture = join(__dirname, 'app');
@@ -8,8 +8,9 @@ const fixture = join(__dirname, 'app');
 rspackOnlyTest(
   'should build succeed with source build plugin',
   async ({ page }) => {
-    const rsbuild = await dev({
+    const rsbuild = await build({
       cwd: fixture,
+      runServer: true,
     });
 
     await page.goto(getHrefByEntryName('index', rsbuild.port));
@@ -19,6 +20,6 @@ rspackOnlyTest(
       'Card Comp Title: AppCARD COMP CONTENT:hello world',
     );
 
-    await rsbuild.server.close();
+    await rsbuild.close();
   },
 );
