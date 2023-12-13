@@ -5,7 +5,7 @@ import type {
   RequestHandler,
   RsbuildDevMiddlewareOptions,
 } from '@rsbuild/shared';
-import { DevMiddleware } from './devMiddleware';
+import { CompilerDevMiddleware } from './compilerDevMiddleware';
 import {
   faviconFallbackMiddleware,
   getHtmlFallbackMiddleware,
@@ -14,7 +14,7 @@ import { join, isAbsolute } from 'path';
 
 const applySetupMiddlewares = (
   dev: RsbuildDevMiddlewareOptions['dev'],
-  devMiddleware: DevMiddleware,
+  devMiddleware: CompilerDevMiddleware,
 ) => {
   const setupMiddlewares = dev.setupMiddlewares || [];
 
@@ -49,7 +49,7 @@ const applyDefaultMiddlewares = async ({
   pwd: RsbuildDevMiddlewareOptions['pwd'];
   middlewares: RequestHandler[];
   dev: RsbuildDevMiddlewareOptions['dev'];
-  devMiddleware: DevMiddleware;
+  devMiddleware: CompilerDevMiddleware;
 }): Promise<{
   onUpgrade: UpgradeEvent;
 }> => {
@@ -152,7 +152,7 @@ const applyDefaultMiddlewares = async ({
 export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
   const middlewares: RequestHandler[] = [];
   // create dev middleware instance
-  const devMiddleware = new DevMiddleware({
+  const devMiddleware = new CompilerDevMiddleware({
     dev: options.dev,
     publicPaths: options.output.publicPaths,
     devMiddleware: options.devMiddleware,

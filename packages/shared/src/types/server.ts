@@ -96,13 +96,24 @@ export type DevServerAPIs = {
     https: boolean;
     defaultRoutes: Routes;
   };
+  /**
+   * Trigger rsbuild onBeforeStartDevServer hook
+   */
   beforeStart: () => Promise<void>;
+  /**
+   * Trigger rsbuild onAfterStartDevServer hook
+   */
   afterStart: (options?: { port?: number; routes?: Routes }) => Promise<void>;
+  /**
+   * Get the corresponding builtin middleware according to the rsbuild config
+   *
+   * Related config: proxy / publicDir / historyApiFallback / headers / ...
+   */
   getMiddlewares: (overrides?: RsbuildDevMiddlewareOptions['dev']) => Promise<{
     middlewares: RequestHandler[];
     close: () => Promise<void>;
     /**
-     * subscribe http upgrade event
+     * Subscribe http upgrade event
      */
     onUpgrade: UpgradeEvent;
   }>;

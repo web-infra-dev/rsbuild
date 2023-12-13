@@ -21,7 +21,7 @@ import connect from '@rsbuild/shared/connect';
 import { registerCleaner } from './restart';
 import type { Context } from '../types';
 import { createHttpServer } from './httpServer';
-import { getMiddlewares } from './devMiddlewares';
+import { getMiddlewares } from './getDevMiddlewares';
 import { notFoundMiddleware } from './middlewares';
 
 export async function getServerAPIs<
