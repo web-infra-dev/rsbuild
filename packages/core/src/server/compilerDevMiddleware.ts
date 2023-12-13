@@ -34,7 +34,12 @@ function getHMRClientPath(
   return clientEntry;
 }
 
-export class DevMiddleware {
+/**
+ * Setup compiler-related logic:
+ * 1. setup webpack-dev-middleware
+ * 2. establish webSocket connect
+ */
+export class CompilerDevMiddleware {
   public middleware?: DevMiddlewareAPI;
 
   private devOptions: RsbuildDevMiddlewareOptions['dev'];
