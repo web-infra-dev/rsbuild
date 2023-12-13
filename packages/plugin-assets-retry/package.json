@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-assets-retry",
-  "version": "0.0.19",
+  "version": "0.2.3",
   "description": "Assets retry plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -9,6 +9,7 @@
     "directory": "packages/plugin-assets-retry"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -17,7 +18,7 @@
     }
   },
   "main": "./dist/index.js",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -27,8 +28,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "serialize-javascript": "^6.0.0",
-    "webpack-sources": "^3.2.3"
+    "serialize-javascript": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
@@ -37,14 +37,13 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
     "@types/serialize-javascript": "^5.0.1",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.4",
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
     "terser": "5.19.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.0"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "https://registry.npmjs.org/",
-    "types": "./dist/index.d.ts"
+    "registry": "https://registry.npmjs.org/"
   }
 }

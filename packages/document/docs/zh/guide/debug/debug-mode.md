@@ -77,7 +77,7 @@ module.exports = {
 };
 ```
 
-关于 Rspack 配置项的完整介绍，请查看 [Rspack 官方文档](https://www.rspack.dev/zh/config)。
+关于 Rspack 配置项的完整介绍，请查看 [Rspack 官方文档](https://rspack.dev/zh/config)。
 
 ## Webpack 配置文件
 

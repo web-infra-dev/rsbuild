@@ -1,4 +1,3 @@
-import path from 'path';
 import { build } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { pluginSwc } from '@rsbuild/plugin-swc';
@@ -10,7 +9,6 @@ test('should import with function customName', async () => {
 
   const setupConfig = {
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
   };
 
   {
@@ -46,7 +44,7 @@ test('should import with function customName', async () => {
 
         // @ts-expect-error rspack and webpack all support this
         disableDefaultEntries: true,
-        entries: {
+        entry: {
           index: './src/index.js',
         },
       },
@@ -62,7 +60,6 @@ test('should import with template config with SWC', async () => {
 
   const setupConfig = {
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     plugins: [pluginSwc()],
   };
 

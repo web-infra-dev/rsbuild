@@ -64,24 +64,23 @@ export const HTML_REGEX = /\.html$/;
 export const JSON_REGEX = /\.json$/;
 export const JS_REGEX = /\.(js|mjs|cjs|jsx)$/;
 export const TS_REGEX = /\.(ts|mts|cts|tsx)$/;
+export const SCRIPT_REGEX = /\.(js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
+export const TS_AND_JSX_REGEX = /\.(ts|tsx|jsx|mts|cts)$/;
 export const SVG_REGEX = /\.svg$/;
 export const CSS_REGEX = /\.css$/;
 export const LESS_REGEX = /\.less$/;
 export const SASS_REGEX = /\.s(a|c)ss$/;
-export const STYLUS_REGEX = /\.styl$/;
+export const STYLUS_REGEX = /\.styl(us)?$/;
 export const CSS_MODULES_REGEX = /\.module\.\w+$/i;
-export const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
 export const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
 export const MODULE_PATH_REGEX =
   /[\\/]node_modules[\\/](\.pnpm[\\/])?(?:(@[^[\\/]+)(?:[\\/]))?([^\\/]+)/;
 
 export const TS_CONFIG_FILE = 'tsconfig.json';
 
-export const ROUTE_SPEC_FILE = 'route.json';
-
 export const TARGET_ID_MAP: Record<RsbuildTarget, string> = {
   web: 'Client',
   node: 'Server',
-  'service-worker': 'Server Worker',
   'web-worker': 'Web Worker',
+  'service-worker': 'Service Worker',
 };

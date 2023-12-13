@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/document",
-  "version": "0.0.19",
+  "version": "0.2.3",
   "description": "Shared documentation of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -9,6 +9,7 @@
     "directory": "packages/document"
   },
   "license": "MIT",
+  "type": "commonjs",
   "files": [
     "docs",
     "src",
@@ -20,11 +21,12 @@
     "preview": "rspress preview"
   },
   "devDependencies": {
-    "@rspress/shared": "0.0.0-next-20231108104528",
-    "@types/node": "^16",
+    "@rsbuild/core": "workspace:*",
+    "@types/node": "16.x",
+    "fast-glob": "^3.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rspress": "0.0.0-next-20231108104528"
+    "rspress": "0.0.0-next-20231207111357"
   },
   "publishConfig": {
     "access": "public",

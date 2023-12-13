@@ -5,7 +5,7 @@
 在 Rsbuild 中，你有两种方式可以设置路径别名:
 
 - 通过 `tsconfig.json` 中的 `paths` 配置。
-- 通过 [source.alias](http://rsbuild.dev/zh/config/options/source.html#sourcealias) 配置。
+- 通过 [source.alias](/config/source/alias) 配置。
 
 ## 通过 `tsconfig.json` 的 `paths` 配置
 
@@ -26,12 +26,12 @@
 以上配置完成后，如果你在代码中引用 `@common/Foo.tsx`, 则会映射到 `<project>/src/common/Foo.tsx` 路径上。
 
 :::tip
-你可以阅读 [TypeScript - paths](https://www.typescriptlang.org/tsconfig#paths) 文档来了解更多用法。
+你可以阅读 [TypeScript - paths](https://typescriptlang.org/tsconfig#paths) 文档来了解更多用法。
 :::
 
 ## 通过 `source.alias` 配置
 
-Rsbuild 提供了 [source.alias](http://rsbuild.dev/zh/config/options/source.html#sourcealias) 配置项，对应 Rspack 原生的 [resolve.alias](https://www.rspack.dev/zh/config/resolve.html#resolvealias) 配置，你可以通过对象或者函数的方式来配置这个选项。
+Rsbuild 提供了 [source.alias](/config/source/alias) 配置项，对应 Rspack 原生的 [resolve.alias](https://rspack.dev/zh/config/resolve#resolvealias) 配置，你可以通过对象或者函数的方式来配置这个选项。
 
 ### 使用场景
 
@@ -78,4 +78,4 @@ export default {
 
 `tsconfig.json` 的 `paths` 配置的优先级高于 `source.alias`，当一个路径同时匹配到这两者定义的规则时，会优先使用 `tsconfig.json` 的 `paths` 定义的值。
 
-你可以通过 [source.aliasStrategy](http://rsbuild.dev/zh/config/options/source.html#sourcealiasstrategy) 来调整这两个选项的优先级。
+你可以通过 [source.aliasStrategy](/config/source/alias-strategy) 来调整这两个选项的优先级。

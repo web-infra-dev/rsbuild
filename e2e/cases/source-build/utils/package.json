@@ -6,20 +6,12 @@
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "source": "./src/index.ts"
     },
     "./common": {
+      "types": "./dist/types/common/index.d.ts",
       "source": "./src/common/index.ts"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "./dist/types/index.d.ts"
-      ],
-      "common": [
-        "./dist/types/common/index.d.ts"
-      ]
     }
   }
 }

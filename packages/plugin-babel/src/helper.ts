@@ -1,14 +1,23 @@
 import { isAbsolute, normalize, sep } from 'path';
-import { castArray, mergeChainedOptions } from '@rsbuild/shared';
+import {
+  castArray,
+  mergeChainedOptions,
+  type BundlerChain,
+  type ChainIdentifier,
+  type NormalizedConfig,
+} from '@rsbuild/shared';
 import upath from 'upath';
 import type {
   BabelPlugin,
   BabelConfigUtils,
   PresetEnvOptions,
   PresetReactOptions,
-  BabelPluginOptions,
   BabelTransformOptions,
+  PluginBabelOptions,
 } from './types';
+import type { PluginOptions as BabelPluginOptions } from '@babel/core';
+
+export const BABEL_JS_RULE = 'babel-js';
 
 const normalizeToPosixPath = (p: string | undefined) =>
   upath
@@ -120,6 +129,7 @@ export const getBabelUtils = (
 ): BabelConfigUtils => {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const noop = () => {};
+
   return {
     addPlugins: (plugins: BabelPlugin[]) => addPlugins(plugins, config),
     addPresets: (presets: BabelPlugin[]) => addPresets(presets, config),
@@ -131,7 +141,7 @@ export const getBabelUtils = (
     // It can be overridden by `extraBabelUtils`.
     addIncludes: noop,
     addExcludes: noop,
-    // Compat `presetEnvOptions` and `presetReactOptions` in Eden.
+    // Compat `presetEnvOptions` and `presetReactOptions` in Modern.js
     modifyPresetEnvOptions: (options: PresetEnvOptions) =>
       modifyPresetOptions('@babel/preset-env', options, config.presets || []),
     modifyPresetReactOptions: (options: PresetReactOptions) =>
@@ -139,16 +149,9 @@ export const getBabelUtils = (
   };
 };
 
-export type BabelConfig =
-  | BabelTransformOptions
-  | ((
-      config: BabelTransformOptions,
-      utils: BabelConfigUtils,
-    ) => BabelTransformOptions | void);
-
 export const applyUserBabelConfig = (
   defaultOptions: BabelTransformOptions,
-  userBabelConfig?: BabelConfig | BabelConfig[],
+  userBabelConfig?: PluginBabelOptions['babelLoaderOptions'],
   extraBabelUtils?: Partial<BabelConfigUtils>,
 ): BabelTransformOptions => {
   if (userBabelConfig) {
@@ -165,4 +168,33 @@ export const applyUserBabelConfig = (
   }
 
   return defaultOptions;
+};
+
+export const getUseBuiltIns = (config: NormalizedConfig) => {
+  const { polyfill } = config.output;
+  if (polyfill === 'ua' || polyfill === 'off') {
+    return false;
+  }
+  return polyfill;
+};
+
+export const modifyBabelLoaderOptions = ({
+  chain,
+  CHAIN_ID,
+  modifier,
+}: {
+  chain: BundlerChain;
+  CHAIN_ID: ChainIdentifier;
+  modifier: (config: BabelTransformOptions) => BabelTransformOptions;
+}) => {
+  const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI, BABEL_JS_RULE];
+
+  ruleIds.forEach((ruleId) => {
+    if (chain.module.rules.has(ruleId)) {
+      const rule = chain.module.rule(ruleId);
+      if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
+        rule.use(CHAIN_ID.USE.BABEL).tap(modifier);
+      }
+    }
+  });
 };

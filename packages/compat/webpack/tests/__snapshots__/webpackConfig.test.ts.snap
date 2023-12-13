@@ -7,20 +7,6 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "foo": "2",
     },
   },
-  HtmlBasicPlugin {
-    "HtmlPlugin": [Function],
-    "name": "HtmlBasicPlugin",
-    "options": {
-      "HtmlPlugin": [Function],
-      "info": {},
-    },
-  },
-  DefinePlugin {
-    "definitions": {
-      "process.env.ASSET_PREFIX": """",
-      "process.env.NODE_ENV": ""test"",
-    },
-  },
   MiniCssExtractPlugin {
     "_sortedModulesCache": WeakMap {},
     "options": {
@@ -39,13 +25,41 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
   HotModuleReplacementPlugin {
     "options": {},
   },
-  ReactRefreshPlugin {
-    "options": {
-      "exclude": [
-        /node_modules/,
+  HtmlWebpackPlugin {
+    "userOptions": {
+      "chunks": [
+        "index",
       ],
-      "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
-      "overlay": false,
+      "entryName": "index",
+      "filename": "index.html",
+      "inject": "head",
+      "meta": {
+        "charset": {
+          "charset": "UTF-8",
+        },
+        "viewport": "width=device-width, initial-scale=1.0",
+      },
+      "minify": false,
+      "scriptLoading": "defer",
+      "template": "<ROOT>/packages/core/static/template.html",
+      "templateParameters": [Function],
+    },
+    "version": 5,
+  },
+  HtmlBasicPlugin {
+    "name": "HtmlBasicPlugin",
+    "options": {
+      "info": {
+        "index": {
+          "title": "Rsbuild App",
+        },
+      },
+    },
+  },
+  DefinePlugin {
+    "definitions": {
+      "process.env.ASSET_PREFIX": """",
+      "process.env.NODE_ENV": ""test"",
     },
   },
   ProgressPlugin {
@@ -73,674 +87,42 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
 
 exports[`webpackConfig > should allow to use tools.webpackChain to modify config 1`] = `
 {
-  "context": "<ROOT>",
   "devtool": "eval",
-  "infrastructureLogging": {
-    "level": "error",
-  },
-  "mode": "development",
-  "module": {
-    "parser": {
-      "javascript": {
-        "exportsPresence": "error",
-      },
-    },
-  },
-  "name": "Client",
-  "performance": {
-    "hints": false,
-  },
 }
 `;
 
 exports[`webpackConfig > should allow tools.webpack to be an array 1`] = `
 {
-  "context": "<ROOT>",
   "devtool": "source-map",
-  "infrastructureLogging": {
-    "level": "error",
-  },
-  "mode": "development",
-  "module": {
-    "parser": {
-      "javascript": {
-        "exportsPresence": "error",
-      },
-    },
-  },
-  "name": "Client",
-  "performance": {
-    "hints": false,
-  },
 }
 `;
 
 exports[`webpackConfig > should allow tools.webpack to be an object 1`] = `
 {
-  "context": "<ROOT>",
   "devtool": "eval",
-  "infrastructureLogging": {
-    "level": "error",
-  },
-  "mode": "development",
-  "module": {
-    "parser": {
-      "javascript": {
-        "exportsPresence": "error",
-      },
-    },
-  },
-  "name": "Client",
-  "performance": {
-    "hints": false,
-  },
 }
 `;
 
 exports[`webpackConfig > should allow tools.webpack to modify config object 1`] = `
 {
-  "context": "<ROOT>",
   "devtool": "eval",
-  "infrastructureLogging": {
-    "level": "error",
-  },
-  "mode": "development",
-  "module": {
-    "parser": {
-      "javascript": {
-        "exportsPresence": "error",
-      },
-    },
-  },
-  "name": "Client",
-  "performance": {
-    "hints": false,
-  },
 }
 `;
 
 exports[`webpackConfig > should allow tools.webpack to return config 1`] = `
 {
-  "context": "<ROOT>",
   "devtool": "eval",
-  "infrastructureLogging": {
-    "level": "error",
-  },
-  "mode": "development",
-  "module": {
-    "parser": {
-      "javascript": {
-        "exportsPresence": "error",
-      },
-    },
-  },
-  "name": "Client",
-  "performance": {
-    "hints": false,
-  },
 }
 `;
 
 exports[`webpackConfig > should allow tools.webpackChain to be an array 1`] = `
 {
-  "context": "<ROOT>",
   "devtool": "source-map",
-  "infrastructureLogging": {
-    "level": "error",
-  },
-  "mode": "development",
-  "module": {
-    "parser": {
-      "javascript": {
-        "exportsPresence": "error",
-      },
-    },
-  },
-  "name": "Client",
-  "performance": {
-    "hints": false,
-  },
 }
-`;
-
-exports[`webpackConfig > should not have any pluginImport in Babel 1`] = `
-[
-  {
-    "include": [
-      {
-        "and": [
-          "<ROOT>",
-          {
-            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-          },
-        ],
-      },
-    ],
-    "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
-        "options": {
-          "babelrc": false,
-          "compact": false,
-          "configFile": false,
-          "plugins": [
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
-              {
-                "version": "legacy",
-              },
-            ],
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
-              {
-                "proposal": "minimal",
-              },
-            ],
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-              {
-                "useESModules": true,
-                "version": "7.23.2",
-              },
-            ],
-            "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
-            [
-              "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
-              {},
-            ],
-          ],
-          "presets": [
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
-              {
-                "bugfixes": true,
-                "corejs": {
-                  "proposals": true,
-                  "version": "3.32",
-                },
-                "exclude": [
-                  "transform-typeof-symbol",
-                ],
-                "modules": "commonjs",
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-                "useBuiltIns": "usage",
-              },
-            ],
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-              {
-                "allExtensions": true,
-                "allowDeclareFields": true,
-                "allowNamespaces": true,
-                "isTSX": true,
-                "optimizeConstEnums": true,
-              },
-            ],
-          ],
-        },
-      },
-    ],
-  },
-  {
-    "mimetype": {
-      "or": [
-        "text/javascript",
-        "application/javascript",
-      ],
-    },
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
-        "options": {
-          "babelrc": false,
-          "compact": false,
-          "configFile": false,
-          "plugins": [
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
-              {
-                "version": "legacy",
-              },
-            ],
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
-              {
-                "proposal": "minimal",
-              },
-            ],
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-              {
-                "useESModules": true,
-                "version": "7.23.2",
-              },
-            ],
-            "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
-            [
-              "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
-              {},
-            ],
-          ],
-          "presets": [
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
-              {
-                "bugfixes": true,
-                "corejs": {
-                  "proposals": true,
-                  "version": "3.32",
-                },
-                "exclude": [
-                  "transform-typeof-symbol",
-                ],
-                "modules": "commonjs",
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-                "useBuiltIns": "usage",
-              },
-            ],
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-              {
-                "allExtensions": true,
-                "allowDeclareFields": true,
-                "allowNamespaces": true,
-                "isTSX": true,
-                "optimizeConstEnums": true,
-              },
-            ],
-          ],
-        },
-      },
-    ],
-  },
-]
-`;
-
-exports[`webpackConfig > should not set default pluginImport for Babel 1`] = `
-[
-  {
-    "include": [
-      {
-        "and": [
-          "<ROOT>",
-          {
-            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-          },
-        ],
-      },
-    ],
-    "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
-        "options": {
-          "babelrc": false,
-          "compact": false,
-          "configFile": false,
-          "plugins": [
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
-              {
-                "version": "legacy",
-              },
-            ],
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
-              {
-                "proposal": "minimal",
-              },
-            ],
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-              {
-                "useESModules": true,
-                "version": "7.23.2",
-              },
-            ],
-            "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
-            [
-              "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
-              {},
-            ],
-          ],
-          "presets": [
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
-              {
-                "bugfixes": true,
-                "corejs": {
-                  "proposals": true,
-                  "version": "3.32",
-                },
-                "exclude": [
-                  "transform-typeof-symbol",
-                ],
-                "modules": "commonjs",
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-                "useBuiltIns": "usage",
-              },
-            ],
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-              {
-                "allExtensions": true,
-                "allowDeclareFields": true,
-                "allowNamespaces": true,
-                "isTSX": true,
-                "optimizeConstEnums": true,
-              },
-            ],
-          ],
-        },
-      },
-    ],
-  },
-  {
-    "mimetype": {
-      "or": [
-        "text/javascript",
-        "application/javascript",
-      ],
-    },
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
-        "options": {
-          "babelrc": false,
-          "compact": false,
-          "configFile": false,
-          "plugins": [
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
-              {
-                "version": "legacy",
-              },
-            ],
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
-              {
-                "proposal": "minimal",
-              },
-            ],
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-              {
-                "useESModules": true,
-                "version": "7.23.2",
-              },
-            ],
-            "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
-            [
-              "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
-              {},
-            ],
-          ],
-          "presets": [
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
-              {
-                "bugfixes": true,
-                "corejs": {
-                  "proposals": true,
-                  "version": "3.32",
-                },
-                "exclude": [
-                  "transform-typeof-symbol",
-                ],
-                "modules": "commonjs",
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-                "useBuiltIns": "usage",
-              },
-            ],
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-              {
-                "allExtensions": true,
-                "allowDeclareFields": true,
-                "allowNamespaces": true,
-                "isTSX": true,
-                "optimizeConstEnums": true,
-              },
-            ],
-          ],
-        },
-      },
-    ],
-  },
-]
 `;
 
 exports[`webpackConfig > should provide mergeConfig util in tools.webpack function 1`] = `
 {
-  "context": "<ROOT>",
   "devtool": "eval",
-  "infrastructureLogging": {
-    "level": "error",
-  },
-  "mode": "development",
-  "module": {
-    "parser": {
-      "javascript": {
-        "exportsPresence": "error",
-      },
-    },
-  },
-  "name": "Client",
-  "performance": {
-    "hints": false,
-  },
 }
-`;
-
-exports[`webpackConfig > should set proper pluginImport option in Babel 1`] = `
-[
-  {
-    "include": [
-      {
-        "and": [
-          "<ROOT>",
-          {
-            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-          },
-        ],
-      },
-    ],
-    "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
-        "options": {
-          "babelrc": false,
-          "compact": false,
-          "configFile": false,
-          "plugins": [
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
-              {
-                "version": "legacy",
-              },
-            ],
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
-              {
-                "proposal": "minimal",
-              },
-            ],
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-              {
-                "useESModules": true,
-                "version": "7.23.2",
-              },
-            ],
-            "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-              {
-                "camel2DashComponentName": true,
-                "libraryName": "foo",
-              },
-              "foo",
-            ],
-            [
-              "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
-              {},
-            ],
-          ],
-          "presets": [
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
-              {
-                "bugfixes": true,
-                "corejs": {
-                  "proposals": true,
-                  "version": "3.32",
-                },
-                "exclude": [
-                  "transform-typeof-symbol",
-                ],
-                "modules": "commonjs",
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-                "useBuiltIns": "usage",
-              },
-            ],
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-              {
-                "allExtensions": true,
-                "allowDeclareFields": true,
-                "allowNamespaces": true,
-                "isTSX": true,
-                "optimizeConstEnums": true,
-              },
-            ],
-          ],
-        },
-      },
-    ],
-  },
-  {
-    "mimetype": {
-      "or": [
-        "text/javascript",
-        "application/javascript",
-      ],
-    },
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
-        "options": {
-          "babelrc": false,
-          "compact": false,
-          "configFile": false,
-          "plugins": [
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
-              {
-                "version": "legacy",
-              },
-            ],
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
-              {
-                "proposal": "minimal",
-              },
-            ],
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-              {
-                "useESModules": true,
-                "version": "7.23.2",
-              },
-            ],
-            "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-import/lib/index.js",
-              {
-                "camel2DashComponentName": true,
-                "libraryName": "foo",
-              },
-              "foo",
-            ],
-            [
-              "<ROOT>/packages/compat/webpack/compiled/babel-plugin-lodash",
-              {},
-            ],
-          ],
-          "presets": [
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
-              {
-                "bugfixes": true,
-                "corejs": {
-                  "proposals": true,
-                  "version": "3.32",
-                },
-                "exclude": [
-                  "transform-typeof-symbol",
-                ],
-                "modules": "commonjs",
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-                "useBuiltIns": "usage",
-              },
-            ],
-            [
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-              {
-                "allExtensions": true,
-                "allowDeclareFields": true,
-                "allowNamespaces": true,
-                "isTSX": true,
-                "optimizeConstEnums": true,
-              },
-            ],
-          ],
-        },
-      },
-    ],
-  },
-]
 `;

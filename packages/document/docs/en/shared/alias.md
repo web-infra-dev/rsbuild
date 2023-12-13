@@ -5,7 +5,7 @@ For example, if you frequently reference the `src/common/request.ts` module in y
 In Rsbuild, there are two ways to set up path aliases:
 
 - Through the `paths` configuration in `tsconfig.json`.
-- Through the [source.alias](https://rsbuild.dev/config/options/source.html#sourcealias) configuration.
+- Through the [source.alias](/config/source/alias) configuration.
 
 ## Using `tsconfig.json`'s `paths` Configuration
 
@@ -26,12 +26,12 @@ For example:
 After configuring, if you reference `@common/Foo.tsx` in your code, it will be mapped to the `<project>/src/common/Foo.tsx` path.
 
 :::tip
-You can refer to the [TypeScript - paths](https://www.typescriptlang.org/tsconfig#paths) documentation for more details.
+You can refer to the [TypeScript - paths](https://typescriptlang.org/tsconfig#paths) documentation for more details.
 :::
 
 ## Use `source.alias` Configuration
 
-Rsbuild provides the [source.alias](https://rsbuild.dev/config/options/source.html#sourcealias) configuration option, which corresponds to the webpack/Rspack native [resolve.alias](https://www.rspack.dev/config/resolve.html#resolvealias) configuration. You can configure this option using an object or a function.
+Rsbuild provides the [source.alias](/config/source/alias) configuration option, which corresponds to the webpack/Rspack native [resolve.alias](https://rspack.dev/config/resolve#resolvealias) configuration. You can configure this option using an object or a function.
 
 ### Use Cases
 
@@ -78,4 +78,4 @@ export default {
 
 The `paths` configuration in `tsconfig.json` takes precedence over the `source.alias` configuration. When a path matches the rules defined in both `paths` and `source.alias`, the value defined in `paths` will be used.
 
-You can adjust the priority of these two options using [source.aliasStrategy](https://rsbuild.dev/config/options/source.html#sourcealiasstrategy).
+You can adjust the priority of these two options using [source.aliasStrategy](/config/source/alias-strategy).

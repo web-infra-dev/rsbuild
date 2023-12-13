@@ -1,10 +1,8 @@
-import {
-  DefaultRsbuildPlugin,
-  getSharedPkgCompiledPath,
-} from '@rsbuild/shared';
+import { getSharedPkgCompiledPath } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginYaml = (): DefaultRsbuildPlugin => ({
-  name: 'plugin-yaml',
+export const pluginYaml = (): RsbuildPlugin => ({
+  name: 'rsbuild:yaml',
 
   setup(api) {
     api.modifyBundlerChain((chain, { CHAIN_ID }) => {

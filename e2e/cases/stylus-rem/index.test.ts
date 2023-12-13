@@ -1,19 +1,12 @@
-import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
-
 import { pluginStylus } from '@rsbuild/plugin-stylus';
+import { pluginRem } from '@rsbuild/plugin-rem';
 
 test('should compile stylus and rem correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
-    plugins: [pluginStylus()],
-    rsbuildConfig: {
-      output: {
-        convertToRem: true,
-      },
-    },
+    plugins: [pluginStylus(), pluginRem()],
   });
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -22,7 +15,7 @@ test('should compile stylus and rem correctly', async () => {
 
   if (rsbuild.providerType === 'rspack') {
     expect(content).toEqual(
-      'body{color:#f00;font:.28rem Arial,sans-serif}.title-class-_7352f{font-size:.28rem}',
+      'body{color:#f00;font:.28rem Arial,sans-serif}.title-class-_6c2f8{font-size:.28rem}',
     );
   } else {
     expect(content).toEqual(

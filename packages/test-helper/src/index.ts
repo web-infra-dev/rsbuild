@@ -1,9 +1,9 @@
+import { isPathString, normalizeToPosixPath } from './path';
 import {
   applyMatcherReplacement,
   createDefaultPathMatchers,
   PathMatcher,
 } from './pathSerializer';
-import { isPathString, normalizeToPosixPath } from './path';
 
 export interface SnapshotSerializerOptions {
   cwd?: string;
@@ -22,7 +22,7 @@ export function createSnapshotSerializer(options?: SnapshotSerializerOptions) {
     { mark: 'root', match: cwd },
     { mark: 'workspace', match: workspace },
     ...customMatchers,
-    ...createDefaultPathMatchers(workspace),
+    ...createDefaultPathMatchers(),
   ];
 
   pathMatchers

@@ -1,5 +1,5 @@
 import path from 'path';
-import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { ensureAbsolutePath, type ChainedConfig } from '@rsbuild/shared';
 import type { ModuleScopes } from '../../types';
 
@@ -28,17 +28,15 @@ export const applyScopeChain = (
 export const pluginModuleScopes = (
   moduleScopes?: ChainedConfig<ModuleScopes>,
 ): RsbuildPlugin => ({
-  name: 'plugin-module-scopes',
+  name: 'uni-builder:module-scopes',
 
   setup(api) {
-    api.modifyWebpackChain(async (chain, { CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       if (!moduleScopes) {
         return;
       }
 
-      const { ModuleScopePlugin } = await import(
-        '../webpackPlugins/ModuleScopePlugin'
-      );
+      const { ModuleScopePlugin } = await import('../ModuleScopePlugin');
 
       const scopes = applyScopeChain([], moduleScopes);
 

@@ -1,7 +1,7 @@
 import path from 'path';
-import { logger } from '@rsbuild/shared';
-import { deepmerge } from '@rsbuild/shared/deepmerge';
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import { logger } from '@rsbuild/core';
+import { deepmerge } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 export type PluginSvelteOptions = {
   /**
@@ -12,11 +12,9 @@ export type PluginSvelteOptions = {
   svelteLoaderOptions?: Record<string, any>;
 };
 
-export function pluginSvelte(
-  options: PluginSvelteOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> {
+export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
   return {
-    name: 'plugin-svelte',
+    name: 'rsbuild:svelte',
 
     setup(api) {
       let sveltePath: string = '';
@@ -44,12 +42,11 @@ export function pluginSvelte(
         chain.resolve.alias
           .set('svelte', path.join(sveltePath, 'src/runtime'))
           .end()
-          // TODO: change to use `...` wildcard
           .extensions.add('.svelte')
           .end()
           .mainFields.prepend('svelte')
           .end()
-          .set('conditionNames', ['svelte', 'browser', 'import']);
+          .set('conditionNames', ['svelte', '...']);
 
         const loaderPath = require.resolve('svelte-loader');
 
@@ -72,7 +69,7 @@ export function pluginSvelte(
               dev: !isProd,
             },
             preprocess: sveltePreprocess(),
-            emitCss: !rsbuildConfig.output.disableCssExtract,
+            emitCss: !rsbuildConfig.output.injectStyles,
             hotReload: !isProd && rsbuildConfig.dev.hmr,
           },
           options.svelteLoaderOptions ?? {},

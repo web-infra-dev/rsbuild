@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 export type LazyCompilationOptions =
   | boolean
@@ -10,10 +10,10 @@ export type LazyCompilationOptions =
 export const pluginLazyCompilation = (
   options: LazyCompilationOptions,
 ): RsbuildPlugin => ({
-  name: 'plugin-lazy-compilation',
+  name: 'uni-builder:lazy-compilation',
 
   setup(api) {
-    api.modifyWebpackChain((chain, { isProd, isServer, isWebWorker }) => {
+    api.modifyBundlerChain((chain, { isProd, isServer, isWebWorker }) => {
       if (isProd || isServer || isWebWorker || !options) {
         return;
       }

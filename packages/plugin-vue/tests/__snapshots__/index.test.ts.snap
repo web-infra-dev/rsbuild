@@ -85,7 +85,7 @@ exports[`plugin-vue > should define feature flags correctly 1`] = `
   },
   "plugins": [
     Plugin {},
-    Plugin {
+    DefinePlugin {
       "_options": {
         "__VUE_OPTIONS_API__": "true",
         "__VUE_PROD_DEVTOOLS__": "false",

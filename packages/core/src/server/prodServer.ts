@@ -1,20 +1,23 @@
-import type { ListenOptions } from 'net';
-import { createServer, Server } from 'http';
-import connect from 'connect';
+import { Server } from 'http';
+import connect from '@rsbuild/shared/connect';
 import { join } from 'path';
-import sirv from 'sirv';
+import sirv from '../../compiled/sirv';
 import {
-  Context,
-  RsbuildConfig,
-  getPort,
-  DEFAULT_PORT,
-  StartServerResult,
   getAddressUrls,
-  DEFAULT_DEV_HOST,
   printServerURLs,
+  formatRoutes,
   ROOT_DIST_DIR,
+  isFunction,
+  getServerOptions,
+  type ServerConfig,
+  type RsbuildConfig,
+  type RequestHandler,
+  type StartServerResult,
+  type PreviewServerOptions,
 } from '@rsbuild/shared';
 import { faviconFallbackMiddleware } from './middlewares';
+import type { Context } from '../types';
+import { createHttpServer } from './httpServer';
 
 type RsbuildProdServerOptions = {
   pwd: string;
@@ -22,7 +25,9 @@ type RsbuildProdServerOptions = {
     path: string;
     assetPrefix?: string;
   };
+  serverConfig: ServerConfig;
 };
+
 export class RsbuildProdServer {
   private app!: Server;
   private options: RsbuildProdServerOptions;
@@ -40,7 +45,56 @@ export class RsbuildProdServer {
   }
 
   private async applyDefaultMiddlewares() {
+    const { headers, proxy, historyApiFallback, compress } =
+      this.options.serverConfig;
+
+    // compression should be the first middleware
+    if (compress) {
+      const { default: compression } = await import(
+        '../../compiled/http-compression'
+      );
+      this.middlewares.use((req, res, next) => {
+        compression({
+          gzip: true,
+          brotli: false,
+        })(req, res, next);
+      });
+    }
+
+    if (headers) {
+      this.middlewares.use((_req, res, next) => {
+        for (const [key, value] of Object.entries(headers)) {
+          res.setHeader(key, value);
+        }
+        next();
+      });
+    }
+
+    if (proxy) {
+      const { createProxyMiddleware } = await import('./proxy');
+      const { middlewares, upgrade } = createProxyMiddleware(proxy);
+      middlewares.forEach((middleware) => {
+        this.middlewares.use(middleware);
+      });
+
+      this.app.on('upgrade', upgrade);
+    }
+
     this.applyStaticAssetMiddleware();
+
+    if (historyApiFallback) {
+      const { default: connectHistoryApiFallback } = await import(
+        '../../compiled/connect-history-api-fallback'
+      );
+      const historyApiFallbackMiddleware = connectHistoryApiFallback(
+        historyApiFallback === true ? {} : historyApiFallback,
+      ) as RequestHandler;
+
+      this.middlewares.use(historyApiFallbackMiddleware);
+
+      // ensure fallback request can be handled by sirv
+      this.applyStaticAssetMiddleware();
+    }
 
     this.middlewares.use(faviconFallbackMiddleware);
   }
@@ -48,13 +102,15 @@ export class RsbuildProdServer {
   private applyStaticAssetMiddleware() {
     const {
       output: { path, assetPrefix },
+      serverConfig: { htmlFallback },
       pwd,
     } = this.options;
 
     const assetMiddleware = sirv(join(pwd, path), {
       etag: true,
       dev: true,
-      ignores: false,
+      ignores: ['favicon.ico'],
+      single: htmlFallback === 'index',
     });
 
     this.middlewares.use((req, res, next) => {
@@ -73,67 +129,78 @@ export class RsbuildProdServer {
     });
   }
 
-  public async createHTTPServer() {
-    return createServer(this.middlewares);
-  }
-
-  public listen(
-    options?: number | ListenOptions | undefined,
-    listener?: () => void,
-  ) {
-    const callback = () => {
-      listener?.();
-    };
-
-    if (typeof options === 'object') {
-      this.app.listen(options, callback);
-    } else {
-      this.app.listen(options || 8080, callback);
-    }
-  }
-
-  public close() {
-    this.app.close();
-  }
+  public close() {}
 }
 
 export async function startProdServer(
   context: Context,
   rsbuildConfig: RsbuildConfig,
+  { printURLs = true, getPortSilently }: PreviewServerOptions = {},
 ) {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'production';
   }
 
-  const port = await getPort(rsbuildConfig.dev?.port || DEFAULT_PORT);
+  const { serverConfig, port, host, https } = await getServerOptions({
+    rsbuildConfig,
+    getPortSilently,
+  });
+
   const server = new RsbuildProdServer({
     pwd: context.rootPath,
     output: {
       path: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
       assetPrefix: rsbuildConfig.output?.assetPrefix,
     },
+    serverConfig,
   });
 
-  const httpServer = await server.createHTTPServer();
+  await context.hooks.onBeforeStartProdServerHook.call();
+
+  const httpServer = await createHttpServer({
+    https: serverConfig.https,
+    middlewares: server.middlewares,
+  });
 
   await server.onInit(httpServer);
 
   return new Promise<StartServerResult>((resolve) => {
-    server.listen(
+    httpServer.listen(
       {
-        host: DEFAULT_DEV_HOST,
+        host,
         port,
       },
-      () => {
-        const urls = getAddressUrls('http', port);
+      async () => {
+        const routes = formatRoutes(
+          context.entry,
+          rsbuildConfig.output?.distPath?.html,
+          rsbuildConfig.html?.outputStructure,
+        );
+        await context.hooks.onAfterStartProdServerHook.call({
+          port,
+          routes,
+        });
 
-        printServerURLs(urls);
+        const urls = getAddressUrls(https ? 'https' : 'http', port);
+
+        if (printURLs) {
+          printServerURLs(
+            isFunction(printURLs) ? printURLs(urls) : urls,
+            routes,
+          );
+        }
+
+        const onClose = () => {
+          server.close();
+          httpServer.close();
+        };
+
         resolve({
           port,
           urls: urls.map((item) => item.url),
           server: {
-            close: () => {
-              server.close();
+            close: async () => {
+              onClose();
             },
           },
         });

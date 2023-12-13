@@ -3,18 +3,6 @@
 exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is installed 1`] = `
 {
   "cacheGroups": {
-    "lib-antd": {
-      "name": "lib-antd",
-      "priority": 0,
-      "reuseExistingChunk": true,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(antd\\)\\[\\\\\\\\/\\]/,
-    },
-    "lib-arco": {
-      "name": "lib-arco",
-      "priority": 0,
-      "reuseExistingChunk": true,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\?arco-design\\)\\[\\\\\\\\/\\]/,
-    },
     "lib-axios": {
       "name": "lib-axios",
       "priority": 0,
@@ -37,7 +25,7 @@ exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is i
       "name": "lib-react",
       "priority": 0,
       "reuseExistingChunk": true,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\|react-refresh\\|@rspack\\\\/plugin-react-refresh\\)\\[\\\\\\\\/\\]/,
     },
     "lib-router": {
       "name": "lib-router",
@@ -45,11 +33,32 @@ exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is i
       "reuseExistingChunk": true,
       "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|@remix-run\\\\/router\\|history\\)\\[\\\\\\\\/\\]/,
     },
-    "lib-semi": {
-      "name": "lib-semi",
+  },
+  "chunks": "all",
+  "enforceSizeThreshold": 50000,
+}
+`;
+
+exports[`splitChunks > should apply splitChunks.react/router plugin option when strategy is split-by-experience 1`] = `
+{
+  "cacheGroups": {
+    "lib-axios": {
+      "name": "lib-axios",
       "priority": 0,
       "reuseExistingChunk": true,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(@\\(ies\\|douyinfe\\)\\[\\\\\\\\/\\]semi-\\.\\*\\)\\[\\\\\\\\/\\]/,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
+    },
+    "lib-lodash": {
+      "name": "lib-lodash",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
+    },
+    "lib-polyfill": {
+      "name": "lib-polyfill",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
     },
   },
   "chunks": "all",
@@ -76,9 +85,6 @@ exports[`splitChunks > should not apply splitChunks rule when strategy is not sp
 
 exports[`transformImport > should apply antd & arco transformImport 1`] = `
 {
-  "exclude": [
-    "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-  ],
   "include": [
     {
       "and": [
@@ -88,8 +94,9 @@ exports[`transformImport > should apply antd & arco transformImport 1`] = `
         },
       ],
     },
+    /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
-  "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+  "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
     {
@@ -152,9 +159,6 @@ exports[`transformImport > should apply antd & arco transformImport 1`] = `
 
 exports[`transformImport > should not apply antd & arco when transformImport is false 1`] = `
 {
-  "exclude": [
-    "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-  ],
   "include": [
     {
       "and": [
@@ -164,8 +168,9 @@ exports[`transformImport > should not apply antd & arco when transformImport is 
         },
       ],
     },
+    /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
-  "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+  "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
     {

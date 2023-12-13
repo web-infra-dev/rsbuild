@@ -10,6 +10,9 @@ function getCommonBuildConfig(cwd: string): RsbuildConfig {
       exclude: [path.resolve(cwd, './src/test.js')],
     },
     output: {
+      sourceMap: {
+        js: 'source-map',
+      },
       overrideBrowserslist: ['ie 11'],
     },
     tools: {
@@ -26,7 +29,6 @@ test('should throw error when exist syntax errors', async () => {
   await expect(
     build({
       cwd,
-      entry: { index: path.resolve(cwd, './src/index.js') },
       rsbuildConfig: getCommonBuildConfig(cwd),
       plugins: [pluginCheckSyntax()],
     }),
@@ -38,7 +40,6 @@ test('should not throw error when the file is excluded', async () => {
   await expect(
     build({
       cwd,
-      entry: { index: path.resolve(cwd, './src/index.js') },
       plugins: [
         pluginCheckSyntax({
           exclude: /src\/test/,
@@ -55,7 +56,6 @@ test('should not throw error when the targets are support es6', async () => {
   await expect(
     build({
       cwd,
-      entry: { index: path.resolve(cwd, './src/index.js') },
       plugins: [
         pluginCheckSyntax({
           targets: ['chrome >= 60', 'edge >= 15'],
@@ -72,7 +72,6 @@ test('should throw error when using optional chaining and target is es6 browsers
   await expect(
     build({
       cwd,
-      entry: { index: path.resolve(cwd, './src/index.js') },
       plugins: [
         pluginCheckSyntax({
           targets: ['chrome >= 53'],
@@ -89,7 +88,6 @@ test('should not throw error when using optional chaining and ecmaVersion is 202
   await expect(
     build({
       cwd,
-      entry: { index: path.resolve(cwd, './src/index.js') },
       plugins: [
         pluginCheckSyntax({
           ecmaVersion: 2020,

@@ -13,6 +13,6 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.0"
   }
 }

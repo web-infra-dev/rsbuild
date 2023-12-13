@@ -1,4 +1,4 @@
-import { isServerTarget, type SharedRsbuildPluginAPI } from '@rsbuild/shared';
+import { isServerTarget, type RsbuildPluginAPI } from '@rsbuild/shared';
 
 const getAntdMajorVersion = (appDirectory: string) => {
   try {
@@ -12,7 +12,7 @@ const getAntdMajorVersion = (appDirectory: string) => {
   }
 };
 
-export const applyAntdSupport = (api: SharedRsbuildPluginAPI) => {
+export const applyAntdSupport = (api: RsbuildPluginAPI) => {
   api.modifyRsbuildConfig((rsbuildConfig) => {
     rsbuildConfig.source ??= {};
 
@@ -34,7 +34,7 @@ export const applyAntdSupport = (api: SharedRsbuildPluginAPI) => {
         ...(rsbuildConfig.source.transformImport || []),
         {
           libraryName: 'antd',
-          libraryDirectory: isServerTarget(api.context.target) ? 'lib' : 'es',
+          libraryDirectory: isServerTarget(api.context.targets) ? 'lib' : 'es',
           style: true,
         },
       ];

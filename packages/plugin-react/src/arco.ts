@@ -1,10 +1,10 @@
 import {
   isServerTarget,
   isPackageInstalled,
-  type SharedRsbuildPluginAPI,
+  type RsbuildPluginAPI,
 } from '@rsbuild/shared';
 
-export const applyArcoSupport = (api: SharedRsbuildPluginAPI) => {
+export const applyArcoSupport = (api: RsbuildPluginAPI) => {
   const ARCO_NAME = '@arco-design/web-react';
   const ARCO_ICON = `${ARCO_NAME}/icon`;
 
@@ -18,7 +18,7 @@ export const applyArcoSupport = (api: SharedRsbuildPluginAPI) => {
       return;
     }
 
-    const isUseSSR = isServerTarget(api.context.target);
+    const isUseSSR = isServerTarget(api.context.targets);
 
     if (!transformImport?.some((item) => item.libraryName === ARCO_NAME)) {
       transformImport.push({

@@ -5,33 +5,48 @@ import {
 } from '@modern-js/module-tools';
 import path from 'path';
 
-export default defineConfig({
+const define = {
+  RSBUILD_VERSION: require('../packages/core/package.json').version,
+};
+
+const BUILD_TARGET = 'es2020' as const;
+
+export const baseBuildConfig = {
   plugins: [moduleTools()],
   buildConfig: {
-    buildType: 'bundleless',
-    format: 'cjs',
-    target: 'es2019',
+    buildType: 'bundleless' as const,
+    format: 'cjs' as const,
+    target: BUILD_TARGET,
+    define,
   },
-});
+};
+
+export default defineConfig(baseBuildConfig);
+
+const externals = ['@rsbuild/core', /[\\/]compiled[\\/]/];
 
 export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
   {
     format: 'cjs',
-    target: 'es2019',
+    target: BUILD_TARGET,
+    define,
     autoExtension: true,
+    externals,
     dts: {
       respectExternal: false,
     },
   },
   {
     format: 'esm',
-    target: 'es2020',
+    target: BUILD_TARGET,
     dts: false,
+    define,
     autoExtension: true,
     shims: true,
+    externals,
     esbuildOptions: (option) => {
       let { inject } = option;
-      const filepath = path.join(__dirname, 'require_shims.js');
+      const filepath = path.join(__dirname, 'requireShims.js');
       if (inject) {
         inject.push(filepath);
       } else {
@@ -56,7 +71,7 @@ export const configWithEsm = defineConfig({
     {
       buildType: 'bundleless',
       format: 'cjs',
-      target: 'es2019',
+      target: BUILD_TARGET,
       outDir: './dist/cjs',
       dts: {
         distPath: '../type',
@@ -65,7 +80,7 @@ export const configWithEsm = defineConfig({
     {
       buildType: 'bundleless',
       format: 'esm',
-      target: 'es2019',
+      target: BUILD_TARGET,
       outDir: './dist/esm',
       dts: false,
     },

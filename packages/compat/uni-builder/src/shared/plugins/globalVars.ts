@@ -1,14 +1,11 @@
-import {
-  mergeChainedOptions,
-  type Define,
-  type DefaultRsbuildPlugin,
-} from '@rsbuild/shared';
+import { mergeChainedOptions, type Define } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { ChainedGlobalVars } from '../../types';
 
 export const pluginGlobalVars = (
   options?: ChainedGlobalVars,
-): DefaultRsbuildPlugin => ({
-  name: 'plugin-global-vars',
+): RsbuildPlugin => ({
+  name: 'uni-builder:global-vars',
 
   setup(api) {
     api.modifyBundlerChain((chain, { env, target, bundler }) => {

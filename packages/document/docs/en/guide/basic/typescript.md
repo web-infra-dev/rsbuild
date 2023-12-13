@@ -6,7 +6,9 @@ Rsbuild supports TypeScript by default, allowing you to directly use `.ts` and `
 
 Rsbuild uses SWC by default for transpiling TypeScript code, and it also supports switching to Babel for transpilation.
 
-Unlike the native TypeScript compiler, tools like SWC and Babel compile each file separately and cannot determine whether an imported name is a type or a value. Therefore, when using TypeScript in Rsbuild, you need to enable the [isolatedModules](https://www.typescriptlang.org/tsconfig/#isolatedModules) option in your `tsconfig.json` file:
+### isolatedModules
+
+Unlike the native TypeScript compiler, tools like SWC and Babel compile each file separately and cannot determine whether an imported name is a type or a value. Therefore, when using TypeScript in Rsbuild, you need to enable the [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) option in your `tsconfig.json` file:
 
 ```json title="tsconfig.json"
 {

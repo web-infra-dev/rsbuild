@@ -1,15 +1,10 @@
 import assert from 'assert';
-import {
-  CSS_MODULES_REGEX,
-  GLOBAL_CSS_REGEX,
-  NODE_MODULES_REGEX,
-} from './constants';
+import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
-import deepmerge from 'deepmerge';
-import { getSharedPkgCompiledPath as getCompiledPath } from './utils';
+import deepmerge from '../compiled/deepmerge';
+import { getSharedPkgCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
-  CssModules,
   RsbuildTarget,
   CSSLoaderOptions,
   NormalizedConfig,
@@ -26,14 +21,6 @@ export const getCssModuleLocalIdentName = (
     : '[path][name]__[local]-[hash:base64:6]');
 
 export const isInNodeModules = (path: string) => NODE_MODULES_REGEX.test(path);
-
-/** Determine if a file path is a CSS module when disableCssModuleExtension is enabled. */
-export const isLooseCssModules = (path: string) => {
-  if (NODE_MODULES_REGEX.test(path)) {
-    return CSS_MODULES_REGEX.test(path);
-  }
-  return !GLOBAL_CSS_REGEX.test(path);
-};
 
 export type CssLoaderModules =
   | boolean
@@ -56,53 +43,23 @@ export const isCssModules = (filename: string, modules: CssLoaderModules) => {
 
   if (typeof auto === 'boolean') {
     return auto && CSS_MODULES_REGEX.test(filename);
-  } else if (auto instanceof RegExp) {
+  }
+  if (auto instanceof RegExp) {
     return auto.test(filename);
-  } else if (typeof auto === 'function') {
+  }
+  if (typeof auto === 'function') {
     return auto(filename);
   }
   return true;
 };
 
-export const getCssModulesAutoRule = (
-  config?: CssModules,
-  disableCssModuleExtension = false,
-) => {
-  if (!config || config?.auto === undefined) {
-    return disableCssModuleExtension ? isLooseCssModules : true;
-  }
-
-  return config.auto;
-};
-
-type CssNanoOptions = {
-  configFile?: string | undefined;
-  preset?: [string, object] | string | undefined;
-};
-
-export const getCssnanoDefaultOptions = (): CssNanoOptions => ({
-  preset: [
-    'default',
-    {
-      // merge longhand will break safe-area-inset-top, so disable it
-      // https://github.com/cssnano/cssnano/issues/803
-      // https://github.com/cssnano/cssnano/issues/967
-      mergeLonghand: false,
-    },
-  ],
-});
-
 export const getPostcssConfig = ({
-  enableCssMinify,
-  enableSourceMap,
   browserslist,
   config,
 }: {
-  enableCssMinify: boolean;
-  enableSourceMap: boolean;
   browserslist: string[];
   config: NormalizedConfig;
-}) => {
+}): ProcessOptions => {
   const extraPlugins: AcceptedPlugin[] = [];
 
   const utils = {
@@ -126,11 +83,11 @@ export const getPostcssConfig = ({
   const defaultPostcssConfig = {
     postcssOptions: {
       plugins: [
-        require(getCompiledPath('postcss-flexbugs-fixes')),
-        require(getCompiledPath('autoprefixer'))(autoprefixerOptions),
+        require(getSharedPkgCompiledPath('postcss-flexbugs-fixes')),
+        require(getSharedPkgCompiledPath('autoprefixer'))(autoprefixerOptions),
       ].filter(Boolean),
     },
-    sourceMap: enableSourceMap,
+    sourceMap: config.output.sourceMap.css,
   };
 
   const mergedConfig = mergeChainedOptions({
@@ -184,14 +141,12 @@ export const normalizeCssLoaderOptions = (
 
 export const getCssLoaderOptions = ({
   config,
-  enableSourceMap,
   importLoaders,
   isServer,
   isWebWorker,
   localIdentName,
 }: {
   config: NormalizedConfig;
-  enableSourceMap: boolean;
   importLoaders: number;
   isServer: boolean;
   isWebWorker: boolean;
@@ -202,14 +157,11 @@ export const getCssLoaderOptions = ({
   const defaultOptions = {
     importLoaders,
     modules: {
-      auto: getCssModulesAutoRule(
-        cssModules,
-        config.output.disableCssModuleExtension,
-      ),
+      auto: cssModules.auto,
       exportLocalsConvention: cssModules.exportLocalsConvention,
       localIdentName,
     },
-    sourceMap: enableSourceMap,
+    sourceMap: config.output.sourceMap.css,
   };
 
   const mergedCssLoaderOptions = mergeChainedOptions({
@@ -230,9 +182,7 @@ export const isUseCssExtract = (
   config: NormalizedConfig,
   target: RsbuildTarget,
 ) =>
-  !config.output.disableCssExtract &&
-  target !== 'node' &&
-  target !== 'web-worker';
+  !config.output.injectStyles && target !== 'node' && target !== 'web-worker';
 
 /**
  * fix resolve-url-loader can't deal with resolve.alias config (such as @xxx、xxx)

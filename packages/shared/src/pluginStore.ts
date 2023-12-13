@@ -1,9 +1,5 @@
 import { logger, debug } from './logger';
-import type {
-  PluginStore,
-  RsbuildPlugin,
-  DefaultRsbuildPluginAPI,
-} from './types';
+import type { PluginStore, RsbuildPlugin, RsbuildPluginAPI } from './types';
 
 export function createPluginStore(): PluginStore {
   let plugins: RsbuildPlugin[] = [];
@@ -24,7 +20,9 @@ export function createPluginStore(): PluginStore {
         );
       }
       if (plugins.find((item) => item.name === newPlugin.name)) {
-        logger.warn(`Plugin "${newPlugin.name}" already exists.`);
+        logger.warn(
+          `Rsbuild plugin "${newPlugin.name}" registered multiple times.`,
+        );
       } else if (before) {
         const index = plugins.findIndex((item) => item.name === before);
         if (index === -1) {
@@ -129,7 +127,7 @@ export async function initPlugins({
   pluginAPI,
   pluginStore,
 }: {
-  pluginAPI?: DefaultRsbuildPluginAPI;
+  pluginAPI?: RsbuildPluginAPI;
   pluginStore: PluginStore;
 }) {
   debug('init plugins');
@@ -147,7 +145,7 @@ export async function initPlugins({
     if (removedPlugins.includes(plugin.name)) {
       continue;
     }
-    await plugin.setup(pluginAPI);
+    await plugin.setup(pluginAPI!);
   }
 
   debug('init plugins done');

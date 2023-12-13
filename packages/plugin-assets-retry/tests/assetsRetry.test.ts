@@ -14,7 +14,11 @@ describe('plugin-assets-retry', () => {
   it("should't add assets retry plugin when target is set to 'node'", async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginAssetsRetry()],
-      target: 'node',
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
     const config = await rsbuild.unwrapWebpackConfig();
 

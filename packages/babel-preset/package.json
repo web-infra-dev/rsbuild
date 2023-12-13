@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/babel-preset",
-  "version": "0.0.19",
+  "version": "0.2.3",
   "description": "The babel config of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -9,6 +9,7 @@
     "directory": "packages/babel-preset"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -23,10 +24,11 @@
       "default": "./dist/node.js"
     }
   },
-  "main": "./dist/index.js",
-  "types": "./src/index.ts",
   "typesVersions": {
     "*": {
+      ".": [
+        "./dist/index.d.ts"
+      ],
       "web": [
         "./dist/web.d.ts"
       ],
@@ -35,6 +37,8 @@
       ]
     }
   },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -60,13 +64,12 @@
     "core-js": "~3.32.2"
   },
   "devDependencies": {
-    "@types/node": "^16",
-    "typescript": "^5.2.2"
+    "@types/node": "16.x",
+    "typescript": "^5.3.0"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "https://registry.npmjs.org/",
-    "types": "./dist/index.d.ts"
+    "registry": "https://registry.npmjs.org/"
   }
 }

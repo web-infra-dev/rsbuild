@@ -194,16 +194,6 @@ The source code of Rspress can be found in [this repo](https://github.com/web-in
 
 ## Submitting Changes
 
-### Add a Changeset
-
-Rsbuild is using [Changesets](https://github.com/changesets/changesets) to manage the versioning and changelogs.
-
-If you've changed some packages, you need add a new changeset for the changes. Please run `change` command to select the changed packages and add the changeset info.
-
-```sh
-pnpm run change
-```
-
 ### Committing your Changes
 
 Commit your changes to your forked repo, and [create a pull request](https://help.github.com/articles/creating-a-pull-request/).
@@ -221,6 +211,16 @@ feat(plugin-swc): Add `xxx` config
 |    |_______ Scope
 |____________ Type
 ```
+
+---
+
+## Benchmarking
+
+You can input `!bench` in the comment area of ​​the PR to do benchmarking on `rsbuild` (you need to have Collaborator and above permissions).
+
+You can focus on metrics related to build time and bundle size based on the comparison table output by comments to assist you in making relevant performance judgments and decisions.
+
+Dependencies installation-related metrics base on publishing process, so the data is relatively lagging and is for reference only.
 
 ---
 

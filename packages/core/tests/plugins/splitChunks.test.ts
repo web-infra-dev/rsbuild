@@ -1,20 +1,5 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
-import {
-  pluginSplitChunks,
-  createDependenciesRegExp,
-} from '@src/plugins/splitChunks';
-
-test('createDependenciesRegExp', () => {
-  const cases = {
-    'react,react-dom,history':
-      /[\\/]node_modules[\\/](react|react-dom|history)[\\/]/,
-    '@babel/runtime': /[\\/]node_modules[\\/](@babel\/runtime)[\\/]/,
-  };
-  for (const [deps, expected] of Object.entries(cases)) {
-    const actual = createDependenciesRegExp(...deps.split(','));
-    expect(actual).toEqual(expected);
-  }
-});
+import { pluginSplitChunks } from '@src/plugins/splitChunks';
 
 describe('plugin-split-chunks', () => {
   const cases = [
@@ -137,7 +122,11 @@ describe('plugin-split-chunks', () => {
     },
     {
       name: 'should not split chunks when target is not',
-      target: 'node',
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     },
   ];
 
@@ -154,7 +143,6 @@ describe('plugin-split-chunks', () => {
           polyfill: 'entry',
         },
       },
-      target: (item.target || 'web') as any,
     });
 
     const config = await rsbuild.unwrapConfig();

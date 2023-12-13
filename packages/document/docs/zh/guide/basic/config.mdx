@@ -8,12 +8,13 @@ Rsbuild 提供了丰富的配置项，并为每个配置项预设了一个通用
 
 Rsbuild 中的配置可以分为以下几类：
 
-- [Dev](/config/options/dev)：与本地开发有关的配置。
-- [Html](/config/options/html)：与 HTML 有关的配置。
-- [Tools](/config/options/tools)：与底层工具有关的配置。
-- [Source](/config/options/source)：与源代码解析、编译方式相关的配置。
-- [Output](/config/options/output)：与构建产物有关的配置。
-- [Performance](/config/options/performance)：与编译性能、产物性能有关的配置。
+- Dev：与本地开发有关的配置。
+- Html：与 HTML 有关的配置。
+- Tools：与底层工具有关的配置。
+- Server：与 Rsbuild 服务器有关的配置，在本地开发和预览时都会生效。
+- Source：与源代码解析、编译方式相关的配置。
+- Output：与构建产物有关的配置。
+- Performance：与编译性能、产物性能有关的配置。
 
 你可以在 [配置](/config/) 页面找到所有配置项的详细说明。
 
@@ -30,7 +31,7 @@ Rsbuild 中的配置可以分为以下几类：
 
 我们推荐使用 `.ts` 格式的配置文件，并从 `@rsbuild/core` 中导入 `defineConfig` 工具函数, 它提供了友好的 TypeScript 类型推导和自动补全，可以帮助你避免配置中的错误。
 
-比如在 `rsbuild.config.ts` 中，你可以定义 Rsbuild 的 [source.alias](/config/options/source.html#sourcealias) 配置：
+比如在 `rsbuild.config.ts` 中，你可以定义 Rsbuild 的 [source.alias](/config/source/alias) 配置：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -58,7 +59,7 @@ module.exports = {
 
 ## 使用环境变量
 
-在配置文件重，你可以使用 `process.env.NODE_ENV` 等 Node.js 环境变量，来动态写入不同的配置：
+在配置文件中，你可以使用 `process.env.NODE_ENV` 等 Node.js 环境变量，来动态写入不同的配置：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -75,9 +76,50 @@ export default defineConfig({
 });
 ```
 
+## 导出配置函数
+
+Rsbuild 支持在配置文件中导出一个函数，你可以在函数中动态计算配置，并返回给 Rsbuild。
+
+```js title="rsbuild.config.js"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig(({ env, command }) => ({
+  source: {
+    alias: {
+      '@foo': env === 'development' ? './src/foo.dev.ts' : './src/foo.prod.ts',
+    },
+  },
+}));
+```
+
+该函数接受以下入参：
+
+- `env`：对应 `process.env.NODE_ENV` 的值。
+  - 当运行 `rsbuild dev` 时，`env` 的值为 `development`。
+  - 当运行 `rsbuild build` 或 `rsbuild preview` 时，`env` 的值为 `production`。
+- `command`：对应当前运行的命令，如 `dev`、`build`、`preview`。
+
+## 导出异步函数
+
+Rsbuild 也支持在配置文件中导出一个异步函数，你可以在函数中进行一些异步操作：
+
+```js title="rsbuild.config.js"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig(async ({ env, command }) => {
+  const result = await someAsyncFunction();
+
+  return {
+    html: {
+      title: result,
+    },
+  };
+});
+```
+
 ## 合并配置
 
-你可以使用 `@rspack/core` 导出的 [mergeRsbuildConfig](/api/javascript-api/core.html#mergersbuildconfig) 函数来合并多个配置。
+你可以使用 `@rspack/core` 导出的 [mergeRsbuildConfig](/api/javascript-api/core#mergersbuildconfig) 函数来合并多个配置。
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig, mergeRsbuildConfig } from '@rsbuild/core';

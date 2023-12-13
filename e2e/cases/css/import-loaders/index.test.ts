@@ -1,4 +1,3 @@
-import path from 'path';
 import { expect } from '@playwright/test';
 import { build } from '@scripts/shared';
 import { webpackOnlyTest } from '../../../scripts/helper';
@@ -8,12 +7,6 @@ webpackOnlyTest(
   async () => {
     const rsbuild = await build({
       cwd: __dirname,
-      entry: { index: path.resolve(__dirname, './src/index.js') },
-      rsbuildConfig: {
-        output: {
-          disableSourceMap: true,
-        },
-      },
     });
     const files = await rsbuild.unwrapOutputJSON();
 

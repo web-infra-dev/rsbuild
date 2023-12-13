@@ -1,18 +1,19 @@
 import { join } from 'path';
 import { pluginEntry } from '@rsbuild/core/plugins/entry';
-import { pluginBasic } from '@/plugins/basic';
+import { pluginBasic } from '@rsbuild/core/plugins/basic';
 import { createStubRsbuild, fixturesDir } from './helper';
-import { createCompiler } from '@/core/createCompiler';
-import { createPrimaryContext } from '@/core/createContext';
-import { getCreateRsbuildDefaultOptions } from '@rsbuild/core';
 
 describe('build hooks', () => {
   test('should call onBeforeBuild hook before build', async () => {
     const fn = vi.fn();
     const rsbuild = await createStubRsbuild({
       cwd: fixturesDir,
-      entry: {
-        main: join(fixturesDir, 'src/index.js'),
+      rsbuildConfig: {
+        source: {
+          entry: {
+            main: join(fixturesDir, 'src/index.js'),
+          },
+        },
       },
       plugins: [
         pluginEntry(),
@@ -49,23 +50,5 @@ describe('build hooks', () => {
       watch: true,
     });
     expect(fn).toHaveBeenCalledTimes(1);
-  });
-
-  const createDefaultContext = () =>
-    createPrimaryContext(getCreateRsbuildDefaultOptions(), {});
-
-  test('should return Compiler when passing single webpack config', async () => {
-    const compiler = await createCompiler({
-      context: createDefaultContext(),
-      webpackConfigs: [{}],
-    });
-    expect(compiler.constructor.name).toEqual('Compiler');
-  });
-  test('should return MultiCompiler when passing multiple webpack configs', async () => {
-    const compiler = await createCompiler({
-      context: createDefaultContext(),
-      webpackConfigs: [{}, {}],
-    });
-    expect(compiler.constructor.name).toEqual('MultiCompiler');
   });
 });

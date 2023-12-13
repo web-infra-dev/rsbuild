@@ -16,11 +16,23 @@ function formatTargetDir(targetDir: string) {
   return targetDir.trim().replace(/\/+$/g, '');
 }
 
+function pkgFromUserAgent(userAgent: string | undefined) {
+  if (!userAgent) return undefined;
+  const pkgSpec = userAgent.split(' ')[0];
+  const pkgSpecArr = pkgSpec.split('/');
+  return {
+    name: pkgSpecArr[0],
+    version: pkgSpecArr[1],
+  };
+}
+
 async function main() {
   console.log('');
   logger.greet('◆  Create Rsbuild Project');
 
   const cwd = process.cwd();
+  const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
+  const pkgManager = pkgInfo ? pkgInfo.name : 'npm';
   const packageRoot = path.resolve(__dirname, '..');
   const packageJsonPath = path.join(packageRoot, 'package.json');
   const { version } = require(packageJsonPath);
@@ -48,7 +60,10 @@ async function main() {
       { value: 'react', label: 'React' },
       { value: 'vue3', label: 'Vue 3' },
       { value: 'vue2', label: 'Vue 2' },
+      { value: 'lit', label: 'Lit' },
       { value: 'svelte', label: 'Svelte' },
+      { value: 'solid', label: 'Solid' },
+      { value: 'vanilla', label: 'Vanilla' },
     ],
   })) as string;
 
@@ -71,7 +86,11 @@ async function main() {
   copyFolder(commonFolder, distFolder, version);
   copyFolder(srcFolder, distFolder, version);
 
-  const nextSteps = [`cd ${targetDir}`, 'npm i', 'npm run dev'];
+  const nextSteps = [
+    `cd ${targetDir}`,
+    `${pkgManager} i`,
+    `${pkgManager} run dev`,
+  ];
 
   note(nextSteps.join('\n'), 'Next steps');
 

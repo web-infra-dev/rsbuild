@@ -1,13 +1,13 @@
 import _ from 'lodash';
-import { NormalizedConfig } from '@rsbuild/webpack';
+import { logger } from '@rsbuild/core';
+import { isBeyondReact17 } from '@rsbuild/plugin-react';
 import {
-  logger,
   isUsingHMR,
-  isBeyondReact17,
   getCoreJsVersion,
   getBrowserslistWithDefault,
   getDefaultStyledComponentsConfig,
   type ModifyChainUtils,
+  type NormalizedConfig,
 } from '@rsbuild/shared';
 import { Extensions } from '@modern-js/swc-plugins';
 import { getDefaultSwcConfig } from './plugin';

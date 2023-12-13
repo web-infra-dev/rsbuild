@@ -52,8 +52,12 @@ describe('plugin-lazy-compilation', () => {
 
   it('should not apply lazy compilation for node target', async () => {
     const rsbuild = await createStubRsbuild({
-      target: 'node',
       plugins: [pluginLazyCompilation(true)],
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     const config = await rsbuild.unwrapWebpackConfig();

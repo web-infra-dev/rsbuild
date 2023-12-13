@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-type-check",
-  "version": "0.0.19",
+  "version": "0.2.3",
   "description": "TS checker plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -9,6 +9,7 @@
     "directory": "packages/plugin-type-check"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -17,7 +18,7 @@
     }
   },
   "main": "./dist/index.js",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -32,15 +33,14 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/test-helper": "workspace:*",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.0.19"
+    "@rsbuild/core": "0.x"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "https://registry.npmjs.org/",
-    "types": "./dist/index.d.ts"
+    "registry": "https://registry.npmjs.org/"
   }
 }

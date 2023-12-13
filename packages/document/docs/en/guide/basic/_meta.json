@@ -1,6 +1,7 @@
 [
   "cli",
   "config",
+  "page-route",
   "output-files",
   "css-usage",
   "static-assets",
@@ -9,5 +10,7 @@
   "configure-rspack",
   "html-template",
   "css-modules",
-  "typescript"
+  "typescript",
+  "tailwindcss",
+  "unocss"
 ]

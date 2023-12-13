@@ -13,6 +13,9 @@ Usage: rsbuild dev [options]
 
 Options:
   --open                open the page in browser on startup
+  --port <port>         specify a port number for Rsbuild Server to listen
+  --host <host>         specify the host that the Rsbuild Server listens to
+  -c --config <config>  specify the configuration file, can be a relative or absolute path
   -h, --help            display help for command
 ```
 
@@ -24,6 +27,8 @@ The `rsbuild build` command will build the outputs for production in the `dist/`
 Usage: rsbuild build [options]
 
 Options:
+  -w --watch            turn on watch mode, watch for changes and rebuild
+  -c --config <config>  specify the configuration file, can be a relative or absolute path
   -h, --help            display help for command
 ```
 
@@ -31,10 +36,16 @@ Options:
 
 The `rsbuild preview` command is used to preview the production build outputs locally. Note that you need to execute the `rsbuild build` command beforehand to generate the corresponding outputs.
 
+Do not use this as a production server as it's not designed for it.
+
 ```bash
 Usage: rsbuild preview [options]
 
 Options:
+  --open                open the page in browser on startup
+  --port <port>         specify a port number for Rsbuild Server to listen
+  --host <host>         specify the host that the Rsbuild Server listens to
+  -c --config <config>  specify the configuration file, can be a relative or absolute path
   -h, --help            display help for command
 ```
 
@@ -49,7 +60,7 @@ Options:
   --env <env>           view the configuration in the target environment (default: "development")
   --output <output>     Specify the path to output in the dist (default: "/")
   --verbose             Show the full function in the result
-  -c --config <config>  specify the configuration file, which can be a relative or absolute path
+  -c --config <config>  specify the configuration file, can be a relative or absolute path
   -h, --help            show command help
 ```
 

@@ -1,0 +1,40 @@
+# writeToDisk
+
+- **Type:** `boolean | ((filename: string) => boolean)`
+- **Default:** `false`
+
+Used to control whether the build artifacts of the development environment are written to the disk.
+
+Rsbuild by default saves the build artifacts in the memory of the dev server, thereby reducing the overhead caused by file operations.
+
+## Writing to Disk
+
+You can choose to write the build output to disk, which is usually used for inspecting the content of the build output or configuring proxy rules for static assets.
+
+Simply set the `dev.writeToDisk` option to `true`:
+
+```ts
+export default {
+  dev: {
+    writeToDisk: true,
+  },
+};
+```
+
+:::tip
+Setting `writeToDisk: true` is used for viewing the build artifacts in a development environment. It does not change the behavior of the dev server. When accessing files through a browser, the dev server will still read the file content from memory.
+:::
+
+## Matching Specific Files
+
+You can also set `dev.writeToDisk` to a function to match only certain files. When the function returns `false`, the file will not be written; when it returns `true`, the file will be written to disk.
+
+For example, to write files to disk while excluding hot-update temporary files:
+
+```ts
+export default {
+  dev: {
+    writeToDisk: (file) => !file.includes('.hot-update.'),
+  },
+};
+```

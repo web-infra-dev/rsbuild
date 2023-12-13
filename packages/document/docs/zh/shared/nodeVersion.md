@@ -24,5 +24,3 @@ nvm use 18
 :::tip nvm 和 fnm
 nvm 和 fnm 都是 Node.js 版本管理工具。相对来说，nvm 较为成熟和稳定，而 fnm 是使用 Rust 实现的，比 nvm 提供了更好的性能。
 :::
-
-此外，在安装 nvm 或 fnm 后，然后只要仓库根目录下有内容为 `lts/hydrogen` 的 `.nvmrc` 文件，进入这个仓库时就会自动安装或切换到正确的 Node.js 版本。

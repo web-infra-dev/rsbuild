@@ -1,4 +1,3 @@
-import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 
@@ -32,10 +31,12 @@ test('should add polyfill when set polyfill entry (default)', async ({
 }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       output: {
         polyfill: 'entry',
+        sourceMap: {
+          js: 'source-map',
+        },
       },
     },
     runServer: true,
@@ -45,7 +46,7 @@ test('should add polyfill when set polyfill entry (default)', async ({
 
   expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
 
-  rsbuild.close();
+  await rsbuild.close();
 
   const files = await rsbuild.unwrapOutputJSON(false);
 
@@ -59,10 +60,12 @@ test('should add polyfill when set polyfill entry (default)', async ({
 test('should add polyfill when set polyfill usage', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       output: {
         polyfill: 'usage',
+        sourceMap: {
+          js: 'source-map',
+        },
       },
     },
     runServer: true,
@@ -72,7 +75,7 @@ test('should add polyfill when set polyfill usage', async ({ page }) => {
 
   expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
 
-  rsbuild.close();
+  await rsbuild.close();
 
   const files = await rsbuild.unwrapOutputJSON(false);
 

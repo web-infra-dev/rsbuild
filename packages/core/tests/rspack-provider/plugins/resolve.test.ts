@@ -26,6 +26,8 @@ describe('plugin-resolve', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0].resolve?.extensions).toEqual([
+      '.ts',
+      '.tsx',
       '.js',
       '.jsx',
       '.mjs',
@@ -115,46 +117,5 @@ describe('plugin-resolve', () => {
     expect(bundlerConfigs[0].resolve?.alias).toEqual({
       foo: 'bar',
     });
-  });
-
-  it('should support custom resolve.mainFields', async () => {
-    const mainFieldsOption = ['main', 'test', 'browser', ['module', 'exports']];
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginResolve()],
-      rsbuildConfig: {
-        source: {
-          resolveMainFields: mainFieldsOption,
-        },
-      },
-    });
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    expect(bundlerConfigs[0].resolve?.mainFields).toEqual([
-      'main',
-      'test',
-      'browser',
-      'module',
-      'exports',
-    ]);
-  });
-
-  it('should support custom webpack resolve.mainFields by target', async () => {
-    const mainFieldsOption = {
-      web: ['main', 'browser'],
-      node: ['main', 'node'],
-    };
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginResolve()],
-      rsbuildConfig: {
-        source: {
-          resolveMainFields: mainFieldsOption,
-        },
-      },
-    });
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    expect(bundlerConfigs[0].resolve?.mainFields).toEqual(mainFieldsOption.web);
   });
 });

@@ -1,10 +1,10 @@
 # Configure Rspack
 
-Rsbuild supports directly modifying the Rspack configuration object and also supports modifying the built-in Rspack configuration through the bundler-chain.
+Rsbuild supports directly modifying the Rspack configuration object, and also supports modifying the built-in Rspack configuration of Rsbuild through the bundler-chain.
 
-## Modify Rspack Configuration Object
+## Modify Rspack Config
 
-You can use the `tools.rspack` option of Rsbuild to modify the Rspack configuration object. Please refer to the [tools.rspack documentation](/config/options/tools.html#toolsrspack) for complete usage.
+You can use the `tools.rspack` option of Rsbuild to modify the Rspack configuration object. Please refer to the [tools.rspack documentation](/config/tools/rspack) for complete usage.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -21,7 +21,7 @@ export default {
 
 ## Use Bundler Chain
 
-import BundlerChain from '@zh/shared/bundlerChain.md';
+import BundlerChain from '@en/shared/bundlerChain.md';
 
 <BundlerChain />
 
@@ -34,7 +34,7 @@ Rsbuild provides the `tools.bundlerChain` configuration option to modify the bun
 The value of `tools.bundlerChain` is a `Function` type that accepts two parameters:
 
 - The first parameter is the `bundler-chain` instance, which can be used to modify the default bundler configuration.
-- The second parameter is a [toolbox](/config/options/tools.html#toolbox-2) that includes `env`, `isProd`, `CHAIN_ID`, and more.
+- The second parameter is [utils](/config/tools/bundler-chain#utils) that includes `env`, `isProd`, `CHAIN_ID`, and more.
 
 Here's a basic example:
 
@@ -150,7 +150,7 @@ export default {
 
 #### Modify based on environment
 
-In the `tools.bundlerChain` function, you can access various environment identifiers in the second parameter, such as development/production environment build, SSR build, Web Worker build, to achieve configuration modifications for different environments.
+In the `tools.bundlerChain` function, you can access various environment identifiers in the second parameter, such as development/production build, SSR build, Web Worker build, to achieve configuration modifications for different environments.
 
 ```js title="rsbuild.config.ts"
 export default {

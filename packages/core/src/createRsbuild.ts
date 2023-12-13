@@ -7,41 +7,33 @@ import {
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
 import { plugins } from './plugins';
-import type { RsbuildConfig } from './rspack-provider';
+import type { RsbuildConfig } from './types';
 
 const getRspackProvider = async (rsbuildConfig: RsbuildConfig) => {
-  const { rspackProvider } = await import('./rspack-provider');
-
+  const { rspackProvider } = await import('./provider');
   return rspackProvider({
     rsbuildConfig,
   });
 };
 
-export const getCreateRsbuildDefaultOptions =
-  (): Required<CreateRsbuildOptions> => ({
-    cwd: process.cwd(),
-    entry: {},
-    target: ['web'],
-    configPath: null,
-  });
-
-export async function createRsbuild<
-  P extends ({ rsbuildConfig }: { rsbuildConfig: T }) => RsbuildProvider,
-  T = RsbuildConfig,
->(
+export async function createRsbuild(
   options: CreateRsbuildOptions & {
-    rsbuildConfig: T;
-    provider?: P;
+    provider?: ({
+      rsbuildConfig,
+    }: {
+      rsbuildConfig: RsbuildConfig;
+    }) => RsbuildProvider;
   },
-): Promise<RsbuildInstance<ReturnType<P>>> {
-  const { rsbuildConfig } = options;
+): Promise<RsbuildInstance> {
+  const { rsbuildConfig = {} } = options;
 
   const provider = options.provider
     ? options.provider({ rsbuildConfig })
     : await getRspackProvider(rsbuildConfig as RsbuildConfig);
 
-  const rsbuildOptions = {
-    ...getCreateRsbuildDefaultOptions(),
+  const rsbuildOptions: Required<CreateRsbuildOptions> = {
+    cwd: process.cwd(),
+    rsbuildConfig,
     ...options,
   };
 
@@ -54,6 +46,7 @@ export async function createRsbuild<
     initConfigs,
     inspectConfig,
     createCompiler,
+    getServerAPIs,
     startDevServer,
     applyDefaultPlugins,
   } = await provider({
@@ -66,15 +59,17 @@ export async function createRsbuild<
   await applyDefaultPlugins(pluginStore);
   debug('add default plugins done');
 
-  return {
+  const rsbuild = {
     ...pick(pluginStore, ['addPlugins', 'removePlugins', 'isPluginExists']),
     ...pick(pluginAPI, [
       'onBeforeBuild',
       'onBeforeCreateCompiler',
       'onBeforeStartDevServer',
+      'onBeforeStartProdServer',
       'onAfterBuild',
       'onAfterCreateCompiler',
       'onAfterStartDevServer',
+      'onAfterStartProdServer',
       'onDevCompileDone',
       'onExit',
       'getHTMLPaths',
@@ -86,7 +81,14 @@ export async function createRsbuild<
     createCompiler,
     initConfigs,
     inspectConfig,
+    getServerAPIs,
     startDevServer,
     context: publicContext,
   };
+
+  if (rsbuildConfig.plugins) {
+    rsbuild.addPlugins(rsbuildConfig.plugins);
+  }
+
+  return rsbuild;
 }

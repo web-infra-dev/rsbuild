@@ -1,11 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import {
-  STYLUS_REGEX,
-  isUseCssSourceMap,
-  mergeChainedOptions,
-} from '@rsbuild/shared';
-import { deepmerge } from '@rsbuild/shared/deepmerge';
-import type { RsbuildPluginAPI } from '@rsbuild/webpack';
+import { deepmerge, STYLUS_REGEX, mergeChainedOptions } from '@rsbuild/shared';
 
 type StylusOptions = {
   use?: string[];
@@ -23,11 +17,9 @@ type StylusLoaderOptions = {
 
 export type PluginStylusOptions = StylusLoaderOptions;
 
-export function pluginStylus(
-  options?: PluginStylusOptions,
-): RsbuildPlugin<RsbuildPluginAPI> {
+export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
   return {
-    name: 'plugin-stylus',
+    name: 'rsbuild:stylus',
 
     setup(api) {
       const { bundlerType } = api.context;
@@ -36,7 +28,7 @@ export function pluginStylus(
 
         const mergedOptions = mergeChainedOptions({
           defaults: {
-            sourceMap: isUseCssSourceMap(config),
+            sourceMap: config.output.sourceMap.css,
           },
           options,
           mergeFn: deepmerge,
@@ -49,7 +41,7 @@ export function pluginStylus(
         const { applyBaseCSSRule } = await import(
           bundlerType === 'webpack'
             ? '@rsbuild/webpack/plugin-css'
-            : '@rsbuild/core/rspack-plugin-css'
+            : '@rsbuild/core/provider'
         );
         await applyBaseCSSRule({
           rule,
@@ -67,9 +59,7 @@ export function pluginStylus(
 
       bundlerType === 'rspack' &&
         (api as any).modifyRspackConfig(async (rspackConfig: any) => {
-          const { applyCSSModuleRule } = await import(
-            '@rsbuild/core/rspack-plugin-css'
-          );
+          const { applyCSSModuleRule } = await import('@rsbuild/core/provider');
 
           const config = api.getNormalizedConfig();
 

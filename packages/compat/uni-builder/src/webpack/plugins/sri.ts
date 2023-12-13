@@ -1,12 +1,12 @@
 import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
-import type { RsbuildPlugin } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { SriOptions } from '../../types';
 
 export const pluginSRI = (options: SriOptions | boolean): RsbuildPlugin => ({
-  name: 'plugin-sri',
+  name: 'uni-builder:sri',
 
   setup(api) {
-    api.modifyWebpackChain((chain, { CHAIN_ID }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID }) => {
       chain.output.crossOriginLoading('anonymous');
       chain
         .plugin(CHAIN_ID.PLUGIN.SUBRESOURCE_INTEGRITY)

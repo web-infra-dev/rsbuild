@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "0.0.19",
+  "version": "0.2.3",
   "description": "Unleash the power of Rspack with the out-of-the-box build tool.",
   "homepage": "https://rsbuild.dev",
   "bugs": {
@@ -12,6 +12,7 @@
     "directory": "packages/core"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -21,54 +22,29 @@
       "types": "./dist/server/index.d.ts",
       "default": "./dist/server/index.js"
     },
-    "./hmr-client": {
-      "types": "./dist/server/dev-middleware/hmr-client/index.d.ts",
-      "default": "./dist/server/dev-middleware/hmr-client/index.js"
+    "./client/*": {
+      "types": "./dist/client/*.d.ts",
+      "default": "./dist/client/*.js"
     },
     "./cli": {
-      "types": "./dist/cli/index.d.ts",
-      "default": "./dist/cli/index.js"
+      "types": "./dist/cli/commands.d.ts",
+      "default": "./dist/cli/commands.js"
     },
     "./plugins/*": {
       "types": "./dist/plugins/*.d.ts",
       "default": "./dist/plugins/*.js"
     },
-    "./rspack-plugin-css": {
-      "types": "./dist/rspack-provider/plugins/css.d.ts",
-      "default": "./dist/rspack-provider/plugins/css.js"
-    },
-    "./rspack-provider": {
-      "types": "./dist/rspack-provider/index.d.ts",
-      "default": "./dist/rspack-provider/index.js"
+    "./provider": {
+      "types": "./dist/provider/index.d.ts",
+      "default": "./dist/provider/index.js"
     },
     "./types": {
       "types": "./types.d.ts"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "main": "./dist/index.js",
-  "types": "./src/index.ts",
-  "typesVersions": {
-    "*": {
-      "cli": [
-        "./dist/cli/index.d.ts"
-      ],
-      "server": [
-        "./dist/server/index.d.ts"
-      ],
-      "hmr-client": [
-        "./dist/server/dev-middleware/hmr-client/index.d.ts"
-      ],
-      "plugins/*": [
-        "./dist/plugins/*.d.ts"
-      ],
-      "rspack-plugin-css": [
-        "./dist/rspack-provider/plugins/css.d.ts"
-      ],
-      "rspack-provider": [
-        "./dist/rspack-provider/index.d.ts"
-      ]
-    }
-  },
+  "types": "./dist/index.d.ts",
   "bin": {
     "rsbuild": "./bin/rsbuild.js"
   },
@@ -76,6 +52,7 @@
     "bin",
     "dist",
     "static",
+    "compiled",
     "types.d.ts"
   ],
   "scripts": {
@@ -84,34 +61,15 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/core": "0.3.11",
-    "connect": "3.7.0",
-    "connect-history-api-fallback": "^2.0.0",
-    "commander": "^10.0.1",
+    "@rspack/core": "0.4.3",
     "core-js": "~3.32.2",
-    "filesize": "^8.0.7",
-    "gzip-size": "^6.0.0",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.4",
-    "http-compression": "1.0.6",
-    "http-proxy-middleware": "^2.0.1",
-    "jiti": "^1.20.0",
-    "lodash": "^4.17.21",
-    "open": "^8.4.0",
-    "postcss": "8.4.31",
-    "rslog": "^1.1.0",
-    "semver": "^7.5.4",
-    "sirv": "^2.0.3",
-    "strip-ansi": "^6.0.1",
-    "ws": "^8.2.0"
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
+    "postcss": "8.4.31"
   },
   "devDependencies": {
-    "@types/connect": "3.4.35",
-    "@types/connect-history-api-fallback": "^1.3.5",
-    "@types/lodash": "^4.14.200",
-    "@types/node": "^16",
-    "@types/ws": "^8.2.0",
-    "@types/semver": "^7.5.4",
-    "typescript": "^5.2.2"
+    "@types/node": "16.x",
+    "typescript": "^5.3.0",
+    "webpack": "^5.89.0"
   },
   "engines": {
     "node": ">=14.0.0"
@@ -119,7 +77,6 @@
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "https://registry.npmjs.org/",
-    "types": "./dist/index.d.ts"
+    "registry": "https://registry.npmjs.org/"
   }
 }

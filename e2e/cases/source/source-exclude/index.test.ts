@@ -7,7 +7,6 @@ test('should not compile specified file when source.exclude', async () => {
   await expect(
     build({
       cwd: __dirname,
-      entry: { index: path.resolve(__dirname, './src/index.js') },
       plugins: [pluginCheckSyntax()],
       rsbuildConfig: {
         source: {

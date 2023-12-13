@@ -1,12 +1,11 @@
-import { fs } from '@rsbuild/shared/fs-extra';
-import type { CopyPluginOptions } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
+import fs from 'fs';
+import type { RsbuildPlugin, CopyPluginOptions } from '@rsbuild/shared';
 
 export const pluginCopy = (): RsbuildPlugin => ({
-  name: 'plugin-copy',
+  name: 'rsbuild-webpack:copy',
 
   setup(api) {
-    api.modifyWebpackChain(async (chain, { CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
       const { copy } = config.output;
 

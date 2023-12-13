@@ -1,25 +1,20 @@
 # Plugin List
 
+## Plugin System
+
+You can read about the functionality of Rsbuild plugins and how to develop an Rsbuild plugin in the [Plugin System](/plugins/dev/index) documentation.
+
 ## Using Plugins
 
-You can register Rsbuild plugins using the `plugins` option in `rsbuild.config.ts`.
+You can register Rsbuild plugins in the `rsbuild.config.ts` file using the `plugins` option. For more details, refer to [plugins](/config/plugins).
 
-For example, to register a Vue plugin:
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginVue } from '@rsbuild/plugin-vue';
-
-export default defineConfig({
-  plugins: [pluginVue()],
-});
-```
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance#rsbuildaddplugins) method.
 
 ## Official Plugins
 
 The following are official plugins that can be used in Rsbuild.
 
-### React Related
+### For React
 
 Plugins available for the React framework:
 
@@ -27,7 +22,7 @@ Plugins available for the React framework:
 - [SVGR Plugin](/plugins/list/plugin-svgr): Support convert SVG to React components.
 - [Styled Components Plugin](/plugins/list/plugin-styled-components): Provides compile-time support for styled-components.
 
-### Vue Related
+### For Vue
 
 Plugins available for the Vue framework:
 
@@ -36,11 +31,17 @@ Plugins available for the Vue framework:
 - [Vue2 Plugin](/plugins/list/plugin-vue2): Provides support for Vue 2 SFC (Single File Components).
 - [Vue2 JSX Plugin](/plugins/list/plugin-vue2-jsx): Provides support for Vue 2 JSX / TSX syntax.
 
-### Svelte Related
+### For Svelte
 
 Plugins available for the Svelte framework:
 
 - [Svelte Plugin](/plugins/list/plugin-svelte): Provides support for Svelte components (`.svelte` files).
+
+### For Solid
+
+Plugins available for the Solid framework:
+
+- [Solid Plugin](/plugins/list/plugin-solid): Provides support for Solid.
 
 ### Common
 
@@ -54,8 +55,10 @@ The following are common framework-agnostic plugins:
 - [Source Build Plugin](/plugins/list/plugin-source-build): This plugin is designed for the monorepo scenario. It supports referencing source code from other subdirectories and performs build and hot update.
 - [Stylus Plugin](/plugins/list/plugin-stylus): Use Stylus as the CSS preprocessor.
 - [Check Syntax Plugin](/plugins/list/plugin-check-syntax): Used to analyze the syntax compatibility of artifacts, to see if there are any advanced syntaxes that may cause compatibility issues.
-- [CSS Minimizer Plugin](/plugins/list/plugin-css-minimizer): Used to customize CSS minimizer, switch to [cssnano] or other tools for CSS compression.
+- [CSS Minimizer Plugin](/plugins/list/plugin-css-minimizer): Used to customize CSS minimizer, switch to [cssnano](https://cssnano.co/) or other tools for CSS compression.
 - [Pug Plugin](/plugins/list/plugin-pug): Provides support for the Pug template engine.
+- [Rem Plugin](/plugins/list/plugin-rem): Implements the rem adaptive layout for mobile pages.
+- [UMD Plugin](/plugins/list/plugin-umd): Used to build outputs in UMD format.
 
 :::tip
 You can find the source code of all official plugins in the [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) repository.

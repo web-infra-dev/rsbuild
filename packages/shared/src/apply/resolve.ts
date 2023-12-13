@@ -1,37 +1,23 @@
-import { getExtensions } from '../config';
-import _ from 'lodash';
 import { castArray, ensureAbsolutePath } from '../utils';
-import type { ChainIdentifier } from '../chain';
 import { mergeChainedOptions } from '../mergeChainedOptions';
-import {
-  RsbuildTarget,
+import type { ChainIdentifier } from '../chain';
+import type {
   BundlerChain,
   ChainedConfig,
-  SharedRsbuildPluginAPI,
   NormalizedConfig,
+  RsbuildPluginAPI,
 } from '../types';
 
-export function applyResolvePlugin(api: SharedRsbuildPluginAPI) {
-  api.modifyBundlerChain((chain, { target, CHAIN_ID }) => {
+export function applyResolvePlugin(api: RsbuildPluginAPI) {
+  api.modifyBundlerChain((chain, { CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
-    const isTsProject = Boolean(api.context.tsconfigPath);
-    applyExtensions({
-      chain,
-      config,
-      target,
-      isTsProject,
-    });
+
+    applyExtensions({ chain });
 
     applyAlias({
       chain,
       config,
       rootPath: api.context.rootPath,
-    });
-
-    applyMainFields({
-      chain,
-      config,
-      target,
     });
 
     applyFullySpecified({ chain, config, CHAIN_ID });
@@ -52,24 +38,24 @@ function applyFullySpecified({
     .rule(CHAIN_ID.RULE.MJS)
     .test(/\.m?js/)
     .resolve.set('fullySpecified', false);
+
+  if (chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI)) {
+    chain.module
+      .rule(CHAIN_ID.RULE.JS_DATA_URI)
+      .resolve.set('fullySpecified', false);
+  }
 }
 
-function applyExtensions({
-  chain,
-  config,
-  target,
-  isTsProject,
-}: {
-  chain: BundlerChain;
-  config: NormalizedConfig;
-  target: RsbuildTarget;
-  isTsProject: boolean;
-}) {
-  const extensions = getExtensions({
-    target,
-    isTsProject,
-    resolveExtensionPrefix: config.source.resolveExtensionPrefix,
-  });
+function applyExtensions({ chain }: { chain: BundlerChain }) {
+  const extensions = [
+    // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
+    '.ts',
+    '.tsx',
+    '.js',
+    '.jsx',
+    '.mjs',
+    '.json',
+  ];
 
   chain.resolve.extensions.merge(extensions);
 }
@@ -115,38 +101,4 @@ function applyAlias({
       formattedValues.length === 1 ? formattedValues[0] : formattedValues,
     );
   });
-}
-
-function applyMainFields({
-  chain,
-  config,
-  target,
-}: {
-  chain: BundlerChain;
-  config: NormalizedConfig;
-  target: RsbuildTarget;
-}) {
-  const { resolveMainFields } = config.source;
-  if (!resolveMainFields) {
-    return;
-  }
-
-  const mainFields = Array.isArray(resolveMainFields)
-    ? resolveMainFields
-    : resolveMainFields[target];
-
-  if (mainFields) {
-    mainFields
-      .reduce((result: string[], fields) => {
-        if (Array.isArray(fields)) {
-          result.push(...fields);
-        } else {
-          result.push(fields);
-        }
-        return result;
-      }, [] as string[])
-      .forEach((field) => {
-        chain.resolve.mainFields.add(field);
-      });
-  }
 }

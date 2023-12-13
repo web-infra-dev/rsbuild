@@ -1,4 +1,4 @@
-import { join, resolve } from 'path';
+import { resolve } from 'path';
 import { test, expect } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -9,9 +9,6 @@ const fixtures = resolve(__dirname, '../');
 test('pug', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     plugins: [pluginReact(), pluginPug()],
     rsbuildConfig: {
@@ -21,7 +18,7 @@ test('pug', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   const testPug = page.locator('#test-pug');
   await expect(testPug).toHaveText('Pug source code!');
@@ -29,5 +26,5 @@ test('pug', async ({ page }) => {
   const testEl = page.locator('#test');
   await expect(testEl).toHaveText('Hello Rsbuild!');
 
-  rsbuild.close();
+  await rsbuild.close();
 });

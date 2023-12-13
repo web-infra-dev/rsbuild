@@ -4,25 +4,23 @@ import {
   isUseCssExtract,
   getPostcssConfig,
   ModifyChainUtils,
-  isUseCssSourceMap,
   mergeChainedOptions,
   getCssLoaderOptions,
   getBrowserslistWithDefault,
   getCssModuleLocalIdentName,
+  getSharedPkgCompiledPath,
   type Context,
+  type RsbuildPlugin,
+  type NormalizedConfig,
   type BundlerChainRule,
+  type CSSExtractOptions,
 } from '@rsbuild/shared';
-import type {
-  RsbuildPlugin,
-  CSSExtractOptions,
-  NormalizedConfig,
-} from '../types';
 
 export async function applyBaseCSSRule({
   rule,
   config,
   context,
-  utils: { target, isProd, isServer, CHAIN_ID, isWebWorker, getCompiledPath },
+  utils: { target, isProd, isServer, CHAIN_ID, isWebWorker },
   importLoaders = 1,
 }: {
   rule: BundlerChainRule;
@@ -39,9 +37,6 @@ export async function applyBaseCSSRule({
 
   // 1. Check user config
   const enableExtractCSS = isUseCssExtract(config, target);
-  const enableCssMinify = !enableExtractCSS && isProd;
-
-  const enableSourceMap = isUseCssSourceMap(config);
   const enableCSSModuleTS = Boolean(config.output.enableCssModuleTSDeclaration);
 
   // 2. Prepare loader options
@@ -49,7 +44,6 @@ export async function applyBaseCSSRule({
 
   const cssLoaderOptions = getCssLoaderOptions({
     config,
-    enableSourceMap,
     importLoaders,
     isServer,
     isWebWorker,
@@ -113,21 +107,19 @@ export async function applyBaseCSSRule({
 
   rule
     .use(CHAIN_ID.USE.CSS)
-    .loader(getCompiledPath('css-loader'))
+    .loader(getSharedPkgCompiledPath('css-loader'))
     .options(cssLoaderOptions)
     .end();
 
   if (!isServer && !isWebWorker) {
     const postcssLoaderOptions = getPostcssConfig({
-      enableSourceMap,
       browserslist,
       config,
-      enableCssMinify,
     });
 
     rule
       .use(CHAIN_ID.USE.POSTCSS)
-      .loader(getCompiledPath('postcss-loader'))
+      .loader(getSharedPkgCompiledPath('postcss-loader'))
       .options(postcssLoaderOptions)
       .end();
   }
@@ -142,7 +134,7 @@ export async function applyBaseCSSRule({
 
 export const pluginCss = (): RsbuildPlugin => {
   return {
-    name: 'plugin-css',
+    name: 'rsbuild-webpack:css',
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);

@@ -1,17 +1,22 @@
-import { deepmerge } from '@rsbuild/shared/deepmerge';
+import { deepmerge } from '@rsbuild/shared';
 import { VueLoaderPlugin } from 'vue-loader';
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { VueLoaderOptions } from 'vue-loader';
+import { applySplitChunksRule } from './splitChunks';
+
+export type SplitVueChunkOptions = {
+  vue?: boolean;
+  router?: boolean;
+};
 
 export type PluginVueOptions = {
   vueLoaderOptions?: VueLoaderOptions;
+  splitChunks?: SplitVueChunkOptions;
 };
 
-export function pluginVue2(
-  options: PluginVueOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> {
+export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
   return {
-    name: 'plugin-vue2',
+    name: 'rsbuild:vue2',
 
     setup(api) {
       api.modifyBundlerChain((chain, { CHAIN_ID }) => {
@@ -36,6 +41,8 @@ export function pluginVue2(
 
         chain.plugin(CHAIN_ID.PLUGIN.VUE_LOADER_PLUGIN).use(VueLoaderPlugin);
       });
+
+      applySplitChunksRule(api, options.splitChunks);
     },
   };
 }

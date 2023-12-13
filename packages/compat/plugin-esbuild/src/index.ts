@@ -1,6 +1,5 @@
 import { JS_REGEX, TS_REGEX, applyScriptCondition } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { RsbuildPluginAPI } from '@rsbuild/webpack';
 import type {
   LoaderOptions,
   MinifyPluginOptions,
@@ -13,12 +12,14 @@ export interface PluginEsbuildOptions {
 
 export function pluginEsbuild(
   userOptions: PluginEsbuildOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> {
+): RsbuildPlugin {
   return {
-    name: 'plugin-esbuild',
+    name: 'rsbuild-webpack:esbuild',
+
+    pre: ['rsbuild:babel', 'uni-builder:babel'],
 
     setup(api) {
-      api.modifyWebpackChain(async (chain, { CHAIN_ID, isProd, target }) => {
+      api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
         const rsbuildConfig = api.getNormalizedConfig();
         const esbuildLoaderPath = require.resolve('../compiled/esbuild-loader');
 

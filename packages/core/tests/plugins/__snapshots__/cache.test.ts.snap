@@ -78,24 +78,6 @@ exports[`plugin-cache > 'should not apply cacheDigest' 1`] = `
 }
 `;
 
-exports[`plugin-cache > 'should watch framework config change' 1`] = `
-{
-  "cache": {
-    "buildDependencies": {
-      "packageJson": [
-        "<ROOT>/package.json",
-      ],
-      "tailwindcss": [
-        "/root/tailwind.config.ts",
-      ],
-    },
-    "cacheDirectory": "<ROOT>/node_modules/.cache/rspack",
-    "name": "web-test",
-    "type": "filesystem",
-  },
-}
-`;
-
 exports[`plugin-cache > 'should watch tsconfig change' 1`] = `
 {
   "cache": {

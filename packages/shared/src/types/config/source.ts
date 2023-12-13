@@ -1,13 +1,10 @@
-import type { RsbuildTarget } from '../rsbuild';
-import type { ModifyChainUtils } from '../hooks';
-import type { ChainedConfig, ChainedConfigWithUtils } from '../utils';
+import type { RsbuildEntry } from '../rsbuild';
+import type { ChainedConfig } from '../utils';
 
 export type Alias = Record<string, string | false | (string | false)[]>;
 
 // Use a loose type to compat webpack
 export type Define = Record<string, any>;
-
-export type MainFields = (string | string[])[];
 
 export type AliasStrategy = 'prefer-tsconfig' | 'prefer-alias';
 
@@ -29,6 +26,10 @@ export interface SourceConfig {
    */
   include?: (string | RegExp)[];
   /**
+   * Set the entry modules.
+   */
+  entry?: RsbuildEntry;
+  /**
    * Specifies that certain files that will be excluded from compilation.
    */
   exclude?: (string | RegExp)[];
@@ -38,15 +39,6 @@ export interface SourceConfig {
    * It can be used to execute global logics, such as polyfill injection.
    */
   preEntry?: string | string[];
-  /**
-   * This configuration will determine which field of `package.json` you use to import the `npm` module.
-   * Same as the [resolve.mainFields](https://webpack.js.org/configuration/resolve/#resolvemainfields) config of webpack.
-   */
-  resolveMainFields?: MainFields | Partial<Record<RsbuildTarget, MainFields>>;
-  /**
-   * Add a prefix to [resolve.extensions](https://webpack.js.org/configuration/resolve/#resolveextensions).
-   */
-  resolveExtensionPrefix?: string | Partial<Record<RsbuildTarget, string>>;
   /**
    * Used to replaces variables in your code with other values or expressions at compile time.
    */

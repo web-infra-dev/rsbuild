@@ -4,11 +4,11 @@ import {
   findUpSync,
   getDistPath,
   getSharedPkgCompiledPath,
-  type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginNodeAddons = (): DefaultRsbuildPlugin => ({
-  name: 'plugin-node-addons',
+export const pluginNodeAddons = (): RsbuildPlugin => ({
+  name: 'rsbuild:node-addons',
 
   setup(api) {
     api.modifyBundlerChain(
@@ -43,7 +43,7 @@ export const pluginNodeAddons = (): DefaultRsbuildPlugin => ({
 
           const { name: pkgName } = require(pkgJSON);
           const config = api.getNormalizedConfig();
-          const serverPath = getDistPath(config.output, 'server');
+          const serverPath = getDistPath(config, 'server');
           return `${serverPath}/${getFilename(resourcePath, pkgName)}`;
         };
 

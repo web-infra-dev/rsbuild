@@ -18,11 +18,11 @@
     "e2e:rspack": "cd ./e2e && pnpm test:rspack",
     "e2e:webpack": "cd ./e2e && pnpm test:webpack",
     "gen-release-note": "modern gen-release-note",
-    "lint": "oxlint .",
+    "lint": "ls-lint",
     "new": "modern new",
     "prepare": "pnpm run build && husky install",
     "release": "modern release",
-    "test": "pnpm run ut",
+    "test": "cross-env NODE_OPTIONS=--max-old-space-size=8192 pnpm run ut",
     "update-modern": "cd ./scripts/update-packages && pnpm start:modern",
     "update-rspack": "cd ./scripts/update-packages && pnpm start:rspack",
     "update-rspress": "cd ./scripts/update-packages && pnpm start:rspress",
@@ -31,28 +31,26 @@
     "ut:watch": "vitest"
   },
   "nano-staged": {
-    "*.{md,json,css,less,scss}": "prettier --write",
+    "*.{md,mdx,json,css,less,scss}": "prettier --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "prettier --write",
-      "oxlint"
+      "prettier --write"
     ],
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
-    "@modern-js/module-tools": "^2.40.0",
-    "@modern-js/monorepo-tools": "^2.40.0",
+    "@ls-lint/ls-lint": "^2.2.2",
+    "@modern-js/module-tools": "^2.41.0",
+    "@modern-js/monorepo-tools": "^2.41.0",
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/tsconfig": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "husky": "^8.0.3",
-    "is-ci": "^3.0.1",
     "nano-staged": "^0.8.0",
     "nx": "^17.0.1",
-    "oxlint": "^0.0.14",
     "prettier": "^3.0.3",
     "vite-tsconfig-paths": "4.2.1",
-    "vitest": "1.0.0-beta.1"
+    "vitest": "1.0.1"
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {
@@ -60,6 +58,9 @@
     "pnpm": ">=8.7.0"
   },
   "pnpm": {
+    "overrides": {
+      "esbuild": "~0.19.0"
+    },
     "allowedDeprecatedVersions": {
       "consolidate": "0.15.1"
     }

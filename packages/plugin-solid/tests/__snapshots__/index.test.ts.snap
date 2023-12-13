@@ -1,0 +1,148 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugin-solid > should allow to configure solid preset options 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+            "options": {
+              "babelrc": false,
+              "compact": false,
+              "configFile": false,
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                ],
+              ],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-preset-solid/index.js",
+                  {
+                    "generate": "ssr",
+                    "hydratable": true,
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "resolve": {
+    "alias": {
+      "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
+    },
+  },
+}
+`;
+
+exports[`plugin-solid > should apply solid preset correctly 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+            "options": {
+              "babelrc": false,
+              "compact": false,
+              "configFile": false,
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                ],
+              ],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-preset-solid/index.js",
+                  {},
+                ],
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "resolve": {
+    "alias": {
+      "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
+    },
+  },
+}
+`;
+
+exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+            "options": {
+              "babelrc": false,
+              "compact": false,
+              "configFile": false,
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                ],
+              ],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-preset-solid/index.js",
+                  {},
+                ],
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "resolve": {
+    "alias": {
+      "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
+    },
+  },
+}
+`;

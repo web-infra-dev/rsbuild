@@ -34,36 +34,13 @@ export default () => {
 };
 ```
 
-## 为所有样式文件启用 CSS Modules
+## CSS Modules 识别规则
 
 在默认情况下，只有 `*.module.css` 结尾的文件才被视为 CSS Modules 模块。
 
-如果你想将源码目录下的所有 CSS 文件当做 CSS Modules 模块进行处理，可以通过开启 [output.disableCssModuleExtension](https://rsbuild.dev/zh/config/options/output.html#outputdisablecssmoduleextension) 来实现，比如：
+如果你想将其他 CSS 文件也当做 CSS Modules 模块进行处理，可以通过配置 [output.cssModules.auto](/config/output/css-modules#cssmodulesauto) 来实现。
 
-```ts
-export default {
-  output: {
-    disableCssModuleExtension: true,
-  },
-};
-```
-
-设置后，以下两个文件都会被视为 CSS Modules：
-
-```ts
-import styles1 from './foo.module.css';
-import styles2 from './bar.css';
-```
-
-:::tip
-我们不推荐开启此配置项，因为开启 `disableCssModuleExtension` 后，CSS Modules 文件和普通 CSS 文件无法得到明确的区分，不利于长期维护。
-:::
-
-## 为指定的样式文件启用 CSS Modules
-
-在默认情况下，只有 `*.module.css` 结尾的文件才被视为 CSS Modules 模块。
-
-如果你想只为一些指定的样式文件启用 CSS Modules，可以通过配置 [output.cssModules](/config/options/output.html#outputcssmodule) 来实现，比如：
+比如：
 
 ```ts
 export default {
@@ -77,9 +54,16 @@ export default {
 };
 ```
 
+设置后，以下两个文件都会被视为 CSS Modules：
+
+```ts
+import styles1 from './foo.module.css';
+import styles2 from './shared/bar.css';
+```
+
 ## 自定义类名
 
-自定义 CSS Modules 生成的类名也是我们比较常用的功能，你可以使用 [output.cssModules.localIdentName](/config/options/output.html#outputcssmoduleslocalidentname) 来进行配置。
+自定义 CSS Modules 生成的类名也是我们比较常用的功能，你可以使用 [output.cssModules.localIdentName](/config/output/css-modules#cssmoduleslocalidentname) 来进行配置。
 
 ```ts
 export default {
@@ -91,7 +75,7 @@ export default {
 };
 ```
 
-如果你需要自定义 CSS Modules 的其他配置，可以通过 [output.cssModules](/config/options/output.html#outputcssmodules) 进行设置。
+如果你需要自定义 CSS Modules 的其他配置，可以通过 [output.cssModules](/config/output/css-modules) 进行设置。
 
 ## 类型声明
 
@@ -138,42 +122,14 @@ declare module '*.module.stylus' {
 }
 ```
 
-如果你开启了 `disableCssModuleExtension` 配置值，还需要添加以下类型：
-
-```ts title="src/env.d.ts"
-declare module '*.css' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-declare module '*.scss' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-declare module '*.sass' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-declare module '*.less' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-declare module '*.styl' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-declare module '*.stylus' {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
-```
-
 添加类型声明后，如果依然存在上述错误提示，请尝试重启当前 IDE，或者调整 `env.d.ts` 所在的目录，使 TypeScript 能够正确识别类型定义。
 
+<!--
 ## 生成准确的类型定义
 
 上述方法虽然可以解决 CSS Modules 在 TypeScript 中的类型问题，但是无法准确地提示出某个 CSS 文件导出了哪些类名。
 
-Rsbuild 支持为 CSS Modules 生成准确的类型声明，你只需要开启 [output.enableCssModuleTSDeclaration](/config/options/output.html#outputenablecssmoduletsdeclaration) 配置项，再执行构建命令，Rsbuild 就会为项目中所有的 CSS Modules 文件生成相应的类型声明文件。
+Rsbuild 支持为 CSS Modules 生成准确的类型声明，你只需要开启 [output.enableCssModuleTSDeclaration](/config/output/enablecssmoduletsdeclaration) 配置项，再执行构建命令，Rsbuild 就会为项目中所有的 CSS Modules 文件生成相应的类型声明文件。
 
 ```ts
 export default {
@@ -181,7 +137,7 @@ export default {
     enableCssModuleTSDeclaration: true,
   },
 };
-```
+``` -->
 
 ### 示例
 

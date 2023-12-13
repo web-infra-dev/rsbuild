@@ -5,8 +5,11 @@ import { build } from '@scripts/shared';
 test('should build web-worker target correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
-    target: 'web-worker',
+    rsbuildConfig: {
+      output: {
+        targets: ['web-worker'],
+      },
+    },
   });
   const files = await rsbuild.unwrapOutputJSON();
   const filenames = Object.keys(files);
@@ -19,8 +22,14 @@ test('should build web-worker target correctly', async () => {
 test('should build web-worker target with dynamicImport correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index2.js') },
-    target: 'web-worker',
+    rsbuildConfig: {
+      source: {
+        entry: { index: path.resolve(__dirname, './src/index2.js') },
+      },
+      output: {
+        targets: ['web-worker'],
+      },
+    },
   });
   const files = await rsbuild.unwrapOutputJSON();
   const filenames = Object.keys(files);

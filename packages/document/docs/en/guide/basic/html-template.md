@@ -6,7 +6,7 @@ Rsbuild provides some configs to set the HTML template. Through this chapter, yo
 
 ## Set Template
 
-In Rsbuild, you can use [html.template](/config/options/html.html#htmltemplate) config to define the path to the custom HTML template.
+In Rsbuild, you can use [html.template](/config/html/template) config to define the path to the custom HTML template.
 
 ```ts
 export default {
@@ -18,7 +18,7 @@ export default {
 
 ## Set Page Title
 
-You can set the HTML `<title>` tag through the [html.title](/config/options/html.html#htmltitle) config.
+You can set the HTML `<title>` tag through the [html.title](/config/html/title) config.
 
 When there is only one page in your project, just use the `html.title` setting directly:
 
@@ -50,7 +50,7 @@ export default {
 
 Rsbuild supports setting [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) icon and [apple-touch-icon](https://webhint.io/docs/user-guide/hints/hint-apple-touch-icons/) icon.
 
-You can set the favicon through the [html.favicon](/config/options/html.html#htmlfavicon) config.
+You can set the favicon through the [html.favicon](/config/html/favicon) config.
 
 ```ts
 export default {
@@ -60,7 +60,7 @@ export default {
 };
 ```
 
-You can also set the apple-touch-icon for iOS system through the [html.appIcon](/config/options/html.html#htmlappicon) config.
+You can also set the apple-touch-icon for iOS system through the [html.appIcon](/config/html/app-icon) config.
 
 ```ts
 export default {
@@ -72,7 +72,7 @@ export default {
 
 ## Set Meta Tags
 
-You can set the meta tags through the [html.meta](/config/options/html.html#htmlmeta) config.
+You can set the meta tags through the [html.meta](/config/html/meta) config.
 
 For example to setting description:
 
@@ -98,13 +98,10 @@ In HTML templates, you can use a variety of template parameters. The template pa
 
 ```ts
 type DefaultParameters = {
-  meta: string; // corresponding to html.meta config
-  title: string; // corresponding to html.title config
   mountId: string; // corresponding to html.mountId config
   entryName: string; // entry name
   assetPrefix: string; // corresponding to output.assetPrefix config
-  compilation: webpack.Compilation; // Compilation object corresponding to webpack
-  webpackConfig: config; // webpack config
+  compilation: Compilation; // Compilation object corresponding to Rspack
   // htmlWebpackPlugin built-in parameters
   // See https://github.com/jantimon/html-webpack-plugin for details
   htmlWebpackPlugin: {
@@ -115,7 +112,7 @@ type DefaultParameters = {
 };
 ```
 
-You can also use the [html.templateParameters](/config/options/html.html#htmltemplateparameters) config to pass in custom template parameters.
+You can also use the [html.templateParameters](/config/html/template-parameters) config to pass in custom template parameters.
 
 For example:
 
@@ -143,9 +140,9 @@ The generated HTML code is as follows:
 
 ## Template Engine
 
-Rsbuild supports using [Lodash Template](https://www.lodashjs.com/docs/lodash.template), [EJS](https://ejs.co/), [Pug](https://pugjs.org/) as template engines, the most basic Lodash Template is used as the default template engine.
+Rsbuild supports using [Lodash Template](https://lodashjs.com/docs/lodash.template), [EJS](https://ejs.co/), [Pug](https://pugjs.org/) as template engines, the most basic Lodash Template is used as the default template engine.
 
-### [Lodash Template](https://www.lodashjs.com/docs/lodash.template)
+### [Lodash Template](https://lodashjs.com/docs/lodash.template)
 
 When the suffix of the template is `.html`, Rsbuild will use Lodash Template to compile it.
 
@@ -159,13 +156,13 @@ For example, if you define a `text` parameter in a template with a value of `'wo
 <div>hello world!</div>
 ```
 
-Please read the [Lodash Template](https://www.lodashjs.com/docs/lodash.template) documentation for details.
+Please read the [Lodash Template](https://lodashjs.com/docs/lodash.template) documentation for details.
 
 ### [EJS](https://ejs.co/)
 
 When the suffix of the template is `.ejs`, Rsbuild will use the EJS template engine to compile it. EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.
 
-For example, you can first refer to a `.ejs` template through the [html.template](/config/options/html.html#htmltemplate) config:
+For example, you can first refer to a `.ejs` template through the [html.template](/config/html/template) config:
 
 ```ts
 export default {
@@ -214,7 +211,7 @@ All tags that need to be injected into HTML can be accessed in the template file
 </html>
 ```
 
-The purpose of `html.tags` is to adjust these template variables and thus modify the HTML, as defined in [API References](/config/options/html.html#htmltags).
+The purpose of `html.tags` is to adjust these template variables and thus modify the HTML, as defined in [API References](/config/html/tags).
 
 ### Tag Object
 

@@ -1,11 +1,10 @@
-import type { ChainedConfig, ChainedConfigWithUtils } from '@rsbuild/shared';
+import type { ChainedConfigWithUtils } from '@rsbuild/shared';
 import type {
   PluginItem as BabelPlugin,
-  PluginOptions as BabelPluginOptions,
   TransformOptions as BabelTransformOptions,
 } from '@babel/core';
 
-export { BabelPlugin, BabelPluginOptions, BabelTransformOptions };
+export type { BabelPlugin, BabelTransformOptions };
 
 export type PresetEnvTargets = string | string[] | Record<string, string>;
 export type PresetEnvBuiltIns = 'usage' | 'entry' | false;
@@ -51,18 +50,32 @@ export type PresetReactOptions =
   | AutomaticRuntimePresetReactOptions
   | ClassicRuntimePresetReactOptions;
 
+export type RuleCondition = string | RegExp | (string | RegExp)[];
+
 export type BabelConfigUtils = {
   addPlugins: (plugins: BabelPlugin[]) => void;
   addPresets: (presets: BabelPlugin[]) => void;
-  addIncludes: (includes: string | RegExp | (string | RegExp)[]) => void;
-  addExcludes: (excludes: string | RegExp | (string | RegExp)[]) => void;
   removePlugins: (plugins: string | string[]) => void;
   removePresets: (presets: string | string[]) => void;
   modifyPresetEnvOptions: (options: PresetEnvOptions) => void;
   modifyPresetReactOptions: (options: PresetReactOptions) => void;
+  /**
+   * use `source.include` instead
+   * @deprecated
+   */
+  addIncludes: (includes: RuleCondition) => void;
+  /**
+   * use `source.exclude` instead
+   * @deprecated
+   */
+  addExcludes: (excludes: RuleCondition) => void;
 };
 
-export type PluginBabelOptions = ChainedConfigWithUtils<
-  BabelTransformOptions,
-  BabelConfigUtils
->;
+export type PluginBabelOptions = {
+  include?: RuleCondition;
+  exclude?: RuleCondition;
+  babelLoaderOptions?: ChainedConfigWithUtils<
+    BabelTransformOptions,
+    BabelConfigUtils
+  >;
+};

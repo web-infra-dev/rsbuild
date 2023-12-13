@@ -3,16 +3,15 @@
  * license at https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
 import path from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { color, logger } from '@rsbuild/shared';
-import filesize from 'filesize';
-import gzipSize from 'gzip-size';
 import type {
-  DefaultRsbuildPlugin,
   Stats,
   MultiStats,
   StatsAsset,
+  PrintFileSizeOptions,
 } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
 /** Filter source map and license files */
 export const filterAsset = (asset: string) =>
@@ -46,21 +45,35 @@ async function printHeader(
   logger.log(color.bold(color.blue(headerRow)));
 }
 
-async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
+const calcFileSize = (len: number) => {
+  const val = len / 1000;
+  return `${val.toFixed(val < 1 ? 2 : 1)} kB`;
+};
+
+async function printFileSizes(
+  config: PrintFileSizeOptions,
+  stats: Stats | MultiStats,
+  distPath: string,
+) {
+  if (config.detail === false && config.total === false) {
+    return;
+  }
+
+  const { default: gzipSize } = await import('@rsbuild/shared/gzip-size');
+
   const formatAsset = (asset: StatsAsset) => {
-    const contents = fs.readFileSync(path.join(distPath, asset.name));
+    const fileName = asset.name.split('?')[0];
+    const contents = fse.readFileSync(path.join(distPath, fileName));
     const size = contents.length;
     const gzippedSize = gzipSize.sync(contents);
 
     return {
       size,
-      folder: path.join(path.basename(distPath), path.dirname(asset.name)),
-      name: path.basename(asset.name),
+      folder: path.join(path.basename(distPath), path.dirname(fileName)),
+      name: path.basename(fileName),
       gzippedSize,
-      sizeLabel: filesize(size, { round: 1 }),
-      gzipSizeLabel: getAssetColor(gzippedSize)(
-        filesize(gzippedSize, { round: 1 }),
-      ),
+      sizeLabel: calcFileSize(size),
+      gzipSizeLabel: getAssetColor(gzippedSize)(calcFileSize(gzippedSize)),
     };
   };
 
@@ -90,16 +103,18 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
     return;
   }
 
-  assets.sort((a, b) => b.size - a.size);
+  assets.sort((a, b) => a.size - b.size);
+
+  logger.info(`Production file sizes:\n`);
 
   const longestLabelLength = Math.max(...assets.map((a) => a.sizeLabel.length));
   const longestFileLength = Math.max(
     ...assets.map((a) => (a.folder + path.sep + a.name).length),
   );
 
-  logger.info(`Production file sizes:\n`);
-
-  printHeader(longestFileLength, longestLabelLength);
+  if (config.detail !== false) {
+    printHeader(longestFileLength, longestLabelLength);
+  }
 
   let totalSize = 0;
   let totalGzipSize = 0;
@@ -113,45 +128,64 @@ async function printFileSizes(stats: Stats | MultiStats, distPath: string) {
     totalSize += asset.size;
     totalGzipSize += asset.gzippedSize;
 
-    if (sizeLength < longestLabelLength) {
-      const rightPadding = ' '.repeat(longestLabelLength - sizeLength);
-      sizeLabel += rightPadding;
+    if (config.detail !== false) {
+      if (sizeLength < longestLabelLength) {
+        const rightPadding = ' '.repeat(longestLabelLength - sizeLength);
+        sizeLabel += rightPadding;
+      }
+
+      let fileNameLabel =
+        color.dim(asset.folder + path.sep) + color.cyan(asset.name);
+
+      if (fileNameLength < longestFileLength) {
+        const rightPadding = ' '.repeat(longestFileLength - fileNameLength);
+        fileNameLabel += rightPadding;
+      }
+
+      logger.log(`  ${fileNameLabel}    ${sizeLabel}    ${gzipSizeLabel}`);
     }
-
-    let fileNameLabel =
-      color.dim(asset.folder + path.sep) + color.cyan(asset.name);
-
-    if (fileNameLength < longestFileLength) {
-      const rightPadding = ' '.repeat(longestFileLength - fileNameLength);
-      fileNameLabel += rightPadding;
-    }
-
-    logger.log(`  ${fileNameLabel}    ${sizeLabel}    ${gzipSizeLabel}`);
   });
 
-  const totalSizeLabel = `${color.bold(color.blue('Total size:'))}  ${filesize(
-    totalSize,
-    { round: 1 },
-  )}`;
-  const gzippedSizeLabel = `${color.bold(
-    color.blue('Gzipped size:'),
-  )}  ${filesize(totalGzipSize, { round: 1 })}`;
-  logger.log(`\n  ${totalSizeLabel}\n  ${gzippedSizeLabel}\n`);
+  if (config.total !== false) {
+    const totalSizeLabel = `${color.bold(
+      color.blue('Total size:'),
+    )}  ${calcFileSize(totalSize)}`;
+    const gzippedSizeLabel = `${color.bold(
+      color.blue('Gzipped size:'),
+    )}  ${calcFileSize(totalGzipSize)}`;
+    logger.log(`\n  ${totalSizeLabel}\n  ${gzippedSizeLabel}\n`);
+  }
 }
 
-export const pluginFileSize = (): DefaultRsbuildPlugin => ({
-  name: 'plugin-file-size',
+export const pluginFileSize = (): RsbuildPlugin => ({
+  name: 'rsbuild:file-size',
 
   setup(api) {
     api.onAfterBuild(async ({ stats }) => {
-      const config = api.getNormalizedConfig();
+      const { printFileSize } = api.getNormalizedConfig().performance;
 
-      if (config.performance.printFileSize && stats) {
+      if (printFileSize === false) {
+        return;
+      }
+
+      const printFileSizeConfig =
+        typeof printFileSize === 'boolean'
+          ? {
+              total: true,
+              detail: true,
+            }
+          : printFileSize;
+
+      if (stats) {
         try {
-          await printFileSizes(stats, api.context.distPath);
+          await printFileSizes(
+            printFileSizeConfig,
+            stats,
+            api.context.distPath,
+          );
         } catch (err) {
-          logger.error('Failed to print file size.');
-          logger.error(err as Error);
+          logger.warn('Failed to print file size.');
+          logger.warn(err as Error);
         }
       }
     });

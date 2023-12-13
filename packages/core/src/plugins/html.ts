@@ -1,5 +1,7 @@
-import path from 'path';
+import path, { isAbsolute } from 'path';
 import {
+  fse,
+  color,
   isURL,
   castArray,
   getMinify,
@@ -7,27 +9,19 @@ import {
   isFileExists,
   isPlainObject,
   isHtmlDisabled,
-  ROUTE_SPEC_FILE,
   removeTailSlash,
   mergeChainedOptions,
 } from '@rsbuild/shared';
-import { fs } from '@rsbuild/shared/fs-extra';
 import type {
-  MetaAttrs,
   HtmlConfig,
-  MetaOptions,
+  RsbuildPluginAPI,
   NormalizedConfig,
   HTMLPluginOptions,
-  DefaultRsbuildPlugin,
-  HtmlTagsPluginOptions,
-  SharedRsbuildPluginAPI,
-  NormalizedOutputConfig,
+  HtmlInjectTagDescriptor,
 } from '@rsbuild/shared';
-import _ from 'lodash';
-import {
-  HtmlBasicPlugin,
-  type HtmlInfo,
-} from '../rspack-plugins/HtmlBasicPlugin';
+import type { HtmlTagsPluginOptions } from '../rspack/HtmlTagsPlugin';
+import type { HtmlInfo } from '../rspack/HtmlBasicPlugin';
+import type { RsbuildPlugin } from '../types';
 
 export function getTitle(entryName: string, config: NormalizedConfig) {
   return mergeChainedOptions({
@@ -47,17 +41,53 @@ export function getInject(entryName: string, config: NormalizedConfig) {
   });
 }
 
-export function getTemplatePath(entryName: string, config: NormalizedConfig) {
+const existTemplatePath: string[] = [];
+
+export async function getTemplate(
+  entryName: string,
+  config: NormalizedConfig,
+  rootPath: string,
+): Promise<{ templatePath: string; templateContent?: string }> {
   const DEFAULT_TEMPLATE = path.resolve(
     __dirname,
     '../../static/template.html',
   );
-  return mergeChainedOptions({
+
+  const templatePath = mergeChainedOptions({
     defaults: DEFAULT_TEMPLATE,
     options: config.html.template,
     utils: { entryName },
     useObjectParam: true,
   });
+
+  if (templatePath === DEFAULT_TEMPLATE) {
+    return {
+      templatePath: templatePath,
+    };
+  }
+
+  const absolutePath = isAbsolute(templatePath)
+    ? templatePath
+    : path.resolve(rootPath, templatePath);
+
+  if (!existTemplatePath.includes(absolutePath)) {
+    // Check if custom template exists
+    if (!(await isFileExists(absolutePath))) {
+      throw new Error(
+        `Failed to resolve HTML template, please check if the file exists: ${color.cyan(
+          absolutePath,
+        )}`,
+      );
+    }
+
+    existTemplatePath.push(absolutePath);
+  }
+
+  const templateContent = await fse.readFile(absolutePath, 'utf-8');
+  return {
+    templatePath: absolutePath,
+    templateContent,
+  };
 }
 
 export function getFavicon(
@@ -74,43 +104,28 @@ export function getFavicon(
   });
 }
 
-export const generateMetaTags = (metaOptions?: MetaOptions): MetaAttrs[] => {
-  if (!metaOptions) {
-    return [];
-  }
-
-  return Object.keys(metaOptions)
-    .map((metaName) => {
-      const metaTagContent = metaOptions[metaName];
-      return typeof metaTagContent === 'string'
-        ? {
-            name: metaName,
-            content: metaTagContent,
-          }
-        : metaTagContent;
-    })
-    .filter(Boolean) as MetaAttrs[];
-};
-
-// This is a minimist subset of modern.js server routes
-type RoutesInfo = {
-  isSPA: boolean;
-  urlPath: string;
-  entryName: string;
-  entryPath: string;
-};
-
-export async function getMetaTags(
+export function getMetaTags(
   entryName: string,
-  config: { html: HtmlConfig; output: NormalizedOutputConfig },
+  config: { html: HtmlConfig },
+  templateContent?: string,
 ) {
-  const merged = mergeChainedOptions({
+  const metaTags = mergeChainedOptions({
     defaults: {},
     options: config.html.meta,
     utils: { entryName },
     useObjectParam: true,
   });
-  return generateMetaTags(merged);
+
+  // `html.meta` will add charset meta by default.
+  // If the custom HTML template already contains charset meta, Rsbuild should not inject it again.
+  if (templateContent && metaTags.charset) {
+    const charsetRegExp = /<meta[^>]+charset=["'][^>]*>/i;
+    if (charsetRegExp.test(templateContent)) {
+      delete metaTags.charset;
+    }
+  }
+
+  return metaTags;
 }
 
 function getTemplateParameters(
@@ -151,26 +166,29 @@ function getChunks(entryName: string, entryValue: string | string[]) {
   return [...dependOn, entryName];
 }
 
-export const applyInjectTags = (api: SharedRsbuildPluginAPI) => {
-  api.modifyBundlerChain(async (chain, { HtmlPlugin, CHAIN_ID }) => {
+export const applyInjectTags = (api: RsbuildPluginAPI) => {
+  api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
 
     const tags = castArray(config.html.tags).filter(Boolean);
-    const tagsByEntries = _.mapValues(config.html.tagsByEntries, (tags) =>
-      castArray(tags).filter(Boolean),
+    const tagsByEntries = config.html.tagsByEntries || {};
+    Object.keys(tagsByEntries).forEach(
+      (key) =>
+        (tagsByEntries[key] = castArray(tagsByEntries[key]).filter(Boolean)),
     );
-    const shouldByEntries = _.some(tagsByEntries, 'length');
+    const shouldByEntries = Object.values(tagsByEntries).some(
+      (entry) => Array.isArray(entry) && entry.length > 0,
+    );
 
     // skip if options is empty.
     if (!tags.length && !shouldByEntries) {
       return;
     }
-    // dynamic import.
-    const { HtmlTagsPlugin } = await import('@rsbuild/shared');
-    // const { HtmlTagsPlugin } = await import('../webpackPlugins/HtmlTagsPlugin');
+
+    const { HtmlTagsPlugin } = await import('../rspack/HtmlTagsPlugin');
+
     // create shared options used for entry without specified options.
     const sharedOptions: HtmlTagsPluginOptions = {
-      HtmlPlugin,
       append: true,
       hash: false,
       publicPath: true,
@@ -186,7 +204,10 @@ export const applyInjectTags = (api: SharedRsbuildPluginAPI) => {
     // apply webpack plugin for each entries.
     for (const [entry, filename] of Object.entries(api.getHTMLPaths())) {
       const opts = { ...sharedOptions, includes: [filename] };
-      entry in tagsByEntries && (opts.tags = tagsByEntries[entry]);
+      entry in tagsByEntries &&
+        (opts.tags = (
+          tagsByEntries as Record<string, HtmlInjectTagDescriptor[]>
+        )[entry]);
       chain
         .plugin(`${CHAIN_ID.PLUGIN.HTML_TAGS}#${entry}`)
         .use(HtmlTagsPlugin, [opts]);
@@ -194,12 +215,10 @@ export const applyInjectTags = (api: SharedRsbuildPluginAPI) => {
   });
 };
 
-export const pluginHtml = (): DefaultRsbuildPlugin => ({
-  name: 'plugin-html',
+export const pluginHtml = (): RsbuildPlugin => ({
+  name: 'rsbuild:html',
 
   setup(api) {
-    const routesInfo: RoutesInfo[] = [];
-
     api.modifyBundlerChain(
       async (chain, { HtmlPlugin, isProd, CHAIN_ID, target }) => {
         const config = api.getNormalizedConfig();
@@ -219,39 +238,46 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
         const htmlInfoMap: Record<string, HtmlInfo> = {};
 
         await Promise.all(
-          entryNames.map(async (entryName, index) => {
+          entryNames.map(async (entryName) => {
             const entryValue = entries[entryName].values() as string | string[];
             const chunks = getChunks(entryName, entryValue);
             const inject = getInject(entryName, config);
             const filename = htmlPaths[entryName];
-            const template = getTemplatePath(entryName, config);
+            const { templatePath, templateContent } = await getTemplate(
+              entryName,
+              config,
+              api.context.rootPath,
+            );
             const templateParameters = getTemplateParameters(
               entryName,
               config,
               assetPrefix,
             );
 
+            const metaTags = getMetaTags(entryName, config, templateContent);
+
             const pluginOptions: HTMLPluginOptions = {
+              meta: metaTags,
               chunks,
               inject,
               minify,
               filename,
-              template,
+              template: templatePath,
+              entryName,
               templateParameters,
               scriptLoading: config.html.scriptLoading,
             };
 
             const htmlInfo: HtmlInfo = {};
-            htmlInfoMap[filename] = htmlInfo;
+            htmlInfoMap[entryName] = htmlInfo;
+
+            if (templateContent) {
+              htmlInfo.templateContent = templateContent;
+            }
 
             const title = getTitle(entryName, config);
             if (title) {
               htmlInfo.title = title;
-            }
-
-            const metaTags = await getMetaTags(entryName, config);
-            if (metaTags.length) {
-              htmlInfo.meta = metaTags;
             }
 
             const favicon = getFavicon(entryName, config);
@@ -273,32 +299,29 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
               },
             });
 
-            routesInfo.push({
-              urlPath: index === 0 ? '/' : `/${entryName}`,
-              entryName,
-              entryPath: filename,
-              isSPA: true,
-            });
-
             chain
               .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
               .use(HtmlPlugin, [finalOptions]);
           }),
         );
 
+        const { HtmlBasicPlugin } = await import('../rspack/HtmlBasicPlugin');
+
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
-          .use(HtmlBasicPlugin, [{ HtmlPlugin, info: htmlInfoMap }]);
+          .use(HtmlBasicPlugin, [{ info: htmlInfoMap }]);
 
         if (config.security) {
           const { nonce } = config.security;
 
           if (nonce) {
-            const { HtmlNoncePlugin } = await import('@rsbuild/shared');
+            const { HtmlNoncePlugin } = await import(
+              '../rspack/HtmlNoncePlugin'
+            );
 
             chain
               .plugin(CHAIN_ID.PLUGIN.HTML_NONCE)
-              .use(HtmlNoncePlugin, [{ nonce, HtmlPlugin }]);
+              .use(HtmlNoncePlugin, [{ nonce }]);
           }
         }
 
@@ -306,7 +329,9 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
           const { appIcon, crossorigin } = config.html;
 
           if (crossorigin) {
-            const { HtmlCrossOriginPlugin } = await import('@rsbuild/shared');
+            const { HtmlCrossOriginPlugin } = await import(
+              '../rspack/HtmlCrossOriginPlugin'
+            );
 
             const formattedCrossorigin =
               crossorigin === true ? 'anonymous' : crossorigin;
@@ -314,43 +339,29 @@ export const pluginHtml = (): DefaultRsbuildPlugin => ({
             chain
               .plugin(CHAIN_ID.PLUGIN.HTML_CROSS_ORIGIN)
               .use(HtmlCrossOriginPlugin, [
-                { crossOrigin: formattedCrossorigin, HtmlPlugin },
+                { crossOrigin: formattedCrossorigin },
               ]);
 
             chain.output.crossOriginLoading(formattedCrossorigin);
           }
 
           if (appIcon) {
-            const { HtmlAppIconPlugin } = await import('@rsbuild/shared');
+            const { HtmlAppIconPlugin } = await import(
+              '../rspack/HtmlAppIconPlugin'
+            );
 
-            const distDir = getDistPath(config.output, 'image');
+            const distDir = getDistPath(config, 'image');
             const iconPath = path.isAbsolute(appIcon)
               ? appIcon
               : path.join(api.context.rootPath, appIcon);
 
             chain
               .plugin(CHAIN_ID.PLUGIN.APP_ICON)
-              .use(HtmlAppIconPlugin, [{ iconPath, distDir, HtmlPlugin }]);
+              .use(HtmlAppIconPlugin, [{ iconPath, distDir }]);
           }
         }
       },
     );
-
-    const emitRouteJson = async () => {
-      const routeFilePath = path.join(api.context.distPath, ROUTE_SPEC_FILE);
-
-      // generate a basic route.json for modern.js server
-      // if the framework has already generate a route.json, do nothing
-      if (!(await isFileExists(routeFilePath)) && routesInfo.length) {
-        await fs.outputFile(
-          routeFilePath,
-          JSON.stringify({ routes: routesInfo }, null, 2),
-        );
-      }
-    };
-
-    api.onBeforeBuild(emitRouteJson);
-    api.onBeforeStartDevServer(emitRouteJson);
 
     applyInjectTags(api);
   },

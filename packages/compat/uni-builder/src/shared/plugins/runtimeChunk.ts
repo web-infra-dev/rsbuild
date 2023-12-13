@@ -1,8 +1,8 @@
-import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { RUNTIME_CHUNK_NAME } from '../constants';
 
-export const pluginRuntimeChunk = (): DefaultRsbuildPlugin => ({
-  name: 'plugin-runtime-chunk',
+export const pluginRuntimeChunk = (): RsbuildPlugin => ({
+  name: 'uni-builder:runtime-chunk',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { target }) => {
@@ -28,8 +28,8 @@ export const pluginRuntimeChunk = (): DefaultRsbuildPlugin => ({
       // matches bundler-runtime.js and bundler-runtime.123456.js
       const regexp = new RegExp(`${RUNTIME_CHUNK_NAME}([.].+)?\\.js$`);
 
-      if (!config.output.enableInlineScripts) {
-        config.output.enableInlineScripts = regexp;
+      if (!config.output.inlineScripts) {
+        config.output.inlineScripts = regexp;
       }
     });
   },

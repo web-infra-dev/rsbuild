@@ -9,9 +9,6 @@ test('should preserve viewBox after svgo minification', async () => {
   const fixture = join(__dirname, 'svgo-minify-view-box');
   const buildOpts = {
     cwd: fixture,
-    entry: {
-      main: join(fixture, 'src/index.jsx'),
-    },
     plugins: [
       pluginReact(),
       pluginSvgr({
@@ -23,10 +20,10 @@ test('should preserve viewBox after svgo minification', async () => {
   const rsbuild = await build(buildOpts);
 
   const files = await rsbuild.unwrapOutputJSON();
-  const mainJs = Object.keys(files).find(
-    (file) => file.includes('/main.') && file.endsWith('.js'),
+  const indexJs = Object.keys(files).find(
+    (file) => file.includes('/index.') && file.endsWith('.js'),
   );
-  const content = readFileSync(mainJs!, 'utf-8');
+  const content = readFileSync(indexJs!, 'utf-8');
 
   expect(
     content.includes('width:120,height:120,viewBox:"0 0 120 120"'),
@@ -37,9 +34,6 @@ test('should add id prefix after svgo minification', async () => {
   const fixture = join(__dirname, 'svgo-minify-id-prefix');
   const buildOpts = {
     cwd: fixture,
-    entry: {
-      main: join(fixture, 'src/index.jsx'),
-    },
     plugins: [
       pluginReact(),
       pluginSvgr({
@@ -51,10 +45,10 @@ test('should add id prefix after svgo minification', async () => {
   const rsbuild = await build(buildOpts);
 
   const files = await rsbuild.unwrapOutputJSON();
-  const mainJs = Object.keys(files).find(
-    (file) => file.includes('/main.') && file.endsWith('.js'),
+  const indexJs = Object.keys(files).find(
+    (file) => file.includes('/index.') && file.endsWith('.js'),
   );
-  const content = readFileSync(mainJs!, 'utf-8');
+  const content = readFileSync(indexJs!, 'utf-8');
 
   expect(
     content.includes('"linearGradient",{id:"idPrefix_svg__a"}'),

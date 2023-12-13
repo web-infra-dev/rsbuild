@@ -8,9 +8,6 @@ import { pluginSwc } from '@rsbuild/plugin-swc';
 test('should run SWC compilation correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/main.ts'),
-    },
     plugins: [pluginSwc()],
     runServer: true,
   });
@@ -24,15 +21,12 @@ test('should run SWC compilation correctly', async ({ page }) => {
     school: 'yyy',
   });
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('should optimize lodash bundle size', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/main.ts'),
-    },
     plugins: [pluginSwc()],
     runServer: true,
     rsbuildConfig: {
@@ -55,15 +49,12 @@ test('should optimize lodash bundle size', async ({ page }) => {
 
   expect(bundleSize < 10).toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('should use define for class', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/main.ts'),
-    },
     plugins: [
       pluginSwc({
         overrides: [
@@ -102,15 +93,12 @@ test('should use define for class', async () => {
     file.includes('_define_property(_assert_this_initialized(_this), "id", 1)'),
   ).toBe(true);
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('core-js-entry', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/core-js-entry.ts'),
-    },
     plugins: [
       pluginSwc({
         env: {
@@ -120,6 +108,11 @@ test('core-js-entry', async () => {
       }),
     ],
     rsbuildConfig: {
+      source: {
+        entry: {
+          index: path.resolve(__dirname, './src/core-js-entry.ts'),
+        },
+      },
       output: {
         disableMinimize: true,
       },
@@ -127,15 +120,12 @@ test('core-js-entry', async () => {
     runServer: true,
   });
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('core-js-usage', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/core-js-usage.ts'),
-    },
     plugins: [
       pluginSwc({
         env: {
@@ -145,6 +135,11 @@ test('core-js-usage', async () => {
       }),
     ],
     rsbuildConfig: {
+      source: {
+        entry: {
+          index: path.resolve(__dirname, './src/core-js-usage.ts'),
+        },
+      },
       output: {
         disableMinimize: true,
       },
@@ -152,5 +147,5 @@ test('core-js-usage', async () => {
     runServer: true,
   });
 
-  rsbuild.close();
+  await rsbuild.close();
 });

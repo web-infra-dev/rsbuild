@@ -1,7 +1,8 @@
 import { join } from 'path';
-import { logger, castArray, type DefaultRsbuildPlugin } from '@rsbuild/shared';
+import { logger, castArray, normalizeUrl, type Routes } from '@rsbuild/shared';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import type { RsbuildPlugin } from '../types';
 
 const execAsync = promisify(exec);
 
@@ -69,7 +70,7 @@ export async function openBrowser(url: string): Promise<boolean> {
   // Fallback to open
   // (It will always open new tab)
   try {
-    const { default: open } = await import('open');
+    const { default: open } = await import('../../compiled/open');
     await open(url);
     return true;
   } catch (err) {
@@ -84,16 +85,19 @@ export const replacePlaceholder = (url: string, port: number) =>
 
 const openedURLs: string[] = [];
 
-export function pluginStartUrl(): DefaultRsbuildPlugin {
+export function pluginStartUrl(): RsbuildPlugin {
   return {
-    name: 'plugin-start-url',
+    name: 'rsbuild:start-url',
     setup(api) {
-      api.onAfterStartDevServer(async (params) => {
-        const { port } = params;
+      const onStartServer = async (params: {
+        port: number;
+        routes: Routes;
+      }) => {
+        const { port, routes } = params;
         const config = api.getNormalizedConfig();
         const { startUrl, beforeStartUrl } = config.dev;
-        const { open, https } = api.context.devServer || {};
-        const shouldOpen = Boolean(startUrl) || open;
+        const { https } = api.context.devServer || {};
+        const shouldOpen = Boolean(startUrl);
 
         if (!shouldOpen) {
           return;
@@ -103,7 +107,14 @@ export function pluginStartUrl(): DefaultRsbuildPlugin {
 
         if (startUrl === true || !startUrl) {
           const protocol = https ? 'https' : 'http';
-          urls.push(`${protocol}://localhost:${port}`);
+          if (routes.length) {
+            // auto open the first one
+            urls.push(
+              normalizeUrl(
+                `${protocol}://localhost:${port}/${routes[0].route}`,
+              ),
+            );
+          }
         } else {
           urls.push(
             ...castArray(startUrl).map((item) =>
@@ -132,7 +143,10 @@ export function pluginStartUrl(): DefaultRsbuildPlugin {
         } else {
           openUrls();
         }
-      });
+      };
+
+      api.onAfterStartDevServer(onStartServer);
+      api.onAfterStartProdServer(onStartServer);
     },
   };
 }

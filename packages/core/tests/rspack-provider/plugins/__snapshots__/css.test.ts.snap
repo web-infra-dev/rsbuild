@@ -24,7 +24,7 @@ exports[`plugin-css > should apply custom css-modules-typescript-loader when ena
             "type": "css/module",
             "use": [
               {
-                "loader": "<ROOT>/packages/core/src/rspack-provider/rspackLoader/css-modules-typescript-pre-loader",
+                "loader": "<ROOT>/packages/core/src/provider/css-modules-typescript-pre-loader",
                 "options": {
                   "modules": {
                     "auto": true,
@@ -60,7 +60,7 @@ exports[`plugin-css > should apply custom css-modules-typescript-loader when ena
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -73,7 +73,7 @@ exports[`plugin-css > should apply custom css-modules-typescript-loader when ena
             "type": "css",
             "use": [
               {
-                "loader": "<ROOT>/packages/core/src/rspack-provider/rspackLoader/css-modules-typescript-pre-loader",
+                "loader": "<ROOT>/packages/core/src/provider/css-modules-typescript-pre-loader",
                 "options": {
                   "modules": {
                     "auto": true,
@@ -109,7 +109,7 @@ exports[`plugin-css > should apply custom css-modules-typescript-loader when ena
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -119,6 +119,11 @@ exports[`plugin-css > should apply custom css-modules-typescript-loader when ena
       },
     ],
   },
+  "plugins": [
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
+    },
+  ],
 }
 `;
 
@@ -167,7 +172,7 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -201,7 +206,7 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -211,6 +216,11 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
       },
     ],
   },
+  "plugins": [
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
+    },
+  ],
 }
 `;
 
@@ -265,7 +275,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -305,7 +315,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -315,10 +325,15 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
       },
     ],
   },
+  "plugins": [
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
+    },
+  ],
 }
 `;
 
-exports[`plugin-css disableCssExtract > should apply ignoreCssLoader when disableCssExtract is true and target is node 1`] = `
+exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyles is true and target is node 1`] = `
 {
   "experiments": {
     "css": false,
@@ -345,7 +360,7 @@ exports[`plugin-css disableCssExtract > should apply ignoreCssLoader when disabl
                 "exportOnlyLocals": true,
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
         ],
@@ -355,7 +370,7 @@ exports[`plugin-css disableCssExtract > should apply ignoreCssLoader when disabl
 }
 `;
 
-exports[`plugin-css disableCssExtract > should use css-loader + style-loader when disableCssExtract is true 1`] = `
+exports[`plugin-css injectStyles > should use css-loader + style-loader when injectStyles is true 1`] = `
 {
   "experiments": {
     "css": false,
@@ -384,7 +399,7 @@ exports[`plugin-css disableCssExtract > should use css-loader + style-loader whe
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
@@ -415,7 +430,7 @@ exports[`plugin-css disableCssExtract > should use css-loader + style-loader whe
                   },
                 ],
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
         ],
@@ -467,7 +482,7 @@ exports[`plugin-less > should add less-loader 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -477,7 +492,7 @@ exports[`plugin-less > should add less-loader 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -517,7 +532,7 @@ exports[`plugin-less > should add less-loader 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -527,7 +542,7 @@ exports[`plugin-less > should add less-loader 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -540,7 +555,7 @@ exports[`plugin-less > should add less-loader 1`] = `
 }
 `;
 
-exports[`plugin-less > should add less-loader and css-loader when disableCssExtract 1`] = `
+exports[`plugin-less > should add less-loader and css-loader when injectStyles 1`] = `
 {
   "module": {
     "rules": [
@@ -566,7 +581,7 @@ exports[`plugin-less > should add less-loader and css-loader when disableCssExtr
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
@@ -597,7 +612,7 @@ exports[`plugin-less > should add less-loader and css-loader when disableCssExtr
                   },
                 ],
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
@@ -607,7 +622,7 @@ exports[`plugin-less > should add less-loader and css-loader when disableCssExtr
               "lessOptions": {
                 "javascriptEnabled": true,
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
         ],
@@ -662,7 +677,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -672,7 +687,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -715,7 +730,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -725,7 +740,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -780,7 +795,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -790,7 +805,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": false,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -830,7 +845,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -840,7 +855,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": false,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -895,7 +910,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -949,7 +964,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -976,7 +991,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
 }
 `;
 
-exports[`plugin-sass > should add sass-loader and css-loader when disableCssExtract 1`] = `
+exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1`] = `
 {
   "module": {
     "rules": [
@@ -1002,7 +1017,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when disableCssExtr
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
@@ -1033,7 +1048,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when disableCssExtr
                   },
                 ],
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
@@ -1102,7 +1117,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -1159,7 +1174,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {

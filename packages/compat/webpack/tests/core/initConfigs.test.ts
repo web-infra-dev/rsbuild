@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '../helper';
-import { RsbuildConfig, RsbuildPluginAPI } from '@/types';
+import { RsbuildConfig, RsbuildPluginAPI } from '@rsbuild/shared';
 
 describe('modifyRsbuildConfig', () => {
   it.skip('should not allow to modify Rsbuild config', async () => {
@@ -10,13 +10,13 @@ describe('modifyRsbuildConfig', () => {
       {
         name: 'foo',
         setup(api: RsbuildPluginAPI) {
-          api.modifyRsbuildConfig((_config, utils) => {
+          api.modifyRsbuildConfig((_config) => {
             config = _config;
-            config.dev = { port: 8080 };
+            config.server = { port: 8080 };
           });
 
           api.modifyWebpackChain(() => {
-            config.dev!.port = 8899;
+            config.server!.port = 8899;
           });
         },
       },
@@ -26,16 +26,16 @@ describe('modifyRsbuildConfig', () => {
       origin: { rsbuildConfig },
     } = await rsbuild.inspectConfig();
 
-    expect(rsbuildConfig.dev.port).toBe(8080);
+    expect(rsbuildConfig.server?.port).toBe(8080);
   });
 
   it('should modify config by utils', async () => {
     const rsbuild = await createStubRsbuild({
-      entry: {
-        main: 'src/index.ts',
-      },
       rsbuildConfig: {
         source: {
+          entry: {
+            main: 'src/index.ts',
+          },
           preEntry: 'a.js',
         },
       },

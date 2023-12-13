@@ -16,18 +16,24 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "hot": true,
   },
   "devtool": "cheap-module-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "disableTransformByDefault": true,
-      "newResolver": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
   },
   "mode": "development",
   "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
     "rules": [
       {
         "resolve": {
@@ -189,7 +195,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -229,7 +235,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -275,7 +281,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -285,7 +291,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -325,7 +331,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -335,7 +341,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -381,7 +387,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -435,7 +441,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -458,9 +464,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
       },
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -470,8 +473,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -606,6 +610,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "chunkFilename": "static/js/async/[name].js",
     "cssChunkFilename": "static/css/async/[name].css",
     "cssFilename": "static/css/[name].css",
+    "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
     "path": "<ROOT>/dist",
@@ -613,21 +618,50 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
+  "performance": {
+    "hints": false,
+  },
   "plugins": [
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "entryName": "index",
+        "filename": "index.html",
+        "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
+        "minify": false,
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+      },
+      "version": 5,
+    },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
-        "info": {},
+        "info": {
+          "index": {
+            "title": "Rsbuild App",
+          },
+        },
       },
     },
-    Plugin {
+    DefinePlugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""development"",
       },
       "name": "DefinePlugin",
+    },
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
     },
   ],
   "resolve": {
@@ -635,6 +669,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
@@ -663,19 +699,25 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "devServer": {
     "hot": false,
   },
-  "devtool": "hidden-source-map",
+  "devtool": false,
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "disableTransformByDefault": true,
-      "newResolver": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
   },
   "mode": "production",
   "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
     "rules": [
       {
         "resolve": {
@@ -1106,9 +1148,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
       },
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -1118,8 +1157,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -1153,7 +1193,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
               },
               "minify": false,
-              "sourceMaps": true,
+              "sourceMaps": false,
             },
           },
         ],
@@ -1197,7 +1237,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
               },
               "minify": false,
-              "sourceMaps": true,
+              "sourceMaps": false,
             },
           },
         ],
@@ -1227,23 +1267,20 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "chunkIds": "deterministic",
     "minimize": true,
     "minimizer": [
-      Plugin {
+      SwcJsMinimizerRspackPlugin {
         "_options": {
-          "asciiOnly": true,
-          "comments": "false",
-          "dropConsole": false,
+          "compress": "{"passes":1,"pure_funcs":[],"drop_console":false}",
           "exclude": undefined,
           "extractComments": "true",
+          "format": "{"comments":false,"asciiOnly":true}",
           "include": undefined,
-          "keepClassNames": false,
-          "keepFnNames": false,
-          "passes": 1,
-          "pureFuncs": [],
+          "mangle": "{"keep_classnames":false,"keep_fnames":false}",
+          "module": undefined,
           "test": undefined,
         },
         "name": "SwcJsMinimizerRspackPlugin",
       },
-      Plugin {
+      SwcCssMinimizerRspackPlugin {
         "_options": false,
         "name": "SwcCssMinimizerRspackPlugin",
       },
@@ -1284,16 +1321,61 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
+  "performance": {
+    "hints": false,
+  },
   "plugins": [
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "entryName": "index",
+        "filename": "index.html",
+        "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
+        "minify": {
+          "collapseWhitespace": true,
+          "keepClosingSlash": true,
+          "minifyCSS": true,
+          "minifyJS": {
+            "format": {
+              "ascii_only": true,
+            },
+            "mangle": {
+              "safari10": true,
+            },
+          },
+          "minifyURLs": true,
+          "removeComments": false,
+          "removeEmptyAttributes": true,
+          "removeRedundantAttributes": true,
+          "removeScriptTypeAttributes": true,
+          "removeStyleLinkTypeAttributes": true,
+          "useShortDoctype": true,
+        },
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+      },
+      "version": 5,
+    },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
-        "info": {},
+        "info": {
+          "index": {
+            "title": "Rsbuild App",
+          },
+        },
       },
     },
-    Plugin {
+    DefinePlugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""production"",
@@ -1301,10 +1383,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {
-      "htmlPlugin": [Function],
       "name": "RemoveCssSourcemapPlugin",
     },
-    Plugin {
+    ProgressPlugin {
       "_options": {
         "prefix": "Client",
         "profile": false,
@@ -1317,6 +1398,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
@@ -1346,18 +1429,24 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hot": false,
   },
   "devtool": "cheap-module-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "disableTransformByDefault": true,
-      "newResolver": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
   },
   "mode": "development",
   "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
     "rules": [
       {
         "resolve": {
@@ -1529,7 +1618,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -1548,7 +1637,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -1618,8 +1707,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -1727,8 +1817,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
+  "performance": {
+    "hints": false,
+  },
   "plugins": [
-    Plugin {
+    DefinePlugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""test"",
@@ -1742,6 +1835,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       "node",
     ],
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",
@@ -1768,18 +1863,24 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "hot": true,
   },
   "devtool": "cheap-module-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "disableTransformByDefault": true,
-      "newResolver": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
   },
   "mode": "development",
   "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
     "rules": [
       {
         "test": /\\\\\\.test\\$/,
@@ -1949,7 +2050,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -1989,7 +2090,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2035,7 +2136,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -2045,7 +2146,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2085,7 +2186,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -2095,7 +2196,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -2141,7 +2242,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -2195,7 +2296,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -2218,9 +2319,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
       },
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -2230,8 +2328,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -2366,6 +2465,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "chunkFilename": "static/js/async/[name].js",
     "cssChunkFilename": "static/css/async/[name].css",
     "cssFilename": "static/css/[name].css",
+    "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
     "path": "<ROOT>/dist",
@@ -2373,24 +2473,53 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
+  "performance": {
+    "hints": false,
+  },
   "plugins": [
     TestPlugin {
       "name": "TestPlugin",
     },
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "entryName": "index",
+        "filename": "index.html",
+        "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
+        "minify": false,
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+      },
+      "version": 5,
+    },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
-        "info": {},
+        "info": {
+          "index": {
+            "title": "Rsbuild App",
+          },
+        },
       },
     },
-    Plugin {
+    DefinePlugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""development"",
       },
       "name": "DefinePlugin",
+    },
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
     },
   ],
   "resolve": {
@@ -2398,6 +2527,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",

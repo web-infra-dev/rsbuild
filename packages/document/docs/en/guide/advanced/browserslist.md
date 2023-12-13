@@ -54,7 +54,7 @@ When you are building multiple targets at the same time, for example if the targ
 
 ### Use output.overrideBrowserslist config
 
-In addition to the above standard usage, Rsbuild also provides [output.overrideBrowserslist](/config/options/output.html#outputoverridebrowserslist) config, which can also set the value of Browserslist.
+In addition to the above standard usage, Rsbuild also provides [output.overrideBrowserslist](/config/output/override-browserslist) config, which can also set the value of Browserslist.
 
 `overrideBrowserslist` can be set to an array, which is written in the same way as the `browserslistrc` configuration, but has a higher priority than `browserslistrc`.
 
@@ -162,7 +162,7 @@ not op_mini all
 
 ## Default Browserslist
 
-Rsbuild will set different default values of Browserslist according to [build target](/api/start/build-target), but we recommend that you explicitly set Browserslist in your project, which will make the compatible scope of the project more clear.
+Rsbuild will set different default values of Browserslist according to [output.targets](/config/output/targets), but we recommend that you explicitly set Browserslist in your project, which will make the compatible scope of the project more clear.
 
 ### Web Target
 

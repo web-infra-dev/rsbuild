@@ -1,26 +1,44 @@
+import path from 'path';
+import type { Compiler } from '@rspack/core';
 import type {
-  NormalizedConfig,
+  CacheGroup,
   RsbuildTarget,
+  NormalizedConfig,
   SharedCompiledPkgNames,
 } from './types';
-import path from 'path';
-import fs from 'fs-extra';
-import semver from 'semver';
-import { findUp } from './fs';
+import fse from '../compiled/fs-extra';
+import deepmerge from '../compiled/deepmerge';
+import color from '../compiled/picocolors';
+import { DEFAULT_ASSET_PREFIX } from './constants';
+
+export { color, deepmerge };
+
+export type Colors = Omit<
+  keyof typeof color,
+  'createColor' | 'isColorSupported'
+>;
 
 export const isDev = (): boolean => process.env.NODE_ENV === 'development';
+
 export const isProd = (): boolean => process.env.NODE_ENV === 'production';
+
 export const isTest = () => process.env.NODE_ENV === 'test';
+
 export const isString = (str: unknown): str is string =>
   typeof str === 'string';
+
 export const isUndefined = (obj: unknown): obj is undefined =>
   typeof obj === 'undefined';
+
 export const isFunction = (func: unknown): func is (...args: any[]) => any =>
   typeof func === 'function';
+
 export const isObject = (obj: unknown): obj is Record<string, any> =>
   obj !== null && typeof obj === 'object';
+
 export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
   isObject(obj) && Object.prototype.toString.call(obj) === '[object Object]';
+
 export const isRegExp = (obj: any): obj is RegExp =>
   Object.prototype.toString.call(obj) === '[object RegExp]';
 
@@ -49,30 +67,12 @@ export const awaitableGetter = <T>(
   return { then, promises };
 };
 
-export const isUseJsSourceMap = (config: NormalizedConfig) => {
-  const { disableSourceMap } = config.output || {};
-
-  if (typeof disableSourceMap === 'boolean') {
-    return !disableSourceMap;
+export const getJsSourceMap = (config: NormalizedConfig) => {
+  const { sourceMap } = config.output;
+  if (sourceMap.js === undefined) {
+    return isProd() ? false : 'cheap-module-source-map';
   }
-
-  return !disableSourceMap.js;
-};
-
-export const isUseCssSourceMap = (config: NormalizedConfig) => {
-  const { disableSourceMap } = config.output || {};
-
-  if (typeof disableSourceMap === 'boolean') {
-    return !disableSourceMap;
-  }
-
-  // If the disableSourceMap.css option is not specified, we will enable it in development mode.
-  // We do not need CSS Source Map in production mode.
-  if (disableSourceMap.css === undefined) {
-    return process.env.NODE_ENV !== 'production';
-  }
-
-  return !disableSourceMap.css;
+  return sourceMap.js;
 };
 
 export const getSharedPkgCompiledPath = (packageName: SharedCompiledPkgNames) =>
@@ -88,7 +88,7 @@ export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
   );
 }
 
-export function isServerTarget(target: RsbuildTarget | RsbuildTarget[]) {
+export function isServerTarget(target: RsbuildTarget[]) {
   return (Array.isArray(target) ? target : [target]).some((item) =>
     ['node', 'service-worker'].includes(item),
   );
@@ -103,7 +103,7 @@ export function resolvePackage(loader: string, dirname: string) {
 
 export const getCoreJsVersion = (corejsPkgPath: string) => {
   try {
-    const { version } = fs.readJSONSync(corejsPkgPath);
+    const { version } = fse.readJSONSync(corejsPkgPath);
     const [major, minor] = version.split('.');
     return `${major}.${minor}`;
   } catch (err) {
@@ -142,23 +142,147 @@ export const isPackageInstalled = (
   }
 };
 
-// TODO: move to react plugin
-export const isBeyondReact17 = async (cwd: string) => {
-  const pkgPath = await findUp({ cwd, filename: 'package.json' });
+export const camelCase = (input: string): string =>
+  input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
 
-  if (!pkgPath) {
-    return false;
-  }
+export const cloneDeep = <T>(value: T): T => deepmerge({}, value);
 
-  const pkgInfo = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
-  const deps = {
-    ...pkgInfo.devDependencies,
-    ...pkgInfo.dependencies,
-  };
+const DEP_MATCH_TEMPLATE = /[\\/]node_modules[\\/](<SOURCES>)[\\/]/.source;
 
-  if (typeof deps.react !== 'string') {
-    return false;
-  }
-
-  return semver.satisfies(semver.minVersion(deps.react)!, '>=17.0.0');
+/** Expect to match path just like "./node_modules/react-router/" */
+export const createDependenciesRegExp = (
+  ...dependencies: (string | RegExp)[]
+) => {
+  const sources = dependencies.map((d) =>
+    typeof d === 'string' ? d : d.source,
+  );
+  const expr = DEP_MATCH_TEMPLATE.replace('<SOURCES>', sources.join('|'));
+  return new RegExp(expr);
 };
+
+export function createCacheGroups(
+  group: Record<string, (string | RegExp)[]>,
+): CacheGroup {
+  const experienceCacheGroup: CacheGroup = {};
+
+  Object.entries(group).forEach(([name, pkgs]) => {
+    const key = `lib-${name}`;
+
+    experienceCacheGroup[key] = {
+      test: createDependenciesRegExp(...pkgs),
+      priority: 0,
+      name: key,
+      reuseExistingChunk: true,
+    };
+  });
+
+  return experienceCacheGroup;
+}
+
+export function debounce<T extends (...args: any[]) => void>(
+  func: T,
+  wait: number,
+): (...args: Parameters<T>) => void {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  return (...args: Parameters<T>) => {
+    if (timeoutId !== null) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, wait);
+  };
+}
+
+export const upperFirst = (str: string) =>
+  str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+
+/** The intersection of webpack and Rspack */
+export const COMPILATION_PROCESS_STAGE = {
+  PROCESS_ASSETS_STAGE_ADDITIONAL: -2000,
+  PROCESS_ASSETS_STAGE_PRE_PROCESS: -1000,
+  PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE: 700,
+  PROCESS_ASSETS_STAGE_SUMMARIZE: 1000,
+  PROCESS_ASSETS_STAGE_REPORT: 5000,
+};
+
+export const generateScriptTag = () => ({
+  tagName: 'script',
+  attributes: {
+    type: 'text/javascript',
+  },
+  voidTag: false,
+  meta: {},
+});
+
+export const getPublicPathFromCompiler = (compiler: Compiler) => {
+  const { publicPath } = compiler.options.output;
+  if (typeof publicPath === 'string' && publicPath !== 'auto') {
+    return addTrailingSlash(publicPath);
+  }
+  // publicPath function is not supported yet
+  return DEFAULT_ASSET_PREFIX;
+};
+
+export function partition<T>(
+  array: T[],
+  predicate: (value: T) => boolean,
+): [T[], T[]] {
+  const truthy: T[] = [];
+  const falsy: T[] = [];
+
+  for (const value of array) {
+    if (predicate(value)) {
+      truthy.push(value);
+    } else {
+      falsy.push(value);
+    }
+  }
+
+  return [truthy, falsy];
+}
+
+export function pick<T, U extends keyof T>(obj: T, keys: ReadonlyArray<U>) {
+  return keys.reduce(
+    (ret, key) => {
+      if (obj[key] !== undefined) {
+        ret[key] = obj[key];
+      }
+      return ret;
+    },
+    {} as Pick<T, U>,
+  );
+}
+
+export const prettyTime = (seconds: number) => {
+  const format = (time: string) => color.bold(Number(time));
+
+  if (seconds < 1) {
+    const digits = seconds >= 0.01 ? 2 : 3;
+    return `${format(seconds.toFixed(digits))} s`;
+  }
+
+  if (seconds < 60) {
+    return `${format(seconds.toFixed(1))} s`;
+  }
+
+  const minutes = seconds / 60;
+  return `${format(minutes.toFixed(2))} m`;
+};
+
+const colorList: Colors[] = ['green', 'cyan', 'yellow', 'blue', 'magenta'];
+
+export const getProgressColor = (index: number) =>
+  colorList[index % colorList.length];
+
+export function onExitProcess(listener: NodeJS.ExitListener) {
+  process.on('exit', listener);
+
+  // listen to 'SIGINT' and trigger a exit
+  // 'SIGINT' from the terminal is supported on all platforms, and can usually be generated with Ctrl + C
+  process.on('SIGINT', () => {
+    process.exit(0);
+  });
+}

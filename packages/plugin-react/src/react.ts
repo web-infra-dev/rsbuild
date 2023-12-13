@@ -1,5 +1,5 @@
 import { isUsingHMR, isClientCompiler, isProd } from '@rsbuild/shared';
-import type { Rspack, RsbuildPluginAPI } from '@rsbuild/core/rspack-provider';
+import type { Rspack, RsbuildPluginAPI } from '@rsbuild/core';
 
 function getReactRefreshEntry(compiler: Rspack.Compiler) {
   const hot = compiler.options.devServer?.hot ?? true;
@@ -81,7 +81,6 @@ export const applyBasicReactSupport = (api: RsbuildPluginAPI) => {
     }
 
     const { default: ReactRefreshRspackPlugin } = await import(
-      // TODO https://github.com/web-infra-dev/rspack/issues/4471
       '@rspack/plugin-react-refresh'
     );
 

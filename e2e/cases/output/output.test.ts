@@ -1,6 +1,6 @@
 import { join, dirname } from 'path';
 import { expect, test } from '@playwright/test';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import { build } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
 
@@ -12,8 +12,8 @@ test.describe('output configure multi', () => {
   let rsbuild: Awaited<ReturnType<typeof build>>;
 
   test.beforeAll(async () => {
-    await fs.mkdir(dirname(distFilePath), { recursive: true });
-    await fs.writeFile(
+    await fse.mkdir(dirname(distFilePath), { recursive: true });
+    await fse.writeFile(
       distFilePath,
       `{
       "test": 1
@@ -22,9 +22,6 @@ test.describe('output configure multi', () => {
 
     rsbuild = await build({
       cwd: join(fixtures, 'rem'),
-      entry: {
-        main: join(fixtures, 'rem/src/index.ts'),
-      },
       plugins: [pluginReact()],
       rsbuildConfig: {
         output: {
@@ -39,43 +36,32 @@ test.describe('output configure multi', () => {
   });
 
   test.afterAll(async () => {
-    rsbuild.close();
+    await rsbuild.close();
     await rsbuild.clean();
   });
 
   test('cleanDistPath default (enable)', async () => {
-    expect(fs.existsSync(distFilePath)).toBeFalsy();
+    expect(fse.existsSync(distFilePath)).toBeFalsy();
   });
 
   test('copy', async () => {
-    expect(fs.existsSync(join(fixtures, 'rem/dist-1/icon.png'))).toBeTruthy();
+    expect(fse.existsSync(join(fixtures, 'rem/dist-1/icon.png'))).toBeTruthy();
   });
 
   test('distPath', async () => {
-    expect(fs.existsSync(join(fixtures, 'rem/dist-1/main.html'))).toBeTruthy();
+    expect(
+      fse.existsSync(join(fixtures, 'rem/dist-1/index.html')),
+    ).toBeTruthy();
 
-    expect(fs.existsSync(join(fixtures, 'rem/dist-1/aa/js'))).toBeTruthy();
-  });
-
-  test('sourcemap', async () => {
-    const files = await rsbuild.unwrapOutputJSON(false);
-
-    const jsMapFiles = Object.keys(files).filter((files) =>
-      files.endsWith('.js.map'),
-    );
-    const cssMapFiles = Object.keys(files).filter((files) =>
-      files.endsWith('.css.map'),
-    );
-    expect(jsMapFiles.length).toBeGreaterThanOrEqual(1);
-    expect(cssMapFiles.length).toBe(0);
+    expect(fse.existsSync(join(fixtures, 'rem/dist-1/aa/js'))).toBeTruthy();
   });
 });
 
 test('cleanDistPath disable', async () => {
   const distFilePath = join(fixtures, 'rem/dist-2/test.json');
 
-  await fs.mkdir(dirname(distFilePath), { recursive: true });
-  await fs.writeFile(
+  await fse.mkdir(dirname(distFilePath), { recursive: true });
+  await fse.writeFile(
     distFilePath,
     `{
     "test": 1
@@ -84,9 +70,6 @@ test('cleanDistPath disable', async () => {
 
   const rsbuild = await build({
     cwd: join(fixtures, 'rem'),
-    entry: {
-      main: join(fixtures, 'rem/src/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
@@ -98,37 +81,8 @@ test('cleanDistPath disable', async () => {
     },
   });
 
-  expect(fs.existsSync(distFilePath)).toBeTruthy();
+  expect(fse.existsSync(distFilePath)).toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
   rsbuild.clean();
-});
-
-test('disableSourcemap', async () => {
-  const rsbuild = await build({
-    cwd: join(fixtures, 'rem'),
-    entry: {
-      main: join(fixtures, 'rem/src/index.ts'),
-    },
-    plugins: [pluginReact()],
-    rsbuildConfig: {
-      output: {
-        distPath: {
-          root: 'dist-3',
-        },
-        disableSourceMap: true,
-      },
-    },
-  });
-
-  const files = await rsbuild.unwrapOutputJSON(false);
-
-  const jsMapFiles = Object.keys(files).filter((files) =>
-    files.endsWith('.js.map'),
-  );
-  const cssMapFiles = Object.keys(files).filter((files) =>
-    files.endsWith('.css.map'),
-  );
-  expect(jsMapFiles.length).toBe(0);
-  expect(cssMapFiles.length).toBe(0);
 });

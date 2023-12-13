@@ -1,172 +1,35 @@
 # @rsbuild/core
 
-## 0.0.19
+## 0.2.3
 
 ### Patch Changes
 
-- 5e13847: fix(core): failed to read NODE_ENV in config file
-- Updated dependencies [f47302e]
-  - @rsbuild/shared@0.0.19
+- 44d8087: fix: clear the assigned env vars for reloading
+  - @rsbuild/shared@0.2.3
 
-## 0.0.18
-
-### Patch Changes
-
-- 6f1c4a1: feat: add builtin assets and CSS modules types
-- 164f135: refactor: extract assetsRetry as a standalone plugin
-- efcc697: feat: support dynamicImportMode.eager and preserveAllComments'
-- 4887d6d: chore: use findUp utils to replace pkg-up dep
-- faf797a: fix(deps): add missing dependencies to core and shared
-- 58306e2: perf: make open browser faster
-- 594c16a: feat: only enable progress bar in production
-- 7fe5f26: refactor: move source.globalVars option to uni-builder
-- c3201ae: feat: add Rsbuild server, decouple with Modern.js server
-- 78d4d94: feat: replace pretty-time and improve time format
-- fad683d: feat(cli): add new --open option for dev command
-- Updated dependencies [164f135]
-- Updated dependencies [96d9d43]
-- Updated dependencies [4887d6d]
-- Updated dependencies [c743a94]
-- Updated dependencies [faf797a]
-- Updated dependencies [594c16a]
-- Updated dependencies [7fe5f26]
-- Updated dependencies [78d4d94]
-- Updated dependencies [fad683d]
-  - @rsbuild/shared@0.0.18
-
-## 0.0.17
+## 0.2.2
 
 ### Patch Changes
 
-- b25b47c: feat: support html.template as a function
-- 3b87b50: refactor: move html.titleByEntries option to uni-builder
-- fd05681: refactor: remove source.compileJsDataURI option
-- 6220e04: refactor: merge HTML plugins into a unified plugin
-- 41a7938: feat(deps): bump Rspack v0.3.11
-- f1f15cf: feat: support html.templateParameters as a function
-- 60fc2de: feat: support html.title as a function
-- 58e7453: feat: support html.favicon as a function
-- 7ecbc74: feat: support html.inject as a function
-- Updated dependencies [b25b47c]
-- Updated dependencies [3b87b50]
-- Updated dependencies [fd05681]
-- Updated dependencies [6220e04]
-- Updated dependencies [41a7938]
-- Updated dependencies [f1f15cf]
-- Updated dependencies [60fc2de]
-- Updated dependencies [58e7453]
-- Updated dependencies [659a2f5]
-- Updated dependencies [7ecbc74]
-- Updated dependencies [47078fd]
-  - @rsbuild/shared@0.0.17
+- @rsbuild/shared@0.2.2
 
-## 0.0.16
+## 0.2.1
 
 ### Patch Changes
 
-- a2a18ec: feat: support html.meta to be a function
-- 8f03dd0: refactor: move html.metaByEntries option to uni-builder
-- 9a52542: feat: add default meta configs and simplify the templates
-- Updated dependencies [a2a18ec]
-- Updated dependencies [8f03dd0]
-- Updated dependencies [9a52542]
-  - @rsbuild/shared@0.0.16
+- a92997d: fix(cli): missing logger require
+  - @rsbuild/shared@0.2.1
 
-## 0.0.15
+## 0.2.0
 
-### Patch Changes
+### Minor Changes
 
-- 25ab68e: refactor: use plugin to generate titles instead of template params
-- Updated dependencies [25ab68e]
-  - @rsbuild/shared@0.0.15
-
-## 0.0.14
+- 04deba66: breaking change: remove deprecated source.entries config
 
 ### Patch Changes
 
-- 705c6a7: refactor: move legacy manifest config to uni-builder
-- a4badc6: perf: using a lighter modern.js server package
-- 8f52317: perf: replace chalk with picocolors
-- 094cd55: refactor: @rsbuild/core no longer depend on webpack
-- c331840: refactor: @rsbuild/shared no longer depend on webpack
-- Updated dependencies [705c6a7]
-- Updated dependencies [a4badc6]
-- Updated dependencies [8f52317]
-- Updated dependencies [094cd55]
-- Updated dependencies [c331840]
-  - @rsbuild/shared@0.0.14
-
-## 0.0.13
-
-### Patch Changes
-
-- 9c19198: refactor: simplify RsbuildConfig definitions
-- fedbe79: refactor: use plugin to generate meta tags instead of template params
-- 219dd60: chore(deps): bump Rspack v0.3.9
-- dbceb3e: fix(startUrl): failed to stringify circular error object
-- b46bc69: refactor: replace @rspack/html-plugin with html-webpack-plugin
-- 7ddb447: fix(core): failed to release static applescript
-- 3bf93a5: refactor: extract css-minimizer plugin as a standalone package
-- 84a4d61: chore(utils): unify the castArray implementation
-- 510de48: perf: switch the default polyfill mode to usage
-- 73ec291: perf: remove config validation
-- Updated dependencies [9c19198]
-- Updated dependencies [fedbe79]
-- Updated dependencies [219dd60]
-- Updated dependencies [b46bc69]
-- Updated dependencies [3bf93a5]
-- Updated dependencies [84a4d61]
-- Updated dependencies [510de48]
-- Updated dependencies [73ec291]
-  - @rsbuild/shared@0.0.13
-
-## 0.0.12
-
-### Patch Changes
-
-- @rsbuild/shared@0.0.12
-
-## 0.0.11
-
-### Patch Changes
-
-- 70c39ed: perf: reduce builtin PostCSS plugins
-- 18f3997: fix(schema): add missing tools schemas
-- 1bb644b: perf(core): remove strip-ansi dependency
-- d5ed6d6: refactor: extract checkSyntax plugin as a standalone package
-- 884fbb7: refactor: replace @rspack/dev-client with @rspack/plugin-react-refresh
-- b07fdba: refactor: move babel helpers to plugin-babel
-- Updated dependencies [70c39ed]
-- Updated dependencies [18f3997]
-- Updated dependencies [d5ed6d6]
-- Updated dependencies [b07fdba]
-  - @rsbuild/shared@0.0.11
-
-## 0.0.10
-
-### Patch Changes
-
-- @rsbuild/shared@0.0.10
-
-## 0.0.9
-
-### Patch Changes
-
-- @rsbuild/shared@0.0.9
-
-## 0.0.8
-
-### Patch Changes
-
-- d6755bf: feat(rsbuild): init rsbuild pkg
-- af1da01: chore: remove modern-web target
-- b1a1327: feat: Use Rspack `builtin:swc-loader` instead of Rspack's built-in translation behavior
-- 290427a: feat(cli): support rsbuild inspect command
-- 3936afc: feat(core): add basic implementation of CLI
-- 349df6f: feat: adjust the default browserslist config
-- Updated dependencies [90cf710]
-- Updated dependencies [af1da01]
-- Updated dependencies [ce80b80]
-- Updated dependencies [349df6f]
-- Updated dependencies [d57dcec]
-  - @rsbuild/shared@0.0.8
+- c11aa843: chore: bump rspack to 0.4.2
+- 42622b45: fix(server-plugin): not relay on modifyRsbuildConfig
+- 4aa56abd: chore(server): extract createHttpServer method from rsbuildServer
+- Updated dependencies [04deba66]
+  - @rsbuild/shared@0.2.0

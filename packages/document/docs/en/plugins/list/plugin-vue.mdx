@@ -28,8 +28,6 @@ export default {
 };
 ```
 
-If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
-
 After registering the plugin, you can directly import `*.vue` SFC files in your code.
 
 ## Options
@@ -58,6 +56,44 @@ const defaultOptions = {
 pluginVue({
   vueLoaderOptions: {
     hotReload: false,
+  },
+});
+```
+
+### splitChunks
+
+When [chunkSplit.strategy](/config/performance/chunk-split) set to `split-by-experience`, Rsbuild will automatically split `vue` and `router` related packages into separate chunks by default:
+
+- `lib-vue.js`: includes vue, vue-loader, and vue's sub-dependencies (@vue/shared, @vue/reactivity, @vue/runtime-dom, @vue/runtime-core).
+- `lib-router.js`: includes vue-router.
+
+This option is used to control this behavior and determine whether the `vue` and `router` related packages need to be split into separate chunks.
+
+- **Type:**
+
+```ts
+type SplitVueChunkOptions = {
+  vue?: boolean;
+  router?: boolean;
+};
+```
+
+- **Default:**
+
+```ts
+const defaultOptions = {
+  vue: true,
+  router: true,
+};
+```
+
+- **Example:**
+
+```ts
+pluginVue({
+  splitChunks: {
+    vue: false,
+    router: false,
   },
 });
 ```

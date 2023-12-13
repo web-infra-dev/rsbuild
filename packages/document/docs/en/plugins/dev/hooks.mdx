@@ -7,10 +7,8 @@ This section describes the lifetime hooks provided by Rsbuild plugin.
 **Common Hooks**
 
 - `modifyRsbuildConfig`: Modify raw config of Rsbuild.
-- `modifyBundlerChain`: Modify config of Rspack or webpack via the bundler chain api.
-- `modifyWebpackChain`: Modify webpack-chain.
-- `modifyWebpackConfig`: Modify raw config of webpack.
 - `modifyRspackConfig`: Modify raw config of Rspack.
+- `modifyBundlerChain`: Modify config of Rspack or webpack via the bundler chain api.
 - `onBeforeCreateCompiler`: Called before creating compiler instance.
 - `onAfterCreateCompiler`: Called after the compiler object is created, but before the build is executed.
 
@@ -25,6 +23,11 @@ This section describes the lifetime hooks provided by Rsbuild plugin.
 - `onAfterStartDevServer`: Called after starting the development server.
 - `onDevCompileDone`: Called after each development compile.
 
+**Prod Server Hooks**: Called only when the preview method is executed to run the production preview server.
+
+- `onBeforeStartProdServer`: Called before starting the production server.
+- `onAfterStartProdServer`: Called after starting the production server.
+
 **Other Hooks**
 
 - `onExit`: Called when the process is going to exit.
@@ -35,22 +38,22 @@ This section describes the lifetime hooks provided by Rsbuild plugin.
 
 Modify the config passed to the Rsbuild, you can directly modify the config object, or return a new object to replace the previous object.
 
-- **Type**
+- **Type:**
 
 ```ts
-type ModifyWebpackChainUtils = {
+type ModifyRsbuildConfigUtils = {
   mergeRsbuildConfig: typeof mergeRsbuildConfig;
 };
 
 function ModifyRsbuildConfig(
   callback: (
     config: RsbuildConfig,
-    utils: ModifyWebpackChainUtils,
+    utils: ModifyRsbuildConfigUtils,
   ) => PromiseOrNot<RsbuildConfig | void>,
 ): void;
 ```
 
-- **Example**
+- **Example:**
 
 ```ts
 export default () => ({
@@ -66,15 +69,53 @@ export default () => ({
 });
 ```
 
+### modifyRspackConfig
+
+To modify the final Rspack config object, you can directly modify the config object, or return a new object to replace the previous object.
+
+- **Type:**
+
+```ts
+type ModifyRspackConfigUtils = {
+  env: NodeEnv;
+  isProd: boolean;
+  target: RsbuildTarget;
+  isServer: boolean;
+  isWebWorker: boolean;
+  rspack: typeof import('@rspack/core');
+};
+
+function ModifyRspackConfig(
+  callback: (
+    config: RspackConfig,
+    utils: ModifyRspackConfigUtils,
+  ) => Promise<RspackConfig | void> | RspackConfig | void,
+): void;
+```
+
+- **Example:**
+
+```ts
+export default () => ({
+  setup: (api) => {
+    api.modifyRspackConfig((config, utils) => {
+      if (utils.env === 'development') {
+        config.devtool = 'eval';
+      }
+    });
+  },
+});
+```
+
 ### modifyBundlerChain
 
-Bundler chain is a subset of webpack chain, which contains part of the webpack chain API that you can use to modify both webpack and Rspack configuration.
+Bundler chain is a subset of webpack chain, which contains part of the webpack chain API that you can use to modify both Rspack and webpack configuration.
 
 `modifyBundlerChain` is used to call the bundler chain to modify the Rspack configuration.
 
-This hook only supports modifying the configuration of the non-differentiated parts of webpack and Rspack. For example, modifying the devtool configuration option (webpack and Rspack have the same devtool property value type), or adding an [Rspack-compatible](https://www.rspack.dev/guide/plugin-compat) webpack plugin.
+This hook only supports modifying the configuration of the non-differentiated parts of Rspack and webpack. For example, modifying the devtool configuration option (Rspack and webpack have the same devtool property value type), or adding an [Rspack-compatible](https://rspack.dev/guide/plugin-compat) webpack plugin.
 
-- **Type**
+- **Type:**
 
 ```ts
 type ModifyBundlerChainUtils = {
@@ -101,7 +142,7 @@ function ModifyBundlerChain(
 ): void;
 ```
 
-- **Example**
+- **Example:**
 
 ```ts
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
@@ -119,52 +160,13 @@ export default () => ({
 });
 ```
 
-### modifyRspackConfig
-
-To modify the final Rspack config object, you can directly modify the config object, or return a new object to replace the previous object.
-
-- **Type**
-
-```ts
-type ModifyRspackConfigUtils = {
-  env: NodeEnv;
-  isProd: boolean;
-  target: RsbuildTarget;
-  isServer: boolean;
-  isWebWorker: boolean;
-  getCompiledPath: (name: string) => string;
-  rspack: typeof import('@rspack/core');
-};
-
-function ModifyRspackConfig(
-  callback: (
-    config: RspackConfig,
-    utils: ModifyRspackConfigUtils,
-  ) => Promise<RspackConfig | void> | RspackConfig | void,
-): void;
-```
-
-- **Example**
-
-```ts
-export default () => ({
-  setup: (api) => {
-    api.modifyRspackConfig((config, utils) => {
-      if (utils.env === 'development') {
-        config.devtool = 'eval';
-      }
-    });
-  },
-});
-```
-
 ### onBeforeCreateCompiler
 
 import OnBeforeCreateCompiler from '@en/shared/onBeforeCreateCompiler.md';
 
 <OnBeforeCreateCompiler />
 
-- **Example**
+- **Example:**
 
 ```ts
 export default () => ({
@@ -182,7 +184,7 @@ import OnAfterCreateCompiler from '@en/shared/onAfterCreateCompiler.md';
 
 <OnAfterCreateCompiler />
 
-- **Example**
+- **Example:**
 
 ```ts
 export default () => ({
@@ -202,7 +204,7 @@ import OnBeforeBuild from '@en/shared/onBeforeBuild.md';
 
 <OnBeforeBuild />
 
-- **Example**
+- **Example:**
 
 ```ts
 export default () => ({
@@ -220,7 +222,7 @@ import OnAfterBuild from '@en/shared/onAfterBuild.md';
 
 <OnAfterBuild />
 
-- **Example**
+- **Example:**
 
 ```ts
 export default () => ({
@@ -240,7 +242,7 @@ import OnBeforeStartDevServer from '@en/shared/onBeforeStartDevServer.md';
 
 <OnBeforeStartDevServer />
 
-- **Example**
+- **Example:**
 
 ```ts
 export default () => ({
@@ -258,7 +260,7 @@ import OnAfterStartDevServer from '@en/shared/onAfterStartDevServer.md';
 
 <OnAfterStartDevServer />
 
-- **Example**
+- **Example:**
 
 ```ts
 export default () => ({
@@ -276,7 +278,7 @@ import OnDevCompileDone from '@en/shared/onDevCompileDone.md';
 
 <OnDevCompileDone />
 
-- **Example**
+- **Example:**
 
 ```ts
 export default () => ({
@@ -292,6 +294,44 @@ export default () => ({
 });
 ```
 
+## Prod Server Hooks
+
+### onBeforeStartProdServer
+
+import OnBeforeStartProdServer from '@en/shared/onBeforeStartProdServer.md';
+
+<OnBeforeStartProdServer />
+
+- **Example:**
+
+```ts
+export default () => ({
+  setup: (api) => {
+    api.onBeforeStartProdServer(() => {
+      console.log('before start!');
+    });
+  },
+});
+```
+
+### onAfterStartProdServer
+
+import OnAfterStartProdServer from '@en/shared/onAfterStartProdServer.md';
+
+<OnAfterStartProdServer />
+
+- **Example:**
+
+```ts
+export default () => ({
+  setup: (api) => {
+    api.onAfterStartProdServer(({ port }) => {
+      console.log('this port is: ', port);
+    });
+  },
+});
+```
+
 ## Other Hooks
 
 ### onExit
@@ -300,7 +340,7 @@ import OnExit from '@en/shared/onExit.md';
 
 <OnExit />
 
-- **Example**
+- **Example:**
 
 ```ts
 export default () => ({

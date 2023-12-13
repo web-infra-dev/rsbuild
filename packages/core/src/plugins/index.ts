@@ -1,11 +1,11 @@
 import type { Plugins } from '@rsbuild/shared';
 
 export const plugins: Plugins = {
+  basic: () => import('./basic').then((m) => m.pluginBasic()),
   html: () => import('./html').then((m) => m.pluginHtml()),
   cleanOutput: () => import('./cleanOutput').then((m) => m.pluginCleanOutput()),
   startUrl: () => import('./startUrl').then((m) => m.pluginStartUrl()),
   fileSize: () => import('./fileSize').then((m) => m.pluginFileSize()),
-  devtool: () => import('./devtool').then((m) => m.pluginDevtool()),
   target: () => import('./target').then((m) => m.pluginTarget()),
   entry: () => import('./entry').then((m) => m.pluginEntry()),
   cache: () => import('./cache').then((m) => m.pluginCache()),
@@ -16,7 +16,6 @@ export const plugins: Plugins = {
   bundleAnalyzer: () =>
     import('./bundleAnalyzer').then((m) => m.pluginBundleAnalyzer()),
   asset: () => import('./asset').then((m) => m.pluginAsset()),
-  rem: () => import('./rem').then((m) => m.pluginRem()),
   wasm: () => import('./wasm').then((m) => m.pluginWasm()),
   moment: () => import('./moment').then((m) => m.pluginMoment()),
   nodeAddons: () => import('./nodeAddons').then((m) => m.pluginNodeAddons()),

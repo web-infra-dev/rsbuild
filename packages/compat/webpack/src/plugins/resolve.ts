@@ -1,12 +1,13 @@
+import path from 'path';
 import {
   isWebTarget,
   TS_CONFIG_FILE,
   applyResolvePlugin,
+  type BundlerChain,
   type RsbuildTarget,
+  type RsbuildPlugin,
   type ChainIdentifier,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin, WebpackChain } from '../types';
-import path from 'path';
 
 async function applyTsConfigPathsPlugin({
   chain,
@@ -15,7 +16,7 @@ async function applyTsConfigPathsPlugin({
   mainFields,
   extensions,
 }: {
-  chain: WebpackChain;
+  chain: BundlerChain;
   CHAIN_ID: ChainIdentifier;
   cwd: string;
   mainFields: (string | string[])[];
@@ -35,7 +36,7 @@ async function applyTsConfigPathsPlugin({
     ]);
 }
 
-const getMainFields = (chain: WebpackChain, target: RsbuildTarget) => {
+const getMainFields = (chain: BundlerChain, target: RsbuildTarget) => {
   const mainFields = chain.resolve.mainFields.values();
 
   if (mainFields.length) {
@@ -50,18 +51,14 @@ const getMainFields = (chain: WebpackChain, target: RsbuildTarget) => {
 };
 
 export const pluginResolve = (): RsbuildPlugin => ({
-  name: 'plugin-resolve',
+  name: 'rsbuild-webpack:resolve',
 
   setup(api) {
     applyResolvePlugin(api);
 
-    api.modifyWebpackChain(async (chain, { CHAIN_ID, target }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
       const config = api.getNormalizedConfig();
       const isTsProject = Boolean(api.context.tsconfigPath);
-
-      chain.module
-        .rule(CHAIN_ID.RULE.JS_DATA_URI)
-        .resolve.set('fullySpecified', false);
 
       if (isTsProject && config.source.aliasStrategy === 'prefer-tsconfig') {
         await applyTsConfigPathsPlugin({

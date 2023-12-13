@@ -1,5 +1,6 @@
 import path from 'path';
 import { defineConfig } from 'rspress/config';
+import { rsbuildPluginOverview } from './src/rsbuildPluginOverview';
 
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
@@ -16,6 +17,7 @@ export default defineConfig({
     checkDeadLinks: true,
   },
   route: {
+    cleanUrls: true,
     // exclude document fragments from routes
     exclude: ['**/zh/shared/**', '**/en/shared/**'],
   },
@@ -37,7 +39,7 @@ export default defineConfig({
       {
         icon: 'discord',
         mode: 'link',
-        content: 'https://discord.gg/dfJnVWaG',
+        content: 'https://discord.gg/mScJfeeT',
       },
     ],
     locales: [
@@ -63,15 +65,8 @@ export default defineConfig({
       text: 'Edit this page on GitHub',
     },
   },
-  replaceRules: [
-    // Using "#MODERNJS" to display "Modern.js"
-    // and it will not be replaced in EdenX in the in-house document
-    {
-      search: /#MODERNJS/g,
-      replace: 'Modern.js',
-    },
-  ],
   builderConfig: {
+    plugins: [rsbuildPluginOverview],
     source: {
       alias: {
         '@components': path.join(__dirname, 'src/components'),

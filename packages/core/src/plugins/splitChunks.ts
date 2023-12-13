@@ -1,14 +1,15 @@
 import assert from 'assert';
 import {
   NODE_MODULES_REGEX,
+  createDependenciesRegExp,
   getPackageNameFromModulePath,
   type Polyfill,
   type CacheGroup,
   type SplitChunks,
   type ForceSplitting,
   type RsbuildChunkSplit,
-  type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
 // We expose the three-layer to specify webpack chunk-split ability:
 // 1. By strategy.There some best practice integrated in our internal strategy.
@@ -24,11 +25,11 @@ interface SplitChunksContext {
   /**
    * Default split config in webpack
    */
-  defaultConfig: SplitChunks;
+  defaultConfig: Exclude<SplitChunks, false>;
   /**
    * User webpack `splitChunks` config
    */
-  override: SplitChunks;
+  override: Exclude<SplitChunks, false>;
   /**
    * User Rsbuild `chunkSplit` config
    */
@@ -63,19 +64,6 @@ function getUserDefinedCacheGroups(forceSplitting: ForceSplitting): CacheGroup {
 
   return cacheGroups;
 }
-
-const DEPENDENCY_MATCH_TEMPL = /[\\/]node_modules[\\/](<SOURCES>)[\\/]/.source;
-
-/** Expect to match path just like "./node_modules/react-router/" */
-export const createDependenciesRegExp = (
-  ...dependencies: (string | RegExp)[]
-) => {
-  const sources = dependencies.map((d) =>
-    typeof d === 'string' ? d : d.source,
-  );
-  const expr = DEPENDENCY_MATCH_TEMPL.replace('<SOURCES>', sources.join('|'));
-  return new RegExp(expr);
-};
 
 function splitByExperience(ctx: SplitChunksContext): SplitChunks {
   const { override, polyfill, defaultConfig, userDefinedCacheGroups } = ctx;
@@ -147,6 +135,7 @@ function splitBySize(ctx: SplitChunksContext): SplitChunks {
   const { override, userDefinedCacheGroups, defaultConfig, rsbuildConfig } =
     ctx;
   assert(rsbuildConfig.strategy === 'split-by-size');
+
   return {
     ...defaultConfig,
     minSize: rsbuildConfig.minSize ?? 0,
@@ -175,7 +164,6 @@ function splitCustom(ctx: SplitChunksContext): SplitChunks {
 
 function allInOne(_ctx: SplitChunksContext): SplitChunks {
   // Set false to avoid chunk split.
-  // @ts-expect-error Rspack type missing
   return false;
 }
 
@@ -218,9 +206,9 @@ const SPLIT_STRATEGY_DISPATCHER: Record<
   'single-vendor': singleVendor,
 };
 
-export function pluginSplitChunks(): DefaultRsbuildPlugin {
+export function pluginSplitChunks(): RsbuildPlugin {
   return {
-    name: 'plugin-split-chunks',
+    name: 'rsbuild:split-chunks',
     setup(api) {
       api.modifyBundlerChain(
         async (chain, { isServer, isWebWorker, isServiceWorker }) => {
@@ -240,7 +228,7 @@ export function pluginSplitChunks(): DefaultRsbuildPlugin {
           }
 
           const config = api.getNormalizedConfig();
-          const defaultConfig: SplitChunks = {
+          const defaultConfig: Exclude<SplitChunks, false> = {
             // Optimize both `initial` and `async` chunks
             chunks: 'all',
             // When chunk size >= 50000 bytes, split it into separate chunk

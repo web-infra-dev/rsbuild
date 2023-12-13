@@ -1,13 +1,14 @@
-import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
 test('should ignore css content when build node target', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-
-    target: 'node',
-    entry: { index: path.resolve(__dirname, './src/index.js') },
+    rsbuildConfig: {
+      output: {
+        targets: ['node'],
+      },
+    },
   });
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -24,8 +25,11 @@ test('should ignore css content when build node target', async () => {
 test('should ignore css content when build web-worker target', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    target: 'web-worker',
-    entry: { index: path.resolve(__dirname, './src/index.js') },
+    rsbuildConfig: {
+      output: {
+        targets: ['web-worker'],
+      },
+    },
   });
   const files = await rsbuild.unwrapOutputJSON();
 

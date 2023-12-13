@@ -1,4 +1,3 @@
-import path from 'path';
 import { expect } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 import { webpackOnlyTest } from '@scripts/helper';
@@ -6,9 +5,6 @@ import { webpackOnlyTest } from '@scripts/helper';
 webpackOnlyTest('decorator latest', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     runServer: true,
     rsbuildConfig: {
       output: {
@@ -31,5 +27,5 @@ webpackOnlyTest('decorator latest', async ({ page }) => {
     );
   }
 
-  rsbuild.close();
+  await rsbuild.close();
 });

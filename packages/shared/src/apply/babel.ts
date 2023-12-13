@@ -1,10 +1,5 @@
-import { NODE_MODULES_REGEX } from '../constants';
-import type {
-  WebpackChainRule,
-  BundlerChainRule,
-  NormalizedConfig,
-  Context,
-} from '../types';
+import { NODE_MODULES_REGEX, TS_AND_JSX_REGEX } from '../constants';
+import type { BundlerChainRule, NormalizedConfig, Context } from '../types';
 
 export function applyScriptCondition({
   rule,
@@ -13,7 +8,7 @@ export function applyScriptCondition({
   includes,
   excludes,
 }: {
-  rule: BundlerChainRule | WebpackChainRule;
+  rule: BundlerChainRule;
   config: NormalizedConfig;
   context: Context;
   includes: (string | RegExp)[];
@@ -23,6 +18,10 @@ export function applyScriptCondition({
   rule.include.add({
     and: [context.rootPath, { not: NODE_MODULES_REGEX }],
   });
+
+  // Always compile TS and JSX files.
+  // Otherwise, it will lead to compilation errors and incorrect output.
+  rule.include.add(TS_AND_JSX_REGEX);
 
   [...includes, ...(config.source.include || [])].forEach((condition) => {
     rule.include.add(condition);

@@ -4,7 +4,8 @@
 node_modules/
 
 dist/
-dist-*
+e2e/**/dist-*
+!**/rslog/dist
 coverage/
 doc_build/
 playwright-report/
@@ -16,3 +17,5 @@ tsconfig.tsbuildinfo
 .idea/
 .nx/
 .history/
+.env.local
+.env.*.local

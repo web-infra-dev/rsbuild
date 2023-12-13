@@ -1,13 +1,10 @@
-import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
-
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 
 test('should compile stylus correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     plugins: [pluginStylus()],
   });
   const files = await rsbuild.unwrapOutputJSON();
@@ -17,7 +14,7 @@ test('should compile stylus correctly', async () => {
 
   if (rsbuild.providerType === 'rspack') {
     expect(content).toEqual(
-      'body{color:#f00;font:14px Arial,sans-serif}.title-class-_7352f{font-size:14px}',
+      'body{color:#f00;font:14px Arial,sans-serif}.title-class-_6c2f8{font-size:14px}',
     );
   } else {
     expect(content).toEqual(

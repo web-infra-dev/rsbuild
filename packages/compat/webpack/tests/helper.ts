@@ -1,5 +1,4 @@
-import { type CreateRsbuildOptions } from '@rsbuild/shared';
-import type { RsbuildPlugin, RsbuildConfig } from '@/types';
+import type { RsbuildPlugin, CreateRsbuildOptions } from '@rsbuild/shared';
 import assert from 'assert';
 import { webpackProvider } from '@/provider';
 import { join } from 'path';
@@ -12,16 +11,23 @@ import {
 export const fixturesDir = join(__dirname, 'fixtures');
 
 /**
- * different with rsbuild.createRsbuild. support add custom plugins instead of applyDefaultPlugins.
+ * different with rsbuild.createRsbuild support add custom plugins instead of applyDefaultPlugins.
  */
 export async function createStubRsbuild({
   rsbuildConfig = {},
   plugins,
   ...options
 }: CreateRsbuildOptions & {
-  rsbuildConfig?: RsbuildConfig;
   plugins?: RsbuildPlugin[];
 }) {
+  // mock default entry
+  if (!rsbuildConfig.source?.entry) {
+    rsbuildConfig.source ||= {};
+    rsbuildConfig.source.entry = {
+      index: './src/index.js',
+    };
+  }
+
   const rsbuild = await createBaseRsbuild({
     provider: webpackProvider,
     rsbuildConfig,

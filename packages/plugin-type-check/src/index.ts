@@ -1,11 +1,10 @@
-import { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import { logger, type RsbuildPlugin } from '@rsbuild/core';
 import {
-  logger,
   CHAIN_ID,
+  deepmerge,
   mergeChainedOptions,
   type ChainedConfig,
 } from '@rsbuild/shared';
-import { deepmerge } from '@rsbuild/shared/deepmerge';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
 type ForkTsCheckerOptions = ConstructorParameters<
@@ -19,9 +18,9 @@ export type PluginTypeCheckerOptions = {
 
 export const pluginTypeCheck = (
   options: PluginTypeCheckerOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> => {
+): RsbuildPlugin => {
   return {
-    name: 'plugin-type-check',
+    name: 'rsbuild:type-check',
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { target }) => {
@@ -33,10 +32,7 @@ export const pluginTypeCheck = (
 
         // If there is multiple target, only apply type checker to the first target
         // to avoid multiple type checker running at the same time
-        if (
-          Array.isArray(api.context.target) &&
-          target !== api.context.target[0]
-        ) {
+        if (target !== api.context.targets[0]) {
           return;
         }
 

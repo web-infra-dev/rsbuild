@@ -6,7 +6,9 @@ Rsbuild 默认支持 TypeScript，你可以直接在项目中使用 `.ts` 和 `.
 
 Rsbuild 默认使用 SWC 来转译 TypeScript 代码，也支持切换到 Babel 进行转译。
 
-与 TypeScript 原生编译器不同，像 SWC 和 Babel 这样的工具会将每个文件单独编译，它无法确定导入的名称是一个类型还是一个值。因此，当你在 Rsbuild 中使用 TypeScript 时，需要启用 `tsconfig.json` 中的 [isolatedModules](https://www.typescriptlang.org/tsconfig/#isolatedModules) 选项：
+### isolatedModules
+
+与 TypeScript 原生编译器不同，像 SWC 和 Babel 这样的工具会将每个文件单独编译，它无法确定导入的名称是一个类型还是一个值。因此，当你在 Rsbuild 中使用 TypeScript 时，需要启用 `tsconfig.json` 中的 [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) 选项：
 
 ```json title="tsconfig.json"
 {

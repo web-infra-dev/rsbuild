@@ -33,7 +33,27 @@ export default {
 };
 ```
 
-If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
+### Configuring tsconfig.json
+
+The Type Check plugin by default performs checks based on the `tsconfig.json` file in the root directory of the current project. Below is an example of a `tsconfig.json` file, which you can also adjust according to the needs of your project.
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["DOM", "ES2020"],
+    "module": "ESNext",
+    "strict": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler"
+  },
+  "include": ["src"]
+}
+```
+
+Please note that the fields in `tsconfig.json` will not affect the compilation behavior and output of Rsbuild, but will only affect the results of type checking.
 
 ## Options
 
@@ -136,6 +156,7 @@ pluginTypeCheck({
 
 - `fork-ts-checker-webpack-plugin` does not support checking TypeScript code in `.vue` files.
 - If you have enabled `ts-loader` in your project and manually configured `compileOnly: false`, please disable the Type Check plugin to avoid duplicate type checking.
+- Some errors will be displayed as warnings in IDEs such as VS Code, but they will still be displayed as errors in the `fork-ts-checker-webpack-plugin` check. For details, please refer to: [Why are some errors reported as warnings?] (https://code.visualstudio.com/docs/typescript/typescript-compiling#_why-are-some-errors-reported-as-warnings).
 
 # Performance Optimization
 

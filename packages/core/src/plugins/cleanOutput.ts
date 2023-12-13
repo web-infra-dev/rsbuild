@@ -1,14 +1,14 @@
-import type { DefaultRsbuildPlugin } from '@rsbuild/shared';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
 const emptyDir = async (dir: string) => {
-  if (await fs.pathExists(dir)) {
-    await fs.emptyDir(dir);
+  if (await fse.pathExists(dir)) {
+    await fse.emptyDir(dir);
   }
 };
 
-export const pluginCleanOutput = (): DefaultRsbuildPlugin => ({
-  name: 'plugin-clean-output',
+export const pluginCleanOutput = (): RsbuildPlugin => ({
+  name: 'rsbuild:clean-output',
 
   setup(api) {
     const clean = async () => {

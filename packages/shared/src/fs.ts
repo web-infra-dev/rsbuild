@@ -1,28 +1,23 @@
-import path, { isAbsolute, join } from 'path';
+import path from 'path';
+import fse from '../compiled/fs-extra';
 import { MODULE_PATH_REGEX } from './constants';
 import { removeLeadingSlash } from './utils';
-import { promises, constants, existsSync, statSync } from 'fs';
-import {
+import { promises, constants, statSync } from 'fs';
+import type {
+  RsbuildConfig,
   DistPathConfig,
-  NormalizedOutputConfig,
-  HtmlConfig,
   FilenameConfig,
+  NormalizedConfig,
 } from './types';
 
-export function getAbsoluteDistPath(
-  cwd: string,
-  outputConfig: NormalizedOutputConfig,
-) {
-  const root = getDistPath(outputConfig, 'root');
-  return isAbsolute(root) ? root : join(cwd, root);
-}
+export { fse };
 
 export const getDistPath = (
-  outputConfig: NormalizedOutputConfig,
+  config: RsbuildConfig | NormalizedConfig,
   type: keyof DistPathConfig,
 ): string => {
-  const { distPath } = outputConfig;
-  const ret = distPath[type];
+  const { distPath } = config.output || {};
+  const ret = distPath?.[type];
   if (typeof ret !== 'string') {
     throw new Error(`unknown key ${type} in "output.distPath"`);
   }
@@ -36,6 +31,14 @@ export async function isFileExists(file: string) {
     .catch(() => false);
 }
 
+export const isFileSync = (filePath: string) => {
+  try {
+    return statSync(filePath, { throwIfNoEntry: false })?.isFile();
+  } catch (_) {
+    return false;
+  }
+};
+
 /**
  * Find first already exists file.
  * @param files - Absolute file paths with extension.
@@ -43,7 +46,7 @@ export async function isFileExists(file: string) {
  */
 export const findExists = (files: string[]): string | false => {
   for (const file of files) {
-    if (existsSync(file) && statSync(file).isFile()) {
+    if (isFileSync(file)) {
       return file;
     }
   }
@@ -67,12 +70,9 @@ export function getPackageNameFromModulePath(modulePath: string) {
 
 export function getHTMLPathByEntry(
   entryName: string,
-  config: {
-    output: NormalizedOutputConfig;
-    html: HtmlConfig;
-  },
+  config: NormalizedConfig,
 ) {
-  const htmlPath = getDistPath(config.output, 'html');
+  const htmlPath = getDistPath(config, 'html');
   const filename =
     config.html.outputStructure === 'flat'
       ? `${entryName}.html`
@@ -82,12 +82,12 @@ export function getHTMLPathByEntry(
 }
 
 export const getFilename = (
-  output: NormalizedOutputConfig,
+  config: NormalizedConfig,
   type: keyof FilenameConfig,
   isProd: boolean,
 ) => {
-  const { filename } = output;
-  const useHash = !output.disableFilenameHash;
+  const { filename } = config.output;
+  const useHash = !config.output.disableFilenameHash;
   const hash = useHash ? '.[contenthash:8]' : '';
 
   switch (type) {
@@ -146,8 +146,7 @@ export function findUpSync({
     const filePath = path.join(dir, filename);
 
     try {
-      const stats = statSync(filePath, { throwIfNoEntry: false });
-      if (stats?.isFile()) {
+      if (isFileSync(filePath)) {
         return filePath;
       }
     } catch {}

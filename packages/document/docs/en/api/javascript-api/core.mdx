@@ -1,7 +1,3 @@
----
-extractApiHeaders: [2]
----
-
 # Rsbuild Core
 
 This section describes some of the core methods provided by Rsbuild.
@@ -9,6 +5,14 @@ This section describes some of the core methods provided by Rsbuild.
 ## createRsbuild
 
 Create a Rsbuild instance object.
+
+- **Type:**
+
+```ts
+function createRsbuild(options: CreateRsbuildOptions): Promise<RsbuildInstance>;
+```
+
+- **Example:**
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
@@ -25,14 +29,8 @@ The first parameter of `createRsbuild` is a options object, you can pass in the 
 ```ts
 type RsbuildEntry = Record<string, string | string[]>;
 
-type RsbuildTarget = 'web' | 'node' | 'web-worker';
-
 type CreateRsbuildOptions = {
   cwd?: string;
-  entry?: RsbuildEntry;
-  target?: RsbuildTarget | RsbuildTarget[];
-  provider?: RsbuildProvider;
-  configPath?: string | null;
   rsbuildConfig?: RsbuildConfig;
 };
 ```
@@ -40,11 +38,68 @@ type CreateRsbuildOptions = {
 Description:
 
 - `cwd`: The root path of the current build, the default value is `process.cwd()`.
-- `entry`: Build entry object.
-- `target`: Build target type, the default value is `['web']`, see chapter [Build Target](/api/start/build-target) for details.
-- `configPath`: The path to the config file of higher-level solution (absolute path), this parameter affects the build cache update.
 - `provider`: Used to switch the underlying bundler.
 - `rsbuildConfig`: Rsbuild configuration object. Rsbuild provides a rich set of configuration options that allow you to customize the build behavior flexibly. You can find all available configuration options in the [Configuration](/config/) section.
+
+## loadConfig
+
+Load Rsbuild configuration file.
+
+- **Type:**
+
+```ts
+function loadConfig(params: {
+  // Default is process.cwd()
+  cwd: string;
+  // Specify the configuration file, can be a relative or absolute path
+  path?: string;
+}): Promise<RsbuildConfig>;
+```
+
+- **Example:**
+
+```ts
+const config = await loadConfig();
+
+console.log(config); // -> RsbuildConfig
+```
+
+## loadEnv
+
+Load the `.env` file and return all environment variables starting with the specified prefixes.
+
+- **Type:**
+
+```ts
+function loadEnv(params: {
+  // Default is process.cwd()
+  cwd?: string;
+  // Default is ['PUBLIC_']
+  prefixes?: string[];
+}): Promise<{
+  // All environment variables in the .env file
+  parsed: Record<string, string>;
+  // Environment variables starting with the specified prefixes
+  publicVars: Record<string, string>;
+}>;
+```
+
+- **Example:**
+
+```ts
+const { parsed, publicVars } = await loadEnv();
+
+mergeRsbuildConfig(
+  {
+    source: {
+      define: publicVars,
+    },
+  },
+  userConfig,
+);
+```
+
+This method will also load files such as `.env.local` and `.env.[mode]`, see [Environment Variables](/guide/advanced/env-vars) for details.
 
 ## mergeRsbuildConfig
 
@@ -52,13 +107,13 @@ Used to merge multiple Rsbuild configuration objects.
 
 The `mergeRsbuildConfig` function takes multiple configuration objects as parameters. It deep merges each configuration object, automatically combining multiple function values into an array of sequentially executed functions, and returns a merged configuration object.
 
-- **Type**
+- **Type:**
 
 ```ts
 function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
 ```
 
-- **Example**
+- **Example:**
 
 ```ts
 import { mergeRsbuildConfig } from '@rsbuild/core';
@@ -80,3 +135,41 @@ console.log(mergedConfig); // { dev: { https: true } }
 ```
 
 > This method will not modify the config object in the input parameter.
+
+## logger
+
+Used to output log information in a unified format, based on [rslog](https://github.com/rspack-contrib/rslog).
+
+- **Example:**
+
+```ts
+import { logger } from '@rsbuild/core';
+
+// A gradient welcome log
+logger.greet(`\n➜ Rsbuild v1.0.0\n`);
+
+// Info
+logger.info('This is a info message');
+
+// Start
+logger.start('This is a start message');
+
+// Warn
+logger.warn('This is a warn message');
+
+// Ready
+logger.ready('This is a ready message');
+
+// Success
+logger.success('This is a success message');
+
+// Error
+logger.error('This is a error message');
+logger.error(new Error('This is a error message with stack'));
+
+// Debug
+logger.debug('This is a debug message');
+
+// Same as console.log
+logger.log('This is a log message');
+```

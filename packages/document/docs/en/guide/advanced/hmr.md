@@ -10,7 +10,7 @@ Hot Module Replacement (HMR) exchanges, adds, or removes modules while an applic
 
 Rsbuild has built-in support for HMR. By default, HMR is enabled in development.
 
-By setting [dev.hmr](/config/options/dev.html#devhmr) to false, HMR can be disabled, which the HMR and react-refresh will no longer work.
+By setting [dev.hmr](/config/dev/hmr) to false, HMR can be disabled, which the HMR and react-refresh will no longer work.
 
 ```ts
 export default {
@@ -34,7 +34,7 @@ The default config are as follows, Rsbuild will automatically deduce the URL of 
 export default {
   dev: {
     client: {
-      path: '/webpack-hmr',
+      path: '/rsbuild-hmr',
       // Equivalent to port of the dev server
       port: '',
       // Equivalent to location.hostname

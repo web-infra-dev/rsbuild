@@ -24,8 +24,6 @@ export default {
 };
 ```
 
-If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
-
 ## Enable Detection
 
 After registering the Check Syntax plugin, Rsbuild will perform syntax checking after production builds.
@@ -55,7 +53,23 @@ error   [Syntax Checker] Find some syntax errors after production build:
 
 :::tip
 Currently, syntax checking is implemented based on AST parser. Each time it performs a check, it can only identify the first incompatible syntax found in the file. If there are multiple incompatible syntaxes in the file, you need to fix the detected syntax and re-run the check.
+If the corresponding source location is not shown in the log, try setting **output.disableMinimize** to true and rebuild again.
 :::
+
+Note that displaying source code information depends on the source map file. You can configure the [output.sourceMap](/config/output/source-map) option to generate source map files during production builds.
+
+```js
+export default {
+  output: {
+    sourceMap: {
+      js:
+        process.env.NODE_ENV === 'production'
+          ? 'cheap-module-source-map'
+          : 'source-map',
+    },
+  },
+};
+```
 
 ### Solutions
 
@@ -65,7 +79,7 @@ If a syntax error is detected, you can handle it in the following ways:
 - If you don't want to downgrade the syntax, you can adjust the project's browserslist to match the syntax.
 - If you do not want to check the syntax of certain products, you can use the `checkSyntax.exclude` configuration to exclude the files to be checked.
 
-### Options
+## Options
 
 ### targets
 

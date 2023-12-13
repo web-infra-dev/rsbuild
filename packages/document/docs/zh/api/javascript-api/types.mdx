@@ -1,7 +1,3 @@
----
-extractApiHeaders: [2]
----
-
 # Rsbuild Types
 
 本章节描述了 Rsbuild 提供的一些类型定义。
@@ -16,24 +12,24 @@ import type { RsbuildInstance } from '@rsbuild/core';
 let rsbuild: RsbuildInstance;
 ```
 
-## Context
+## RsbuildContext
 
 Rsbuild 实例中 context 属性的类型定义。
 
 ```ts
-import type { Context } from '@rsbuild/core';
+import type { RsbuildContext } from '@rsbuild/core';
 
-const context: Context = rsbuild.context;
+const context: RsbuildContext = rsbuild.context;
 ```
 
 ## RsbuildPlugin
 
-Rsbuild 插件的类型，需要配合 provider 中提供的 `RsbuildPluginAPI` 类型来使用。
+Rsbuild 插件的类型。
 
 ```ts
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
-const myPlugin: RsbuildPlugin<RsbuildPluginAPI> = {
+const myPlugin: RsbuildPlugin = {
   name: 'my-plugin',
   setup() {},
 };
@@ -45,14 +41,6 @@ Rsbuild 构建产物的类型。
 
 ```ts
 import type { RsbuildTarget } from '@rsbuild/core';
-```
-
-## RsbuildEntry
-
-对应 `createRsbuild` 方法的 `entry` 选项的类型。
-
-```ts
-import type { RsbuildEntry } from '@rsbuild/core';
 ```
 
 ## CreateRsbuildOptions

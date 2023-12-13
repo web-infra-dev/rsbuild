@@ -28,66 +28,63 @@ export default {
 };
 ```
 
-如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
-
 ## 选项
 
-你可以通过以下配置修改 [babel-loader](https://github.com/babel/babel-loader) 的配置项。
+### babelLoaderOptions
+
+传递给 `babel-loader` 的选项，请查阅 [babel-loader 文档](https://github.com/babel/babel-loader) 来了解具体用法。
 
 - **类型：** `Object | Function`
-
 - **默认值：**
 
 ```ts
-{
-  "babelrc": false,
-  "compact": false,
-  "configFile": false,
-  "plugins": [],
-  "presets": [
+const defaultOptions = {
+  babelrc: false,
+  compact: false,
+  configFile: false,
+  plugins: [],
+  presets: [
     [
-      "@babel/preset-typescript",
+      '@babel/preset-typescript',
       {
-        "allExtensions": true,
-        "allowDeclareFields": true,
-        "allowNamespaces": true,
-        "isTSX": true,
-        "optimizeConstEnums": true,
+        allExtensions: true,
+        allowDeclareFields: true,
+        allowNamespaces: true,
+        isTSX: true,
+        optimizeConstEnums: true,
       },
     ],
   ],
-}
+};
 ```
 
-### Function 类型
+#### Function 类型
 
 当配置项为 Function 类型时，默认 Babel 配置会作为第一个参数传入，你可以直接修改配置对象，也可以返回一个对象作为最终的 `babel-loader` 配置。
 
 ```js
-export default {
-  plugins: [
-    pluginBabel((config) => {
-      // 添加一个插件，比如配置某个组件库的按需引入
-      config.plugins.push([
-        'babel-plugin-import',
-        {
-          libraryName: 'xxx-components',
-          libraryDirectory: 'es',
-          style: true,
-        },
-      ]);
-    }),
-  ],
-};
+pluginBabel({
+  babelLoaderOptions: (config) => {
+    // 添加一个插件，比如配置某个组件库的按需引入
+    config.plugins.push([
+      'babel-plugin-import',
+      {
+        libraryName: 'xxx-components',
+        libraryDirectory: 'es',
+        style: true,
+      },
+    ]);
+  },
+});
 ```
 
 函数的第二个参数提供了一些方便的工具函数，请继续阅读下方文档。
 
 :::tip
-以上示例仅作为参考，通常来说，你不需要手动配置 `babel-plugin-import`，因为 Rspack SWC 编译已支持 transformImport 能力，Rsbuild 也提供了更通用的 `source.transformImport` 配置。
+以上示例仅作为参考，通常来说，你不需要手动配置 `babel-plugin-import`，因为 Rspack SWC 编译已支持 transformImport 能力，Rsbuild 也提供了更通用的 [source.transformImport](/config/source/transform-import) 配置。
 :::
 
-### Object 类型
+#### Object 类型
 
 当配置项的值为 `Object` 类型时，会与默认配置通过 `Object.assign` 浅合并。
 
@@ -96,104 +93,128 @@ export default {
 :::
 
 ```js
-export default {
-  plugins: [
-    pluginBabel({
-      plugins: [
-        [
-          'babel-plugin-import',
-          {
-            libraryName: 'xxx-components',
-            libraryDirectory: 'es',
-            style: true,
-          },
-        ],
+pluginBabel({
+  babelLoaderOptions: {
+    plugins: [
+      [
+        'babel-plugin-import',
+        {
+          libraryName: 'xxx-components',
+          libraryDirectory: 'es',
+          style: true,
+        },
       ],
-    }),
-  ],
-};
+    ],
+  },
+});
 ```
 
-### 工具函数
+#### 工具函数
 
 配置项为 Function 类型时，第二个参数可用的工具函数如下:
 
-#### addPlugins
+##### addPlugins
 
 - **类型：** `(plugins: BabelPlugin[]) => void`
 
 添加若干个 Babel 插件。
 
 ```js
-export default {
-  plugins: [
-    pluginBabel((config, { addPlugins }) => {
-      addPlugins([
-        [
-          'babel-plugin-import',
-          {
-            libraryName: 'xxx-components',
-            libraryDirectory: 'es',
-            style: true,
-          },
-        ],
-      ]);
-    }),
-  ],
-};
+pluginBabel({
+  babelLoaderOptions: (config, { addPlugins }) => {
+    addPlugins([
+      [
+        'babel-plugin-import',
+        {
+          libraryName: 'xxx-components',
+          libraryDirectory: 'es',
+          style: true,
+        },
+      ],
+    ]);
+  },
+});
 ```
 
-#### addPresets
+##### addPresets
 
 - **类型：** `(presets: BabelPlugin[]) => void`
 
 添加若干个 Babel 预设配置 (大多数情况下不需要增加预设)。
 
 ```js
-export default {
-  plugins: [
-    pluginBabel((config, { addPresets }) => {
-      addPresets(['@babel/preset-env']);
-    }),
-  ],
-};
+pluginBabel({
+  babelLoaderOptions: (config, { addPresets }) => {
+    addPresets(['@babel/preset-env']);
+  },
+});
 ```
 
-#### removePlugins
+##### removePlugins
 
 - **类型：** `(plugins: string | string[]) => void`
 
 移除 Babel 插件，传入需要移除的插件名称即可，你可以传入单个字符串，也可以传入一个字符串数组。
 
 ```js
-export default {
-  plugins: [
-    pluginBabel((config, { removePlugins }) => {
-      removePlugins('babel-plugin-import');
-    }),
-  ],
-};
+pluginBabel({
+  babelLoaderOptions: (config, { removePlugins }) => {
+    removePlugins('babel-plugin-import');
+  },
+});
 ```
 
-#### removePresets
+##### removePresets
 
 - **类型：** `(presets: string | string[]) => void`
 
 移除 Babel 预设配置，传入需要移除的预设名称即可，你可以传入单个字符串，也可以传入一个字符串数组。
 
 ```js
-export default {
-  plugins: [
-    pluginBabel((config, { removePresets }) => {
-      removePresets('@babel/preset-env');
-    }),
-  ],
-};
+pluginBabel({
+  babelLoaderOptions: (config, { removePresets }) => {
+    removePresets('@babel/preset-env');
+  },
+});
 ```
 
-### 调试 Babel 配置
+### include
 
-当你通过配置项修改 `babel-loader` 配置后，可以在 [Rsbuild 调试模式](https://rsbuild.dev/zh/guide/debug/debug-mode) 下查看最终生成的配置。
+- **类型：** `string | RegExp | (string | RegExp)[]`
+- **默认值：** `undefined`
+
+用于指定需要 Babel 编译的文件。
+
+由于 Babel 编译存在性能开销，通过 `include` 来匹配部分文件可以减少 Babel 编译的模块数量，从而提升构建性能。
+
+比如，只对 `.custom.js` 文件进行编译，并忽略 `node_modules` 下的文件：
+
+```js
+pluginBabel({
+  include: /\.custom\.js$/,
+  // 建议 exclude node_modules 目录以提升构建性能
+  exclude: /[\\/]node_modules[\\/]/,
+});
+```
+
+:::tip
+当你配置 `include` 或 `exclude` 选项时，Rsbuild 会创建一条单独的 Rspack rule 来应用 babel-loader 和 swc-loader。
+
+这条单独的 rule 与 Rsbuild 内置的 SWC rule 是完全独立的，并且不会受到 [source.include](/config/source/include) 和 [source.exclude](/config/source/exclude) 的作用。
+:::
+
+### exclude
+
+- **类型：** `string | RegExp | (string | RegExp)[]`
+- **默认值：** `undefined`
+
+用于指定不需要 Babel 编译的文件。
+
+由于 Babel 编译存在性能开销，通过 `exclude` 来排除部分文件可以减少 Babel 编译的模块数量，从而提升构建性能。
+
+## 调试配置
+
+当你通过配置项修改 `babel-loader` 配置后，可以在 [Rsbuild 调试模式](/guide/debug/debug-mode) 下查看最终生成的配置。
 
 首先通过 `DEBUG=rsbuild` 参数开启调试模式：
 
@@ -206,3 +227,62 @@ DEBUG=rsbuild pnpm build
 ```
 
 然后打开生成的 `rspack.config.web.js`，搜索 `babel-loader` 关键词，即可看到完整的 `babel-loader` 配置内容。
+
+## 常见问题
+
+### 编译卡死
+
+在使用 Babel 插件后，如果编译进度条卡死，但终端无 Error 日志时，通常是因为编译过程中出现了异常。在某些情况下，当 Error 被 webpack 或其他模块捕获后，错误日志不会被正确输出。最为常见的场景是 Babel 配置出现异常，抛出 Error 后被 webpack 捕获，而 webpack 在个别情况下吞掉了 Error。
+
+**解决方法：**
+
+如果你修改 Babel 配置后出现此问题，建议检查是否有以下错误用法：
+
+1. 配置了一个不存在的 plugin 或 preset，可能是名称拼写错误，或是未正确安装。
+
+```ts
+// 错误示例
+pluginBabel({
+  babelLoaderOptions: (config, { addPlugins }) => {
+    // 该插件名称错误，或者未安装
+    addPlugins('babel-plugin-not-exists');
+  },
+});
+```
+
+2. 是否配置了多个 babel-plugin-import，但是没有在数组的第三项声明每一个 babel-plugin-import 的名称。
+
+```ts
+// 错误示例
+pluginBabel({
+  babelLoaderOptions: (config, { addPlugins }) => {
+    addPlugins([
+      ['babel-plugin-import', { libraryName: 'antd', libraryDirectory: 'es' }],
+      [
+        'babel-plugin-import',
+        { libraryName: 'antd-mobile', libraryDirectory: 'es' },
+      ],
+    ]);
+  },
+});
+```
+
+```ts
+// 正确示例
+pluginBabel({
+  babelLoaderOptions: (config, { addPlugins }) => {
+    addPlugins([
+      [
+        'babel-plugin-import',
+        { libraryName: 'antd', libraryDirectory: 'es' },
+        'antd',
+      ],
+      [
+        'babel-plugin-import',
+        { libraryName: 'antd-mobile', libraryDirectory: 'es' },
+        'antd-mobile',
+      ],
+    ]);
+  },
+});
+```

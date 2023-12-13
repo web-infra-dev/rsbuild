@@ -1,6 +1,7 @@
-import { RsbuildConfig, webpack } from '@rsbuild/webpack';
+import { webpack } from '@rsbuild/webpack';
 import { merge } from 'lodash';
-import { color, logger } from '@rsbuild/shared';
+import { logger } from '@rsbuild/core';
+import { color, type RsbuildConfig } from '@rsbuild/shared';
 import {
   Output,
   JsMinifyOptions,

@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { test } from '@playwright/test';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { fse } from '@rsbuild/shared';
 import glob, { Options as GlobOptions } from 'fast-glob';
 
 export const providerType = process.env.PROVIDE_TYPE || 'rspack';
@@ -29,10 +29,24 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
   const ret: Record<string, string> = {};
 
   for await (const file of files) {
-    ret[file] = await fs.readFile(file, 'utf-8');
+    ret[file] = await fse.readFile(file, 'utf-8');
   }
 
   return ret;
 };
 
-export { runStaticServer } from './static';
+export const awaitFileExists = async (dir: string) => {
+  const maxChecks = 100;
+  const interval = 100;
+  let checks = 0;
+
+  while (checks < maxChecks) {
+    if (fse.existsSync(dir)) {
+      return;
+    }
+    checks++;
+    await new Promise((resolve) => setTimeout(resolve, interval));
+  }
+
+  throw new Error('awaitFileExists failed: ' + dir);
+};

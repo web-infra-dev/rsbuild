@@ -1,27 +1,13 @@
 import {
-  debug,
   isDebug,
-  castArray,
-  initPlugins,
-  mergeRsbuildConfig,
   type PluginStore,
   type InspectConfigOptions,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
+import { initRsbuildConfig, type Context } from '@rsbuild/core/provider';
 import { inspectConfig } from './inspectConfig';
 import { generateWebpackConfig } from './webpackConfig';
-import { normalizeConfig } from '../config/normalize';
-import type { Context, WebpackConfig } from '../types';
-
-async function modifyRsbuildConfig(context: Context) {
-  debug('modify Rsbuild config');
-  const [modified] = await context.hooks.modifyRsbuildConfigHook.call(
-    context.config,
-    { mergeRsbuildConfig },
-  );
-  context.config = modified;
-  debug('modify Rsbuild config done');
-}
+import type { WebpackConfig } from '../types';
 
 export type InitConfigsOptions = {
   context: Context;
@@ -36,15 +22,12 @@ export async function initConfigs({
 }: InitConfigsOptions): Promise<{
   webpackConfigs: WebpackConfig[];
 }> {
-  await initPlugins({
-    pluginAPI: context.pluginAPI,
+  const normalizedConfig = await initRsbuildConfig({
+    context,
     pluginStore,
   });
+  const { targets } = normalizedConfig.output;
 
-  await modifyRsbuildConfig(context);
-  context.normalizedConfig = normalizeConfig(context.config);
-
-  const targets = castArray(rsbuildOptions.target);
   const webpackConfigs = await Promise.all(
     targets.map((target) => generateWebpackConfig({ target, context })),
   );

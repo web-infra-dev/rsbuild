@@ -1,33 +1,32 @@
 import {
   pickRsbuildConfig,
-  createPublicContext,
+  type RsbuildConfig,
   type RsbuildProvider,
+  type PreviewServerOptions,
 } from '@rsbuild/shared';
-import { startProdServer, startDevServer } from '@rsbuild/core/server';
-import { createContext } from './core/createContext';
-import { applyDefaultPlugins } from './shared/plugin';
-import { RsbuildConfig, NormalizedConfig, WebpackConfig } from './types';
+import {
+  getPluginAPI,
+  createContext,
+  initRsbuildConfig,
+  createPublicContext,
+} from '@rsbuild/core/provider';
+import { applyDefaultPlugins } from './shared';
 import { initConfigs } from './core/initConfigs';
-import { getPluginAPI } from './core/initPlugins';
-import type { Compiler, MultiCompiler } from 'webpack';
-
-export type WebpackProvider = RsbuildProvider<
-  RsbuildConfig,
-  WebpackConfig,
-  NormalizedConfig,
-  Compiler | MultiCompiler
->;
 
 export function webpackProvider({
   rsbuildConfig: originalRsbuildConfig,
 }: {
   rsbuildConfig: RsbuildConfig;
-}): WebpackProvider {
+}): RsbuildProvider {
   const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
 
   // @ts-expect-error compiler type mismatch
   return async ({ pluginStore, rsbuildOptions, plugins }) => {
-    const context = await createContext(rsbuildOptions, rsbuildConfig);
+    const context = await createContext(
+      rsbuildOptions,
+      rsbuildConfig,
+      'webpack',
+    );
     const pluginAPI = getPluginAPI({ context, pluginStore });
 
     context.pluginAPI = pluginAPI;
@@ -62,18 +61,44 @@ export function webpackProvider({
         return createCompiler({ context, webpackConfigs });
       },
 
-      async startDevServer(options) {
-        const { startDevCompile } = await import('./core/createCompiler');
-        return startDevServer(
+      async getServerAPIs(options) {
+        const { getServerAPIs } = await import('@rsbuild/core/server');
+        const { createDevMiddleware } = await import('./core/createCompiler');
+        await initRsbuildConfig({ context, pluginStore });
+        return getServerAPIs(
           { context, pluginStore, rsbuildOptions },
-          // @ts-expect-error compiler type mismatch
-          startDevCompile,
+          // @ts-expect-error compile type mismatch
+          createDevMiddleware,
           options,
         );
       },
 
-      async preview() {
-        return startProdServer(context, context.config);
+      async startDevServer(options) {
+        const { startDevServer } = await import('@rsbuild/core/server');
+        const { createDevMiddleware } = await import('./core/createCompiler');
+        await initRsbuildConfig({
+          context,
+          pluginStore,
+        });
+        return startDevServer(
+          {
+            context,
+            pluginStore,
+            rsbuildOptions,
+          },
+          // @ts-expect-error compile type mismatch
+          createDevMiddleware,
+          options,
+        );
+      },
+
+      async preview(options?: PreviewServerOptions) {
+        const { startProdServer } = await import('@rsbuild/core/server');
+        await initRsbuildConfig({
+          context,
+          pluginStore,
+        });
+        return startProdServer(context, context.config, options);
       },
 
       async build(options) {

@@ -1,19 +1,20 @@
-import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 
 test('should exclude specified less file', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       tools: {
-        less: (opts, { addExcludes }) => {
+        less: (_, { addExcludes }) => {
           addExcludes([/b\.less$/]);
         },
-      },
-      output: {
-        enableAssetFallback: true,
+        bundlerChain(chain) {
+          chain.module
+            .rule('fallback')
+            .test(/b\.less$/)
+            .type('asset/resource');
+        },
       },
     },
   });

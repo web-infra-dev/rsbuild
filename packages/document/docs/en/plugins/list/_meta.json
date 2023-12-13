@@ -7,6 +7,7 @@
   "plugin-vue2",
   "plugin-vue2-jsx",
   "plugin-svelte",
+  "plugin-solid",
   "plugin-assets-retry",
   "plugin-babel",
   "plugin-type-check",
@@ -17,5 +18,7 @@
   "plugin-styled-components",
   "plugin-check-syntax",
   "plugin-css-minimizer",
-  "plugin-pug"
+  "plugin-pug",
+  "plugin-rem",
+  "plugin-umd"
 ]

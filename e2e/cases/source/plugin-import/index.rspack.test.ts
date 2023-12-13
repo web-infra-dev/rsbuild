@@ -1,4 +1,3 @@
-import path from 'path';
 import { build } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { cases, shareTest, copyPkgToNodeModules, findEntry } from './helper';
@@ -8,7 +7,6 @@ test('should import with template config', async () => {
 
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       source: {
         transformImport: [

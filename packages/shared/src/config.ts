@@ -16,11 +16,10 @@ import {
   DEFAULT_ASSET_PREFIX,
 } from './constants';
 import type {
-  RsbuildTarget,
   BundlerChainRule,
   RsbuildConfig,
   InspectConfigOptions,
-  CreateRsbuildOptions,
+  NormalizedServerConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
   NormalizedOutputConfig,
@@ -30,12 +29,11 @@ import type {
   NormalizedToolsConfig,
   NormalizedConfig,
 } from './types';
-import { pick } from './pick';
-import { logger } from 'rslog';
+import { logger } from './logger';
 import { join } from 'path';
-import { color } from './color';
 import type { minify } from 'terser';
-import fs from 'fs-extra';
+import fse from '../compiled/fs-extra';
+import { pick, color, upperFirst } from './utils';
 
 import _ from 'lodash';
 import { DEFAULT_DEV_HOST } from './constants';
@@ -43,11 +41,19 @@ import { getJSMinifyOptions } from './minimize';
 
 export const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
-  https: false,
-  port: DEFAULT_PORT,
   assetPrefix: DEFAULT_ASSET_PREFIX,
   startUrl: false,
+});
+
+export const getDefaultServerConfig = (): NormalizedServerConfig => ({
+  port: DEFAULT_PORT,
   host: DEFAULT_DEV_HOST,
+  htmlFallback: 'index',
+  compress: true,
+  publicDir: {
+    name: 'public',
+    copyOnBuild: true,
+  },
 });
 
 export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
@@ -74,7 +80,12 @@ export const getDefaultSecurityConfig = (): NormalizedSecurityConfig => ({
   nonce: '',
 });
 
-export const getDefaultToolsConfig = (): NormalizedToolsConfig => ({});
+export const getDefaultToolsConfig = (): NormalizedToolsConfig => ({
+  cssExtract: {
+    loaderOptions: {},
+    pluginOptions: {},
+  },
+});
 
 export const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
   profile: false,
@@ -89,6 +100,7 @@ export const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
 });
 
 export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
+  targets: ['web'],
   distPath: {
     root: ROOT_DIST_DIR,
     js: JS_DIST_DIR,
@@ -114,20 +126,19 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   },
   legalComments: 'linked',
   cleanDistPath: true,
-  disableCssExtract: false,
+  injectStyles: false,
   disableMinimize: false,
-  disableSourceMap: {
-    js: false,
-    css: undefined,
+  sourceMap: {
+    js: undefined,
+    css: false,
   },
   disableFilenameHash: false,
-  disableCssModuleExtension: false,
-  enableAssetFallback: false,
   enableLatestDecorators: false,
   enableCssModuleTSDeclaration: false,
-  enableInlineScripts: false,
-  enableInlineStyles: false,
+  inlineScripts: false,
+  inlineStyles: false,
   cssModules: {
+    auto: true,
     exportLocalsConvention: 'camelCase',
   },
 });
@@ -136,20 +147,18 @@ export async function outputInspectConfigFiles({
   rsbuildConfig,
   bundlerConfigs,
   inspectOptions,
-  rsbuildOptions,
   configType,
 }: {
   configType: string;
-  rsbuildConfig: string;
+  rsbuildConfig: NormalizedConfig;
+  rawRsbuildConfig: string;
   bundlerConfigs: string[];
   inspectOptions: InspectConfigOptions & {
     outputPath: string;
   };
-  rsbuildOptions: Required<CreateRsbuildOptions>;
 }) {
   const { outputPath } = inspectOptions;
 
-  const { target } = rsbuildOptions;
   const files = [
     {
       path: join(outputPath, 'rsbuild.config.js'),
@@ -157,18 +166,18 @@ export async function outputInspectConfigFiles({
       content: rsbuildConfig,
     },
     ...bundlerConfigs.map((content, index) => {
-      const suffix = Array.isArray(target) ? target[index] : target;
+      const suffix = rsbuildConfig.output.targets[index];
       const outputFile = `${configType}.config.${suffix}.js`;
       let outputFilePath = join(outputPath, outputFile);
 
       // if filename is conflict, add a random id to the filename.
-      if (fs.existsSync(outputFilePath)) {
+      if (fse.existsSync(outputFilePath)) {
         outputFilePath = outputFilePath.replace(/\.js$/, `.${Date.now()}.js`);
       }
 
       return {
         path: outputFilePath,
-        label: `${_.upperFirst(configType)} Config (${suffix})`,
+        label: `${upperFirst(configType)} Config (${suffix})`,
         content,
       };
     }),
@@ -176,7 +185,7 @@ export async function outputInspectConfigFiles({
 
   await Promise.all(
     files.map((item) =>
-      fs.outputFile(item.path, `module.exports = ${item.content}`),
+      fse.outputFile(item.path, `module.exports = ${item.content}`),
     ),
   );
 
@@ -215,43 +224,6 @@ export const setConfig = <T extends Record<string, any>, P extends string>(
   _.set(config, path, value);
 };
 
-export function getExtensions({
-  target = 'web',
-  resolveExtensionPrefix,
-  isTsProject,
-}: {
-  target?: RsbuildTarget;
-  resolveExtensionPrefix?: NormalizedSourceConfig['resolveExtensionPrefix'];
-  isTsProject?: boolean;
-} = {}) {
-  let extensions = [
-    // only resolve .ts(x) files if it's a ts project
-    // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
-    ...(isTsProject ? ['.ts', '.tsx'] : []),
-    '.js',
-    '.jsx',
-    '.mjs',
-    '.json',
-  ];
-
-  // add an extra prefix to all extensions
-  if (resolveExtensionPrefix) {
-    const extensionPrefix =
-      typeof resolveExtensionPrefix === 'string'
-        ? resolveExtensionPrefix
-        : resolveExtensionPrefix[target];
-
-    if (extensionPrefix) {
-      extensions = extensions.reduce<string[]>(
-        (ret, ext) => [...ret, extensionPrefix + ext, ext],
-        [],
-      );
-    }
-  }
-
-  return extensions;
-}
-
 type MinifyOptions = NonNullable<Parameters<typeof minify>[1]>;
 
 export async function getMinify(isProd: boolean, config: NormalizedConfig) {
@@ -277,7 +249,7 @@ export async function getMinify(isProd: boolean, config: NormalizedConfig) {
 }
 
 export async function stringifyConfig(config: unknown, verbose?: boolean) {
-  const { default: WebpackChain } = await import('webpack-chain');
+  const { default: WebpackChain } = await import('../compiled/webpack-chain');
 
   // webpackChain.toString can be used as a common stringify method
   const stringify = WebpackChain.toString as (
@@ -356,6 +328,7 @@ export const pickRsbuildConfig = (
 ): RsbuildConfig => {
   const keys: Array<keyof RsbuildConfig> = [
     'dev',
+    'server',
     'html',
     'tools',
     'source',

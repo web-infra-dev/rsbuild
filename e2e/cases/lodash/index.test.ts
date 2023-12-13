@@ -1,4 +1,3 @@
-import * as path from 'path';
 import { expect, test } from '@playwright/test';
 import { webpackOnlyTest } from '@scripts/helper';
 import { build } from '@scripts/shared';
@@ -7,9 +6,6 @@ import { build } from '@scripts/shared';
 webpackOnlyTest('should optimize lodash bundle size by default', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.ts'),
-    },
     rsbuildConfig: {
       performance: {
         chunkSplit: {
@@ -28,9 +24,6 @@ webpackOnlyTest('should optimize lodash bundle size by default', async () => {
 test('should not optimize lodash bundle size when transformLodash is false', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.ts'),
-    },
     rsbuildConfig: {
       performance: {
         transformLodash: false,

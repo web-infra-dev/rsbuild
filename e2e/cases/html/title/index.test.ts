@@ -5,7 +5,11 @@ import { build } from '@scripts/shared';
 test('should generate default title correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { foo: path.resolve(__dirname, './src/foo.js') },
+    rsbuildConfig: {
+      source: {
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
+      },
+    },
   });
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -17,8 +21,10 @@ test('should generate default title correctly', async () => {
 test('should generate title correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { foo: path.resolve(__dirname, './src/foo.js') },
     rsbuildConfig: {
+      source: {
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
+      },
       html: {
         title: 'foo',
       },
@@ -34,8 +40,10 @@ test('should generate title correctly', async () => {
 test('should generate title correctly when using custom HTML template', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { foo: path.resolve(__dirname, './src/foo.js') },
     rsbuildConfig: {
+      source: {
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
+      },
       html: {
         title: 'foo',
         template: path.resolve(__dirname, './src/empty.html'),
@@ -52,11 +60,13 @@ test('should generate title correctly when using custom HTML template', async ()
 test('should generate title via function correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      foo: path.resolve(__dirname, './src/foo.js'),
-      bar: path.resolve(__dirname, './src/foo.js'),
-    },
     rsbuildConfig: {
+      source: {
+        entry: {
+          foo: path.resolve(__dirname, './src/foo.js'),
+          bar: path.resolve(__dirname, './src/foo.js'),
+        },
+      },
       html: {
         title({ entryName }) {
           return entryName;
@@ -75,30 +85,22 @@ test('should generate title via function correctly', async () => {
   expect(barHtml).toContain('<title>bar</title>');
 });
 
-// TODO move to uni-builder
-test.skip('should generate title for MPA correctly', async () => {
+test('should not inject title if template already contains a title', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      foo: path.resolve(__dirname, './src/foo.js'),
-      bar: path.resolve(__dirname, './src/foo.js'),
-    },
     rsbuildConfig: {
+      source: {
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
+      },
       html: {
-        title: 'default',
-        // titleByEntries: {
-        //   foo: 'foo',
-        // },
+        title: 'Hello',
+        template: './src/title.html',
       },
     },
   });
   const files = await rsbuild.unwrapOutputJSON();
 
-  const fooHtml =
+  const html =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
-  expect(fooHtml).toContain('<title>foo</title>');
-
-  const barHtml =
-    files[Object.keys(files).find((file) => file.endsWith('bar.html'))!];
-  expect(barHtml).toContain('<title>default</title>');
+  expect(html).toContain('<title>Page Title</title>');
 });

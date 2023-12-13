@@ -10,10 +10,11 @@ import {
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
 } from '@rsbuild/shared';
+import type { Context } from '@rsbuild/core/provider';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 
-import type { Context, WebpackConfig } from '../types';
+import type { WebpackConfig } from '../types';
 
 async function modifyWebpackChain(
   context: Context,
@@ -148,7 +149,12 @@ export async function generateWebpackConfig({
   context: Context;
 }) {
   const chainUtils = await getChainUtils(target);
-  const { BannerPlugin, DefinePlugin, ProvidePlugin } = await import('webpack');
+  const {
+    BannerPlugin,
+    DefinePlugin,
+    ProvidePlugin,
+    HotModuleReplacementPlugin,
+  } = await import('webpack');
 
   const bundlerChain = await modifyBundlerChain(context, {
     ...chainUtils,
@@ -156,6 +162,7 @@ export async function generateWebpackConfig({
       BannerPlugin,
       DefinePlugin,
       ProvidePlugin,
+      HotModuleReplacementPlugin,
     },
   });
 

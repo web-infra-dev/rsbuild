@@ -8,9 +8,6 @@ test('should run top level await correctly when using SWC', async ({
 }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.ts'),
-    },
     plugins: [pluginSwc()],
     runServer: true,
   });
@@ -19,5 +16,5 @@ test('should run top level await correctly when using SWC', async ({
 
   expect(await page.evaluate('window.foo')).toEqual('hello');
 
-  rsbuild.close();
+  await rsbuild.close();
 });

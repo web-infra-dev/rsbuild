@@ -1,11 +1,9 @@
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
-  isProd,
   mergeChainedOptions,
-  getCssnanoDefaultOptions,
   type BundlerChain,
   type ChainedConfig,
   type ChainIdentifier,
-  type DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
 import type CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
@@ -16,15 +14,28 @@ export type PluginCssMinimizerOptions = {
   pluginOptions?: ChainedConfig<CssMinimizerPluginOptions>;
 };
 
+type CssNanoOptions = {
+  configFile?: string | undefined;
+  preset?: [string, object] | string | undefined;
+};
+
+const getCssnanoDefaultOptions = (): CssNanoOptions => ({
+  preset: [
+    'default',
+    {
+      // merge longhand will break safe-area-inset-top, so disable it
+      // https://github.com/cssnano/cssnano/issues/803
+      // https://github.com/cssnano/cssnano/issues/967
+      mergeLonghand: false,
+    },
+  ],
+});
+
 export async function applyCSSMinimizer(
   chain: BundlerChain,
   CHAIN_ID: ChainIdentifier,
   options: PluginCssMinimizerOptions = {},
 ) {
-  if (!isProd()) {
-    return;
-  }
-
   const { default: CssMinimizerPlugin } = await import(
     'css-minimizer-webpack-plugin'
   );
@@ -39,8 +50,7 @@ export async function applyCSSMinimizer(
   chain.optimization
     .minimizer(CHAIN_ID.MINIMIZER.CSS)
     .use(CssMinimizerPlugin, [
-      // Due to css-minimizer-webpack-plugin has changed the type of class, which using a generic type in
-      // constructor, leading auto inference of parameters of plugin constructor is not possible, using any instead
+      // @ts-expect-error type mismatch
       mergedOptions,
     ])
     .end();
@@ -48,16 +58,17 @@ export async function applyCSSMinimizer(
 
 export const pluginCssMinimizer = (
   options?: PluginCssMinimizerOptions,
-): DefaultRsbuildPlugin => ({
-  name: 'plugin-css-minimizer',
+): RsbuildPlugin => ({
+  name: 'rsbuild:css-minimizer',
 
   setup(api) {
-    if (api.context.bundlerType === 'webpack') {
-      return;
-    }
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
+      const config = api.getNormalizedConfig();
+      const isMinimize = isProd && !config.output.disableMinimize;
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-      await applyCSSMinimizer(chain, CHAIN_ID, options);
+      if (isMinimize) {
+        await applyCSSMinimizer(chain, CHAIN_ID, options);
+      }
     });
   },
 });

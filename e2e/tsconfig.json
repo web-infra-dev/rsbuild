@@ -9,5 +9,13 @@
       "@scripts/*": ["./scripts/*"]
     }
   },
-  "include": ["src", "scripts", "cases", "playwright.config.ts"]
+  "include": [
+    "src",
+    "scripts",
+    "cases",
+    "playwright.config.ts",
+    "cases/**/*.test.ts",
+    "uni-builder/**/*.test.ts"
+  ],
+  "exclude": ["**/node_modules", "**/.*/"]
 }

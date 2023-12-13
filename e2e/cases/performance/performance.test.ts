@@ -12,11 +12,13 @@ test.describe('performance configure multi', () => {
   test.beforeAll(async () => {
     const rsbuild = await build({
       cwd: basicFixtures,
-      entry: {
-        main: join(basicFixtures, 'src/index.ts'),
-      },
       plugins: [pluginReact()],
       rsbuildConfig: {
+        output: {
+          distPath: {
+            root: 'dist-1',
+          },
+        },
         performance: {
           bundleAnalyze: {},
           chunkSplit: {
@@ -48,9 +50,6 @@ test.describe('performance configure multi', () => {
 test('should generate vendor chunk when chunkSplit is "single-vendor"', async () => {
   const rsbuild = await build({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic/src/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
@@ -73,9 +72,6 @@ test('should generate vendor chunk when chunkSplit is "single-vendor"', async ()
 test('should generate preconnect link when preconnect is defined', async () => {
   const rsbuild = await build({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic/src/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
@@ -112,9 +108,6 @@ test('should generate preconnect link when preconnect is defined', async () => {
 test('should generate dnsPrefetch link when dnsPrefetch is defined', async () => {
   const rsbuild = await build({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic/src/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {

@@ -8,13 +8,13 @@ In addition, Rsbuild also provides multiple configs to customize the compile rul
 
 The Rsbuild has built-in community popular CSS preprocessors such as Less, Sass.
 
-By default, you don't need to configure anything for Less and Sass. If you need to customize loader config, you can configure [tools.less](/config/options/tools.html#toolsless), [tools.sass](/config/options/tools.html#toolssass) to set it up.
+By default, you don't need to configure anything for Less and Sass. If you need to customize loader config, you can configure [tools.less](/config/tools/less), [tools.sass](/config/tools/sass) to set it up.
 
 You can also use Stylus in Rsbuild, just install the Stylus plugin provided by Rsbuild, please refer to [Stylus Plugin](/plugins/list/plugin-stylus) for usage.
 
 ## Using PostCSS
 
-Rsbuild has built-in [PostCSS](https://postcss.org/) to transform the CSS code. You can configure the postcss-loader via [tools.postcss](/config/options/tools.html#toolspostcss).
+Rsbuild has built-in [PostCSS](https://postcss.org/) to transform the CSS code. You can configure the postcss-loader via [tools.postcss](/config/tools/postcss).
 
 ```ts
 export default {
@@ -34,7 +34,7 @@ export default {
 Rsbuild has some builtin PostCSS plugins, which will perform the following transformations on CSS:
 
 - [autoprefixer](https://github.com/postcss/autoprefixer): we have enabled [autoprefixer](https://github.com/postcss/autoprefixer) to add vendor prefixes to CSS rules. If you want to configure the target browser, you can use [browserslist](/guide/advanced/browserslist).
-- [postcss-flexbugs-fixes](https://www.npmjs.com/package/postcss-flexbugs-fixes): Used to fix known [Flex Bugs](https://github.com/philipwalton/flexbugs).
+- [postcss-flexbugs-fixes](https://npmjs.com/package/postcss-flexbugs-fixes): Used to fix known [Flex Bugs](https://github.com/philipwalton/flexbugs).
 
 ## Using CSS Modules
 
@@ -52,12 +52,12 @@ You can customize the CSS minimizer by using the [CSS Minimizer plugin](/plugins
 
 By default, Rsbuild will extract CSS into a separate `.css` file and output it to the dist directory.
 
-If you want to inline styles into your JS file, you can set [output.disableCssExtract](/config/options/output.html#outputdisablecssextract) to true to disable CSS extraction logic.When the JS file is requested by the browser, JS dynamically inserts the `<style>` tag into the Html to load the CSS styles.
+If you want to inline styles into your JS file, you can set [output.injectStyles](/config/output/inject-styles) to true to disable CSS extraction logic. When the JS file is requested by the browser, JS dynamically inserts the `<style>` tag into the Html to load the CSS styles.
 
 ```ts
 export default {
   output: {
-    disableCssExtract: true,
+    injectStyles: true,
   },
 };
 ```

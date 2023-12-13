@@ -33,18 +33,24 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "hot": true,
   },
   "devtool": "cheap-module-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "disableTransformByDefault": true,
-      "newResolver": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
   },
   "mode": "development",
   "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
     "rules": [
       {
         "resolve": {
@@ -206,7 +212,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -246,7 +252,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -292,7 +298,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -302,7 +308,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -342,7 +348,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -352,7 +358,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -398,7 +404,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -452,7 +458,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -475,9 +481,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
         "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
       },
       {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
         "include": [
           {
             "and": [
@@ -487,8 +490,9 @@ exports[`plugins/react > should work with swc-loader 1`] = `
               },
             ],
           },
+          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -628,7 +632,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           "name": "lib-react",
           "priority": 0,
           "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\)\\[\\\\\\\\/\\]/,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\|react-refresh\\|@rspack\\\\/plugin-react-refresh\\)\\[\\\\\\\\/\\]/,
         },
         "lib-router": {
           "name": "lib-router",
@@ -652,21 +656,50 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
+  "performance": {
+    "hints": false,
+  },
   "plugins": [
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "entryName": "index",
+        "filename": "index.html",
+        "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
+        "minify": false,
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+      },
+      "version": 5,
+    },
     HtmlBasicPlugin {
-      "HtmlPlugin": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
-        "HtmlPlugin": [Function],
-        "info": {},
+        "info": {
+          "index": {
+            "title": "Rsbuild App",
+          },
+        },
       },
     },
-    Plugin {
+    DefinePlugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""test"",
       },
       "name": "DefinePlugin",
+    },
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
     },
     ReactRefreshRspackPlugin {
       "options": {
@@ -680,6 +713,8 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",

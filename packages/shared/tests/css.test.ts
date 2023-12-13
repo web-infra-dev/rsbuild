@@ -1,9 +1,4 @@
-import {
-  normalizeCssLoaderOptions,
-  isCssModules,
-  getCssModulesAutoRule,
-  isLooseCssModules,
-} from '../src/css';
+import { isCssModules, normalizeCssLoaderOptions } from '../src/css';
 
 describe('normalizeCssLoaderOptions', () => {
   it('should enable exportOnlyLocals correctly', () => {
@@ -76,37 +71,4 @@ it('check isCssModules', () => {
       auto: /\.module\./i,
     }),
   ).toBeFalsy();
-});
-
-it('getCssModulesAutoRule', () => {
-  expect(getCssModulesAutoRule(undefined, true)).toEqual(isLooseCssModules);
-
-  expect(
-    getCssModulesAutoRule(
-      {
-        auto: false,
-      },
-      true,
-    ),
-  ).toBeFalsy();
-
-  expect(
-    getCssModulesAutoRule(
-      {
-        auto: true,
-      },
-      true,
-    ),
-  ).toBeTruthy();
-
-  const autoFn = () => true;
-
-  expect(
-    getCssModulesAutoRule(
-      {
-        auto: autoFn,
-      },
-      true,
-    ),
-  ).toEqual(autoFn);
 });

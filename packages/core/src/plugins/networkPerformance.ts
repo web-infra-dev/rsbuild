@@ -1,17 +1,11 @@
-import {
-  HtmlNetworkPerformancePlugin,
-  type DefaultRsbuildPlugin,
-} from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginNetworkPerformance = (): DefaultRsbuildPlugin => ({
+export const pluginNetworkPerformance = (): RsbuildPlugin => ({
   name: `plugin-network-performance`,
 
   setup(api) {
     api.modifyBundlerChain(
-      async (
-        chain,
-        { CHAIN_ID, isServer, isWebWorker, isServiceWorker, HtmlPlugin },
-      ) => {
+      async (chain, { CHAIN_ID, isServer, isWebWorker, isServiceWorker }) => {
         const config = api.getNormalizedConfig();
         const {
           performance: { dnsPrefetch, preconnect },
@@ -21,24 +15,20 @@ export const pluginNetworkPerformance = (): DefaultRsbuildPlugin => ({
           return;
         }
 
+        const { HtmlNetworkPerformancePlugin } = await import(
+          '../rspack/HtmlNetworkPerformancePlugin'
+        );
+
         if (dnsPrefetch) {
           chain
             .plugin(CHAIN_ID.PLUGIN.HTML_DNS_PREFETCH)
-            .use(HtmlNetworkPerformancePlugin, [
-              dnsPrefetch,
-              'dnsPrefetch',
-              HtmlPlugin,
-            ]);
+            .use(HtmlNetworkPerformancePlugin, [dnsPrefetch, 'dnsPrefetch']);
         }
 
         if (preconnect) {
           chain
             .plugin(CHAIN_ID.PLUGIN.HTML_PRECONNECT)
-            .use(HtmlNetworkPerformancePlugin, [
-              preconnect,
-              'preconnect',
-              HtmlPlugin,
-            ]);
+            .use(HtmlNetworkPerformancePlugin, [preconnect, 'preconnect']);
         }
       },
     );

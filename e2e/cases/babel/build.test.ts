@@ -1,61 +1,48 @@
-import path from 'path';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
+import { rspackOnlyTest } from '@scripts/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
-test('babel', async ({ page }) => {
+rspackOnlyTest('babel', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     runServer: true,
     plugins: [
-      pluginBabel((_, { addPlugins }) => {
-        addPlugins([require('./plugins/myBabelPlugin')]);
-      }),
-    ],
-    rsbuildConfig: {
-      tools: {
-        babel(_, { addPlugins }) {
+      pluginBabel({
+        babelLoaderOptions: (_, { addPlugins }) => {
           addPlugins([require('./plugins/myBabelPlugin')]);
         },
-      },
-    },
+      }),
+    ],
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
   expect(await page.evaluate('window.b')).toBe(10);
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
-test('babel exclude', async ({ page }) => {
+rspackOnlyTest('babel exclude', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     runServer: true,
-    plugins: [
-      pluginBabel((_, { addPlugins, addExcludes }) => {
-        addPlugins([require('./plugins/myBabelPlugin')]);
-        addExcludes(/aa/);
-      }),
-    ],
     rsbuildConfig: {
-      tools: {
-        babel(_, { addPlugins, addExcludes }) {
-          addPlugins([require('./plugins/myBabelPlugin')]);
-          addExcludes(/aa/);
-        },
+      source: {
+        exclude: [/aa/],
       },
     },
+    plugins: [
+      pluginBabel({
+        babelLoaderOptions: (_, { addPlugins }) => {
+          addPlugins([require('./plugins/myBabelPlugin')]);
+        },
+      }),
+    ],
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
   expect(await page.evaluate('window.b')).toBe(10);
   expect(await page.evaluate('window.bb')).toBeUndefined();
 
-  rsbuild.close();
+  await rsbuild.close();
 });

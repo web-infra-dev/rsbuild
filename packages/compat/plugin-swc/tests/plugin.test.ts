@@ -1,12 +1,12 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginSwc } from '../src';
-import { pluginBabel } from '@rsbuild/webpack/plugin-babel';
+import { pluginBabel } from '../../uni-builder/src/webpack/plugins/babel';
 import { webpackProvider } from '@rsbuild/webpack';
 import { applyPluginConfig } from '../src/utils';
 import type {
-  ModifyWebpackChainUtils,
   NormalizedConfig,
-} from '@rsbuild/webpack';
+  ModifyWebpackChainUtils,
+} from '@rsbuild/shared';
 
 const TEST_BUILDER_CONFIG = {
   output: {},
@@ -164,8 +164,11 @@ describe('plugin-swc', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      target: ['node', 'service-worker', 'web', 'web-worker'],
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        output: {
+          targets: ['node', 'service-worker', 'web', 'web-worker'],
+        },
+      },
       provider: webpackProvider,
     });
     const configs = await rsbuild.initConfigs();

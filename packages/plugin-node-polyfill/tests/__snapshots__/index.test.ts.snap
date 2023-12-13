@@ -3,7 +3,7 @@
 exports[`plugin-node-polyfill > should add node-polyfill config 1`] = `
 {
   "plugins": [
-    Plugin {
+    ProvidePlugin {
       "_options": {
         "Buffer": [
           "<ROOT>/node_modules/<PNPM_INNER>/buffer/index.js",

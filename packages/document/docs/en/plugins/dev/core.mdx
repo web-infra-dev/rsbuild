@@ -7,7 +7,7 @@ This section describes the core plugin types and APIs.
 The type of the plugin object. The plugin object contains the following properties:
 
 - `name`: The name of the plugin, a unique identifier.
-- `setup`: The setup function of the plugin, which can be an asynchronous function. This function will only be executed once when the plugin is initialized.
+- `setup`: The setup function of the plugin, which can be an asynchronous function. This function will only be executed once when the plugin is initialized. The plugin API provides the context info, utility functions and lifecycle hooks. For a complete introduction to lifecycle hooks, please read the [Plugin Hooks](/plugins/dev/hooks) chapter.
 - `pre`: Specifies the preceding plugins for the current plugin. You can pass an array of preceding plugin names, and the current plugin will be executed after these plugins.
 - `post`: Specifies the succeeding plugins for the current plugin. You can pass an array of succeeding plugin names, and the current plugin will be executed before these plugins.
 - `remove`: Specifies the plugins to be removed. You can pass an array of plugin names to be removed.
@@ -15,12 +15,12 @@ The type of the plugin object. The plugin object contains the following properti
 The type of the plugin object, which contains the following properties:
 
 ```ts
-export type RsbuildPlugin<API = RsbuildPluginAPI> = {
+export type RsbuildPlugin = {
   name: string;
   pre?: string[];
   post?: string[];
   remove?: string[];
-  setup: (api: API) => Promise<void> | void;
+  setup: (api: RsbuildPluginAPI) => Promise<void> | void;
 };
 ```
 
@@ -34,7 +34,7 @@ export default (): RsbuildPlugin => ({
 
   pre: ['plugin-bar'],
 
-  setup: api => {
+  setup: (api) => {
     api.onAfterBuild(() => {
       console.log('after build!');
     });
@@ -95,33 +95,13 @@ const pluginBar = {
 
 For example, if you register both the Foo and Bar plugins mentioned above, the Foo plugin will not take effect because the Bar plugin declares the removal of the Foo plugin.
 
-## RsbuildPluginAPI
-
-The type of plugin API. The plugin API provides the context info, utility functions and lifecycle hooks.
-
-For a complete introduction to lifecycle hooks, please read the [Plugin Hooks](/plugins/dev/hooks) chapter.
-
-```ts
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
-
-export default (): RsbuildPlugin<RsbuildPluginAPI> => ({
-  name: 'plugin-foo',
-
-  setup: api => {
-    api.modifyRspackConfig(config => {
-      config.devtool = false;
-    });
-  },
-});
-```
-
 ## api.context
 
 `api.context` is a read-only object that provides some context information.
 
-The content of `api.context` is exactly the same as `rsbuild.context`, please refer to [rsbuild.context](/api/javascript-api/instance.html#rsbuild-context).
+The content of `api.context` is exactly the same as `rsbuild.context`, please refer to [rsbuild.context](/api/javascript-api/instance#rsbuild-context).
 
-- **Example**
+- **Example:**
 
 ```ts
 const pluginFoo = () => ({
@@ -137,7 +117,7 @@ import GetRsbuildConfig from '@en/shared/getRsbuildConfig.md';
 
 <GetRsbuildConfig />
 
-- **Example**
+- **Example:**
 
 ```ts
 const pluginFoo = () => ({
@@ -154,7 +134,7 @@ import GetNormalizedConfig from '@en/shared/getNormalizedConfig.md';
 
 <GetNormalizedConfig />
 
-- **Example**
+- **Example:**
 
 ```ts
 const pluginFoo = () => ({
@@ -171,11 +151,11 @@ import IsPluginExists from '@en/shared/isPluginExists.md';
 
 <IsPluginExists />
 
-- **Example**
+- **Example:**
 
 ```ts
 export default () => ({
-  setup: api => {
+  setup: (api) => {
     console.log(api.isPluginExists('plugin-foo'));
   },
 });
@@ -183,18 +163,18 @@ export default () => ({
 
 ## api.getHTMLPaths
 
-import GetHTMLPaths from '@en/shared/getHTMLPaths.md';
+import GetHTMLPaths from '@en/shared/getHtmlPaths.md';
 
 <GetHTMLPaths />
 
-- **Example**
+- **Example:**
 
 ```ts
 const pluginFoo = () => ({
   setup(api) {
-    api.modifyWebpackChain(() => {
+    api.modifyRspackConfig(() => {
       const htmlPaths = api.getHTMLPaths();
-      console.log(htmlPaths); // { main: 'html/main/index.html' };
+      console.log(htmlPaths); // { index: 'index.html' };
     });
   },
 });

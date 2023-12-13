@@ -1,10 +1,10 @@
 import {
-  isUseCssSourceMap,
   LESS_REGEX,
   FileFilterUtil,
   getLessLoaderOptions,
+  getSharedPkgCompiledPath,
+  type RsbuildPlugin,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
 
 export type LessLoaderUtils = {
   addExcludes: FileFilterUtil;
@@ -12,7 +12,7 @@ export type LessLoaderUtils = {
 
 export function pluginLess(): RsbuildPlugin {
   return {
-    name: 'plugin-less',
+    name: 'rsbuild-webpack:less',
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
@@ -20,7 +20,7 @@ export function pluginLess(): RsbuildPlugin {
 
         const { options, excludes } = getLessLoaderOptions(
           config.tools.less,
-          isUseCssSourceMap(config),
+          config.output.sourceMap.css,
         );
         const rule = chain.module
           .rule(utils.CHAIN_ID.RULE.LESS)
@@ -40,7 +40,7 @@ export function pluginLess(): RsbuildPlugin {
 
         rule
           .use(utils.CHAIN_ID.USE.LESS)
-          .loader(utils.getCompiledPath('less-loader'))
+          .loader(getSharedPkgCompiledPath('less-loader'))
           .options(options);
       });
     },
