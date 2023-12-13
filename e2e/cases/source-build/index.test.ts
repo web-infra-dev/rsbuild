@@ -2,8 +2,6 @@ import { join } from 'path';
 import { expect } from '@playwright/test';
 import { dev, getHrefByEntryName } from '@scripts/shared';
 import { rspackOnlyTest } from '@scripts/helper';
-import { pluginSourceBuild } from '@rsbuild/plugin-source-build';
-import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixture = join(__dirname, 'app');
 
@@ -12,7 +10,6 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: fixture,
-      plugins: [pluginSourceBuild(), pluginReact()],
     });
 
     await page.goto(getHrefByEntryName('index', rsbuild.port));
