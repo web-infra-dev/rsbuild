@@ -12,7 +12,6 @@ export * from './config';
 export * from './format';
 export * from './server';
 export * from './chain';
-export * from './apply';
 export * from './getLoaderOptions';
 export * from './patch';
 export * from './css';

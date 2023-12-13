@@ -1,13 +1,28 @@
-import { castArray } from './utils';
+import { posix } from 'path';
+import { getDistPath, getFilename } from './fs';
+import { addTrailingSlash } from './utils';
+import { castArray, ensureAbsolutePath } from './utils';
 import { debug } from './logger';
 import {
+  DEFAULT_PORT,
+  TS_AND_JSX_REGEX,
+  DEFAULT_DEV_HOST,
+  NODE_MODULES_REGEX,
+  DEFAULT_ASSET_PREFIX,
+} from './constants';
+import type {
   Context,
-  CreateAsyncHook,
-  ModifyBundlerChainUtils,
-  ModifyBundlerChainFn,
   BundlerChain,
   RsbuildConfig,
+  ChainedConfig,
+  CreateAsyncHook,
+  BundlerChainRule,
+  NormalizedConfig,
+  RsbuildPluginAPI,
+  ModifyBundlerChainFn,
+  ModifyBundlerChainUtils,
 } from './types';
+import { mergeChainedOptions } from './mergeChainedOptions';
 
 export async function getBundlerChain() {
   const { default: WebpackChain } = await import('../compiled/webpack-chain');
@@ -226,3 +241,215 @@ export const CHAIN_ID = {
 } as const;
 
 export type ChainIdentifier = typeof CHAIN_ID;
+
+export function applyScriptCondition({
+  rule,
+  config,
+  context,
+  includes,
+  excludes,
+}: {
+  rule: BundlerChainRule;
+  config: NormalizedConfig;
+  context: Context;
+  includes: (string | RegExp)[];
+  excludes: (string | RegExp)[];
+}) {
+  // compile all folders in app directory, exclude node_modules
+  rule.include.add({
+    and: [context.rootPath, { not: NODE_MODULES_REGEX }],
+  });
+
+  // Always compile TS and JSX files.
+  // Otherwise, it will lead to compilation errors and incorrect output.
+  rule.include.add(TS_AND_JSX_REGEX);
+
+  [...includes, ...(config.source.include || [])].forEach((condition) => {
+    rule.include.add(condition);
+  });
+
+  [...excludes, ...(config.source.exclude || [])].forEach((condition) => {
+    rule.exclude.add(condition);
+  });
+}
+
+export function applyOutputPlugin(api: RsbuildPluginAPI) {
+  function getPublicPath({
+    config,
+    isProd,
+    context,
+  }: {
+    config: NormalizedConfig;
+    isProd: boolean;
+    context: Context;
+  }) {
+    const { dev, output } = config;
+
+    let publicPath = DEFAULT_ASSET_PREFIX;
+
+    if (isProd) {
+      if (output.assetPrefix) {
+        publicPath = output.assetPrefix;
+      }
+    } else if (typeof dev.assetPrefix === 'string') {
+      publicPath = dev.assetPrefix;
+    } else if (dev.assetPrefix === true) {
+      const protocol = context.devServer?.https ? 'https' : 'http';
+      const hostname = context.devServer?.hostname || DEFAULT_DEV_HOST;
+      const port = context.devServer?.port || DEFAULT_PORT;
+      if (hostname === DEFAULT_DEV_HOST) {
+        const localHostname = `localhost`;
+        // If user not specify the hostname, it would use 0.0.0.0
+        // The http://0.0.0.0:port can't visit in windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
+        // Relative to docs:
+        // - https://github.com/quarkusio/quarkus/issues/12246
+        publicPath = `${protocol}://${localHostname}:${port}/`;
+      } else {
+        publicPath = `${protocol}://${hostname}:${port}/`;
+      }
+    }
+
+    return addTrailingSlash(publicPath);
+  }
+
+  api.modifyBundlerChain(
+    async (chain, { isProd, isServer, isServiceWorker }) => {
+      const config = api.getNormalizedConfig();
+      const jsPath = getDistPath(config, 'js');
+
+      const publicPath = getPublicPath({
+        config,
+        isProd,
+        context: api.context,
+      });
+
+      // js output
+      const jsFilename = getFilename(config, 'js', isProd);
+
+      chain.output
+        .path(api.context.distPath)
+        .filename(posix.join(jsPath, jsFilename))
+        .chunkFilename(posix.join(jsPath, `async/${jsFilename}`))
+        .publicPath(publicPath)
+        // disable pathinfo to improve compile performance
+        // the path info is useless in most cases
+        // see: https://webpack.js.org/guides/build-performance/#output-without-path-info
+        .pathinfo(false)
+        // since webpack v5.54.0+, hashFunction supports xxhash64 as a faster algorithm
+        // which will be used as default when experiments.futureDefaults is enabled.
+        .hashFunction('xxhash64');
+
+      if (isServer) {
+        const serverPath = getDistPath(config, 'server');
+        const filename = posix.join(serverPath, `[name].js`);
+
+        chain.output
+          .filename(filename)
+          .chunkFilename(filename)
+          .libraryTarget('commonjs2');
+      }
+
+      if (isServiceWorker) {
+        const workerPath = getDistPath(config, 'worker');
+        const filename = posix.join(workerPath, `[name].js`);
+
+        chain.output.filename(filename).chunkFilename(filename);
+      }
+    },
+  );
+}
+
+export function applyResolvePlugin(api: RsbuildPluginAPI) {
+  api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+    const config = api.getNormalizedConfig();
+
+    applyExtensions({ chain });
+
+    applyAlias({
+      chain,
+      config,
+      rootPath: api.context.rootPath,
+    });
+
+    applyFullySpecified({ chain, config, CHAIN_ID });
+  });
+}
+
+// compatible with legacy packages with type="module"
+// https://github.com/webpack/webpack/issues/11467
+function applyFullySpecified({
+  chain,
+  CHAIN_ID,
+}: {
+  chain: BundlerChain;
+  config: NormalizedConfig;
+  CHAIN_ID: ChainIdentifier;
+}) {
+  chain.module
+    .rule(CHAIN_ID.RULE.MJS)
+    .test(/\.m?js/)
+    .resolve.set('fullySpecified', false);
+
+  if (chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI)) {
+    chain.module
+      .rule(CHAIN_ID.RULE.JS_DATA_URI)
+      .resolve.set('fullySpecified', false);
+  }
+}
+
+function applyExtensions({ chain }: { chain: BundlerChain }) {
+  const extensions = [
+    // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
+    '.ts',
+    '.tsx',
+    '.js',
+    '.jsx',
+    '.mjs',
+    '.json',
+  ];
+
+  chain.resolve.extensions.merge(extensions);
+}
+
+function applyAlias({
+  chain,
+  config,
+  rootPath,
+}: {
+  chain: BundlerChain;
+  config: NormalizedConfig;
+  rootPath: string;
+}) {
+  const { alias } = config.source as {
+    alias?: ChainedConfig<Record<string, string>>;
+  };
+
+  if (!alias) {
+    return;
+  }
+
+  const mergedAlias = mergeChainedOptions({
+    defaults: {},
+    options: alias,
+  });
+
+  /**
+   * Format alias value:
+   * - Relative paths need to be turned into absolute paths.
+   * - Absolute paths or a package name are not processed.
+   */
+  Object.keys(mergedAlias).forEach((name) => {
+    const values = castArray(mergedAlias[name]);
+    const formattedValues = values.map((value) => {
+      if (typeof value === 'string' && value.startsWith('.')) {
+        return ensureAbsolutePath(rootPath, value);
+      }
+      return value;
+    });
+
+    chain.resolve.alias.set(
+      name,
+      formattedValues.length === 1 ? formattedValues[0] : formattedValues,
+    );
+  });
+}
