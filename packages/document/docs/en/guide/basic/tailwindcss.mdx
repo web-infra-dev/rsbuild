@@ -14,19 +14,14 @@ import { PackageManagerTabs } from '@theme';
 
 ## Configuring PostCSS
 
-Register the `tailwindcss` plugin through [tools.postcss](/config/tools/postcss).
+You can register the `tailwindcss` PostCSS plugin through [postcss.config.cjs](https://www.npmjs.com/package/postcss-loader#config) or [tools.postcss](/config/tools/postcss).
 
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import tailwindcss from 'tailwindcss';
-
-export default defineConfig({
-  tools: {
-    postcss(config) {
-      config.postcssOptions?.plugins?.push(tailwindcss);
-    },
+```js title="postcss.config.cjs"
+module.exports = {
+  plugins: {
+    tailwindcss: {},
   },
-});
+};
 ```
 
 ## Configuring Tailwind CSS
