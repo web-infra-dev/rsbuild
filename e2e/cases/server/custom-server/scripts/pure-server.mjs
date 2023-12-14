@@ -3,13 +3,26 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import { createRsbuild } from '@rsbuild/core';
 import express from 'express';
 
-export async function startDevServer(fixtures) {
+// startDevServer without compile
+export async function startDevServerPure(fixtures) {
   const rsbuild = await createRsbuild({
     cwd: fixtures,
     rsbuildConfig: {
       plugins: [pluginReact()],
       server: {
         htmlFallback: false,
+      },
+      dev: {
+        setupMiddlewares: [
+          (middlewares, server) => {
+            middlewares.unshift((req, res, next) => {
+              if (req.url === '/test') {
+                req.url = '/bbb';
+              }
+              next();
+            });
+          },
+        ],
       },
     },
   });
@@ -22,11 +35,7 @@ export async function startDevServer(fixtures) {
     config: { host, port },
   } = serverAPIs;
 
-  const compileMiddlewareAPI = await serverAPIs.startCompile();
-
-  const { middlewares, close, onUpgrade } = await serverAPIs.getMiddlewares({
-    compileMiddlewareAPI,
-  });
+  const { middlewares, close, onUpgrade } = await serverAPIs.getMiddlewares();
 
   app.get('/aaa', (_req, res) => {
     res.send('Hello World!');

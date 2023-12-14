@@ -3,23 +3,32 @@ import type {
   ServerAPIs,
   UpgradeEvent,
   RequestHandler,
-  RsbuildDevMiddlewareOptions,
+  DevMiddlewaresConfig,
+  CompileMiddlewareAPI,
 } from '@rsbuild/shared';
-import { CompilerDevMiddleware } from './compilerDevMiddleware';
 import {
   faviconFallbackMiddleware,
   getHtmlFallbackMiddleware,
 } from './middlewares';
 import { join, isAbsolute } from 'path';
 
+export type RsbuildDevMiddlewareOptions = {
+  pwd: string;
+  dev: DevMiddlewaresConfig;
+  compileMiddlewareAPI?: CompileMiddlewareAPI;
+  output: {
+    distPath: string;
+  };
+};
+
 const applySetupMiddlewares = (
   dev: RsbuildDevMiddlewareOptions['dev'],
-  devMiddleware: CompilerDevMiddleware,
+  compileMiddlewareAPI?: CompileMiddlewareAPI,
 ) => {
   const setupMiddlewares = dev.setupMiddlewares || [];
 
   const serverOptions: ServerAPIs = {
-    sockWrite: (type, data) => devMiddleware.sockWrite(type, data),
+    sockWrite: (type, data) => compileMiddlewareAPI?.sockWrite(type, data),
   };
 
   const before: RequestHandler[] = [];
@@ -41,7 +50,7 @@ const applySetupMiddlewares = (
 const applyDefaultMiddlewares = async ({
   middlewares,
   dev,
-  devMiddleware,
+  compileMiddlewareAPI,
   output,
   pwd,
 }: {
@@ -49,7 +58,7 @@ const applyDefaultMiddlewares = async ({
   pwd: RsbuildDevMiddlewareOptions['pwd'];
   middlewares: RequestHandler[];
   dev: RsbuildDevMiddlewareOptions['dev'];
-  devMiddleware: CompilerDevMiddleware;
+  compileMiddlewareAPI?: CompileMiddlewareAPI;
 }): Promise<{
   onUpgrade: UpgradeEvent;
 }> => {
@@ -97,11 +106,14 @@ const applyDefaultMiddlewares = async ({
     });
   }
 
-  // do rspack build / plugin apply / socket server when pass compiler instance
-  devMiddleware.init();
-  devMiddleware.middleware && middlewares.push(devMiddleware.middleware);
-  // subscribe upgrade event to handle websocket
-  upgradeEvents.push(devMiddleware.upgrade.bind(devMiddleware));
+  if (compileMiddlewareAPI) {
+    middlewares.push(compileMiddlewareAPI.middleware);
+
+    // subscribe upgrade event to handle websocket
+    upgradeEvents.push(
+      compileMiddlewareAPI.onUpgrade.bind(compileMiddlewareAPI),
+    );
+  }
 
   if (dev.publicDir && dev.publicDir.name) {
     const { default: sirv } = await import('../../compiled/sirv');
@@ -118,13 +130,14 @@ const applyDefaultMiddlewares = async ({
 
   const { distPath } = output;
 
-  middlewares.push(
-    getHtmlFallbackMiddleware({
-      distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
-      callback: devMiddleware.middleware,
-      htmlFallback: dev.htmlFallback,
-    }),
-  );
+  compileMiddlewareAPI &&
+    middlewares.push(
+      getHtmlFallbackMiddleware({
+        distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
+        callback: compileMiddlewareAPI.middleware,
+        htmlFallback: dev.htmlFallback,
+      }),
+    );
 
   if (dev.historyApiFallback) {
     const { default: connectHistoryApiFallback } = await import(
@@ -137,7 +150,8 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(historyApiFallbackMiddleware);
 
     // ensure fallback request can be handled by webpack-dev-middleware
-    devMiddleware.middleware && middlewares.push(devMiddleware.middleware);
+    compileMiddlewareAPI?.middleware &&
+      middlewares.push(compileMiddlewareAPI.middleware);
   }
 
   middlewares.push(faviconFallbackMiddleware);
@@ -151,22 +165,20 @@ const applyDefaultMiddlewares = async ({
 
 export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
   const middlewares: RequestHandler[] = [];
-  // create dev middleware instance
-  const devMiddleware = new CompilerDevMiddleware({
-    dev: options.dev,
-    publicPaths: options.output.publicPaths,
-    devMiddleware: options.devMiddleware,
-  });
+  const { compileMiddlewareAPI } = options;
 
   // Order: setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push
-  const { before, after } = applySetupMiddlewares(options.dev, devMiddleware);
+  const { before, after } = applySetupMiddlewares(
+    options.dev,
+    compileMiddlewareAPI,
+  );
 
   before.forEach((fn) => middlewares.push(fn));
 
   const { onUpgrade } = await applyDefaultMiddlewares({
     middlewares,
     dev: options.dev,
-    devMiddleware,
+    compileMiddlewareAPI,
     output: options.output,
     pwd: options.pwd,
   });
@@ -175,7 +187,7 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
 
   return {
     close: async () => {
-      devMiddleware.close();
+      compileMiddlewareAPI?.close();
     },
     onUpgrade,
     middlewares,
