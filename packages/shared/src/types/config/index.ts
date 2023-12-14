@@ -10,7 +10,7 @@ import type {
 } from './performance';
 import type { ToolsConfig, NormalizedToolsConfig } from './tools';
 import type { DeepReadonly } from '../utils';
-import type { RsbuildPlugin } from '..';
+import type { RsbuildPlugin, RsbuildProvider } from '..';
 
 /**
  * The shared Rsbuild config.
@@ -26,6 +26,7 @@ export interface RsbuildConfig {
   security?: SecurityConfig;
   performance?: PerformanceConfig;
   plugins?: RsbuildPlugin[];
+  provider?: RsbuildProvider<'rspack'> | RsbuildProvider<'webpack'>;
 }
 
 export type NormalizedConfig = DeepReadonly<{
@@ -38,6 +39,7 @@ export type NormalizedConfig = DeepReadonly<{
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;
   plugins?: RsbuildPlugin[];
+  provider?: RsbuildProvider<'rspack'> | RsbuildProvider<'webpack'>;
 }>;
 
 export * from './dev';

@@ -6,19 +6,14 @@ import type {
   CreateRsbuildOptions,
   BundlerPluginInstance,
 } from '@rsbuild/shared';
-import type { RsbuildConfig } from '@rsbuild/core';
 
-const getRspackProvider = async (rsbuildConfig: RsbuildConfig) => {
+const getRspackProvider = async () => {
   const { rspackProvider } = await import('@rsbuild/core/provider');
-
-  return rspackProvider({
-    rsbuildConfig,
-  });
+  return rspackProvider;
 };
 
 export const getRsbuildPlugins = async () => {
   const { plugins } = await import('@rsbuild/core/plugins/index');
-
   return plugins;
 };
 
@@ -73,13 +68,7 @@ export const matchPlugin = (config: RspackConfig, pluginName: string) => {
 /**
  * different with rsbuild createRsbuild. support add custom plugins instead of applyDefaultPlugins.
  */
-export async function createStubRsbuild<
-  P extends ({
-    rsbuildConfig,
-  }: {
-    rsbuildConfig: RsbuildConfig;
-  }) => RsbuildProvider,
->({
+export async function createStubRsbuild<P extends RsbuildProvider>({
   rsbuildConfig = {},
   plugins,
   ...options
@@ -88,7 +77,7 @@ export async function createStubRsbuild<
   plugins?: RsbuildPlugin[];
 }): Promise<
   Pick<
-    RsbuildInstance<ReturnType<P>>,
+    RsbuildInstance<P>,
     | 'build'
     | 'createCompiler'
     | 'inspectConfig'
@@ -119,8 +108,8 @@ export async function createStubRsbuild<
   }
 
   const provider = options.provider
-    ? options.provider({ rsbuildConfig })
-    : await getRspackProvider(rsbuildConfig as RsbuildConfig);
+    ? options.provider
+    : await getRspackProvider();
 
   const pluginStore = createPluginStore();
   const {

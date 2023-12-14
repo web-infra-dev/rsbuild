@@ -42,10 +42,11 @@ export const createRsbuild = async (
   }
 
   const { webpackProvider } = await import('@rsbuild/webpack');
-  const rsbuild = await createRsbuild({
-    ...rsbuildOptions,
-    provider: webpackProvider,
-  });
+
+  rsbuildOptions.rsbuildConfig ||= {};
+  rsbuildOptions.rsbuildConfig.provider = webpackProvider;
+
+  const rsbuild = await createRsbuild(rsbuildOptions);
 
   if (plugins) {
     rsbuild.addPlugins(plugins);
