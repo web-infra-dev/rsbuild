@@ -5,7 +5,7 @@ import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
 import type { StartServerResult, DevServerAPIs } from './server';
 import type { AddressUrl } from '../url';
 import type { Logger } from '../logger';
-import type { NormalizedConfig } from './config';
+import type { NormalizedConfig, RsbuildConfig } from './config';
 import type { WebpackConfig } from './thirdParty';
 import type { RspackConfig } from './rspack';
 
@@ -52,6 +52,7 @@ export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
 export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
   (options: {
     pluginStore: PluginStore;
+    rsbuildConfig: RsbuildConfig;
     rsbuildOptions: Required<CreateRsbuildOptions>;
     plugins: Plugins;
   }) => Promise<ProviderInstance<B>>;
