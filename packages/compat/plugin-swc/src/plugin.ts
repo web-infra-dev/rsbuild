@@ -1,4 +1,4 @@
-import * as path from 'path';
+import path from 'path';
 import {
   SCRIPT_REGEX,
   DEFAULT_BROWSERSLIST,

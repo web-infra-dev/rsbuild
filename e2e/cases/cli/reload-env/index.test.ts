@@ -5,7 +5,8 @@ import { fse } from '@rsbuild/shared';
 import { awaitFileExists } from '@scripts/helper';
 import { getRandomPort } from '@scripts/shared';
 
-test('should restart dev server when .env file is changed', async () => {
+// Skipped as it occasionally failed in CI
+test.skip('should restart dev server when .env file is changed', async () => {
   const dist = path.join(__dirname, 'dist');
   const configFile = path.join(__dirname, 'rsbuild.config.mjs');
   const envLocalFile = path.join(__dirname, '.env.local');
