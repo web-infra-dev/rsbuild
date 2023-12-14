@@ -12,9 +12,8 @@ export const rspackProvider: RsbuildProvider = async ({
   pluginStore,
   rsbuildOptions,
   plugins,
-  rsbuildConfig: originalRsbuildConfig,
 }) => {
-  const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
+  const rsbuildConfig = pickRsbuildConfig(rsbuildOptions.rsbuildConfig);
 
   const context = await createContext(rsbuildOptions, rsbuildConfig, 'rspack');
   const pluginAPI = getPluginAPI({ context, pluginStore });

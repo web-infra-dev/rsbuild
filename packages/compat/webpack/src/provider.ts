@@ -13,12 +13,11 @@ import { applyDefaultPlugins } from './shared';
 import { initConfigs } from './core/initConfigs';
 
 export const webpackProvider: RsbuildProvider<'webpack'> = async ({
+  plugins,
   pluginStore,
   rsbuildOptions,
-  rsbuildConfig: originalRsbuildConfig,
-  plugins,
 }) => {
-  const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
+  const rsbuildConfig = pickRsbuildConfig(rsbuildOptions.rsbuildConfig);
   const context = await createContext(rsbuildOptions, rsbuildConfig, 'webpack');
   const pluginAPI = getPluginAPI({ context, pluginStore });
 

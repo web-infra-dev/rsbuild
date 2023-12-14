@@ -40,10 +40,9 @@ export async function createRsbuild(
     startDevServer,
     applyDefaultPlugins,
   } = await provider({
-    pluginStore,
-    rsbuildConfig,
-    rsbuildOptions,
     plugins,
+    pluginStore,
+    rsbuildOptions,
   });
 
   debug('add default plugins');

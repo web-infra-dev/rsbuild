@@ -122,7 +122,6 @@ export async function createStubRsbuild<P extends RsbuildProvider>({
     initConfigs,
   } = await provider({
     pluginStore,
-    rsbuildConfig,
     rsbuildOptions,
     plugins: await getRsbuildPlugins(),
   });
