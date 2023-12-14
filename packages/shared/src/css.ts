@@ -118,18 +118,18 @@ export const getPostcssLoaderOptions = async ({
 
   const userPostcssConfig = await loadUserPostcssrc(root);
 
-  userPostcssConfig.plugins ||= [];
-  userPostcssConfig.plugins.push(
-    require(getSharedPkgCompiledPath('postcss-flexbugs-fixes')),
-    // Place autoprefixer as the last plugin to correctly process the results of other plugins
-    // such as tailwindcss
-    require(getSharedPkgCompiledPath('autoprefixer'))(autoprefixerOptions),
-  );
-
-  userPostcssConfig.config = false;
-
-  const defaultPostcssConfig = {
-    postcssOptions: userPostcssConfig,
+  const defaultPostcssConfig: PostCSSLoaderOptions = {
+    postcssOptions: {
+      ...userPostcssConfig,
+      config: false,
+      plugins: [
+        ...(userPostcssConfig.plugins || []),
+        require(getSharedPkgCompiledPath('postcss-flexbugs-fixes')),
+        // Place autoprefixer as the last plugin to correctly process the results of other plugins
+        // such as tailwindcss
+        require(getSharedPkgCompiledPath('autoprefixer'))(autoprefixerOptions),
+      ],
+    },
     sourceMap: config.output.sourceMap.css,
   };
 
