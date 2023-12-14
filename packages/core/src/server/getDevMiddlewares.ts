@@ -106,13 +106,14 @@ const applyDefaultMiddlewares = async ({
     });
   }
 
-  compileMiddlewareAPI?.middleware &&
+  if (compileMiddlewareAPI) {
     middlewares.push(compileMiddlewareAPI.middleware);
-  // subscribe upgrade event to handle websocket
-  compileMiddlewareAPI?.onUpgrade &&
+
+    // subscribe upgrade event to handle websocket
     upgradeEvents.push(
       compileMiddlewareAPI.onUpgrade.bind(compileMiddlewareAPI),
     );
+  }
 
   if (dev.publicDir && dev.publicDir.name) {
     const { default: sirv } = await import('../../compiled/sirv');
@@ -129,13 +130,14 @@ const applyDefaultMiddlewares = async ({
 
   const { distPath } = output;
 
-  middlewares.push(
-    getHtmlFallbackMiddleware({
-      distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
-      callback: compileMiddlewareAPI?.middleware,
-      htmlFallback: dev.htmlFallback,
-    }),
-  );
+  compileMiddlewareAPI &&
+    middlewares.push(
+      getHtmlFallbackMiddleware({
+        distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
+        callback: compileMiddlewareAPI.middleware,
+        htmlFallback: dev.htmlFallback,
+      }),
+    );
 
   if (dev.historyApiFallback) {
     const { default: connectHistoryApiFallback } = await import(
