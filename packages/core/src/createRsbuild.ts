@@ -14,13 +14,12 @@ const getRspackProvider = async () => {
 };
 
 export async function createRsbuild(
-  options: CreateRsbuildOptions & {
-    provider?: RsbuildProvider;
-  },
+  options: CreateRsbuildOptions,
 ): Promise<RsbuildInstance> {
   const { rsbuildConfig = {} } = options;
 
-  const provider = options.provider || (await getRspackProvider());
+  const provider = (rsbuildConfig.provider ||
+    (await getRspackProvider())) as RsbuildProvider;
 
   const rsbuildOptions: Required<CreateRsbuildOptions> = {
     cwd: process.cwd(),

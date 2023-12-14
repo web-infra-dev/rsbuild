@@ -10,7 +10,7 @@ import {
 import type { Context } from '@rsbuild/core/provider';
 import type { WebpackConfig } from '../types';
 import { initConfigs, InitConfigsOptions } from './initConfigs';
-import type { Compiler, MultiCompiler } from 'webpack';
+import type { Compiler } from 'webpack';
 import { getDevMiddleware } from './devMiddleware';
 
 export async function createCompiler({
@@ -27,10 +27,11 @@ export async function createCompiler({
 
   const { default: webpack } = await import('webpack');
 
-  const compiler =
-    webpackConfigs.length === 1
-      ? webpack(webpackConfigs[0])
-      : webpack(webpackConfigs);
+  const compiler = (webpackConfigs.length === 1
+    ? webpack(webpackConfigs[0])
+    : webpack(webpackConfigs)) as unknown as
+    | Rspack.Compiler
+    | Rspack.MultiCompiler;
 
   let isFirstCompile = true;
 
@@ -55,7 +56,7 @@ export async function createCompiler({
   });
 
   await context.hooks.onAfterCreateCompilerHook.call({
-    compiler: compiler as unknown as Rspack.Compiler | Rspack.MultiCompiler,
+    compiler,
   });
   debug('create compiler done');
 
@@ -64,9 +65,9 @@ export async function createCompiler({
 
 export async function createDevMiddleware(
   options: InitConfigsOptions,
-  customCompiler?: Compiler | MultiCompiler,
+  customCompiler?: Rspack.Compiler | Rspack.MultiCompiler,
 ) {
-  let compiler: Compiler | MultiCompiler;
+  let compiler: Rspack.Compiler | Rspack.MultiCompiler;
   if (customCompiler) {
     compiler = customCompiler;
   } else {
@@ -78,7 +79,7 @@ export async function createDevMiddleware(
   }
 
   return {
-    devMiddleware: getDevMiddleware(compiler),
+    devMiddleware: getDevMiddleware(compiler as unknown as Compiler),
     compiler,
   };
 }

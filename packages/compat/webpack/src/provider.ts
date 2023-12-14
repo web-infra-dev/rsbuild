@@ -60,7 +60,6 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
       await initRsbuildConfig({ context, pluginStore });
       return getServerAPIs(
         { context, pluginStore, rsbuildOptions },
-        // @ts-expect-error compile type mismatch
         createDevMiddleware,
         options,
       );
@@ -79,7 +78,6 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
           pluginStore,
           rsbuildOptions,
         },
-        // @ts-expect-error compile type mismatch
         createDevMiddleware,
         options,
       );
