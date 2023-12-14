@@ -38,7 +38,7 @@
     "http-proxy-middleware": "^2.0.6",
     "icss-utils": "5.1.0",
     "loader-utils2": "npm:loader-utils@2.0.4",
-    "jiti": "^1.20.0",
+    "jiti": "^1.21.0",
     "json5": "^2.2.3",
     "line-diff": "2.1.1",
     "mime-types": "^2.1.35",
