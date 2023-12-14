@@ -79,7 +79,7 @@ export const pluginRem = (options: PluginRemOptions = {}): RsbuildPlugin => ({
         );
 
         const entries = Object.keys(chain.entryPoints.entries() || {});
-        const distDir = getDistPath(config.output, 'js');
+        const distDir = getDistPath(config, 'js');
 
         chain
           .plugin(CHAIN_ID.PLUGIN.AUTO_SET_ROOT_SIZE)

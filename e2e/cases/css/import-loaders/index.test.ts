@@ -7,11 +7,6 @@ webpackOnlyTest(
   async () => {
     const rsbuild = await build({
       cwd: __dirname,
-      rsbuildConfig: {
-        output: {
-          disableSourceMap: true,
-        },
-      },
     });
     const files = await rsbuild.unwrapOutputJSON();
 

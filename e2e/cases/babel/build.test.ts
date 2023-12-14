@@ -26,11 +26,15 @@ rspackOnlyTest('babel exclude', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     runServer: true,
+    rsbuildConfig: {
+      source: {
+        exclude: [/aa/],
+      },
+    },
     plugins: [
       pluginBabel({
-        babelLoaderOptions: (_, { addPlugins, addExcludes }) => {
+        babelLoaderOptions: (_, { addPlugins }) => {
           addPlugins([require('./plugins/myBabelPlugin')]);
-          addExcludes(/aa/);
         },
       }),
     ],

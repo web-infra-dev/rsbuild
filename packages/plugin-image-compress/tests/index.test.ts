@@ -1,5 +1,4 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
-import { webpackProvider } from '@rsbuild/webpack';
 import { pluginAsset } from '@rsbuild/core/plugins/asset';
 import { pluginImageCompress } from '../src';
 
@@ -8,7 +7,6 @@ process.env.NODE_ENV = 'production';
 describe('plugin-image-compress', () => {
   it('should generate correct options', async () => {
     const rsbuild = await createStubRsbuild({
-      provider: webpackProvider,
       rsbuildConfig: {},
       plugins: [pluginAsset(), pluginImageCompress()],
     });
@@ -17,7 +15,6 @@ describe('plugin-image-compress', () => {
 
   it('should accept `...options: Options[]` as parameter', async () => {
     const rsbuild = await createStubRsbuild({
-      provider: webpackProvider,
       rsbuildConfig: {},
       plugins: [pluginAsset(), pluginImageCompress('jpeg', { use: 'png' })],
     });
@@ -44,7 +41,6 @@ describe('plugin-image-compress', () => {
 
   it('should accept `options: Options[]` as parameter', async () => {
     const rsbuild = await createStubRsbuild({
-      provider: webpackProvider,
       rsbuildConfig: {},
       plugins: [pluginAsset(), pluginImageCompress(['jpeg', { use: 'png' }])],
     });

@@ -52,12 +52,12 @@ You can customize the CSS minimizer by using the [CSS Minimizer plugin](/plugins
 
 By default, Rsbuild will extract CSS into a separate `.css` file and output it to the dist directory.
 
-If you want to inline styles into your JS file, you can set [output.disableCssExtract](/config/output/disable-css-extract) to true to disable CSS extraction logic.When the JS file is requested by the browser, JS dynamically inserts the `<style>` tag into the Html to load the CSS styles.
+If you want to inline styles into your JS file, you can set [output.injectStyles](/config/output/inject-styles) to true to disable CSS extraction logic. When the JS file is requested by the browser, JS dynamically inserts the `<style>` tag into the Html to load the CSS styles.
 
 ```ts
 export default {
   output: {
-    disableCssExtract: true,
+    injectStyles: true,
   },
 };
 ```

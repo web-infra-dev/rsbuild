@@ -69,7 +69,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
               dev: !isProd,
             },
             preprocess: sveltePreprocess(),
-            emitCss: !rsbuildConfig.output.disableCssExtract,
+            emitCss: !rsbuildConfig.output.injectStyles,
             hotReload: !isProd && rsbuildConfig.dev.hmr,
           },
           options.svelteLoaderOptions ?? {},

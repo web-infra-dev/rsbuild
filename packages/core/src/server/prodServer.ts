@@ -1,6 +1,4 @@
-import type { ListenOptions } from 'net';
-import { createServer, Server } from 'http';
-import { createServer as createHttpsServer } from 'https';
+import { Server } from 'http';
 import connect from '@rsbuild/shared/connect';
 import { join } from 'path';
 import sirv from '../../compiled/sirv';
@@ -19,6 +17,7 @@ import {
 } from '@rsbuild/shared';
 import { faviconFallbackMiddleware } from './middlewares';
 import type { Context } from '../types';
+import { createHttpServer } from './httpServer';
 
 type RsbuildProdServerOptions = {
   pwd: string;
@@ -73,10 +72,12 @@ export class RsbuildProdServer {
 
     if (proxy) {
       const { createProxyMiddleware } = await import('./proxy');
-      const { middlewares } = createProxyMiddleware(proxy, this.app);
+      const { middlewares, upgrade } = createProxyMiddleware(proxy);
       middlewares.forEach((middleware) => {
         this.middlewares.use(middleware);
       });
+
+      this.app.on('upgrade', upgrade);
     }
 
     this.applyStaticAssetMiddleware();
@@ -128,34 +129,7 @@ export class RsbuildProdServer {
     });
   }
 
-  public async createHTTPServer() {
-    const { serverConfig } = this.options;
-    const httpsOption = serverConfig.https;
-    if (httpsOption) {
-      return createHttpsServer(httpsOption, this.middlewares);
-    } else {
-      return createServer(this.middlewares);
-    }
-  }
-
-  public listen(
-    options?: number | ListenOptions | undefined,
-    listener?: () => Promise<void>,
-  ) {
-    const callback = () => {
-      listener?.();
-    };
-
-    if (typeof options === 'object') {
-      this.app.listen(options, callback);
-    } else {
-      this.app.listen(options || 8080, callback);
-    }
-  }
-
-  public close() {
-    this.app.close();
-  }
+  public close() {}
 }
 
 export async function startProdServer(
@@ -183,12 +157,15 @@ export async function startProdServer(
 
   await context.hooks.onBeforeStartProdServerHook.call();
 
-  const httpServer = await server.createHTTPServer();
+  const httpServer = await createHttpServer({
+    https: serverConfig.https,
+    middlewares: server.middlewares,
+  });
 
   await server.onInit(httpServer);
 
   return new Promise<StartServerResult>((resolve) => {
-    server.listen(
+    httpServer.listen(
       {
         host,
         port,
@@ -213,12 +190,17 @@ export async function startProdServer(
           );
         }
 
+        const onClose = () => {
+          server.close();
+          httpServer.close();
+        };
+
         resolve({
           port,
           urls: urls.map((item) => item.url),
           server: {
             close: async () => {
-              server.close();
+              onClose();
             },
           },
         });

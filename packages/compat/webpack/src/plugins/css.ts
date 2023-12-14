@@ -2,9 +2,8 @@ import {
   CSS_REGEX,
   resolvePackage,
   isUseCssExtract,
-  getPostcssConfig,
+  getPostcssLoaderOptions,
   ModifyChainUtils,
-  isUseCssSourceMap,
   mergeChainedOptions,
   getCssLoaderOptions,
   getBrowserslistWithDefault,
@@ -38,7 +37,6 @@ export async function applyBaseCSSRule({
 
   // 1. Check user config
   const enableExtractCSS = isUseCssExtract(config, target);
-  const enableSourceMap = isUseCssSourceMap(config);
   const enableCSSModuleTS = Boolean(config.output.enableCssModuleTSDeclaration);
 
   // 2. Prepare loader options
@@ -46,7 +44,6 @@ export async function applyBaseCSSRule({
 
   const cssLoaderOptions = getCssLoaderOptions({
     config,
-    enableSourceMap,
     importLoaders,
     isServer,
     isWebWorker,
@@ -115,10 +112,10 @@ export async function applyBaseCSSRule({
     .end();
 
   if (!isServer && !isWebWorker) {
-    const postcssLoaderOptions = getPostcssConfig({
-      enableSourceMap,
+    const postcssLoaderOptions = await getPostcssLoaderOptions({
       browserslist,
       config,
+      root: context.rootPath,
     });
 
     rule

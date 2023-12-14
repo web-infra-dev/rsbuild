@@ -14,7 +14,7 @@ You can install the plugin using the following command:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsbuild/plugin-vue2-jsx -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-vue2-jsx -D" />
 
 ### Register Plugin
 
@@ -25,9 +25,22 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginVue2Jsx } from '@rsbuild/plugin-vue2-jsx';
 
 export default {
-  plugins: [pluginBabel(), pluginVue2Jsx()],
+  plugins: [
+    pluginBabel({
+      include: /\.(jsx|tsx)$/,
+      exclude: /[\\/]node_modules[\\/]/,
+    }),
+    pluginVue2Jsx(),
+  ],
 };
 ```
+
+:::tip
+Since the Vue JSX plugin relies on Babel for compilation, you need to additionally add the [Babel plugin](/plugins/list/plugin-babel).
+
+Babel compilation will introduce extra overhead, in the example above, we use `include` to match `.jsx` and `.tsx` files, thereby reducing the performance cost brought by Babel.
+
+:::
 
 After registering the plugin, you can use Vue's [JSX / TSX syntax](https://github.com/vuejs/jsx-vue2) in your code.
 

@@ -1,6 +1,5 @@
 import {
   isDebug,
-  castArray,
   type PluginStore,
   type InspectConfigOptions,
   type CreateRsbuildOptions,
@@ -23,12 +22,12 @@ export async function initConfigs({
 }: InitConfigsOptions): Promise<{
   webpackConfigs: WebpackConfig[];
 }> {
-  await initRsbuildConfig({
+  const normalizedConfig = await initRsbuildConfig({
     context,
     pluginStore,
   });
+  const { targets } = normalizedConfig.output;
 
-  const targets = castArray(rsbuildOptions.target);
   const webpackConfigs = await Promise.all(
     targets.map((target) => generateWebpackConfig({ target, context })),
   );

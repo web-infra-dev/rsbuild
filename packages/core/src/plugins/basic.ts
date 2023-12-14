@@ -1,5 +1,5 @@
 import path from 'path';
-import { TARGET_ID_MAP } from '@rsbuild/shared';
+import { TARGET_ID_MAP, getJsSourceMap } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 /**
@@ -10,7 +10,11 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain((chain, { env, isProd, target }) => {
+      const config = api.getNormalizedConfig();
+
       chain.name(TARGET_ID_MAP[target]);
+
+      chain.devtool(getJsSourceMap(config));
 
       // The base directory for resolving entry points and loaders from the configuration.
       chain.context(api.context.rootPath);

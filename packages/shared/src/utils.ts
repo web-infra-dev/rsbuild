@@ -3,6 +3,7 @@ import type { Compiler } from '@rspack/core';
 import type {
   CacheGroup,
   RsbuildTarget,
+  ModifyChainUtils,
   NormalizedConfig,
   SharedCompiledPkgNames,
 } from './types';
@@ -67,30 +68,12 @@ export const awaitableGetter = <T>(
   return { then, promises };
 };
 
-export const isUseJsSourceMap = (config: NormalizedConfig) => {
-  const { disableSourceMap } = config.output || {};
-
-  if (typeof disableSourceMap === 'boolean') {
-    return !disableSourceMap;
+export const getJsSourceMap = (config: NormalizedConfig) => {
+  const { sourceMap } = config.output;
+  if (sourceMap.js === undefined) {
+    return isProd() ? false : 'cheap-module-source-map';
   }
-
-  return !disableSourceMap.js;
-};
-
-export const isUseCssSourceMap = (config: NormalizedConfig) => {
-  const { disableSourceMap } = config.output || {};
-
-  if (typeof disableSourceMap === 'boolean') {
-    return !disableSourceMap;
-  }
-
-  // If the disableSourceMap.css option is not specified, we will enable it in development mode.
-  // We do not need CSS Source Map in production mode.
-  if (disableSourceMap.css === undefined) {
-    return process.env.NODE_ENV !== 'production';
-  }
-
-  return !disableSourceMap.css;
+  return sourceMap.js;
 };
 
 export const getSharedPkgCompiledPath = (packageName: SharedCompiledPkgNames) =>
@@ -106,7 +89,7 @@ export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
   );
 }
 
-export function isServerTarget(target: RsbuildTarget | RsbuildTarget[]) {
+export function isServerTarget(target: RsbuildTarget[]) {
   return (Array.isArray(target) ? target : [target]).some((item) =>
     ['node', 'service-worker'].includes(item),
   );
@@ -303,4 +286,31 @@ export function onExitProcess(listener: NodeJS.ExitListener) {
   process.on('SIGINT', () => {
     process.exit(0);
   });
+}
+
+export const isHtmlDisabled = (
+  config: NormalizedConfig,
+  target: RsbuildTarget,
+) => {
+  const { htmlPlugin } = config.tools as {
+    htmlPlugin: boolean | Array<unknown>;
+  };
+  return (
+    htmlPlugin === false ||
+    (Array.isArray(htmlPlugin) && htmlPlugin.includes(false)) ||
+    target !== 'web'
+  );
+};
+
+export function isUsingHMR(
+  config: NormalizedConfig,
+  { isProd, target }: Pick<ModifyChainUtils, 'isProd' | 'target'>,
+) {
+  return (
+    !isProd &&
+    target !== 'node' &&
+    target !== 'web-worker' &&
+    target !== 'service-worker' &&
+    config.dev.hmr
+  );
 }

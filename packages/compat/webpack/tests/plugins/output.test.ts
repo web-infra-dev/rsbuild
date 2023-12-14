@@ -7,16 +7,16 @@ describe('plugin-output', () => {
       plugins: [pluginOutput()],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
   it('should allow to custom server directory with distPath.server', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      target: ['node'],
       rsbuildConfig: {
         output: {
+          targets: ['node'],
           distPath: {
             server: 'server',
           },
@@ -24,7 +24,7 @@ describe('plugin-output', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -41,7 +41,7 @@ describe('plugin-output', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -57,7 +57,7 @@ describe('plugin-output', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 });

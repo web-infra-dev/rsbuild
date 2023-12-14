@@ -27,6 +27,7 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -57,7 +58,7 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -73,6 +74,7 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -103,7 +105,7 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -113,6 +115,11 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
       },
     ],
   },
+  "plugins": [
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
+    },
+  ],
 }
 `;
 
@@ -143,6 +150,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -173,7 +181,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -189,6 +197,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -219,7 +228,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -241,6 +250,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -271,7 +281,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -281,7 +291,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -297,6 +307,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -327,7 +338,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -337,7 +348,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -359,6 +370,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -389,7 +401,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -419,6 +431,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -449,7 +462,7 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -474,6 +487,9 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
     ],
   },
   "plugins": [
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
+    },
     AutoSetRootFontSizePlugin {
       "HtmlPlugin": [Function],
       "distDir": "static/js",
@@ -524,6 +540,7 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -554,7 +571,7 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -570,6 +587,7 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -600,7 +618,7 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -611,6 +629,9 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
     ],
   },
   "plugins": [
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
+    },
     AutoSetRootFontSizePlugin {
       "HtmlPlugin": [Function],
       "distDir": "static/js",
@@ -666,6 +687,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -696,7 +718,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -712,6 +734,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -742,7 +765,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -764,6 +787,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -794,7 +818,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -804,7 +828,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -820,6 +844,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -850,7 +875,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -860,7 +885,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -882,6 +907,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -912,7 +938,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -942,6 +968,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -972,7 +999,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -997,6 +1024,9 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
     ],
   },
   "plugins": [
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
+    },
     AutoSetRootFontSizePlugin {
       "HtmlPlugin": [Function],
       "distDir": "static/js",

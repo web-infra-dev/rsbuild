@@ -7,7 +7,7 @@ describe('plugin-sri', () => {
       plugins: [pluginSRI(true)],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.output?.crossOriginLoading).toBe('anonymous');
   });
 
@@ -21,7 +21,7 @@ describe('plugin-sri', () => {
       ],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.output?.crossOriginLoading).toBe('anonymous');
   });
 });

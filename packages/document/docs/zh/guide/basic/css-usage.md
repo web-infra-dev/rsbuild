@@ -52,12 +52,12 @@ Rsbuild 默认使用 Rspack 内置的 `SwcCssMinimizerRspackPlugin` 插件，在
 
 默认情况下，Rsbuild 会把 CSS 提取为独立的 `.css` 文件，并输出到构建产物目录。
 
-如果你希望将样式内联到 JS 文件中，可以将 [output.disableCssExtract](/config/output/disable-css-extract) 设置为 `true` 来禁用 CSS 提取逻辑。当浏览器请求到 JS 文件后，JS 将动态地向 HTML 插入 `<style>` 标签，以此加载 CSS 样式。
+如果你希望将样式内联到 JS 文件中，可以将 [output.injectStyles](/config/output/inject-styles) 设置为 `true` 来禁用 CSS 提取逻辑。当浏览器请求到 JS 文件后，JS 将动态地向 HTML 插入 `<style>` 标签，以此加载 CSS 样式。
 
 ```ts
 export default {
   output: {
-    disableCssExtract: true,
+    injectStyles: true,
   },
 };
 ```

@@ -73,8 +73,8 @@ export const pluginFallback = (): RsbuildPlugin => ({
     if (api.context.bundlerType === 'webpack') {
       api.modifyBundlerChain((chain, { isProd }) => {
         const rsbuildConfig = api.getNormalizedConfig();
-        const distDir = getDistPath(rsbuildConfig.output, 'media');
-        const filename = getFilename(rsbuildConfig.output, 'media', isProd);
+        const distDir = getDistPath(rsbuildConfig, 'media');
+        const filename = getFilename(rsbuildConfig, 'media', isProd);
 
         chain.output.merge({
           assetModuleFilename: join(distDir, filename),
@@ -93,8 +93,8 @@ export const pluginFallback = (): RsbuildPlugin => ({
       api.modifyRspackConfig((config, { isProd }) => {
         const rsbuildConfig = api.getNormalizedConfig();
 
-        const distDir = getDistPath(rsbuildConfig.output, 'media');
-        const filename = getFilename(rsbuildConfig.output, 'media', isProd);
+        const distDir = getDistPath(rsbuildConfig, 'media');
+        const filename = getFilename(rsbuildConfig, 'media', isProd);
 
         setConfig(
           config,

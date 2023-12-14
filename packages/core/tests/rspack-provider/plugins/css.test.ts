@@ -17,28 +17,30 @@ describe('plugin-css', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should disable source map when output.disableSourceMap is true', async () => {
+  it('should enable source map when output.sourceMap.css is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableSourceMap: true,
+          sourceMap: {
+            css: true,
+          },
         },
       },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(JSON.stringify(bundlerConfigs[0])).toContain('"sourceMap":false');
+    expect(JSON.stringify(bundlerConfigs[0])).toContain('"sourceMap":true');
   });
 
-  it('should disable source map when output.disableSourceMap is css: true', async () => {
+  it('should disable source map when output.sourceMap.css is false', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableSourceMap: {
-            css: true,
+          sourceMap: {
+            css: false,
           },
         },
       },
@@ -131,13 +133,13 @@ describe('plugin-css', () => {
   });
 });
 
-describe('plugin-css disableCssExtract', () => {
-  it('should use css-loader + style-loader when disableCssExtract is true', async () => {
+describe('plugin-css injectStyles', () => {
+  it('should use css-loader + style-loader when injectStyles is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          disableCssExtract: true,
+          injectStyles: true,
         },
       },
     });
@@ -147,13 +149,13 @@ describe('plugin-css disableCssExtract', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should apply ignoreCssLoader when disableCssExtract is true and target is node', async () => {
+  it('should apply ignoreCssLoader when injectStyles is true and target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      target: 'node',
       rsbuildConfig: {
         output: {
-          disableCssExtract: true,
+          targets: ['node'],
+          injectStyles: true,
         },
       },
     });
@@ -179,12 +181,12 @@ describe('plugin-less', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should add less-loader and css-loader when disableCssExtract', async () => {
+  it('should add less-loader and css-loader when injectStyles', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginLess()],
       rsbuildConfig: {
         output: {
-          disableCssExtract: true,
+          injectStyles: true,
         },
       },
     });
@@ -241,12 +243,12 @@ describe('plugin-sass', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should add sass-loader and css-loader when disableCssExtract', async () => {
+  it('should add sass-loader and css-loader when injectStyles', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSass()],
       rsbuildConfig: {
         output: {
-          disableCssExtract: true,
+          injectStyles: true,
         },
       },
     });

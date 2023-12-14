@@ -43,7 +43,7 @@ export const pluginNodeAddons = (): RsbuildPlugin => ({
 
           const { name: pkgName } = require(pkgJSON);
           const config = api.getNormalizedConfig();
-          const serverPath = getDistPath(config.output, 'server');
+          const serverPath = getDistPath(config, 'server');
           return `${serverPath}/${getFilename(resourcePath, pkgName)}`;
         };
 

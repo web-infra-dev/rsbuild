@@ -1,13 +1,14 @@
-import assert from 'assert';
 import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
-import type { AcceptedPlugin, ProcessOptions } from 'postcss';
+import type { AcceptedPlugin } from 'postcss';
 import deepmerge from '../compiled/deepmerge';
 import { getSharedPkgCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
   RsbuildTarget,
+  PostCSSOptions,
   CSSLoaderOptions,
   NormalizedConfig,
+  PostCSSLoaderOptions,
 } from './types';
 
 export const getCssModuleLocalIdentName = (
@@ -53,15 +54,48 @@ export const isCssModules = (filename: string, modules: CssLoaderModules) => {
   return true;
 };
 
-export const getPostcssConfig = ({
-  enableSourceMap,
+const userPostcssrcCache = new Map<
+  string,
+  PostCSSOptions | Promise<PostCSSOptions>
+>();
+
+async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
+  const cached = userPostcssrcCache.get(root);
+
+  if (cached) {
+    return cached;
+  }
+
+  const { default: postcssrc } = await import(
+    '../compiled/postcss-load-config'
+  );
+
+  const promise = postcssrc({}, root).catch((err: Error) => {
+    // ignore the config not found error
+    if (err.message?.includes('No PostCSS Config found')) {
+      return {};
+    }
+    throw err;
+  });
+
+  userPostcssrcCache.set(root, promise);
+
+  promise.then((config: PostCSSOptions) => {
+    userPostcssrcCache.set(root, config);
+  });
+
+  return promise;
+}
+
+export const getPostcssLoaderOptions = async ({
   browserslist,
   config,
+  root,
 }: {
-  enableSourceMap: boolean;
   browserslist: string[];
   config: NormalizedConfig;
-}): ProcessOptions => {
+  root: string;
+}): Promise<PostCSSLoaderOptions> => {
   const extraPlugins: AcceptedPlugin[] = [];
 
   const utils = {
@@ -82,14 +116,21 @@ export const getPostcssConfig = ({
     options: config.tools.autoprefixer,
   });
 
-  const defaultPostcssConfig = {
+  const userPostcssConfig = await loadUserPostcssrc(root);
+
+  const defaultPostcssConfig: PostCSSLoaderOptions = {
     postcssOptions: {
+      ...userPostcssConfig,
+      config: false,
       plugins: [
+        ...(userPostcssConfig.plugins || []),
         require(getSharedPkgCompiledPath('postcss-flexbugs-fixes')),
+        // Place autoprefixer as the last plugin to correctly process the results of other plugins
+        // such as tailwindcss
         require(getSharedPkgCompiledPath('autoprefixer'))(autoprefixerOptions),
-      ].filter(Boolean),
+      ],
     },
-    sourceMap: enableSourceMap,
+    sourceMap: config.output.sourceMap.css,
   };
 
   const mergedConfig = mergeChainedOptions({
@@ -97,17 +138,12 @@ export const getPostcssConfig = ({
     options: config.tools.postcss,
     utils,
   });
+
   if (extraPlugins.length) {
-    assert('postcssOptions' in mergedConfig);
-    assert('plugins' in mergedConfig.postcssOptions!);
-    mergedConfig.postcssOptions.plugins!.push(...extraPlugins);
+    mergedConfig?.postcssOptions?.plugins!.push(...extraPlugins);
   }
 
-  return mergedConfig as ProcessOptions & {
-    postcssOptions: {
-      plugins?: AcceptedPlugin[];
-    };
-  };
+  return mergedConfig;
 };
 
 // If the target is 'node' or 'web-worker' and the modules option of css-loader is enabled,
@@ -143,14 +179,12 @@ export const normalizeCssLoaderOptions = (
 
 export const getCssLoaderOptions = ({
   config,
-  enableSourceMap,
   importLoaders,
   isServer,
   isWebWorker,
   localIdentName,
 }: {
   config: NormalizedConfig;
-  enableSourceMap: boolean;
   importLoaders: number;
   isServer: boolean;
   isWebWorker: boolean;
@@ -165,7 +199,7 @@ export const getCssLoaderOptions = ({
       exportLocalsConvention: cssModules.exportLocalsConvention,
       localIdentName,
     },
-    sourceMap: enableSourceMap,
+    sourceMap: config.output.sourceMap.css,
   };
 
   const mergedCssLoaderOptions = mergeChainedOptions({
@@ -186,9 +220,7 @@ export const isUseCssExtract = (
   config: NormalizedConfig,
   target: RsbuildTarget,
 ) =>
-  !config.output.disableCssExtract &&
-  target !== 'node' &&
-  target !== 'web-worker';
+  !config.output.injectStyles && target !== 'node' && target !== 'web-worker';
 
 /**
  * fix resolve-url-loader can't deal with resolve.alias config (such as @xxx、xxx)

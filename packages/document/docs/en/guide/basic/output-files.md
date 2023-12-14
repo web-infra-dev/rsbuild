@@ -41,7 +41,7 @@ Rsbuild provides some configs to modify the directory or filename, you can:
 - Modify the filename through [output.filename](/config/output/filename).
 - Modify the output path of through [output.distPath](/config/output/dist-path).
 - Modify the license file through [output.legalComments](/config/output/legal-comments).
-- Remove Source Map file through [output.disableSourceMap](/config/output/disable-source-map).
+- Modify Source Map file through [output.sourceMap](/config/output/source-map).
 - Modify the output structure of the HTML files through [html.outputStructure](/config/html/output-structure).
 
 ## Static Assets
@@ -92,7 +92,7 @@ dist
 
 ## Node.js Output Directory
 
-When the [Build Target](/api/start/build-target) of Rsbuild contains `'node'`, or you have enabled server-side features such as SSR in the higher level solutions, Rsbuild will generate some output files for Node.js and output them to the `bundles` directory:
+When the [output.targets](/config/output/targets) of Rsbuild contains `'node'`, or you have enabled server-side features such as SSR in the higher level solutions, Rsbuild will generate some output files for Node.js and output them to the `bundles` directory:
 
 ```bash
 dist

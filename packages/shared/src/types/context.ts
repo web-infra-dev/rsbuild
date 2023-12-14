@@ -8,8 +8,8 @@ export type Context = {
   version: string;
   /** The entry points object. */
   entry: RsbuildEntry;
-  /** The build target type. */
-  target: RsbuildTarget | RsbuildTarget[];
+  /** The build targets type. */
+  targets: RsbuildTarget[];
   /** The root path of current project. */
   rootPath: string;
   /** Absolute path of output files. */

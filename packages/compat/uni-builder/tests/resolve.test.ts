@@ -8,7 +8,7 @@ describe('plugin-main-fields', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMainFields(mainFieldsOption)],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     const mainFieldsResult = ['main', 'test', 'browser', 'module', 'exports'];
     expect(config.resolve?.mainFields).toEqual(mainFieldsResult);
@@ -23,7 +23,7 @@ describe('plugin-main-fields', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMainFields(mainFieldsOption)],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config.resolve?.mainFields).toEqual(mainFieldsOption.web);
   });

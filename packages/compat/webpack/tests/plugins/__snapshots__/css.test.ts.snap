@@ -24,7 +24,7 @@ exports[`plugin-css > should not apply postcss-loader when target is node 1`] = 
                 "exportOnlyLocals": true,
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
         ],
@@ -57,13 +57,14 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -82,7 +83,7 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
                   },
                 ],
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
         ],
@@ -115,13 +116,14 @@ exports[`plugin-css > should remove some postcss plugins based on browserslist 1
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -140,7 +142,7 @@ exports[`plugin-css > should remove some postcss plugins based on browserslist 1
                   },
                 ],
               },
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
         ],

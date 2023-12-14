@@ -242,10 +242,6 @@ If your project is a micro-frontend application (such as a Garfish sub-applicati
 
 If you need to retry assets in micro-frontend scenarios, please contact the developers of the micro-frontend framework to find a solution.
 
-#### Dynamic import
-
-Currently, Assets Retry plugin cannot work on dynamically imported resources. This feature will be supported in the future.
-
 #### Assets in custom templates
 
 Assets Retry plugin listens to the page error event to know whether the current resource fails to load and needs to be retried. Therefore, if the resource in the custom template is executed earlier than Assets Retry plugin, then Assets Retry plugin cannot listen to the event that the resource fails to load, so it will not be retried.

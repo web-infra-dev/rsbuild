@@ -30,8 +30,11 @@ describe('plugins/react', () => {
 
   it('should not apply react refresh when target is node', async () => {
     const rsbuild = await createStubRsbuild({
-      target: 'node',
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     rsbuild.addPlugins([pluginReact()]);
@@ -41,8 +44,11 @@ describe('plugins/react', () => {
 
   it('should not apply react refresh when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
-      target: 'web-worker',
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        output: {
+          targets: ['web-worker'],
+        },
+      },
     });
 
     rsbuild.addPlugins([pluginReact()]);

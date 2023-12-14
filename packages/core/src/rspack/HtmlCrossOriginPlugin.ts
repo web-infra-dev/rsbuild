@@ -1,10 +1,9 @@
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { CrossOrigin } from '@rsbuild/shared';
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
 
 type CrossOriginOptions = {
   crossOrigin: CrossOrigin;
-  HtmlPlugin: typeof HtmlWebpackPlugin;
 };
 
 export class HtmlCrossOriginPlugin implements RspackPluginInstance {
@@ -12,13 +11,10 @@ export class HtmlCrossOriginPlugin implements RspackPluginInstance {
 
   readonly crossOrigin: CrossOrigin;
 
-  readonly HtmlPlugin: typeof HtmlWebpackPlugin;
-
   constructor(options: CrossOriginOptions) {
     const { crossOrigin } = options;
     this.name = 'HtmlCrossOriginPlugin';
     this.crossOrigin = crossOrigin;
-    this.HtmlPlugin = options.HtmlPlugin;
   }
 
   apply(compiler: Compiler): void {
@@ -34,7 +30,7 @@ export class HtmlCrossOriginPlugin implements RspackPluginInstance {
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       // @ts-expect-error compilation type mismatch
-      this.HtmlPlugin.getHooks(compilation).alterAssetTags.tap(
+      HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tap(
         this.name,
         (alterAssetTags) => {
           const {

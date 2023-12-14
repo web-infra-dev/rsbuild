@@ -1,7 +1,6 @@
 import {
   LESS_REGEX,
   FileFilterUtil,
-  isUseCssSourceMap,
   getLessLoaderOptions,
   getSharedPkgCompiledPath,
   type RsbuildPlugin,
@@ -21,7 +20,7 @@ export function pluginLess(): RsbuildPlugin {
 
         const { options, excludes } = getLessLoaderOptions(
           config.tools.less,
-          isUseCssSourceMap(config),
+          config.output.sourceMap.css,
         );
         const rule = chain.module
           .rule(utils.CHAIN_ID.RULE.LESS)

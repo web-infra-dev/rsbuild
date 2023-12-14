@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/document",
-  "version": "0.1.9",
+  "version": "0.2.3",
   "description": "Shared documentation of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -22,12 +22,11 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rspress/shared": "^1.8.0",
-    "@types/node": "^16",
+    "@types/node": "16.x",
     "fast-glob": "^3.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rspress": "^1.8.0"
+    "rspress": "^1.8.3"
   },
   "publishConfig": {
     "access": "public",

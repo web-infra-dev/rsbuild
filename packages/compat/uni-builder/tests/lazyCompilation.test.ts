@@ -13,7 +13,7 @@ describe('plugin-lazy-compilation', () => {
       ],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toEqual({
       experiments: {
         lazyCompilation: {
@@ -32,7 +32,7 @@ describe('plugin-lazy-compilation', () => {
       plugins: [pluginSplitChunks(), pluginLazyCompilation(true)],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.optimization?.splitChunks).toEqual(false);
   });
 
@@ -44,7 +44,7 @@ describe('plugin-lazy-compilation', () => {
       plugins: [pluginLazyCompilation(true)],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toEqual({});
 
     process.env.NODE_ENV = NODE_ENV;
@@ -52,11 +52,15 @@ describe('plugin-lazy-compilation', () => {
 
   it('should not apply lazy compilation for node target', async () => {
     const rsbuild = await createStubRsbuild({
-      target: 'node',
       plugins: [pluginLazyCompilation(true)],
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toEqual({});
   });
 });

@@ -56,6 +56,21 @@ Currently, syntax checking is implemented based on AST parser. Each time it perf
 If the corresponding source location is not shown in the log, try setting **output.disableMinimize** to true and rebuild again.
 :::
 
+Note that displaying source code information depends on the source map file. You can configure the [output.sourceMap](/config/output/source-map) option to generate source map files during production builds.
+
+```js
+export default {
+  output: {
+    sourceMap: {
+      js:
+        process.env.NODE_ENV === 'production'
+          ? 'cheap-module-source-map'
+          : 'source-map',
+    },
+  },
+};
+```
+
 ### Solutions
 
 If a syntax error is detected, you can handle it in the following ways:

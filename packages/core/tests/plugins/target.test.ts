@@ -1,4 +1,4 @@
-import type { SpyInstance } from 'vitest';
+import type { MockInstance } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { getBrowserslist } from '@rsbuild/shared';
 import { pluginTarget } from '@src/plugins/target';
@@ -14,35 +14,37 @@ vi.mock('@rsbuild/shared', async (importOriginal) => {
 describe('plugin-target', () => {
   const cases = [
     {
-      target: 'node',
+      targets: ['node' as const],
       browserslist: ['foo'],
       expected: { target: 'node' },
     },
     {
-      target: 'web',
       browserslist: ['foo'],
       expected: { target: ['web', 'browserslist'] },
     },
     {
-      target: 'web',
       browserslist: null,
       expected: { target: ['web', 'es5'] },
     },
     {
-      target: 'web-worker',
+      targets: ['web-worker' as const],
       browserslist: null,
       expected: { target: ['webworker', 'es5'] },
     },
   ];
 
   test.each(cases)('%j', async (item) => {
-    (getBrowserslist as unknown as SpyInstance).mockResolvedValueOnce(
+    (getBrowserslist as unknown as MockInstance).mockResolvedValueOnce(
       item.browserslist,
     );
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginTarget()],
-      target: item.target as any,
+      rsbuildConfig: {
+        output: {
+          targets: item.targets,
+        },
+      },
     });
 
     const config = await rsbuild.unwrapConfig();

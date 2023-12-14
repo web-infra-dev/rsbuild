@@ -1,5 +1,5 @@
 import { pluginRem } from '../src';
-import { createStubRsbuild, matchPlugin } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginCss } from '../../core/src/provider/plugins/css';
 import { pluginLess } from '../../core/src/provider/plugins/less';
 import { pluginSass } from '../../core/src/provider/plugins/sass';
@@ -32,7 +32,6 @@ describe('plugin-rem', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].plugins?.length || 0).toBe(0);
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
@@ -56,26 +55,30 @@ describe('plugin-rem', () => {
   it('should not run rem plugin when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
-      target: ['node'],
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-
     expect(
-      matchPlugin(bundlerConfigs[0], 'AutoSetRootFontSizePlugin'),
+      await rsbuild.matchBundlerPlugin('AutoSetRootFontSizePlugin'),
     ).toBeFalsy();
   });
 
   it('should not run rem plugin when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem()],
-      target: ['web-worker'],
+      rsbuildConfig: {
+        output: {
+          targets: ['web-worker'],
+        },
+      },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-
     expect(
-      matchPlugin(bundlerConfigs[0], 'AutoSetRootFontSizePlugin'),
+      await rsbuild.matchBundlerPlugin('AutoSetRootFontSizePlugin'),
     ).toBeFalsy();
   });
 });

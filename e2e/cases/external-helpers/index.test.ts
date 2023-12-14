@@ -12,6 +12,11 @@ test('should externalHelpers by default', async () => {
       source: {
         entry: { index: path.resolve(__dirname, './src/main.ts') },
       },
+      output: {
+        sourceMap: {
+          js: 'source-map',
+        },
+      },
     },
   });
   const files = await rsbuild.unwrapOutputJSON(false);

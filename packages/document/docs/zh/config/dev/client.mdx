@@ -3,16 +3,16 @@
 - **类型：**
 
 ```ts
-{
-    /** 指定协议名称 */
-    protocol?: string;
-    /** 事件流路径 */
-    path?: string;
-    /** 指定监听请求的端口号 */
-    port?: string;
-    /** 指定要使用的 host */
-    host?: string;
-}
+type Client = {
+  /** 指定协议名称 */
+  protocol?: string;
+  /** 事件流路径 */
+  path?: string;
+  /** 指定监听请求的端口号 */
+  port?: string;
+  /** 指定要使用的 host */
+  host?: string;
+};
 ```
 
 - **默认值：**

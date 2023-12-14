@@ -6,7 +6,6 @@ export const plugins: Plugins = {
   cleanOutput: () => import('./cleanOutput').then((m) => m.pluginCleanOutput()),
   startUrl: () => import('./startUrl').then((m) => m.pluginStartUrl()),
   fileSize: () => import('./fileSize').then((m) => m.pluginFileSize()),
-  devtool: () => import('./devtool').then((m) => m.pluginDevtool()),
   target: () => import('./target').then((m) => m.pluginTarget()),
   entry: () => import('./entry').then((m) => m.pluginEntry()),
   cache: () => import('./cache').then((m) => m.pluginCache()),

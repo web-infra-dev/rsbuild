@@ -27,7 +27,6 @@ export type CreateWebpackBuilderOptions = {
   bundlerType: 'webpack';
   config: UniBuilderWebpackConfig;
   frameworkConfigPath?: string;
-  target?: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
   cwd: string;
 };
@@ -36,7 +35,6 @@ export type CreateRspackBuilderOptions = {
   bundlerType: 'rspack';
   config: UniBuilderRspackConfig;
   frameworkConfigPath?: string;
-  target?: RsbuildTarget | RsbuildTarget[];
   /** The root path of current project. */
   cwd?: string;
 };
@@ -60,6 +58,13 @@ export type ModuleScopes = Array<string | RegExp>;
 export type MainFields = (string | string[])[];
 
 export type DevServerHttpsOptions = boolean | { key: string; cert: string };
+
+export type DisableSourceMapOption =
+  | boolean
+  | {
+      js?: boolean;
+      css?: boolean;
+    };
 
 export type UniBuilderExtraConfig = {
   tools?: {
@@ -183,6 +188,14 @@ export type UniBuilderExtraConfig = {
      * Whether to transform SVGs into React components. If true, will treat all .svg files as assets.
      */
     disableSvgr?: boolean;
+    /**
+     * Whether to disable source map.
+     */
+    disableSourceMap?: DisableSourceMapOption;
+    /**
+     * @deprecated use `output.injectStyles` instead
+     */
+    disableCssExtract?: boolean;
   };
   html?: {
     /**

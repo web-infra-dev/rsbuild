@@ -34,7 +34,7 @@ export const applyAntdSupport = (api: RsbuildPluginAPI) => {
         ...(rsbuildConfig.source.transformImport || []),
         {
           libraryName: 'antd',
-          libraryDirectory: isServerTarget(api.context.target) ? 'lib' : 'es',
+          libraryDirectory: isServerTarget(api.context.targets) ? 'lib' : 'es',
           style: true,
         },
       ];

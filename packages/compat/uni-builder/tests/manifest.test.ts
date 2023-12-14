@@ -13,7 +13,7 @@ describe('plugin-manifest', () => {
     });
 
     expect(
-      await rsbuild.matchWebpackPlugin('WebpackManifestPlugin'),
+      await rsbuild.matchBundlerPlugin('WebpackManifestPlugin'),
     ).toBeTruthy();
   });
 
@@ -22,13 +22,13 @@ describe('plugin-manifest', () => {
       plugins: [pluginManifest()],
       rsbuildConfig: {
         output: {
+          targets: ['node'],
           enableAssetManifest: true,
         },
       },
-      target: ['node'],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 });

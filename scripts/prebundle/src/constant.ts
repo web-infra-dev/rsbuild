@@ -67,7 +67,6 @@ export const TASKS: TaskConfig[] = [
       'jiti',
       'rslog',
       'deepmerge',
-      'url-join',
       'fs-extra',
       'chokidar',
       'webpack-chain',
@@ -76,6 +75,14 @@ export const TASKS: TaskConfig[] = [
       'browserslist',
       'gzip-size',
       'json5',
+      {
+        name: 'yaml',
+        ignoreDts: true,
+      },
+      {
+        name: 'line-diff',
+        ignoreDts: true,
+      },
       {
         name: 'semver',
         ignoreDts: true,
@@ -109,6 +116,14 @@ export const TASKS: TaskConfig[] = [
         ignoreDts: true,
       },
       {
+        name: 'yaml-loader',
+        ignoreDts: true,
+        externals: {
+          yaml: '../yaml',
+          'loader-utils': '../loader-utils2',
+        },
+      },
+      {
         name: 'css-loader',
         ignoreDts: true,
         externals: {
@@ -129,6 +144,28 @@ export const TASKS: TaskConfig[] = [
           semver: '../semver',
         },
         ignoreDts: true,
+      },
+      {
+        name: 'postcss-load-config',
+        externals: {
+          jiti: '../jiti',
+          yaml: '../yaml',
+        },
+        ignoreDts: true,
+        // this is a trick to avoid ncc compiling the dynamic import syntax
+        // https://github.com/vercel/ncc/issues/935
+        beforeBundle(task) {
+          replaceFileContent(
+            join(task.depPath, 'src/index.js'),
+            (content) => `${content.replace('await import', 'await __import')}`,
+          );
+        },
+        afterBundle(task) {
+          replaceFileContent(
+            join(task.distPath, 'index.js'),
+            (content) => `${content.replace('await __import', 'await import')}`,
+          );
+        },
       },
       {
         name: 'loader-utils2',

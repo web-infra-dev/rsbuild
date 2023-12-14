@@ -14,12 +14,10 @@ const bundlerNodeConfig = path.resolve(
 );
 
 test('should generate config files when writeToDisk is true', async () => {
-  const rsbuild = await createRsbuild(
-    {
-      cwd: __dirname,
-    },
-    {},
-  );
+  const rsbuild = await createRsbuild({
+    cwd: __dirname,
+    rsbuildConfig: {},
+  });
   await rsbuild.inspectConfig({
     writeToDisk: true,
   });
@@ -32,13 +30,14 @@ test('should generate config files when writeToDisk is true', async () => {
 });
 
 test('should generate bundler config for node when target contains node', async () => {
-  const rsbuild = await createRsbuild(
-    {
-      cwd: __dirname,
-      target: ['web', 'node'],
+  const rsbuild = await createRsbuild({
+    cwd: __dirname,
+    rsbuildConfig: {
+      output: {
+        targets: ['web', 'node'],
+      },
     },
-    {},
-  );
+  });
   await rsbuild.inspectConfig({
     writeToDisk: true,
   });
@@ -53,12 +52,10 @@ test('should generate bundler config for node when target contains node', async 
 });
 
 test('should not generate config files when writeToDisk is false', async () => {
-  const rsbuild = await createRsbuild(
-    {
-      cwd: __dirname,
-    },
-    {},
-  );
+  const rsbuild = await createRsbuild({
+    cwd: __dirname,
+    rsbuildConfig: {},
+  });
   await rsbuild.inspectConfig({
     writeToDisk: false,
   });

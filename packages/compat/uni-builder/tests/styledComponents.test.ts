@@ -9,8 +9,11 @@ import { pluginSwc } from '@rsbuild/plugin-swc';
 describe('plugins/styled-components', () => {
   it('should enable ssr when target contain node', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
-      target: ['node', 'web'],
+      rsbuildConfig: {
+        output: {
+          targets: ['node', 'web'],
+        },
+      },
     });
 
     rsbuild.addPlugins([
@@ -22,7 +25,7 @@ describe('plugins/styled-components', () => {
 
     for (const config of configs) {
       expect(
-        config.module.rules.find(
+        config.module?.rules?.find(
           (r) => r.test?.toString() === SCRIPT_REGEX.toString(),
         ),
       ).toMatchSnapshot();

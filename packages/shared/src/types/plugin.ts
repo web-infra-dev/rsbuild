@@ -95,7 +95,6 @@ export type Plugins = {
   cleanOutput: PluginsFn;
   startUrl: PluginsFn;
   fileSize: PluginsFn;
-  devtool: PluginsFn;
   target: PluginsFn;
   entry: PluginsFn;
   cache: PluginsFn;
@@ -114,6 +113,12 @@ export type Plugins = {
   preloadOrPrefetch: PluginsFn;
   performance: PluginsFn;
   define: PluginsFn;
+};
+
+export type GetRsbuildConfig = {
+  (): Readonly<RsbuildConfig>;
+  (type: 'original' | 'current'): Readonly<RsbuildConfig>;
+  (type: 'normalized'): NormalizedConfig;
 };
 
 /**
@@ -139,7 +144,7 @@ export type RsbuildPluginAPI = {
    * The key is entry name and the value is path.
    */
   getHTMLPaths: () => Record<string, string>;
-  getRsbuildConfig: () => Readonly<RsbuildConfig>;
+  getRsbuildConfig: GetRsbuildConfig;
   getNormalizedConfig: () => NormalizedConfig;
 
   modifyRsbuildConfig: (fn: ModifyRsbuildConfigFn) => void;

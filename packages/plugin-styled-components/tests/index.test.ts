@@ -6,8 +6,11 @@ import { SCRIPT_REGEX } from '@rsbuild/shared';
 describe('plugins/styled-components', () => {
   it('should enable ssr when target contain node', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
-      target: ['node', 'web'],
+      rsbuildConfig: {
+        output: {
+          targets: ['node', 'web'],
+        },
+      },
     });
 
     rsbuild.addPlugins([pluginStyledComponents()]);

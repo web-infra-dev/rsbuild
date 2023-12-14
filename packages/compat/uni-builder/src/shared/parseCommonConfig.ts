@@ -36,6 +36,7 @@ import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 import { pluginPostcssLegacy } from './plugins/postcssLegacy';
+import { pluginDevtool } from './plugins/devtools';
 
 const GLOBAL_CSS_REGEX = /\.global\.\w+$/;
 
@@ -131,7 +132,6 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     : UniBuilderWebpackConfig,
   cwd: string,
   frameworkConfigPath?: string,
-  target: RsbuildTarget | RsbuildTarget[] = 'web',
 ): Promise<{
   rsbuildConfig: RsbuildConfig;
   rsbuildPlugins: RsbuildPlugin[];
@@ -162,7 +162,12 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
     delete output.enableInlineScripts;
   }
 
-  const targets = typeof target === 'string' ? [target] : target;
+  if (uniBuilderConfig.output?.disableCssExtract) {
+    output.injectStyles = uniBuilderConfig.output?.disableCssExtract;
+    delete output.disableCssExtract;
+  }
+
+  const targets = uniBuilderConfig.output?.targets || ['web'];
   let overrideBrowserslist: OverrideBrowserslist = {};
 
   for (const target of targets) {
@@ -273,6 +278,9 @@ export async function parseCommonConfig<B = 'rspack' | 'webpack'>(
   const rsbuildPlugins: RsbuildPlugin[] = [
     pluginSplitChunks(),
     pluginGlobalVars(uniBuilderConfig.source?.globalVars),
+    pluginDevtool({
+      disableSourceMap: uniBuilderConfig.output?.disableSourceMap,
+    }),
   ];
 
   const checkSyntaxOptions = uniBuilderConfig.security?.checkSyntax;

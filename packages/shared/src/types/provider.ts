@@ -2,10 +2,12 @@ import type { PluginStore, Plugins, RsbuildPluginAPI } from './plugin';
 import type { Context } from './context';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
-import { StartServerResult } from './server';
+import type { StartServerResult, DevServerAPIs } from './server';
 import type { AddressUrl } from '../url';
 import type { Logger } from '../logger';
-import { RsbuildConfig, RspackConfig, WebpackConfig } from '.';
+import type { NormalizedConfig } from './config';
+import type { WebpackConfig } from './thirdParty';
+import type { RspackConfig } from './rspack';
 
 export type Bundler = 'rspack' | 'webpack';
 
@@ -36,11 +38,22 @@ export type InspectConfigOptions = {
   writeToDisk?: boolean;
 };
 
+export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
+  rsbuildConfig: string;
+  bundlerConfigs: string[];
+  origin: {
+    rsbuildConfig: NormalizedConfig & {
+      pluginNames: string[];
+    };
+    bundlerConfigs: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
+  };
+};
+
 export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
   (options: {
+    plugins: Plugins;
     pluginStore: PluginStore;
     rsbuildOptions: Required<CreateRsbuildOptions>;
-    plugins: Plugins;
   }) => Promise<ProviderInstance<B>>;
 
 export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
@@ -56,6 +69,15 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
     options?: CreateCompilerOptions,
   ) => Promise<Compiler | MultiCompiler>;
 
+  /**
+   * This API is not stable
+   *
+   * It is designed for high-level frameworks that require a custom server
+   */
+  getServerAPIs: (
+    options?: Omit<StartDevServerOptions, 'printURLs'>,
+  ) => Promise<DevServerAPIs>;
+
   startDevServer: (
     options?: StartDevServerOptions,
   ) => Promise<StartServerResult>;
@@ -68,14 +90,7 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
     B extends 'rspack' ? RspackConfig[] : WebpackConfig[]
   >;
 
-  inspectConfig: (options?: InspectConfigOptions) => Promise<{
-    rsbuildConfig: string;
-    bundlerConfigs: string[];
-    origin: {
-      rsbuildConfig: RsbuildConfig & {
-        pluginNames: string[];
-      };
-      bundlerConfigs: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
-    };
-  }>;
+  inspectConfig: (
+    options?: InspectConfigOptions,
+  ) => Promise<InspectConfigResult<B>>;
 };

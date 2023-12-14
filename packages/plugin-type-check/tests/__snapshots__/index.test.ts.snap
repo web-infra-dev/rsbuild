@@ -23,8 +23,10 @@ exports[`plugin-type-check > should allow to configure fork-ts-checker-webpack-p
           "log": [Function],
         },
         "typescript": {
+          "build": false,
           "configFile": "<ROOT>/packages/plugin-type-check/tests/tsconfig.json",
           "memoryLimit": 8192,
+          "mode": "readonly",
           "typescriptPath": "<ROOT>/node_modules/<PNPM_INNER>/typescript/lib/typescript.js",
         },
       },
@@ -53,8 +55,10 @@ exports[`plugin-type-check > should apply fork-ts-checker-webpack-plugin correct
           "log": [Function],
         },
         "typescript": {
+          "build": false,
           "configFile": "<ROOT>/packages/plugin-type-check/tests/tsconfig.json",
           "memoryLimit": 8192,
+          "mode": "readonly",
           "typescriptPath": "<ROOT>/node_modules/<PNPM_INNER>/typescript/lib/typescript.js",
         },
       },
@@ -85,8 +89,10 @@ exports[`plugin-type-check > should only apply one ts-checker plugin when there 
           "log": [Function],
         },
         "typescript": {
+          "build": false,
           "configFile": "<ROOT>/packages/plugin-type-check/tests/tsconfig.json",
           "memoryLimit": 8192,
+          "mode": "readonly",
           "typescriptPath": "<ROOT>/node_modules/<PNPM_INNER>/typescript/lib/typescript.js",
         },
       },

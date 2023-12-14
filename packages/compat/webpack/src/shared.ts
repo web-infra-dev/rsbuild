@@ -17,7 +17,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.cache?.(),
     plugins.target?.(),
     import('./plugins/output').then((m) => m.pluginOutput()),
-    plugins.devtool(),
     import('./plugins/resolve').then((m) => m.pluginResolve()),
     plugins.fileSize?.(),
     plugins.cleanOutput?.(),

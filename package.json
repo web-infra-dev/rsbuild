@@ -58,6 +58,9 @@
     "pnpm": ">=8.7.0"
   },
   "pnpm": {
+    "overrides": {
+      "esbuild": "~0.19.0"
+    },
     "allowedDeprecatedVersions": {
       "consolidate": "0.15.1"
     }

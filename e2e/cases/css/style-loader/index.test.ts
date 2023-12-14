@@ -4,23 +4,21 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
-test('should inline style when disableCssExtract is false', async ({
-  page,
-}) => {
+test('should inline style when injectStyles is true', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
     runServer: true,
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
-        disableCssExtract: true,
+        injectStyles: true,
       },
     },
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
 
-  // disableCssExtract worked
+  // injectStyles worked
   const files = await rsbuild.unwrapOutputJSON();
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
   expect(cssFiles.length).toBe(0);

@@ -4,20 +4,19 @@ import { MODULE_PATH_REGEX } from './constants';
 import { removeLeadingSlash } from './utils';
 import { promises, constants, statSync } from 'fs';
 import type {
-  HtmlConfig,
-  OutputConfig,
+  RsbuildConfig,
   DistPathConfig,
   FilenameConfig,
-  NormalizedOutputConfig,
+  NormalizedConfig,
 } from './types';
 
 export { fse };
 
 export const getDistPath = (
-  outputConfig: OutputConfig | NormalizedOutputConfig,
+  config: RsbuildConfig | NormalizedConfig,
   type: keyof DistPathConfig,
 ): string => {
-  const { distPath } = outputConfig;
+  const { distPath } = config.output || {};
   const ret = distPath?.[type];
   if (typeof ret !== 'string') {
     throw new Error(`unknown key ${type} in "output.distPath"`);
@@ -71,12 +70,9 @@ export function getPackageNameFromModulePath(modulePath: string) {
 
 export function getHTMLPathByEntry(
   entryName: string,
-  config: {
-    output: NormalizedOutputConfig;
-    html: HtmlConfig;
-  },
+  config: NormalizedConfig,
 ) {
-  const htmlPath = getDistPath(config.output, 'html');
+  const htmlPath = getDistPath(config, 'html');
   const filename =
     config.html.outputStructure === 'flat'
       ? `${entryName}.html`
@@ -86,12 +82,12 @@ export function getHTMLPathByEntry(
 }
 
 export const getFilename = (
-  output: NormalizedOutputConfig,
+  config: NormalizedConfig,
   type: keyof FilenameConfig,
   isProd: boolean,
 ) => {
-  const { filename } = output;
-  const useHash = !output.disableFilenameHash;
+  const { filename } = config.output;
+  const useHash = !config.output.disableFilenameHash;
   const hash = useHash ? '.[contenthash:8]' : '';
 
   switch (type) {

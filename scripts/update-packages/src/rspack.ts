@@ -7,7 +7,8 @@ import { getPackages } from '@manypkg/get-packages';
 import { getPackageVersion } from './utils';
 
 async function run() {
-  const rspackVersion = process.env.RSPACK_VERSION || 'latest';
+  // eg. pnpm update-rspack 0.4.3-canary-xxx
+  const rspackVersion = process.argv[2] || 'latest';
   const root = path.join(__dirname, '../../..');
   const pkgPath = path.join(root, 'package.json');
   const pkgObj = fs.readJSONSync(pkgPath, 'utf-8');

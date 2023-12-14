@@ -50,11 +50,9 @@ For example to disable Source Map:
 
 ```js
 export default {
-  tools: {
-    bundlerChain(chain, { env }) {
-      if (env === 'development') {
-        chain.devtool(false);
-      }
+  output: {
+    sourceMap: {
+      js: false,
     },
   },
 };
@@ -64,11 +62,9 @@ Or set the source map format of the development environment to the cheapest `eva
 
 ```js
 export default {
-  tools: {
-    bundlerChain(chain, { env }) {
-      if (env === 'development') {
-        chain.devtool('eval');
-      }
+  output: {
+    sourceMap: {
+      js: process.env.NODE_ENV === 'development' ? 'eval' : false,
     },
   },
 };
@@ -96,21 +92,3 @@ For example, you can add the following config to `package.json`, which means tha
 ```
 
 Note that this strategy can lead to some differences in the build result of development production environment.
-
-## Production optimization strategies
-
-The following are strategies for improve build performance in production environment.
-
-### Disable Source Map
-
-If your project does not need Source Map in the production, you can turn it off through the `disableSourceMap` config to improve the build speed.
-
-```js
-export default {
-  output: {
-    disableSourceMap: true,
-  },
-};
-```
-
-See [output.disableSourceMap](/config/output/disable-source-map) for details.
