@@ -2,7 +2,7 @@ import {
   CSS_REGEX,
   resolvePackage,
   isUseCssExtract,
-  getPostcssConfig,
+  getPostcssLoaderOptions,
   ModifyChainUtils,
   mergeChainedOptions,
   getCssLoaderOptions,
@@ -112,9 +112,10 @@ export async function applyBaseCSSRule({
     .end();
 
   if (!isServer && !isWebWorker) {
-    const postcssLoaderOptions = getPostcssConfig({
+    const postcssLoaderOptions = await getPostcssLoaderOptions({
       browserslist,
       config,
+      root: context.rootPath,
     });
 
     rule

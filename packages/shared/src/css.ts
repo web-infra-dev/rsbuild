@@ -1,13 +1,15 @@
 import assert from 'assert';
 import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
-import type { AcceptedPlugin, ProcessOptions } from 'postcss';
+import type { AcceptedPlugin } from 'postcss';
 import deepmerge from '../compiled/deepmerge';
 import { getSharedPkgCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
   RsbuildTarget,
+  PostCSSOptions,
   CSSLoaderOptions,
   NormalizedConfig,
+  PostCSSLoaderOptions,
 } from './types';
 
 export const getCssModuleLocalIdentName = (
@@ -53,13 +55,48 @@ export const isCssModules = (filename: string, modules: CssLoaderModules) => {
   return true;
 };
 
-export const getPostcssConfig = ({
+const userPostcssrcCache = new Map<
+  string,
+  PostCSSOptions | Promise<PostCSSOptions>
+>();
+
+async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
+  const cached = userPostcssrcCache.get(root);
+
+  if (cached) {
+    return cached;
+  }
+
+  const { default: postcssrc } = await import(
+    '../compiled/postcss-load-config'
+  );
+
+  const promise = postcssrc({}, root).catch((err: Error) => {
+    // ignore the config not found error
+    if (err.message?.includes('No PostCSS Config found')) {
+      return {};
+    }
+    throw err;
+  });
+
+  userPostcssrcCache.set(root, promise);
+
+  promise.then((config: PostCSSOptions) => {
+    userPostcssrcCache.set(root, config);
+  });
+
+  return promise;
+}
+
+export const getPostcssLoaderOptions = async ({
   browserslist,
   config,
+  root,
 }: {
   browserslist: string[];
   config: NormalizedConfig;
-}): ProcessOptions => {
+  root: string;
+}): Promise<PostCSSLoaderOptions> => {
   const extraPlugins: AcceptedPlugin[] = [];
 
   const utils = {
@@ -80,13 +117,19 @@ export const getPostcssConfig = ({
     options: config.tools.autoprefixer,
   });
 
+  const userPostcssConfig = await loadUserPostcssrc(root);
+
+  userPostcssConfig.plugins ||= [];
+  userPostcssConfig.plugins.push(
+    require(getSharedPkgCompiledPath('postcss-flexbugs-fixes')),
+    // Place autoprefixer as the last plugin to correctly process the results of other plugins
+    // such as tailwindcss
+    require(getSharedPkgCompiledPath('autoprefixer'))(autoprefixerOptions),
+  );
+
   const defaultPostcssConfig = {
-    postcssOptions: {
-      plugins: [
-        require(getSharedPkgCompiledPath('postcss-flexbugs-fixes')),
-        require(getSharedPkgCompiledPath('autoprefixer'))(autoprefixerOptions),
-      ].filter(Boolean),
-    },
+    config: false,
+    postcssOptions: userPostcssConfig,
     sourceMap: config.output.sourceMap.css,
   };
 
@@ -95,17 +138,14 @@ export const getPostcssConfig = ({
     options: config.tools.postcss,
     utils,
   });
+
   if (extraPlugins.length) {
     assert('postcssOptions' in mergedConfig);
     assert('plugins' in mergedConfig.postcssOptions!);
     mergedConfig.postcssOptions.plugins!.push(...extraPlugins);
   }
 
-  return mergedConfig as ProcessOptions & {
-    postcssOptions: {
-      plugins?: AcceptedPlugin[];
-    };
-  };
+  return mergedConfig;
 };
 
 // If the target is 'node' or 'web-worker' and the modules option of css-loader is enabled,
