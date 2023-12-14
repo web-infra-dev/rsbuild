@@ -92,6 +92,7 @@ export type PostCSSOptions = {
   to?: string;
   from?: string;
   map?: boolean | SourceMapOptions;
+  config?: boolean;
   syntax?: Syntax;
   parser?: string | object | (() => Parser);
   plugins?: AcceptedPlugin[];

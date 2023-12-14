@@ -1,4 +1,3 @@
-import assert from 'assert';
 import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
 import type { AcceptedPlugin } from 'postcss';
 import deepmerge from '../compiled/deepmerge';
@@ -127,8 +126,9 @@ export const getPostcssLoaderOptions = async ({
     require(getSharedPkgCompiledPath('autoprefixer'))(autoprefixerOptions),
   );
 
+  userPostcssConfig.config = false;
+
   const defaultPostcssConfig = {
-    config: false,
     postcssOptions: userPostcssConfig,
     sourceMap: config.output.sourceMap.css,
   };
@@ -140,9 +140,7 @@ export const getPostcssLoaderOptions = async ({
   });
 
   if (extraPlugins.length) {
-    assert('postcssOptions' in mergedConfig);
-    assert('plugins' in mergedConfig.postcssOptions!);
-    mergedConfig.postcssOptions.plugins!.push(...extraPlugins);
+    mergedConfig?.postcssOptions?.plugins!.push(...extraPlugins);
   }
 
   return mergedConfig;
