@@ -1,5 +1,5 @@
-import * as path from 'path';
-import * as fs from 'fs';
+import fs from 'fs';
+import path from 'path';
 import { getBrowserslist } from '@rsbuild/shared';
 import { transformSync } from '../src/binding';
 import {

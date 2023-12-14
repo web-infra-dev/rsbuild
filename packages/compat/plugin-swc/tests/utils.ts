@@ -1,7 +1,7 @@
-import * as path from 'path';
-import * as fs from 'fs';
+import path from 'path';
+import fs from 'fs';
 import { Script } from 'node:vm';
-import * as swc from '@swc/core';
+import { transformFileSync } from '@swc/core';
 import { Output, TransformConfig } from '@modern-js/swc-plugins';
 import { merge } from 'lodash';
 import { getDefaultSwcConfig } from '../src/plugin';
@@ -114,7 +114,7 @@ export async function fsSnapshot(
   const optionsPath = findPath(['js', 'json'], base, 'option')!;
   let option: TransformConfig;
   if (optionsPath.endsWith('ts')) {
-    const { code } = swc.transformFileSync(optionsPath, {
+    const { code } = transformFileSync(optionsPath, {
       jsc: {
         externalHelpers: false,
       },

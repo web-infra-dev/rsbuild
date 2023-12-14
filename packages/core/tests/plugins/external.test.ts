@@ -1,4 +1,4 @@
-import * as shared from '@rsbuild/shared';
+import { getBundlerChain } from '@rsbuild/shared';
 import { pluginExternals } from '@src/plugins/externals';
 
 describe('plugin-external', () => {
@@ -22,7 +22,7 @@ describe('plugin-external', () => {
 
     pluginExternals().setup(api);
 
-    const chain = await shared.getBundlerChain();
+    const chain = await getBundlerChain();
 
     await modifyBundlerChainCb(chain);
 

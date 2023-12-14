@@ -1,4 +1,4 @@
-import * as path from 'path';
+import path from 'path';
 
 export const CORE_JS_PATH = require.resolve('core-js/package.json');
 export const SWC_HELPERS_PATH = require.resolve('@swc/helpers/package.json');
