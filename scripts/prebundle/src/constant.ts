@@ -76,6 +76,10 @@ export const TASKS: TaskConfig[] = [
       'gzip-size',
       'json5',
       {
+        name: 'yaml',
+        ignoreDts: true,
+      },
+      {
         name: 'line-diff',
         ignoreDts: true,
       },
@@ -112,6 +116,14 @@ export const TASKS: TaskConfig[] = [
         ignoreDts: true,
       },
       {
+        name: 'yaml-loader',
+        ignoreDts: true,
+        externals: {
+          yaml: '../yaml',
+          'loader-utils': '../loader-utils2',
+        },
+      },
+      {
         name: 'css-loader',
         ignoreDts: true,
         externals: {
@@ -130,6 +142,14 @@ export const TASKS: TaskConfig[] = [
         externals: {
           jiti: '../jiti',
           semver: '../semver',
+        },
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-load-config',
+        externals: {
+          jiti: '../jiti',
+          yaml: '../yaml',
         },
         ignoreDts: true,
       },
