@@ -171,6 +171,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -211,6 +212,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -257,6 +259,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -307,6 +310,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -363,6 +367,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -417,6 +422,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {

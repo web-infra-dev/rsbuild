@@ -171,6 +171,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -211,6 +212,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -257,6 +259,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -307,6 +310,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -363,6 +367,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -417,6 +422,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -855,6 +861,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -895,6 +902,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -941,6 +949,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -991,6 +1000,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -1047,6 +1057,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -1101,6 +1112,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -2026,6 +2038,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -2066,6 +2079,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -2112,6 +2126,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -2162,6 +2177,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -2218,6 +2234,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -2272,6 +2289,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {

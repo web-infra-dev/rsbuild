@@ -64,6 +64,7 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -122,6 +123,7 @@ exports[`plugin-css > should remove some postcss plugins based on browserslist 1
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {

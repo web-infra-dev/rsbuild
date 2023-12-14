@@ -181,6 +181,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -236,6 +237,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -305,6 +307,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -675,6 +678,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -730,6 +734,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -799,6 +804,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {

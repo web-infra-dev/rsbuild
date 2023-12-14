@@ -45,6 +45,7 @@
     "open": "^8.4.0",
     "picocolors": "1.0.0",
     "postcss-loader": "7.3.3",
+    "postcss-load-config": "4.0.2",
     "postcss-value-parser": "4.2.0",
     "postcss-modules-local-by-default": "4.0.3",
     "postcss-modules-scope": "3.0.0",
@@ -56,6 +57,8 @@
     "webpack-chain": "npm:webpack-5-chain@8.0.1",
     "webpack-dev-middleware": "6.1.1",
     "webpack-sources": "^3.2.3",
-    "ws": "^8.14.2"
+    "ws": "^8.14.2",
+    "yaml": "^2.3.4",
+    "yaml-loader": "^0.8.0"
   }
 }

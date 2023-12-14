@@ -139,6 +139,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -183,6 +184,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -233,6 +235,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -287,6 +290,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -347,6 +351,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -405,6 +410,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -931,6 +937,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -975,6 +982,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -1025,6 +1033,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -1079,6 +1088,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -1139,6 +1149,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -1197,6 +1208,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -1774,6 +1786,7 @@ exports[`uni-builder webpack > should generator webpack config correctly 1`] = `
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -1833,6 +1846,7 @@ exports[`uni-builder webpack > should generator webpack config correctly 1`] = `
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -1906,6 +1920,7 @@ exports[`uni-builder webpack > should generator webpack config correctly 1`] = `
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -2541,6 +2556,7 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -2600,6 +2616,7 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -2673,6 +2690,7 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {

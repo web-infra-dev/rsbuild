@@ -1785,6 +1785,9 @@ importers:
       picocolors:
         specifier: 1.0.0
         version: 1.0.0
+      postcss-load-config:
+        specifier: 4.0.2
+        version: 4.0.2(postcss@8.4.31)
       postcss-loader:
         specifier: 7.3.3
         version: 7.3.3(postcss@8.4.31)(typescript@5.3.2)(webpack@5.89.0)
@@ -1824,6 +1827,12 @@ importers:
       ws:
         specifier: ^8.14.2
         version: 8.14.2
+      yaml:
+        specifier: ^2.3.4
+        version: 2.3.4
+      yaml-loader:
+        specifier: ^0.8.0
+        version: 0.8.0
 
   scripts/tsconfig: {}
 
@@ -14930,6 +14939,15 @@ packages:
     dependencies:
       commander: 6.2.1
       js-yaml: 3.14.1
+    dev: true
+
+  /yaml-loader@0.8.0:
+    resolution: {integrity: sha512-LjeKnTzVBKWiQBeE2L9ssl6WprqaUIxCSNs5tle8PaDydgu3wVFXTbMfsvF2MSErpy9TDVa092n4q6adYwJaWg==}
+    engines: {node: '>= 12.13'}
+    dependencies:
+      javascript-stringify: 2.1.0
+      loader-utils: 2.0.4
+      yaml: 2.3.4
     dev: true
 
   /yaml@1.10.2:
