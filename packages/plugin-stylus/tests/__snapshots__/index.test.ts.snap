@@ -5,65 +5,102 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
   "module": {
     "rules": [
       {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.styl\\(us\\)\\?\\$/,
-        "use": [
+        "oneOf": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
-            "options": {
-              "importLoaders": 2,
-              "modules": {
-                "auto": true,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-              },
-              "sourceMap": false,
+            "resolve": {
+              "preferRelative": true,
             },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "plugins": [
-                  [Function],
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
+            "sideEffects": true,
+            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
+            "type": "css/module",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
                     ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
                   },
-                ],
+                  "sourceMap": false,
+                },
               },
-              "sourceMap": false,
-            },
+              {
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
+                "options": {
+                  "sourceMap": false,
+                },
+              },
+            ],
           },
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
-            "options": {
-              "sourceMap": false,
+            "resolve": {
+              "preferRelative": true,
             },
+            "sideEffects": true,
+            "type": "css",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
+                "options": {
+                  "sourceMap": false,
+                },
+              },
+            ],
           },
         ],
+        "test": /\\\\\\.styl\\(us\\)\\?\\$/,
       },
     ],
   },
@@ -75,68 +112,108 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
   "module": {
     "rules": [
       {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.styl\\(us\\)\\?\\$/,
-        "use": [
+        "oneOf": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
-            "options": {
-              "importLoaders": 2,
-              "modules": {
-                "auto": true,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-              },
-              "sourceMap": false,
+            "resolve": {
+              "preferRelative": true,
             },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "plugins": [
-                  [Function],
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
+            "sideEffects": true,
+            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
+            "type": "css/module",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
                     ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
                   },
-                ],
+                  "sourceMap": false,
+                },
               },
-              "sourceMap": false,
-            },
+              {
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
+                "options": {
+                  "sourceMap": false,
+                  "stylusOptions": {
+                    "lineNumbers": false,
+                  },
+                },
+              },
+            ],
           },
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
-            "options": {
-              "sourceMap": false,
-              "stylusOptions": {
-                "lineNumbers": false,
-              },
+            "resolve": {
+              "preferRelative": true,
             },
+            "sideEffects": true,
+            "type": "css",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
+                "options": {
+                  "sourceMap": false,
+                  "stylusOptions": {
+                    "lineNumbers": false,
+                  },
+                },
+              },
+            ],
           },
         ],
+        "test": /\\\\\\.styl\\(us\\)\\?\\$/,
       },
     ],
   },

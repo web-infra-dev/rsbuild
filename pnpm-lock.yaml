@@ -1248,9 +1248,6 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../compat/webpack
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
@@ -1351,9 +1348,6 @@ importers:
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../compat/webpack
       '@types/babel__core':
         specifier: ^7.20.3
         version: 7.20.3
@@ -1555,9 +1549,6 @@ importers:
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../compat/webpack
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
@@ -1605,9 +1596,6 @@ importers:
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../compat/webpack
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
