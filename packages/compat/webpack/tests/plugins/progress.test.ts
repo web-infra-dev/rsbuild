@@ -8,7 +8,7 @@ describe('plugin-progress', () => {
       plugins: [pluginProgress()],
     });
 
-    const matched = await rsbuild.matchWebpackPlugin('ProgressPlugin');
+    const matched = await rsbuild.matchBundlerPlugin('ProgressPlugin');
     expect(matched).toBeTruthy();
   });
 
@@ -22,7 +22,7 @@ describe('plugin-progress', () => {
       },
     });
 
-    const matched = await rsbuild.matchWebpackPlugin('ProgressPlugin');
+    const matched = await rsbuild.matchBundlerPlugin('ProgressPlugin');
     expect(matched).toBeFalsy();
   });
 });

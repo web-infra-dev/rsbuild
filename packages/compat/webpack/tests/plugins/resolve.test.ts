@@ -6,7 +6,7 @@ describe('plugin-resolve', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.resolve?.extensions).toEqual([
       '.ts',
       '.tsx',
@@ -28,7 +28,7 @@ describe('plugin-resolve', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config.resolve?.alias).toEqual({
       foo: 'bar',
@@ -48,7 +48,7 @@ describe('plugin-resolve', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config.resolve?.alias).toEqual({
       foo: 'bar',
@@ -59,7 +59,7 @@ describe('plugin-resolve', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });

@@ -19,8 +19,9 @@ describe('plugin-swc', () => {
   it('should set swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginSwc()],
-      rsbuildConfig: {},
-      provider: webpackProvider,
+      rsbuildConfig: {
+        provider: webpackProvider,
+      },
     });
     const config = await rsbuild.unwrapConfig();
 
@@ -31,8 +32,9 @@ describe('plugin-swc', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginSwc()],
-      rsbuildConfig: {},
-      provider: webpackProvider,
+      rsbuildConfig: {
+        provider: webpackProvider,
+      },
     });
     const config = await rsbuild.unwrapConfig();
     expect(config.optimization).toMatchSnapshot();
@@ -52,8 +54,9 @@ describe('plugin-swc', () => {
           },
         }),
       ],
-      rsbuildConfig: {},
-      provider: webpackProvider,
+      rsbuildConfig: {
+        provider: webpackProvider,
+      },
     });
     const config = await rsbuild.unwrapConfig();
     expect(config.optimization).toMatchSnapshot();
@@ -75,8 +78,9 @@ describe('plugin-swc', () => {
           },
         }),
       ],
-      rsbuildConfig: {},
-      provider: webpackProvider,
+      rsbuildConfig: {
+        provider: webpackProvider,
+      },
     });
     const config = await rsbuild.unwrapConfig();
     expect(config.optimization).toMatchSnapshot();
@@ -94,8 +98,9 @@ describe('plugin-swc', () => {
           cssMinify: false,
         }),
       ],
-      rsbuildConfig: {},
-      provider: webpackProvider,
+      rsbuildConfig: {
+        provider: webpackProvider,
+      },
     });
     const config = await rsbuild.unwrapConfig();
     expect(config.optimization).toBeFalsy();
@@ -116,8 +121,9 @@ describe('plugin-swc', () => {
           minify: true,
         }),
       ],
-      rsbuildConfig: {},
-      provider: webpackProvider,
+      rsbuildConfig: {
+        provider: webpackProvider,
+      },
     });
     const config = await rsbuild.unwrapConfig();
     expect(config.optimization).toBeFalsy();
@@ -130,12 +136,12 @@ describe('plugin-swc', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel(), pluginSwc()],
       rsbuildConfig: {
+        provider: webpackProvider,
         source: {
           include: [/foo/],
           exclude: [/bar/],
         },
       },
-      provider: webpackProvider,
     });
     const config = await rsbuild.unwrapConfig();
 
@@ -147,11 +153,11 @@ describe('plugin-swc', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
       rsbuildConfig: {
+        provider: webpackProvider,
         dev: {
           hmr: false,
         },
       },
-      provider: webpackProvider,
     });
     const config = await rsbuild.unwrapConfig();
     expect(config.module).toMatchSnapshot();
@@ -165,11 +171,11 @@ describe('plugin-swc', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
       rsbuildConfig: {
+        provider: webpackProvider,
         output: {
           targets: ['node', 'service-worker', 'web', 'web-worker'],
         },
       },
-      provider: webpackProvider,
     });
     const configs = await rsbuild.initConfigs();
 
@@ -300,8 +306,9 @@ describe('plugin-swc', () => {
           },
         }),
       ],
-      rsbuildConfig: {},
-      provider: webpackProvider,
+      rsbuildConfig: {
+        provider: webpackProvider,
+      },
     });
     const config = await rsbuild.unwrapConfig();
 

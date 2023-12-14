@@ -59,7 +59,7 @@ describe('modifyRsbuildConfig', () => {
       },
     ]);
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.entry).toEqual({
       main: ['a.js', 'b.js', 'src/index.ts'],
     });
