@@ -16,7 +16,7 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -32,7 +32,7 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -48,7 +48,7 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -69,7 +69,7 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -87,7 +87,7 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -103,7 +103,7 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -124,7 +124,7 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -155,7 +155,7 @@ describe('webpackConfig', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.plugins).toMatchSnapshot();
   });
 
@@ -175,7 +175,7 @@ describe('webpackConfig', () => {
       plugins: [],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.plugins).toEqual([]);
   });
 
@@ -196,7 +196,7 @@ describe('webpackConfig', () => {
       plugins: [],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.module?.rules).toEqual([newRule]);
   });
 });
