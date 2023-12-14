@@ -14,7 +14,7 @@ import { PackageManagerTabs } from '@theme';
 
 ## Configuring PostCSS
 
-Register the `unocss` plugin through [tools.postcss](/config/tools/postcss) or [postcss.config.cjs](https://www.npmjs.com/package/postcss-loader#config).
+You can register the `unocss` PostCSS plugin through [postcss.config.cjs](https://www.npmjs.com/package/postcss-loader#config) or [tools.postcss](/config/tools/postcss).
 
 ```js title="postcss.config.cjs"
 module.exports = {
@@ -23,6 +23,8 @@ module.exports = {
   },
 };
 ```
+
+Rsbuild has integrated [autoprefixer](https://github.com/postcss/autoprefixer), so you only need to register the `tailwindcss` plugin.
 
 ## Configuring UnoCSS
 
