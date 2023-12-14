@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Socket } from 'net';
 import type {
-  RsbuildDevMiddlewareOptions,
+  DevMiddlewaresConfig,
   DevMiddlewareAPI,
   NextFunction,
   DevMiddleware as CustomDevMiddleware,
@@ -10,17 +10,15 @@ import { SocketServer } from './socketServer';
 
 type Options = {
   publicPaths: string[];
-  dev: RsbuildDevMiddlewareOptions['dev'];
-  devMiddleware?: CustomDevMiddleware;
+  dev: DevMiddlewaresConfig;
+  devMiddleware: CustomDevMiddleware;
 };
 
 const noop = () => {
   // noop
 };
 
-function getHMRClientPath(
-  client: RsbuildDevMiddlewareOptions['dev']['client'],
-) {
+function getHMRClientPath(client: DevMiddlewaresConfig['client']) {
   const protocol = client?.protocol ? `&protocol=${client.protocol}` : '';
   const host = client?.host ? `&host=${client.host}` : '';
   const path = client?.path ? `&path=${client.path}` : '';
@@ -40,11 +38,11 @@ function getHMRClientPath(
  * 2. establish webSocket connect
  */
 export class CompilerDevMiddleware {
-  public middleware?: DevMiddlewareAPI;
+  public middleware!: DevMiddlewareAPI;
 
-  private devOptions: RsbuildDevMiddlewareOptions['dev'];
+  private devOptions: DevMiddlewaresConfig;
 
-  private devMiddleware?: CustomDevMiddleware;
+  private devMiddleware: CustomDevMiddleware;
 
   private publicPaths: string[];
 
@@ -61,13 +59,11 @@ export class CompilerDevMiddleware {
   }
 
   public init() {
-    if (this.devMiddleware) {
-      // start compiling
-      this.middleware = this.setupDevMiddleware(
-        this.devMiddleware,
-        this.publicPaths,
-      );
-    }
+    // start compiling
+    this.middleware = this.setupDevMiddleware(
+      this.devMiddleware,
+      this.publicPaths,
+    );
 
     this.socketServer.prepare();
   }
