@@ -1,5 +1,12 @@
 # @rsbuild/webpack
 
+## 0.2.4
+
+### Patch Changes
+
+- @rsbuild/core@0.2.4
+- @rsbuild/shared@0.2.4
+
 ## 0.2.3
 
 ### Patch Changes
