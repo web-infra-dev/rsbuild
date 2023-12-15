@@ -5,7 +5,6 @@
 
 ```js
 const defaultOptions = {
-  config: false,
   postcssOptions: {
     plugins: [
       require('postcss-flexbugs-fixes'),
@@ -17,6 +16,8 @@ const defaultOptions = {
 ```
 
 Rsbuild 默认集成 PostCSS，你可以通过 `tools.postcss` 对 [postcss-loader](https://github.com/webpack-contrib/postcss-loader) 进行配置。
+
+注意，出于性能的考虑，Rsbuild 使用 [postcss-load-config](https://github.com/postcss/postcss-load-config) 加载外部配置文件，并将其和默认配置合并。
 
 ### Function 类型
 

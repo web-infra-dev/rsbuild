@@ -143,6 +143,10 @@ export const getPostcssLoaderOptions = async ({
     mergedConfig?.postcssOptions?.plugins!.push(...extraPlugins);
   }
 
+  // always use postcss-load-config to load external config
+  mergedConfig.postcssOptions ||= {};
+  mergedConfig.postcssOptions.config = false;
+
   return mergedConfig;
 };
 
