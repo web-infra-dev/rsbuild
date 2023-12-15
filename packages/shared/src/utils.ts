@@ -3,6 +3,7 @@ import type { Compiler } from '@rspack/core';
 import type {
   CacheGroup,
   RsbuildTarget,
+  ModifyChainUtils,
   NormalizedConfig,
   SharedCompiledPkgNames,
 } from './types';
@@ -285,4 +286,31 @@ export function onExitProcess(listener: NodeJS.ExitListener) {
   process.on('SIGINT', () => {
     process.exit(0);
   });
+}
+
+export const isHtmlDisabled = (
+  config: NormalizedConfig,
+  target: RsbuildTarget,
+) => {
+  const { htmlPlugin } = config.tools as {
+    htmlPlugin: boolean | Array<unknown>;
+  };
+  return (
+    htmlPlugin === false ||
+    (Array.isArray(htmlPlugin) && htmlPlugin.includes(false)) ||
+    target !== 'web'
+  );
+};
+
+export function isUsingHMR(
+  config: NormalizedConfig,
+  { isProd, target }: Pick<ModifyChainUtils, 'isProd' | 'target'>,
+) {
+  return (
+    !isProd &&
+    target !== 'node' &&
+    target !== 'web-worker' &&
+    target !== 'service-worker' &&
+    config.dev.hmr
+  );
 }

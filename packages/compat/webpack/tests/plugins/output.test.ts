@@ -7,7 +7,7 @@ describe('plugin-output', () => {
       plugins: [pluginOutput()],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -24,7 +24,7 @@ describe('plugin-output', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -41,7 +41,7 @@ describe('plugin-output', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -57,7 +57,7 @@ describe('plugin-output', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 });

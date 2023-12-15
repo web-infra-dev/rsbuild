@@ -1,13 +1,13 @@
 import path from 'path';
 import {
+  logger,
   getBrowserslistWithDefault,
   isUseCssExtract,
   CSS_REGEX,
   CSS_MODULES_REGEX,
   getCssLoaderOptions,
   setConfig,
-  logger,
-  getPostcssConfig,
+  getPostcssLoaderOptions,
   getCssModuleLocalIdentName,
   resolvePackage,
   mergeChainedOptions,
@@ -120,9 +120,10 @@ export async function applyBaseCSSRule({
   }
 
   if (!isServer && !isWebWorker) {
-    const postcssLoaderOptions = getPostcssConfig({
+    const postcssLoaderOptions = await getPostcssLoaderOptions({
       browserslist,
       config,
+      root: context.rootPath,
     });
 
     rule

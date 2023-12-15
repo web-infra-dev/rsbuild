@@ -1,5 +1,12 @@
 # @rsbuild/plugin-type-check
 
+## 0.2.4
+
+### Patch Changes
+
+- c8711b3c: feat(type-check): support for typescript project reference
+  - @rsbuild/shared@0.2.4
+
 ## 0.2.3
 
 ### Patch Changes

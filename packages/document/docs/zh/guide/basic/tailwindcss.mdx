@@ -14,20 +14,17 @@ import { PackageManagerTabs } from '@theme';
 
 ## 配置 PostCSS
 
-通过 [tools.postcss](/config/tools/postcss) 来注册 `tailwindcss` 插件。
+你可以通过 [postcss.config.cjs](https://www.npmjs.com/package/postcss-loader#config) 或 [tools.postcss](/config/tools/postcss) 来注册 `tailwindcss` 的 PostCSS 插件。
 
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import tailwindcss from 'tailwindcss';
-
-export default defineConfig({
-  tools: {
-    postcss(config) {
-      config.postcssOptions?.plugins?.push(tailwindcss);
-    },
+```js title="postcss.config.cjs"
+module.exports = {
+  plugins: {
+    tailwindcss: {},
   },
-});
+};
 ```
+
+Rsbuild 已经内置了 [autoprefixer](https://github.com/postcss/autoprefixer)，因此你只需要注册 `tailwindcss` 插件即可。
 
 ## 配置 Tailwind CSS
 

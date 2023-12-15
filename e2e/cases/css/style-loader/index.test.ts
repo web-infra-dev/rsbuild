@@ -27,11 +27,10 @@ test('should inline style when injectStyles is true', async ({ page }) => {
   const indexJsFile = Object.keys(files).find(
     (file) => file.includes('index.') && file.endsWith('.js'),
   )!;
-  expect(
-    files[indexJsFile].includes(
-      'html,\\nbody {\\n  padding: 0;\\n  margin: 0;\\n}\\n\\n* {\\n  -webkit-font-smoothing: antialiased;\\n  -moz-osx-font-smoothing: grayscale;\\n  box-sizing: border-box;\\n}\\n\\n.description {\\n  text-align: center;\\n  line-height: 1.5;\\n  font-size: 16px;',
-    ),
-  ).toBeTruthy();
+
+  expect(files[indexJsFile].includes('padding: 0;')).toBeTruthy();
+  expect(files[indexJsFile].includes('margin: 0;')).toBeTruthy();
+  expect(files[indexJsFile].includes('text-align: center;')).toBeTruthy();
 
   // scss worked
   const header = page.locator('#header');

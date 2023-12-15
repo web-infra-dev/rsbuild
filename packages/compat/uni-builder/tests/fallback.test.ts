@@ -41,7 +41,7 @@ describe('plugin-fallback', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -50,7 +50,7 @@ describe('plugin-fallback', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [testPlugin, pluginFallback()],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });

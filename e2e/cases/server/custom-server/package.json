@@ -3,7 +3,8 @@
   "name": "@e2e/custom-server",
   "version": "1.0.0",
   "scripts": {
-    "dev": "node ./scripts/index.mjs"
+    "dev": "node ./scripts/index.mjs",
+    "dev:pure": "node ./scripts/index.mjs pure"
   },
   "dependencies": {
     "express": "^4.18.2"

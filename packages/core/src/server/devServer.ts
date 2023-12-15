@@ -13,10 +13,12 @@ import {
   getPublicPathFromCompiler,
   RspackMultiCompiler,
   RspackCompiler,
-  RsbuildDevMiddlewareOptions,
+  CompileMiddlewareAPI,
+  DevMiddlewaresConfig,
   Routes,
   DevServerAPIs,
 } from '@rsbuild/shared';
+
 import connect from '@rsbuild/shared/connect';
 import { registerCleaner } from './restart';
 import type { Context } from '../types';
@@ -64,15 +66,6 @@ export async function getServerAPIs<
     https,
   };
 
-  const { devMiddleware, compiler } = await createDevMiddleware(
-    options,
-    customCompiler,
-  );
-
-  const publicPaths = (compiler as RspackMultiCompiler).compilers
-    ? (compiler as RspackMultiCompiler).compilers.map(getPublicPathFromCompiler)
-    : [getPublicPathFromCompiler(compiler as RspackCompiler)];
-
   return {
     config: { devServerConfig, port, host, https, defaultRoutes },
     beforeStart: async () => {
@@ -84,21 +77,60 @@ export async function getServerAPIs<
         routes: params.routes || defaultRoutes,
       });
     },
-    getMiddlewares: async (
-      overrides: RsbuildDevMiddlewareOptions['dev'] = {},
-    ) =>
-      await getMiddlewares({
-        pwd: options.context.rootPath,
+    startCompile: async () => {
+      const { devMiddleware, compiler } = await createDevMiddleware(
+        options,
+        customCompiler,
+      );
+      const { CompilerDevMiddleware } = await import('./compilerDevMiddleware');
+
+      const publicPaths = (compiler as RspackMultiCompiler).compilers
+        ? (compiler as RspackMultiCompiler).compilers.map(
+            getPublicPathFromCompiler,
+          )
+        : [getPublicPathFromCompiler(compiler as RspackCompiler)];
+
+      // create dev middleware instance
+      const compilerDevMiddleware = new CompilerDevMiddleware({
+        dev: devServerConfig,
+        publicPaths: publicPaths,
         devMiddleware,
+      });
+
+      compilerDevMiddleware.init();
+
+      return {
+        middleware: compilerDevMiddleware.middleware,
+        sockWrite: (...args) => compilerDevMiddleware.sockWrite(...args),
+        onUpgrade: (...args) => compilerDevMiddleware.upgrade(...args),
+        close: () => compilerDevMiddleware?.close(),
+      };
+    },
+    getMiddlewares: async (
+      params: {
+        compileMiddlewareAPI?: CompileMiddlewareAPI;
+        /**
+         * Overrides middleware configs
+         *
+         * By default, get config from rsbuild dev.xxx and server.xxx
+         */
+        overrides?: DevMiddlewaresConfig;
+      } = {},
+    ) => {
+      const { compileMiddlewareAPI, overrides = {} } = params;
+
+      return getMiddlewares({
+        pwd: options.context.rootPath,
+        compileMiddlewareAPI,
         dev: {
           ...devServerConfig,
           ...overrides,
         },
         output: {
           distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
-          publicPaths,
         },
-      }),
+      });
+    },
   };
 }
 
@@ -163,7 +195,11 @@ export async function startDevServer<
     printServerURLs(urls, defaultRoutes, logger);
   }
 
-  const devMiddlewares = await serverAPIs.getMiddlewares();
+  const compileMiddlewareAPI = await serverAPIs.startCompile();
+
+  const devMiddlewares = await serverAPIs.getMiddlewares({
+    compileMiddlewareAPI,
+  });
 
   devMiddlewares.middlewares.forEach((m) => middlewares.use(m));
 

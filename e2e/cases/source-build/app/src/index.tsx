@@ -1,5 +1,4 @@
 import { Card } from '@e2e/source-build-components';
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 const rootElement = document.getElementById('root');

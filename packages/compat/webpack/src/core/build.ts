@@ -3,12 +3,13 @@ import { initConfigs, InitConfigsOptions } from './initConfigs';
 import {
   logger,
   type Stats,
+  type Rspack,
   type BuildOptions,
   type RspackConfig,
 } from '@rsbuild/shared';
 import type {
-  MultiStats,
   Compiler,
+  MultiStats,
   MultiCompiler,
   Configuration as WebpackConfig,
 } from 'webpack';
@@ -53,11 +54,10 @@ export const build = async (
 
   const { context } = initOptions;
 
-  let compiler: Compiler | MultiCompiler;
+  let compiler: Rspack.Compiler | Rspack.MultiCompiler;
   let bundlerConfigs: WebpackConfig[] | undefined;
 
   if (customCompiler) {
-    // @ts-expect-error compiler type mismatch
     compiler = customCompiler;
   } else {
     const { webpackConfigs } = await initConfigs(initOptions);
@@ -81,7 +81,7 @@ export const build = async (
       }
     });
   } else {
-    const executeResult = await executer?.(compiler);
+    const executeResult = await executer?.(compiler as unknown as Compiler);
     await context.hooks.onAfterBuildHook.call({
       stats: executeResult?.stats as Stats,
     });

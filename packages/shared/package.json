@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/shared",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "The internal shared modules and dependencies of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -26,6 +26,10 @@
     "./rslog": {
       "types": "./compiled/rslog/dist/index.d.ts",
       "default": "./compiled/rslog/index.js"
+    },
+    "./json5": {
+      "types": "./compiled/json5/lib/index.d.ts",
+      "default": "./compiled/json5/index.js"
     },
     "./gzip-size": {
       "types": "./compiled/gzip-size/index.d.ts",

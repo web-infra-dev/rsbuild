@@ -1,5 +1,12 @@
 # @rsbuild/plugin-vue2-jsx
 
+## 0.2.4
+
+### Patch Changes
+
+- @rsbuild/plugin-babel@0.2.4
+- @rsbuild/shared@0.2.4
+
 ## 0.2.3
 
 ### Patch Changes

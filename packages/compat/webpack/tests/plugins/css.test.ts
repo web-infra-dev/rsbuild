@@ -14,7 +14,7 @@ describe('plugin-css', () => {
         },
       },
     });
-    const includeStyleLoader = await rsbuild.matchWebpackLoader(
+    const includeStyleLoader = await rsbuild.matchLoader(
       'style-loader',
       'index.css',
     );
@@ -29,7 +29,7 @@ describe('plugin-css', () => {
       rsbuildConfig: {},
     });
 
-    const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
+    const includeMiniCssExtractLoader = await rsbuild.matchLoader(
       'mini-css-extract-plugin',
       'index.css',
     );
@@ -47,7 +47,7 @@ describe('plugin-css', () => {
       },
     });
 
-    const includeSassLoader = await rsbuild.matchWebpackLoader(
+    const includeSassLoader = await rsbuild.matchLoader(
       'sass-loader',
       'index.scss',
     );
@@ -65,7 +65,7 @@ describe('plugin-css', () => {
       },
     });
 
-    const includeLessLoader = await rsbuild.matchWebpackLoader(
+    const includeLessLoader = await rsbuild.matchLoader(
       'less-loader',
       'index.less',
     );
@@ -82,7 +82,7 @@ describe('plugin-css', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -97,7 +97,7 @@ describe('plugin-css', () => {
       },
     });
 
-    const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
+    const includeMiniCssExtractLoader = await rsbuild.matchLoader(
       'mini-css-extract-plugin',
       'index.css',
     );
@@ -115,7 +115,7 @@ describe('plugin-css', () => {
       },
     });
 
-    const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
+    const includeMiniCssExtractLoader = await rsbuild.matchLoader(
       'mini-css-extract-plugin',
       'index.css',
     );
@@ -137,7 +137,7 @@ describe('plugin-css', () => {
       },
     });
 
-    const includeStyleLoader = await rsbuild.matchWebpackLoader(
+    const includeStyleLoader = await rsbuild.matchLoader(
       'style-loader',
       'index.css',
     );
@@ -159,7 +159,7 @@ describe('plugin-css', () => {
       },
     });
 
-    const includeStyleLoader = await rsbuild.matchWebpackLoader(
+    const includeStyleLoader = await rsbuild.matchLoader(
       'style-loader',
       'index.css',
     );
@@ -177,7 +177,7 @@ describe('plugin-css', () => {
       },
     });
 
-    const includeMiniCssExtractLoader = await rsbuild.matchWebpackLoader(
+    const includeMiniCssExtractLoader = await rsbuild.matchLoader(
       'mini-css-extract-plugin',
       'index.css',
     );
@@ -195,7 +195,7 @@ describe('plugin-css', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -212,7 +212,7 @@ describe('plugin-css', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(JSON.stringify(config)).toContain('"sourceMap":true');
   });
@@ -229,7 +229,7 @@ describe('plugin-css', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(JSON.stringify(config)).toContain('"sourceMap":false');
   });
@@ -242,7 +242,7 @@ describe('plugin-css', () => {
       plugins: [pluginCss()],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(JSON.stringify(config)).toContain('"sourceMap":false');
 
@@ -261,7 +261,7 @@ describe('plugin-css', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(JSON.stringify(config)).toContain(
       '"localIdentName":"[hash:base64]"',
@@ -277,7 +277,7 @@ describe('plugin-css', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });

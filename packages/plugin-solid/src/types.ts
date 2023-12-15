@@ -24,7 +24,7 @@ export type SolidPresetOptions = {
    * Boolean to indicate whether to enable automatic event delegation on camelCase.
    * @default true
    */
-  delegateEvents: boolean;
+  delegateEvents?: boolean;
   /**
    * Boolean indicates whether smart conditional detection should be used. This optimizes simple boolean expressions and ternaries in JSX.
    * @default true

@@ -1,4 +1,3 @@
-import * as path from 'path';
 import { test, expect } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 

@@ -1,11 +1,7 @@
 import type { IncomingMessage } from 'http';
 import type { Socket } from 'net';
 import ws from '../../compiled/ws';
-import {
-  logger,
-  type Stats,
-  type RsbuildDevMiddlewareOptions,
-} from '@rsbuild/shared';
+import { logger, type Stats, type DevMiddlewaresConfig } from '@rsbuild/shared';
 
 interface ExtWebSocket extends ws {
   isAlive: boolean;
@@ -16,13 +12,13 @@ export class SocketServer {
 
   private readonly sockets: ws[] = [];
 
-  private readonly options: RsbuildDevMiddlewareOptions['dev'];
+  private readonly options: DevMiddlewaresConfig;
 
   private stats?: Stats;
 
   private timer: NodeJS.Timeout | null = null;
 
-  constructor(options: RsbuildDevMiddlewareOptions['dev']) {
+  constructor(options: DevMiddlewaresConfig) {
     this.options = options;
   }
 

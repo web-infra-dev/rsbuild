@@ -72,7 +72,6 @@ export async function init({
     return await createRsbuild({
       cwd: root,
       rsbuildConfig: config,
-      provider: config.provider,
     });
   } catch (err) {
     if (isRestart) {

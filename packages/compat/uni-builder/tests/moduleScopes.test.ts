@@ -10,7 +10,7 @@ describe('plugin-module-scopes', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginModuleScopes(['./src/foo.ts', './src/bar.ts'])],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });

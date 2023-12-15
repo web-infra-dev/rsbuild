@@ -6,7 +6,7 @@ describe('plugin-ts-loader', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginTsLoader()],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -21,7 +21,7 @@ describe('plugin-ts-loader', () => {
         }),
       ],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });

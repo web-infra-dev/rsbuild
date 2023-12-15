@@ -6,7 +6,7 @@ describe('plugin-assets-retry', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginAssetsRetry()],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -20,7 +20,7 @@ describe('plugin-assets-retry', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });

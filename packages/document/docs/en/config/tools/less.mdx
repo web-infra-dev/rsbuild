@@ -8,8 +8,7 @@ const defaultOptions = {
   lessOptions: {
     javascriptEnabled: true,
   },
-  // CSS Source Map enabled by default in development environment
-  sourceMap: isDev,
+  sourceMap: rsbuildConfig.output.sourceMap.css,
 };
 ```
 

@@ -22,7 +22,11 @@ export async function startDevServer(fixtures) {
     config: { host, port },
   } = serverAPIs;
 
-  const { middlewares, close, onUpgrade } = await serverAPIs.getMiddlewares();
+  const compileMiddlewareAPI = await serverAPIs.startCompile();
+
+  const { middlewares, close, onUpgrade } = await serverAPIs.getMiddlewares({
+    compileMiddlewareAPI,
+  });
 
   app.get('/aaa', (_req, res) => {
     res.send('Hello World!');

@@ -1,5 +1,5 @@
 import { pluginRem } from '../src';
-import { createStubRsbuild, matchPlugin } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginCss } from '../../core/src/provider/plugins/css';
 import { pluginLess } from '../../core/src/provider/plugins/less';
 import { pluginSass } from '../../core/src/provider/plugins/sass';
@@ -62,10 +62,8 @@ describe('plugin-rem', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-
     expect(
-      matchPlugin(bundlerConfigs[0], 'AutoSetRootFontSizePlugin'),
+      await rsbuild.matchBundlerPlugin('AutoSetRootFontSizePlugin'),
     ).toBeFalsy();
   });
 
@@ -79,10 +77,8 @@ describe('plugin-rem', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-
     expect(
-      matchPlugin(bundlerConfigs[0], 'AutoSetRootFontSizePlugin'),
+      await rsbuild.matchBundlerPlugin('AutoSetRootFontSizePlugin'),
     ).toBeFalsy();
   });
 });

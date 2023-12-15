@@ -15,7 +15,7 @@ describe('plugin-babel', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -32,7 +32,7 @@ describe('plugin-babel', () => {
         }),
       ],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -46,7 +46,7 @@ describe('plugin-babel', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -65,7 +65,7 @@ describe('plugin-babel', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.entry).toMatchSnapshot();
   });
 
@@ -83,7 +83,7 @@ describe('plugin-babel', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.entry).toMatchSnapshot();
   });
 
@@ -96,7 +96,7 @@ describe('plugin-babel', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -110,7 +110,7 @@ describe('plugin-babel', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(JSON.stringify(config)).toContain(
       '"generatorOpts":{"jsescOption":{"minimal":true}}',
@@ -126,7 +126,7 @@ describe('plugin-babel', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
   });
@@ -146,7 +146,7 @@ describe('plugin-babel', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     const babelRules = config.module!.rules?.filter((item: any) => {
       return item?.use?.[0].loader.includes('babel-loader');
@@ -160,7 +160,7 @@ describe('plugin-babel', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     const babelRules = config.module!.rules?.filter((item: any) => {
       return item?.use?.[0].loader.includes('babel-loader');
@@ -179,7 +179,7 @@ describe('plugin-babel', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     const babelRules = config.module!.rules?.filter((item: any) => {
       return item?.use?.[0].loader.includes('babel-loader');
