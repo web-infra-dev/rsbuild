@@ -1,6 +1,11 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Socket } from 'net';
-import { DevConfig, NextFunction, RequestHandler } from './config/dev';
+import {
+  DevConfig,
+  NextFunction,
+  RequestHandler,
+  ServerAPIs,
+} from './config/dev';
 import { ServerConfig } from './config/server';
 import { Routes } from './hooks';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
@@ -61,16 +66,6 @@ export type DevMiddlewaresConfig = Omit<
   | 'strictPort'
 >;
 
-export type RsbuildDevMiddlewareOptions = {
-  pwd: string;
-  dev: DevMiddlewaresConfig;
-  devMiddleware?: DevMiddleware;
-  output: {
-    distPath: string;
-    publicPaths: string[];
-  };
-};
-
 export type StartServerResult = {
   urls: string[];
   port: number;
@@ -79,11 +74,21 @@ export type StartServerResult = {
   };
 };
 
+/**
+ * It used to subscribe http upgrade event
+ */
 export type UpgradeEvent = (
   req: IncomingMessage,
   socket: Socket,
   head: any,
 ) => void;
+
+export type CompileMiddlewareAPI = {
+  middleware: RequestHandler;
+  sockWrite: ServerAPIs['sockWrite'];
+  onUpgrade: UpgradeEvent;
+  close: () => void;
+};
 
 export type DevServerAPIs = {
   /**
@@ -97,6 +102,10 @@ export type DevServerAPIs = {
     defaultRoutes: Routes;
   };
   /**
+   * Trigger rsbuild compile
+   */
+  startCompile: () => Promise<CompileMiddlewareAPI>;
+  /**
    * Trigger rsbuild onBeforeStartDevServer hook
    */
   beforeStart: () => Promise<void>;
@@ -109,7 +118,15 @@ export type DevServerAPIs = {
    *
    * Related config: proxy / publicDir / historyApiFallback / headers / ...
    */
-  getMiddlewares: (overrides?: RsbuildDevMiddlewareOptions['dev']) => Promise<{
+  getMiddlewares: (options?: {
+    compileMiddlewareAPI?: CompileMiddlewareAPI;
+    /**
+     * Overrides middleware configs
+     *
+     * By default, get config from rsbuild dev.xxx and server.xxx
+     */
+    overrides?: DevMiddlewaresConfig;
+  }) => Promise<{
     middlewares: RequestHandler[];
     close: () => Promise<void>;
     /**

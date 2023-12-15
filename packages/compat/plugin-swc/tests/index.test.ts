@@ -1,4 +1,4 @@
-import * as path from 'path';
+import path from 'path';
 import MagicString from 'magic-string';
 import { SourceMapConsumer } from 'source-map';
 

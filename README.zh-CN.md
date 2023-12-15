@@ -91,7 +91,7 @@ Rsbuild 具备以下特性：
 
 ## 🌟 质量
 
-Rsbuild 通过 [Web Infra QoS](https://web-infra-dev.github.io/web-infra-QoS/index?product=rsbuild&metrics=bundle-size) 来观测核心指标的变化情况，比如 bundle size、compile speed 和 install size。
+Rsbuild 通过 [Web Infra QoS](https://web-infra-qos.netlify.app?product=rsbuild&metrics=bundle-size) 来观测核心指标的变化情况，比如 bundle size、compile speed 和 install size。
 
 ## 🙌 行为准则
 
@@ -104,6 +104,8 @@ Rsbuild 的一些实现参考了社区中杰出的项目，对他们表示感谢
 - 部分插件的实现参考了 [create-react-app](https://github.com/facebook/create-react-app)。
 - 部分 util 函数参考了 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)。
 - 部分 API 的设计参考了 [vite](https://github.com/vitejs/vite)。
+
+Rsbuild 网站由 [Netlify](https://www.netlify.com/) 提供支持。
 
 ## 📖 License
 
