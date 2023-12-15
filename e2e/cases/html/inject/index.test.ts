@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 import { pluginRem } from '@rsbuild/plugin-rem';
 
-test('Rsbuild injection script order should be as expected', async () => {
+test('injection script order should be as expected', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     plugins: [
@@ -25,10 +25,9 @@ test('Rsbuild injection script order should be as expected', async () => {
 
   // rem => normal resource => template custom resource
   expect(
-    /(<script src="\/static\/js\/convert-rem).*(\/static\/js\/index).*(example.com\/assets\/a.js)/.test(
-      html,
-    ),
+    html.indexOf('/js/convert-rem') < html.indexOf('/js/index'),
   ).toBeTruthy();
+  expect(html.indexOf('/js/index') < html.indexOf('/assets/a.js')).toBeTruthy();
 });
 
 test('should set inject via function correctly', async () => {

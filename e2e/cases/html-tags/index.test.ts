@@ -23,7 +23,8 @@ test('should inject tags', async () => {
 
   const files = await rsbuild.unwrapOutputJSON();
 
-  const indexHtml = files[path.resolve(__dirname, './dist/index.html')];
+  const indexHtml =
+    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 
   expect(isHtmlMatch(indexHtml, /foo\.js/)).toBeTruthy();
   expect(

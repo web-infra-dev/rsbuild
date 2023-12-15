@@ -5,8 +5,6 @@ import {
   PathMatcher,
 } from './pathSerializer';
 
-export { normalizeToPosixPath } from './path';
-
 export interface SnapshotSerializerOptions {
   cwd?: string;
   workspace?: string;
