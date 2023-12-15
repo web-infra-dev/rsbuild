@@ -8,15 +8,21 @@ test('should run inspect command correctly', async () => {
     cwd: __dirname,
   });
 
-  const outputs = await globContentJSON(path.join(__dirname, 'dist'));
-  const outputFiles = Object.keys(outputs);
+  const files = await globContentJSON(path.join(__dirname, 'dist'));
+  const fileNames = Object.keys(files);
 
-  expect(
-    outputFiles.find((item) => item.includes('rsbuild.config.js')),
-  ).toBeTruthy();
-  expect(
-    outputFiles.find((item) => item.includes('rspack.config.web.js')),
-  ).toBeTruthy();
+  const rsbuildConfig = fileNames.find((item) =>
+    item.includes('rsbuild.config.js'),
+  );
+  expect(rsbuildConfig).toBeTruthy();
+  expect(files[rsbuildConfig!]).toContain("'rsbuild:basic'");
+  expect(files[rsbuildConfig!]).toContain('hmr: true');
+
+  const rspackConfig = fileNames.find((item) =>
+    item.includes('rspack.config.web.js'),
+  );
+  expect(rspackConfig).toBeTruthy();
+  expect(files[rspackConfig!]).toContain("mode: 'development'");
 });
 
 test('should run inspect command with output option correctly', async () => {
