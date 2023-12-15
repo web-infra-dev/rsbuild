@@ -1,5 +1,12 @@
 # @rsbuild/core
 
+## 0.2.5
+
+### Patch Changes
+
+- chore: bump v0.2.5
+  - @rsbuild/shared@0.2.5
+
 ## 0.2.4
 
 ### Patch Changes
