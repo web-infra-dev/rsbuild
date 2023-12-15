@@ -89,7 +89,7 @@ Come and chat with us on [Discord](https://discord.gg/mScJfeeT)! The Rspack / Rs
 
 ## 🌟 Quality
 
-Rsbuild uses [Web Infra QoS](https://web-infra-dev.github.io/web-infra-QoS/index?product=rsbuild&metrics=bundle-size) to observe the trend of key metrics, such as bundle size, compile speed and install size.
+Rsbuild uses [Web Infra QoS](https://web-infra-qos.netlify.app?product=rsbuild&metrics=bundle-size) to observe the trend of key metrics, such as bundle size, compile speed and install size.
 
 ## 🙌 Code of Conduct
 
@@ -102,6 +102,8 @@ Some of the implementations of Rsbuild have drawn inspiration from outstanding p
 - The implementation of some plugins is referenced from [create-react-app](https://github.com/facebook/create-react-app)
 - Some utility functions are referenced from [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
 - The design of some APIs is referenced from [vite](https://github.com/vitejs/vite).
+
+This Rsbuild website is powered by [Netlify](https://www.netlify.com/).
 
 ## 📖 License
 
