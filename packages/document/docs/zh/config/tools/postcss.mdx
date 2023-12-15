@@ -11,8 +11,7 @@ const defaultOptions = {
       require('postcss-flexbugs-fixes'),
       require('autoprefixer')({ flexbox: 'no-2009' }),
     ],
-    // 默认在开发环境下启用 CSS 的 Source Map
-    sourceMap: isDev,
+    sourceMap: rsbuildConfig.output.sourceMap.css,
   },
 };
 ```

@@ -11,8 +11,7 @@ const defaultOptions = {
       require('postcss-flexbugs-fixes'),
       require('autoprefixer')({ flexbox: 'no-2009' }),
     ],
-    // CSS Source Map enabled by default in development environment
-    sourceMap: isDev,
+    sourceMap: rsbuildConfig.output.sourceMap.css,
   },
 };
 ```

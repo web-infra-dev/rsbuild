@@ -8,8 +8,7 @@ const defaultOptions = {
   lessOptions: {
     javascriptEnabled: true,
   },
-  // 默认在开发环境下启用 CSS 的 Source Map
-  sourceMap: isDev,
+  sourceMap: rsbuildConfig.output.sourceMap.css,
 };
 ```
 
