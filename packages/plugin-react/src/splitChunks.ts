@@ -32,7 +32,9 @@ export const applySplitChunksRule = (
         'react',
         'react-dom',
         'scheduler',
-        ...(isProd() ? [] : ['react-refresh', '@rspack/plugin-react-refresh']),
+        ...(isProd()
+          ? []
+          : ['react-refresh', /@rspack[\\/]plugin-react-refresh/]),
       ];
     }
 
@@ -40,8 +42,8 @@ export const applySplitChunksRule = (
       extraGroups.router = [
         'react-router',
         'react-router-dom',
-        '@remix-run/router',
         'history',
+        /@remix-run[\\/]router/,
       ];
     }
 
