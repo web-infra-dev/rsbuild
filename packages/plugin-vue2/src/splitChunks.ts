@@ -41,7 +41,7 @@ export const applySplitChunksRule = (
     chain.optimization.splitChunks({
       ...currentConfig,
       cacheGroups: {
-        ...(currentConfig as SplitChunks).cacheGroups,
+        ...(currentConfig as Exclude<SplitChunks, false>).cacheGroups,
         ...createCacheGroups(extraGroups),
       },
     });
