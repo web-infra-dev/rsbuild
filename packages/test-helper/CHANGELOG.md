@@ -1,5 +1,13 @@
 # @rsbuild/test-helper
 
+## 0.2.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @rsbuild/core@0.2.5
+  - @rsbuild/shared@0.2.5
+
 ## 0.2.4
 
 ### Patch Changes

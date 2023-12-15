@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-assets-retry",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Assets retry plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
