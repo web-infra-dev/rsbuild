@@ -30,10 +30,7 @@ export const applySplitChunksRule = (
       extraGroups.vue = [
         'vue',
         'vue-loader',
-        '@vue/shared',
-        '@vue/reactivity',
-        '@vue/runtime-dom',
-        '@vue/runtime-core',
+        /@vue[\\/](shared|reactivity|runtime-dom|runtime-core)/,
       ];
     }
 
