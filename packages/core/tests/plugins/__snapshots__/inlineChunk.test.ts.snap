@@ -45,6 +45,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -52,9 +53,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index": {
-            "title": "Rsbuild App",
-          },
+          "index": {},
         },
       },
     },
@@ -119,6 +118,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -126,9 +126,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index": {
-            "title": "Rsbuild App",
-          },
+          "index": {},
         },
       },
     },

@@ -646,6 +646,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -653,9 +654,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index": {
-            "title": "Rsbuild App",
-          },
+          "index": {},
         },
       },
     },
