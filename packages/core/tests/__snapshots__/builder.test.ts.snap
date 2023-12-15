@@ -406,7 +406,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -461,7 +461,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],

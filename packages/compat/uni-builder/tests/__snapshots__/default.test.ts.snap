@@ -394,7 +394,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -453,7 +453,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -1192,7 +1192,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -1251,7 +1251,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],

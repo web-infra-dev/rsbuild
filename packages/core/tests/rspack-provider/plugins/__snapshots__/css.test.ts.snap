@@ -939,7 +939,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -994,7 +994,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -1079,7 +1079,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
             "loader": "<ROOT>/packages/shared/compiled/sass-loader",
             "options": {
               "implementation": "<ROOT>/packages/shared/compiled/sass",
-              "sourceMap": true,
+              "sourceMap": false,
             },
           },
         ],
@@ -1149,7 +1149,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -1207,7 +1207,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
