@@ -423,7 +423,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
             ],
@@ -478,7 +478,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
             ],

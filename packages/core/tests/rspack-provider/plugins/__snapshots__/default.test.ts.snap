@@ -406,7 +406,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
             ],
@@ -461,7 +461,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
             ],
@@ -1095,7 +1095,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
             ],
@@ -1150,7 +1150,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
             ],
@@ -1676,7 +1676,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
             ],
@@ -1699,7 +1699,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
             ],
@@ -2271,7 +2271,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
             ],
@@ -2326,7 +2326,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/sass-loader",
                 "options": {
                   "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
             ],

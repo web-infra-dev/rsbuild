@@ -21,7 +21,9 @@ export function pluginSass(): RsbuildPlugin {
 
         const { excludes, options } = getSassLoaderOptions(
           config.tools.sass,
-          config.output.sourceMap.css,
+          // source-maps required for loaders preceding resolve-url-loader
+          // otherwise the resolve-url-loader will throw an error
+          true,
         );
 
         const rule = chain.module

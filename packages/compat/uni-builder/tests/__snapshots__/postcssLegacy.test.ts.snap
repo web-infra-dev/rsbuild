@@ -332,7 +332,7 @@ exports[`plugin-postcssLegacy > should register postcss plugin by browserslist 1
               "loader": "<ROOT>/packages/shared/compiled/sass-loader",
               "options": {
                 "implementation": "<ROOT>/packages/shared/compiled/sass",
-                "sourceMap": false,
+                "sourceMap": true,
               },
             },
           ],
@@ -383,7 +383,7 @@ exports[`plugin-postcssLegacy > should register postcss plugin by browserslist 1
               "loader": "<ROOT>/packages/shared/compiled/sass-loader",
               "options": {
                 "implementation": "<ROOT>/packages/shared/compiled/sass",
-                "sourceMap": false,
+                "sourceMap": true,
               },
             },
           ],
