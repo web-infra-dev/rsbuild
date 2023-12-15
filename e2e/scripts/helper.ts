@@ -1,10 +1,8 @@
 import { join } from 'path';
 import { test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import glob, {
-  convertPathToPattern,
-  type Options as GlobOptions,
-} from 'fast-glob';
+import glob, { type Options as GlobOptions } from 'fast-glob';
+import { normalizeToPosixPath } from '@rsbuild/test-helper';
 
 export const providerType = process.env.PROVIDE_TYPE || 'rspack';
 
@@ -29,8 +27,8 @@ export const rspackOnlyTest = getProviderTest(['rspack']);
 
 export const globContentJSON = async (path: string, options?: GlobOptions) => {
   const files = await glob(
-    // https://github.com/mrmlnc/fast-glob#convertpathtopatternpath
-    convertPathToPattern(join(path, '**/*')),
+    // fast-glob only accepts posix path
+    normalizeToPosixPath(join(path, '**/*')),
     options,
   );
   const ret: Record<string, string> = {};
