@@ -55,6 +55,7 @@ interface Options {
 type LogMethods = keyof typeof LOG_TYPES;
 type Logger = Record<LogMethods, LogFunction> & {
     greet: (message: string) => void;
+    level: LogLevel;
 };
 
 declare let createLogger: (options?: Options) => Logger;
