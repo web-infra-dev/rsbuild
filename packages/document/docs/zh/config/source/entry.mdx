@@ -10,7 +10,8 @@ type Entry = Record<string, string | string[]>;
 
 ```ts
 const defaultEntry = {
-  index: 'src/index.(ts|js|tsx|jsx|mjs|cjs)',
+  // 默认支持其他后缀，如 ts、tsx、jsx、mjs、cjs
+  index: 'src/index.js',
 };
 ```
 
@@ -45,3 +46,5 @@ export default {
         ├── foo.js
         └── bar.js
 ```
+
+如果你不需要生成 HTML 文件，可以将 [tools.htmlPlugin](/config/tools/html-plugin) 设置为 `false` 来禁用这一行为。
