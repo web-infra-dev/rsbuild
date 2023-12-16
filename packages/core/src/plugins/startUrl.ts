@@ -59,11 +59,10 @@ export async function openBrowser(url: string): Promise<boolean> {
 
         return true;
       }
-      return false;
+      logger.debug('Failed to find the target browser.');
     } catch (err) {
-      logger.error('Failed to open start URL with apple script.');
-      logger.error(err);
-      return false;
+      logger.debug('Failed to open start URL with apple script.');
+      logger.debug(err);
     }
   }
 
