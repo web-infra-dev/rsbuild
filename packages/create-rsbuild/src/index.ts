@@ -133,10 +133,8 @@ function copyFolder(src: string, dist: string, version: string, name?: string) {
 const updatePackageJson = (pkgJsonPath: string, version: string, name?: string) => {
   let content = fs.readFileSync(pkgJsonPath, 'utf-8');
   content = content.replace(/workspace:\*/g, `^${version}`);
-  if (name) {
-    pkg = JSON.parse(content)
-    pkg.name = name
-  }
+  const pkg = JSON.parse(content)
+  if (name) pkg.name = name
   fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, 2));
 };
 
