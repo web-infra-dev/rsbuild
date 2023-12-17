@@ -9,8 +9,15 @@ function initNodeEnv() {
   }
 }
 
+function initLogger() {
+  if (process.env.DEBUG) {
+    logger.level = 'verbose';
+  }
+}
+
 export function prepareCli() {
   initNodeEnv();
+  initLogger();
 
   // If not called through a package manager,
   // output a blank line to keep the greet log nice.
