@@ -3,14 +3,24 @@
 - **Type:** `boolean`
 - **Default:** `true`
 
-Whether to clean all files in the dist path before starting compilation.
+Whether to clean up all files under the output directory (default is `dist`) before the build starts.
 
-By default, Rsbuild clean up the dist file, you can disable this behavior by setting `cleanDistPath` to `false`.
+By default, Rsbuild automatically cleans the files under the output directory. You can set `cleanDistPath` to `false` to disable this behavior.
 
 ```js
 export default {
   output: {
     cleanDistPath: false,
+  },
+};
+```
+
+If you only need to clean files before the production build, and not in the development build, you can configure it as follows:
+
+```js
+export default {
+  output: {
+    cleanDistPath: process.env.NODE_ENV === 'production',
   },
 };
 ```
