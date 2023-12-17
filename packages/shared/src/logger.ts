@@ -19,7 +19,7 @@ export const debug = (message: string | (() => string)) => {
     const { performance } = require('perf_hooks');
     const result = typeof message === 'string' ? message : message();
     const time = color.gray(`[${performance.now().toFixed(2)} ms]`);
-    console.error(`${color.bold(color.yellow('debug'))}   ${result} ${time}`);
+    logger.debug(`${result} ${time}`);
   }
 };
 
