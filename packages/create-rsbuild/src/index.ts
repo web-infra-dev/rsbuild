@@ -84,7 +84,7 @@ async function main() {
   const distFolder = path.join(cwd, targetDir);
 
   copyFolder(commonFolder, distFolder, version);
-  copyFolder(srcFolder, distFolder, version, targetDir);
+  copyFolder(srcFolder, distFolder, version, path.basename(targetDir));
 
   const nextSteps = [
     `cd ${targetDir}`,
