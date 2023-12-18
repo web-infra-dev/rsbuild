@@ -87,6 +87,10 @@
       "types": "./compiled/postcss-modules-values/index.d.ts",
       "default": "./compiled/postcss-modules-values/index.js"
     },
+    "./semver": {
+      "types": "./compiled/semver/index.d.ts",
+      "default": "./compiled/semver/index.js"
+    },
     "./webpack-merge": {
       "types": "./compiled/webpack-merge/types/index.d.ts",
       "default": "./compiled/webpack-merge/index.js"
