@@ -22,6 +22,7 @@ import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type { RspackConfig, RspackRule } from '../rspack';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
 import type { BundlerPluginInstance } from '../bundlerConfig';
+import type { RsbuildTarget } from '../rsbuild';
 import type {
   ModifyWebpackChainUtils,
   ModifyWebpackConfigUtils,
@@ -47,7 +48,10 @@ export type ToolsBundlerChainConfig = ArrayOrNot<
 
 export type ToolsPostCSSLoaderConfig = ChainedConfigWithUtils<
   PostCSSLoaderOptions,
-  { addPlugins: (plugins: PostCSSPlugin | PostCSSPlugin[]) => void }
+  {
+    addPlugins: (plugins: PostCSSPlugin | PostCSSPlugin[]) => void;
+    target: RsbuildTarget;
+  }
 >;
 
 export type ToolsCSSLoaderConfig = ChainedConfig<CSSLoaderOptions>;
