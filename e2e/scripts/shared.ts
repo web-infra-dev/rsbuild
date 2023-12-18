@@ -1,3 +1,4 @@
+import net from 'net';
 import { URL } from 'url';
 import assert from 'assert';
 import { join } from 'path';
@@ -73,16 +74,34 @@ export const createRsbuild = async (
   return rsbuild;
 };
 
+function isPortAvailable(port: number) {
+  const server = net.createServer().listen(port);
+  return new Promise((resolve, reject) => {
+    server.on('listening', () => {
+      server.close();
+      resolve(true);
+    });
+
+    server.on('error', (err: { code: string }) => {
+      if (err.code === 'EADDRINUSE') {
+        resolve(false);
+      } else {
+        reject(err);
+      }
+    });
+  });
+}
+
 const portMap = new Map();
 
 // Available port ranges: 1024 ～ 65535
 // `10080` is not available in CI, so we start with `11000`.
-export function getRandomPort(
+export async function getRandomPort(
   defaultPort = Math.ceil(Math.random() * 50000) + 11000,
 ) {
   let port = defaultPort;
   while (true) {
-    if (!portMap.get(port)) {
+    if (!portMap.get(port) && (await isPortAvailable(port))) {
       portMap.set(port, 1);
       return port;
     } else {
@@ -105,7 +124,7 @@ const updateConfigForTest = async (
   // make devPort random to avoid port conflict
   config.server = {
     ...(config.server || {}),
-    port: getRandomPort(config.server?.port),
+    port: await getRandomPort(config.server?.port),
   };
 
   config.dev ??= {};
