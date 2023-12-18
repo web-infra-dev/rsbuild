@@ -50,7 +50,7 @@ export async function createCompiler({
 
   const logRspackVersion = () => {
     if (!isVersionLogged) {
-      logger.start(`Use Rspack v${rspack.rspackVersion}`);
+      logger.debug(`Use Rspack v${rspack.rspackVersion}`);
       isVersionLogged = true;
     }
   };
