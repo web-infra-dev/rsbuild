@@ -28,11 +28,19 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
   const sourceCodeB = fs.readFileSync(filePath, 'utf-8');
   fs.writeFileSync(filePath, sourceCodeB.replace('B:', 'Beep:'), 'utf-8');
 
-  // content of B changed to `Beap: 5` means HMR has taken effect
-  await expect(b).toHaveText('Beep: 5');
-  // the state (count) of A should be kept
-  await expect(a).toHaveText('A: 5');
+  await page.waitForFunction(() => {
+    const aText = document.querySelector('#A')!.textContent;
+    const bText = document.querySelector('#B')!.textContent;
 
-  fs.writeFileSync(filePath, sourceCodeB, 'utf-8'); // recover the source code
+    return (
+      // the state (count) of A should be kept
+      aText === 'A: 5' &&
+      // content of B changed to `Beap: 5` means HMR has taken effect
+      bText === 'Beep: 5'
+    );
+  });
+
+  // recover the source code
+  fs.writeFileSync(filePath, sourceCodeB, 'utf-8');
   handle.server.close();
 });
