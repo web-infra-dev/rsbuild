@@ -584,7 +584,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 2,
               "modules": {
                 "auto": true,
                 "exportLocalsConvention": "camelCase",

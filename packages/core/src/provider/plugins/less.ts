@@ -17,14 +17,6 @@ export function pluginLess(): RsbuildPlugin {
           .rule(utils.CHAIN_ID.RULE.LESS)
           .test(LESS_REGEX);
 
-        await applyBaseCSSRule({
-          rule,
-          utils,
-          config,
-          context: api.context,
-          importLoaders: 2,
-        });
-
         const { excludes, options } = getLessLoaderOptions(
           config.tools.less,
           config.output.sourceMap.css,
@@ -39,6 +31,7 @@ export function pluginLess(): RsbuildPlugin {
           utils,
           config,
           context: api.context,
+          importLoaders: 2,
         });
 
         rule
