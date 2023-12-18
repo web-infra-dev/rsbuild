@@ -31,7 +31,7 @@ export const pluginRem = (options: PluginRemOptions = {}): RsbuildPlugin => ({
 
         // handle css
         const { default: PxToRemPlugin } = (await import(
-          '../compiled/postcss-pxtorem'
+          '../compiled/postcss-pxtorem/index.js'
         )) as {
           default: (_opts: PxToRemOptions) => any;
         };
