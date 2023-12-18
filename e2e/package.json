@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "scripts": {
     "test": "pnpm run test:rspack && pnpm run test:webpack",
-    "test:webpack": "PROVIDE_TYPE=webpack playwright test",
+    "test:webpack": "cross-env PROVIDE_TYPE=webpack playwright test",
     "test:rspack": "playwright test",
-    "test:webpack-swc": "PROVIDE_TYPE=webpack playwright test swc"
+    "test:webpack-swc": "cross-env PROVIDE_TYPE=webpack playwright test swc"
   },
   "dependencies": {
     "devcert": "1.2.2",
