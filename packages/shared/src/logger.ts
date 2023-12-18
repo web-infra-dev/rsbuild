@@ -1,6 +1,11 @@
 import { logger, type Logger } from '../compiled/rslog';
 import { color } from './utils';
 
+// setup the logger level
+if (process.env.DEBUG) {
+  logger.level = 'verbose';
+}
+
 export const isDebug = () => {
   if (!process.env.DEBUG) {
     return false;
