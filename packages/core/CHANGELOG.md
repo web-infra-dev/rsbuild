@@ -1,5 +1,13 @@
 # @rsbuild/core
 
+## 0.2.6
+
+### Patch Changes
+
+- 85a3d29c: feat: print debug logs when set DEBUG env
+- Updated dependencies [85a3d29c]
+  - @rsbuild/shared@0.2.6
+
 ## 0.2.5
 
 ### Patch Changes
