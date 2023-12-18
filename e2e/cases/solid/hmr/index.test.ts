@@ -5,7 +5,7 @@ import { rspackOnlyTest } from '@scripts/helper';
 import { dev, getHrefByEntryName } from '@scripts/shared';
 
 rspackOnlyTest('hmr should work properly', async ({ page }) => {
-  const root = path.join(__dirname, 'hmr');
+  const root = __dirname;
 
   const handle = await dev({
     cwd: root,
