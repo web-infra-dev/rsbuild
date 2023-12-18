@@ -14,9 +14,21 @@ Rsbuild 内置了社区流行的 CSS 预处理器，包括 Less 和 Sass。
 
 ## 使用 PostCSS
 
-Rsbuild 内置了 [PostCSS](https://postcss.org/) 来转换 CSS 代码。你可以通过 [tools.postcss](/config/tools/postcss) 来配置 postcss-loader。
+Rsbuild 内置了 [PostCSS](https://postcss.org/) 来转换 CSS 代码。你可以通过以下方式来配置 PostCSS：
 
-```ts
+1. Rsbuild 使用 [postcss-load-config](https://github.com/postcss/postcss-load-config) 来加载当前项目根目录下的 PostCSS 配置文件，比如 `postcss.config.js`：
+
+```js title="postcss.config.js"
+module.exports = {
+  'postcss-px-to-viewport': {
+    viewportWidth: 375,
+  },
+};
+```
+
+2. 通过 Rsbuild 的 [tools.postcss](/config/tools/postcss) 选项来配置 postcss-loader，该选项支持通过函数来修改内置配置，比如：
+
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     postcss: (opts) => {
@@ -28,6 +40,8 @@ export default {
   },
 };
 ```
+
+当你同时配置 `postcss.config.js` 文件和 `tools.postcss` 选项时，两者都会生效，并且 `tools.postcss` 的优先级更高。
 
 ### 内置 PostCSS 插件
 
