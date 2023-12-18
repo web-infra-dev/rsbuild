@@ -91,10 +91,12 @@ export const getPostcssLoaderOptions = async ({
   browserslist,
   config,
   root,
+  target,
 }: {
   browserslist: string[];
   config: NormalizedConfig;
   root: string;
+  target: RsbuildTarget;
 }): Promise<PostCSSLoaderOptions> => {
   const extraPlugins: AcceptedPlugin[] = [];
 
@@ -106,6 +108,7 @@ export const getPostcssLoaderOptions = async ({
         extraPlugins.push(plugins);
       }
     },
+    target,
   };
 
   const autoprefixerOptions = mergeChainedOptions({

@@ -124,6 +124,7 @@ export async function applyBaseCSSRule({
       browserslist,
       config,
       root: context.rootPath,
+      target,
     });
 
     rule

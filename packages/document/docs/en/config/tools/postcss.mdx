@@ -107,3 +107,22 @@ export default {
 :::tip
 Rsbuild uses the PostCSS v8 version. When you use third-party PostCSS plugins, please pay attention to whether the PostCSS version is compatible. Some legacy plugins may not work in PostCSS v8.
 :::
+
+#### target
+
+- **Type:** `'web' | 'node' | 'web-worker'`
+
+The `target` parameter can be used to determine the current target. For example:
+
+```js
+export default {
+  tools: {
+    postcss: (config, { target }) => {
+      if (target === 'node') {
+        // ...
+      }
+      return config;
+    },
+  },
+};
+```
