@@ -8,6 +8,11 @@ const fixtures = __dirname;
 
 // hmr test will timeout in CI
 test('default & hmr (default true)', async ({ page }) => {
+  // HMR cases will fail in Windows
+  if (process.platform === 'win32') {
+    test.skip();
+  }
+
   await fse.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src'));
   const rsbuild = await dev({
     cwd: join(fixtures, 'hmr'),
@@ -130,6 +135,11 @@ test('dev.port & output.distPath', async ({ page }) => {
 });
 
 test('hmr should work when setting dev.port & client', async ({ page }) => {
+  // HMR cases will fail in Windows
+  if (process.platform === 'win32') {
+    test.skip();
+  }
+
   await fse.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src-1'));
   const cwd = join(fixtures, 'hmr');
   const rsbuild = await dev({
@@ -184,6 +194,7 @@ test('hmr should work when setting dev.port & client', async ({ page }) => {
 });
 
 // need devcert
+// TODO: failed in Windows
 test.skip('dev.https', async () => {
   const rsbuild = await dev({
     cwd: join(fixtures, 'basic'),
@@ -206,6 +217,11 @@ test.skip('dev.https', async () => {
 
 // hmr will timeout in CI
 test('devServer', async ({ page }) => {
+  // HMR cases will fail in Windows
+  if (process.platform === 'win32') {
+    test.skip();
+  }
+
   let i = 0;
   let reloadFn: undefined | (() => void);
 

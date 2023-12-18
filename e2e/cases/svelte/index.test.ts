@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import { expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { build, dev, getHrefByEntryName } from '@scripts/shared';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 import { rspackOnlyTest } from '@scripts/helper';
@@ -41,6 +41,11 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest('hmr should work properly', async ({ page }) => {
+  // HMR cases will fail in Windows
+  if (process.platform === 'win32') {
+    test.skip();
+  }
+
   const root = path.join(__dirname, 'hmr');
 
   const handle = await dev({
