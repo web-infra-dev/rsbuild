@@ -84,7 +84,7 @@ async function main() {
   const distFolder = path.join(cwd, targetDir);
 
   copyFolder(commonFolder, distFolder, version);
-  copyFolder(srcFolder, distFolder, version);
+  copyFolder(srcFolder, distFolder, version, path.basename(targetDir));
 
   const nextSteps = [
     `cd ${targetDir}`,
@@ -97,7 +97,7 @@ async function main() {
   outro('Done.');
 }
 
-function copyFolder(src: string, dist: string, version: string) {
+function copyFolder(src: string, dist: string, version: string, name?: string) {
   const renameFiles: Record<string, string> = {
     gitignore: '.gitignore',
   };
@@ -124,16 +124,18 @@ function copyFolder(src: string, dist: string, version: string) {
       fs.copyFileSync(srcFile, distFile);
 
       if (file === 'package.json') {
-        replaceVersion(distFile, version);
+        updatePackageJson(distFile, version, name);
       }
     }
   }
 }
 
-const replaceVersion = (pkgJsonPath: string, version: string) => {
+const updatePackageJson = (pkgJsonPath: string, version: string, name?: string) => {
   let content = fs.readFileSync(pkgJsonPath, 'utf-8');
   content = content.replace(/workspace:\*/g, `^${version}`);
-  fs.writeFileSync(pkgJsonPath, content);
+  const pkg = JSON.parse(content);
+  if (name) pkg.name = name;
+  fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, 2));
 };
 
 main();

@@ -10,7 +10,8 @@ type Entry = Record<string, string | string[]>;
 
 ```ts
 const defaultEntry = {
-  index: 'src/index.(ts|js|tsx|jsx|mjs|cjs)',
+  // default support for other suffixes such as ts, tsx, jsx, mjs, cjs
+  index: 'src/index.js',
 };
 ```
 
@@ -45,3 +46,5 @@ The generated directory structure is as follows:
         ├── foo.js
         └── bar.js
 ```
+
+If you do not need to generate HTML files, you can set [tools.htmlPlugin](/config/tools/html-plugin) to `false` to disable this behavior.

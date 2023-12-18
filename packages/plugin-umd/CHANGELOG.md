@@ -1,5 +1,11 @@
 # @rsbuild/plugin-umd
 
+## 0.2.5
+
+### Patch Changes
+
+- @rsbuild/shared@0.2.5
+
 ## 0.2.4
 
 ### Patch Changes

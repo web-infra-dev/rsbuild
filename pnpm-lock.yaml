@@ -823,8 +823,8 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0
       rslog:
-        specifier: ^1.1.1
-        version: 1.1.1
+        specifier: ^1.1.2
+        version: 1.1.2
     devDependencies:
       '@types/node':
         specifier: 16.x
@@ -1807,8 +1807,8 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       rslog:
-        specifier: ^1.1.1
-        version: 1.1.1
+        specifier: ^1.1.2
+        version: 1.1.2
       semver:
         specifier: ^7.5.4
         version: 7.5.4
@@ -4150,7 +4150,7 @@ packages:
       '@swc/helpers': 0.5.3
       caniuse-lite: 1.0.30001559
       lodash: 4.17.21
-      rslog: 1.1.1
+      rslog: 1.1.2
     dev: true
 
   /@modern-js/utils@2.42.0:
@@ -4159,7 +4159,7 @@ packages:
       '@swc/helpers': 0.5.3
       caniuse-lite: 1.0.30001559
       lodash: 4.17.21
-      rslog: 1.1.1
+      rslog: 1.1.2
     dev: true
 
   /@napi-rs/image-android-arm-eabi@1.7.0:
@@ -4917,7 +4917,7 @@ packages:
       execa: 5.1.1
       fs-extra: 11.2.0
       globby: 14.0.0
-      rslog: 1.1.1
+      rslog: 1.1.2
       unified: 10.1.2
     dev: true
 
@@ -12764,8 +12764,8 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /rslog@1.1.1:
-    resolution: {integrity: sha512-ncYfbtX17x9Irt3gowS8lPdbx6F9WaRpR+5M/OopoCvfUDFDyQGxUEG+cbnjzyZ7PTYmb07Fn+rdGBfWPN2b7w==}
+  /rslog@1.1.2:
+    resolution: {integrity: sha512-n7eRCuFVX9mlN/796pusF9/OUpS6F2NMzSx+mphkyIo+O4fSgSf3wyahPrF1FW+Pz8qWBwtMlvGwmeUqagerTQ==}
     engines: {node: '>=14.17.6'}
 
   /rspack-manifest-plugin@5.0.0-alpha0(webpack@5.89.0):
