@@ -2,7 +2,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
 
 export type HtmlInfo = {
-  title?: string;
   favicon?: string;
   templateContent?: string;
 };
@@ -27,9 +26,8 @@ export class HtmlBasicPlugin {
   apply(compiler: Compiler) {
     const addTitleTag = (
       headTags: HtmlWebpackPlugin.HtmlTagObject[],
-      entryName: string,
+      title?: string,
     ) => {
-      const { title } = this.options.info[entryName];
       if (title) {
         headTags.unshift({
           tagName: 'title',
@@ -74,7 +72,7 @@ export class HtmlBasicPlugin {
           const { templateContent } = this.options.info[entryName];
 
           if (!hasTitle(templateContent)) {
-            addTitleTag(headTags, entryName);
+            addTitleTag(headTags, data.plugin.options?.title);
           }
 
           addFavicon(headTags, entryName);

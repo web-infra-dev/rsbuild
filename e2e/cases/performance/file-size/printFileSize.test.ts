@@ -25,7 +25,7 @@ test.describe('should print file size correctly', async () => {
         },
       },
     });
-    expect(consoleOutput).toContain('dist/static/js');
+    expect(consoleOutput).toContain('index.html');
     expect(consoleOutput).toContain('Total size:');
     expect(consoleOutput).toContain('Gzipped size:');
   });
@@ -39,7 +39,7 @@ test.describe('should print file size correctly', async () => {
         },
       },
     });
-    expect(consoleOutput).not.toContain('dist/static/js');
+    expect(consoleOutput).not.toContain('index.html');
     expect(consoleOutput).not.toContain('Total size:');
     expect(consoleOutput).not.toContain('Gzipped size:');
   });
@@ -55,7 +55,7 @@ test.describe('should print file size correctly', async () => {
         },
       },
     });
-    expect(consoleOutput).not.toContain('dist/static/js');
+    expect(consoleOutput).not.toContain('index.html');
     expect(consoleOutput).toContain('Total size:');
     expect(consoleOutput).toContain('Gzipped size:');
   });
@@ -71,7 +71,7 @@ test.describe('should print file size correctly', async () => {
         },
       },
     });
-    expect(consoleOutput).toContain('dist/static/js');
+    expect(consoleOutput).toContain('index.html');
     expect(consoleOutput).not.toContain('Total size:');
     expect(consoleOutput).not.toContain('Gzipped size:');
   });

@@ -145,6 +145,7 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
 
 export async function outputInspectConfigFiles({
   rsbuildConfig,
+  rawRsbuildConfig,
   bundlerConfigs,
   inspectOptions,
   configType,
@@ -163,7 +164,7 @@ export async function outputInspectConfigFiles({
     {
       path: join(outputPath, 'rsbuild.config.js'),
       label: 'Rsbuild Config',
-      content: rsbuildConfig,
+      content: rawRsbuildConfig,
     },
     ...bundlerConfigs.map((content, index) => {
       const suffix = rsbuildConfig.output.targets[index];

@@ -1,4 +1,4 @@
-import path, { join } from 'path';
+import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
 
@@ -15,7 +15,7 @@ test('should allow to import wasm file', async ({ page }) => {
   );
 
   expect(wasmFile).toBeTruthy();
-  expect(wasmFile?.includes('static/wasm/')).toBeTruthy();
+  expect(/static[\\/]wasm/g.test(wasmFile!)).toBeTruthy();
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
 
@@ -41,7 +41,7 @@ test('should allow to dynamic import wasm file', async () => {
   );
 
   expect(wasmFile).toBeTruthy();
-  expect(wasmFile?.includes('static/wasm/')).toBeTruthy();
+  expect(/static[\\/]wasm/g.test(wasmFile!)).toBeTruthy();
 });
 
 test('should allow to use new URL to get path of wasm file', async ({
@@ -59,7 +59,7 @@ test('should allow to use new URL to get path of wasm file', async ({
   );
 
   expect(wasmFile).toBeTruthy();
-  expect(wasmFile?.includes('static/wasm/')).toBeTruthy();
+  expect(/static[\\/]wasm/g.test(wasmFile!)).toBeTruthy();
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
 

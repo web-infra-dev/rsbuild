@@ -121,7 +121,6 @@ export const getPostcssLoaderOptions = async ({
   const defaultPostcssConfig: PostCSSLoaderOptions = {
     postcssOptions: {
       ...userPostcssConfig,
-      config: false,
       plugins: [
         ...(userPostcssConfig.plugins || []),
         require(getSharedPkgCompiledPath('postcss-flexbugs-fixes')),
@@ -142,6 +141,10 @@ export const getPostcssLoaderOptions = async ({
   if (extraPlugins.length) {
     mergedConfig?.postcssOptions?.plugins!.push(...extraPlugins);
   }
+
+  // always use postcss-load-config to load external config
+  mergedConfig.postcssOptions ||= {};
+  mergedConfig.postcssOptions.config = false;
 
   return mergedConfig;
 };

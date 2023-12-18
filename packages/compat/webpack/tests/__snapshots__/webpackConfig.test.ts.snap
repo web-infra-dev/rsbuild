@@ -43,6 +43,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "scriptLoading": "defer",
       "template": "<ROOT>/packages/core/static/template.html",
       "templateParameters": [Function],
+      "title": "Rsbuild App",
     },
     "version": 5,
   },
@@ -50,9 +51,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
     "name": "HtmlBasicPlugin",
     "options": {
       "info": {
-        "index": {
-          "title": "Rsbuild App",
-        },
+        "index": {},
       },
     },
   },

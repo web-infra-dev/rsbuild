@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { posix } from 'path';
 import { getDistPath } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
@@ -15,7 +15,7 @@ export const pluginWasm = (): RsbuildPlugin => ({
         asyncWebAssembly: true,
       });
 
-      const wasmFilename = join(distPath, '[hash].module.wasm');
+      const wasmFilename = posix.join(distPath, '[hash].module.wasm');
 
       chain.output.merge({
         webassemblyModuleFilename: wasmFilename,

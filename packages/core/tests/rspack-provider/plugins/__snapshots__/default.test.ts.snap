@@ -649,6 +649,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -656,9 +657,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index": {
-            "title": "Rsbuild App",
-          },
+          "index": {},
         },
       },
     },
@@ -1380,6 +1379,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -1387,9 +1387,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index": {
-            "title": "Rsbuild App",
-          },
+          "index": {},
         },
       },
     },
@@ -2528,6 +2526,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -2535,9 +2534,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index": {
-            "title": "Rsbuild App",
-          },
+          "index": {},
         },
       },
     },

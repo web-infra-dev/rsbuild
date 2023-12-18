@@ -5,19 +5,19 @@
 
 ```js
 const defaultOptions = {
-  config: false,
   postcssOptions: {
     plugins: [
       require('postcss-flexbugs-fixes'),
       require('autoprefixer')({ flexbox: 'no-2009' }),
     ],
-    // CSS Source Map enabled by default in development environment
-    sourceMap: isDev,
+    sourceMap: rsbuildConfig.output.sourceMap.css,
   },
 };
 ```
 
 Rsbuild integrates PostCSS by default, you can configure [postcss-loader](https://github.com/webpack-contrib/postcss-loader) through `tools.postcss`.
+
+Note that, for performance, Rsbuild uses [postcss-load-config](https://github.com/postcss/postcss-load-config) to load external config files and merges them with the default config.
 
 ### Function Type
 
