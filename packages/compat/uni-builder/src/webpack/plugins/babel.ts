@@ -173,10 +173,7 @@ export const pluginBabel = (options?: PluginBabelOptions): RsbuildPlugin => ({
 
 function applyPluginLodash(config: BabelConfig, transformLodash?: boolean) {
   if (transformLodash) {
-    config.plugins?.push([
-      require.resolve('../../../compiled/babel-plugin-lodash'),
-      {},
-    ]);
+    config.plugins?.push([require.resolve('babel-plugin-lodash'), {}]);
   }
 }
 
