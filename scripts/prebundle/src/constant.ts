@@ -204,7 +204,6 @@ export const TASKS: TaskConfig[] = [
       },
       {
         name: 'autoprefixer',
-        ignoreDts: true,
         externals: {
           picocolors: '../picocolors',
           browserslist: '../browserslist',
