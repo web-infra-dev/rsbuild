@@ -35,7 +35,7 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
     return (
       // the state (count) of A should be kept
       aText === 'A: 5' &&
-      // content of B changed to `Beap: 5` means HMR has taken effect
+      // content of B changed to `Beep: 5` means HMR has taken effect
       bText === 'Beep: 5'
     );
   });
