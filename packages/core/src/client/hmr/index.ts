@@ -23,24 +23,6 @@ const hadRuntimeError = false;
 // Connect to Dev Server
 const socketUrl = createSocketUrl(__resourceQuery);
 
-const connection = new WebSocket(socketUrl);
-
-connection.onopen = function () {
-  if (typeof console !== 'undefined' && typeof console.info === 'function') {
-    // Notify users that the HMR has successfully connected.
-    console.info('[HMR] connected.');
-  }
-};
-
-// Unlike WebpackDevServer client, we won't try to reconnect
-// to avoid spamming the console. Disconnect usually happens
-// when developer stops the server.
-connection.onclose = function () {
-  if (typeof console !== 'undefined' && typeof console.info === 'function') {
-    console.info('[HMR] disconnected. Refresh the page if necessary.');
-  }
-};
-
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
 let mostRecentCompilationHash: string | null = null;
@@ -138,32 +120,6 @@ function handleAvailableHash(hash: string) {
   mostRecentCompilationHash = hash;
 }
 
-// Handle messages from the server.
-connection.onmessage = function (e) {
-  const message = JSON.parse(e.data);
-  switch (message.type) {
-    case 'hash':
-      handleAvailableHash(message.data);
-      break;
-    case 'still-ok':
-    case 'ok':
-      handleSuccess();
-      break;
-    case 'content-changed':
-      // Triggered when a file from `contentBase` changed.
-      window.location.reload();
-      break;
-    case 'warnings':
-      handleWarnings(message.data);
-      break;
-    case 'errors':
-      handleErrors(message.data);
-      break;
-    default:
-    // Do nothing.
-  }
-};
-
 // Is there a newer version of this code available?
 function isUpdateAvailable() {
   // __webpack_hash__ is the hash of the current compilation.
@@ -216,3 +172,78 @@ function tryApplyUpdates() {
     );
   }
 }
+
+let connection: WebSocket | null = null;
+const MAX_RETRIES = 100;
+
+// Establishing a WebSocket connection with the server.
+function connect() {
+  let isConnected = false;
+  connection = new WebSocket(socketUrl);
+
+  connection.onopen = function () {
+    isConnected = true;
+    if (typeof console !== 'undefined' && typeof console.info === 'function') {
+      // Notify users that the HMR has successfully connected.
+      console.info('[HMR] connected.');
+    }
+  };
+
+  // Unlike WebpackDevServer client, we won't try to reconnect
+  // to avoid spamming the console. Disconnect usually happens
+  // when developer stops the server.
+  connection.onclose = function () {
+    if (typeof console !== 'undefined' && typeof console.info === 'function') {
+      console.info('[HMR] disconnected. Refresh the page if necessary.');
+    }
+    isConnected = false;
+    // When the server disconnects, attempt to reconnect.
+    let retry_count = 0;
+    const retryInterval = setInterval(() => {
+      retry_count++;
+      if (isConnected || retry_count > MAX_RETRIES) {
+        clearInterval(retryInterval);
+        return;
+      }
+      reconnect();
+    }, 1000);
+  };
+  // Handle messages from the server.
+  connection.onmessage = function (e) {
+    const message = JSON.parse(e.data);
+    switch (message.type) {
+      case 'hash':
+        handleAvailableHash(message.data);
+        break;
+      case 'still-ok':
+      case 'ok':
+        handleSuccess();
+        break;
+      case 'content-changed':
+        // Triggered when a file from `contentBase` changed.
+        window.location.reload();
+        break;
+      case 'warnings':
+        handleWarnings(message.data);
+        break;
+      case 'errors':
+        handleErrors(message.data);
+        break;
+      default:
+      // Do nothing.
+    }
+  };
+}
+
+/**
+ * Close the current connection if it exists and then establishes a new
+ * connection.
+ */
+function reconnect() {
+  if (connection) {
+    connection.close();
+  }
+  connect();
+}
+
+connect();
