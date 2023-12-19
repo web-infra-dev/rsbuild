@@ -92,6 +92,7 @@ exports[`plugin-vue > should define feature flags correctly 1`] = `
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""test"",
       },
+      "affectedHooks": undefined,
       "name": "DefinePlugin",
     },
   ],

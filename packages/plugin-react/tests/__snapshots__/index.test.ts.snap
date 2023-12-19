@@ -701,6 +701,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""test"",
       },
+      "affectedHooks": undefined,
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {
