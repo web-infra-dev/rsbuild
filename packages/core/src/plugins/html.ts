@@ -275,10 +275,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
               htmlInfo.templateContent = templateContent;
             }
 
-            const title = getTitle(entryName, config);
-            if (title) {
-              pluginOptions.title = title;
-            }
+            pluginOptions.title = getTitle(entryName, config);
 
             const favicon = getFavicon(entryName, config);
             if (favicon) {
