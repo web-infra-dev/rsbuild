@@ -413,6 +413,90 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
 }
 `;
 
+exports[`plugin-html > should stop injecting <script> if inject is '() => false' 1`] = `
+{
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
+  "plugins": [
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "entryName": "index",
+        "filename": "index.html",
+        "inject": false,
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
+        "minify": false,
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+        "title": "Rsbuild App",
+      },
+      "version": 5,
+    },
+    HtmlBasicPlugin {
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "info": {
+          "index": {},
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`plugin-html > should stop injecting <script> if inject is 'false' 1`] = `
+{
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
+  "plugins": [
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "entryName": "index",
+        "filename": "index.html",
+        "inject": false,
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
+        "minify": false,
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+        "title": "Rsbuild App",
+      },
+      "version": 5,
+    },
+    HtmlBasicPlugin {
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "info": {
+          "index": {},
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`plugin-html > should support multi entry 1`] = `
 {
   "entry": {
