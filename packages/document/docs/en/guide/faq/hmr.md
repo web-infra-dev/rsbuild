@@ -56,7 +56,7 @@ export default {
 };
 ```
 
-To solve this problem, you need to reference the development builds of React or not configure `externals` in the development environment.
+In order to solve this problem, you need to reference React's development environment products and install React Devtools. After the installation is complete, you can implement hot updates
 
 If you are unsure about the type of React build you are using, you can refer to the [React documentation - Use the Production Build](https://legacy.reactjs.org/docs/optimizing-performance#use-the-production-build).
 
