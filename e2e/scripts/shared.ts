@@ -75,29 +75,30 @@ export const createRsbuild = async (
 };
 
 function isPortAvailable(port: number) {
-  const server = net.createServer().listen(port);
-  return new Promise((resolve, reject) => {
-    server.on('listening', () => {
-      server.close();
-      resolve(true);
-    });
+  try {
+    const server = net.createServer().listen(port);
+    return new Promise((resolve) => {
+      server.on('listening', () => {
+        server.close();
+        resolve(true);
+      });
 
-    server.on('error', (err: { code: string }) => {
-      if (err.code === 'EADDRINUSE') {
+      server.on('error', () => {
         resolve(false);
-      } else {
-        reject(err);
-      }
+      });
     });
-  });
+  } catch (err) {
+    return false;
+  }
 }
 
 const portMap = new Map();
 
 // Available port ranges: 1024 ～ 65535
-// `10080` is not available in CI, so we start with `11000`.
+// `10080` is not available in macOS CI, `> 50000` get 'permission denied' in Windows.
+// so we use `15000` ~ `45000`.
 export async function getRandomPort(
-  defaultPort = Math.ceil(Math.random() * 50000) + 11000,
+  defaultPort = Math.ceil(Math.random() * 30000) + 15000,
 ) {
   let port = defaultPort;
   while (true) {
