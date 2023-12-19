@@ -26,17 +26,15 @@ export class HtmlBasicPlugin {
   apply(compiler: Compiler) {
     const addTitleTag = (
       headTags: HtmlWebpackPlugin.HtmlTagObject[],
-      title?: string,
+      title = '',
     ) => {
-      if (title) {
-        headTags.unshift({
-          tagName: 'title',
-          innerHTML: title,
-          attributes: {},
-          voidTag: false,
-          meta: {},
-        });
-      }
+      headTags.unshift({
+        tagName: 'title',
+        innerHTML: title,
+        attributes: {},
+        voidTag: false,
+        meta: {},
+      });
     };
 
     const addFavicon = (
