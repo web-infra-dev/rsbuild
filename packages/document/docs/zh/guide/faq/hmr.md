@@ -56,7 +56,7 @@ export default {
 };
 ```
 
-为了解决该问题，你需要引用 React 的开发环境产物，同时安装 React Devtools，安装完成后即可实现热更新
+为了解决该问题，你需要引用 React 的开发环境产物，同时安装 React Devtools，安装完成后即可实现热更新。
 
 ---
 
