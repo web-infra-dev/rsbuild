@@ -273,47 +273,6 @@ importers:
         specifier: ^2.7.14
         version: 2.7.14
 
-  e2e/uni-builder/import-antd-v4:
-    dependencies:
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-
-  e2e/uni-builder/import-antd-v5:
-    dependencies:
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-
-  e2e/uni-builder/import-arco:
-    dependencies:
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-
-  e2e/uni-builder/source-build/app-ts-loader:
-    dependencies:
-      '@e2e/source-build-common':
-        specifier: workspace:*
-        version: link:../common
-
-  e2e/uni-builder/source-build/common: {}
-
-  e2e/uni-builder/styled-component:
-    dependencies:
-      styled-components:
-        specifier: ^6.0.0
-        version: 6.1.0(react-dom@18.2.0)(react@18.2.0)
-
   examples/lit:
     devDependencies:
       '@rsbuild/core':
