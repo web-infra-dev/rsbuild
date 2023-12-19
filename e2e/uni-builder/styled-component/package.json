@@ -1,7 +1,0 @@
-{
-  "name": "@e2e/uni-builder-styled-component",
-  "private": true,
-  "dependencies": {
-    "styled-components": "^6.0.0"
-  }
-}
