@@ -5,7 +5,6 @@ import {
   modifyBundlerChain,
   mergeChainedOptions,
   type NodeEnv,
-  type WebpackChain,
   type RsbuildTarget,
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
@@ -13,17 +12,18 @@ import {
 import type { Context } from '@rsbuild/core/provider';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
-
+import type WebpackChain from 'webpack-chain';
 import type { WebpackConfig } from '../types';
 
 async function modifyWebpackChain(
   context: Context,
   utils: ModifyWebpackChainUtils,
   chain: WebpackChain,
-) {
+): Promise<WebpackChain> {
   debug('modify webpack chain');
 
   const [modifiedChain] = await context.hooks.modifyWebpackChainHook.call(
+    // @ts-expect-error `chain` in the sig of modifyWebpackChainHook is `RspackChain`.
     chain,
     utils,
   );
@@ -36,6 +36,7 @@ async function modifyWebpackChain(
 
   debug('modify webpack chain done');
 
+  // @ts-expect-error `modifiedChain` in the output of modifyWebpackChainHook is `RspackConfig`.
   return modifiedChain;
 }
 
@@ -43,7 +44,7 @@ async function modifyWebpackConfig(
   context: Context,
   webpackConfig: WebpackConfig,
   utils: ModifyWebpackConfigUtils,
-) {
+): Promise<WebpackConfig> {
   debug('modify webpack config');
   let [modifiedConfig] = await context.hooks.modifyWebpackConfigHook.call(
     webpackConfig,
@@ -171,7 +172,7 @@ export async function generateWebpackConfig({
     chainUtils,
     // module rules not support merge
     // need a special rule merge or use bundlerChain as WebpackChain
-    bundlerChain as WebpackChain,
+    bundlerChain as unknown as WebpackChain,
   );
 
   let webpackConfig = chain.toConfig();

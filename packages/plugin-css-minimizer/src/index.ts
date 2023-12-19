@@ -49,10 +49,7 @@ export async function applyCSSMinimizer(
 
   chain.optimization
     .minimizer(CHAIN_ID.MINIMIZER.CSS)
-    .use(CssMinimizerPlugin, [
-      // @ts-expect-error type mismatch
-      mergedOptions,
-    ])
+    .use(CssMinimizerPlugin, [mergedOptions])
     .end();
 }
 
