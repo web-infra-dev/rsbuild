@@ -199,6 +199,63 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
         },
       ],
     },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
+          "options": {
+            "cwd": "<ROOT>",
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "inlineSourcesContent": true,
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+            "minify": false,
+            "sourceMaps": true,
+          },
+        },
+      ],
+    },
   ],
 }
 `;
@@ -266,6 +323,60 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
         },
       ],
     },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
+          "options": {
+            "cwd": "<ROOT>",
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "targets": [
+                "node >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "inlineSourcesContent": true,
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+            "minify": false,
+            "sourceMaps": true,
+          },
+        },
+      ],
+    },
   ],
 }
 `;
@@ -286,6 +397,63 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
         /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
       ],
       "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
+          "options": {
+            "cwd": "<ROOT>",
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "inlineSourcesContent": true,
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+            "minify": false,
+            "sourceMaps": true,
+          },
+        },
+      ],
+    },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -406,6 +574,63 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
         },
       ],
     },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
+          "options": {
+            "cwd": "<ROOT>",
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "inlineSourcesContent": true,
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "react": {
+                  "refresh": true,
+                  "runtime": "classic",
+                },
+              },
+            },
+            "minify": false,
+            "sourceMaps": true,
+          },
+        },
+      ],
+    },
   ],
 }
 `;
@@ -426,6 +651,63 @@ exports[`plugin-swc > should disable react refresh when target is not web 4`] = 
         /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
       ],
       "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
+          "options": {
+            "cwd": "<ROOT>",
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "inlineSourcesContent": true,
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+            "minify": false,
+            "sourceMaps": true,
+          },
+        },
+      ],
+    },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
