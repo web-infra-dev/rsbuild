@@ -869,6 +869,59 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
     ],
   },
   {
+    "test": /override\\.ts/,
+    "use": [
+      {
+        "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
+        "options": {
+          "cwd": "<ROOT>",
+          "env": {
+            "coreJs": "3.32",
+            "mode": "usage",
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "extensions": {
+            "lockCorejsVersion": {
+              "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+              "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+            },
+            "lodash": {
+              "cwd": "<ROOT>",
+              "ids": [
+                "lodash",
+                "lodash-es",
+              ],
+            },
+          },
+          "inlineSourcesContent": true,
+          "jsc": {
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": true,
+            },
+            "preserveAllComments": true,
+            "transform": {
+              "react": {
+                "refresh": true,
+                "runtime": "classic",
+              },
+              "useDefineForClassFields": false,
+            },
+          },
+          "minify": false,
+          "sourceMaps": true,
+        },
+      },
+    ],
+  },
+  {
     "mimetype": {
       "or": [
         "text/javascript",
@@ -918,59 +971,6 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
                 "runtime": "classic",
               },
               "useDefineForClassFields": true,
-            },
-          },
-          "minify": false,
-          "sourceMaps": true,
-        },
-      },
-    ],
-  },
-  {
-    "test": /override\\.ts/,
-    "use": [
-      {
-        "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
-        "options": {
-          "cwd": "<ROOT>",
-          "env": {
-            "coreJs": "3.32",
-            "mode": "usage",
-            "targets": [
-              "chrome >= 87",
-              "edge >= 88",
-              "firefox >= 78",
-              "safari >= 14",
-            ],
-          },
-          "extensions": {
-            "lockCorejsVersion": {
-              "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-              "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-            },
-            "lodash": {
-              "cwd": "<ROOT>",
-              "ids": [
-                "lodash",
-                "lodash-es",
-              ],
-            },
-          },
-          "inlineSourcesContent": true,
-          "jsc": {
-            "externalHelpers": true,
-            "parser": {
-              "decorators": true,
-              "syntax": "typescript",
-              "tsx": true,
-            },
-            "preserveAllComments": true,
-            "transform": {
-              "react": {
-                "refresh": true,
-                "runtime": "classic",
-              },
-              "useDefineForClassFields": false,
             },
           },
           "minify": false,

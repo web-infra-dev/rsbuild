@@ -1,6 +1,5 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginSwc } from '../src';
-import { pluginBabel } from '../../uni-builder/src/webpack/plugins/babel';
 import { webpackProvider } from '@rsbuild/webpack';
 import { applyPluginConfig } from '../src/utils';
 import type {
@@ -18,7 +17,7 @@ const UTILS = { target: 'web', isProd: true } as ModifyWebpackChainUtils;
 describe('plugin-swc', () => {
   it('should set swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel(), pluginSwc()],
+      plugins: [pluginSwc()],
       rsbuildConfig: {
         provider: webpackProvider,
       },
@@ -31,7 +30,7 @@ describe('plugin-swc', () => {
   it('should set swc minimizer in production', async () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel(), pluginSwc()],
+      plugins: [pluginSwc()],
       rsbuildConfig: {
         provider: webpackProvider,
       },
@@ -46,7 +45,6 @@ describe('plugin-swc', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [
-        pluginBabel(),
         pluginSwc({
           jsMinify: {
             compress: false,
@@ -68,7 +66,6 @@ describe('plugin-swc', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [
-        pluginBabel(),
         pluginSwc({
           jsc: {
             minify: {
@@ -92,7 +89,6 @@ describe('plugin-swc', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [
-        pluginBabel(),
         pluginSwc({
           jsMinify: false,
           cssMinify: false,
@@ -111,7 +107,6 @@ describe('plugin-swc', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [
-        pluginBabel(),
         pluginSwc({
           jsMinify: false,
           cssMinify: false,
@@ -134,7 +129,7 @@ describe('plugin-swc', () => {
     process.env.NODE_ENV = 'development';
 
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginBabel(), pluginSwc()],
+      plugins: [pluginSwc()],
       rsbuildConfig: {
         provider: webpackProvider,
         source: {
@@ -287,7 +282,6 @@ describe('plugin-swc', () => {
   it('should set multiple swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [
-        pluginBabel(),
         pluginSwc({
           overrides: [
             {
