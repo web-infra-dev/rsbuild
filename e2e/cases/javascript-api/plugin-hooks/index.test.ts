@@ -67,9 +67,9 @@ test('should run plugin hooks correctly when running startDevServer', async () =
   const result = await rsbuild.startDevServer();
 
   expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
-    'BeforeStartDevServer',
     'BeforeCreateCompiler',
     'AfterCreateCompiler',
+    'BeforeStartDevServer',
     'AfterStartDevServer',
   ]);
 
