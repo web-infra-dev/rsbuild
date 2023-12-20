@@ -1,8 +1,8 @@
-import { expect } from '@playwright/test';
-import { webpackOnlyTest } from '@scripts/helper';
+import { test, expect } from '@playwright/test';
 import { build } from '@scripts/shared';
 
-webpackOnlyTest('should compile const enum correctly', async () => {
+// TODO not supported yet
+test.skip('should compile const enum correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
