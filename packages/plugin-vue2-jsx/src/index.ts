@@ -2,10 +2,25 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
 
 type VueJSXPresetOptions = {
+  /**
+   * Whether to enable the Composition API in Vue.js JSX.
+   */
   compositionAPI?: boolean | string;
+  /**
+   * Whether to enable stateless functional components in Vue.js JSX.
+   */
   functional?: boolean;
+  /**
+   * Whether to enable automatic 'h' injection syntactic sugar.
+   */
   injectH?: boolean;
+  /**
+   * Whether to enable `vModel` syntactic sugar
+   */
   vModel?: boolean;
+  /**
+   * Whether to enable `vOn` syntactic sugar
+   */
   vOn?: boolean;
 };
 
