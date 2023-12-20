@@ -173,67 +173,98 @@ function tryApplyUpdates() {
   }
 }
 
+const MAX_RETRIES = 20;
 let connection: WebSocket | null = null;
-let isConnected = false;
-const MAX_RETRIES = 100;
+let retry_counter = 0;
+
+function onOpen() {
+  if (typeof console !== 'undefined' && typeof console.info === 'function') {
+    // Notify users that the HMR has successfully connected.
+    console.info('[HMR] connected.');
+  }
+}
+
+function onMessage(e: MessageEvent<any>) {
+  const message = JSON.parse(e.data);
+  switch (message.type) {
+    case 'hash':
+      handleAvailableHash(message.data);
+      break;
+    case 'still-ok':
+    case 'ok':
+      handleSuccess();
+      break;
+    case 'content-changed':
+      // Triggered when a file from `contentBase` changed.
+      window.location.reload();
+      break;
+    case 'warnings':
+      handleWarnings(message.data);
+      break;
+    case 'errors':
+      handleErrors(message.data);
+      break;
+    default:
+    // Do nothing.
+  }
+}
+
+async function sleep(msec: number = 1000) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, msec);
+  });
+}
+
+async function onClose() {
+  if (typeof console !== 'undefined' && typeof console.info === 'function') {
+    console.info('[HMR] disconnected. Attempting to reconnect.');
+  }
+
+  removeListeners();
+
+  await sleep(1000);
+  retry_counter++;
+
+  if (
+    connection &&
+    (connection.readyState === connection.CONNECTING ||
+      connection.readyState === connection.OPEN)
+  ) {
+    retry_counter = 0;
+    return;
+  }
+
+  // Exceeded max retry attempts, stop retry.
+  if (retry_counter > MAX_RETRIES) {
+    if (typeof console !== 'undefined' && typeof console.info === 'function') {
+      console.info(
+        '[HMR] Unable to establish a connection after exceeding the maximum retry attempts.',
+      );
+    }
+    retry_counter = 0;
+    return;
+  }
+
+  reconnect();
+}
 
 // Establishing a WebSocket connection with the server.
 function connect() {
-  isConnected = false;
   connection = new WebSocket(socketUrl);
 
-  connection.onopen = function () {
-    isConnected = true;
-    if (typeof console !== 'undefined' && typeof console.info === 'function') {
-      // Notify users that the HMR has successfully connected.
-      console.info('[HMR] connected.');
-    }
-  };
-
+  connection.addEventListener('open', onOpen);
   // Attempt to reconnect after disconnection
-  connection.onclose = function () {
-    if (typeof console !== 'undefined' && typeof console.info === 'function') {
-      console.info('[HMR] disconnected. Attempting to reconnect.');
-    }
-    isConnected = false;
-
-    let retry_count = 0;
-    const retryInterval = setInterval(() => {
-      retry_count++;
-
-      if (isConnected || retry_count > MAX_RETRIES) {
-        clearInterval(retryInterval);
-        return;
-      }
-      reconnect();
-    }, 1000);
-  };
-
+  connection.addEventListener('close', onClose);
   // Handle messages from the server.
-  connection.onmessage = function (e) {
-    const message = JSON.parse(e.data);
-    switch (message.type) {
-      case 'hash':
-        handleAvailableHash(message.data);
-        break;
-      case 'still-ok':
-      case 'ok':
-        handleSuccess();
-        break;
-      case 'content-changed':
-        // Triggered when a file from `contentBase` changed.
-        window.location.reload();
-        break;
-      case 'warnings':
-        handleWarnings(message.data);
-        break;
-      case 'errors':
-        handleErrors(message.data);
-        break;
-      default:
-      // Do nothing.
-    }
-  };
+  connection.addEventListener('message', onMessage);
+}
+
+function removeListeners() {
+  if (connection) {
+    connection.removeEventListener('open', onOpen);
+    connection.removeEventListener('close', onClose);
+    connection.removeEventListener('message', onMessage);
+  }
 }
 
 /**
@@ -242,7 +273,7 @@ function connect() {
  */
 function reconnect() {
   if (connection) {
-    connection.close();
+    connection = null;
   }
   connect();
 }
