@@ -177,8 +177,6 @@ export async function startDevServer<
 
   debug('create dev server done');
 
-  await serverAPIs.beforeStart();
-
   const protocol = https ? 'https' : 'http';
   let urls = getAddressUrls(protocol, port, host);
 
@@ -204,6 +202,8 @@ export async function startDevServer<
   devMiddlewares.middlewares.forEach((m) => middlewares.use(m));
 
   middlewares.use(notFoundMiddleware);
+
+  await serverAPIs.beforeStart();
 
   debug('listen dev server');
 
