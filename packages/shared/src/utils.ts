@@ -43,6 +43,9 @@ export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
 export const isRegExp = (obj: any): obj is RegExp =>
   Object.prototype.toString.call(obj) === '[object RegExp]';
 
+export const isNil = (o: unknown): o is undefined | null =>
+  o === undefined || o === null;
+
 export const createVirtualModule = (content: string) =>
   `data:text/javascript,${content}`;
 

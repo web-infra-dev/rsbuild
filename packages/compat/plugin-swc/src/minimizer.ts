@@ -1,13 +1,12 @@
 import { webpack } from '@rsbuild/webpack';
 import { merge } from 'lodash';
 import { logger } from '@rsbuild/core';
-import { color, type RsbuildConfig } from '@rsbuild/shared';
 import {
-  Output,
-  JsMinifyOptions,
-  CssMinifyOptions,
-  TerserCompressOptions,
-} from './types';
+  color,
+  getSwcMinimizerOptions,
+  type NormalizedConfig,
+} from '@rsbuild/shared';
+import { Output, JsMinifyOptions, CssMinifyOptions } from './types';
 import { minify, minifyCss } from './binding';
 import { CSS_REGEX, JS_REGEX } from './constants';
 
@@ -34,13 +33,11 @@ export class SwcMinimizerPlugin {
 
   private name: string = 'swc-minimizer-plugin';
 
-  constructor(
-    options: {
-      jsMinify?: boolean | JsMinifyOptions;
-      cssMinify?: boolean | CssMinifyOptions;
-      rsbuildConfig?: RsbuildConfig;
-    } = {},
-  ) {
+  constructor(options: {
+    jsMinify?: boolean | JsMinifyOptions;
+    cssMinify?: boolean | CssMinifyOptions;
+    rsbuildConfig: NormalizedConfig;
+  }) {
     this.minifyOptions = {
       jsMinify: merge(
         this.getDefaultJsMinifyOptions(options.rsbuildConfig),
@@ -50,21 +47,16 @@ export class SwcMinimizerPlugin {
     };
   }
 
-  getDefaultJsMinifyOptions(rsbuildConfig?: RsbuildConfig): JsMinifyOptions {
-    const compressOptions: TerserCompressOptions = {};
-    const { removeConsole } = rsbuildConfig?.performance || {};
-
-    if (removeConsole === true) {
-      compressOptions.drop_console = true;
-    } else if (Array.isArray(removeConsole)) {
-      const pureFuncs = removeConsole.map((method) => `console.${method}`);
-      compressOptions.pure_funcs = pureFuncs;
-    }
-
-    return {
-      compress: compressOptions,
+  getDefaultJsMinifyOptions(rsbuildConfig: NormalizedConfig): JsMinifyOptions {
+    const options = {
+      ...getSwcMinimizerOptions(rsbuildConfig),
       mangle: true,
     };
+
+    // extractComments not supported yet
+    delete options.extractComments;
+
+    return options;
   }
 
   apply(compiler: webpack.Compiler): void {

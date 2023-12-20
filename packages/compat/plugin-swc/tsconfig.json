@@ -2,8 +2,15 @@
   "extends": "@rsbuild/tsconfig/base",
   "compilerOptions": {
     "outDir": "./dist",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "rootDir": "src",
+    "composite": true
   },
+  "references": [
+    {
+      "path": "../../shared"
+    }
+  ],
   "include": ["src"],
   "exclude": ["./tests/fixtures"]
 }

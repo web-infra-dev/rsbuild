@@ -1,4 +1,4 @@
-import { mergeChainedOptions } from '../src';
+import { mergeChainedOptions, isNil } from '../src';
 
 describe('mergeChainedOptions', () => {
   test(`should return default options`, () => {
@@ -122,5 +122,31 @@ describe('mergeChainedOptions', () => {
       d: 'd',
       e: 'e',
     });
+  });
+
+  test('should allow false as options', () => {
+    expect(
+      mergeChainedOptions<'head' | false>({
+        defaults: 'head',
+        options: false,
+        isFalsy: isNil,
+      }),
+    ).toBe(false);
+
+    expect(
+      mergeChainedOptions<'head' | false>({
+        defaults: 'head',
+        options: () => false,
+        isFalsy: isNil,
+      }),
+    ).toBe(false);
+
+    expect(
+      mergeChainedOptions<'head' | false>({
+        defaults: 'head',
+        options: ['head', 'head', () => false],
+        isFalsy: isNil,
+      }),
+    ).toBe(false);
   });
 });

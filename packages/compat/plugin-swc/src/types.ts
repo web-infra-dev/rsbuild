@@ -11,7 +11,6 @@ export type {
   Output,
   TransformConfig,
   JsMinifyOptions,
-  TerserCompressOptions,
 } from '@modern-js/swc-plugins';
 
 export type OuterExtensions = Omit<Extensions, 'ssrLoaderId' | 'configRoutes'>;

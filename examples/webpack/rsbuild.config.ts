@@ -1,11 +1,8 @@
 import { defineConfig } from '@rsbuild/core';
-import { pluginSourceBuild } from '@rsbuild/plugin-source-build';
+import { pluginSwc } from '@rsbuild/plugin-swc';
 import { webpackProvider } from '@rsbuild/webpack';
 
 export default defineConfig({
+  plugins: [pluginSwc()],
   provider: webpackProvider,
-  plugins: [pluginSourceBuild()],
-  tools: {
-    tsLoader: {},
-  },
 });
