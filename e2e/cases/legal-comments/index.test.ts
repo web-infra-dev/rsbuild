@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
+import { rspackOnlyTest } from '@scripts/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
-test('legalComments linked (default)', async ({ page }) => {
+rspackOnlyTest('legalComments linked (default)', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
     runServer: true,

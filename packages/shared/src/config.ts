@@ -37,7 +37,7 @@ import { pick, color, upperFirst } from './utils';
 
 import _ from 'lodash';
 import { DEFAULT_DEV_HOST } from './constants';
-import { getJSMinifyOptions } from './minimize';
+import { getTerserMinifyOptions } from './minimize';
 
 export const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
@@ -231,7 +231,7 @@ export async function getMinify(isProd: boolean, config: NormalizedConfig) {
   if (config.output.disableMinimize || !isProd) {
     return false;
   }
-  const minifyJS: MinifyOptions = (await getJSMinifyOptions(config))
+  const minifyJS: MinifyOptions = (await getTerserMinifyOptions(config))
     .terserOptions!;
 
   return {
