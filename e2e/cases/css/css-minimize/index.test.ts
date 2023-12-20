@@ -18,18 +18,21 @@ rspackOnlyTest('should minimize CSS correctly by default', async () => {
   );
 });
 
-test('should minimize CSS with plugin-css-minimizer correctly', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    rsbuildConfig: {},
-    plugins: [pluginCssMinimizer()],
-  });
-  const files = await rsbuild.unwrapOutputJSON();
+rspackOnlyTest(
+  'should minimize CSS with plugin-css-minimizer correctly',
+  async () => {
+    const rsbuild = await build({
+      cwd: __dirname,
+      rsbuildConfig: {},
+      plugins: [pluginCssMinimizer()],
+    });
+    const files = await rsbuild.unwrapOutputJSON();
 
-  const content =
-    files[Object.keys(files).find((file) => file.endsWith('.css'))!];
+    const content =
+      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
-  expect(content).toEqual(
-    '.a,.b{font-size:1.5rem;line-height:1.5;text-align:center}.b{background:#fafafa}',
-  );
-});
+    expect(content).toEqual(
+      '.a,.b{font-size:1.5rem;line-height:1.5;text-align:center}.b{background:#fafafa}',
+    );
+  },
+);

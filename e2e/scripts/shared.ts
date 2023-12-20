@@ -4,16 +4,12 @@ import assert from 'assert';
 import { join } from 'path';
 import { fse } from '@rsbuild/shared';
 import { globContentJSON } from '@scripts/helper';
-import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+import { pluginSwc } from '@rsbuild/plugin-swc';
 import type {
   RsbuildConfig,
   RsbuildPlugin,
   CreateRsbuildOptions,
 } from '@rsbuild/core';
-
-// TODO should not depend on uni-builder plugins
-import { pluginBabel } from '../../packages/compat/uni-builder/src/webpack/plugins/babel';
-import { pluginReact } from '../../packages/compat/uni-builder/src/webpack/plugins/react';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
   const baseUrl = new URL(`http://localhost:${port}`);
@@ -53,22 +49,9 @@ export const createRsbuild = async (
     rsbuild.addPlugins(plugins);
   }
 
-  const babel = pluginBabel();
-  if (!rsbuild.isPluginExists(babel.name)) {
-    // @rsbuild/webpack has no built-in transformer
-    rsbuild.addPlugins([babel]);
-  }
-
-  const react = pluginReact();
-  if (!rsbuild.isPluginExists(react.name)) {
-    // @rsbuild/webpack has no built-in transformer
-    rsbuild.addPlugins([react]);
-  }
-
-  const cssMinimizer = pluginCssMinimizer();
-  if (!rsbuild.isPluginExists(cssMinimizer.name)) {
-    // @rsbuild/webpack has no built-in CSS minimizer
-    rsbuild.addPlugins([cssMinimizer]);
+  const swc = pluginSwc();
+  if (!rsbuild.isPluginExists(swc.name)) {
+    rsbuild.addPlugins([swc]);
   }
 
   return rsbuild;

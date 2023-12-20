@@ -11,15 +11,9 @@ test('should compile CSS modules composes correctly', async () => {
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
-  if (rsbuild.providerType === 'rspack') {
-    expect(content).toMatch(
-      /.*\{background:red;color:yellow\}.*\{background:blue\}/,
-    );
-  } else {
-    expect(content).toMatch(
-      /.*\{background:red;color:#ff0\}.*\{background:blue\}/,
-    );
-  }
+  expect(content).toMatch(
+    /.*\{background:red;color:yellow\}.*\{background:blue\}/,
+  );
 });
 
 test('should compile CSS modules composes with external correctly', async () => {
@@ -36,13 +30,7 @@ test('should compile CSS modules composes with external correctly', async () => 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
-  if (rsbuild.providerType === 'rspack') {
-    expect(content).toMatch(
-      /.*\{background:cyan;color:black\}.*\{background:green\}/,
-    );
-  } else {
-    expect(content).toMatch(
-      /.*\{background:cyan;color:#000\}.*\{background:green\}/,
-    );
-  }
+  expect(content).toMatch(
+    /.*\{background:cyan;color:black\}.*\{background:green\}/,
+  );
 });
