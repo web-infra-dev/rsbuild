@@ -4,7 +4,6 @@ import {
   isWebTarget,
   SCRIPT_REGEX,
   getJsSourceMap,
-  addCoreJsEntry,
   getCoreJsVersion,
   applyScriptCondition,
   getBrowserslistWithDefault,
@@ -57,75 +56,66 @@ export const pluginSwc = (): RsbuildPlugin => ({
   name: 'rsbuild:swc',
 
   setup(api) {
-    api.modifyBundlerChain(
-      async (chain, { CHAIN_ID, target, isServer, isServiceWorker }) => {
-        const config = api.getNormalizedConfig();
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
+      const config = api.getNormalizedConfig();
 
-        addCoreJsEntry({
-          chain,
-          config,
-          isServer,
-          isServiceWorker,
-        });
+      const rule = chain.module
+        .rule(CHAIN_ID.RULE.JS)
+        .test(SCRIPT_REGEX)
+        .type('javascript/auto');
 
-        const rule = chain.module
-          .rule(CHAIN_ID.RULE.JS)
-          .test(SCRIPT_REGEX)
-          .type('javascript/auto');
+      applyScriptCondition({
+        rule,
+        config,
+        context: api.context,
+        includes: [],
+        excludes: [],
+      });
 
-        applyScriptCondition({
-          rule,
-          config,
-          context: api.context,
-          includes: [],
-          excludes: [],
-        });
+      const swcConfig = await getDefaultSwcConfig(
+        config,
+        api.context.rootPath,
+        target,
+      );
 
-        const swcConfig = await getDefaultSwcConfig(
-          config,
-          api.context.rootPath,
-          target,
-        );
+      applyTransformImport(swcConfig, config.source.transformImport);
 
-        applyTransformImport(swcConfig, config.source.transformImport);
+      applyDecorator(swcConfig, config.output.enableLatestDecorators);
 
-        applyDecorator(swcConfig, config.output.enableLatestDecorators);
+      // apply polyfill
+      if (isWebTarget(target)) {
+        const polyfillMode = config.output.polyfill;
 
-        // apply polyfill
-        if (isWebTarget(target)) {
-          const polyfillMode = config.output.polyfill;
-
-          if (polyfillMode === 'off' || polyfillMode === 'ua') {
-            swcConfig.env!.mode = undefined;
-          } else {
-            swcConfig.env!.mode = polyfillMode;
-            /* Apply core-js version and path alias and exclude core-js */
-            await applyCoreJs(swcConfig, chain, polyfillMode);
-          }
+        if (polyfillMode === 'off' || polyfillMode === 'ua') {
+          swcConfig.env!.mode = undefined;
+        } else {
+          swcConfig.env!.mode = polyfillMode;
+          /* Apply core-js version and path alias and exclude core-js */
+          await applyCoreJs(swcConfig, chain, polyfillMode);
         }
+      }
 
-        rule
-          .use(CHAIN_ID.USE.SWC)
-          .loader(builtinSwcLoaderName)
-          .options(swcConfig);
+      rule
+        .use(CHAIN_ID.USE.SWC)
+        .loader(builtinSwcLoaderName)
+        .options(swcConfig);
 
-        /**
-         * If a script is imported with data URI, it can be compiled by babel too.
-         * This is used by some frameworks to create virtual entry.
-         * https://webpack.js.org/api/module-methods/#import
-         * @example: import x from 'data:text/javascript,export default 1;';
-         */
-        chain.module
-          .rule(CHAIN_ID.RULE.JS_DATA_URI)
-          .mimetype({
-            or: ['text/javascript', 'application/javascript'],
-          })
-          .use(CHAIN_ID.USE.SWC)
-          .loader(builtinSwcLoaderName)
-          // Using cloned options to keep options separate from each other
-          .options(cloneDeep(swcConfig));
-      },
-    );
+      /**
+       * If a script is imported with data URI, it can be compiled by babel too.
+       * This is used by some frameworks to create virtual entry.
+       * https://webpack.js.org/api/module-methods/#import
+       * @example: import x from 'data:text/javascript,export default 1;';
+       */
+      chain.module
+        .rule(CHAIN_ID.RULE.JS_DATA_URI)
+        .mimetype({
+          or: ['text/javascript', 'application/javascript'],
+        })
+        .use(CHAIN_ID.USE.SWC)
+        .loader(builtinSwcLoaderName)
+        // Using cloned options to keep options separate from each other
+        .options(cloneDeep(swcConfig));
+    });
   },
 });
 
