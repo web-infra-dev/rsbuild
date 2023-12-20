@@ -107,10 +107,14 @@ export type DevServerAPIs = {
   startCompile: () => Promise<CompileMiddlewareAPI>;
   /**
    * Trigger rsbuild onBeforeStartDevServer hook
+   *
+   * It should called before listen and after compile
    */
   beforeStart: () => Promise<void>;
   /**
    * Trigger rsbuild onAfterStartDevServer hook
+   *
+   * It should called after listen
    */
   afterStart: (options?: { port?: number; routes?: Routes }) => Promise<void>;
   /**
