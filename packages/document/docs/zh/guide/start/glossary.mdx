@@ -2,9 +2,9 @@
 
 ## Bundler
 
-import Bundler from '@zh/shared/bundler.md';
+指 [Rspack](https://rspack.dev/)、[Webpack](https://webpack.js.org/) 等模块打包工具。
 
-<Bundler />
+打包工具的主要目标是将 JavaScript、CSS 等文件打包在一起，打包后的文件可以在浏览器、Node.js 等环境中使用。当 Bundler 处理 Web 应用时，它会构建一个依赖关系图，其中包含应用需要的各个模块，然后将所有模块打包成一个或多个 bundle。
 
 ## CSR
 
@@ -38,9 +38,9 @@ Modern.js 是字节跳动 Web 工程体系的开源版本，它提供多个解�
 
 ## Rspack
 
-import Rspack from '@zh/shared/rspack.md';
+[Rspack](https://rspack.dev/) 是一个基于 Rust 的高性能 Web 构建工具，具备与 webpack 生态系统的互操作性，可以被 webpack 项目低成本集成，并提供更好的构建性能。
 
-<Rspack />
+相较于 webpack，Rspack 的构建性能有明显提升，除了 Rust 带来的语言优势，这也来自于它的并行架构和增量编译等特性。经过 benchmark 验证，Rspack 可以带来 5 ～ 10 倍编译性能的提升。
 
 ## Rspress
 
