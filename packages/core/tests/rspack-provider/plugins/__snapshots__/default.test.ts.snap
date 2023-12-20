@@ -663,6 +663,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""development"",
       },
+      "affectedHooks": undefined,
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {
@@ -1289,10 +1290,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           "module": undefined,
           "test": undefined,
         },
+        "affectedHooks": "compilation",
         "name": "SwcJsMinimizerRspackPlugin",
       },
       SwcCssMinimizerRspackPlugin {
-        "_options": false,
+        "_options": undefined,
+        "affectedHooks": undefined,
         "name": "SwcCssMinimizerRspackPlugin",
       },
     ],
@@ -1390,6 +1393,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""production"",
       },
+      "affectedHooks": undefined,
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {
@@ -1400,6 +1404,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "prefix": "Client",
         "profile": false,
       },
+      "affectedHooks": undefined,
       "name": "ProgressPlugin",
     },
   ],
@@ -1836,6 +1841,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""test"",
       },
+      "affectedHooks": undefined,
       "name": "DefinePlugin",
     },
   ],
@@ -2531,6 +2537,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""development"",
       },
+      "affectedHooks": undefined,
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {

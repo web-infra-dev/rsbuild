@@ -755,6 +755,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""development"",
       },
+      "affectedHooks": undefined,
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {
@@ -765,10 +766,12 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
         "prefix": "Client",
         "profile": false,
       },
+      "affectedHooks": undefined,
       "name": "ProgressPlugin",
     },
     DefinePlugin {
       "_options": {},
+      "affectedHooks": undefined,
       "name": "DefinePlugin",
     },
     ReactRefreshRspackPlugin {
@@ -1499,6 +1502,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
           "module": undefined,
           "test": undefined,
         },
+        "affectedHooks": "compilation",
         "name": "SwcJsMinimizerRspackPlugin",
       },
       CssMinimizerPlugin {
@@ -1588,6 +1592,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""production"",
       },
+      "affectedHooks": undefined,
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {
@@ -1598,6 +1603,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
         "prefix": "Client",
         "profile": false,
       },
+      "affectedHooks": undefined,
       "name": "ProgressPlugin",
     },
     InlineChunkHtmlPlugin {
@@ -1614,6 +1620,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
     },
     DefinePlugin {
       "_options": {},
+      "affectedHooks": undefined,
       "name": "DefinePlugin",
     },
   ],
