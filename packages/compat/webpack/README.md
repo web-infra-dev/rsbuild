@@ -13,21 +13,19 @@ Note that this package is mainly used for compatibility with Modern.js and Rsbui
 ```ts
 import { defineConfig } from '@rsbuild/core';
 import { webpackProvider } from '@rsbuild/webpack';
-import { pluginBabel } from '@rsbuild/plugin-babel';
-import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+import { pluginSwc } from '@rsbuild/plugin-swc';
 
 export default defineConfig({
   provider: webpackProvider,
   plugins: [
-    // @rsbuild/webpack has no built-in transformer,
-    // so you need to register the plugin-babel.
-    pluginBabel(),
-    // @rsbuild/webpack has no built-in CSS minimizer,
-    // so you need to register the plugin-css-minimizer.
-    pluginCssMinimizer(),
+    // @rsbuild/webpack has no built-in transformer and minimizer,
+    // so you need to register the plugin-swc.
+    pluginSwc(),
   ],
 });
 ```
+
+> Note that some Rsbuild plugins cannot be used with the webpack provider.
 
 ## Documentation
 
