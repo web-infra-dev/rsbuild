@@ -1,4 +1,4 @@
-import { CHAIN_ID, type RspackBuiltinsConfig } from '@rsbuild/shared';
+import { CHAIN_ID, isObject, type RspackBuiltinsConfig } from '@rsbuild/shared';
 import type { RsbuildPlugin, NormalizedConfig } from '../../types';
 
 const getJsMinimizerOptions = (config: NormalizedConfig) => {
@@ -7,29 +7,37 @@ const getJsMinimizerOptions = (config: NormalizedConfig) => {
   const { removeConsole } = config.performance;
 
   if (removeConsole === true) {
-    options.dropConsole = true;
+    options.compress = {
+      ...(isObject(options.compress) ? options.compress : {}),
+      drop_console: true,
+    };
   } else if (Array.isArray(removeConsole)) {
     const pureFuncs = removeConsole.map((method) => `console.${method}`);
-    options.pureFuncs = pureFuncs;
+    options.compress = {
+      ...(isObject(options.compress) ? options.compress : {}),
+      pure_funcs: pureFuncs,
+    };
   }
+
+  options.format ||= {};
 
   switch (config.output.legalComments) {
     case 'inline':
-      options.comments = 'some';
+      options.format.comments = 'some';
       options.extractComments = false;
       break;
     case 'linked':
       options.extractComments = true;
       break;
     case 'none':
-      options.comments = false;
+      options.format.comments = false;
       options.extractComments = false;
       break;
     default:
       break;
   }
 
-  options.asciiOnly = config.output.charset === 'ascii';
+  options.format.asciiOnly = config.output.charset === 'ascii';
 
   return options;
 };
