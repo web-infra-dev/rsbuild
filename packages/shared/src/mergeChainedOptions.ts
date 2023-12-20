@@ -34,37 +34,17 @@ export function mergeChainedOptions<T, U = unknown, F = Falsy>({
   utils,
   mergeFn = Object.assign,
   useObjectParam,
-  isFalsy = (
-    v:
-      | T
-      | ChainedConfig<T>
-      | ChainedConfigWithUtils<T, U>
-      | ChainedConfigCombineUtils<T, U>
-      | F
-      | undefined,
-  ): v is F => !v,
+  isFalsy = (v: unknown | F | undefined): v is F => !v,
 }: {
   defaults: T;
-  options?:
-    | ChainedConfig<T>
-    | ChainedConfigWithUtils<T, U>
-    | ChainedConfigCombineUtils<T, U>
-    | F;
+  options?: unknown | F;
   utils?: U;
   mergeFn?: typeof Object.assign;
   useObjectParam?: true;
   /**
    * To determine if current value is falsy. `false | undefined | null` as falsy by default.
    */
-  isFalsy?: (
-    v:
-      | T
-      | ChainedConfig<T>
-      | ChainedConfigWithUtils<T, U>
-      | ChainedConfigCombineUtils<T, U>
-      | F
-      | undefined,
-  ) => v is F;
+  isFalsy?: (v: unknown | F | undefined) => v is F;
 }) {
   if (isFalsy(options)) {
     return defaults;
