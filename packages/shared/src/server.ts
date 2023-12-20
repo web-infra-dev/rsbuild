@@ -108,15 +108,13 @@ export const getServerOptions = async ({
   rsbuildConfig: RsbuildConfig;
   getPortSilently?: boolean;
 }) => {
-  const port = await getPort(
-    rsbuildConfig.server?.port || DEFAULT_PORT,
-    rsbuildConfig.server?.strictPort || false,
-    {
-      silent: getPortSilently,
-    },
-  );
-
   const host = rsbuildConfig.server?.host || DEFAULT_DEV_HOST;
+  const port = await getPort({
+    host,
+    port: rsbuildConfig.server?.port || DEFAULT_PORT,
+    strictPort: rsbuildConfig.server?.strictPort || false,
+    silent: getPortSilently,
+  });
 
   const https = Boolean(rsbuildConfig.server?.https) || false;
 

@@ -56,9 +56,9 @@ export default {
 };
 ```
 
-为了解决该问题，你需要引用 React 的开发环境产物，或者在开发环境下不配置 `externals`。
+为了解决该问题，你需要引用 React 的开发环境产物，同时安装 React Devtools，安装完成后即可实现热更新。
 
-如果你不确定当前使用的 React 产物类型，可以参考：[React 官方文档 - Use the Production Build](https://legacy.reactjs.org/docs/optimizing-performance#use-the-production-build)
+如果你不确定当前使用的 React 产物类型，可以参考：[React 官方文档 - Use the Production Build](https://legacy.reactjs.org/docs/optimizing-performance.html#use-the-production-build)。
 
 ---
 
