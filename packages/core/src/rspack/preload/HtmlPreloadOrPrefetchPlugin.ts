@@ -30,7 +30,7 @@ import {
   type BeforeAssetTagGenerationHtmlPluginData,
   type As,
 } from './helpers';
-import { getHtmlPlugin } from '../../html-plugin-util';
+import { getHtmlPlugin } from '../../htmlPluginUtil';
 
 const defaultOptions = {
   type: 'async-chunks' as const,

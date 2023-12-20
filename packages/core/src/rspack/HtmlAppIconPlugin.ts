@@ -7,7 +7,7 @@ import {
   getPublicPathFromCompiler,
   COMPILATION_PROCESS_STAGE,
 } from '@rsbuild/shared';
-import { getHtmlPlugin } from '../html-plugin-util';
+import { getHtmlPlugin } from '../htmlPluginUtil';
 
 type AppIconOptions = {
   distDir: string;

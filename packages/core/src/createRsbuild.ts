@@ -7,7 +7,7 @@ import {
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
 import { plugins } from './plugins';
-import { setHtmlPlugin } from './html-plugin-util';
+import { setHtmlPlugin } from './htmlPluginUtil';
 
 const getRspackProvider = async () => {
   const { rspackProvider } = await import('./provider');

@@ -1,6 +1,6 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
-import { getHtmlPlugin } from '../html-plugin-util';
+import { getHtmlPlugin } from '../htmlPluginUtil';
 
 export type HtmlInfo = {
   favicon?: string;

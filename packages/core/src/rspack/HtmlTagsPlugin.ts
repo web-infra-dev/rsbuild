@@ -9,7 +9,7 @@ import {
   type HtmlInjectTagDescriptor,
   type HtmlInjectTagUtils,
 } from '@rsbuild/shared';
-import { getHtmlPlugin } from '../html-plugin-util';
+import { getHtmlPlugin } from '../htmlPluginUtil';
 
 export interface HtmlTagsPluginOptions {
   hash?: HtmlInjectTag['hash'];

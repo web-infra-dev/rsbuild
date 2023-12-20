@@ -12,7 +12,7 @@ import {
 } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
 import type { Context } from '../../types';
-import { getHtmlPlugin } from '../../html-plugin-util';
+import { getHtmlPlugin } from '../../htmlPluginUtil';
 
 async function modifyRspackConfig(
   context: Context,
