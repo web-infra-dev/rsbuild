@@ -4,15 +4,15 @@
  */
 export type PxToRemOptions = {
   /**
-   * (Number | Function) Represents the root element font size or returns the root element font size based on the input parameter
+   * Represents the root element font size or returns the root element font size based on the input parameter
    */
   rootValue?: number;
   /**
-   * (Number) The decimal numbers to allow the REM units to grow to.
+   * The decimal numbers to allow the REM units to grow to.
    */
   unitPrecision?: number;
   /**
-   * (Array) The properties that can change from px to rem.
+   * The properties that can change from px to rem.
    * * Values need to be exact matches.
    * * Use wildcard * to enable all properties. Example: ['*']
    * * Use * at the start or end of a word. (['*position*'] will match background-position-y)
@@ -21,7 +21,7 @@ export type PxToRemOptions = {
    */
   propList?: Array<string>;
   /**
-   * (Array) The selectors to ignore and leave as px.
+   * The selectors to ignore and leave as px.
    * * If value is string, it checks to see if selector contains the string.
    * * ['body'] will match .body-class
    * * If value is regexp, it checks to see if the selector matches the regexp.
@@ -29,19 +29,19 @@ export type PxToRemOptions = {
    */
   selectorBlackList?: Array<string>;
   /**
-   * (Boolean) Replaces rules containing rems instead of adding fallbacks.
+   * Replaces rules containing rems instead of adding fallbacks.
    */
   replace?: boolean;
   /**
-   * (Boolean) Allow px to be converted in media queries.
+   * Allow px to be converted in media queries.
    */
   mediaQuery?: boolean;
   /**
-   * (Number) Set the minimum pixel value to replace.
+   * Set the minimum pixel value to replace.
    */
   minPixelValue?: number;
   /**
-   *  (String, Regexp, Function) The file path to ignore and leave as px.
+   *  The file path to ignore and leave as px.
    * * If value is string, it checks to see if file path contains the string.
    * * 'exclude' will match \project\postcss-pxtorem\exclude\path
    * * If value is regexp, it checks to see if file path matches the regexp.
