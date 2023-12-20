@@ -137,6 +137,17 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
 {
   "rules": [
     {
+      "include": [
+        {
+          "and": [
+            "<ROOT>",
+            {
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+            },
+          ],
+        },
+        /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      ],
       "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
@@ -196,6 +207,17 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
 {
   "rules": [
     {
+      "include": [
+        {
+          "and": [
+            "<ROOT>",
+            {
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+            },
+          ],
+        },
+        /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      ],
       "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
@@ -252,6 +274,17 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
 {
   "rules": [
     {
+      "include": [
+        {
+          "and": [
+            "<ROOT>",
+            {
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+            },
+          ],
+        },
+        /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      ],
       "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
@@ -311,6 +344,17 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
 {
   "rules": [
     {
+      "include": [
+        {
+          "and": [
+            "<ROOT>",
+            {
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+            },
+          ],
+        },
+        /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      ],
       "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
@@ -370,6 +414,17 @@ exports[`plugin-swc > should disable react refresh when target is not web 4`] = 
 {
   "rules": [
     {
+      "include": [
+        {
+          "and": [
+            "<ROOT>",
+            {
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+            },
+          ],
+        },
+        /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      ],
       "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {

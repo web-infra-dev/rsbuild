@@ -2,6 +2,7 @@ import path from 'path';
 import {
   SCRIPT_REGEX,
   DEFAULT_BROWSERSLIST,
+  applyScriptCondition,
   type RsbuildPlugin,
   type RsbuildPluginAPI,
 } from '@rsbuild/shared';
@@ -44,8 +45,19 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
         rootPath,
       );
 
-      chain.module.rule(CHAIN_ID.RULE.JS).uses.delete(CHAIN_ID.USE.BABEL);
-      chain.module.delete(CHAIN_ID.RULE.TS);
+      // If babel plugin is used, replace babel-loader
+      if (chain.module.rules.get(CHAIN_ID.RULE.JS)) {
+        chain.module.rule(CHAIN_ID.RULE.JS).uses.delete(CHAIN_ID.USE.BABEL);
+        chain.module.delete(CHAIN_ID.RULE.TS);
+      } else {
+        applyScriptCondition({
+          rule: chain.module.rule(CHAIN_ID.RULE.JS),
+          config: rsbuildConfig,
+          context: api.context,
+          includes: [],
+          excludes: [],
+        });
+      }
 
       for (let i = 0; i < swcConfigs.length; i++) {
         const { test, include, exclude, swcConfig } = swcConfigs[i];
