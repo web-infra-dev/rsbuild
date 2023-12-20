@@ -1,5 +1,12 @@
 # @rsbuild/babel-preset
 
+## 0.2.7
+
+### Patch Changes
+
+- @rsbuild/plugin-babel@0.2.7
+- @rsbuild/shared@0.2.7
+
 ## 0.2.6
 
 ### Patch Changes
