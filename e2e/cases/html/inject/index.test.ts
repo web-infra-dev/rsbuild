@@ -28,6 +28,8 @@ test('injection script order should be as expected', async () => {
     html.indexOf('/js/convert-rem') < html.indexOf('/js/index'),
   ).toBeTruthy();
   expect(html.indexOf('/js/index') < html.indexOf('/assets/a.js')).toBeTruthy();
+
+  expect(html.indexOf('/js/index')).toBe(html.lastIndexOf('/js/index'));
 });
 
 test('should set inject via function correctly', async () => {

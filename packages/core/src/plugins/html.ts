@@ -11,6 +11,7 @@ import {
   isHtmlDisabled,
   removeTailSlash,
   mergeChainedOptions,
+  isNil,
 } from '@rsbuild/shared';
 import type {
   HtmlConfig,
@@ -38,6 +39,7 @@ export function getInject(entryName: string, config: NormalizedConfig) {
     options: config.html.inject,
     utils: { entryName },
     useObjectParam: true,
+    isFalsy: isNil,
   });
 }
 
