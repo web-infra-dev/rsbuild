@@ -1,6 +1,7 @@
 import { pluginHtml } from '@src/plugins/html';
 import { pluginEntry } from '@src/plugins/entry';
 import { createStubRsbuild } from '@rsbuild/test-helper';
+import { HtmlConfig } from '@rsbuild/shared';
 
 vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();
@@ -258,4 +259,19 @@ describe('plugin-html', () => {
     expect(plugins?.length).toBe(2);
     expect(config).toMatchSnapshot();
   });
+
+  it.each<{ value: HtmlConfig['inject']; message: string }>([
+    { value: false, message: 'false' },
+    { value: () => false, message: `() => false` },
+  ])(
+    'should stop injecting <script> if inject is $message',
+    async ({ value }) => {
+      const rsbuild = await createStubRsbuild({
+        plugins: [pluginEntry(), pluginHtml()],
+        rsbuildConfig: { html: { inject: value } },
+      });
+      const config = await rsbuild.unwrapConfig();
+      expect(config).toMatchSnapshot();
+    },
+  );
 });
