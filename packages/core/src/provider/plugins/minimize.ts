@@ -1,46 +1,5 @@
-import { CHAIN_ID, isObject, type RspackBuiltinsConfig } from '@rsbuild/shared';
-import type { RsbuildPlugin, NormalizedConfig } from '../../types';
-
-const getJsMinimizerOptions = (config: NormalizedConfig) => {
-  const options: RspackBuiltinsConfig['minifyOptions'] = {};
-
-  const { removeConsole } = config.performance;
-
-  if (removeConsole === true) {
-    options.compress = {
-      ...(isObject(options.compress) ? options.compress : {}),
-      drop_console: true,
-    };
-  } else if (Array.isArray(removeConsole)) {
-    const pureFuncs = removeConsole.map((method) => `console.${method}`);
-    options.compress = {
-      ...(isObject(options.compress) ? options.compress : {}),
-      pure_funcs: pureFuncs,
-    };
-  }
-
-  options.format ||= {};
-
-  switch (config.output.legalComments) {
-    case 'inline':
-      options.format.comments = 'some';
-      options.extractComments = false;
-      break;
-    case 'linked':
-      options.extractComments = true;
-      break;
-    case 'none':
-      options.format.comments = false;
-      options.extractComments = false;
-      break;
-    default:
-      break;
-  }
-
-  options.format.asciiOnly = config.output.charset === 'ascii';
-
-  return options;
-};
+import { CHAIN_ID, getSwcMinimizerOptions } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../../types';
 
 export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'rsbuild:minimize',
@@ -62,7 +21,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
 
       chain.optimization
         .minimizer(CHAIN_ID.MINIMIZER.JS)
-        .use(SwcJsMinimizerRspackPlugin, [getJsMinimizerOptions(config)])
+        .use(SwcJsMinimizerRspackPlugin, [getSwcMinimizerOptions(config)])
         .end()
         .minimizer(CHAIN_ID.MINIMIZER.CSS)
         .use(SwcCssMinimizerRspackPlugin, [])

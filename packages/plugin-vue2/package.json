@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-vue2",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Vue 2 plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
