@@ -1,13 +1,14 @@
 import { join } from 'path';
 import { fse } from '@rsbuild/shared';
 import { expect, test } from '@playwright/test';
+import { rspackOnlyTest } from '@scripts/helper';
 import { dev, getHrefByEntryName } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
 // hmr test will timeout in CI
-test('default & hmr (default true)', async ({ page }) => {
+rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
   // HMR cases will fail in Windows
   if (process.platform === 'win32') {
     test.skip();
@@ -134,64 +135,67 @@ test('dev.port & output.distPath', async ({ page }) => {
   await fse.remove(join(fixtures, 'basic/dist-1'));
 });
 
-test('hmr should work when setting dev.port & client', async ({ page }) => {
-  // HMR cases will fail in Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
+rspackOnlyTest(
+  'hmr should work when setting dev.port & client',
+  async ({ page }) => {
+    // HMR cases will fail in Windows
+    if (process.platform === 'win32') {
+      test.skip();
+    }
 
-  await fse.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src-1'));
-  const cwd = join(fixtures, 'hmr');
-  const rsbuild = await dev({
-    cwd,
-    plugins: [pluginReact()],
-    rsbuildConfig: {
-      source: {
-        entry: {
-          index: join(cwd, 'test-src-1/index.ts'),
+    await fse.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src-1'));
+    const cwd = join(fixtures, 'hmr');
+    const rsbuild = await dev({
+      cwd,
+      plugins: [pluginReact()],
+      rsbuildConfig: {
+        source: {
+          entry: {
+            index: join(cwd, 'test-src-1/index.ts'),
+          },
+        },
+        output: {
+          distPath: {
+            root: 'dist-hmr-1',
+          },
+        },
+        server: {
+          port: 3001,
+        },
+        dev: {
+          client: {
+            host: '',
+          },
         },
       },
-      output: {
-        distPath: {
-          root: 'dist-hmr-1',
-        },
-      },
-      server: {
-        port: 3001,
-      },
-      dev: {
-        client: {
-          host: '',
-        },
-      },
-    },
-  });
+    });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
-  expect(rsbuild.port).toBe(3001);
+    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    expect(rsbuild.port).toBe(3001);
 
-  const appPath = join(fixtures, 'hmr', 'test-src-1/App.tsx');
+    const appPath = join(fixtures, 'hmr', 'test-src-1/App.tsx');
 
-  const locator = page.locator('#test');
-  await expect(locator).toHaveText('Hello Rsbuild!');
+    const locator = page.locator('#test');
+    await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await fse.writeFile(
-    appPath,
-    fse.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
-  );
+    await fse.writeFile(
+      appPath,
+      fse.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
+    );
 
-  // wait for hmr take effect
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  await expect(locator).toHaveText('Hello Test!');
+    // wait for hmr take effect
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await expect(locator).toHaveText('Hello Test!');
 
-  // restore
-  await fse.writeFile(
-    appPath,
-    fse.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
-  );
+    // restore
+    await fse.writeFile(
+      appPath,
+      fse.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
+    );
 
-  await rsbuild.server.close();
-});
+    await rsbuild.server.close();
+  },
+);
 
 // need devcert
 // TODO: failed in Windows
