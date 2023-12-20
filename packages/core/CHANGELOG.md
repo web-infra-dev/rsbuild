@@ -1,5 +1,12 @@
 # @rsbuild/core
 
+## 0.2.7
+
+### Patch Changes
+
+- 553999f0: fix: allow setting empty title to override default title
+  - @rsbuild/shared@0.2.7
+
 ## 0.2.6
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-vue-jsx",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Vue 3 JSX plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
