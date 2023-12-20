@@ -16,6 +16,5 @@ export * from './getLoaderOptions';
 export * from './patch';
 export * from './css';
 export * from './minimize';
-export * from './coreJs';
 export * from './port';
 export * from './url';
