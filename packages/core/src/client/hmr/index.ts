@@ -174,11 +174,12 @@ function tryApplyUpdates() {
 }
 
 let connection: WebSocket | null = null;
+let isConnected = false;
 const MAX_RETRIES = 100;
 
 // Establishing a WebSocket connection with the server.
 function connect() {
-  let isConnected = false;
+  isConnected = false;
   connection = new WebSocket(socketUrl);
 
   connection.onopen = function () {
@@ -189,18 +190,17 @@ function connect() {
     }
   };
 
-  // Unlike WebpackDevServer client, we won't try to reconnect
-  // to avoid spamming the console. Disconnect usually happens
-  // when developer stops the server.
+  // Attempt to reconnect after disconnection
   connection.onclose = function () {
     if (typeof console !== 'undefined' && typeof console.info === 'function') {
-      console.info('[HMR] disconnected. Refresh the page if necessary.');
+      console.info('[HMR] disconnected. Attempting to reconnect.');
     }
     isConnected = false;
-    // When the server disconnects, attempt to reconnect.
+
     let retry_count = 0;
     const retryInterval = setInterval(() => {
       retry_count++;
+
       if (isConnected || retry_count > MAX_RETRIES) {
         clearInterval(retryInterval);
         return;
@@ -208,6 +208,7 @@ function connect() {
       reconnect();
     }, 1000);
   };
+
   // Handle messages from the server.
   connection.onmessage = function (e) {
     const message = JSON.parse(e.data);
