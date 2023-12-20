@@ -7,6 +7,8 @@
 export { createRsbuild } from './createRsbuild';
 export { loadConfig, defineConfig } from './cli/config';
 
+export { getHtmlPlugin } from './html-plugin-util';
+
 // Helpers
 export { logger, mergeRsbuildConfig } from '@rsbuild/shared';
 
