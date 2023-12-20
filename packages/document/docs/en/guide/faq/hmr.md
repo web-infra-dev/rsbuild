@@ -58,7 +58,7 @@ export default {
 
 To solve this problem, you need to reference the React development artifacts and install React Devtools, then hot reloading will work properly.
 
-If you are unsure about the type of React build you are using, you can refer to the [React documentation - Use the Production Build](https://legacy.reactjs.org/docs/optimizing-performance#use-the-production-build).
+If you are unsure about the type of React build you are using, you can refer to the [React documentation - Use the Production Build](https://legacy.reactjs.org/docs/optimizing-performance.html#use-the-production-build).
 
 ---
 
