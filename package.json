@@ -47,7 +47,7 @@
     "cross-env": "^7.0.3",
     "husky": "^8.0.3",
     "nano-staged": "^0.8.0",
-    "nx": "^17.0.1",
+    "nx": "^17.2.6",
     "prettier": "^3.0.3",
     "vite-tsconfig-paths": "4.2.1",
     "vitest": "1.0.1"
