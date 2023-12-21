@@ -184,6 +184,18 @@ importers:
         specifier: ^5.3.0
         version: 5.3.2
 
+  e2e/cases/pug/vue2-template:
+    dependencies:
+      vue:
+        specifier: ^2.7.14
+        version: 2.7.14
+
+  e2e/cases/pug/vue3-template:
+    dependencies:
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.4
+
   e2e/cases/react/remove-prop-types:
     dependencies:
       prop-types:
@@ -4449,6 +4461,7 @@ packages:
     resolution: {integrity: sha512-kFnT+laLBL5rS3VgXipJ1xVYeLRfmLg/yXTbjkofpStYAANYSVaCNjrB/pya8S9LOMHf5xEItLS1a+nXLydsng==}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
