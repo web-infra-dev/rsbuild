@@ -28,7 +28,7 @@
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/shared": "workspace:*",
-    "@rspack/core": "0.4.4-canary-5eb224a-20231220085045",
+    "@rspack/core": "0.4.4",
     "@types/lodash": "^4.14.200",
     "@types/node": "16.x",
     "lodash": "^4.17.21",
