@@ -24,7 +24,7 @@ test('should restart dev server and reload config when config file changed', asy
           root: 'dist',
         },
       },
-      server: { port: ${getRandomPort()} }
+      server: { port: ${await getRandomPort()} }
     };`,
   );
 
@@ -45,7 +45,7 @@ test('should restart dev server and reload config when config file changed', asy
           root: 'dist-2',
         },
       },
-      server: { port: ${getRandomPort()} }
+      server: { port: ${await getRandomPort()} }
     };`,
   );
 

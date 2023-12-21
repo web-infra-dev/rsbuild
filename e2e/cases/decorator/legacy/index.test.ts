@@ -1,7 +1,8 @@
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { rspackOnlyTest } from '@scripts/helper';
 import { build, getHrefByEntryName } from '@scripts/shared';
 
-test('decorator legacy(default)', async ({ page }) => {
+rspackOnlyTest('decorator legacy(default)', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     runServer: true,

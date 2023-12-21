@@ -1,18 +1,15 @@
+import net from 'net';
 import { URL } from 'url';
 import assert from 'assert';
 import { join } from 'path';
 import { fse } from '@rsbuild/shared';
 import { globContentJSON } from '@scripts/helper';
-import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+import { pluginSwc } from '@rsbuild/plugin-swc';
 import type {
   RsbuildConfig,
   RsbuildPlugin,
   CreateRsbuildOptions,
 } from '@rsbuild/core';
-
-// TODO should not depend on uni-builder plugins
-import { pluginBabel } from '../../packages/compat/uni-builder/src/webpack/plugins/babel';
-import { pluginReact } from '../../packages/compat/uni-builder/src/webpack/plugins/react';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
   const baseUrl = new URL(`http://localhost:${port}`);
@@ -52,37 +49,43 @@ export const createRsbuild = async (
     rsbuild.addPlugins(plugins);
   }
 
-  const babel = pluginBabel();
-  if (!rsbuild.isPluginExists(babel.name)) {
-    // @rsbuild/webpack has no built-in transformer
-    rsbuild.addPlugins([babel]);
-  }
-
-  const react = pluginReact();
-  if (!rsbuild.isPluginExists(react.name)) {
-    // @rsbuild/webpack has no built-in transformer
-    rsbuild.addPlugins([react]);
-  }
-
-  const cssMinimizer = pluginCssMinimizer();
-  if (!rsbuild.isPluginExists(cssMinimizer.name)) {
-    // @rsbuild/webpack has no built-in CSS minimizer
-    rsbuild.addPlugins([cssMinimizer]);
+  const swc = pluginSwc();
+  if (!rsbuild.isPluginExists(swc.name)) {
+    rsbuild.addPlugins([swc]);
   }
 
   return rsbuild;
 };
 
+function isPortAvailable(port: number) {
+  try {
+    const server = net.createServer().listen(port);
+    return new Promise((resolve) => {
+      server.on('listening', () => {
+        server.close();
+        resolve(true);
+      });
+
+      server.on('error', () => {
+        resolve(false);
+      });
+    });
+  } catch (err) {
+    return false;
+  }
+}
+
 const portMap = new Map();
 
 // Available port ranges: 1024 ～ 65535
-// `10080` is not available in CI, so we start with `11000`.
-export function getRandomPort(
-  defaultPort = Math.ceil(Math.random() * 50000) + 11000,
+// `10080` is not available in macOS CI, `> 50000` get 'permission denied' in Windows.
+// so we use `15000` ~ `45000`.
+export async function getRandomPort(
+  defaultPort = Math.ceil(Math.random() * 30000) + 15000,
 ) {
   let port = defaultPort;
   while (true) {
-    if (!portMap.get(port)) {
+    if (!portMap.get(port) && (await isPortAvailable(port))) {
       portMap.set(port, 1);
       return port;
     } else {
@@ -105,7 +108,7 @@ const updateConfigForTest = async (
   // make devPort random to avoid port conflict
   config.server = {
     ...(config.server || {}),
-    port: getRandomPort(config.server?.port),
+    port: await getRandomPort(config.server?.port),
   };
 
   config.dev ??= {};

@@ -40,7 +40,7 @@ export async function modifyBundlerChain(
     config: Readonly<RsbuildConfig>;
   },
   utils: ModifyBundlerChainUtils,
-) {
+): Promise<BundlerChain> {
   debug('modify bundler chain');
 
   const bundlerChain = await getBundlerChain();
@@ -256,6 +256,7 @@ export function applyScriptCondition({
   excludes: (string | RegExp)[];
 }) {
   // compile all folders in app directory, exclude node_modules
+  // which can be removed next version of rspack
   rule.include.add({
     and: [context.rootPath, { not: NODE_MODULES_REGEX }],
   });

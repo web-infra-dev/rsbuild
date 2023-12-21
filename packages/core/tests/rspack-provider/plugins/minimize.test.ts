@@ -42,10 +42,12 @@ describe('plugin-minimize', () => {
             "module": undefined,
             "test": undefined,
           },
+          "affectedHooks": "compilation",
           "name": "SwcJsMinimizerRspackPlugin",
         },
         SwcCssMinimizerRspackPlugin {
-          "_options": false,
+          "_options": undefined,
+          "affectedHooks": undefined,
           "name": "SwcCssMinimizerRspackPlugin",
         },
       ]
@@ -102,10 +104,12 @@ describe('plugin-minimize', () => {
             "module": undefined,
             "test": undefined,
           },
+          "affectedHooks": "compilation",
           "name": "SwcJsMinimizerRspackPlugin",
         },
         SwcCssMinimizerRspackPlugin {
-          "_options": false,
+          "_options": undefined,
+          "affectedHooks": undefined,
           "name": "SwcCssMinimizerRspackPlugin",
         },
       ]
@@ -143,10 +147,12 @@ describe('plugin-minimize', () => {
             "module": undefined,
             "test": undefined,
           },
+          "affectedHooks": "compilation",
           "name": "SwcJsMinimizerRspackPlugin",
         },
         SwcCssMinimizerRspackPlugin {
-          "_options": false,
+          "_options": undefined,
+          "affectedHooks": undefined,
           "name": "SwcCssMinimizerRspackPlugin",
         },
       ]
@@ -184,10 +190,12 @@ describe('plugin-minimize', () => {
             "module": undefined,
             "test": undefined,
           },
+          "affectedHooks": "compilation",
           "name": "SwcJsMinimizerRspackPlugin",
         },
         SwcCssMinimizerRspackPlugin {
-          "_options": false,
+          "_options": undefined,
+          "affectedHooks": undefined,
           "name": "SwcCssMinimizerRspackPlugin",
         },
       ]

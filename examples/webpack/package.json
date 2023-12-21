@@ -1,0 +1,19 @@
+{
+  "name": "@examples/webpack",
+  "private": true,
+  "scripts": {
+    "dev": "rsbuild dev --open",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/webpack": "workspace:*",
+    "@rsbuild/plugin-swc": "workspace:*",
+    "typescript": "^5.3.0"
+  }
+}

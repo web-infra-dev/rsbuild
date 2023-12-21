@@ -23,24 +23,6 @@ const hadRuntimeError = false;
 // Connect to Dev Server
 const socketUrl = createSocketUrl(__resourceQuery);
 
-const connection = new WebSocket(socketUrl);
-
-connection.onopen = function () {
-  if (typeof console !== 'undefined' && typeof console.info === 'function') {
-    // Notify users that the HMR has successfully connected.
-    console.info('[HMR] connected.');
-  }
-};
-
-// Unlike WebpackDevServer client, we won't try to reconnect
-// to avoid spamming the console. Disconnect usually happens
-// when developer stops the server.
-connection.onclose = function () {
-  if (typeof console !== 'undefined' && typeof console.info === 'function') {
-    console.info('[HMR] disconnected. Refresh the page if necessary.');
-  }
-};
-
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
 let mostRecentCompilationHash: string | null = null;
@@ -138,32 +120,6 @@ function handleAvailableHash(hash: string) {
   mostRecentCompilationHash = hash;
 }
 
-// Handle messages from the server.
-connection.onmessage = function (e) {
-  const message = JSON.parse(e.data);
-  switch (message.type) {
-    case 'hash':
-      handleAvailableHash(message.data);
-      break;
-    case 'still-ok':
-    case 'ok':
-      handleSuccess();
-      break;
-    case 'content-changed':
-      // Triggered when a file from `contentBase` changed.
-      window.location.reload();
-      break;
-    case 'warnings':
-      handleWarnings(message.data);
-      break;
-    case 'errors':
-      handleErrors(message.data);
-      break;
-    default:
-    // Do nothing.
-  }
-};
-
 // Is there a newer version of this code available?
 function isUpdateAvailable() {
   // __webpack_hash__ is the hash of the current compilation.
@@ -216,3 +172,110 @@ function tryApplyUpdates() {
     );
   }
 }
+
+const MAX_RETRIES = 100;
+let connection: WebSocket | null = null;
+let retry_counter = 0;
+
+function onOpen() {
+  if (typeof console !== 'undefined' && typeof console.info === 'function') {
+    // Notify users that the HMR has successfully connected.
+    console.info('[HMR] connected.');
+  }
+}
+
+function onMessage(e: MessageEvent<any>) {
+  const message = JSON.parse(e.data);
+  switch (message.type) {
+    case 'hash':
+      handleAvailableHash(message.data);
+      break;
+    case 'still-ok':
+    case 'ok':
+      handleSuccess();
+      break;
+    case 'content-changed':
+      // Triggered when a file from `contentBase` changed.
+      window.location.reload();
+      break;
+    case 'warnings':
+      handleWarnings(message.data);
+      break;
+    case 'errors':
+      handleErrors(message.data);
+      break;
+    default:
+    // Do nothing.
+  }
+}
+
+async function sleep(msec: number = 1000) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, msec);
+  });
+}
+
+async function onClose() {
+  if (typeof console !== 'undefined' && typeof console.info === 'function') {
+    console.info('[HMR] disconnected. Attempting to reconnect.');
+  }
+
+  removeListeners();
+
+  await sleep(1000);
+  retry_counter++;
+
+  if (
+    connection &&
+    (connection.readyState === connection.CONNECTING ||
+      connection.readyState === connection.OPEN)
+  ) {
+    retry_counter = 0;
+    return;
+  }
+
+  // Exceeded max retry attempts, stop retry.
+  if (retry_counter > MAX_RETRIES) {
+    if (typeof console !== 'undefined' && typeof console.info === 'function') {
+      console.info(
+        '[HMR] Unable to establish a connection after exceeding the maximum retry attempts.',
+      );
+    }
+    retry_counter = 0;
+    return;
+  }
+
+  reconnect();
+}
+
+// Establishing a WebSocket connection with the server.
+function connect() {
+  connection = new WebSocket(socketUrl);
+
+  connection.addEventListener('open', onOpen);
+  // Attempt to reconnect after disconnection
+  connection.addEventListener('close', onClose);
+  // Handle messages from the server.
+  connection.addEventListener('message', onMessage);
+}
+
+function removeListeners() {
+  if (connection) {
+    connection.removeEventListener('open', onOpen);
+    connection.removeEventListener('close', onClose);
+    connection.removeEventListener('message', onMessage);
+  }
+}
+
+/**
+ * Close the current connection if it exists and then establishes a new
+ * connection.
+ */
+function reconnect() {
+  if (connection) {
+    connection = null;
+  }
+  connect();
+}
+
+connect();

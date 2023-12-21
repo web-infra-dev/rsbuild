@@ -1,6 +1,6 @@
 # https
 
-- **Type:** `{ key: string; cert: string }`
+- **Type:** `import('https').ServerOptions`
 - **Default:** `undefined`
 
 After configuring this option, you can enable HTTPS Server, and disabling the HTTP Server.
@@ -19,9 +19,9 @@ HTTPS:
   > Network: https://192.168.0.1:8080/
 ```
 
-#### Manually set the certificate
+#### Set Certificate
 
-You can manually pass in the certificate and the private key required in the `server.https` option. This parameter will be directly passed to the createServer method of the https module in Node.js.
+You can manually pass in the certificate and the private key required in the `server.https` option. This parameter will be directly passed to the `createServer` method of the https module in Node.js.
 
 For details, please refer to [https.createServer](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener).
 

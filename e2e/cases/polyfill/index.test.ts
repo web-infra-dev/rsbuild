@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { rspackOnlyTest } from '@scripts/helper';
 import { build, getHrefByEntryName } from '@scripts/shared';
 
 const POLYFILL_RE = /\/lib-polyfill/;
@@ -57,31 +58,39 @@ test('should add polyfill when set polyfill entry (default)', async ({
   expect(content.includes('object.has-own.js')).toBeTruthy();
 });
 
-test('should add polyfill when set polyfill usage', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    rsbuildConfig: {
-      output: {
-        polyfill: 'usage',
-        sourceMap: {
-          js: 'source-map',
+// @rsbuild/plugin-swc do not support groupBy yet
+rspackOnlyTest(
+  'should add polyfill when set polyfill usage',
+  async ({ page }) => {
+    const rsbuild = await build({
+      cwd: __dirname,
+      rsbuildConfig: {
+        output: {
+          polyfill: 'usage',
+          sourceMap: {
+            js: 'source-map',
+          },
         },
       },
-    },
-    runServer: true,
-  });
+      runServer: true,
+    });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+    page.on('pageerror', (err) => {
+      console.log('page err', err);
+    });
 
-  expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
+    await page.goto(getHrefByEntryName('index', rsbuild.port));
 
-  await rsbuild.close();
+    expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
 
-  const files = await rsbuild.unwrapOutputJSON(false);
+    await rsbuild.close();
 
-  const content = getPolyfillContent(files);
+    const files = await rsbuild.unwrapOutputJSON(false);
 
-  // should only polyfill some usage api
-  expect(content.includes('object.group-by.js')).toBeTruthy();
-  expect(content.includes('object.has-own.js')).toBeFalsy();
-});
+    const content = getPolyfillContent(files);
+
+    // should only polyfill some usage api
+    expect(content.includes('object.group-by.js')).toBeTruthy();
+    expect(content.includes('object.has-own.js')).toBeFalsy();
+  },
+);

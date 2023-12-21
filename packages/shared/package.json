@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/shared",
-  "version": "0.2.5",
+  "version": "0.2.8",
   "description": "The internal shared modules and dependencies of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -87,6 +87,10 @@
       "types": "./compiled/postcss-modules-values/index.d.ts",
       "default": "./compiled/postcss-modules-values/index.js"
     },
+    "./semver": {
+      "types": "./compiled/semver/index.d.ts",
+      "default": "./compiled/semver/index.js"
+    },
     "./webpack-merge": {
       "types": "./compiled/webpack-merge/types/index.d.ts",
       "default": "./compiled/webpack-merge/index.js"
@@ -110,7 +114,7 @@
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@rspack/core": "0.4.3",
+    "@rspack/core": "0.4.4",
     "caniuse-lite": "^1.0.30001559",
     "lodash": "^4.17.21",
     "postcss": "8.4.31"

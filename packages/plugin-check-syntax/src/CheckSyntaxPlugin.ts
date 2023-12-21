@@ -33,7 +33,7 @@ export class CheckSyntaxPlugin {
 
   constructor(
     options: CheckSyntaxOptions &
-      Required<Pick<CheckSyntaxOptions, 'targets' | 'exclude'>> & {
+      Required<Pick<CheckSyntaxOptions, 'targets'>> & {
         rootPath: string;
       },
   ) {

@@ -24,7 +24,7 @@ test('should allow plugin to modify preview server config', async ({
   page,
 }) => {
   const cwd = join(__dirname, 'basic');
-  const PORT = getRandomPort();
+  const PORT = await getRandomPort();
 
   const plugin: RsbuildPlugin = {
     name: 'test',

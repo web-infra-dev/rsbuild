@@ -1,5 +1,5 @@
 import fs from 'fs';
-import semver from 'semver';
+import semver from '@rsbuild/shared/semver';
 import { findUp } from '@rsbuild/shared';
 
 export const isBeyondReact17 = async (cwd: string) => {

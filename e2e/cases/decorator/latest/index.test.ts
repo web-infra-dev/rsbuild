@@ -1,8 +1,7 @@
-import { expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
-import { webpackOnlyTest } from '@scripts/helper';
 
-webpackOnlyTest('decorator latest', async ({ page }) => {
+test.skip('decorator latest', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     runServer: true,

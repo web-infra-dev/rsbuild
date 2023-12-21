@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "scripts": {
     "test": "pnpm run test:rspack && pnpm run test:webpack",
-    "test:webpack": "PROVIDE_TYPE=webpack playwright test",
+    "test:webpack": "cross-env PROVIDE_TYPE=webpack playwright test",
     "test:rspack": "playwright test",
-    "test:webpack-swc": "PROVIDE_TYPE=webpack playwright test swc"
+    "test:webpack-swc": "cross-env PROVIDE_TYPE=webpack playwright test swc"
   },
   "dependencies": {
     "devcert": "1.2.2",
@@ -30,10 +30,10 @@
     "@rsbuild/plugin-pug": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-rem": "workspace:*",
-    "@rsbuild/plugin-stylus": "workspace:*",
     "@rsbuild/plugin-solid": "workspace:*",
     "@rsbuild/plugin-source-build": "workspace:*",
     "@rsbuild/plugin-styled-components": "workspace:*",
+    "@rsbuild/plugin-stylus": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-svgr": "workspace:*",
     "@rsbuild/plugin-swc": "workspace:*",

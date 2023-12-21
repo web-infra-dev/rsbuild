@@ -789,6 +789,7 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
   {
     "entry": {
       "main": [
+        "/datatext/javascript,import \\"core-js\\";",
         "src/index.js",
       ],
     },
@@ -1019,6 +1020,7 @@ exports[`plugin-swc > should has correct core-js 1`] = `
   {
     "entry": {
       "main": [
+        "/datatext/javascript,import \\"core-js\\";",
         "src/index.js",
       ],
     },

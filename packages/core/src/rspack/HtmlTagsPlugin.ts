@@ -1,4 +1,4 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler } from '@rspack/core';
 import {
   partition,
@@ -9,6 +9,7 @@ import {
   type HtmlInjectTagDescriptor,
   type HtmlInjectTagUtils,
 } from '@rsbuild/shared';
+import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
 export interface HtmlTagsPluginOptions {
   hash?: HtmlInjectTag['hash'];
@@ -74,7 +75,7 @@ export class HtmlTagsPlugin {
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       const compilationHash = compilation.hash || '';
       // @ts-expect-error compilation type mismatch
-      const hooks = HtmlWebpackPlugin.getHooks(compilation);
+      const hooks = getHTMLPlugin().getHooks(compilation);
       hooks.alterAssetTagGroups.tap(this.name, (params) => {
         // skip unmatched file and empty tag list.
         const includesCurrentFile =

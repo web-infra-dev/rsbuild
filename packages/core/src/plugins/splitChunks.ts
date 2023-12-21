@@ -120,7 +120,7 @@ function splitByModule(ctx: SplitChunksContext): SplitChunks {
       vendors: {
         priority: -10,
         test: NODE_MODULES_REGEX,
-        // todo: not support in rspack
+        // TODO: not support in rspack
         // @ts-expect-error
         name(module: { context: string | null }): string | false {
           return getPackageNameFromModulePath(module.context!);

@@ -1,5 +1,28 @@
 # @rsbuild/plugin-swc
 
+## 0.2.8
+
+### Patch Changes
+
+- 98c82ee4: chore: bump swc
+  - @rsbuild/plugin-react@0.2.8
+  - @rsbuild/shared@0.2.8
+
+## 0.2.7
+
+### Patch Changes
+
+- @rsbuild/plugin-react@0.2.7
+- @rsbuild/shared@0.2.7
+
+## 0.2.6
+
+### Patch Changes
+
+- Updated dependencies [85a3d29c]
+  - @rsbuild/shared@0.2.6
+  - @rsbuild/plugin-react@0.2.6
+
 ## 0.2.5
 
 ### Patch Changes

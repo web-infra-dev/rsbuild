@@ -9,17 +9,19 @@ import { logger } from './logger';
  * @param strictPort - Whether to throw an error when the port is occupied.
  * @returns Available port number.
  */
-export const getPort = async (
-  port: string | number,
-  strictPort: boolean = false,
-  {
-    tryLimits = 20,
-    silent = false,
-  }: {
-    tryLimits?: number;
-    silent?: boolean;
-  } = {},
-): Promise<number> => {
+export const getPort = async ({
+  host,
+  port,
+  strictPort,
+  tryLimits = 20,
+  silent = false,
+}: {
+  host: string;
+  port: string | number;
+  strictPort: boolean;
+  tryLimits?: number;
+  silent?: boolean;
+}): Promise<number> => {
   if (typeof port === 'string') {
     port = parseInt(port, 10);
   }
@@ -38,16 +40,10 @@ export const getPort = async (
         const server = net.createServer();
         server.unref();
         server.on('error', reject);
-        server.listen(
-          {
-            port,
-            host: '0.0.0.0',
-          },
-          () => {
-            found = true;
-            server.close(resolve);
-          },
-        );
+        server.listen({ port, host }, () => {
+          found = true;
+          server.close(resolve);
+        });
       });
     } catch (e: any) {
       if (e.code !== 'EADDRINUSE') {

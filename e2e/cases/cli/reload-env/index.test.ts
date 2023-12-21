@@ -25,7 +25,7 @@ test.skip('should restart dev server when .env file is changed', async () => {
       output: {
         disableFilenameHash: true,
       },
-      server: { port: ${getRandomPort()} }
+      server: { port: ${await getRandomPort()} }
     };`,
   );
 

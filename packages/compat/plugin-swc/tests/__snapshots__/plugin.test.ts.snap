@@ -137,7 +137,75 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
 {
   "rules": [
     {
+      "include": [
+        {
+          "and": [
+            "<ROOT>",
+            {
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+            },
+          ],
+        },
+        /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      ],
       "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
+          "options": {
+            "cwd": "<ROOT>",
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "inlineSourcesContent": true,
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+            "minify": false,
+            "sourceMaps": true,
+          },
+        },
+      ],
+    },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -196,7 +264,72 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
 {
   "rules": [
     {
+      "include": [
+        {
+          "and": [
+            "<ROOT>",
+            {
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+            },
+          ],
+        },
+        /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      ],
       "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
+          "options": {
+            "cwd": "<ROOT>",
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "targets": [
+                "node >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "inlineSourcesContent": true,
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+            "minify": false,
+            "sourceMaps": true,
+          },
+        },
+      ],
+    },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -252,7 +385,75 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
 {
   "rules": [
     {
+      "include": [
+        {
+          "and": [
+            "<ROOT>",
+            {
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+            },
+          ],
+        },
+        /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      ],
       "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
+          "options": {
+            "cwd": "<ROOT>",
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "inlineSourcesContent": true,
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+            "minify": false,
+            "sourceMaps": true,
+          },
+        },
+      ],
+    },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -311,7 +512,75 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
 {
   "rules": [
     {
+      "include": [
+        {
+          "and": [
+            "<ROOT>",
+            {
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+            },
+          ],
+        },
+        /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      ],
       "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
+          "options": {
+            "cwd": "<ROOT>",
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "inlineSourcesContent": true,
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "react": {
+                  "refresh": true,
+                  "runtime": "classic",
+                },
+              },
+            },
+            "minify": false,
+            "sourceMaps": true,
+          },
+        },
+      ],
+    },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -370,7 +639,75 @@ exports[`plugin-swc > should disable react refresh when target is not web 4`] = 
 {
   "rules": [
     {
+      "include": [
+        {
+          "and": [
+            "<ROOT>",
+            {
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+            },
+          ],
+        },
+        /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      ],
       "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
+          "options": {
+            "cwd": "<ROOT>",
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "inlineSourcesContent": true,
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+            "minify": false,
+            "sourceMaps": true,
+          },
+        },
+      ],
+    },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -433,6 +770,9 @@ exports[`plugin-swc > should set correct swc minimizer options in production 1`]
         "cssMinify": {},
         "jsMinify": {
           "compress": false,
+          "format": {
+            "asciiOnly": true,
+          },
           "mangle": false,
         },
       },
@@ -450,6 +790,9 @@ exports[`plugin-swc > should set correct swc minimizer options using raw swc con
         "cssMinify": {},
         "jsMinify": {
           "compress": false,
+          "format": {
+            "asciiOnly": true,
+          },
           "mangle": false,
         },
       },
@@ -474,64 +817,6 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
       /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
     "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
-        "options": {
-          "cwd": "<ROOT>",
-          "env": {
-            "coreJs": "3.32",
-            "mode": "usage",
-            "targets": [
-              "chrome >= 87",
-              "edge >= 88",
-              "firefox >= 78",
-              "safari >= 14",
-            ],
-          },
-          "extensions": {
-            "lockCorejsVersion": {
-              "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-              "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-            },
-            "lodash": {
-              "cwd": "<ROOT>",
-              "ids": [
-                "lodash",
-                "lodash-es",
-              ],
-            },
-          },
-          "inlineSourcesContent": true,
-          "jsc": {
-            "externalHelpers": true,
-            "parser": {
-              "decorators": true,
-              "syntax": "typescript",
-              "tsx": true,
-            },
-            "preserveAllComments": true,
-            "transform": {
-              "react": {
-                "refresh": true,
-                "runtime": "classic",
-              },
-              "useDefineForClassFields": true,
-            },
-          },
-          "minify": false,
-          "sourceMaps": true,
-        },
-      },
-    ],
-  },
-  {
-    "mimetype": {
-      "or": [
-        "text/javascript",
-        "application/javascript",
-      ],
-    },
     "use": [
       {
         "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -636,6 +921,64 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
       },
     ],
   },
+  {
+    "mimetype": {
+      "or": [
+        "text/javascript",
+        "application/javascript",
+      ],
+    },
+    "use": [
+      {
+        "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
+        "options": {
+          "cwd": "<ROOT>",
+          "env": {
+            "coreJs": "3.32",
+            "mode": "usage",
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "extensions": {
+            "lockCorejsVersion": {
+              "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+              "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+            },
+            "lodash": {
+              "cwd": "<ROOT>",
+              "ids": [
+                "lodash",
+                "lodash-es",
+              ],
+            },
+          },
+          "inlineSourcesContent": true,
+          "jsc": {
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": true,
+            },
+            "preserveAllComments": true,
+            "transform": {
+              "react": {
+                "refresh": true,
+                "runtime": "classic",
+              },
+              "useDefineForClassFields": true,
+            },
+          },
+          "minify": false,
+          "sourceMaps": true,
+        },
+      },
+    ],
+  },
 ]
 `;
 
@@ -646,7 +989,9 @@ exports[`plugin-swc > should set swc minimizer in production 1`] = `
       "minifyOptions": {
         "cssMinify": {},
         "jsMinify": {
-          "compress": {},
+          "format": {
+            "asciiOnly": true,
+          },
           "mangle": true,
         },
       },

@@ -6,7 +6,8 @@
     "**/coverage": true,
     "**/compiled": true,
     "**/doc_build": true,
-    "**/node_modules": true
+    "**/node_modules": true,
+    "**/tsconfig.tsbuildinfo": true
   },
   "files.exclude": {
     "**/.DS_Store": true

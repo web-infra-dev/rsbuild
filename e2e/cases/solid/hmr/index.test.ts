@@ -1,10 +1,15 @@
 import fs from 'fs';
 import path from 'path';
-import { expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { rspackOnlyTest } from '@scripts/helper';
 import { dev, getHrefByEntryName } from '@scripts/shared';
 
 rspackOnlyTest('hmr should work properly', async ({ page }) => {
+  // HMR cases will fail in Windows
+  if (process.platform === 'win32') {
+    test.skip();
+  }
+
   const root = __dirname;
 
   const handle = await dev({

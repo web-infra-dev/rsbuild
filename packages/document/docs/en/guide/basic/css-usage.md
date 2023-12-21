@@ -14,7 +14,19 @@ You can also use Stylus in Rsbuild, just install the Stylus plugin provided by R
 
 ## Using PostCSS
 
-Rsbuild has built-in [PostCSS](https://postcss.org/) to transform the CSS code. You can configure the postcss-loader via [tools.postcss](/config/tools/postcss).
+Rsbuild has built-in [PostCSS](https://postcss.org/) to transform the CSS code. You can configure PostCSS in the following ways:
+
+1. Rsbuild uses [postcss-load-config](https://github.com/postcss/postcss-load-config) to load the PostCSS configuration file in the root directory of the current project, such as `postcss.config.js`:
+
+```js
+module.exports = {
+  'postcss-px-to-viewport': {
+    viewportWidth: 375,
+  },
+};
+```
+
+2. Configure the postcss-loader through Rsbuild's [tools.postcss](/config/tools/postcss) option, which supports modifying the built-in configuration through a function, for example:
 
 ```ts
 export default {
@@ -28,6 +40,8 @@ export default {
   },
 };
 ```
+
+When you configure both the `postcss.config.js` file and the `tools.postcss` option, both will take effect, and the `tools.postcss` option will take precedence.
 
 ### Builtin PostCSS plugins
 

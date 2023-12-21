@@ -1,5 +1,5 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
+import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
 type NonceOptions = {
   nonce: string;
@@ -22,18 +22,17 @@ export class HtmlNoncePlugin implements RspackPluginInstance {
     }
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
-      // @ts-expect-error compilation type mismatch
-      HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tap(
-        this.name,
-        (alterAssetTags) => {
+      getHTMLPlugin()
+        // @ts-expect-error compilation type mismatch
+        .getHooks(compilation)
+        .alterAssetTags.tap(this.name, (alterAssetTags) => {
           const {
             assetTags: { scripts },
           } = alterAssetTags;
 
           scripts.forEach((script) => (script.attributes.nonce = this.nonce));
           return alterAssetTags;
-        },
-      );
+        });
     });
   }
 }

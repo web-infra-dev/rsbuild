@@ -6,7 +6,8 @@ import {
   type PreconnectOption,
   type DnsPrefetchOption,
 } from '@rsbuild/shared';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
 type NetworkPerformanceType = 'preconnect' | 'dnsPrefetch';
 
@@ -44,27 +45,29 @@ export class HtmlNetworkPerformancePlugin implements RspackPluginInstance {
     compiler.hooks.compilation.tap(
       `HTML${this.type}Plugin`,
       (compilation: Compilation) => {
-        // @ts-expect-error compilation type mismatch
-        HtmlWebpackPlugin.getHooks(compilation).alterAssetTagGroups.tap(
-          `HTML${upperFirst(this.type)}Plugin`,
-          (htmlPluginData) => {
-            const { headTags } = htmlPluginData;
+        getHTMLPlugin()
+          // @ts-expect-error compilation type mismatch
+          .getHooks(compilation)
+          .alterAssetTagGroups.tap(
+            `HTML${upperFirst(this.type)}Plugin`,
+            (htmlPluginData) => {
+              const { headTags } = htmlPluginData;
 
-            const options: PreconnectOption[] | DnsPrefetchOption[] =
-              this.options.map((option) =>
-                typeof option === 'string'
-                  ? {
-                      href: option,
-                    }
-                  : option,
-              );
+              const options: PreconnectOption[] | DnsPrefetchOption[] =
+                this.options.map((option) =>
+                  typeof option === 'string'
+                    ? {
+                        href: option,
+                      }
+                    : option,
+                );
 
-            if (options.length) {
-              headTags.unshift(...generateLinks(options, this.type));
-            }
-            return htmlPluginData;
-          },
-        );
+              if (options.length) {
+                headTags.unshift(...generateLinks(options, this.type));
+              }
+              return htmlPluginData;
+            },
+          );
       },
     );
   }

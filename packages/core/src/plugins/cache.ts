@@ -111,6 +111,7 @@ export const pluginCache = (): RsbuildPlugin => ({
         Array.isArray(cacheConfig.cacheDigest) &&
         cacheConfig.cacheDigest.length;
 
+      // @ts-expect-error rspack only support `boolean` but somethings we use webpack provider.
       chain.cache({
         // The default cache name of webpack is '${name}-${env}', and the `name` is `default` by default.
         // We set cache name to avoid cache conflicts of different targets.
