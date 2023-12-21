@@ -9,18 +9,27 @@ export type ConfigParams = {
   command: string;
 };
 
-export type RsbuildConfigFn = (
+export type RsbuildConfigAsyncFn = (
   env: ConfigParams,
-) => RsbuildConfig | Promise<RsbuildConfig>;
+) => Promise<RsbuildConfig>;
 
-export type RsbuildConfigExport = RsbuildConfig | RsbuildConfigFn;
+export type RsbuildConfigSyncFn = (env: ConfigParams) => RsbuildConfig;
+
+export type RsbuildConfigExport =
+  | RsbuildConfig
+  | RsbuildConfigSyncFn
+  | RsbuildConfigAsyncFn;
 
 /**
  * This function helps you to autocomplete configuration types.
  * It accepts a Rsbuild config object, or a function that returns a config.
  */
 export function defineConfig(config: RsbuildConfig): RsbuildConfig;
-export function defineConfig(config: RsbuildConfigFn): RsbuildConfigFn;
+export function defineConfig(config: RsbuildConfigSyncFn): RsbuildConfigSyncFn;
+export function defineConfig(
+  config: RsbuildConfigAsyncFn,
+): RsbuildConfigAsyncFn;
+export function defineConfig(config: RsbuildConfigExport): RsbuildConfigExport;
 export function defineConfig(config: RsbuildConfigExport) {
   return config;
 }
