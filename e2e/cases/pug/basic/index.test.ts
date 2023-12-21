@@ -1,21 +1,10 @@
-import { resolve } from 'path';
 import { test, expect } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
-import { pluginReact } from '@rsbuild/plugin-react';
-import { pluginPug } from '@rsbuild/plugin-pug';
 
-const fixtures = resolve(__dirname, '../');
-
-test('pug', async ({ page }) => {
+test('should allow to use .pug template file', async ({ page }) => {
   const rsbuild = await build({
-    cwd: fixtures,
+    cwd: __dirname,
     runServer: true,
-    plugins: [pluginReact(), pluginPug()],
-    rsbuildConfig: {
-      html: {
-        template: './static/index.pug',
-      },
-    },
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
