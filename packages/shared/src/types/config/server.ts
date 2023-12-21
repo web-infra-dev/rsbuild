@@ -1,4 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http';
+import type { ServerOptions as HttpsServerOptions } from 'https';
 import type {
   Options as BaseProxyOptions,
   Filter as ProxyFilter,
@@ -64,7 +65,7 @@ export interface ServerConfig {
   /**
    * After configuring this option, you can enable HTTPS Server, and disabling the HTTP Server.
    */
-  https?: { key: string; cert: string };
+  https?: HttpsServerOptions;
   /**
    * Used to set the host of Rsbuild Server.
    */
