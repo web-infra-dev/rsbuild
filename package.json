@@ -39,8 +39,8 @@
   },
   "devDependencies": {
     "@ls-lint/ls-lint": "^2.2.2",
-    "@modern-js/module-tools": "^2.41.0",
-    "@modern-js/monorepo-tools": "^2.41.0",
+    "@modern-js/module-tools": "^2.43.0",
+    "@modern-js/monorepo-tools": "^2.43.0",
     "@rsbuild/test-helper": "workspace:*",
     "@rsbuild/tsconfig": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
