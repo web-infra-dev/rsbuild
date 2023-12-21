@@ -5,6 +5,9 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 let htmlPlugin: typeof HtmlWebpackPlugin;
 
+/**
+ * This method is used to override the Rsbuild default html-plugin (html-rspack-plugin).
+ */
 export const setHtmlPlugin = (plugin: typeof HtmlWebpackPlugin) => {
   htmlPlugin = plugin;
 };

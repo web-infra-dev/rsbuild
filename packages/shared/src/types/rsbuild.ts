@@ -59,10 +59,4 @@ export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {
   >['pluginAPI']['onAfterStartProdServer'];
   onDevCompileDone: Awaited<ReturnType<P>>['pluginAPI']['onDevCompileDone'];
   onExit: Awaited<ReturnType<P>>['pluginAPI']['onExit'];
-
-  /**
-   * This method is used to override the Rsbuild default html-plugin (html-rspack-plugin).
-   *
-   */
-  setHtmlPlugin: (plugin: typeof import('html-webpack-plugin')) => void;
 };

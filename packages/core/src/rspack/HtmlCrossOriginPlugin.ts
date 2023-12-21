@@ -1,6 +1,6 @@
 import type { CrossOrigin } from '@rsbuild/shared';
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
-import { getHtmlPlugin } from '../htmlPluginUtil';
+import { getHtmlPlugin } from '../provider/htmlPluginUtil';
 
 type CrossOriginOptions = {
   crossOrigin: CrossOrigin;

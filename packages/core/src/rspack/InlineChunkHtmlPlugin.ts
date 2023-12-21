@@ -15,7 +15,7 @@ import {
 } from '@rsbuild/shared';
 import type { Compiler, Compilation } from '@rspack/core';
 import type { HtmlTagObject } from 'html-webpack-plugin';
-import { getHtmlPlugin } from '../htmlPluginUtil';
+import { getHtmlPlugin } from '../provider/htmlPluginUtil';
 
 export type InlineChunkHtmlPluginOptions = {
   styleTests: InlineChunkTest[];
