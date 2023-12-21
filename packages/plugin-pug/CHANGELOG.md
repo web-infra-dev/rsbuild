@@ -1,5 +1,12 @@
 # @rsbuild/plugin-pug
 
+## 0.2.8
+
+### Patch Changes
+
+- 9b50341: feat(plugin-pug): support Vue SFC
+  - @rsbuild/shared@0.2.8
+
 ## 0.2.7
 
 ### Patch Changes
