@@ -7,7 +7,7 @@ import {
   getPublicPathFromCompiler,
   COMPILATION_PROCESS_STAGE,
 } from '@rsbuild/shared';
-import { getHtmlPlugin } from '../provider/htmlPluginUtil';
+import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
 type AppIconOptions = {
   distDir: string;
@@ -38,7 +38,7 @@ export class HtmlAppIconPlugin {
 
     // add html asset tags
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
-      getHtmlPlugin()
+      getHTMLPlugin()
         // @ts-expect-error compilation type mismatch
         .getHooks(compilation)
         .alterAssetTagGroups.tap(this.name, (data) => {

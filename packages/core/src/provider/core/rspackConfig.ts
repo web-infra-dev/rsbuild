@@ -12,7 +12,7 @@ import {
 } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
 import type { Context } from '../../types';
-import { getHtmlPlugin } from '../htmlPluginUtil';
+import { getHTMLPlugin } from '../htmlPluginUtil';
 
 async function modifyRspackConfig(
   context: Context,
@@ -101,7 +101,7 @@ async function getChainUtils(target: RsbuildTarget): Promise<ModifyChainUtils> {
     isWebWorker: target === 'web-worker',
     getCompiledPath,
     CHAIN_ID,
-    HtmlPlugin: getHtmlPlugin(),
+    HtmlPlugin: getHTMLPlugin(),
   };
 }
 

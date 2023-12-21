@@ -30,7 +30,7 @@ import {
   type BeforeAssetTagGenerationHtmlPluginData,
   type As,
 } from './helpers';
-import { getHtmlPlugin } from '../../provider/htmlPluginUtil';
+import { getHTMLPlugin } from '../../provider/htmlPluginUtil';
 
 const defaultOptions = {
   type: 'async-chunks' as const,
@@ -190,7 +190,7 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
 
   apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(this.constructor.name, (compilation) => {
-      getHtmlPlugin()
+      getHTMLPlugin()
         // @ts-expect-error compilation type mismatch
         .getHooks(compilation)
         .beforeAssetTagGeneration.tap(
@@ -208,7 +208,7 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
           },
         );
 
-      getHtmlPlugin()
+      getHTMLPlugin()
         // @ts-expect-error compilation type mismatch
         .getHooks(compilation)
         .alterAssetTags.tap(

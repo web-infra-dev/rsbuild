@@ -7,7 +7,7 @@ import {
   type DnsPrefetchOption,
 } from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import { getHtmlPlugin } from '../provider/htmlPluginUtil';
+import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
 type NetworkPerformanceType = 'preconnect' | 'dnsPrefetch';
 
@@ -45,7 +45,7 @@ export class HtmlNetworkPerformancePlugin implements RspackPluginInstance {
     compiler.hooks.compilation.tap(
       `HTML${this.type}Plugin`,
       (compilation: Compilation) => {
-        getHtmlPlugin()
+        getHTMLPlugin()
           // @ts-expect-error compilation type mismatch
           .getHooks(compilation)
           .alterAssetTagGroups.tap(

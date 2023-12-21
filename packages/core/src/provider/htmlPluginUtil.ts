@@ -8,10 +8,10 @@ let htmlPlugin: typeof HtmlWebpackPlugin;
 /**
  * This method is used to override the Rsbuild default html-plugin (html-rspack-plugin).
  */
-export const setHtmlPlugin = (plugin: typeof HtmlWebpackPlugin) => {
+export const setHTMLPlugin = (plugin: typeof HtmlWebpackPlugin) => {
   htmlPlugin = plugin;
 };
 
-export const getHtmlPlugin = () => {
+export const getHTMLPlugin = () => {
   return htmlPlugin || HtmlWebpackPlugin;
 };

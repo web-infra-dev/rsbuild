@@ -68,8 +68,8 @@ async function getChainUtils(
   target: RsbuildTarget,
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
-  const { getHtmlPlugin } = await import('@rsbuild/core/provider');
-  const HtmlPlugin = getHtmlPlugin();
+  const { getHTMLPlugin } = await import('@rsbuild/core/provider');
+  const HtmlPlugin = getHTMLPlugin();
 
   const nodeEnv = process.env.NODE_ENV as NodeEnv;
 

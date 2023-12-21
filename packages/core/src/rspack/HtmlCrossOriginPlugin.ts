@@ -1,6 +1,6 @@
 import type { CrossOrigin } from '@rsbuild/shared';
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
-import { getHtmlPlugin } from '../provider/htmlPluginUtil';
+import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
 type CrossOriginOptions = {
   crossOrigin: CrossOrigin;
@@ -29,7 +29,7 @@ export class HtmlCrossOriginPlugin implements RspackPluginInstance {
     }
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
-      getHtmlPlugin()
+      getHTMLPlugin()
         // @ts-expect-error compilation type mismatch
         .getHooks(compilation)
         .alterAssetTags.tap(this.name, (alterAssetTags) => {

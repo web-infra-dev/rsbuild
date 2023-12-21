@@ -8,4 +8,4 @@ export { initRsbuildConfig } from './core/initConfigs';
 export { getPluginAPI } from './core/initPlugins';
 export { applyBaseCSSRule, applyCSSModuleRule } from './plugins/css';
 export type { Context } from '../types';
-export { setHtmlPlugin, getHtmlPlugin } from './htmlPluginUtil';
+export { setHTMLPlugin, getHTMLPlugin } from './htmlPluginUtil';

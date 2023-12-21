@@ -1,6 +1,6 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
-import { getHtmlPlugin } from '../provider/htmlPluginUtil';
+import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
 export type HtmlInfo = {
   favicon?: string;
@@ -57,7 +57,7 @@ export class HtmlBasicPlugin {
     };
 
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
-      getHtmlPlugin()
+      getHTMLPlugin()
         // @ts-expect-error compilation type mismatch
         .getHooks(compilation)
         .alterAssetTagGroups.tap(this.name, (data) => {

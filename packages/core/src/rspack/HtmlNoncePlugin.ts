@@ -1,5 +1,5 @@
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
-import { getHtmlPlugin } from '../provider/htmlPluginUtil';
+import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
 type NonceOptions = {
   nonce: string;
@@ -22,7 +22,7 @@ export class HtmlNoncePlugin implements RspackPluginInstance {
     }
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
-      getHtmlPlugin()
+      getHTMLPlugin()
         // @ts-expect-error compilation type mismatch
         .getHooks(compilation)
         .alterAssetTags.tap(this.name, (alterAssetTags) => {
