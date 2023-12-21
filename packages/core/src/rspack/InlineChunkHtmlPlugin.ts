@@ -14,8 +14,8 @@ import {
   type InlineChunkTest,
 } from '@rsbuild/shared';
 import type { Compiler, Compilation } from '@rspack/core';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
+import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
 export type InlineChunkHtmlPluginOptions = {
   styleTests: InlineChunkTest[];
@@ -224,7 +224,7 @@ export class InlineChunkHtmlPlugin {
         this.getInlinedTag(publicPath, tag, compilation);
 
       // @ts-expect-error compilation type mismatch
-      const hooks = HtmlWebpackPlugin.getHooks(compilation);
+      const hooks = getHTMLPlugin().getHooks(compilation);
 
       hooks.alterAssetTagGroups.tap(this.name, (assets) => {
         assets.headTags = assets.headTags.map(tagFunction);

@@ -16,7 +16,7 @@
  */
 
 import type { Compiler, RspackPluginInstance, Compilation } from '@rspack/core';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import {
   upperFirst,
   withPublicPath,
@@ -30,6 +30,7 @@ import {
   type BeforeAssetTagGenerationHtmlPluginData,
   type As,
 } from './helpers';
+import { getHTMLPlugin } from '../../provider/htmlPluginUtil';
 
 const defaultOptions = {
   type: 'async-chunks' as const,
@@ -189,38 +190,42 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
 
   apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(this.constructor.name, (compilation) => {
-      // @ts-expect-error compilation type mismatch
-      HtmlWebpackPlugin.getHooks(compilation).beforeAssetTagGeneration.tap(
-        `HTML${upperFirst(this.type)}Plugin`,
-        (htmlPluginData) => {
-          this.resourceHints = generateLinks(
-            this.options,
-            this.type,
-            compilation,
-            htmlPluginData,
-            this.HTMLCount,
-          );
+      getHTMLPlugin()
+        // @ts-expect-error compilation type mismatch
+        .getHooks(compilation)
+        .beforeAssetTagGeneration.tap(
+          `HTML${upperFirst(this.type)}Plugin`,
+          (htmlPluginData) => {
+            this.resourceHints = generateLinks(
+              this.options,
+              this.type,
+              compilation,
+              htmlPluginData,
+              this.HTMLCount,
+            );
 
-          return htmlPluginData;
-        },
-      );
+            return htmlPluginData;
+          },
+        );
 
-      // @ts-expect-error compilation type mismatch
-      HtmlWebpackPlugin.getHooks(compilation).alterAssetTags.tap(
-        `HTML${upperFirst(this.type)}Plugin`,
-        (htmlPluginData) => {
-          if (this.resourceHints) {
-            htmlPluginData.assetTags.styles = [
-              ...filterResourceHints(
-                this.resourceHints,
-                htmlPluginData.assetTags.scripts,
-              ),
-              ...htmlPluginData.assetTags.styles,
-            ];
-          }
-          return htmlPluginData;
-        },
-      );
+      getHTMLPlugin()
+        // @ts-expect-error compilation type mismatch
+        .getHooks(compilation)
+        .alterAssetTags.tap(
+          `HTML${upperFirst(this.type)}Plugin`,
+          (htmlPluginData) => {
+            if (this.resourceHints) {
+              htmlPluginData.assetTags.styles = [
+                ...filterResourceHints(
+                  this.resourceHints,
+                  htmlPluginData.assetTags.scripts,
+                ),
+                ...htmlPluginData.assetTags.styles,
+              ];
+            }
+            return htmlPluginData;
+          },
+        );
     });
   }
 }

@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { posix, basename } from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
 import WebpackSources from '@rsbuild/shared/webpack-sources';
 import {
@@ -8,6 +7,7 @@ import {
   getPublicPathFromCompiler,
   COMPILATION_PROCESS_STAGE,
 } from '@rsbuild/shared';
+import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
 type AppIconOptions = {
   distDir: string;
@@ -38,10 +38,10 @@ export class HtmlAppIconPlugin {
 
     // add html asset tags
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
-      // @ts-expect-error compilation type mismatch
-      HtmlWebpackPlugin.getHooks(compilation).alterAssetTagGroups.tap(
-        this.name,
-        (data) => {
+      getHTMLPlugin()
+        // @ts-expect-error compilation type mismatch
+        .getHooks(compilation)
+        .alterAssetTagGroups.tap(this.name, (data) => {
           const publicPath = getPublicPathFromCompiler(compiler);
 
           data.headTags.unshift({
@@ -56,8 +56,7 @@ export class HtmlAppIconPlugin {
           });
 
           return data;
-        },
-      );
+        });
     });
 
     // copy icon to dist
