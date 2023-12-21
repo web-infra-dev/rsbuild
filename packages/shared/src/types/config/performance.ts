@@ -144,7 +144,6 @@ export interface BaseSplitRules {
 }
 
 export interface BaseChunkSplit extends BaseSplitRules {
-  /** todo: split-by-module not support in Rspack */
   strategy:
     | 'split-by-module'
     | 'split-by-experience'

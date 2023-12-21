@@ -1,8 +1,9 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { pluginSplitChunks } from '@src/plugins/splitChunks';
+import type { RsbuildConfig } from '@rsbuild/shared';
 
 describe('plugin-split-chunks', () => {
-  const cases = [
+  const cases: Array<{ name: string; rsbuildConfig: RsbuildConfig }> = [
     {
       name: 'should set split-by-experience config',
       rsbuildConfig: {
@@ -29,20 +30,19 @@ describe('plugin-split-chunks', () => {
         },
       },
     },
-    // not support in rspack mode
-    // {
-    //   name: 'should set split-by-module config',
-    //   rsbuildConfig: {
-    //     performance: {
-    //       chunkSplit: {
-    //         strategy: 'split-by-module',
-    //       },
-    //     },
-    //     output: {
-    //       polyfill: 'entry',
-    //     },
-    //   },
-    // },
+    {
+      name: 'should set split-by-module config',
+      rsbuildConfig: {
+        performance: {
+          chunkSplit: {
+            strategy: 'split-by-module',
+          },
+        },
+        output: {
+          polyfill: 'entry',
+        },
+      },
+    },
     {
       name: 'should set single-vendor config',
       rsbuildConfig: {

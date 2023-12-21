@@ -144,3 +144,23 @@ exports[`plugin-split-chunks > 'should set split-by-experience config' 1`] = `
   },
 }
 `;
+
+exports[`plugin-split-chunks > 'should set split-by-module config' 1`] = `
+{
+  "optimization": {
+    "splitChunks": {
+      "cacheGroups": {
+        "vendors": {
+          "name": [Function],
+          "priority": -10,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+        },
+      },
+      "chunks": "all",
+      "enforceSizeThreshold": 50000,
+      "maxInitialRequests": Infinity,
+      "minSize": 0,
+    },
+  },
+}
+`;

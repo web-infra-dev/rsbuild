@@ -57,7 +57,7 @@ export function getPackageNameFromModulePath(modulePath: string) {
   const handleModuleContext = modulePath?.match(MODULE_PATH_REGEX);
 
   if (!handleModuleContext) {
-    return false;
+    return undefined;
   }
 
   const [, , scope, name] = handleModuleContext;
