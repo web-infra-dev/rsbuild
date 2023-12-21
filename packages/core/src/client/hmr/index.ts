@@ -173,7 +173,7 @@ function tryApplyUpdates() {
   }
 }
 
-const MAX_RETRIES = 20;
+const MAX_RETRIES = 100;
 let connection: WebSocket | null = null;
 let retry_counter = 0;
 
