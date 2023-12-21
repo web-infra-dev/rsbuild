@@ -5,7 +5,17 @@ import type { VueLoaderOptions } from 'vue-loader';
 import { applySplitChunksRule } from './splitChunks';
 
 export type SplitVueChunkOptions = {
+  /**
+   * Enables split chunking for Vue-related dependencies (e.g., vue, vue-loader).
+   *
+   * @default true
+   */
   vue?: boolean;
+  /**
+   * Enables split chunking for vue-router.
+   *
+   * @default true
+   */
   router?: boolean;
 };
 
