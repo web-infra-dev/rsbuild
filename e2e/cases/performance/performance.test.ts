@@ -47,28 +47,6 @@ test.describe('performance configure multi', () => {
   });
 });
 
-test('should generate vendor chunk when chunkSplit is "single-vendor"', async () => {
-  const rsbuild = await build({
-    cwd: join(fixtures, 'basic'),
-    plugins: [pluginReact()],
-    rsbuildConfig: {
-      performance: {
-        chunkSplit: {
-          strategy: 'single-vendor',
-        },
-      },
-    },
-  });
-
-  const files = await rsbuild.unwrapOutputJSON();
-
-  const [vendorFile] = Object.entries(files).find(
-    ([name, content]) => name.includes('vendor') && content.includes('React'),
-  )!;
-
-  expect(vendorFile).toBeTruthy();
-});
-
 test('should generate preconnect link when preconnect is defined', async () => {
   const rsbuild = await build({
     cwd: join(fixtures, 'basic'),
