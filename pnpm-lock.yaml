@@ -580,8 +580,8 @@ importers:
         specifier: ^11.1.0
         version: 11.1.0
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.5.7
-        version: /html-rspack-plugin@5.5.7
+        specifier: npm:html-rspack-plugin@5.6.0
+        version: /html-rspack-plugin@5.6.0
       mini-css-extract-plugin:
         specifier: 2.7.6
         version: 2.7.6(webpack@5.89.0)
@@ -626,8 +626,8 @@ importers:
         specifier: ~3.32.2
         version: 3.32.2
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.5.7
-        version: /html-rspack-plugin@5.5.7
+        specifier: npm:html-rspack-plugin@5.6.0
+        version: /html-rspack-plugin@5.6.0
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -934,8 +934,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.4
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.5.7
-        version: /html-rspack-plugin@5.5.7
+        specifier: npm:html-rspack-plugin@5.6.0
+        version: /html-rspack-plugin@5.6.0
       terser:
         specifier: 5.19.2
         version: 5.19.2
@@ -1140,8 +1140,8 @@ importers:
         specifier: workspace:*
         version: link:../test-helper
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.5.7
-        version: /html-rspack-plugin@5.5.7
+        specifier: npm:html-rspack-plugin@5.6.0
+        version: /html-rspack-plugin@5.6.0
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
@@ -1441,8 +1441,8 @@ importers:
         specifier: 16.x
         version: 16.18.59
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.5.7
-        version: /html-rspack-plugin@5.5.7
+        specifier: npm:html-rspack-plugin@5.6.0
+        version: /html-rspack-plugin@5.6.0
       mini-css-extract-plugin:
         specifier: 2.7.6
         version: 2.7.6(webpack@5.89.0)
@@ -8708,8 +8708,8 @@ packages:
     resolution: {integrity: sha512-igBTJcNNNhvZFRtm8uA6xMY6xYleeDwn3PeBCkDz7tHttv4F2hsDI2aPgNERWzvRcNYHNT3ymRaQzllmXj4YsQ==}
     dev: true
 
-  /html-rspack-plugin@5.5.7:
-    resolution: {integrity: sha512-7dNAURj9XBHWoYg59F8VU6hT7J7w+od4Lr5hc/rrgN6sy6QfqVpoPqW9Qw4IGFOgit8Pul7iQp1yysBSIhOlsg==}
+  /html-rspack-plugin@5.6.0:
+    resolution: {integrity: sha512-4jrAQEEt9JCcGbeP7dFV1d42RF6IA9nYWoqK5i+rncdPPMz6eVHt1scPy9722brams7/SndzJhoIxN0Hw7T4ZA==}
     engines: {node: '>=10.13.0'}
     dependencies:
       lodash: 4.17.21
