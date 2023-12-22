@@ -2,9 +2,36 @@
 
 Rsbuild comes with a lightweight CLI that includes commands such as `dev` and `build`.
 
-## Commands
+---
 
-### rsbuild dev
+## rsbuild -h
+
+To view all available CLI commands, run the following command in the project directory:
+
+```bash
+npx rsbuild -h
+```
+
+输出如下所示：
+
+```text
+Usage: rsbuild <command> [options]
+
+Options:
+  -V, --version      output the version number
+  -h, --help         display help for command
+
+Commands:
+  dev [options]      starting the dev server
+  build [options]    build the app for production
+  preview [options]  preview the production build locally
+  inspect [options]  inspect the Rspack and Rsbuild configs
+  help [command]     display help for command
+```
+
+---
+
+## rsbuild dev
 
 The `rsbuild dev` command is used to start a local development server and compile the source code in the development environment.
 
@@ -19,7 +46,9 @@ Options:
   -h, --help            display help for command
 ```
 
-### rsbuild build
+---
+
+## rsbuild build
 
 The `rsbuild build` command will build the outputs for production in the `dist/` directory by default.
 
@@ -32,7 +61,9 @@ Options:
   -h, --help            display help for command
 ```
 
-### rsbuild preview
+---
+
+## rsbuild preview
 
 The `rsbuild preview` command is used to preview the production build outputs locally. Note that you need to execute the `rsbuild build` command beforehand to generate the corresponding outputs.
 
@@ -48,6 +79,8 @@ Options:
   -c --config <config>  specify the configuration file, can be a relative or absolute path
   -h, --help            display help for command
 ```
+
+---
 
 ## rsbuild inspect
 
