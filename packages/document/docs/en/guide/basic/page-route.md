@@ -2,7 +2,7 @@
 
 This chapter will introduces how to access pages during local development and preview.
 
-### Default
+## Default
 
 Rsbuild Server will generate the corresponding page route based on the [source.entry](/config/source/entry) configuration.
 
@@ -19,7 +19,7 @@ export default {
 };
 ```
 
-### Default fallback logic
+## Default fallback logic
 
 By default, when the request meets the following conditions and the corresponding resource is not found, it will fallback to `index.html`:
 
@@ -34,7 +34,7 @@ export default {
 };
 ```
 
-#### Custom fallback logic
+### Custom fallback logic
 
 When Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration cannot meet your needs, for example, if you want to be able to access `main.html` when accessing `/`, you can set it up using [server.historyApiFallback] (/config/server/history-api-fallback).
 
@@ -54,7 +54,7 @@ export default {
 };
 ```
 
-### The HTML file output path and Route
+## HTML file output path and Route
 
 Normally, `/` points to the dist root directory, and the HTML file is output to the dist root directory. At this time, the corresponding HTML page can be accessed through `/xxx`.
 
