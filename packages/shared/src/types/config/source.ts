@@ -1,5 +1,6 @@
 import type { RsbuildEntry } from '../rsbuild';
 import type { ChainedConfig } from '../utils';
+import type { RuleSetCondition } from '@rspack/core';
 
 export type Alias = Record<string, string | false | (string | false)[]>;
 
@@ -24,7 +25,7 @@ export interface SourceConfig {
    * In order to maintain faster compilation speed, Rsbuild will not compile files under node_modules through
    * `babel-loader` or `ts-loader` by default, as will as the files outside the current project directory.
    */
-  include?: (string | RegExp)[];
+  include?: RuleSetCondition[];
   /**
    * Set the entry modules.
    */
@@ -32,7 +33,7 @@ export interface SourceConfig {
   /**
    * Specifies that certain files that will be excluded from compilation.
    */
-  exclude?: (string | RegExp)[];
+  exclude?: RuleSetCondition[];
   /**
    * Add a script before the entry file of each page.
    * This script will be executed before the page code.
