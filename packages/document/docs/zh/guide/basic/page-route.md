@@ -2,7 +2,7 @@
 
 本章节介绍了如何在本地开发和预览时进行页面访问。
 
-### 默认情况
+## 默认情况
 
 Rsbuild Server 会根据 [source.entry](/config/source/entry) 配置生成对应的页面路由。
 
@@ -19,7 +19,7 @@ export default {
 };
 ```
 
-### 默认 Fallback 逻辑
+## 默认 Fallback 逻辑
 
 当请求满足以下条件且未找到对应资源时，会被 `server.htmlFallback` 处理，默认会回退到 index.html。
 
@@ -34,7 +34,7 @@ export default {
 };
 ```
 
-#### 自定义 Fallback 逻辑
+### 自定义 Fallback 逻辑
 
 当 Rsbuild 默认的 [server.htmlFallback](/config/server/html-fallback) 配置无法满足你的需求，例如，希望在访问 `/` 时可以访问 `main.html`，可通过 [server.historyApiFallback](/config/server/history-api-fallback) 进行设置。
 
@@ -54,7 +54,7 @@ export default {
 };
 ```
 
-### HTML 文件输出位置与路由的关系
+## HTML 文件输出位置与路由的关系
 
 通常情况下，`/` 指向 dist 产物根目录， 而 HTML 文件输出到 dist 根目录下，此时可通过 `/xxx` 访问对应的 HTML 页面。
 

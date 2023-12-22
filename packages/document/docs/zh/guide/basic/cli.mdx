@@ -2,9 +2,36 @@
 
 Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令。
 
-## 命令
+---
 
-### rsbuild dev
+## rsbuild -h
+
+如果你需要查看所有可用的 CLI 命令，请在项目目录中运行以下命令：
+
+```bash
+npx rsbuild -h
+```
+
+The output is as follows:
+
+```text
+Usage: rsbuild <command> [options]
+
+Options:
+  -V, --version      output the version number
+  -h, --help         display help for command
+
+Commands:
+  dev [options]      starting the dev server
+  build [options]    build the app for production
+  preview [options]  preview the production build locally
+  inspect [options]  inspect the Rspack and Rsbuild configs
+  help [command]     display help for command
+```
+
+---
+
+## rsbuild dev
 
 `rsbuild dev` 命令用于启动一个本地开发服务器，对源代码进行开发环境编译。
 
@@ -19,7 +46,9 @@ Options:
   -h, --help            显示命令帮助
 ```
 
-### rsbuild build
+---
+
+## rsbuild build
 
 `rsbuild build` 命令默认会在 `dist/` 目录下构建出可用于生产环境的产物。
 
@@ -32,7 +61,9 @@ Options:
   -h, --help            显示命令帮助
 ```
 
-### rsbuild preview
+---
+
+## rsbuild preview
 
 `rsbuild preview` 命令用于在本地预览生产环境构建的产物, 注意你需要提前执行 `rsbuild build` 命令构建出对应产物。
 
@@ -48,6 +79,8 @@ Options:
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
   -h, --help            显示命令帮助
 ```
+
+---
 
 ## rsbuild inspect
 
