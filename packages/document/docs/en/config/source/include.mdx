@@ -107,16 +107,26 @@ If you match a module that is symlinked to the current project, then you need to
 
 For example, if you symlink the `packages/foo` path in Monorepo to the `node_modules/foo` path of the current project, you need to match the `packages/foo` path, not the `node_modules/foo` path.
 
-### Precautions
+### Notes
 
-Note that `source.include` should not be used to compile the entire `node_modules` directory. For example, the following usage is wrong:
+In general, `source.include` should not be used to compile the entire `node_modules` directory. For example, the following configuration is not recommended:
 
 ```ts
 export default {
   source: {
-    include: [/\/node_modules\//],
+    include: [/[\\/]node_modules[\\/]/],
   },
 };
 ```
 
-If you compile the entire `node_modules`, not only will the build time be greatly increased, but also unexpected errors may occur. Because most of the npm packages in `node_modules` are already compiled, there is usually no need for a second compilation. In addition, exceptions may occur after npm packages such as `core-js` are compiled.
+This is because most of the npm packages in `node_modules` are already compiled, and it is usually unnecessary to recompile them. Compiling the entire `node_modules` will increase compilation time and may cause unexpected errors in certain npm packages, such as `core-js`, which may result in runtime exceptions after compilation.
+
+If you are willing to accept the increase in compilation time, you can use the following configuration to compile all JavaScript files but exclude `core-js':
+
+```ts
+export default {
+  source: {
+    include: [{ not: /[\\/]core-js[\\/]/ }],
+  },
+};
+```
