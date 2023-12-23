@@ -107,7 +107,7 @@ If you match a module that is symlinked to the current project, then you need to
 
 For example, if you symlink the `packages/foo` path in Monorepo to the `node_modules/foo` path of the current project, you need to match the `packages/foo` path, not the `node_modules/foo` path.
 
-### Notes
+### Compile node_modules
 
 In general, `source.include` should not be used to compile the entire `node_modules` directory. For example, the following configuration is not recommended:
 
