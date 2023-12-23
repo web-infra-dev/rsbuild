@@ -109,7 +109,7 @@ export default {
 
 ### 注意事项
 
-注意，`source.include` 不应该被用于编译整个 `node_modules` 目录，比如下面的写法是错误的：
+通常来说，`source.include` 不应该用于编译整个 `node_modules` 目录，比如下面的写法是不推荐的：
 
 ```ts
 export default {
@@ -119,4 +119,14 @@ export default {
 };
 ```
 
-如果你对整个 `node_modules` 进行编译，不仅会使编译时间大幅度增加，并且可能会产生不可预期的错误。因为 `node_modules` 中的大部分 npm 包发布的已经是编译后的产物，通常没必要经过二次编译。此外，`core-js` 等 npm 包被编译后可能会出现异常。
+这是因为 `node_modules` 中的大部分 npm 包发布的已经是编译后的产物，通常没必要经过二次编译。如果你对整个 `node_modules` 进行编译，会使编译时间增加，并且个别的 npm 包可能会产生不可预期的错误，比如 `core-js` 被编译后会出现运行时异常。
+
+如果你可以接受编译时间的增加，可以通过下面的配置来编译所有 JavaScript 文件，但是需要排除 `core-js`：
+
+```ts
+export default {
+  source: {
+    include: [{ not: /[\\/]core-js[\\/]/ }],
+  },
+};
+```
