@@ -50,3 +50,9 @@ export default {
   },
 };
 ```
+
+## hot-update files
+
+During the HMR process, the page will make GET requests to get hot-update files, including `*.hot-update.json` and `*.hot-update.js`. These files contain the necessary information for hot updates, such as the updated modules and their code.
+
+Hot-update files are considered to be static assets. If you need to configure the URL for hot-update files, please use the [dev.assetPrefix](/config/dev/asset-prefix) option.
