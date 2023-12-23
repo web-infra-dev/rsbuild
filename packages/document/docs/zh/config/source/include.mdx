@@ -107,7 +107,7 @@ export default {
 
 比如，你将 Monorepo 中的 `packages/foo` 路径 symlink 到当前项目的 `node_modules/foo` 路径下，则需要去匹配 `packages/foo` 路径，而不是 `node_modules/foo` 路径。
 
-### 注意事项
+### 编译 node_modules
 
 通常来说，`source.include` 不应该用于编译整个 `node_modules` 目录，比如下面的写法是不推荐的：
 

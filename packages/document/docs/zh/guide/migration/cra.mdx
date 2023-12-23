@@ -70,6 +70,12 @@ const App = () => (
 
 请参考 [SVGR 插件](/plugins/list/plugin-svgr) 文档了解如何在 Rsbuild 中使用 SVGR。
 
+## 编译 node_modules
+
+CRA 默认会使用 Babel 编译 node_modules 中的依赖，但 Rsbuild 则不会，这是为了避免二次编译带来的性能损耗和潜在的编译错误。
+
+如果你需要处理 node_modules 中依赖引起的语法兼容性问题，可以使用 [source.include](/config/source/include#编译-node_modules) 配置项来编译 node_modules。
+
 ## 内容补充
 
 当前文档只涵盖了迁移过程的部分事项，如果你发现有合适的内容可以补充，欢迎通过 pull request 来完善文档 🤝。

@@ -70,6 +70,12 @@ const App = () => (
 
 Please refer to the [SVGR plugin](/plugins/list/plugin-svgr) documentation to learn how to use SVGR in Rsbuild.
 
+## Compile node_modules
+
+By default, CRA uses Babel to compile dependencies in node_modules, but Rsbuild does not, to avoid the performance overhead and potential compilation errors caused by secondary compilation.
+
+If you need to handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](/config/source/include#compile-node_modules) configuration option to compile node_modules.
+
 ## Contents Supplement
 
 The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
