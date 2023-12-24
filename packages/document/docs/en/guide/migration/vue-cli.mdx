@@ -91,6 +91,24 @@ Notes:
 - When migrating `configureWebpack`, note that most of the Webpack and Rsbuild configs are the same, but there are also some differences or functionalities not implemented in Rsbuild.
 - The above table does not cover all configurations of Vue CLI, feel free to add more.
 
+## Environment Variables
+
+Vue CLI injects environment variables starting with `VUE_APP_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
+
+To be compatible with Vue CLI's behavior, you can manually call Rsbuild's [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables starting with `VUE_APP_`, and inject them into the client code through the [source.define](/config/source/define) config.
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, loadEnv } from '@rsbuild/core';
+
+const { publicVars } = loadEnv({ prefixes: ['VUE_APP_'] });
+
+export default defineConfig({
+  source: {
+    define: publicVars,
+  },
+});
+```
+
 ## Contents Supplement
 
 The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.

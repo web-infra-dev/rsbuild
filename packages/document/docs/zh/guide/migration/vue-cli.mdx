@@ -93,6 +93,24 @@ export default defineConfig({
 - 在迁移 configureWebpack 时，注意大部分 Webpack 和 Rspack 配置是相同的，但也存在一些差异或 Rspack 未实现的功能。
 - 上述表格尚未覆盖到 Vue CLI 的所有配置，欢迎补充。
 
+## 环境变量
+
+Vue CLI 默认会将 `VUE_APP_` 开头的环境变量注入到 client 代码中，而 Rsbuild 默认会注入 `PUBLIC_` 开头的环境变量（参考 [public 变量](/guide/advanced/env-vars#public-变量)）。
+
+为了兼容 Vue CLI 的行为，你可以手动调用 Rsbuild 提供的 [loadEnv](/api/javascript-api/core#loadenv) 方法来读取 `REACT_APP_` 开头的环境变量，并通过 [source.define](/config/source/define) 配置项注入到 client 代码中。
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, loadEnv } from '@rsbuild/core';
+
+const { publicVars } = loadEnv({ prefixes: ['VUE_APP_'] });
+
+export default defineConfig({
+  source: {
+    define: publicVars,
+  },
+});
+```
+
 ## 内容补充
 
 当前文档只涵盖了迁移过程的部分事项，如果你发现有合适的内容可以补充，欢迎通过 pull request 来完善文档 🤝。
