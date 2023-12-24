@@ -1,5 +1,12 @@
 # @rsbuild/core
 
+## 0.2.9
+
+### Patch Changes
+
+- d02ce710: feat: support split-by-module with rspack
+  - @rsbuild/shared@0.2.9
+
 ## 0.2.8
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @rsbuild/plugin-swc
 
+## 0.2.9
+
+### Patch Changes
+
+- @rsbuild/plugin-react@0.2.9
+- @rsbuild/shared@0.2.9
+
 ## 0.2.8
 
 ### Patch Changes

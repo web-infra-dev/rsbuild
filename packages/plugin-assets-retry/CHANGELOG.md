@@ -1,5 +1,11 @@
 # @rsbuild/plugin-assets-retry
 
+## 0.2.9
+
+### Patch Changes
+
+- @rsbuild/shared@0.2.9
+
 ## 0.2.8
 
 ### Patch Changes
