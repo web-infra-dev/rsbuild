@@ -74,7 +74,25 @@ Please refer to the [SVGR plugin](/plugins/list/plugin-svgr) documentation to le
 
 By default, CRA uses Babel to compile dependencies in node_modules, but Rsbuild does not, to avoid the performance overhead and potential compilation errors caused by secondary compilation.
 
-If you need to handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](/config/source/include#compile-node_modules) configuration option to compile node_modules.
+If you need to handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](
+
+## Environment Variables
+
+CRA injects environment variables starting with `REACT_APP_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
+
+To be compatible with CRA's behavior, you can manually call Rsbuild's [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables starting with `REACT_APP_`, and inject them into the client code through the [source.define](/config/source/define) config.
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, loadEnv } from '@rsbuild/core';
+
+const { publicVars } = loadEnv({ prefixes: ['REACT_APP_'] });
+
+export default defineConfig({
+  source: {
+    define: publicVars,
+  },
+});
+```
 
 ## Contents Supplement
 
