@@ -41,7 +41,7 @@ export async function init({
 
   try {
     const root = process.cwd();
-    const { publicVars } = await loadEnv({ cwd: root });
+    const { publicVars } = loadEnv({ cwd: root });
     const config = await loadConfig({
       cwd: root,
       path: commonOpts.config,
