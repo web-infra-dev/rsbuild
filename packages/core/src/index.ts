@@ -4,6 +4,7 @@
  */
 
 // Core Methods
+export { loadEnv } from './loadEnv';
 export { createRsbuild } from './createRsbuild';
 export { loadConfig, defineConfig } from './cli/config';
 
