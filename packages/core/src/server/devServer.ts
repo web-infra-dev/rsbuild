@@ -20,7 +20,7 @@ import {
 } from '@rsbuild/shared';
 
 import connect from '@rsbuild/shared/connect';
-import { registerCleaner } from './restart';
+import { onBeforeRestartServer } from './restart';
 import type { Context } from '../types';
 import { createHttpServer } from './httpServer';
 import { getMiddlewares } from './getDevMiddlewares';
@@ -224,20 +224,18 @@ export async function startDevServer<
 
         await serverAPIs.afterStart();
 
-        const onClose = async () => {
+        const closeServer = async () => {
           await devMiddlewares.close();
           httpServer.close();
         };
 
-        registerCleaner(onClose);
+        onBeforeRestartServer(closeServer);
 
         resolve({
           port,
           urls: urls.map((item) => item.url),
           server: {
-            close: async () => {
-              await onClose();
-            },
+            close: closeServer,
           },
         });
       },

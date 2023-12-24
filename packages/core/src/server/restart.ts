@@ -4,12 +4,12 @@ import { init } from '../cli/commands';
 
 type Cleaner = () => Promise<unknown> | unknown;
 
-const cleaners: Cleaner[] = [];
+let cleaners: Cleaner[] = [];
 
 /**
  * Add a cleaner to handle side effects
  */
-export const registerCleaner = (cleaner: Cleaner) => {
+export const onBeforeRestartServer = (cleaner: Cleaner) => {
   cleaners.push(cleaner);
 };
 
@@ -27,6 +27,7 @@ export const restartDevServer = async ({ filePath }: { filePath: string }) => {
 
   for (const cleaner of cleaners) {
     await cleaner();
+    cleaners = [];
   }
 
   const rsbuild = await init({ isRestart: true });
