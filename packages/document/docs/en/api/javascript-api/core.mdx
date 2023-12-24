@@ -59,6 +59,8 @@ function loadConfig(params: {
 - **Example:**
 
 ```ts
+import { loadConfig } from '@rsbuild/core';
+
 const config = await loadConfig();
 
 console.log(config); // -> RsbuildConfig
@@ -87,9 +89,11 @@ function loadEnv(params: {
 - **Example:**
 
 ```ts
+import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
+
 const { parsed, publicVars } = loadEnv();
 
-mergeRsbuildConfig(
+const mergedConfig = mergeRsbuildConfig(
   {
     source: {
       define: publicVars,
