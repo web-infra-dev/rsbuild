@@ -76,18 +76,18 @@ function loadEnv(params: {
   cwd?: string;
   // Default is ['PUBLIC_']
   prefixes?: string[];
-}): Promise<{
+}): {
   // All environment variables in the .env file
   parsed: Record<string, string>;
   // Environment variables starting with the specified prefixes
   publicVars: Record<string, string>;
-}>;
+};
 ```
 
 - **Example:**
 
 ```ts
-const { parsed, publicVars } = await loadEnv();
+const { parsed, publicVars } = loadEnv();
 
 mergeRsbuildConfig(
   {
