@@ -70,6 +70,29 @@ const App = () => (
 
 Please refer to the [SVGR plugin](/plugins/list/plugin-svgr) documentation to learn how to use SVGR in Rsbuild.
 
+## Configuration Migration
+
+Here is the corresponding Rsbuild configuration for [CRA configuration](https://create-react-app.dev/docs/advanced-configuration/):
+
+| CRA                     | Rsbuild                                                                                         |
+| ----------------------- | ----------------------------------------------------------------------------------------------- |
+| HOST                    | [server.host](/config/server/host)                                                              |
+| PORT                    | [server.port](/config/server/port)                                                              |
+| HTTPS                   | [server.https](/config/server/https)                                                            |
+| WDS_SOCKET_HOST         | [dev.client.host](/config/dev/client)                                                           |
+| WDS_SOCKET_PATH         | [dev.client.path](/config/dev/client)                                                           |
+| WDS_SOCKET_PORT         | [dev.client.port](/config/dev/client)                                                           |
+| PUBLIC_URL              | [dev.assetPrefix](/config/dev/asset-prefix) / [output.assetPrefix](/config/output/asset-prefix) |
+| BUILD_PATH              | [output.distPath](/config/output/dist-path)                                                     |
+| GENERATE_SOURCEMAP      | [output.sourceMap](/config/output/source-map)                                                   |
+| IMAGE_INLINE_SIZE_LIMIT | [output.dataUriLimit](/config/output/data-uri-limit)                                            |
+| FAST_REFRESH            | [dev.hmr](/config/dev/hmr)                                                                      |
+| TSC_COMPILE_ON_ERROR    | [Type Check Plugin](/plugins/list/plugin-type-check)                                            |
+
+Notes:
+
+- The above table does not cover all configurations of CRA, feel free to add more.
+
 ## Compile node_modules
 
 By default, CRA uses Babel to compile dependencies in node_modules, but Rsbuild does not, to avoid the performance overhead and potential compilation errors caused by secondary compilation.

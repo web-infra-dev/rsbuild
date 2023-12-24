@@ -70,6 +70,29 @@ const App = () => (
 
 请参考 [SVGR 插件](/plugins/list/plugin-svgr) 文档了解如何在 Rsbuild 中使用 SVGR。
 
+## 配置迁移
+
+以下是 [CRA 配置](https://create-react-app.dev/docs/advanced-configuration/)对应的 Rsbuild 配置：
+
+| CRA                     | Rsbuild                                                                                         |
+| ----------------------- | ----------------------------------------------------------------------------------------------- |
+| HOST                    | [server.host](/config/server/host)                                                              |
+| PORT                    | [server.port](/config/server/port)                                                              |
+| HTTPS                   | [server.https](/config/server/https)                                                            |
+| WDS_SOCKET_HOST         | [dev.client.host](/config/dev/client)                                                           |
+| WDS_SOCKET_PATH         | [dev.client.path](/config/dev/client)                                                           |
+| WDS_SOCKET_PORT         | [dev.client.port](/config/dev/client)                                                           |
+| PUBLIC_URL              | [dev.assetPrefix](/config/dev/asset-prefix) / [output.assetPrefix](/config/output/asset-prefix) |
+| BUILD_PATH              | [output.distPath](/config/output/dist-path)                                                     |
+| GENERATE_SOURCEMAP      | [output.sourceMap](/config/output/source-map)                                                   |
+| IMAGE_INLINE_SIZE_LIMIT | [output.dataUriLimit](/config/output/data-uri-limit)                                            |
+| FAST_REFRESH            | [dev.hmr](/config/dev/hmr)                                                                      |
+| TSC_COMPILE_ON_ERROR    | [Type Check Plugin](/plugins/list/plugin-type-check)                                            |
+
+说明：
+
+- 上述表格尚未覆盖到 CRA 的所有配置，欢迎补充。
+
 ## 编译 node_modules
 
 CRA 默认会使用 Babel 编译 node_modules 中的依赖，但 Rsbuild 则不会，这是为了避免二次编译带来的性能损耗和潜在的编译错误。
