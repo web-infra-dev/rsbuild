@@ -1,13 +1,12 @@
 import fs from 'fs';
 import { join } from 'path';
-import { isFileSync } from '@rsbuild/shared';
+import { isDev, isFileSync } from '@rsbuild/shared';
+import { onBeforeRestartServer } from './server/restart';
 
 export const getEnvFiles = () => {
   const { NODE_ENV } = process.env;
   return ['.env', '.env.local', `.env.${NODE_ENV}`, `.env.${NODE_ENV}.local`];
 };
-
-let lastParsed: Record<string, string>;
 
 export async function loadEnv({
   cwd = process.cwd(),
@@ -25,15 +24,6 @@ export async function loadEnv({
     Object.assign(parsed, parse(fs.readFileSync(envPath)));
   });
 
-  // clear the assigned env vars for reloading
-  if (lastParsed) {
-    Object.keys(lastParsed).forEach((key) => {
-      if (process.env[key] === lastParsed[key]) {
-        delete process.env[key];
-      }
-    });
-  }
-
   expand({ parsed });
 
   const publicVars: Record<string, string> = {};
@@ -45,7 +35,16 @@ export async function loadEnv({
     }
   });
 
-  lastParsed = parsed;
+  // clear the assigned env vars before restarting dev server
+  if (isDev()) {
+    onBeforeRestartServer(() => {
+      Object.keys(parsed).forEach((key) => {
+        if (process.env[key] === parsed[key]) {
+          delete process.env[key];
+        }
+      });
+    });
+  }
 
   return {
     parsed,
