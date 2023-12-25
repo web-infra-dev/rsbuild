@@ -26,36 +26,6 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
     "options": {},
   },
   HtmlWebpackPlugin {
-    "options": {
-      "base": false,
-      "cache": true,
-      "chunks": [
-        "index",
-      ],
-      "chunksSortMode": "auto",
-      "compile": true,
-      "entryName": "index",
-      "excludeChunks": [],
-      "favicon": false,
-      "filename": "index.html",
-      "hash": false,
-      "inject": "head",
-      "meta": {
-        "charset": {
-          "charset": "UTF-8",
-        },
-        "viewport": "width=device-width, initial-scale=1.0",
-      },
-      "minify": false,
-      "publicPath": "auto",
-      "scriptLoading": "defer",
-      "showErrors": true,
-      "template": "<ROOT>/packages/core/static/template.html",
-      "templateContent": false,
-      "templateParameters": [Function],
-      "title": "Rsbuild App",
-      "xhtml": false,
-    },
     "userOptions": {
       "chunks": [
         "index",

@@ -35,7 +35,7 @@
     "@rsbuild/shared": "workspace:*",
     "fast-glob": "^3.3.1",
     "globby": "^11.1.0",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.6.0",
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
     "mini-css-extract-plugin": "2.7.6",
     "postcss": "8.4.31",
     "style-loader": "3.3.3",
