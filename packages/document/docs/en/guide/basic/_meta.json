@@ -1,7 +1,7 @@
 [
   "cli",
   "config",
-  "page-route",
+  "server",
   "output-files",
   "css-usage",
   "static-assets",

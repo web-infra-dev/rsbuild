@@ -1,8 +1,12 @@
-# Page Route
+# Server
 
-This chapter will introduces how to access pages during local development and preview.
+Rsbuild comes with a built-in dev server designed to improve the development experience. When you run the `rsbuild dev` or `rsbuild preview` commands, the server will start, providing features such as page preview, routing, and hot module reloading.
 
-## Default
+## Page Routing
+
+Rsbuild Server offers a set of default routing convention, and allows users to customize it through configurations.
+
+### Default Behavior
 
 Rsbuild Server will generate the corresponding page route based on the [source.entry](/config/source/entry) configuration.
 
@@ -19,7 +23,7 @@ export default {
 };
 ```
 
-## Default fallback logic
+### Fallback Behavior
 
 By default, when the request meets the following conditions and the corresponding resource is not found, it will fallback to `index.html`:
 
@@ -34,9 +38,9 @@ export default {
 };
 ```
 
-### Custom fallback logic
+### Custom Fallback Behavior
 
-When Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration cannot meet your needs, for example, if you want to be able to access `main.html` when accessing `/`, you can set it up using [server.historyApiFallback] (/config/server/history-api-fallback).
+When Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration cannot meet your needs, for example, if you want to be able to access `main.html` when accessing `/`, you can set it up using [server.historyApiFallback](/config/server/history-api-fallback).
 
 ```ts title=rsbuild.config.ts
 export default {
@@ -54,7 +58,7 @@ export default {
 };
 ```
 
-## HTML file output path and Route
+### HTML Output Path
 
 Normally, `/` points to the dist root directory, and the HTML file is output to the dist root directory. At this time, the corresponding HTML page can be accessed through `/xxx`.
 
@@ -62,7 +66,7 @@ If you output HTML files to other subdirectories by modifying [output.distPath.h
 
 For example, if you set the HTML file to be output to the `HTML` directory, index.html will be accessed through `/html/`, and foo.html will be accessed through `/html/foo`.
 
-```
+```ts
 export default {
   source: {
     entry: {
@@ -77,3 +81,15 @@ export default {
   },
 };
 ```
+
+## Comparing Rspack Dev Server
+
+Rsbuild dev server and the dev server of Rspack CLI (`@rspack/dev-server`) share some similarities and differences:
+
+- Both are based on [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware).
+- They have different configs, with Rsbuild offering a richer set of configurations.
+- The log format of Rspack CLI aligns with Webpack CLI, while the logs of Rsbuild are clearer and more readable.
+
+:::tip
+Rsbuild applications cannot use Rspack's [devServer](https://rspack.dev/config/dev-server) config. You can configure the behavior of the server through Rsbuild's `dev` and `server` configs, see [Config Overview](/config/index) for details.
+:::
