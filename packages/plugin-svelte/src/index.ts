@@ -39,14 +39,10 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
 
         const rsbuildConfig = api.getNormalizedConfig();
 
-        chain.resolve.alias
-          .set('svelte', path.join(sveltePath, 'src/runtime'))
-          .end()
-          .extensions.add('.svelte')
-          .end()
-          .mainFields.prepend('svelte')
-          .end()
-          .set('conditionNames', ['svelte', '...']);
+        chain.resolve.alias.set('svelte', path.join(sveltePath, 'src/runtime'));
+        chain.resolve.extensions.add('.svelte');
+        chain.resolve.mainFields.add('svelte').add('...');
+        chain.resolve.set('conditionNames', ['svelte', '...']);
 
         const loaderPath = require.resolve('svelte-loader');
 
