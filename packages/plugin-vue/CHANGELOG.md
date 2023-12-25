@@ -1,5 +1,12 @@
 # @rsbuild/plugin-vue
 
+## 0.2.10
+
+### Patch Changes
+
+- 1b3ff8f: feat(plugin-vue): add feature flag for Vue v3.4
+  - @rsbuild/shared@0.2.10
+
 ## 0.2.9
 
 ### Patch Changes
