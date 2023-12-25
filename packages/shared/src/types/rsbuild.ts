@@ -16,7 +16,9 @@ export type CreateRsbuildOptions = {
   rsbuildConfig?: RsbuildConfig;
 };
 
-export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {
+export type RsbuildInstance<
+  P extends RsbuildProvider | RsbuildProvider<'webpack'> = RsbuildProvider,
+> = {
   context: Context;
 
   addPlugins: PluginStore['addPlugins'];
