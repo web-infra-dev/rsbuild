@@ -52,3 +52,20 @@ export default defineConfig({
   ],
 });
 ```
+
+## Rspack Plugins
+
+The `plugins` option is used to register Rsbuild plugins. If you need to register Rspack or Webpack plugins, please use [tools.rspack](/config/tools/rspack).
+
+```ts title="rsbuild.config.ts"
+export default {
+  // Rsbuild Plugins
+  plugins: [pluginStylus()],
+  tools: {
+    rspack: {
+      // Rspack or Webpack Plugins
+      plugins: [new SomeWebpackPlugin()],
+    },
+  },
+};
+```
