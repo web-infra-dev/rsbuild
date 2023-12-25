@@ -1,0 +1,137 @@
+# Webpack
+
+本章节介绍如何将使用 Webpack 的项目迁移到 Rsbuild。
+
+## 安装依赖
+
+首先你需要把 Webpack 相关的 npm 依赖替换为 Rsbuild 的依赖。
+
+import { PackageManagerTabs } from '@theme';
+
+移除 Webpack 的依赖：
+
+<PackageManagerTabs command="remove webpack webpack-cli webpack-dev-server" />
+
+安装 Rsbuild 的依赖：
+
+<PackageManagerTabs command="add @rsbuild/core -D" />
+
+## 更新 npm scripts
+
+下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
+
+```diff title="package.json"
+{
+  "scripts": {
+-   "serve": "webpack serve -c webpack.config.js",
+-   "build": "webpack rsbuild -c webpack.config.js",
++   "dev": "rsbuild dev",
++   "build": "rsbuild build"
+  }
+}
+```
+
+## 创建配置文件
+
+在 package.json 的同级目录下创建 Rsbuild 的配置文件 `rsbuild.config.ts`，并添加以下内容：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  plugins: [],
+});
+```
+
+## 使用插件
+
+Rsbuild 提供了丰富的插件，对常见的使用场景提供开箱即用的支持，你可以参考[插件列表](/plugins/list/index)文档来了解这些插件。
+
+我们以 React 项目为例，来介绍如何接入 Rsbuild 插件。首先，你可以移除一些 React 相关的构建依赖，它们已经被 Rsbuild React 插件内置，比如：
+
+- `react-refresh`
+- `@babel/preset-react`
+- `@pmmmwh/react-refresh-webpack-plugin`
+
+然后参考 [React 插件](/plugins/list/plugin-react) 文档，注册并使用即可：
+
+```diff
+import { defineConfig } from '@rsbuild/core';
++import { pluginReact } from '@rsbuild/plugin-react';
+
+export default {
++  plugins: [pluginReact()],
+};
+```
+
+## 构建入口
+
+Webpack 使用 `entry` 字段来设置构建入口，在 Rsbuild 中你可以使用 [source.entry](/config/source/entry) 来设置。
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      foo: './src/pages/foo/index.ts',
+      bar: './src/pages/bar/index.ts',
+    },
+  },
+};
+```
+
+## 配置迁移
+
+在一个 Webpack 项目中，可能已经包含了一些复杂的 `webpack.config.js` 配置文件。
+
+而迁移到 Rsbuild 后，大部分 Webpack 配置已经被 Rsbuild 内置，不再需要手动配置，比如 output、resolve、module.rules 等。
+
+对于少部分需要迁移的 Webpack 配置，你可以选择以下方案：
+
+- 使用 [tools.rspack](/config/tools/rspack) 选项（Rspack 和 Webpack 的配置基本上等价）。
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      plugins: [new SomeWebpackPlugin()],
+    },
+  },
+};
+```
+
+- 使用 Rsbuild 中封装的配置项，比如 css-loader 的选项可以通过 [tools.cssLoader](/config/tools/css-loader) 设置。
+
+## 验证结果
+
+完成以上步骤后，你已经完成了从 Webpack 到 Rsbuild 的基本迁移，此时可以执行 `npm run dev` 命令来尝试启动开发服务器。
+
+如果在构建过程中发现问题，请根据错误日志进行调试，或者查看 Webpack 配置，检查是否有一些必须的配置未被迁移到 Rsbuild。
+
+## 清理依赖
+
+由于 Rsbuild 内置了一些常见的 loader 和 plugin，所以你可以移除以下依赖，这会显著提升项目的依赖安装速度：
+
+- css-loader
+- less-loader
+- sass-loader
+- babel-loader
+- style-loader
+- postcss-loader
+- html-webpack-plugin
+- mini-css-extract-plugin
+- autoprefixer
+- @babel/core
+- @babel/preset-env
+- @babel/preset-typescript
+- @babel/runtime
+- ...
+
+:::tip
+以上仅列出了一些常见的可移除依赖。在实际的 Webpack 项目中，可能还存在很多其他依赖，请酌情处理。
+:::
+
+## 内容补充
+
+当前文档只涵盖了迁移过程的部分事项，如果你发现有合适的内容可以补充，欢迎通过 pull request 来完善文档 🤝。
+
+> Rsbuild 的文档位于 [rsbuild/packages/document](https://github.com/web-infra-dev/rsbuild/tree/main/packages/document) 目录。
