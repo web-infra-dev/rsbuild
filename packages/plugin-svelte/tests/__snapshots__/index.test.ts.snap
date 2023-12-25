@@ -39,6 +39,7 @@ exports[`plugin-svelte > should add svelte loader properly 1`] = `
     ],
     "mainFields": [
       "svelte",
+      "...",
     ],
   },
   "resolveLoader": {
@@ -84,6 +85,7 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
     ],
     "mainFields": [
       "svelte",
+      "...",
     ],
   },
   "resolveLoader": {
@@ -133,6 +135,7 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
     ],
     "mainFields": [
       "svelte",
+      "...",
     ],
   },
   "resolveLoader": {
@@ -182,6 +185,7 @@ exports[`plugin-svelte > should turn off hmr by hand correctly 1`] = `
     ],
     "mainFields": [
       "svelte",
+      "...",
     ],
   },
   "resolveLoader": {
