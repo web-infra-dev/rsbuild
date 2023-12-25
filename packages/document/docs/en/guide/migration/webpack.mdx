@@ -1,0 +1,137 @@
+# Webpack
+
+This section introduces how to migrate a project using Webpack to Rsbuild.
+
+## Installing Dependencies
+
+First, you need to replace the npm dependencies of Webpack with Rsbuild's dependencies.
+
+import { PackageManagerTabs } from '@theme';
+
+Remove Webpack dependencies:
+
+<PackageManagerTabs command="remove webpack webpack-cli webpack-dev-server" />
+
+Install Rsbuild dependencies:
+
+<PackageManagerTabs command="add @rsbuild/core -D" />
+
+## Updating npm scripts
+
+Next, you need to update the npm scripts in your package.json to use Rsbuild's CLI commands.
+
+```diff title="package.json"
+{
+  "scripts": {
+-   "serve": "webpack serve -c webpack.config.js",
+-   "build": "webpack rsbuild -c webpack.config.js",
++   "dev": "rsbuild dev",
++   "build": "rsbuild build"
+  }
+}
+```
+
+## Create Configuration File
+
+Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  plugins: [],
+});
+```
+
+## Using Plugins
+
+Rsbuild offers a rich set of plugins that provide out-of-the-box support for common scenarios. You can refer to the [Plugin List](/plugins/list/index) documentation to learn about these plugins.
+
+Taking a React project as an example, let's see how to integrate Rsbuild plugins. First, you can remove some React-related build dependencies that are already built into the Rsbuild React plugin, such as:
+
+- `react-refresh`
+- `@babel/preset-react`
+- `@pmmmwh/react-refresh-webpack-plugin`
+
+Then see the [React Plugin](/plugins/list/plugin-react) documentation, register it and use it as follows:
+
+```diff
+import { defineConfig } from '@rsbuild/core';
++import { pluginReact } from '@rsbuild/plugin-react';
+
+export default {
++  plugins: [pluginReact()],
+};
+```
+
+## Build Entry
+
+Webpack uses the `entry` field to set the build entry. In Rsbuild, you can use [source.entry](/config/source/entry) to set it.
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      foo: './src/pages/foo/index.ts',
+      bar: './src/pages/bar/index.ts',
+    },
+  },
+};
+```
+
+## Configuration Migration
+
+In a Webpack project, there might be some complex `webpack.config.js` configuration files.
+
+After migrating to Rsbuild, most Webpack configurations are built-in and do not require manual configuration, such as output, resolve, module.rules, etc.
+
+For the few Webpack configurations that need to be migrated, you can choose the following options:
+
+- Use the [tools.rspack](/config/tools/rspack) option (Rspack and Webpack configurations are basically equivalent).
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      plugins: [new SomeWebpackPlugin()],
+    },
+  },
+};
+```
+
+- Use encapsulated config options in Rsbuild, for example, options for css-loader can be set through [tools.cssLoader](/config/tools/css-loader).
+
+## Validating Results
+
+After completing the above steps, you have completed the basic migration from Webpack to Rsbuild. You can now run the `npm run serve` command to try starting the dev server.
+
+If you encounter any issues during the build process, please debug according to the error log, or check the Webpack configuration to see if there are any necessary configurations that have not been migrated to Rsbuild.
+
+## Cleaning Up Dependencies
+
+Since Rsbuild has built-in some common loaders and plugins, you can remove the following dependencies, which will significantly improve the dependency installation speed of the project:
+
+- css-loader
+- less-loader
+- sass-loader
+- babel-loader
+- style-loader
+- postcss-loader
+- html-webpack-plugin
+- mini-css-extract-plugin
+- autoprefixer
+- @babel/core
+- @babel/preset-env
+- @babel/preset-typescript
+- @babel/runtime
+- ...
+
+:::tip
+The above only lists some of the common dependencies that can be removed. In actual Webpack projects, there may be many other dependencies, please handle them as appropriate.
+:::
+
+## Contents Supplement
+
+The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
+
+> The documentation for rsbuild can be found in the [rsbuild/packages/document](https://github.com/web-infra-dev/rsbuild/tree/main/packages/document) directory.
