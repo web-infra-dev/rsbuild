@@ -4,6 +4,9 @@ Called after each development environment build, you can use `isFirstCompile` to
 
 ```ts
 function OnDevCompileDone(
-  callback: (params: { isFirstCompile: boolean }) => Promise<void> | void,
+  callback: (params: {
+    isFirstCompile: boolean;
+    stats: Stats | MultiStats;
+  }) => Promise<void> | void,
 ): void;
 ```

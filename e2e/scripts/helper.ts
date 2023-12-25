@@ -1,7 +1,8 @@
 import { join } from 'path';
 import { test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import glob, { Options as GlobOptions } from 'fast-glob';
+import glob, { type Options as GlobOptions } from 'fast-glob';
+import { normalizeToPosixPath } from '@rsbuild/test-helper';
 
 export const providerType = process.env.PROVIDE_TYPE || 'rspack';
 
@@ -25,7 +26,11 @@ export const webpackOnlyTest = getProviderTest(['webpack']);
 export const rspackOnlyTest = getProviderTest(['rspack']);
 
 export const globContentJSON = async (path: string, options?: GlobOptions) => {
-  const files = await glob(join(path, '**/*'), options);
+  const files = await glob(
+    // fast-glob only accepts posix path
+    normalizeToPosixPath(join(path, '**/*')),
+    options,
+  );
   const ret: Record<string, string> = {};
 
   for await (const file of files) {

@@ -1,4 +1,4 @@
-import type { SpyInstance } from 'vitest';
+import type { MockInstance } from 'vitest';
 import { createStubRsbuild } from '@rsbuild/test-helper';
 import { getBrowserslist } from '@rsbuild/shared';
 import { pluginTarget } from '@src/plugins/target';
@@ -34,7 +34,7 @@ describe('plugin-target', () => {
   ];
 
   test.each(cases)('%j', async (item) => {
-    (getBrowserslist as unknown as SpyInstance).mockResolvedValueOnce(
+    (getBrowserslist as unknown as MockInstance).mockResolvedValueOnce(
       item.browserslist,
     );
 

@@ -6,13 +6,7 @@ import type * as SassLoader from '../../compiled/sass-loader';
 import type Less from '../../compiled/less';
 import type { LoaderContext } from '@rspack/core';
 import type TerserPlugin from 'terser-webpack-plugin';
-import type {
-  Syntax,
-  Parser,
-  Stringifier,
-  AcceptedPlugin,
-  SourceMapOptions,
-} from 'postcss';
+import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { Configuration as WebpackConfig } from 'webpack';
 import type {
   PluginOptions as MiniCSSExtractPluginOptions,
@@ -88,14 +82,9 @@ export type LessLoaderOptions = {
   implementation?: unknown;
 };
 
-export type PostCSSOptions = {
-  to?: string;
-  from?: string;
-  map?: boolean | SourceMapOptions;
-  syntax?: Syntax;
-  parser?: string | object | (() => Parser);
+export type PostCSSOptions = ProcessOptions & {
+  config?: boolean;
   plugins?: AcceptedPlugin[];
-  stringifier?: Stringifier | Syntax;
 };
 
 export type PostCSSLoaderOptions = {

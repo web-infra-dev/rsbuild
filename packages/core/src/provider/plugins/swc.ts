@@ -13,7 +13,7 @@ import {
   type RsbuildTarget,
   type BuiltinSwcLoaderOptions,
 } from '@rsbuild/shared';
-import * as path from 'path';
+import path from 'path';
 import type {
   RsbuildPlugin,
   NormalizedConfig,

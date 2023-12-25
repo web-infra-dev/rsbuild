@@ -12,6 +12,9 @@
     },
     {
       "path": "../shared"
+    },
+    {
+      "path": "../plugin-babel"
     }
   ],
   "include": ["src"]

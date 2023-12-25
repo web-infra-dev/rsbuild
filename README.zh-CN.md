@@ -34,7 +34,7 @@ Rsbuild 的构建性能与原生 Rspack 处于同一水平。由于 Rsbuild 内�
 
 以下是构建 1000 个 React 组件的时间：
 
-![benchmark-11211243](https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/benchmark-11271559.png)
+![benchmark](https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/benchmark-12111918.png)
 
 > 以上数据基于 Farm 团队搭建的 benchmark，更多信息请参考 [performance-compare](https://github.com/rspack-contrib/performance-compare)。
 
@@ -91,7 +91,7 @@ Rsbuild 具备以下特性：
 
 ## 🌟 质量
 
-Rsbuild 通过 [Web Infra QoS](https://web-infra-dev.github.io/web-infra-QoS/index?product=rsbuild&metrics=bundle-size) 来观测核心指标的变化情况，比如 bundle size、compile speed 和 install size。
+Rsbuild 通过 [Web Infra QoS](https://web-infra-qos.netlify.app?product=rsbuild&metrics=bundle-size) 来观测核心指标的变化情况，比如 bundle size、compile speed 和 install size。
 
 ## 🙌 行为准则
 
@@ -104,6 +104,8 @@ Rsbuild 的一些实现参考了社区中杰出的项目，对他们表示感谢
 - 部分插件的实现参考了 [create-react-app](https://github.com/facebook/create-react-app)。
 - 部分 util 函数参考了 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)。
 - 部分 API 的设计参考了 [vite](https://github.com/vitejs/vite)。
+
+Rsbuild 网站由 [Netlify](https://www.netlify.com/) 提供支持。
 
 ## 📖 License
 

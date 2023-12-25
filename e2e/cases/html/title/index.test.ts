@@ -57,6 +57,26 @@ test('should generate title correctly when using custom HTML template', async ()
   expect(html).toContain('<title>foo</title>');
 });
 
+test('should generate title correctly when using htmlWebpackPlugin.options.title', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      source: {
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
+      },
+      html: {
+        title: 'foo',
+        template: path.resolve(__dirname, './src/plugin-options-title.html'),
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const html =
+    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  expect(html).toContain('<title>foo</title>');
+});
+
 test('should generate title via function correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,

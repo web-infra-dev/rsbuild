@@ -139,6 +139,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -183,6 +184,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -233,6 +235,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -287,6 +290,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -347,6 +351,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -405,6 +410,7 @@ exports[`uni-builder rspack > should generator rspack config correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -931,6 +937,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -975,6 +982,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -1025,6 +1033,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -1079,6 +1088,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -1139,6 +1149,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -1197,6 +1208,7 @@ exports[`uni-builder rspack > should generator rspack config correctly when prod
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -1660,105 +1672,6 @@ exports[`uni-builder webpack > should generator webpack config correctly 1`] = `
         "test": /\\\\\\.m\\?js/,
       },
       {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
-          ],
-        },
-        "resolve": {
-          "fullySpecified": false,
-        },
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
-            "options": {
-              "babelrc": false,
-              "compact": false,
-              "configFile": false,
-              "plugins": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
-                  {
-                    "version": "legacy",
-                  },
-                ],
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
-                  {
-                    "proposal": "minimal",
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-                  {
-                    "useESModules": true,
-                    "version": "7.23.2",
-                  },
-                ],
-                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
-                [
-                  "<ROOT>/packages/compat/uni-builder/compiled/babel-plugin-lodash/index.js",
-                  {},
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
-                  {
-                    "displayName": true,
-                    "pure": false,
-                    "ssr": false,
-                    "transpileTemplateLiterals": true,
-                  },
-                ],
-              ],
-              "presets": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
-                  {
-                    "bugfixes": true,
-                    "corejs": {
-                      "proposals": true,
-                      "version": "3.32",
-                    },
-                    "exclude": [
-                      "transform-typeof-symbol",
-                    ],
-                    "modules": false,
-                    "targets": [
-                      "> 0.01%",
-                      "not dead",
-                      "not op_mini all",
-                    ],
-                    "useBuiltIns": "entry",
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-                  {
-                    "allExtensions": true,
-                    "allowDeclareFields": true,
-                    "allowNamespaces": true,
-                    "isTSX": true,
-                    "optimizeConstEnums": true,
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
-                  {
-                    "development": true,
-                    "runtime": "classic",
-                    "useBuiltIns": true,
-                    "useSpread": false,
-                  },
-                ],
-              ],
-            },
-          },
-        ],
-      },
-      {
         "oneOf": [
           {
             "generator": {
@@ -1873,6 +1786,7 @@ exports[`uni-builder webpack > should generator webpack config correctly 1`] = `
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -1932,6 +1846,7 @@ exports[`uni-builder webpack > should generator webpack config correctly 1`] = `
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -2005,6 +1920,7 @@ exports[`uni-builder webpack > should generator webpack config correctly 1`] = `
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -2261,6 +2177,102 @@ exports[`uni-builder webpack > should generator webpack config correctly 1`] = `
           },
         ],
       },
+      {
+        "mimetype": {
+          "or": [
+            "text/javascript",
+            "application/javascript",
+          ],
+        },
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
+            "options": {
+              "babelrc": false,
+              "compact": false,
+              "configFile": false,
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  {
+                    "proposal": "minimal",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  {
+                    "useESModules": true,
+                    "version": "7.23.2",
+                  },
+                ],
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
+                [
+                  "<ROOT>/packages/compat/uni-builder/compiled/babel-plugin-lodash/index.js",
+                  {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  {
+                    "displayName": true,
+                    "pure": false,
+                    "ssr": false,
+                    "transpileTemplateLiterals": true,
+                  },
+                ],
+              ],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  {
+                    "bugfixes": true,
+                    "corejs": {
+                      "proposals": true,
+                      "version": "3.32",
+                    },
+                    "exclude": [
+                      "transform-typeof-symbol",
+                    ],
+                    "modules": false,
+                    "targets": [
+                      "> 0.01%",
+                      "not dead",
+                      "not op_mini all",
+                    ],
+                    "useBuiltIns": "entry",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": true,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
     ],
   },
   "name": "Client",
@@ -2430,111 +2442,6 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
         "test": /\\\\\\.m\\?js/,
       },
       {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
-          ],
-        },
-        "resolve": {
-          "fullySpecified": false,
-        },
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
-            "options": {
-              "babelrc": false,
-              "compact": true,
-              "configFile": false,
-              "plugins": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
-                  {
-                    "version": "legacy",
-                  },
-                ],
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
-                  {
-                    "proposal": "minimal",
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
-                  {
-                    "useESModules": true,
-                    "version": "7.23.2",
-                  },
-                ],
-                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
-                [
-                  "<ROOT>/packages/compat/uni-builder/compiled/babel-plugin-lodash/index.js",
-                  {},
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-transform-react-remove-prop-types/lib/index.js",
-                  {
-                    "removeImport": true,
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
-                  {
-                    "displayName": true,
-                    "pure": true,
-                    "ssr": false,
-                    "transpileTemplateLiterals": true,
-                  },
-                ],
-              ],
-              "presets": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
-                  {
-                    "bugfixes": true,
-                    "corejs": {
-                      "proposals": true,
-                      "version": "3.32",
-                    },
-                    "exclude": [
-                      "transform-typeof-symbol",
-                    ],
-                    "modules": false,
-                    "targets": [
-                      "> 0.01%",
-                      "not dead",
-                      "not op_mini all",
-                    ],
-                    "useBuiltIns": "entry",
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-                  {
-                    "allExtensions": true,
-                    "allowDeclareFields": true,
-                    "allowNamespaces": true,
-                    "isTSX": true,
-                    "optimizeConstEnums": true,
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
-                  {
-                    "development": false,
-                    "runtime": "classic",
-                    "useBuiltIns": true,
-                    "useSpread": false,
-                  },
-                ],
-              ],
-            },
-          },
-        ],
-      },
-      {
         "oneOf": [
           {
             "generator": {
@@ -2649,6 +2556,7 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -2708,6 +2616,7 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -2781,6 +2690,7 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
             "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
+                "config": false,
                 "plugins": [
                   [Function],
                   {
@@ -2942,6 +2852,108 @@ exports[`uni-builder webpack > should generator webpack config correctly when pr
           /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
         "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
+            "options": {
+              "babelrc": false,
+              "compact": true,
+              "configFile": false,
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-export-default-from/lib/index.js",
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-partial-application/lib/index.js",
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-pipeline-operator/lib/index.js",
+                  {
+                    "proposal": "minimal",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
+                  {
+                    "useESModules": true,
+                    "version": "7.23.2",
+                  },
+                ],
+                "<ROOT>/packages/babel-preset/dist/pluginLockCorejsVersion",
+                [
+                  "<ROOT>/packages/compat/uni-builder/compiled/babel-plugin-lodash/index.js",
+                  {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-transform-react-remove-prop-types/lib/index.js",
+                  {
+                    "removeImport": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-styled-components/lib/index.js",
+                  {
+                    "displayName": true,
+                    "pure": true,
+                    "ssr": false,
+                    "transpileTemplateLiterals": true,
+                  },
+                ],
+              ],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-env/lib/index.js",
+                  {
+                    "bugfixes": true,
+                    "corejs": {
+                      "proposals": true,
+                      "version": "3.32",
+                    },
+                    "exclude": [
+                      "transform-typeof-symbol",
+                    ],
+                    "modules": false,
+                    "targets": [
+                      "> 0.01%",
+                      "not dead",
+                      "not op_mini all",
+                    ],
+                    "useBuiltIns": "entry",
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-react/lib/index.js",
+                  {
+                    "development": false,
+                    "runtime": "classic",
+                    "useBuiltIns": true,
+                    "useSpread": false,
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+      {
+        "mimetype": {
+          "or": [
+            "text/javascript",
+            "application/javascript",
+          ],
+        },
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",

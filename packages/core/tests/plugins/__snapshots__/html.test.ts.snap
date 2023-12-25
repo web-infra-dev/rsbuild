@@ -29,6 +29,7 @@ exports[`plugin-html > should add one tags plugin instance 1`] = `
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -50,6 +51,7 @@ exports[`plugin-html > should add one tags plugin instance 1`] = `
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -57,12 +59,8 @@ exports[`plugin-html > should add one tags plugin instance 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "foo": {
-            "title": "Rsbuild App",
-          },
-          "main": {
-            "title": "Rsbuild App",
-          },
+          "foo": {},
+          "main": {},
         },
       },
     },
@@ -118,6 +116,7 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -139,6 +138,7 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -146,12 +146,8 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "foo": {
-            "title": "Rsbuild App",
-          },
-          "main": {
-            "title": "Rsbuild App",
-          },
+          "foo": {},
+          "main": {},
         },
       },
     },
@@ -221,9 +217,7 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index": {
-            "title": "Rsbuild App",
-          },
+          "index": {},
         },
       },
     },
@@ -258,6 +252,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -265,9 +260,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index": {
-            "title": "Rsbuild App",
-          },
+          "index": {},
         },
       },
     },
@@ -301,6 +294,7 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -308,9 +302,7 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index": {
-            "title": "Rsbuild App",
-          },
+          "index": {},
         },
       },
     },
@@ -363,6 +355,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -370,9 +363,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index": {
-            "title": "Rsbuild App",
-          },
+          "index": {},
         },
       },
     },
@@ -406,6 +397,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -413,9 +405,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "index": {
-            "title": "Rsbuild App",
-          },
+          "index": {},
         },
       },
     },
@@ -452,6 +442,7 @@ exports[`plugin-html > should support multi entry 1`] = `
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -473,6 +464,7 @@ exports[`plugin-html > should support multi entry 1`] = `
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
+        "title": "Rsbuild App",
       },
       "version": 5,
     },
@@ -480,12 +472,8 @@ exports[`plugin-html > should support multi entry 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "foo": {
-            "title": "Rsbuild App",
-          },
-          "main": {
-            "title": "Rsbuild App",
-          },
+          "foo": {},
+          "main": {},
         },
       },
     },

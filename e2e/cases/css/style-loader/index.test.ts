@@ -4,23 +4,21 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
-test('should inline style when disableCssExtract is false', async ({
-  page,
-}) => {
+test('should inline style when injectStyles is true', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
     runServer: true,
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
-        disableCssExtract: true,
+        injectStyles: true,
       },
     },
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
 
-  // disableCssExtract worked
+  // injectStyles worked
   const files = await rsbuild.unwrapOutputJSON();
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
   expect(cssFiles.length).toBe(0);
@@ -29,11 +27,10 @@ test('should inline style when disableCssExtract is false', async ({
   const indexJsFile = Object.keys(files).find(
     (file) => file.includes('index.') && file.endsWith('.js'),
   )!;
-  expect(
-    files[indexJsFile].includes(
-      'html,\\nbody {\\n  padding: 0;\\n  margin: 0;\\n}\\n\\n* {\\n  -webkit-font-smoothing: antialiased;\\n  -moz-osx-font-smoothing: grayscale;\\n  box-sizing: border-box;\\n}\\n\\n.description {\\n  text-align: center;\\n  line-height: 1.5;\\n  font-size: 16px;',
-    ),
-  ).toBeTruthy();
+
+  expect(files[indexJsFile].includes('padding: 0;')).toBeTruthy();
+  expect(files[indexJsFile].includes('margin: 0;')).toBeTruthy();
+  expect(files[indexJsFile].includes('text-align: center;')).toBeTruthy();
 
   // scss worked
   const header = page.locator('#header');

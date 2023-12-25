@@ -1,7 +1,13 @@
-import type { IncomingMessage, ServerResponse, Server } from 'http';
-import { DevConfig, NextFunction } from './config/dev';
+import type { IncomingMessage, ServerResponse } from 'http';
+import type { Socket } from 'net';
+import {
+  DevConfig,
+  NextFunction,
+  RequestHandler,
+  ServerAPIs,
+} from './config/dev';
 import { ServerConfig } from './config/server';
-import type { Logger } from '../logger';
+import { Routes } from './hooks';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 
 export type Middleware = (
@@ -49,39 +55,83 @@ export type CreateDevMiddlewareReturns = {
   compiler: RspackCompiler | RspackMultiCompiler;
 };
 
-export type RsbuildDevMiddlewareOptions = {
-  pwd: string;
-  /** Rsbuild devConfig */
-  dev: Omit<
-    DevConfig & ServerConfig,
-    | 'beforeStartUrl'
-    | 'progressBar'
-    | 'startUrl'
-    | 'https'
-    | 'host'
-    | 'port'
-    | 'strictPort'
-  >;
-  devMiddleware?: DevMiddleware;
-  output: {
-    distPath: string;
-    publicPaths: string[];
-  };
-};
-
-export type CreateDevServerOptions = {
-  server?: {
-    customApp?: Server;
-    logger?: Logger;
-  };
-} & RsbuildDevMiddlewareOptions;
-
-export type ServerApi = {
-  close: () => Promise<void>;
-};
+export type DevMiddlewaresConfig = Omit<
+  DevConfig & ServerConfig,
+  | 'beforeStartUrl'
+  | 'progressBar'
+  | 'startUrl'
+  | 'https'
+  | 'host'
+  | 'port'
+  | 'strictPort'
+>;
 
 export type StartServerResult = {
   urls: string[];
   port: number;
-  server: ServerApi;
+  server: {
+    close: () => Promise<void>;
+  };
+};
+
+/**
+ * It used to subscribe http upgrade event
+ */
+export type UpgradeEvent = (
+  req: IncomingMessage,
+  socket: Socket,
+  head: any,
+) => void;
+
+export type CompileMiddlewareAPI = {
+  middleware: RequestHandler;
+  sockWrite: ServerAPIs['sockWrite'];
+  onUpgrade: UpgradeEvent;
+  close: () => void;
+};
+
+export type DevServerAPIs = {
+  /**
+   * The resolved rsbuild server config
+   */
+  config: {
+    devServerConfig: DevConfig & ServerConfig;
+    port: number;
+    host: string;
+    https: boolean;
+    defaultRoutes: Routes;
+  };
+  /**
+   * Trigger rsbuild compile
+   */
+  startCompile: () => Promise<CompileMiddlewareAPI>;
+  /**
+   * Trigger rsbuild onBeforeStartDevServer hook
+   */
+  beforeStart: () => Promise<void>;
+  /**
+   * Trigger rsbuild onAfterStartDevServer hook
+   */
+  afterStart: (options?: { port?: number; routes?: Routes }) => Promise<void>;
+  /**
+   * Get the corresponding builtin middleware according to the rsbuild config
+   *
+   * Related config: proxy / publicDir / historyApiFallback / headers / ...
+   */
+  getMiddlewares: (options?: {
+    compileMiddlewareAPI?: CompileMiddlewareAPI;
+    /**
+     * Overrides middleware configs
+     *
+     * By default, get config from rsbuild dev.xxx and server.xxx
+     */
+    overrides?: DevMiddlewaresConfig;
+  }) => Promise<{
+    middlewares: RequestHandler[];
+    close: () => Promise<void>;
+    /**
+     * Subscribe http upgrade event
+     */
+    onUpgrade: UpgradeEvent;
+  }>;
 };

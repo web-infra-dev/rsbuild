@@ -126,7 +126,7 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   },
   legalComments: 'linked',
   cleanDistPath: true,
-  disableCssExtract: false,
+  injectStyles: false,
   disableMinimize: false,
   sourceMap: {
     js: undefined,

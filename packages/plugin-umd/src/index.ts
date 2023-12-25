@@ -3,6 +3,7 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 
 export type PluginUmdOptions = {
   name: string;
+  export?: string | string[];
 };
 
 export const pluginUmd = (options: PluginUmdOptions): RsbuildPlugin => ({
@@ -35,8 +36,13 @@ export const pluginUmd = (options: PluginUmdOptions): RsbuildPlugin => ({
       chain.output.library({
         name: options.name,
         type: 'umd',
+        // name the AMD module of the UMD build
         umdNamedDefine: true,
+        export: options.export,
       });
+
+      // To make UMD build available on both browsers and Node.js
+      chain.output.globalObject('this');
 
       // disable split chunks to output a single chunk
       chain.optimization.splitChunks(false);

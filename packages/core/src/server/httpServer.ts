@@ -5,14 +5,11 @@ export const createHttpServer = async (options: {
   https?: ServerConfig['https'];
   middlewares: connect.Server;
 }) => {
-  let app;
   if (options.https) {
     const { createServer } = await import('https');
-    app = createServer(options.https, options.middlewares);
-  } else {
-    const { createServer } = await import('http');
-    app = createServer(options.middlewares);
+    return createServer(options.https, options.middlewares);
   }
 
-  return app;
+  const { createServer } = await import('http');
+  return createServer(options.middlewares);
 };

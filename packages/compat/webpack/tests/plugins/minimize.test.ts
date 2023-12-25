@@ -9,7 +9,7 @@ describe('plugin-minimize', () => {
       plugins: [pluginMinimize()],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.optimization?.minimize).toEqual(false);
 
     process.env.NODE_ENV = 'test';
@@ -22,7 +22,7 @@ describe('plugin-minimize', () => {
       plugins: [pluginMinimize()],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.optimization).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
@@ -40,7 +40,7 @@ describe('plugin-minimize', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(config.optimization?.minimize).toEqual(false);
 
     process.env.NODE_ENV = 'test';
@@ -58,7 +58,7 @@ describe('plugin-minimize', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(JSON.stringify(config.optimization)).toContain(
       '"extractComments":false',
     );
@@ -81,7 +81,7 @@ describe('plugin-minimize', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(JSON.stringify(config.optimization)).toContain(
       '"extractComments":false',
     );
@@ -102,7 +102,7 @@ describe('plugin-minimize', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
     expect(JSON.stringify(config.optimization)).toContain('"ascii_only":false');
 
     process.env.NODE_ENV = 'test';

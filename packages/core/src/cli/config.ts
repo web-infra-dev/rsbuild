@@ -1,20 +1,8 @@
 import fs from 'fs';
 import { isAbsolute, join } from 'path';
-import {
-  color,
-  logger,
-  debounce,
-  type RsbuildConfig as BaseRsbuildConfig,
-} from '@rsbuild/shared';
+import { color, logger, debounce, type RsbuildConfig } from '@rsbuild/shared';
 import { getEnvFiles } from '../loadEnv';
 import { restartDevServer } from '../server/restart';
-
-export type RsbuildConfig = BaseRsbuildConfig & {
-  /**
-   * @private only for testing
-   */
-  provider?: any;
-};
 
 export type ConfigParams = {
   env: string;

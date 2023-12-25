@@ -1,9 +1,13 @@
 import fs from 'fs';
-import path from 'path';
+import { posix, basename } from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
 import WebpackSources from '@rsbuild/shared/webpack-sources';
-import { COMPILATION_PROCESS_STAGE } from '@rsbuild/shared';
+import {
+  withPublicPath,
+  getPublicPathFromCompiler,
+  COMPILATION_PROCESS_STAGE,
+} from '@rsbuild/shared';
 
 type AppIconOptions = {
   distDir: string;
@@ -30,10 +34,7 @@ export class HtmlAppIconPlugin {
       );
     }
 
-    const iconRelativePath = path.join(
-      this.distDir,
-      path.basename(this.iconPath),
-    );
+    const iconRelativePath = posix.join(this.distDir, basename(this.iconPath));
 
     // add html asset tags
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
@@ -41,7 +42,7 @@ export class HtmlAppIconPlugin {
       HtmlWebpackPlugin.getHooks(compilation).alterAssetTagGroups.tap(
         this.name,
         (data) => {
-          const { publicPath } = compiler.options.output;
+          const publicPath = getPublicPathFromCompiler(compiler);
 
           data.headTags.unshift({
             tagName: 'link',
@@ -49,7 +50,7 @@ export class HtmlAppIconPlugin {
             attributes: {
               rel: 'apple-touch-icon',
               sizes: '180*180',
-              href: `${publicPath as string}${iconRelativePath}`,
+              href: withPublicPath(iconRelativePath, publicPath),
             },
             meta: {},
           });

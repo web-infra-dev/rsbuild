@@ -4,11 +4,6 @@ import { expect, test } from '@playwright/test';
 test('should generate tailwindcss utilities correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    rsbuildConfig: {
-      html: {
-        template: './src/index.html',
-      },
-    },
   });
 
   const files = await rsbuild.unwrapOutputJSON();

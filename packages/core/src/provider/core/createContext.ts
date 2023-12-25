@@ -126,9 +126,10 @@ export function createPublicContext(
 export async function createContext(
   options: Required<CreateRsbuildOptions>,
   userRsbuildConfig: RsbuildConfig,
+  bundlerType: BundlerType,
 ): Promise<Context> {
   const rsbuildConfig = withDefaultConfig(userRsbuildConfig);
-  const context = createContextByConfig(options, 'rspack', rsbuildConfig);
+  const context = createContextByConfig(options, bundlerType, rsbuildConfig);
 
   const tsconfigPath = join(context.rootPath, TS_CONFIG_FILE);
 

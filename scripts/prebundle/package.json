@@ -38,12 +38,14 @@
     "http-proxy-middleware": "^2.0.6",
     "icss-utils": "5.1.0",
     "loader-utils2": "npm:loader-utils@2.0.4",
-    "jiti": "^1.20.0",
+    "jiti": "^1.21.0",
     "json5": "^2.2.3",
+    "line-diff": "2.1.1",
     "mime-types": "^2.1.35",
     "open": "^8.4.0",
     "picocolors": "1.0.0",
     "postcss-loader": "7.3.3",
+    "postcss-load-config": "4.0.2",
     "postcss-value-parser": "4.2.0",
     "postcss-modules-local-by-default": "4.0.3",
     "postcss-modules-scope": "3.0.0",
@@ -55,6 +57,8 @@
     "webpack-chain": "npm:webpack-5-chain@8.0.1",
     "webpack-dev-middleware": "6.1.1",
     "webpack-sources": "^3.2.3",
-    "ws": "^8.14.2"
+    "ws": "^8.14.2",
+    "yaml": "^2.3.4",
+    "yaml-loader": "^0.8.0"
   }
 }

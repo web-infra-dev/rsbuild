@@ -3,18 +3,38 @@
 - **Type:** `undefined | string[]`
 - **Default:** `undefined`
 
-Specifies that the user agent should preemptively perform DNS resolution for the target resource's origin, refer to [dns-prefetch](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/dns-prefetch).
+Used to configure the [dns-prefetch](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/dns-prefetch) attribute.
 
 After this property is set, the domain name can be resolved before the resource is requested, reducing request latency and improving loading performance.
 
-See [Using dns-prefetch](https://developer.mozilla.org/en-US/docs/Web/Performance/dns-prefetch) for more details.
+## Why DNS Prefetch
 
-### Example
+When a browser requests a resource from a (third party) server, that cross-origin's domain name must be resolved to an IP address before the browser can issue the request. This process is known as DNS resolution. While DNS caching can help to reduce this latency, DNS resolution can add significant latency to requests.
+
+Configuring `dns-prefetch` can resolve the domain before requesting resources, reducing request latency and improving loading performance.
+
+For more information, please refer to: [Using dns-prefetch](https://developer.mozilla.org/en-US/docs/Web/Performance/dns-prefetch).
+
+## Example
 
 ```js
 export default {
   performance: {
-    dnsPrefetch: ['http://xxx.com'],
+    dnsPrefetch: ['https://example.com'],
   },
 };
 ```
+
+The generated HTML tag in HTML is:
+
+```html
+<link rel="dns-prefetch" href="https://example.com" />
+```
+
+## Notes
+
+In general, a website should not configure more than 10 DNS prefetches.
+
+Using too many DNS prefetches can lead to performance issues because browsers have limits on the number of DNS requests they can maintain. Excessive DNS prefetching, or prefetching for domains that are not ultimately used can cause resource contention and may reduce browser efficiency.
+
+For more details, refer to [What Is a DNS Prefetch?](https://www.splunk.com/en_us/blog/learn/dns-prefetch.html).

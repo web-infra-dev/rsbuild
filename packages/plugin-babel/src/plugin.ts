@@ -1,7 +1,7 @@
 import path from 'path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { cloneDeep, SCRIPT_REGEX } from '@rsbuild/shared';
-import { applyUserBabelConfig, type BabelConfig } from './helper';
+import { castArray, cloneDeep, SCRIPT_REGEX } from '@rsbuild/shared';
+import { applyUserBabelConfig, BABEL_JS_RULE } from './helper';
 import type { PluginBabelOptions } from './types';
 
 /**
@@ -25,27 +25,6 @@ export const pluginBabel = (
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
       const getBabelOptions = () => {
-        // 1. Create babel utils function about include/exclude,
-        const includes: Array<string | RegExp> = [];
-        const excludes: Array<string | RegExp> = [];
-
-        const babelUtils = {
-          addIncludes(items: string | RegExp | Array<string | RegExp>) {
-            if (Array.isArray(items)) {
-              includes.push(...items);
-            } else {
-              includes.push(items);
-            }
-          },
-          addExcludes(items: string | RegExp | Array<string | RegExp>) {
-            if (Array.isArray(items)) {
-              excludes.push(...items);
-            } else {
-              excludes.push(items);
-            }
-          },
-        };
-
         const baseConfig = {
           plugins: [],
           presets: [
@@ -60,42 +39,62 @@ export const pluginBabel = (
         const userBabelConfig = applyUserBabelConfig(
           cloneDeep(baseConfig),
           options.babelLoaderOptions,
-          babelUtils,
         );
 
-        const babelOptions: BabelConfig = {
+        return {
           babelrc: false,
           configFile: false,
           compact: isProd,
           ...userBabelConfig,
         };
-
-        return {
-          babelOptions,
-          includes,
-          excludes,
-        };
       };
 
-      const { babelOptions, includes = [], excludes = [] } = getBabelOptions();
+      const babelOptions = getBabelOptions();
+      const babelLoader = path.resolve(
+        __dirname,
+        '../compiled/babel-loader/index.js',
+      );
+      const { include, exclude } = options;
 
-      // already set source.include / exclude in plugin-swc
-      const rule = chain.module.rule(CHAIN_ID.RULE.JS);
+      if (include || exclude) {
+        const rule = chain.module.rule(BABEL_JS_RULE);
 
-      includes.forEach((condition) => {
-        rule.include.add(condition);
-      });
+        if (include) {
+          castArray(include).forEach((condition) => {
+            rule.include.add(condition);
+          });
+        }
+        if (exclude) {
+          castArray(exclude).forEach((condition) => {
+            rule.exclude.add(condition);
+          });
+        }
 
-      excludes.forEach((condition) => {
-        rule.exclude.add(condition);
-      });
+        const swcRule = chain.module.rules
+          .get(CHAIN_ID.RULE.JS)
+          .use(CHAIN_ID.USE.SWC);
+        const swcLoader = swcRule.get('loader');
+        const swcOptions = swcRule.get('options');
 
-      rule
-        .test(SCRIPT_REGEX)
-        .use(CHAIN_ID.USE.BABEL)
-        .after(CHAIN_ID.USE.SWC)
-        .loader(path.resolve(__dirname, '../compiled/babel-loader/index.js'))
-        .options(babelOptions);
+        rule
+          .test(SCRIPT_REGEX)
+          .use(CHAIN_ID.USE.SWC)
+          .loader(swcLoader)
+          .options(swcOptions)
+          .end()
+          .use(CHAIN_ID.USE.BABEL)
+          .loader(babelLoader)
+          .options(babelOptions);
+      } else {
+        // already set source.include / exclude in plugin-swc
+        const rule = chain.module.rule(CHAIN_ID.RULE.JS);
+        rule
+          .test(SCRIPT_REGEX)
+          .use(CHAIN_ID.USE.BABEL)
+          .after(CHAIN_ID.USE.SWC)
+          .loader(babelLoader)
+          .options(babelOptions);
+      }
     });
   },
 });

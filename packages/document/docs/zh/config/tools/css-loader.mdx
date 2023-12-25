@@ -10,22 +10,21 @@
   modules: {
     auto: true,
     exportLocalsConvention: 'camelCase',
-    localIdentName: config.output.cssModules.localIdentName,
+    localIdentName: rsbuildConfig.output.cssModules.localIdentName,
     // isServer 表示 node (SSR) 构建
     // isWebWorker 表示 web worker 构建
     exportOnlyLocals: isServer || isWebWorker,
   },
-  // 默认在开发环境下启用 CSS 的 Source Map
-  sourceMap: isDev,
+  sourceMap: rsbuildConfig.output.sourceMap.css,
   // importLoaders 在编译 css 文件时为 `1`，在编译 sass/less 文件时为 `2`
   importLoaders: 1 || 2,
 }
 ```
 
 :::tip
-在使用 Rspack 作为打包工具时，仅支持在 [disableCssExtract](https://rsbuild.dev/zh/config/output/disable-css-extract) 时使用该配置。
+在使用 Rspack 作为打包工具时，仅支持在 [injectStyles](/config/output/inject-styles) 时使用该配置。
 
-修改 CSS Modules 相关配置，推荐使用 [output.cssModules](https://rsbuild.dev/zh/config/output/css-modules) 配置项。
+修改 CSS Modules 相关配置，推荐使用 [output.cssModules](/config/output/css-modules) 配置项。
 :::
 
 ### Object 类型

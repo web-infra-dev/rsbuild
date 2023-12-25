@@ -7,7 +7,7 @@ describe('applyDefaultPlugins', () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createStubRsbuild({});
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
 
@@ -19,7 +19,7 @@ describe('applyDefaultPlugins', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({});
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
 
@@ -37,7 +37,7 @@ describe('applyDefaultPlugins', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
 
@@ -55,7 +55,7 @@ describe('applyDefaultPlugins', () => {
       },
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
 
@@ -83,7 +83,7 @@ describe('bundlerApi', () => {
       plugins: [testPlugin],
     });
 
-    const config = await rsbuild.unwrapWebpackConfig();
+    const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchInlineSnapshot(`
       {

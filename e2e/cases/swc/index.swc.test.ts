@@ -1,5 +1,5 @@
+import path from 'path';
 import assert from 'assert';
-import * as path from 'path';
 import { readFileSync } from 'fs';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
