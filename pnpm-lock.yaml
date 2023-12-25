@@ -1334,8 +1334,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       vue-loader:
-        specifier: ^17.2.2
-        version: 17.3.0(webpack@5.89.0)
+        specifier: ^17.4.0
+        version: 17.4.0(webpack@5.89.0)
       webpack:
         specifier: ^5.89.0
         version: 5.89.0
@@ -13924,8 +13924,8 @@ packages:
       - whiskers
     dev: false
 
-  /vue-loader@17.3.0(webpack@5.89.0):
-    resolution: {integrity: sha512-VUURABiN0TIUz0yvJJ/V/rZjGUh10JZtD+IDI5bXFslzFi9mV6ebKkPzoqiSi8e0vh8Ip7JHJx+I0AzAG0KsCA==}
+  /vue-loader@17.4.0(webpack@5.89.0):
+    resolution: {integrity: sha512-tq81JlBNWYvoYAh5PRZXg5bE7BEv0Id6W7BF5otj18MtHgu5OqiK9rQu0z73r+VGlIq0lLDoEeC7RWYynUpXlQ==}
     peerDependencies:
       '@vue/compiler-sfc': '*'
       vue: '*'
