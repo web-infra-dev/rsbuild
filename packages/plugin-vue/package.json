@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "vue-loader": "^17.2.2",
+    "vue-loader": "^17.4.0",
     "webpack": "^5.89.0"
   },
   "devDependencies": {
