@@ -57,10 +57,10 @@ export default {
     sourceMap: {
       js:
         process.env.NODE_ENV === 'production'
-          ? // 开发环境使用性能更好的 source map 格式
-            'cheap-module-source-map'
-          : // 生产环境使用高质量的 source map 格式
-            'source-map',
+          ? // 生产环境使用高质量的 source map 格式
+            'source-map'
+          : // 开发环境使用性能更好的 source map 格式
+            'cheap-module-source-map',
     },
   },
 };
