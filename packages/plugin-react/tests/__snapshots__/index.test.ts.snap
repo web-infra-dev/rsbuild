@@ -515,8 +515,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "safari >= 14",
                 ],
               },
-              "exclude": [],
-              "inlineSourcesContent": true,
               "isModule": "unknown",
               "jsc": {
                 "externalHelpers": true,
@@ -536,7 +534,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   },
                 },
               },
-              "minify": false,
               "sourceMaps": true,
             },
           },
@@ -564,8 +561,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "safari >= 14",
                 ],
               },
-              "exclude": [],
-              "inlineSourcesContent": true,
               "isModule": "unknown",
               "jsc": {
                 "externalHelpers": true,
@@ -585,7 +580,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   },
                 },
               },
-              "minify": false,
               "sourceMaps": true,
             },
           },

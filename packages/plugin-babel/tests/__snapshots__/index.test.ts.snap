@@ -34,8 +34,6 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
             "safari >= 14",
           ],
         },
-        "exclude": [],
-        "inlineSourcesContent": true,
         "isModule": "unknown",
         "jsc": {
           "externalHelpers": true,
@@ -50,7 +48,6 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
             "legacyDecorator": true,
           },
         },
-        "minify": false,
         "sourceMaps": true,
       },
     },

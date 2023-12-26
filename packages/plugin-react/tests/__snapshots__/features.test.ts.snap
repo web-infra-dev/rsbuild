@@ -113,8 +113,6 @@ exports[`transformImport > should apply antd & arco transformImport 1`] = `
             "safari >= 14",
           ],
         },
-        "exclude": [],
-        "inlineSourcesContent": true,
         "isModule": "unknown",
         "jsc": {
           "externalHelpers": true,
@@ -134,7 +132,6 @@ exports[`transformImport > should apply antd & arco transformImport 1`] = `
             },
           },
         },
-        "minify": false,
         "rspackExperiments": {
           "import": [
             {
@@ -187,8 +184,6 @@ exports[`transformImport > should not apply antd & arco when transformImport is 
             "safari >= 14",
           ],
         },
-        "exclude": [],
-        "inlineSourcesContent": true,
         "isModule": "unknown",
         "jsc": {
           "externalHelpers": true,
@@ -208,7 +203,6 @@ exports[`transformImport > should not apply antd & arco when transformImport is 
             },
           },
         },
-        "minify": false,
         "sourceMaps": true,
       },
     },
