@@ -23,6 +23,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "rspackFuture": {
+      "disableApplyEntryLazily": true,
+    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -657,7 +660,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""development"",
       },
-      "affectedHooks": undefined,
+      "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {
@@ -707,6 +710,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "rspackFuture": {
+      "disableApplyEntryLazily": true,
+    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1381,7 +1387,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""production"",
       },
-      "affectedHooks": undefined,
+      "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {
@@ -1439,6 +1445,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "rspackFuture": {
+      "disableApplyEntryLazily": true,
+    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1823,7 +1832,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""test"",
       },
-      "affectedHooks": undefined,
+      "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
   ],
@@ -1868,6 +1877,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "rspackFuture": {
+      "disableApplyEntryLazily": true,
+    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -2513,7 +2525,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""development"",
       },
-      "affectedHooks": undefined,
+      "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {

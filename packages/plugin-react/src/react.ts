@@ -25,12 +25,9 @@ const setupCompiler = (compiler: Rspack.Compiler) => {
     return;
   }
 
-  for (const key in compiler.options.entry) {
-    compiler.options.entry[key].import = [
-      reactRefreshEntry,
-      ...(compiler.options.entry[key].import || []),
-    ];
-  }
+  new compiler.webpack.EntryPlugin(compiler.context, reactRefreshEntry, {
+    name: undefined,
+  }).apply(compiler);
 };
 
 export const applyBasicReactSupport = (api: RsbuildPluginAPI) => {
