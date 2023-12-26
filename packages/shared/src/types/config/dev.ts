@@ -26,6 +26,10 @@ export interface DevConfig {
    */
   hmr?: boolean;
   /**
+   * Whether to reload the page when file changes are detected.
+   */
+  liveReload?: boolean;
+  /**
    * Used to set the page URL to open automatically when the Dev Server starts.
    * By default, no page will be opened.
    */
@@ -72,4 +76,4 @@ export interface DevConfig {
 }
 
 export type NormalizedDevConfig = DevConfig &
-  Required<Pick<DevConfig, 'hmr' | 'startUrl' | 'assetPrefix'>>;
+  Required<Pick<DevConfig, 'hmr' | 'liveReload' | 'startUrl' | 'assetPrefix'>>;

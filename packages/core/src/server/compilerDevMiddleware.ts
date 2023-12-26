@@ -100,14 +100,14 @@ export class CompilerDevMiddleware {
       },
     };
 
-    const enableHMR = this.devOptions.hmr;
+    const injectClient = this.devOptions.hmr || this.devOptions.liveReload;
 
     const middleware = devMiddleware({
       headers: devOptions.headers,
       publicPath: '/',
       stats: false,
       callbacks,
-      hmrClientPath: enableHMR
+      hmrClientPath: injectClient
         ? getHMRClientPath(devOptions.client)
         : undefined,
       serverSideRender: true,
