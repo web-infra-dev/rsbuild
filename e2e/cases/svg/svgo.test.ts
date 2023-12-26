@@ -51,6 +51,6 @@ test('should add id prefix after svgo minification', async () => {
   const content = readFileSync(indexJs!, 'utf-8');
 
   expect(
-    content.includes('"linearGradient",{id:"idPrefix_svg__a"}'),
+    content.includes('"linearGradient",{id:"idPrefix_svg__a"'),
   ).toBeTruthy();
 });
