@@ -54,9 +54,6 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
     fse.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
   );
 
-  // wait for hmr take effect
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
   await expect(locator).toHaveText('Hello Test!');
 
   // #test-keep should unchanged when app.tsx hmr
@@ -70,9 +67,6 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
   color: rgb(0, 0, 255);
 }`,
   );
-
-  // wait for hmr take effect
-  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   await expect(locator).toHaveCSS('color', 'rgb(0, 0, 255)');
 
@@ -183,8 +177,6 @@ rspackOnlyTest(
       fse.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
     );
 
-    // wait for hmr take effect
-    await new Promise((resolve) => setTimeout(resolve, 2000));
     await expect(locator).toHaveText('Hello Test!');
 
     // restore
@@ -263,8 +255,17 @@ test('devServer', async ({ page }) => {
   i = 0;
   reloadFn!();
 
-  // wait for page reload take effect
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  // check value of `i`
+  const maxChecks = 100;
+  let checks = 0;
+  while (checks < maxChecks) {
+    if (i === 0) {
+      checks++;
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    } else {
+      break;
+    }
+  }
 
   expect(i).toBeGreaterThanOrEqual(1);
 
