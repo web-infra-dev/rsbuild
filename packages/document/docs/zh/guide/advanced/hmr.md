@@ -4,18 +4,29 @@
 
 - 保留在完全重新加载页面期间丢失的应用程序状态。
 - 只更新变更内容，以节省宝贵的开发时间。
-- 在源代码中 CSS/JS 产生修改时，会立刻在浏览器中进行更新，这几乎相当于在浏览器 devtools 直接更改样式。
+- 在源代码中 CSS / JS 产生修改时，会立刻在浏览器中进行更新，这几乎相当于在浏览器 devtools 直接更改样式。
 
-## 启用 HMR
+## HMR 开关
 
 Rsbuild 已内置了对 HMR 的支持，在开发环境下默认启用。
 
-如果你不需要使用 HMR 能力，可以将 [dev.hmr](/config/dev/hmr) 设置为 false，此时将不再提供热更新和 react-refresh 功能。
+如果你不需要使用 HMR 能力，可以将 [dev.hmr](/config/dev/hmr) 设置为 `false`，此时热更新和 react-refresh 将被禁用，Rsbuild 会自动降级到 [dev.liveReload](/config/dev/live-reload)。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     hmr: false,
+  },
+};
+```
+
+如果你需要同时禁用 HMR 和 liveReload，可以将 [dev.hmr](/config/dev/hmr) 和 [dev.liveReload](/config/dev/live-reload) 都设置为 `false`，此时页面上不会发起 Web Socket 请求到 dev server，也不会在文件变更时自动刷新页面。
+
+```js title="rsbuild.config.ts"
+export default {
+  dev: {
+    hmr: false,
+    liveReload: false,
   },
 };
 ```
