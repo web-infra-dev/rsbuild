@@ -5,7 +5,11 @@
 
 Whether to enable Hot Module Replacement.
 
-If `hmr` is set to `false`, the HMR and react-refresh will no longer work.
+Please refer to [Hot Module Replacement](/guide/advanced/hmr) for more information.
+
+## Disabling HMR
+
+If `dev.hmr` is set to `false`, HMR and react-refresh will be disabled and Rsbuild will automatically fall back to [dev.liveReload](/config/dev/live-reload).
 
 ```js
 export default {
@@ -14,5 +18,3 @@ export default {
   },
 };
 ```
-
-See [Hot Module Replacement](/guide/advanced/hmr) for more information.

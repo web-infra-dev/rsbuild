@@ -4,18 +4,29 @@ Hot Module Replacement (HMR) exchanges, adds, or removes modules while an applic
 
 - Retain application state which is lost during a full reload.
 - Save valuable development time by only updating what's changed.
-- Instantly update the browser when modifications are made to CSS/JS in the source code, which is almost comparable to changing styles directly in the browser's dev tools.
+- Instantly update the browser when modifications are made to CSS / JS in the source code, which is almost comparable to changing styles directly in the browser's dev tools.
 
-## Enabling HMR
+## HMR Toggle
 
-Rsbuild has built-in support for HMR. By default, HMR is enabled in development.
+Rsbuild has built-in support for HMR, which is enabled by default during development.
 
-By setting [dev.hmr](/config/dev/hmr) to false, HMR can be disabled, which the HMR and react-refresh will no longer work.
+If you do not need to use HMR, you can set [dev.hmr](/config/dev/hmr) to `false`. This will disable HMR and react-refresh will, and Rsbuild will automatically fallback to [dev.liveReload](/config/dev/live-reload).
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     hmr: false,
+  },
+};
+```
+
+If you need to disable both HMR and liveReload, you can set both [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) to `false`. Then, no Web Socket requests will be made to the dev server on the page, and the page will not automatically refresh when files change.
+
+```js title="rsbuild.config.ts"
+export default {
+  dev: {
+    hmr: false,
+    liveReload: false,
   },
 };
 ```
