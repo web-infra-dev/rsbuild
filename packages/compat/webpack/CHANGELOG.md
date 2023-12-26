@@ -1,5 +1,13 @@
 # @rsbuild/webpack
 
+## 0.2.11
+
+### Patch Changes
+
+- Updated dependencies [2c21478]
+  - @rsbuild/core@0.2.11
+  - @rsbuild/shared@0.2.11
+
 ## 0.2.10
 
 ### Patch Changes

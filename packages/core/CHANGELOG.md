@@ -1,5 +1,12 @@
 # @rsbuild/core
 
+## 0.2.11
+
+### Patch Changes
+
+- 2c21478: fix: make hmr-client isomorphic
+  - @rsbuild/shared@0.2.11
+
 ## 0.2.10
 
 ### Patch Changes
