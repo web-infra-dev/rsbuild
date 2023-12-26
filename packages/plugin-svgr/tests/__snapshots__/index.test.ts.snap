@@ -58,7 +58,41 @@ exports[`svgr > 'export default Component' 1`] = `
       "type": "javascript/auto",
       "use": [
         {
-          "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
+          "loader": "builtin:swc-loader",
+          "options": {
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "shippedProposals": true,
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "exclude": [],
+            "inlineSourcesContent": true,
+            "isModule": "unknown",
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "decoratorMetadata": true,
+                "legacyDecorator": true,
+              },
+            },
+            "minify": false,
+            "sourceMaps": true,
+          },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader",
           "options": {
             "svgo": true,
             "svgoConfig": {
@@ -141,7 +175,41 @@ exports[`svgr > 'export default url' 1`] = `
       "type": "javascript/auto",
       "use": [
         {
-          "loader": "<ROOT>/node_modules/<PNPM_INNER>/@svgr/webpack/dist/index.js",
+          "loader": "builtin:swc-loader",
+          "options": {
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "shippedProposals": true,
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "exclude": [],
+            "inlineSourcesContent": true,
+            "isModule": "unknown",
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "decoratorMetadata": true,
+                "legacyDecorator": true,
+              },
+            },
+            "minify": false,
+            "sourceMaps": true,
+          },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader",
           "options": {
             "svgo": true,
             "svgoConfig": {
