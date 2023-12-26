@@ -41,6 +41,7 @@ import { getTerserMinifyOptions } from './minimize';
 
 export const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
+  liveReload: true,
   assetPrefix: DEFAULT_ASSET_PREFIX,
   startUrl: false,
 });

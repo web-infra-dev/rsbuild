@@ -121,7 +121,7 @@ export class SocketServer {
       }
     });
 
-    if (this.options.hmr) {
+    if (this.options.hmr || this.options.liveReload) {
       this.singleWrite(connection, 'hot');
     }
 
