@@ -14,7 +14,7 @@ import {
 } from './utils';
 import { SwcMinimizerPlugin } from './minimizer';
 
-const PLUGIN_NAME = 'plugin-swc';
+const PLUGIN_NAME = 'rsbuild-webpack:swc';
 
 /**
  * In this plugin, we do:
