@@ -40,6 +40,20 @@ Babel compilation will introduce extra overhead, in the example above, we use `i
 
 :::
 
+## JSX Type Inference
+
+When using Vue >= 3.3, please set `"jsxImportSource": "vue"` in `tsconfig.json` to enable JSX type inference.
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "jsxImportSource": "vue"
+  }
+}
+```
+
+For more details, see [Vue - JSX Type Inference](https://vuejs.org/guide/extras/render-function.html#jsx-type-inference).
+
 ## Options
 
 If you need to customize the compilation behavior of Vue, you can use the following configs.

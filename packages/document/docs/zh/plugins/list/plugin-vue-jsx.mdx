@@ -40,6 +40,20 @@ Babel 编译会产生额外的编译开销，在上述例子中，我们通过 `
 
 :::
 
+## JSX 类型推导
+
+在使用 Vue >= 3.3 版本时，请在 `tsconfig.json` 中设置 `"jsxImportSource": "vue"`，以启用 JSX 类型推导。
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "jsxImportSource": "vue"
+  }
+}
+```
+
+详见 [Vue - JSX Type Inference](https://vuejs.org/guide/extras/render-function.html#jsx-type-inference)。
+
 ## 选项
 
 如果你需要自定义 Vue 的编译行为，可以使用以下配置项。
