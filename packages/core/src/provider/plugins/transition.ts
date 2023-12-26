@@ -22,6 +22,8 @@ export const pluginTransition = (): RsbuildPlugin => ({
         'experiments.rspackFuture.disableApplyEntryLazily',
         true,
       );
+
+      setConfig(config, 'experiments.rspackFuture.newTreeshaking', true);
     });
   },
 });
