@@ -39,6 +39,8 @@ function getSvgoDefaultConfig() {
 export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
   name: 'rsbuild:svgr',
 
+  pre: ['rsbuild:babel', 'uni-builder:babel', 'rsbuild-webpack:swc'],
+
   setup(api) {
     api.modifyBundlerChain(async (chain, { isProd, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
@@ -81,11 +83,26 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
           filename: outputName,
         });
 
-      rule
-        .oneOf(CHAIN_ID.ONE_OF.SVG)
-        .type('javascript/auto')
+      const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+      const svgrRule = rule.oneOf(CHAIN_ID.ONE_OF.SVG).type('javascript/auto');
+
+      [CHAIN_ID.USE.SWC, CHAIN_ID.USE.BABEL].some((id) => {
+        const use = jsRule.uses.get(id);
+
+        if (use) {
+          svgrRule
+            .use(id)
+            .loader(use.get('loader'))
+            .options(use.get('options'));
+          return true;
+        }
+
+        return false;
+      });
+
+      svgrRule
         .use(CHAIN_ID.USE.SVGR)
-        .loader(require.resolve('@svgr/webpack'))
+        .loader(path.resolve(__dirname, './loader'))
         .options({
           svgo: true,
           svgoConfig: getSvgoDefaultConfig(),

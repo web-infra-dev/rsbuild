@@ -1,0 +1,64 @@
+/**
+ * Copyright (c) 2017, Smooth Code
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ * modified from https://github.com/gregberge/svgr/blob/7595d378b73d4826a4cead165b3f32386b07315b/packages/webpack/src/index.ts
+ */
+
+import { callbackify } from 'util';
+import { transform, Config, State } from '@svgr/core';
+import { normalize } from 'path';
+import svgo from '@svgr/plugin-svgo';
+import jsx from '@svgr/plugin-jsx';
+import type { Rspack } from '@rsbuild/core';
+
+const transformSvg = callbackify(
+  async (contents: string, config: Config, state: Partial<State>) =>
+    transform(contents, config, state),
+);
+
+function svgrLoader(
+  this: Rspack.LoaderContext<Config>,
+  contents: string,
+): void {
+  this.cacheable && this.cacheable();
+  const callback = this.async();
+
+  const options = this.getOptions();
+
+  const previousExport = (() => {
+    if (contents.startsWith('export ')) return contents;
+    const exportMatches = contents.match(/^module.exports\s*=\s*(.*)/);
+    return exportMatches ? `export default ${exportMatches[1]}` : null;
+  })();
+
+  const state = {
+    caller: {
+      name: '@rsbuild/plugin-svgr',
+      previousExport,
+      defaultPlugins: [svgo, jsx],
+    },
+    filePath: normalize(this.resourcePath),
+  };
+
+  if (!previousExport) {
+    transformSvg(contents, options, state, callback);
+  } else {
+    this.fs.readFile(this.resourcePath, (err: Error, result: unknown) => {
+      if (err) {
+        callback(err);
+        return;
+      }
+      transformSvg(String(result), options, state, (err, content) => {
+        if (err) {
+          callback(err);
+          return;
+        }
+        callback(null, content);
+      });
+    });
+  }
+}
+
+export default svgrLoader;
