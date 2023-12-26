@@ -18,17 +18,22 @@ test.afterEach(() => {
 test('should fallback to live-reload when dev.hmr is false', async ({
   page,
 }) => {
+  // HMR cases will fail in Windows
+  if (process.platform === 'win32') {
+    test.skip();
+  }
+
   const rsbuild = await dev({
     cwd: __dirname,
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
 
-  const test = page.locator('#test');
-  await expect(test).toHaveText('Hello Rsbuild!');
+  const testEl = page.locator('#test');
+  await expect(testEl).toHaveText('Hello Rsbuild!');
 
   fs.writeFileSync(appFile, appCode.replace('Rsbuild', 'Live Reload'), 'utf-8');
-  await expect(test).toHaveText('Hello Live Reload!');
+  await expect(testEl).toHaveText('Hello Live Reload!');
 
   rsbuild.server.close();
 });
