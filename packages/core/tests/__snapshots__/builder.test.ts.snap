@@ -498,8 +498,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "safari >= 14",
                 ],
               },
-              "exclude": [],
-              "inlineSourcesContent": true,
               "isModule": "unknown",
               "jsc": {
                 "externalHelpers": true,
@@ -514,7 +512,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "legacyDecorator": true,
                 },
               },
-              "minify": false,
               "sourceMaps": true,
             },
           },
@@ -542,8 +539,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "safari >= 14",
                 ],
               },
-              "exclude": [],
-              "inlineSourcesContent": true,
               "isModule": "unknown",
               "jsc": {
                 "externalHelpers": true,
@@ -558,7 +553,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "legacyDecorator": true,
                 },
               },
-              "minify": false,
               "sourceMaps": true,
             },
           },

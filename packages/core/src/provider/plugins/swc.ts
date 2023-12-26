@@ -39,13 +39,10 @@ export async function getDefaultSwcConfig(
       preserveAllComments: true,
     },
     isModule: 'unknown',
-    minify: false, // for loader, we don't need to minify, we do minification using plugin
     env: {
       targets: await getBrowserslistWithDefault(rootPath, config, target),
     },
     sourceMaps: Boolean(getJsSourceMap(config)),
-    exclude: [],
-    inlineSourcesContent: true,
   };
 }
 

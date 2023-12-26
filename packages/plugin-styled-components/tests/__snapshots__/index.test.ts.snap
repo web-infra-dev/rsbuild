@@ -24,8 +24,6 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
             "node >= 14",
           ],
         },
-        "exclude": [],
-        "inlineSourcesContent": true,
         "isModule": "unknown",
         "jsc": {
           "externalHelpers": true,
@@ -40,7 +38,6 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
             "legacyDecorator": true,
           },
         },
-        "minify": false,
         "rspackExperiments": {
           "styledComponents": {
             "displayName": true,
@@ -86,8 +83,6 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
             "safari >= 14",
           ],
         },
-        "exclude": [],
-        "inlineSourcesContent": true,
         "isModule": "unknown",
         "jsc": {
           "externalHelpers": true,
@@ -102,7 +97,6 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
             "legacyDecorator": true,
           },
         },
-        "minify": false,
         "rspackExperiments": {
           "styledComponents": {
             "displayName": true,
@@ -148,8 +142,6 @@ exports[`plugins/styled-components > should works in rspack mode 1`] = `
             "safari >= 14",
           ],
         },
-        "exclude": [],
-        "inlineSourcesContent": true,
         "isModule": "unknown",
         "jsc": {
           "externalHelpers": true,
@@ -164,7 +156,6 @@ exports[`plugins/styled-components > should works in rspack mode 1`] = `
             "legacyDecorator": true,
           },
         },
-        "minify": false,
         "rspackExperiments": {
           "styledComponents": {
             "displayName": true,

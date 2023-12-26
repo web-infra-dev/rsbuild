@@ -71,8 +71,6 @@ exports[`svgr > 'export default Component' 1`] = `
                 "safari >= 14",
               ],
             },
-            "exclude": [],
-            "inlineSourcesContent": true,
             "isModule": "unknown",
             "jsc": {
               "externalHelpers": true,
@@ -87,7 +85,6 @@ exports[`svgr > 'export default Component' 1`] = `
                 "legacyDecorator": true,
               },
             },
-            "minify": false,
             "sourceMaps": true,
           },
         },
@@ -188,8 +185,6 @@ exports[`svgr > 'export default url' 1`] = `
                 "safari >= 14",
               ],
             },
-            "exclude": [],
-            "inlineSourcesContent": true,
             "isModule": "unknown",
             "jsc": {
               "externalHelpers": true,
@@ -204,7 +199,6 @@ exports[`svgr > 'export default url' 1`] = `
                 "legacyDecorator": true,
               },
             },
-            "minify": false,
             "sourceMaps": true,
           },
         },

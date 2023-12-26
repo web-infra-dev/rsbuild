@@ -154,12 +154,9 @@ export function getDefaultSwcConfig(): TransformConfig {
       // https://github.com/swc-project/swc/issues/6403
       preserveAllComments: true,
     },
-    minify: false, // for loader, we don't need to minify, we do minification using plugin
     sourceMaps: true,
     env: {
       targets: DEFAULT_BROWSERSLIST.web.join(', '),
     },
-    exclude: [],
-    inlineSourcesContent: true,
   };
 }
