@@ -12,6 +12,21 @@ import { PackageManagerTabs } from '@theme';
 
 Then select `Svelte` when prompted to "Select framework".
 
+## Use Svelte in an existing project
+
+To compile Svelte components (`.svelte` files), you need to register the Rsbuild [Svelte plugin](/plugins/list/plugin-svelte). The plugin will automatically add the necessary configuration for Svelte builds.
+
+For example, register in `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginSvelte } from '@rsbuild/plugin-svelte';
+
+export default defineConfig({
+  plugins: [pluginSvelte()],
+});
+```
+
 import DeployApp from '@en/shared/deployApp.md';
 
 <DeployApp />
