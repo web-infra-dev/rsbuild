@@ -23,6 +23,9 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "rspackFuture": {
+      "disableApplyEntryLazily": true,
+    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -657,7 +660,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""development"",
       },
-      "affectedHooks": undefined,
+      "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
     RemoveCssSourcemapPlugin {

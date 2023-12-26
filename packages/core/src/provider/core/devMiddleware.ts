@@ -12,12 +12,9 @@ function applyHMREntry(compiler: Compiler, clientPath: string) {
     return;
   }
 
-  for (const key in compiler.options.entry) {
-    compiler.options.entry[key].import = [
-      clientPath,
-      ...(compiler.options.entry[key].import || []),
-    ];
-  }
+  new compiler.webpack.EntryPlugin(compiler.context, clientPath, {
+    name: undefined,
+  }).apply(compiler);
 }
 
 export const getDevMiddleware =
