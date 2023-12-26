@@ -12,6 +12,28 @@ import { PackageManagerTabs } from '@theme';
 
 Then select `Solid` when prompted to "Select framework".
 
+## Use Solid in an existing project
+
+To compile Solid components, you need to register the Rsbuild [Solid plugin](/plugins/list/plugin-solid). The plugin will automatically add the necessary configuration for Solid builds.
+
+For example, register in `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+
+export default defineConfig({
+  plugins: [
+    pluginBabel({
+      include: /\.(jsx|tsx)$/,
+      exclude: /[\\/]node_modules[\\/]/,
+    }),
+    pluginSolid(),
+  ],
+});
+```
+
 import DeployApp from '@en/shared/deployApp.md';
 
 <DeployApp />

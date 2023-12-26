@@ -12,6 +12,28 @@ import { PackageManagerTabs } from '@theme';
 
 然后在 `Select framework` 时选择 `Solid` 即可。
 
+## 在已有项目中使用 Solid
+
+为了能够编译 Solid 组件，你需要注册 Rsbuild 的 [Solid 插件](/plugins/list/plugin-solid)，插件会自动添加 Solid 构建所需的配置。
+
+例如，在 `rsbuild.config.ts` 中注册：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+
+export default defineConfig({
+  plugins: [
+    pluginBabel({
+      include: /\.(jsx|tsx)$/,
+      exclude: /[\\/]node_modules[\\/]/,
+    }),
+    pluginSolid(),
+  ],
+});
+```
+
 import DeployApp from '@zh/shared/deployApp.md';
 
 <DeployApp />
