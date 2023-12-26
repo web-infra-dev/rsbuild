@@ -39,6 +39,8 @@ function getSvgoDefaultConfig() {
 export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
   name: 'rsbuild:svgr',
 
+  pre: ['rsbuild:babel', 'uni-builder:babel', 'rsbuild-webpack:swc'],
+
   setup(api) {
     api.modifyBundlerChain(async (chain, { isProd, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
