@@ -75,10 +75,9 @@ function generateLinks(
   const htmlChunks =
     // Handle all chunks.
     options.type === 'all-assets' || HTMLCount === 1
-      ? extractedChunks // Only handle chunks imported by this HtmlWebpackPlugin.
-      : extractedChunks.filter((chunk) =>
-          // TODO: Not yet supported in rspack, maybe we should implement it in another way
-          // https://github.com/web-infra-dev/rspack/issues/3896
+      ? extractedChunks
+      : // Only handle chunks imported by this HtmlWebpackPlugin.
+        extractedChunks.filter((chunk) =>
           doesChunkBelongToHtml({
             chunk,
             compilation,
