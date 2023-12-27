@@ -274,4 +274,66 @@ describe('plugin-html', () => {
       expect(config).toMatchSnapshot();
     },
   );
+
+  it('should skip html plugin when htmlPlugin gives a object with `disabled: true`', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginEntry(), pluginHtml()],
+
+      rsbuildConfig: {
+        source: {
+          entry: { index: './src/index.js', index2: './src/index2.js' },
+        },
+        tools: {
+          htmlPlugin: (_, { entryName }) => {
+            if (entryName === 'index2') {
+              // skip index2
+              return { disabled: true };
+            }
+          },
+        },
+      },
+    });
+
+    await expect(
+      rsbuild.matchBundlerPlugins('HtmlWebpackPlugin'),
+    ).resolves.toHaveLength(1);
+  });
+
+  it('should create extra html plugins when htmlPlugin gives a list of flavors', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginEntry(), pluginHtml()],
+
+      rsbuildConfig: {
+        source: {
+          entry: {
+            index: './src/index.js',
+            index2: './src/index2.js',
+            vendor: './src/vendor.js',
+          },
+        },
+        tools: {
+          htmlPlugin: (options, { entryName }) => {
+            if (entryName === 'vendor') {
+              // 0 html output for `vendor` entry
+              return { disabled: true };
+            }
+            if (entryName === 'index2') {
+              // 1 html output for `index2` entry
+              return;
+            }
+            // 2 html output for `index` entry
+            return {
+              ...options,
+              filename: 'green.html',
+              flavors: [{ filename: 'red.html' }],
+            };
+          },
+        },
+      },
+    });
+
+    await expect(
+      rsbuild.matchBundlerPlugins('HtmlWebpackPlugin'),
+    ).resolves.toHaveLength(3);
+  });
 });
