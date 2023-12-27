@@ -43,7 +43,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.performance(),
     plugins.networkPerformance(),
     plugins.preloadOrPrefetch(),
-    import('./plugins/server').then((m) => m.pluginServer()),
+    plugins.server(),
   ]);
 
 export const getCompiledPath = (packageName: string) => {

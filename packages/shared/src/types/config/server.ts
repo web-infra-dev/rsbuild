@@ -43,7 +43,7 @@ export type PublicDir =
        */
       name?: string;
       /**
-       * Whether copy files from the publicDir into the distDir on build
+       * Whether to copy files from the publicDir to the distDir on production build
        * @default true
        */
       copyOnBuild?: boolean;
