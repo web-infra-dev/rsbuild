@@ -3,7 +3,7 @@
 - **Type:**
 
 ```ts
-type Entry = Record<string, string | string[]>;
+type Entry = Record<string, string | string[] | EntryDescription>;
 ```
 
 - **Default:**
@@ -48,3 +48,26 @@ The generated directory structure is as follows:
 ```
 
 If you do not need to generate HTML files, you can set [tools.htmlPlugin](/config/tools/html-plugin) to `false` to disable this behavior.
+
+## Description Object
+
+`source.entry` also supports Rspack's entry description object. For example:
+
+```ts
+export default {
+  source: {
+    entry: {
+      foo: {
+        import: './src/foo.js',
+        runtime: 'foo',
+      },
+      bar: {
+        import: './src/bar.js',
+        runtime: 'bar',
+      },
+    },
+  },
+};
+```
+
+For the complete usage of the description object, please refer to [Rspack - Entry Description Object](https://rspack.dev/config/entry#entry-description-object).

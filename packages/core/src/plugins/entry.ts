@@ -1,5 +1,6 @@
-import { castArray, color, createVirtualModule } from '@rsbuild/shared';
+import { color, castArray, createVirtualModule } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
+import type { EntryDescription } from '@rspack/core';
 
 export const pluginEntry = (): RsbuildPlugin => ({
   name: 'rsbuild:entry',
@@ -14,7 +15,26 @@ export const pluginEntry = (): RsbuildPlugin => ({
         config.output.polyfill === 'entry' && !isServer && !isServiceWorker;
 
       Object.keys(entry).forEach((entryName) => {
-        const appendEntry = (file: string) => chain.entry(entryName).add(file);
+        const entryImport: string[] = [];
+        let entryDescription: EntryDescription | null = null;
+
+        const appendEntry = (item: string | EntryDescription) => {
+          if (typeof item === 'string') {
+            entryImport.push(item);
+            return;
+          }
+
+          if (item.import) {
+            entryImport.push(...castArray(item.import));
+          }
+
+          if (entryDescription) {
+            // merge entry description object
+            Object.assign(entryDescription, item);
+          } else {
+            entryDescription = item;
+          }
+        };
 
         preEntry.forEach(appendEntry);
 
@@ -23,6 +43,19 @@ export const pluginEntry = (): RsbuildPlugin => ({
         }
 
         castArray(entry[entryName]).forEach(appendEntry);
+
+        chain.entryPoints.set(entryName, {
+          // @ts-expect-error EntryDescription type mismatch
+          values() {
+            if (entryDescription) {
+              return {
+                ...entryDescription,
+                import: entryImport,
+              };
+            }
+            return entryImport;
+          },
+        });
       });
     });
 

@@ -13,6 +13,7 @@ import {
   mergeChainedOptions,
   isNil,
 } from '@rsbuild/shared';
+import type { EntryDescription } from '@rspack/core';
 import type {
   HtmlConfig,
   RsbuildPluginAPI,
@@ -157,15 +158,19 @@ function getTemplateParameters(
   };
 }
 
-function getChunks(entryName: string, entryValue: string | string[]) {
-  const dependOn = [];
-
+function getChunks(
+  entryName: string,
+  entryValue: string | string[] | EntryDescription,
+): string[] {
   if (isPlainObject(entryValue)) {
-    // @ts-expect-error assume entry is an entry object
-    dependOn.push(...entryValue.dependOn);
+    // @ts-expect-error Rspack do not support dependOn yet
+    const { dependOn } = entryValue as EntryDescription;
+    if (Array.isArray(dependOn)) {
+      return [...dependOn, entryName];
+    }
   }
 
-  return [...dependOn, entryName];
+  return [entryName];
 }
 
 export const applyInjectTags = (api: RsbuildPluginAPI) => {
@@ -241,8 +246,12 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
         await Promise.all(
           entryNames.map(async (entryName) => {
-            const entryValue = entries[entryName].values() as string | string[];
-            const chunks = getChunks(entryName, entryValue);
+            const entryValue = entries[entryName].values();
+            const chunks = getChunks(
+              entryName,
+              // @ts-expect-error EntryDescription type mismatch
+              entryValue,
+            );
             const inject = getInject(entryName, config);
             const filename = htmlPaths[entryName];
             const { templatePath, templateContent } = await getTemplate(
