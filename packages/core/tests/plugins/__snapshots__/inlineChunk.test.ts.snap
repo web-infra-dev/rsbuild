@@ -65,7 +65,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
       "inlinedAssets": Set {},
       "name": "InlineChunkHtmlPlugin",
       "scriptTests": [
-        /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
+        /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
       ],
       "styleTests": [],
     },

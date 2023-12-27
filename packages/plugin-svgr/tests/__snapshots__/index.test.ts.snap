@@ -9,8 +9,8 @@ exports[`svgr > 'export default Component' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
         ],
       },
       "resourceQuery": /\\(__inline=false\\|url\\)/,
@@ -19,8 +19,8 @@ exports[`svgr > 'export default Component' 1`] = `
     {
       "issuer": {
         "not": [
-          /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
         ],
       },
       "resourceQuery": /inline/,
@@ -32,8 +32,8 @@ exports[`svgr > 'export default Component' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
         ],
       },
       "parser": {
@@ -123,8 +123,8 @@ exports[`svgr > 'export default url' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
         ],
       },
       "resourceQuery": /\\(__inline=false\\|url\\)/,
@@ -133,8 +133,8 @@ exports[`svgr > 'export default url' 1`] = `
     {
       "issuer": {
         "not": [
-          /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
         ],
       },
       "resourceQuery": /inline/,
@@ -146,8 +146,8 @@ exports[`svgr > 'export default url' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
         ],
       },
       "parser": {

@@ -62,14 +62,14 @@ export const DEFAULT_ASSET_PREFIX = '/';
 // RegExp
 export const HTML_REGEX = /\.html$/;
 export const JSON_REGEX = /\.json$/;
-export const JS_REGEX = /\.(js|mjs|cjs|jsx)$/;
-export const TS_REGEX = /\.(ts|mts|cts|tsx)$/;
-export const SCRIPT_REGEX = /\.(js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
-export const TS_AND_JSX_REGEX = /\.(ts|tsx|jsx|mts|cts)$/;
+export const JS_REGEX = /\.(?:js|mjs|cjs|jsx)$/;
+export const TS_REGEX = /\.(?:ts|mts|cts|tsx)$/;
+export const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
+export const TS_AND_JSX_REGEX = /\.(?:ts|tsx|jsx|mts|cts)$/;
 export const SVG_REGEX = /\.svg$/;
 export const CSS_REGEX = /\.css$/;
 export const LESS_REGEX = /\.less$/;
-export const SASS_REGEX = /\.s(a|c)ss$/;
+export const SASS_REGEX = /\.s(?:a|c)ss$/;
 export const CSS_MODULES_REGEX = /\.module\.\w+$/i;
 export const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
 

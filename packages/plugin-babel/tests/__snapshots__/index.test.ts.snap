@@ -14,10 +14,10 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
         },
       ],
     },
-    /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]query-string\\[\\\\\\\\/\\]/,
   ],
-  "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
     {
@@ -81,7 +81,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
@@ -116,7 +116,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
