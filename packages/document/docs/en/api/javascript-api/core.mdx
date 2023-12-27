@@ -27,8 +27,6 @@ const rsbuild = await createRsbuild({
 The first parameter of `createRsbuild` is a options object, you can pass in the following options:
 
 ```ts
-type RsbuildEntry = Record<string, string | string[]>;
-
 type CreateRsbuildOptions = {
   cwd?: string;
   rsbuildConfig?: RsbuildConfig;

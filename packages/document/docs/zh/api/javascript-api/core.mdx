@@ -27,8 +27,6 @@ const rsbuild = await createRsbuild({
 `createRsbuild` 的第一个参数是一个配置对象，你可以传入以下选项：
 
 ```ts
-type RsbuildEntry = Record<string, string | string[]>;
-
 type CreateRsbuildOptions = {
   cwd?: string;
   rsbuildConfig?: RsbuildConfig;
