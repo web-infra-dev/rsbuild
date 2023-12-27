@@ -1,5 +1,11 @@
 # @rsbuild/shared
 
+## 0.2.12
+
+### Patch Changes
+
+- 6c0c710: fix: handle css-loader mode option correctly
+
 ## 0.2.11
 
 ## 0.2.10
