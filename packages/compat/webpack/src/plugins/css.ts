@@ -9,7 +9,7 @@ import {
   getBrowserslistWithDefault,
   getCssModuleLocalIdentName,
   getSharedPkgCompiledPath,
-  type Context,
+  type RsbuildContext,
   type RsbuildPlugin,
   type NormalizedConfig,
   type BundlerChainRule,
@@ -25,7 +25,7 @@ export async function applyBaseCSSRule({
 }: {
   rule: BundlerChainRule;
   config: NormalizedConfig;
-  context: Context;
+  context: RsbuildContext;
   utils: ModifyChainUtils;
   importLoaders?: number;
 }) {

@@ -13,7 +13,7 @@ import {
   mergeChainedOptions,
   getSharedPkgCompiledPath,
   type BundlerChain,
-  type Context,
+  type RsbuildContext,
   type RspackRule,
   type RuleSetRule,
   type ModifyBundlerChainUtils,
@@ -32,7 +32,7 @@ export async function applyBaseCSSRule({
 }: {
   rule: ReturnType<BundlerChain['module']['rule']>;
   config: NormalizedConfig;
-  context: Context;
+  context: RsbuildContext;
   utils: ModifyBundlerChainUtils;
   importLoaders?: number;
 }) {

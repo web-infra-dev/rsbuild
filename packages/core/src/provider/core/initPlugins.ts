@@ -7,7 +7,7 @@ import {
   type GetRsbuildConfig,
 } from '@rsbuild/shared';
 import { createPublicContext } from './createContext';
-import type { Context, NormalizedConfig } from '../../types';
+import type { InternalContext, NormalizedConfig } from '../../types';
 
 export function getHTMLPathByEntry(
   entryName: string,
@@ -26,7 +26,7 @@ export function getPluginAPI({
   context,
   pluginStore,
 }: {
-  context: Context;
+  context: InternalContext;
   pluginStore: PluginStore;
 }): RsbuildPluginAPI {
   const { hooks } = context;

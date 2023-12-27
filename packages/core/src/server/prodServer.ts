@@ -14,7 +14,7 @@ import {
 } from '@rsbuild/shared';
 import { formatRoutes, getServerOptions, printServerURLs } from './helper';
 import { faviconFallbackMiddleware } from './middlewares';
-import type { Context } from '../types';
+import type { InternalContext } from '../types';
 import { createHttpServer } from './httpServer';
 
 type RsbuildProdServerOptions = {
@@ -131,7 +131,7 @@ export class RsbuildProdServer {
 }
 
 export async function startProdServer(
-  context: Context,
+  context: InternalContext,
   rsbuildConfig: RsbuildConfig,
   { printURLs = true, getPortSilently }: PreviewServerOptions = {},
 ) {

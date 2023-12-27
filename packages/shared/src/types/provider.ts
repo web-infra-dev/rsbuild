@@ -1,5 +1,5 @@
 import type { PluginStore, Plugins, RsbuildPluginAPI } from './plugin';
-import type { Context } from './context';
+import type { RsbuildContext } from './context';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
 import type { StartServerResult, DevServerAPIs } from './server';
@@ -59,7 +59,7 @@ export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
 export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   readonly bundler: Bundler;
 
-  readonly publicContext: Readonly<Context>;
+  readonly publicContext: Readonly<RsbuildContext>;
 
   pluginAPI: RsbuildPluginAPI;
 

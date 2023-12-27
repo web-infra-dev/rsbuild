@@ -14,7 +14,7 @@ import type {
   ModifyBundlerChainFn,
   ModifyChainUtils,
 } from './hooks';
-import { Context } from './context';
+import type { RsbuildContext } from './context';
 import {
   RsbuildConfig,
   NormalizedConfig,
@@ -126,7 +126,7 @@ export type GetRsbuildConfig = {
  * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
 export type RsbuildPluginAPI = {
-  context: Readonly<Context>;
+  context: Readonly<RsbuildContext>;
   isPluginExists: PluginStore['isPluginExists'];
 
   onExit: (fn: OnExitFn) => void;

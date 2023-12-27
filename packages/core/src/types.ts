@@ -1,7 +1,7 @@
 import type {
-  Context as BaseContext,
   RsbuildConfig,
   RsbuildPlugin,
+  RsbuildContext,
   NormalizedConfig,
   RsbuildPluginAPI,
 } from '@rsbuild/shared';
@@ -10,7 +10,7 @@ import type { Hooks } from './provider/core/initHooks';
 export type { RsbuildPlugin, RsbuildPluginAPI };
 
 /** The inner context. */
-export type Context = BaseContext & {
+export type InternalContext = RsbuildContext & {
   /** All hooks. */
   hooks: Readonly<Hooks>;
   /** Current Rsbuild config. */

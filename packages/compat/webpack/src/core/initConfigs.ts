@@ -4,13 +4,16 @@ import {
   type InspectConfigOptions,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
-import { initRsbuildConfig, type Context } from '@rsbuild/core/provider';
+import {
+  initRsbuildConfig,
+  type InternalContext,
+} from '@rsbuild/core/provider';
 import { inspectConfig } from './inspectConfig';
 import { generateWebpackConfig } from './webpackConfig';
 import type { WebpackConfig } from '../types';
 
 export type InitConfigsOptions = {
-  context: Context;
+  context: InternalContext;
   pluginStore: PluginStore;
   rsbuildOptions: Required<CreateRsbuildOptions>;
 };
