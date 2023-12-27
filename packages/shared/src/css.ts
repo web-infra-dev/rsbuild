@@ -38,7 +38,7 @@ export const isCssModules = (filename: string, modules: CssLoaderModules) => {
   // Same as the `mode` option
   // https://github.com/webpack-contrib/css-loader?tab=readme-ov-file#mode
   if (typeof modules === 'string') {
-    // CSS Modules will be disabled if mode is false
+    // CSS Modules will be disabled if mode is 'global'
     return modules !== 'global';
   }
 
