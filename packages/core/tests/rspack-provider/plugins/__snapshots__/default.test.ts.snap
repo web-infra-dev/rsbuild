@@ -470,7 +470,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             ],
           },
         ],
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
       },
       {
         "include": [
@@ -482,9 +482,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
             ],
           },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -1157,7 +1157,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             ],
           },
         ],
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
       },
       {
         "include": [
@@ -1169,9 +1169,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
             ],
           },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -1707,7 +1707,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             ],
           },
         ],
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
       },
       {
         "include": [
@@ -1719,9 +1719,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
             ],
           },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -2332,7 +2332,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             ],
           },
         ],
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
       },
       {
         "include": [
@@ -2344,9 +2344,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
             ],
           },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {

@@ -11,9 +11,9 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
         },
       ],
     },
-    /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
-  "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
     {
@@ -64,9 +64,9 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
         },
       ],
     },
-    /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
-  "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
     {
@@ -123,9 +123,9 @@ exports[`plugins/styled-components > should works in rspack mode 1`] = `
         },
       ],
     },
-    /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
-  "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
     {

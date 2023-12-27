@@ -5,7 +5,7 @@ exports[`plugin-vue-jsx > should allow to configure jsx babel plugin options 1`]
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
@@ -47,7 +47,7 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
@@ -87,7 +87,7 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly in rspack mode
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",

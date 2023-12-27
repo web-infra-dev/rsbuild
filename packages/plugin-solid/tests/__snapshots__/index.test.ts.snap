@@ -5,7 +5,7 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
@@ -56,7 +56,7 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
@@ -104,7 +104,7 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",

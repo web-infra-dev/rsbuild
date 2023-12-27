@@ -3,12 +3,13 @@ import { merge } from 'lodash';
 import { logger } from '@rsbuild/core';
 import {
   color,
+  CSS_REGEX,
   getSwcMinimizerOptions,
   type NormalizedConfig,
 } from '@rsbuild/shared';
 import { Output, JsMinifyOptions, CssMinifyOptions } from './types';
 import { minify, minifyCss } from './binding';
-import { CSS_REGEX, JS_REGEX } from './constants';
+import { JS_REGEX } from './constants';
 
 export interface NormalizedSwcMinifyOption {
   jsMinify?: JsMinifyOptions;

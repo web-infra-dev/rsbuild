@@ -216,7 +216,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           "preferRelative": true,
         },
         "sideEffects": true,
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
@@ -712,7 +712,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           "preferRelative": true,
         },
         "sideEffects": true,
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
@@ -1225,7 +1225,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "preferRelative": true,
         },
         "sideEffects": true,
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
         "use": [
           {
             "loader": "@rsbuild/shared/ignore-css-loader",
@@ -1577,7 +1577,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "preferRelative": true,
         },
         "sideEffects": true,
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
         "use": [
           {
             "loader": "@rsbuild/shared/ignore-css-loader",
