@@ -9,14 +9,14 @@ import {
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
 } from '@rsbuild/shared';
-import type { Context } from '@rsbuild/core/provider';
+import type { InternalContext } from '@rsbuild/core/provider';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import type WebpackChain from 'webpack-chain';
 import type { WebpackConfig } from '../types';
 
 async function modifyWebpackChain(
-  context: Context,
+  context: InternalContext,
   utils: ModifyWebpackChainUtils,
   chain: WebpackChain,
 ): Promise<WebpackChain> {
@@ -41,7 +41,7 @@ async function modifyWebpackChain(
 }
 
 async function modifyWebpackConfig(
-  context: Context,
+  context: InternalContext,
   webpackConfig: WebpackConfig,
   utils: ModifyWebpackConfigUtils,
 ): Promise<WebpackConfig> {
@@ -149,7 +149,7 @@ export async function generateWebpackConfig({
   context,
 }: {
   target: RsbuildTarget;
-  context: Context;
+  context: InternalContext;
 }) {
   const chainUtils = await getChainUtils(target);
   const {

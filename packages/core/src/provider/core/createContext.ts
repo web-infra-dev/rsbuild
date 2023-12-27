@@ -6,14 +6,14 @@ import {
   isFileExists,
   RsbuildConfig,
   TS_CONFIG_FILE,
-  type Context as BaseContext,
   type BundlerType,
   type RsbuildEntry,
   type RsbuildTarget,
+  type RsbuildContext,
   type NormalizedConfig,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
-import type { Context } from '../../types';
+import type { InternalContext } from '../../types';
 import { initHooks } from './initHooks';
 import { withDefaultConfig } from '../config';
 
@@ -55,13 +55,13 @@ export function createContextByConfig(
   options: Required<CreateRsbuildOptions>,
   bundlerType: BundlerType,
   config: RsbuildConfig = {},
-): BaseContext {
+): RsbuildContext {
   const { cwd } = options;
   const rootPath = cwd;
   const distPath = getAbsoluteDistPath(cwd, config);
   const cachePath = join(rootPath, 'node_modules', '.cache');
 
-  const context: BaseContext = {
+  const context: RsbuildContext = {
     entry: config.source?.entry || getDefaultEntry(rootPath),
     targets: config.output?.targets || [],
     version: RSBUILD_VERSION,
@@ -75,7 +75,7 @@ export function createContextByConfig(
 }
 
 export function updateContextByNormalizedConfig(
-  context: BaseContext,
+  context: RsbuildContext,
   config: NormalizedConfig,
 ) {
   context.targets = config.output.targets as RsbuildTarget[];
@@ -87,8 +87,8 @@ export function updateContextByNormalizedConfig(
 }
 
 export function createPublicContext(
-  context: BaseContext,
-): Readonly<BaseContext> {
+  context: RsbuildContext,
+): Readonly<RsbuildContext> {
   const exposedKeys = [
     'entry',
     'targets',
@@ -104,13 +104,13 @@ export function createPublicContext(
 
   // Using Proxy to get the current value of context.
   return new Proxy(context, {
-    get(target, prop: keyof BaseContext) {
+    get(target, prop: keyof RsbuildContext) {
       if (exposedKeys.includes(prop)) {
         return target[prop];
       }
       return undefined;
     },
-    set(_, prop: keyof BaseContext) {
+    set(_, prop: keyof RsbuildContext) {
       logger.error(
         `Context is readonly, you can not assign to the "context.${prop}" prop.`,
       );
@@ -127,7 +127,7 @@ export async function createContext(
   options: Required<CreateRsbuildOptions>,
   userRsbuildConfig: RsbuildConfig,
   bundlerType: BundlerType,
-): Promise<Context> {
+): Promise<InternalContext> {
   const rsbuildConfig = withDefaultConfig(userRsbuildConfig);
   const context = createContextByConfig(options, bundlerType, rsbuildConfig);
 

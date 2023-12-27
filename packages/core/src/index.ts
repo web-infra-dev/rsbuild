@@ -22,10 +22,10 @@ export type {
   RsbuildPluginAPI,
 } from './types';
 export type {
-  Context as RsbuildContext,
   RsbuildMode,
   RsbuildEntry,
   RsbuildTarget,
+  RsbuildContext,
   RsbuildInstance,
   CreateRsbuildOptions,
   InspectConfigOptions,

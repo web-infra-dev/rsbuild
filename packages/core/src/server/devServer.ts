@@ -18,14 +18,14 @@ import {
 import { formatRoutes, getDevOptions, printServerURLs } from './helper';
 import connect from '@rsbuild/shared/connect';
 import { onBeforeRestartServer } from './restart';
-import type { Context } from '../types';
+import type { InternalContext } from '../types';
 import { createHttpServer } from './httpServer';
 import { getMiddlewares } from './getDevMiddlewares';
 import { notFoundMiddleware } from './middlewares';
 
 export async function getServerAPIs<
   Options extends {
-    context: Context;
+    context: InternalContext;
   },
 >(
   options: Options,
@@ -133,7 +133,7 @@ export async function getServerAPIs<
 
 export async function startDevServer<
   Options extends {
-    context: Context;
+    context: InternalContext;
   },
 >(
   options: Options,

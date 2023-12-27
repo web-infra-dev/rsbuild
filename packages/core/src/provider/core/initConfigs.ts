@@ -12,9 +12,9 @@ import { updateContextByNormalizedConfig } from './createContext';
 import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
 import { normalizeConfig } from '../config';
-import type { Context, NormalizedConfig } from '../../types';
+import type { InternalContext, NormalizedConfig } from '../../types';
 
-async function modifyRsbuildConfig(context: Context) {
+async function modifyRsbuildConfig(context: InternalContext) {
   debug('modify Rsbuild config');
   const [modified] = await context.hooks.modifyRsbuildConfigHook.call(
     context.config,
@@ -26,7 +26,7 @@ async function modifyRsbuildConfig(context: Context) {
 }
 
 export type InitConfigsOptions = {
-  context: Context;
+  context: InternalContext;
   pluginStore: PluginStore;
   rsbuildOptions: Required<CreateRsbuildOptions>;
 };

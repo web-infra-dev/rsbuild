@@ -3,7 +3,7 @@ import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
 export type BundlerType = 'rspack' | 'webpack';
 
 /** The public context */
-export type Context = {
+export type RsbuildContext = {
   /** The Rsbuild core version. */
   version: string;
   /** The entry points object. */

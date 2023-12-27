@@ -11,11 +11,11 @@ import {
   type ModifyRspackConfigUtils,
 } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
-import type { Context } from '../../types';
+import type { InternalContext } from '../../types';
 import { getHTMLPlugin } from '../htmlPluginUtil';
 
 async function modifyRspackConfig(
-  context: Context,
+  context: InternalContext,
   rspackConfig: RspackConfig,
   utils: ModifyRspackConfigUtils,
 ) {
@@ -110,7 +110,7 @@ export async function generateRspackConfig({
   context,
 }: {
   target: RsbuildTarget;
-  context: Context;
+  context: InternalContext;
 }): Promise<RspackConfig> {
   const chainUtils = await getChainUtils(target);
   const {

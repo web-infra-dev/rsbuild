@@ -7,7 +7,7 @@ import {
   type Rspack,
   type RspackConfig,
 } from '@rsbuild/shared';
-import type { Context } from '@rsbuild/core/provider';
+import type { InternalContext } from '@rsbuild/core/provider';
 import type { WebpackConfig } from '../types';
 import { initConfigs, InitConfigsOptions } from './initConfigs';
 import type { Compiler } from 'webpack';
@@ -17,7 +17,7 @@ export async function createCompiler({
   context,
   webpackConfigs,
 }: {
-  context: Context;
+  context: InternalContext;
   webpackConfigs: WebpackConfig[];
 }) {
   debug('create compiler');

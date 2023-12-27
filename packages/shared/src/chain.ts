@@ -11,10 +11,10 @@ import {
   DEFAULT_ASSET_PREFIX,
 } from './constants';
 import type {
-  Context,
   BundlerChain,
   RsbuildConfig,
   ChainedConfig,
+  RsbuildContext,
   CreateAsyncHook,
   BundlerChainRule,
   NormalizedConfig,
@@ -33,7 +33,7 @@ export async function getBundlerChain() {
 }
 
 export async function modifyBundlerChain(
-  context: Context & {
+  context: RsbuildContext & {
     hooks: {
       modifyBundlerChainHook: CreateAsyncHook<ModifyBundlerChainFn>;
     };
@@ -251,7 +251,7 @@ export function applyScriptCondition({
 }: {
   rule: BundlerChainRule;
   config: NormalizedConfig;
-  context: Context;
+  context: RsbuildContext;
   includes: (string | RegExp)[];
   excludes: (string | RegExp)[];
 }) {
@@ -282,7 +282,7 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
   }: {
     config: NormalizedConfig;
     isProd: boolean;
-    context: Context;
+    context: RsbuildContext;
   }) {
     const { dev, output } = config;
 
