@@ -113,6 +113,7 @@ export type Plugins = {
   preloadOrPrefetch: PluginsFn;
   performance: PluginsFn;
   define: PluginsFn;
+  server: PluginsFn;
 };
 
 export type GetRsbuildConfig = {

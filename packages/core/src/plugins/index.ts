@@ -26,4 +26,5 @@ export const plugins: Plugins = {
     import('./preloadOrPrefetch').then((m) => m.pluginPreloadOrPrefetch()),
   performance: () => import('./performance').then((m) => m.pluginPerformance()),
   define: () => import('./define').then((m) => m.pluginDefine()),
+  server: () => import('./server').then((m) => m.pluginServer()),
 };
