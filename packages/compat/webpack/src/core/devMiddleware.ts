@@ -3,9 +3,9 @@ import type { Compiler, MultiCompiler } from 'webpack';
 import {
   setupServerHooks,
   isClientCompiler,
-  DevMiddleware,
+  type DevMiddleware,
 } from '@rsbuild/shared';
-import { IncomingMessage, ServerResponse } from 'http';
+import type { IncomingMessage, ServerResponse } from 'http';
 
 const applyHMREntry = (
   compiler: Compiler | MultiCompiler,
