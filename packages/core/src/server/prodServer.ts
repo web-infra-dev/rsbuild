@@ -1,20 +1,18 @@
-import { Server } from 'http';
+import type { Server } from 'http';
 import connect from '@rsbuild/shared/connect';
 import { join } from 'path';
 import sirv from '../../compiled/sirv';
 import {
-  getAddressUrls,
-  printServerURLs,
-  formatRoutes,
-  ROOT_DIST_DIR,
   isFunction,
-  getServerOptions,
+  ROOT_DIST_DIR,
+  getAddressUrls,
   type ServerConfig,
   type RsbuildConfig,
   type RequestHandler,
   type StartServerResult,
   type PreviewServerOptions,
 } from '@rsbuild/shared';
+import { formatRoutes, getServerOptions, printServerURLs } from './helper';
 import { faviconFallbackMiddleware } from './middlewares';
 import type { Context } from '../types';
 import { createHttpServer } from './httpServer';

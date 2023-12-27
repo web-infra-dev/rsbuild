@@ -72,8 +72,6 @@ export const LESS_REGEX = /\.less$/;
 export const SASS_REGEX = /\.s(a|c)ss$/;
 export const CSS_MODULES_REGEX = /\.module\.\w+$/i;
 export const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
-export const MODULE_PATH_REGEX =
-  /[\\/]node_modules[\\/](\.pnpm[\\/])?(?:(@[^[\\/]+)(?:[\\/]))?([^\\/]+)/;
 
 export const TS_CONFIG_FILE = 'tsconfig.json';
 

@@ -2,6 +2,7 @@ import path from 'path';
 import type { Compiler } from '@rspack/core';
 import type {
   CacheGroup,
+  CompilerTapFn,
   RsbuildTarget,
   ModifyChainUtils,
   NormalizedConfig,
@@ -317,3 +318,44 @@ export function isUsingHMR(
     config.dev.hmr
   );
 }
+
+export const isClientCompiler = (compiler: {
+  options: {
+    target?: Compiler['options']['target'];
+  };
+}) => {
+  const { target } = compiler.options;
+
+  if (target) {
+    return Array.isArray(target) ? target.includes('web') : target === 'web';
+  }
+
+  return false;
+};
+
+type ServerCallbacks = {
+  onInvalid: () => void;
+  onDone: (stats: any) => void;
+};
+
+export const setupServerHooks = (
+  compiler: {
+    name?: Compiler['name'];
+    hooks: {
+      compile: CompilerTapFn<ServerCallbacks['onInvalid']>;
+      invalid: CompilerTapFn<ServerCallbacks['onInvalid']>;
+      done: CompilerTapFn<ServerCallbacks['onDone']>;
+    };
+  },
+  hookCallbacks: ServerCallbacks,
+) => {
+  if (compiler.name === 'server') {
+    return;
+  }
+
+  const { compile, invalid, done } = compiler.hooks;
+
+  compile.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
+  invalid.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
+  done.tap('rsbuild-dev-server', hookCallbacks.onDone);
+};

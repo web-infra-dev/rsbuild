@@ -2,7 +2,6 @@ import assert from 'assert';
 import {
   NODE_MODULES_REGEX,
   createDependenciesRegExp,
-  getPackageNameFromModulePath,
   type Polyfill,
   type CacheGroup,
   type SplitChunks,
@@ -104,6 +103,24 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
       ...override.cacheGroups,
     },
   };
+}
+
+export const MODULE_PATH_REGEX =
+  /[\\/]node_modules[\\/](\.pnpm[\\/])?(?:(@[^[\\/]+)(?:[\\/]))?([^\\/]+)/;
+
+export function getPackageNameFromModulePath(modulePath: string) {
+  const handleModuleContext = modulePath?.match(MODULE_PATH_REGEX);
+
+  if (!handleModuleContext) {
+    return undefined;
+  }
+
+  const [, , scope, name] = handleModuleContext;
+  const packageName = ['npm', (scope ?? '').replace('@', ''), name]
+    .filter(Boolean)
+    .join('.');
+
+  return packageName;
 }
 
 function splitByModule(ctx: SplitChunksContext): SplitChunks {

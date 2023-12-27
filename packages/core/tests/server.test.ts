@@ -1,11 +1,10 @@
 import webpack from 'webpack';
 import {
-  setupServerHooks,
-  isClientCompiler,
   mergeDevOptions,
   formatRoutes,
   printServerURLs,
-} from '../src/server';
+} from '../src/server/helper';
+import { isClientCompiler, setupServerHooks } from '@rsbuild/shared';
 
 test('formatRoutes', () => {
   expect(

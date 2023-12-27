@@ -1,18 +1,20 @@
+import {
+  color,
+  logger as defaultLogger,
+  getPort,
+  deepmerge,
+  normalizeUrl,
+  DEFAULT_PORT,
+  DEFAULT_DEV_HOST,
+} from '@rsbuild/shared';
 import type {
+  Logger,
   Routes,
   DevConfig,
   RsbuildEntry,
   RsbuildConfig,
-  CompilerTapFn,
   OutputStructure,
-} from './types';
-import { getPort } from './port';
-import deepmerge from '../compiled/deepmerge';
-import { color } from './utils';
-import { logger as defaultLogger, Logger } from './logger';
-import { DEFAULT_PORT, DEFAULT_DEV_HOST } from './constants';
-import type { Compiler } from '@rspack/core';
-import { normalizeUrl } from './url';
+} from '@rsbuild/shared';
 
 /*
  * format route by entry and adjust the index route to be the first
@@ -144,45 +146,4 @@ export const getDevOptions = async ({
     host,
     https,
   };
-};
-
-type ServerCallbacks = {
-  onInvalid: () => void;
-  onDone: (stats: any) => void;
-};
-
-export const setupServerHooks = (
-  compiler: {
-    name?: Compiler['name'];
-    hooks: {
-      compile: CompilerTapFn<ServerCallbacks['onInvalid']>;
-      invalid: CompilerTapFn<ServerCallbacks['onInvalid']>;
-      done: CompilerTapFn<ServerCallbacks['onDone']>;
-    };
-  },
-  hookCallbacks: ServerCallbacks,
-) => {
-  if (compiler.name === 'server') {
-    return;
-  }
-
-  const { compile, invalid, done } = compiler.hooks;
-
-  compile.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
-  invalid.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
-  done.tap('rsbuild-dev-server', hookCallbacks.onDone);
-};
-
-export const isClientCompiler = (compiler: {
-  options: {
-    target?: Compiler['options']['target'];
-  };
-}) => {
-  const { target } = compiler.options;
-
-  if (target) {
-    return Array.isArray(target) ? target.includes('web') : target === 'web';
-  }
-
-  return false;
 };

@@ -1,12 +1,26 @@
 import {
+  getDistPath,
   onExitProcess,
-  getHTMLPathByEntry,
+  removeLeadingSlash,
   type PluginStore,
   type RsbuildPluginAPI,
   type GetRsbuildConfig,
 } from '@rsbuild/shared';
 import { createPublicContext } from './createContext';
-import type { Context } from '../../types';
+import type { Context, NormalizedConfig } from '../../types';
+
+export function getHTMLPathByEntry(
+  entryName: string,
+  config: NormalizedConfig,
+) {
+  const htmlPath = getDistPath(config, 'html');
+  const filename =
+    config.html.outputStructure === 'flat'
+      ? `${entryName}.html`
+      : `${entryName}/index.html`;
+
+  return removeLeadingSlash(`${htmlPath}/${filename}`);
+}
 
 export function getPluginAPI({
   context,
