@@ -12,7 +12,7 @@ test('should run inspect command correctly', async () => {
   const fileNames = Object.keys(files);
 
   const rsbuildConfig = fileNames.find((item) =>
-    item.includes('rsbuild.config.js'),
+    item.includes('rsbuild.config.mjs'),
   );
   expect(rsbuildConfig).toBeTruthy();
   expect(files[rsbuildConfig!]).toContain("'rsbuild:basic'");
