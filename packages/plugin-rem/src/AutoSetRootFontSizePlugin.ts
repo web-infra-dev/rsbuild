@@ -4,7 +4,6 @@ import {
   withPublicPath,
   generateScriptTag,
   getPublicPathFromCompiler,
-  COMPILATION_PROCESS_STAGE,
   type Rspack,
 } from '@rsbuild/shared';
 import WebpackSources from '@rsbuild/shared/webpack-sources';
@@ -108,7 +107,8 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
           compilation.hooks.processAssets.tapPromise(
             {
               name: this.name,
-              stage: COMPILATION_PROCESS_STAGE.PROCESS_ASSETS_STAGE_PRE_PROCESS,
+              stage:
+                compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
             },
             async (assets) => {
               const scriptPath = await this.getScriptPath();

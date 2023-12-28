@@ -1,5 +1,4 @@
 import type { Compiler, Compilation } from '@rspack/core';
-import { COMPILATION_PROCESS_STAGE } from '@rsbuild/shared';
 
 export class RemoveCssSourcemapPlugin {
   name: string;
@@ -13,7 +12,7 @@ export class RemoveCssSourcemapPlugin {
       compilation.hooks.processAssets.tap(
         {
           name: this.name,
-          stage: COMPILATION_PROCESS_STAGE.PROCESS_ASSETS_STAGE_SUMMARIZE,
+          stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_SUMMARIZE,
         },
         () => {
           Object.keys(compilation.assets).forEach((name) => {

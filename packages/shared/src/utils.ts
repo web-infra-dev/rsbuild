@@ -204,15 +204,6 @@ export function debounce<T extends (...args: any[]) => void>(
 export const upperFirst = (str: string) =>
   str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 
-/** The intersection of webpack and Rspack */
-export const COMPILATION_PROCESS_STAGE = {
-  PROCESS_ASSETS_STAGE_ADDITIONAL: -2000,
-  PROCESS_ASSETS_STAGE_PRE_PROCESS: -1000,
-  PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE: 700,
-  PROCESS_ASSETS_STAGE_SUMMARIZE: 1000,
-  PROCESS_ASSETS_STAGE_REPORT: 5000,
-};
-
 export const generateScriptTag = () => ({
   tagName: 'script',
   attributes: {
