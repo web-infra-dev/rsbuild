@@ -231,6 +231,8 @@ export const TASKS: TaskConfig[] = [
         },
       },
       {
+        // The webpack-bundle-analyzer version was locked to v4.9.0 to be compatible with Rspack
+        // If we need to upgrade the version, please check if the chunk detail can be displayed correctly
         name: 'webpack-bundle-analyzer',
         externals: {
           commander: '../commander',
