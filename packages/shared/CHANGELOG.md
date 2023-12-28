@@ -1,5 +1,11 @@
 # @rsbuild/shared
 
+## 0.2.13
+
+### Patch Changes
+
+- 7bd330eb: chore(deps): bump sass-loader from v13.0.2 to v13.3.3
+
 ## 0.2.12
 
 ### Patch Changes
