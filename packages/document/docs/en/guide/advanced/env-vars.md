@@ -139,8 +139,29 @@ console.log(process.env.PASSWORD); // -> undefined
 ```
 
 :::tip
-Public variables are injected into the client code through [source.define](/config/source/define). Please read the following content to understand the principles and notes of define.
+
+- The content of public variables will be exposed to your client code, so please avoid including sensitive information in public variables.
+- Public variables are injected into the client code through [source.define](/config/source/define). Please read ["Using define config"](#using-define-config) to understand the principles and notes of define.
+
 :::
+
+### Custom Prefix
+
+Rsbuild provides the [loadEnv](/api/javascript-api/core#loadenv) method, which can inject environment variables with any prefix into client code.
+
+For example, when migrating a Create React App project to Rsbuild, you can read environment variables starting with `REACT_APP_` and inject them through the [source.define](/config/source/define) config as follows:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, loadEnv } from '@rsbuild/core';
+
+const { publicVars } = loadEnv({ prefixes: ['REACT_APP_'] });
+
+export default defineConfig({
+  source: {
+    define: publicVars,
+  },
+});
+```
 
 ## Using define config
 
