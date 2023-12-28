@@ -12,14 +12,14 @@ test('should run inspect command correctly', async () => {
   const fileNames = Object.keys(files);
 
   const rsbuildConfig = fileNames.find((item) =>
-    item.includes('rsbuild.config.js'),
+    item.includes('rsbuild.config.mjs'),
   );
   expect(rsbuildConfig).toBeTruthy();
   expect(files[rsbuildConfig!]).toContain("'rsbuild:basic'");
   expect(files[rsbuildConfig!]).toContain('hmr: true');
 
   const rspackConfig = fileNames.find((item) =>
-    item.includes('rspack.config.web.js'),
+    item.includes('rspack.config.web.mjs'),
   );
   expect(rspackConfig).toBeTruthy();
   expect(files[rspackConfig!]).toContain("mode: 'development'");
@@ -34,9 +34,9 @@ test('should run inspect command with output option correctly', async () => {
   const outputFiles = Object.keys(outputs);
 
   expect(
-    outputFiles.find((item) => item.includes('rsbuild.config.js')),
+    outputFiles.find((item) => item.includes('rsbuild.config.mjs')),
   ).toBeTruthy();
   expect(
-    outputFiles.find((item) => item.includes('rspack.config.web.js')),
+    outputFiles.find((item) => item.includes('rspack.config.web.mjs')),
   ).toBeTruthy();
 });
