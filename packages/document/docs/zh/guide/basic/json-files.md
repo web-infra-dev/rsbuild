@@ -24,10 +24,12 @@ console.log(example.items); // [1, 2];
 
 ### 具名引用
 
-Rsbuild 暂不支持通过 named import 来引用 JSON 文件：
+Rsbuild 同样支持通过 named import 来引用 JSON 文件：
 
 ```js
 import { name } from './example.json';
+
+console.log(name); // 'foo';
 ```
 
 ## YAML 文件
