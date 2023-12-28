@@ -45,17 +45,23 @@ export default defineConfig({
 });
 ```
 
-如果你在开发一个非 TypeScript 项目，可以使用 `.js` 格式的配置文件：
+如果你在开发一个非 TypeScript 项目，可以使用 `.mjs` 格式的配置文件：
 
-```js
-module.exports = {
+```js title="rsbuild.config.mjs"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   source: {
     alias: (opts) => {
       opts['@common'] = './src/common';
     },
   },
-};
+});
 ```
+
+:::tip
+Rsbuild 使用 [jiti](https://github.com/unjs/jiti) 来加载配置文件，提供 ESM 与 CommonJS 的互操作性，模块解析的行为与 Node.js 原生行为存在一定差异。
+:::
 
 ## 使用环境变量
 

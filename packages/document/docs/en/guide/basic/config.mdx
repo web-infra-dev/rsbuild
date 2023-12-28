@@ -45,17 +45,23 @@ export default defineConfig({
 });
 ```
 
-If you are developing a non-TypeScript project, you can use the `.js` format for the configuration file:
+If you are developing a non-TypeScript project, you can use the `.mjs` format for the configuration file:
 
-```js
-module.exports = {
+```js title="rsbuild.config.mjs"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   source: {
     alias: (opts) => {
       opts['@common'] = './src/common';
     },
   },
-};
+});
 ```
+
+:::tip
+Rsbuild uses [jiti](https://github.com/unjs/jiti) to load configuration files, providing interoperability between ESM and CommonJS. The behavior of module resolution differs slightly from the native behavior of Node.js.
+:::
 
 ## Using Environment Variables
 
