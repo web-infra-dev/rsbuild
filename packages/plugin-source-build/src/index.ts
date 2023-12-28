@@ -43,6 +43,13 @@ export function pluginSourceBuild(
   return {
     name: pluginName,
 
+    pre: [
+      'rsbuild:babel',
+      'uni-builder:babel',
+      'uni-builder:ts-loader',
+      'rsbuild-webpack:swc',
+    ],
+
     setup(api) {
       const projectRootPath = api.context.rootPath;
 
