@@ -35,7 +35,6 @@ export const TASKS: TaskConfig[] = [
       'open',
       'dotenv',
       'dotenv-expand',
-      'commander',
       'ws',
       {
         name: 'sirv',
@@ -66,6 +65,7 @@ export const TASKS: TaskConfig[] = [
     dependencies: [
       'jiti',
       'rslog',
+      'commander',
       'deepmerge',
       'fs-extra',
       'chokidar',
@@ -228,6 +228,13 @@ export const TASKS: TaskConfig[] = [
         externals: {
           // express is a peer dependency, no need to provide express type
           express: 'express',
+        },
+      },
+      {
+        name: 'webpack-bundle-analyzer',
+        externals: {
+          commander: '../commander',
+          'gzip-size': '../gzip-size',
         },
       },
     ],

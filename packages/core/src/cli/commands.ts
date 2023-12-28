@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { logger } from '@rsbuild/shared';
-import { program } from '../../compiled/commander';
+import { program } from '@rsbuild/shared/commander';
 import { loadEnv } from '../loadEnv';
 import { loadConfig } from './config';
 import type { RsbuildMode } from '..';

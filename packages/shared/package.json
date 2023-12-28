@@ -47,6 +47,10 @@
       "types": "./compiled/connect/index.d.ts",
       "default": "./compiled/connect/index.js"
     },
+    "./commander": {
+      "types": "./compiled/commander/typings/index.d.ts",
+      "default": "./compiled/commander/index.js"
+    },
     "./webpack-sources": {
       "types": "./compiled/webpack-sources/index.d.ts",
       "default": "./compiled/webpack-sources/index.js"
