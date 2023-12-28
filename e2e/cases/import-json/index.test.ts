@@ -6,7 +6,6 @@ rspackOnlyTest('should import JSON correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     runServer: true,
-    rsbuildConfig: {},
   });
 
   await page.goto(getHrefByEntryName('index', rsbuild.port));
