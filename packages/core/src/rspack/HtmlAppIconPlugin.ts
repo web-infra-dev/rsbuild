@@ -2,11 +2,7 @@ import fs from 'fs';
 import { posix, basename } from 'path';
 import type { Compiler, Compilation } from '@rspack/core';
 import WebpackSources from '@rsbuild/shared/webpack-sources';
-import {
-  withPublicPath,
-  getPublicPathFromCompiler,
-  COMPILATION_PROCESS_STAGE,
-} from '@rsbuild/shared';
+import { withPublicPath, getPublicPathFromCompiler } from '@rsbuild/shared';
 import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
 type AppIconOptions = {
@@ -66,7 +62,8 @@ export class HtmlAppIconPlugin {
         compilation.hooks.processAssets.tap(
           {
             name: this.name,
-            stage: COMPILATION_PROCESS_STAGE.PROCESS_ASSETS_STAGE_PRE_PROCESS,
+            stage:
+              compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
           },
           (assets) => {
             const source = fs.readFileSync(this.iconPath);
