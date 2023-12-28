@@ -26,8 +26,12 @@ export const getSourceInclude = async (options: {
 };
 
 export interface PluginSourceBuildOptions {
-  projectName?: string;
+  /**
+   * Used to configure the resolve field of the source code files.
+   * @default 'source''
+   */
   sourceField?: string;
+  projectName?: string;
   extraMonorepoStrategies?: ExtraMonorepoStrategies;
 }
 

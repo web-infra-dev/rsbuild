@@ -151,6 +151,37 @@ Note that the above example is a simplified one. In real monorepo projects, ther
 If you want to learn more about project reference, please refer to the official documentation on [TypeScript - Project References](https://typescriptlang.org/docs/handbook/project-references).
 :::
 
+### sourceField
+
+- **Type:** `string`
+- **Default:** `'source'`
+
+Used to configure the resolve field of the source code files.
+
+For example, when configured as `my-source`:
+
+```ts
+pluginSourceBuild({
+  sourceField: 'my-source',
+});
+```
+
+In `package.json`, the source code file path can be specified using `my-source`:
+
+```json title="package.json"
+{
+  "name": "lib",
+  "main": "./dist/index.js",
+  "my-source": "./src/index.ts",
+  "exports": {
+    ".": {
+      "my-source": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  }
+}
+```
+
 ## Caveat
 
 When using Source Build plugin, there are a few things to keep in mind:

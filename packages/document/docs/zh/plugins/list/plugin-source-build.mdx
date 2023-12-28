@@ -151,6 +151,39 @@ Project reference 提供了以下能力：
 如果你想了解更多关于 project reference 的内容，请阅读 [TypeScript - Project References](https://typescriptlang.org/docs/handbook/project-references) 官方文档。
 :::
 
+## 选项
+
+### sourceField
+
+- **类型：** `string`
+- **默认值：** `'source'`
+
+用于配置源代码文件对应的解析字段。
+
+比如配置为 `my-source`：
+
+```ts
+pluginSourceBuild({
+  sourceField: 'my-source',
+});
+```
+
+在 `package.json` 中，即可通过 `my-source` 指定源代码文件的路径：
+
+```json title="package.json"
+{
+  "name": "lib",
+  "main": "./dist/index.js",
+  "my-source": "./src/index.ts",
+  "exports": {
+    ".": {
+      "my-source": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  }
+}
+```
+
 ## 注意事项
 
 在使用 Source Build 插件的时候，需要注意几点：
