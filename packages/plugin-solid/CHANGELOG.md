@@ -1,5 +1,13 @@
 # @rsbuild/plugin-solid
 
+## 0.2.13
+
+### Patch Changes
+
+- Updated dependencies [7bd330eb]
+  - @rsbuild/shared@0.2.13
+  - @rsbuild/plugin-babel@0.2.13
+
 ## 0.2.12
 
 ### Patch Changes
