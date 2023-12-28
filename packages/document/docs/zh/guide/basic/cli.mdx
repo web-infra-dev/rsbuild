@@ -39,11 +39,25 @@ Commands:
 Usage: rsbuild dev [options]
 
 Options:
-  --open                启动时是否在浏览器中打开页面
+  --open [url]          启动时是否在浏览器中打开页面
   --port <port>         设置 Rsbuild Server 监听的端口号
   --host <host>         指定 Rsbuild Server 启动时监听的 host
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
   -h, --help            显示命令帮助
+```
+
+### 打开页面
+
+通过 `--open` 选项可以在启动 dev server 时自动打开页面，等同于将 [dev.startUrl](/config/dev/start-url) 设置为 `true`。
+
+```bash
+rsbuild dev --open
+```
+
+`--open` 选项也支持指定需要打开的 URL 地址，比如：
+
+```bash
+rsbuild dev --open http://localhost:8080/foo
 ```
 
 ---
@@ -73,7 +87,7 @@ Options:
 Usage: rsbuild preview [options]
 
 Options:
-  --open                启动时是否在浏览器中打开页面
+  --open [url]          启动时是否在浏览器中打开页面
   --port <port>         设置 Rsbuild Server 监听的端口号
   --host <host>         指定 Rsbuild Server 启动时监听的 host
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径

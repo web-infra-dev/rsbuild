@@ -7,7 +7,7 @@ import type { RsbuildMode } from '..';
 
 export type CommonOptions = {
   config?: string;
-  open?: boolean;
+  open?: boolean | string;
   host?: string;
   port?: number;
 };
@@ -56,7 +56,7 @@ export async function init({
 
     if (commonOpts.open && !config.dev?.startUrl) {
       config.dev ||= {};
-      config.dev.startUrl = true;
+      config.dev.startUrl = commonOpts.open;
     }
 
     if (commonOpts.host) {
@@ -87,7 +87,7 @@ export function runCli() {
 
   program
     .command('dev')
-    .option('--open', 'open the page in browser on startup')
+    .option('--open [url]', 'open the page in browser on startup')
     .option(
       '--port <port>',
       'specify a port number for Rsbuild Server to listen',
@@ -135,7 +135,7 @@ export function runCli() {
 
   program
     .command('preview')
-    .option('--open', 'open the page in browser on startup')
+    .option('--open [url]', 'open the page in browser on startup')
     .option(
       '--port <port>',
       'specify a port number for Rsbuild Server to listen',
