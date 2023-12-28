@@ -45,16 +45,18 @@ export default defineConfig({
 });
 ```
 
-If you are developing a non-TypeScript project, you can use the `.js` format for the configuration file:
+If you are developing a non-TypeScript project, you can use the `.mjs` format for the configuration file:
 
-```js
-module.exports = {
+```js title="rsbuild.config.mjs"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   source: {
     alias: (opts) => {
       opts['@common'] = './src/common';
     },
   },
-};
+});
 ```
 
 ## Using Environment Variables
