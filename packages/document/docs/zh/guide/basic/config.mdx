@@ -59,6 +59,10 @@ export default defineConfig({
 });
 ```
 
+:::tip
+Rsbuild 使用 [jiti](https://github.com/unjs/jiti) 来加载配置文件，提供 ESM 与 CommonJS 的互操作性，模块解析的行为与 Node.js 原生行为存在一定差异。
+:::
+
 ## 使用环境变量
 
 在配置文件中，你可以使用 `process.env.NODE_ENV` 等 Node.js 环境变量，来动态写入不同的配置：
