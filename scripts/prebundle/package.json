@@ -21,6 +21,7 @@
   "devDependencies": {
     "@types/connect": "3.4.35",
     "@types/fs-extra": "^11.0.2",
+    "@types/sass-loader": "8.0.8",
     "autoprefixer": "10.4.16",
     "babel-loader": "9.1.3",
     "browserslist": "4.22.1",
@@ -51,6 +52,7 @@
     "postcss-modules-scope": "3.0.0",
     "postcss-modules-values": "4.0.0",
     "postcss-modules-extract-imports": "3.0.0",
+    "sass-loader": "13.3.3",
     "semver": "^7.5.4",
     "rslog": "^1.1.2",
     "sirv": "^2.0.3",

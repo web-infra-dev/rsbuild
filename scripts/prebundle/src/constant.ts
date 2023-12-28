@@ -116,6 +116,12 @@ export const TASKS: TaskConfig[] = [
         ignoreDts: true,
       },
       {
+        name: 'sass-loader',
+        externals: {
+          sass: '../sass',
+        },
+      },
+      {
         name: 'yaml-loader',
         ignoreDts: true,
         externals: {
