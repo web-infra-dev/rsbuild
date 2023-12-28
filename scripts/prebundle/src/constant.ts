@@ -122,6 +122,13 @@ export const TASKS: TaskConfig[] = [
         },
       },
       {
+        name: 'less-loader',
+        ignoreDts: true,
+        externals: {
+          less: '../less',
+        },
+      },
+      {
         name: 'yaml-loader',
         ignoreDts: true,
         externals: {
