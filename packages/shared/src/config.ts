@@ -163,18 +163,18 @@ export async function outputInspectConfigFiles({
 
   const files = [
     {
-      path: join(outputPath, 'rsbuild.config.js'),
+      path: join(outputPath, 'rsbuild.config.mjs'),
       label: 'Rsbuild Config',
       content: rawRsbuildConfig,
     },
     ...bundlerConfigs.map((content, index) => {
       const suffix = rsbuildConfig.output.targets[index];
-      const outputFile = `${configType}.config.${suffix}.js`;
+      const outputFile = `${configType}.config.${suffix}.mjs`;
       let outputFilePath = join(outputPath, outputFile);
 
       // if filename is conflict, add a random id to the filename.
       if (fse.existsSync(outputFilePath)) {
-        outputFilePath = outputFilePath.replace(/\.js$/, `.${Date.now()}.js`);
+        outputFilePath = outputFilePath.replace(/\.mjs$/, `.${Date.now()}.mjs`);
       }
 
       return {
@@ -187,7 +187,7 @@ export async function outputInspectConfigFiles({
 
   await Promise.all(
     files.map((item) =>
-      fse.outputFile(item.path, `module.exports = ${item.content}`),
+      fse.outputFile(item.path, `export default ${item.content}`),
     ),
   );
 
