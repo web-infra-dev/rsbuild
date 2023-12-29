@@ -1,4 +1,4 @@
-import { getSharedPkgCompiledPath } from '@rsbuild/shared';
+import { join } from 'path';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginToml = (): RsbuildPlugin => ({
@@ -11,7 +11,7 @@ export const pluginToml = (): RsbuildPlugin => ({
         .type('javascript/auto')
         .test(/\.toml$/)
         .use(CHAIN_ID.USE.TOML)
-        .loader(getSharedPkgCompiledPath('toml-loader'));
+        .loader(join(__dirname, '../../compiled', 'toml-loader'));
     });
   },
 });
