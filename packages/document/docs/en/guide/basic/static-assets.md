@@ -158,6 +158,37 @@ console.log(myFile); // "/static/myFile.6c12aba3.pdf"
 
 For more information about asset modules, please refer to [Rspack - Asset modules](https://rspack.dev/guide/asset-module#asset-modules).
 
+## Custom Rules
+
+In some scenarios, you may need to bypass the built-in assets processing rules of Rsbuild and add some custom rules.
+
+Taking PNG image as an example, you need to:
+
+1. Modify the built-in Rspack config via [tools.bundlerChain](/config/tools/bundler-chain) to exclude `.png` files using the `exclude` method.
+2. Add custom asset processing rules via [tools.rspack](/config/tools/rspack).
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      chain.module
+        // Use `CHAIN_ID.RULE.IMAGE` to locate the built-in image rule
+        .rule(CHAIN_ID.RULE.IMAGE)
+        .exclude.add(/\.png$/);
+    },
+    rspack(config, { addRules }) {
+      addRules([
+        {
+          test: /\.png$/,
+          // Add a custom loader to handle png images
+          loader: 'custom-png-loader',
+        },
+      ]);
+    },
+  },
+};
+```
+
 ## Image Format
 
 When using image assets, you can choose a appropriate image format according to the pros and cons in the table below.

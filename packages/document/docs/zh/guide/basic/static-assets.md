@@ -158,6 +158,37 @@ console.log(myFile); // "/static/myFile.6c12aba3.pdf"
 
 关于 asset modules 的更多介绍，请参考 [Rspack - Asset modules](https://rspack.dev/guide/asset-module#asset-modules)。
 
+## 自定义规则
+
+在某些场景下，你可能需要跳过 Rsbuild 内置的静态资源处理规则，并添加一些自定义规则。
+
+以 PNG 图片为例，你需要：
+
+1. 通过 [tools.bundlerChain](/config/tools/bundler-chain) 来修改内置的 Rspack 配置，通过 `exclude` 排除 `.png` 文件。
+2. 通过 [tools.rspack](/config/tools/rspack) 来添加自定义的静态资源处理规则。
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      chain.module
+        // 通过 `CHAIN_ID.RULE.IMAGE` 来定位到内置的图片规则
+        .rule(CHAIN_ID.RULE.IMAGE)
+        .exclude.add(/\.png$/);
+    },
+    rspack(config, { addRules }) {
+      addRules([
+        {
+          test: /\.png$/,
+          // 添加一个自定义的 loader 来处理 png 图片
+          loader: 'custom-png-loader',
+        },
+      ]);
+    },
+  },
+};
+```
+
 ## 图片格式
 
 在使用图片资源时，你可以根据下方表格中图片的优缺点以及适用场景，来选择合适的图片格式。
