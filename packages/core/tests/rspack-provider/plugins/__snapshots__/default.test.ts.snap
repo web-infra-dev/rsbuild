@@ -566,7 +566,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
+            "loader": "<ROOT>/packages/core/compiled/toml-loader",
           },
         ],
       },
@@ -1253,7 +1253,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
+            "loader": "<ROOT>/packages/core/compiled/toml-loader",
           },
         ],
       },
@@ -1791,7 +1791,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
+            "loader": "<ROOT>/packages/core/compiled/toml-loader",
           },
         ],
       },
@@ -2428,7 +2428,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
+            "loader": "<ROOT>/packages/core/compiled/toml-loader",
           },
         ],
       },

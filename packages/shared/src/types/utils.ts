@@ -36,7 +36,6 @@ export type SharedCompiledPkgNames =
   | 'sass-loader'
   | 'less-loader'
   | 'node-loader'
-  | 'toml-loader'
   | 'yaml-loader'
   | 'resolve-url-loader';
 

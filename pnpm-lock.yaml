@@ -1652,6 +1652,9 @@ importers:
       sirv:
         specifier: ^2.0.3
         version: 2.0.3
+      toml-loader:
+        specifier: 1.0.0
+        version: 1.0.0
       webpack-bundle-analyzer:
         specifier: 4.9.0
         version: 4.9.0
@@ -1743,6 +1746,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -13449,6 +13453,16 @@ packages:
   /token-stream@1.0.0:
     resolution: {integrity: sha512-VSsyNPPW74RpHwR8Fc21uubwHY7wMDeJLys2IX5zJNih+OnAnaifKHo+1LHT7DAdloQ7apeaaWg8l7qnf/TnEg==}
     dev: false
+
+  /toml-loader@1.0.0:
+    resolution: {integrity: sha512-/1xtg+pmD6IOuJBGtFp75hSofSVx3F8akeOS+31Rk1R5n8mYSZGKuaLM39qcxUm+SEx7zuntWR2puwYSntUKAg==}
+    dependencies:
+      toml: 2.3.6
+    dev: true
+
+  /toml@2.3.6:
+    resolution: {integrity: sha512-gVweAectJU3ebq//Ferr2JUY4WKSDe5N+z0FvjDncLGyHmIDoxgY/2Ie4qfEIDm4IS7OA6Rmdm7pdEEdMcV/xQ==}
+    dev: true
 
   /totalist@1.1.0:
     resolution: {integrity: sha512-gduQwd1rOdDMGxFG1gEvhV88Oirdo2p+KjoYFU7k2g+i7n6AFFbDQ5kMPUsW0pNbfQsB/cwXvT1i4Bue0s9g5g==}
