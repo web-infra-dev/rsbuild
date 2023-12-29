@@ -128,18 +128,21 @@ declare module '*.png' {
 
 ## 扩展静态资源类型
 
-如果 Rsbuild 内置的静态资源类型不能满足你的需求，那么你可以通过 [tools.bundlerChain](/config/tools/bundler-chain) 来修改内置的 Rspack 配置，并扩展你需要的静态资源类型。
+如果 Rsbuild 内置的静态资源类型不能满足你的需求，那么你可以通过 [tools.rspack](/config/tools/rspack) 来修改内置的 Rspack 配置，并扩展你需要的静态资源类型。
 
 比如，你需要把 `*.pdf` 文件当做静态资源直接输出到产物目录，可以添加以下配置：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
-    bundlerChain(chain) {
-      chain.module
-        .rule('pdf')
-        .test(/\.pdf$/)
-        .type('asset/resource');
+    rspack(config, { addRules }) {
+      addRules([
+        {
+          test: /\.pdf$/,
+          // 将资源转换为单独的文件，并且导出产物地址
+          type: 'asset/resource',
+        },
+      ]);
     },
   },
 };
@@ -153,10 +156,7 @@ import myFile from './static/myFile.pdf';
 console.log(myFile); // "/static/myFile.6c12aba3.pdf"
 ```
 
-关于以上配置的更多介绍，请参考：
-
-- [Rspack 文档 - Asset modules](https://rspack.dev/guide/asset-module#asset-modules)
-- [webpack 文档 - Asset modules](https://webpack.js.org/guides/asset-modules/)
+关于 asset modules 的更多介绍，请参考 [Rspack - Asset modules](https://rspack.dev/guide/asset-module#asset-modules)。
 
 ## 图片格式
 
