@@ -1,6 +1,14 @@
 # bundlerChain
 
-- **Type:** `Function | undefined`
+- **Type:**
+
+```ts
+type BundlerChainFn = (
+  chain: BundlerChain,
+  utils: ModifyBundlerChainUtils,
+) => void;
+```
+
 - **Default:** `undefined`
 
 You can modify the Rspack and webpack configuration by configuring `tools.bundlerChain` which is type of `Function`. The function receives two parameters, the first is the original bundler chain object, and the second is an object containing some utils.
@@ -15,9 +23,9 @@ Configurations modified via bundler chain will work on both Rspack and webpack b
 
 > `tools.bundlerChain` is executed earlier than tools.rspack and thus will be overridden by changes in other.
 
-### Utils
+## Utils
 
-#### env
+### env
 
 - **Type:** `'development' | 'production' | 'test'`
 
@@ -35,7 +43,7 @@ export default {
 };
 ```
 
-#### isProd
+### isProd
 
 - **Type:** `boolean`
 
@@ -53,7 +61,7 @@ export default {
 };
 ```
 
-#### target
+### target
 
 - **Type:** `'web' | 'node' | 'web-worker' | 'service-worker'`
 
@@ -71,7 +79,7 @@ export default {
 };
 ```
 
-#### isServer
+### isServer
 
 - **Type:** `boolean`
 
@@ -89,7 +97,7 @@ export default {
 };
 ```
 
-#### isWebWorker
+### isWebWorker
 
 - **Type:** `boolean`
 
@@ -123,7 +131,7 @@ export default {
 };
 ```
 
-#### CHAIN_ID
+## CHAIN_ID
 
 Some common Chain IDs are predefined in the Rsbuild, and you can use these IDs to locate the built-in Rule or Plugin.
 
@@ -133,7 +141,7 @@ Please note that some of the rules or plugins listed below are not available by 
 For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is registered.
 :::
 
-##### CHAIN_ID.RULE
+### CHAIN_ID.RULE
 
 | ID            | Description       |
 | ------------- | ----------------- |
