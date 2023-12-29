@@ -588,9 +588,6 @@ importers:
       postcss:
         specifier: 8.4.31
         version: 8.4.31
-      style-loader:
-        specifier: 3.3.3
-        version: 3.3.3(webpack@5.89.0)
       terser-webpack-plugin:
         specifier: 5.3.9
         version: 5.3.9(webpack@5.89.0)
@@ -1652,6 +1649,9 @@ importers:
       sirv:
         specifier: ^2.0.3
         version: 2.0.3
+      style-loader:
+        specifier: 3.3.3
+        version: 3.3.3(webpack@5.89.0)
       toml-loader:
         specifier: 1.0.0
         version: 1.0.0
@@ -12970,7 +12970,7 @@ packages:
       webpack: ^5.0.0
     dependencies:
       webpack: 5.89.0
-    dev: false
+    dev: true
 
   /style-to-object@0.4.4:
     resolution: {integrity: sha512-HYNoHZa2GorYNyqiCaBgsxvcJIn7OHq6inEga+E6Ke3m5JkoqpQbnFssk4jwe+K7AhGa2fcha4wSOf1Kn01dMg==}

@@ -126,6 +126,16 @@ export const TASKS: TaskConfig[] = [
         },
       },
       {
+        name: 'style-loader',
+        ignoreDts: true,
+        afterBundle: (task) => {
+          fs.copySync(
+            join(task.depPath, 'dist/runtime'),
+            join(task.distPath, 'runtime'),
+          );
+        },
+      },
+      {
         name: 'less-loader',
         ignoreDts: true,
         externals: {

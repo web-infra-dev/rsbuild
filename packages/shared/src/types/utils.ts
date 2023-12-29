@@ -34,6 +34,7 @@ export type SharedCompiledPkgNames =
   | 'postcss-flexbugs-fixes'
   | 'autoprefixer'
   | 'sass-loader'
+  | 'style-loader'
   | 'less-loader'
   | 'node-loader'
   | 'yaml-loader'

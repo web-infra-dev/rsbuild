@@ -391,7 +391,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/style-loader/dist/cjs.js",
+            "loader": "<ROOT>/packages/shared/compiled/style-loader",
             "options": {
               "esModule": false,
             },
@@ -576,7 +576,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/style-loader/dist/cjs.js",
+            "loader": "<ROOT>/packages/shared/compiled/style-loader",
             "options": {
               "esModule": false,
             },
@@ -1019,7 +1019,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
         "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/style-loader/dist/cjs.js",
+            "loader": "<ROOT>/packages/shared/compiled/style-loader",
             "options": {
               "esModule": false,
             },

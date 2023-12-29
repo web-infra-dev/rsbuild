@@ -78,7 +78,7 @@ export async function applyBaseCSSRule({
 
       rule
         .use(CHAIN_ID.USE.STYLE)
-        .loader(require.resolve('style-loader'))
+        .loader(getSharedPkgCompiledPath('style-loader'))
         .options(styleLoaderOptions)
         .end();
     }
