@@ -53,26 +53,63 @@ console.log(logoURL); // => "/static/logo.6c12aba3.png"
 ```ts
 type PluginSvgrOptions = {
   /**
+   * 修改 SVGR 配置
+   */
+  svgrOptions?: import('@svgr/core').Config;
+
+  /**
    * 修改 SVG 文件的默认导出类型
    */
   svgDefaultExport?: 'component' | 'url';
 };
 ```
 
+### svgrOptions
+
+用于修改 SVGR 的选项，传入的对象会与默认值进行 deep merge。完整文档请参考 [SVGR - Options](https://react-svgr.com/docs/options/)。
+
+- **类型：** `import('@svgr/core').Config`
 - **默认值：**
 
 ```ts
-{
-  svgDefaultExport: 'url';
-}
+const defaultSvgrOptions = {
+  svgo: true,
+  svgoConfig: {
+    plugins: [
+      {
+        name: 'preset-default',
+        params: {
+          overrides: {
+            removeViewBox: false,
+          },
+        },
+      },
+      'prefixIds',
+    ],
+  },
+};
+```
+
+- **示例：**
+
+```ts
+pluginSvgr({
+  svgrOptions: {
+    svgoConfig: {
+      datauri: 'base64',
+    },
+  },
+});
 ```
 
 ### svgDefaultExport
 
+修改 SVG 文件的默认导出类型。
+
 - **类型：** `'component' | 'url'`
 - **默认值：** `'url'`
 
-修改 SVG 文件的默认导出类型，比如把默认导出的内容设置为 React 组件：
+比如把默认导出的内容设置为 React 组件：
 
 ```ts title="rsbuild.config.ts"
 export default {
