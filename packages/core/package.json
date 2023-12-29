@@ -64,8 +64,7 @@
     "@rspack/core": "0.4.5",
     "core-js": "~3.32.2",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
-    "postcss": "8.4.31",
-    "style-loader": "3.3.3"
+    "postcss": "8.4.31"
   },
   "devDependencies": {
     "@types/node": "16.x",

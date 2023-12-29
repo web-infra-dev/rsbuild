@@ -122,6 +122,10 @@ export const TASKS: TaskConfig[] = [
         },
       },
       {
+        name: 'style-loader',
+        ignoreDts: true,
+      },
+      {
         name: 'less-loader',
         ignoreDts: true,
         externals: {
