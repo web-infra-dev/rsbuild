@@ -3,14 +3,7 @@ import type { WebpackChain } from './utils';
 
 export interface BundlerPluginInstance {
   [index: string]: any;
-
-  apply: (compiler: {
-    hooks: {
-      compilation: {
-        tap: any;
-      };
-    };
-  }) => void;
+  apply: (compiler: any) => void;
 }
 
 export interface BundlerChain extends Omit<WebpackChain, 'toConfig'> {
