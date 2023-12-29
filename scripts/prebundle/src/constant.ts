@@ -57,6 +57,10 @@ export const TASKS: TaskConfig[] = [
         name: 'connect-history-api-fallback',
         ignoreDts: true,
       },
+      {
+        name: 'toml-loader',
+        ignoreDts: true,
+      },
     ],
   },
   {
