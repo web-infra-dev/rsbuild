@@ -128,18 +128,21 @@ After adding the type declaration, if the type error still exists, you can try t
 
 ## Extend Asset Types
 
-If the built-in asset types in Rsbuild cannot meet your requirements, you can modify the built-in Rspack configuration and extend the asset types you need using [tools.bundlerChain](/config/tools/bundler-chain).
+If the built-in asset types in Rsbuild cannot meet your requirements, you can modify the built-in Rspack configuration and extend the asset types you need using [tools.rspack](/config/tools/rspack).
 
 For example, if you want to treat `*.pdf` files as assets and directly output them to the dist directory, you can add the following configuration:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
-    bundlerChain(chain) {
-      chain.module
-        .rule('pdf')
-        .test(/\.pdf$/)
-        .type('asset/resource');
+    rspack(config, { addRules }) {
+      addRules([
+        {
+          test: /\.pdf$/,
+          // converts asset to a separate file and exports the URL address.
+          type: 'asset/resource',
+        },
+      ]);
     },
   },
 };
@@ -153,10 +156,7 @@ import myFile from './static/myFile.pdf';
 console.log(myFile); // "/static/myFile.6c12aba3.pdf"
 ```
 
-For more information about asset modules, please refer to:
-
-- [Rspack Documentation - Asset modules](https://rspack.dev/guide/asset-module#asset-modules)
-- [webpack Documentation - Asset modules](https://webpack.js.org/guides/asset-modules/)
+For more information about asset modules, please refer to [Rspack - Asset modules](https://rspack.dev/guide/asset-module#asset-modules).
 
 ## Image Format
 
