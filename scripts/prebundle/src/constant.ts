@@ -1,6 +1,6 @@
 import path, { join } from 'path';
 import type { TaskConfig } from './types';
-import fs from 'fs-extra';
+import fs, { copySync } from 'fs-extra';
 import { replaceFileContent } from './helper';
 
 export const ROOT_DIR = join(__dirname, '..', '..', '..');
@@ -123,6 +123,15 @@ export const TASKS: TaskConfig[] = [
         name: 'sass-loader',
         externals: {
           sass: '../sass',
+        },
+      },
+      {
+        name: 'sass',
+        externals: {
+          chokidar: '../chokidar',
+        },
+        afterBundle(task) {
+          copySync(join(task.depPath, 'types'), join(task.distPath, 'types'));
         },
       },
       {

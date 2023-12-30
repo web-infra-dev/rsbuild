@@ -2,13 +2,13 @@ import {LegacyException} from './exception';
 import {LegacyOptions} from './options';
 
 /**
- * The object returned by [[render]] and [[renderSync]] after a successful
- * compilation.
+ * The object returned by {@link render} and {@link renderSync} after a
+ * successful compilation.
  *
  * @category Legacy
- * @deprecated This is only used by the legacy [[render]] and [[renderSync]]
- * APIs. Use [[compile]], [[compileString]], [[compileAsync]], and
- * [[compileStringAsync]] instead.
+ * @deprecated This is only used by the legacy {@link render} and {@link
+ * renderSync} APIs. Use {@link compile}, {@link compileString}, {@link
+ * compileAsync}, and {@link compileStringAsync} instead.
  */
 export interface LegacyResult {
   /**
@@ -32,14 +32,14 @@ export interface LegacyResult {
    *
    * This is `undefined` unless either
    *
-   * * [[LegacySharedOptions.sourceMap]] is a string; or
-   * * [[LegacySharedOptions.sourceMap]] is `true` and
-   *   [[LegacySharedOptions.outFile]] is set.
+   * * {@link LegacySharedOptions.sourceMap} is a string; or
+   * * {@link LegacySharedOptions.sourceMap} is `true` and
+   *   {@link LegacySharedOptions.outFile} is set.
    *
    * The source map uses absolute [`file:`
    * URLs](https://en.wikipedia.org/wiki/File_URI_scheme) to link to the Sass
-   * source files, except if the source file comes from
-   * [[LegacyStringOptions.data]] in which case it lists its URL as `"stdin"`.
+   * source files, except if the source file comes from {@link
+   * LegacyStringOptions.data} in which case it lists its URL as `"stdin"`.
    *
    * @example
    *
@@ -58,9 +58,9 @@ export interface LegacyResult {
   /** Additional information about the compilation. */
   stats: {
     /**
-     * The absolute path of [[LegacyFileOptions.file]] or
-     * [[LegacyStringOptions.file]], or `"data"` if [[LegacyStringOptions.file]]
-     * wasn't set.
+     * The absolute path of {@link LegacyFileOptions.file} or {@link
+     * LegacyStringOptions.file}, or `"data"` if {@link
+     * LegacyStringOptions.file} wasn't set.
      */
     entry: string;
 
@@ -84,8 +84,8 @@ export interface LegacyResult {
 
     /**
      * An array of the absolute paths of all Sass files loaded during
-     * compilation. If a stylesheet was loaded from a [[LegacyImporter]] that
-     * returned the stylesheet’s contents, the raw string of the `@use` or
+     * compilation. If a stylesheet was loaded from a {@link LegacyImporter}
+     * that returned the stylesheet’s contents, the raw string of the `@use` or
      * `@import` that loaded that stylesheet included in this array.
      */
     includedFiles: string[];
@@ -95,6 +95,11 @@ export interface LegacyResult {
 /**
  * This function synchronously compiles a Sass file to CSS. If it succeeds, it
  * returns the result, and if it fails it throws an error.
+ *
+ * **Heads up!** When using the `sass-embedded` npm package, **{@link render}
+ * is almost always faster than {@link renderSync}**, due to the overhead of
+ * emulating synchronous messaging with worker threads and concurrent
+ * compilations being blocked on main thread.
  *
  * @example
  *
@@ -106,19 +111,19 @@ export interface LegacyResult {
  * ```
  *
  * @category Legacy
- * @deprecated Use [[compile]] or [[compileString]] instead.
+ * @deprecated Use {@link compile} or {@link compileString} instead.
  */
 export function renderSync(options: LegacyOptions<'sync'>): LegacyResult;
 
 /**
 
  * This function asynchronously compiles a Sass file to CSS, and calls
- * `callback` with a [[LegacyResult]] if compilation succeeds or
- * [[LegacyException]] if it fails.
+ * `callback` with a {@link LegacyResult} if compilation succeeds or {@link
+ * LegacyException} if it fails.
  *
- * **Heads up!** When using Dart Sass, **[[renderSync]] is almost twice as fast
- * as [[render]]** by default, due to the overhead of making the entire
- * evaluation process asynchronous.
+ * **Heads up!** When using the `sass` npm package, **{@link renderSync} is
+ * almost twice as fast as {@link render}** by default, due to the overhead of
+ * making the entire evaluation process asynchronous.
  *
  * ```js
  * const sass = require('sass'); // or require('node-sass');
@@ -131,7 +136,7 @@ export function renderSync(options: LegacyOptions<'sync'>): LegacyResult;
  * ```
  *
  * @category Legacy
- * @deprecated Use [[compileAsync]] or [[compileStringAsync]] instead.
+ * @deprecated Use {@link compileAsync} or {@link compileStringAsync} instead.
  */
 export function render(
   options: LegacyOptions<'async'>,
