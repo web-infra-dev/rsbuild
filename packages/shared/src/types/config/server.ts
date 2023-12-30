@@ -74,6 +74,9 @@ export interface ServerConfig {
    * Adds headers to all responses.
    */
   headers?: Record<string, string | string[]>;
+  /**
+   * Whether to support html fallback.
+   */
   htmlFallback?: HtmlFallback;
   /**
    * Provide alternative pages for some 404 responses or other requests.
@@ -88,7 +91,22 @@ export interface ServerConfig {
    * Whether to throw an error when the port is occupied.
    */
   strictPort?: boolean;
+  /**
+   * Whether to print the server urls when the server is started.
+   */
+  printUrls?: boolean;
 }
 
 export type NormalizedServerConfig = ServerConfig &
-  Required<Pick<ServerConfig, 'htmlFallback' | 'port' | 'host' | 'publicDir'>>;
+  Required<
+    Pick<
+      ServerConfig,
+      | 'htmlFallback'
+      | 'port'
+      | 'host'
+      | 'compress'
+      | 'publicDir'
+      | 'strictPort'
+      | 'printUrls'
+    >
+  >;

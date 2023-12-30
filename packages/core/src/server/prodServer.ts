@@ -181,7 +181,7 @@ export async function startProdServer(
 
         const urls = getAddressUrls(https ? 'https' : 'http', port);
 
-        if (printURLs) {
+        if (printURLs && serverConfig.printUrls !== false) {
           printServerURLs(
             isFunction(printURLs) ? printURLs(urls) : urls,
             routes,

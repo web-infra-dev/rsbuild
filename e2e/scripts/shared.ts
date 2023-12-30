@@ -108,6 +108,7 @@ const updateConfigForTest = async (
   // make devPort random to avoid port conflict
   config.server = {
     ...(config.server || {}),
+    printUrls: config.server?.printUrls || false,
     port: await getRandomPort(config.server?.port),
   };
 
@@ -155,9 +156,7 @@ export async function dev({
 
   const rsbuild = await createRsbuild(options, plugins);
 
-  return rsbuild.startDevServer({
-    printURLs: false,
-  });
+  return rsbuild.startDevServer();
 }
 
 export async function build({
@@ -185,9 +184,7 @@ export async function build({
     port,
     server: { close },
   } = runServer
-    ? await rsbuild.preview({
-        printURLs: false,
-      })
+    ? await rsbuild.preview()
     : { port: 0, server: { close: noop } };
 
   const clean = async () => await fse.remove(distPath);
