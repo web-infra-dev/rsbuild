@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import { proxyConsole } from '@scripts/helper';
+import { normalizeToPosixPath } from '@rsbuild/test-helper';
 
 test('should not compile specified file when source.exclude', async () => {
   const { logs, restore } = proxyConsole();
@@ -26,7 +27,9 @@ test('should not compile specified file when source.exclude', async () => {
   expect(logs.find((log) => log.includes('ERROR 1'))).toBeTruthy();
   expect(
     logs.find(
-      (log) => log.includes('source:') && log.includes('/dist/static/js/index'),
+      (log) =>
+        log.includes('source:') &&
+        normalizeToPosixPath(log).includes('/dist/static/js/index'),
     ),
   ).toBeTruthy();
 });

@@ -4,6 +4,7 @@ import { build } from '@scripts/shared';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import type { RsbuildConfig } from '@rsbuild/shared';
 import { proxyConsole } from '@scripts/helper';
+import { normalizeToPosixPath } from '@rsbuild/test-helper';
 
 function getCommonBuildConfig(cwd: string): RsbuildConfig {
   return {
@@ -45,7 +46,9 @@ test('should throw error when exist syntax errors', async () => {
   ).toBeTruthy();
   expect(
     logs.find(
-      (log) => log.includes('output:') && log.includes('/dist/static/js/index'),
+      (log) =>
+        log.includes('output:') &&
+        normalizeToPosixPath(log).includes('/dist/static/js/index'),
     ),
   ).toBeTruthy();
   expect(logs.find((log) => log.includes('reason:'))).toBeTruthy();
@@ -109,7 +112,9 @@ test('should throw error when using optional chaining and target is es6 browsers
   ).toBeTruthy();
   expect(
     logs.find(
-      (log) => log.includes('output:') && log.includes('/dist/static/js/index'),
+      (log) =>
+        log.includes('output:') &&
+        normalizeToPosixPath(log).includes('/dist/static/js/index'),
     ),
   ).toBeTruthy();
   expect(
