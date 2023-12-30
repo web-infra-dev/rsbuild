@@ -1,6 +1,6 @@
 import path, { join } from 'path';
 import type { TaskConfig } from './types';
-import fs from 'fs-extra';
+import fs, { copySync } from 'fs-extra';
 import { replaceFileContent } from './helper';
 
 export const ROOT_DIR = join(__dirname, '..', '..', '..');
@@ -126,12 +126,36 @@ export const TASKS: TaskConfig[] = [
         },
       },
       {
+        name: 'sass',
+        externals: {
+          chokidar: '../chokidar',
+        },
+        afterBundle(task) {
+          copySync(join(task.depPath, 'types'), join(task.distPath, 'types'));
+        },
+      },
+      {
         name: 'style-loader',
         ignoreDts: true,
         afterBundle: (task) => {
           fs.copySync(
             join(task.depPath, 'dist/runtime'),
             join(task.distPath, 'runtime'),
+          );
+        },
+      },
+      {
+        name: 'less',
+        externals: {
+          // needle is an optional dependency and no need to bundle it.
+          needle: 'needle',
+        },
+        afterBundle(task) {
+          replaceFileContent(join(task.distPath, 'index.d.ts'), (content) =>
+            content.replace(
+              `declare module "less" {\n    export = less;\n}`,
+              `export = Less;`,
+            ),
           );
         },
       },

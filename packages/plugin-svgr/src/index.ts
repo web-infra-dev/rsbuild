@@ -3,15 +3,22 @@ import {
   JS_REGEX,
   TS_REGEX,
   SVG_REGEX,
+  deepmerge,
   getDistPath,
   getFilename,
   chainStaticAssetRule,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
+import { Config } from '@svgr/core';
 
 export type SvgDefaultExport = 'component' | 'url';
 
 export type PluginSvgrOptions = {
+  /**
+   * Configure SVGR options.
+   */
+  svgrOptions?: Config;
+
   /**
    * Configure the default export type of SVG files.
    */
@@ -100,13 +107,18 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         return false;
       });
 
+      const svgrOptions = deepmerge(
+        {
+          svgo: true,
+          svgoConfig: getSvgoDefaultConfig(),
+        },
+        options.svgrOptions || {},
+      );
+
       svgrRule
         .use(CHAIN_ID.USE.SVGR)
         .loader(path.resolve(__dirname, './loader'))
-        .options({
-          svgo: true,
-          svgoConfig: getSvgoDefaultConfig(),
-        })
+        .options(svgrOptions)
         .end()
         .when(svgDefaultExport === 'url', (c) =>
           c

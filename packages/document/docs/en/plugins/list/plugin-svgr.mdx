@@ -53,26 +53,63 @@ If you need to customize the compilation behavior of Svgr, you can use the follo
 ```ts
 type PluginSvgrOptions = {
   /**
+   * Configure SVGR options.
+   */
+  svgrOptions?: import('@svgr/core').Config;
+
+  /**
    * Configure the default export type of SVG files.
    */
   svgDefaultExport?: 'component' | 'url';
 };
 ```
 
+### svgrOptions
+
+Modify the options of SVGR, the passed object will be deep merged with the default value. See [SVGR - Options](https://react-svgr.com/docs/options/) for details.
+
+- **Type:** `import('@svgr/core').Config`
 - **Default:**
 
 ```ts
-{
-  svgDefaultExport: 'component';
-}
+const defaultSvgrOptions = {
+  svgo: true,
+  svgoConfig: {
+    plugins: [
+      {
+        name: 'preset-default',
+        params: {
+          overrides: {
+            removeViewBox: false,
+          },
+        },
+      },
+      'prefixIds',
+    ],
+  },
+};
+```
+
+- **Example:**
+
+```ts
+pluginSvgr({
+  svgrOptions: {
+    svgoConfig: {
+      datauri: 'base64',
+    },
+  },
+});
 ```
 
 ### svgDefaultExport
 
+Modify the default export type of SVG files.
+
 - **Type:** `'component' | 'url'`
 - **Default:** `'url'`
 
-Modify the default export type of SVG files. For example, set the default export as a React component:
+For example, set the default export as a React component:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -132,46 +169,3 @@ declare module '*.svg' {
 ```
 
 After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `env.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
-
-## Modify the SVGR configuration
-
-When [SVGR](https://react-svgr.com/) is enabled, its default configuration is as follows:
-
-```js
-{
-  svgo: true,
-  svgoConfig: {
-    plugins: [
-      {
-        name: 'preset-default',
-        params: {
-          overrides: {
-            removeViewBox: false,
-          },
-        },
-      },
-      'prefixIds',
-    ],
-  },
-}
-```
-
-If you need to modify the SVGR configuration, you can do the following:
-
-```js
-export default {
-  tools: {
-    bundlerChain: (chain, { CHAIN_ID }) => {
-      chain.module
-        .rule(CHAIN_ID.RULE.SVG)
-        .oneOf(CHAIN_ID.ONE_OF.SVG)
-        .use(CHAIN_ID.USE.SVGR)
-        .tap((options) => {
-          // modify svgoConfig
-          options.svgoConfig.plugins[0].params.overrides.removeUselessDefs = false;
-          return options;
-        });
-    },
-  },
-};
-```

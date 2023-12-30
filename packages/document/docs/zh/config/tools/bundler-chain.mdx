@@ -1,6 +1,14 @@
 # bundlerChain
 
-- **类型：** `Function | undefined`
+- **类型：**
+
+```ts
+type BundlerChainFn = (
+  chain: BundlerChain,
+  utils: ModifyBundlerChainUtils,
+) => void;
+```
+
 - **默认值：** `undefined`
 
 你可以通过 `tools.bundlerChain` 来修改默认的 Rspack 和 webpack 配置，它的值为 `Function` 类型，接收两个参数：
@@ -18,9 +26,9 @@ Bundler chain 是 webpack chain 的子集，其中包含一部分 webpack chain 
 
 > `tools.bundlerChain` 的执行时机早于 tools.rspack，因此会被其他配置中的修改所覆盖。
 
-### 工具集合
+## 工具集合
 
-#### env
+### env
 
 - **类型：** `'development' | 'production' | 'test'`
 
@@ -38,7 +46,7 @@ export default {
 };
 ```
 
-#### isProd
+### isProd
 
 - **类型：** `boolean`
 
@@ -56,7 +64,7 @@ export default {
 };
 ```
 
-#### target
+### target
 
 - **类型：** `'web' | 'node' | 'web-worker' | 'service-worker'`
 
@@ -74,7 +82,7 @@ export default {
 };
 ```
 
-#### isServer
+### isServer
 
 - **类型：** `boolean`
 
@@ -92,7 +100,7 @@ export default {
 };
 ```
 
-#### isWebWorker
+### isWebWorker
 
 - **类型：** `boolean`
 
@@ -126,7 +134,7 @@ export default {
 };
 ```
 
-#### CHAIN_ID
+## CHAIN_ID
 
 Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID 来定位到内置的 Rule 或 Plugin。
 
@@ -136,7 +144,7 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 比如，`RULE.STYLUS` 仅在注册了 Stylus 插件后才会存在。
 :::
 
-##### CHAIN_ID.RULE
+### CHAIN_ID.RULE
 
 | ID            | 描述                 |
 | ------------- | -------------------- |
