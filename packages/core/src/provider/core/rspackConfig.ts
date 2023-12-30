@@ -130,7 +130,7 @@ export async function generateRspackConfig({
     },
   });
 
-  let rspackConfig = chain.toConfig();
+  let rspackConfig = chain.toConfig() as RspackConfig;
 
   rspackConfig = await modifyRspackConfig(
     context,
