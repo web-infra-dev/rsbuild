@@ -3,6 +3,8 @@ import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import type { RsbuildConfig } from '@rsbuild/shared';
+import { proxyConsole } from '@scripts/helper';
+import { normalizeToPosixPath } from '@rsbuild/test-helper';
 
 function getCommonBuildConfig(cwd: string): RsbuildConfig {
   return {
@@ -26,6 +28,8 @@ function getCommonBuildConfig(cwd: string): RsbuildConfig {
 
 test('should throw error when exist syntax errors', async () => {
   const cwd = path.join(__dirname, 'fixtures/basic');
+  const { logs, restore } = proxyConsole();
+
   await expect(
     build({
       cwd,
@@ -33,6 +37,24 @@ test('should throw error when exist syntax errors', async () => {
       plugins: [pluginCheckSyntax()],
     }),
   ).rejects.toThrowError('[Syntax Checker]');
+
+  restore();
+
+  expect(logs.find((log) => log.includes('ERROR 1'))).toBeTruthy();
+  expect(
+    logs.find((log) => log.includes('source:') && log.includes('src/test.js')),
+  ).toBeTruthy();
+  expect(
+    logs.find(
+      (log) =>
+        log.includes('output:') &&
+        normalizeToPosixPath(log).includes('/dist/static/js/index'),
+    ),
+  ).toBeTruthy();
+  expect(logs.find((log) => log.includes('reason:'))).toBeTruthy();
+  expect(
+    logs.find((log) => log.includes('> 1 | export const printLog = () => {')),
+  ).toBeTruthy();
 });
 
 test('should not throw error when the file is excluded', async () => {
@@ -68,6 +90,7 @@ test('should not throw error when the targets are support es6', async () => {
 
 test('should throw error when using optional chaining and target is es6 browsers', async () => {
   const cwd = path.join(__dirname, 'fixtures/esnext');
+  const { logs, restore } = proxyConsole();
 
   await expect(
     build({
@@ -80,6 +103,28 @@ test('should throw error when using optional chaining and target is es6 browsers
       rsbuildConfig: getCommonBuildConfig(cwd),
     }),
   ).rejects.toThrowError('[Syntax Checker]');
+
+  restore();
+
+  expect(logs.find((log) => log.includes('ERROR 1'))).toBeTruthy();
+  expect(
+    logs.find((log) => log.includes('source:') && log.includes('src/test.js')),
+  ).toBeTruthy();
+  expect(
+    logs.find(
+      (log) =>
+        log.includes('output:') &&
+        normalizeToPosixPath(log).includes('/dist/static/js/index'),
+    ),
+  ).toBeTruthy();
+  expect(
+    logs.find(
+      (log) => log.includes('reason:') && log.includes('Unexpected token'),
+    ),
+  ).toBeTruthy();
+  expect(
+    logs.find((log) => log.includes('> 3 |   console.log(arr, arr?.flat());')),
+  ).toBeTruthy();
 });
 
 test('should not throw error when using optional chaining and ecmaVersion is 2020', async () => {

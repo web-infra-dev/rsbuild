@@ -30,7 +30,7 @@ export function printErrors(errors: SyntaxError[]) {
   );
 
   errs.forEach((err, index) => {
-    console.info(color.bold(color.red(`  ERROR ${index + 1}`)));
+    console.log(color.bold(color.red(`  ERROR ${index + 1}`)));
     printMain(err, longest);
   });
 

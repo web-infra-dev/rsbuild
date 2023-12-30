@@ -7,7 +7,7 @@ const cwd = __dirname;
 test('should print server urls correctly when printUrls is true', async ({
   page,
 }) => {
-  const { logs, restore } = proxyConsole();
+  const { logs, restore } = proxyConsole('log');
 
   const rsbuild = await dev({
     cwd,
@@ -37,7 +37,7 @@ test('should print server urls correctly when printUrls is true', async ({
 test('should not print server urls when printUrls is false', async ({
   page,
 }) => {
-  const { logs, restore } = proxyConsole();
+  const { logs, restore } = proxyConsole('log');
 
   const rsbuild = await dev({
     cwd,
