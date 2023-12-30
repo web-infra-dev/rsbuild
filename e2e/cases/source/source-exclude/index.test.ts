@@ -2,8 +2,10 @@ import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
+import { proxyConsole } from '@scripts/helper';
 
 test('should not compile specified file when source.exclude', async () => {
+  const { logs, restore } = proxyConsole();
   await expect(
     build({
       cwd: __dirname,
@@ -18,4 +20,13 @@ test('should not compile specified file when source.exclude', async () => {
       },
     }),
   ).rejects.toThrowError('[Syntax Checker]');
+
+  restore();
+
+  expect(logs.find((log) => log.includes('ERROR 1'))).toBeTruthy();
+  expect(
+    logs.find(
+      (log) => log.includes('source:') && log.includes('/dist/static/js/index'),
+    ),
+  ).toBeTruthy();
 });
