@@ -51,6 +51,8 @@ export const getDefaultServerConfig = (): NormalizedServerConfig => ({
   host: DEFAULT_DEV_HOST,
   htmlFallback: 'index',
   compress: true,
+  printUrls: true,
+  strictPort: false,
   publicDir: {
     name: 'public',
     copyOnBuild: true,

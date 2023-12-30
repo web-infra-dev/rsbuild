@@ -63,3 +63,19 @@ export const awaitFileExists = async (dir: string) => {
 
   throw new Error('awaitFileExists failed: ' + dir);
 };
+
+export const proxyConsole = (type: 'log' | 'warn' | 'error' = 'log') => {
+  const logs: string[] = [];
+
+  const original = console[type];
+  console[type] = (log) => {
+    logs.push(log);
+  };
+
+  return {
+    logs,
+    restore: () => {
+      console[type] = original;
+    },
+  };
+};

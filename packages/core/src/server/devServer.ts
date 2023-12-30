@@ -178,7 +178,7 @@ export async function startDevServer<
   let urls = getAddressUrls(protocol, port, host);
 
   // print url after http server created and before dev compile (just a short time interval)
-  if (printURLs) {
+  if (printURLs && devServerConfig.printUrls !== false) {
     if (isFunction(printURLs)) {
       urls = printURLs(urls);
 
