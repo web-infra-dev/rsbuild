@@ -1,11 +1,14 @@
 import type * as Rspack from '@rspack/core';
+import type { BundlerPluginInstance } from './bundlerConfig';
 
 export type { Rspack };
 
-type BuiltinsOptions = NonNullable<Rspack.RspackOptions['builtins']>;
+type BuiltinsOptions = NonNullable<Rspack.Configuration['builtins']>;
 
-export type RspackConfig = Rspack.RspackOptions & {
+export type RspackConfig = Omit<Rspack.Configuration, 'plugins'> & {
   builtins?: Omit<BuiltinsOptions, 'html'>;
+  // Use a loose type here, so that user can pass webpack plugins
+  plugins?: BundlerPluginInstance[];
 };
 export type RspackCompiler = Rspack.Compiler;
 export type RspackMultiCompiler = Rspack.MultiCompiler;

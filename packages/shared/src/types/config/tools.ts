@@ -76,10 +76,7 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
 };
 
 export type ToolsRspackConfig = ChainedConfigWithUtils<
-  Omit<RspackConfig, 'plugins'> & {
-    // Use a loose type here, so that user can pass webpack plugins
-    plugins?: BundlerPluginInstance[];
-  },
+  RspackConfig,
   ModifyRspackConfigUtils
 >;
 
