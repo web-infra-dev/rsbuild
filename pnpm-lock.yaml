@@ -1538,6 +1538,9 @@ importers:
       '@types/fs-extra':
         specifier: ^11.0.2
         version: 11.0.3
+      '@types/less':
+        specifier: 3.0.6
+        version: 3.0.6
       '@types/sass-loader':
         specifier: 8.0.8
         version: 8.0.8
@@ -1598,6 +1601,9 @@ importers:
       json5:
         specifier: ^2.2.3
         version: 2.2.3
+      less:
+        specifier: 4.2.0
+        version: 4.2.0
       less-loader:
         specifier: 11.1.4
         version: 11.1.4(less@4.2.0)(webpack@5.89.0)
@@ -5216,6 +5222,10 @@ packages:
     dependencies:
       '@types/node': 16.18.59
     dev: false
+
+  /@types/less@3.0.6:
+    resolution: {integrity: sha512-PecSzorDGdabF57OBeQO/xFbAkYWo88g4Xvnsx7LRwqLC17I7OoKtA3bQB9uXkY6UkMWCOsA8HSVpaoitscdXw==}
+    dev: true
 
   /@types/lodash@4.14.200:
     resolution: {integrity: sha512-YI/M/4HRImtNf3pJgbF+W6FrXovqj+T+/HpENLTooK9PnkacBsDpeP3IpHab40CClUfhNmdM2WTNP2sa2dni5Q==}
