@@ -1,9 +1,9 @@
 import {
-  logger,
+  color,
   debug,
+  logger,
   type HtmlFallback,
   type RequestHandler as Middleware,
-  color,
 } from '@rsbuild/shared';
 import path from 'path';
 import fs from 'fs';
