@@ -1,0 +1,25 @@
+# printUrls
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Whether to print the server's urls.
+
+By default, when you start the dev server or preview server, Rsbuild will print the following logs:
+
+```text
+> Local:    http://localhost:8080
+> Network:  http://192.168.0.1:8080
+```
+
+## Disabling Output
+
+Setting `server.printUrls` to `false` will prevent Rsbuild from printing the server urls.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls: false,
+  },
+};
+```
