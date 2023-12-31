@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
-    "rslog": "^1.1.2"
+    "rslog": "^1.1.3"
   },
   "devDependencies": {
     "@types/node": "16.x",
