@@ -1,7 +1,9 @@
 import {
-  RequestHandler as Middleware,
+  color,
   debug,
-  HtmlFallback,
+  logger,
+  type HtmlFallback,
+  type RequestHandler as Middleware,
 } from '@rsbuild/shared';
 import path from 'path';
 import fs from 'fs';
@@ -49,7 +51,17 @@ export const getHtmlFallbackMiddleware: (params: {
     }
 
     const { url } = req;
-    const pathname = decodeURIComponent(url);
+    let pathname = url;
+
+    // Handle invalid URLs
+    try {
+      pathname = decodeURIComponent(url);
+    } catch (err) {
+      logger.error(
+        new Error(`Invalid URL: ${color.yellow(url)}`, { cause: err }),
+      );
+      return next();
+    }
 
     let outputFileSystem = fs;
 
