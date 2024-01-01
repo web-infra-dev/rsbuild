@@ -50,6 +50,25 @@ export default defineConfig({
 });
 ```
 
+## HTML 模板
+
+CRA 默认使用 `public/index.html` 文件作为 HTML 模板。在 Rsbuild 中，你可以通过 [html.template](/config/html/template) 来指定 HTML 模板：
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  html: {
+    template: './public/index.html',
+  },
+});
+```
+
+在 HTML 模板中，如果使用了 CRA 的 `%PUBLIC_URL%` 变量，请替换为 Rsbuild 的 [assetPrefix 变量](/config/html/template-parameters)，并使用斜杠进行连接：
+
+```diff
+-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
++  <link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
+```
+
 这样就完成了从 CRA 到 Rsbuild 的基本迁移，此时你可以执行 `npm run start` 命令来尝试启动开发服务器。
 
 ## 使用 SVGR

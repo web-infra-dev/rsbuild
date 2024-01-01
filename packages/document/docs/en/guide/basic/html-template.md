@@ -98,10 +98,10 @@ In HTML templates, you can use a variety of template parameters. The template pa
 
 ```ts
 type DefaultParameters = {
-  mountId: string; // corresponding to html.mountId config
+  mountId: string; // the value of html.mountId config
   entryName: string; // entry name
-  assetPrefix: string; // corresponding to output.assetPrefix config
-  compilation: Compilation; // Compilation object corresponding to Rspack
+  assetPrefix: string; // the value of dev.assetPrefix or output.assetPrefix configs
+  compilation: Compilation; // Compilation object of Rspack
   // htmlWebpackPlugin built-in parameters
   // See https://github.com/jantimon/html-webpack-plugin for details
   htmlWebpackPlugin: {
