@@ -1,5 +1,11 @@
 # @rsbuild/shared
 
+## 0.2.14
+
+### Patch Changes
+
+- a65b78dd: test: add e2e case for toml-loader
+
 ## 0.2.13
 
 ### Patch Changes

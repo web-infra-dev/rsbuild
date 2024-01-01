@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-swc",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "description": "SWC plugin for Rsbuild",
   "repository": {
     "type": "git",
