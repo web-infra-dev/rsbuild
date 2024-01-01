@@ -50,6 +50,25 @@ export default defineConfig({
 });
 ```
 
+## HTML Template
+
+CRA uses the `public/index.html` file as the default HTML template. In Rsbuild, you can specify the HTML template through [html.template](/config/html/template):
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  html: {
+    template: './public/index.html',
+  },
+});
+```
+
+In the HTML template, if you are using the `%PUBLIC_URL%` variable from CRA, replace it with Rsbuild's [assetPrefix variable](/config/html/template-parameters) and use a forward slash for concatenation:
+
+```diff
+-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
++  <link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
+```
+
 This completes the basic migration from CRA to Rsbuild. You can now run the `npm run start` command to try starting the dev server.
 
 ## Using SVGR
