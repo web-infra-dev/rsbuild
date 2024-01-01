@@ -74,6 +74,7 @@ export const TASKS: TaskConfig[] = [
       'fs-extra',
       'chokidar',
       'webpack-chain',
+      'webpack-merge',
       'mime-types',
       'connect',
       'browserslist',

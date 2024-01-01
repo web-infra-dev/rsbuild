@@ -12,7 +12,7 @@ import {
 import type { InternalContext } from '@rsbuild/core/provider';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
-import type WebpackChain from 'webpack-chain';
+import type WebpackChain from 'webpack-5-chain';
 import type { WebpackConfig } from '../types';
 
 async function modifyWebpackChain(

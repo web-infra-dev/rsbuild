@@ -41,7 +41,7 @@
     "terser-webpack-plugin": "5.3.9",
     "tsconfig-paths-webpack-plugin": "4.1.0",
     "webpack": "^5.89.0",
-    "webpack-chain": "^6.5.1"
+    "webpack-5-chain": "8.0.1"
   },
   "devDependencies": {
     "@rsbuild/test-helper": "workspace:*",
