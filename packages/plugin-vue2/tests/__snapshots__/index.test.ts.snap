@@ -24,6 +24,9 @@ exports[`plugin-vue2 > should add vue-loader and VueLoaderPlugin correctly 1`] =
     VueLoaderPlugin {},
   ],
   "resolve": {
+    "alias": {
+      "vue$": "vue/dist/vue.runtime.esm.js",
+    },
     "extensions": [
       ".vue",
     ],
@@ -56,6 +59,9 @@ exports[`plugin-vue2 > should allow to configure vueLoader options 1`] = `
     VueLoaderPlugin {},
   ],
   "resolve": {
+    "alias": {
+      "vue$": "vue/dist/vue.runtime.esm.js",
+    },
     "extensions": [
       ".vue",
     ],
