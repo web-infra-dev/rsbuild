@@ -121,8 +121,8 @@ test('printServerURLs', () => {
     },
   };
 
-  printServerURLs(
-    [
+  printServerURLs({
+    urls: [
       {
         url: 'http://localhost:8080',
         label: 'local',
@@ -132,7 +132,7 @@ test('printServerURLs', () => {
         label: 'network',
       },
     ],
-    [
+    routes: [
       {
         name: 'index',
         route: '',
@@ -140,7 +140,7 @@ test('printServerURLs', () => {
     ],
     // @ts-expect-error
     logger,
-  );
+  });
 
   expect(message!).toMatchInlineSnapshot(`
     "  > local     http:/localhost:8080/
@@ -148,8 +148,8 @@ test('printServerURLs', () => {
     "
   `);
 
-  printServerURLs(
-    [
+  printServerURLs({
+    urls: [
       {
         url: 'http://localhost:8080',
         label: 'local',
@@ -159,7 +159,7 @@ test('printServerURLs', () => {
         label: 'network',
       },
     ],
-    [
+    routes: [
       {
         name: 'index',
         route: '',
@@ -175,7 +175,7 @@ test('printServerURLs', () => {
     ],
     // @ts-expect-error
     logger,
-  );
+  });
 
   expect(message!).toMatchInlineSnapshot(`
     "  > local

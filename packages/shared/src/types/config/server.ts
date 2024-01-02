@@ -34,6 +34,10 @@ export type HistoryApiFallbackOptions = {
   }>;
 };
 
+export type PrintUrls =
+  | boolean
+  | ((params: { urls: string[]; port: number; protocol: string }) => void);
+
 export type PublicDir =
   | false
   | {
@@ -94,7 +98,7 @@ export interface ServerConfig {
   /**
    * Whether to print the server urls when the server is started.
    */
-  printUrls?: boolean;
+  printUrls?: PrintUrls;
 }
 
 export type NormalizedServerConfig = ServerConfig &

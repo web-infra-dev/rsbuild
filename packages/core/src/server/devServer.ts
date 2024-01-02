@@ -178,7 +178,7 @@ export async function startDevServer<
   let urls = getAddressUrls(protocol, port, host);
 
   // print url after http server created and before dev compile (just a short time interval)
-  if (printURLs && devServerConfig.printUrls !== false) {
+  if (printURLs) {
     if (isFunction(printURLs)) {
       urls = printURLs(urls);
 
@@ -187,7 +187,14 @@ export async function startDevServer<
       }
     }
 
-    printServerURLs(urls, defaultRoutes, logger);
+    printServerURLs({
+      urls,
+      port,
+      routes: defaultRoutes,
+      logger,
+      protocol,
+      printUrls: devServerConfig.printUrls,
+    });
   }
 
   const compileMiddlewareAPI = await serverAPIs.startCompile();
