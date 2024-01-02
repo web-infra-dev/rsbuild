@@ -3,6 +3,7 @@ import {
   logger as defaultLogger,
   getPort,
   deepmerge,
+  isFunction,
   normalizeUrl,
   DEFAULT_PORT,
   DEFAULT_DEV_HOST,
@@ -11,6 +12,7 @@ import type {
   Logger,
   Routes,
   DevConfig,
+  PrintUrls,
   RsbuildEntry,
   RsbuildConfig,
   OutputStructure,
@@ -38,11 +40,34 @@ export const formatRoutes = (
   );
 };
 
-export function printServerURLs(
-  urls: Array<{ url: string; label: string }>,
-  routes: Routes,
-  logger: Logger = defaultLogger,
-) {
+export function printServerURLs({
+  urls,
+  port,
+  routes,
+  protocol,
+  printUrls,
+  logger = defaultLogger,
+}: {
+  urls: Array<{ url: string; label: string }>;
+  port: number;
+  routes: Routes;
+  logger?: Logger;
+  protocol: string;
+  printUrls?: PrintUrls;
+}) {
+  if (printUrls === false) {
+    return;
+  }
+
+  if (isFunction(printUrls)) {
+    printUrls({
+      urls: urls.map((item) => item.url),
+      port,
+      protocol,
+    });
+    return;
+  }
+
   let message = '';
 
   if (routes.length === 1) {
