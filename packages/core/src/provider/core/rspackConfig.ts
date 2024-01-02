@@ -2,6 +2,7 @@ import {
   debug,
   CHAIN_ID,
   castArray,
+  chainToConfig,
   modifyBundlerChain,
   mergeChainedOptions,
   type NodeEnv,
@@ -130,7 +131,7 @@ export async function generateRspackConfig({
     },
   });
 
-  let rspackConfig = chain.toConfig() as RspackConfig;
+  let rspackConfig = chainToConfig(chain);
 
   rspackConfig = await modifyRspackConfig(
     context,

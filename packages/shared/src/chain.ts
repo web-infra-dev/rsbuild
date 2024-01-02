@@ -1,6 +1,6 @@
 import { posix } from 'path';
 import { getDistPath, getFilename } from './fs';
-import { addTrailingSlash } from './utils';
+import { addTrailingSlash, isPlainObject } from './utils';
 import { castArray, ensureAbsolutePath } from './utils';
 import { debug } from './logger';
 import {
@@ -12,6 +12,8 @@ import {
 } from './constants';
 import type {
   BundlerChain,
+  RsbuildEntry,
+  RspackConfig,
   RsbuildConfig,
   ChainedConfig,
   RsbuildContext,
@@ -23,6 +25,7 @@ import type {
   ModifyBundlerChainUtils,
 } from './types';
 import { mergeChainedOptions } from './mergeChainedOptions';
+import type { EntryDescription } from '@rspack/core';
 
 export async function getBundlerChain() {
   const { default: WebpackChain } = await import('../compiled/webpack-chain');
@@ -453,4 +456,53 @@ function applyAlias({
       formattedValues.length === 1 ? formattedValues[0] : formattedValues,
     );
   });
+}
+
+export function chainToConfig(chain: BundlerChain): RspackConfig {
+  const config = chain.toConfig();
+  const { entry } = config;
+
+  if (!isPlainObject(entry)) {
+    return config as RspackConfig;
+  }
+
+  const formattedEntry: RsbuildEntry = {};
+
+  /**
+   * webpack-chain can not handle entry description object correctly,
+   * so we need to format the entry object and correct the entry description object.
+   */
+  Object.entries(entry).forEach(([entryName, entryValue]) => {
+    const entryImport: string[] = [];
+    let entryDescription: EntryDescription | null = null;
+
+    castArray(entryValue).forEach((item) => {
+      if (typeof item === 'string') {
+        entryImport.push(item);
+        return;
+      }
+
+      if (item.import) {
+        entryImport.push(...castArray(item.import));
+      }
+
+      if (entryDescription) {
+        // merge entry description object
+        Object.assign(entryDescription, item);
+      } else {
+        entryDescription = item;
+      }
+    });
+
+    formattedEntry[entryName] = entryDescription
+      ? {
+          ...(entryDescription as EntryDescription),
+          import: entryImport,
+        }
+      : entryImport;
+  });
+
+  config.entry = formattedEntry;
+
+  return config as RspackConfig;
 }

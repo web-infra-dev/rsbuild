@@ -2,9 +2,11 @@ import {
   debug,
   CHAIN_ID,
   castArray,
+  chainToConfig,
   modifyBundlerChain,
   mergeChainedOptions,
   type NodeEnv,
+  type BundlerChain,
   type RsbuildTarget,
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
@@ -177,7 +179,9 @@ export async function generateWebpackConfig({
     bundlerChain as unknown as WebpackChain,
   );
 
-  let webpackConfig = chain.toConfig();
+  let webpackConfig = chainToConfig(
+    chain as unknown as BundlerChain,
+  ) as WebpackConfig;
 
   webpackConfig = await modifyWebpackConfig(
     context,
