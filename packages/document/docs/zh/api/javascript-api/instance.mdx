@@ -185,8 +185,6 @@ type StartDevServerOptions = {
   compiler?: Compiler | MultiCompiler;
   // 是否在启动时静默获取端口号，默认为 false
   getPortSilently?: boolean;
-  // 自定义日志输出对象
-  logger?: Logger;
 };
 
 type StartServerResult = {
@@ -266,42 +264,6 @@ await rsbuild.startDevServer({
   getPortSilently: true,
 });
 ```
-
-### 自定义日志输出对象
-
-默认情况下，Rsbuild 会使用 [rslog](https://github.com/rspack-contrib/rslog) 来输出日志，你可以通过 `logger` 参数来自定义日志输出对象。
-
-```ts
-const customLogger = {
-  // 你需要定义以下的方法
-  info(msg: string) {
-    console.log(msg);
-  },
-  error(msg: string) {
-    console.error(msg);
-  },
-  warn(msg: string) {
-    console.warn(msg);
-  },
-  success(msg: string) {
-    console.log(`✅ msg`);
-  },
-  debug(msg: string) {
-    if (process.env.DEBUG) {
-      console.log(msg);
-    }
-  },
-  log(msg: string) {
-    console.log(msg);
-  };
-}
-
-await rsbuild.startDevServer({
-  logger: customLogger,
-});
-```
-
-这样，Rsbuild 会使用你自定义的日志输出对象来输出日志。
 
 ## rsbuild.preview
 

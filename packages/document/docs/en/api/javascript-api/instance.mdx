@@ -185,8 +185,6 @@ type StartDevServerOptions = {
   compiler?: Compiler | MultiCompiler;
   // Whether to get the port silently, the default is false
   getPortSilently?: boolean;
-  // custom logger
-  logger?: Logger;
 };
 
 type StartServerResult = {
@@ -266,42 +264,6 @@ await rsbuild.startDevServer({
   getPortSilently: true,
 });
 ```
-
-### Custom Logger
-
-By default, Rsbuild uses [rslog](https://github.com/rspack-contrib/rslog) to output logs. You can customize the log output object through the `logger` parameter.
-
-```ts
-const customLogger = {
-  // You need to define the following methods
-  info(msg: string) {
-    console.log(msg);
-  },
-  error(msg: string) {
-    console.error(msg);
-  },
-  warn(msg: string) {
-    console.warn(msg);
-  },
-  success(msg: string) {
-    console.log(`✅ msg`);
-  },
-  debug(msg: string) {
-    if (process.env.DEBUG) {
-      console.log(msg);
-    }
-  },
-  log(msg: string) {
-    console.log(msg);
-  };
-}
-
-await rsbuild.startDevServer({
-  logger: customLogger,
-});
-```
-
-Then Rsbuild will use the custom logger to output logs.
 
 ## rsbuild.preview
 

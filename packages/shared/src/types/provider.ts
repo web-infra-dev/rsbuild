@@ -15,8 +15,11 @@ export type CreateCompilerOptions = { watch?: boolean };
 
 export type StartDevServerOptions = {
   compiler?: Compiler | MultiCompiler;
-  logger?: Logger;
   getPortSilently?: boolean;
+  /**
+   * @deprecated use `logger.override()` instead
+   */
+  logger?: Logger;
   /**
    * @deprecated use `server.printUrls` instead
    */
