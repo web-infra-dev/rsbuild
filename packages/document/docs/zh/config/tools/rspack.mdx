@@ -269,3 +269,7 @@ export default {
   },
 };
 ```
+
+:::tip
+mergeConfig 方法会创建一个新的 config 对象，不会修改原始 config 对象，因此你需要 return mergeConfig 的执行结果。
+:::
