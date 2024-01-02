@@ -18,7 +18,9 @@ test('should allow to customize logger', async ({ page }) => {
 
   await page.goto(`http://localhost:${rsbuild.port}`);
 
-  expect(logs.includes('[START] Compiling...')).toBeTruthy();
+  expect(
+    logs.find((item) => item.includes('[START] Compiling...')),
+  ).toBeTruthy();
   expect(
     logs.find((item) => item.includes('[READY] Client compiled in')),
   ).toBeTruthy();
