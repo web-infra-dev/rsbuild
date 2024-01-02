@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { build } from '@scripts/shared';
 import { rspackOnlyTest, proxyConsole } from '@scripts/helper';
 
