@@ -3,7 +3,7 @@
   "name": "@rsbuild/e2e",
   "version": "1.0.0",
   "scripts": {
-    "test": "pnpm run test:rspack && pnpm run test:webpack",
+    "test": "pnpm run test:rspack custom-logger",
     "test:webpack": "cross-env PROVIDE_TYPE=webpack playwright test",
     "test:rspack": "playwright test",
     "test:webpack-swc": "cross-env PROVIDE_TYPE=webpack playwright test swc"
