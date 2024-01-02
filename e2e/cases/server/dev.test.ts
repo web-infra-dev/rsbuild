@@ -189,28 +189,6 @@ rspackOnlyTest(
   },
 );
 
-// need devcert
-// TODO: failed in Windows
-test.skip('dev.https', async () => {
-  const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
-    rsbuildConfig: {
-      output: {
-        distPath: {
-          root: 'dist-https',
-        },
-      },
-      server: {
-        https: true,
-      },
-    },
-  });
-
-  expect(rsbuild.urls[0].startsWith('https')).toBeTruthy();
-
-  await rsbuild.server.close();
-});
-
 // hmr will timeout in CI
 test('devServer', async ({ page }) => {
   // HMR cases will fail in Windows
