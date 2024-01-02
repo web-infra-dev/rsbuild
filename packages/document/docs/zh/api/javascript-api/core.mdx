@@ -175,3 +175,42 @@ logger.debug('This is a debug message');
 // Same as console.log
 logger.log('This is a log message');
 ```
+
+### 自定义 Logger
+
+你可以使用 `logger.override` 方法来覆盖默认 logger 的部分或全部方法：
+
+```ts
+import { logger } from '@rsbuild/core';
+
+logger.override({
+  log: (message) => {
+    console.log(`[log] ${message}`);
+  },
+  info: (message) => {
+    console.log(`[info] ${message}`);
+  },
+  warn: (message) => {
+    console.warn(`[warn] ${message}`);
+  },
+  start: (message) => {
+    console.log(`[start] ${message}`);
+  },
+  ready: (message) => {
+    console.log(`[ready] ${message}`);
+  },
+  error: (message) => {
+    console.error(`[error] ${message}`);
+  },
+  success: (message) => {
+    console.error(`[success] ${message}`);
+  },
+  debug: (message) => {
+    if (process.env.DEBUG) {
+      console.log(`[debug] ${message}`);
+    }
+  },
+});
+
+logger.info('hello'); // [info] hello
+```

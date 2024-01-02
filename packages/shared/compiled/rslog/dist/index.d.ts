@@ -42,7 +42,7 @@ declare let LOG_TYPES: {
 };
 
 type LogLevel = 'error' | 'warn' | 'info' | 'log' | 'verbose';
-type LogMessage = number | string | unknown | Error | null;
+type LogMessage = unknown;
 interface LogType {
     label?: string;
     level: LogLevel;
@@ -56,6 +56,7 @@ type LogMethods = keyof typeof LOG_TYPES;
 type Logger = Record<LogMethods, LogFunction> & {
     greet: (message: string) => void;
     level: LogLevel;
+    override: (customLogger: Partial<Record<LogMethods, LogFunction>>) => void;
 };
 
 declare let createLogger: (options?: Options) => Logger;
