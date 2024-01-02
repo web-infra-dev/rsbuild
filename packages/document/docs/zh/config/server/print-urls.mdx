@@ -1,6 +1,6 @@
 # printUrls
 
-- **类型：** `boolean`
+- **类型：** `boolean | Function`
 - **默认值：** `true`
 
 是否输出 server 的 URL 地址。
@@ -10,6 +10,24 @@
 ```text
 > Local:    http://localhost:8080
 > Network:  http://192.168.0.1:8080
+```
+
+## 自定义日志
+
+`server.printUrls` 可以设置为一个函数，函数的入参包括 port，protocol 和 urls。
+
+当 `server.printUrls` 设置为函数时，Rsbuild 将不会输出 server 的 URL 地址，你可以基于入参来自定义日志内容，并自行输出到 terminal。
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ urls, port, protocol }) {
+      console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
+      console.log(port); // 8080
+      console.log(protocol); // 'http' or 'https'
+    },
+  },
+};
 ```
 
 ## 禁用输出

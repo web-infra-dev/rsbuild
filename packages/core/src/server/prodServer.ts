@@ -179,14 +179,16 @@ export async function startProdServer(
           routes,
         });
 
-        const urls = getAddressUrls(https ? 'https' : 'http', port);
+        const protocol = https ? 'https' : 'http';
+        const urls = getAddressUrls(protocol, port);
 
-        if (printURLs && serverConfig.printUrls !== false) {
-          printServerURLs(
-            isFunction(printURLs) ? printURLs(urls) : urls,
-            routes,
-          );
-        }
+        printServerURLs({
+          urls: isFunction(printURLs) ? printURLs(urls) : urls,
+          port,
+          routes,
+          protocol,
+          printUrls: serverConfig.printUrls,
+        });
 
         const onClose = () => {
           server.close();
