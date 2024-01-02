@@ -136,6 +136,19 @@ export default defineConfig({
 });
 ```
 
+## 移除 react-app-polyfill
+
+CRA 提供了 [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill) 来手动注入 polyfill 代码。
+
+在 Rsbuild 项目中，你可以移除 react-app-polyfill 相关的依赖和代码，因为 Rsbuild 会自动读取 browserslist 配置，并按需注入 polyfill 代码。
+
+```diff title="src/index.js"
+- import 'react-app-polyfill/ie11';
+- import 'react-app-polyfill/stable';
+```
+
+你可以参考 [浏览器兼容性](/guide/advanced/browser-compatibility) 来了解 Rsbuild 是如何处理 polyfill 的。
+
 ## 内容补充
 
 当前文档只涵盖了迁移过程的部分事项，如果你发现有合适的内容可以补充，欢迎通过 pull request 来完善文档 🤝。
