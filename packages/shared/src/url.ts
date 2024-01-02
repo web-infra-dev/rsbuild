@@ -61,7 +61,7 @@ const getIpv4Interfaces = () => {
   return Array.from(ipv4Interfaces.values());
 };
 
-const isLocalHost = (host: string) => {
+const isLoopbackHost = (host: string) => {
   const loopbackHosts = ['localhost', '127.0.0.1', '::1'];
   return loopbackHosts.includes(host);
 };
@@ -77,7 +77,7 @@ export const getAddressUrls = (
   if (host && host !== DEFAULT_DEV_HOST) {
     return [
       {
-        label: isLocalHost(host) ? LOCAL_LABEL : NETWORK_LABEL,
+        label: isLoopbackHost(host) ? LOCAL_LABEL : NETWORK_LABEL,
         url: `${protocol}://${host}:${port}`,
       },
     ];
@@ -86,7 +86,7 @@ export const getAddressUrls = (
   const ipv4Interfaces = getIpv4Interfaces();
 
   return ipv4Interfaces.reduce((memo: AddressUrl[], detail) => {
-    if (isLocalHost(detail.address) || detail.internal) {
+    if (isLoopbackHost(detail.address) || detail.internal) {
       memo.push({
         label: LOCAL_LABEL,
         url: `${protocol}://localhost:${port}`,
