@@ -15,47 +15,18 @@ export const pluginEntry = (): RsbuildPlugin => ({
         config.output.polyfill === 'entry' && !isServer && !isServiceWorker;
 
       Object.keys(entry).forEach((entryName) => {
-        const entryImport: string[] = [];
-        let entryDescription: EntryDescription | null = null;
-
-        const appendEntry = (item: string | EntryDescription) => {
-          if (typeof item === 'string') {
-            entryImport.push(item);
-            return;
-          }
-
-          if (item.import) {
-            entryImport.push(...castArray(item.import));
-          }
-
-          if (entryDescription) {
-            // merge entry description object
-            Object.assign(entryDescription, item);
-          } else {
-            entryDescription = item;
-          }
+        const entryPoint = chain.entry(entryName);
+        const addEntry = (item: string | EntryDescription) => {
+          entryPoint.add(item);
         };
 
-        preEntry.forEach(appendEntry);
+        preEntry.forEach(addEntry);
 
         if (injectCoreJsEntry) {
-          appendEntry(createVirtualModule('import "core-js";'));
+          addEntry(createVirtualModule('import "core-js";'));
         }
 
-        castArray(entry[entryName]).forEach(appendEntry);
-
-        chain.entryPoints.set(entryName, {
-          // @ts-expect-error EntryDescription type mismatch
-          values() {
-            if (entryDescription) {
-              return {
-                ...entryDescription,
-                import: entryImport,
-              };
-            }
-            return entryImport;
-          },
-        });
+        castArray(entry[entryName]).forEach(addEntry);
       });
     });
 
