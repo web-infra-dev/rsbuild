@@ -108,10 +108,15 @@ export const getAddressUrls = (
   const ipv4Interfaces = getIpv4Interfaces();
 
   return ipv4Interfaces.map((detail) => {
-    const url = concatUrl({ host: detail.address, port, protocol });
     if (isLoopbackHost(detail.address) || detail.internal) {
-      return { label: LOCAL_LABEL, url };
+      return {
+        label: LOCAL_LABEL,
+        url: concatUrl({ host: 'localhost', port, protocol }),
+      };
     }
-    return { label: NETWORK_LABEL, url };
+    return {
+      label: NETWORK_LABEL,
+      url: concatUrl({ host: detail.address, port, protocol }),
+    };
   });
 };
