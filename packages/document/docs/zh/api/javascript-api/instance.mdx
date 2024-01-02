@@ -181,8 +181,6 @@ await rsbuild.build({
 
 ```ts
 type StartDevServerOptions = {
-  // 是否输出 URL 信息，默认为 true
-  printURLs?: boolean | Function;
   // 自定义 Compiler 对象
   compiler?: Compiler | MultiCompiler;
   // 是否在启动时静默获取端口号，默认为 false
@@ -242,29 +240,6 @@ console.log(port); // 8080
 
 // 关闭 Dev Server
 await server.close();
-```
-
-### 自定义 URL 输出
-
-将 `printURLs` 设置为 `false` 可以禁用默认的 URL 输出，此时你可以输出自定义的日志内容。
-
-```ts
-await rsbuild.startDevServer({
-  printURLs: false,
-});
-```
-
-你也可以直接将 `printURLs` 配置为一个函数来修改 URL，比如给每个 URL 增加一个子路径：
-
-```ts
-await rsbuild.startDevServer({
-  printURLs: (urls) => {
-    return urls.map(({ label, url }) => ({
-      label,
-      url: `${url}/path`,
-    }));
-  },
-});
 ```
 
 ### 自定义 Compiler

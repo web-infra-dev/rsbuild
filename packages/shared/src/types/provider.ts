@@ -15,14 +15,20 @@ export type CreateCompilerOptions = { watch?: boolean };
 
 export type StartDevServerOptions = {
   compiler?: Compiler | MultiCompiler;
-  printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
   logger?: Logger;
   getPortSilently?: boolean;
+  /**
+   * @deprecated use `server.printUrls` instead
+   */
+  printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
 };
 
 export type PreviewServerOptions = {
-  printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
   getPortSilently?: boolean;
+  /**
+   * @deprecated use `server.printUrls` instead
+   */
+  printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
 };
 
 export type BuildOptions = {
