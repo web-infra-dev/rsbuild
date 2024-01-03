@@ -594,9 +594,6 @@ importers:
       webpack:
         specifier: ^5.89.0
         version: 5.89.0
-      webpack-5-chain:
-        specifier: 8.0.1
-        version: 8.0.1
     devDependencies:
       '@rsbuild/test-helper':
         specifier: workspace:*
@@ -1514,8 +1511,8 @@ importers:
         specifier: ^8.5.10
         version: 8.5.10
       '@vercel/ncc':
-        specifier: 0.33.3
-        version: 0.33.3
+        specifier: 0.38.1
+        version: 0.38.1
       dts-packer:
         specifier: 0.0.3
         version: 0.0.3
@@ -5423,8 +5420,8 @@ packages:
       '@types/yargs-parser': 21.0.2
     dev: false
 
-  /@vercel/ncc@0.33.3:
-    resolution: {integrity: sha512-JGZ11QV+/ZcfudW2Cz2JVp54/pJNXbsuWRgSh2ZmmZdQBKXqBtIGrwI1Wyx8nlbzAiEFe7FHi4K1zX4//jxTnQ==}
+  /@vercel/ncc@0.38.1:
+    resolution: {integrity: sha512-IBBb+iI2NLu4VQn3Vwldyi2QwaXt5+hTyh58ggAMoCGE6DJmPvwL3KPBWcJl1m9LYPChBLE980Jw+CS4Wokqxw==}
     hasBin: true
     dev: false
 
@@ -7438,6 +7435,7 @@ packages:
   /deepmerge@1.5.2:
     resolution: {integrity: sha512-95k0GDqvBjZavkuvzx/YqVLv/6YYa17fz6ILMSf7neqQITCPbnfEnQvEgMPNjH4kgobe7+WIL0yJEHku+H3qtQ==}
     engines: {node: '>=0.10.0'}
+    dev: true
 
   /deepmerge@4.3.1:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
@@ -9307,6 +9305,7 @@ packages:
 
   /javascript-stringify@2.1.0:
     resolution: {integrity: sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==}
+    dev: true
 
   /jest-diff@29.7.0:
     resolution: {integrity: sha512-LMIgiIrhigmPrs03JHpxUh2yISK3vLFPkAodPeo0+BuF7wA2FoQbkEg1u8gBYBThncu7e1oEDUfIXVuTqLRUjw==}
@@ -14121,6 +14120,7 @@ packages:
     dependencies:
       deepmerge: 1.5.2
       javascript-stringify: 2.1.0
+    dev: true
 
   /webpack-bundle-analyzer@4.9.0:
     resolution: {integrity: sha512-+bXGmO1LyiNx0i9enBu3H8mv42sj/BJWhZNFwjz92tVnBa9J3JMGo2an2IXlEleoDOPn/Hofl5hr/xCpObUDtw==}

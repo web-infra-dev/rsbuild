@@ -278,7 +278,10 @@ export function pluginSplitChunks(): RsbuildPlugin {
             polyfill: config.output.polyfill,
           });
 
-          chain.optimization.splitChunks(splitChunksOptions);
+          chain.optimization.splitChunks(
+            // @ts-expect-error splitChunks type mismatch
+            splitChunksOptions,
+          );
         },
       );
     },
