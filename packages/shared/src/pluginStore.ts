@@ -3,78 +3,74 @@ import type {
   PluginStore,
   RsbuildPlugin,
   RsbuildPluginAPI,
-  BundlerPluginInstance,
+  RsbuildPlugins,
 } from './types';
 import { color, isFunction } from './utils';
-
-function validatePlugin(plugin: unknown) {
-  const type = typeof plugin;
-
-  if (type !== 'object' || plugin === null) {
-    throw new Error(
-      `Expect Rsbuild plugin instance to be an object, but got ${type}.`,
-    );
-  }
-
-  if (!isFunction((plugin as RsbuildPlugin).setup)) {
-    if (isFunction((plugin as BundlerPluginInstance).apply)) {
-      const { name = 'SomeWebpackPlugin' } =
-        (plugin as BundlerPluginInstance).constructor || {};
-
-      const messages = [
-        `${color.yellow(
-          name,
-        )} looks like a Webpack or Rspack plugin, please use ${color.yellow(
-          '`tools.rspack`',
-        )} to register it:`,
-        color.green(`
-  // rsbuild.config.ts
-  export default {
-    tools: {
-      rspack: {
-        plugins: [new ${name}()]
-      }
-    }
-  };
-`),
-      ];
-
-      throw new Error(messages.join('\n'));
-    }
-
-    throw new Error(
-      `Expect Rsbuild plugin.setup to be a function, but got ${type}.`,
-    );
-  }
-}
 
 export function createPluginStore(): PluginStore {
   let plugins: RsbuildPlugin[] = [];
 
   const addPlugins = (
-    newPlugins: RsbuildPlugin[],
+    newPlugins: RsbuildPlugins,
     options?: { before?: string },
   ) => {
     const { before } = options || {};
-    newPlugins.forEach((newPlugin) => {
-      validatePlugin(newPlugin);
-
-      if (plugins.find((item) => item.name === newPlugin.name)) {
-        logger.warn(
-          `Rsbuild plugin "${newPlugin.name}" registered multiple times.`,
+    for (const plugin of newPlugins) {
+      if (!plugin) continue;
+      if (typeof plugin !== 'object') {
+        throw new Error(
+          `expect plugin instance is object, but got ${typeof plugin}.`,
         );
-      } else if (before) {
+      }
+
+      const { name, setup, apply } = plugin as any;
+      if (typeof name !== 'string') {
+        logger.warn(
+          `Rsbuild plugin must have a "name" field for identification.`,
+        );
+      }
+      if (!isFunction(setup)) {
+        if (isFunction(apply)) {
+          const _name = plugin.constructor?.name ?? 'SomeWebpackPlugin';
+
+          const message =
+            `${color.yellow(_name)} looks like a webpack or Rspack plugin, ` +
+            `please use ${color.yellow('`tools.rspack`')} to register it:\n`;
+          const example = [
+            '  // rsbuild.config.ts',
+            '  export default {',
+            '    tools: {',
+            '      rspack: {',
+            `        plugins: [new ${name}()]`,
+            '      }',
+            '    }',
+            '  };',
+          ].join('\n');
+
+          throw new Error(message + color.green(example));
+        }
+
+        throw new Error(
+          `Expect Rsbuild plugin.setup to be a function, but got ${typeof plugin}.`,
+        );
+      }
+      if (plugins.some((item) => item.name === plugin.name)) {
+        logger.warn(
+          `Rsbuild plugin "${plugin.name}" registered multiple times.`,
+        );
+      }
+      if (before) {
         const index = plugins.findIndex((item) => item.name === before);
         if (index === -1) {
           logger.warn(`Plugin "${before}" does not exist.`);
-          plugins.push(newPlugin);
+          plugins.push(plugin);
         } else {
-          plugins.splice(index, 0, newPlugin);
+          plugins.splice(index, 0, plugin);
         }
       } else {
-        plugins.push(newPlugin);
+        plugins.push(plugin);
       }
-    });
+    }
   };
 
   const removePlugins = (pluginNames: string[]) => {
