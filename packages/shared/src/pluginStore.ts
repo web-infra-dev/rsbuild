@@ -1,40 +1,61 @@
 import { logger, debug } from './logger';
-import type { PluginStore, RsbuildPlugin, RsbuildPluginAPI } from './types';
+import type {
+  PluginStore,
+  RsbuildPlugin,
+  RsbuildPluginAPI,
+  RsbuildPlugins,
+} from './types';
 
 export function createPluginStore(): PluginStore {
   let plugins: RsbuildPlugin[] = [];
 
   const addPlugins = (
-    newPlugins: RsbuildPlugin[],
+    newPlugins: RsbuildPlugins,
     options?: { before?: string },
   ) => {
     const { before } = options || {};
-    newPlugins.forEach((newPlugin) => {
-      if (typeof newPlugin !== 'object' || newPlugin === null) {
-        throw new Error(
-          `expect plugin instance is object, but got ${typeof newPlugin}.`,
-        );
-      } else if (typeof newPlugin.setup !== 'function') {
-        throw new Error(
-          `expect plugin.setup is function, but got ${typeof newPlugin}.`,
+    for (const plugin of newPlugins) {
+      if (!plugin) {
+        continue;
+      }
+      if (typeof plugin.name !== 'string') {
+        logger.warn(
+          `Rsbuild plugin must have a "name" field for identification.`,
         );
       }
-      if (plugins.find((item) => item.name === newPlugin.name)) {
-        logger.warn(
-          `Rsbuild plugin "${newPlugin.name}" registered multiple times.`,
+      if (typeof plugin !== 'object') {
+        throw new Error(
+          `expect plugin instance is object, but got ${typeof plugin}.`,
         );
-      } else if (before) {
+      }
+      if (typeof (plugin as any).apply === 'function') {
+        logger.warn(
+          `Rsbuild plugin "${plugin.name}" has an "apply" method. ` +
+            'Perhaps you have passed a webpack/Rspack plugin to Rsbuild unexpectedly?',
+        );
+      }
+      if (typeof plugin.setup !== 'function') {
+        throw new Error(
+          `expect plugin.setup is function, but got ${typeof plugin}.`,
+        );
+      }
+      if (plugins.some((item) => item.name === plugin.name)) {
+        logger.warn(
+          `Rsbuild plugin "${plugin.name}" registered multiple times.`,
+        );
+      }
+      if (before) {
         const index = plugins.findIndex((item) => item.name === before);
         if (index === -1) {
           logger.warn(`Plugin "${before}" does not exist.`);
-          plugins.push(newPlugin);
+          plugins.push(plugin);
         } else {
-          plugins.splice(index, 0, newPlugin);
+          plugins.splice(index, 0, plugin);
         }
       } else {
-        plugins.push(newPlugin);
+        plugins.push(plugin);
       }
-    });
+    }
   };
 
   const removePlugins = (pluginNames: string[]) => {

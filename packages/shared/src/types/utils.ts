@@ -2,6 +2,8 @@ import type WebpackChain from '../../compiled/webpack-chain';
 
 export type { WebpackChain };
 
+export type Falsy = false | null | undefined;
+
 export type ArrayOrNot<T> = T | T[];
 
 export type PromiseOrNot<T> = T | Promise<T>;

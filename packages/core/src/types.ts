@@ -1,13 +1,14 @@
 import type {
   RsbuildConfig,
   RsbuildPlugin,
+  RsbuildPlugins,
   RsbuildContext,
   NormalizedConfig,
   RsbuildPluginAPI,
 } from '@rsbuild/shared';
 import type { Hooks } from './provider/core/initHooks';
 
-export type { RsbuildPlugin, RsbuildPluginAPI };
+export type { RsbuildPlugin, RsbuildPlugins, RsbuildPluginAPI };
 
 /** The inner context. */
 export type InternalContext = RsbuildContext & {
