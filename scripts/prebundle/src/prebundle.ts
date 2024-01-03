@@ -159,6 +159,7 @@ export async function prebundle(task: ParsedTask) {
 
   const { code, assets } = await ncc(task.depEntry, {
     minify: task.minify,
+    target: 'es2019',
     externals: {
       ...DEFAULT_EXTERNALS,
       ...task.externals,

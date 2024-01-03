@@ -12,7 +12,7 @@
     "@babel/core": "^7.23.2",
     "@types/node": "16.x",
     "@types/ws": "^8.5.10",
-    "@vercel/ncc": "0.33.3",
+    "@vercel/ncc": "0.38.1",
     "dts-packer": "0.0.3",
     "fast-glob": "^3.3.1",
     "postcss": "8.4.31",

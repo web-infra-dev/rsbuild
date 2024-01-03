@@ -1514,8 +1514,8 @@ importers:
         specifier: ^8.5.10
         version: 8.5.10
       '@vercel/ncc':
-        specifier: 0.33.3
-        version: 0.33.3
+        specifier: 0.38.1
+        version: 0.38.1
       dts-packer:
         specifier: 0.0.3
         version: 0.0.3
@@ -5423,8 +5423,8 @@ packages:
       '@types/yargs-parser': 21.0.2
     dev: false
 
-  /@vercel/ncc@0.33.3:
-    resolution: {integrity: sha512-JGZ11QV+/ZcfudW2Cz2JVp54/pJNXbsuWRgSh2ZmmZdQBKXqBtIGrwI1Wyx8nlbzAiEFe7FHi4K1zX4//jxTnQ==}
+  /@vercel/ncc@0.38.1:
+    resolution: {integrity: sha512-IBBb+iI2NLu4VQn3Vwldyi2QwaXt5+hTyh58ggAMoCGE6DJmPvwL3KPBWcJl1m9LYPChBLE980Jw+CS4Wokqxw==}
     hasBin: true
     dev: false
 
