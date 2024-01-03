@@ -1,5 +1,11 @@
 # @rsbuild/shared
 
+## 0.2.15
+
+### Patch Changes
+
+- 6038abf: chore: deprecate logger option of startDevServer
+
 ## 0.2.14
 
 ### Patch Changes
