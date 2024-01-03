@@ -3,4 +3,4 @@
 '@rsbuild/core': patch
 ---
 
-feat: enable to pass falsy values as plugins
+feat: allow passing falsy plugins
