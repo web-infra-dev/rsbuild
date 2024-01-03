@@ -23,7 +23,7 @@ export default defineConfig({
   },
   themeConfig: {
     footer: {
-      message: 'Copyright © 2023 ByteDance.',
+      message: 'Copyright © 2024 ByteDance.',
     },
     socialLinks: [
       {
