@@ -4,7 +4,7 @@ This section describes some of the type definitions provided by the Rsbuild.
 
 ## RsbuildInstance
 
-The type of the Rsbuild instance.
+The type of Rsbuild instance, corresponding to the return value of the [createRsbuild](/api/javascript-api/core#creatersbuild) method.
 
 ```ts
 import type { RsbuildInstance } from '@rsbuild/core';
@@ -12,9 +12,31 @@ import type { RsbuildInstance } from '@rsbuild/core';
 let rsbuild: RsbuildInstance;
 ```
 
+## RsbuildConfig
+
+The type of Rsbuild configuration.
+
+```ts
+import type { RsbuildConfig } from '@rsbuild/core';
+
+const config: RsbuildConfig = {
+  // ...
+};
+```
+
+## NormalizedConfig
+
+The type of Rsbuild configuration after normalization, corresponding to the return value of the [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) method.
+
+```ts
+import type { NormalizedConfig } from '@rsbuild/core';
+
+const config: NormalizedConfig = api.getNormalizedConfig();
+```
+
 ## RsbuildContext
 
-The type of the context property in the Rsbuild instance.
+The type of the [context property](/api/javascript-api/instance#rsbuildcontext) in the Rsbuild instance.
 
 ```ts
 import type { RsbuildContext } from '@rsbuild/core';
@@ -35,6 +57,19 @@ const myPlugin: RsbuildPlugin = {
 };
 ```
 
+## RsbuildPluginAPI
+
+The type of the `api` object passed into the `setup` function in the Rsbuild plugin.
+
+```ts
+import type { RsbuildPluginAPI } from '@rsbuild/core';
+
+const myPlugin = {
+  name: 'my-plugin',
+  setup(api: RsbuildPluginAPI) {},
+};
+```
+
 ## RsbuildTarget
 
 The type of build target.
@@ -45,8 +80,16 @@ import type { RsbuildTarget } from '@rsbuild/core';
 
 ## CreateRsbuildOptions
 
-The param type of `createRsbuild` method.
+The param type of [createRsbuild](/api/javascript-api/core#creatersbuild) method.
 
 ```ts
 import type { CreateRsbuildOptions } from '@rsbuild/core';
+```
+
+## InspectConfigOptions
+
+The param type of [rsbuild.inspectConfig](/api/javascript-api/instance#rsbuildinspectconfig) method.
+
+```ts
+import type { InspectConfigOptions } from '@rsbuild/core';
 ```
