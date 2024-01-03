@@ -8,13 +8,13 @@ import {
   type NodeEnv,
   type BundlerChain,
   type RsbuildTarget,
+  type WebpackChain,
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
 } from '@rsbuild/shared';
 import type { InternalContext } from '@rsbuild/core/provider';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
-import type WebpackChain from 'webpack-5-chain';
 import type { WebpackConfig } from '../types';
 
 async function modifyWebpackChain(
@@ -25,7 +25,6 @@ async function modifyWebpackChain(
   debug('modify webpack chain');
 
   const [modifiedChain] = await context.hooks.modifyWebpackChainHook.call(
-    // @ts-expect-error `chain` in the sig of modifyWebpackChainHook is `RspackChain`.
     chain,
     utils,
   );
@@ -38,7 +37,6 @@ async function modifyWebpackChain(
 
   debug('modify webpack chain done');
 
-  // @ts-expect-error `modifiedChain` in the output of modifyWebpackChainHook is `RspackConfig`.
   return modifiedChain;
 }
 
