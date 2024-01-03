@@ -31,7 +31,7 @@ export function createPluginStore(): PluginStore {
       }
       if (!isFunction(setup)) {
         if (isFunction(apply)) {
-          const _name = name ?? plugin.constructor?.name ?? 'SomeWebpackPlugin';
+          const _name = plugin.constructor?.name ?? 'SomeWebpackPlugin';
 
           const message =
             `${color.yellow(_name)} looks like a webpack or Rspack plugin, ` +
