@@ -5,6 +5,7 @@ import type {
   RsbuildPluginAPI,
   RsbuildPlugins,
 } from './types';
+import { color, isFunction } from './utils';
 
 export function createPluginStore(): PluginStore {
   let plugins: RsbuildPlugin[] = [];
@@ -15,28 +16,42 @@ export function createPluginStore(): PluginStore {
   ) => {
     const { before } = options || {};
     for (const plugin of newPlugins) {
-      if (!plugin) {
-        continue;
-      }
-      if (typeof plugin.name !== 'string') {
-        logger.warn(
-          `Rsbuild plugin must have a "name" field for identification.`,
-        );
-      }
+      if (!plugin) continue;
       if (typeof plugin !== 'object') {
         throw new Error(
           `expect plugin instance is object, but got ${typeof plugin}.`,
         );
       }
-      if (typeof (plugin as any).apply === 'function') {
+
+      const { name, setup, apply } = plugin as any;
+      if (typeof name !== 'string') {
         logger.warn(
-          `Rsbuild plugin "${plugin.name}" has an "apply" method. ` +
-            'Perhaps you have passed a webpack/Rspack plugin to Rsbuild unexpectedly?',
+          `Rsbuild plugin must have a "name" field for identification.`,
         );
       }
-      if (typeof plugin.setup !== 'function') {
+      if (!isFunction(setup)) {
+        if (isFunction(apply)) {
+          const _name = name ?? plugin.constructor?.name ?? 'SomeWebpackPlugin';
+
+          const message =
+            `${color.yellow(_name)} looks like a webpack or Rspack plugin, ` +
+            `please use ${color.yellow('`tools.rspack`')} to register it:\n`;
+          const example = [
+            '  // rsbuild.config.ts',
+            '  export default {',
+            '    tools: {',
+            '      rspack: {',
+            `        plugins: [new ${name}()]`,
+            '      }',
+            '    }',
+            '  };',
+          ].join('\n');
+
+          throw new Error(message + color.green(example));
+        }
+
         throw new Error(
-          `expect plugin.setup is function, but got ${typeof plugin}.`,
+          `Expect Rsbuild plugin.setup to be a function, but got ${typeof plugin}.`,
         );
       }
       if (plugins.some((item) => item.name === plugin.name)) {
