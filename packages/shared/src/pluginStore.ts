@@ -1,5 +1,52 @@
 import { logger, debug } from './logger';
-import type { PluginStore, RsbuildPlugin, RsbuildPluginAPI } from './types';
+import type {
+  PluginStore,
+  RsbuildPlugin,
+  RsbuildPluginAPI,
+  BundlerPluginInstance,
+} from './types';
+import { color, isFunction } from './utils';
+
+function validatePlugin(plugin: unknown) {
+  const type = typeof plugin;
+
+  if (type !== 'object' || plugin === null) {
+    throw new Error(
+      `Expect Rsbuild plugin instance to be an object, but got ${type}.`,
+    );
+  }
+
+  if (!isFunction((plugin as RsbuildPlugin).setup)) {
+    if (isFunction((plugin as BundlerPluginInstance).apply)) {
+      const { name = 'SomeWebpackPlugin' } =
+        (plugin as BundlerPluginInstance).constructor || {};
+
+      const messages = [
+        `${color.yellow(
+          name,
+        )} looks like a Webpack or Rspack plugin, please use ${color.yellow(
+          '`tools.rspack`',
+        )} to register it:`,
+        color.green(`
+  // rsbuild.config.ts
+  export default {
+    tools: {
+      rspack: {
+        plugins: [new ${name}()]
+      }
+    }
+  };
+`),
+      ];
+
+      throw new Error(messages.join('\n'));
+    }
+
+    throw new Error(
+      `Expect Rsbuild plugin.setup to be a function, but got ${type}.`,
+    );
+  }
+}
 
 export function createPluginStore(): PluginStore {
   let plugins: RsbuildPlugin[] = [];
@@ -10,15 +57,8 @@ export function createPluginStore(): PluginStore {
   ) => {
     const { before } = options || {};
     newPlugins.forEach((newPlugin) => {
-      if (typeof newPlugin !== 'object' || newPlugin === null) {
-        throw new Error(
-          `expect plugin instance is object, but got ${typeof newPlugin}.`,
-        );
-      } else if (typeof newPlugin.setup !== 'function') {
-        throw new Error(
-          `expect plugin.setup is function, but got ${typeof newPlugin}.`,
-        );
-      }
+      validatePlugin(newPlugin);
+
       if (plugins.find((item) => item.name === newPlugin.name)) {
         logger.warn(
           `Rsbuild plugin "${newPlugin.name}" registered multiple times.`,
