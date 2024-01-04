@@ -44,7 +44,7 @@ export function pluginSass(): RsbuildPlugin {
         });
 
         rule
-          .use(utils.CHAIN_ID.USE.RESOLVE_URL_LOADER_FOR_SASS)
+          .use(utils.CHAIN_ID.USE.RESOLVE_URL)
           .loader(getSharedPkgCompiledPath('resolve-url-loader'))
           .options({
             join: await getResolveUrlJoinFn(),
