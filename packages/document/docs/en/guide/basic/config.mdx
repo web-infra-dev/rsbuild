@@ -105,6 +105,10 @@ The function accepts the following parameters:
   - When running `rsbuild build` or `rsbuild preview`, the value of `env` is `production`.
 - `command`: the current command being run, such as `dev`, `build`, `preview`.
 
+:::tip
+The exported config function must provide a return value. If you do not need to return any config, you can return an empty object.
+:::
+
 ## Export Async Function
 
 Rsbuild also supports the export of an async function in the config file, where you can perform some async operations:
