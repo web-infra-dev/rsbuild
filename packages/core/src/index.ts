@@ -8,6 +8,8 @@ export { loadEnv } from './loadEnv';
 export { createRsbuild } from './createRsbuild';
 export { loadConfig, defineConfig } from './cli/config';
 
+export const version = RSBUILD_VERSION;
+
 // Helpers
 export { logger, mergeRsbuildConfig } from '@rsbuild/shared';
 
