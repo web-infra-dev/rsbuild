@@ -154,7 +154,7 @@ export const CHAIN_ID = {
     /** mini-css-extract-plugin.loader */
     MINI_CSS_EXTRACT: 'mini-css-extract',
     /** resolve-url-loader */
-    RESOLVE_URL_LOADER_FOR_SASS: 'resolve-url-loader',
+    RESOLVE_URL: 'resolve-url-loader',
     /** plugin-image-compress.loader */
     IMAGE_COMPRESS: 'image-compress',
     /** plugin-image-compress svgo-loader */
@@ -216,7 +216,7 @@ export const CHAIN_ID = {
     NODE_POLYFILL_PROVIDE: 'node-polyfill-provide',
     /** WebpackSRIPlugin */
     SUBRESOURCE_INTEGRITY: 'subresource-integrity',
-    /** WebpackAssetsRetryPlugin */
+    /** AssetsRetryPlugin */
     ASSETS_RETRY: 'assets-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
