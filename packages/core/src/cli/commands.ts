@@ -1,10 +1,11 @@
 import { join } from 'path';
 import { existsSync } from 'fs';
-import { color, logger } from '@rsbuild/shared';
+import { color, isDev, logger } from '@rsbuild/shared';
 import { program } from '@rsbuild/shared/commander';
 import { loadEnv } from '../loadEnv';
 import { loadConfig } from './config';
 import type { RsbuildMode } from '..';
+import { onBeforeRestartServer } from 'src/server/restart';
 
 export type CommonOptions = {
   config?: string;
@@ -42,7 +43,9 @@ export async function init({
 
   try {
     const root = process.cwd();
-    const { publicVars } = loadEnv({ cwd: root });
+    const envs = loadEnv({ cwd: root });
+    isDev() && onBeforeRestartServer(envs.cleanup);
+
     const config = await loadConfig({
       cwd: root,
       path: commonOpts.config,
@@ -51,7 +54,7 @@ export async function init({
 
     config.source ||= {};
     config.source.define = {
-      ...publicVars,
+      ...envs.publicVars,
       ...config.source.define,
     };
 
