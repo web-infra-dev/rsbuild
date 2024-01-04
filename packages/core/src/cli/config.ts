@@ -125,7 +125,13 @@ export async function loadConfig({
         command,
       };
 
-      return (await configExport(params)) || {};
+      const result = await configExport(params);
+
+      if (result === undefined) {
+        throw new Error('Rsbuild config function must return a config object.');
+      }
+
+      return result;
     }
 
     return configExport;

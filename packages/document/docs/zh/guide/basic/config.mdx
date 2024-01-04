@@ -105,6 +105,10 @@ export default defineConfig(({ env, command }) => ({
   - 当运行 `rsbuild build` 或 `rsbuild preview` 时，`env` 的值为 `production`。
 - `command`：对应当前运行的命令，如 `dev`、`build`、`preview`。
 
+:::tip
+导出的配置函数必须提供一个返回值，如果你不需要返回任何配置，可以 return 一个空对象。
+:::
+
 ## 导出异步函数
 
 Rsbuild 也支持在配置文件中导出一个异步函数，你可以在函数中进行一些异步操作：
