@@ -1,6 +1,13 @@
 # Create React App
 
-本章节介绍如何将 [Create React App](https://github.com/facebook/create-react-app)（简称 CRA）项目迁移到 Rsbuild。
+本章节介绍如何将 [Create React App](https://github.com/facebook/create-react-app)（简称 CRA）或 [CRACO](https://craco.js.org/) 项目迁移到 Rsbuild。
+
+:::tip CRA eject
+如果你的项目已经执行了 CRA 的 `eject` 命令，那么本文档的大部分内容将不再适用。
+
+CRA 项目在 eject 后，更近似于直接使用 webpack 的项目，因此你可以参考 [webpack 迁移指南](/guide/migration/webpack)。
+
+:::
 
 ## 安装依赖
 
@@ -8,11 +15,13 @@
 
 import { PackageManagerTabs } from '@theme';
 
-移除 CRA 的依赖：
+- 移除 CRA 的依赖：
 
 <PackageManagerTabs command="remove react-scripts" />
 
-安装 Rsbuild 的依赖：
+> 对于使用 CRACO 的项目，你还可以移除 `@craco/craco` 依赖。
+
+- 安装 Rsbuild 的依赖：
 
 <PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-react -D" />
 

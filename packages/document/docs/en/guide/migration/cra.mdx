@@ -1,6 +1,13 @@
 # Create React App
 
-This chapter introduces how to migrate a [Create React App](https://github.com/facebook/create-react-app) (CRA) project to Rsbuild.
+This chapter introduces how to migrate a [Create React App](https://github.com/facebook/create-react-app) (CRA) or [CRACO](https://craco.js.org/) project to Rsbuild.
+
+:::tip CRA eject
+If your project has already run the CRA `eject` command, then most of the content in this document will no longer be applicable.
+
+After ejecting a CRA project, it becomes more like a project directly using webpack, so you can refer to the [webpack migration guide](/guide/migration/webpack).
+
+:::
 
 ## Installing Dependencies
 
@@ -8,11 +15,13 @@ First, you need to replace the npm dependencies of CRA with Rsbuild's dependenci
 
 import { PackageManagerTabs } from '@theme';
 
-Remove CRA dependencies:
+- Remove CRA dependencies:
 
 <PackageManagerTabs command="remove react-scripts" />
 
-Install Rsbuild dependencies:
+> For projects using CRACO, you can also remove the @craco/craco dependency.
+
+- Install Rsbuild dependencies:
 
 <PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-react -D" />
 
