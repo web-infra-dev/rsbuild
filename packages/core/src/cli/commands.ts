@@ -1,5 +1,6 @@
 import { join } from 'path';
-import { logger } from '@rsbuild/shared';
+import { existsSync } from 'fs';
+import { color, logger } from '@rsbuild/shared';
 import { program } from '@rsbuild/shared/commander';
 import { loadEnv } from '../loadEnv';
 import { loadConfig } from './config';
@@ -152,6 +153,15 @@ export function runCli() {
     .action(async (options: PreviewOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
+
+        if (rsbuild && !existsSync(rsbuild.context.distPath)) {
+          throw new Error(
+            `The output directory ${color.yellow(
+              rsbuild.context.distPath,
+            )} does not exist, please build the project before previewing.`,
+          );
+        }
+
         await rsbuild?.preview();
       } catch (err) {
         logger.error('Failed to start preview server.');
