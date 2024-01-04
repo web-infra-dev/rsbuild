@@ -3,15 +3,15 @@ import type { webpack } from '@rsbuild/webpack';
 import Codecs from './shared/codecs';
 import type { FinalOptions } from './types';
 
-export const MODERN_JS_IMAGE_MINIMIZER_PLUGIN_NAME =
+export const IMAGE_MINIMIZER_PLUGIN_NAME =
   '@rsbuild/plugin-image-compress/minimizer' as const;
 
 export interface MinimizedResult {
   source: webpack.sources.RawSource;
 }
 
-export class ModernJsImageMinimizerPlugin {
-  name = MODERN_JS_IMAGE_MINIMIZER_PLUGIN_NAME;
+export class ImageMinimizerPlugin {
+  name = IMAGE_MINIMIZER_PLUGIN_NAME;
 
   options: FinalOptions;
 
@@ -24,14 +24,15 @@ export class ModernJsImageMinimizerPlugin {
     compilation: webpack.Compilation,
     assets: Record<string, webpack.sources.Source>,
   ): Promise<void> {
-    const cache = compilation.getCache(MODERN_JS_IMAGE_MINIMIZER_PLUGIN_NAME);
+    const cache = compilation.getCache(IMAGE_MINIMIZER_PLUGIN_NAME);
     const { RawSource } = compiler.webpack.sources;
     const { matchObject } = compiler.webpack.ModuleFilenameHelpers;
+
     const buildError = (error: unknown, file?: string, context?: string) => {
       const cause = error instanceof Error ? error : new Error();
       const message =
         file && context
-          ? `"${file}" in "${context}" from Modern.js Image Minimizer:\n${cause.message}`
+          ? `"${file}" in "${context}" from Image Minimizer:\n${cause.message}`
           : cause.message;
       const ret = new compiler.webpack.WebpackError(message);
       error instanceof Error && ((ret as any).error = error);

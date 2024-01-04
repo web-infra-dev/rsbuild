@@ -1,6 +1,6 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import assert from 'assert';
-import { ModernJsImageMinimizerPlugin } from './minimizer';
+import { ImageMinimizerPlugin } from './minimizer';
 import { withDefaultOptions } from './shared/utils';
 import { Codecs, Options } from './types';
 
@@ -38,18 +38,21 @@ export const pluginImageCompress: IPluginImageCompress = (
   ...args
 ): RsbuildPlugin => ({
   name: 'rsbuild:image-compress',
+
   setup(api) {
     const opts = normalizeOptions(castOptions(args));
 
-    api.modifyBundlerChain((chain, { env }) => {
-      if (env !== 'production') {
+    api.modifyBundlerChain((chain, { isProd }) => {
+      if (!isProd) {
         return;
       }
+
       chain.optimization.minimize(true);
+
       for (const opt of opts) {
         chain.optimization
           .minimizer(`image-compress-${opt.use}`)
-          .use(ModernJsImageMinimizerPlugin, [opt]);
+          .use(ImageMinimizerPlugin, [opt]);
       }
     });
   },

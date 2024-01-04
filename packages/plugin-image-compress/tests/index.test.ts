@@ -21,14 +21,14 @@ describe('plugin-image-compress', () => {
     const config = await rsbuild.unwrapConfig();
     expect(config.optimization?.minimizer).toMatchInlineSnapshot(`
       [
-        ModernJsImageMinimizerPlugin {
+        ImageMinimizerPlugin {
           "name": "@rsbuild/plugin-image-compress/minimizer",
           "options": {
             "test": /\\\\\\.\\(jpg\\|jpeg\\)\\$/,
             "use": "jpeg",
           },
         },
-        ModernJsImageMinimizerPlugin {
+        ImageMinimizerPlugin {
           "name": "@rsbuild/plugin-image-compress/minimizer",
           "options": {
             "test": /\\\\\\.png\\$/,
@@ -47,14 +47,14 @@ describe('plugin-image-compress', () => {
     const config = await rsbuild.unwrapConfig();
     expect(config.optimization?.minimizer).toMatchInlineSnapshot(`
       [
-        ModernJsImageMinimizerPlugin {
+        ImageMinimizerPlugin {
           "name": "@rsbuild/plugin-image-compress/minimizer",
           "options": {
             "test": /\\\\\\.\\(jpg\\|jpeg\\)\\$/,
             "use": "jpeg",
           },
         },
-        ModernJsImageMinimizerPlugin {
+        ImageMinimizerPlugin {
           "name": "@rsbuild/plugin-image-compress/minimizer",
           "options": {
             "test": /\\\\\\.png\\$/,
