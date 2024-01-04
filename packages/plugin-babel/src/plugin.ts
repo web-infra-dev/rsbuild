@@ -3,7 +3,7 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 import { castArray, cloneDeep, SCRIPT_REGEX } from '@rsbuild/shared';
 import { applyUserBabelConfig, BABEL_JS_RULE } from './helper';
 import type { PluginBabelOptions } from './types';
-import { isEqual } from 'lodash';
+import isEqual from 'fast-deep-equal';
 
 /**
  * The `@babel/preset-typescript` default options.
