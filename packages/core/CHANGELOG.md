@@ -1,5 +1,15 @@
 # @rsbuild/core
 
+## 0.2.16
+
+### Patch Changes
+
+- 5c954333: feat: allow passing falsy plugins
+- fc988434: perf: ncc target to es2019 to reduce bundle size
+- Updated dependencies [5c954333]
+- Updated dependencies [fc988434]
+  - @rsbuild/shared@0.2.16
+
 ## 0.2.15
 
 ### Patch Changes

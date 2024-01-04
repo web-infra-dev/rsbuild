@@ -1,5 +1,14 @@
 # @rsbuild/babel-preset
 
+## 0.2.16
+
+### Patch Changes
+
+- Updated dependencies [5c954333]
+- Updated dependencies [fc988434]
+  - @rsbuild/shared@0.2.16
+  - @rsbuild/plugin-babel@0.2.16
+
 ## 0.2.15
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-umd",
-  "version": "0.2.15",
+  "version": "0.2.16",
   "description": "UMD plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
