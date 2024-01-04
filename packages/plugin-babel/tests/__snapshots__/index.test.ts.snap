@@ -1,115 +1,210 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] = `
-{
-  "exclude": [
-    "src/example",
-  ],
-  "include": [
-    {
-      "and": [
-        "<ROOT>",
-        {
-          "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-        },
-      ],
-    },
-    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-    /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]query-string\\[\\\\\\\\/\\]/,
-  ],
-  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-  "type": "javascript/auto",
-  "use": [
-    {
-      "loader": "builtin:swc-loader",
-      "options": {
-        "env": {
-          "coreJs": "3.32",
-          "mode": "usage",
-          "shippedProposals": true,
-          "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
-          ],
-        },
-        "isModule": "unknown",
-        "jsc": {
-          "externalHelpers": true,
-          "parser": {
-            "decorators": true,
-            "syntax": "typescript",
-            "tsx": true,
-          },
-          "preserveAllComments": true,
-          "transform": {
-            "decoratorMetadata": true,
-            "legacyDecorator": true,
-          },
-        },
-        "sourceMaps": true,
-      },
-    },
-    {
-      "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
-      "options": {
-        "babelrc": false,
-        "compact": false,
-        "configFile": false,
-        "plugins": [],
-        "presets": [
-          [
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-            {
-              "allExtensions": true,
-              "allowDeclareFields": true,
-              "allowNamespaces": true,
-              "isTSX": true,
-              "optimizeConstEnums": true,
-            },
-          ],
-        ],
-      },
-    },
-  ],
-}
-`;
-
-exports[`plugins/babel > should set babel-loader 1`] = `
-{
-  "module": {
-    "rules": [
+exports[`plugins/babel > babel-loader should works independent with builtin:swc-loader 1`] = `
+[
+  {
+    "exclude": [
+      "src/example",
+    ],
+    "include": [
       {
-        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "use": [
+        "and": [
+          "<ROOT>",
           {
-            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
-            "options": {
-              "babelrc": false,
-              "compact": false,
-              "configFile": false,
-              "plugins": [],
-              "presets": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-                  {
-                    "allExtensions": true,
-                    "allowDeclareFields": true,
-                    "allowNamespaces": true,
-                    "isTSX": true,
-                    "optimizeConstEnums": true,
-                  },
-                ],
-              ],
-            },
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
         ],
+      },
+      /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]query-string\\[\\\\\\\\/\\]/,
+    ],
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "env": {
+            "coreJs": "3.32",
+            "mode": "usage",
+            "shippedProposals": true,
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "isModule": "unknown",
+          "jsc": {
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": true,
+            },
+            "preserveAllComments": true,
+            "transform": {
+              "decoratorMetadata": true,
+              "legacyDecorator": true,
+            },
+          },
+          "sourceMaps": true,
+        },
       },
     ],
   },
-}
+  {
+    "include": [
+      /\\\\\\.custom\\\\\\.js\\$/,
+    ],
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "use": [
+      {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "env": {
+            "coreJs": "3.32",
+            "mode": "usage",
+            "shippedProposals": true,
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "isModule": "unknown",
+          "jsc": {
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": true,
+            },
+            "preserveAllComments": true,
+            "transform": {
+              "decoratorMetadata": true,
+              "legacyDecorator": true,
+            },
+          },
+          "sourceMaps": true,
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+        "options": {
+          "babelrc": false,
+          "compact": false,
+          "configFile": false,
+          "plugins": [],
+          "presets": [
+            [
+              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+              {
+                "allExtensions": true,
+                "allowDeclareFields": true,
+                "allowNamespaces": true,
+                "isTSX": true,
+                "optimizeConstEnums": true,
+              },
+            ],
+          ],
+        },
+      },
+    ],
+  },
+]
 `;
+
+exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] = `
+[
+  {
+    "exclude": [
+      "src/example",
+    ],
+    "include": [
+      {
+        "and": [
+          "<ROOT>",
+          {
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+          },
+        ],
+      },
+      /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]query-string\\[\\\\\\\\/\\]/,
+    ],
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "env": {
+            "coreJs": "3.32",
+            "mode": "usage",
+            "shippedProposals": true,
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "isModule": "unknown",
+          "jsc": {
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": true,
+            },
+            "preserveAllComments": true,
+            "transform": {
+              "decoratorMetadata": true,
+              "legacyDecorator": true,
+            },
+          },
+          "sourceMaps": true,
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+        "options": {
+          "babelrc": false,
+          "compact": false,
+          "configFile": false,
+          "plugins": [
+            [
+              "babel-plugin-import",
+              {
+                "libraryDirectory": "es",
+                "libraryName": "xxx-components",
+                "style": true,
+              },
+            ],
+          ],
+          "presets": [
+            [
+              "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+              {
+                "allExtensions": true,
+                "allowDeclareFields": true,
+                "allowNamespaces": true,
+                "isTSX": true,
+                "optimizeConstEnums": true,
+              },
+            ],
+          ],
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`plugins/babel > should not set babel-loader 1`] = `{}`;
 
 exports[`plugins/babel > should set babel-loader when config is add 1`] = `
 {

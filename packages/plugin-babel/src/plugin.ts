@@ -3,6 +3,7 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 import { castArray, cloneDeep, SCRIPT_REGEX } from '@rsbuild/shared';
 import { applyUserBabelConfig, BABEL_JS_RULE } from './helper';
 import type { PluginBabelOptions } from './types';
+import { isEqual } from 'lodash';
 
 /**
  * The `@babel/preset-typescript` default options.
@@ -24,6 +25,8 @@ export const pluginBabel = (
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
+      const { include, exclude } = options;
+
       const getBabelOptions = () => {
         const baseConfig = {
           plugins: [],
@@ -41,6 +44,13 @@ export const pluginBabel = (
           options.babelLoaderOptions,
         );
 
+        const notModify =
+          isEqual(baseConfig, userBabelConfig) && !include && !exclude;
+
+        if (notModify) {
+          return undefined;
+        }
+
         return {
           babelrc: false,
           configFile: false,
@@ -50,11 +60,15 @@ export const pluginBabel = (
       };
 
       const babelOptions = getBabelOptions();
+
+      if (!babelOptions) {
+        return;
+      }
+
       const babelLoader = path.resolve(
         __dirname,
         '../compiled/babel-loader/index.js',
       );
-      const { include, exclude } = options;
 
       if (include || exclude) {
         const rule = chain.module.rule(BABEL_JS_RULE);

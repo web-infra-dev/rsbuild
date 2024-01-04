@@ -948,6 +948,9 @@ importers:
       '@types/babel__core':
         specifier: ^7.20.3
         version: 7.20.3
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       upath:
         specifier: 2.0.1
         version: 2.0.1
@@ -958,6 +961,9 @@ importers:
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper
+      '@types/lodash':
+        specifier: ^4.14.200
+        version: 4.14.200
       '@types/node':
         specifier: 16.x
         version: 16.18.59

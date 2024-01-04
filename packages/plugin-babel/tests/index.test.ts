@@ -14,18 +14,58 @@ describe('plugins/babel', () => {
       },
     });
 
-    rsbuild.addPlugins([pluginBabel()]);
+    rsbuild.addPlugins([
+      pluginBabel({
+        babelLoaderOptions: (_config, { addPlugins }) => {
+          addPlugins([
+            [
+              'babel-plugin-import',
+              {
+                libraryName: 'xxx-components',
+                libraryDirectory: 'es',
+                style: true,
+              },
+            ],
+          ]);
+        },
+      }),
+    ]);
 
     const config = await rsbuild.unwrapConfig();
 
     expect(
-      config.module.rules.find(
-        (r) => r.test.toString() === SCRIPT_REGEX.toString(),
+      config.module.rules.filter(
+        (r) => r.test?.toString() === SCRIPT_REGEX.toString(),
       ),
     ).toMatchSnapshot();
   });
 
-  it('should set babel-loader', async () => {
+  it('babel-loader should works independent with builtin:swc-loader', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        source: {
+          include: [/[\\/]node_modules[\\/]query-string[\\/]/],
+          exclude: ['src/example'],
+        },
+      },
+    });
+
+    rsbuild.addPlugins([
+      pluginBabel({
+        include: /\.custom\.js$/,
+      }),
+    ]);
+
+    const config = await rsbuild.unwrapConfig();
+
+    expect(
+      config.module.rules.filter(
+        (r) => r.test?.toString() === SCRIPT_REGEX.toString(),
+      ),
+    ).toMatchSnapshot();
+  });
+
+  it('should not set babel-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
       rsbuildConfig: {},
