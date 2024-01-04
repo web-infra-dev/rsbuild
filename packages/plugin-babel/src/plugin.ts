@@ -25,7 +25,7 @@ export const pluginBabel = (
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
-      const { include, exclude } = options;
+      const { include, exclude, autoCheckAdd } = options;
 
       const getBabelOptions = () => {
         const baseConfig = {
@@ -47,7 +47,7 @@ export const pluginBabel = (
         const notModify =
           isEqual(baseConfig, userBabelConfig) && !include && !exclude;
 
-        if (notModify) {
+        if (autoCheckAdd && notModify) {
           return undefined;
         }
 

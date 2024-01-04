@@ -74,6 +74,11 @@ export type BabelConfigUtils = {
 export type PluginBabelOptions = {
   include?: RuleCondition;
   exclude?: RuleCondition;
+  /**
+   * Babel translation behavior will not be added when configuration not modified
+   * @default false
+   */
+  autoCheckAdd?: boolean;
   babelLoaderOptions?: ChainedConfigWithUtils<
     BabelTransformOptions,
     BabelConfigUtils

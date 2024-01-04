@@ -14,22 +14,7 @@ describe('plugins/babel', () => {
       },
     });
 
-    rsbuild.addPlugins([
-      pluginBabel({
-        babelLoaderOptions: (_config, { addPlugins }) => {
-          addPlugins([
-            [
-              'babel-plugin-import',
-              {
-                libraryName: 'xxx-components',
-                libraryDirectory: 'es',
-                style: true,
-              },
-            ],
-          ]);
-        },
-      }),
-    ]);
+    rsbuild.addPlugins([pluginBabel()]);
 
     const config = await rsbuild.unwrapConfig();
 
@@ -65,9 +50,24 @@ describe('plugins/babel', () => {
     ).toMatchSnapshot();
   });
 
-  it('should not set babel-loader', async () => {
+  it('should set babel-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
+      rsbuildConfig: {},
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    expect(bundlerConfigs[0]).toMatchSnapshot();
+  });
+
+  it('should not set babel-loader when set autoCheckAdd and config not modified', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [
+        pluginBabel({
+          autoCheckAdd: true,
+        }),
+      ],
       rsbuildConfig: {},
     });
 

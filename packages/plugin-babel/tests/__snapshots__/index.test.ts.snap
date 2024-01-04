@@ -175,16 +175,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
           "babelrc": false,
           "compact": false,
           "configFile": false,
-          "plugins": [
-            [
-              "babel-plugin-import",
-              {
-                "libraryDirectory": "es",
-                "libraryName": "xxx-components",
-                "style": true,
-              },
-            ],
-          ],
+          "plugins": [],
           "presets": [
             [
               "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
@@ -204,7 +195,42 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
 ]
 `;
 
-exports[`plugins/babel > should not set babel-loader 1`] = `{}`;
+exports[`plugins/babel > should not set babel-loader when set autoCheckAdd and config not modified 1`] = `{}`;
+
+exports[`plugins/babel > should set babel-loader 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+            "options": {
+              "babelrc": false,
+              "compact": false,
+              "configFile": false,
+              "plugins": [],
+              "presets": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                  {
+                    "allExtensions": true,
+                    "allowDeclareFields": true,
+                    "allowNamespaces": true,
+                    "isTSX": true,
+                    "optimizeConstEnums": true,
+                  },
+                ],
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
 
 exports[`plugins/babel > should set babel-loader when config is add 1`] = `
 {
