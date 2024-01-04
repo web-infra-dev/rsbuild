@@ -191,13 +191,13 @@ export const CHAIN_ID = {
     /** WebpackBundleAnalyzer */
     BUNDLE_ANALYZER: 'bundle-analyze',
     /** HtmlTagsPlugin */
-    HTML_TAGS: 'html-tags',
+    HTML_TAGS: 'html-tags-plugin',
     /** HtmlBasicPlugin */
-    HTML_BASIC: 'html-basic',
+    HTML_BASIC: 'html-basic-plugin',
     /** HtmlNoncePlugin */
-    HTML_NONCE: 'html-nonce',
+    HTML_NONCE: 'html-nonce-plugin',
     /** HtmlCrossOriginPlugin */
-    HTML_CROSS_ORIGIN: 'html-cross-origin',
+    HTML_CROSS_ORIGIN: 'html-cross-origin-plugin',
     /** htmlPreconnectPlugin */
     HTML_PRECONNECT: 'html-preconnect-plugin',
     /** htmlDnsPrefetchPlugin */
