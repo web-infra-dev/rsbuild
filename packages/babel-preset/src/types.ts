@@ -1,8 +1,4 @@
-import type {
-  PresetEnvOptions,
-  PresetEnvTargets,
-  PresetEnvBuiltIns,
-} from '@rsbuild/plugin-babel';
+import type { PresetEnvOptions } from '@rsbuild/plugin-babel';
 
 export type { TransformOptions as BabelConfig } from '@babel/core';
 
@@ -26,10 +22,6 @@ export type BasePresetOptions = {
 };
 
 export type WebPresetOptions = BasePresetOptions & {
-  presetEnv: PresetEnvOptions & {
-    targets: PresetEnvTargets;
-    useBuiltIns: PresetEnvBuiltIns;
-  };
   pluginTransformRuntime?: Record<string, unknown> | false;
 };
 
