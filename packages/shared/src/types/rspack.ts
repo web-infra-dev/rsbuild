@@ -113,11 +113,39 @@ export type BuiltinSwcLoaderOptions = {
     };
     preserveAllComments?: boolean;
   };
-  rspackExperiments?: Pick<
-    BuiltinsOptions,
-    'react' | 'decorator' | 'presetEnv' | 'emotion' | 'relay'
-  > & {
-    import?: BuiltinsOptions['pluginImport'];
+  rspackExperiments?: {
+    relay?:
+      | boolean
+      | {
+          artifactDirectory?: string;
+          language: 'javascript' | 'typescript' | 'flow';
+        };
+    emotion?:
+      | boolean
+      | {
+          sourceMap?: boolean;
+          autoLabel?: 'never' | 'dev-only' | 'always';
+          labelFormat?: string;
+          importMap?: {
+            [packageName: string]: {
+              [exportName: string]: {
+                canonicalImport?: [string, string];
+              };
+            };
+          };
+        };
+    import?: {
+      libraryName: string;
+      libraryDirectory?: string;
+      customName?: string;
+      customStyleName?: string;
+      style?: string | boolean;
+      styleLibraryDirectory?: string;
+      camelToDashComponentName?: boolean;
+      transformToDefaultImport?: boolean;
+      ignoreEsComponent?: Array<string>;
+      ignoreStyleComponent?: Array<string>;
+    }[];
     styledComponents?: {
       displayName?: boolean;
       ssr?: boolean;

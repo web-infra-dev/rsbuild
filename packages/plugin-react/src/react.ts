@@ -1,57 +1,12 @@
-import {
-  isProd,
-  isUsingHMR,
-  isClientCompiler,
-  type SwcReactConfig,
-} from '@rsbuild/shared';
-import type { Rspack, RsbuildPluginAPI } from '@rsbuild/core';
+import path from 'node:path';
+import { SwcReactConfig, isUsingHMR } from '@rsbuild/shared';
+import type { RsbuildPluginAPI } from '@rsbuild/core';
 import type { PluginReactOptions } from '.';
 
-function getReactRefreshEntry(compiler: Rspack.Compiler) {
-  const hot = compiler.options.devServer?.hot ?? true;
-  const refresh = compiler.options.builtins?.react?.refresh ?? true;
+export const REACT_REFRESH_PATH = require.resolve('react-refresh');
+const REACT_REFRESH_DIR_PATH = path.dirname(REACT_REFRESH_PATH);
 
-  if (hot && refresh) {
-    const reactRefreshEntryPath = require.resolve(
-      '@rspack/plugin-react-refresh/react-refresh-entry',
-    );
-    return reactRefreshEntryPath;
-  }
-
-  return null;
-}
-
-const setupCompiler = (compiler: Rspack.Compiler) => {
-  if (!isClientCompiler(compiler)) {
-    return;
-  }
-
-  const reactRefreshEntry = getReactRefreshEntry(compiler);
-  if (!reactRefreshEntry) {
-    return;
-  }
-
-  new compiler.webpack.EntryPlugin(compiler.context, reactRefreshEntry, {
-    name: undefined,
-  }).apply(compiler);
-};
-
-export const applyBasicReactSupport = (
-  api: RsbuildPluginAPI,
-  options: PluginReactOptions,
-) => {
-  api.onAfterCreateCompiler(({ compiler: multiCompiler }) => {
-    if (isProd()) {
-      return;
-    }
-
-    if ((multiCompiler as Rspack.MultiCompiler).compilers) {
-      (multiCompiler as Rspack.MultiCompiler).compilers.forEach(setupCompiler);
-    } else {
-      setupCompiler(multiCompiler as Rspack.Compiler);
-    }
-  });
-
+export const applyBasicReactSupport = (api: RsbuildPluginAPI, options: PluginReactOptions) => {
   api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
     const config = api.getNormalizedConfig();
     const usingHMR = isUsingHMR(config, { isProd, target });
@@ -86,6 +41,8 @@ export const applyBasicReactSupport = (
     if (!usingHMR) {
       return;
     }
+
+    chain.resolve.alias.set('react-refresh', REACT_REFRESH_DIR_PATH);
 
     const { default: ReactRefreshRspackPlugin } = await import(
       '@rspack/plugin-react-refresh'

@@ -12,9 +12,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     },
   },
   "context": "<ROOT>",
-  "devServer": {
-    "hot": true,
-  },
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
@@ -649,9 +646,13 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     RemoveCssSourcemapPlugin {
       "name": "RemoveCssSourcemapPlugin",
     },
+    HotModuleReplacementPlugin {
+      "name": "HotModuleReplacementPlugin",
+    },
   ],
   "resolve": {
     "alias": {
+      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
