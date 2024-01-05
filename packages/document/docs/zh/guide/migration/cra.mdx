@@ -80,6 +80,24 @@ export default defineConfig({
 
 这样就完成了从 CRA 到 Rsbuild 的基本迁移，此时你可以执行 `npm run start` 命令来尝试启动开发服务器。
 
+## 构建产物目录
+
+CRA 默认会将构建产物输出到 `build` 目录，而 Rsbuild 的默认构建产物目录为 `dist`。
+
+你可以配置 Rsbuild 的 [output.distPath.root](/config/output/dist-path) 选项，将目录修改为 `build`，与 CRA 保持一致：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    distPath: {
+      root: 'build',
+    },
+  },
+};
+```
+
+> 更多细节请参考[构建产物目录](/guide/basic/output-files)章节。
+
 ## 使用 SVGR
 
 如果你使用了 CRA 的 "SVG 转 React 组件" 功能（即 [SVGR](https://react-svgr.com/)），那么还需要安装 Rsbuild 的 SVGR 插件。
