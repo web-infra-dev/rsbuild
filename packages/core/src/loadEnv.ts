@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { join } from 'path';
-import { isDev, isFileSync } from '@rsbuild/shared';
-import { onBeforeRestartServer } from './server/restart';
+import { isFileSync } from '@rsbuild/shared';
 import { parse } from '../compiled/dotenv';
 import { expand } from '../compiled/dotenv-expand';
 
@@ -34,19 +33,20 @@ export function loadEnv({
     }
   });
 
-  // clear the assigned env vars before restarting dev server
-  if (isDev()) {
-    onBeforeRestartServer(() => {
-      Object.keys(parsed).forEach((key) => {
-        if (process.env[key] === parsed[key]) {
-          delete process.env[key];
-        }
-      });
+  let _cleaned = false;
+  const cleanup = () => {
+    if (_cleaned) return;
+    Object.keys(parsed).forEach((key) => {
+      if (process.env[key] === parsed[key]) {
+        delete process.env[key];
+      }
     });
-  }
+    _cleaned = true;
+  };
 
   return {
     parsed,
     publicVars,
+    cleanup,
   };
 }
