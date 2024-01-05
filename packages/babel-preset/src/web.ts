@@ -8,7 +8,7 @@ export const getBabelConfigForWeb = (options: WebPresetOptions) => {
     {
       presetEnv: {
         bugfixes: true,
-        corejs: options.presetEnv.useBuiltIns
+        corejs: options.presetEnv?.useBuiltIns
           ? {
               version: getCoreJsVersion(
                 require.resolve('core-js/package.json'),
