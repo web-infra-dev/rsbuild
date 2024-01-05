@@ -80,6 +80,24 @@ In the HTML template, if you are using the `%PUBLIC_URL%` variable from CRA, rep
 
 This completes the basic migration from CRA to Rsbuild. You can now run the `npm run start` command to try starting the dev server.
 
+## Output Directory
+
+By default, CRA outputs to the `build` directory, while Rsbuild's default output directory is `dist`.
+
+You can configure Rsbuild's [output.distPath.root](/config/output/dist-path) option to change the directory to `build`, in line with CRA:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    distPath: {
+      root: 'build',
+    },
+  },
+};
+```
+
+> For more details, please refer to the [Output Files](/guide/basic/output-files) section.
+
 ## Using SVGR
 
 If you are using the "SVG to React Component" feature of CRA (i.e., [SVGR](https://react-svgr.com/)), you also need to install the SVGR plugin for Rsbuild.
