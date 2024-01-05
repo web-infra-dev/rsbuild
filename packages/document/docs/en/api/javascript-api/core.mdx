@@ -81,6 +81,8 @@ function loadEnv(params: {
   parsed: Record<string, string>;
   // Environment variables starting with the specified prefixes
   publicVars: Record<string, string>;
+  // Remove the loaded environment variables from `process.env`
+  cleanup: () => void;
 };
 ```
 

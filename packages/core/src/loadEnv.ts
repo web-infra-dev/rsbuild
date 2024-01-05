@@ -33,15 +33,15 @@ export function loadEnv({
     }
   });
 
-  let _cleaned = false;
+  let cleaned = false;
   const cleanup = () => {
-    if (_cleaned) return;
+    if (cleaned) return;
     Object.keys(parsed).forEach((key) => {
       if (process.env[key] === parsed[key]) {
         delete process.env[key];
       }
     });
-    _cleaned = true;
+    cleaned = true;
   };
 
   return {
