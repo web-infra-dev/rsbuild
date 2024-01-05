@@ -3,14 +3,18 @@ import { generateBaseConfig } from './base';
 import type { BabelConfig, NodePresetOptions } from './types';
 
 export const getBabelConfigForNode = (options: NodePresetOptions = {}) => {
-  const mergedOptions = deepmerge(
-    {
-      presetEnv: {
-        targets: ['node >= 14'],
+  let mergedOptions = options;
+
+  if (!options.presetEnv || !options.presetEnv.targets) {
+    mergedOptions = deepmerge(
+      {
+        presetEnv: {
+          targets: ['node >= 14'],
+        },
       },
-    },
-    options,
-  );
+      options,
+    );
+  }
 
   const config = generateBaseConfig(mergedOptions);
 
