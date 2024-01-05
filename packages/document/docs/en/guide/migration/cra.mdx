@@ -163,6 +163,49 @@ export default defineConfig({
 });
 ```
 
+## Import Unknown Assets
+
+In CRA, if you import an asset that the build tool cannot recognize, CRA will by default output the file to the `build/static/media` directory, for example, the `document.pdf` file:
+
+```js title="index.js"
+import document from './document.pdf';
+```
+
+In Rsbuild, when importing unrecognized assets, Rsbuild will logs errors:
+
+```text
+You may need an appropriate loader to handle this file type.
+```
+
+To resolve this error, you can use the following methods:
+
+- Configure a suitable loader to handle this type of asset via [tools.rspack](/config/tools/rspack).
+- Configure [asset modules](https://rspack.dev/guide/asset-module) rule to handle this type of asset via [tools.rspack](/config/tools/rspack).
+
+For example, you can add the following asset modules config to get the same output result as CRA:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      module: {
+        rules: [
+          {
+            // Match .png asset
+            // You can change this regular expression to match different types of files
+            test: /\.png$/,
+            type: 'asset/resource',
+            generator: {
+              filename: 'static/media/[name].[hash][ext]',
+            },
+          },
+        ],
+      },
+    },
+  },
+};
+```
+
 ## Remove react-app-polyfill
 
 CRA provides [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill) to manually inject polyfill code.
