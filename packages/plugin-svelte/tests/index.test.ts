@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
-import { pluginSvelte } from '../src';
+import { Transformer, pluginSvelte } from '../src';
 
 describe('plugin-svelte', () => {
   it('should add svelte loader properly', async () => {
@@ -45,6 +45,30 @@ describe('plugin-svelte', () => {
         pluginSvelte({
           svelteLoaderOptions: {
             preprocess: null,
+          },
+        }),
+      ],
+    });
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config).toMatchSnapshot();
+  });
+
+  it('should support pass custom preprocess options', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {},
+      plugins: [
+        pluginSvelte({
+          preprocessOptions: {
+            aliases: [
+              ['potato', 'potatoLanguage'],
+              ['pot', 'potatoLanguage'],
+            ],
+            /** Add a custom language preprocessor */
+            potatoLanguage: (({ content }) => {
+              const { code, map } = require('potato-language').render(content);
+              return { code, map };
+            }) as Transformer<unknown>,
           },
         }),
       ],
