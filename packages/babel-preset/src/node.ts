@@ -6,7 +6,7 @@ export const getBabelConfigForNode = (options: NodePresetOptions = {}) => {
   const mergedOptions = deepmerge(
     {
       presetEnv: {
-        targets: ['node >= 14'],
+        targets: ['node >= 16'],
       },
     },
     options,

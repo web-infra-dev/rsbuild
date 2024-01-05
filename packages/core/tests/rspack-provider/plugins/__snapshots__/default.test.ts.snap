@@ -1729,7 +1729,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "options": {
               "env": {
                 "targets": [
-                  "node >= 14",
+                  "node >= 16",
                 ],
               },
               "isModule": "unknown",
@@ -1764,7 +1764,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "options": {
               "env": {
                 "targets": [
-                  "node >= 14",
+                  "node >= 16",
                 ],
               },
               "isModule": "unknown",

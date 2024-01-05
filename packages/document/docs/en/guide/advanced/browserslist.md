@@ -89,7 +89,7 @@ export default {
         '> 0.2%',
         'not dead',
       ],
-      node: ['node >= 14'],
+      node: ['node >= 20'],
     },
   },
 };
@@ -179,10 +179,10 @@ Under this browser range, JavaScript code will be compatible with browsers that 
 
 ### Node Target
 
-Node target will be compatible with Node.js 14.0 by default.
+Node target will be compatible with Node.js 16.0 by default.
 
 ```yaml
-node >= 14
+node >= 16
 ```
 
 ### Web Worker Target

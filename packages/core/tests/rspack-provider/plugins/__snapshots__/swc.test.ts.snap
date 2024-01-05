@@ -578,7 +578,7 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
               "options": {
                 "env": {
                   "targets": [
-                    "node >= 14",
+                    "node >= 16",
                   ],
                 },
                 "isModule": "unknown",
@@ -613,7 +613,7 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
               "options": {
                 "env": {
                   "targets": [
-                    "node >= 14",
+                    "node >= 16",
                   ],
                 },
                 "isModule": "unknown",
@@ -1100,7 +1100,7 @@ exports[`plugin-swc > should has correct core-js 2`] = `
               "options": {
                 "env": {
                   "targets": [
-                    "node >= 14",
+                    "node >= 16",
                   ],
                 },
                 "isModule": "unknown",
@@ -1135,7 +1135,7 @@ exports[`plugin-swc > should has correct core-js 2`] = `
               "options": {
                 "env": {
                   "targets": [
-                    "node >= 14",
+                    "node >= 16",
                   ],
                 },
                 "isModule": "unknown",
