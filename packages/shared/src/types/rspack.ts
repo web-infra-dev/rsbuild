@@ -24,16 +24,7 @@ export type RspackPluginInstance = GetElementType<
   NonNullable<RspackConfig['plugins']>
 >;
 
-export type RspackBuiltinsConfig = Omit<
-  BuiltinsOptions,
-  | 'html'
-  | 'react'
-  | 'pluginImport'
-  | 'decorator'
-  | 'presetEnv'
-  | 'emotion'
-  | 'relay'
->;
+export type RspackBuiltinsConfig = BuiltinsOptions;
 
 export declare type JscTarget =
   | 'es3'
