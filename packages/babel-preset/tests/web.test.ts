@@ -11,6 +11,22 @@ test('should provide web preset as expected', () => {
   ).toMatchSnapshot();
 });
 
+test('should provide web preset as expected when presetEnv is false', () => {
+  expect(
+    getBabelConfigForWeb({
+      presetEnv: false,
+    }).presets,
+  ).toMatchSnapshot();
+});
+
+test('should provide web preset as expected when presetEnv is empty object', () => {
+  expect(
+    getBabelConfigForWeb({
+      presetEnv: {},
+    }).presets,
+  ).toMatchSnapshot();
+});
+
 test('should support inject core-js polyfills by entry', () => {
   expect(
     getBabelConfigForWeb({

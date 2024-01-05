@@ -3,20 +3,27 @@ import { deepmerge, getCoreJsVersion } from '@rsbuild/shared';
 import { generateBaseConfig } from './base';
 import type { BabelConfig, WebPresetOptions } from './types';
 
+const getDefaultPresetEnvOption = (options: WebPresetOptions) => {
+  if (options.presetEnv === false) {
+    return false;
+  }
+
+  return {
+    bugfixes: true,
+    // core-js is required for web target
+    corejs: options.presetEnv?.useBuiltIns
+      ? {
+          version: getCoreJsVersion(require.resolve('core-js/package.json')),
+          proposals: true,
+        }
+      : undefined,
+  };
+};
+
 export const getBabelConfigForWeb = (options: WebPresetOptions) => {
   const mergedOptions = deepmerge(
     {
-      presetEnv: {
-        bugfixes: true,
-        corejs: options.presetEnv?.useBuiltIns
-          ? {
-              version: getCoreJsVersion(
-                require.resolve('core-js/package.json'),
-              ),
-              proposals: true,
-            }
-          : undefined,
-      },
+      presetEnv: getDefaultPresetEnvOption(options),
     },
     options,
   );
