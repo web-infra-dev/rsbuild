@@ -2,6 +2,27 @@ import path from 'path';
 import { logger } from '@rsbuild/core';
 import { deepmerge } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
+import type { CompileOptions } from 'svelte/compiler';
+import type {
+  AutoPreprocessOptions,
+  Transformer,
+} from 'svelte-preprocess/dist/types';
+
+export type { AutoPreprocessOptions, Transformer };
+
+export interface SvelteLoaderOptions {
+  compilerOptions?: Omit<CompileOptions, 'filename' | 'format' | 'generate'>;
+  /**
+   * Extra HMR options, the defaults are completely fine\
+   * You can safely omit hotOptions altogether
+   */
+  hotOptions?: {
+    /** Preserve local component state */
+    preserveLocalState?: boolean;
+    [key: string]: any;
+  };
+  [key: string]: any;
+}
 
 export type PluginSvelteOptions = {
   /**
@@ -9,7 +30,13 @@ export type PluginSvelteOptions = {
    *
    * See https://github.com/sveltejs/svelte-loader
    */
-  svelteLoaderOptions?: Record<string, any>;
+  svelteLoaderOptions?: SvelteLoaderOptions;
+  /**
+   * The options of svelte-preprocess
+   *
+   * See https://github.com/sveltejs/svelte-preprocess
+   */
+  preprocessOptions?: AutoPreprocessOptions;
 };
 
 export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
@@ -64,7 +91,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
             compilerOptions: {
               dev: !isProd,
             },
-            preprocess: sveltePreprocess(),
+            preprocess: sveltePreprocess(options.preprocessOptions),
             emitCss: !rsbuildConfig.output.injectStyles,
             hotReload: !isProd && rsbuildConfig.dev.hmr,
           },
