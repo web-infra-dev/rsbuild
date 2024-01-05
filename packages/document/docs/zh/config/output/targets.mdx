@@ -62,7 +62,7 @@ export default {
 - 不会打包或抽取 CSS 代码，但产物中会包含 CSS Modules 的 id 信息。
 - 不会开启默认的拆包策略，但 dynamic import 依然可以生效。
 - 不会开启热更新相关的能力。
-- 将 Browserslist 的默认值调整为 `['node >= 14']`。
+- 将 Browserslist 的默认值调整为 `['node >= 16']`。
 
 :::tip
 如果触发了并行构建，比如同时构建 web 产物和 node 产物，那么上述处理不会影响 web 产物，web 产物所需的 HTML、CSS 等文件依然会正确生成。

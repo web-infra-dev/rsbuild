@@ -17,7 +17,7 @@ export const DEFAULT_BROWSERSLIST = {
   web: DEFAULT_WEB_BROWSERSLIST,
   'web-worker': DEFAULT_WEB_BROWSERSLIST,
   'service-worker': DEFAULT_WEB_BROWSERSLIST,
-  node: ['node >= 14'],
+  node: ['node >= 16'],
 };
 
 // Paths
