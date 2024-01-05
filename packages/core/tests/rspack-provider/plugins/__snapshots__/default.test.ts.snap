@@ -12,9 +12,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
   },
   "context": "<ROOT>",
-  "devServer": {
-    "hot": true,
-  },
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
@@ -666,9 +663,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     RemoveCssSourcemapPlugin {
       "name": "RemoveCssSourcemapPlugin",
     },
+    HotModuleReplacementPlugin {
+      "name": "HotModuleReplacementPlugin",
+    },
   ],
   "resolve": {
     "alias": {
+      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
@@ -699,9 +700,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
   },
   "context": "<ROOT>",
-  "devServer": {
-    "hot": false,
-  },
   "devtool": false,
   "entry": {
     "index": [
@@ -1277,7 +1275,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "_options": {
           "compress": "{"passes":1,"pure_funcs":[],"drop_console":false}",
           "exclude": undefined,
-          "extractComments": "true",
+          "extractComments": {
+            "condition": "@preserve|@lic|@cc_on|^/**!",
+          },
           "format": "{"comments":false,"asciiOnly":true}",
           "include": undefined,
           "mangle": "{"keep_classnames":false,"keep_fnames":false}",
@@ -1404,6 +1404,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   ],
   "resolve": {
     "alias": {
+      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
@@ -1434,9 +1435,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     },
   },
   "context": "<ROOT>",
-  "devServer": {
-    "hot": false,
-  },
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
@@ -1837,6 +1835,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     },
   ],
   "resolve": {
+    "alias": {
+      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    },
     "conditionNames": [
       "require",
       "node",
@@ -1866,9 +1867,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
     },
   },
   "context": "<ROOT>",
-  "devServer": {
-    "hot": true,
-  },
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
@@ -2531,9 +2529,13 @@ exports[`tools.rspack > should match snapshot 1`] = `
     RemoveCssSourcemapPlugin {
       "name": "RemoveCssSourcemapPlugin",
     },
+    HotModuleReplacementPlugin {
+      "name": "HotModuleReplacementPlugin",
+    },
   ],
   "resolve": {
     "alias": {
+      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [

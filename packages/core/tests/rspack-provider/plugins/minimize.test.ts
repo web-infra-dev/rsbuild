@@ -35,7 +35,9 @@ describe('plugin-minimize', () => {
           "_options": {
             "compress": "{"passes":1,"pure_funcs":[],"drop_console":false}",
             "exclude": undefined,
-            "extractComments": "true",
+            "extractComments": {
+              "condition": "@preserve|@lic|@cc_on|^/**!",
+            },
             "format": "{"comments":false,"asciiOnly":true}",
             "include": undefined,
             "mangle": "{"keep_classnames":false,"keep_fnames":false}",
@@ -97,7 +99,9 @@ describe('plugin-minimize', () => {
           "_options": {
             "compress": "{"passes":1,"pure_funcs":[],"drop_console":true}",
             "exclude": undefined,
-            "extractComments": "true",
+            "extractComments": {
+              "condition": "@preserve|@lic|@cc_on|^/**!",
+            },
             "format": "{"comments":false,"asciiOnly":true}",
             "include": undefined,
             "mangle": "{"keep_classnames":false,"keep_fnames":false}",
@@ -140,7 +144,9 @@ describe('plugin-minimize', () => {
           "_options": {
             "compress": "{"passes":1,"pure_funcs":["console.log","console.warn"],"drop_console":false}",
             "exclude": undefined,
-            "extractComments": "true",
+            "extractComments": {
+              "condition": "@preserve|@lic|@cc_on|^/**!",
+            },
             "format": "{"comments":false,"asciiOnly":true}",
             "include": undefined,
             "mangle": "{"keep_classnames":false,"keep_fnames":false}",
@@ -183,7 +189,9 @@ describe('plugin-minimize', () => {
           "_options": {
             "compress": "{"passes":1,"pure_funcs":[],"drop_console":false}",
             "exclude": undefined,
-            "extractComments": "true",
+            "extractComments": {
+              "condition": "@preserve|@lic|@cc_on|^/**!",
+            },
             "format": "{"comments":false,"asciiOnly":false}",
             "include": undefined,
             "mangle": "{"keep_classnames":false,"keep_fnames":false}",

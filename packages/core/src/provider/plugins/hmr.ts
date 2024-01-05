@@ -1,17 +1,21 @@
 import type { RsbuildPlugin } from '../../types';
 
-import { setConfig, isUsingHMR } from '@rsbuild/shared';
+import { isUsingHMR } from '@rsbuild/shared';
 
 export const pluginHMR = (): RsbuildPlugin => ({
   name: 'rsbuild:hmr',
 
   setup(api) {
-    api.modifyRspackConfig((rspackConfig, utils) => {
+    api.modifyBundlerChain((chain, utils) => {
       const config = api.getNormalizedConfig();
 
       const usingHMR = isUsingHMR(config, utils);
 
-      setConfig(rspackConfig, 'devServer.hot', usingHMR);
+      if (usingHMR) {
+        chain
+          .plugin(utils.CHAIN_ID.PLUGIN.HMR)
+          .use(utils.bundler.HotModuleReplacementPlugin);
+      }
     });
   },
 });
