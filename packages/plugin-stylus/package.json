@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-stylus",
-  "version": "0.2.16",
+  "version": "0.2.17",
   "description": "Stylus plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {

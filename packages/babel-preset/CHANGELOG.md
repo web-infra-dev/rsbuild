@@ -1,5 +1,14 @@
 # @rsbuild/babel-preset
 
+## 0.2.17
+
+### Patch Changes
+
+- 2dd7d5e: fix: presetEnv need allow null value
+  fix: presetEnv 需要允许传入空值
+  - @rsbuild/plugin-babel@0.2.17
+  - @rsbuild/shared@0.2.17
+
 ## 0.2.16
 
 ### Patch Changes
