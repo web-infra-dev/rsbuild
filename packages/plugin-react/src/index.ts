@@ -23,6 +23,12 @@ export type SplitReactChunkOptions = {
 
 export type PluginReactOptions = {
   /**
+   * Decides which React JSX runtime to use.
+   * `automatic` auto imports the functions for transpiled JSX. `classic` does not automatic import anything.
+   * @default 'automatic'
+   */
+  jsxRuntime?: 'classic' | 'automatic';
+  /**
    * Configuration for chunk splitting of React-related dependencies.
    */
   splitChunks?: SplitReactChunkOptions;
@@ -37,7 +43,7 @@ export const pluginReact = (
 
   setup(api) {
     if (api.context.bundlerType === 'rspack') {
-      applyBasicReactSupport(api);
+      applyBasicReactSupport(api, options);
     }
     applyAntdSupport(api);
     applyArcoSupport(api);

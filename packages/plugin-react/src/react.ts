@@ -1,5 +1,6 @@
 import { isUsingHMR, isClientCompiler, isProd } from '@rsbuild/shared';
 import type { Rspack, RsbuildPluginAPI } from '@rsbuild/core';
+import type { PluginReactOptions } from '.';
 
 function getReactRefreshEntry(compiler: Rspack.Compiler) {
   const hot = compiler.options.devServer?.hot ?? true;
@@ -30,7 +31,10 @@ const setupCompiler = (compiler: Rspack.Compiler) => {
   }).apply(compiler);
 };
 
-export const applyBasicReactSupport = (api: RsbuildPluginAPI) => {
+export const applyBasicReactSupport = (
+  api: RsbuildPluginAPI,
+  options: PluginReactOptions,
+) => {
   api.onAfterCreateCompiler(({ compiler: multiCompiler }) => {
     if (isProd()) {
       return;
@@ -51,7 +55,7 @@ export const applyBasicReactSupport = (api: RsbuildPluginAPI) => {
     const reactOptions = {
       development: !isProd,
       refresh: usingHMR,
-      runtime: 'automatic',
+      runtime: options.jsxRuntime ?? 'automatic',
     };
 
     rule.use(CHAIN_ID.USE.SWC).tap((options) => {

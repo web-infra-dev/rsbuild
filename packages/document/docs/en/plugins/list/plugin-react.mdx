@@ -66,6 +66,33 @@ At the same time, the above default behavior can be turned off by manually setti
 
 ## Options
 
+### jsxRuntime
+
+- **Type:** `'automatic' | 'classic'`
+- **Default:** `'automatic'`
+
+By default, Rsbuild uses the [new JSX runtime](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) introduced in React 17, which is `jsxRuntime: 'automatic'`.
+
+If your current React version is lower than 16.14.0, you can set `jsxRuntime` to `'classic'`:
+
+```ts
+pluginReact({
+  jsxRuntime: 'classic',
+});
+```
+
+> React 16.14.0 can use the new JSX runtime.
+
+When using the classic JSX runtime, you need to manually import React in your code:
+
+```jsx
+import React from 'react';
+
+function App() {
+  return <h1>Hello World</h1>;
+}
+```
+
 ### splitChunks
 
 When [chunkSplit.strategy](/config/performance/chunk-split) set to `split-by-experience`, Rsbuild will automatically split `react` and `router` related packages into separate chunks by default:
