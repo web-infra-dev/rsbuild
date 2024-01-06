@@ -29,6 +29,11 @@ export type PluginReactOptions = {
    */
   jsxRuntime?: 'classic' | 'automatic';
   /**
+   * Specify the import path of the JSX runtime when `jsxRuntime` is `'automatic'`.
+   * @default 'react'
+   */
+  jsxImportSource?: string;
+  /**
    * Configuration for chunk splitting of React-related dependencies.
    */
   splitChunks?: SplitReactChunkOptions;

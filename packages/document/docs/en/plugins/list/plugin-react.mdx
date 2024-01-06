@@ -93,6 +93,21 @@ function App() {
 }
 ```
 
+### jsxImportSource
+
+- **Type:** `string`
+- **Default:** `'react'`
+
+When `jsxRuntime` is `'automatic'`, you can specify the import path of the JSX runtime through `jsxImportSource`.
+
+For example, when using [Emotion](https://emotion.sh/), you can set `jsxImportSource` to `'@emotion/react'`:
+
+```ts
+pluginReact({
+  jsxImportSource: '@emotion/react',
+});
+```
+
 ### splitChunks
 
 When [chunkSplit.strategy](/config/performance/chunk-split) set to `split-by-experience`, Rsbuild will automatically split `react` and `router` related packages into separate chunks by default:
