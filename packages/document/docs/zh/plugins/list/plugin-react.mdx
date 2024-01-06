@@ -93,6 +93,21 @@ function App() {
 }
 ```
 
+### jsxImportSource
+
+- **类型：** `string`
+- **默认值：** `'react'`
+
+当 `jsxRuntime` 为 `'automatic'` 时，你可以通过 `jsxImportSource` 来指定 JSX runtime 的引入路径。
+
+比如，在使用 [Emotion](https://emotion.sh/) 时，你可以将 `jsxImportSource` 设置为 `'@emotion/react'`：
+
+```ts
+pluginReact({
+  jsxImportSource: '@emotion/react',
+});
+```
+
 ### splitChunks
 
 在 [chunkSplit.strategy](/config/performance/chunk-split) 设置为 `split-by-experience` 时，Rsbuild 默认会自动将 `react` 和 `router` 相关的包拆分为单独的 chunk:
