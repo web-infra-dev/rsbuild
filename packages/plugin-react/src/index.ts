@@ -23,6 +23,10 @@ export type SplitReactChunkOptions = {
 };
 
 export type PluginReactOptions = {
+  /**
+   * Configure the behavior of SWC to transform React code,
+   * the same as SWC's [jsc.transform.react](https://swc.rs/docs/configuration/compilation#jsctransformreact).
+   */
   swcReactOptions?: SwcReactConfig;
   /**
    * Configuration for chunk splitting of React-related dependencies.
