@@ -66,18 +66,52 @@ const defaultArcoConfig = [
 
 ## 选项
 
-### jsxRuntime
+### swcReactOptions
+
+用于配置 SWC 转换 React 代码的行为，等价于 SWC 的 [jsc.transform.react](https://swc.rs/docs/configuration/compilation#jsctransformreact) 选项。
+
+- **类型：**
+
+```ts
+interface SwcReactOptions {
+  pragma?: string;
+  pragmaFrag?: string;
+  throwIfNamespace?: boolean;
+  development?: boolean;
+  useBuiltins?: boolean;
+  refresh?: boolean;
+  runtime?: 'automatic' | 'classic';
+  importSource?: string;
+}
+```
+
+- **默认值：**
+
+```ts
+const isDev = process.env.NODE_ENV === 'development';
+const defaultOptions = {
+  development: isDev,
+  refresh: isDev,
+  runtime: 'automatic',
+};
+```
+
+### swcReactOptions.runtime
+
+设置 JSX runtime 的类型。
 
 - **类型：** `'automatic' | 'classic'`
 - **默认值：** `'automatic'`
 
-默认情况下，Rsbuild 使用 React 17 引入的[新版本 JSX runtime](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)，即 `jsxRuntime: 'automatic'`。
+默认情况下，Rsbuild 使用 React 17 引入的[新版本 JSX runtime](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)，即 `runtime: 'automatic'`。
 
-如果你当前的 React 版本低于 16.14.0，可以将 `jsxRuntime` 设置为 `'classic'`：
+如果你当前的 React 版本低于 16.14.0，可以将 `runtime` 设置为 `'classic'`：
 
 ```ts
 pluginReact({
-  jsxRuntime: 'classic',
+  swcReactOptions: {
+    runtime: 'classic',
+  },
 });
 ```
 
@@ -93,18 +127,20 @@ function App() {
 }
 ```
 
-### jsxImportSource
+### swcReactOptions.importSource
+
+当 `runtime` 为 `'automatic'` 时，你可以通过 `importSource` 来指定 JSX runtime 的引入路径。
 
 - **类型：** `string`
 - **默认值：** `'react'`
 
-当 `jsxRuntime` 为 `'automatic'` 时，你可以通过 `jsxImportSource` 来指定 JSX runtime 的引入路径。
-
-比如，在使用 [Emotion](https://emotion.sh/) 时，你可以将 `jsxImportSource` 设置为 `'@emotion/react'`：
+比如，在使用 [Emotion](https://emotion.sh/) 时，你可以将 `importSource` 设置为 `'@emotion/react'`：
 
 ```ts
 pluginReact({
-  jsxImportSource: '@emotion/react',
+  swcReactOptions: {
+    importSource: '@emotion/react',
+  },
 });
 ```
 

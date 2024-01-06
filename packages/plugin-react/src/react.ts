@@ -2,7 +2,7 @@ import {
   isProd,
   isUsingHMR,
   isClientCompiler,
-  type ReactConfig,
+  type SwcReactConfig,
 } from '@rsbuild/shared';
 import type { Rspack, RsbuildPluginAPI } from '@rsbuild/core';
 import type { PluginReactOptions } from '.';
@@ -57,15 +57,12 @@ export const applyBasicReactSupport = (
     const usingHMR = isUsingHMR(config, { isProd, target });
     const rule = chain.module.rule(CHAIN_ID.RULE.JS);
 
-    const reactOptions: ReactConfig = {
+    const reactOptions: SwcReactConfig = {
       development: !isProd,
       refresh: usingHMR,
-      runtime: options.jsxRuntime ?? 'automatic',
+      runtime: 'automatic',
+      ...options.swcReactOptions,
     };
-
-    if (options.jsxImportSource) {
-      reactOptions.importSource = options.jsxImportSource;
-    }
 
     rule.use(CHAIN_ID.USE.SWC).tap((options) => {
       options.jsc.transform.react = {

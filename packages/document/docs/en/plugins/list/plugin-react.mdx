@@ -66,18 +66,50 @@ At the same time, the above default behavior can be turned off by manually setti
 
 ## Options
 
-### jsxRuntime
+### swcReactOptions
+
+Configure the behavior of SWC to transform React code, the same as SWC's [jsc.transform.react](https://swc.rs/docs/configuration/compilation#jsctransformreact) option.
+
+- **Type:**
+
+```ts
+interface SwcReactOptions {
+  pragma?: string;
+  pragmaFrag?: string;
+  throwIfNamespace?: boolean;
+  development?: boolean;
+  useBuiltins?: boolean;
+  refresh?: boolean;
+  runtime?: 'automatic' | 'classic';
+  importSource?: string;
+}
+```
+
+- **Default:**
+
+```ts
+const isDev = process.env.NODE_ENV === 'development';
+const defaultOptions = {
+  development: isDev,
+  refresh: isDev,
+  runtime: 'automatic',
+};
+```
+
+### swcReactOptions.runtime
 
 - **Type:** `'automatic' | 'classic'`
 - **Default:** `'automatic'`
 
-By default, Rsbuild uses the [new JSX runtime](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) introduced in React 17, which is `jsxRuntime: 'automatic'`.
+By default, Rsbuild uses the [new JSX runtime](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) introduced in React 17, which is `runtime: 'automatic'`.
 
-If your current React version is lower than 16.14.0, you can set `jsxRuntime` to `'classic'`:
+If your current React version is lower than 16.14.0, you can set `runtime` to `'classic'`:
 
 ```ts
 pluginReact({
-  jsxRuntime: 'classic',
+  swcReactOptions: {
+    runtime: 'classic',
+  },
 });
 ```
 
@@ -93,18 +125,20 @@ function App() {
 }
 ```
 
-### jsxImportSource
+### swcReactOptions.importSource
 
 - **Type:** `string`
 - **Default:** `'react'`
 
-When `jsxRuntime` is `'automatic'`, you can specify the import path of the JSX runtime through `jsxImportSource`.
+When `runtime` is `'automatic'`, you can specify the import path of the JSX runtime through `importSource`.
 
-For example, when using [Emotion](https://emotion.sh/), you can set `jsxImportSource` to `'@emotion/react'`:
+For example, when using [Emotion](https://emotion.sh/), you can set `importSource` to `'@emotion/react'`:
 
 ```ts
 pluginReact({
-  jsxImportSource: '@emotion/react',
+  swcReactOptions: {
+    importSource: '@emotion/react',
+  },
 });
 ```
 
