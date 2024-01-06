@@ -3,6 +3,7 @@ import { applyAntdSupport } from './antd';
 import { applyArcoSupport } from './arco';
 import { applySplitChunksRule } from './splitChunks';
 import { applyBasicReactSupport } from './react';
+import type { SwcReactConfig } from '@rsbuild/shared';
 
 export { isBeyondReact17 } from './utils';
 
@@ -22,17 +23,7 @@ export type SplitReactChunkOptions = {
 };
 
 export type PluginReactOptions = {
-  /**
-   * Decides which React JSX runtime to use.
-   * `automatic` auto imports the functions for transpiled JSX. `classic` does not automatic import anything.
-   * @default 'automatic'
-   */
-  jsxRuntime?: 'classic' | 'automatic';
-  /**
-   * Specify the import path of the JSX runtime when `jsxRuntime` is `'automatic'`.
-   * @default 'react'
-   */
-  jsxImportSource?: string;
+  swcReactOptions?: SwcReactConfig;
   /**
    * Configuration for chunk splitting of React-related dependencies.
    */

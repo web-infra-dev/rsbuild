@@ -63,19 +63,28 @@ export interface EsParserConfig {
   importAssertions?: boolean;
 }
 
-export interface ReactConfig {
+export interface SwcReactConfig {
   pragma?: string;
   pragmaFrag?: string;
   throwIfNamespace?: boolean;
   development?: boolean;
   useBuiltins?: boolean;
   refresh?: boolean;
+  /**
+   * Decides which React JSX runtime to use.
+   * `automatic` auto imports the functions for transpiled JSX. `classic` does not automatic import anything.
+   * @default 'automatic'
+   */
   runtime?: 'automatic' | 'classic';
+  /**
+   * Specify the import path of the JSX runtime when `jsxRuntime` is `'automatic'`.
+   * @default 'react'
+   */
   importSource?: string;
 }
 
 export interface TransformConfig {
-  react?: ReactConfig;
+  react?: SwcReactConfig;
   legacyDecorator?: boolean;
   decoratorMetadata?: boolean;
   treatConstEnumAsEnum?: boolean;

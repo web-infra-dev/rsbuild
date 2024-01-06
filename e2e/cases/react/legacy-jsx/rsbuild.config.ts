@@ -1,5 +1,10 @@
+import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-export default {
-  plugins: [pluginReact({ jsxRuntime: 'classic' })],
-};
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      swcReactOptions: { runtime: 'classic' },
+    }),
+  ],
+});

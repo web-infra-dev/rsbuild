@@ -81,7 +81,9 @@ describe('plugins/react', () => {
 
     rsbuild.addPlugins([
       pluginReact({
-        jsxImportSource: '@emotion/react',
+        swcReactOptions: {
+          importSource: '@emotion/react',
+        },
       }),
     ]);
     const config = await rsbuild.unwrapConfig();
