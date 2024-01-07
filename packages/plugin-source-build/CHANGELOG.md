@@ -1,5 +1,12 @@
 # @rsbuild/plugin-source-build
 
+## 0.2.18
+
+### Patch Changes
+
+- @rsbuild/monorepo-utils@0.2.18
+- @rsbuild/shared@0.2.18
+
 ## 0.2.17
 
 ### Patch Changes
