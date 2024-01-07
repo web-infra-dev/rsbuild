@@ -17,7 +17,7 @@ hero:
     alt: Rsbuild Logo
 
 features:
-  - title: Rspack Based
+  - title: Rspack-based
     details: Using Rspack to bring you the ultimate development experience.
     icon: 🚀
   - title: Batteries Included

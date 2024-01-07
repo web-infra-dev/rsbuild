@@ -4,7 +4,7 @@
 
 # Rsbuild
 
-The Rspack based build tool. It's fast, out-of-the-box and extensible.
+The Rspack-based build tool. It's fast, out-of-the-box and extensible.
 
 ## Documentation
 
