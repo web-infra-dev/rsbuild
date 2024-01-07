@@ -63,6 +63,26 @@ export default defineConfig({
 Rsbuild uses [jiti](https://github.com/unjs/jiti) to load configuration files, providing interoperability between ESM and CommonJS. The behavior of module resolution differs slightly from the native behavior of Node.js.
 :::
 
+### Specify Config File
+
+Rsbuild CLI uses the `--config` option to specify the config file, which can be set to a relative path or an absolute path.
+
+For example, if you need to use the `rsbuild.prod.config.js` file when running `build`, you can add the following scripts to `package.json`:
+
+```json title="package.json"
+{
+  "scripts": {
+    "build": "rsbuild build --config rsbuild.prod.config.js"
+  }
+}
+```
+
+You can also abbreviate the `--config` option to `-c`:
+
+```bash
+rsbuild build -c rsbuild.prod.config.js
+```
+
 ## Using Environment Variables
 
 In the configuration file, you can use Node.js environment variables such as `process.env.NODE_ENV` to dynamically set different configurations:
