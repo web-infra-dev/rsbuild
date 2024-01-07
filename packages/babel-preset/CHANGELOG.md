@@ -1,5 +1,13 @@
 # @rsbuild/babel-preset
 
+## 0.2.18
+
+### Patch Changes
+
+- 9b77e489: fix(babel-preset): should merge targets array correctly
+  - @rsbuild/plugin-babel@0.2.18
+  - @rsbuild/shared@0.2.18
+
 ## 0.2.17
 
 ### Patch Changes

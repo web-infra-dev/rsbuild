@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-source-build",
-  "version": "0.2.17",
+  "version": "0.2.18",
   "description": "Source build plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
