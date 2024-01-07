@@ -76,6 +76,60 @@ export default {
 };
 ```
 
+### Additional Properties
+
+#### `disabled`
+
+- **Type:** `boolean | undefined`
+- **Default:** `undefined`
+
+This property allows you skip the html generation for a specific entry.
+
+```js
+export default {
+  tools: {
+    htmlPlugin: (config, { entryName }) => {
+      if (entryName === 'vendor') {
+        config.disabled = true;
+      }
+    },
+  },
+};
+```
+
+#### `flavors`
+
+- **Type:** `Partial<HTMLPluginOptions>[] | undefined`
+- **Default:** `undefined`
+
+This property allows you generating extra html files for a specific entry.
+
+```js
+export default {
+  tools: {
+    htmlPlugin: (config, { entryName }) => {
+      if (entryName === 'app') {
+        config.flavors = [
+          ...(config.flavors || []),
+          // emit extra html file `a.html` for tenant A with endpoint variable `https://a.corp.com/`
+          {
+            title: 'App - Tenant A',
+            filename: 'a.html',
+            templateParameters: { endpoint: 'https://a.corp.com/' },
+          },
+          // emit extra html file `b.html` for tenant B with endpoint variable `https://b.corp.com/`
+          {
+            title: 'App - Tenant B',
+            filename: 'b.html',
+            templateParameters: { endpoint: 'https://b.corp.com/' },
+          },
+        ];
+      }
+    },
+  },
+};
+```
+
 ## Example
 
 ### Modify HTML File Name

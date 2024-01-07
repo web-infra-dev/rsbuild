@@ -280,7 +280,6 @@ export const pluginHtml = (): RsbuildPlugin => ({
             };
 
             const htmlInfo: HtmlInfo = {};
-            htmlInfoMap[entryName] = htmlInfo;
 
             if (templateContent) {
               htmlInfo.templateContent = templateContent;
@@ -297,8 +296,11 @@ export const pluginHtml = (): RsbuildPlugin => ({
                 pluginOptions.favicon = favicon;
               }
             }
-
-            const finalOptions = mergeChainedOptions({
+            const {
+              flavors = [],
+              disabled,
+              ...finalOptions
+            } = mergeChainedOptions({
               defaults: pluginOptions,
               options: config.tools.htmlPlugin,
               utils: {
@@ -306,10 +308,22 @@ export const pluginHtml = (): RsbuildPlugin => ({
                 entryValue,
               },
             });
+            if (disabled) {
+              return;
+            }
+            htmlInfoMap[entryName] = htmlInfo;
 
-            chain
-              .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
-              .use(HtmlPlugin, [finalOptions]);
+            const pluginName = `${CHAIN_ID.PLUGIN.HTML}-${entryName}`;
+
+            chain.plugin(pluginName).use(HtmlPlugin, [finalOptions]);
+
+            flavors.forEach((flavor, index) => {
+              const options = { ...finalOptions, ...flavor };
+
+              chain
+                .plugin(`${pluginName}-flavor-${index}`)
+                .use(HtmlPlugin, [options]);
+            });
           }),
         );
 

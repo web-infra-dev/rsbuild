@@ -53,16 +53,11 @@ export function baseMatchLoader({
   });
 }
 
-/** Match plugin by constructor name. */
-const matchPlugin = (config: RspackConfig, pluginName: string) => {
-  const result = config.plugins?.filter(
-    (item) => item?.constructor.name === pluginName,
-  );
-
-  if (Array.isArray(result)) {
-    return result[0] || null;
-  }
-  return result || null;
+const matchPluginsByCotrName = (config: RspackConfig, pluginName: string) => {
+  const pluginFilter = (item: unknown): item is BundlerPluginInstance =>
+    item?.constructor?.name === pluginName;
+  const result = config.plugins?.filter(pluginFilter);
+  return result || [];
 };
 
 /**
@@ -90,6 +85,7 @@ export async function createStubRsbuild({
     unwrapConfig: () => Promise<Record<string, any>>;
     matchLoader: (loader: string, testFile: string) => Promise<boolean>;
     matchBundlerPlugin: (name: string) => Promise<BundlerPluginInstance | null>;
+    matchBundlerPlugins: (name: string) => Promise<BundlerPluginInstance[]>;
   }
 > {
   const { pick, createPluginStore } = await import('@rsbuild/shared');
@@ -137,11 +133,15 @@ export async function createStubRsbuild({
     return configs[0];
   };
 
-  /** Match rspack/webpack plugin by constructor name. */
-  const matchBundlerPlugin = async (pluginName: string) => {
+  const matchBundlerPlugins = async (pluginName: string) => {
     const config = await unwrapConfig();
 
-    return matchPlugin(config, pluginName) as BundlerPluginInstance;
+    return matchPluginsByCotrName(config, pluginName);
+  };
+
+  /** Match rspack/webpack plugin by constructor name. */
+  const matchBundlerPlugin = async (pluginName: string) => {
+    return (await matchBundlerPlugins(pluginName))[0] || null;
   };
 
   /** Check if a file handled by specific loader. */
@@ -159,5 +159,6 @@ export async function createStubRsbuild({
     initConfigs,
     unwrapConfig,
     matchBundlerPlugin,
+    matchBundlerPlugins,
   };
 }

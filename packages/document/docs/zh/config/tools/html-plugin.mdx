@@ -76,6 +76,62 @@ export default {
 };
 ```
 
+### 额外属性
+
+除去 html-webpack-plugin 的配置项外，你还可以设置以下属性。
+
+#### `disabled`
+
+- **类型：** `boolean | undefined`
+- **默认值：** `undefined`
+
+该属性允许你为某一 entry 跳过 html 生成。
+
+```js
+export default {
+  tools: {
+    htmlPlugin: (config, { entryName }) => {
+      if (entryName === 'vendor') {
+        config.disabled = true;
+      }
+    },
+  },
+};
+```
+
+#### `flavors`
+
+- **类型：** `Partial<HTMLPluginOptions>[] | undefined`
+- **默认值：** `undefined`
+
+该属性允许你为某一 entry 生成额外的 html 文件。
+
+```js
+export default {
+  tools: {
+    htmlPlugin: (config, { entryName }) => {
+      if (entryName === 'app') {
+        config.flavors = [
+          ...(config.flavors || []),
+          // 为租户 A 生成一个额外的 html 文件 `a.html`，包含一个 `endpoint` 变量 `https://a.corp.com/`
+          {
+            title: 'App - 租户 A',
+            filename: 'a.html',
+            templateParameters: { endpoint: 'https://a.corp.com/' },
+          },
+          // 为租户 B 生成一个额外的 html 文件 `b.html`，包含一个 `endpoint` 变量 `https://b.corp.com/`
+          {
+            title: 'App - 租户 B',
+            filename: 'b.html',
+            templateParameters: { endpoint: 'https://b.corp.com/' },
+          },
+        ];
+      }
+    },
+  },
+};
+```
+
 ## 示例
 
 ### 修改 HTML 文件名

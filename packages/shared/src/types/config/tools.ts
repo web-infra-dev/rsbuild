@@ -20,14 +20,39 @@ import type {
 import type { BundlerChain } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type { RspackConfig, RspackRule } from '../rspack';
-import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+import type { Options as RawHTMLPluginOptions } from 'html-webpack-plugin';
 import type { BundlerPluginInstance } from '../bundlerConfig';
 import type {
   ModifyWebpackChainUtils,
   ModifyWebpackConfigUtils,
 } from '../plugin';
 
-export type { HTMLPluginOptions };
+export interface HTMLPluginOptions extends RawHTMLPluginOptions {
+  /**
+   * skip html output for an entry
+   * @example skip html output for entry named `vendor`
+   * ```
+   * { tools: {
+   *   html(config, { entryName }) {
+   *     if (entryName === "vendor") return { disabled: true }
+   *   }
+   * }}
+   * ```
+   */
+  disabled?: boolean;
+  /**
+   * generate extra html files for specific entry
+   * @example generate an extra html with title "Xmas Version" and filename `x-mas.html`
+   * ```
+   * { tools: {
+   *   html(config) {
+   *     return { ...config, flavors: [{ title: "Xmas Version", filename: "x-mas.html" }] }
+   *   }
+   * }}
+   * ```
+   */
+  flavors?: Partial<RawHTMLPluginOptions>[];
+}
 
 export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
 
