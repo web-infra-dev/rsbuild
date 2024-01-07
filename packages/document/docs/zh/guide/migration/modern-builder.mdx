@@ -1,0 +1,104 @@
+# Modern.js Builder
+
+本章节介绍如何将使用 Modern.js Builder (或 EdenX Builder) 的项目迁移到 Rsbuild。
+
+## 主要区别
+
+Rsbuild 是 Modern.js Builder 的新版本，主要区别如下：
+
+- Rsbuild 的性能更出色，在同时使用 Rspack 的情况下，**Rsbuild 的启动速度和构建速度是 Builder 的 1.5 ~ 2 倍**。
+- Rsbuild 仅支持 Rspack 作为打包工具，不再支持 Webpack。
+- Rsbuild 的 CLI 工具和 dev server 更加强大，支持更多功能。
+
+## 安装依赖
+
+首先你需要把 Builder 相关的 npm 依赖替换为 Rsbuild 的依赖。
+
+import { PackageManagerTabs } from '@theme';
+
+- 移除 Builder 的依赖：
+
+<PackageManagerTabs command="remove @modern-js/builder-cli @modern-js/builder-webpack-provider @modern-js/builder-rspack-provider" />
+
+- 安装 Rsbuild 的依赖：
+
+<PackageManagerTabs command="add @rsbuild/core -D" />
+
+## 更新 npm scripts
+
+下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
+
+```diff title="package.json"
+{
+  "scripts": {
+-   "dev": "builder dev",
+-   "build": "builder build",
+-   "serve": "builder serve"
++   "dev": "rsbuild dev",
++   "build": "rsbuild build",
++   "preview": "rsbuild preview"
+  }
+}
+```
+
+## 修改配置文件
+
+- 将 `builder.config.ts` 重命名为 `rsbuild.config.ts`。
+- 从 `@modern-js/builder-cli` 中导入 `defineConfig` 方法，改为从 `@rsbuild/core` 中导入。
+- 将 `builderPlugins` 字段改为 `plugins`。
+
+```diff title="rsbuild.config.ts"
+- import { defineConfig } from '@modern-js/builder-cli';
++ import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+-  builderPlugins: [],
++  plugins: [],
+});
+```
+
+## 替换插件
+
+Rsbuild 和 Builder 的插件系统不兼容，因此需要将 Builder 的插件替换为 Rsbuild 的插件。
+
+下面是 Builder 插件和 Rsbuild 插件的对应关系：
+
+| Builder                                  | Rsbuild                                                               |
+| ---------------------------------------- | --------------------------------------------------------------------- |
+| @modern-js/builder-plugin-vue            | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                       |
+| @modern-js/builder-plugin-vue2           | [@rsbuild/plugin-vue2](/plugins/list/plugin-vue2)                     |
+| @modern-js/builder-plugin-stylus         | [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus)                 |
+| @modern-js/builder-plugin-node-polyfill  | [@rsbuild/plugin-node-polyfill](/plugins/list/plugin-node-polyfill)   |
+| @modern-js/builder-plugin-image-compress | [@rsbuild/plugin-image-compress](/plugins/list/plugin-image-compress) |
+| @modern-js/builder-plugin-swc            | 默认生效，无须使用                                                    |
+| @modern-js/builder-plugin-esbuild        | 不再支持                                                              |
+
+以 `@modern-js/builder-plugin-vue` 为例，你需要先安装 `@rsbuild/plugin-vue`，然后在 `rsbuild.config.ts` 中引入插件，并添加到 `plugins` 字段中。
+
+```diff title="rsbuild.config.ts"
+- import { builderPluginVue } from '@modern-js/builder-plugin-vue';
++ import { pluginVue } from '@rsbuild/plugin-vue';
+
+export default defineConfig({
+-  builderPlugins: [builderPluginVue()],
++  plugins: [pluginVue()],
+});
+```
+
+## 配置迁移
+
+Rsbuild 和 Builder 的绝大多数配置项是一致的，仅有少许配置项进行了调整。
+
+你可以通过 [Rsbuild 配置项](/config/index) 来查看 Rsbuild 的配置项。
+
+## 验证结果
+
+完成以上步骤后，你已经完成了从 Modern.js Builder 到 Rsbuild 的基本迁移，此时可以执行 `npm run dev` 命令来尝试启动开发服务器。
+
+如果在构建过程中发现问题，请根据错误日志进行调试。
+
+## 内容补充
+
+当前文档只涵盖了迁移过程的部分事项，如果你发现有合适的内容可以补充，欢迎通过 pull request 来完善文档 🤝。
+
+> Rsbuild 的文档位于 [rsbuild/packages/document](https://github.com/web-infra-dev/rsbuild/tree/main/packages/document) 目录。
