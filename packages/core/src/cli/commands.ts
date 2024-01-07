@@ -91,7 +91,7 @@ export function runCli() {
 
   program
     .command('dev')
-    .option('--open [url]', 'open the page in browser on startup')
+    .option('-o --open [url]', 'open the page in browser on startup')
     .option(
       '--port <port>',
       'specify a port number for Rsbuild Server to listen',
@@ -139,7 +139,7 @@ export function runCli() {
 
   program
     .command('preview')
-    .option('--open [url]', 'open the page in browser on startup')
+    .option('-o --open [url]', 'open the page in browser on startup')
     .option(
       '--port <port>',
       'specify a port number for Rsbuild Server to listen',
