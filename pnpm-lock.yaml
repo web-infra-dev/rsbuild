@@ -163,11 +163,11 @@ importers:
         specifier: 16.x
         version: 16.18.59
       '@types/react':
-        specifier: ^18
-        version: 18.0.38
+        specifier: ^18.2.47
+        version: 18.2.47
       '@types/react-dom':
-        specifier: ^18
-        version: 18.2.14
+        specifier: ^18.2.18
+        version: 18.2.18
       fast-glob:
         specifier: ^3.3.1
         version: 3.3.2
@@ -702,11 +702,11 @@ importers:
         specifier: workspace:*
         version: link:../../plugin-react
       '@types/react':
-        specifier: ^18
-        version: 18.0.38
+        specifier: ^18.2.47
+        version: 18.2.47
       '@types/react-dom':
-        specifier: ^18
-        version: 18.2.14
+        specifier: ^18.2.18
+        version: 18.2.18
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
@@ -1030,8 +1030,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       svgo:
-        specifier: ^3.0.2
-        version: 3.0.2
+        specifier: ^3.2.0
+        version: 3.2.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -3638,7 +3638,7 @@ packages:
       react: '>=16'
     dependencies:
       '@types/mdx': 2.0.9
-      '@types/react': 18.0.38
+      '@types/react': 18.2.47
       react: 18.2.0
     dev: true
 
@@ -4874,7 +4874,7 @@ packages:
       '@svgr/core': 8.1.0(typescript@5.3.2)
       cosmiconfig: 8.3.6(typescript@5.3.2)
       deepmerge: 4.3.1
-      svgo: 3.0.2
+      svgo: 3.2.0
     transitivePeerDependencies:
       - typescript
 
@@ -5269,14 +5269,14 @@ packages:
     resolution: {integrity: sha512-+0autS93xyXizIYiyL02FCY8N+KkKPhILhcUSA276HxzreZ16kl+cmwvV2qAM/PuCCwPXzOXOWhiPcw20uSFcA==}
     dev: true
 
-  /@types/react-dom@18.2.14:
-    resolution: {integrity: sha512-V835xgdSVmyQmI1KLV2BEIUgqEuinxp9O4G6g3FqO/SqLac049E53aysv0oEFD2kHfejeKU+ZqL2bcFWj9gLAQ==}
+  /@types/react-dom@18.2.18:
+    resolution: {integrity: sha512-TJxDm6OfAX2KJWJdMEVTwWke5Sc/E/RlnPGvGfS0W7+6ocy2xhDVQVh/KvC2Uf7kACs+gDytdusDSdWfWkaNzw==}
     dependencies:
-      '@types/react': 18.0.38
+      '@types/react': 18.2.47
     dev: true
 
-  /@types/react@18.0.38:
-    resolution: {integrity: sha512-ExsidLLSzYj4cvaQjGnQCk4HFfVT9+EZ9XZsQ8Hsrcn8QNgXtpZ3m9vSIC2MWtx7jHictK6wYhQgGh6ic58oOw==}
+  /@types/react@18.2.47:
+    resolution: {integrity: sha512-xquNkkOirwyCgoClNk85BjP+aqnIS+ckAJ8i37gAbDs14jfW/J23f2GItAf33oiUPQnqNMALiFeoM9Y5mbjpVQ==}
     dependencies:
       '@types/prop-types': 15.7.9
       '@types/scheduler': 0.16.5
@@ -11522,7 +11522,7 @@ packages:
     dependencies:
       postcss: 8.4.31
       postcss-value-parser: 4.2.0
-      svgo: 3.0.2
+      svgo: 3.2.0
     dev: false
 
   /postcss-unique-selectors@6.0.0(postcss@8.4.31):
@@ -13103,8 +13103,8 @@ packages:
     resolution: {integrity: sha512-ovssysQTa+luh7A5Weu3Rta6FJlFBBbInjOh722LIt6klpU2/HtdUbszju/G4devcvk8PGt7FCLv5wftu3THUA==}
     dev: false
 
-  /svgo@3.0.2:
-    resolution: {integrity: sha512-Z706C1U2pb1+JGP48fbazf3KxHrWOsLme6Rv7imFBn5EnuanDW1GPaA/P1/dvObE670JDePC3mnj0k0B7P0jjQ==}
+  /svgo@3.2.0:
+    resolution: {integrity: sha512-4PP6CMW/V7l/GmKRKzsLR8xxjdHTV4IMvhTnpuHwwBazSIlw5W/5SmPjN8Dwyt7lKbSJrRDgp4t9ph0HgChFBQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -13112,6 +13112,7 @@ packages:
       commander: 7.2.0
       css-select: 5.1.0
       css-tree: 2.3.1
+      css-what: 6.1.0
       csso: 5.0.5
       picocolors: 1.0.0
 
