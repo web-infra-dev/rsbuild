@@ -39,7 +39,7 @@ The `rsbuild dev` command is used to start a local development server and compil
 Usage: rsbuild dev [options]
 
 Options:
-  --open [url]          open the page in browser on startup
+  -o, --open [url]          open the page in browser on startup
   --port <port>         specify a port number for Rsbuild Server to listen
   --host <host>         specify the host that the Rsbuild Server listens to
   -c --config <config>  specify the configuration file, can be a relative or absolute path
@@ -58,6 +58,12 @@ The `--open` option also supports specifying the URL to be opened, for example:
 
 ```bash
 rsbuild dev --open http://localhost:8080/foo
+```
+
+The `--open` option can also be abbreviated to `-o`:
+
+```bash
+rsbuild dev -o
 ```
 
 ---
