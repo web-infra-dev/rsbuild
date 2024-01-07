@@ -1,7 +1,7 @@
 {
   "name": "@rsbuild/core",
   "version": "0.2.18",
-  "description": "Unleash the power of Rspack with the out-of-the-box build tool.",
+  "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.dev",
   "bugs": {
     "url": "https://github.com/web-infra-dev/rsbuild/issues"
