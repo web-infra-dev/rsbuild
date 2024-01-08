@@ -1,6 +1,6 @@
 import type { RspackConfig } from '../rspack';
 import type { RsbuildTarget } from '../rsbuild';
-import type { Builtins, Externals } from '@rspack/core';
+import type { CopyRspackPluginOptions, Externals } from '@rspack/core';
 
 export type DistPathConfig = {
   /** The root directory of all files. */
@@ -82,7 +82,7 @@ export type CssModules = {
   exportLocalsConvention?: CssModuleLocalsConvention;
 };
 
-export type CopyPluginOptions = NonNullable<Builtins['copy']>;
+export type CopyPluginOptions = CopyRspackPluginOptions;
 
 export type InlineChunkTestFunction = (params: {
   size: number;

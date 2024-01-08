@@ -1,10 +1,7 @@
 import { isObject } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
-import type {
-  NormalizedConfig,
-  TerserPluginOptions,
-  RspackBuiltinsConfig,
-} from './types';
+import type { NormalizedConfig, TerserPluginOptions } from './types';
+import { SwcJsMinimizerRspackPluginOptions } from '@rspack/core';
 
 function applyRemoveConsole(
   options: TerserPluginOptions,
@@ -76,7 +73,7 @@ export async function getTerserMinifyOptions(config: NormalizedConfig) {
 }
 
 export const getSwcMinimizerOptions = (config: NormalizedConfig) => {
-  const options: RspackBuiltinsConfig['minifyOptions'] = {};
+  const options: SwcJsMinimizerRspackPluginOptions = {};
 
   const { removeConsole } = config.performance;
 
