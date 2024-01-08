@@ -1,7 +1,6 @@
 import {
   debug,
   logger as defaultLogger,
-  isFunction,
   ROOT_DIST_DIR,
   getAddressUrls,
   StartServerResult,
@@ -143,7 +142,6 @@ export async function startDevServer<
   ) => Promise<CreateDevMiddlewareReturns>,
   {
     compiler,
-    printURLs = true,
     logger: customLogger,
     getPortSilently,
   }: StartDevServerOptions & {
@@ -154,7 +152,6 @@ export async function startDevServer<
 
   const serverAPIs = await getServerAPIs(options, createDevMiddleware, {
     compiler,
-    printURLs,
     logger: customLogger,
     getPortSilently,
   });
@@ -178,24 +175,14 @@ export async function startDevServer<
   let urls = getAddressUrls(protocol, port, host);
 
   // print url after http server created and before dev compile (just a short time interval)
-  if (printURLs) {
-    if (isFunction(printURLs)) {
-      urls = printURLs(urls);
-
-      if (!Array.isArray(urls)) {
-        throw new Error('Please return an array in the `printURLs` function.');
-      }
-    }
-
-    printServerURLs({
-      urls,
-      port,
-      routes: defaultRoutes,
-      logger,
-      protocol,
-      printUrls: devServerConfig.printUrls,
-    });
-  }
+  printServerURLs({
+    urls,
+    port,
+    routes: defaultRoutes,
+    logger,
+    protocol,
+    printUrls: devServerConfig.printUrls,
+  });
 
   const compileMiddlewareAPI = await serverAPIs.startCompile();
 

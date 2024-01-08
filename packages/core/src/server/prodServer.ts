@@ -3,7 +3,6 @@ import connect from '@rsbuild/shared/connect';
 import { join } from 'path';
 import sirv from '../../compiled/sirv';
 import {
-  isFunction,
   ROOT_DIST_DIR,
   getAddressUrls,
   type ServerConfig,
@@ -133,7 +132,7 @@ export class RsbuildProdServer {
 export async function startProdServer(
   context: InternalContext,
   rsbuildConfig: RsbuildConfig,
-  { printURLs = true, getPortSilently }: PreviewServerOptions = {},
+  { getPortSilently }: PreviewServerOptions = {},
 ) {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'production';
@@ -183,7 +182,7 @@ export async function startProdServer(
         const urls = getAddressUrls(protocol, port);
 
         printServerURLs({
-          urls: isFunction(printURLs) ? printURLs(urls) : urls,
+          urls,
           port,
           routes,
           protocol,
