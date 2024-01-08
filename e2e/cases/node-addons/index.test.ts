@@ -13,5 +13,5 @@ test('should compile Node addons correctly', async () => {
   const files = await rsbuild.unwrapOutputJSON();
   const addonFile = Object.keys(files).find((file) => file.endsWith('a.node'));
 
-  expect(addonFile?.includes('bundles/a.node')).toBeTruthy();
+  expect(addonFile?.includes('server/a.node')).toBeTruthy();
 });
