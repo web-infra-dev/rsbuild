@@ -3,7 +3,6 @@ import type { RsbuildContext } from './context';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
 import type { StartServerResult, DevServerAPIs } from './server';
-import type { AddressUrl } from '../url';
 import type { Logger } from '../logger';
 import type { NormalizedConfig } from './config';
 import type { WebpackConfig } from './thirdParty';
@@ -20,18 +19,10 @@ export type StartDevServerOptions = {
    * @deprecated use `logger.override()` instead
    */
   logger?: Logger;
-  /**
-   * @deprecated use `server.printUrls` instead
-   */
-  printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
 };
 
 export type PreviewServerOptions = {
   getPortSilently?: boolean;
-  /**
-   * @deprecated use `server.printUrls` instead
-   */
-  printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
 };
 
 export type BuildOptions = {
@@ -83,9 +74,7 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
    *
    * It is designed for high-level frameworks that require a custom server
    */
-  getServerAPIs: (
-    options?: Omit<StartDevServerOptions, 'printURLs'>,
-  ) => Promise<DevServerAPIs>;
+  getServerAPIs: (options?: StartDevServerOptions) => Promise<DevServerAPIs>;
 
   startDevServer: (
     options?: StartDevServerOptions,
