@@ -92,11 +92,11 @@ dist
 
 ## Node.js 产物目录
 
-当 Rsbuild 的 [output.targets](/config/output/targets) 中包含 `'node'`，或者你在上层框架中开启了 SSR 等服务端功能时，Rsbuild 会在构建后生成一份 Node.js 产物，并输出到 `bundles` 目录下：
+当 Rsbuild 的 [output.targets](/config/output/targets) 中包含 `'node'`，或者你在上层框架中开启了 SSR 等服务端功能时，Rsbuild 会在构建后生成一份 Node.js 产物，并输出到 `server` 目录下：
 
 ```bash
 dist
-├── bundles
+├── server
 │   └── [name].js
 ├── static
 └── [name].html

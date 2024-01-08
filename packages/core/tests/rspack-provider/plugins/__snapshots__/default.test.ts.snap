@@ -1812,10 +1812,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "splitChunks": false,
   },
   "output": {
-    "chunkFilename": "bundles/[name].js",
+    "chunkFilename": "server/[name].js",
     "cssChunkFilename": "static/css/async/[name].css",
     "cssFilename": "static/css/[name].css",
-    "filename": "bundles/[name].js",
+    "filename": "server/[name].js",
     "hashFunction": "xxhash64",
     "libraryTarget": "commonjs2",
     "path": "<ROOT>/dist",
