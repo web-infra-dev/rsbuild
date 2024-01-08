@@ -11,7 +11,7 @@ export const pluginServer = (): RsbuildPlugin => ({
       const config = api.getNormalizedConfig();
 
       if (isProd && config.server?.publicDir) {
-        const { name, copyOnBuild } = config.server?.publicDir;
+        const { name, copyOnBuild } = config.server.publicDir;
 
         if (!copyOnBuild || !name) {
           return;

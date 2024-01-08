@@ -18,7 +18,7 @@
     "e2e:rspack": "cd ./e2e && pnpm test:rspack",
     "e2e:webpack": "cd ./e2e && pnpm test:webpack",
     "gen-release-note": "modern gen-release-note",
-    "lint": "ls-lint",
+    "lint": "biome lint ./packages && ls-lint",
     "new": "modern new",
     "prepare": "pnpm run build && husky install",
     "release": "modern release",
@@ -38,6 +38,7 @@
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.4.1",
     "@ls-lint/ls-lint": "^2.2.2",
     "@modern-js/module-tools": "^2.45.0",
     "@modern-js/monorepo-tools": "^2.45.0",

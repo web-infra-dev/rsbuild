@@ -126,13 +126,17 @@ export class HtmlTagsPlugin {
               const optHash = tag.hash ?? this.ctx.hash;
 
               if (typeof optHash === 'function') {
-                compilationHash.length &&
-                  (filename = optHash(filename, compilationHash));
+                if (compilationHash.length) {
+                  filename = optHash(filename, compilationHash);
+                }
               } else if (typeof optHash === 'string') {
-                optHash.length && (filename = withHash(filename, optHash));
+                if (optHash.length) {
+                  filename = withHash(filename, optHash);
+                }
               } else if (optHash === true) {
-                compilationHash.length &&
-                  (filename = withHash(filename, compilationHash));
+                if (compilationHash.length) {
+                  filename = withHash(filename, compilationHash);
+                }
               }
 
               attrs[filenameTag] = filename;

@@ -9,7 +9,7 @@ import {
 } from './helpers';
 import { fse, JS_REGEX, HTML_REGEX } from '@rsbuild/shared';
 import type {
-  SyntaxError,
+  ECMASyntaxError,
   EcmaVersion,
   CheckSyntaxOptions,
   CheckSyntaxExclude,
@@ -21,7 +21,7 @@ type Compiler = Rspack.Compiler;
 type Compilation = Rspack.Compilation;
 
 export class CheckSyntaxPlugin {
-  errors: SyntaxError[] = [];
+  errors: ECMASyntaxError[] = [];
 
   ecmaVersion: EcmaVersion;
 

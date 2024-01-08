@@ -302,7 +302,7 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
       const hostname = context.devServer?.hostname || DEFAULT_DEV_HOST;
       const port = context.devServer?.port || DEFAULT_PORT;
       if (hostname === DEFAULT_DEV_HOST) {
-        const localHostname = `localhost`;
+        const localHostname = 'localhost';
         // If user not specify the hostname, it would use 0.0.0.0
         // The http://0.0.0.0:port can't visit in windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
         // Relative to docs:
@@ -345,7 +345,7 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
 
       if (isServer) {
         const serverPath = getDistPath(config, 'server');
-        const filename = posix.join(serverPath, `[name].js`);
+        const filename = posix.join(serverPath, '[name].js');
 
         chain.output
           .filename(filename)
@@ -355,7 +355,7 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
 
       if (isServiceWorker) {
         const workerPath = getDistPath(config, 'worker');
-        const filename = posix.join(workerPath, `[name].js`);
+        const filename = posix.join(workerPath, '[name].js');
 
         chain.output.filename(filename).chunkFilename(filename);
       }

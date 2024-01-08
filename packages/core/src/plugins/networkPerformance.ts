@@ -1,7 +1,7 @@
 import type { RsbuildPlugin } from '../types';
 
 export const pluginNetworkPerformance = (): RsbuildPlugin => ({
-  name: `plugin-network-performance`,
+  name: 'plugin-network-performance',
 
   setup(api) {
     api.modifyBundlerChain(

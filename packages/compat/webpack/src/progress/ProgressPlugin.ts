@@ -14,7 +14,7 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
 
   id: string;
 
-  hasCompileErrors: boolean = false;
+  hasCompileErrors = false;
 
   compileTime: string | null = null;
 
@@ -33,8 +33,8 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
       dependencies: true,
       dependenciesCount: 10000,
       percentBy: null,
-      handler: (percentage, message) => {
-        percentage = friendlyPercentage(percentage);
+      handler: (originalPercentage, message) => {
+        const percentage = friendlyPercentage(originalPercentage);
         const done = percentage === 1;
 
         if (process.stdout.isTTY) {

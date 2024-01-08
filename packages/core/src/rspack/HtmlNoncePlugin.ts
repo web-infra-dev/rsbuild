@@ -30,7 +30,9 @@ export class HtmlNoncePlugin implements RspackPluginInstance {
             assetTags: { scripts },
           } = alterAssetTags;
 
-          scripts.forEach((script) => (script.attributes.nonce = this.nonce));
+          scripts.forEach((script) => {
+            script.attributes.nonce = this.nonce;
+          });
           return alterAssetTags;
         });
     });

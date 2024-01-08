@@ -35,7 +35,11 @@ export class ImageMinimizerPlugin {
           ? `"${file}" in "${context}" from Image Minimizer:\n${cause.message}`
           : cause.message;
       const ret = new compiler.webpack.WebpackError(message);
-      error instanceof Error && ((ret as any).error = error);
+
+      if (error instanceof Error) {
+        (ret as any).error = error;
+      }
+
       return ret;
     };
 

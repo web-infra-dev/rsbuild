@@ -5,10 +5,12 @@ const mockSwcLoaderRunner = (): [
   Promise<ReturnType<LoaderDefinitionFunction>>,
   LoaderContext<{}>,
 ] => {
-  let resolve;
-  const p = new Promise<ReturnType<LoaderDefinitionFunction>>(
-    (r) => (resolve = r),
-  );
+  let resolve: unknown;
+
+  const p = new Promise<ReturnType<LoaderDefinitionFunction>>((r) => {
+    resolve = r;
+  });
+
   return [
     p,
     {

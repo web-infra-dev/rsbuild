@@ -54,7 +54,7 @@ async function processCss(
   ]);
 
   await pipeline.process(inputSource, {
-    from: `/fake-css-modules-loader`,
+    from: '/fake-css-modules-loader',
     to: undefined,
   });
 

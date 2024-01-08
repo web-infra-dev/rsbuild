@@ -66,7 +66,9 @@ const compareSemver = (version1: string, version2: string) => {
   return 0;
 };
 
-export const isSatisfyRspackVersion = async (version: string) => {
+export const isSatisfyRspackVersion = async (originalVersion: string) => {
+  let version = originalVersion;
+
   // The nightly version of rspack is to append `-canary-xxx` to the current version
   if (version.includes('-canary')) {
     version = version.split('-canary')[0];

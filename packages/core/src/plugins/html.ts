@@ -179,10 +179,11 @@ export const applyInjectTags = (api: RsbuildPluginAPI) => {
 
     const tags = castArray(config.html.tags).filter(Boolean);
     const tagsByEntries = config.html.tagsByEntries || {};
-    Object.keys(tagsByEntries).forEach(
-      (key) =>
-        (tagsByEntries[key] = castArray(tagsByEntries[key]).filter(Boolean)),
-    );
+
+    Object.keys(tagsByEntries).forEach((key) => {
+      tagsByEntries[key] = castArray(tagsByEntries[key]).filter(Boolean);
+    });
+
     const shouldByEntries = Object.values(tagsByEntries).some(
       (entry) => Array.isArray(entry) && entry.length > 0,
     );
@@ -201,6 +202,7 @@ export const applyInjectTags = (api: RsbuildPluginAPI) => {
       publicPath: true,
       tags,
     };
+
     // apply only one webpack plugin if `html.tagsByEntries` is empty.
     if (tags.length && !shouldByEntries) {
       chain
@@ -208,13 +210,17 @@ export const applyInjectTags = (api: RsbuildPluginAPI) => {
         .use(HtmlTagsPlugin, [sharedOptions]);
       return;
     }
+
     // apply webpack plugin for each entries.
     for (const [entry, filename] of Object.entries(api.getHTMLPaths())) {
       const opts = { ...sharedOptions, includes: [filename] };
-      entry in tagsByEntries &&
-        (opts.tags = (
+
+      if (entry in tagsByEntries) {
+        opts.tags = (
           tagsByEntries as Record<string, HtmlInjectTagDescriptor[]>
-        )[entry]);
+        )[entry];
+      }
+
       chain
         .plugin(`${CHAIN_ID.PLUGIN.HTML_TAGS}#${entry}`)
         .use(HtmlTagsPlugin, [opts]);

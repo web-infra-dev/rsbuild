@@ -28,7 +28,8 @@ interface ExtractChunks {
 function isAsync(chunk: Chunk | ChunkGroup): boolean {
   if ('canBeInitial' in chunk) {
     return !chunk.canBeInitial();
-  } else if ('isInitial' in chunk) {
+  }
+  if ('isInitial' in chunk) {
     return !chunk.isInitial();
   }
   // compat rspack

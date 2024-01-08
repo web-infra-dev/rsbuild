@@ -22,7 +22,8 @@ function svgrLoader(
   this: Rspack.LoaderContext<Config>,
   contents: string,
 ): void {
-  this.cacheable && this.cacheable();
+  this?.cacheable();
+
   const callback = this.async();
 
   const options = this.getOptions();

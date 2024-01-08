@@ -13,11 +13,11 @@ export function formatStats(stats: Stats | MultiStats, showWarnings = true) {
     const errorMsgs = `${errors.join('\n\n')}\n`;
     const isTerserError = errorMsgs.includes('from Terser');
     const title = color.bold(
-      color.red(isTerserError ? `Minify error: ` : `Compile error: `),
+      color.red(isTerserError ? 'Minify error: ' : 'Compile error: '),
     );
     const tip = color.yellow(
       isTerserError
-        ? `Failed to minify with terser, check for syntax errors.`
+        ? 'Failed to minify with terser, check for syntax errors.'
         : 'Failed to compile, check the errors for troubleshooting.',
     );
 
@@ -29,7 +29,7 @@ export function formatStats(stats: Stats | MultiStats, showWarnings = true) {
 
   // always show warnings in tty mode
   if (warnings.length && (showWarnings || process.stdout.isTTY)) {
-    const title = color.bold(color.yellow(`Compile Warning: \n`));
+    const title = color.bold(color.yellow('Compile Warning: \n'));
     return {
       message: `${title}${`${warnings.join('\n\n')}\n`}`,
       level: 'warning',

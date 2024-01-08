@@ -1,8 +1,8 @@
-import {
+import type {
+  Falsy,
   ChainedConfig,
   ChainedConfigWithUtils,
   ChainedConfigCombineUtils,
-  Falsy,
 } from './types';
 import { isFunction, isPlainObject } from './utils';
 
@@ -65,7 +65,9 @@ export function mergeChainedOptions<T, U = unknown, F = Falsy>({
       : options(defaults, utils);
 
     return isFalsy(ret) ? defaults : ret;
-  } else if (Array.isArray(options)) {
+  }
+
+  if (Array.isArray(options)) {
     return options.reduce(
       (defaults, options) =>
         mergeChainedOptions({
