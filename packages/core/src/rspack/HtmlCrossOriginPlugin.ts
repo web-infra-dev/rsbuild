@@ -37,12 +37,12 @@ export class HtmlCrossOriginPlugin implements RspackPluginInstance {
             assetTags: { scripts, styles },
           } = alterAssetTags;
 
-          scripts.forEach(
-            (script) => (script.attributes.crossorigin = this.crossOrigin),
-          );
-          styles.forEach(
-            (style) => (style.attributes.crossorigin = this.crossOrigin),
-          );
+          scripts.forEach((script) => {
+            script.attributes.crossorigin = this.crossOrigin;
+          });
+          styles.forEach((style) => {
+            style.attributes.crossorigin = this.crossOrigin;
+          });
 
           return alterAssetTags;
         });

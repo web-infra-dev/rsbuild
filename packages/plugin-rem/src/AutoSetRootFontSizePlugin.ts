@@ -210,8 +210,8 @@ export const genJSTemplate = (
 
     ${
       opts.useRootFontSizeBeyondMax
-        ? `htmlFontSizePx = htmlFontSizePx < maxRootFontSize ? htmlFontSizePx : rem2px ;`
-        : `htmlFontSizePx = Math.min(htmlFontSizePx, maxRootFontSize);`
+        ? 'htmlFontSizePx = htmlFontSizePx < maxRootFontSize ? htmlFontSizePx : rem2px ;'
+        : 'htmlFontSizePx = Math.min(htmlFontSizePx, maxRootFontSize);'
     }
 
     window.${opts.rootFontSizeVariableName} = htmlFontSizePx;

@@ -22,9 +22,11 @@ const normalize = <T>(
 ): T | undefined => {
   if (v === true || v === undefined) {
     return defaultValue;
-  } else if (v === false) {
+  }
+  if (v === false) {
     return undefined;
-  } else {
+  }
+  {
     return v;
   }
 };
@@ -32,7 +34,7 @@ const normalize = <T>(
 export class SwcMinimizerPlugin {
   private readonly minifyOptions: NormalizedSwcMinifyOption;
 
-  private name: string = 'swc-minimizer-plugin';
+  private name = 'swc-minimizer-plugin';
 
   constructor(options: {
     jsMinify?: boolean | JsMinifyOptions;

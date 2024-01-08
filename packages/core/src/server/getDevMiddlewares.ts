@@ -115,7 +115,7 @@ const applyDefaultMiddlewares = async ({
     );
   }
 
-  if (dev.publicDir && dev.publicDir.name) {
+  if (dev.publicDir !== false && dev.publicDir?.name) {
     const { default: sirv } = await import('../../compiled/sirv');
     const { name } = dev.publicDir;
     const publicDir = isAbsolute(name) ? name : join(pwd, name);

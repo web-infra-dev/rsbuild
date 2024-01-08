@@ -42,7 +42,7 @@ async function main() {
     placeholder: 'my-project',
     validate(value) {
       if (value.length === 0) {
-        return `Target folder is required`;
+        return 'Target folder is required';
       }
       if (fs.existsSync(path.join(cwd, value))) {
         return `"${value}" is not empty, please input another folder`;
@@ -80,7 +80,7 @@ async function main() {
   checkCancel(language);
 
   const srcFolder = path.join(packageRoot, `template-${framework}-${language}`);
-  const commonFolder = path.join(packageRoot, `template-common`);
+  const commonFolder = path.join(packageRoot, 'template-common');
   const distFolder = path.join(cwd, targetDir);
 
   copyFolder(commonFolder, distFolder, version);
@@ -130,7 +130,11 @@ function copyFolder(src: string, dist: string, version: string, name?: string) {
   }
 }
 
-const updatePackageJson = (pkgJsonPath: string, version: string, name?: string) => {
+const updatePackageJson = (
+  pkgJsonPath: string,
+  version: string,
+  name?: string,
+) => {
   let content = fs.readFileSync(pkgJsonPath, 'utf-8');
   content = content.replace(/workspace:\*/g, `^${version}`);
   const pkg = JSON.parse(content);

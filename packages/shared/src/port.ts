@@ -59,7 +59,8 @@ export const getPort = async ({
       throw new Error(
         `Port "${original}" is occupied, please choose another one.`,
       );
-    } else if (!silent) {
+    }
+    if (!silent) {
       logger.info(
         `Port ${original} is in use, ${color.yellow(`using port ${port}.`)}\n`,
       );

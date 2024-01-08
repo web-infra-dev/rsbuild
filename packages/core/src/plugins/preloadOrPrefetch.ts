@@ -1,7 +1,7 @@
 import type { RsbuildPlugin } from '../types';
 
 export const pluginPreloadOrPrefetch = (): RsbuildPlugin => ({
-  name: `plugin-preload-or-prefetch`,
+  name: 'plugin-preload-or-prefetch',
 
   setup(api) {
     api.modifyBundlerChain(

@@ -29,10 +29,9 @@ export function createSnapshotSerializer(options?: SnapshotSerializerOptions) {
 
   pathMatchers
     .filter((matcher) => typeof matcher.match === 'string')
-    .forEach(
-      (matcher) =>
-        (matcher.match = normalizeToPosixPath(matcher.match as string)),
-    );
+    .forEach((matcher) => {
+      matcher.match = normalizeToPosixPath(matcher.match as string);
+    });
 
   return {
     pathMatchers,

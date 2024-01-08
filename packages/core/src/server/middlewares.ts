@@ -83,14 +83,13 @@ export const getHtmlFallbackMiddleware: (params: {
         return callback(req, res, (...args) => {
           next(...args);
         });
-      } else {
-        return next();
       }
+      return next();
     };
 
     // '/' => '/index.html'
     if (pathname.endsWith('/')) {
-      const newUrl = url + 'index.html';
+      const newUrl = `${url}index.html`;
       const filePath = path.join(distPath, pathname, 'index.html');
 
       if (outputFileSystem.existsSync(filePath)) {
@@ -100,8 +99,8 @@ export const getHtmlFallbackMiddleware: (params: {
       // '/main' => '/main.html'
       !pathname.endsWith('.html')
     ) {
-      const newUrl = url + '.html';
-      const filePath = path.join(distPath, pathname + '.html');
+      const newUrl = `${url}.html`;
+      const filePath = path.join(distPath, `${pathname}.html`);
 
       if (outputFileSystem.existsSync(filePath)) {
         return rewrite(newUrl);
