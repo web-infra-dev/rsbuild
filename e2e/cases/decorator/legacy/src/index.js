@@ -1,5 +1,5 @@
 function decorator(value) {
-  return function (target, property, descriptor) {
+  return (target, property, descriptor) => {
     const original = descriptor.value;
 
     descriptor.value = function (...args) {

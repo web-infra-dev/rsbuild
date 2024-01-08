@@ -151,7 +151,7 @@ export const TASKS: TaskConfig[] = [
           replaceFileContent(join(task.distPath, 'index.d.ts'), (content) =>
             content.replace(
               `declare module "less" {\n    export = less;\n}`,
-              `export = Less;`,
+              'export = Less;',
             ),
           );
         },

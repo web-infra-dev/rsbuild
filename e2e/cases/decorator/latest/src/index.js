@@ -6,7 +6,7 @@ function readonly(elementDescriptor) {
 }
 
 function decorator(value) {
-  return function (elementDescriptor) {
+  return (elementDescriptor) => {
     const original = elementDescriptor.descriptor.value;
 
     elementDescriptor.descriptor.value = function (...args) {

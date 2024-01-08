@@ -4,12 +4,14 @@ import { build } from '@scripts/shared';
 const cwd = __dirname;
 
 test.describe('should print file size correctly', async () => {
-  let originalLog = console.log;
-  let consoleOutput: string = '';
+  const originalLog = console.log;
+  let consoleOutput = '';
 
   test.beforeEach(() => {
     consoleOutput = '';
-    console.log = (...output) => (consoleOutput += output.join(' ') + '\n');
+    console.log = (...output) => {
+      consoleOutput += `${output.join(' ')}\n`;
+    };
   });
 
   test.afterEach(() => {

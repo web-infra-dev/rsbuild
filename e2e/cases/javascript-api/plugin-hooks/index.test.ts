@@ -8,7 +8,7 @@ const distFile = path.join(__dirname, 'node_modules/hooksTempFile');
 const write = (str: string) => {
   let content: string;
   if (fse.existsSync(distFile)) {
-    content = fse.readFileSync(distFile, 'utf-8') + ',' + str;
+    content = `${fse.readFileSync(distFile, 'utf-8')},${str}`;
   } else {
     content = str;
   }

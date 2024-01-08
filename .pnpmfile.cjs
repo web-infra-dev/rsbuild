@@ -1,7 +1,7 @@
 function readPackage(pkg, _context) {
   // do not need eslint
   if (pkg.name === '@modern-js/plugin-lint') {
-    delete pkg.dependencies['eslint'];
+    delete pkg.dependencies.eslint;
   }
 
   // Fix: https://github.com/browserify/resolve/issues/264

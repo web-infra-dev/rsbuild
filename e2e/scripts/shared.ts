@@ -88,14 +88,13 @@ export async function getRandomPort(
     if (!portMap.get(port) && (await isPortAvailable(port))) {
       portMap.set(port, 1);
       return port;
-    } else {
-      port++;
     }
+    port++;
   }
 }
 
 const updateConfigForTest = async (
-  config: RsbuildConfig,
+  originalConfig: RsbuildConfig,
   cwd: string = process.cwd(),
 ) => {
   const { loadConfig, mergeRsbuildConfig } = await import('@rsbuild/core');
@@ -103,7 +102,7 @@ const updateConfigForTest = async (
     cwd,
   });
 
-  config = mergeRsbuildConfig(loadedConfig, config);
+  const config = mergeRsbuildConfig(loadedConfig, originalConfig);
 
   // make devPort random to avoid port conflict
   config.server = {

@@ -4,8 +4,8 @@
 node_modules/
 
 dist/
-e2e/**/dist-*
-!**/rslog/dist
+dist-*
+!packages/shared/compiled/rslog/dist
 coverage/
 doc_build/
 playwright-report/

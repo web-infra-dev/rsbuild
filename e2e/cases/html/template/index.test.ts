@@ -58,7 +58,7 @@ test('should allow to access templateParameters', async ({ page }) => {
   const testEl = page.locator('#test');
   await expect(testEl).toHaveText('Hello Rsbuild!');
 
-  await expect(page.evaluate(`window.foo`)).resolves.toBe('bar');
+  await expect(page.evaluate('window.foo')).resolves.toBe('bar');
 
   await rsbuild.close();
 });

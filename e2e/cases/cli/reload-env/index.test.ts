@@ -15,7 +15,7 @@ test.skip('should restart dev server when .env file is changed', async () => {
   fse.removeSync(configFile);
   fse.removeSync(envLocalFile);
 
-  fse.writeFileSync(envLocalFile, `PUBLIC_NAME=jack`);
+  fse.writeFileSync(envLocalFile, 'PUBLIC_NAME=jack');
   fse.writeFileSync(
     configFile,
     `export default {
@@ -37,7 +37,7 @@ test.skip('should restart dev server when .env file is changed', async () => {
   expect(fse.readFileSync(distIndex, 'utf-8')).toContain('jack');
 
   fse.removeSync(distIndex);
-  fse.writeFileSync(envLocalFile, `PUBLIC_NAME=rose`);
+  fse.writeFileSync(envLocalFile, 'PUBLIC_NAME=rose');
   await awaitFileExists(distIndex);
   expect(fse.readFileSync(distIndex, 'utf-8')).toContain('rose');
 
