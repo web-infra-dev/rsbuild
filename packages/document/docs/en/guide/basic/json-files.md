@@ -34,9 +34,9 @@ console.log(name); // 'foo';
 
 ## YAML file
 
-YAML is a data serialization language commonly used for writing configuration files.
+[YAML](https://yaml.org/) is a data serialization language commonly used for writing configuration files.
 
-You can directly import `.yaml` or `.yml` files in JavaScript and they will be automatically converted to JSON format.
+Rsbuild provides the [TOML plugin](/plugins/list/plugin-toml). After registering the plugin, you can import `.yaml` or `.yml` files in JavaScript and they will be automatically converted to JavaScript objects.
 
 ### Example
 
@@ -58,7 +58,7 @@ console.log(example.foo); // { bar: 'baz' };
 
 [TOML](https://toml.io/) is a semantically explicit, easy-to-read configuration file format.
 
-Rsbuild provides the [Toml plugin](/plugins/list/plugin-toml). After registering the plugin, you can import `.toml` files in JavaScript and it will be automatically converted to JSON format.
+Rsbuild provides the [TOML plugin](/plugins/list/plugin-toml). After registering the plugin, you can import `.toml` files in JavaScript and it will be automatically converted to JavaScript objects.
 
 ### Example
 
