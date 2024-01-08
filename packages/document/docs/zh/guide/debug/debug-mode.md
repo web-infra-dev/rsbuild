@@ -54,7 +54,7 @@ export default {
 };
 ```
 
-关于 Rsbuild 配置项的完整介绍，请查看 [Rsbuild 配置项](/guide/basic/config) 章节。
+关于 Rsbuild 配置项的完整介绍，请查看 [配置 Rsbuild](/guide/basic/configure-rsbuild) 章节。
 
 ## Rspack 配置文件
 
