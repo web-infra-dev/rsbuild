@@ -34,7 +34,7 @@ The build performance of Rsbuild is on a par with native Rspack. Considering tha
 
 This is the time it takes to build 1000 React components:
 
-![benchmark](https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/benchmark-12111918.png)
+![benchmark](https://github.com/web-infra-dev/rsbuild/assets/7237365/16442d44-6939-46de-94f8-369e94c9539a)
 
 > The data is based on the benchmark built by the Farm team, more info in [performance-compare](https://github.com/rspack-contrib/performance-compare).
 

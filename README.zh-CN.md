@@ -34,7 +34,7 @@ Rsbuild 的构建性能与原生 Rspack 处于同一水平。由于 Rsbuild 内�
 
 以下是构建 1000 个 React 组件的时间：
 
-![benchmark](https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/benchmark-12111918.png)
+![benchmark](https://github.com/web-infra-dev/rsbuild/assets/7237365/16442d44-6939-46de-94f8-369e94c9539a)
 
 > 以上数据基于 Farm 团队搭建的 benchmark，更多信息请参考 [performance-compare](https://github.com/rspack-contrib/performance-compare)。
 
