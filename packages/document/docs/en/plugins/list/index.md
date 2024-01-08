@@ -59,6 +59,7 @@ The following are common framework-agnostic plugins:
 - [Pug Plugin](/plugins/list/plugin-pug): Provides support for the Pug template engine.
 - [Rem Plugin](/plugins/list/plugin-rem): Implements the rem adaptive layout for mobile pages.
 - [UMD Plugin](/plugins/list/plugin-umd): Used to build outputs in UMD format.
+- [TOML Plugin](/plugins/list/plugin-toml): Used to import TOML files and convert them into JavaScript objects.
 
 :::tip
 You can find the source code of all official plugins in the [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) repository.

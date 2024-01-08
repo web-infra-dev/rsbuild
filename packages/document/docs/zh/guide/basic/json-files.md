@@ -56,9 +56,9 @@ console.log(example.foo); // { bar: 'baz' };
 
 ## TOML 文件
 
-TOML 是一种语义明显、易于阅读的配置文件格式。
+[TOML](https://toml.io/) 是一种语义明显、易于阅读的配置文件格式。
 
-你可以直接在 JavaScript 中引用 `.toml` 文件，它会被自动转换为 JSON 格式。
+Rsbuild 提供了 [Toml 插件](/plugins/list/plugin-toml)，在注册插件后，你可以在 JavaScript 中引用 `.toml` 文件，它会被自动转换为 JavaScript 对象。
 
 ### 示例
 
@@ -82,7 +82,7 @@ console.log(example.foo); // { bar: 'baz' };
 
 - 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的类型声明：
 
-```ts
+```ts title="src/env.d.ts"
 /// <reference types="@rsbuild/core/types" />
 ```
 

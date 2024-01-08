@@ -20,5 +20,6 @@
   "plugin-css-minimizer",
   "plugin-pug",
   "plugin-rem",
-  "plugin-umd"
+  "plugin-umd",
+  "plugin-toml"
 ]
