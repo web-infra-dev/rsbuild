@@ -1,7 +1,5 @@
 import path from 'path';
 import fse from '../compiled/fs-extra';
-import { MODULE_PATH_REGEX } from './constants';
-import { removeLeadingSlash } from './utils';
 import { promises, constants, statSync } from 'fs';
 import type {
   RsbuildConfig,
@@ -52,34 +50,6 @@ export const findExists = (files: string[]): string | false => {
   }
   return false;
 };
-
-export function getPackageNameFromModulePath(modulePath: string) {
-  const handleModuleContext = modulePath?.match(MODULE_PATH_REGEX);
-
-  if (!handleModuleContext) {
-    return undefined;
-  }
-
-  const [, , scope, name] = handleModuleContext;
-  const packageName = ['npm', (scope ?? '').replace('@', ''), name]
-    .filter(Boolean)
-    .join('.');
-
-  return packageName;
-}
-
-export function getHTMLPathByEntry(
-  entryName: string,
-  config: NormalizedConfig,
-) {
-  const htmlPath = getDistPath(config, 'html');
-  const filename =
-    config.html.outputStructure === 'flat'
-      ? `${entryName}.html`
-      : `${entryName}/index.html`;
-
-  return removeLeadingSlash(`${htmlPath}/${filename}`);
-}
 
 export const getFilename = (
   config: NormalizedConfig,

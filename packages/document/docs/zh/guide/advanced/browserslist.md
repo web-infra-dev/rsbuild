@@ -89,7 +89,7 @@ export default {
         '> 0.2%',
         'not dead',
       ],
-      node: ['node >= 14'],
+      node: ['node >= 20'],
     },
   },
 };
@@ -179,10 +179,10 @@ safari >= 14
 
 ### Node 产物
 
-Node 产物默认最低兼容到 Node.js 14.0 版本。
+Node 产物默认最低兼容到 Node.js 16.0 版本。
 
 ```yaml
-node >= 14
+node >= 16
 ```
 
 ### Web Worker 产物

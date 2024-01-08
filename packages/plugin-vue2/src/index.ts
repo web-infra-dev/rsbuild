@@ -22,6 +22,11 @@ export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
       api.modifyBundlerChain((chain, { CHAIN_ID }) => {
         chain.resolve.extensions.add('.vue');
 
+        // https://github.com/web-infra-dev/rsbuild/issues/1132
+        if (!chain.resolve.alias.get('vue$')) {
+          chain.resolve.alias.set('vue$', 'vue/dist/vue.runtime.esm.js');
+        }
+
         const vueLoaderOptions = deepmerge(
           {
             compilerOptions: {

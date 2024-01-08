@@ -1,34 +1,31 @@
 import {
-  CreateDevMiddlewareReturns,
-  logger as defaultLogger,
-  StartDevServerOptions,
-  getAddressUrls,
-  printServerURLs,
   debug,
+  logger as defaultLogger,
   isFunction,
-  StartServerResult,
-  getDevOptions,
   ROOT_DIST_DIR,
-  formatRoutes,
+  getAddressUrls,
+  StartServerResult,
   getPublicPathFromCompiler,
-  RspackMultiCompiler,
-  RspackCompiler,
-  CompileMiddlewareAPI,
-  DevMiddlewaresConfig,
-  Routes,
-  DevServerAPIs,
+  type Routes,
+  type DevServerAPIs,
+  type RspackCompiler,
+  type RspackMultiCompiler,
+  type CompileMiddlewareAPI,
+  type DevMiddlewaresConfig,
+  type StartDevServerOptions,
+  type CreateDevMiddlewareReturns,
 } from '@rsbuild/shared';
-
+import { formatRoutes, getDevOptions, printServerURLs } from './helper';
 import connect from '@rsbuild/shared/connect';
 import { onBeforeRestartServer } from './restart';
-import type { Context } from '../types';
+import type { InternalContext } from '../types';
 import { createHttpServer } from './httpServer';
 import { getMiddlewares } from './getDevMiddlewares';
 import { notFoundMiddleware } from './middlewares';
 
 export async function getServerAPIs<
   Options extends {
-    context: Context;
+    context: InternalContext;
   },
 >(
   options: Options,
@@ -136,7 +133,7 @@ export async function getServerAPIs<
 
 export async function startDevServer<
   Options extends {
-    context: Context;
+    context: InternalContext;
   },
 >(
   options: Options,
@@ -190,7 +187,14 @@ export async function startDevServer<
       }
     }
 
-    printServerURLs(urls, defaultRoutes, logger);
+    printServerURLs({
+      urls,
+      port,
+      routes: defaultRoutes,
+      logger,
+      protocol,
+      printUrls: devServerConfig.printUrls,
+    });
   }
 
   const compileMiddlewareAPI = await serverAPIs.startCompile();

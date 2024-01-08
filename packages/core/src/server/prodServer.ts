@@ -1,22 +1,20 @@
-import { Server } from 'http';
+import type { Server } from 'http';
 import connect from '@rsbuild/shared/connect';
 import { join } from 'path';
 import sirv from '../../compiled/sirv';
 import {
-  getAddressUrls,
-  printServerURLs,
-  formatRoutes,
-  ROOT_DIST_DIR,
   isFunction,
-  getServerOptions,
+  ROOT_DIST_DIR,
+  getAddressUrls,
   type ServerConfig,
   type RsbuildConfig,
   type RequestHandler,
   type StartServerResult,
   type PreviewServerOptions,
 } from '@rsbuild/shared';
+import { formatRoutes, getServerOptions, printServerURLs } from './helper';
 import { faviconFallbackMiddleware } from './middlewares';
-import type { Context } from '../types';
+import type { InternalContext } from '../types';
 import { createHttpServer } from './httpServer';
 
 type RsbuildProdServerOptions = {
@@ -133,7 +131,7 @@ export class RsbuildProdServer {
 }
 
 export async function startProdServer(
-  context: Context,
+  context: InternalContext,
   rsbuildConfig: RsbuildConfig,
   { printURLs = true, getPortSilently }: PreviewServerOptions = {},
 ) {
@@ -181,14 +179,16 @@ export async function startProdServer(
           routes,
         });
 
-        const urls = getAddressUrls(https ? 'https' : 'http', port);
+        const protocol = https ? 'https' : 'http';
+        const urls = getAddressUrls(protocol, port);
 
-        if (printURLs) {
-          printServerURLs(
-            isFunction(printURLs) ? printURLs(urls) : urls,
-            routes,
-          );
-        }
+        printServerURLs({
+          urls: isFunction(printURLs) ? printURLs(urls) : urls,
+          port,
+          routes,
+          protocol,
+          printUrls: serverConfig.printUrls,
+        });
 
         const onClose = () => {
           server.close();

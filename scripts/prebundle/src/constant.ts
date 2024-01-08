@@ -1,6 +1,6 @@
 import path, { join } from 'path';
 import type { TaskConfig } from './types';
-import fs from 'fs-extra';
+import fs, { copySync } from 'fs-extra';
 import { replaceFileContent } from './helper';
 
 export const ROOT_DIR = join(__dirname, '..', '..', '..');
@@ -35,7 +35,6 @@ export const TASKS: TaskConfig[] = [
       'open',
       'dotenv',
       'dotenv-expand',
-      'commander',
       'ws',
       {
         name: 'sirv',
@@ -66,10 +65,12 @@ export const TASKS: TaskConfig[] = [
     dependencies: [
       'jiti',
       'rslog',
+      'commander',
       'deepmerge',
       'fs-extra',
       'chokidar',
       'webpack-chain',
+      'webpack-merge',
       'mime-types',
       'connect',
       'browserslist',
@@ -116,11 +117,50 @@ export const TASKS: TaskConfig[] = [
         ignoreDts: true,
       },
       {
-        name: 'yaml-loader',
+        name: 'sass-loader',
+        externals: {
+          sass: '../sass',
+        },
+      },
+      {
+        name: 'sass',
+        externals: {
+          chokidar: '../chokidar',
+        },
+        afterBundle(task) {
+          copySync(join(task.depPath, 'types'), join(task.distPath, 'types'));
+        },
+      },
+      {
+        name: 'style-loader',
+        ignoreDts: true,
+        afterBundle: (task) => {
+          fs.copySync(
+            join(task.depPath, 'dist/runtime'),
+            join(task.distPath, 'runtime'),
+          );
+        },
+      },
+      {
+        name: 'less',
+        externals: {
+          // needle is an optional dependency and no need to bundle it.
+          needle: 'needle',
+        },
+        afterBundle(task) {
+          replaceFileContent(join(task.distPath, 'index.d.ts'), (content) =>
+            content.replace(
+              `declare module "less" {\n    export = less;\n}`,
+              `export = Less;`,
+            ),
+          );
+        },
+      },
+      {
+        name: 'less-loader',
         ignoreDts: true,
         externals: {
-          yaml: '../yaml',
-          'loader-utils': '../loader-utils2',
+          less: '../less',
         },
       },
       {
@@ -217,6 +257,15 @@ export const TASKS: TaskConfig[] = [
           express: 'express',
         },
       },
+      {
+        // The webpack-bundle-analyzer version was locked to v4.9.0 to be compatible with Rspack
+        // If we need to upgrade the version, please check if the chunk detail can be displayed correctly
+        name: 'webpack-bundle-analyzer',
+        externals: {
+          commander: '../commander',
+          'gzip-size': '../gzip-size',
+        },
+      },
     ],
   },
   {
@@ -238,6 +287,26 @@ export const TASKS: TaskConfig[] = [
             'module.exports.validate = () => {};',
           );
         },
+      },
+    ],
+  },
+  {
+    packageDir: 'plugin-toml',
+    packageName: '@rsbuild/plugin-toml',
+    dependencies: [
+      {
+        name: 'toml-loader',
+        ignoreDts: true,
+      },
+    ],
+  },
+  {
+    packageDir: 'plugin-yaml',
+    packageName: '@rsbuild/plugin-yaml',
+    dependencies: [
+      {
+        name: 'yaml-loader',
+        ignoreDts: true,
       },
     ],
   },

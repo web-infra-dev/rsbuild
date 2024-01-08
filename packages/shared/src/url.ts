@@ -1,6 +1,7 @@
 import os from 'os';
 import { URL } from 'url';
 import { posix } from 'path';
+import { isIPv6 } from 'net';
 import { DEFAULT_DEV_HOST } from './constants';
 
 // remove repeat '/'
@@ -61,6 +62,28 @@ const getIpv4Interfaces = () => {
   return Array.from(ipv4Interfaces.values());
 };
 
+const isLoopbackHost = (host: string) => {
+  const loopbackHosts = ['localhost', '127.0.0.1', '::1'];
+  return loopbackHosts.includes(host);
+};
+
+const getHostInUrl = (host: string) => {
+  if (isIPv6(host)) {
+    return host === '::' ? '[::1]' : `${host}`;
+  }
+  return host;
+};
+
+const concatUrl = ({
+  host,
+  port,
+  protocol,
+}: {
+  host: string;
+  port: number;
+  protocol: string;
+}) => `${protocol}://${host}:${port}`;
+
 export const getAddressUrls = (
   protocol = 'http',
   port: number,
@@ -68,31 +91,32 @@ export const getAddressUrls = (
 ) => {
   const LOCAL_LABEL = 'Local:  ';
   const NETWORK_LABEL = 'Network:  ';
-  const isLocalhost = (url: string) => url?.includes('localhost');
 
   if (host && host !== DEFAULT_DEV_HOST) {
     return [
       {
-        label: isLocalhost(host) ? LOCAL_LABEL : NETWORK_LABEL,
-        url: `${protocol}://${host}:${port}`,
+        label: isLoopbackHost(host) ? LOCAL_LABEL : NETWORK_LABEL,
+        url: concatUrl({
+          port,
+          host: getHostInUrl(host),
+          protocol,
+        }),
       },
     ];
   }
 
   const ipv4Interfaces = getIpv4Interfaces();
 
-  return ipv4Interfaces.reduce((memo: AddressUrl[], detail) => {
-    if (isLocalhost(detail.address) || detail.internal) {
-      memo.push({
+  return ipv4Interfaces.map((detail) => {
+    if (isLoopbackHost(detail.address) || detail.internal) {
+      return {
         label: LOCAL_LABEL,
-        url: `${protocol}://localhost:${port}`,
-      });
-    } else {
-      memo.push({
-        label: NETWORK_LABEL,
-        url: `${protocol}://${detail.address}:${port}`,
-      });
+        url: concatUrl({ host: 'localhost', port, protocol }),
+      };
     }
-    return memo;
-  }, []);
+    return {
+      label: NETWORK_LABEL,
+      url: concatUrl({ host: detail.address, port, protocol }),
+    };
+  });
 };

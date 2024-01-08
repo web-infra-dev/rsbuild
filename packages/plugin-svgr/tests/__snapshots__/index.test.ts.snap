@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`svgr > 'export default Component' 1`] = `
+exports[`svgr > 'configure SVGR options' 1`] = `
 {
   "oneOf": [
     {
@@ -9,8 +9,8 @@ exports[`svgr > 'export default Component' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
         ],
       },
       "resourceQuery": /\\(__inline=false\\|url\\)/,
@@ -19,8 +19,8 @@ exports[`svgr > 'export default Component' 1`] = `
     {
       "issuer": {
         "not": [
-          /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
         ],
       },
       "resourceQuery": /inline/,
@@ -32,8 +32,130 @@ exports[`svgr > 'export default Component' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
+        ],
+      },
+      "parser": {
+        "dataUrlCondition": {
+          "maxSize": 10000,
+        },
+      },
+      "type": "asset",
+    },
+    {
+      "resourceQuery": /inline/,
+      "type": "asset/inline",
+    },
+    {
+      "generator": {
+        "filename": "static/svg/[name].[contenthash:8].svg",
+      },
+      "resourceQuery": /url/,
+      "type": "asset/resource",
+    },
+    {
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "builtin:swc-loader",
+          "options": {
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "shippedProposals": true,
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "isModule": "unknown",
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "decoratorMetadata": true,
+                "legacyDecorator": true,
+              },
+            },
+            "sourceMaps": true,
+          },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader",
+          "options": {
+            "svgo": true,
+            "svgoConfig": {
+              "datauri": "base64",
+              "plugins": [
+                {
+                  "name": "preset-default",
+                  "params": {
+                    "overrides": {
+                      "removeViewBox": false,
+                    },
+                  },
+                },
+                "prefixIds",
+              ],
+            },
+          },
+        },
+        {
+          "loader": "<ROOT>/node_modules/<PNPM_INNER>/url-loader/dist/cjs.js",
+          "options": {
+            "limit": 10000,
+            "name": "static/svg/[name].[contenthash:8].svg",
+          },
+        },
+      ],
+    },
+  ],
+  "test": /\\\\\\.svg\\$/,
+}
+`;
+
+exports[`svgr > 'export default Component' 1`] = `
+{
+  "oneOf": [
+    {
+      "generator": {
+        "filename": "static/svg/[name].[contenthash:8].svg",
+      },
+      "issuer": {
+        "not": [
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
+        ],
+      },
+      "resourceQuery": /\\(__inline=false\\|url\\)/,
+      "type": "asset/resource",
+    },
+    {
+      "issuer": {
+        "not": [
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
+        ],
+      },
+      "resourceQuery": /inline/,
+      "type": "asset/inline",
+    },
+    {
+      "generator": {
+        "filename": "static/svg/[name].[contenthash:8].svg",
+      },
+      "issuer": {
+        "not": [
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
         ],
       },
       "parser": {
@@ -123,8 +245,8 @@ exports[`svgr > 'export default url' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
         ],
       },
       "resourceQuery": /\\(__inline=false\\|url\\)/,
@@ -133,8 +255,8 @@ exports[`svgr > 'export default url' 1`] = `
     {
       "issuer": {
         "not": [
-          /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
         ],
       },
       "resourceQuery": /inline/,
@@ -146,8 +268,8 @@ exports[`svgr > 'export default url' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
         ],
       },
       "parser": {

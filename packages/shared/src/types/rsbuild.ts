@@ -1,11 +1,12 @@
-import type { Context } from './context';
 import type { PluginStore } from './plugin';
 import type { RsbuildConfig } from './config';
+import type { RsbuildContext } from './context';
 import type { RsbuildProvider, ProviderInstance } from './provider';
+import type { EntryDescription } from '@rspack/core';
 
 export type RsbuildTarget = 'web' | 'node' | 'web-worker' | 'service-worker';
 
-export type RsbuildEntry = Record<string, string | string[]>;
+export type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 
 export type RsbuildMode = 'development' | 'production';
 
@@ -19,7 +20,7 @@ export type CreateRsbuildOptions = {
 export type RsbuildInstance<
   P extends RsbuildProvider | RsbuildProvider<'webpack'> = RsbuildProvider,
 > = {
-  context: Context;
+  context: RsbuildContext;
 
   addPlugins: PluginStore['addPlugins'];
   removePlugins: PluginStore['removePlugins'];

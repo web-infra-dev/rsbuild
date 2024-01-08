@@ -1,6 +1,13 @@
 # Create React App
 
-This chapter introduces how to migrate a [Create React App](https://github.com/facebook/create-react-app) (CRA) project to Rsbuild.
+This chapter introduces how to migrate a [Create React App](https://github.com/facebook/create-react-app) (CRA) or [CRACO](https://craco.js.org/) project to Rsbuild.
+
+:::tip CRA eject
+If your project has already run the CRA `eject` command, then most of the content in this document will no longer be applicable.
+
+After ejecting a CRA project, it becomes more like a project directly using webpack, so you can refer to the [webpack migration guide](/guide/migration/webpack).
+
+:::
 
 ## Installing Dependencies
 
@@ -8,11 +15,13 @@ First, you need to replace the npm dependencies of CRA with Rsbuild's dependenci
 
 import { PackageManagerTabs } from '@theme';
 
-Remove CRA dependencies:
+- Remove CRA dependencies:
 
 <PackageManagerTabs command="remove react-scripts" />
 
-Install Rsbuild dependencies:
+> For projects using CRACO, you can also remove the @craco/craco dependency.
+
+- Install Rsbuild dependencies:
 
 <PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-react -D" />
 
@@ -50,7 +59,44 @@ export default defineConfig({
 });
 ```
 
+## HTML Template
+
+CRA uses the `public/index.html` file as the default HTML template. In Rsbuild, you can specify the HTML template through [html.template](/config/html/template):
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  html: {
+    template: './public/index.html',
+  },
+});
+```
+
+In the HTML template, if you are using the `%PUBLIC_URL%` variable from CRA, replace it with Rsbuild's [assetPrefix variable](/config/html/template-parameters) and use a forward slash for concatenation:
+
+```diff
+-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
++  <link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
+```
+
 This completes the basic migration from CRA to Rsbuild. You can now run the `npm run start` command to try starting the dev server.
+
+## Output Directory
+
+By default, CRA outputs to the `build` directory, while Rsbuild's default output directory is `dist`.
+
+You can configure Rsbuild's [output.distPath.root](/config/output/dist-path) option to change the directory to `build`, in line with CRA:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    distPath: {
+      root: 'build',
+    },
+  },
+};
+```
+
+> For more details, please refer to the [Output Files](/guide/basic/output-files) section.
 
 ## Using SVGR
 
@@ -97,7 +143,7 @@ Notes:
 
 By default, CRA uses Babel to compile dependencies in node_modules, but Rsbuild does not, to avoid the performance overhead and potential compilation errors caused by secondary compilation.
 
-If you need to handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](
+If you need to handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](/config/source/include#compile-node_modules) config to compile node_modules.
 
 ## Environment Variables
 
@@ -115,6 +161,117 @@ export default defineConfig({
     define: publicVars,
   },
 });
+```
+
+## Import Unknown Assets
+
+In CRA, if you import an asset that the build tool cannot recognize, CRA will by default output the file to the `build/static/media` directory, for example, the `document.pdf` file:
+
+```js title="index.js"
+import document from './document.pdf';
+```
+
+In Rsbuild, when importing unrecognized assets, Rsbuild will logs errors:
+
+```text
+You may need an appropriate loader to handle this file type.
+```
+
+To resolve this error, you can use the following methods:
+
+- Configure a suitable loader to handle this type of asset via [tools.rspack](/config/tools/rspack).
+- Configure [asset modules](https://rspack.dev/guide/asset-module) rule to handle this type of asset via [tools.rspack](/config/tools/rspack).
+
+For example, you can add the following asset modules config to get the same output result as CRA:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      module: {
+        rules: [
+          {
+            // Match .png asset
+            // You can change this regular expression to match different types of files
+            test: /\.png$/,
+            type: 'asset/resource',
+            generator: {
+              filename: 'static/media/[name].[hash][ext]',
+            },
+          },
+        ],
+      },
+    },
+  },
+};
+```
+
+## Remove react-app-polyfill
+
+CRA provides [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill) to manually inject polyfill code.
+
+In the Rsbuild project, you can remove the dependency and code related to react-app-polyfill, as Rsbuild will automatically read the browserslist config and inject polyfill code as needed.
+
+```diff title="src/index.js"
+- import 'react-app-polyfill/ie11';
+- import 'react-app-polyfill/stable';
+```
+
+You can read [Browser Compatibility](/guide/advanced/browser-compatibility) to understand how Rsbuild handles polyfills.
+
+## CRACO Migration
+
+If your project is using [CRACO](https://craco.js.org) to override CRA configuration, you can refer to the table below for migration:
+
+| CRACO                                                                                           | Rsbuild                                                          |
+| ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [webpack.configure](https://craco.js.org/docs/configuration/webpack/#webpackconfigure)          | [tools.rspack](/config/tools/rspack)                             |
+| [webpack.alias](https://craco.js.org/docs/configuration/webpack/#webpackalias)                  | [source.alias](/config/source/alias)                             |
+| [webpack.plugins](https://craco.js.org/docs/configuration/webpack/#webpackplugins)              | [tools.rspack.appendPlugins](/config/tools/rspack#appendplugins) |
+| [webpack.plugins.remove](https://craco.js.org/docs/configuration/webpack/#webpackpluginsremove) | [tools.rspack.removePlugin](/config/tools/rspack#removeplugin)   |
+| [style.modules](https://craco.js.org/docs/configuration/style/#stylemodules)                    | [output.cssModules](/config/output/css-modules)                  |
+| [style.css](https://craco.js.org/docs/configuration/style/#stylecss)                            | [tools.cssLoader](/config/tools/css-loader)                      |
+| [style.sass](https://craco.js.org/docs/configuration/style/#stylesass)                          | [tools.sass](/config/tools/sass)                                 |
+| [style.postcss](https://craco.js.org/docs/configuration/style/#stylepostcss)                    | [tools.postcss](/config/tools/postcss)                           |
+| [babel](https://craco.js.org/docs/configuration/babel/)                                         | [Babel Plugin](/plugins/list/plugin-babel)                       |
+| [typescript](https://craco.js.org/docs/configuration/typescript/)                               | [Type Check Plugin](/plugins/list/plugin-type-check)             |
+| [devServer](https://craco.js.org/docs/configuration/devserver/)                                 | [server configs](/config/index)                                  |
+
+### Example
+
+Here is an example of migrating from `webpack.configure` to `tools.rspack`:
+
+- Before migration:
+
+```js title="craco.config.js"
+const { whenDev } = require('@craco/craco');
+
+module.exports = {
+  webpack: {
+    configure: {
+      resolve: {
+        mainFields: ['browser', 'module', 'main'],
+      },
+    },
+    plugins: [...whenDev(() => [new MyWebpackPlugin()], [])],
+  },
+};
+```
+
+- After migration:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      resolve: {
+        mainFields: ['browser', 'module', 'main'],
+      },
+      plugins:
+        process.env.NODE_ENV === 'development' ? [new MyWebpackPlugin()] : [],
+    },
+  },
+};
 ```
 
 ## Contents Supplement

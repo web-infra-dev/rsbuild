@@ -1,5 +1,63 @@
 # @rsbuild/core
 
+## 0.2.18
+
+### Patch Changes
+
+- @rsbuild/shared@0.2.18
+
+## 0.2.17
+
+### Patch Changes
+
+- @rsbuild/shared@0.2.17
+
+## 0.2.16
+
+### Patch Changes
+
+- 5c954333: feat: allow passing falsy plugins
+- fc988434: perf: ncc target to es2019 to reduce bundle size
+- Updated dependencies [5c954333]
+- Updated dependencies [fc988434]
+  - @rsbuild/shared@0.2.16
+
+## 0.2.15
+
+### Patch Changes
+
+- Updated dependencies [6038abf]
+  - @rsbuild/shared@0.2.15
+
+## 0.2.14
+
+### Patch Changes
+
+- a65b78dd: test: add e2e case for toml-loader
+- Updated dependencies [a65b78dd]
+  - @rsbuild/shared@0.2.14
+
+## 0.2.13
+
+### Patch Changes
+
+- Updated dependencies [7bd330eb]
+  - @rsbuild/shared@0.2.13
+
+## 0.2.12
+
+### Patch Changes
+
+- Updated dependencies [6c0c710]
+  - @rsbuild/shared@0.2.12
+
+## 0.2.11
+
+### Patch Changes
+
+- 2c21478: fix: make hmr-client isomorphic
+  - @rsbuild/shared@0.2.11
+
 ## 0.2.10
 
 ### Patch Changes

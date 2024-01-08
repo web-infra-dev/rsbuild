@@ -2,28 +2,29 @@ import {
   debug,
   CHAIN_ID,
   castArray,
+  chainToConfig,
   modifyBundlerChain,
   mergeChainedOptions,
   type NodeEnv,
+  type BundlerChain,
   type RsbuildTarget,
+  type WebpackChain,
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
 } from '@rsbuild/shared';
-import type { Context } from '@rsbuild/core/provider';
+import type { InternalContext } from '@rsbuild/core/provider';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
-import type WebpackChain from 'webpack-chain';
 import type { WebpackConfig } from '../types';
 
 async function modifyWebpackChain(
-  context: Context,
+  context: InternalContext,
   utils: ModifyWebpackChainUtils,
   chain: WebpackChain,
 ): Promise<WebpackChain> {
   debug('modify webpack chain');
 
   const [modifiedChain] = await context.hooks.modifyWebpackChainHook.call(
-    // @ts-expect-error `chain` in the sig of modifyWebpackChainHook is `RspackChain`.
     chain,
     utils,
   );
@@ -36,12 +37,11 @@ async function modifyWebpackChain(
 
   debug('modify webpack chain done');
 
-  // @ts-expect-error `modifiedChain` in the output of modifyWebpackChainHook is `RspackConfig`.
   return modifiedChain;
 }
 
 async function modifyWebpackConfig(
-  context: Context,
+  context: InternalContext,
   webpackConfig: WebpackConfig,
   utils: ModifyWebpackConfigUtils,
 ): Promise<WebpackConfig> {
@@ -149,7 +149,7 @@ export async function generateWebpackConfig({
   context,
 }: {
   target: RsbuildTarget;
-  context: Context;
+  context: InternalContext;
 }) {
   const chainUtils = await getChainUtils(target);
   const {
@@ -177,7 +177,9 @@ export async function generateWebpackConfig({
     bundlerChain as unknown as WebpackChain,
   );
 
-  let webpackConfig = chain.toConfig();
+  let webpackConfig = chainToConfig(
+    chain as unknown as BundlerChain,
+  ) as WebpackConfig;
 
   webpackConfig = await modifyWebpackConfig(
     context,

@@ -9,6 +9,7 @@
     "applescript",
     "atrules",
     "brotli",
+    "datauri",
     "deepmerge",
     "docgen",
     "envinfo",
@@ -47,6 +48,7 @@
     "transpiling",
     "tsbuildinfo",
     "unocss",
-    "vitest"
+    "vitest",
+    "webm"
   ]
 }

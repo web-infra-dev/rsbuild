@@ -9,7 +9,6 @@ import { join } from 'path';
 import {
   isFunction,
   addTrailingSlash,
-  COMPILATION_PROCESS_STAGE,
   getPublicPathFromCompiler,
   type InlineChunkTest,
 } from '@rsbuild/shared';
@@ -239,7 +238,7 @@ export class InlineChunkHtmlPlugin {
            * Remove marked inline assets in summarize stage,
            * which should be later than the emitting of html-webpack-plugin
            */
-          stage: COMPILATION_PROCESS_STAGE.PROCESS_ASSETS_STAGE_SUMMARIZE,
+          stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_SUMMARIZE,
         },
         () => {
           const { devtool } = compiler.options;

@@ -1,5 +1,42 @@
 # @rsbuild/shared
 
+## 0.2.18
+
+## 0.2.17
+
+## 0.2.16
+
+### Patch Changes
+
+- 5c954333: feat: allow passing falsy plugins
+- fc988434: perf: ncc target to es2019 to reduce bundle size
+
+## 0.2.15
+
+### Patch Changes
+
+- 6038abf: chore: deprecate logger option of startDevServer
+
+## 0.2.14
+
+### Patch Changes
+
+- a65b78dd: test: add e2e case for toml-loader
+
+## 0.2.13
+
+### Patch Changes
+
+- 7bd330eb: chore(deps): bump sass-loader from v13.0.2 to v13.3.3
+
+## 0.2.12
+
+### Patch Changes
+
+- 6c0c710: fix: handle css-loader mode option correctly
+
+## 0.2.11
+
 ## 0.2.10
 
 ## 0.2.9

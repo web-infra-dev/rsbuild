@@ -1,19 +1,10 @@
 import {
   Configuration,
   Compiler,
+  WebpackPluginInstance,
   RuleSetRule,
-  ResolveOptions
-} from '@rspack/core';
-
-declare interface WebpackPluginInstance {
-	[index: string]: any;
-
-	/**
-	 * The run point of the plugin, required method.
-	 */
-	apply: (compiler: Compiler) => void;
-}
-
+  ResolveOptions,
+} from 'webpack';
 import * as https from 'https';
 
 export = Config;
@@ -110,9 +101,6 @@ declare class Config extends __Config.ChainedMap<void> {
   toConfig(): Configuration;
 }
 
-/**
- * This is really `RspackConfigChain` 
- */
 declare namespace Config {
   class Chained<Parent> extends __Config.Chained<Parent> {}
   class TypedChainedMap<Parent, OptionsType> extends __Config.TypedChainedMap<

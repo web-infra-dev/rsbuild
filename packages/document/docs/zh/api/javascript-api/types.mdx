@@ -4,7 +4,7 @@
 
 ## RsbuildInstance
 
-Rsbuild 实例的类型。
+Rsbuild 实例的类型，对应 [createRsbuild](/api/javascript-api/core#creatersbuild) 方法的返回值。
 
 ```ts
 import type { RsbuildInstance } from '@rsbuild/core';
@@ -12,9 +12,31 @@ import type { RsbuildInstance } from '@rsbuild/core';
 let rsbuild: RsbuildInstance;
 ```
 
+## RsbuildConfig
+
+Rsbuild 配置的类型。
+
+```ts
+import type { RsbuildConfig } from '@rsbuild/core';
+
+const config: RsbuildConfig = {
+  // ...
+};
+```
+
+## NormalizedConfig
+
+Rsbuild 配置归一化后的类型，对应 [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) 方法的返回值。
+
+```ts
+import type { NormalizedConfig } from '@rsbuild/core';
+
+const config: NormalizedConfig = api.getNormalizedConfig();
+```
+
 ## RsbuildContext
 
-Rsbuild 实例中 context 属性的类型定义。
+Rsbuild 实例中 [context 属性](/api/javascript-api/instance#rsbuildcontext)的类型定义。
 
 ```ts
 import type { RsbuildContext } from '@rsbuild/core';
@@ -35,6 +57,19 @@ const myPlugin: RsbuildPlugin = {
 };
 ```
 
+## RsbuildPluginAPI
+
+Rsbuild 插件中，setup 函数传入的 api 对象的类型。
+
+```ts
+import type { RsbuildPluginAPI } from '@rsbuild/core';
+
+const myPlugin = {
+  name: 'my-plugin',
+  setup(api: RsbuildPluginAPI) {},
+};
+```
+
 ## RsbuildTarget
 
 Rsbuild 构建产物的类型。
@@ -45,8 +80,16 @@ import type { RsbuildTarget } from '@rsbuild/core';
 
 ## CreateRsbuildOptions
 
-对应 `createRsbuild` 方法的入参类型。
+[createRsbuild](/api/javascript-api/core#creatersbuild) 方法的入参类型。
 
 ```ts
 import type { CreateRsbuildOptions } from '@rsbuild/core';
+```
+
+## InspectConfigOptions
+
+[rsbuild.inspectConfig](/api/javascript-api/instance#rsbuildinspectconfig) 方法的入参类型。
+
+```ts
+import type { InspectConfigOptions } from '@rsbuild/core';
 ```

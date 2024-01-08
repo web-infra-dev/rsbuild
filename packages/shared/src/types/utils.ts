@@ -2,6 +2,8 @@ import type WebpackChain from '../../compiled/webpack-chain';
 
 export type { WebpackChain };
 
+export type Falsy = false | null | undefined;
+
 export type ArrayOrNot<T> = T | T[];
 
 export type PromiseOrNot<T> = T | Promise<T>;
@@ -34,9 +36,9 @@ export type SharedCompiledPkgNames =
   | 'postcss-flexbugs-fixes'
   | 'autoprefixer'
   | 'sass-loader'
+  | 'style-loader'
   | 'less-loader'
   | 'node-loader'
-  | 'toml-loader'
   | 'yaml-loader'
   | 'resolve-url-loader';
 

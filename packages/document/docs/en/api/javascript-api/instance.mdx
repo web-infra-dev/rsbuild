@@ -23,7 +23,7 @@ The entry object from the `source.entry` option.
 - **Type:**
 
 ```ts
-type RsbuildEntry = Record<string, string | string[]>;
+type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 ```
 
 ### context.targets
@@ -181,14 +181,10 @@ Start the local dev server.
 
 ```ts
 type StartDevServerOptions = {
-  // Whether to output URL infos, the default is true
-  printURLs?: boolean | Function;
   // custom Compiler object
   compiler?: Compiler | MultiCompiler;
   // Whether to get the port silently, the default is false
   getPortSilently?: boolean;
-  // custom logger
-  logger?: Logger;
 };
 
 type StartServerResult = {
@@ -244,29 +240,6 @@ console.log(port); // 8080
 await server.close();
 ```
 
-### Disable Print URLs
-
-Setting `printURLs` to `false` to disable the default URL output, so you can custom the logs.
-
-```ts
-await rsbuild.startDevServer({
-  printURLs: false,
-});
-```
-
-You can also directly configure `printURLs` as a function to modify URLs, such as adding a subpath to each URL:
-
-```ts
-await rsbuild.startDevServer({
-  printURLs: (urls) => {
-    return urls.map(({ label, url }) => ({
-      label,
-      url: `${url}/path`,
-    }));
-  },
-});
-```
-
 ### Custom Compiler
 
 In some cases, you may want to use a custom compiler:
@@ -291,42 +264,6 @@ await rsbuild.startDevServer({
   getPortSilently: true,
 });
 ```
-
-### Custom Logger
-
-By default, Rsbuild uses [rslog](https://github.com/rspack-contrib/rslog) to output logs. You can customize the log output object through the `logger` parameter.
-
-```ts
-const customLogger = {
-  // You need to define the following methods
-  info(msg: string) {
-    console.log(msg);
-  },
-  error(msg: string) {
-    console.error(msg);
-  },
-  warn(msg: string) {
-    console.warn(msg);
-  },
-  success(msg: string) {
-    console.log(`✅ msg`);
-  },
-  debug(msg: string) {
-    if (process.env.DEBUG) {
-      console.log(msg);
-    }
-  },
-  log(msg: string) {
-    console.log(msg);
-  };
-}
-
-await rsbuild.startDevServer({
-  logger: customLogger,
-});
-```
-
-Then Rsbuild will use the custom logger to output logs.
 
 ## rsbuild.preview
 

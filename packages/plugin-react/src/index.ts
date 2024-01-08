@@ -3,6 +3,7 @@ import { applyAntdSupport } from './antd';
 import { applyArcoSupport } from './arco';
 import { applySplitChunksRule } from './splitChunks';
 import { applyBasicReactSupport } from './react';
+import type { SwcReactConfig } from '@rsbuild/shared';
 
 export { isBeyondReact17 } from './utils';
 
@@ -23,6 +24,11 @@ export type SplitReactChunkOptions = {
 
 export type PluginReactOptions = {
   /**
+   * Configure the behavior of SWC to transform React code,
+   * the same as SWC's [jsc.transform.react](https://swc.rs/docs/configuration/compilation#jsctransformreact).
+   */
+  swcReactOptions?: SwcReactConfig;
+  /**
    * Configuration for chunk splitting of React-related dependencies.
    */
   splitChunks?: SplitReactChunkOptions;
@@ -37,7 +43,7 @@ export const pluginReact = (
 
   setup(api) {
     if (api.context.bundlerType === 'rspack') {
-      applyBasicReactSupport(api);
+      applyBasicReactSupport(api, options);
     }
     applyAntdSupport(api);
     applyArcoSupport(api);

@@ -117,21 +117,21 @@ exports[`plugin-image-compress > should generate correct options 1`] = `
   "optimization": {
     "minimize": true,
     "minimizer": [
-      ModernJsImageMinimizerPlugin {
+      ImageMinimizerPlugin {
         "name": "@rsbuild/plugin-image-compress/minimizer",
         "options": {
           "test": /\\\\\\.\\(jpg\\|jpeg\\)\\$/,
           "use": "jpeg",
         },
       },
-      ModernJsImageMinimizerPlugin {
+      ImageMinimizerPlugin {
         "name": "@rsbuild/plugin-image-compress/minimizer",
         "options": {
           "test": /\\\\\\.png\\$/,
           "use": "png",
         },
       },
-      ModernJsImageMinimizerPlugin {
+      ImageMinimizerPlugin {
         "name": "@rsbuild/plugin-image-compress/minimizer",
         "options": {
           "test": /\\\\\\.\\(ico\\|icon\\)\\$/,

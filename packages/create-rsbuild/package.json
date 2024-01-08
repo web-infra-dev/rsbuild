@@ -1,6 +1,6 @@
 {
   "name": "create-rsbuild",
-  "version": "0.2.10",
+  "version": "0.2.18",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
-    "rslog": "^1.1.2"
+    "rslog": "^1.2.0"
   },
   "devDependencies": {
     "@types/node": "16.x",

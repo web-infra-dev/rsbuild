@@ -1,11 +1,14 @@
 import type * as Rspack from '@rspack/core';
+import type { BundlerPluginInstance } from './bundlerConfig';
 
 export type { Rspack };
 
-type BuiltinsOptions = NonNullable<Rspack.RspackOptions['builtins']>;
+type BuiltinsOptions = NonNullable<Rspack.Configuration['builtins']>;
 
-export type RspackConfig = Rspack.RspackOptions & {
+export type RspackConfig = Omit<Rspack.Configuration, 'plugins'> & {
   builtins?: Omit<BuiltinsOptions, 'html'>;
+  // Use a loose type here, so that user can pass webpack plugins
+  plugins?: BundlerPluginInstance[];
 };
 export type RspackCompiler = Rspack.Compiler;
 export type RspackMultiCompiler = Rspack.MultiCompiler;
@@ -60,19 +63,28 @@ export interface EsParserConfig {
   importAssertions?: boolean;
 }
 
-export interface ReactConfig {
+export interface SwcReactConfig {
   pragma?: string;
   pragmaFrag?: string;
   throwIfNamespace?: boolean;
   development?: boolean;
   useBuiltins?: boolean;
   refresh?: boolean;
+  /**
+   * Decides which React JSX runtime to use.
+   * `automatic` auto imports the functions for transpiled JSX. `classic` does not automatic import anything.
+   * @default 'automatic'
+   */
   runtime?: 'automatic' | 'classic';
+  /**
+   * Specify the import path of the JSX runtime when `jsxRuntime` is `'automatic'`.
+   * @default 'react'
+   */
   importSource?: string;
 }
 
 export interface TransformConfig {
-  react?: ReactConfig;
+  react?: SwcReactConfig;
   legacyDecorator?: boolean;
   decoratorMetadata?: boolean;
   treatConstEnumAsEnum?: boolean;

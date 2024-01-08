@@ -1,4 +1,4 @@
-import type { WebpackChain } from './utils';
+import type { Falsy, WebpackChain } from './utils';
 import type {
   OnExitFn,
   OnAfterBuildFn,
@@ -14,7 +14,7 @@ import type {
   ModifyBundlerChainFn,
   ModifyChainUtils,
 } from './hooks';
-import { Context } from './context';
+import type { RsbuildContext } from './context';
 import {
   RsbuildConfig,
   NormalizedConfig,
@@ -71,7 +71,7 @@ export type ModifyWebpackConfigFn = (
 
 export type PluginStore = {
   readonly plugins: RsbuildPlugin[];
-  addPlugins: (plugins: RsbuildPlugin[], options?: { before?: string }) => void;
+  addPlugins: (plugins: RsbuildPlugins, options?: { before?: string }) => void;
   removePlugins: (pluginNames: string[]) => void;
   isPluginExists: (pluginName: string) => boolean;
   /** The plugin API. */
@@ -86,6 +86,8 @@ export type RsbuildPlugin = {
   remove?: string[];
 };
 
+export type RsbuildPlugins = (RsbuildPlugin | Falsy)[];
+
 type PluginsFn<T = void> = T extends void
   ? () => Promise<RsbuildPlugin>
   : (arg: T) => Promise<RsbuildPlugin>;
@@ -98,8 +100,6 @@ export type Plugins = {
   target: PluginsFn;
   entry: PluginsFn;
   cache: PluginsFn;
-  yaml: PluginsFn;
-  toml: PluginsFn;
   splitChunks: PluginsFn;
   inlineChunk: PluginsFn;
   bundleAnalyzer: PluginsFn;
@@ -113,6 +113,7 @@ export type Plugins = {
   preloadOrPrefetch: PluginsFn;
   performance: PluginsFn;
   define: PluginsFn;
+  server: PluginsFn;
 };
 
 export type GetRsbuildConfig = {
@@ -125,7 +126,7 @@ export type GetRsbuildConfig = {
  * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
 export type RsbuildPluginAPI = {
-  context: Readonly<Context>;
+  context: Readonly<RsbuildContext>;
   isPluginExists: PluginStore['isPluginExists'];
 
   onExit: (fn: OnExitFn) => void;

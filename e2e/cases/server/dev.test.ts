@@ -54,9 +54,6 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
     fse.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
   );
 
-  // wait for hmr take effect
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
   await expect(locator).toHaveText('Hello Test!');
 
   // #test-keep should unchanged when app.tsx hmr
@@ -70,9 +67,6 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
   color: rgb(0, 0, 255);
 }`,
   );
-
-  // wait for hmr take effect
-  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   await expect(locator).toHaveCSS('color', 'rgb(0, 0, 255)');
 
@@ -183,8 +177,6 @@ rspackOnlyTest(
       fse.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
     );
 
-    // wait for hmr take effect
-    await new Promise((resolve) => setTimeout(resolve, 2000));
     await expect(locator).toHaveText('Hello Test!');
 
     // restore
@@ -196,28 +188,6 @@ rspackOnlyTest(
     await rsbuild.server.close();
   },
 );
-
-// need devcert
-// TODO: failed in Windows
-test.skip('dev.https', async () => {
-  const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
-    rsbuildConfig: {
-      output: {
-        distPath: {
-          root: 'dist-https',
-        },
-      },
-      server: {
-        https: true,
-      },
-    },
-  });
-
-  expect(rsbuild.urls[0].startsWith('https')).toBeTruthy();
-
-  await rsbuild.server.close();
-});
 
 // hmr will timeout in CI
 test('devServer', async ({ page }) => {
@@ -263,8 +233,17 @@ test('devServer', async ({ page }) => {
   i = 0;
   reloadFn!();
 
-  // wait for page reload take effect
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  // check value of `i`
+  const maxChecks = 100;
+  let checks = 0;
+  while (checks < maxChecks) {
+    if (i === 0) {
+      checks++;
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    } else {
+      break;
+    }
+  }
 
   expect(i).toBeGreaterThanOrEqual(1);
 

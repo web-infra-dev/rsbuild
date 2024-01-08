@@ -24,10 +24,12 @@ console.log(example.items); // [1, 2];
 
 ### Named Import
 
-Rsbuild does not support importing JSON files via named import yet:
+Rsbuild also supports importing JSON files via named import:
 
 ```js
 import { name } from './example.json';
+
+console.log(name); // 'foo';
 ```
 
 ## YAML file

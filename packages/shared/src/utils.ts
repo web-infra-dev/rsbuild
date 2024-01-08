@@ -2,6 +2,7 @@ import path from 'path';
 import type { Compiler } from '@rspack/core';
 import type {
   CacheGroup,
+  CompilerTapFn,
   RsbuildTarget,
   ModifyChainUtils,
   NormalizedConfig,
@@ -203,15 +204,6 @@ export function debounce<T extends (...args: any[]) => void>(
 export const upperFirst = (str: string) =>
   str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 
-/** The intersection of webpack and Rspack */
-export const COMPILATION_PROCESS_STAGE = {
-  PROCESS_ASSETS_STAGE_ADDITIONAL: -2000,
-  PROCESS_ASSETS_STAGE_PRE_PROCESS: -1000,
-  PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE: 700,
-  PROCESS_ASSETS_STAGE_SUMMARIZE: 1000,
-  PROCESS_ASSETS_STAGE_REPORT: 5000,
-};
-
 export const generateScriptTag = () => ({
   tagName: 'script',
   attributes: {
@@ -317,3 +309,44 @@ export function isUsingHMR(
     config.dev.hmr
   );
 }
+
+export const isClientCompiler = (compiler: {
+  options: {
+    target?: Compiler['options']['target'];
+  };
+}) => {
+  const { target } = compiler.options;
+
+  if (target) {
+    return Array.isArray(target) ? target.includes('web') : target === 'web';
+  }
+
+  return false;
+};
+
+type ServerCallbacks = {
+  onInvalid: () => void;
+  onDone: (stats: any) => void;
+};
+
+export const setupServerHooks = (
+  compiler: {
+    name?: Compiler['name'];
+    hooks: {
+      compile: CompilerTapFn<ServerCallbacks['onInvalid']>;
+      invalid: CompilerTapFn<ServerCallbacks['onInvalid']>;
+      done: CompilerTapFn<ServerCallbacks['onDone']>;
+    };
+  },
+  hookCallbacks: ServerCallbacks,
+) => {
+  if (compiler.name === 'server') {
+    return;
+  }
+
+  const { compile, invalid, done } = compiler.hooks;
+
+  compile.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
+  invalid.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
+  done.tap('rsbuild-dev-server', hookCallbacks.onDone);
+};

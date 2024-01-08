@@ -471,7 +471,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             ],
           },
         ],
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
       },
       {
         "include": [
@@ -483,9 +483,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
             ],
           },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -559,24 +559,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
               "sourceMaps": true,
             },
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.toml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },
@@ -1159,7 +1141,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             ],
           },
         ],
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
       },
       {
         "include": [
@@ -1171,9 +1153,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
             ],
           },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -1247,24 +1229,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
               "sourceMaps": false,
             },
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.toml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },
@@ -1710,7 +1674,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             ],
           },
         ],
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
       },
       {
         "include": [
@@ -1722,9 +1686,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
             ],
           },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -1732,7 +1696,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "options": {
               "env": {
                 "targets": [
-                  "node >= 14",
+                  "node >= 16",
                 ],
               },
               "isModule": "unknown",
@@ -1767,7 +1731,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "options": {
               "env": {
                 "targets": [
-                  "node >= 14",
+                  "node >= 16",
                 ],
               },
               "isModule": "unknown",
@@ -1789,24 +1753,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
         ],
       },
-      {
-        "test": /\\\\\\.toml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
-          },
-        ],
-      },
     ],
   },
   "name": "Server",
@@ -1815,10 +1761,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "splitChunks": false,
   },
   "output": {
-    "chunkFilename": "bundles/[name].js",
+    "chunkFilename": "server/[name].js",
     "cssChunkFilename": "static/css/async/[name].css",
     "cssFilename": "static/css/[name].css",
-    "filename": "bundles/[name].js",
+    "filename": "server/[name].js",
     "hashFunction": "xxhash64",
     "libraryTarget": "commonjs2",
     "path": "<ROOT>/dist",
@@ -2336,7 +2282,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             ],
           },
         ],
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
       },
       {
         "include": [
@@ -2348,9 +2294,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
             ],
           },
-          /\\\\\\.\\(ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "test": /\\\\\\.\\(js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
           {
@@ -2424,24 +2370,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
               "sourceMaps": true,
             },
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.toml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },

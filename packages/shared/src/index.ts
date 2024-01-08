@@ -10,7 +10,6 @@ export * from './mergeRsbuildConfig';
 export * from './types';
 export * from './config';
 export * from './format';
-export * from './server';
 export * from './chain';
 export * from './getLoaderOptions';
 export * from './patch';

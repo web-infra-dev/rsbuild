@@ -1,5 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { deepmerge, STYLUS_REGEX, mergeChainedOptions } from '@rsbuild/shared';
+import { deepmerge, mergeChainedOptions } from '@rsbuild/shared';
 
 type StylusOptions = {
   use?: string[];
@@ -22,7 +22,8 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
     name: 'rsbuild:stylus',
 
     setup(api) {
-      const { bundlerType } = api.context;
+      const STYLUS_REGEX = /\.styl(us)?$/;
+
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
 
@@ -38,14 +39,16 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
           .rule(utils.CHAIN_ID.RULE.STYLUS)
           .test(STYLUS_REGEX);
 
+        const { bundlerType } = api.context;
         const { applyBaseCSSRule } = await import(
           bundlerType === 'webpack'
             ? '@rsbuild/webpack/plugin-css'
             : '@rsbuild/core/provider'
         );
+
         await applyBaseCSSRule({
           rule,
-          config: config as any,
+          config,
           context: api.context,
           utils,
           importLoaders: 2,
@@ -57,16 +60,14 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
           .options(mergedOptions);
       });
 
-      bundlerType === 'rspack' &&
-        (api as any).modifyRspackConfig(async (rspackConfig: any) => {
-          const { applyCSSModuleRule } = await import('@rsbuild/core/provider');
+      api.modifyRspackConfig(async (rspackConfig) => {
+        const { applyCSSModuleRule } = await import('@rsbuild/core/provider');
 
-          const config = api.getNormalizedConfig();
+        const config = api.getNormalizedConfig();
+        const rules = rspackConfig.module?.rules;
 
-          const rules = rspackConfig.module?.rules;
-
-          applyCSSModuleRule(rules, STYLUS_REGEX, config as any);
-        });
+        applyCSSModuleRule(rules, STYLUS_REGEX, config);
+      });
     },
   };
 }

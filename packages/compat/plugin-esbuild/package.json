@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-esbuild",
-  "version": "0.2.10",
+  "version": "0.2.18",
   "description": "Esbuild plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -19,7 +19,8 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "compiled"
   ],
   "scripts": {
     "build": "modern build",

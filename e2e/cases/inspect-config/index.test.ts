@@ -3,14 +3,14 @@ import { fse } from '@rsbuild/shared';
 import { expect, test } from '@playwright/test';
 import { createRsbuild } from '@scripts/shared';
 
-const rsbuildConfig = path.resolve(__dirname, './dist/rsbuild.config.js');
+const rsbuildConfig = path.resolve(__dirname, './dist/rsbuild.config.mjs');
 const bundlerConfig = path.resolve(
   __dirname,
-  `./dist/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.js`,
+  `./dist/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
 );
 const bundlerNodeConfig = path.resolve(
   __dirname,
-  `./dist/${process.env.PROVIDE_TYPE || 'rspack'}.config.node.js`,
+  `./dist/${process.env.PROVIDE_TYPE || 'rspack'}.config.node.mjs`,
 );
 
 test('should generate config files when writeToDisk is true', async () => {

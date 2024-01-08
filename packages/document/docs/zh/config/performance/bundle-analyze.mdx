@@ -89,3 +89,4 @@ export default {
 1. 开启 Server 模式会导致 `build` 进程不能正常退出。
 2. 开启 bundleAnalyzer 会降低构建性能。因此，在日常开发过程中不应该开启此配置项，建议通过 `BUNDLE_ANALYZE` 环境变量来按需开启。
 3. 由于 `dev` 阶段不会进行代码压缩等优化，无法反映真实的产物体积，因此建议在 `build` 阶段分析产物体积。
+4. 如果在 `dev` 阶段开启 bundleAnalyzer，为了保证 webpack-bundle-analyzer 可以读取到静态资源的内容，Rsbuild 会自动开启 [dev.writeToDisk](/config/dev/write-to-disk) 选项。

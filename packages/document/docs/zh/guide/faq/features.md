@@ -84,8 +84,8 @@ debug   add default plugins done [1938.57 ms]
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /root/my-project/dist/rsbuild.config.js
-  - Rspack Config (web): /root/my-project/dist/rspack.config.web.js
+  - Rsbuild Config: /root/my-project/dist/rsbuild.config.mjs
+  - Rspack Config (web): /root/my-project/dist/rspack.config.web.mjs
 ```
 
 ---

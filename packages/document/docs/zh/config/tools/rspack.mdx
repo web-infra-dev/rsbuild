@@ -1,8 +1,7 @@
 # rspack
 
-- **类型：** `Object | Function | undefined`
+- **类型：** `Rspack.Configuration | Function | undefined`
 - **默认值：** `undefined`
-- **打包工具：** `仅支持 Rspack`
 
 `tools.rspack` 选项用于配置原生的 [Rspack](https://rspack.dev/)。
 
@@ -270,3 +269,7 @@ export default {
   },
 };
 ```
+
+:::tip
+mergeConfig 方法会创建一个新的 config 对象，不会修改原始 config 对象，因此你需要 return mergeConfig 的执行结果。
+:::

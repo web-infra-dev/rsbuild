@@ -8,6 +8,8 @@ export { loadEnv } from './loadEnv';
 export { createRsbuild } from './createRsbuild';
 export { loadConfig, defineConfig } from './cli/config';
 
+export const version = RSBUILD_VERSION;
+
 // Helpers
 export { logger, mergeRsbuildConfig } from '@rsbuild/shared';
 
@@ -19,13 +21,14 @@ export type {
   NormalizedConfig,
   // Plugin Types
   RsbuildPlugin,
+  RsbuildPlugins,
   RsbuildPluginAPI,
 } from './types';
 export type {
-  Context as RsbuildContext,
   RsbuildMode,
   RsbuildEntry,
   RsbuildTarget,
+  RsbuildContext,
   RsbuildInstance,
   CreateRsbuildOptions,
   InspectConfigOptions,

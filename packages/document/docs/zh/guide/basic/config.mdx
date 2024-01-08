@@ -45,16 +45,42 @@ export default defineConfig({
 });
 ```
 
-如果你在开发一个非 TypeScript 项目，可以使用 `.js` 格式的配置文件：
+如果你在开发一个非 TypeScript 项目，可以使用 `.mjs` 格式的配置文件：
 
-```js
-module.exports = {
+```js title="rsbuild.config.mjs"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   source: {
     alias: (opts) => {
       opts['@common'] = './src/common';
     },
   },
-};
+});
+```
+
+:::tip
+Rsbuild 使用 [jiti](https://github.com/unjs/jiti) 来加载配置文件，提供 ESM 与 CommonJS 的互操作性，模块解析的行为与 Node.js 原生行为存在一定差异。
+:::
+
+## 指定配置文件
+
+Rsbuild CLI 通过 `--config` 选项来指定配置文件，可以设置为相对路径或绝对路径。
+
+例如，你需要在执行 `build` 命令时使用 `rsbuild.prod.config.ts` 文件，可以在 `package.json` 中添加如下配置：
+
+```json title="package.json"
+{
+  "scripts": {
+    "build": "rsbuild build --config rsbuild.prod.config.ts"
+  }
+}
+```
+
+你也可以将 `--config` 选项缩写为 `-c`：
+
+```bash
+rsbuild build -c rsbuild.prod.config.js
 ```
 
 ## 使用环境变量
@@ -98,6 +124,10 @@ export default defineConfig(({ env, command }) => ({
   - 当运行 `rsbuild dev` 时，`env` 的值为 `development`。
   - 当运行 `rsbuild build` 或 `rsbuild preview` 时，`env` 的值为 `production`。
 - `command`：对应当前运行的命令，如 `dev`、`build`、`preview`。
+
+:::tip
+导出的配置函数必须提供一个返回值，如果你不需要返回任何配置，可以 return 一个空对象。
+:::
 
 ## 导出异步函数
 
@@ -148,10 +178,10 @@ DEBUG=rsbuild pnpm dev
 ```
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /Project/demo/dist/rsbuild.config.js
-  - Rspack Config (web): /Project/demo/dist/rspack.config.web.js
+  - Rsbuild Config: /Project/demo/dist/rsbuild.config.mjs
+  - Rspack Config (web): /Project/demo/dist/rspack.config.web.mjs
 ```
 
-打开生成的 `/dist/rsbuild.config.js` 文件，即可查看 Rsbuild 配置的完整内容。
+打开生成的 `/dist/rsbuild.config.mjs` 文件，即可查看 Rsbuild 配置的完整内容。
 
 关于调试模式的完整介绍，请查看 [开启调试模式](/guide/debug/debug-mode) 章节。

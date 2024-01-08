@@ -23,7 +23,7 @@ type Version = string;
 - **类型：**
 
 ```ts
-type RsbuildEntry = Record<string, string | string[]>;
+type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 ```
 
 ### context.targets
@@ -181,14 +181,10 @@ await rsbuild.build({
 
 ```ts
 type StartDevServerOptions = {
-  // 是否输出 URL 信息，默认为 true
-  printURLs?: boolean | Function;
   // 自定义 Compiler 对象
   compiler?: Compiler | MultiCompiler;
   // 是否在启动时静默获取端口号，默认为 false
   getPortSilently?: boolean;
-  // 自定义日志输出对象
-  logger?: Logger;
 };
 
 type StartServerResult = {
@@ -244,29 +240,6 @@ console.log(port); // 8080
 await server.close();
 ```
 
-### 自定义 URL 输出
-
-将 `printURLs` 设置为 `false` 可以禁用默认的 URL 输出，此时你可以输出自定义的日志内容。
-
-```ts
-await rsbuild.startDevServer({
-  printURLs: false,
-});
-```
-
-你也可以直接将 `printURLs` 配置为一个函数来修改 URL，比如给每个 URL 增加一个子路径：
-
-```ts
-await rsbuild.startDevServer({
-  printURLs: (urls) => {
-    return urls.map(({ label, url }) => ({
-      label,
-      url: `${url}/path`,
-    }));
-  },
-});
-```
-
 ### 自定义 Compiler
 
 个别情况下，你可能希望使用自定义的 compiler：
@@ -291,42 +264,6 @@ await rsbuild.startDevServer({
   getPortSilently: true,
 });
 ```
-
-### 自定义日志输出对象
-
-默认情况下，Rsbuild 会使用 [rslog](https://github.com/rspack-contrib/rslog) 来输出日志，你可以通过 `logger` 参数来自定义日志输出对象。
-
-```ts
-const customLogger = {
-  // 你需要定义以下的方法
-  info(msg: string) {
-    console.log(msg);
-  },
-  error(msg: string) {
-    console.error(msg);
-  },
-  warn(msg: string) {
-    console.warn(msg);
-  },
-  success(msg: string) {
-    console.log(`✅ msg`);
-  },
-  debug(msg: string) {
-    if (process.env.DEBUG) {
-      console.log(msg);
-    }
-  },
-  log(msg: string) {
-    console.log(msg);
-  };
-}
-
-await rsbuild.startDevServer({
-  logger: customLogger,
-});
-```
-
-这样，Rsbuild 会使用你自定义的日志输出对象来输出日志。
 
 ## rsbuild.preview
 

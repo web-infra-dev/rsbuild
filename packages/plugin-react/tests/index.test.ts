@@ -73,4 +73,21 @@ describe('plugins/react', () => {
 
     expect(config.optimization.splitChunks).toMatchSnapshot();
   });
+
+  it('should allow to custom jsxImportSource', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {},
+    });
+
+    rsbuild.addPlugins([
+      pluginReact({
+        swcReactOptions: {
+          importSource: '@emotion/react',
+        },
+      }),
+    ]);
+    const config = await rsbuild.unwrapConfig();
+
+    expect(JSON.stringify(config)).toContain(`"importSource":"@emotion/react"`);
+  });
 });

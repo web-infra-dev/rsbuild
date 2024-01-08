@@ -139,8 +139,29 @@ console.log(process.env.PASSWORD); // -> undefined
 ```
 
 :::tip
-public 变量是通过 [source.define](/config/source/define) 注入到 client 代码的，请阅读下方内容来了解 define 的原理和注意事项。
+
+- public 变量的内容会出现在你的 client 代码中，请避免在 public 变量中包含敏感信息。
+- public 变量是通过 [source.define](/config/source/define) 注入到 client 代码的，请阅读[「使用 define 配置」](#使用-define-配置)来了解 define 的原理和注意事项。
+
 :::
+
+### 自定义前缀
+
+Rsbuild 提供了 [loadEnv](/api/javascript-api/core#loadenv) 方法，可以把任何前缀的环境变量注入到 client 代码中。
+
+比如将一个 Create React App 项目迁移到 Rsbuild 时，你可以通过以下方式来读取 `REACT_APP_` 开头的环境变量，并通过 [source.define](/config/source/define) 配置项注入：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, loadEnv } from '@rsbuild/core';
+
+const { publicVars } = loadEnv({ prefixes: ['REACT_APP_'] });
+
+export default defineConfig({
+  source: {
+    define: publicVars,
+  },
+});
+```
 
 ## 使用 define 配置
 

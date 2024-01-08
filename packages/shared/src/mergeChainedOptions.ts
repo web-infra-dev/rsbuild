@@ -2,10 +2,9 @@ import {
   ChainedConfig,
   ChainedConfigWithUtils,
   ChainedConfigCombineUtils,
+  Falsy,
 } from './types';
 import { isFunction, isPlainObject } from './utils';
-
-export type Falsy = false | null | undefined;
 
 export function mergeChainedOptions<T, U = unknown, F = Falsy>(params: {
   defaults: T;

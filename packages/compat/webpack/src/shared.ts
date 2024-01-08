@@ -34,8 +34,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     import('./plugins/sass').then((m) => m.pluginSass()),
     import('./plugins/less').then((m) => m.pluginLess()),
     plugins.bundleAnalyzer(),
-    plugins.toml(),
-    plugins.yaml(),
     plugins.splitChunks(),
     plugins.startUrl?.(),
     plugins.inlineChunk(),
@@ -43,7 +41,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.performance(),
     plugins.networkPerformance(),
     plugins.preloadOrPrefetch(),
-    import('./plugins/server').then((m) => m.pluginServer()),
+    plugins.server(),
   ]);
 
 export const getCompiledPath = (packageName: string) => {

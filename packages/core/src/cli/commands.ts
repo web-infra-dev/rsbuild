@@ -1,13 +1,15 @@
 import { join } from 'path';
-import { logger } from '@rsbuild/shared';
-import { program } from '../../compiled/commander';
+import { existsSync } from 'fs';
+import { color, isDev, logger } from '@rsbuild/shared';
+import { program } from '@rsbuild/shared/commander';
 import { loadEnv } from '../loadEnv';
 import { loadConfig } from './config';
 import type { RsbuildMode } from '..';
+import { onBeforeRestartServer } from 'src/server/restart';
 
 export type CommonOptions = {
   config?: string;
-  open?: boolean;
+  open?: boolean | string;
   host?: string;
   port?: number;
 };
@@ -41,7 +43,9 @@ export async function init({
 
   try {
     const root = process.cwd();
-    const { publicVars } = loadEnv({ cwd: root });
+    const envs = loadEnv({ cwd: root });
+    isDev() && onBeforeRestartServer(envs.cleanup);
+
     const config = await loadConfig({
       cwd: root,
       path: commonOpts.config,
@@ -50,13 +54,13 @@ export async function init({
 
     config.source ||= {};
     config.source.define = {
-      ...publicVars,
+      ...envs.publicVars,
       ...config.source.define,
     };
 
     if (commonOpts.open && !config.dev?.startUrl) {
       config.dev ||= {};
-      config.dev.startUrl = true;
+      config.dev.startUrl = commonOpts.open;
     }
 
     if (commonOpts.host) {
@@ -87,7 +91,7 @@ export function runCli() {
 
   program
     .command('dev')
-    .option('--open', 'open the page in browser on startup')
+    .option('-o --open [url]', 'open the page in browser on startup')
     .option(
       '--port <port>',
       'specify a port number for Rsbuild Server to listen',
@@ -135,7 +139,7 @@ export function runCli() {
 
   program
     .command('preview')
-    .option('--open', 'open the page in browser on startup')
+    .option('-o --open [url]', 'open the page in browser on startup')
     .option(
       '--port <port>',
       'specify a port number for Rsbuild Server to listen',
@@ -152,6 +156,15 @@ export function runCli() {
     .action(async (options: PreviewOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
+
+        if (rsbuild && !existsSync(rsbuild.context.distPath)) {
+          throw new Error(
+            `The output directory ${color.yellow(
+              rsbuild.context.distPath,
+            )} does not exist, please build the project before previewing.`,
+          );
+        }
+
         await rsbuild?.preview();
       } catch (err) {
         logger.error('Failed to start preview server.');

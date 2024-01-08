@@ -1,6 +1,6 @@
 import { posix } from 'path';
 import { getDistPath, getFilename } from './fs';
-import { addTrailingSlash } from './utils';
+import { addTrailingSlash, isPlainObject } from './utils';
 import { castArray, ensureAbsolutePath } from './utils';
 import { debug } from './logger';
 import {
@@ -11,10 +11,12 @@ import {
   DEFAULT_ASSET_PREFIX,
 } from './constants';
 import type {
-  Context,
   BundlerChain,
+  RsbuildEntry,
+  RspackConfig,
   RsbuildConfig,
   ChainedConfig,
+  RsbuildContext,
   CreateAsyncHook,
   BundlerChainRule,
   NormalizedConfig,
@@ -23,6 +25,7 @@ import type {
   ModifyBundlerChainUtils,
 } from './types';
 import { mergeChainedOptions } from './mergeChainedOptions';
+import type { EntryDescription } from '@rspack/core';
 
 export async function getBundlerChain() {
   const { default: WebpackChain } = await import('../compiled/webpack-chain');
@@ -33,7 +36,7 @@ export async function getBundlerChain() {
 }
 
 export async function modifyBundlerChain(
-  context: Context & {
+  context: RsbuildContext & {
     hooks: {
       modifyBundlerChainHook: CreateAsyncHook<ModifyBundlerChainFn>;
     };
@@ -151,7 +154,7 @@ export const CHAIN_ID = {
     /** mini-css-extract-plugin.loader */
     MINI_CSS_EXTRACT: 'mini-css-extract',
     /** resolve-url-loader */
-    RESOLVE_URL_LOADER_FOR_SASS: 'resolve-url-loader',
+    RESOLVE_URL: 'resolve-url-loader',
     /** plugin-image-compress.loader */
     IMAGE_COMPRESS: 'image-compress',
     /** plugin-image-compress svgo-loader */
@@ -188,13 +191,13 @@ export const CHAIN_ID = {
     /** WebpackBundleAnalyzer */
     BUNDLE_ANALYZER: 'bundle-analyze',
     /** HtmlTagsPlugin */
-    HTML_TAGS: 'html-tags',
+    HTML_TAGS: 'html-tags-plugin',
     /** HtmlBasicPlugin */
-    HTML_BASIC: 'html-basic',
+    HTML_BASIC: 'html-basic-plugin',
     /** HtmlNoncePlugin */
-    HTML_NONCE: 'html-nonce',
+    HTML_NONCE: 'html-nonce-plugin',
     /** HtmlCrossOriginPlugin */
-    HTML_CROSS_ORIGIN: 'html-cross-origin',
+    HTML_CROSS_ORIGIN: 'html-cross-origin-plugin',
     /** htmlPreconnectPlugin */
     HTML_PRECONNECT: 'html-preconnect-plugin',
     /** htmlDnsPrefetchPlugin */
@@ -213,7 +216,7 @@ export const CHAIN_ID = {
     NODE_POLYFILL_PROVIDE: 'node-polyfill-provide',
     /** WebpackSRIPlugin */
     SUBRESOURCE_INTEGRITY: 'subresource-integrity',
-    /** WebpackAssetsRetryPlugin */
+    /** AssetsRetryPlugin */
     ASSETS_RETRY: 'assets-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
@@ -251,7 +254,7 @@ export function applyScriptCondition({
 }: {
   rule: BundlerChainRule;
   config: NormalizedConfig;
-  context: Context;
+  context: RsbuildContext;
   includes: (string | RegExp)[];
   excludes: (string | RegExp)[];
 }) {
@@ -282,7 +285,7 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
   }: {
     config: NormalizedConfig;
     isProd: boolean;
-    context: Context;
+    context: RsbuildContext;
   }) {
     const { dev, output } = config;
 
@@ -453,4 +456,53 @@ function applyAlias({
       formattedValues.length === 1 ? formattedValues[0] : formattedValues,
     );
   });
+}
+
+export function chainToConfig(chain: BundlerChain): RspackConfig {
+  const config = chain.toConfig();
+  const { entry } = config;
+
+  if (!isPlainObject(entry)) {
+    return config as RspackConfig;
+  }
+
+  const formattedEntry: RsbuildEntry = {};
+
+  /**
+   * webpack-chain can not handle entry description object correctly,
+   * so we need to format the entry object and correct the entry description object.
+   */
+  Object.entries(entry).forEach(([entryName, entryValue]) => {
+    const entryImport: string[] = [];
+    let entryDescription: EntryDescription | null = null;
+
+    castArray(entryValue).forEach((item) => {
+      if (typeof item === 'string') {
+        entryImport.push(item);
+        return;
+      }
+
+      if (item.import) {
+        entryImport.push(...castArray(item.import));
+      }
+
+      if (entryDescription) {
+        // merge entry description object
+        Object.assign(entryDescription, item);
+      } else {
+        entryDescription = item;
+      }
+    });
+
+    formattedEntry[entryName] = entryDescription
+      ? {
+          ...(entryDescription as EntryDescription),
+          import: entryImport,
+        }
+      : entryImport;
+  });
+
+  config.entry = formattedEntry;
+
+  return config as RspackConfig;
 }

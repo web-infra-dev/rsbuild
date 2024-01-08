@@ -8,11 +8,11 @@ First, you need to replace the npm dependencies of Webpack with Rsbuild's depend
 
 import { PackageManagerTabs } from '@theme';
 
-Remove Webpack dependencies:
+- Remove Webpack dependencies:
 
 <PackageManagerTabs command="remove webpack webpack-cli webpack-dev-server" />
 
-Install Rsbuild dependencies:
+- Install Rsbuild dependencies:
 
 <PackageManagerTabs command="add @rsbuild/core -D" />
 
@@ -24,7 +24,7 @@ Next, you need to update the npm scripts in your package.json to use Rsbuild's C
 {
   "scripts": {
 -   "serve": "webpack serve -c webpack.config.js",
--   "build": "webpack rsbuild -c webpack.config.js",
+-   "build": "webpack build -c webpack.config.js",
 +   "dev": "rsbuild dev",
 +   "build": "rsbuild build"
   }

@@ -27,8 +27,6 @@ const rsbuild = await createRsbuild({
 `createRsbuild` 的第一个参数是一个配置对象，你可以传入以下选项：
 
 ```ts
-type RsbuildEntry = Record<string, string | string[]>;
-
 type CreateRsbuildOptions = {
   cwd?: string;
   rsbuildConfig?: RsbuildConfig;
@@ -83,6 +81,8 @@ function loadEnv(params: {
   parsed: Record<string, string>;
   // 以 prefixes 开头的环境变量
   publicVars: Record<string, string>;
+  // 从 `process.env` 上清除挂载的环境变量
+  cleanup: () => void;
 };
 ```
 
@@ -176,4 +176,56 @@ logger.debug('This is a debug message');
 
 // Same as console.log
 logger.log('This is a log message');
+```
+
+### 自定义 Logger
+
+你可以使用 `logger.override` 方法来覆盖默认 logger 的部分或全部方法：
+
+```ts
+import { logger } from '@rsbuild/core';
+
+logger.override({
+  log: (message) => {
+    console.log(`[log] ${message}`);
+  },
+  info: (message) => {
+    console.log(`[info] ${message}`);
+  },
+  warn: (message) => {
+    console.warn(`[warn] ${message}`);
+  },
+  start: (message) => {
+    console.log(`[start] ${message}`);
+  },
+  ready: (message) => {
+    console.log(`[ready] ${message}`);
+  },
+  error: (message) => {
+    console.error(`[error] ${message}`);
+  },
+  success: (message) => {
+    console.error(`[success] ${message}`);
+  },
+  debug: (message) => {
+    if (process.env.DEBUG) {
+      console.log(`[debug] ${message}`);
+    }
+  },
+});
+
+logger.info('hello'); // [info] hello
+```
+
+## version
+
+当前使用的 `@rsbuild/core` 的版本。
+
+- **类型：** `string`
+- **示例：**
+
+```ts
+import { version } from '@rsbuild/core';
+
+console.log(version); // 1.0.0
 ```

@@ -1,5 +1,6 @@
-import { castArray, color, createVirtualModule } from '@rsbuild/shared';
+import { color, castArray, createVirtualModule } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
+import type { EntryDescription } from '@rspack/core';
 
 export const pluginEntry = (): RsbuildPlugin => ({
   name: 'rsbuild:entry',
@@ -14,15 +15,18 @@ export const pluginEntry = (): RsbuildPlugin => ({
         config.output.polyfill === 'entry' && !isServer && !isServiceWorker;
 
       Object.keys(entry).forEach((entryName) => {
-        const appendEntry = (file: string) => chain.entry(entryName).add(file);
+        const entryPoint = chain.entry(entryName);
+        const addEntry = (item: string | EntryDescription) => {
+          entryPoint.add(item);
+        };
 
-        preEntry.forEach(appendEntry);
+        preEntry.forEach(addEntry);
 
         if (injectCoreJsEntry) {
-          appendEntry(createVirtualModule('import "core-js";'));
+          addEntry(createVirtualModule('import "core-js";'));
         }
 
-        castArray(entry[entryName]).forEach(appendEntry);
+        castArray(entry[entryName]).forEach(addEntry);
       });
     });
 

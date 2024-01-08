@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/shared",
-  "version": "0.2.10",
+  "version": "0.2.18",
   "description": "The internal shared modules and dependencies of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -46,6 +46,10 @@
     "./connect": {
       "types": "./compiled/connect/index.d.ts",
       "default": "./compiled/connect/index.js"
+    },
+    "./commander": {
+      "types": "./compiled/commander/typings/index.d.ts",
+      "default": "./compiled/commander/index.js"
     },
     "./webpack-sources": {
       "types": "./compiled/webpack-sources/index.d.ts",

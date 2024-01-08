@@ -1,6 +1,6 @@
 import path from 'path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { castArray, cloneDeep, SCRIPT_REGEX } from '@rsbuild/shared';
+import { castArray, cloneDeep, SCRIPT_REGEX, isProd } from '@rsbuild/shared';
 import { applyUserBabelConfig, BABEL_JS_RULE } from './helper';
 import type { PluginBabelOptions } from './types';
 
@@ -17,36 +17,38 @@ export const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
   isTSX: true,
 };
 
+export const getDefaultBabelOptions = () => {
+  return {
+    babelrc: false,
+    configFile: false,
+    compact: isProd(),
+    plugins: [],
+    presets: [
+      // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
+      [
+        require.resolve('@babel/preset-typescript'),
+        DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS,
+      ],
+    ],
+  };
+};
+
 export const pluginBabel = (
   options: PluginBabelOptions = {},
 ): RsbuildPlugin => ({
   name: 'rsbuild:babel',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       const getBabelOptions = () => {
-        const baseConfig = {
-          plugins: [],
-          presets: [
-            // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
-            [
-              require.resolve('@babel/preset-typescript'),
-              DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS,
-            ],
-          ],
-        };
+        const baseConfig = getDefaultBabelOptions();
 
         const userBabelConfig = applyUserBabelConfig(
           cloneDeep(baseConfig),
           options.babelLoaderOptions,
         );
 
-        return {
-          babelrc: false,
-          configFile: false,
-          compact: isProd,
-          ...userBabelConfig,
-        };
+        return userBabelConfig;
       };
 
       const babelOptions = getBabelOptions();

@@ -100,7 +100,7 @@ export default {
 type DefaultParameters = {
   mountId: string; // 对应 html.mountId 配置
   entryName: string; // 入口名称
-  assetPrefix: string; // 对应 output.assetPrefix 配置
+  assetPrefix: string; // 对应 dev.assetPrefix 和 output.assetPrefix 配置
   compilation: Compilation; // 对应 Rspack 的 compilation 对象
   // htmlWebpackPlugin 内置的参数
   // 详见 https://github.com/jantimon/html-webpack-plugin

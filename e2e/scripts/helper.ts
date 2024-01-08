@@ -1,7 +1,7 @@
 import { platform } from 'os';
 import { join } from 'path';
 import { test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
+import { fse, type ConsoleType, castArray } from '@rsbuild/shared';
 import glob, {
   convertPathToPattern,
   type Options as GlobOptions,
@@ -62,4 +62,30 @@ export const awaitFileExists = async (dir: string) => {
   }
 
   throw new Error('awaitFileExists failed: ' + dir);
+};
+
+export const proxyConsole = (
+  types: ConsoleType | ConsoleType[] = ['log', 'warn', 'info', 'error'],
+) => {
+  const logs: string[] = [];
+  const restores: Array<() => void> = [];
+
+  castArray(types).forEach((type) => {
+    const method = console[type];
+
+    restores.push(() => {
+      console[type] = method;
+    });
+
+    console[type] = (log) => {
+      logs.push(log);
+    };
+  });
+
+  return {
+    logs,
+    restore: () => {
+      restores.forEach((restore) => restore());
+    },
+  };
 };

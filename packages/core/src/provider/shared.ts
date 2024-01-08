@@ -33,8 +33,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     import('./plugins/progress').then((m) => m.pluginProgress()),
     import('./plugins/swc').then((m) => m.pluginSwc()),
     plugins.externals(),
-    plugins.toml(),
-    plugins.yaml(),
     plugins.splitChunks(),
     plugins.startUrl(),
     plugins.inlineChunk(),
@@ -42,7 +40,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.networkPerformance(),
     plugins.preloadOrPrefetch(),
     plugins.performance(),
-    import('./plugins/server').then((m) => m.pluginServer()),
+    plugins.server(),
     import('./plugins/rspackProfile').then((m) => m.pluginRspackProfile()),
   ]);
 

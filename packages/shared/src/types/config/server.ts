@@ -34,6 +34,10 @@ export type HistoryApiFallbackOptions = {
   }>;
 };
 
+export type PrintUrls =
+  | boolean
+  | ((params: { urls: string[]; port: number; protocol: string }) => void);
+
 export type PublicDir =
   | false
   | {
@@ -43,7 +47,7 @@ export type PublicDir =
        */
       name?: string;
       /**
-       * Whether copy files from the publicDir into the distDir on build
+       * Whether to copy files from the publicDir to the distDir on production build
        * @default true
        */
       copyOnBuild?: boolean;
@@ -74,6 +78,9 @@ export interface ServerConfig {
    * Adds headers to all responses.
    */
   headers?: Record<string, string | string[]>;
+  /**
+   * Whether to support html fallback.
+   */
   htmlFallback?: HtmlFallback;
   /**
    * Provide alternative pages for some 404 responses or other requests.
@@ -88,7 +95,22 @@ export interface ServerConfig {
    * Whether to throw an error when the port is occupied.
    */
   strictPort?: boolean;
+  /**
+   * Whether to print the server urls when the server is started.
+   */
+  printUrls?: PrintUrls;
 }
 
 export type NormalizedServerConfig = ServerConfig &
-  Required<Pick<ServerConfig, 'htmlFallback' | 'port' | 'host' | 'publicDir'>>;
+  Required<
+    Pick<
+      ServerConfig,
+      | 'htmlFallback'
+      | 'port'
+      | 'host'
+      | 'compress'
+      | 'publicDir'
+      | 'strictPort'
+      | 'printUrls'
+    >
+  >;

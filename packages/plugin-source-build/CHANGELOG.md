@@ -1,5 +1,67 @@
 # @rsbuild/plugin-source-build
 
+## 0.2.18
+
+### Patch Changes
+
+- @rsbuild/monorepo-utils@0.2.18
+- @rsbuild/shared@0.2.18
+
+## 0.2.17
+
+### Patch Changes
+
+- @rsbuild/monorepo-utils@0.2.17
+- @rsbuild/shared@0.2.17
+
+## 0.2.16
+
+### Patch Changes
+
+- Updated dependencies [5c954333]
+- Updated dependencies [fc988434]
+  - @rsbuild/shared@0.2.16
+  - @rsbuild/monorepo-utils@0.2.16
+
+## 0.2.15
+
+### Patch Changes
+
+- Updated dependencies [6038abf]
+  - @rsbuild/shared@0.2.15
+  - @rsbuild/monorepo-utils@0.2.15
+
+## 0.2.14
+
+### Patch Changes
+
+- Updated dependencies [a65b78dd]
+  - @rsbuild/shared@0.2.14
+  - @rsbuild/monorepo-utils@0.2.14
+
+## 0.2.13
+
+### Patch Changes
+
+- Updated dependencies [7bd330eb]
+  - @rsbuild/shared@0.2.13
+  - @rsbuild/monorepo-utils@0.2.13
+
+## 0.2.12
+
+### Patch Changes
+
+- Updated dependencies [6c0c710]
+  - @rsbuild/shared@0.2.12
+  - @rsbuild/monorepo-utils@0.2.12
+
+## 0.2.11
+
+### Patch Changes
+
+- @rsbuild/monorepo-utils@0.2.11
+- @rsbuild/shared@0.2.11
+
 ## 0.2.10
 
 ### Patch Changes

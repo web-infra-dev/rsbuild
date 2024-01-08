@@ -4,7 +4,7 @@ import { fse } from '@rsbuild/shared';
 import {
   findExists,
   isFileExists,
-  type Context,
+  type RsbuildContext,
   type BuildCacheOptions,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
@@ -43,7 +43,7 @@ function getDigestHash(digest: Array<string | undefined>) {
 
 function getCacheDirectory(
   { cacheDirectory }: BuildCacheOptions,
-  context: Context,
+  context: RsbuildContext,
 ) {
   if (cacheDirectory) {
     return isAbsolute(cacheDirectory)
@@ -57,7 +57,7 @@ function getCacheDirectory(
  * webpack can't detect the changes of framework config, tsconfig, tailwind config and browserslist config.
  * but they will affect the compilation result, so they need to be added to buildDependencies.
  */
-async function getBuildDependencies(context: Readonly<Context>) {
+async function getBuildDependencies(context: Readonly<RsbuildContext>) {
   const rootPackageJson = join(context.rootPath, 'package.json');
   const browserslistConfig = join(context.rootPath, '.browserslistrc');
 
@@ -111,7 +111,6 @@ export const pluginCache = (): RsbuildPlugin => ({
         Array.isArray(cacheConfig.cacheDigest) &&
         cacheConfig.cacheDigest.length;
 
-      // @ts-expect-error rspack only support `boolean` but somethings we use webpack provider.
       chain.cache({
         // The default cache name of webpack is '${name}-${env}', and the `name` is `default` by default.
         // We set cache name to avoid cache conflicts of different targets.

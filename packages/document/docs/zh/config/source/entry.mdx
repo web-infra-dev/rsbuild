@@ -3,7 +3,7 @@
 - **类型：**
 
 ```ts
-type Entry = Record<string, string | string[]>;
+type Entry = Record<string, string | string[] | EntryDescription>;
 ```
 
 - **默认值：**
@@ -48,3 +48,26 @@ export default {
 ```
 
 如果你不需要生成 HTML 文件，可以将 [tools.htmlPlugin](/config/tools/html-plugin) 设置为 `false` 来禁用这一行为。
+
+## 描述对象
+
+`source.entry` 同样支持 Rspack 的 entry 描述对象写法，比如：
+
+```ts
+export default {
+  source: {
+    entry: {
+      foo: {
+        import: './src/foo.js',
+        runtime: 'foo',
+      },
+      bar: {
+        import: './src/bar.js',
+        runtime: 'bar',
+      },
+    },
+  },
+};
+```
+
+关于描述对象的完整用法，请参考 [Rspack - 入口描述对象](https://rspack.dev/config/entry#%E5%85%A5%E5%8F%A3%E6%8F%8F%E8%BF%B0%E5%AF%B9%E8%B1%A1)。

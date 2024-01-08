@@ -1,8 +1,7 @@
 # rspack
 
-- **Type:** `Object | Function | undefined`
+- **Type:** `Rspack.Configuration | Function | undefined`
 - **Default:** `undefined`
-- **Bundler:** `only support Rspack`
 
 `tools.rspack` is used to configure [Rspack](https://rspack.dev/).
 
@@ -270,3 +269,7 @@ export default {
   },
 };
 ```
+
+:::tip
+The mergeConfig method will create a new config object without modifying the original config object, so you need to return the result of mergeConfig.
+:::

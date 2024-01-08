@@ -27,8 +27,6 @@ const rsbuild = await createRsbuild({
 The first parameter of `createRsbuild` is a options object, you can pass in the following options:
 
 ```ts
-type RsbuildEntry = Record<string, string | string[]>;
-
 type CreateRsbuildOptions = {
   cwd?: string;
   rsbuildConfig?: RsbuildConfig;
@@ -83,6 +81,8 @@ function loadEnv(params: {
   parsed: Record<string, string>;
   // Environment variables starting with the specified prefixes
   publicVars: Record<string, string>;
+  // Remove the loaded environment variables from `process.env`
+  cleanup: () => void;
 };
 ```
 
@@ -176,4 +176,56 @@ logger.debug('This is a debug message');
 
 // Same as console.log
 logger.log('This is a log message');
+```
+
+### Custom Logger
+
+You can use the `logger.override` method to override partial or all methods of the default logger:
+
+```ts
+import { logger } from '@rsbuild/core';
+
+logger.override({
+  log: (message) => {
+    console.log(`[log] ${message}`);
+  },
+  info: (message) => {
+    console.log(`[info] ${message}`);
+  },
+  warn: (message) => {
+    console.warn(`[warn] ${message}`);
+  },
+  start: (message) => {
+    console.log(`[start] ${message}`);
+  },
+  ready: (message) => {
+    console.log(`[ready] ${message}`);
+  },
+  error: (message) => {
+    console.error(`[error] ${message}`);
+  },
+  success: (message) => {
+    console.error(`[success] ${message}`);
+  },
+  debug: (message) => {
+    if (process.env.DEBUG) {
+      console.log(`[debug] ${message}`);
+    }
+  },
+});
+
+logger.info('hello'); // [info] hello
+```
+
+## version
+
+The version of `@rsbuild/core` currently in use.
+
+- **Type:** `string`
+- **Example:**
+
+```ts
+import { version } from '@rsbuild/core';
+
+console.log(version); // 1.0.0
 ```

@@ -1,5 +1,5 @@
 import type { PluginStore, Plugins, RsbuildPluginAPI } from './plugin';
-import type { Context } from './context';
+import type { RsbuildContext } from './context';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
 import type { StartServerResult, DevServerAPIs } from './server';
@@ -15,14 +15,23 @@ export type CreateCompilerOptions = { watch?: boolean };
 
 export type StartDevServerOptions = {
   compiler?: Compiler | MultiCompiler;
-  printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
-  logger?: Logger;
   getPortSilently?: boolean;
+  /**
+   * @deprecated use `logger.override()` instead
+   */
+  logger?: Logger;
+  /**
+   * @deprecated use `server.printUrls` instead
+   */
+  printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
 };
 
 export type PreviewServerOptions = {
-  printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
   getPortSilently?: boolean;
+  /**
+   * @deprecated use `server.printUrls` instead
+   */
+  printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
 };
 
 export type BuildOptions = {
@@ -59,7 +68,7 @@ export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
 export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   readonly bundler: Bundler;
 
-  readonly publicContext: Readonly<Context>;
+  readonly publicContext: Readonly<RsbuildContext>;
 
   pluginAPI: RsbuildPluginAPI;
 

@@ -2,6 +2,7 @@ import {
   debug,
   CHAIN_ID,
   castArray,
+  chainToConfig,
   modifyBundlerChain,
   mergeChainedOptions,
   type NodeEnv,
@@ -11,11 +12,11 @@ import {
   type ModifyRspackConfigUtils,
 } from '@rsbuild/shared';
 import { getCompiledPath } from '../shared';
-import type { Context } from '../../types';
+import type { InternalContext } from '../../types';
 import { getHTMLPlugin } from '../htmlPluginUtil';
 
 async function modifyRspackConfig(
-  context: Context,
+  context: InternalContext,
   rspackConfig: RspackConfig,
   utils: ModifyRspackConfigUtils,
 ) {
@@ -110,7 +111,7 @@ export async function generateRspackConfig({
   context,
 }: {
   target: RsbuildTarget;
-  context: Context;
+  context: InternalContext;
 }): Promise<RspackConfig> {
   const chainUtils = await getChainUtils(target);
   const {
@@ -130,7 +131,7 @@ export async function generateRspackConfig({
     },
   });
 
-  let rspackConfig = chain.toConfig();
+  let rspackConfig = chainToConfig(chain);
 
   rspackConfig = await modifyRspackConfig(
     context,

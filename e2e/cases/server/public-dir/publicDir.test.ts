@@ -1,14 +1,12 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { dev, build } from '@scripts/shared';
-import { pluginReact } from '@rsbuild/plugin-react';
 
 const cwd = __dirname;
 
 test('should serve publicDir for dev server correctly', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
-    plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
         entry: {
@@ -35,7 +33,6 @@ test('should serve custom publicDir for dev server correctly', async ({
 }) => {
   const rsbuild = await dev({
     cwd,
-    plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
         entry: {
@@ -65,7 +62,6 @@ test('should serve custom publicDir for dev server correctly', async ({
 test('should not serve publicDir when publicDir is false', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
-    plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
         entry: {
@@ -96,7 +92,6 @@ test('should serve publicDir for preview server correctly', async ({
 }) => {
   const rsbuild = await build({
     cwd,
-    plugins: [pluginReact()],
     runServer: true,
     rsbuildConfig: {
       source: {

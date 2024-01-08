@@ -9,7 +9,6 @@
     "test:webpack-swc": "cross-env PROVIDE_TYPE=webpack playwright test swc"
   },
   "dependencies": {
-    "devcert": "1.2.2",
     "lodash": "^4.17.21",
     "moment": "^2",
     "react": "^18.2.0",
@@ -38,6 +37,7 @@
     "@rsbuild/plugin-svgr": "workspace:*",
     "@rsbuild/plugin-swc": "workspace:*",
     "@rsbuild/plugin-type-check": "workspace:*",
+    "@rsbuild/plugin-toml": "workspace:*",
     "@rsbuild/plugin-umd": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "workspace:*",
@@ -48,8 +48,8 @@
     "@rsbuild/webpack": "workspace:*",
     "@types/lodash": "^4.14.200",
     "@types/node": "16.x",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18",
     "fast-glob": "^3.3.1",
     "playwright": "1.33.0",
     "tailwindcss": "^3.3.5",

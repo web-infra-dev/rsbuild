@@ -57,3 +57,44 @@ pluginSvelte({
   },
 });
 ```
+
+### preprocessOptions
+
+Options passed to `svelte-preprocess`, please refer to the [svelte-preprocess documentation](https://github.com/sveltejs/svelte-preprocess/blob/c2107e529da9438ea5b8060aa471119940896e40/docs/preprocessing.md) for detailed usage.
+
+- **Type:** `AutoPreprocessOptions`
+- **Default:** `undefined`
+
+```ts
+interface AutoPreprocessOptions {
+  globalStyle: { ... },
+  replace: { ... },
+  typescript: { ... },
+  scss: { ... },
+  sass: { ... },
+  less: { ... },
+  stylus: { ... },
+  babel: { ... },
+  postcss: { ... },
+  coffeescript: { ... },
+  pug: { ... },
+}
+```
+
+- **Example:**
+
+```ts
+pluginSvelte({
+  preprocessOptions: {
+    aliases: [
+      ['potato', 'potatoLanguage'],
+      ['pot', 'potatoLanguage'],
+    ],
+    /** Add a custom language preprocessor */
+    potatoLanguage({ content, filename, attributes }) {
+      const { code, map } = require('potato-language').render(content);
+      return { code, map };
+    },
+  },
+});
+```
