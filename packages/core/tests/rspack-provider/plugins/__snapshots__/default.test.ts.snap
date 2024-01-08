@@ -25,6 +25,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableApplyEntryLazily": true,
+      "newTreeshaking": true,
     },
   },
   "infrastructureLogging": {
@@ -694,6 +695,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableApplyEntryLazily": true,
+      "newTreeshaking": true,
     },
   },
   "infrastructureLogging": {
@@ -1411,6 +1413,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableApplyEntryLazily": true,
+      "newTreeshaking": true,
     },
   },
   "infrastructureLogging": {
@@ -1825,6 +1828,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "asyncWebAssembly": true,
     "rspackFuture": {
       "disableApplyEntryLazily": true,
+      "newTreeshaking": true,
     },
   },
   "infrastructureLogging": {
