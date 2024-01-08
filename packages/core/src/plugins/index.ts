@@ -10,7 +10,6 @@ export const plugins: Plugins = {
   entry: () => import('./entry').then((m) => m.pluginEntry()),
   cache: () => import('./cache').then((m) => m.pluginCache()),
   yaml: () => import('./yaml').then((m) => m.pluginYaml()),
-  toml: () => import('./toml').then((m) => m.pluginToml()),
   splitChunks: () => import('./splitChunks').then((m) => m.pluginSplitChunks()),
   inlineChunk: () => import('./inlineChunk').then((m) => m.pluginInlineChunk()),
   bundleAnalyzer: () =>

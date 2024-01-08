@@ -348,15 +348,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         ],
       },
       {
-        "test": /\\\\\\.toml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/toml-loader",
-          },
-        ],
-      },
-      {
         "test": /\\\\\\.ya\\?ml\\$/,
         "type": "javascript/auto",
         "use": [
@@ -844,15 +835,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         ],
       },
       {
-        "test": /\\\\\\.toml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/toml-loader",
-          },
-        ],
-      },
-      {
         "test": /\\\\\\.ya\\?ml\\$/,
         "type": "javascript/auto",
         "use": [
@@ -1295,15 +1277,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ],
       },
       {
-        "test": /\\\\\\.toml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/toml-loader",
-          },
-        ],
-      },
-      {
         "test": /\\\\\\.ya\\?ml\\$/,
         "type": "javascript/auto",
         "use": [
@@ -1643,15 +1616,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "sourceMap": false,
             },
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.toml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/toml-loader",
           },
         ],
       },

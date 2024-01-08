@@ -57,10 +57,6 @@ export const TASKS: TaskConfig[] = [
         name: 'connect-history-api-fallback',
         ignoreDts: true,
       },
-      {
-        name: 'toml-loader',
-        ignoreDts: true,
-      },
     ],
   },
   {
@@ -299,6 +295,16 @@ export const TASKS: TaskConfig[] = [
             'module.exports.validate = () => {};',
           );
         },
+      },
+    ],
+  },
+  {
+    packageDir: 'plugin-toml',
+    packageName: '@rsbuild/plugin-toml',
+    dependencies: [
+      {
+        name: 'toml-loader',
+        ignoreDts: true,
       },
     ],
   },
