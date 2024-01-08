@@ -1,0 +1,35 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.4.1/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "files": {
+    "ignore": [
+      "dist/**/*",
+      "coverage/**/*",
+      "compiled/**/*",
+      "node_modules/**/*",
+      "plugin-swc/tests/fixtures/**/*"
+    ]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "style": {
+        "noNonNullAssertion": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noConfusingVoidType": "off"
+      },
+      "complexity": {
+        "noForEach": "off",
+        "noBannedTypes": "off"
+      },
+      "performance": {
+        "noDelete": "off"
+      }
+    }
+  }
+}
