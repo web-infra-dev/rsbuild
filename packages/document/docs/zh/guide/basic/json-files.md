@@ -34,9 +34,9 @@ console.log(name); // 'foo';
 
 ## YAML 文件
 
-YAML 是一种数据序列化语言，通常用于编写配置文件。
+[YAML](https://yaml.org/) 是一种数据序列化语言，通常用于编写配置文件。
 
-你可以直接在 JavaScript 中引用 `.yaml` 或 `.yml` 文件，它们会被自动转换为 JSON 格式。
+Rsbuild 提供了 [YAML 插件](/plugins/list/plugin-yaml)，在注册插件后，你可以在 JavaScript 中引用 `.yaml` 或 `.yml` 文件，它们会被自动转换为 JavaScript 对象。
 
 ### 示例
 
@@ -58,7 +58,7 @@ console.log(example.foo); // { bar: 'baz' };
 
 [TOML](https://toml.io/) 是一种语义明显、易于阅读的配置文件格式。
 
-Rsbuild 提供了 [Toml 插件](/plugins/list/plugin-toml)，在注册插件后，你可以在 JavaScript 中引用 `.toml` 文件，它会被自动转换为 JavaScript 对象。
+Rsbuild 提供了 [TOML 插件](/plugins/list/plugin-toml)，在注册插件后，你可以在 JavaScript 中引用 `.toml` 文件，它会被自动转换为 JavaScript 对象。
 
 ### 示例
 

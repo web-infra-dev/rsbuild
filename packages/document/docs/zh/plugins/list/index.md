@@ -59,6 +59,7 @@
 - [Pug 插件](/plugins/list/plugin-pug)：提供对 Pug 模板引擎的支持。
 - [Rem 插件](/plugins/list/plugin-rem)：用于实现移动端页面的 rem 自适应布局。
 - [UMD 插件](/plugins/list/plugin-umd)：用于构建 UMD 格式的产物。
+- [YAML 插件](/plugins/list/plugin-yaml)：用于引用 YAML 文件，并将其转换为 JavaScript 对象。
 - [TOML 插件](/plugins/list/plugin-toml)：用于引用 TOML 文件，并将其转换为 JavaScript 对象。
 
 :::tip
