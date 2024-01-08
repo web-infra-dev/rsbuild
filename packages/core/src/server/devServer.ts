@@ -1,6 +1,5 @@
 import {
   debug,
-  logger as defaultLogger,
   ROOT_DIST_DIR,
   getAddressUrls,
   StartServerResult,
@@ -142,7 +141,6 @@ export async function startDevServer<
   ) => Promise<CreateDevMiddlewareReturns>,
   {
     compiler,
-    logger: customLogger,
     getPortSilently,
   }: StartDevServerOptions & {
     defaultPort?: number;
@@ -152,15 +150,12 @@ export async function startDevServer<
 
   const serverAPIs = await getServerAPIs(options, createDevMiddleware, {
     compiler,
-    logger: customLogger,
     getPortSilently,
   });
 
   const {
     config: { devServerConfig, port, host, https, defaultRoutes },
   } = serverAPIs;
-
-  const logger = customLogger ?? defaultLogger;
 
   const middlewares = connect();
 
@@ -179,7 +174,6 @@ export async function startDevServer<
     urls,
     port,
     routes: defaultRoutes,
-    logger,
     protocol,
     printUrls: devServerConfig.printUrls,
   });

@@ -114,14 +114,11 @@ test('formatRoutes', () => {
 });
 
 test('printServerURLs', () => {
-  let message: string;
-  const logger = {
-    log: (msg: string) => {
-      message = msg;
-    },
-  };
+  let message: string | undefined;
 
-  printServerURLs({
+  message = printServerURLs({
+    port: 8080,
+    protocol: 'http',
     urls: [
       {
         url: 'http://localhost:8080',
@@ -138,8 +135,6 @@ test('printServerURLs', () => {
         route: '',
       },
     ],
-    // @ts-expect-error
-    logger,
   });
 
   expect(message!).toMatchInlineSnapshot(`
@@ -148,7 +143,9 @@ test('printServerURLs', () => {
     "
   `);
 
-  printServerURLs({
+  message = printServerURLs({
+    port: 8080,
+    protocol: 'http',
     urls: [
       {
         url: 'http://localhost:8080',
@@ -173,8 +170,6 @@ test('printServerURLs', () => {
         route: 'bar',
       },
     ],
-    // @ts-expect-error
-    logger,
   });
 
   expect(message!).toMatchInlineSnapshot(`

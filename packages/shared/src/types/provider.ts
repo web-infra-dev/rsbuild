@@ -3,7 +3,6 @@ import type { RsbuildContext } from './context';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
 import type { StartServerResult, DevServerAPIs } from './server';
-import type { Logger } from '../logger';
 import type { NormalizedConfig } from './config';
 import type { WebpackConfig } from './thirdParty';
 import type { RspackConfig } from './rspack';
@@ -15,10 +14,6 @@ export type CreateCompilerOptions = { watch?: boolean };
 export type StartDevServerOptions = {
   compiler?: Compiler | MultiCompiler;
   getPortSilently?: boolean;
-  /**
-   * @deprecated use `logger.override()` instead
-   */
-  logger?: Logger;
 };
 
 export type PreviewServerOptions = {

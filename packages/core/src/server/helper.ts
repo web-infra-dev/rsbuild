@@ -1,6 +1,6 @@
 import {
   color,
-  logger as defaultLogger,
+  logger,
   getPort,
   deepmerge,
   isFunction,
@@ -9,7 +9,6 @@ import {
   DEFAULT_DEV_HOST,
 } from '@rsbuild/shared';
 import type {
-  Logger,
   Routes,
   DevConfig,
   PrintUrls,
@@ -46,12 +45,10 @@ export function printServerURLs({
   routes,
   protocol,
   printUrls,
-  logger = defaultLogger,
 }: {
   urls: Array<{ url: string; label: string }>;
   port: number;
   routes: Routes;
-  logger?: Logger;
   protocol: string;
   printUrls?: PrintUrls;
 }) {
@@ -95,6 +92,8 @@ export function printServerURLs({
   }
 
   logger.log(message);
+
+  return message;
 }
 
 /**
