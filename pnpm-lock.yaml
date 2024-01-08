@@ -153,6 +153,9 @@ importers:
       '@rsbuild/plugin-vue2-jsx':
         specifier: workspace:*
         version: link:../packages/plugin-vue2-jsx
+      '@rsbuild/plugin-yaml':
+        specifier: workspace:*
+        version: link:../packages/plugin-yaml
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../packages/shared
