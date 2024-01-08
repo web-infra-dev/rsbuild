@@ -588,15 +588,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           },
         ],
       },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
-          },
-        ],
-      },
     ],
   },
   "name": "Client",
