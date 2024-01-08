@@ -562,15 +562,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         ],
       },
       {
-        "test": /\\\\\\.toml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/toml-loader",
-          },
-        ],
-      },
-      {
         "test": /\\\\\\.ya\\?ml\\$/,
         "type": "javascript/auto",
         "use": [

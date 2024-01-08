@@ -129,6 +129,9 @@ importers:
       '@rsbuild/plugin-swc':
         specifier: workspace:*
         version: link:../packages/compat/plugin-swc
+      '@rsbuild/plugin-toml':
+        specifier: workspace:*
+        version: link:../packages/plugin-toml
       '@rsbuild/plugin-type-check':
         specifier: workspace:*
         version: link:../packages/plugin-type-check
@@ -1289,6 +1292,22 @@ importers:
       '@types/node':
         specifier: 16.x
         version: 16.18.59
+      typescript:
+        specifier: ^5.3.0
+        version: 5.3.2
+
+  packages/plugin-toml:
+    dependencies:
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rsbuild/test-helper':
+        specifier: workspace:*
+        version: link:../test-helper
       typescript:
         specifier: ^5.3.0
         version: 5.3.2

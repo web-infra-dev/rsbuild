@@ -37,6 +37,7 @@
     "@rsbuild/plugin-svgr": "workspace:*",
     "@rsbuild/plugin-swc": "workspace:*",
     "@rsbuild/plugin-type-check": "workspace:*",
+    "@rsbuild/plugin-toml": "workspace:*",
     "@rsbuild/plugin-umd": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "workspace:*",

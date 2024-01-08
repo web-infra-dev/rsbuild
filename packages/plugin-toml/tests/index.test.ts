@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@rsbuild/test-helper';
-import { pluginToml } from '@src/plugins/toml';
+import { pluginToml } from '../src';
 
 describe('plugin-toml', () => {
   it('should add toml rule properly', async () => {
