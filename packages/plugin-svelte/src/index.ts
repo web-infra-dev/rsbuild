@@ -44,7 +44,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
     name: 'rsbuild:svelte',
 
     setup(api) {
-      let sveltePath: string = '';
+      let sveltePath = '';
       try {
         // Resolve `svelte` package path from the project directory
         sveltePath = path.dirname(
@@ -54,9 +54,9 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
         );
       } catch (err) {
         logger.error(
-          `Cannot resolve \`svelte\` package under the project directory, did you forget to install it?`,
+          'Cannot resolve `svelte` package under the project directory, did you forget to install it?',
         );
-        throw new Error(`Cannot resolve \`svelte\` package`, {
+        throw new Error('Cannot resolve `svelte` package', {
           cause: err,
         });
       }

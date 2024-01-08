@@ -33,8 +33,7 @@ export const withPublicPath = (str: string, base: string) => {
   }
 
   if (base.startsWith('//')) {
-    base = `https:${base}`;
-    return urlJoin(base, str).replace('https:', '');
+    return urlJoin(`https:${base}`, str).replace('https:', '');
   }
 
   return posix.join(base, str);
@@ -84,11 +83,15 @@ const concatUrl = ({
   protocol: string;
 }) => `${protocol}://${host}:${port}`;
 
-export const getAddressUrls = (
+export const getAddressUrls = ({
   protocol = 'http',
-  port: number,
-  host?: string,
-) => {
+  port,
+  host,
+}: {
+  protocol?: string;
+  port: number;
+  host?: string;
+}) => {
   const LOCAL_LABEL = 'Local:  ';
   const NETWORK_LABEL = 'Network:  ';
 

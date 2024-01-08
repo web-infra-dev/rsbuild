@@ -179,7 +179,7 @@ export async function startProdServer(
         });
 
         const protocol = https ? 'https' : 'http';
-        const urls = getAddressUrls(protocol, port);
+        const urls = getAddressUrls({ protocol, port });
 
         printServerURLs({
           urls,

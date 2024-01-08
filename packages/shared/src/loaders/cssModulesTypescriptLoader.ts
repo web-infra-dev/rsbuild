@@ -75,9 +75,8 @@ const enforceLFLineSeparators = (text?: string) => {
   if (text) {
     // replace all CRLFs (Windows) by LFs (Unix)
     return text.replace(/\r\n/g, '\n');
-  } else {
-    return text;
   }
+  return text;
 };
 
 const compareText = (contentA: string, contentB: string) => {
@@ -112,16 +111,19 @@ const extractLocalExports = (content: string) => {
 
 const getCssModuleKeys = (content: string) => {
   const keyRegex = /"([^\\"]+)":/g;
-  let match;
   const cssModuleKeys = [];
 
   const localExports = extractLocalExports(content);
 
-  while ((match = keyRegex.exec(localExports))) {
+  let match = keyRegex.exec(localExports);
+
+  while (match !== null) {
     if (cssModuleKeys.indexOf(match[1]) < 0) {
       cssModuleKeys.push(match[1]);
     }
+    match = keyRegex.exec(localExports);
   }
+
   return cssModuleKeys;
 };
 

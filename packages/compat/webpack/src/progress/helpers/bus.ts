@@ -16,7 +16,7 @@ class Bus {
 
   prevOutput: string;
 
-  destroyed: boolean = false;
+  destroyed = false;
 
   constructor() {
     this.prevOutput = '';

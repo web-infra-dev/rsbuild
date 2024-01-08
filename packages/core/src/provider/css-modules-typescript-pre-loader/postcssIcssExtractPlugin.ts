@@ -31,7 +31,6 @@ const getExportLocalsConvention = (
     case 'dashesOnly': {
       return [dashesCamelCase(name)];
     }
-    case 'asIs':
     default:
       return [name];
   }

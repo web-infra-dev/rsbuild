@@ -2,7 +2,7 @@ import { fse, color } from '@rsbuild/shared';
 import { SourceMapConsumer } from 'source-map';
 import { checkIsExcludeSource } from './utils';
 import {
-  SyntaxError,
+  ECMASyntaxError,
   type AcornParseError,
   type CheckSyntaxExclude,
 } from '../types';
@@ -37,7 +37,7 @@ export async function generateError({
 
   if (!error) {
     const path = filepath.replace(rootPath, '');
-    error = new SyntaxError(err.message, {
+    error = new ECMASyntaxError(err.message, {
       source: {
         path,
         line: err.loc.line,
@@ -80,7 +80,7 @@ async function tryGenerateErrorFromSourceMap({
   err: AcornParseError;
   filepath: string;
   rootPath: string;
-}): Promise<SyntaxError | null> {
+}): Promise<ECMASyntaxError | null> {
   const sourceMapPath = `${filepath}.map`;
   if (!fse.existsSync(sourceMapPath)) {
     return null;
@@ -111,7 +111,7 @@ async function tryGenerateErrorFromSourceMap({
     const rawLines = smContent.split(/\r?\n/g);
     const highlightLine = (sm.line ?? 1) - 1;
 
-    return new SyntaxError(err.message, {
+    return new ECMASyntaxError(err.message, {
       source: {
         path,
         line: sm.line ?? 0,

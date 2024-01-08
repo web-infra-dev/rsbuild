@@ -9,11 +9,9 @@ import {
   type ModifyChainUtils,
   type NormalizedConfig,
 } from '@rsbuild/shared';
-import { Extensions } from '@modern-js/swc-plugins';
 import { getDefaultSwcConfig } from './plugin';
 import {
   ObjPluginSwcOptions,
-  OuterExtensions,
   PluginSwcOptions,
   TransformConfig,
 } from './types';
@@ -26,10 +24,8 @@ export async function determinePresetReact(
   root: string,
   pluginConfig: ObjPluginSwcOptions,
 ) {
-  const presetReact =
-    pluginConfig.presetReact || (pluginConfig.presetReact = {});
-
-  presetReact.runtime ??= (await isBeyondReact17(root))
+  pluginConfig.presetReact ||= {};
+  pluginConfig.presetReact.runtime ??= (await isBeyondReact17(root))
     ? 'automatic'
     : 'classic';
 }
@@ -187,7 +183,9 @@ export async function applyPluginConfig(
     };
   }
 
-  const extensions: Extensions | OuterExtensions = (swc.extensions ??= {});
+  swc.extensions ??= {};
+
+  const extensions = swc.extensions;
 
   if (rsbuildConfig.source?.transformImport) {
     extensions.pluginImport ??= [];

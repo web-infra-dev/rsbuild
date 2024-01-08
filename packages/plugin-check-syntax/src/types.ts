@@ -38,7 +38,7 @@ interface SyntaxErrorOptions {
   output?: File;
 }
 
-export class SyntaxError extends Error {
+export class ECMASyntaxError extends Error {
   source: File & { code: string };
 
   output: File | undefined;

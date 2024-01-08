@@ -200,7 +200,7 @@ function onMessage(e: MessageEvent<any>) {
   }
 }
 
-async function sleep(msec: number = 1000) {
+async function sleep(msec = 1000) {
   return new Promise((resolve) => {
     setTimeout(resolve, msec);
   });

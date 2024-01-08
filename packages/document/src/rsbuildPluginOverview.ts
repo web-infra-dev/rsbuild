@@ -17,10 +17,9 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
     const groups: Group[] = [];
 
     files.forEach((file) => {
-      file = file.replace(root, '');
-      file = file.replace(/\.mdx?/, '');
+      const filename = file.replace(root, '').replace(/\.mdx?/, '');
+      const pair = filename.split('/');
 
-      const pair = file.split('/');
       if (pair.length < 2) {
         return;
       }
@@ -28,7 +27,7 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
       const group = groups.find((group) => group.name === pair[0]);
       const item = {
         text: `${pair[0]}.${camelCase(pair[1])}`,
-        link: `/config/${file}`,
+        link: `/config/${filename}`,
       };
       if (group) {
         group.items.push(item);

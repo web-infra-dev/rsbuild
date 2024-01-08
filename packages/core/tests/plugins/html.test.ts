@@ -262,7 +262,7 @@ describe('plugin-html', () => {
 
   it.each<{ value: HtmlConfig['inject']; message: string }>([
     { value: false, message: 'false' },
-    { value: () => false, message: `() => false` },
+    { value: () => false, message: '() => false' },
   ])(
     'should stop injecting <script> if inject is $message',
     async ({ value }) => {

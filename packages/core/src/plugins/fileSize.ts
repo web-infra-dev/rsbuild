@@ -105,7 +105,7 @@ async function printFileSizes(
 
   assets.sort((a, b) => a.size - b.size);
 
-  logger.info(`Production file sizes:\n`);
+  logger.info('Production file sizes:\n');
 
   const longestLabelLength = Math.max(...assets.map((a) => a.sizeLabel.length));
   const longestFileLength = Math.max(

@@ -1,13 +1,13 @@
 import { mergeChainedOptions, isNil } from '../src';
 
 describe('mergeChainedOptions', () => {
-  test(`should return default options`, () => {
+  test('should return default options', () => {
     expect(mergeChainedOptions({ defaults: { value: 'a' } })).toEqual({
       value: 'a',
     });
   });
 
-  test(`should merge default options`, () => {
+  test('should merge default options', () => {
     expect(
       mergeChainedOptions({
         defaults: { name: 'a' },
@@ -22,7 +22,7 @@ describe('mergeChainedOptions', () => {
     });
   });
 
-  test(`should support custom merge function`, () => {
+  test('should support custom merge function', () => {
     const merge = (target: any, source: any) => {
       for (const key in source) {
         if (Object.hasOwn(target, key)) {
@@ -54,7 +54,7 @@ describe('mergeChainedOptions', () => {
     });
   });
 
-  test(`should support function or object array`, () => {
+  test('should support function or object array', () => {
     const defaults = { a: 'a' };
 
     const options = [
@@ -85,7 +85,7 @@ describe('mergeChainedOptions', () => {
     });
   });
 
-  test(`should support function and use object param`, () => {
+  test('should support function and use object param', () => {
     const defaults = { a: 'a' };
 
     const options = [

@@ -42,7 +42,8 @@ export function baseMatchLoader({
         rule.use.some((useOptions) => {
           if (typeof useOptions === 'object' && useOptions !== null) {
             return useOptions.loader?.includes(loader);
-          } else if (typeof useOptions === 'string') {
+          }
+          if (typeof useOptions === 'string') {
             return useOptions.includes(loader);
           }
           return false;

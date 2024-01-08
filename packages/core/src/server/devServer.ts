@@ -167,7 +167,7 @@ export async function startDevServer<
   debug('create dev server done');
 
   const protocol = https ? 'https' : 'http';
-  let urls = getAddressUrls(protocol, port, host);
+  const urls = getAddressUrls({ protocol, port, host });
 
   // print url after http server created and before dev compile (just a short time interval)
   printServerURLs({

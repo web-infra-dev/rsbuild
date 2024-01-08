@@ -118,7 +118,7 @@ export function runCli() {
 
   program
     .command('build')
-    .option(`-w --watch`, 'turn on watch mode, watch for changes and rebuild')
+    .option('-w --watch', 'turn on watch mode, watch for changes and rebuild')
     .option(
       '-c --config <config>',
       'specify the configuration file, can be a relative or absolute path',
@@ -176,7 +176,7 @@ export function runCli() {
   program
     .command('inspect')
     .description('inspect the Rspack and Rsbuild configs')
-    .option(`--env <env>`, 'specify env mode', 'development')
+    .option('--env <env>', 'specify env mode', 'development')
     .option('--output <output>', 'specify inspect content output path', '/')
     .option('--verbose', 'show full function definitions in output')
     .option(

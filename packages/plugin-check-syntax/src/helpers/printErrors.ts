@@ -1,6 +1,6 @@
 import { logger } from '@rsbuild/core';
 import { color } from '@rsbuild/shared';
-import type { SyntaxError } from '../types';
+import type { ECMASyntaxError } from '../types';
 
 type Error = {
   source: string;
@@ -9,7 +9,7 @@ type Error = {
   code: string;
 };
 
-export function printErrors(errors: SyntaxError[]) {
+export function printErrors(errors: ECMASyntaxError[]) {
   if (errors.length === 0) {
     logger.success('The syntax check success.');
     return;

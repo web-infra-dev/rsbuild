@@ -6,7 +6,7 @@ import { features, feature as featureUnpack } from 'caniuse-lite';
  * because caniuse-lite only support `es6` as the feature id
  */
 export function getEcmaVersion(targets: string[]) {
-  return checkIsSupportBrowser(`es6`, targets) ? 6 : 5;
+  return checkIsSupportBrowser('es6', targets) ? 6 : 5;
 }
 
 function checkIsSupportBrowser(feature: string, targets: string[]) {

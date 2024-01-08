@@ -12,7 +12,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  test(`should set value when target value is not undefined `, () => {
+  test('should set value when target value is not undefined', () => {
     expect(
       mergeRsbuildConfig(
         { source: { alias: {} } },
@@ -28,7 +28,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  test(`should ignore undefined property`, () => {
+  test('should ignore undefined property', () => {
     const noop = () => ({});
     const config = mergeRsbuildConfig(
       { source: { alias: {} } },
@@ -46,7 +46,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  test(`should keep single function value`, () => {
+  test('should keep single function value', () => {
     const config = mergeRsbuildConfig(
       { tools: { webpack: undefined } },
       { tools: { webpack: () => ({}) } },

@@ -83,9 +83,8 @@ export function findPath(
       const filePath = path.resolve(base, `${name}.${ext}`);
       if (fs.existsSync(filePath)) {
         return filePath;
-      } else {
-        return null;
       }
+      return null;
     })
     .filter(Boolean)[0];
 
