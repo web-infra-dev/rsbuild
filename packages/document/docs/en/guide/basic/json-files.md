@@ -54,11 +54,11 @@ console.log(example.hello); // 'world';
 console.log(example.foo); // { bar: 'baz' };
 ```
 
-## Toml file
+## TOML file
 
-Toml is a semantically explicit, easy-to-read configuration file format.
+[TOML](https://toml.io/) is a semantically explicit, easy-to-read configuration file format.
 
-You can directly import `.toml` files in JavaScript and it will be automatically converted to JSON format.
+Rsbuild provides the [Toml plugin](/plugins/list/plugin-toml). After registering the plugin, you can import `.toml` files in JavaScript and it will be automatically converted to JSON format.
 
 ### Example
 
@@ -69,7 +69,7 @@ hello = "world"
 bar = "baz"
 ```
 
-```js
+```js title="src/env.d.ts"
 import example from './example.toml';
 
 console.log(example.hello); // 'world';
@@ -82,7 +82,7 @@ When you import YAML or Toml files in TypeScript code, please create a `src/env.
 
 - Method 1: If the `@rsbuild/core` package is installed, you can directly reference the type declarations provided by `@rsbuild/core`:
 
-```ts
+```ts title="src/env.d.ts"
 /// <reference types="@rsbuild/core/types" />
 ```
 
