@@ -26,9 +26,7 @@ const normalize = <T>(
   if (v === false) {
     return undefined;
   }
-  {
-    return v;
-  }
+  return v;
 };
 
 export class SwcMinimizerPlugin {
