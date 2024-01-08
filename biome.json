@@ -5,10 +5,12 @@
   },
   "files": {
     "ignore": [
+      ".nx/**/*",
       "dist/**/*",
+      "dist-*/**/*",
       "coverage/**/*",
+      "cspell.json",
       "compiled/**/*",
-      "node_modules/**/*",
       "plugin-swc/tests/fixtures/**/*"
     ]
   },
@@ -16,6 +18,10 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "a11y": {
+        "useAltText": "off",
+        "useButtonType": "off"
+      },
       "style": {
         "noNonNullAssertion": "off"
       },

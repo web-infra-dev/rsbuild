@@ -39,7 +39,7 @@ test.describe('source configure multi', () => {
     await expect(page.innerHTML('#test-el')).resolves.toBe('aaaaa');
 
     // test order
-    await expect(page.evaluate(`window.aa`)).resolves.toBe(2);
+    await expect(page.evaluate('window.aa')).resolves.toBe(2);
   });
 });
 

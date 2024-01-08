@@ -30,7 +30,7 @@ test('externals', async ({ page }) => {
   const testExternal = page.locator('#test-external');
   await expect(testExternal).toHaveText('1');
 
-  const externalVar = await page.evaluate(`window.aa`);
+  const externalVar = await page.evaluate('window.aa');
 
   expect(externalVar).toBeDefined();
 

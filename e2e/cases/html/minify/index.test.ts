@@ -24,7 +24,7 @@ test('should minify template js & css', async ({ page }) => {
   await expect(test).toHaveCSS('text-align', 'center');
   await expect(test).toHaveCSS('font-size', '146px');
   await expect(test).toHaveText('Hello Rsbuild!');
-  await expect(page.evaluate(`window.b`)).resolves.toBe(2);
+  await expect(page.evaluate('window.b')).resolves.toBe(2);
 
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -73,7 +73,7 @@ test('should minify template success when inlineScripts & inlineStyles', async (
   await expect(test).toHaveCSS('text-align', 'center');
   await expect(test).toHaveCSS('font-size', '146px');
   await expect(test).toHaveText('Hello Rsbuild!');
-  await expect(page.evaluate(`window.b`)).resolves.toBe(2);
+  await expect(page.evaluate('window.b')).resolves.toBe(2);
 
   const files = await rsbuild.unwrapOutputJSON();
 

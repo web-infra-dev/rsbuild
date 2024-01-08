@@ -24,6 +24,8 @@
       "default": "./dist/node.js"
     }
   },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
       ".": [
@@ -37,8 +39,6 @@
       ]
     }
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],

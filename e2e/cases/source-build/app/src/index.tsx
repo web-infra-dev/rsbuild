@@ -6,7 +6,7 @@ const root = ReactDOM.createRoot(rootElement!);
 const App = () => (
   <div className="container">
     <main>
-      <Card title="App" content="hello world"></Card>
+      <Card title="App" content="hello world" />
     </main>
   </div>
 );

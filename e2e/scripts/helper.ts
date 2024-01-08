@@ -61,7 +61,7 @@ export const awaitFileExists = async (dir: string) => {
     await new Promise((resolve) => setTimeout(resolve, interval));
   }
 
-  throw new Error('awaitFileExists failed: ' + dir);
+  throw new Error(`awaitFileExists failed: ${dir}`);
 };
 
 export const proxyConsole = (

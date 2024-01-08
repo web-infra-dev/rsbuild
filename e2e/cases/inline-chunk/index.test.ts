@@ -40,7 +40,7 @@ test('inline all scripts should work and emit all source maps', async ({
   await page.goto(getHrefByEntryName('index', rsbuild.port));
 
   // test runtime
-  expect(await page.evaluate(`window.test`)).toBe('aaaa');
+  expect(await page.evaluate('window.test')).toBe('aaaa');
 
   const files = await rsbuild.unwrapOutputJSON(false);
 

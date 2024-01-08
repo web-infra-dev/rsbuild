@@ -7,7 +7,7 @@ import type { TransformImport } from '@rsbuild/shared';
 
 export const cases: Parameters<typeof shareTest>[] = [
   [
-    `camelCase test`,
+    'camelCase test',
     './src/camel.js',
     {
       libraryName: 'foo',
@@ -16,7 +16,7 @@ export const cases: Parameters<typeof shareTest>[] = [
     },
   ],
   [
-    `kebab-case test`,
+    'kebab-case test',
     './src/kebab.js',
     {
       libraryName: 'foo',
