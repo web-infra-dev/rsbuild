@@ -100,7 +100,6 @@ export type Plugins = {
   target: PluginsFn;
   entry: PluginsFn;
   cache: PluginsFn;
-  yaml: PluginsFn;
   splitChunks: PluginsFn;
   inlineChunk: PluginsFn;
   bundleAnalyzer: PluginsFn;

@@ -347,15 +347,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
         ],
       },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
-          },
-        ],
-      },
     ],
   },
   "name": "Client",
@@ -834,15 +825,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           },
         ],
       },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
-          },
-        ],
-      },
     ],
   },
   "name": "Client",
@@ -1276,15 +1258,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
         ],
       },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
-          },
-        ],
-      },
     ],
   },
   "name": "Server",
@@ -1616,15 +1589,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "sourceMap": false,
             },
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },

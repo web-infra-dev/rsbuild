@@ -33,7 +33,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     import('./plugins/progress').then((m) => m.pluginProgress()),
     import('./plugins/swc').then((m) => m.pluginSwc()),
     plugins.externals(),
-    plugins.yaml(),
     plugins.splitChunks(),
     plugins.startUrl(),
     plugins.inlineChunk(),

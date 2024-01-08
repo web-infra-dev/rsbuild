@@ -561,15 +561,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
         ],
       },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
-          },
-        ],
-      },
     ],
   },
   "name": "Client",
@@ -1239,15 +1230,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
         ],
       },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
-          },
-        ],
-      },
     ],
   },
   "name": "Client",
@@ -1765,15 +1747,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "sourceMaps": true,
             },
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },
@@ -2393,15 +2366,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
               "sourceMaps": true,
             },
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
           },
         ],
       },

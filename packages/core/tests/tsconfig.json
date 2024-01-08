@@ -5,8 +5,7 @@
     "types": ["vitest/globals"],
     "paths": {
       "@src/*": ["../src/*"],
-      "@/*": ["../src/provider/*"],
-      "@rsbuild/test-helper": ["../../vitest-helper/*"]
+      "@/*": ["../src/provider/*"]
     }
   },
   "include": ["./**/*.ts"]

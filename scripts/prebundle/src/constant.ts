@@ -164,14 +164,6 @@ export const TASKS: TaskConfig[] = [
         },
       },
       {
-        name: 'yaml-loader',
-        ignoreDts: true,
-        externals: {
-          yaml: '../yaml',
-          'loader-utils': '../loader-utils2',
-        },
-      },
-      {
         name: 'css-loader',
         ignoreDts: true,
         externals: {
@@ -304,6 +296,16 @@ export const TASKS: TaskConfig[] = [
     dependencies: [
       {
         name: 'toml-loader',
+        ignoreDts: true,
+      },
+    ],
+  },
+  {
+    packageDir: 'plugin-yaml',
+    packageName: '@rsbuild/plugin-yaml',
+    dependencies: [
+      {
+        name: 'yaml-loader',
         ignoreDts: true,
       },
     ],
