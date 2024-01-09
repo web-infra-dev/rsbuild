@@ -6,7 +6,13 @@ describe('plugin-solid', () => {
   it('should apply solid preset correctly in rspack mode', async () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {},
-      plugins: [pluginSolid(), pluginBabel()],
+      plugins: [
+        pluginSolid(),
+        pluginBabel({
+          include: /\.(?:jsx|tsx)$/,
+          exclude: /[\\/]node_modules[\\/]/,
+        }),
+      ],
     });
     const config = await rsbuild.unwrapConfig();
 
@@ -16,7 +22,13 @@ describe('plugin-solid', () => {
   it('should apply solid preset correctly', async () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {},
-      plugins: [pluginSolid(), pluginBabel()],
+      plugins: [
+        pluginSolid(),
+        pluginBabel({
+          include: /\.(?:jsx|tsx)$/,
+          exclude: /[\\/]node_modules[\\/]/,
+        }),
+      ],
     });
     const config = await rsbuild.unwrapConfig();
 
@@ -33,7 +45,10 @@ describe('plugin-solid', () => {
             hydratable: true,
           },
         }),
-        pluginBabel(),
+        pluginBabel({
+          include: /\.(?:jsx|tsx)$/,
+          exclude: /[\\/]node_modules[\\/]/,
+        }),
       ],
     });
     const config = await rsbuild.unwrapConfig();

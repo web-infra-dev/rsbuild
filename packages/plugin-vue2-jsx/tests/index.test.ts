@@ -5,7 +5,13 @@ import { pluginVue2Jsx } from '../src';
 describe('plugin-vue2-jsx', () => {
   it('should apply jsx babel plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginVue2Jsx(), pluginBabel()],
+      plugins: [
+        pluginVue2Jsx(),
+        pluginBabel({
+          include: /\.(?:jsx|tsx)$/,
+          exclude: /[\\/]node_modules[\\/]/,
+        }),
+      ],
       rsbuildConfig: {},
     });
     const config = await rsbuild.unwrapConfig();
@@ -21,7 +27,10 @@ describe('plugin-vue2-jsx', () => {
             injectH: false,
           },
         }),
-        pluginBabel(),
+        pluginBabel({
+          include: /\.(?:jsx|tsx)$/,
+          exclude: /[\\/]node_modules[\\/]/,
+        }),
       ],
       rsbuildConfig: {},
     });
