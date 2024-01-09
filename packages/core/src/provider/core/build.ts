@@ -34,7 +34,7 @@ export const build = async (
     bundlerConfigs = rspackConfigs;
   }
 
-  await context.hooks.onBeforeBuildHook.call({
+  await context.hooks.onBeforeBuild.call({
     bundlerConfigs,
   });
 
@@ -68,5 +68,5 @@ export const build = async (
     },
   );
 
-  await context.hooks.onAfterBuildHook.call({ stats });
+  await context.hooks.onAfterBuild.call({ stats });
 };

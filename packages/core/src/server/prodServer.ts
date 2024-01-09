@@ -152,7 +152,7 @@ export async function startProdServer(
     serverConfig,
   });
 
-  await context.hooks.onBeforeStartProdServerHook.call();
+  await context.hooks.onBeforeStartProdServer.call();
 
   const httpServer = await createHttpServer({
     https: serverConfig.https,
@@ -173,7 +173,7 @@ export async function startProdServer(
           rsbuildConfig.output?.distPath?.html,
           rsbuildConfig.html?.outputStructure,
         );
-        await context.hooks.onAfterStartProdServerHook.call({
+        await context.hooks.onAfterStartProdServer.call({
           port,
           routes,
         });

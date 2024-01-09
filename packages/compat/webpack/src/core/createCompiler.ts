@@ -21,7 +21,7 @@ export async function createCompiler({
   webpackConfigs: WebpackConfig[];
 }) {
   debug('create compiler');
-  await context.hooks.onBeforeCreateCompilerHook.call({
+  await context.hooks.onBeforeCreateCompiler.call({
     bundlerConfigs: webpackConfigs as RspackConfig[],
   });
 
@@ -46,7 +46,7 @@ export async function createCompiler({
     }
 
     if (isDev()) {
-      await context.hooks.onDevCompileDoneHook.call({
+      await context.hooks.onDevCompileDone.call({
         isFirstCompile,
         stats: stats as Stats,
       });
@@ -55,7 +55,7 @@ export async function createCompiler({
     isFirstCompile = false;
   });
 
-  await context.hooks.onAfterCreateCompilerHook.call({
+  await context.hooks.onAfterCreateCompiler.call({
     compiler,
   });
   debug('create compiler done');

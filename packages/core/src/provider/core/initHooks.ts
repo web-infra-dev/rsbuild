@@ -20,23 +20,23 @@ import type {
 export function initHooks() {
   return {
     /** parameters are not bundler-related */
-    onExitHook: createAsyncHook<OnExitFn>(),
-    onDevCompileDoneHook: createAsyncHook<OnDevCompileDoneFn>(),
-    onAfterStartDevServerHook: createAsyncHook<OnAfterStartDevServerFn>(),
-    onBeforeStartDevServerHook: createAsyncHook<OnBeforeStartDevServerFn>(),
-    onAfterStartProdServerHook: createAsyncHook<OnAfterStartProdServerFn>(),
-    onBeforeStartProdServerHook: createAsyncHook<OnBeforeStartProdServerFn>(),
+    onExit: createAsyncHook<OnExitFn>(),
+    onDevCompileDone: createAsyncHook<OnDevCompileDoneFn>(),
+    onAfterStartDevServer: createAsyncHook<OnAfterStartDevServerFn>(),
+    onBeforeStartDevServer: createAsyncHook<OnBeforeStartDevServerFn>(),
+    onAfterStartProdServer: createAsyncHook<OnAfterStartProdServerFn>(),
+    onBeforeStartProdServer: createAsyncHook<OnBeforeStartProdServerFn>(),
 
     /** parameters are bundler-related */
-    onAfterBuildHook: createAsyncHook<OnAfterBuildFn>(),
-    onBeforeBuildHook: createAsyncHook<OnBeforeBuildFn>(),
-    modifyRspackConfigHook: createAsyncHook<ModifyRspackConfigFn>(),
-    modifyBundlerChainHook: createAsyncHook<ModifyBundlerChainFn>(),
-    modifyWebpackChainHook: createAsyncHook<ModifyWebpackChainFn>(),
-    modifyWebpackConfigHook: createAsyncHook<ModifyWebpackConfigFn>(),
-    modifyRsbuildConfigHook: createAsyncHook<ModifyRsbuildConfigFn>(),
-    onAfterCreateCompilerHook: createAsyncHook<OnAfterCreateCompilerFn>(),
-    onBeforeCreateCompilerHook: createAsyncHook<OnBeforeCreateCompilerFn>(),
+    onAfterBuild: createAsyncHook<OnAfterBuildFn>(),
+    onBeforeBuild: createAsyncHook<OnBeforeBuildFn>(),
+    modifyRspackConfig: createAsyncHook<ModifyRspackConfigFn>(),
+    modifyBundlerChain: createAsyncHook<ModifyBundlerChainFn>(),
+    modifyWebpackChain: createAsyncHook<ModifyWebpackChainFn>(),
+    modifyWebpackConfig: createAsyncHook<ModifyWebpackConfigFn>(),
+    modifyRsbuildConfig: createAsyncHook<ModifyRsbuildConfigFn>(),
+    onAfterCreateCompiler: createAsyncHook<OnAfterCreateCompilerFn>(),
+    onBeforeCreateCompiler: createAsyncHook<OnBeforeCreateCompilerFn>(),
   };
 }
 

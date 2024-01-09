@@ -36,7 +36,7 @@ export const build = async (
     bundlerConfigs = webpackConfigs;
   }
 
-  await context.hooks.onBeforeBuildHook.call({
+  await context.hooks.onBeforeBuild.call({
     bundlerConfigs: bundlerConfigs as RspackConfig[],
   });
 
@@ -72,5 +72,5 @@ export const build = async (
     },
   );
 
-  await context.hooks.onAfterBuildHook.call({ stats });
+  await context.hooks.onAfterBuild.call({ stats });
 };

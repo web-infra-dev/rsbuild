@@ -25,7 +25,7 @@ export async function createCompiler({
   rspackConfigs: RspackConfig[];
 }): Promise<RspackCompiler | RspackMultiCompiler> {
   debug('create compiler');
-  await context.hooks.onBeforeCreateCompilerHook.call({
+  await context.hooks.onBeforeCreateCompiler.call({
     bundlerConfigs: rspackConfigs,
   });
 
@@ -102,7 +102,7 @@ export async function createCompiler({
     }
 
     if (isDev()) {
-      await context.hooks.onDevCompileDoneHook.call({
+      await context.hooks.onDevCompileDone.call({
         isFirstCompile,
         stats: stats,
       });
@@ -112,7 +112,7 @@ export async function createCompiler({
     isFirstCompile = false;
   });
 
-  await context.hooks.onAfterCreateCompilerHook.call({ compiler });
+  await context.hooks.onAfterCreateCompiler.call({ compiler });
   debug('create compiler done');
 
   return compiler;

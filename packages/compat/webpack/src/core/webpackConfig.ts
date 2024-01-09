@@ -24,7 +24,7 @@ async function modifyWebpackChain(
 ): Promise<WebpackChain> {
   debug('modify webpack chain');
 
-  const [modifiedChain] = await context.hooks.modifyWebpackChainHook.call(
+  const [modifiedChain] = await context.hooks.modifyWebpackChain.call(
     chain,
     utils,
   );
@@ -46,7 +46,7 @@ async function modifyWebpackConfig(
   utils: ModifyWebpackConfigUtils,
 ): Promise<WebpackConfig> {
   debug('modify webpack config');
-  let [modifiedConfig] = await context.hooks.modifyWebpackConfigHook.call(
+  let [modifiedConfig] = await context.hooks.modifyWebpackConfig.call(
     webpackConfig,
     utils,
   );

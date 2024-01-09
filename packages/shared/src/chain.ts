@@ -38,7 +38,7 @@ export async function getBundlerChain() {
 export async function modifyBundlerChain(
   context: RsbuildContext & {
     hooks: {
-      modifyBundlerChainHook: CreateAsyncHook<ModifyBundlerChainFn>;
+      modifyBundlerChain: CreateAsyncHook<ModifyBundlerChainFn>;
     };
     config: Readonly<RsbuildConfig>;
   },
@@ -48,8 +48,10 @@ export async function modifyBundlerChain(
 
   const bundlerChain = await getBundlerChain();
 
-  const [modifiedBundlerChain] =
-    await context.hooks.modifyBundlerChainHook.call(bundlerChain, utils);
+  const [modifiedBundlerChain] = await context.hooks.modifyBundlerChain.call(
+    bundlerChain,
+    utils,
+  );
 
   if (context.config.tools?.bundlerChain) {
     castArray(context.config.tools.bundlerChain).forEach((item) => {

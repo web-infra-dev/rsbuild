@@ -16,7 +16,7 @@ import type { InternalContext, NormalizedConfig } from '../../types';
 
 async function modifyRsbuildConfig(context: InternalContext) {
   debug('modify Rsbuild config');
-  const [modified] = await context.hooks.modifyRsbuildConfigHook.call(
+  const [modified] = await context.hooks.modifyRsbuildConfig.call(
     context.config,
     { mergeRsbuildConfig },
   );
@@ -86,8 +86,8 @@ export async function initConfigs({
     };
 
     // run inspect later to avoid cleaned by cleanOutput plugin
-    context.hooks.onBeforeBuildHook.tap(inspect);
-    context.hooks.onBeforeStartDevServerHook.tap(inspect);
+    context.hooks.onBeforeBuild.tap(inspect);
+    context.hooks.onBeforeStartDevServer.tap(inspect);
   }
 
   return {
