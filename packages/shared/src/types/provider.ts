@@ -51,6 +51,10 @@ export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
     rsbuildOptions: Required<CreateRsbuildOptions>;
   }) => Promise<ProviderInstance<B>>;
 
+export type CreateCompiler =
+  // Allow user to manually narrow Compiler type
+  <C = Compiler | MultiCompiler>(options?: CreateCompilerOptions) => Promise<C>;
+
 export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   readonly bundler: Bundler;
 
@@ -60,9 +64,7 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
 
   applyDefaultPlugins: (pluginStore: PluginStore) => Promise<void>;
 
-  createCompiler: (
-    options?: CreateCompilerOptions,
-  ) => Promise<Compiler | MultiCompiler>;
+  createCompiler: CreateCompiler;
 
   /**
    * This API is not stable
