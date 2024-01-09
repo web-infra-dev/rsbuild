@@ -44,7 +44,7 @@ For example, to allow the jpeg compressor to recognize new extension name and to
 
 ```js
 pluginImageCompress([
-  { use: 'jpeg', test: /\.(jpg|jpeg|jpe)$/ },
+  { use: 'jpeg', test: /\.(?:jpg|jpeg|jpe)$/ },
   { use: 'png', minQuality: 50 },
   'ico',
 ]);

@@ -191,7 +191,7 @@ export const pluginTypeScriptExt = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain) => {
       // Set ts-loader to recognize more files as typescript modules
-      chain.module.rule(CHAIN_ID.RULE.TS).test(/\.(ts|mts|cts|tsx|tss|tsm)$/);
+      chain.module.rule(CHAIN_ID.RULE.TS).test(/\.(?:ts|mts|cts|tsx|tss|tsm)$/);
     });
   },
 });

@@ -43,7 +43,7 @@ pluginImageCompress([{ use: 'jpeg' }, { use: 'png' }, { use: 'ico' }]);
 
 ```js
 pluginImageCompress([
-  { use: 'jpeg', test: /\.(jpg|jpeg|jpe)$/ },
+  { use: 'jpeg', test: /\.(?:jpg|jpeg|jpe)$/ },
   { use: 'png', minQuality: 50 },
   'ico',
 ]);

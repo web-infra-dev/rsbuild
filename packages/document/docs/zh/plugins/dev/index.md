@@ -187,7 +187,7 @@ export const pluginTypeScriptExt = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain) => {
       // 设置 ts-loader 将更多的文件识别为 typescript 模块
-      chain.module.rule(CHAIN_ID.RULE.TS).test(/\.(ts|mts|cts|tsx|tss|tsm)$/);
+      chain.module.rule(CHAIN_ID.RULE.TS).test(/\.(?:ts|mts|cts|tsx|tss|tsm)$/);
     });
   },
 });
