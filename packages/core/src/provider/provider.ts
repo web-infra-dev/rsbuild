@@ -1,5 +1,6 @@
 import {
   pickRsbuildConfig,
+  type CreateCompiler,
   type RsbuildProvider,
   type PreviewServerOptions,
 } from '@rsbuild/shared';
@@ -20,29 +21,31 @@ export const rspackProvider: RsbuildProvider = async ({
 
   context.pluginAPI = pluginAPI;
 
+  const createCompiler = (async () => {
+    const { createCompiler } = await import('./core/createCompiler');
+    const { rspackConfigs } = await initConfigs({
+      context,
+      pluginStore,
+      rsbuildOptions,
+    });
+
+    return createCompiler({
+      context,
+      rspackConfigs,
+    });
+  }) as CreateCompiler;
+
   return {
     bundler: 'rspack',
 
     pluginAPI,
 
+    createCompiler,
+
     publicContext: createPublicContext(context),
 
     async applyDefaultPlugins() {
       pluginStore.addPlugins(await applyDefaultPlugins(plugins));
-    },
-
-    async createCompiler() {
-      const { createCompiler } = await import('./core/createCompiler');
-      const { rspackConfigs } = await initConfigs({
-        context,
-        pluginStore,
-        rsbuildOptions,
-      });
-
-      return createCompiler({
-        context,
-        rspackConfigs,
-      });
     },
 
     async getServerAPIs(options) {
