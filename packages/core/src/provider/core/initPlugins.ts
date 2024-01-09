@@ -64,7 +64,7 @@ export function getPluginAPI({
   };
 
   onExitProcess(() => {
-    hooks.onExitHook.call();
+    hooks.onExit.call();
   });
 
   return {
@@ -75,20 +75,20 @@ export function getPluginAPI({
     isPluginExists: pluginStore.isPluginExists,
 
     // Hooks
-    onExit: hooks.onExitHook.tap,
-    onAfterBuild: hooks.onAfterBuildHook.tap,
-    onBeforeBuild: hooks.onBeforeBuildHook.tap,
-    onDevCompileDone: hooks.onDevCompileDoneHook.tap,
-    modifyBundlerChain: hooks.modifyBundlerChainHook.tap,
-    modifyRspackConfig: hooks.modifyRspackConfigHook.tap,
-    modifyWebpackChain: hooks.modifyWebpackChainHook.tap,
-    modifyWebpackConfig: hooks.modifyWebpackConfigHook.tap,
-    modifyRsbuildConfig: hooks.modifyRsbuildConfigHook.tap,
-    onAfterCreateCompiler: hooks.onAfterCreateCompilerHook.tap,
-    onAfterStartDevServer: hooks.onAfterStartDevServerHook.tap,
-    onBeforeCreateCompiler: hooks.onBeforeCreateCompilerHook.tap,
-    onBeforeStartDevServer: hooks.onBeforeStartDevServerHook.tap,
-    onAfterStartProdServer: hooks.onAfterStartProdServerHook.tap,
-    onBeforeStartProdServer: hooks.onBeforeStartProdServerHook.tap,
+    onExit: hooks.onExit.tap,
+    onAfterBuild: hooks.onAfterBuild.tap,
+    onBeforeBuild: hooks.onBeforeBuild.tap,
+    onDevCompileDone: hooks.onDevCompileDone.tap,
+    modifyBundlerChain: hooks.modifyBundlerChain.tap,
+    modifyRspackConfig: hooks.modifyRspackConfig.tap,
+    modifyWebpackChain: hooks.modifyWebpackChain.tap,
+    modifyWebpackConfig: hooks.modifyWebpackConfig.tap,
+    modifyRsbuildConfig: hooks.modifyRsbuildConfig.tap,
+    onAfterCreateCompiler: hooks.onAfterCreateCompiler.tap,
+    onAfterStartDevServer: hooks.onAfterStartDevServer.tap,
+    onBeforeCreateCompiler: hooks.onBeforeCreateCompiler.tap,
+    onBeforeStartDevServer: hooks.onBeforeStartDevServer.tap,
+    onAfterStartProdServer: hooks.onAfterStartProdServer.tap,
+    onBeforeStartProdServer: hooks.onBeforeStartProdServer.tap,
   };
 }

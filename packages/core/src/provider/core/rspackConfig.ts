@@ -21,7 +21,7 @@ async function modifyRspackConfig(
   utils: ModifyRspackConfigUtils,
 ) {
   debug('modify Rspack config');
-  let [modifiedConfig] = await context.hooks.modifyRspackConfigHook.call(
+  let [modifiedConfig] = await context.hooks.modifyRspackConfig.call(
     rspackConfig,
     utils,
   );

@@ -74,12 +74,8 @@ export const rspackProvider: RsbuildProvider = async ({
     },
 
     async build(options) {
-      const { build: buildImpl, rspackBuild } = await import('./core/build');
-      return buildImpl(
-        { context, pluginStore, rsbuildOptions },
-        options,
-        rspackBuild,
-      );
+      const { build } = await import('./core/build');
+      return build({ context, pluginStore, rsbuildOptions }, options);
     },
 
     async initConfigs() {

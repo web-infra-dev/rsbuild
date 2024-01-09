@@ -64,10 +64,10 @@ export async function getServerAPIs<
   return {
     config: { devServerConfig, port, host, https, defaultRoutes },
     beforeStart: async () => {
-      await options.context.hooks.onBeforeStartDevServerHook.call();
+      await options.context.hooks.onBeforeStartDevServer.call();
     },
     afterStart: async (params: { port?: number; routes?: Routes } = {}) => {
-      await options.context.hooks.onAfterStartDevServerHook.call({
+      await options.context.hooks.onAfterStartDevServer.call({
         port: params.port || port,
         routes: params.routes || defaultRoutes,
       });

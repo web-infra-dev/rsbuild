@@ -92,12 +92,8 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async build(options) {
-      const { build: buildImpl, webpackBuild } = await import('./core/build');
-      return buildImpl(
-        { context, pluginStore, rsbuildOptions },
-        options,
-        webpackBuild,
-      );
+      const { build } = await import('./core/build');
+      return build({ context, pluginStore, rsbuildOptions }, options);
     },
 
     async inspectConfig(inspectOptions) {
