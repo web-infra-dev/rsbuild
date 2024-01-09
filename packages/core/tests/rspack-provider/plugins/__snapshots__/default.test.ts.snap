@@ -604,6 +604,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "hints": false,
   },
   "plugins": [
+    HotModuleReplacementPlugin {
+      "name": "HotModuleReplacementPlugin",
+    },
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
@@ -644,9 +647,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
     RemoveCssSourcemapPlugin {
       "name": "RemoveCssSourcemapPlugin",
-    },
-    HotModuleReplacementPlugin {
-      "name": "HotModuleReplacementPlugin",
     },
   ],
   "resolve": {
@@ -2416,6 +2416,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
     TestPlugin {
       "name": "TestPlugin",
     },
+    HotModuleReplacementPlugin {
+      "name": "HotModuleReplacementPlugin",
+    },
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
@@ -2456,9 +2459,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
     },
     RemoveCssSourcemapPlugin {
       "name": "RemoveCssSourcemapPlugin",
-    },
-    HotModuleReplacementPlugin {
-      "name": "HotModuleReplacementPlugin",
     },
   ],
   "resolve": {

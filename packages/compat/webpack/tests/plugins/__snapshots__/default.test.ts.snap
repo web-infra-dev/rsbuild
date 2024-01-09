@@ -391,6 +391,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "hints": false,
   },
   "plugins": [
+    HotModuleReplacementPlugin {
+      "options": {},
+    },
     MiniCssExtractPlugin {
       "_sortedModulesCache": WeakMap {},
       "options": {
@@ -405,9 +408,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "insert": undefined,
         "linkType": "text/css",
       },
-    },
-    HotModuleReplacementPlugin {
-      "options": {},
     },
     HtmlWebpackPlugin {
       "userOptions": {

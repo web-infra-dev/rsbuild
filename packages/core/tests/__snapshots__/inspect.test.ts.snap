@@ -20,7 +20,6 @@ exports[`inspectConfig > should print plugin names when inspect config 1`] = `
   "rsbuild:less",
   "rsbuild:sass",
   "rsbuild:minimize",
-  "rsbuild:hmr",
   "rsbuild:progress",
   "rsbuild:swc",
   "rsbuild:externals",
