@@ -13,7 +13,7 @@ export const jpegCodec: Codec<'jpeg'> = {
     return compressJpeg(buf, options);
   },
   defaultOptions: {
-    test: /\.(jpg|jpeg)$/,
+    test: /\.(?:jpg|jpeg)$/,
   },
 };
 
@@ -40,7 +40,7 @@ export const icoCodec: Codec<'ico'> = {
     return new Transformer(buf).ico();
   },
   defaultOptions: {
-    test: /\.(ico|icon)$/,
+    test: /\.(?:ico|icon)$/,
   },
 };
 

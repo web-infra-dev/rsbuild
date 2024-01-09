@@ -8,7 +8,7 @@ export default defineConfig({
     pluginVue(),
     pluginVueJsx(),
     pluginBabel({
-      include: /\.(jsx|tsx)$/,
+      include: /\.(?:jsx|tsx)$/,
       exclude: /[\\/]node_modules[\\/]/,
     }),
   ],

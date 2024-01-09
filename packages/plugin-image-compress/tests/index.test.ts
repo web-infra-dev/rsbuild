@@ -24,7 +24,7 @@ describe('plugin-image-compress', () => {
         ImageMinimizerPlugin {
           "name": "@rsbuild/plugin-image-compress/minimizer",
           "options": {
-            "test": /\\\\\\.\\(jpg\\|jpeg\\)\\$/,
+            "test": /\\\\\\.\\(\\?:jpg\\|jpeg\\)\\$/,
             "use": "jpeg",
           },
         },
@@ -50,7 +50,7 @@ describe('plugin-image-compress', () => {
         ImageMinimizerPlugin {
           "name": "@rsbuild/plugin-image-compress/minimizer",
           "options": {
-            "test": /\\\\\\.\\(jpg\\|jpeg\\)\\$/,
+            "test": /\\\\\\.\\(\\?:jpg\\|jpeg\\)\\$/,
             "use": "jpeg",
           },
         },

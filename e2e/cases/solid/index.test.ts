@@ -4,13 +4,13 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 import { rspackOnlyTest } from '@scripts/helper';
-import { build, dev, getHrefByEntryName } from '@scripts/shared';
+import { build, getHrefByEntryName } from '@scripts/shared';
 
 const buildFixture = (rootDir: string): ReturnType<typeof build> => {
   const root = path.join(__dirname, rootDir);
   const plugins = [
     pluginBabel({
-      include: /\.(jsx|tsx)$/,
+      include: /\.(?:jsx|tsx)$/,
       exclude: /[\\/]node_modules[\\/]/,
     }),
     pluginSolid(),

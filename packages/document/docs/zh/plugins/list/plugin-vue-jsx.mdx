@@ -23,7 +23,7 @@ import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
 export default {
   plugins: [
     pluginBabel({
-      include: /\.(jsx|tsx)$/,
+      include: /\.(?:jsx|tsx)$/,
       exclude: /[\\/]node_modules[\\/]/,
     }),
     pluginVueJsx(),
