@@ -6,13 +6,7 @@ describe('plugin-vue-jsx', () => {
   it('should apply jsx babel plugin correctly in rspack mode', async () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {},
-      plugins: [
-        pluginVueJsx(),
-        pluginBabel({
-          include: /\.(?:jsx|tsx)$/,
-          exclude: /[\\/]node_modules[\\/]/,
-        }),
-      ],
+      plugins: [pluginVueJsx(), pluginBabel()],
     });
     const config = await rsbuild.unwrapConfig();
 
@@ -22,13 +16,7 @@ describe('plugin-vue-jsx', () => {
   it('should apply jsx babel plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {},
-      plugins: [
-        pluginVueJsx(),
-        pluginBabel({
-          include: /\.(?:jsx|tsx)$/,
-          exclude: /[\\/]node_modules[\\/]/,
-        }),
-      ],
+      plugins: [pluginVueJsx(), pluginBabel()],
     });
     const config = await rsbuild.unwrapConfig();
 
@@ -44,10 +32,7 @@ describe('plugin-vue-jsx', () => {
             transformOn: false,
           },
         }),
-        pluginBabel({
-          include: /\.(?:jsx|tsx)$/,
-          exclude: /[\\/]node_modules[\\/]/,
-        }),
+        pluginBabel(),
       ],
     });
     const config = await rsbuild.unwrapConfig();
