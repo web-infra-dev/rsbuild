@@ -7,6 +7,9 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "foo": "2",
     },
   },
+  HotModuleReplacementPlugin {
+    "options": {},
+  },
   MiniCssExtractPlugin {
     "_sortedModulesCache": WeakMap {},
     "options": {
@@ -21,9 +24,6 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "insert": undefined,
       "linkType": "text/css",
     },
-  },
-  HotModuleReplacementPlugin {
-    "options": {},
   },
   HtmlWebpackPlugin {
     "userOptions": {

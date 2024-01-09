@@ -642,6 +642,9 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "hints": false,
   },
   "plugins": [
+    HotModuleReplacementPlugin {
+      "name": "HotModuleReplacementPlugin",
+    },
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
@@ -682,9 +685,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     },
     RemoveCssSourcemapPlugin {
       "name": "RemoveCssSourcemapPlugin",
-    },
-    HotModuleReplacementPlugin {
-      "name": "HotModuleReplacementPlugin",
     },
     ReactRefreshRspackPlugin {
       "options": {

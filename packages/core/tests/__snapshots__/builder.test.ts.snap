@@ -604,6 +604,9 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     "hints": false,
   },
   "plugins": [
+    HotModuleReplacementPlugin {
+      "name": "HotModuleReplacementPlugin",
+    },
     HtmlWebpackPlugin {
       "userOptions": {
         "chunks": [
@@ -644,9 +647,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     },
     RemoveCssSourcemapPlugin {
       "name": "RemoveCssSourcemapPlugin",
-    },
-    HotModuleReplacementPlugin {
-      "name": "HotModuleReplacementPlugin",
     },
   ],
   "resolve": {

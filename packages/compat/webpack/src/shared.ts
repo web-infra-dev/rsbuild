@@ -20,7 +20,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     import('./plugins/resolve').then((m) => m.pluginResolve()),
     plugins.fileSize?.(),
     plugins.cleanOutput?.(),
-    import('./plugins/hmr').then((m) => m.pluginHMR()),
     plugins.asset(),
     import('./plugins/copy').then((m) => m.pluginCopy()),
     plugins.html(),
