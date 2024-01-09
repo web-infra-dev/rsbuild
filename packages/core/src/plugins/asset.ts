@@ -16,7 +16,7 @@ export function getRegExpForExts(exts: string[]): RegExp {
     .join('|');
 
   return new RegExp(
-    exts.length === 1 ? `\\.${matcher}$` : `\\.(${matcher})$`,
+    exts.length === 1 ? `\\.${matcher}$` : `\\.(?:${matcher})$`,
     'i',
   );
 }

@@ -64,7 +64,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
       },
       {
         "oneOf": [
@@ -118,7 +118,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
       },
       {
         "oneOf": [
@@ -145,7 +145,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
         "dependency": "url",
@@ -542,7 +542,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
       },
       {
         "oneOf": [
@@ -596,7 +596,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
       },
       {
         "oneOf": [
@@ -623,7 +623,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
         "dependency": "url",
@@ -1057,7 +1057,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
       },
       {
         "oneOf": [
@@ -1111,7 +1111,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
       },
       {
         "oneOf": [
@@ -1138,7 +1138,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
         "dependency": "url",
@@ -1402,7 +1402,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
       },
       {
         "oneOf": [
@@ -1456,7 +1456,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
       },
       {
         "oneOf": [
@@ -1483,7 +1483,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
         "dependency": "url",

@@ -80,7 +80,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
       },
       {
         "oneOf": [
@@ -134,7 +134,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
       },
       {
         "oneOf": [
@@ -161,7 +161,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
         "dependency": "url",

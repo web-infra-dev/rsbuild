@@ -4,8 +4,10 @@ import { pluginAsset, getRegExpForExts } from '@src/plugins/asset';
 
 describe('getRegExpForExts', () => {
   it('should get correct RegExp of exts', () => {
+    expect(getRegExpForExts(['woff'])).toEqual(/\.woff$/i);
+
     expect(getRegExpForExts(FONT_EXTENSIONS)).toEqual(
-      /\.(woff|woff2|eot|ttf|otf|ttc)$/i,
+      /\.(?:woff|woff2|eot|ttf|otf|ttc)$/i,
     );
   });
 });
