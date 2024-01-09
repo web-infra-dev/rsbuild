@@ -20,9 +20,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "disableApplyEntryLazily": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -690,9 +687,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "disableApplyEntryLazily": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1232,7 +1226,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "name": "Client",
   "optimization": {
-    "chunkIds": "deterministic",
     "minimize": true,
     "minimizer": [
       SwcJsMinimizerRspackPlugin {
@@ -1407,9 +1400,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "disableApplyEntryLazily": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1821,9 +1811,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "disableApplyEntryLazily": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
