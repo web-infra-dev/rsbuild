@@ -191,7 +191,7 @@ pluginSourceBuild({
 
 用于控制优先读取源代码还是产物代码。
 
-默认情况下，Source Build 插件会优先读取源代码，比如在下面的例子中，会优先读取 `source` 字段。
+默认情况下，Source Build 插件会优先读取源代码，比如在下面的例子中，它会读取 `source` 字段。
 
 ```json title="package.json"
 {
@@ -201,7 +201,7 @@ pluginSourceBuild({
 }
 ```
 
-当 `resolvePriority` 设置为 `'output'` 时，Source Build 插件会优先读取产物代码，即 `main` 或 `module` 字段对应的代码。
+当 `resolvePriority` 设置为 `'output'` 时，Source Build 插件会优先读取产物代码，即 `main` 或 `module` 字段指向的代码。
 
 ```ts
 pluginSourceBuild({
