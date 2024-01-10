@@ -1,3 +1,4 @@
+import { setConfig } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../../types';
 
 /**
@@ -6,7 +7,11 @@ import type { RsbuildPlugin } from '../../types';
 export const pluginTransition = (): RsbuildPlugin => ({
   name: 'rsbuild:transition',
 
-  setup() {
+  setup(api) {
     process.env.RSPACK_CONFIG_VALIDATE = 'loose-silent';
+
+    api.modifyRspackConfig((config) => {
+      setConfig(config, 'experiments.rspackFuture.newTreeshaking', true);
+    });
   },
 });

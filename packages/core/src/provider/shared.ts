@@ -44,7 +44,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
   ]);
 
 // apply builtin:swc-loader
-export const rspackMinVersion = '0.4.5';
+export const rspackMinVersion = '0.5.0';
 
 const compareSemver = (version1: string, version2: string) => {
   const parts1 = version1.split('.').map(Number);
