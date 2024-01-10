@@ -22,6 +22,12 @@ export type ProxyOptions =
   | ProxyDetail[]
   | ProxyDetail;
 
+export type HistoryApiFallbackContext = {
+  match: RegExpMatchArray;
+  parsedUrl: import('url').Url;
+  request: Request;
+};
+
 export type HistoryApiFallbackOptions = {
   index?: string;
   verbose?: boolean;
@@ -30,7 +36,7 @@ export type HistoryApiFallbackOptions = {
   disableDotRule?: true;
   rewrites?: Array<{
     from: RegExp;
-    to: string | RegExp | Function;
+    to: string | RegExp | ((context: HistoryApiFallbackContext) => string);
   }>;
 };
 
