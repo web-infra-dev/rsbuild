@@ -11,15 +11,15 @@ export type PromiseOrNot<T> = T | Promise<T>;
 export type NodeEnv = 'development' | 'production' | 'test';
 
 export type ChainedConfig<Config> = ArrayOrNot<
-  Config | ((config: Config) => Config | undefined)
+  Config | ((config: Config) => Config | void)
 >;
 
 export type ChainedConfigWithUtils<Config, Utils> = ArrayOrNot<
-  Config | ((config: Config, utils: Utils) => Config | undefined)
+  Config | ((config: Config, utils: Utils) => Config | void)
 >;
 
 export type ChainedConfigCombineUtils<Config, Utils> = ArrayOrNot<
-  Config | ((params: { value: Config } & Utils) => Config | undefined)
+  Config | ((params: { value: Config } & Utils) => Config | void)
 >;
 
 export type DeepReadonly<T> = keyof T extends never
