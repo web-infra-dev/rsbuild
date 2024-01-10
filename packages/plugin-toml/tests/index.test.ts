@@ -1,4 +1,4 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginToml } from '../src';
 
 describe('plugin-toml', () => {

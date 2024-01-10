@@ -1,4 +1,4 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginDefine } from '@src/plugins/define';
 
 describe('plugin-define', () => {

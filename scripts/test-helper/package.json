@@ -1,12 +1,9 @@
 {
-  "name": "@rsbuild/test-helper",
-  "version": "0.3.0",
-  "description": "The vitest helpers of Rsbuild.",
-  "homepage": "https://rsbuild.dev",
+  "name": "@scripts/test-helper",
+  "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/web-infra-dev/rsbuild",
-    "directory": "packages/test-helper"
+    "url": "https://github.com/web-infra-dev/rsbuild"
   },
   "license": "MIT",
   "type": "commonjs",

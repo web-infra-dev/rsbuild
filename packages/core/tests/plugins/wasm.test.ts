@@ -1,4 +1,4 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginWasm } from '@src/plugins/wasm';
 
 describe('plugin-wasm', () => {

@@ -1,4 +1,4 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginCss } from '@/plugins/css';
 import { pluginLess } from '@/plugins/less';
 import { pluginSass } from '@/plugins/sass';

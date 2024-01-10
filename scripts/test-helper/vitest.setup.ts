@@ -1,6 +1,6 @@
 import path from 'path';
 import { expect } from 'vitest';
-import { createSnapshotSerializer } from '@rsbuild/test-helper';
+import { createSnapshotSerializer } from './dist';
 
 expect.addSnapshotSerializer(
   createSnapshotSerializer({

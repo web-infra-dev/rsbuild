@@ -8,10 +8,10 @@
   },
   "references": [
     {
-      "path": "../core"
+      "path": "../../packages/core"
     },
     {
-      "path": "../shared"
+      "path": "../../packages/shared"
     }
   ],
   "include": ["src"]

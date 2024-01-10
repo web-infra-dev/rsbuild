@@ -1,4 +1,4 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginVueJsx } from '../src';
 

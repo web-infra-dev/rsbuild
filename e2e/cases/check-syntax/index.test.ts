@@ -4,7 +4,7 @@ import { build } from '@scripts/shared';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import type { RsbuildConfig } from '@rsbuild/shared';
 import { proxyConsole } from '@scripts/helper';
-import { normalizeToPosixPath } from '@rsbuild/test-helper';
+import { normalizeToPosixPath } from '@scripts/test-helper';
 
 function getCommonBuildConfig(cwd: string): RsbuildConfig {
   return {

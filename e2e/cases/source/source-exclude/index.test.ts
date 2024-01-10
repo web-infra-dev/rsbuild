@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { build } from '@scripts/shared';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import { proxyConsole } from '@scripts/helper';
-import { normalizeToPosixPath } from '@rsbuild/test-helper';
+import { normalizeToPosixPath } from '@scripts/test-helper';
 
 test('should not compile specified file when source.exclude', async () => {
   const { logs, restore } = proxyConsole();

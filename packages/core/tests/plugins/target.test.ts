@@ -1,5 +1,5 @@
 import type { MockInstance } from 'vitest';
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { getBrowserslist } from '@rsbuild/shared';
 import { pluginTarget } from '@src/plugins/target';
 
