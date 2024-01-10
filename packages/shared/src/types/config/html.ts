@@ -45,7 +45,7 @@ export type HtmlInjectTagUtils = {
 export type HtmlInjectTagHandler = (
   tags: HtmlInjectTag[],
   utils: HtmlInjectTagUtils,
-) => HtmlInjectTag[] | undefined;
+) => HtmlInjectTag[] | void;
 
 export type HtmlInjectTagDescriptor = HtmlInjectTag | HtmlInjectTagHandler;
 
