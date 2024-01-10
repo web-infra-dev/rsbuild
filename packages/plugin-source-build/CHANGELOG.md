@@ -1,5 +1,13 @@
 # @rsbuild/plugin-source-build
 
+## 0.3.0
+
+### Patch Changes
+
+- Updated dependencies [25ff00e]
+  - @rsbuild/shared@0.3.0
+  - @rsbuild/monorepo-utils@0.3.0
+
 ## 0.2.18
 
 ### Patch Changes

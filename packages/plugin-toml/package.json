@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-toml",
-  "version": "0.2.18",
+  "version": "0.3.0",
   "description": "TOML plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {

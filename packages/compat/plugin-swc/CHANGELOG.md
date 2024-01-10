@@ -1,5 +1,13 @@
 # @rsbuild/plugin-swc
 
+## 0.3.0
+
+### Patch Changes
+
+- Updated dependencies [25ff00e]
+  - @rsbuild/plugin-react@0.3.0
+  - @rsbuild/shared@0.3.0
+
 ## 0.2.18
 
 ### Patch Changes

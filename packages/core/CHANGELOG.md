@@ -1,5 +1,17 @@
 # @rsbuild/core
 
+## 0.3.0
+
+### Minor Changes
+
+- 56265b4: perf(RegExp): use non-capturing groups for asset rules
+- 25ff00e: feat: bump Rspack v0.5.0 stable and enable new tree shaking
+
+### Patch Changes
+
+- Updated dependencies [25ff00e]
+  - @rsbuild/shared@0.3.0
+
 ## 0.2.18
 
 ### Patch Changes
