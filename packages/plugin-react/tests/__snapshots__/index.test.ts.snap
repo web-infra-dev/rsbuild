@@ -686,6 +686,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     ReactRefreshRspackPlugin {
       "options": {
         "exclude": /node_modules/i,
+        "forceEnable": false,
         "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
       },
     },
