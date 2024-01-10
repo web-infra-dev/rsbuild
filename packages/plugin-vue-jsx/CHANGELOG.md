@@ -1,5 +1,11 @@
 # @rsbuild/plugin-vue-jsx
 
+## 0.3.0
+
+### Patch Changes
+
+- @rsbuild/plugin-babel@0.3.0
+
 ## 0.2.18
 
 ### Patch Changes

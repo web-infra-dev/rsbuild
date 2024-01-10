@@ -1,5 +1,11 @@
 # @rsbuild/shared
 
+## 0.3.0
+
+### Minor Changes
+
+- 25ff00e: feat: bump Rspack v0.5.0 stable and enable new tree shaking
+
 ## 0.2.18
 
 ## 0.2.17
