@@ -1192,6 +1192,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../plugin-babel
       '@rsbuild/test-helper':
         specifier: workspace:*
         version: link:../test-helper

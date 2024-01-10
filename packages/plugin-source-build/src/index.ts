@@ -31,6 +31,11 @@ export interface PluginSourceBuildOptions {
    * @default 'source''
    */
   sourceField?: string;
+  /**
+   * Whether to read source code or output code first.
+   * @default 'source'
+   */
+  resolvePriority?: 'source' | 'output';
   projectName?: string;
   extraMonorepoStrategies?: ExtraMonorepoStrategies;
 }
@@ -41,6 +46,7 @@ export function pluginSourceBuild(
   const {
     projectName,
     sourceField = 'source',
+    resolvePriority = 'source',
     extraMonorepoStrategies,
   } = options ?? {};
 
@@ -82,11 +88,17 @@ export function pluginSourceBuild(
             const rule = chain.module.rule(ruleId);
 
             // https://rspack.dev/config/resolve
-            // when source is not exist, other mainFields will effect. // source > webpack default mainFields.
-            rule.resolve.mainFields.merge([sourceField, '...']);
+            // when source is not exist, other mainFields will effect. // source > Rspack default mainFields.
+            rule.resolve.mainFields.merge(
+              resolvePriority === 'source'
+                ? [sourceField, '...']
+                : ['...', sourceField],
+            );
 
-            // bundler-chain do not support resolve.conditionNames
+            // bundler-chain do not support resolve.conditionNames yet
             rule.resolve.merge({
+              // `conditionNames` is not affected by `resolvePriority`.
+              // The priority is controlled by the order of fields declared in `exports`.
               conditionNames: ['...', sourceField],
             });
           }
