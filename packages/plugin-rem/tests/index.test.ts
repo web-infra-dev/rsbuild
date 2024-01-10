@@ -1,5 +1,5 @@
 import { pluginRem } from '../src';
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginCss } from '../../core/src/provider/plugins/css';
 import { pluginLess } from '../../core/src/provider/plugins/less';
 import { pluginSass } from '../../core/src/provider/plugins/sass';

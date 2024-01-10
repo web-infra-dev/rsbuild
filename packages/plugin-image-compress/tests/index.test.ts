@@ -1,4 +1,4 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginAsset } from '@rsbuild/core/plugins/asset';
 import { pluginImageCompress } from '../src';
 

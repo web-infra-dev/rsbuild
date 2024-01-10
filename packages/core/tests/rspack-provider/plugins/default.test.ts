@@ -1,4 +1,4 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { RsbuildPlugin } from '@rsbuild/shared';
 import { BUILTIN_LOADER } from '@/shared';
 

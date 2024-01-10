@@ -1,6 +1,6 @@
 import { expect, describe, it } from 'vitest';
 import { pluginStyledComponents } from '../src';
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { SCRIPT_REGEX } from '@rsbuild/shared';
 
 describe('plugins/styled-components', () => {

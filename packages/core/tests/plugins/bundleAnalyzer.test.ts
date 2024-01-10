@@ -1,4 +1,4 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginBundleAnalyzer } from '@src/plugins/bundleAnalyzer';
 
 describe('plugin-bundle-analyze', () => {

@@ -1,6 +1,6 @@
 import { expect, describe, it, test } from 'vitest';
 import { PluginSvgrOptions, pluginSvgr } from '../src';
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { SVG_REGEX } from '@rsbuild/shared';
 
 describe('svgr', () => {

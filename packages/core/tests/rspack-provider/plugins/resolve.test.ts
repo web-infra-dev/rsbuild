@@ -1,5 +1,5 @@
 import { pluginResolve } from '@/plugins/resolve';
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 
 describe('plugin-resolve', () => {
   it('should apply default extensions correctly', async () => {

@@ -1,5 +1,5 @@
 import { initHooks } from '@/core/initHooks';
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 
 describe('initHooks', () => {
   test('should init hooks correctly', async () => {

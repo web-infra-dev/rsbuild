@@ -1,6 +1,6 @@
 import { expect, describe, it, vi } from 'vitest';
 import { pluginReact } from '../src';
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { SCRIPT_REGEX } from '@rsbuild/shared';
 
 vi.mock('@rsbuild/shared', async (importOriginal) => {
