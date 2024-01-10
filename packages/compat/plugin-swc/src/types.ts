@@ -40,7 +40,7 @@ export type Override<T extends 'inner' | 'outer'> = Omit<
 export type FnPluginSwcOptions = (
   config: TransformConfig,
   utilities: Utilities,
-) => void | TransformConfig;
+) => TransformConfig | undefined;
 
 export type PluginSwcOptions<T extends 'inner' | 'outer' = 'inner'> =
   | ObjPluginSwcOptions<T>

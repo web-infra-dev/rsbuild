@@ -11,7 +11,7 @@ export default defineComponent({
 
   render() {
     return (
-      <button id="button1" onClick={() => this.count++}>
+      <button id="button1" type="button" onClick={() => this.count++}>
         A: {this.count}
       </button>
     );

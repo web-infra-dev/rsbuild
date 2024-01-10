@@ -16,9 +16,7 @@ export interface CodecBaseOptions {
   jpeg: JpegCompressOptions;
   png: PngQuantOptions;
   pngLossless: PNGLosslessOptions;
-  ico: {
-    /* empty */
-  };
+  ico: Record<string, never>;
   svg: SvgoConfig;
 }
 
