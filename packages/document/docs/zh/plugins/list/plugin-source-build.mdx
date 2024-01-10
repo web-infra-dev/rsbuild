@@ -184,6 +184,38 @@ pluginSourceBuild({
 }
 ```
 
+### resolvePriority
+
+- **类型：** `'source' | 'output'`
+- **默认值：** `'source'`
+
+用于控制优先读取源代码还是产物代码。
+
+默认情况下，Source Build 插件会优先读取源代码，比如在下面的例子中，它会读取 `source` 字段。
+
+```json title="package.json"
+{
+  "name": "lib",
+  "main": "./dist/index.js",
+  "source": "./src/index.ts"
+}
+```
+
+当 `resolvePriority` 设置为 `'output'` 时，Source Build 插件会优先读取产物代码，即 `main` 或 `module` 字段指向的代码。
+
+```ts
+pluginSourceBuild({
+  resolvePriority: 'output',
+});
+```
+
+:::tip
+package.json 中的 `exports` 字段不受 `resolvePriority` 的影响。
+
+`exports` 中 key 的声明顺序决定了读取顺序，较早声明的 key 具有更高的优先级。
+
+:::
+
 ## 注意事项
 
 在使用 Source Build 插件的时候，需要注意几点：

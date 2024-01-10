@@ -12,8 +12,7 @@ import type {
 } from '@rsbuild/core';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
-  const baseUrl = new URL(`http://localhost:${port}`);
-  const htmlRoot = new URL('/', baseUrl);
+  const htmlRoot = new URL(`http://localhost:${port}`);
   const homeUrl = new URL(`${entryName}.html`, htmlRoot);
 
   return homeUrl.href;

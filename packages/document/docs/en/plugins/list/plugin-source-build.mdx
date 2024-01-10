@@ -151,6 +151,8 @@ Note that the above example is a simplified one. In real monorepo projects, ther
 If you want to learn more about project reference, please refer to the official documentation on [TypeScript - Project References](https://typescriptlang.org/docs/handbook/project-references).
 :::
 
+## Options
+
 ### sourceField
 
 - **Type:** `string`
@@ -181,6 +183,38 @@ In `package.json`, the source code file path can be specified using `my-source`:
   }
 }
 ```
+
+### resolvePriority
+
+- **Type:** `'source' | 'output'`
+- **Default:** `'source'`
+
+Used to control the priority of reading the source code or the output code.
+
+By default, Source Build plugin will reading the source code first, for example, in the following example, it will read the `source` field.
+
+```json title="package.json"
+{
+  "name": "lib",
+  "main": "./dist/index.js",
+  "source": "./src/index.ts"
+}
+```
+
+When `resolvePriority` is set to `'output'`, Source Build plugin will read the output code first, i.e., the code from the `main` or `module` field.
+
+```ts
+pluginSourceBuild({
+  resolvePriority: 'output',
+});
+```
+
+:::tip
+The `exports` field in package.json is not affected by `resolvePriority`.
+
+The keys order in `exports` determines the resolving order, earlier declared keys having higher priority.
+
+:::
 
 ## Caveat
 
