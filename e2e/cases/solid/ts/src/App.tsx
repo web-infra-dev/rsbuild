@@ -4,7 +4,7 @@ const App = () => {
   const [count, setCount] = createSignal(0);
 
   return (
-    <button id="button" onClick={() => setCount(count() + 1)}>
+    <button id="button" type="button" onClick={() => setCount(count() + 1)}>
       count: {count()}
     </button>
   );

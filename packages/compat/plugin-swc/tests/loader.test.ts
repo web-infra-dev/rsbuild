@@ -3,7 +3,7 @@ import { createLoader } from '../src/loader';
 
 const mockSwcLoaderRunner = (): [
   Promise<ReturnType<LoaderDefinitionFunction>>,
-  LoaderContext<{}>,
+  LoaderContext<Record<string, never>>,
 ] => {
   let resolve: unknown;
 
@@ -21,7 +21,7 @@ const mockSwcLoaderRunner = (): [
         return resolve;
       },
       resourcePath: '/test.js',
-    } as LoaderContext<{}>,
+    } as LoaderContext<Record<string, never>>,
   ];
 };
 

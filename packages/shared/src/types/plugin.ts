@@ -88,7 +88,7 @@ export type RsbuildPlugin = {
 
 export type RsbuildPlugins = (RsbuildPlugin | Falsy)[];
 
-type PluginsFn<T = void> = T extends void
+type PluginsFn<T = undefined> = T extends undefined
   ? () => Promise<RsbuildPlugin>
   : (arg: T) => Promise<RsbuildPlugin>;
 

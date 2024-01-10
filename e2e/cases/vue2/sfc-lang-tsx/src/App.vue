@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button id="button" @click="count++">{{ count }}</button>
+    <button id="button" type="button" @click="count++">{{ count }}</button>
     <Foo />
   </div>
 </template>

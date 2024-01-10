@@ -6,7 +6,7 @@ const App = () => {
 
   return (
     <div>
-      <button id="A" onClick={() => setCount(count() + 1)}>
+      <button id="A" type="button" onClick={() => setCount(count() + 1)}>
         A: {count()}
       </button>
       <B count={count} />
