@@ -25,3 +25,19 @@ export default {
 ```
 
 After registering the plugin, you can directly develop Preact.
+
+## Options
+
+### reactAliasesEnabled
+
+Whether to aliases `react`, `react-dom` to `preact/compat`.
+
+- **Type:** `boolean`
+- **Default:** `true`
+- **Example:** Disable aliases.
+
+```ts
+pluginPreact({
+  reactAliasesEnabled: false,
+});
+```

@@ -25,3 +25,19 @@ export default {
 ```
 
 注册完插件后，你可以直接进行 Preact 开发。
+
+## 选项
+
+### reactAliasesEnabled
+
+是否将 `react`、`react-dom` 通过 alias 指向 `preact/compat`。
+
+- **类型：** `boolean`
+- **默认值：** `true`
+- **示例：** 禁用别名。
+
+```ts
+pluginPreact({
+  reactAliasesEnabled: false,
+});
+```
