@@ -68,6 +68,8 @@ function getURLMessages(
       )}${color.cyan(normalizeUrl(`${url}/${r.route}`))}\n`;
     });
   });
+
+  return message;
 }
 
 export function printServerURLs({
