@@ -42,7 +42,11 @@ export type HistoryApiFallbackOptions = {
 
 export type PrintUrls =
   | boolean
-  | ((params: { urls: string[]; port: number; protocol: string }) => void);
+  | ((params: {
+      urls: string[];
+      port: number;
+      protocol: string;
+    }) => string[] | void);
 
 export type PublicDir =
   | false
