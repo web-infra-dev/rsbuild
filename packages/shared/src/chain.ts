@@ -212,6 +212,8 @@ export const CHAIN_ID = {
     MINI_CSS_EXTRACT: 'mini-css-extract',
     /** VueLoaderPlugin */
     VUE_LOADER_PLUGIN: 'vue-loader-plugin',
+    /** PreactRefreshPlugin */
+    PREACT_REFRESH: 'preact-refresh',
     /** ReactFastRefreshPlugin */
     REACT_FAST_REFRESH: 'react-fast-refresh',
     /** ProvidePlugin for node polyfill */
