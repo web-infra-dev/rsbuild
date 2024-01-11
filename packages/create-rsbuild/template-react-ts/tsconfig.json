@@ -8,7 +8,8 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "useDefineForClassFields": true
   },
   "include": ["src"]
 }
