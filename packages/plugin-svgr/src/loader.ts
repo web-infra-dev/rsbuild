@@ -7,7 +7,7 @@
  */
 
 import { callbackify } from 'util';
-import { transform, Config, State } from '@svgr/core';
+import { transform, type Config, type State } from '@svgr/core';
 import { normalize } from 'path';
 import svgo from '@svgr/plugin-svgo';
 import jsx from '@svgr/plugin-jsx';

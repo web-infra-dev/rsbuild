@@ -9,7 +9,7 @@ import {
   chainStaticAssetRule,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { Config } from '@svgr/core';
+import type { Config } from '@svgr/core';
 
 export type SvgDefaultExport = 'component' | 'url';
 

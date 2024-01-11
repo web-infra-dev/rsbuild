@@ -1,5 +1,5 @@
 import type { Buffer } from 'buffer';
-import {
+import type {
   JpegCompressOptions,
   PNGLosslessOptions,
   PngQuantOptions,

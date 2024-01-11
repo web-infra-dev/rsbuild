@@ -1,7 +1,7 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getHrefByEntryName } from '@scripts/shared';
-import { BundlerChain } from '@rsbuild/shared';
+import type { BundlerChain } from '@rsbuild/shared';
 
 // use source-map for easy to test. By default, Rsbuild use hidden-source-map
 const toolsConfig = {

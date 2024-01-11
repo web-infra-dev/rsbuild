@@ -10,7 +10,7 @@ import {
   type NormalizedConfig,
 } from '@rsbuild/shared';
 import { getDefaultSwcConfig } from './plugin';
-import {
+import type {
   ObjPluginSwcOptions,
   PluginSwcOptions,
   TransformConfig,

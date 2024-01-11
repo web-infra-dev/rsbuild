@@ -1,4 +1,4 @@
-import { LoaderContext, LoaderDefinitionFunction } from 'webpack';
+import type { LoaderContext, LoaderDefinitionFunction } from 'webpack';
 import { createLoader } from '../src/loader';
 
 const mockSwcLoaderRunner = (): [

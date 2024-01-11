@@ -1,7 +1,7 @@
 import path from 'path';
 import { fse } from '@rsbuild/shared';
 import { load } from 'js-yaml';
-import glob, { Options as GlobOptions } from 'fast-glob';
+import glob, { type Options as GlobOptions } from 'fast-glob';
 import pMap from 'p-map';
 import { Project } from '../project/project';
 import { PNPM_WORKSPACE_FILE, PACKAGE_JSON } from '../constants';

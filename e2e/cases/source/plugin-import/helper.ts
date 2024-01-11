@@ -2,7 +2,7 @@ import path from 'path';
 import { build } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { RsbuildConfig } from '@rsbuild/core';
+import type { RsbuildConfig } from '@rsbuild/core';
 import type { TransformImport } from '@rsbuild/shared';
 
 export const cases: Parameters<typeof shareTest>[] = [

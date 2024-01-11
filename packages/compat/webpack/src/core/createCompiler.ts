@@ -9,7 +9,7 @@ import {
 } from '@rsbuild/shared';
 import type { InternalContext } from '@rsbuild/core/provider';
 import type { WebpackConfig } from '../types';
-import { initConfigs, InitConfigsOptions } from './initConfigs';
+import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import type { Compiler } from 'webpack';
 import { getDevMiddleware } from './devMiddleware';
 

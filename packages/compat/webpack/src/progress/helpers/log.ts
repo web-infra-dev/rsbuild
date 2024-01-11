@@ -1,4 +1,4 @@
-import { Writable } from 'stream';
+import type { Writable } from 'stream';
 import ansiEscapes from '../../../compiled/ansi-escapes';
 
 export interface LogUpdate {

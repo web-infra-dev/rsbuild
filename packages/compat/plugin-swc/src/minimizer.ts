@@ -1,4 +1,4 @@
-import { webpack } from '@rsbuild/webpack';
+import type { webpack } from '@rsbuild/webpack';
 import { merge } from 'lodash';
 import { logger } from '@rsbuild/core';
 import {
@@ -7,7 +7,7 @@ import {
   getSwcMinimizerOptions,
   type NormalizedConfig,
 } from '@rsbuild/shared';
-import { Output, JsMinifyOptions, CssMinifyOptions } from './types';
+import type { Output, JsMinifyOptions, CssMinifyOptions } from './types';
 import { minify, minifyCss } from './binding';
 import { JS_REGEX } from './constants';
 

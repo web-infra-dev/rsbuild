@@ -1,7 +1,7 @@
 import {
   CHAIN_ID,
-  BundlerChain,
   getTerserMinifyOptions,
+  type BundlerChain,
   type RsbuildPlugin,
   type NormalizedConfig,
 } from '@rsbuild/shared';

@@ -1,4 +1,4 @@
-import { type RsbuildPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/shared';
 import fs from 'fs';
 import { join, isAbsolute } from 'path';
 

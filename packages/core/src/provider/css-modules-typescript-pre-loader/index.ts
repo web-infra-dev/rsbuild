@@ -1,5 +1,9 @@
 import cssModulesTypescriptLoader from '@rsbuild/shared/css-modules-typescript-loader';
-import { isCssModules, isInNodeModules, CssModules } from '@rsbuild/shared';
+import {
+  isCssModules,
+  isInNodeModules,
+  type CssModules,
+} from '@rsbuild/shared';
 import type { LoaderContext } from '@rspack/core';
 import type { PostcssParsePluginOptions } from './postcssIcssExtractPlugin';
 import type { CssModuleLocalsConvention } from '@rsbuild/shared';

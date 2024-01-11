@@ -1,6 +1,6 @@
 import path from 'path';
 import type { MonorepoAnalyzer } from '../types';
-import { isMonorepo, IsMonorepoFn } from './isMonorepo';
+import { isMonorepo, type IsMonorepoFn } from './isMonorepo';
 import type { GetProjectsFunc } from './getProjects';
 
 export interface IMonorepoBaseData {

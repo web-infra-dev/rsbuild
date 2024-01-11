@@ -1,13 +1,13 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Socket } from 'net';
-import {
+import type {
   DevConfig,
   NextFunction,
   RequestHandler,
   ServerAPIs,
 } from './config/dev';
-import { ServerConfig } from './config/server';
-import { Routes } from './hooks';
+import type { ServerConfig } from './config/server';
+import type { Routes } from './hooks';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 
 export type Middleware = (

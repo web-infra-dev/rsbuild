@@ -1,12 +1,15 @@
 import path from 'node:path';
-import { SwcReactConfig, isUsingHMR } from '@rsbuild/shared';
+import { type SwcReactConfig, isUsingHMR } from '@rsbuild/shared';
 import type { RsbuildPluginAPI } from '@rsbuild/core';
 import type { PluginReactOptions } from '.';
 
 export const REACT_REFRESH_PATH = require.resolve('react-refresh');
 const REACT_REFRESH_DIR_PATH = path.dirname(REACT_REFRESH_PATH);
 
-export const applyBasicReactSupport = (api: RsbuildPluginAPI, options: PluginReactOptions) => {
+export const applyBasicReactSupport = (
+  api: RsbuildPluginAPI,
+  options: PluginReactOptions,
+) => {
   api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
     const config = api.getNormalizedConfig();
     const usingHMR = isUsingHMR(config, { isProd, target });

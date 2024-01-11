@@ -1,6 +1,6 @@
 import {
   createProxyMiddleware as baseCreateProxyMiddleware,
-  RequestHandler,
+  type RequestHandler,
 } from '@rsbuild/shared/http-proxy-middleware';
 import {
   logger,

@@ -6,7 +6,7 @@ import {
   Transformer,
 } from '@napi-rs/image';
 import svgo from 'svgo';
-import { Codec, Codecs } from '../types';
+import type { Codec, Codecs } from '../types';
 
 export const jpegCodec: Codec<'jpeg'> = {
   handler(buf, options) {

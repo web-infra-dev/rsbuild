@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import { Script } from 'node:vm';
 import { transformFileSync } from '@swc/core';
-import { Output, TransformConfig } from '@modern-js/swc-plugins';
+import type { Output, TransformConfig } from '@modern-js/swc-plugins';
 import { merge } from 'lodash';
 import { getDefaultSwcConfig } from '../src/plugin';
 
@@ -152,7 +152,7 @@ export async function fsSnapshot(
     const expected = fs.readFileSync(expectedPath).toString();
 
     expect(finalCode, `Test base: ${base}`).toEqual(
-      expected.replace(new RegExp('\\r\\n', 'g'), '\n'),
+      expected.replace(/\r\n/g, '\n'),
     );
   }
 }

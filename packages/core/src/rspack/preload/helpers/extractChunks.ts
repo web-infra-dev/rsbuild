@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Chunk, Compilation } from 'webpack';
+import type { Chunk, Compilation } from 'webpack';
 import type { PreloadIncludeType } from '@rsbuild/shared';
 
 export type ChunkGroup = Compilation['chunkGroups'][0];
