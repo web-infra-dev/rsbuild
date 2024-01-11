@@ -35,21 +35,8 @@ For projects using Vue CLI, you can refer to the [Vue CLI Migration Guide](/guid
 
 If you need to use the JSX syntax of Vue, you also need to register the [Vue 3 JSX plugin](/plugins/list/plugin-vue-jsx).
 
-## Type Declarations
+## TypeScript Support
 
-In a TypeScript project, you need to add type definitions for `*.vue` files so that TypeScript can recognize them correctly.
+Rsbuild supports compiling TypeScript by default.
 
-Create `env.d.ts` in the `src` directory and add the following content:
-
-```ts title="src/env.d.ts"
-declare module '*.vue' {
-  import type { DefineComponent } from 'vue';
-
-  const component: DefineComponent<{}, {}, any>;
-  export default component;
-}
-```
-
-import DeployApp from '@en/shared/deployApp.md';
-
-<DeployApp />
+Please refer to the [TypeScript - IDE Support](https://vuejs.org/guide/typescript/overview.html#ide-support) section of the Vue documentation to learn how to set up Vue TypeScript support in your IDE.
