@@ -1,6 +1,6 @@
 import path from 'path';
 import { test, expect } from '@playwright/test';
-import { RsbuildPlugin, createRsbuild } from '@rsbuild/core';
+import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
 import { fse } from '@rsbuild/shared';
 
 const distFile = path.join(__dirname, 'node_modules/hooksTempFile');

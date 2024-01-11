@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { build, getRandomPort, getHrefByEntryName } from '@scripts/shared';
-import { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 test('should preview dist files correctly', async ({ page }) => {
   const cwd = join(__dirname, 'basic');

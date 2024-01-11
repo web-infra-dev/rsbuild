@@ -3,7 +3,6 @@ import {
   resolvePackage,
   isUseCssExtract,
   getPostcssLoaderOptions,
-  ModifyChainUtils,
   mergeChainedOptions,
   getCssLoaderOptions,
   getBrowserslistWithDefault,
@@ -13,6 +12,7 @@ import {
   type RsbuildPlugin,
   type NormalizedConfig,
   type BundlerChainRule,
+  type ModifyChainUtils,
   type CSSExtractOptions,
 } from '@rsbuild/shared';
 

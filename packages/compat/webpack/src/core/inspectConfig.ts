@@ -1,5 +1,5 @@
 import { join, isAbsolute } from 'path';
-import { initConfigs, InitConfigsOptions } from './initConfigs';
+import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import {
   outputInspectConfigFiles,
   stringifyConfig,

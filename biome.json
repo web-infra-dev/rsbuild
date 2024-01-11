@@ -13,7 +13,8 @@
       "compiled/**/*",
       "plugin-swc/tests/fixtures/**/*",
       "*.css.d.ts"
-    ]
+    ],
+    "ignoreUnknown": true
   },
   "linter": {
     "enabled": true,
@@ -31,6 +32,10 @@
       },
       "performance": {
         "noDelete": "off"
+      },
+      "nursery": {
+        "useImportType": "error",
+        "useExportType": "error"
       }
     }
   }

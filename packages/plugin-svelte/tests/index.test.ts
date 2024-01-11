@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { Transformer, pluginSvelte } from '../src';
+import { type Transformer, pluginSvelte } from '../src';
 
 describe('plugin-svelte', () => {
   it('should add svelte loader properly', async () => {

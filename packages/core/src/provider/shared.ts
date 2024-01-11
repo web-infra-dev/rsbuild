@@ -1,10 +1,10 @@
 import { join } from 'path';
 import {
   getSharedPkgCompiledPath,
-  SharedCompiledPkgNames,
+  type SharedCompiledPkgNames,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
-import { RsbuildPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 import { awaitableGetter, type Plugins } from '@rsbuild/shared';
 
 export const applyDefaultPlugins = (plugins: Plugins) =>

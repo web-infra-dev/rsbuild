@@ -1,9 +1,9 @@
 import type { ChainIdentifier } from '../chain';
 import type { Stats, MultiStats } from './stats';
-import { NodeEnv, PromiseOrNot } from './utils';
-import { RsbuildTarget } from './rsbuild';
-import { BundlerChain } from './bundlerConfig';
-import { mergeRsbuildConfig } from '../mergeRsbuildConfig';
+import type { NodeEnv, PromiseOrNot } from './utils';
+import type { RsbuildTarget } from './rsbuild';
+import type { BundlerChain } from './bundlerConfig';
+import type { mergeRsbuildConfig } from '../mergeRsbuildConfig';
 import type { Rspack, RspackConfig } from './rspack';
 import type { RsbuildConfig } from './config';
 import type { WebpackConfig } from './thirdParty';

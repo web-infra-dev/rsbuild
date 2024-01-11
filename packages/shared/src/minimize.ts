@@ -1,7 +1,7 @@
 import { isObject } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type { NormalizedConfig, TerserPluginOptions } from './types';
-import { SwcJsMinimizerRspackPluginOptions } from '@rspack/core';
+import type { SwcJsMinimizerRspackPluginOptions } from '@rspack/core';
 
 function applyRemoveConsole(
   options: TerserPluginOptions,

@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { ChunkGroup } from './extractChunks';
+import type { ChunkGroup } from './extractChunks';
 import type { Compilation } from '@rspack/core';
 import type { Chunk } from 'webpack';
 import type { PreloadOrPreFetchOption } from '@rsbuild/shared';
-import { BeforeAssetTagGenerationHtmlPluginData } from './type';
+import type { BeforeAssetTagGenerationHtmlPluginData } from './type';
 
 interface DoesChunkBelongToHtmlOptions {
   chunk: Chunk;

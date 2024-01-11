@@ -15,7 +15,7 @@ import type {
   ModifyChainUtils,
 } from './hooks';
 import type { RsbuildContext } from './context';
-import {
+import type {
   RsbuildConfig,
   NormalizedConfig,
   ModifyRspackConfigUtils,

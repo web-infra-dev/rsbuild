@@ -1,5 +1,5 @@
 import { createCompiler } from './createCompiler';
-import { initConfigs, InitConfigsOptions } from './initConfigs';
+import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import { logger } from '@rsbuild/shared';
 import type {
   Stats,

@@ -2,7 +2,7 @@ import fs from 'fs';
 import { join } from 'path';
 import {
   getSharedPkgCompiledPath,
-  SharedCompiledPkgNames,
+  type SharedCompiledPkgNames,
 } from '@rsbuild/shared';
 import {
   awaitableGetter,

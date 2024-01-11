@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { FinalOptions, Options } from '../types';
+import type { FinalOptions, Options } from '../types';
 import codecs from './codecs';
 
 export const withDefaultOptions = (opt: Options): FinalOptions => {
