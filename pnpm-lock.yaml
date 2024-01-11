@@ -62,6 +62,9 @@ importers:
       moment:
         specifier: ^2
         version: 2.29.4
+      preact:
+        specifier: ^10.19.3
+        version: 10.19.3
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -102,6 +105,9 @@ importers:
       '@rsbuild/plugin-node-polyfill':
         specifier: workspace:*
         version: link:../packages/plugin-node-polyfill
+      '@rsbuild/plugin-preact':
+        specifier: workspace:*
+        version: link:../packages/plugin-preact
       '@rsbuild/plugin-pug':
         specifier: workspace:*
         version: link:../packages/plugin-pug

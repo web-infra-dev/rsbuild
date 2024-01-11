@@ -1,4 +1,4 @@
-import { useState } from 'preact';
+import { useState } from 'preact/hooks';
 
 const App = () => {
   const [count, setCount] = useState(0);
