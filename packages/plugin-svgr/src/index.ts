@@ -21,6 +21,7 @@ export type PluginSvgrOptions = {
 
   /**
    * Configure the default export type of SVG files.
+   * @default 'url'
    */
   svgDefaultExport?: SvgDefaultExport;
 };

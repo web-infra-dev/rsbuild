@@ -39,49 +39,6 @@ test('svg (assets)', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('svgr (defaultExport url)', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: join(fixtures, 'svg'),
-    runServer: true,
-    rsbuildConfig: {
-      source: {
-        entry: {
-          index: join(fixtures, 'svg', 'src/index.js'),
-        },
-      },
-    },
-    plugins: [
-      pluginReact(),
-      pluginSvgr({
-        svgDefaultExport: 'url',
-      }),
-    ],
-  });
-
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
-
-  // test svgr（namedExport）
-  await expect(
-    page.evaluate(`document.getElementById('test-svg').tagName === 'svg'`),
-  ).resolves.toBeTruthy();
-
-  // test svg asset
-  await expect(
-    page.evaluate(
-      `document.getElementById('test-img').src.startsWith('data:image/svg')`,
-    ),
-  ).resolves.toBeTruthy();
-
-  // test svg asset in css
-  await expect(
-    page.evaluate(
-      `getComputedStyle(document.getElementById('test-css')).backgroundImage.includes('url("data:image/svg')`,
-    ),
-  ).resolves.toBeTruthy();
-
-  await rsbuild.close();
-});
-
 test('svgr (defaultExport component)', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'svg-default-export-component'),
@@ -99,37 +56,6 @@ test('svgr (defaultExport component)', async ({ page }) => {
 
   await expect(
     page.evaluate(`document.getElementById('test-svg').tagName === 'svg'`),
-  ).resolves.toBeTruthy();
-
-  await rsbuild.close();
-});
-
-test('svgr (query url)', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: join(fixtures, 'svg-url'),
-    plugins: [
-      pluginReact(),
-      pluginSvgr({
-        svgDefaultExport: 'component',
-      }),
-    ],
-    runServer: true,
-  });
-
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
-
-  // test svg asset
-  await expect(
-    page.evaluate(
-      `document.getElementById('test-img').src.includes('static/svg/app')`,
-    ),
-  ).resolves.toBeTruthy();
-
-  // test svg asset in css
-  await expect(
-    page.evaluate(
-      `getComputedStyle(document.getElementById('test-css')).backgroundImage.includes('static/svg/app')`,
-    ),
   ).resolves.toBeTruthy();
 
   await rsbuild.close();

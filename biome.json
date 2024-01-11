@@ -11,7 +11,8 @@
       "coverage/**/*",
       "cspell.json",
       "compiled/**/*",
-      "plugin-swc/tests/fixtures/**/*"
+      "plugin-swc/tests/fixtures/**/*",
+      "*.css.d.ts"
     ]
   },
   "linter": {
