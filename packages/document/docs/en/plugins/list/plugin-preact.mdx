@@ -1,0 +1,27 @@
+# Preact Plugin
+
+The Preact plugin provides support for Preact, integrating features such as JSX compilation and React aliasing.
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-preact -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginPreact } from '@rsbuild/plugin-preact';
+
+export default {
+  plugins: [pluginPreact()],
+};
+```
+
+After registering the plugin, you can directly develop Preact.

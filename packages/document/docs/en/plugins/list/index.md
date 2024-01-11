@@ -31,6 +31,12 @@ Plugins available for the Vue framework:
 - [Vue2 Plugin](/plugins/list/plugin-vue2): Provides support for Vue 2 SFC (Single File Components).
 - [Vue2 JSX Plugin](/plugins/list/plugin-vue2-jsx): Provides support for Vue 2 JSX / TSX syntax.
 
+### For Preact
+
+Plugins available for the Preact framework:
+
+- [Preact Plugin](/plugins/list/plugin-preact): Provides support for Preact.
+
 ### For Svelte
 
 Plugins available for the Svelte framework:
