@@ -11,6 +11,7 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "moment": "^2",
+    "preact": "^10.19.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
@@ -26,6 +27,7 @@
     "@rsbuild/plugin-css-minimizer": "workspace:*",
     "@rsbuild/plugin-image-compress": "workspace:*",
     "@rsbuild/plugin-node-polyfill": "workspace:*",
+    "@rsbuild/plugin-preact": "workspace:*",
     "@rsbuild/plugin-pug": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-rem": "workspace:*",
