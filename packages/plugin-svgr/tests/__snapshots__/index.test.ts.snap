@@ -109,7 +109,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/node_modules/<PNPM_INNER>/url-loader/dist/cjs.js",
+          "loader": "<ROOT>/packages/plugin-svgr/compiled/url-loader",
           "options": {
             "limit": 10000,
             "name": "static/svg/[name].[contenthash:8].svg",
@@ -344,7 +344,7 @@ exports[`svgr > 'export default url' 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/node_modules/<PNPM_INNER>/url-loader/dist/cjs.js",
+          "loader": "<ROOT>/packages/plugin-svgr/compiled/url-loader",
           "options": {
             "limit": 10000,
             "name": "static/svg/[name].[contenthash:8].svg",

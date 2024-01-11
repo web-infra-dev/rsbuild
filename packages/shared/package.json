@@ -51,6 +51,14 @@
       "types": "./compiled/commander/typings/index.d.ts",
       "default": "./compiled/commander/index.js"
     },
+    "./mime-types": {
+      "types": "./compiled/mime-types/index.d.ts",
+      "default": "./compiled/mime-types/index.js"
+    },
+    "./loader-utils2": {
+      "types": "./compiled/loader-utils2/index.d.ts",
+      "default": "./compiled/loader-utils2/index.js"
+    },
     "./webpack-sources": {
       "types": "./compiled/webpack-sources/index.d.ts",
       "default": "./compiled/webpack-sources/index.js"

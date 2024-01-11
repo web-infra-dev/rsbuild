@@ -1,5 +1,5 @@
 import path, { join } from 'path';
-import type { TaskConfig } from './types';
+import type { ParsedTask, TaskConfig } from './types';
 import fs, { copySync } from 'fs-extra';
 import { replaceFileContent } from './helper';
 
@@ -25,6 +25,13 @@ export const DEFAULT_EXTERNALS = {
   postcss: 'postcss',
   typescript: 'typescript',
   '@babel/core': '@babel/core',
+};
+
+const writeEmptySchemaUtils = (task: ParsedTask) => {
+  // The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
+  // So we skip the validation and let TypeScript to ensure type safety.
+  const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
+  fs.outputFileSync(schemaUtilsPath, 'module.exports.validate = () => {};');
 };
 
 export const TASKS: TaskConfig[] = [
@@ -232,15 +239,7 @@ export const TASKS: TaskConfig[] = [
             'schema-utils/declarations/validate',
           'mime-types': '../mime-types',
         },
-        afterBundle(task) {
-          // The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
-          // So we skip the validation and let TypeScript to ensure type safety.
-          const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
-          fs.outputFileSync(
-            schemaUtilsPath,
-            'module.exports.validate = () => {};',
-          );
-        },
+        afterBundle: writeEmptySchemaUtils,
       },
       {
         name: 'autoprefixer',
@@ -278,14 +277,40 @@ export const TASKS: TaskConfig[] = [
         externals: {
           'schema-utils': './schema-utils',
         },
+        afterBundle: writeEmptySchemaUtils,
+      },
+    ],
+  },
+  {
+    packageDir: 'plugin-svgr',
+    packageName: '@rsbuild/plugin-svgr',
+    dependencies: [
+      {
+        name: 'file-loader',
+        ignoreDts: true,
+        externals: {
+          'schema-utils': './schema-utils',
+          'loader-utils': '@rsbuild/shared/loader-utils2',
+        },
+        afterBundle: writeEmptySchemaUtils,
+      },
+      {
+        name: 'url-loader',
+        ignoreDts: true,
+        externals: {
+          'schema-utils': './schema-utils',
+          'loader-utils': '@rsbuild/shared/loader-utils2',
+          'mime-types': '@rsbuild/shared/mime-types',
+        },
         afterBundle(task) {
-          // The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
-          // So we skip the validation and let TypeScript to ensure type safety.
-          const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
-          fs.outputFileSync(
-            schemaUtilsPath,
-            'module.exports.validate = () => {};',
-          );
+          writeEmptySchemaUtils(task);
+          replaceFileContent(join(task.distPath, 'index.js'), (content) => {
+            // use prebundled file-loader
+            return content.replace(
+              '"file-loader"',
+              'require.resolve("../file-loader")',
+            );
+          });
         },
       },
     ],
