@@ -1,11 +1,11 @@
-import { useState } from 'preact';
+import { createSignal } from 'solid-js';
 
 const App = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = createSignal(0);
 
   return (
-    <button id="button" type="button" onClick={() => setCount(count + 1)}>
-      count: {count}
+    <button id="button" type="button" onClick={() => setCount(count() + 1)}>
+      count: {count()}
     </button>
   );
 };
