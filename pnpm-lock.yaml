@@ -1291,12 +1291,6 @@ importers:
       '@svgr/plugin-svgo':
         specifier: 8.1.0
         version: 8.1.0(@svgr/core@8.1.0)(typescript@5.3.2)
-      file-loader:
-        specifier: 6.2.0
-        version: 6.2.0(webpack@5.89.0)
-      url-loader:
-        specifier: 4.1.1
-        version: 4.1.1(file-loader@6.2.0)(webpack@5.89.0)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1600,6 +1594,9 @@ importers:
       dotenv-expand:
         specifier: 10.0.0
         version: 10.0.0
+      file-loader:
+        specifier: 6.2.0
+        version: 6.2.0(webpack@5.89.0)
       fs-extra:
         specifier: ^11.1.1
         version: 11.2.0
@@ -1684,6 +1681,9 @@ importers:
       toml-loader:
         specifier: 1.0.0
         version: 1.0.0
+      url-loader:
+        specifier: 4.1.1
+        version: 4.1.1(file-loader@6.2.0)(webpack@5.89.0)
       webpack-bundle-analyzer:
         specifier: 4.9.0
         version: 4.9.0
@@ -8172,7 +8172,7 @@ packages:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
       webpack: 5.89.0
-    dev: false
+    dev: true
 
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
@@ -13827,7 +13827,7 @@ packages:
       mime-types: 2.1.35
       schema-utils: 3.3.0
       webpack: 5.89.0
-    dev: false
+    dev: true
 
   /url@0.11.3:
     resolution: {integrity: sha512-6hxOLGfZASQK/cijlZnZJTq8OXAkt/3YGfQX45vvMYXpZoo8NdWZcY73K108Jf759lS1Bv/8wXnHDTSz17dSRw==}

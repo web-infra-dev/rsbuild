@@ -124,7 +124,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         .when(svgDefaultExport === 'url', (c) =>
           c
             .use(CHAIN_ID.USE.URL)
-            .loader(require.resolve('url-loader'))
+            .loader(path.join(__dirname, '../compiled', 'url-loader'))
             .options({
               limit: config.output.dataUriLimit.svg,
               name: outputName,

@@ -19,7 +19,8 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "compiled"
   ],
   "scripts": {
     "build": "modern build",
@@ -29,9 +30,7 @@
     "@rsbuild/shared": "workspace:*",
     "@svgr/core": "8.1.0",
     "@svgr/plugin-jsx": "8.1.0",
-    "@svgr/plugin-svgo": "8.1.0",
-    "file-loader": "6.2.0",
-    "url-loader": "4.1.1"
+    "@svgr/plugin-svgo": "8.1.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
