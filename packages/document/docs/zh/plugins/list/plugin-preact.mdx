@@ -1,0 +1,27 @@
+# Preact 插件
+
+Preact 插件提供了对 Preact 的支持，插件内部集成了 JSX 编译、React aliasing 等功能。
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-preact -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginPreact } from '@rsbuild/plugin-preact';
+
+export default {
+  plugins: [pluginPreact()],
+};
+```
+
+注册完插件后，你可以直接进行 Preact 开发。

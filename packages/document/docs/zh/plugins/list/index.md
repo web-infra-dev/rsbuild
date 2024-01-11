@@ -31,6 +31,12 @@
 - [Vue 2 插件](/plugins/list/plugin-vue2)：提供对 Vue 2 SFC（单文件组件）的支持。
 - [Vue 2 JSX 插件](/plugins/list/plugin-vue2-jsx)：提供对 Vue 2 JSX / TSX 语法的支持。
 
+### Preact
+
+适用于 Preact 框架的插件有：
+
+- [Preact 插件](/plugins/list/plugin-preact)：提供对 Preact 的支持。
+
 ### Svelte
 
 适用于 Svelte 框架的插件有：
