@@ -46,18 +46,6 @@ interface Attributes {
   crossorigin?: string;
 }
 
-function filterResourceHints(
-  resourceHints: HtmlWebpackPlugin.HtmlTagObject[],
-  scripts: HtmlWebpackPlugin.HtmlTagObject[],
-): HtmlWebpackPlugin.HtmlTagObject[] {
-  return resourceHints.filter(
-    (resourceHint) =>
-      !scripts.find(
-        (script) => script.attributes.src === resourceHint.attributes.href,
-      ),
-  );
-}
-
 function generateLinks(
   options: PreloadOrPreFetchOption,
   type: LinkType,
@@ -215,10 +203,7 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
           (htmlPluginData) => {
             if (this.resourceHints) {
               htmlPluginData.assetTags.styles = [
-                ...filterResourceHints(
-                  this.resourceHints,
-                  htmlPluginData.assetTags.scripts,
-                ),
+                ...this.resourceHints,
                 ...htmlPluginData.assetTags.styles,
               ];
             }

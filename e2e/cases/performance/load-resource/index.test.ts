@@ -147,7 +147,7 @@ test('should generate prefetch link by config (distinguish html)', async () => {
   )!;
 
   // icon.png、test.js、test.css、test.png
-  expect(content.match(/rel="prefetch"/g)?.length).toBe(4);
+  expect(content.match(/rel="prefetch"/g)?.length).toBe(6);
 
   const assetFileName = Object.keys(files).find((file) =>
     file.includes('/static/image/'),
@@ -165,8 +165,8 @@ test('should generate prefetch link by config (distinguish html)', async () => {
     name.endsWith('page2.html'),
   )!;
 
-  // test.js、test.css、test.png
-  expect(content2.match(/rel="prefetch"/g)?.length).toBe(3);
+  // lib-react、main.js、test.js、test.css、test.png
+  expect(content2.match(/rel="prefetch"/g)?.length).toBe(5);
 });
 
 test('should generate preload link when preload is defined', async () => {
