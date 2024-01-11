@@ -1291,9 +1291,12 @@ importers:
       '@svgr/plugin-svgo':
         specifier: 8.1.0
         version: 8.1.0(@svgr/core@8.1.0)(typescript@5.3.2)
+      file-loader:
+        specifier: 6.2.0
+        version: 6.2.0(webpack@5.89.0)
       url-loader:
         specifier: 4.1.1
-        version: 4.1.1(webpack@5.89.0)
+        version: 4.1.1(file-loader@6.2.0)(webpack@5.89.0)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -8160,6 +8163,17 @@ packages:
       escape-string-regexp: 1.0.5
     dev: true
 
+  /file-loader@6.2.0(webpack@5.89.0):
+    resolution: {integrity: sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      webpack: ^4.0.0 || ^5.0.0
+    dependencies:
+      loader-utils: 2.0.4
+      schema-utils: 3.3.0
+      webpack: 5.89.0
+    dev: false
+
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
     engines: {node: '>=8'}
@@ -13798,7 +13812,7 @@ packages:
     dependencies:
       punycode: 2.3.0
 
-  /url-loader@4.1.1(webpack@5.89.0):
+  /url-loader@4.1.1(file-loader@6.2.0)(webpack@5.89.0):
     resolution: {integrity: sha512-3BTV812+AVHHOJQO8O5MkWgZ5aosP7GnROJwvzLS9hWDj00lZ6Z0wNak423Lp9PBZN05N+Jk/N5Si8jRAlGyWA==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -13808,6 +13822,7 @@ packages:
       file-loader:
         optional: true
     dependencies:
+      file-loader: 6.2.0(webpack@5.89.0)
       loader-utils: 2.0.4
       mime-types: 2.1.35
       schema-utils: 3.3.0
