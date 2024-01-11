@@ -2,6 +2,7 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   isServerTarget,
   mergeChainedOptions,
+  modifySwcLoaderOptions,
   getDefaultStyledComponentsConfig,
   type ChainedConfig,
 } from '@rsbuild/shared';
@@ -28,7 +29,7 @@ export const pluginStyledComponents = (
   name: 'rsbuild:styled-components',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
+    api.modifyBundlerChain(async (chain, { isProd }) => {
       const { bundlerType } = api.context;
 
       if (bundlerType === 'webpack') {
@@ -46,19 +47,13 @@ export const pluginStyledComponents = (
         return;
       }
 
-      [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI].forEach((ruleId) => {
-        if (chain.module.rules.has(ruleId)) {
-          const rule = chain.module.rule(ruleId);
-          if (rule.uses.has(CHAIN_ID.USE.SWC)) {
-            // update rspack builtin:swc-loader configuration
-            rule.use(CHAIN_ID.USE.SWC).tap((options) => {
-              options.rspackExperiments ??= {};
-              options.rspackExperiments.styledComponents =
-                styledComponentsOptions;
-              return options;
-            });
-          }
-        }
+      modifySwcLoaderOptions({
+        chain,
+        modifier: (options) => {
+          options.rspackExperiments ??= {};
+          options.rspackExperiments.styledComponents = styledComponentsOptions;
+          return options;
+        },
       });
     });
   },

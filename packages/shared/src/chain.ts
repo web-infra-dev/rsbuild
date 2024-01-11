@@ -23,6 +23,7 @@ import type {
   RsbuildPluginAPI,
   ModifyBundlerChainFn,
   ModifyBundlerChainUtils,
+  BuiltinSwcLoaderOptions,
 } from './types';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type { EntryDescription } from '@rspack/core';
@@ -510,3 +511,22 @@ export function chainToConfig(chain: BundlerChain): RspackConfig {
 
   return config as RspackConfig;
 }
+
+export const modifySwcLoaderOptions = ({
+  chain,
+  modifier,
+}: {
+  chain: BundlerChain;
+  modifier: (config: BuiltinSwcLoaderOptions) => BuiltinSwcLoaderOptions;
+}) => {
+  const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI];
+
+  ruleIds.forEach((ruleId) => {
+    if (chain.module.rules.has(ruleId)) {
+      const rule = chain.module.rule(ruleId);
+      if (rule.uses.has(CHAIN_ID.USE.SWC)) {
+        rule.use(CHAIN_ID.USE.SWC).tap(modifier);
+      }
+    }
+  });
+};
