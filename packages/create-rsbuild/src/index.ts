@@ -61,6 +61,7 @@ async function main() {
       { value: 'vue3', label: 'Vue 3' },
       { value: 'vue2', label: 'Vue 2' },
       { value: 'lit', label: 'Lit' },
+      { value: 'preact', label: 'Preact' },
       { value: 'svelte', label: 'Svelte' },
       { value: 'solid', label: 'Solid' },
       { value: 'vanilla', label: 'Vanilla' },

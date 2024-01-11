@@ -704,6 +704,35 @@ importers:
         specifier: ^5.3.0
         version: 5.3.2
 
+  packages/create-rsbuild/template-preact-js:
+    dependencies:
+      preact:
+        specifier: ^10.19.3
+        version: 10.19.3
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../core
+      '@rsbuild/plugin-preact':
+        specifier: workspace:*
+        version: link:../../plugin-preact
+
+  packages/create-rsbuild/template-preact-ts:
+    dependencies:
+      preact:
+        specifier: ^10.19.3
+        version: 10.19.3
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../core
+      '@rsbuild/plugin-preact':
+        specifier: workspace:*
+        version: link:../../plugin-preact
+      typescript:
+        specifier: ^5.3.0
+        version: 5.3.2
+
   packages/create-rsbuild/template-react-js:
     dependencies:
       react:
