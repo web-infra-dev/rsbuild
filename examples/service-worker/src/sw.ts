@@ -18,4 +18,4 @@ self.addEventListener('fetch', (e) => {
   }
 });
 
-export {};
+export type {};
