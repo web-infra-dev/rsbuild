@@ -4,6 +4,7 @@ import {
   getPort,
   deepmerge,
   isFunction,
+  getUrlLabel,
   normalizeUrl,
   DEFAULT_PORT,
   DEFAULT_DEV_HOST,
@@ -39,8 +40,40 @@ export const formatRoutes = (
   );
 };
 
+function getURLMessages(
+  urls: Array<{ url: string; label: string }>,
+  routes: Routes,
+) {
+  if (routes.length === 1) {
+    return urls
+      .map(
+        ({ label, url }) =>
+          `  ${`> ${label.padEnd(10)}`}${color.cyan(
+            normalizeUrl(`${url}/${routes[0].route}`),
+          )}\n`,
+      )
+      .join('');
+  }
+
+  let message = '';
+  const maxNameLength = Math.max(...routes.map((r) => r.name.length));
+  urls.forEach(({ label, url }, index) => {
+    if (index > 0) {
+      message += '\n';
+    }
+    message += `  ${`> ${label}`}\n`;
+    routes.forEach((r) => {
+      message += `  ${color.dim('-')} ${color.dim(
+        r.name.padEnd(maxNameLength + 4),
+      )}${color.cyan(normalizeUrl(`${url}/${r.route}`))}\n`;
+    });
+  });
+
+  return message;
+}
+
 export function printServerURLs({
-  urls,
+  urls: originalUrls,
   port,
   routes,
   protocol,
@@ -56,41 +89,36 @@ export function printServerURLs({
     return;
   }
 
+  let urls = originalUrls;
+
   if (isFunction(printUrls)) {
-    printUrls({
+    const newUrls = printUrls({
       urls: urls.map((item) => item.url),
       port,
       protocol,
     });
+
+    if (!newUrls) {
+      return;
+    }
+
+    if (!Array.isArray(newUrls)) {
+      throw new Error(
+        `"server.printUrls" must return an array, but got ${typeof newUrls}.`,
+      );
+    }
+
+    urls = newUrls.map((url) => ({
+      url,
+      label: getUrlLabel(url),
+    }));
+  }
+
+  if (urls.length === 0) {
     return;
   }
 
-  let message = '';
-
-  if (routes.length === 1) {
-    message = urls
-      .map(
-        ({ label, url }) =>
-          `  ${`> ${label.padEnd(10)}`}${color.cyan(
-            normalizeUrl(`${url}/${routes[0].route}`),
-          )}\n`,
-      )
-      .join('');
-  } else {
-    const maxNameLength = Math.max(...routes.map((r) => r.name.length));
-    urls.forEach(({ label, url }, index) => {
-      if (index > 0) {
-        message += '\n';
-      }
-      message += `  ${`> ${label}`}\n`;
-      routes.forEach((r) => {
-        message += `  ${color.dim('-')} ${color.dim(
-          r.name.padEnd(maxNameLength + 4),
-        )}${color.cyan(normalizeUrl(`${url}/${r.route}`))}\n`;
-      });
-    });
-  }
-
+  const message = getURLMessages(urls, routes);
   logger.log(message);
 
   return message;

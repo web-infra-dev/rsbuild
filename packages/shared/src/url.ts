@@ -83,6 +83,18 @@ const concatUrl = ({
   protocol: string;
 }) => `${protocol}://${host}:${port}`;
 
+const LOCAL_LABEL = 'Local:  ';
+const NETWORK_LABEL = 'Network:  ';
+
+export const getUrlLabel = (url: string) => {
+  try {
+    const { host } = new URL(url);
+    return isLoopbackHost(host) ? LOCAL_LABEL : NETWORK_LABEL;
+  } catch (err) {
+    return NETWORK_LABEL;
+  }
+};
+
 export const getAddressUrls = ({
   protocol = 'http',
   port,
@@ -92,9 +104,6 @@ export const getAddressUrls = ({
   port: number;
   host?: string;
 }) => {
-  const LOCAL_LABEL = 'Local:  ';
-  const NETWORK_LABEL = 'Network:  ';
-
   if (host && host !== DEFAULT_DEV_HOST) {
     return [
       {

@@ -95,3 +95,36 @@ test('should allow to custom urls', async ({ page }) => {
   await rsbuild.server.close();
   restore();
 });
+
+test('should allow to modify and return new urls', async ({ page }) => {
+  const { logs, restore } = proxyConsole('log');
+
+  const rsbuild = await dev({
+    cwd,
+    rsbuildConfig: {
+      server: {
+        printUrls: ({ urls }) => urls.map((url) => `${url}/test`),
+      },
+    },
+  });
+
+  await page.goto(`http://localhost:${rsbuild.port}`);
+
+  const localLog = logs.find(
+    (log) =>
+      log.includes('Local:') &&
+      log.includes(`http://localhost:${rsbuild.port}/test/`),
+  );
+  const networkLog = logs.find(
+    (log) =>
+      log.includes('Network:') &&
+      log.includes('http://') &&
+      log.endsWith('/test/'),
+  );
+
+  expect(localLog).toBeFalsy();
+  expect(networkLog).toBeFalsy();
+
+  await rsbuild.server.close();
+  restore();
+});

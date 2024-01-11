@@ -14,9 +14,32 @@
 
 ## 自定义日志
 
-`server.printUrls` 可以设置为一个函数，函数的入参包括 port，protocol 和 urls。
+`server.printUrls` 可以设置为一个函数，函数的入参包括 `port`，`protocol` 和 `urls`。
 
-当 `server.printUrls` 设置为函数时，Rsbuild 将不会输出 server 的 URL 地址，你可以基于入参来自定义日志内容，并自行输出到 terminal。
+### 修改 URL
+
+如果 `printUrls` 函数返回了一组新的 URLs，那么 Rsbuild 将会把这组 URLs 按照默认格式输出到 terminal：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ urls }) {
+      return urls.map((url) => `${url}/base`);
+    },
+  },
+};
+```
+
+输出为：
+
+```text
+> Local:    http://localhost:8080/base/
+> Network:  http://192.168.0.1:8080/base/
+```
+
+### 完全自定义
+
+如果 `printUrls` 函数没有返回值，Rsbuild 将不会输出 server 的 URL 地址，你可以基于入参来自定义日志内容，并自行输出到 terminal。
 
 ```ts title="rsbuild.config.ts"
 export default {

@@ -14,9 +14,32 @@ By default, when you start the dev server or preview server, Rsbuild will print 
 
 ## Custom Logging
 
-`server.printUrls` can be set to a function, with parameters including port, protocol, and urls.
+`server.printUrls` can be set to a function, with parameters including `port`, `protocol`, and `urls`.
 
-When `server.printUrls` is set to a function, Rsbuild will not print the server's URL addresses. You can customize the log content based on the parameters and output it to the terminal yourself.
+### Modify URL
+
+If the `printUrls` function returns an URLs array, Rsbuild prints these URLs to the terminal in the default format:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ urls }) {
+      return urls.map((url) => `${url}/base`);
+    },
+  },
+};
+```
+
+Output:
+
+```text
+> Local:    http://localhost:8080/base/
+> Network:  http://192.168.0.1:8080/base/
+```
+
+### Fully Customizable
+
+If the `printUrls` function does not return a value, Rsbuild will not print the server's URL addresses. You can customize the log content based on the parameters and output it to the terminal yourself.
 
 ```ts title="rsbuild.config.ts"
 export default {
