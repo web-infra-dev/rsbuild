@@ -1,5 +1,10 @@
 import path from 'node:path';
-import { type SwcReactConfig, isUsingHMR } from '@rsbuild/shared';
+import {
+  deepmerge,
+  isUsingHMR,
+  modifySwcLoaderOptions,
+  type SwcReactConfig,
+} from '@rsbuild/shared';
 import type { RsbuildPluginAPI } from '@rsbuild/core';
 import type { PluginReactOptions } from '.';
 
@@ -13,8 +18,6 @@ export const applyBasicReactSupport = (
   api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
     const config = api.getNormalizedConfig();
     const usingHMR = isUsingHMR(config, { isProd, target });
-    const rule = chain.module.rule(CHAIN_ID.RULE.JS);
-
     const reactOptions: SwcReactConfig = {
       development: !isProd,
       refresh: usingHMR,
@@ -22,24 +25,18 @@ export const applyBasicReactSupport = (
       ...options.swcReactOptions,
     };
 
-    rule.use(CHAIN_ID.USE.SWC).tap((options) => {
-      options.jsc.transform.react = {
-        ...reactOptions,
-      };
-      return options;
-    });
-
-    if (chain.module.rules.has(CHAIN_ID.RULE.JS_DATA_URI)) {
-      chain.module
-        .rule(CHAIN_ID.RULE.JS_DATA_URI)
-        .use(CHAIN_ID.USE.SWC)
-        .tap((options) => {
-          options.jsc.transform.react = {
-            ...reactOptions,
-          };
-          return options;
+    modifySwcLoaderOptions({
+      chain,
+      modifier: (options) => {
+        return deepmerge(options, {
+          jsc: {
+            transform: {
+              react: reactOptions,
+            },
+          },
         });
-    }
+      },
+    });
 
     if (!usingHMR) {
       return;

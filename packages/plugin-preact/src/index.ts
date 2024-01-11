@@ -1,5 +1,9 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { SwcReactConfig } from '@rsbuild/shared';
+import {
+  deepmerge,
+  modifySwcLoaderOptions,
+  type SwcReactConfig,
+} from '@rsbuild/shared';
 
 export type PluginPreactOptions = {
   /**
@@ -19,7 +23,7 @@ export const pluginPreact = (
   setup(api) {
     const { reactAliasesEnabled = true } = options;
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
+    api.modifyBundlerChain(async (chain, { isProd }) => {
       if (reactAliasesEnabled) {
         chain.resolve.alias.merge({
           react: 'preact/compat',
@@ -35,18 +39,17 @@ export const pluginPreact = (
         importSource: 'preact',
       };
 
-      [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI].forEach((ruleId) => {
-        if (chain.module.rules.has(ruleId)) {
-          const rule = chain.module.rule(ruleId);
-          if (rule.uses.has(CHAIN_ID.USE.SWC)) {
-            rule.use(CHAIN_ID.USE.SWC).tap((options) => {
-              options.jsc.transform.react = {
-                ...reactOptions,
-              };
-              return options;
-            });
-          }
-        }
+      modifySwcLoaderOptions({
+        chain,
+        modifier: (options) => {
+          return deepmerge(options, {
+            jsc: {
+              transform: {
+                react: reactOptions,
+              },
+            },
+          });
+        },
       });
     });
   },
