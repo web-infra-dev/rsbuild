@@ -1,5 +1,11 @@
 # create-rsbuild
 
+## 0.3.1
+
+### Patch Changes
+
+- 7b877865: feat(create-rsbuild): add extensions config for Vue projects
+
 ## 0.3.0
 
 ## 0.2.18
