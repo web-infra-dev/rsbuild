@@ -1,11 +1,15 @@
 import { join } from 'path';
 import {
+  color,
   getSharedPkgCompiledPath,
+  type Stats,
+  type MultiStats,
   type SharedCompiledPkgNames,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 import { awaitableGetter, type Plugins } from '@rsbuild/shared';
+import { formatStatsMessages } from '../client/formatStats';
 
 export const applyDefaultPlugins = (plugins: Plugins) =>
   awaitableGetter<RsbuildPlugin>([
@@ -90,3 +94,40 @@ export const getCompiledPath = (packageName: string) => {
 };
 
 export const BUILTIN_LOADER = 'builtin:';
+
+export function formatStats(stats: Stats | MultiStats, showWarnings = true) {
+  const statsData = stats.toJson({
+    preset: 'errors-warnings',
+  });
+
+  const { errors, warnings } = formatStatsMessages(statsData);
+
+  if (errors.length) {
+    const errorMsgs = `${errors.join('\n\n')}\n`;
+    const isTerserError = errorMsgs.includes('from Terser');
+    const title = color.bold(
+      color.red(isTerserError ? 'Minify error: ' : 'Compile error: '),
+    );
+    const tip = color.yellow(
+      isTerserError
+        ? 'Failed to minify with terser, check for syntax errors.'
+        : 'Failed to compile, check the errors for troubleshooting.',
+    );
+
+    return {
+      message: `${title}\n${tip}\n${errorMsgs}`,
+      level: 'error',
+    };
+  }
+
+  // always show warnings in tty mode
+  if (warnings.length && (showWarnings || process.stdout.isTTY)) {
+    const title = color.bold(color.yellow('Compile Warning: \n'));
+    return {
+      message: `${title}${`${warnings.join('\n\n')}\n`}`,
+      level: 'warning',
+    };
+  }
+
+  return {};
+}

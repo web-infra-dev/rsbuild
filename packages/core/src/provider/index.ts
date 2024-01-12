@@ -9,3 +9,4 @@ export { getPluginAPI } from './core/initPlugins';
 export { applyBaseCSSRule, applyCSSModuleRule } from './plugins/css';
 export type { InternalContext } from '../types';
 export { setHTMLPlugin, getHTMLPlugin } from './htmlPluginUtil';
+export { formatStats } from './shared';
