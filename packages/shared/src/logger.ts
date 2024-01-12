@@ -15,7 +15,8 @@ export const isDebug = () => {
   return (
     flag === 'rsbuild' ||
     // compat the legacy usage from Modern.js Builder
-    flag === 'builder'
+    flag === 'builder' ||
+    flag === '*'
   );
 };
 
