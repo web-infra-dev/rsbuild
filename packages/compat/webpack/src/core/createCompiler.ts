@@ -2,12 +2,11 @@ import {
   isDev,
   logger,
   debug,
-  formatStats,
   type Stats,
   type Rspack,
   type RspackConfig,
 } from '@rsbuild/shared';
-import type { InternalContext } from '@rsbuild/core/provider';
+import { formatStats, type InternalContext } from '@rsbuild/core/provider';
 import type { WebpackConfig } from '../types';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import type { Compiler } from 'webpack';

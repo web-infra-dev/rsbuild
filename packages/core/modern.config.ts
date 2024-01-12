@@ -6,7 +6,7 @@ export default defineConfig({
   buildConfig: [
     {
       ...baseBuildConfig.buildConfig,
-      input: ['src', '!src/client'],
+      input: ['src', '!src/client/hmr'],
     },
     {
       buildType: 'bundle',

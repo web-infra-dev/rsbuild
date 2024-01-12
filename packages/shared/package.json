@@ -15,10 +15,6 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./format-stats": {
-      "types": "./dist/formatStats.d.ts",
-      "default": "./dist/formatStats.js"
-    },
     "./jiti": {
       "types": "./compiled/jiti/types/jiti.d.ts",
       "default": "./compiled/jiti/index.js"

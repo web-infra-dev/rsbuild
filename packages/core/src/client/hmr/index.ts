@@ -5,7 +5,7 @@
  * Tips: this package will be bundled and running in the browser, do not import from the entry of @rsbuild/core.
  */
 import type { StatsError } from '@rsbuild/shared';
-import { formatStatsMessages } from '@rsbuild/shared/format-stats';
+import { formatStatsMessages } from '../formatStats';
 import { createSocketUrl } from './createSocketUrl';
 
 // declare any to fix the type of `module.hot`
