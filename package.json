@@ -19,7 +19,6 @@
     "e2e:webpack": "cd ./e2e && pnpm test:webpack",
     "lint": "biome lint . --diagnostic-level=warn && ls-lint",
     "prepare": "pnpm run build && husky install",
-    "release": "pnpm -r publish --report-summary",
     "test": "cross-env NODE_OPTIONS=--max-old-space-size=8192 pnpm run ut",
     "update-modern": "cd ./scripts/update-packages && pnpm start:modern",
     "update-rspack": "cd ./scripts/update-packages && pnpm start:rspack",
