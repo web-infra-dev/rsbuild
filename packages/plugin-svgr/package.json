@@ -28,13 +28,13 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
+    "@rsbuild/plugin-react": "workspace:*",
     "@svgr/core": "8.1.0",
     "@svgr/plugin-jsx": "8.1.0",
     "@svgr/plugin-svgo": "8.1.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/plugin-react": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "16.x",
     "typescript": "^5.3.0"

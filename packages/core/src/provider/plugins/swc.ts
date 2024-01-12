@@ -18,6 +18,7 @@ import type {
   NormalizedConfig,
   NormalizedSourceConfig,
 } from '../../types';
+import { PLUGIN_SWC_NAME } from '../../constants';
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
 
@@ -50,7 +51,7 @@ export async function getDefaultSwcConfig(
  * Provide some swc configs of rspack
  */
 export const pluginSwc = (): RsbuildPlugin => ({
-  name: 'rsbuild:swc',
+  name: PLUGIN_SWC_NAME,
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {

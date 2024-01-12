@@ -1,4 +1,5 @@
 import path from 'path';
+import { PLUGIN_BABEL_NAME } from '@rsbuild/core';
 import {
   SCRIPT_REGEX,
   DEFAULT_BROWSERSLIST,
@@ -13,7 +14,7 @@ import {
 } from './utils';
 import { SwcMinimizerPlugin } from './minimizer';
 
-const PLUGIN_NAME = 'rsbuild-webpack:swc';
+const PLUGIN_WEBPACK_SWC_NAME = 'rsbuild-webpack:swc';
 
 /**
  * In this plugin, we do:
@@ -23,9 +24,9 @@ const PLUGIN_NAME = 'rsbuild-webpack:swc';
  * - Add swc minifier plugin
  */
 export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
-  name: PLUGIN_NAME,
+  name: PLUGIN_WEBPACK_SWC_NAME,
 
-  pre: ['rsbuild:babel', 'uni-builder:babel'],
+  pre: [PLUGIN_BABEL_NAME, 'uni-builder:babel'],
 
   setup(api) {
     if (api.context.bundlerType === 'rspack') {
