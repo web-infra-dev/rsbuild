@@ -66,6 +66,36 @@ test('should return 404 when htmlFallback false', async ({ page }) => {
   await rsbuild.server.close();
 });
 
+test('should access /main with query or hash success', async ({ page }) => {
+  const rsbuild = await dev({
+    cwd: join(fixtures, 'basic'),
+    rsbuildConfig: {
+      source: {
+        entry: {
+          main: join(fixtures, 'basic', 'src/index.ts'),
+        },
+      },
+    },
+  });
+
+  const url = new URL(`http://localhost:${rsbuild.port}/main?aa=1`);
+
+  const res = await page.goto(url.href);
+
+  expect(res?.status()).toBe(200);
+
+  const locator = page.locator('#test');
+  await expect(locator).toHaveText('Hello Rsbuild!');
+
+  const url1 = new URL(`http://localhost:${rsbuild.port}/main#aa=1`);
+
+  const res1 = await page.goto(url1.href);
+
+  expect(res1?.status()).toBe(200);
+
+  await rsbuild.server.close();
+});
+
 test('should access /main.html success when entry is main', async ({
   page,
 }) => {
