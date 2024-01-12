@@ -1365,6 +1365,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/plugin-react':
+        specifier: workspace:*
+        version: link:../plugin-react
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
