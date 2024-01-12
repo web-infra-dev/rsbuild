@@ -28,12 +28,28 @@ export type { Rspack } from './provider';
 export type {
   // Config Types
   RsbuildConfig,
+  DevConfig,
+  HtmlConfig,
+  ToolsConfig,
+  SourceConfig,
+  OutputConfig,
+  SecurityConfig,
+  PerformanceConfig,
+  // Normalized Config Types
   NormalizedConfig,
+  NormalizedDevConfig,
+  NormalizedHtmlConfig,
+  NormalizedToolsConfig,
+  NormalizedSourceConfig,
+  NormalizedOutputConfig,
+  NormalizedSecurityConfig,
+  NormalizedPerformanceConfig,
   // Plugin Types
   RsbuildPlugin,
   RsbuildPlugins,
   RsbuildPluginAPI,
 } from './types';
+
 export type {
   RsbuildMode,
   RsbuildEntry,

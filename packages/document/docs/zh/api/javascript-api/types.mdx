@@ -24,6 +24,20 @@ const config: RsbuildConfig = {
 };
 ```
 
+你也可以引用 Rsbuild 配置中各个字段的类型定义：
+
+```ts
+import type {
+  DevConfig,
+  HtmlConfig,
+  ToolsConfig,
+  SourceConfig,
+  OutputConfig,
+  SecurityConfig,
+  PerformanceConfig,
+} from '@rsbuild/core';
+```
+
 ## NormalizedConfig
 
 Rsbuild 配置归一化后的类型，对应 [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) 方法的返回值。
@@ -32,6 +46,20 @@ Rsbuild 配置归一化后的类型，对应 [getNormalizedConfig](/plugins/dev/
 import type { NormalizedConfig } from '@rsbuild/core';
 
 const config: NormalizedConfig = api.getNormalizedConfig();
+```
+
+你也可以引用归一化后的 Rsbuild 配置中各个字段的类型定义：
+
+```ts
+import type {
+  NormalizedDevConfig,
+  NormalizedHtmlConfig,
+  NormalizedToolsConfig,
+  NormalizedSourceConfig,
+  NormalizedOutputConfig,
+  NormalizedSecurityConfig,
+  NormalizedPerformanceConfig,
+} from '@rsbuild/core';
 ```
 
 ## RsbuildContext
