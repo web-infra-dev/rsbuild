@@ -83,6 +83,11 @@ exports[`svgr > 'configure SVGR options' 1`] = `
               "transform": {
                 "decoratorMetadata": true,
                 "legacyDecorator": true,
+                "react": {
+                  "development": true,
+                  "refresh": true,
+                  "runtime": "automatic",
+                },
               },
             },
             "sourceMaps": true,
@@ -205,6 +210,11 @@ exports[`svgr > 'export default Component' 1`] = `
               "transform": {
                 "decoratorMetadata": true,
                 "legacyDecorator": true,
+                "react": {
+                  "development": true,
+                  "refresh": true,
+                  "runtime": "automatic",
+                },
               },
             },
             "sourceMaps": true,
@@ -319,6 +329,11 @@ exports[`svgr > 'export default url' 1`] = `
               "transform": {
                 "decoratorMetadata": true,
                 "legacyDecorator": true,
+                "react": {
+                  "development": true,
+                  "refresh": true,
+                  "runtime": "automatic",
+                },
               },
             },
             "sourceMaps": true,

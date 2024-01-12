@@ -1,6 +1,7 @@
-import { expect, describe, it, test } from 'vitest';
+import { expect, describe, it } from 'vitest';
 import { type PluginSvgrOptions, pluginSvgr } from '../src';
 import { createStubRsbuild } from '@scripts/test-helper';
+import { pluginReact } from '@rsbuild/plugin-react';
 import { SVG_REGEX } from '@rsbuild/shared';
 
 describe('svgr', () => {
@@ -32,7 +33,7 @@ describe('svgr', () => {
       rsbuildConfig: {},
     });
 
-    rsbuild.addPlugins([pluginSvgr(item.pluginConfig)]);
+    rsbuild.addPlugins([pluginSvgr(item.pluginConfig), pluginReact()]);
 
     const config = await rsbuild.unwrapConfig();
 
