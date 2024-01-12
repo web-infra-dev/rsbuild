@@ -7,10 +7,10 @@ This section describes the core plugin types and APIs.
 The type of the plugin object. The plugin object contains the following properties:
 
 - `name`: The name of the plugin, a unique identifier.
-- `setup`: The setup function of the plugin, which can be an asynchronous function. This function will only be executed once when the plugin is initialized. The plugin API provides the context info, utility functions and lifecycle hooks. For a complete introduction to lifecycle hooks, please read the [Plugin Hooks](/plugins/dev/hooks) chapter.
-- `pre`: Specifies the preceding plugins for the current plugin. You can pass an array of preceding plugin names, and the current plugin will be executed after these plugins.
-- `post`: Specifies the succeeding plugins for the current plugin. You can pass an array of succeeding plugin names, and the current plugin will be executed before these plugins.
-- `remove`: Specifies the plugins to be removed. You can pass an array of plugin names to be removed.
+- `setup`: The setup function of the plugin, which can be an async function. This function is called once when the plugin is initialized. The plugin API provides the context info, utility functions and lifecycle hooks. For a complete introduction to lifecycle hooks, please read the [Plugin Hooks](/plugins/dev/hooks) chapter.
+- `pre`: Declare the names of pre-plugins, which will be executed before the current plugin.
+- `post`: Declare the names of post-plugins, which will be executed after the current plugin.
+- `remove`: Declare the plugins that need to be removed, you can pass an array of plugin names.
 
 The type of the plugin object, which contains the following properties:
 

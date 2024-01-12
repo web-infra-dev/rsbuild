@@ -4,7 +4,6 @@ import {
   DEFAULT_BROWSERSLIST,
   applyScriptCondition,
   type RsbuildPlugin,
-  type RsbuildPluginAPI,
 } from '@rsbuild/shared';
 import type { PluginSwcOptions, TransformConfig } from './types';
 import {
@@ -28,7 +27,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
 
   pre: ['rsbuild:babel', 'uni-builder:babel'],
 
-  setup(api: RsbuildPluginAPI) {
+  setup(api) {
     if (api.context.bundlerType === 'rspack') {
       return;
     }

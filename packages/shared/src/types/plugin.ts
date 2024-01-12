@@ -78,11 +78,31 @@ export type PluginStore = {
   pluginAPI?: RsbuildPluginAPI;
 };
 
+/**
+ * The type of the Rsbuild plugin object.
+ */
 export type RsbuildPlugin = {
+  /**
+   * The name of the plugin, a unique identifier.
+   */
   name: string;
+  /**
+   * The setup function of the plugin, which can be an async function.
+   * This function is called once when the plugin is initialized.
+   * @param api provides the context info, utility functions and lifecycle hooks.
+   */
   setup: (api: RsbuildPluginAPI) => PromiseOrNot<void>;
+  /**
+   * Declare the names of pre-plugins, which will be executed before the current plugin.
+   */
   pre?: string[];
+  /**
+   * Declare the names of post-plugins, which will be executed after the current plugin.
+   */
   post?: string[];
+  /**
+   * Declare the plugins that need to be removed, you can pass an array of plugin names.
+   */
   remove?: string[];
 };
 
