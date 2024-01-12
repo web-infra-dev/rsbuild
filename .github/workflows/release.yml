@@ -57,7 +57,7 @@ jobs:
           version: 'next'
           type: 'release'
           branch: ''
-          tools: 'modern'
+          tools: 'changeset'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -96,7 +96,7 @@ jobs:
           version: ${{ github.event.inputs.version }}
           branch: ${{ github.event.inputs.branch }}
           type: 'release'
-          tools: 'modern'
+          tools: 'changeset'
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

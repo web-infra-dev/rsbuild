@@ -44,7 +44,7 @@ jobs:
           version: ${{ github.event.inputs.version || 'latest' }}
           versionNumber: 'auto'
           type: 'pull request'
-          tools: 'modern'
+          tools: 'changeset'
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

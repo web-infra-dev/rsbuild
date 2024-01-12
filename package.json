@@ -3,26 +3,22 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "scripts/*",
       "packages/*",
       "packages/compat/*"
     ]
   },
   "scripts": {
     "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @examples/* @e2e/* rsbuild-* --parallel=10",
-    "bump": "modern bump",
-    "change": "modern change",
+    "change": "changeset",
+    "changeset": "changeset",
     "check-changeset": "cd ./scripts/check-changeset && pnpm start",
     "check-dependency-version": "check-dependency-version-consistency . --ignore-dep vue-loader",
     "dev:doc": "cd packages/document && pnpm run dev",
     "e2e": "cd ./e2e && pnpm test",
     "e2e:rspack": "cd ./e2e && pnpm test:rspack",
     "e2e:webpack": "cd ./e2e && pnpm test:webpack",
-    "gen-release-note": "modern gen-release-note",
     "lint": "biome lint . --diagnostic-level=warn && ls-lint",
-    "new": "modern new",
     "prepare": "pnpm run build && husky install",
-    "release": "modern release",
     "test": "cross-env NODE_OPTIONS=--max-old-space-size=8192 pnpm run ut",
     "update-modern": "cd ./scripts/update-packages && pnpm start:modern",
     "update-rspack": "cd ./scripts/update-packages && pnpm start:rspack",
@@ -40,9 +36,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.1",
+    "@changesets/cli": "^2.27.1",
     "@ls-lint/ls-lint": "^2.2.2",
     "@modern-js/module-tools": "^2.45.0",
-    "@modern-js/monorepo-tools": "^2.45.0",
     "@rsbuild/tsconfig": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
