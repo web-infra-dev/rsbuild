@@ -53,7 +53,6 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
     PLUGIN_REACT_NAME,
     PLUGIN_BABEL_NAME,
     'uni-builder:babel',
-    'rsbuild-webpack:swc',
   ],
 
   setup(api) {
