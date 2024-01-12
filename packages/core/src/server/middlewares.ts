@@ -5,6 +5,7 @@ import {
   type HtmlFallback,
   type RequestHandler as Middleware,
 } from '@rsbuild/shared';
+import { parse } from 'url';
 import path from 'path';
 import fs from 'fs';
 
@@ -55,7 +56,7 @@ export const getHtmlFallbackMiddleware: (params: {
 
     // Handle invalid URLs
     try {
-      pathname = decodeURIComponent(url);
+      pathname = parse(url, false, true).pathname!;
     } catch (err) {
       logger.error(
         new Error(`Invalid URL: ${color.yellow(url)}`, { cause: err }),
@@ -89,7 +90,7 @@ export const getHtmlFallbackMiddleware: (params: {
 
     // '/' => '/index.html'
     if (pathname.endsWith('/')) {
-      const newUrl = `${url}index.html`;
+      const newUrl = `${pathname}index.html`;
       const filePath = path.join(distPath, pathname, 'index.html');
 
       if (outputFileSystem.existsSync(filePath)) {
@@ -99,7 +100,7 @@ export const getHtmlFallbackMiddleware: (params: {
       // '/main' => '/main.html'
       !pathname.endsWith('.html')
     ) {
-      const newUrl = `${url}.html`;
+      const newUrl = `${pathname}.html`;
       const filePath = path.join(distPath, `${pathname}.html`);
 
       if (outputFileSystem.existsSync(filePath)) {
