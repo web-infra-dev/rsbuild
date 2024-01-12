@@ -41,7 +41,7 @@ jobs:
           version: nightly
           branch: main
           type: 'release'
-          tools: 'modern'
+          tools: 'changeset'
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
