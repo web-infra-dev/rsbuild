@@ -1,5 +1,12 @@
 # @rsbuild/core
 
+## 0.3.2
+
+### Patch Changes
+
+- 13fe4d8: chore: bump 0.3.2
+  - @rsbuild/shared@0.3.2
+
 ## 0.3.1
 
 ### Patch Changes
