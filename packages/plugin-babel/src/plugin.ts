@@ -1,5 +1,5 @@
 import path from 'path';
-import type { RsbuildPlugin } from '@rsbuild/core';
+import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
 import { castArray, cloneDeep, SCRIPT_REGEX, isProd } from '@rsbuild/shared';
 import { applyUserBabelConfig, BABEL_JS_RULE } from './helper';
 import type { PluginBabelOptions } from './types';
@@ -33,10 +33,12 @@ export const getDefaultBabelOptions = () => {
   };
 };
 
+export { PLUGIN_BABEL_NAME };
+
 export const pluginBabel = (
   options: PluginBabelOptions = {},
 ): RsbuildPlugin => ({
-  name: 'rsbuild:babel',
+  name: PLUGIN_BABEL_NAME,
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {

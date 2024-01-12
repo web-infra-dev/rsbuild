@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { setConfig, TS_CONFIG_FILE } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '@rsbuild/core';
+import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
 import {
   filterByField,
   getDependentProjects,
@@ -9,7 +9,7 @@ import {
   type ExtraMonorepoStrategies,
 } from '@rsbuild/monorepo-utils';
 
-export const pluginName = 'rsbuild:source-build';
+export const PLUGIN_SOURCE_BUILD_NAME = 'rsbuild:source-build';
 
 export const getSourceInclude = async (options: {
   projects: Project[];
@@ -51,14 +51,9 @@ export function pluginSourceBuild(
   } = options ?? {};
 
   return {
-    name: pluginName,
+    name: PLUGIN_SOURCE_BUILD_NAME,
 
-    pre: [
-      'rsbuild:babel',
-      'uni-builder:babel',
-      'uni-builder:ts-loader',
-      'rsbuild-webpack:swc',
-    ],
+    pre: [PLUGIN_BABEL_NAME, 'uni-builder:babel', 'uni-builder:ts-loader'],
 
     setup(api) {
       const projectRootPath = api.context.rootPath;

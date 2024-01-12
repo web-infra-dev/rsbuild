@@ -1349,6 +1349,9 @@ importers:
 
   packages/plugin-svgr:
     dependencies:
+      '@rsbuild/plugin-react':
+        specifier: workspace:*
+        version: link:../plugin-react
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
@@ -1365,9 +1368,6 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rsbuild/plugin-react':
-        specifier: workspace:*
-        version: link:../plugin-react
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper

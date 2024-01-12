@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
+import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
 import type { SolidPresetOptions } from './types';
 import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
 
@@ -6,13 +6,15 @@ export type PluginSolidPresetOptions = {
   solidPresetOptions?: SolidPresetOptions;
 };
 
+export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
+
 export function pluginSolid(
   options: PluginSolidPresetOptions = {},
 ): RsbuildPlugin {
   return {
-    name: 'rsbuild:solid',
+    name: PLUGIN_SOLID_NAME,
 
-    pre: ['rsbuild:babel'],
+    pre: [PLUGIN_BABEL_NAME],
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
