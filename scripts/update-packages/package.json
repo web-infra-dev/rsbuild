@@ -3,8 +3,6 @@
   "version": "0.0.7",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
     "start:modern": "tsx ./src/modern.ts",
     "start:rspack": "tsx ./src/rspack.ts",
     "start:rspress": "tsx ./src/rspress.ts"

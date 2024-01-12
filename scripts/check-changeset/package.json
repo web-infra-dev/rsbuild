@@ -3,7 +3,6 @@
   "version": "0.0.7",
   "private": true,
   "scripts": {
-    "build": "tsc",
     "dev": "tsc --watch",
     "start": "tsx ./src/index.ts"
   },
