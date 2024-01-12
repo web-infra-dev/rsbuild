@@ -24,6 +24,20 @@ const config: RsbuildConfig = {
 };
 ```
 
+You can also import the type definitions of each field in the Rsbuild config:
+
+```ts
+import type {
+  DevConfig,
+  HtmlConfig,
+  ToolsConfig,
+  SourceConfig,
+  OutputConfig,
+  SecurityConfig,
+  PerformanceConfig,
+} from '@rsbuild/core';
+```
+
 ## NormalizedConfig
 
 The type of Rsbuild configuration after normalization, corresponding to the return value of the [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) method.
@@ -32,6 +46,20 @@ The type of Rsbuild configuration after normalization, corresponding to the retu
 import type { NormalizedConfig } from '@rsbuild/core';
 
 const config: NormalizedConfig = api.getNormalizedConfig();
+```
+
+You can also import the type definitions of each field in the normalized config:
+
+```ts
+import type {
+  NormalizedDevConfig,
+  NormalizedHtmlConfig,
+  NormalizedToolsConfig,
+  NormalizedSourceConfig,
+  NormalizedOutputConfig,
+  NormalizedSecurityConfig,
+  NormalizedPerformanceConfig,
+} from '@rsbuild/core';
 ```
 
 ## RsbuildContext
