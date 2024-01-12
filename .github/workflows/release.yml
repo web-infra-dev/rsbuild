@@ -102,3 +102,12 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           REPOSITORY: ${{ github.repository }}
           REF: ${{ github.ref }}
+
+      - name: Trigger Modern Update Rsbuild
+        if: ${{github.event.inputs.version == 'latest'}}
+        run: |
+          curl -X POST \
+          -H 'Content-Type: application/json' \
+          -H 'Authorization: Bearer ${{ secrets.REPO_SCOPED_TOKEN }}' \
+          -d '{"ref": "main"}' \
+          https://api.github.com/repos/web-infra-dev/modern.js/actions/workflows/update-rsbuild.yml/dispatches
