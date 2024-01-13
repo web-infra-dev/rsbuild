@@ -18,11 +18,7 @@ export const getPatternsFromYaml = async (monorepoRoot: string) => {
 export const normalize = (results: string[]) =>
   results.map((fp: string) => path.normalize(fp));
 
-const getGlobOpts = (
-  rootPath: string,
-  patterns: string[],
-  ignore: string[] = [],
-): GlobOptions => {
+const getGlobOpts = (rootPath: string, patterns: string[]): GlobOptions => {
   const globOpts: GlobOptions = {
     cwd: rootPath,
     absolute: true,
@@ -35,19 +31,14 @@ const getGlobOpts = (
       // but avoid picking up node_modules/**/package.json and dist/**/package.json
       '**/dist/**',
       '**/node_modules/**',
-      ...(ignore || []),
     ];
   }
 
   return globOpts;
 };
 
-export const makeFileFinder = (
-  rootPath: string,
-  patterns: string[],
-  ignore: string[] = [],
-) => {
-  const globOpts = getGlobOpts(rootPath, patterns, ignore);
+export const makeFileFinder = (rootPath: string, patterns: string[]) => {
+  const globOpts = getGlobOpts(rootPath, patterns);
 
   return async <FileMapperType>(
     fileName: string,
@@ -55,25 +46,18 @@ export const makeFileFinder = (
     customGlobOpts: GlobOptions = {},
   ) => {
     const options = { ...customGlobOpts, ...globOpts };
-    const promise = pMap(
-      Array.from(patterns).sort(),
-      async (globPath: string) => {
-        let result = await glob(path.posix.join(globPath, fileName), options);
 
-        // fast-glob does not respect pattern order, so we re-sort by absolute path
-        result = result.sort();
-        // POSIX results always need to be normalized
-        result = normalize(result);
-
-        return fileMapper(result);
-      },
-      { concurrency: patterns.length || Infinity },
+    let result = await glob(
+      patterns.map((globPath) => path.posix.join(globPath, fileName)),
+      options,
     );
 
-    // always flatten the results
-    const results = await promise;
+    // fast-glob does not respect pattern order, so we re-sort by absolute path
+    result = result.sort();
+    // POSIX results always need to be normalized
+    result = normalize(result);
 
-    return results.reduce((acc, result) => acc.concat(result), []);
+    return await fileMapper(result);
   };
 };
 
@@ -81,7 +65,7 @@ export const readPnpmProjects = async (
   monorepoRoot: string,
   patterns: string[],
 ) => {
-  const finder = makeFileFinder(monorepoRoot, patterns, []);
+  const finder = makeFileFinder(monorepoRoot, patterns);
   const mapper = async (pkgJsonFilePath: string) => {
     const pkgJson = await readPackageJson(pkgJsonFilePath);
     return {
@@ -92,7 +76,9 @@ export const readPnpmProjects = async (
   const projects = await finder(
     PACKAGE_JSON,
     (filePaths) =>
-      pMap(filePaths, mapper, { concurrency: filePaths.length || Infinity }),
+      pMap(filePaths, mapper, {
+        concurrency: filePaths.length || Infinity,
+      }),
     {},
   );
   return projects;
