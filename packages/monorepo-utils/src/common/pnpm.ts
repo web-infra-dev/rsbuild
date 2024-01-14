@@ -2,7 +2,6 @@ import path from 'path';
 import { fse } from '@rsbuild/shared';
 import { load } from 'js-yaml';
 import glob, { type Options as GlobOptions } from 'fast-glob';
-import pMap from 'p-map';
 import { Project } from '../project/project';
 import { PNPM_WORKSPACE_FILE, PACKAGE_JSON } from '../constants';
 import { readPackageJson } from '../utils';
@@ -43,13 +42,10 @@ export const makeFileFinder = (rootPath: string, patterns: string[]) => {
   return async <FileMapperType>(
     fileName: string,
     fileMapper: (filepath: string[]) => Promise<FileMapperType[]>,
-    customGlobOpts: GlobOptions = {},
   ) => {
-    const options = { ...customGlobOpts, ...globOpts };
-
     let result = await glob(
       patterns.map((globPath) => path.posix.join(globPath, fileName)),
-      options,
+      globOpts,
     );
 
     // fast-glob does not respect pattern order, so we re-sort by absolute path
@@ -57,7 +53,7 @@ export const makeFileFinder = (rootPath: string, patterns: string[]) => {
     // POSIX results always need to be normalized
     result = normalize(result);
 
-    return await fileMapper(result);
+    return fileMapper(result);
   };
 };
 
@@ -73,14 +69,11 @@ export const readPnpmProjects = async (
       manifest: pkgJson,
     };
   };
-  const projects = await finder(
-    PACKAGE_JSON,
-    (filePaths) =>
-      pMap(filePaths, mapper, {
-        concurrency: filePaths.length || Infinity,
-      }),
-    {},
+
+  const projects = await finder(PACKAGE_JSON, (filePaths) =>
+    Promise.all(filePaths.map(mapper)),
   );
+
   return projects;
 };
 
