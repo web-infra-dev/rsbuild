@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { createRsbuild } from '@rsbuild/core';
-import express from 'express';
+import polka from 'polka';
 
 export async function startDevServer(fixtures) {
   const rsbuild = await createRsbuild({
@@ -14,7 +14,7 @@ export async function startDevServer(fixtures) {
     },
   });
 
-  const app = express();
+  const app = polka();
 
   const serverAPIs = await rsbuild.getServerAPIs();
 
@@ -29,29 +29,29 @@ export async function startDevServer(fixtures) {
   });
 
   app.get('/aaa', (_req, res) => {
-    res.send('Hello World!');
+    res.end('Hello World!');
   });
 
-  app.use(middlewares);
+  app.use(...middlewares);
 
   app.get('/bbb', (_req, res) => {
-    res.send('Hello Express!');
+    res.end('Hello Express!');
   });
 
   await serverAPIs.beforeStart();
 
-  const httpServer = app.listen({ host, port }, async () => {
+  const { server } = app.listen({ host, port }, async () => {
     await serverAPIs.afterStart();
   });
 
   // subscribe the server's http upgrade event to handle WebSocket upgrade
-  httpServer.on('upgrade', onUpgrade);
+  server.on('upgrade', onUpgrade);
 
   return {
     config: serverAPIs.config,
     close: async () => {
       await close();
-      httpServer.close();
+      server.close();
     },
   };
 }
