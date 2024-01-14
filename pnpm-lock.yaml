@@ -937,18 +937,9 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
-      '@types/js-yaml':
-        specifier: ^4.0.6
-        version: 4.0.8
       fast-glob:
         specifier: ^3.3.1
         version: 3.3.2
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      json5:
-        specifier: ^2.2.3
-        version: 2.2.3
     devDependencies:
       '@types/node':
         specifier: 16.x
@@ -5360,6 +5351,7 @@ packages:
 
   /@types/js-yaml@4.0.8:
     resolution: {integrity: sha512-m6jnPk1VhlYRiLFm3f8X9Uep761f+CK8mHyS65LutH2OhmBF0BeMEjHgg05usH8PLZMWWc/BUR9RPmkvpWnyRA==}
+    dev: true
 
   /@types/json-schema@7.0.14:
     resolution: {integrity: sha512-U3PUjAudAdJBeC2pgN8uTIKgxrb4nlDF3SF0++EldXQvQBGkpFZMSnwQiIoDU77tv45VgNkl/L4ouD+rEomujw==}

@@ -1,6 +1,6 @@
 import path from 'path';
 import { fse } from '@rsbuild/shared';
-import { load } from 'js-yaml';
+import { parse } from '@rsbuild/shared/yaml';
 import glob, { type Options as GlobOptions } from 'fast-glob';
 import { Project } from '../project/project';
 import { PNPM_WORKSPACE_FILE, PACKAGE_JSON } from '../constants';
@@ -10,7 +10,7 @@ import type { IPnpmWorkSpace } from '../types';
 export const getPatternsFromYaml = async (monorepoRoot: string) => {
   const workspaceYamlFilePath = path.join(monorepoRoot, PNPM_WORKSPACE_FILE);
   const yamlContent = await fse.readFile(workspaceYamlFilePath, 'utf8');
-  const pnpmWorkspace = load(yamlContent) as IPnpmWorkSpace;
+  const pnpmWorkspace = parse(yamlContent) as IPnpmWorkSpace;
   return pnpmWorkspace.packages || [];
 };
 
