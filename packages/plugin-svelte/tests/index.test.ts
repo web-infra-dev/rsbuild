@@ -4,6 +4,7 @@ import { type Transformer, pluginSvelte } from '../src';
 describe('plugin-svelte', () => {
   it('should add svelte loader properly', async () => {
     const rsbuild = await createStubRsbuild({
+      cwd: __dirname,
       rsbuildConfig: {},
       plugins: [pluginSvelte()],
     });
@@ -16,6 +17,7 @@ describe('plugin-svelte', () => {
     process.env.NODE_ENV = 'production';
 
     const rsbuild = await createStubRsbuild({
+      cwd: __dirname,
       rsbuildConfig: {},
       plugins: [pluginSvelte()],
     });
@@ -26,6 +28,7 @@ describe('plugin-svelte', () => {
 
   it('should turn off hmr by hand correctly', async () => {
     const rsbuild = await createStubRsbuild({
+      cwd: __dirname,
       rsbuildConfig: {
         dev: {
           hmr: false,
@@ -40,6 +43,7 @@ describe('plugin-svelte', () => {
 
   it('should override default svelte-loader options throw options.svelteLoaderOptions', async () => {
     const rsbuild = await createStubRsbuild({
+      cwd: __dirname,
       rsbuildConfig: {},
       plugins: [
         pluginSvelte({
@@ -56,6 +60,7 @@ describe('plugin-svelte', () => {
 
   it('should support pass custom preprocess options', async () => {
     const rsbuild = await createStubRsbuild({
+      cwd: __dirname,
       rsbuildConfig: {},
       plugins: [
         pluginSvelte({
