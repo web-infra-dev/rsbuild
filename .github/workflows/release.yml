@@ -106,7 +106,7 @@ jobs:
       - name: Trigger Modern Update Rsbuild
         if: ${{github.event.inputs.version == 'latest'}}
         run: |
-            await github.actions.createWorkflowDispatch({
+            await github.rest.actions.createWorkflowDispatch({
                 owner: context.repo.owner,
                 repo: 'modern.js',
                 workflow_id: 'update-rsbuild.yml',
