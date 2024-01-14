@@ -86,6 +86,12 @@ export const TASKS: TaskConfig[] = [
       {
         name: 'yaml',
         ignoreDts: true,
+        afterBundle(task) {
+          fs.writeFileSync(
+            join(task.distPath, 'index.d.ts'),
+            'export declare function parse(src: string, options?: any): any;',
+          );
+        },
       },
       {
         name: 'line-diff',
