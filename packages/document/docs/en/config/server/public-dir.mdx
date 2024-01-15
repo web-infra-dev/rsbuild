@@ -7,7 +7,7 @@ type PublicDir =
   | false
   | {
       /**
-       * Directory to serve as static assets
+       * The name of the public directory, can be set as a relative path or an absolute path.
        * @default 'public'
        */
       name?: string;
@@ -51,7 +51,7 @@ export default {
 
 When the value of `publicDir` is of object type, Rsbuild will merge the current configuration with the default configuration.
 
-For example, to set the public name as `static` and disable `copyOnBuild`:
+For example, to set the public folder name as `static` and disable `copyOnBuild`:
 
 ```ts
 export default {
@@ -65,3 +65,33 @@ export default {
 ```
 
 Note that setting the value of `copyOnBuild` to false means that when you run `rsbuild preview` for a production preview, you will not be able to access the corresponding static resources.
+
+### Path Types
+
+The value of `name` can be set to a relative path or an absolute path. Relative path will be resolved relative to the project root directory.
+
+- Example of a relative path:
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      name: '../some-public',
+    },
+  },
+};
+```
+
+- Example of an absolute path:
+
+```ts
+import path from 'node:path';
+
+export default {
+  server: {
+    publicDir: {
+      name: path.join(__dirname, '../some-public'),
+    },
+  },
+};
+```
