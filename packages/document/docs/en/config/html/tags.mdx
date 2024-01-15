@@ -5,7 +5,7 @@
 
 Modifies the tags that are injected into the HTML page.
 
-#### Tag Object
+## Tag Object
 
 ```ts
 export interface HtmlInjectTag {
@@ -72,7 +72,7 @@ And the `hash` field causes the filename to be followed by an additional hash qu
 
 You can also pass functions to those fields to control the path joining.
 
-#### Tags Handler
+## Tags Handler
 
 ```ts
 export type HtmlInjectTagUtils = {
@@ -144,7 +144,7 @@ So the end product will look like:
 </html>
 ```
 
-#### Limitation
+## Limitation
 
 This configuration is used to modify the content of HTML files after Rsbuild completes building, and does not resolve or parse new modules. It cannot be used to import uncompiled source code files. Also cannot replace configurations such as [source.preEntry](/config/source/pre-entry).
 

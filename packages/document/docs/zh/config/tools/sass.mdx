@@ -11,7 +11,7 @@ const defaultOptions = {
 
 你可以通过 `tools.sass` 修改 [sass-loader](https://github.com/webpack-contrib/sass-loader) 的配置。
 
-### Object 类型
+## Object 类型
 
 当 `tools.sass` 的值为 `Object` 类型时，会与默认配置通过 Object.assign 进行浅层合并，值得注意的是，`sassOptions` 会通过 deepMerge 进行深层合并。
 
@@ -25,7 +25,7 @@ export default {
 };
 ```
 
-### Function 类型
+## Function 类型
 
 当 `tools.sass` 为 Function 类型时，默认配置作为第一个参数传入，可以直接修改配置对象，也可以返回一个值作为最终结果，第二个参数提供了一些可以直接调用的工具函数：
 
@@ -42,7 +42,7 @@ export default {
 };
 ```
 
-### 修改 Sass 版本
+## 修改 Sass 版本
 
 在某些场景下，如果你需要使用特定的 Sass 版本，而不是使用 Rsbuild 内置的 Dart Sass v1，可以在项目中安装需要使用的 Sass 版本，并通过 `sass-loader` 的 `implementation` 选项设置。
 
@@ -56,9 +56,9 @@ export default {
 };
 ```
 
-### 工具函数
+## 工具函数
 
-#### addExcludes
+### addExcludes
 
 - **类型：** `(excludes: RegExp | RegExp[]) => void`
 
