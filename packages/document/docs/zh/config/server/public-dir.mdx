@@ -7,7 +7,7 @@ type PublicDir =
   | false
   | {
       /**
-       * public 目录名称
+       * public 目录名称，可以设置为相对路径或绝对路径
        * @default 'public'
        */
       name?: string;
@@ -51,7 +51,7 @@ export default {
 
 当 `publicDir` 的值为 object 类型时，Rsbuild 会根据当前配置与默认配置进行合并。
 
-比如设置 public 名为 `static`，并关闭 `copyOnBuild`：
+比如设置 public 目录的名称为 `static`，并关闭 `copyOnBuild`：
 
 ```ts
 export default {
@@ -65,3 +65,33 @@ export default {
 ```
 
 需要注意的是，将 `copyOnBuild` 的值为 false 后，如果执行 `rsbuild preview` 进行生产环境预览，将无法访问对应的静态资源文件。
+
+### 路径类型
+
+`name` 的值可以设置为相对路径或绝对路径，相对路径将会相对于项目根目录进行解析。
+
+- 相对路径示例：
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      name: '../some-public',
+    },
+  },
+};
+```
+
+- 绝对路径示例：
+
+```ts
+import path from 'node:path';
+
+export default {
+  server: {
+    publicDir: {
+      name: path.join(__dirname, '../some-public'),
+    },
+  },
+};
+```

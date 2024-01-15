@@ -52,7 +52,7 @@ export type PublicDir =
   | false
   | {
       /**
-       * Directory to serve as static assets
+       * The name of the public directory, can be set as a relative path or an absolute path.
        * @default 'public'
        */
       name?: string;
