@@ -5,7 +5,7 @@
 
 `tools.rspack` is used to configure [Rspack](https://rspack.dev/).
 
-### Object Type
+## Object Type
 
 `tools.rspack` can be configured as an object to be deep merged with the built-in Rspack configuration through [webpack-merge](https://github.com/survivejs/webpack-merge).
 
@@ -25,7 +25,7 @@ export default {
 };
 ```
 
-### Function Type
+## Function Type
 
 `tools.rspack` can be configured as a function. The first parameter of this function is the built-in Rspack configuration object, you can modify this object, and then return it. For example:
 
@@ -46,9 +46,9 @@ The object returned by the `tools.rspack` function is used directly as the final
 
 The second parameter of this function is an object, which contains some utility functions and properties, as follows:
 
-### Utils
+## Utils
 
-#### env
+### env
 
 - **Type:** `'development' | 'production' | 'test'`
 
@@ -67,7 +67,7 @@ export default {
 };
 ```
 
-#### isProd
+### isProd
 
 - **Type:** `boolean`
 
@@ -86,7 +86,7 @@ export default {
 };
 ```
 
-#### target
+### target
 
 - **Type:** `'web' | 'node' | 'web-worker' | 'service-worker'`
 
@@ -105,7 +105,7 @@ export default {
 };
 ```
 
-#### isServer
+### isServer
 
 - **Type:** `boolean`
 
@@ -124,7 +124,7 @@ export default {
 };
 ```
 
-#### isWebWorker
+### isWebWorker
 
 - **Type:** `boolean`
 
@@ -143,7 +143,7 @@ export default {
 };
 ```
 
-#### rspack
+### rspack
 
 - **Type:** `typeof import('@rspack/core')`
 
@@ -160,7 +160,7 @@ export default {
 };
 ```
 
-#### addRules
+### addRules
 
 - **Type:** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
@@ -194,7 +194,7 @@ export default {
 };
 ```
 
-#### prependPlugins
+### prependPlugins
 
 - **Type:** `(plugins: BundlerPluginInstance | BundlerPluginInstance[]) => void`
 
@@ -214,7 +214,7 @@ export default {
 };
 ```
 
-#### appendPlugins
+### appendPlugins
 
 - **Type:** `(plugins: BundlerPluginInstance | BundlerPluginInstance[]) => void`
 
@@ -234,7 +234,7 @@ export default {
 };
 ```
 
-#### removePlugin
+### removePlugin
 
 - **Type:** `(name: string) => void`
 
@@ -252,7 +252,7 @@ export default {
 };
 ```
 
-#### mergeConfig
+### mergeConfig
 
 - **Type:** `(...configs: RspackConfig[]) => RspackConfig`
 

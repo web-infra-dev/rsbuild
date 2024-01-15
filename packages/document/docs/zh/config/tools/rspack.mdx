@@ -5,7 +5,7 @@
 
 `tools.rspack` 选项用于配置原生的 [Rspack](https://rspack.dev/)。
 
-### Object 类型
+## Object 类型
 
 `tools.rspack` 可以配置为一个对象，这个对象将会和内置的 Rspack 配置通过 [webpack-merge](https://github.com/survivejs/webpack-merge) 进行深层合并。
 
@@ -25,7 +25,7 @@ export default {
 };
 ```
 
-### Function 类型
+## Function 类型
 
 `tools.rspack` 也可以配置为一个函数，这个函数接收一个参数，即内置的 Rspack 配置对象，你可以对这个对象进行修改，然后返回一份新的配置。比如：
 
@@ -44,11 +44,11 @@ export default {
 `tools.rspack` 函数返回的对象会直接作为最终使用的 Rspack 配置，不会再与内置的 Rspack 配置进行合并。
 :::
 
-### 工具集合
+## 工具集合
 
 这个函数的第二个参数是一个对象，包含了一些工具函数和属性，详情如下：
 
-#### env
+### env
 
 - **类型：** `'development' | 'production' | 'test'`
 
@@ -67,7 +67,7 @@ export default {
 };
 ```
 
-#### isProd
+### isProd
 
 - **类型：** `boolean`
 
@@ -86,7 +86,7 @@ export default {
 };
 ```
 
-#### target
+### target
 
 - **类型：** `'web' | 'node' | 'web-worker' | 'service-worker'`
 
@@ -105,7 +105,7 @@ export default {
 };
 ```
 
-#### isServer
+### isServer
 
 - **类型：** `boolean`
 
@@ -124,7 +124,7 @@ export default {
 };
 ```
 
-#### isWebWorker
+### isWebWorker
 
 - **类型：** `boolean`
 
@@ -143,7 +143,7 @@ export default {
 };
 ```
 
-#### rspack
+### rspack
 
 - **类型：** `typeof import('@rspack/core')`
 
@@ -160,7 +160,7 @@ export default {
 };
 ```
 
-#### addRules
+### addRules
 
 - **类型：** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
@@ -194,7 +194,7 @@ export default {
 };
 ```
 
-#### prependPlugins
+### prependPlugins
 
 - **类型：** `(plugins: BundlerPluginInstance | BundlerPluginInstance[]) => void`
 
@@ -214,7 +214,7 @@ export default {
 };
 ```
 
-#### appendPlugins
+### appendPlugins
 
 - **类型：** `(plugins: BundlerPluginInstance | BundlerPluginInstance[]) => void`
 
@@ -234,7 +234,7 @@ export default {
 };
 ```
 
-#### removePlugin
+### removePlugin
 
 - **类型：** `(name: string) => void`
 
@@ -252,7 +252,7 @@ export default {
 };
 ```
 
-#### mergeConfig
+### mergeConfig
 
 - **类型：** `(...configs: RspackConfig[]) => RspackConfig`
 

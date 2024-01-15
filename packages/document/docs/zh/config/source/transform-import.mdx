@@ -23,7 +23,7 @@ type Config =
 
 - **默认值：** 当你使用 [React 插件](/plugins/list/plugin-react)时，自动支持 [React 组件库的按需引入](/plugins/list/plugin-react#组件库按需引入)。
 
-### 示例
+## 示例
 
 当使用上述 antd 默认配置：
 
@@ -54,7 +54,7 @@ import Button from 'antd/es/button';
 import 'antd/es/button/style';
 ```
 
-### 禁用默认配置
+## 禁用默认配置
 
 你可以手动设置 `transformImport: false` 来关掉 transformImport 的默认行为。
 
@@ -68,15 +68,15 @@ export default {
 
 比如，当你使用了 `externals` 来避免打包 antd 时，由于 `transformImport` 默认会转换 antd 的引用路径，导致匹配的路径发生了变化，因此 externals 无法正确生效，此时你可以设置关闭 `transformImport` 来避免该问题。
 
-### 配置
+## 配置
 
-#### libraryName
+### libraryName
 
 - **类型：** `string`
 
 用于指定需要按需加载的模块名称。当 Rsbuild 遍历代码时，如果遇到了对应模块的 import 语句，则会对其进行转换。
 
-#### libraryDirectory
+### libraryDirectory
 
 - **类型：** `string`
 - **默认值：** `'lib'`
@@ -95,7 +95,7 @@ import { Button } from 'foo';
 import Button from 'foo/lib/button';
 ```
 
-#### style
+### style
 
 - **类型：** `boolean`
 - **默认值：** `undefined`
@@ -116,7 +116,7 @@ import Button from 'foo/lib/button';
 import 'foo/lib/button/style';
 ```
 
-#### styleLibraryDirectory
+### styleLibraryDirectory
 
 - **类型：** `string`
 - **默认值：** `undefined`
@@ -136,7 +136,7 @@ import Button from 'foo/lib/button';
 import 'foo/styles/button';
 ```
 
-#### camelToDashComponentName
+### camelToDashComponentName
 
 - **类型：** `boolean`
 - **默认值：** `true`
@@ -158,7 +158,7 @@ import ButtonGroup from 'foo/button-group';
 import ButtonGroup from 'foo/ButtonGroup';
 ```
 
-#### transformToDefaultImport
+### transformToDefaultImport
 
 - **类型：** `boolean`
 - **默认值：** `true`
@@ -180,7 +180,7 @@ import Button from 'foo/button';
 import { Button } from 'foo/button';
 ```
 
-#### customName
+### customName
 
 - **类型：** `((member: string) => string | undefined) | string`
 - **默认值：** `undefined`
@@ -196,7 +196,7 @@ import { Button } from 'foo/button';
 
 在使用 Rspack 构建时，不能使用函数配置，但可以使用 [handlebars](https://handlebarsjs.com/) 模版字符串，对于上面的函数配置，在使用模版字符串时可以用以下模版代替 `my-lib/{{ member }}`，也可以使用一些内置帮助方法，例如 `my-lib/{{ kebabCase member }}` 来转换成 kebab-case 格式，除了 kebabCase 以外还有 camelCase，snakeCase，upperCase，lowerCase 可以使用。
 
-#### customStyleName
+### customStyleName
 
 - **类型：** `((member: string) => string | undefined) | string`
 - **默认值：** `undefined`

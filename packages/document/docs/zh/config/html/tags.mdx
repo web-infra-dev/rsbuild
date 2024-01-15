@@ -5,7 +5,7 @@
 
 添加和修改最终注入到 HTML 页面的标签。
 
-#### 对象形式
+## 对象形式
 
 ```ts
 export interface HtmlInjectTag {
@@ -72,7 +72,7 @@ export default {
 
 用户也可以向这两个配置传入函数，以自行控制路径拼接的逻辑。
 
-#### 函数形式
+## 函数形式
 
 ```ts
 export type HtmlInjectTagUtils = {
@@ -145,7 +145,7 @@ export default {
 </html>
 ```
 
-#### 限制
+## 限制
 
 这个配置用于在 Rsbuild 构建完成后修改 HTML 产物的内容，并不会引入和解析新的模块。因此，它无法用于引入未编译的源码文件，也无法代替 [source.preEntry](/config/source/pre-entry) 等配置。
 

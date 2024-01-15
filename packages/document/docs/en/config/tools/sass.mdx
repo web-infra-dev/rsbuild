@@ -11,7 +11,7 @@ const defaultOptions = {
 
 You can modify the config of [sass-loader](https://github.com/webpack-contrib/sass-loader) via `tools.sass`.
 
-### Object Type
+## Object Type
 
 When `tools.sass` is `Object` type, it is merged with the default config through Object.assign. It should be noted that `sassOptions` is merged through deepMerge in a deep way.
 
@@ -27,7 +27,7 @@ export default {
 };
 ```
 
-### Function Type
+## Function Type
 
 When `tools.sass` is a Function, the default config is passed as the first parameter, which can be directly modified or returned as the final result. The second parameter provides some utility functions that can be called directly. For Example:
 
@@ -44,7 +44,7 @@ export default {
 };
 ```
 
-### Modifying Sass Version
+## Modifying Sass Version
 
 In some scenarios, if you need to use a specific version of Sass instead of the built-in Dart Sass v1 in Rsbuild, you can install the desired Sass version in your project and set it up using the `implementation` option of the `sass-loader`.
 
@@ -58,9 +58,9 @@ export default {
 };
 ```
 
-### Utility Function
+## Utility Function
 
-#### addExcludes
+### addExcludes
 
 - **Type:** `(excludes: RegExp | RegExp[]) => void`
 

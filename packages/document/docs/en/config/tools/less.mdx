@@ -14,7 +14,7 @@ const defaultOptions = {
 
 You can modify the config of [less-loader](https://github.com/webpack-contrib/less-loader) via `tools.less`.
 
-### Object Type
+## Object Type
 
 When `tools.less` is configured as `Object` type, it is merged with the default config through Object.assign in a shallow way. It should be noted that `lessOptions` is merged through deepMerge in a deep way. For example:
 
@@ -30,7 +30,7 @@ export default {
 };
 ```
 
-### Function Type
+## Function Type
 
 When `tools.less` is a Function, the default config is passed as the first parameter, which can be directly modified or returned as the final result. The second parameter provides some utility functions that can be called directly. For example:
 
@@ -47,7 +47,7 @@ export default {
 };
 ```
 
-### Modifying Less Version
+## Modifying Less Version
 
 In some scenarios, if you need to use a specific version of Less instead of the built-in Less v4 in Rsbuild, you can install the desired Less version in your project and set it up using the `implementation` option of the `less-loader`.
 
@@ -61,9 +61,9 @@ export default {
 };
 ```
 
-### Util Function
+## Util Function
 
-#### addExcludes
+### addExcludes
 
 - **Type:** `(excludes: RegExp | RegExp[]) => void`
 
