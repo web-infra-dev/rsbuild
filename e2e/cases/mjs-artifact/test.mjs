@@ -6,6 +6,7 @@ import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
 import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
 import { pluginPug } from '@rsbuild/plugin-pug';
 import { pluginReact } from '@rsbuild/plugin-react';
+import { pluginPreact } from '@rsbuild/plugin-preact';
 import { pluginRem } from '@rsbuild/plugin-rem';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginSolid } from '@rsbuild/plugin-solid';
@@ -18,6 +19,8 @@ import { pluginVue } from '@rsbuild/plugin-vue';
 import { pluginVue2 } from '@rsbuild/plugin-vue2';
 import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
 import { pluginVue2Jsx } from '@rsbuild/plugin-vue2-jsx';
+import { pluginToml } from '@rsbuild/plugin-toml';
+import { pluginYaml } from '@rsbuild/plugin-yaml';
 
 export default {
   pluginAssetsRetry,
@@ -28,6 +31,7 @@ export default {
   pluginNodePolyfill,
   pluginPug,
   pluginReact,
+  pluginPreact,
   pluginRem,
   pluginSvgr,
   pluginSolid,
@@ -40,4 +44,6 @@ export default {
   pluginVue2,
   pluginVueJsx,
   pluginVue2Jsx,
+  pluginToml,
+  pluginYaml,
 };
