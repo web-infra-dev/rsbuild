@@ -1,8 +1,10 @@
 import { join, isAbsolute } from 'path';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import {
-  outputInspectConfigFiles,
+  setNodeEnv,
+  getNodeEnv,
   stringifyConfig,
+  outputInspectConfigFiles,
   type NormalizedConfig,
   type InspectConfigResult,
   type InspectConfigOptions,
@@ -20,9 +22,9 @@ export async function inspectConfig({
   bundlerConfigs?: WebpackConfig[];
 }): Promise<InspectConfigResult<'webpack'>> {
   if (inspectOptions.env) {
-    process.env.NODE_ENV = inspectOptions.env;
-  } else if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'development';
+    setNodeEnv(inspectOptions.env);
+  } else if (!getNodeEnv()) {
+    setNodeEnv('development');
   }
 
   const webpackConfigs =

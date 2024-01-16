@@ -1,6 +1,8 @@
 import { join, isAbsolute } from 'path';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import {
+  setNodeEnv,
+  getNodeEnv,
   stringifyConfig,
   outputInspectConfigFiles,
   type RspackConfig,
@@ -20,9 +22,9 @@ export async function inspectConfig({
   bundlerConfigs?: RspackConfig[];
 }): Promise<InspectConfigResult<'rspack'>> {
   if (inspectOptions.env) {
-    process.env.NODE_ENV = inspectOptions.env;
-  } else if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'development';
+    setNodeEnv(inspectOptions.env);
+  } else if (!getNodeEnv()) {
+    setNodeEnv('development');
   }
 
   const rspackConfigs =

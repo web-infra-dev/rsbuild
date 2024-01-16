@@ -1,5 +1,7 @@
 import {
   debug,
+  getNodeEnv,
+  setNodeEnv,
   ROOT_DIST_DIR,
   getAddressUrls,
   getPublicPathFromCompiler,
@@ -38,8 +40,8 @@ export async function getServerAPIs<
     defaultPort?: number;
   } = {},
 ): Promise<DevServerAPIs> {
-  if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'development';
+  if (!getNodeEnv()) {
+    setNodeEnv('development');
   }
 
   const rsbuildConfig = options.context.config;

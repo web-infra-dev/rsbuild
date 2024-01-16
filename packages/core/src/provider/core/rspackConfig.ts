@@ -2,10 +2,10 @@ import {
   debug,
   CHAIN_ID,
   castArray,
+  getNodeEnv,
   chainToConfig,
   modifyBundlerChain,
   mergeChainedOptions,
-  type NodeEnv,
   type RspackConfig,
   type RsbuildTarget,
   type ModifyChainUtils,
@@ -91,7 +91,7 @@ async function getConfigUtils(
 }
 
 async function getChainUtils(target: RsbuildTarget): Promise<ModifyChainUtils> {
-  const nodeEnv = process.env.NODE_ENV as NodeEnv;
+  const nodeEnv = getNodeEnv();
 
   return {
     env: nodeEnv,

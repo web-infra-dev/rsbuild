@@ -1,4 +1,4 @@
-import { removeTailSlash, type Define } from '@rsbuild/shared';
+import { getNodeEnv, removeTailSlash, type Define } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginDefine = (): RsbuildPlugin => ({
@@ -14,7 +14,7 @@ export const pluginDefine = (): RsbuildPlugin => ({
           : config.output.assetPrefix;
 
       const builtinVars: Define = {
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        'process.env.NODE_ENV': JSON.stringify(getNodeEnv()),
         'process.env.ASSET_PREFIX': JSON.stringify(
           removeTailSlash(assetPrefix),
         ),
