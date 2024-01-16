@@ -48,6 +48,11 @@ export interface SourceConfig {
    * Used to import the code and style of the component library on demand
    */
   transformImport?: false | TransformImport[];
+  /**
+   * Configure a custom tsconfig.json file path to use.
+   * @default 'tsconfig.json'
+   */
+  tsconfigPath?: string;
 }
 
 export type TransformImport = {
