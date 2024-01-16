@@ -104,8 +104,11 @@ jobs:
           REF: ${{ github.ref }}
 
       - name: Trigger Modern Update Rsbuild
+        uses: actions/github-script@v6
         if: ${{github.event.inputs.version == 'latest'}}
-        run: |
+        with:
+          github-token: ${{ secrets.REPO_SCOPED_TOKEN }}
+          script: |
             await github.rest.actions.createWorkflowDispatch({
                 owner: context.repo.owner,
                 repo: 'modern.js',
