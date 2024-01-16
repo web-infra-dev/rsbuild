@@ -1,7 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
-import { globContentJSON } from '@scripts/helper';
+import { build, globContentJSON } from '@e2e/helper';
 
 test('should allow to generate HTML with filename hash', async () => {
   await build({

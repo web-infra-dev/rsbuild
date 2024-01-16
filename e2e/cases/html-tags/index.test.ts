@@ -1,6 +1,6 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 const isHtmlMatch = (html: string, pattern: RegExp): boolean =>
   Boolean(html.match(pattern));

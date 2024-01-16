@@ -1,6 +1,6 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build, gotoPage } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 
 test('should set template via function correctly', async () => {
   const rsbuild = await build({

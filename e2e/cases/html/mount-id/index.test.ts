@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { build, gotoPage } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 
 test.describe('should render mountId correctly', () => {
   let rsbuild: Awaited<ReturnType<typeof build>>;

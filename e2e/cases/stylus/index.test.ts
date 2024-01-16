@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 
 test('should compile stylus correctly', async () => {

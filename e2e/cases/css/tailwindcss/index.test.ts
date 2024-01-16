@@ -1,4 +1,4 @@
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should generate tailwindcss utilities correctly', async () => {

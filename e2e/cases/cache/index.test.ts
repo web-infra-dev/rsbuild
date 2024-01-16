@@ -1,7 +1,6 @@
 import path from 'path';
 import { expect } from '@playwright/test';
-import { webpackOnlyTest } from '@scripts/helper';
-import { build } from '@scripts/shared';
+import { build, webpackOnlyTest } from '@e2e/helper';
 import { fse } from '@rsbuild/shared';
 
 webpackOnlyTest(

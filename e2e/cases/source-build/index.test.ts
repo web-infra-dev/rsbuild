@@ -1,7 +1,6 @@
 import { join } from 'path';
 import { expect } from '@playwright/test';
-import { build, gotoPage } from '@scripts/shared';
-import { rspackOnlyTest } from '@scripts/helper';
+import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 const fixture = join(__dirname, 'app');
 

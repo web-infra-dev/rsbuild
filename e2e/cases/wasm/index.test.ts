@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { build, gotoPage } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 
 test('should allow to import wasm file', async ({ page }) => {
   const root = join(__dirname, 'wasm-basic');

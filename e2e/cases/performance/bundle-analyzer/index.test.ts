@@ -1,7 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { dev, build } from '@scripts/shared';
-import { globContentJSON } from '@scripts/helper';
+import { dev, build, globContentJSON } from '@e2e/helper';
 
 test('should emit bundle analyze report correctly when dev', async ({
   page,

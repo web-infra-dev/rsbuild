@@ -1,6 +1,5 @@
 import { expect } from '@playwright/test';
-import { build, gotoPage } from '@scripts/shared';
-import { rspackOnlyTest } from '@scripts/helper';
+import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
 rspackOnlyTest('babel', async ({ page }) => {

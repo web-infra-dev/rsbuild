@@ -2,8 +2,7 @@ import path from 'path';
 import { exec } from 'child_process';
 import { test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { awaitFileExists } from '@scripts/helper';
-import { getRandomPort } from '@scripts/shared';
+import { getRandomPort, awaitFileExists } from '@e2e/helper';
 
 test('should restart dev server and reload config when config file changed', async () => {
   const dist1 = path.join(__dirname, 'dist');

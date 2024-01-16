@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { build, gotoPage } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 
 test('should add node-polyfill when add node-polyfill plugin', async ({
   page,

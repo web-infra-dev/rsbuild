@@ -1,6 +1,6 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 test('should emit local favicon to dist path', async () => {
   const rsbuild = await build({

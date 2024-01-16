@@ -1,7 +1,7 @@
 import { fse } from '@rsbuild/shared';
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { build, gotoPage } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 
 test('tools.htmlPlugin', async ({ page }) => {
   const rsbuild = await build({

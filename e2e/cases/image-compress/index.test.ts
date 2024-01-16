@@ -1,7 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { globContentJSON } from '@scripts/helper';
-import { build } from '@scripts/shared';
+import { build, globContentJSON } from '@e2e/helper';
 import { readFileSync } from 'fs';
 
 test('should compress image with use plugin-image-compress', async () => {

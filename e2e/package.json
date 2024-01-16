@@ -19,6 +19,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@e2e/helper": "workspace:*",
     "@playwright/test": "1.33.0",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
