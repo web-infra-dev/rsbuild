@@ -11,7 +11,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "<ROOT>/packages/compat/plugin-swc/tests",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -25,7 +25,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
           {
             "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
             "options": {
-              "cwd": "<ROOT>",
+              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "env": {
                 "coreJs": "3.32",
                 "mode": "usage",
@@ -42,7 +42,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
                   "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                 },
                 "lodash": {
-                  "cwd": "<ROOT>",
+                  "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                   "ids": [
                     "lodash",
                     "lodash-es",
@@ -60,7 +60,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
                 "transform": {
                   "react": {
                     "refresh": true,
-                    "runtime": "classic",
+                    "runtime": "automatic",
                   },
                 },
               },
@@ -80,7 +80,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
           {
             "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
             "options": {
-              "cwd": "<ROOT>",
+              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "env": {
                 "coreJs": "3.32",
                 "mode": "usage",
@@ -97,7 +97,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
                   "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                 },
                 "lodash": {
-                  "cwd": "<ROOT>",
+                  "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                   "ids": [
                     "lodash",
                     "lodash-es",
@@ -115,7 +115,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
                 "transform": {
                   "react": {
                     "refresh": true,
-                    "runtime": "classic",
+                    "runtime": "automatic",
                   },
                 },
               },
@@ -136,7 +136,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
       "include": [
         {
           "and": [
-            "<ROOT>",
+            "<ROOT>/packages/compat/plugin-swc/tests",
             {
               "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
             },
@@ -149,7 +149,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
           "options": {
-            "cwd": "<ROOT>",
+            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
               "coreJs": "3.32",
               "mode": "usage",
@@ -166,7 +166,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>",
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -184,7 +184,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
               "transform": {
                 "react": {
                   "refresh": false,
-                  "runtime": "classic",
+                  "runtime": "automatic",
                 },
               },
             },
@@ -204,7 +204,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
           "options": {
-            "cwd": "<ROOT>",
+            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
               "coreJs": "3.32",
               "mode": "usage",
@@ -221,7 +221,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>",
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -239,7 +239,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
               "transform": {
                 "react": {
                   "refresh": false,
-                  "runtime": "classic",
+                  "runtime": "automatic",
                 },
               },
             },
@@ -259,7 +259,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
       "include": [
         {
           "and": [
-            "<ROOT>",
+            "<ROOT>/packages/compat/plugin-swc/tests",
             {
               "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
             },
@@ -272,7 +272,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
           "options": {
-            "cwd": "<ROOT>",
+            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
               "coreJs": "3.32",
               "mode": "usage",
@@ -286,7 +286,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>",
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -304,7 +304,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
               "transform": {
                 "react": {
                   "refresh": false,
-                  "runtime": "classic",
+                  "runtime": "automatic",
                 },
               },
             },
@@ -324,7 +324,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
           "options": {
-            "cwd": "<ROOT>",
+            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
               "coreJs": "3.32",
               "mode": "usage",
@@ -338,7 +338,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>",
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -356,7 +356,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
               "transform": {
                 "react": {
                   "refresh": false,
-                  "runtime": "classic",
+                  "runtime": "automatic",
                 },
               },
             },
@@ -376,7 +376,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
       "include": [
         {
           "and": [
-            "<ROOT>",
+            "<ROOT>/packages/compat/plugin-swc/tests",
             {
               "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
             },
@@ -389,7 +389,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
           "options": {
-            "cwd": "<ROOT>",
+            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
               "coreJs": "3.32",
               "mode": "usage",
@@ -406,7 +406,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>",
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -424,7 +424,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
               "transform": {
                 "react": {
                   "refresh": false,
-                  "runtime": "classic",
+                  "runtime": "automatic",
                 },
               },
             },
@@ -444,7 +444,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
           "options": {
-            "cwd": "<ROOT>",
+            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
               "coreJs": "3.32",
               "mode": "usage",
@@ -461,7 +461,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>",
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -479,7 +479,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
               "transform": {
                 "react": {
                   "refresh": false,
-                  "runtime": "classic",
+                  "runtime": "automatic",
                 },
               },
             },
@@ -499,7 +499,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
       "include": [
         {
           "and": [
-            "<ROOT>",
+            "<ROOT>/packages/compat/plugin-swc/tests",
             {
               "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
             },
@@ -512,7 +512,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
           "options": {
-            "cwd": "<ROOT>",
+            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
               "coreJs": "3.32",
               "mode": "usage",
@@ -529,7 +529,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>",
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -547,7 +547,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
               "transform": {
                 "react": {
                   "refresh": true,
-                  "runtime": "classic",
+                  "runtime": "automatic",
                 },
               },
             },
@@ -567,7 +567,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
           "options": {
-            "cwd": "<ROOT>",
+            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
               "coreJs": "3.32",
               "mode": "usage",
@@ -584,7 +584,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>",
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -602,7 +602,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
               "transform": {
                 "react": {
                   "refresh": true,
-                  "runtime": "classic",
+                  "runtime": "automatic",
                 },
               },
             },
@@ -622,7 +622,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 4`] = 
       "include": [
         {
           "and": [
-            "<ROOT>",
+            "<ROOT>/packages/compat/plugin-swc/tests",
             {
               "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
             },
@@ -635,7 +635,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 4`] = 
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
           "options": {
-            "cwd": "<ROOT>",
+            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
               "coreJs": "3.32",
               "mode": "usage",
@@ -652,7 +652,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 4`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>",
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -670,7 +670,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 4`] = 
               "transform": {
                 "react": {
                   "refresh": false,
-                  "runtime": "classic",
+                  "runtime": "automatic",
                 },
               },
             },
@@ -690,7 +690,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 4`] = 
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
           "options": {
-            "cwd": "<ROOT>",
+            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
               "coreJs": "3.32",
               "mode": "usage",
@@ -707,7 +707,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 4`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>",
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -725,7 +725,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 4`] = 
               "transform": {
                 "react": {
                   "refresh": false,
-                  "runtime": "classic",
+                  "runtime": "automatic",
                 },
               },
             },
@@ -784,7 +784,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
     "include": [
       {
         "and": [
-          "<ROOT>",
+          "<ROOT>/packages/compat/plugin-swc/tests",
           {
             "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
@@ -797,7 +797,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
       {
         "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
         "options": {
-          "cwd": "<ROOT>",
+          "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
           "env": {
             "coreJs": "3.32",
             "mode": "usage",
@@ -814,7 +814,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
               "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
             },
             "lodash": {
-              "cwd": "<ROOT>",
+              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "ids": [
                 "lodash",
                 "lodash-es",
@@ -832,7 +832,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
             "transform": {
               "react": {
                 "refresh": true,
-                "runtime": "classic",
+                "runtime": "automatic",
               },
               "useDefineForClassFields": true,
             },
@@ -848,7 +848,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
       {
         "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
         "options": {
-          "cwd": "<ROOT>",
+          "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
           "env": {
             "coreJs": "3.32",
             "mode": "usage",
@@ -865,7 +865,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
               "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
             },
             "lodash": {
-              "cwd": "<ROOT>",
+              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "ids": [
                 "lodash",
                 "lodash-es",
@@ -883,7 +883,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
             "transform": {
               "react": {
                 "refresh": true,
-                "runtime": "classic",
+                "runtime": "automatic",
               },
               "useDefineForClassFields": false,
             },
@@ -904,7 +904,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
       {
         "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
         "options": {
-          "cwd": "<ROOT>",
+          "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
           "env": {
             "coreJs": "3.32",
             "mode": "usage",
@@ -921,7 +921,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
               "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
             },
             "lodash": {
-              "cwd": "<ROOT>",
+              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "ids": [
                 "lodash",
                 "lodash-es",
@@ -939,7 +939,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
             "transform": {
               "react": {
                 "refresh": true,
-                "runtime": "classic",
+                "runtime": "automatic",
               },
               "useDefineForClassFields": true,
             },
@@ -979,7 +979,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "<ROOT>/packages/compat/plugin-swc/tests",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -992,7 +992,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
           {
             "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
             "options": {
-              "cwd": "<ROOT>",
+              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "env": {
                 "coreJs": "3.32",
                 "mode": "usage",
@@ -1009,7 +1009,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
                   "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                 },
                 "lodash": {
-                  "cwd": "<ROOT>",
+                  "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                   "ids": [
                     "lodash",
                     "lodash-es",
@@ -1027,7 +1027,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
                 "transform": {
                   "react": {
                     "refresh": true,
-                    "runtime": "classic",
+                    "runtime": "automatic",
                   },
                 },
               },
@@ -1047,7 +1047,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
           {
             "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
             "options": {
-              "cwd": "<ROOT>",
+              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "env": {
                 "coreJs": "3.32",
                 "mode": "usage",
@@ -1064,7 +1064,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
                   "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                 },
                 "lodash": {
-                  "cwd": "<ROOT>",
+                  "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                   "ids": [
                     "lodash",
                     "lodash-es",
@@ -1082,7 +1082,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
                 "transform": {
                   "react": {
                     "refresh": true,
-                    "runtime": "classic",
+                    "runtime": "automatic",
                   },
                 },
               },

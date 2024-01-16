@@ -7,7 +7,7 @@ exports[`plugin-check-syntax > should add check-syntax plugin properly 1`] = `
       "ecmaVersion": 6,
       "errors": [],
       "exclude": undefined,
-      "rootPath": "<ROOT>",
+      "rootPath": "<ROOT>/packages/plugin-check-syntax/tests",
       "targets": [
         "chrome >= 87",
         "edge >= 88",
@@ -30,7 +30,7 @@ exports[`plugin-check-syntax > should use default browserslist as targets when o
       "exclude": [
         /\\$\\.html/,
       ],
-      "rootPath": "<ROOT>",
+      "rootPath": "<ROOT>/packages/plugin-check-syntax/tests",
       "targets": [
         "iOS 9",
         "Android 4.4",
