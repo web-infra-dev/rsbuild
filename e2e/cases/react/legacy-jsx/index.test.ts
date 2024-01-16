@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { build, gotoPage } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 
 const fixtures = __dirname;
 

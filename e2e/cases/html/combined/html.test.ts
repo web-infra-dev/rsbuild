@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 test.describe('should combine multiple html config correctly', () => {
   let rsbuild: Awaited<ReturnType<typeof build>>;

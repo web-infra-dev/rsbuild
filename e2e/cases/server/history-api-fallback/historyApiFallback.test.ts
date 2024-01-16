@@ -1,7 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { dev, build } from '@scripts/shared';
-import { rspackOnlyTest } from '@scripts/helper';
+import { dev, build, rspackOnlyTest } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const cwd = __dirname;

@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 test('should not apply crossOrigin by default', async () => {
   const rsbuild = await build({

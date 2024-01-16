@@ -1,6 +1,5 @@
 import path from 'path';
-import { build } from '@scripts/shared';
-import { providerType } from '@scripts/helper';
+import { build, providerType } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginSwc } from '@rsbuild/plugin-swc';
 

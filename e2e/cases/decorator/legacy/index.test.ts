@@ -1,6 +1,5 @@
 import { expect } from '@playwright/test';
-import { rspackOnlyTest } from '@scripts/helper';
-import { build, gotoPage } from '@scripts/shared';
+import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest('decorator legacy(default)', async ({ page }) => {
   const rsbuild = await build({

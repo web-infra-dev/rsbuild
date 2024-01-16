@@ -5,8 +5,7 @@
     "baseUrl": "./",
     "outDir": "./dist",
     "paths": {
-      "@/*": ["wasm-basic/src/*"],
-      "@scripts/*": ["../../scripts/*"]
+      "@/*": ["wasm-basic/src/*"]
     }
   },
   "include": ["wasm-basic/src", "*.test.ts", "index.test.ts"]

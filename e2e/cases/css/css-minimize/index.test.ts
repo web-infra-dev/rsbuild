@@ -1,6 +1,5 @@
-import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
-import { rspackOnlyTest } from '@scripts/helper';
+import { expect } from '@playwright/test';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 
 rspackOnlyTest('should minimize CSS correctly by default', async () => {

@@ -1,6 +1,6 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 import { fse } from '@rsbuild/shared';
 
 test('should compile nested npm import correctly', async () => {

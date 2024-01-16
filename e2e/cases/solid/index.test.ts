@@ -3,8 +3,7 @@ import { expect } from '@playwright/test';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
-import { rspackOnlyTest } from '@scripts/helper';
-import { build, gotoPage } from '@scripts/shared';
+import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 const buildFixture = (rootDir: string): ReturnType<typeof build> => {
   const root = path.join(__dirname, rootDir);

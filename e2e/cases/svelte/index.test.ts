@@ -1,9 +1,8 @@
 import path from 'path';
 import fs from 'fs';
 import { test, expect } from '@playwright/test';
-import { build, dev, gotoPage } from '@scripts/shared';
+import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
-import { rspackOnlyTest } from '@scripts/helper';
 
 const buildFixture = (
   rootDir: string,

@@ -1,7 +1,5 @@
 import { expect } from '@playwright/test';
-import { build } from '@scripts/shared';
-import { webpackOnlyTest } from '@scripts/helper';
-import { proxyConsole } from '@scripts/helper';
+import { build, proxyConsole, webpackOnlyTest } from '@e2e/helper';
 
 // TODO: needs rspack exportsPresence error
 // https://github.com/web-infra-dev/rspack/issues/4323

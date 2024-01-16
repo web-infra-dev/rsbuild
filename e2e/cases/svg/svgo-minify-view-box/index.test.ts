@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 test('should preserve viewBox after svgo minification', async () => {
   const buildOpts = {

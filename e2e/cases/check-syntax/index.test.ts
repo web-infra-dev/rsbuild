@@ -1,9 +1,8 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build, proxyConsole } from '@e2e/helper';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import type { RsbuildConfig } from '@rsbuild/shared';
-import { proxyConsole } from '@scripts/helper';
 import { normalizeToPosixPath } from '@scripts/test-helper';
 
 function getCommonBuildConfig(cwd: string): RsbuildConfig {

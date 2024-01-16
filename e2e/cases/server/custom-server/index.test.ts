@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { gotoPage } from '@scripts/shared';
+import { gotoPage } from '@e2e/helper';
 import { startDevServer } from './scripts/server.mjs';
 import { startDevServerPure } from './scripts/pure-server.mjs';
 

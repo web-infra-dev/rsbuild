@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { dev } from '@scripts/shared';
+import { dev } from '@e2e/helper';
 import fs from 'fs';
 
 const fixtures = __dirname;

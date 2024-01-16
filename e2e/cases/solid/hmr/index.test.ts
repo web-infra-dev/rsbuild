@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { test, expect } from '@playwright/test';
-import { rspackOnlyTest } from '@scripts/helper';
-import { dev, gotoPage } from '@scripts/shared';
+import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest('hmr should work properly', async ({ page }) => {
   // HMR cases will fail in Windows

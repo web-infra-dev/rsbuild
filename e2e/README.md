@@ -41,7 +41,7 @@ If the capability corresponding to the test case is not yet supported in other b
 you can use the `webpackOnlyTest` or `rspackOnlyTest` methods for testing. Once other bundlers also support it, you can replace it with the `test` method.
 
 ```ts
-import { webpackOnlyTest } from '@scripts/helper';
+import { webpackOnlyTest } from '@e2e/helper';
 // will passed in webpack, and skipped in rspack
 webpackOnlyTest('test 1 + 1', () => {
   expect(1 + 1).toBe(2);

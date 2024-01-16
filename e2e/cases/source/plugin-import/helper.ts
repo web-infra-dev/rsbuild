@@ -1,5 +1,5 @@
 import path from 'path';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
 import type { RsbuildConfig } from '@rsbuild/core';

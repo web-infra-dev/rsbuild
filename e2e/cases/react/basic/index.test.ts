@@ -1,6 +1,5 @@
 import { expect } from '@playwright/test';
-import { rspackOnlyTest } from '@scripts/helper';
-import { dev, build, gotoPage } from '@scripts/shared';
+import { dev, build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should render basic React component in development correctly',

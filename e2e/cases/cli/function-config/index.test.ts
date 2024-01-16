@@ -2,7 +2,7 @@ import { fse } from '@rsbuild/shared';
 import path from 'path';
 import { execSync } from 'child_process';
 import { expect, test } from '@playwright/test';
-import { globContentJSON } from '@scripts/helper';
+import { globContentJSON } from '@e2e/helper';
 
 test('should allow to export function in config file', async () => {
   const targetDir = path.join(__dirname, 'dist-production-build');

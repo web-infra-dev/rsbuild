@@ -1,8 +1,7 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build, proxyConsole } from '@e2e/helper';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
-import { proxyConsole } from '@scripts/helper';
 import { normalizeToPosixPath } from '@scripts/test-helper';
 
 test('should not compile file which outside of project by default', async () => {

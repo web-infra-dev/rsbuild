@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import { test, expect } from '@playwright/test';
-import { dev, gotoPage } from '@scripts/shared';
+import { dev, gotoPage } from '@e2e/helper';
 
 const appFile = path.join(__dirname, 'src/App.jsx');
 let appCode: string;
