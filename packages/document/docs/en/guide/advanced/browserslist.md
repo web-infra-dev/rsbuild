@@ -24,7 +24,7 @@ You can set the Browserslist value in the `package.json` or `.browserslistrc` fi
 
 Set via `browserslist` in `package.json`:
 
-```json
+```json title="package.json"
 {
   "browserslist": [
     "iOS >= 9",
@@ -38,7 +38,7 @@ Set via `browserslist` in `package.json`:
 
 Set via a separate `.browserslistrc` file:
 
-```yaml
+```yaml title=".browserslistrc"
 iOS >= 9
 Android >= 4.4
 last 2 versions
@@ -52,13 +52,52 @@ By default, the `.browserslistrc` file only takes effect for browser-side bundle
 
 When you are building multiple targets at the same time, for example if the targets contains both `web` and `node`, only the `web` bundles will be affected by the `.browserslistrc` file. If you want to make changes to the `node` bundles, you can use the `output.overrideBrowserslist` configuration below.
 
-### Use output.overrideBrowserslist config
+### Set by Env
+
+You can set different browserslist based on `NODE_ENV` to specify different browser ranges for development and production.
+
+For example, set values based on keys in the `package.json`:
+
+```json title="package.json"
+{
+  "browserslist": {
+    "production": [
+      "chrome >= 87",
+      "edge >= 88",
+      "firefox >= 78",
+      "safari >= 14"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
+```
+
+Or in `.browserslistrc`:
+
+```yaml title=".browserslistrc"
+[production]
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
+
+[development]
+last 1 chrome version
+last 1 firefox version
+last 1 safari version
+```
+
+### overrideBrowserslist
 
 In addition to the above standard usage, Rsbuild also provides [output.overrideBrowserslist](/config/output/override-browserslist) config, which can also set the value of Browserslist.
 
 `overrideBrowserslist` can be set to an array, which is written in the same way as the `browserslistrc` configuration, but has a higher priority than `browserslistrc`.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     overrideBrowserslist: [
@@ -72,13 +111,13 @@ export default {
 };
 ```
 
-When `.overrideBrowserslist` is set to an array, it will also only work for browser-side bundles.
+When `output.overrideBrowserslist` is set to an array, it will also only work for browser-side bundles.
 
 When you build multiple targets at the same time, you can set different browser ranges for different targets. At this point, you need to set `overrideBrowserslist` to an object whose key is the corresponding build target.
 
 For example to set different ranges for `web` and `node`:
 
-```js
+```js title="rsbuild.config.ts"
 export default {
   output: {
     overrideBrowserslist: {
@@ -105,7 +144,7 @@ The following are some commonly used Browserslist, you can choose according to y
 
 In the desktop PC scenario, if you need to be compatible with IE 11 browsers, you can set Browserslist to:
 
-```yaml
+```yaml title=".browserslistrc"
 > 0.5%
 not dead
 Internet Explorer 11
@@ -117,7 +156,7 @@ If you don't need to be compatible with IE 11 browsers, you can adjust Browsersl
 
 - Set to browsers that supports native ES Modules (recommended):
 
-```yaml
+```yaml title=".browserslistrc"
 chrome >= 87
 edge >= 88
 firefox >= 78
@@ -126,7 +165,7 @@ safari >= 14
 
 - Set to browsers that support ES6:
 
-```yaml
+```yaml title=".browserslistrc"
 chrome >= 51
 edge >= 15
 firefox >= 54
@@ -138,7 +177,7 @@ ios_saf >= 10
 
 The mobile H5 scenario is mainly compatible with `iOS` and `Android` systems, usually we set Browserslist as:
 
-```yaml
+```yaml title=".browserslistrc"
 iOS >= 9
 Android >= 4.4
 last 2 versions
@@ -152,7 +191,7 @@ The above Browserslist will compile the code to the ES5 specification, which is 
 
 You can also choose to use the ES6 specification in the H5 scene, which will make the performance of the page better. The corresponding Browserslist is as follows:
 
-```yaml
+```yaml title=".browserslistrc"
 iOS >= 10
 Chrome >= 51
 > 0.5%
@@ -168,7 +207,7 @@ Rsbuild will set different default values of Browserslist according to [output.t
 
 The default values of web target are as follows:
 
-```yaml
+```yaml title=".browserslistrc"
 chrome >= 87
 edge >= 88
 firefox >= 78
@@ -181,7 +220,7 @@ Under this browser range, JavaScript code will be compatible with browsers that 
 
 Node target will be compatible with Node.js 16.0 by default.
 
-```yaml
+```yaml title=".browserslistrc"
 node >= 16
 ```
 
@@ -189,7 +228,7 @@ node >= 16
 
 The default Browserslist of the Web Worker target is consistent with the Web target.
 
-```yaml
+```yaml title=".browserslistrc"
 chrome >= 87
 edge >= 88
 firefox >= 78
