@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 
 const fixtures = __dirname;
 
@@ -17,7 +17,7 @@ test('should minify template js & css', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const test = page.locator('#test');
 
@@ -66,7 +66,7 @@ test('should minify template success when inlineScripts & inlineStyles', async (
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const test = page.locator('#test');
 

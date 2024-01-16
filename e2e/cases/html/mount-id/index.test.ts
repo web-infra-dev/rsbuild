@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 
 test.describe('should render mountId correctly', () => {
   let rsbuild: Awaited<ReturnType<typeof build>>;
@@ -26,7 +26,7 @@ test.describe('should render mountId correctly', () => {
     const errors: string[] = [];
     page.on('pageerror', (err) => errors.push(err.message));
 
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    await gotoPage(page, rsbuild);
 
     const test = page.locator('#test');
     await expect(test).toHaveText('Hello Rsbuild!');

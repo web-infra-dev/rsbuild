@@ -1,6 +1,6 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 
 test('should set template via function correctly', async () => {
   const rsbuild = await build({
@@ -50,7 +50,7 @@ test('should allow to access templateParameters', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const testTemplate = page.locator('#test-template');
   await expect(testTemplate).toHaveText('xxx');

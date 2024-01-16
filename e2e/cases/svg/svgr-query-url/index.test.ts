@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 
 test('should import svg with SVGR plugin and query URL correctly', async ({
   page,
@@ -9,7 +9,7 @@ test('should import svg with SVGR plugin and query URL correctly', async ({
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   // test svg asset
   await expect(

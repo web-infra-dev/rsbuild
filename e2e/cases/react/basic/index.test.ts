@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { rspackOnlyTest } from '@scripts/helper';
-import { dev, build, getHrefByEntryName } from '@scripts/shared';
+import { dev, build, gotoPage } from '@scripts/shared';
 
 rspackOnlyTest(
   'should render basic React component in development correctly',
@@ -9,7 +9,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    await gotoPage(page, rsbuild);
 
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0');
@@ -28,7 +28,7 @@ rspackOnlyTest(
       runServer: true,
     });
 
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    await gotoPage(page, rsbuild);
 
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0');

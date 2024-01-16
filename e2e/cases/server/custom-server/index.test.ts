@@ -1,12 +1,12 @@
 import { expect, test } from '@playwright/test';
-import { getHrefByEntryName } from '@scripts/shared';
+import { gotoPage } from '@scripts/shared';
 import { startDevServer } from './scripts/server.mjs';
 import { startDevServerPure } from './scripts/pure-server.mjs';
 
 test('custom server', async ({ page }) => {
   const { config, close } = await startDevServer(__dirname);
 
-  await page.goto(getHrefByEntryName('index', config.port));
+  await gotoPage(page, config);
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
@@ -22,8 +22,7 @@ test('custom server', async ({ page }) => {
 
 test('custom server without compile', async ({ page }) => {
   const { config, close } = await startDevServerPure(__dirname);
-
-  const indexRes = await page.goto(getHrefByEntryName('index', config.port));
+  const indexRes = await gotoPage(page, config);
 
   expect(indexRes?.status()).toBe(404);
 

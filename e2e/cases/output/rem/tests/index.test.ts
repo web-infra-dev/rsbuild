@@ -1,6 +1,6 @@
 import { join, resolve } from 'path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginRem } from '@rsbuild/plugin-rem';
 
@@ -12,7 +12,7 @@ test('rem default (disable)', async ({ page }) => {
     plugins: [pluginReact()],
     runServer: true,
   });
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const title = page.locator('#title');
   await expect(title).toHaveCSS('font-size', '20px');
@@ -31,7 +31,7 @@ test('rem enable', async ({ page }) => {
     plugins: [pluginReact(), pluginRem()],
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const root = page.locator('html');
   await expect(root).toHaveCSS('font-size', '64px');

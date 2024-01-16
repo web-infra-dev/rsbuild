@@ -4,7 +4,7 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 import { rspackOnlyTest } from '@scripts/helper';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 
 const buildFixture = (rootDir: string): ReturnType<typeof build> => {
   const root = path.join(__dirname, rootDir);
@@ -28,38 +28,32 @@ const buildFixture = (rootDir: string): ReturnType<typeof build> => {
 rspackOnlyTest(
   'should build basic solid component properly',
   async ({ page }) => {
-    const handle = await buildFixture('basic');
+    const rsbuild = await buildFixture('basic');
 
-    await page.goto(getHrefByEntryName('index', handle.port));
+    await gotoPage(page, rsbuild);
 
     const button = page.locator('#button');
-
     await expect(button).toHaveText('count: 0');
 
     button.click();
-
     await expect(button).toHaveText('count: 1');
-
-    handle.close();
+    rsbuild.close();
   },
 );
 
 rspackOnlyTest(
   'should build solid component with typescript',
   async ({ page }) => {
-    const handle = await buildFixture('ts');
+    const rsbuild = await buildFixture('ts');
 
-    await page.goto(getHrefByEntryName('index', handle.port));
+    await gotoPage(page, rsbuild);
 
     const button = page.locator('#button');
-
     await expect(button).toHaveText('count: 0');
 
     button.click();
-
     await expect(button).toHaveText('count: 1');
-
-    handle.close();
+    rsbuild.close();
   },
 );
 
@@ -68,9 +62,9 @@ rspackOnlyTest(
   rspackOnlyTest(
     `should build solid component with ${name}`,
     async ({ page }) => {
-      const handle = await buildFixture(name);
+      const rsbuild = await buildFixture(name);
 
-      await page.goto(getHrefByEntryName('index', handle.port));
+      await gotoPage(page, rsbuild);
 
       const title = page.locator('#title');
 
@@ -78,7 +72,7 @@ rspackOnlyTest(
       // use the text color to assert the compilation result
       await expect(title).toHaveCSS('color', 'rgb(255, 62, 0)');
 
-      handle.close();
+      rsbuild.close();
     },
   );
 });

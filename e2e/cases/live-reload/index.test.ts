@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import { test, expect } from '@playwright/test';
-import { dev, getHrefByEntryName } from '@scripts/shared';
+import { dev, gotoPage } from '@scripts/shared';
 
 const appFile = path.join(__dirname, 'src/App.jsx');
 let appCode: string;
@@ -27,7 +27,7 @@ test('should fallback to live-reload when dev.hmr is false', async ({
     cwd: __dirname,
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const testEl = page.locator('#test');
   await expect(testEl).toHaveText('Hello Rsbuild!');
@@ -50,7 +50,7 @@ test('should not reload page when live-reload is disabled', async ({
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');

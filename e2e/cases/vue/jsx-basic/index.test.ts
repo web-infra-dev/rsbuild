@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 import { rspackOnlyTest } from '@scripts/helper';
 
 rspackOnlyTest('should build basic Vue jsx correctly', async ({ page }) => {
@@ -8,7 +8,7 @@ rspackOnlyTest('should build basic Vue jsx correctly', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const button1 = page.locator('#button1');
   await expect(button1).toHaveText('A: 0');

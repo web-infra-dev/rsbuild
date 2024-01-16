@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
@@ -67,7 +67,7 @@ cases.forEach((_case) => {
       rsbuildConfig: _case.config || {},
     });
 
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    await gotoPage(page, rsbuild);
 
     if (_case.expected === 'url') {
       await expect(

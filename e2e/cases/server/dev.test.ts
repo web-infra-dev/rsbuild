@@ -2,7 +2,7 @@ import { join } from 'path';
 import { fse } from '@rsbuild/shared';
 import { expect, test } from '@playwright/test';
 import { rspackOnlyTest } from '@scripts/helper';
-import { dev, getHrefByEntryName } from '@scripts/shared';
+import { dev, gotoPage } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
@@ -38,7 +38,7 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
@@ -109,7 +109,7 @@ test('dev.port & output.distPath', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   expect(rsbuild.port).toBe(3000);
 
@@ -164,7 +164,7 @@ rspackOnlyTest(
       },
     });
 
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    await gotoPage(page, rsbuild);
     expect(rsbuild.port).toBe(3001);
 
     const appPath = join(fixtures, 'hmr', 'test-src-1/App.tsx');
@@ -222,7 +222,7 @@ test('devServer', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');

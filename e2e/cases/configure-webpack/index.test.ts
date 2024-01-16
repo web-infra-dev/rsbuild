@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { webpackOnlyTest } from '@scripts/helper';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 
 webpackOnlyTest(
   'should allow to use tools.webpackChain to configure Webpack',
@@ -21,7 +21,7 @@ webpackOnlyTest(
       },
     });
 
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    await gotoPage(page, rsbuild);
 
     const testEl = page.locator('#test-el');
     await expect(testEl).toHaveText('aaaaa');

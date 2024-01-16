@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import { test, expect } from '@playwright/test';
-import { build, dev, getHrefByEntryName } from '@scripts/shared';
+import { build, dev, gotoPage } from '@scripts/shared';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 import { rspackOnlyTest } from '@scripts/helper';
 
@@ -28,15 +28,15 @@ const buildFixture = (
 rspackOnlyTest(
   'should build basic svelte component properly',
   async ({ page }) => {
-    const handle = await buildFixture('basic', 'src/index.js');
+    const rsbuild = await buildFixture('basic', 'src/index.js');
 
-    await page.goto(getHrefByEntryName('index', handle.port));
+    await gotoPage(page, rsbuild);
 
     const title = page.locator('#title');
 
     await expect(title).toHaveText('Hello world!');
 
-    handle.close();
+    rsbuild.close();
   },
 );
 
@@ -48,7 +48,7 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
 
   const root = path.join(__dirname, 'hmr');
 
-  const handle = await dev({
+  const rsbuild = await dev({
     cwd: root,
     plugins: [pluginSvelte()],
     rsbuildConfig: {
@@ -60,7 +60,7 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', handle.port));
+  await gotoPage(page, rsbuild);
 
   const a = page.locator('#A');
   const b = page.locator('#B');
@@ -83,21 +83,21 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
   await expect(a).toHaveText('A: 5');
 
   fs.writeFileSync(bPath, sourceCodeB, 'utf-8'); // recover the source code
-  handle.server.close();
+  rsbuild.server.close();
 });
 
 rspackOnlyTest(
   'should build svelte component with typescript',
   async ({ page }) => {
-    const handle = await buildFixture('ts', 'src/index.ts');
+    const rsbuild = await buildFixture('ts', 'src/index.ts');
 
-    await page.goto(getHrefByEntryName('index', handle.port));
+    await gotoPage(page, rsbuild);
 
     const title = page.locator('#title');
 
     await expect(title).toHaveText('Hello world!');
 
-    handle.close();
+    rsbuild.close();
   },
 );
 
@@ -106,9 +106,9 @@ rspackOnlyTest(
   rspackOnlyTest(
     `should build svelte component with ${name}`,
     async ({ page }) => {
-      const handle = await buildFixture(name, 'src/index.js');
+      const rsbuild = await buildFixture(name, 'src/index.js');
 
-      await page.goto(getHrefByEntryName('index', handle.port));
+      await gotoPage(page, rsbuild);
 
       const title = page.locator('#title');
 
@@ -116,7 +116,7 @@ rspackOnlyTest(
       // use the text color to assert the compilation result
       await expect(title).toHaveCSS('color', 'rgb(255, 62, 0)');
 
-      handle.close();
+      rsbuild.close();
     },
   );
 });

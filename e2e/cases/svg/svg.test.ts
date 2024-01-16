@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
@@ -20,7 +20,7 @@ test('svg (assets)', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   // test svg asset
   await expect(
@@ -52,7 +52,7 @@ test('svgr (defaultExport component)', async ({ page }) => {
     ],
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   await expect(
     page.evaluate(`document.getElementById('test-svg').tagName === 'svg'`),
@@ -109,7 +109,7 @@ test('svgr (external react)', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   // test svgr（namedExport）
   await expect(
