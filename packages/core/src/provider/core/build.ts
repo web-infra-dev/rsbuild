@@ -1,6 +1,6 @@
 import { createCompiler } from './createCompiler';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
-import { logger } from '@rsbuild/shared';
+import { getNodeEnv, logger, setNodeEnv } from '@rsbuild/shared';
 import type {
   Stats,
   MultiStats,
@@ -14,8 +14,8 @@ export const build = async (
   initOptions: InitConfigsOptions,
   { mode = 'production', watch, compiler: customCompiler }: BuildOptions = {},
 ) => {
-  if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = mode;
+  if (!getNodeEnv()) {
+    setNodeEnv(mode);
   }
 
   const { context } = initOptions;

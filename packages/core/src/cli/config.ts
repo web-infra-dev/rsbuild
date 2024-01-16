@@ -1,6 +1,12 @@
 import fs from 'fs';
 import { isAbsolute, join } from 'path';
-import { color, logger, debounce, type RsbuildConfig } from '@rsbuild/shared';
+import {
+  color,
+  logger,
+  debounce,
+  getNodeEnv,
+  type RsbuildConfig,
+} from '@rsbuild/shared';
 import { getEnvFiles } from '../loadEnv';
 import { restartDevServer } from '../server/restart';
 
@@ -121,7 +127,7 @@ export async function loadConfig({
 
     if (typeof configExport === 'function') {
       const params: ConfigParams = {
-        env: process.env.NODE_ENV!,
+        env: getNodeEnv(),
         command,
       };
 

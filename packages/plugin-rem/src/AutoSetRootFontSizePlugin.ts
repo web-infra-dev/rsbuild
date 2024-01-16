@@ -1,6 +1,7 @@
 import path from 'path';
 import { logger } from '@rsbuild/core';
 import {
+  isProd,
   withPublicPath,
   generateScriptTag,
   getPublicPathFromCompiler,
@@ -94,7 +95,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
 
     const getRuntimeCode = async () => {
       if (!runtimeCode) {
-        const isCompress = process.env.NODE_ENV === 'production';
+        const isCompress = isProd();
         runtimeCode = await getRootPixelCode(this.options, isCompress);
       }
       return runtimeCode;

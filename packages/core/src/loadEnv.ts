@@ -1,12 +1,12 @@
 import fs from 'fs';
 import { join } from 'path';
-import { isFileSync } from '@rsbuild/shared';
+import { getNodeEnv, isFileSync } from '@rsbuild/shared';
 import { parse } from '../compiled/dotenv';
 import { expand } from '../compiled/dotenv-expand';
 
 export const getEnvFiles = () => {
-  const { NODE_ENV } = process.env;
-  return ['.env', '.env.local', `.env.${NODE_ENV}`, `.env.${NODE_ENV}.local`];
+  const nodeEnv = getNodeEnv();
+  return ['.env', '.env.local', `.env.${nodeEnv}`, `.env.${nodeEnv}.local`];
 };
 
 export function loadEnv({

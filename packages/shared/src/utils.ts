@@ -1,6 +1,7 @@
 import path from 'path';
 import type { Compiler } from '@rspack/core';
 import type {
+  NodeEnv,
   CacheGroup,
   CompilerTapFn,
   RsbuildTarget,
@@ -20,11 +21,17 @@ export type Colors = Omit<
   'createColor' | 'isColorSupported'
 >;
 
-export const isDev = (): boolean => process.env.NODE_ENV === 'development';
+export const getNodeEnv = () => process.env.NODE_ENV as NodeEnv;
 
-export const isProd = (): boolean => process.env.NODE_ENV === 'production';
+export const setNodeEnv = (env: NodeEnv) => {
+  process.env.NODE_ENV = env;
+};
 
-export const isTest = () => process.env.NODE_ENV === 'test';
+export const isDev = (): boolean => getNodeEnv() === 'development';
+
+export const isProd = (): boolean => getNodeEnv() === 'production';
+
+export const isTest = () => getNodeEnv() === 'test';
 
 export const isString = (str: unknown): str is string =>
   typeof str === 'string';
