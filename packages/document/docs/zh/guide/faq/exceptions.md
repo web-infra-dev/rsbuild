@@ -41,7 +41,7 @@ npm ls postcss
 
 ---
 
-### 编译时报错 "export 'foo' (imported as 'foo') was not found in './utils'"？
+### 编译时报错 `export 'foo' (imported as 'foo') was not found in './utils'`？
 
 如果编译的过程中出现此报错，说明代码中引用了一个不存在的导出。
 
@@ -125,7 +125,7 @@ Rsbuild 在生产构建时会默认开启 Rspack 的 tree shaking 功能，tree 
 
 ---
 
-### 打包时出现 JavaScript heap out of memory?
+### 打包时出现 `JavaScript heap out of memory`?
 
 该报错表示打包过程中出现了内存溢出问题，大多数情况下是由于打包的内容较多，超出了 Node.js 默认的内存上限。
 
@@ -157,7 +157,7 @@ Node.js 官方文档中有对以下参数更详细的解释：
 
 ---
 
-### 打包时出现 Can't resolve 'core-js/modules/xxx.js'？
+### 打包时出现 `Can't resolve 'core-js/modules/xxx.js'`？
 
 如果你在打包时出现了类似下面的报错，表示项目中的 [core-js](https://github.com/zloirock/core-js) 无法被正确引用。
 
@@ -231,11 +231,11 @@ Less 中除法的写法也可以通过配置项来修改，详见 [Less - Math](
 
 ---
 
-### 修改配置后，报错 ‘TypeError: Cannot delete property 'xxx' of #\<Object\>’
+### 修改配置后，报错 `TypeError: Cannot delete property 'xxx' of #<Object>`
 
 该报错表示在编译过程中对一个只读配置项进行了删除操作。通常情况下，我们不希望编译过程中的任何操作会直接对传入的配置进行修改，但难以限制底层插件（如 postcss-loader 等）的行为，如果出现该报错，请联系 Rsbuild 开发者，我们需要对该配置进行单独处理。
 
 同类型报错还有：
 
-- 'TypeError: Cannot add property xxx, object is not extensible'
-- 'TypeError: Cannot assign to read only property 'xxx' of object '#\<Object\>'
+- `TypeError: Cannot add property xxx, object is not extensible`
+- `TypeError: Cannot assign to read only property 'xxx' of object '#<Object>`

@@ -41,7 +41,7 @@ Please check if any file formats not supported by Rsbuild are being referenced, 
 
 ---
 
-### Compilation error "export 'foo' (imported as 'foo') was not found in './utils'"?
+### Compilation error `export 'foo' (imported as 'foo') was not found in './utils'`?
 
 If you encounter this error during the compilation process, it means that your code is referencing an export that does not exist.
 
@@ -121,7 +121,7 @@ If you encounter the problem that tree shaking does not take effect, you can che
 
 ---
 
-### JavaScript heap out of memory when compiling?
+### `JavaScript heap out of memory` when compiling?
 
 This error indicates that there is a memory overflow problem during the packaging process. In most cases, it is because the bundled content exceeds the default memory limit of Node.js.
 
@@ -153,7 +153,7 @@ If the above methods cannot solve your problem, it may be that some abnormal log
 
 ---
 
-### Can't resolve 'core-js/modules/xxx.js' when compiling?
+### `Can't resolve 'core-js/modules/xxx.js'` when compiling?
 
 If you get an error similar to the following when compiling, it means that [core-js](https://github.com/zloirock/core-js) cannot be resolved properly in the project.
 
@@ -227,11 +227,11 @@ The writing of division in Less can also be modified through configuration optio
 
 ---
 
-### Compile error ‘TypeError: Cannot delete property 'xxx' of #\<Object\>’
+### Compile error `TypeError: Cannot delete property 'xxx' of #<Object>`
 
 This error indicates that a read-only configuration option was deleted during the compilation process. Normally, we do not want any operation to directly modify the incoming configuration when compiling, but it is difficult to restrict the behavior of underlying plugins (such as postcss-loader, etc). If this error occurs, please contact the Rsbuild developer and we will need to do something special with that configuration.
 
 The same type of error is also reported:
 
-- 'TypeError: Cannot add property xxx, object is not extensible'
-- 'TypeError: Cannot assign to read only property 'xxx' of object '#\<Object\>'
+- `TypeError: Cannot add property xxx, object is not extensible`
+- `TypeError: Cannot assign to read only property 'xxx' of object '#<Object>`
