@@ -97,40 +97,6 @@ export default {
 
 ---
 
-### React 组件的热更新无法生效？
-
-Rsbuild 使用 React 官方的 [Fast Refresh](https://github.com/pmmmwh/react-refresh-webpack-plugin) 能力来进行组件热更新。
-
-如果出现 React 组件的热更新无法生效的问题，或者是热更新后 React 组件的 state 丢失，这通常是因为你的 React 组件使用了匿名函数。在 React Fast Refresh 的官方实践中，要求组件不能为匿名函数，否则热更新后无法保留 React 组件的 state。
-
-以下是一些错误用法的例子：
-
-```tsx
-// 错误写法 1
-export default function () {
-  return <div>Hello World</div>;
-}
-
-// 错误写法 2
-export default () => <div>Hello World</div>;
-```
-
-正确用法是给每个组件函数声明一个名称：
-
-```tsx
-// 正确写法 1
-export default function MyComponent() {
-  return <div>Hello World</div>;
-}
-
-// 正确写法 2
-const MyComponent = () => <div>Hello World</div>;
-
-export default MyComponent;
-```
-
----
-
 ### 开启 https 后，热更新不生效？
 
 当开启 https 时，由于证书的问题，可能会出现 HMR 连接失败的情况，此时打开控制台，会出现 HMR connect failed 的报错。
