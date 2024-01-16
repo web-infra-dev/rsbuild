@@ -46,3 +46,37 @@ Rsbuild 提供对 styled-components 的编译时支持，优化调试体验并�
 import DeployApp from '@zh/shared/deployApp.md';
 
 <DeployApp />
+
+## React Fast Refresh
+
+Rsbuild 使用 React 官方的 [Fast Refresh](https://www.npmjs.com/package/react-refresh) 能力来进行组件热更新。
+
+注意 React Refresh 要求组件按照规范的方式编写，否则热更新可能无效，你可以使用 [eslint-plugin-react-refresh](https://github.com/ArnaudBarre/eslint-plugin-react-refresh) 进行校验。
+
+比如，如果 React 组件的热更新无法生效，或者是热更新后 React 组件的 state 丢失，这通常是因为你的 React 组件使用了匿名函数。在 React Fast Refresh 的官方实践中，要求组件不能为匿名函数，否则热更新后无法保留 React 组件的 state。
+
+以下是一些错误用法的例子：
+
+```tsx
+// 错误写法 1
+export default function () {
+  return <div>Hello World</div>;
+}
+
+// 错误写法 2
+export default () => <div>Hello World</div>;
+```
+
+正确用法是给每个组件函数声明一个名称：
+
+```tsx
+// 正确写法 1
+export default function MyComponent() {
+  return <div>Hello World</div>;
+}
+
+// 正确写法 2
+const MyComponent = () => <div>Hello World</div>;
+
+export default MyComponent;
+```

@@ -46,3 +46,37 @@ If you need to use styled-components, We recommend register the [Styled Componen
 import DeployApp from '@en/shared/deployApp.md';
 
 <DeployApp />
+
+## React Fast Refresh
+
+Rsbuild uses React's official [Fast Refresh](https://www.npmjs.com/package/react-refresh) capability to perform component hot updates.
+
+Note that React Refresh requires components to be written according to the standards. Otherwise HMR may not work. You can use [eslint-plugin-react-refresh](https://github.com/ArnaudBarre/eslint-plugin-react-refresh) for validation.
+
+For example, if the hot update of the React component cannot take effect, or the state of the React component is lost after the hot update, it is usually because your React component uses an anonymous function. In the official practice of React Fast Refresh, it is required that the component cannot be an anonymous function, otherwise the state of the React component cannot be preserved after hot update.
+
+Here are some examples of wrong usage:
+
+```tsx
+// bad
+export default function () {
+  return <div>Hello World</div>;
+}
+
+// bad
+export default () => <div>Hello World</div>;
+```
+
+The correct usage is to declare a name for each component function:
+
+```tsx
+// good
+export default function MyComponent() {
+  return <div>Hello World</div>;
+}
+
+// good
+const MyComponent = () => <div>Hello World</div>;
+
+export default MyComponent;
+```

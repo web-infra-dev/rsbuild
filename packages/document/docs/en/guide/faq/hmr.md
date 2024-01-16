@@ -97,40 +97,6 @@ export default {
 
 ---
 
-### HMR not working when updating React components?
-
-Rsbuild uses React's official [Fast Refresh](https://github.com/pmmmwh/react-refresh-webpack-plugin) capability to perform component hot updates.
-
-If there is a problem that the hot update of the React component cannot take effect, or the state of the React component is lost after the hot update, it is usually because your React component uses an anonymous function. In the official practice of React Fast Refresh, it is required that the component cannot be an anonymous function, otherwise the state of the React component cannot be preserved after hot update.
-
-Here are some examples of wrong usage:
-
-```tsx
-// bad
-export default function () {
-  return <div>Hello World</div>;
-}
-
-// bad
-export default () => <div>Hello World</div>;
-```
-
-The correct usage is to declare a name for each component function:
-
-```tsx
-// good
-export default function MyComponent() {
-  return <div>Hello World</div>;
-}
-
-// good
-const MyComponent = () => <div>Hello World</div>;
-
-export default MyComponent;
-```
-
----
-
 ### HMR not working when use https?
 
 If https is enabled, the HMR connection may fail due to a certificate issue, and if you open the console, you will get an HMR connect failed error.
