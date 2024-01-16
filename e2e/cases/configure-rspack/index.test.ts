@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { rspackOnlyTest } from '@scripts/helper';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 
 rspackOnlyTest(
   'should allow to use tools.rspack to configure Rspack',
@@ -21,7 +21,7 @@ rspackOnlyTest(
       },
     });
 
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    await gotoPage(page, rsbuild);
 
     const testEl = page.locator('#test-el');
     await expect(testEl).toHaveText('aaaaa');

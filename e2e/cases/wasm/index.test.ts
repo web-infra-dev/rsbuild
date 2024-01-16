@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 
 test('should allow to import wasm file', async ({ page }) => {
   const root = join(__dirname, 'wasm-basic');
@@ -17,7 +17,7 @@ test('should allow to import wasm file', async ({ page }) => {
   expect(wasmFile).toBeTruthy();
   expect(/static[\\/]wasm/g.test(wasmFile!)).toBeTruthy();
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   await page.waitForFunction(() => {
     return Boolean(document.querySelector('#root')?.innerHTML);
@@ -61,7 +61,7 @@ test('should allow to use new URL to get path of wasm file', async ({
   expect(wasmFile).toBeTruthy();
   expect(/static[\\/]wasm/g.test(wasmFile!)).toBeTruthy();
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   await page.waitForFunction(() => {
     return Boolean(document.querySelector('#root')?.innerHTML);

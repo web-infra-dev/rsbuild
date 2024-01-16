@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { build, dev, getHrefByEntryName } from '@scripts/shared';
+import { build, dev, gotoPage } from '@scripts/shared';
 
 test('multi compiler build', async ({ page }) => {
   const rsbuild = await build({
@@ -12,7 +12,7 @@ test('multi compiler build', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');
@@ -33,7 +33,7 @@ test('multi compiler dev', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');

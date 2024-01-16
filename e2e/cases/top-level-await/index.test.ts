@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 
 test('should run top level await correctly', async ({ page }) => {
   const rsbuild = await build({
@@ -7,7 +7,7 @@ test('should run top level await correctly', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   expect(await page.evaluate('window.foo')).toEqual('hello');
 

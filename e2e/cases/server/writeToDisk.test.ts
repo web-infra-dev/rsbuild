@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { dev, getHrefByEntryName } from '@scripts/shared';
+import { dev, gotoPage } from '@scripts/shared';
 
 const fixtures = __dirname;
 
@@ -16,7 +16,7 @@ test('writeToDisk default', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
@@ -39,7 +39,7 @@ test('writeToDisk false', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
@@ -62,7 +62,7 @@ test('writeToDisk true', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');

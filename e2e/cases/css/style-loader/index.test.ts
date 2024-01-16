@@ -1,4 +1,4 @@
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
@@ -16,7 +16,7 @@ test('should inline style when injectStyles is true', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   // injectStyles worked
   const files = await rsbuild.unwrapOutputJSON();

@@ -1,6 +1,6 @@
 import { join, resolve } from 'path';
 import { fse } from '@rsbuild/shared';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
@@ -57,7 +57,7 @@ test('injectStyles', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   // injectStyles worked
   const files = await rsbuild.unwrapOutputJSON();

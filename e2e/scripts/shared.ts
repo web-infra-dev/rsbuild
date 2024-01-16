@@ -3,13 +3,14 @@ import { URL } from 'url';
 import assert from 'assert';
 import { join } from 'path';
 import { fse } from '@rsbuild/shared';
-import { globContentJSON } from '@scripts/helper';
+import { globContentJSON } from './helper';
 import { pluginSwc } from '@rsbuild/plugin-swc';
 import type {
   RsbuildConfig,
   RsbuildPlugin,
   CreateRsbuildOptions,
 } from '@rsbuild/core';
+import type { Page } from 'playwright';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
   const htmlRoot = new URL(`http://localhost:${port}`);
@@ -17,6 +18,12 @@ export const getHrefByEntryName = (entryName: string, port: number) => {
 
   return homeUrl.href;
 };
+
+export const gotoPage = async (
+  page: Page,
+  rsbuild: { port: number },
+  path = 'index',
+) => page.goto(getHrefByEntryName(path, rsbuild.port));
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = async () => {};

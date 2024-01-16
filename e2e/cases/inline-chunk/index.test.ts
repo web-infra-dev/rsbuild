@@ -1,6 +1,6 @@
 import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 import type { BundlerChain } from '@rsbuild/shared';
 
 // use source-map for easy to test. By default, Rsbuild use hidden-source-map
@@ -37,7 +37,7 @@ test('inline all scripts should work and emit all source maps', async ({
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   // test runtime
   expect(await page.evaluate('window.test')).toBe('aaaa');

@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { build, getRandomPort, getHrefByEntryName } from '@scripts/shared';
+import { build, getRandomPort, gotoPage } from '@scripts/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 test('should preview dist files correctly', async ({ page }) => {
@@ -12,7 +12,7 @@ test('should preview dist files correctly', async ({ page }) => {
 
   const { port, server } = await instance.preview();
 
-  await page.goto(getHrefByEntryName('index', port));
+  await gotoPage(page, { port });
 
   const rootEl = page.locator('#root');
   await expect(rootEl).toHaveText('Hello Rsbuild!');
@@ -46,7 +46,7 @@ test('should allow plugin to modify preview server config', async ({
 
   expect(port).toEqual(PORT);
 
-  await page.goto(getHrefByEntryName('index', port));
+  await gotoPage(page, { port });
   const rootEl = page.locator('#root');
   await expect(rootEl).toHaveText('Hello Rsbuild!');
   await server.close();

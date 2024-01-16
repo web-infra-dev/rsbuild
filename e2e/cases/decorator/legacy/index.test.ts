@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { rspackOnlyTest } from '@scripts/helper';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@scripts/shared';
 
 rspackOnlyTest('decorator legacy(default)', async ({ page }) => {
   const rsbuild = await build({
@@ -8,7 +8,7 @@ rspackOnlyTest('decorator legacy(default)', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
   expect(await page.evaluate('window.aaa')).toBe('hello world');
 
   if (rsbuild.providerType !== 'rspack') {
