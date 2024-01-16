@@ -14,10 +14,7 @@ export async function getBrowserslist(path: string) {
     return browsersListCache.get(cacheKey)!;
   }
 
-  const result = browserslist.loadConfig({
-    path,
-    env: getNodeEnv(),
-  });
+  const result = browserslist.loadConfig({ path, env });
 
   if (result) {
     browsersListCache.set(cacheKey, result);
