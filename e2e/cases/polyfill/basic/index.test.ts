@@ -1,7 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
-
-const POLYFILL_RE = /\/lib-polyfill/;
+import { getPolyfillContent } from '../helper';
 
 const EXPECT_VALUE = {
   '1': [
@@ -9,21 +8,6 @@ const EXPECT_VALUE = {
     { type: '1', value: 2 },
   ],
   '2': [{ type: '2', value: 3 }],
-};
-
-const getPolyfillContent = (files: Record<string, string>) => {
-  const polyfillFileName = Object.keys(files).find(
-    (file) => POLYFILL_RE.test(file) && file.endsWith('.js.map'),
-  );
-
-  const indexFileName = Object.keys(files).find(
-    (file) => file.includes('index') && file.endsWith('.js.map'),
-  )!;
-
-  const content = polyfillFileName
-    ? files[polyfillFileName]
-    : files[indexFileName];
-  return content;
 };
 
 test('should add polyfill when set polyfill entry (default)', async ({
