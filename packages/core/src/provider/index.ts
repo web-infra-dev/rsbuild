@@ -3,7 +3,6 @@ export type { Rspack, RspackConfig } from '@rsbuild/shared';
 export { createContext, createPublicContext } from './core/createContext';
 export { initPlugins } from '@rsbuild/shared';
 export { initHooks, type Hooks } from './core/initHooks';
-export { withDefaultConfig } from './config';
 export { initRsbuildConfig } from './core/initConfigs';
 export { getPluginAPI } from './core/initPlugins';
 export { applyBaseCSSRule, applyCSSModuleRule } from './plugins/css';

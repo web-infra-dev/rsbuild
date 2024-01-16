@@ -1,12 +1,8 @@
 import { join, isAbsolute } from 'path';
 import {
   logger,
-  findExists,
   getDistPath,
-  isFileExists,
-  TS_CONFIG_FILE,
   type BundlerType,
-  type RsbuildEntry,
   type RsbuildConfig,
   type RsbuildTarget,
   type RsbuildContext,
@@ -17,58 +13,43 @@ import type { InternalContext } from '../../types';
 import { initHooks } from './initHooks';
 import { withDefaultConfig } from '../config';
 
-function getDefaultEntry(root: string): RsbuildEntry {
-  const files = [
-    // Most projects are using typescript now.
-    // So we put `.ts` as the first one to improve performance.
-    'ts',
-    'js',
-    'tsx',
-    'jsx',
-    '.mjs',
-    '.cjs',
-  ].map((ext) => join(root, `src/index.${ext}`));
-
-  const entryFile = findExists(files);
-
-  if (entryFile) {
-    return {
-      index: entryFile,
-    };
-  }
-
-  return {};
+function getAbsolutePath(root: string, filepath: string) {
+  return isAbsolute(filepath) ? filepath : join(root, filepath);
 }
 
 function getAbsoluteDistPath(
   cwd: string,
   config: RsbuildConfig | NormalizedConfig,
 ) {
-  const root = getDistPath(config, 'root');
-  return isAbsolute(root) ? root : join(cwd, root);
+  const dirRoot = getDistPath(config, 'root');
+  return getAbsolutePath(cwd, dirRoot);
 }
 
 /**
  * Create context by config.
  */
-export function createContextByConfig(
+async function createContextByConfig(
   options: Required<CreateRsbuildOptions>,
   bundlerType: BundlerType,
   config: RsbuildConfig = {},
-): RsbuildContext {
+): Promise<RsbuildContext> {
   const { cwd } = options;
   const rootPath = cwd;
   const distPath = getAbsoluteDistPath(cwd, config);
   const cachePath = join(rootPath, 'node_modules', '.cache');
+  const tsconfigPath = config.source?.tsconfigPath;
 
   const context: RsbuildContext = {
-    entry: config.source?.entry || getDefaultEntry(rootPath),
+    entry: config.source?.entry || {},
     targets: config.output?.targets || [],
     version: RSBUILD_VERSION,
     rootPath,
     distPath,
     cachePath,
     bundlerType,
+    tsconfigPath: tsconfigPath
+      ? getAbsolutePath(rootPath, tsconfigPath)
+      : undefined,
   };
 
   return context;
@@ -83,6 +64,12 @@ export function updateContextByNormalizedConfig(
 
   if (config.source.entry) {
     context.entry = config.source.entry;
+  }
+  if (config.source.tsconfigPath) {
+    context.tsconfigPath = getAbsolutePath(
+      context.rootPath,
+      config.source.tsconfigPath,
+    );
   }
 }
 
@@ -128,16 +115,17 @@ export async function createContext(
   userRsbuildConfig: RsbuildConfig,
   bundlerType: BundlerType,
 ): Promise<InternalContext> {
-  const rsbuildConfig = withDefaultConfig(userRsbuildConfig);
-  const context = createContextByConfig(options, bundlerType, rsbuildConfig);
-
-  const tsconfigPath = join(context.rootPath, TS_CONFIG_FILE);
+  const rsbuildConfig = await withDefaultConfig(options.cwd, userRsbuildConfig);
+  const context = await createContextByConfig(
+    options,
+    bundlerType,
+    rsbuildConfig,
+  );
 
   return {
     ...context,
     hooks: initHooks(),
     config: { ...rsbuildConfig },
     originalConfig: userRsbuildConfig,
-    tsconfigPath: (await isFileExists(tsconfigPath)) ? tsconfigPath : undefined,
   };
 }
