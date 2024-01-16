@@ -35,3 +35,15 @@ export type { SomeType } from './types';
 Rsbuild 提供了 Type Check 插件，用于在单独的进程中运行 TypeScript 类型检查，插件内部集成了 [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)。
 
 请参考 [Type Check 插件](/plugins/list/plugin-type-check) 了解用法。
+
+## tsconfig.json 路径
+
+Rsbuild 默认读取根目录的 `tsconfig.json` 文件，你可以使用 [source.tsconfigPath](/config/source/tsconfig-path) 配置自定义的 tsconfig.json 文件路径。
+
+```ts
+export default {
+  source: {
+    tsconfigPath: './tsconfig.custom.json',
+  },
+};
+```
