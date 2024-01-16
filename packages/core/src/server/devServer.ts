@@ -169,30 +169,20 @@ export async function startDevServer<
   const protocol = https ? 'https' : 'http';
   const urls = getAddressUrls({ protocol, port, host });
 
-  // print url after http server created and before dev compile (just a short time interval)
-  printServerURLs({
-    urls,
-    port,
-    routes: defaultRoutes,
-    protocol,
-    printUrls: devServerConfig.printUrls,
+  options.context.hooks.onBeforeCreateCompiler.tap(() => {
+    // print server url should between listen and beforeCompile
+    printServerURLs({
+      urls,
+      port,
+      routes: defaultRoutes,
+      protocol,
+      printUrls: devServerConfig.printUrls,
+    });
   });
-
-  const compileMiddlewareAPI = await serverAPIs.startCompile();
-
-  const devMiddlewares = await serverAPIs.getMiddlewares({
-    compileMiddlewareAPI,
-  });
-
-  devMiddlewares.middlewares.forEach((m) => middlewares.use(m));
-
-  middlewares.use(notFoundMiddleware);
 
   await serverAPIs.beforeStart();
 
   debug('listen dev server');
-
-  httpServer.on('upgrade', devMiddlewares.onUpgrade);
 
   return new Promise<StartServerResult>((resolve) => {
     httpServer.listen(
@@ -204,6 +194,18 @@ export async function startDevServer<
         if (err) {
           throw err;
         }
+
+        const compileMiddlewareAPI = await serverAPIs.startCompile();
+
+        const devMiddlewares = await serverAPIs.getMiddlewares({
+          compileMiddlewareAPI,
+        });
+
+        devMiddlewares.middlewares.forEach((m) => middlewares.use(m));
+
+        middlewares.use(notFoundMiddleware);
+
+        httpServer.on('upgrade', devMiddlewares.onUpgrade);
 
         debug('listen dev server done');
 
