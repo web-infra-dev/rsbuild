@@ -4,7 +4,8 @@
   "workspaces": {
     "packages": [
       "packages/*",
-      "packages/compat/*"
+      "packages/compat/*",
+      "scripts/*"
     ]
   },
   "scripts": {
