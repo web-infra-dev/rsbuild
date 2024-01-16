@@ -1,0 +1,23 @@
+name: Issue Labeled
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: read
+
+jobs:
+  reply-labeled:
+    permissions:
+      issues: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: need reproduction
+        if: github.event.label.name == 'need reproduction'
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'create-comment'
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Hello @${{ github.event.issue.user.login }}. Please provide a reproduction repository or online demo. For background, see [Why reproductions are required](https://antfu.me/posts/why-reproductions-are-required). Thanks ❤️
