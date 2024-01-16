@@ -129,7 +129,7 @@
     "@rspack/core": "0.5.0",
     "caniuse-lite": "^1.0.30001559",
     "lodash": "^4.17.21",
-    "postcss": "8.4.31"
+    "postcss": "^8.4.33"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.200",
