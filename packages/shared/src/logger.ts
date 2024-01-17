@@ -20,12 +20,20 @@ export const isDebug = () => {
   );
 };
 
+function getTime() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+
+  return `${hours}:${minutes}:${seconds}`;
+}
+
 export const debug = (message: string | (() => string)) => {
   if (isDebug()) {
-    const { performance } = require('perf_hooks');
     const result = typeof message === 'string' ? message : message();
-    const time = color.gray(`[${performance.now().toFixed(2)} ms]`);
-    logger.debug(`${result} ${time}`);
+    const time = color.gray(`${getTime()}`);
+    logger.debug(`${time} ${result}`);
   }
 };
 
