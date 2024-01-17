@@ -57,7 +57,7 @@
     "postcss-modules-scope": "3.0.0",
     "postcss-modules-values": "4.0.0",
     "postcss-modules-extract-imports": "3.0.0",
-    "sass": "1.69.6",
+    "sass": "1.69.7",
     "sass-loader": "13.3.3",
     "semver": "^7.5.4",
     "style-loader": "3.3.3",
