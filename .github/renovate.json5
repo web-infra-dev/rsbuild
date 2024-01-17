@@ -1,12 +1,13 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": [
-		"config:recommended",
-		// Use chore as semantic commit type for commit messages
-		":semanticCommitType(chore)"
-	],
+	"extends": ["config:recommended"],
 	"ignorePaths": ["**/tests/**", "**/compiled/**", "**/node_modules/**"],
 	"packageRules": [
+		// Use chore as semantic commit type for commit messages
+		{
+			"matchPackagePatterns": ["*"],
+			"semanticCommitType": "chore"
+		},
 		{
 			"groupName": "babel",
 			"packagePatterns": ["babel"],
