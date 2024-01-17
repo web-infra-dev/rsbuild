@@ -18,6 +18,16 @@ import type {
   OutputStructure,
 } from '@rsbuild/shared';
 
+const formatPrefix = (prefix: string | undefined) => {
+  if (!prefix) {
+    return '/';
+  }
+  if (prefix.endsWith('/')) {
+    return prefix;
+  }
+  return `${prefix}/`;
+};
+
 /*
  * format route by entry and adjust the index route to be the first
  */
@@ -26,15 +36,19 @@ export const formatRoutes = (
   prefix: string | undefined,
   outputStructure: OutputStructure | undefined,
 ): Routes => {
+  const formattedPrefix = formatPrefix(prefix);
+
   return (
     Object.keys(entry)
-      .map((name) => ({
-        name,
-        route:
-          (prefix ? `${prefix}/` : '') +
-          // fix case: /html/index/index.html
-          (name === 'index' && outputStructure !== 'nested' ? '' : name),
-      }))
+      .map((name) => {
+        // fix case: /html/index/index.html
+        const isIndex = name === 'index' && outputStructure === 'flat';
+        const displayName = isIndex ? '' : name;
+        return {
+          name,
+          route: formattedPrefix + displayName,
+        };
+      })
       // adjust the index route to be the first
       .sort((a) => (a.name === 'index' ? -1 : 1))
   );
@@ -95,6 +109,7 @@ export function printServerURLs({
     const newUrls = printUrls({
       urls: urls.map((item) => item.url),
       port,
+      routes,
       protocol,
     });
 
