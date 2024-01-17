@@ -20,7 +20,7 @@ import type {
 
 const formatPrefix = (prefix: string | undefined) => {
   if (!prefix) {
-    return '/';
+    return '';
   }
   if (prefix.endsWith('/')) {
     return prefix;
@@ -42,7 +42,7 @@ export const formatRoutes = (
     Object.keys(entry)
       .map((name) => {
         // fix case: /html/index/index.html
-        const isIndex = name === 'index' && outputStructure === 'flat';
+        const isIndex = name === 'index' && outputStructure !== 'nested';
         const displayName = isIndex ? '' : name;
         return {
           name,

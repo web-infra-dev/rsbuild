@@ -35,6 +35,26 @@ test('formatRoutes', () => {
   expect(
     formatRoutes(
       {
+        index: 'src/index.ts',
+        foo: 'src/index.ts',
+      },
+      '/',
+      undefined,
+    ),
+  ).toEqual([
+    {
+      name: 'index',
+      route: '/',
+    },
+    {
+      name: 'foo',
+      route: '/foo',
+    },
+  ]);
+
+  expect(
+    formatRoutes(
+      {
         foo: 'src/index.ts',
         bar: 'src/index.ts',
         index: 'src/index.ts',
