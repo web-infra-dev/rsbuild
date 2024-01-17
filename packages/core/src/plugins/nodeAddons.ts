@@ -1,5 +1,6 @@
 import { dirname } from 'path';
 import {
+  fse,
   color,
   findUpSync,
   getDistPath,
@@ -40,7 +41,7 @@ export const pluginNodeAddons = (): RsbuildPlugin => ({
           return `${filename}`;
         };
 
-        const { name: pkgName } = require(pkgJSON);
+        const { name: pkgName } = fse.readJSONSync(pkgJSON);
         const config = api.getNormalizedConfig();
         const serverPath = getDistPath(config, 'server');
         return `${serverPath}/${getFilename(resourcePath, pkgName)}`;
