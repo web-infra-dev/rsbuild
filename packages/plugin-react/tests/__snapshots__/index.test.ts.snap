@@ -37,9 +37,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "newTreeshaking": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
