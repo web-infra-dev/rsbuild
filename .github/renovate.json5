@@ -5,7 +5,7 @@
 	"packageRules": [
 		{
 			"groupName": "babel",
-			"packagePatterns": ["^@babel/"],
+			"packagePatterns": ["^babel"],
 			"groupSlug": "babel"
 		},
 		// manually update major versions
