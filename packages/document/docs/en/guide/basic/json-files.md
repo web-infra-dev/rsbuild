@@ -2,8 +2,6 @@
 
 Rsbuild supports import JSON files in code, and also supports import [YAML](https://yaml.org/) and [Toml](https://toml.io/en/) files and converting them to JSON format.
 
-123
-
 ## JSON file
 
 You can import JSON files directly in JavaScript files.
