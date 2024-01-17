@@ -1,6 +1,10 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:recommended"],
+	"extends": [
+		"config:recommended",
+		// Use chore as semantic commit type for commit messages
+		":semanticCommitType(chore)"
+	],
 	"ignorePaths": ["**/tests/**", "**/compiled/**", "**/node_modules/**"],
 	"packageRules": [
 		{
@@ -12,6 +16,11 @@
 			"groupName": "rspack",
 			"packagePatterns": ["rspack"],
 			"groupSlug": "rspack"
+		},
+		{
+			"groupName": "types",
+			"packagePatterns": ["^@types/"],
+			"groupSlug": "types"
 		},
 		// manually update major versions
 		{
