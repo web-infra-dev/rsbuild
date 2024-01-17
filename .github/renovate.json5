@@ -8,6 +8,11 @@
 			"packagePatterns": ["babel"],
 			"groupSlug": "babel"
 		},
+		{
+			"groupName": "rspack",
+			"packagePatterns": ["rspack"],
+			"groupSlug": "rspack"
+		},
 		// manually update major versions
 		{
 			"matchUpdateTypes": ["major"],
