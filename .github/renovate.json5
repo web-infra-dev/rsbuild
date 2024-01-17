@@ -7,6 +7,16 @@
 			"groupName": "babel",
 			"packagePatterns": ["^@babel/"],
 			"groupSlug": "babel"
+		},
+		// manually update major versions
+		{
+			"matchUpdateTypes": ["major"],
+			"enabled": false
+		},
+		// manually update peer dependencies
+		{
+			"depTypeList": ["peerDependencies"],
+			"enabled": false
 		}
 	]
 }
