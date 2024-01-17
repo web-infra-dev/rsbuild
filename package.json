@@ -59,11 +59,23 @@
   "pnpm": {
     "overrides": {
       "esbuild": "~0.19.0",
-      "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@1.0.24"
+      "eslint": "npm:@biomejs/biome@1.x",
+      "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@1.0.24",
+      "@rsbuild/core": "link:packages/core",
+      "@rsbuild/plugin-react": "link:packages/plugin-react",
+      "@rsbuild/plugin-svgr": "link:packages/plugin-svgr"
     },
     "allowedDeprecatedVersions": {
       "vue": "2.7.14",
       "consolidate": "0.15.1"
+    },
+    "packageExtensions": {
+      "dts-packer": {
+        "//": "`resolve >= 1.21.0` breaks dts-packer",
+        "dependencies": {
+          "resolve": "1.20.0"
+        }
+      }
     }
   }
 }
