@@ -95,7 +95,7 @@ export async function createStubRsbuild({
 > {
   const { pick, createPluginStore } = await import('@rsbuild/shared');
   const rsbuildOptions: Required<CreateRsbuildOptions> = {
-    cwd: process.cwd(),
+    cwd: process.env.REBUILD_TEST_SUITE_CWD || process.cwd(),
     rsbuildConfig,
     ...options,
   };

@@ -11,7 +11,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       },
     },
   },
-  "context": "<ROOT>",
+  "context": "<ROOT>/packages/core/tests/rspack-provider/plugins",
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
@@ -470,7 +470,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "<ROOT>/packages/core/tests/rspack-provider/plugins",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -592,7 +592,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/dist",
+    "path": "<ROOT>/packages/core/tests/rspack-provider/plugins/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -678,7 +678,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       },
     },
   },
-  "context": "<ROOT>",
+  "context": "<ROOT>/packages/core/tests/rspack-provider/plugins",
   "devtool": false,
   "entry": {
     "index": [
@@ -1137,7 +1137,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "<ROOT>/packages/core/tests/rspack-provider/plugins",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -1281,7 +1281,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "cssFilename": "static/css/[name].[contenthash:8].css",
     "filename": "static/js/[name].[contenthash:8].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/dist",
+    "path": "<ROOT>/packages/core/tests/rspack-provider/plugins/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1391,7 +1391,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       },
     },
   },
-  "context": "<ROOT>",
+  "context": "<ROOT>/packages/core/tests/rspack-provider/plugins",
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
@@ -1665,7 +1665,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "<ROOT>/packages/core/tests/rspack-provider/plugins",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -1752,7 +1752,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "filename": "server/[name].js",
     "hashFunction": "xxhash64",
     "libraryTarget": "commonjs2",
-    "path": "<ROOT>/dist",
+    "path": "<ROOT>/packages/core/tests/rspack-provider/plugins/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1802,7 +1802,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       },
     },
   },
-  "context": "<ROOT>",
+  "context": "<ROOT>/packages/core/tests/rspack-provider/plugins",
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
@@ -2269,7 +2269,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "<ROOT>/packages/core/tests/rspack-provider/plugins",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -2391,7 +2391,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/dist",
+    "path": "<ROOT>/packages/core/tests/rspack-provider/plugins/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
