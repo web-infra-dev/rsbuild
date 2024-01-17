@@ -1,5 +1,17 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "group:allNonMajor"],
-  "ignorePaths": ["**/tests/**", "**/compiled/**", "**/node_modules/**"]
+  "extends": ["config:recommended"],
+  "ignorePaths": ["**/tests/**", "**/compiled/**", "**/node_modules/**"],
+  "packageRules": [
+    {
+      "groupName": "babel",
+      "packagePatterns": ["^@babel/"],
+      "groupSlug": "babel"
+    },
+    // manually update major versions
+    {
+      "updateTypes": ["major"],
+      "enabled": false
+    }
+  ]
 }
