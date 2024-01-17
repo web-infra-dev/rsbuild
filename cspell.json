@@ -26,6 +26,7 @@
     "longpaths",
     "manypkg",
     "napi",
+    "nolyfill",
     "onclosetag",
     "onopentag",
     "ontext",
