@@ -147,17 +147,19 @@ pnpm run --filter @rsbuild/some-package test
 
 In addition to the unit tests, the Rsbuild also includes end-to-end (E2E) tests, which checks the functionality of the application as a whole.
 
-You can run the `test:e2e` command to run the E2E tests:
+You can run the `e2e` command to run the E2E tests:
 
 ```sh
-pnpm run test:e2e
+pnpm run e2e
 ```
 
 If you need to run a specified test, you can add keywords to filter:
 
 ```sh
-# Only run test cases with the copy-assets keyword
-npx jest copy-assets
+# Only run test cases which contains `vue` keyword in file path with Rspack
+pnpm e2e:rspack vue
+# Only run test cases which contains `vue` keyword in test name with Rspack
+pnpm e2e:rspack -g vue
 ```
 
 ---
