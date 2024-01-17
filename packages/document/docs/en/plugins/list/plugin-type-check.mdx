@@ -17,9 +17,9 @@ The behavior of the plugin differs in the development and production environment
 
 You can install the plugin using the following command:
 
-```bash
-npm install @rsbuild/plugin-type-check -D
-```
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-type-check -D" />
 
 ### Register Plugin
 
@@ -160,9 +160,9 @@ pluginTypeCheck({
 ## Notes
 
 - If you have enabled `ts-loader` in your project and manually configured `compileOnly: false`, please disable the Type Check plugin to avoid duplicate type checking.
-- Some errors will be displayed as warnings in IDEs such as VS Code, but they will still be displayed as errors in the `fork-ts-checker-webpack-plugin` check. For details, please refer to: [Why are some errors reported as warnings?] (https://code.visualstudio.com/docs/typescript/typescript-compiling#_why-are-some-errors-reported-as-warnings).
+- Some errors will be displayed as warnings in IDEs such as VS Code, but they will still be displayed as errors in the `fork-ts-checker-webpack-plugin` check. For details, please refer to: [Why are some errors reported as warnings?](https://code.visualstudio.com/docs/typescript/typescript-compiling#_why-are-some-errors-reported-as-warnings).
 
-# Performance Optimization
+## Performance Optimization
 
 Type checking has a significant performance overhead. You can refer to the [Performance Guide](https://github.com/microsoft/TypeScript/wiki/Performance) in the official TypeScript documentation for performance optimization.
 
@@ -176,8 +176,6 @@ For example, properly configuring the `include` and `exclude` scopes in `tsconfi
 ```
 
 ## Vue Components
-
-import { PackageManagerTabs } from '@theme';
 
 `fork-ts-checker-webpack-plugin` does not support checking TypeScript code in `.vue` components. You can check for type issues in `.vue` files in the following ways:
 
