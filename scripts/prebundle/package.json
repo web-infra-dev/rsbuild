@@ -50,7 +50,7 @@
     "mime-types": "^2.1.35",
     "open": "^8.4.0",
     "picocolors": "1.0.0",
-    "postcss-loader": "7.3.3",
+    "postcss-loader": "7.3.4",
     "postcss-load-config": "4.0.2",
     "postcss-value-parser": "4.2.0",
     "postcss-modules-local-by-default": "4.0.3",
