@@ -1,7 +1,6 @@
 import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
 import type { AcceptedPlugin } from 'postcss';
 import deepmerge from '../compiled/deepmerge';
-import { getSharedPkgCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
   RsbuildTarget,
@@ -119,16 +118,20 @@ export const getPostcssLoaderOptions = async ({
   });
 
   const userPostcssConfig = await loadUserPostcssrc(root);
+  const { default: autoprefixer } = await import('../compiled/autoprefixer');
+  const { default: postcssFlexbugs } = await import(
+    '../compiled/postcss-flexbugs-fixes'
+  );
 
   const defaultPostcssConfig: PostCSSLoaderOptions = {
     postcssOptions: {
       ...userPostcssConfig,
       plugins: [
         ...(userPostcssConfig.plugins || []),
-        require(getSharedPkgCompiledPath('postcss-flexbugs-fixes')),
+        postcssFlexbugs,
         // Place autoprefixer as the last plugin to correctly process the results of other plugins
         // such as tailwindcss
-        require(getSharedPkgCompiledPath('autoprefixer'))(autoprefixerOptions),
+        autoprefixer(autoprefixerOptions),
       ],
     },
     sourceMap: config.output.sourceMap.css,
