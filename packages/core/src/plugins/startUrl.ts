@@ -1,5 +1,11 @@
 import { join } from 'path';
-import { logger, castArray, normalizeUrl, type Routes } from '@rsbuild/shared';
+import {
+  debug,
+  logger,
+  castArray,
+  normalizeUrl,
+  type Routes,
+} from '@rsbuild/shared';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import type { RsbuildPlugin } from '../types';
@@ -59,9 +65,9 @@ export async function openBrowser(url: string): Promise<boolean> {
 
         return true;
       }
-      logger.debug('Failed to find the target browser.');
+      debug('Failed to find the target browser.');
     } catch (err) {
-      logger.debug('Failed to open start URL with apple script.');
+      debug('Failed to open start URL with apple script.');
       logger.debug(err);
     }
   }
