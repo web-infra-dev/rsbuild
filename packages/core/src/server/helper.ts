@@ -109,7 +109,6 @@ export function printServerURLs({
     const newUrls = printUrls({
       urls: urls.map((item) => item.url),
       port,
-      routes,
       protocol,
     });
 
