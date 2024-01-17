@@ -3,7 +3,6 @@ import {
   moduleTools,
   type PartialBaseBuildConfig,
 } from '@modern-js/module-tools';
-import path from 'path';
 
 const define = {
   RSBUILD_VERSION: require('../packages/core/package.json').version,
@@ -44,18 +43,10 @@ export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
     autoExtension: true,
     shims: true,
     externals,
-    esbuildOptions: (option) => {
-      let { inject } = option;
-      const filepath = path.join(__dirname, 'requireShims.js');
-      if (inject) {
-        inject.push(filepath);
-      } else {
-        inject = [filepath];
-      }
-      return {
-        ...option,
-        inject,
-      };
+    // use import.meta['url'] to bypass bundle-require replacement of import.meta.url
+    banner: {
+      js: `import { createRequire } from 'module';
+var require = createRequire(import.meta['url']);\n`,
     },
   },
 ];
