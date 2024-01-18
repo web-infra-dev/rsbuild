@@ -1538,7 +1538,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/compiled/node-loader",
+            "loader": "<ROOT>/packages/core/compiled/node-loader",
             "options": {
               "name": [Function],
             },
