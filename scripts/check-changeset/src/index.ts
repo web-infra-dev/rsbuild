@@ -39,7 +39,6 @@ function validatePackagePeerDependencies(packages: Package[]) {
       if (depPkg) {
         const version = peerDependencies[dep];
         const isInvalid =
-          version.startsWith('workspace') &&
           version !== `workspace:^${depPkg.packageJson.version}`;
         if (isInvalid) {
           throw Error(
