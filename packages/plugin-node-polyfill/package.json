@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-node-polyfill",
-  "version": "1.0.1",
+  "version": "0.3.3",
   "description": "Node polyfill plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -35,7 +35,7 @@
     "typescript": "^5.3.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^1.0.1"
+    "@rsbuild/core": "^0.3.3"
   },
   "publishConfig": {
     "access": "public",
