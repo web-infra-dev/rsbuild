@@ -1,5 +1,13 @@
 # @rsbuild/core
 
+## 1.0.1
+
+### Patch Changes
+
+- 4982dc7: release: bump 0.3.4
+- Updated dependencies [4982dc7]
+  - @rsbuild/shared@1.0.1
+
 ## 0.3.3
 
 ### Patch Changes

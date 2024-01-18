@@ -1,5 +1,11 @@
 # @rsbuild/shared
 
+## 1.0.1
+
+### Patch Changes
+
+- 4982dc7: release: bump 0.3.4
+
 ## 0.3.3
 
 ## 0.3.2
