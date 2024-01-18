@@ -1579,8 +1579,8 @@ importers:
         version: 5.3.2
     devDependencies:
       '@types/connect':
-        specifier: 3.4.35
-        version: 3.4.35
+        specifier: 3.4.38
+        version: 3.4.38
       '@types/fs-extra':
         specifier: ^11.0.2
         version: 11.0.3
@@ -5150,8 +5150,8 @@ packages:
     resolution: {integrity: sha512-uVq4yctS2kS+l1cNQbUxg8zh+HQ9wtfy5Xe7Ru0sfHlIPzncOxlJkz2/8FjM5JgN2S3jw0rL4UnrjumEz3d4UA==}
     dev: true
 
-  /@types/connect@3.4.35:
-    resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
+  /@types/connect@3.4.38:
+    resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
     dependencies:
       '@types/node': 16.18.59
     dev: true

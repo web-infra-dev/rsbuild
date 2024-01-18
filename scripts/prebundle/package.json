@@ -19,7 +19,7 @@
     "typescript": "^5.3.0"
   },
   "devDependencies": {
-    "@types/connect": "3.4.35",
+    "@types/connect": "3.4.38",
     "@types/fs-extra": "^11.0.2",
     "@types/less": "3.0.6",
     "@types/sass-loader": "8.0.8",
