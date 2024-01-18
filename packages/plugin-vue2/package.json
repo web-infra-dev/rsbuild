@@ -38,7 +38,7 @@
     "webpack": "^5.89.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "0.x"
+    "@rsbuild/core": "^0.3.3"
   },
   "publishConfig": {
     "access": "public",

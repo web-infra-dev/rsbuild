@@ -39,6 +39,9 @@
     "typescript": "^5.3.0",
     "webpack": "^5.89.0"
   },
+  "peerDependencies": {
+    "@rsbuild/core": "^0.3.3"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true,
