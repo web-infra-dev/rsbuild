@@ -1,6 +1,23 @@
 # printUrls
 
-- **Type:** `boolean | Function`
+- **Type:**
+
+```ts
+type Routes = Array<{
+  entryName: string;
+  pathname: string;
+}>;
+
+type PrintUrls =
+  | boolean
+  | ((params: {
+      urls: string[];
+      port: number;
+      routes: Routes;
+      protocol: string;
+    }) => string[] | void);
+```
+
 - **Default:** `true`
 
 Whether to print the server's urls.
@@ -14,7 +31,7 @@ By default, when you start the dev server or preview server, Rsbuild will print 
 
 ## Custom Logging
 
-`server.printUrls` can be set to a function, with parameters including `port`, `protocol`, and `urls`.
+`server.printUrls` can be set to a function, with parameters including `port`, `protocol`, `urls` and `routes`.
 
 ### Modify URL
 
@@ -48,6 +65,28 @@ export default {
       console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
       console.log(port); // 8080
       console.log(protocol); // 'http' or 'https'
+    },
+  },
+};
+```
+
+### MPA Output
+
+If the current project contains multiple pages, you can generate a separate URL for each page based on the `routes` parameter.
+
+For example, when the project contains two pages, `index` and `detail`, the content of the `routes` would be:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ routes }) {
+      /**
+       * [
+       *   { entryName: 'index', pathname: '/' },
+       *   { entryName: 'detail', pathname: '/detail' }
+       * ]
+       */
+      console.log(routes);
     },
   },
 };
