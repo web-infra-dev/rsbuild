@@ -14,11 +14,6 @@
 			"groupSlug": "babel"
 		},
 		{
-			"groupName": "rspack",
-			"packagePatterns": ["rspack"],
-			"groupSlug": "rspack"
-		},
-		{
 			"groupName": "types",
 			"packagePatterns": ["^@types/"],
 			"groupSlug": "types"
@@ -31,6 +26,11 @@
 		// manually update peer dependencies
 		{
 			"depTypeList": ["peerDependencies"],
+			"enabled": false
+		},
+		// use GitHub actions to update rspress and modern, manually update rspack
+		{
+			"packagePatterns": ["rspack", "rspress", "modern"],
 			"enabled": false
 		}
 	],

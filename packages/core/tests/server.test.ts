@@ -1,4 +1,4 @@
-import webpack from 'webpack';
+import { rspack } from '@rspack/core';
 import {
   mergeDevOptions,
   formatRoutes,
@@ -228,7 +228,7 @@ test('printServerURLs', () => {
 
 describe('test dev server', () => {
   test('should setupServerHooks correctly', () => {
-    const compiler = webpack({});
+    const compiler = rspack({});
     const onDoneFn = vi.fn();
     const onInvalidFn = vi.fn();
 
@@ -256,7 +256,7 @@ describe('test dev server', () => {
     expect(isInvalidHookRegistered).toBeTruthy();
   });
   test('should not setupServerHooks when compiler is server', () => {
-    const compiler = webpack({
+    const compiler = rspack({
       name: 'server',
     });
     const onDoneFn = vi.fn();
@@ -275,11 +275,11 @@ describe('test dev server', () => {
   });
 
   test('check isClientCompiler', () => {
-    expect(isClientCompiler(webpack({}))).toBeTruthy();
+    expect(isClientCompiler(rspack({}))).toBeTruthy();
 
     expect(
       isClientCompiler(
-        webpack({
+        rspack({
           target: ['web', 'es5'],
         }),
       ),
@@ -287,7 +287,7 @@ describe('test dev server', () => {
 
     expect(
       isClientCompiler(
-        webpack({
+        rspack({
           target: 'node',
         }),
       ),
@@ -295,7 +295,7 @@ describe('test dev server', () => {
 
     expect(
       isClientCompiler(
-        webpack({
+        rspack({
           target: ['node'],
         }),
       ),
