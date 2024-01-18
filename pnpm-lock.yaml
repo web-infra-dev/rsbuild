@@ -288,8 +288,8 @@ importers:
         specifier: ^1.69.5
         version: 1.69.6
       stylus:
-        specifier: 0.59.0
-        version: 0.59.0
+        specifier: 0.62.0
+        version: 0.62.0
 
   e2e/cases/vue:
     dependencies:
@@ -1256,11 +1256,11 @@ importers:
         specifier: workspace:*
         version: link:../shared
       stylus:
-        specifier: 0.59.0
-        version: 0.59.0
+        specifier: 0.62.0
+        version: 0.62.0
       stylus-loader:
         specifier: 7.1.3
-        version: 7.1.3(stylus@0.59.0)(webpack@5.89.0)
+        version: 7.1.3(stylus@0.62.0)(webpack@5.89.0)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -11911,6 +11911,12 @@ packages:
 
   /sax@1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /sax@1.3.0:
+    resolution: {integrity: sha512-0s+oAmw9zLl1V1cS9BtZN7JAd0cW5e0QH4W3LWEK6a4LaLEA2OTpGYWDY+6XasBLtz6wkm3u1xRw95mRuJ59WA==}
 
   /scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
@@ -12381,7 +12387,7 @@ packages:
     resolution: {integrity: sha512-E87pIogpwUsUwXw7dNyU4QDjdgVMy52m+XEOPEKUn161cCzWjjhPSQhByfd1CcNvrOLnXQ6OnnZDwnJrz/Z4YQ==}
     dev: false
 
-  /stylus-loader@7.1.3(stylus@0.59.0)(webpack@5.89.0):
+  /stylus-loader@7.1.3(stylus@0.62.0)(webpack@5.89.0):
     resolution: {integrity: sha512-TY0SKwiY7D2kMd3UxaWKSf3xHF0FFN/FAfsSqfrhxRT/koXTwffq2cgEWDkLQz7VojMu7qEEHt5TlMjkPx9UDw==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -12390,18 +12396,18 @@ packages:
     dependencies:
       fast-glob: 3.3.2
       normalize-path: 3.0.0
-      stylus: 0.59.0
+      stylus: 0.62.0
       webpack: 5.89.0
     dev: false
 
-  /stylus@0.59.0:
-    resolution: {integrity: sha512-lQ9w/XIOH5ZHVNuNbWW8D822r+/wBSO/d6XvtyHLF7LW4KaCIDeVbvn5DF8fGCJAUCwVhVi/h6J0NUcnylUEjg==}
+  /stylus@0.62.0:
+    resolution: {integrity: sha512-v3YCf31atbwJQIMtPNX8hcQ+okD4NQaTuKGUWfII8eaqn+3otrbttGL1zSMZAAtiPsBztQnujVBugg/cXFUpyg==}
     hasBin: true
     dependencies:
       '@adobe/css-tools': 4.3.1
       debug: 4.3.4
       glob: 7.2.3
-      sax: 1.2.4
+      sax: 1.3.0
       source-map: 0.7.4
     transitivePeerDependencies:
       - supports-color
