@@ -265,8 +265,9 @@ import OnAfterStartDevServer from '@en/shared/onAfterStartDevServer.md';
 ```ts
 export default () => ({
   setup: (api) => {
-    api.onAfterStartDevServer(({ port }) => {
+    api.onAfterStartDevServer(({ port, routes }) => {
       console.log('this port is: ', port);
+      console.log('this routes is: ', routes);
     });
   },
 });
@@ -325,8 +326,9 @@ import OnAfterStartProdServer from '@en/shared/onAfterStartProdServer.md';
 ```ts
 export default () => ({
   setup: (api) => {
-    api.onAfterStartProdServer(({ port }) => {
+    api.onAfterStartProdServer(({ port, routes }) => {
       console.log('this port is: ', port);
+      console.log('this routes is: ', routes);
     });
   },
 });
