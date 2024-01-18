@@ -1,11 +1,5 @@
-import { dirname } from 'path';
-import {
-  fse,
-  color,
-  findUpSync,
-  getDistPath,
-  getSharedPkgCompiledPath,
-} from '@rsbuild/shared';
+import { join, dirname } from 'path';
+import { fse, color, findUpSync, getDistPath } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginNodeAddons = (): RsbuildPlugin => ({
@@ -51,7 +45,7 @@ export const pluginNodeAddons = (): RsbuildPlugin => ({
         .rule(CHAIN_ID.RULE.NODE)
         .test(/\.node$/)
         .use(CHAIN_ID.USE.NODE)
-        .loader(getSharedPkgCompiledPath('node-loader'))
+        .loader(join(__dirname, '../../compiled/node-loader'))
         .options({
           name: getDistName,
         });
