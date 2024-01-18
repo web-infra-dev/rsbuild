@@ -4,6 +4,7 @@ import type {
   Options as BaseProxyOptions,
   Filter as ProxyFilter,
 } from '../../../compiled/http-proxy-middleware';
+import type { Routes } from '../hooks';
 
 export type HtmlFallback = false | 'index';
 
@@ -45,6 +46,7 @@ export type PrintUrls =
   | ((params: {
       urls: string[];
       port: number;
+      routes: Routes;
       protocol: string;
     }) => string[] | void);
 

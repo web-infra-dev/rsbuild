@@ -18,14 +18,17 @@ import type {
   OutputStructure,
 } from '@rsbuild/shared';
 
+/**
+ * Make sure there is slash before and after prefix
+ */
 const formatPrefix = (prefix: string | undefined) => {
   if (!prefix) {
-    return '';
+    return '/';
   }
-  if (prefix.endsWith('/')) {
-    return prefix;
-  }
-  return `${prefix}/`;
+
+  const hasLeadingSlash = prefix.startsWith('/');
+  const hasTailSlash = prefix.endsWith('/');
+  return `${hasLeadingSlash ? '' : '/'}${prefix}${hasTailSlash ? '' : '/'}`;
 };
 
 /*
@@ -40,17 +43,17 @@ export const formatRoutes = (
 
   return (
     Object.keys(entry)
-      .map((name) => {
+      .map((entryName) => {
         // fix case: /html/index/index.html
-        const isIndex = name === 'index' && outputStructure !== 'nested';
-        const displayName = isIndex ? '' : name;
+        const isIndex = entryName === 'index' && outputStructure !== 'nested';
+        const displayName = isIndex ? '' : entryName;
         return {
-          name,
-          route: formattedPrefix + displayName,
+          entryName,
+          pathname: formattedPrefix + displayName,
         };
       })
       // adjust the index route to be the first
-      .sort((a) => (a.name === 'index' ? -1 : 1))
+      .sort((a) => (a.entryName === 'index' ? -1 : 1))
   );
 };
 
@@ -63,14 +66,14 @@ function getURLMessages(
       .map(
         ({ label, url }) =>
           `  ${`> ${label.padEnd(10)}`}${color.cyan(
-            normalizeUrl(`${url}/${routes[0].route}`),
+            normalizeUrl(`${url}${routes[0].pathname}`),
           )}\n`,
       )
       .join('');
   }
 
   let message = '';
-  const maxNameLength = Math.max(...routes.map((r) => r.name.length));
+  const maxNameLength = Math.max(...routes.map((r) => r.entryName.length));
   urls.forEach(({ label, url }, index) => {
     if (index > 0) {
       message += '\n';
@@ -78,8 +81,8 @@ function getURLMessages(
     message += `  ${`> ${label}`}\n`;
     routes.forEach((r) => {
       message += `  ${color.dim('-')} ${color.dim(
-        r.name.padEnd(maxNameLength + 4),
-      )}${color.cyan(normalizeUrl(`${url}/${r.route}`))}\n`;
+        r.entryName.padEnd(maxNameLength + 4),
+      )}${color.cyan(normalizeUrl(`${url}${r.pathname}`))}\n`;
     });
   });
 
@@ -109,6 +112,7 @@ export function printServerURLs({
     const newUrls = printUrls({
       urls: urls.map((item) => item.url),
       port,
+      routes,
       protocol,
     });
 

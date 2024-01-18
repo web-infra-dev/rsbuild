@@ -19,16 +19,16 @@ test('formatRoutes', () => {
     ),
   ).toEqual([
     {
-      name: 'index',
-      route: '',
+      entryName: 'index',
+      pathname: '/',
     },
     {
-      name: 'foo',
-      route: 'foo',
+      entryName: 'foo',
+      pathname: '/foo',
     },
     {
-      name: 'bar',
-      route: 'bar',
+      entryName: 'bar',
+      pathname: '/bar',
     },
   ]);
 
@@ -38,17 +38,37 @@ test('formatRoutes', () => {
         index: 'src/index.ts',
         foo: 'src/index.ts',
       },
-      '/',
+      '/hello',
       undefined,
     ),
   ).toEqual([
     {
-      name: 'index',
-      route: '/',
+      entryName: 'index',
+      pathname: '/hello/',
     },
     {
-      name: 'foo',
-      route: '/foo',
+      entryName: 'foo',
+      pathname: '/hello/foo',
+    },
+  ]);
+
+  expect(
+    formatRoutes(
+      {
+        index: 'src/index.ts',
+        foo: 'src/index.ts',
+      },
+      '/hello/',
+      undefined,
+    ),
+  ).toEqual([
+    {
+      entryName: 'index',
+      pathname: '/hello/',
+    },
+    {
+      entryName: 'foo',
+      pathname: '/hello/foo',
     },
   ]);
 
@@ -64,16 +84,16 @@ test('formatRoutes', () => {
     ),
   ).toEqual([
     {
-      name: 'index',
-      route: '',
+      entryName: 'index',
+      pathname: '/',
     },
     {
-      name: 'foo',
-      route: 'foo',
+      entryName: 'foo',
+      pathname: '/foo',
     },
     {
-      name: 'bar',
-      route: 'bar',
+      entryName: 'bar',
+      pathname: '/bar',
     },
   ]);
 
@@ -87,8 +107,8 @@ test('formatRoutes', () => {
     ),
   ).toEqual([
     {
-      name: 'foo',
-      route: 'foo',
+      entryName: 'foo',
+      pathname: '/foo',
     },
   ]);
 
@@ -104,16 +124,16 @@ test('formatRoutes', () => {
     ),
   ).toEqual([
     {
-      name: 'index',
-      route: 'html/',
+      entryName: 'index',
+      pathname: '/html/',
     },
     {
-      name: 'foo',
-      route: 'html/foo',
+      entryName: 'foo',
+      pathname: '/html/foo',
     },
     {
-      name: 'bar',
-      route: 'html/bar',
+      entryName: 'bar',
+      pathname: '/html/bar',
     },
   ]);
 
@@ -127,8 +147,8 @@ test('formatRoutes', () => {
     ),
   ).toEqual([
     {
-      name: 'index',
-      route: 'html/index',
+      entryName: 'index',
+      pathname: '/html/index',
     },
   ]);
 });
@@ -151,8 +171,8 @@ test('printServerURLs', () => {
     ],
     routes: [
       {
-        name: 'index',
-        route: '',
+        entryName: 'index',
+        pathname: '/',
       },
     ],
   });
@@ -178,16 +198,16 @@ test('printServerURLs', () => {
     ],
     routes: [
       {
-        name: 'index',
-        route: '',
+        entryName: 'index',
+        pathname: '/',
       },
       {
-        name: 'foo',
-        route: 'html/foo',
+        entryName: 'foo',
+        pathname: '/html/foo',
       },
       {
-        name: 'bar',
-        route: 'bar',
+        entryName: 'bar',
+        pathname: '/bar',
       },
     ],
   });
