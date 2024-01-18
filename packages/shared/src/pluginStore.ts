@@ -102,58 +102,51 @@ export function createPluginStore(): PluginStore {
   };
 }
 
-const pluginDagSort = <P extends Record<string, any>>(
-  plugins: P[],
-  key = 'name',
-  preKey = 'pre',
-  postKey = 'post',
-): P[] => {
-  type PluginQueryCondition = P | string;
+export const pluginDagSort = (plugins: RsbuildPlugin[]): RsbuildPlugin[] => {
   let allLines: [string, string][] = [];
-  function getPluginByAny(q: PluginQueryCondition) {
-    const target = plugins.find((item) =>
-      typeof q === 'string' ? item[key] === q : item[key] === q[key],
-    );
-    // current plugin design can't guarantee the plugins in pre/post existed
+
+  function getPlugin(name: string) {
+    const target = plugins.find((item) => item.name === name);
     if (!target) {
-      throw new Error(`plugin ${q} not existed`);
+      throw new Error(`plugin ${name} not existed`);
     }
     return target;
   }
-  plugins.forEach((item) => {
-    item[preKey]?.forEach((p: PluginQueryCondition) => {
-      // compatibility: do not add the plugin-name that plugins not have
-      if (plugins.find((ap) => ap.name === p)) {
-        allLines.push([getPluginByAny(p)[key], getPluginByAny(item)[key]]);
+
+  plugins.forEach((plugin) => {
+    plugin.pre?.forEach((pre) => {
+      if (pre && plugins.some((item) => item.name === pre)) {
+        allLines.push([pre, plugin.name]);
       }
     });
-    item[postKey]?.forEach((pt: PluginQueryCondition) => {
-      // compatibility: do not add the plugin-name that plugins not have
-      if (plugins.find((ap) => ap.name === pt)) {
-        allLines.push([getPluginByAny(item)[key], getPluginByAny(pt)[key]]);
+
+    plugin.post?.forEach((post) => {
+      if (post && plugins.some((item) => item.name === post)) {
+        allLines.push([plugin.name, post]);
       }
     });
   });
 
   // search the zero input plugin
   let zeroEndPoints = plugins.filter(
-    (item) => !allLines.find((l) => l[1] === item[key]),
+    (item) => !allLines.find((l) => l[1] === item.name),
   );
 
-  const sortedPoint: P[] = [];
+  const sortedPoint: RsbuildPlugin[] = [];
+
   while (zeroEndPoints.length) {
-    const zep = zeroEndPoints.shift();
-    sortedPoint.push(getPluginByAny(zep!));
-    allLines = allLines.filter((l) => l[0] !== getPluginByAny(zep!)[key]);
+    const zep = zeroEndPoints.shift()!;
+    sortedPoint.push(getPlugin(zep.name));
+    allLines = allLines.filter((l) => l[0] !== getPlugin(zep.name).name);
 
     const restPoints = plugins.filter(
-      (item) => !sortedPoint.find((sp) => sp[key] === item[key]),
+      (item) => !sortedPoint.find((sp) => sp.name === item.name),
     );
     zeroEndPoints = restPoints.filter(
-      // eslint-disable-next-line @typescript-eslint/no-loop-func
-      (item) => !allLines.find((l) => l[1] === item[key]),
+      (item) => !allLines.find((l) => l[1] === item.name),
     );
   }
+
   // if has ring, throw error
   if (allLines.length) {
     const restInRingPoints: Record<string, boolean> = {};
@@ -168,6 +161,7 @@ const pluginDagSort = <P extends Record<string, any>>(
       )}`,
     );
   }
+
   return sortedPoint;
 };
 
