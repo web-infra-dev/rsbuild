@@ -126,7 +126,7 @@
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@rspack/core": "0.5.0",
+    "@rspack/core": "0.5.1",
     "caniuse-lite": "^1.0.30001559",
     "lodash": "^4.17.21",
     "postcss": "^8.4.33"
@@ -134,7 +134,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.200",
     "@types/node": "16.x",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.6.0",
     "mini-css-extract-plugin": "2.7.7",
     "terser": "5.19.2",
     "terser-webpack-plugin": "5.3.9",
