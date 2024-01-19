@@ -639,245 +639,16 @@ importers:
         version: 5.89.0
 
   packages/create-rsbuild:
-    dependencies:
+    devDependencies:
       '@clack/prompts':
         specifier: ^0.7.0
         version: 0.7.0
-      rslog:
-        specifier: ^1.2.0
-        version: 1.2.0
-    devDependencies:
       '@types/node':
         specifier: 16.x
         version: 16.18.59
-      typescript:
-        specifier: ^5.3.0
-        version: 5.3.2
-
-  packages/create-rsbuild/template-lit-js:
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      lit:
-        specifier: ^3.0.2
-        version: 3.0.2
-
-  packages/create-rsbuild/template-lit-ts:
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      lit:
-        specifier: ^3.0.2
-        version: 3.0.2
-      typescript:
-        specifier: ^5.3.0
-        version: 5.3.2
-
-  packages/create-rsbuild/template-preact-js:
-    dependencies:
-      preact:
-        specifier: ^10.19.3
-        version: 10.19.3
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      '@rsbuild/plugin-preact':
-        specifier: workspace:*
-        version: link:../../plugin-preact
-
-  packages/create-rsbuild/template-preact-ts:
-    dependencies:
-      preact:
-        specifier: ^10.19.3
-        version: 10.19.3
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      '@rsbuild/plugin-preact':
-        specifier: workspace:*
-        version: link:../../plugin-preact
-      typescript:
-        specifier: ^5.3.0
-        version: 5.3.2
-
-  packages/create-rsbuild/template-react-js:
-    dependencies:
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      '@rsbuild/plugin-react':
-        specifier: link:../../plugin-react
-        version: link:../../plugin-react
-
-  packages/create-rsbuild/template-react-ts:
-    dependencies:
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      '@rsbuild/plugin-react':
-        specifier: link:../../plugin-react
-        version: link:../../plugin-react
-      '@types/react':
-        specifier: ^18.2.47
-        version: 18.2.47
-      '@types/react-dom':
-        specifier: ^18.2.18
-        version: 18.2.18
-      typescript:
-        specifier: ^5.3.0
-        version: 5.3.2
-
-  packages/create-rsbuild/template-solid-js:
-    dependencies:
-      solid-js:
-        specifier: ^1.8.5
-        version: 1.8.5
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../../plugin-babel
-      '@rsbuild/plugin-solid':
-        specifier: workspace:*
-        version: link:../../plugin-solid
-
-  packages/create-rsbuild/template-solid-ts:
-    dependencies:
-      solid-js:
-        specifier: ^1.8.5
-        version: 1.8.5
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../../plugin-babel
-      '@rsbuild/plugin-solid':
-        specifier: workspace:*
-        version: link:../../plugin-solid
-      typescript:
-        specifier: ^5.3.0
-        version: 5.3.2
-
-  packages/create-rsbuild/template-svelte-js:
-    dependencies:
-      svelte:
-        specifier: ^4.2.2
-        version: 4.2.2
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      '@rsbuild/plugin-svelte':
-        specifier: workspace:*
-        version: link:../../plugin-svelte
-
-  packages/create-rsbuild/template-svelte-ts:
-    dependencies:
-      svelte:
-        specifier: ^4.2.2
-        version: 4.2.2
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      '@rsbuild/plugin-svelte':
-        specifier: workspace:*
-        version: link:../../plugin-svelte
-      typescript:
-        specifier: ^5.3.0
-        version: 5.3.2
-
-  packages/create-rsbuild/template-vanilla-js:
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-
-  packages/create-rsbuild/template-vanilla-ts:
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      typescript:
-        specifier: ^5.3.0
-        version: 5.3.2
-
-  packages/create-rsbuild/template-vue2-js:
-    dependencies:
-      vue:
-        specifier: ^2.7.14
-        version: 2.7.14
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      '@rsbuild/plugin-vue2':
-        specifier: workspace:*
-        version: link:../../plugin-vue2
-
-  packages/create-rsbuild/template-vue2-ts:
-    dependencies:
-      vue:
-        specifier: ^2.7.14
-        version: 2.7.14
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      '@rsbuild/plugin-vue2':
-        specifier: workspace:*
-        version: link:../../plugin-vue2
-      typescript:
-        specifier: ^5.3.0
-        version: 5.3.2
-
-  packages/create-rsbuild/template-vue3-js:
-    dependencies:
-      vue:
-        specifier: ^3.3.4
-        version: 3.3.4
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      '@rsbuild/plugin-vue':
-        specifier: workspace:*
-        version: link:../../plugin-vue
-
-  packages/create-rsbuild/template-vue3-ts:
-    dependencies:
-      vue:
-        specifier: ^3.3.4
-        version: 3.3.4
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../core
-        version: link:../../core
-      '@rsbuild/plugin-vue':
-        specifier: workspace:*
-        version: link:../../plugin-vue
+      rslog:
+        specifier: ^1.2.0
+        version: 1.2.0
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
@@ -3476,7 +3247,7 @@ packages:
     dependencies:
       picocolors: 1.0.0
       sisteransi: 1.0.5
-    dev: false
+    dev: true
 
   /@clack/prompts@0.7.0:
     resolution: {integrity: sha512-0MhX9/B4iL6Re04jPrttDm+BsP8y6mS7byuv0BvXgdXhbV5PdlsHt55dvNsuBCPZ7xq1oTAOOuotR9NFbQyMSA==}
@@ -3484,7 +3255,7 @@ packages:
       '@clack/core': 0.3.3
       picocolors: 1.0.0
       sisteransi: 1.0.5
-    dev: false
+    dev: true
     bundledDependencies:
       - is-unicode-supported
 
@@ -11848,6 +11619,7 @@ packages:
   /rslog@1.2.0:
     resolution: {integrity: sha512-2ZFW7Jtkzt4VkwCFRTE+0lKbzSLSH7U5OM9qZ5YuKk4xVrlIJJZx9Qh/fCyfsk8H+qXbermMc7+18qKJxLQ/bw==}
     engines: {node: '>=14.17.6'}
+    dev: true
 
   /rspack-plugin-virtual-module@0.1.12:
     resolution: {integrity: sha512-qyBM9XsP7oxBQSms2cr715XOeoDi6p5hUYXtlNDfst0jha8vfWVPNeC7j5+j5dG+yt//1OCmLaOY2rWqPSVXDg==}
@@ -12134,7 +11906,7 @@ packages:
 
   /sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
-    dev: false
+    dev: true
 
   /slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}

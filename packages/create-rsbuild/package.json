@@ -9,29 +9,34 @@
     "directory": "packages/create-rsbuild"
   },
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
     "create-rsbuild": "./dist/index.js"
   },
+  "files": [
+    "template-*",
+    "dist"
+  ],
   "scripts": {
     "build": "modern build",
     "dev": "modern build --watch",
     "start": "node ./dist/index.js"
   },
-  "dependencies": {
-    "@clack/prompts": "^0.7.0",
-    "rslog": "^1.2.0"
-  },
   "devDependencies": {
+    "@clack/prompts": "^0.7.0",
     "@types/node": "16.x",
+    "rslog": "^1.2.0",
     "typescript": "^5.3.0"
   },
   "publishConfig": {

@@ -1,6 +1,0 @@
-template-*/dist/
-template-*/node_modules/
-src/
-./tsconfig.json
-./modern.config.ts
-./CHANGELOG.md
