@@ -1210,7 +1210,7 @@ importers:
         version: link:../shared
       vue-loader:
         specifier: ^15.11.1
-        version: 15.11.1(css-loader@6.9.0)(prettier@3.0.3)(webpack@5.89.0)
+        version: 15.11.1(css-loader@6.9.1)(prettier@3.0.3)(webpack@5.89.0)
       webpack:
         specifier: ^5.89.0
         version: 5.89.0
@@ -1386,8 +1386,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       css-loader:
-        specifier: 6.9.0
-        version: 6.9.0(webpack@5.89.0)
+        specifier: 6.9.1
+        version: 6.9.1(webpack@5.89.0)
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -6819,8 +6819,8 @@ packages:
       postcss: 8.4.33
     dev: false
 
-  /css-loader@6.9.0(webpack@5.89.0):
-    resolution: {integrity: sha512-3I5Nu4ytWlHvOP6zItjiHlefBNtrH+oehq8tnQa2kO305qpVyx9XNIT1CXIj5bgCJs7qICBCkgCYxQLKPANoLA==}
+  /css-loader@6.9.1(webpack@5.89.0):
+    resolution: {integrity: sha512-OzABOh0+26JKFdMzlK6PY1u5Zx8+Ck7CVRlcGNZoY9qwJjdfu2VWFuprTIpPW+Av5TZTVViYWcFQaEEQURLknQ==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^5.0.0
@@ -13140,7 +13140,7 @@ packages:
     resolution: {integrity: sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==}
     dev: false
 
-  /vue-loader@15.11.1(css-loader@6.9.0)(prettier@3.0.3)(webpack@5.89.0):
+  /vue-loader@15.11.1(css-loader@6.9.1)(prettier@3.0.3)(webpack@5.89.0):
     resolution: {integrity: sha512-0iw4VchYLePqJfJu9s62ACWUXeSqM30SQqlIftbYWM3C+jpPcEHKSPUZBLjSF9au4HTHQ/naF6OGnO3Q/qGR3Q==}
     peerDependencies:
       '@vue/compiler-sfc': ^3.0.8
@@ -13160,7 +13160,7 @@ packages:
         optional: true
     dependencies:
       '@vue/component-compiler-utils': 3.3.0
-      css-loader: 6.9.0(webpack@5.89.0)
+      css-loader: 6.9.1(webpack@5.89.0)
       hash-sum: 1.0.2
       loader-utils: 1.4.2
       prettier: 3.0.3
