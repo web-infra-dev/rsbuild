@@ -11,13 +11,8 @@ export const isDebug = () => {
     return false;
   }
 
-  const flag = process.env.DEBUG.toLocaleLowerCase();
-  return (
-    flag === 'rsbuild' ||
-    // compat the legacy usage from Modern.js Builder
-    flag === 'builder' ||
-    flag === '*'
-  );
+  const values = process.env.DEBUG.toLocaleLowerCase().split(',');
+  return ['rsbuild', 'builder', '*'].some((key) => values.includes(key));
 };
 
 function getTime() {
