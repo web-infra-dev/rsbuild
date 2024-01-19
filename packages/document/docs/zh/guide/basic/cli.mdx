@@ -39,10 +39,11 @@ Commands:
 Usage: rsbuild dev [options]
 
 Options:
-  -o, --open [url]          启动时是否在浏览器中打开页面
+  -o, --open [url]      启动时是否在浏览器中打开页面
   --port <port>         设置 Rsbuild Server 监听的端口号
   --host <host>         指定 Rsbuild Server 启动时监听的 host
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   -h, --help            显示命令帮助
 ```
 
@@ -78,6 +79,7 @@ Usage: rsbuild build [options]
 Options:
   -w --watch            开启 watch 模式, 监听文件变更并重新构建
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   -h, --help            显示命令帮助
 ```
 
@@ -97,6 +99,7 @@ Options:
   --port <port>         设置 Rsbuild Server 监听的端口号
   --host <host>         指定 Rsbuild Server 启动时监听的 host
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   -h, --help            显示命令帮助
 ```
 
@@ -114,6 +117,7 @@ Options:
   --output <output>     指定在 dist 目录下输出的路径 (default: "/")
   --verbose             在结果中展示函数的完整内容
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   -h, --help            显示命令帮助
 ```
 

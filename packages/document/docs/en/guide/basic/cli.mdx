@@ -39,10 +39,11 @@ The `rsbuild dev` command is used to start a local development server and compil
 Usage: rsbuild dev [options]
 
 Options:
-  -o, --open [url]          open the page in browser on startup
+  -o, --open [url]      open the page in browser on startup
   --port <port>         specify a port number for Rsbuild Server to listen
   --host <host>         specify the host that the Rsbuild Server listens to
   -c --config <config>  specify the configuration file, can be a relative or absolute path
+  --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   -h, --help            display help for command
 ```
 
@@ -78,6 +79,7 @@ Usage: rsbuild build [options]
 Options:
   -w --watch            turn on watch mode, watch for changes and rebuild
   -c --config <config>  specify the configuration file, can be a relative or absolute path
+  --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   -h, --help            display help for command
 ```
 
@@ -97,6 +99,7 @@ Options:
   --port <port>         specify a port number for Rsbuild Server to listen
   --host <host>         specify the host that the Rsbuild Server listens to
   -c --config <config>  specify the configuration file, can be a relative or absolute path
+  --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   -h, --help            display help for command
 ```
 
@@ -114,6 +117,7 @@ Options:
   --output <output>     Specify the path to output in the dist (default: "/")
   --verbose             Show the full function in the result
   -c --config <config>  specify the configuration file, can be a relative or absolute path
+  --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   -h, --help            show command help
 ```
 

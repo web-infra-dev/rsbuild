@@ -93,6 +93,30 @@ Rsbuild 支持读取以下 env 文件：
 
 如果同时存在上述的多个文件，那么多个文件都会被读取，并且表格下方的文件具有更高的优先级。
 
+### Env 模式
+
+Rsbuild 也支持读取 `.env.[mode]` 和 `.env.[mode].local` 文件，你可以通过 CLI 的 `--env-mode <mode>` 选项来指定 env 模式。
+
+比如，指定 env 模式为 `test`：
+
+```bash
+npx rsbuild dev --env-mode test
+```
+
+Rsbuild 会依次读取以下文件：
+
+- .env
+- .env.local
+- .env.test
+- .env.test.local
+
+:::tip
+`--env-mode` 选项的优先级高于 process.env.NODE_ENV。
+
+推荐使用 `--env-mode` 来指定 env 模式，不建议修改 process.env.NODE_ENV。
+
+:::
+
 ### 示例
 
 比如创建 `.env` 文件并添加以下内容：
