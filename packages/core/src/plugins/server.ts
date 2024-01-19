@@ -34,7 +34,7 @@ export const pluginServer = (): RsbuildPlugin => ({
           });
         } catch (err) {
           if (err instanceof Error) {
-            err.message = `Failed to copy publicDir(${name}):\n${err.message}`;
+            err.message = `Copy public dir (${publicDir}) to dist failed:\n${err.message}`;
           }
 
           throw err;
