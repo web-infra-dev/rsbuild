@@ -25,10 +25,20 @@ export const pluginServer = (): RsbuildPlugin => ({
           return;
         }
 
-        await fse.copy(publicDir, api.context.distPath, {
-          // dereference symlinks
-          dereference: true,
-        });
+        try {
+          // async errors will missing Error Stack on copy, move
+          // https://github.com/jprichardson/node-fs-extra/issues/769
+          await fse.copy(publicDir, api.context.distPath, {
+            // dereference symlinks
+            dereference: true,
+          });
+        } catch (err) {
+          if (err instanceof Error) {
+            err.message = `Copy public dir (${publicDir}) to dist failed:\n${err.message}`;
+          }
+
+          throw err;
+        }
       }
     });
   },
