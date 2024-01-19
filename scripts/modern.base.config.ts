@@ -10,17 +10,36 @@ const define = {
 
 const BUILD_TARGET = 'es2020' as const;
 
-export const baseBuildConfig = {
+const requireShim = {
+  // use import.meta['url'] to bypass bundle-require replacement of import.meta.url
+  js: `import { createRequire } from 'module';
+var require = createRequire(import.meta['url']);\n`,
+};
+
+export const baseBuildConfig = defineConfig({
   plugins: [moduleTools()],
   buildConfig: {
-    buildType: 'bundleless' as const,
-    format: 'cjs' as const,
+    buildType: 'bundleless',
+    format: 'cjs',
     target: BUILD_TARGET,
     define,
   },
-};
+});
 
-export default defineConfig(baseBuildConfig);
+export const bundleMjsOnlyConfig = defineConfig({
+  plugins: [moduleTools()],
+  buildConfig: {
+    buildType: 'bundle',
+    format: 'esm',
+    target: BUILD_TARGET,
+    define,
+    autoExtension: true,
+    shims: true,
+    banner: requireShim,
+  },
+});
+
+export default baseBuildConfig;
 
 const externals = ['@rsbuild/core', /[\\/]compiled[\\/]/];
 
@@ -43,11 +62,7 @@ export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
     autoExtension: true,
     shims: true,
     externals,
-    // use import.meta['url'] to bypass bundle-require replacement of import.meta.url
-    banner: {
-      js: `import { createRequire } from 'module';
-var require = createRequire(import.meta['url']);\n`,
-    },
+    banner: requireShim,
   },
 ];
 

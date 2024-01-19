@@ -26,7 +26,7 @@ function pkgFromUserAgent(userAgent: string | undefined) {
   };
 }
 
-async function main() {
+export async function main() {
   console.log('');
   logger.greet('◆  Create Rsbuild Project');
 
