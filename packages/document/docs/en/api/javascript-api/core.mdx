@@ -71,17 +71,32 @@ Load the `.env` file and return all environment variables starting with the spec
 - **Type:**
 
 ```ts
-function loadEnv(params: {
-  // Default is process.cwd()
+type LoadEnvOptions = {
+  /**
+   * The root path to load the env file
+   * @default process.cwd()
+   */
   cwd?: string;
-  // Default is ['PUBLIC_']
+  /**
+   * Used to specify the name of the .env.[mode] file
+   * @default process.env.NODE_ENV
+   */
+  mode?: string;
+  /**
+   * The prefix of public variables
+   * @default ['PUBLIC_']
+   */
   prefixes?: string[];
-}): {
-  // All environment variables in the .env file
+};
+
+function loadEnv(options: LoadEnvOptions): {
+  /** All environment variables in the .env file */
   parsed: Record<string, string>;
-  // Environment variables starting with the specified prefixes
+  /** The absolute paths to all env files */
+  filePaths: string[];
+  /** Environment variables that start with prefixes */
   publicVars: Record<string, string>;
-  // Remove the loaded environment variables from `process.env`
+  /** Clear the environment variables mounted on `process.env` */
   cleanup: () => void;
 };
 ```

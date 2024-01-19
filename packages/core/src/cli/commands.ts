@@ -3,7 +3,7 @@ import { existsSync } from 'fs';
 import { color, isDev, logger } from '@rsbuild/shared';
 import { program } from '@rsbuild/shared/commander';
 import { loadEnv } from '../loadEnv';
-import { loadConfig } from './config';
+import { loadConfigV2, watchFiles } from './config';
 import type { RsbuildMode } from '..';
 import { onBeforeRestartServer } from 'src/server/restart';
 
@@ -44,12 +44,26 @@ export async function init({
   try {
     const root = process.cwd();
     const envs = loadEnv({ cwd: root });
-    isDev() && onBeforeRestartServer(envs.cleanup);
 
-    const config = await loadConfig({
+    if (isDev()) {
+      onBeforeRestartServer(envs.cleanup);
+    }
+
+    const { content: config, filePath: configFilePath } = await loadConfigV2({
       cwd: root,
       path: commonOpts.config,
     });
+
+    const command = process.argv[2];
+    if (command === 'dev') {
+      const files = [...envs.filePaths];
+      if (configFilePath) {
+        files.push(configFilePath);
+      }
+
+      watchFiles(files);
+    }
+
     const { createRsbuild } = await import('../createRsbuild');
 
     config.source ||= {};

@@ -7,7 +7,6 @@ import {
   getNodeEnv,
   type RsbuildConfig,
 } from '@rsbuild/shared';
-import { getEnvFiles } from '../loadEnv';
 import { restartDevServer } from '../server/restart';
 
 export type ConfigParams = {
@@ -71,11 +70,13 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
   return null;
 };
 
-async function watchConfig(root: string, configFile: string) {
-  const chokidar = await import('@rsbuild/shared/chokidar');
-  const envFiles = getEnvFiles().map((filename) => join(root, filename));
+export async function watchFiles(files: string[]) {
+  if (!files.length) {
+    return;
+  }
 
-  const watcher = chokidar.watch([configFile, ...envFiles], {
+  const chokidar = await import('@rsbuild/shared/chokidar');
+  const watcher = chokidar.watch(files, {
     // do not trigger add for initial files
     ignoreInitial: true,
     // If watching fails due to read permissions, the errors will be suppressed silently.
@@ -96,19 +97,7 @@ async function watchConfig(root: string, configFile: string) {
   watcher.on('unlink', callback);
 }
 
-export async function loadConfig({
-  cwd,
-  path,
-}: {
-  cwd: string;
-  path?: string;
-}): Promise<RsbuildConfig> {
-  const configFile = resolveConfigPath(cwd, path);
-
-  if (!configFile) {
-    return {};
-  }
-
+export async function loadConfigByPath(configFile: string) {
   try {
     const { default: jiti } = await import('@rsbuild/shared/jiti');
     const loadConfig = jiti(__filename, {
@@ -118,14 +107,10 @@ export async function loadConfig({
       interopDefault: true,
     });
 
-    const command = process.argv[2];
-    if (command === 'dev') {
-      watchConfig(cwd, configFile);
-    }
-
     const configExport = loadConfig(configFile) as RsbuildConfigExport;
 
     if (typeof configExport === 'function') {
+      const command = process.argv[2];
       const params: ConfigParams = {
         env: getNodeEnv(),
         command,
@@ -145,4 +130,43 @@ export async function loadConfig({
     logger.error(`Failed to load file: ${color.dim(configFile)}`);
     throw err;
   }
+}
+
+export async function loadConfig({
+  cwd,
+  path,
+}: {
+  cwd: string;
+  path?: string;
+}): Promise<RsbuildConfig> {
+  const configFile = resolveConfigPath(cwd, path);
+
+  if (!configFile) {
+    return {};
+  }
+
+  return loadConfigByPath(configFile);
+}
+
+// TODO replace loadConfig in v0.4.0
+export async function loadConfigV2({
+  cwd,
+  path,
+}: {
+  cwd: string;
+  path?: string;
+}): Promise<{ content: RsbuildConfig; filePath: string | null }> {
+  const configFile = resolveConfigPath(cwd, path);
+
+  if (!configFile) {
+    return {
+      content: {},
+      filePath: configFile,
+    };
+  }
+
+  return {
+    content: await loadConfigByPath(configFile),
+    filePath: configFile,
+  };
 }

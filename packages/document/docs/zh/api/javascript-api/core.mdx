@@ -71,17 +71,32 @@ console.log(config); // -> RsbuildConfig
 - **类型：**
 
 ```ts
-function loadEnv(params: {
-  // 默认为 process.cwd()
+type LoadEnvOptions = {
+  /**
+   * 加载 env 文件的根路径
+   * @default process.cwd()
+   */
   cwd?: string;
-  // 默认为 ['PUBLIC_']
+  /**
+   * 用于指定 .env.[mode] 文件的名称
+   * @default process.env.NODE_ENV
+   */
+  mode?: string;
+  /**
+   * public 变量的前缀
+   * @default ['PUBLIC_']
+   */
   prefixes?: string[];
-}): {
-  // .env 文件包含的所有环境变量
+};
+
+function loadEnv(options: LoadEnvOptions): {
+  /** .env 文件包含的所有环境变量 */
   parsed: Record<string, string>;
-  // 以 prefixes 开头的环境变量
+  /** 所有 env 文件的绝对路径 */
+  filePaths: string[];
+  /** 以 prefixes 开头的环境变量 */
   publicVars: Record<string, string>;
-  // 从 `process.env` 上清除挂载的环境变量
+  /** 从 `process.env` 上清除挂载的环境变量 */
   cleanup: () => void;
 };
 ```
