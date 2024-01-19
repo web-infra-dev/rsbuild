@@ -38,11 +38,9 @@ function validatePackagePeerDependencies(packages: Package[]) {
       const depPkg = packages.find((pkg) => pkg.packageJson.name === dep);
       if (depPkg) {
         const version = peerDependencies[dep];
-        const isValid =
-          version === `workspace:^${depPkg.packageJson.version}` ||
-          version === '0.x' ||
-          version === '1.x';
-        if (!isValid) {
+        const isInvalid =
+          version !== `workspace:^${depPkg.packageJson.version}`;
+        if (isInvalid) {
           throw Error(
             `${packageJson.name}'s peerDependencies ${dep} version is not right, expect "workspace:^${depPkg.packageJson.version}"`,
           );

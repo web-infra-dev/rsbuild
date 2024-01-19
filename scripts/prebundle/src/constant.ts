@@ -64,6 +64,13 @@ export const TASKS: TaskConfig[] = [
         name: 'connect-history-api-fallback',
         ignoreDts: true,
       },
+      {
+        name: 'node-loader',
+        ignoreDts: true,
+        externals: {
+          'loader-utils': '@rsbuild/shared/loader-utils2',
+        },
+      },
     ],
   },
   {
@@ -123,6 +130,10 @@ export const TASKS: TaskConfig[] = [
       },
       {
         name: 'postcss-modules-values',
+        ignoreDts: true,
+      },
+      {
+        name: 'postcss-flexbugs-fixes',
         ignoreDts: true,
       },
       {
@@ -235,6 +246,13 @@ export const TASKS: TaskConfig[] = [
           if (fs.existsSync(typesFile)) {
             fs.renameSync(typesFile, path.join(depPath, 'types.d.ts'));
           }
+        },
+      },
+      {
+        name: 'resolve-url-loader',
+        ignoreDts: true,
+        externals: {
+          'loader-utils': '../loader-utils2',
         },
       },
       {

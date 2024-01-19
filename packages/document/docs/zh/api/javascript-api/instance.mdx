@@ -533,8 +533,9 @@ import OnAfterStartDevServer from '@zh/shared/onAfterStartDevServer.md';
 - **示例：**
 
 ```ts
-rsbuild.onAfterStartDevServer(({ port }) => {
+rsbuild.onAfterStartDevServer(({ port, routes }) => {
   console.log('this port is: ', port);
+  console.log('this routes is: ', routes);
 });
 ```
 
@@ -561,8 +562,9 @@ import OnAfterStartProdServer from '@zh/shared/onAfterStartProdServer.md';
 - **示例：**
 
 ```ts
-rsbuild.onAfterStartProdServer(({ port }) => {
+rsbuild.onAfterStartProdServer(({ port, routes }) => {
   console.log('this port is: ', port);
+  console.log('this routes is: ', routes);
 });
 ```
 

@@ -1,5 +1,13 @@
 # @rsbuild/core
 
+## 0.3.4
+
+### Patch Changes
+
+- 3ebf3b5: release: bump 0.3.4
+- Updated dependencies [3ebf3b5]
+  - @rsbuild/shared@0.3.4
+
 ## 0.3.3
 
 ### Patch Changes

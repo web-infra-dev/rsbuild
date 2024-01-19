@@ -1,11 +1,5 @@
 import { join } from 'path';
-import {
-  debug,
-  logger,
-  castArray,
-  normalizeUrl,
-  type Routes,
-} from '@rsbuild/shared';
+import { debug, logger, castArray, type Routes } from '@rsbuild/shared';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import type { RsbuildPlugin } from '../types';
@@ -114,11 +108,7 @@ export function pluginStartUrl(): RsbuildPlugin {
           const protocol = https ? 'https' : 'http';
           if (routes.length) {
             // auto open the first one
-            urls.push(
-              normalizeUrl(
-                `${protocol}://localhost:${port}/${routes[0].route}`,
-              ),
-            );
+            urls.push(`${protocol}://localhost:${port}${routes[0].pathname}`);
           }
         } else {
           urls.push(
