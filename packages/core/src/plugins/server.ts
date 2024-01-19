@@ -33,7 +33,7 @@ export const pluginServer = (): RsbuildPlugin => ({
             dereference: true,
           });
         } catch (err) {
-          logger.error(`Copy publicDir(${publicDir}) to dist error:`, err);
+          logger.error(`Copy public dir (${publicDir}) to dist failed:`, err);
         }
       }
     });
