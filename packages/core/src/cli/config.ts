@@ -155,18 +155,18 @@ export async function loadConfigV2({
 }: {
   cwd: string;
   path?: string;
-}): Promise<{ config: RsbuildConfig; filePath: string | null }> {
+}): Promise<{ content: RsbuildConfig; filePath: string | null }> {
   const configFile = resolveConfigPath(cwd, path);
 
   if (!configFile) {
     return {
-      config: {},
+      content: {},
       filePath: configFile,
     };
   }
 
   return {
-    config: await loadConfigByPath(configFile),
+    content: await loadConfigByPath(configFile),
     filePath: configFile,
   };
 }

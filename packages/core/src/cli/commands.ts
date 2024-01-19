@@ -49,7 +49,7 @@ export async function init({
       onBeforeRestartServer(envs.cleanup);
     }
 
-    const { config, filePath: configFilePath } = await loadConfigV2({
+    const { content: config, filePath: configFilePath } = await loadConfigV2({
       cwd: root,
       path: commonOpts.config,
     });
