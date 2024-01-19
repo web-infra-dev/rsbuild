@@ -30,7 +30,7 @@
     "@rsbuild/shared": "workspace:*",
     "acorn": "^8.10.0",
     "caniuse-lite": "^1.0.30001559",
-    "htmlparser2": "9.0.0",
+    "htmlparser2": "9.1.0",
     "source-map": "^0.7.4"
   },
   "devDependencies": {
