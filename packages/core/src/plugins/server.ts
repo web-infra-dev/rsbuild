@@ -1,4 +1,4 @@
-import { fse } from '@rsbuild/shared';
+import { fse, logger } from '@rsbuild/shared';
 import { join, isAbsolute } from 'path';
 import type { RsbuildPlugin } from '../types';
 
@@ -25,10 +25,16 @@ export const pluginServer = (): RsbuildPlugin => ({
           return;
         }
 
-        await fse.copy(publicDir, api.context.distPath, {
-          // dereference symlinks
-          dereference: true,
-        });
+        try {
+          // can not get useful error stack when copy error
+          // so we manually catch and throw again
+          await fse.copy(publicDir, api.context.distPath, {
+            // dereference symlinks
+            dereference: true,
+          });
+        } catch (err) {
+          logger.error(`Copy publicDir(${publicDir}) to dist error:`, err);
+        }
       }
     });
   },
