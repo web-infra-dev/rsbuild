@@ -93,6 +93,30 @@ Rsbuild supports reading the following types of env files:
 
 If several of the above files exist at the same time, they will all be loaded, with the files listed at the bottom of the table having higher priority.
 
+### Env Mode
+
+Rsbuild also supports reading `.env.[mode]` and `.env.[mode].local` files. You can specify the env mode using the `--env-mode <mode>` CLI option.
+
+For example, set the env mode as `test`:
+
+```bash
+npx rsbuild dev --env-mode test
+```
+
+Rsbuild will then read the following files in sequence:
+
+- .env
+- .env.local
+- .env.test
+- .env.test.local
+
+:::tip
+The `--env-mode` option takes precedence over `process.env.NODE_ENV`.
+
+It is recommended to use `--env-mode` to set the env mode, and not to modify `process.env.NODE_ENV`.
+
+:::
+
 ### Example
 
 For example, create a `.env` file and add the following contents:

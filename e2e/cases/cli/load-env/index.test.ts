@@ -36,3 +36,11 @@ test('should load .env.production.local with higher priority', async () => {
   });
   expect(fse.existsSync(path.join(__dirname, 'dist/3'))).toBeTruthy();
 });
+
+test('should allow to specify env mode via --env-mode', async () => {
+  execSync('npx rsbuild build --env-mode test', {
+    cwd: __dirname,
+  });
+
+  expect(fse.existsSync(path.join(__dirname, 'dist/5'))).toBeTruthy();
+});

@@ -1,14 +1,15 @@
 import { join } from 'path';
 import { existsSync } from 'fs';
 import { color, isDev, logger } from '@rsbuild/shared';
-import { program } from '@rsbuild/shared/commander';
+import { program, type Command } from '@rsbuild/shared/commander';
 import { loadEnv } from '../loadEnv';
 import { loadConfigV2, watchFiles } from './config';
 import type { RsbuildMode } from '..';
-import { onBeforeRestartServer } from 'src/server/restart';
+import { onBeforeRestartServer } from '../server/restart';
 
 export type CommonOptions = {
   config?: string;
+  envMode?: string;
   open?: boolean | string;
   host?: string;
   port?: number;
@@ -43,7 +44,10 @@ export async function init({
 
   try {
     const root = process.cwd();
-    const envs = loadEnv({ cwd: root });
+    const envs = loadEnv({
+      cwd: root,
+      mode: cliOptions?.envMode,
+    });
 
     if (isDev()) {
       onBeforeRestartServer(envs.cleanup);
@@ -100,24 +104,40 @@ export async function init({
   }
 }
 
-export function runCli() {
-  program.name('rsbuild').usage('<command> [options]').version(RSBUILD_VERSION);
-
-  program
-    .command('dev')
-    .option('-o --open [url]', 'open the page in browser on startup')
-    .option(
-      '--port <port>',
-      'specify a port number for Rsbuild Server to listen',
-    )
-    .option(
-      '--host <host>',
-      'specify the host that the Rsbuild Server listens to',
-    )
+const applyCommonOptions = (command: Command) => {
+  command
     .option(
       '-c --config <config>',
       'specify the configuration file, can be a relative or absolute path',
     )
+    .option(
+      '--env-mode <mode>',
+      'specify the env mode to load the `.env.[mode]` file',
+    );
+};
+
+const applyServerOptions = (command: Command) => {
+  command
+    .option('-o --open [url]', 'open the page in browser on startup')
+    .option('--port <port>', 'specify a port number for server to listen')
+    .option('--host <host>', 'specify the host that the server listens to');
+};
+
+export function runCli() {
+  program.name('rsbuild').usage('<command> [options]').version(RSBUILD_VERSION);
+
+  const devCommand = program.command('dev');
+  const buildCommand = program.command('build');
+  const previewCommand = program.command('preview');
+  const inspectCommand = program.command('inspect');
+
+  [devCommand, buildCommand, previewCommand, inspectCommand].forEach(
+    applyCommonOptions,
+  );
+
+  [devCommand, previewCommand].forEach(applyServerOptions);
+
+  devCommand
     .description('starting the dev server')
     .action(async (options: DevOptions) => {
       try {
@@ -130,13 +150,8 @@ export function runCli() {
       }
     });
 
-  program
-    .command('build')
+  buildCommand
     .option('-w --watch', 'turn on watch mode, watch for changes and rebuild')
-    .option(
-      '-c --config <config>',
-      'specify the configuration file, can be a relative or absolute path',
-    )
     .description('build the app for production')
     .action(async (options: BuildOptions) => {
       try {
@@ -151,21 +166,7 @@ export function runCli() {
       }
     });
 
-  program
-    .command('preview')
-    .option('-o --open [url]', 'open the page in browser on startup')
-    .option(
-      '--port <port>',
-      'specify a port number for Rsbuild Server to listen',
-    )
-    .option(
-      '--host <host>',
-      'specify the host that the Rsbuild Server listens to',
-    )
-    .option(
-      '-c --config <config>',
-      'specify the configuration file, can be a relative or absolute path',
-    )
+  previewCommand
     .description('preview the production build locally')
     .action(async (options: PreviewOptions) => {
       try {
@@ -187,16 +188,11 @@ export function runCli() {
       }
     });
 
-  program
-    .command('inspect')
+  inspectCommand
     .description('inspect the Rspack and Rsbuild configs')
     .option('--env <env>', 'specify env mode', 'development')
     .option('--output <output>', 'specify inspect content output path', '/')
     .option('--verbose', 'show full function definitions in output')
-    .option(
-      '-c --config <config>',
-      'specify the configuration file, can be a relative or absolute path',
-    )
     .action(async (options: InspectOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
