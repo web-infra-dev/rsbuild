@@ -17,6 +17,7 @@ export type SvgDefaultExport = 'component' | 'url';
 export type PluginSvgrOptions = {
   /**
    * Configure SVGR options.
+   * @see https://react-svgr.com/docs/options/
    */
   svgrOptions?: Config;
 

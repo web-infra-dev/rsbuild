@@ -27,14 +27,12 @@ export interface SvelteLoaderOptions {
 export type PluginSvelteOptions = {
   /**
    * The options of svelte-loader
-   *
-   * See https://github.com/sveltejs/svelte-loader
+   * @see https://github.com/sveltejs/svelte-loader
    */
   svelteLoaderOptions?: SvelteLoaderOptions;
   /**
-   * The options of svelte-preprocess
-   *
-   * See https://github.com/sveltejs/svelte-preprocess
+   * The options of svelte-preprocess.
+   * @see https://github.com/sveltejs/svelte-preprocess
    */
   preprocessOptions?: AutoPreprocessOptions;
 };

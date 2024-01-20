@@ -2,7 +2,13 @@ import { isProd } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 export type PluginUmdOptions = {
+  /**
+   * `name` is a required field used to specify the name of the UMD library.
+   */
   name: string;
+  /**
+   * Specifies which export to use as the content of the UMD library.
+   */
   export?: string | string[];
 };
 

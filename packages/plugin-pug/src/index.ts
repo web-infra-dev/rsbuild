@@ -4,6 +4,9 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 import type { Options as PugOptions } from 'pug';
 
 export type PluginPugOptions = {
+  /**
+   * Used to set the compilation options for Pug.
+   */
   pugOptions?: PugOptions;
 };
 
