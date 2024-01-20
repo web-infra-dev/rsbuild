@@ -82,6 +82,7 @@ export type PluginBabelOptions = {
   exclude?: RuleCondition;
   /**
    * Options passed to `babel-loader`.
+   * @see https://github.com/babel/babel-loader
    */
   babelLoaderOptions?: ChainedConfigWithUtils<
     BabelTransformOptions,

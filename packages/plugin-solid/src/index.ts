@@ -5,6 +5,7 @@ import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
 export type PluginSolidOptions = {
   /**
    * Options passed to `babel-preset-solid`.
+   * @see https://www.npmjs.com/package/babel-preset-solid
    */
   solidPresetOptions?: SolidPresetOptions;
 };

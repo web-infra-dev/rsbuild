@@ -6,6 +6,7 @@ import type { Options as PugOptions } from 'pug';
 export type PluginPugOptions = {
   /**
    * Used to set the compilation options for Pug.
+   * @see https://pugjs.org/api/reference.html#options
    */
   pugOptions?: PugOptions;
 };
