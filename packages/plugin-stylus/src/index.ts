@@ -11,7 +11,13 @@ type StylusOptions = {
 };
 
 type StylusLoaderOptions = {
+  /**
+   * Options passed to Stylus.
+   */
   stylusOptions?: StylusOptions;
+  /**
+   * Whether to generate Source Map.
+   */
   sourceMap?: boolean;
 };
 
