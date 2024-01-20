@@ -11,6 +11,10 @@ export type CssMinimizerPluginOptions = CssMinimizerPlugin.BasePluginOptions &
   CssMinimizerPlugin.DefinedDefaultMinimizerAndOptions<CssMinimizerPlugin.CssNanoOptionsExtended>;
 
 export type PluginCssMinimizerOptions = {
+  /**
+   * Used to customize the options of css-minimizer-webpack-plugin.
+   * @see https://github.com/webpack-contrib/css-minimizer-webpack-plugin
+   */
   pluginOptions?: ChainedConfig<CssMinimizerPluginOptions>;
 };
 

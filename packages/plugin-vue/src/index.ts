@@ -7,20 +7,25 @@ import { applySplitChunksRule } from './splitChunks';
 export type SplitVueChunkOptions = {
   /**
    * Whether to enable split chunking for Vue-related dependencies (e.g., vue, vue-loader).
-   *
    * @default true
    */
   vue?: boolean;
   /**
    * Whether to enable split chunking for vue-router.
-   *
    * @default true
    */
   router?: boolean;
 };
 
 export type PluginVueOptions = {
+  /**
+   * Options passed to `vue-loader`.
+   * @see https://vue-loader.vuejs.org/
+   */
   vueLoaderOptions?: VueLoaderOptions;
+  /**
+   * This option is used to control the split chunks behavior.
+   */
   splitChunks?: SplitVueChunkOptions;
 };
 

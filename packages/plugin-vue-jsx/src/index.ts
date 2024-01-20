@@ -3,6 +3,10 @@ import type { VueJSXPluginOptions } from '@vue/babel-plugin-jsx';
 import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
 
 export type PluginVueJsxOptions = {
+  /**
+   * Options passed to `@vue/babel-plugin-jsx`.
+   * @see https://github.com/vuejs/babel-plugin-jsx
+   */
   vueJsxOptions?: VueJSXPluginOptions;
 };
 

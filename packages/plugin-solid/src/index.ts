@@ -2,15 +2,17 @@ import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
 import type { SolidPresetOptions } from './types';
 import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
 
-export type PluginSolidPresetOptions = {
+export type PluginSolidOptions = {
+  /**
+   * Options passed to `babel-preset-solid`.
+   * @see https://www.npmjs.com/package/babel-preset-solid
+   */
   solidPresetOptions?: SolidPresetOptions;
 };
 
 export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
-export function pluginSolid(
-  options: PluginSolidPresetOptions = {},
-): RsbuildPlugin {
+export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
   return {
     name: PLUGIN_SOLID_NAME,
 

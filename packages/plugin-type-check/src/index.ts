@@ -13,7 +13,15 @@ type ForkTsCheckerOptions = ConstructorParameters<
 >[0];
 
 export type PluginTypeCheckerOptions = {
+  /**
+   * Whether to enable TypeScript type checking.
+   * @default true
+   */
   enable?: boolean;
+  /**
+   * To modify the options of `fork-ts-checker-webpack-plugin`.
+   * @see https://github.com/TypeStrong/fork-ts-checker-webpack-plugin#readme
+   */
   forkTsCheckerOptions?: ChainedConfig<ForkTsCheckerOptions>;
 };
 

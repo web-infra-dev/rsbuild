@@ -64,7 +64,9 @@ export type PluginRemOptions = {
    * @default true
    */
   inlineRuntime?: boolean;
-  /** Usually, `fontSize = (clientWidth * rootFontSize) / screenWidth` */
+  /**
+   * Usually, `fontSize = (clientWidth * rootFontSize) / screenWidth`
+   */
   screenWidth?: number;
   /**
    * Used to calculate the font size of the document.
@@ -76,17 +78,25 @@ export type PluginRemOptions = {
    * If the `rootFontSize` exceeds the `maxRootFontSize`, the `maxRootFontSize` value will be used instead.
    */
   maxRootFontSize?: number;
-  /** Get clientWidth from the url query based on widthQueryKey */
+  /**
+   * Get clientWidth from the url query based on widthQueryKey.
+   */
   widthQueryKey?: string;
-  /** The entries to ignore */
+  /**
+   * The entries to ignore
+   */
   excludeEntries?: string[];
   /**
    * Whether to use height to calculate rem in landscape.
    * @default false
    */
   supportLandscape?: boolean;
-  /** Whether to use rootFontSize when large than maxRootFontSize（scene：pc） */
+  /**
+   * Whether to use rootFontSize when large than maxRootFontSize (scene：pc)
+   */
   useRootFontSizeBeyondMax?: boolean;
-  /** CSS (postcss-pxtorem) option */
+  /**
+   * Options of `postcss-pxtorem`
+   */
   pxtorem?: PxToRemOptions;
 };

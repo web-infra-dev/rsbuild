@@ -12,6 +12,7 @@ type VueJSXPresetOptions = {
   functional?: boolean;
   /**
    * Whether to enable automatic 'h' injection syntactic sugar.
+   * @default true
    */
   injectH?: boolean;
   /**
@@ -25,6 +26,10 @@ type VueJSXPresetOptions = {
 };
 
 export type PluginVueOptions = {
+  /**
+   * Options passed to `@vue/babel-preset-jsx`.
+   * @see https://github.com/vuejs/jsx-vue2
+   */
   vueJsxOptions?: VueJSXPresetOptions;
 };
 
