@@ -23,7 +23,7 @@ test('should generate module chunks when chunkSplit is "split-by-module"', async
 
   const [reactFile] = Object.entries(files).find(
     ([name, content]) =>
-      name.includes('npm.react@') && content.includes('React'),
+      name.includes('npm.react') && content.includes('React'),
   )!;
   expect(reactFile).toBeTruthy();
 
@@ -33,7 +33,7 @@ test('should generate module chunks when chunkSplit is "split-by-module"', async
 
   expect(jsFiles.length).toEqual(4);
   expect(jsFiles).toContain('index.js');
-  expect(jsFiles.find((file) => file.includes('npm.react@'))).toBeTruthy();
-  expect(jsFiles.find((file) => file.includes('npm.react-dom@'))).toBeTruthy();
-  expect(jsFiles.find((file) => file.includes('npm.scheduler@'))).toBeTruthy();
+  expect(jsFiles.find((file) => file.includes('npm.react'))).toBeTruthy();
+  expect(jsFiles.find((file) => file.includes('npm.react-dom'))).toBeTruthy();
+  expect(jsFiles.find((file) => file.includes('npm.scheduler'))).toBeTruthy();
 });

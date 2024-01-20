@@ -106,7 +106,7 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
 }
 
 export const MODULE_PATH_REGEX =
-  /[\\/]node_modules[\\/](\.pnpm[\\/])?(?:(@[^[\\/]+)(?:[\\/]))?([^\\/]+)/;
+  /.*[\\/]node_modules[\\/](?!\.pnpm[\\/])(?:(@[^\\/]+)[\\/])?([^\\/]+)/;
 
 export function getPackageNameFromModulePath(modulePath: string) {
   const handleModuleContext = modulePath?.match(MODULE_PATH_REGEX);
@@ -115,7 +115,7 @@ export function getPackageNameFromModulePath(modulePath: string) {
     return undefined;
   }
 
-  const [, , scope, name] = handleModuleContext;
+  const [, scope, name] = handleModuleContext;
   const packageName = ['npm', (scope ?? '').replace('@', ''), name]
     .filter(Boolean)
     .join('.');
