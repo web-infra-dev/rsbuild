@@ -35,6 +35,10 @@
       "types": "./compiled/gzip-size/index.d.ts",
       "default": "./compiled/gzip-size/index.js"
     },
+    "./picocolors": {
+      "types": "./compiled/picocolors/picocolors.d.ts",
+      "default": "./compiled/picocolors/index.js"
+    },
     "./browserslist": {
       "types": "./compiled/browserslist/index.d.ts",
       "default": "./compiled/browserslist/index.js"
