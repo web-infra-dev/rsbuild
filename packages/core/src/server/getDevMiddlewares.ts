@@ -1,6 +1,7 @@
 import url from 'url';
 import type {
   ServerAPIs,
+  Middlewares,
   UpgradeEvent,
   RequestHandler,
   DevMiddlewaresConfig,
@@ -56,7 +57,7 @@ const applyDefaultMiddlewares = async ({
 }: {
   output: RsbuildDevMiddlewareOptions['output'];
   pwd: RsbuildDevMiddlewareOptions['pwd'];
-  middlewares: RequestHandler[];
+  middlewares: Middlewares;
   dev: RsbuildDevMiddlewareOptions['dev'];
   compileMiddlewareAPI?: CompileMiddlewareAPI;
 }): Promise<{
@@ -105,6 +106,11 @@ const applyDefaultMiddlewares = async ({
       middlewares.push(middleware);
     });
   }
+
+  const { default: launchEditorMiddleware } = await import(
+    '../../compiled/launch-editor-middleware'
+  );
+  middlewares.push(['/__open-in-editor', launchEditorMiddleware()]);
 
   if (compileMiddlewareAPI) {
     middlewares.push(compileMiddlewareAPI.middleware);
@@ -164,7 +170,7 @@ const applyDefaultMiddlewares = async ({
 };
 
 export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
-  const middlewares: RequestHandler[] = [];
+  const middlewares: Middlewares = [];
   const { compileMiddlewareAPI } = options;
 
   // Order: setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push

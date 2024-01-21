@@ -90,6 +90,8 @@ export type CompileMiddlewareAPI = {
   close: () => void;
 };
 
+export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
+
 export type DevServerAPIs = {
   /**
    * The resolved rsbuild server config
@@ -131,7 +133,7 @@ export type DevServerAPIs = {
      */
     overrides?: DevMiddlewaresConfig;
   }) => Promise<{
-    middlewares: RequestHandler[];
+    middlewares: Middlewares;
     close: () => Promise<void>;
     /**
      * Subscribe http upgrade event

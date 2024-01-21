@@ -44,7 +44,13 @@ export async function startDevServerPure(fixtures) {
     res.end('Hello World!');
   });
 
-  app.use(...middlewares);
+  middlewares.forEach((item) => {
+    if (Array.isArray(item)) {
+      app.use(...item);
+    } else {
+      app.use(item);
+    }
+  });
 
   app.get('/bbb', (_req, res) => {
     res.end('Hello Express!');
