@@ -205,10 +205,10 @@ export async function startDevServer<
 
         devMiddlewares.middlewares.forEach((item) => {
           if (Array.isArray(item)) {
-            middlewares.use(item[0], item[1]);
-            return;
+            middlewares.use(...item);
+          } else {
+            middlewares.use(item);
           }
-          middlewares.use(item);
         });
 
         middlewares.use(notFoundMiddleware);
