@@ -46,6 +46,9 @@ export const TASKS: TaskConfig[] = [
       {
         name: 'launch-editor-middleware',
         ignoreDts: true,
+        externals: {
+          picocolors: '@rsbuild/shared/picocolors',
+        },
       },
       {
         name: 'sirv',
@@ -87,13 +90,18 @@ export const TASKS: TaskConfig[] = [
       'deepmerge',
       'fs-extra',
       'chokidar',
-      'webpack-chain',
       'webpack-merge',
       'mime-types',
       'connect',
       'browserslist',
       'gzip-size',
       'json5',
+      {
+        name: 'webpack-chain',
+        externals: {
+          deepmerge: '../deepmerge',
+        },
+      },
       {
         name: 'yaml',
         ignoreDts: true,
@@ -117,12 +125,20 @@ export const TASKS: TaskConfig[] = [
         ignoreDts: true,
       },
       {
+        name: 'icss-utils',
+        ignoreDts: true,
+      },
+      {
         name: 'postcss-value-parser',
         ignoreDts: true,
       },
       {
         name: 'postcss-modules-local-by-default',
         ignoreDts: true,
+        externals: {
+          'icss-utils': '../icss-utils',
+          'postcss-value-parser': '../postcss-value-parser',
+        },
       },
       {
         name: 'postcss-modules-extract-imports',
@@ -135,13 +151,12 @@ export const TASKS: TaskConfig[] = [
       {
         name: 'postcss-modules-values',
         ignoreDts: true,
+        externals: {
+          'icss-utils': '../icss-utils',
+        },
       },
       {
         name: 'postcss-flexbugs-fixes',
-        ignoreDts: true,
-      },
-      {
-        name: 'icss-utils',
         ignoreDts: true,
       },
       {
@@ -196,6 +211,7 @@ export const TASKS: TaskConfig[] = [
         ignoreDts: true,
         externals: {
           semver: '../semver',
+          'postcss-value-parser': '../postcss-value-parser',
           'postcss-modules-local-by-default':
             '../postcss-modules-local-by-default',
           'postcss-modules-extract-imports':
