@@ -137,6 +137,7 @@ export const TASKS: TaskConfig[] = [
         ignoreDts: true,
         externals: {
           'icss-utils': '../icss-utils',
+          'postcss-value-parser': '../postcss-value-parser',
         },
       },
       {
