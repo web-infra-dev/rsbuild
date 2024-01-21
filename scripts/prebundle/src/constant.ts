@@ -44,6 +44,10 @@ export const TASKS: TaskConfig[] = [
       'dotenv-expand',
       'ws',
       {
+        name: 'launch-editor-middleware',
+        ignoreDts: true,
+      },
+      {
         name: 'sirv',
         afterBundle(task) {
           replaceFileContent(
