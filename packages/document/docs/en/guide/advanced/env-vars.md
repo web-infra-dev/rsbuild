@@ -1,6 +1,6 @@
 # Environment Variables
 
-Rsbuild supports injecting environment variables or expressions into the code during compilation, which is helpful for distinguishing the running environment or injecting constant values. This chapter introduces how to use environment variables.
+Rsbuild supports injecting environment variables or expressions into the code during compilation, which is helpful for distinguishing the running environment or replacing constants. This chapter introduces how to use environment variables.
 
 ## Default Variables
 
@@ -148,14 +148,14 @@ console.log(process.env.BAR); // '2'
 
 ## Public Variables
 
-All environment variables starting with `PUBLIC_` will be automatically injected into the client code. For example, if the following variables are defined:
+All environment variables starting with `PUBLIC_` can be accessed in client code. For example, if the following variables are defined:
 
 ```bash title=".env"
 PUBLIC_NAME=jack
 PASSWORD=123
 ```
 
-In the source files of the client code, public variables can be accessed as follows:
+In the source file of the client code, you can access public variables in the following way. Rsbuild will replace identifiers starting with `process.env.PUBLIC_` with the corresponding expression.
 
 ```ts title="src/index.ts"
 console.log(process.env.PUBLIC_NAME); // -> 'jack'
@@ -165,9 +165,24 @@ console.log(process.env.PASSWORD); // -> undefined
 :::tip
 
 - The content of public variables will be exposed to your client code, so please avoid including sensitive information in public variables.
-- Public variables are injected into the client code through [source.define](/config/source/define). Please read ["Using define config"](#using-define-config) to understand the principles and notes of define.
+- Public variables are replaced through [source.define](/config/source/define). Please read ["Using define config"](#using-define-config) to understand the principles and notes of define.
 
 :::
+
+### Replacement Scope
+
+Public variables will replace identifiers in the client code, with the replacement scope including:
+
+- JavaScript files, and files that can be converted into JavaScript code, such as `.js`, `.ts`, `.tsx`, etc.
+- HTML template files, for example:
+
+```ejs title="template.html"
+<div><%= process.env.PUBLIC_NAME %></div>
+```
+
+Note that public variables will not replace identifiers in the following files:
+
+- CSS files, such as `.css`, `.scss`, `.less`, etc.
 
 ### Custom Prefix
 
@@ -219,9 +234,9 @@ For more about `source.define`, just refer to [API References](/config/source/de
 The environment variable `NODE_ENV` shown in the example above is already injected by the Rsbuild, and you usually do not need to configure it manually.
 :::
 
-### process.env Injection
+### process.env Replacement
 
-When using `source.define`, please avoid injecting the entire `process.env` object, e.g. the following usage is not recommended:
+When using `source.define`, please avoid replacing the entire `process.env` object, e.g. the following usage is not recommended:
 
 ```js
 export default {
@@ -238,7 +253,7 @@ If the above usage is adopted, the following problems will be caused:
 1. Some unused environment variables are additionally injected, causing the environment variables of the development environment to be leaked into the front-end code.
 2. As each `process.env` code will be replaced by a complete environment variable object, the bundle size of the front-end code will increase and the performance will decrease.
 
-So please avoid full injection, just inject the used variables from `process.env`.
+Therefore, please inject the environment variables on `process.env` according to actual needs and avoid replacing them in its entirety.
 
 ## Notes
 
