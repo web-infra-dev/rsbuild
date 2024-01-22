@@ -1,5 +1,5 @@
 import { getBundlerChain } from '@rsbuild/shared';
-import { pluginExternals } from '@src/plugins/externals';
+import { pluginExternals } from '../../src/plugins/externals';
 
 describe('plugin-external', () => {
   it('should add external config', async () => {

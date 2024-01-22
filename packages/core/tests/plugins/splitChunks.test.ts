@@ -3,7 +3,7 @@ import {
   pluginSplitChunks,
   MODULE_PATH_REGEX,
   getPackageNameFromModulePath,
-} from '@src/plugins/splitChunks';
+} from '../../src/plugins/splitChunks';
 import type { RsbuildConfig } from '@rsbuild/shared';
 
 describe('plugin-split-chunks', () => {

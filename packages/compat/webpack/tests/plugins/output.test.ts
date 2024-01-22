@@ -1,4 +1,4 @@
-import { pluginOutput } from '@/plugins/output';
+import { pluginOutput } from '../../src/plugins/output';
 import { createStubRsbuild } from '../helper';
 
 describe('plugin-output', () => {

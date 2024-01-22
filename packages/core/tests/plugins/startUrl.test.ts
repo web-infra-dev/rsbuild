@@ -1,4 +1,4 @@
-import { replacePlaceholder } from '@src/plugins/startUrl';
+import { replacePlaceholder } from '../../src/plugins/startUrl';
 
 describe('plugin-start-url', () => {
   it('#replacePlaceholder - should replace port number correctly', () => {

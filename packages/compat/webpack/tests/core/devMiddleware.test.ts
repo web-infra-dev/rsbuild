@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import { getDevMiddleware } from '@/core/devMiddleware';
+import { getDevMiddleware } from '../../src/core/devMiddleware';
 
 describe('test dev middleware', () => {
   test('should inject entry and setup hooks', () => {

@@ -1,4 +1,4 @@
-import { pluginMinimize } from '@/plugins/minimize';
+import { pluginMinimize } from '../../src/plugins/minimize';
 import { createStubRsbuild } from '../helper';
 
 describe('plugin-minimize', () => {

@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginNetworkPerformance } from '@src/plugins/networkPerformance';
+import { pluginNetworkPerformance } from '../../src/plugins/networkPerformance';
 
 describe('plugin-network-performance', () => {
   it('should add network performance plugin', async () => {

@@ -1,11 +1,12 @@
-import { createCompiler } from '@/core/createCompiler';
-import { createContext } from '@/core/createContext';
+import { createCompiler } from '../../src/provider/core/createCompiler';
+import { createContext } from '../../src/provider/core/createContext';
 
 describe('createCompiler', () => {
   const createDefaultContext = () =>
     createContext(
       {
         cwd: process.cwd(),
+        rsbuildConfig: {},
       },
       {
         source: {

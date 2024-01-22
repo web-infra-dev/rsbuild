@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginNodeAddons } from '@src/plugins/nodeAddons';
+import { pluginNodeAddons } from '../../src/plugins/nodeAddons';
 
 describe('plugin-node-addons', () => {
   it('should add node addons rule properly', async () => {

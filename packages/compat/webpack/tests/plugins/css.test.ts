@@ -1,6 +1,6 @@
-import { pluginCss } from '@/plugins/css';
-import { pluginSass } from '@/plugins/sass';
-import { pluginLess } from '@/plugins/less';
+import { pluginCss } from '../../src/plugins/css';
+import { pluginSass } from '../../src/plugins/sass';
+import { pluginLess } from '../../src/plugins/less';
 import { createStubRsbuild } from '../helper';
 
 describe('plugin-css', () => {

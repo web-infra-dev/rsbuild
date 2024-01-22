@@ -1,5 +1,5 @@
-import { hasTitle } from '@src/rspack/HtmlBasicPlugin';
-import { getHTMLPathByEntry } from '@src/provider/core/initPlugins';
+import { hasTitle } from '../src/rspack/HtmlBasicPlugin';
+import { getHTMLPathByEntry } from '../src/provider/core/initPlugins';
 import type { NormalizedConfig } from '@rsbuild/shared';
 
 test('should detect HTML title via "hasTitle" correctly', () => {

@@ -1,6 +1,6 @@
 import { createStubRsbuild } from '../helper';
-import { pluginProgress } from '@/plugins/progress';
-import { createFriendlyPercentage } from '@/progress/helpers';
+import { pluginProgress } from '../../src/plugins/progress';
+import { createFriendlyPercentage } from '../../src/progress/helpers';
 
 describe('plugin-progress', () => {
   it('should register webpackbar by default', async () => {

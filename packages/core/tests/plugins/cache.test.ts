@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginCache } from '@src/plugins/cache';
+import { pluginCache } from '../../src/plugins/cache';
 
 vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();

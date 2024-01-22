@@ -1,6 +1,6 @@
-import { pluginEntry } from '@src/plugins/entry';
-import { pluginHtml } from '@src/plugins/html';
-import { pluginInlineChunk } from '@src/plugins/inlineChunk';
+import { pluginEntry } from '../../src/plugins/entry';
+import { pluginHtml } from '../../src/plugins/html';
+import { pluginInlineChunk } from '../../src/plugins/inlineChunk';
 import { createStubRsbuild } from '@scripts/test-helper';
 
 describe('plugin-inline-chunk', () => {
