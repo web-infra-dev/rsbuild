@@ -1,6 +1,6 @@
 # 环境变量
 
-Rsbuild 支持在编译过程中向代码中注入环境变量或表达式，这对于区分运行环境、注入常量值等场景很有帮助。本章节会介绍环境变量的使用方式。
+Rsbuild 支持在编译过程中向代码中注入环境变量或表达式，这对于区分运行环境、替换常量值等场景很有帮助。本章节会介绍环境变量的使用方式。
 
 ## 默认环境变量
 
@@ -148,14 +148,14 @@ console.log(process.env.BAR); // '2'
 
 ## public 变量
 
-所有以 `PUBLIC_` 开头的环境变量将被自动注入到 client 代码中，比如定义了以下变量：
+所有以 `PUBLIC_` 开头的环境变量可以在 client 代码中访问，比如定义了以下变量：
 
 ```bash title=".env"
 PUBLIC_NAME=jack
 PASSWORD=123
 ```
 
-在 client 代码的源文件中，可以通过以下方式访问 public 变量：
+在 client 代码的源文件中，可以通过以下方式访问 public 变量，Rsbuild 会将 `process.env.PUBLIC_` 开头的标识符替换为相应的表达式。
 
 ```ts title="src/index.ts"
 console.log(process.env.PUBLIC_NAME); // -> 'jack'
@@ -165,9 +165,24 @@ console.log(process.env.PASSWORD); // -> undefined
 :::tip
 
 - public 变量的内容会出现在你的 client 代码中，请避免在 public 变量中包含敏感信息。
-- public 变量是通过 [source.define](/config/source/define) 注入到 client 代码的，请阅读[「使用 define 配置」](#使用-define-配置)来了解 define 的原理和注意事项。
+- public 变量是通过 [source.define](/config/source/define) 替换的，请阅读[「使用 define 配置」](#使用-define-配置)来了解 define 的原理和注意事项。
 
 :::
+
+### 替换范围
+
+public 变量会替换 client 代码中的标识符，替换范围包含：
+
+- JavaScript 文件，以及能转换为 JavaScript 代码的文件，比如 `.js`，`.ts`，`.tsx` 等。
+- HTML 模板文件，比如：
+
+```ejs title="template.html"
+<div><%= process.env.PUBLIC_NAME %></div>
+```
+
+注意，public 变量不会替换以下文件中的标识符：
+
+- CSS 文件，比如 `.css`, `.scss`, `.less` 等。
 
 ### 自定义前缀
 
@@ -219,9 +234,9 @@ export default {
 以上例子中的环境变量 `NODE_ENV` 已经由 Rsbuild 自动注入，通常你不需要手动配置它的值。
 :::
 
-### process.env 注入方式
+### process.env 替换方式
 
-在使用 `source.define` 时，请避免注入整个 `process.env` 对象，比如下面的用法是不推荐的：
+在使用 `source.define` 时，请避免替换整个 `process.env` 对象，比如下面的用法是不推荐的：
 
 ```js
 export default {
@@ -238,7 +253,7 @@ export default {
 1. 额外注入了一些未使用的环境变量，导致开发环境的环境变量被泄露到前端代码中。
 2. 由于每一处 `process.env` 代码都会被替换为完整的环境变量对象，导致前端代码的包体积增加，性能降低。
 
-因此，请按照实际需求来注入 `process.env` 上的环境变量，避免全量注入。
+因此，请按照实际需求来注入 `process.env` 上的环境变量，避免全量替换。
 
 ### 注意事项
 
