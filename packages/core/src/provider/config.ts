@@ -56,10 +56,7 @@ export const withDefaultConfig = async (
   rootPath: string,
   config: RsbuildConfig,
 ) => {
-  const merged = mergeRsbuildConfig<RsbuildConfig>(
-    createDefaultConfig(),
-    config,
-  );
+  const merged = mergeRsbuildConfig(createDefaultConfig(), config);
 
   merged.source ||= {};
 
@@ -84,7 +81,4 @@ export const withDefaultConfig = async (
  * 3. Meaningful and can be filled by constant value.
  */
 export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig =>
-  mergeRsbuildConfig<NormalizedConfig>(
-    createDefaultConfig() as NormalizedConfig,
-    config as NormalizedConfig,
-  );
+  mergeRsbuildConfig(createDefaultConfig(), config) as NormalizedConfig;
