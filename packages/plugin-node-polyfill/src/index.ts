@@ -1,4 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
+import * as nodeLibs from './libs';
 
 const getResolveFallback = (nodeLibs: Record<string, any>) =>
   Object.keys(nodeLibs).reduce<Record<string, string | false>>(
@@ -14,10 +15,6 @@ const getResolveFallback = (nodeLibs: Record<string, any>) =>
   );
 
 const getProvideLibs = async () => {
-  const { default: nodeLibs } = await import(
-    // @ts-expect-error
-    'node-libs-browser'
-  );
   return {
     Buffer: [nodeLibs.buffer, 'Buffer'],
     process: [nodeLibs.process],
@@ -34,11 +31,6 @@ export function pluginNodePolyfill(): RsbuildPlugin {
         if (isServer) {
           return;
         }
-
-        const { default: nodeLibs } = await import(
-          // @ts-expect-error
-          'node-libs-browser'
-        );
 
         // module polyfill
         chain.resolve.fallback.merge(getResolveFallback(nodeLibs));
