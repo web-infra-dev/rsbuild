@@ -1,4 +1,4 @@
-import { createStubRsbuild } from '../helper';
+import { createStubRsbuild } from './helper';
 import type { RsbuildConfig, RsbuildPluginAPI } from '@rsbuild/shared';
 
 describe('modifyRsbuildConfig', () => {

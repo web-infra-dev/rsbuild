@@ -1,5 +1,5 @@
-import { pluginOutput } from '../../src/plugins/output';
-import { createStubRsbuild } from '../helper';
+import { pluginOutput } from '../src/plugins/output';
+import { createStubRsbuild } from './helper';
 
 describe('plugin-output', () => {
   it('should set output correctly', async () => {

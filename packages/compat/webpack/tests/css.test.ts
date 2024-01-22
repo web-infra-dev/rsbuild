@@ -1,7 +1,7 @@
-import { pluginCss } from '../../src/plugins/css';
-import { pluginSass } from '../../src/plugins/sass';
-import { pluginLess } from '../../src/plugins/less';
-import { createStubRsbuild } from '../helper';
+import { pluginCss } from '../src/plugins/css';
+import { pluginSass } from '../src/plugins/sass';
+import { pluginLess } from '../src/plugins/less';
+import { createStubRsbuild } from './helper';
 
 describe('plugin-css', () => {
   // need check（skipped before because this case time out in CI env)

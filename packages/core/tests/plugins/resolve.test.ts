@@ -1,4 +1,4 @@
-import { pluginResolve } from '../../../src/provider/plugins/resolve';
+import { pluginResolve } from '../../src/provider/plugins/resolve';
 import { createStubRsbuild } from '@scripts/test-helper';
 
 describe('plugin-resolve', () => {

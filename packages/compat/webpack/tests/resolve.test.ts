@@ -1,5 +1,5 @@
-import { pluginResolve } from '../../src/plugins/resolve';
-import { createStubRsbuild } from '../helper';
+import { pluginResolve } from '../src/plugins/resolve';
+import { createStubRsbuild } from './helper';
 
 describe('plugin-resolve', () => {
   it('should apply default extensions correctly', async () => {
