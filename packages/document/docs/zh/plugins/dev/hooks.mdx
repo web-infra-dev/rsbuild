@@ -100,7 +100,7 @@ export default () => ({
   setup: (api) => {
     api.modifyRspackConfig((config, utils) => {
       if (utils.env === 'development') {
-        config.devtool = 'eval';
+        config.devtool = 'eval-cheap-source-map';
       }
     });
   },

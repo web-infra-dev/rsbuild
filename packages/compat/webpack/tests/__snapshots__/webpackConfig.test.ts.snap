@@ -104,7 +104,7 @@ exports[`webpackConfig > should allow tools.webpack to be an object 1`] = `
 
 exports[`webpackConfig > should allow tools.webpack to modify config object 1`] = `
 {
-  "devtool": "eval",
+  "devtool": "eval-cheap-source-map",
 }
 `;
 

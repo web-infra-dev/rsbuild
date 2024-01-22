@@ -1,14 +1,18 @@
-import { mergeRsbuildConfig } from '../src/mergeRsbuildConfig';
+import {
+  mergeRsbuildConfig,
+  type RspackConfig,
+  type RsbuildConfig,
+} from '../src';
 
 describe('mergeRsbuildConfig', () => {
-  it('should pick `false` to replace empty object', () => {
+  it('should use `false` to replace empty object', () => {
     expect(
       mergeRsbuildConfig(
-        { tools: { tsLoader: {} } },
-        { tools: { tsLoader: false } },
+        { tools: { htmlPlugin: {} } },
+        { tools: { htmlPlugin: false } },
       ),
     ).toEqual({
-      tools: { tsLoader: false },
+      tools: { htmlPlugin: false },
     });
   });
 
@@ -51,7 +55,7 @@ describe('mergeRsbuildConfig', () => {
       { tools: { webpack: undefined } },
       { tools: { webpack: () => ({}) } },
     );
-    expect(typeof config.tools.webpack).toEqual('function');
+    expect(typeof config.tools?.webpack).toEqual('function');
   });
 
   test('should merge string and string[] correctly', async () => {
@@ -107,7 +111,7 @@ describe('mergeRsbuildConfig', () => {
   });
 
   test('should merge function and object correctly', async () => {
-    const webpackFn = (config: Record<string, unknown>) => {
+    const rspackFn = (config: RspackConfig) => {
       config.devtool = 'source-map';
     };
 
@@ -115,47 +119,47 @@ describe('mergeRsbuildConfig', () => {
       mergeRsbuildConfig(
         {
           tools: {
-            webpack: {
-              devtool: 'eval',
+            rspack: {
+              devtool: 'eval-cheap-source-map',
             },
           },
         },
         {
-          tools: { webpack: webpackFn },
+          tools: { rspack: rspackFn },
         },
       ),
     ).toEqual({
       tools: {
-        webpack: [{ devtool: 'eval' }, webpackFn],
+        rspack: [{ devtool: 'eval-cheap-source-map' }, rspackFn],
       },
     });
   });
 
-  it('should not effect source params', () => {
-    const obj = { a: [1], b: [2], c: { test: [2] } };
-    const other = { a: [3], b: [4], c: { test: [2] }, d: { test: [1] } };
-    const other1 = { a: [4], b: [5], c: { test: [3] }, d: { test: [2] } };
+  it('should not modify the original objects', () => {
+    const obj: RsbuildConfig = {
+      source: { include: ['1'] },
+    };
+    const other1: RsbuildConfig = {
+      source: { include: ['2'] },
+    };
+    const other2: RsbuildConfig = {
+      source: { include: ['3'] },
+    };
 
-    const res = mergeRsbuildConfig<Record<string, any>>(obj, other, other1);
+    const res = mergeRsbuildConfig(obj, other1, other2);
 
     expect(res).toEqual({
-      a: [1, 3, 4],
-      b: [2, 4, 5],
-      c: { test: [2, 2, 3] },
-      d: { test: [1, 2] },
+      source: {
+        include: ['1', '2', '3'],
+      },
     });
-    expect(obj).toEqual({ a: [1], b: [2], c: { test: [2] } });
-    expect(other).toEqual({
-      a: [3],
-      b: [4],
-      c: { test: [2] },
-      d: { test: [1] },
-    });
+
+    expect(obj).toEqual({ source: { include: ['1'] } });
     expect(other1).toEqual({
-      a: [4],
-      b: [5],
-      c: { test: [3] },
-      d: { test: [2] },
+      source: { include: ['2'] },
+    });
+    expect(other2).toEqual({
+      source: { include: ['3'] },
     });
   });
 

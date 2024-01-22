@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { castArray, isFunction, isUndefined } from './utils';
+import type { RsbuildConfig } from './types/config';
 
 /**
  * When merging config, some properties prefer `override` rather than `merge to array`
@@ -22,7 +23,9 @@ export const isOverriddenConfigKey = (key: string) =>
     'startUrl',
   ].includes(key);
 
-export const mergeRsbuildConfig = <T>(...configs: T[]): T =>
+export const mergeRsbuildConfig = (
+  ...configs: RsbuildConfig[]
+): RsbuildConfig =>
   _.mergeWith(
     {},
     ...configs,

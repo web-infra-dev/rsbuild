@@ -26,7 +26,7 @@ describe('webpackConfig', () => {
       rsbuildConfig: {
         tools: {
           webpack(config) {
-            config.devtool = 'eval';
+            config.devtool = 'eval-cheap-source-map';
           },
         },
       },
