@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { createRsbuild } from '@rsbuild/core';
 import polka from 'polka';

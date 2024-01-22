@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import {
   JS_REGEX,
   TS_REGEX,

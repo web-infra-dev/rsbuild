@@ -5,9 +5,9 @@ import {
   type HtmlFallback,
   type RequestHandler as Middleware,
 } from '@rsbuild/shared';
-import { parse } from 'url';
-import path from 'path';
-import fs from 'fs';
+import { parse } from 'node:url';
+import path from 'node:path';
+import fs from 'node:fs';
 
 export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
   if (req.url === '/favicon.ico') {

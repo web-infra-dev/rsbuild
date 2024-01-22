@@ -1,7 +1,7 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { debug, logger, castArray, type Routes } from '@rsbuild/shared';
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { exec } from 'node:child_process';
+import { promisify } from 'node:util';
 import type { RsbuildPlugin } from '../types';
 
 const execAsync = promisify(exec);

@@ -1,4 +1,4 @@
-import { join, dirname } from 'path';
+import { join, dirname } from 'node:path';
 import { fse, color, findUpSync, getDistPath } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 

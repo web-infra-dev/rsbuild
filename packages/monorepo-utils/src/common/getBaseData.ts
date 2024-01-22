@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import type { MonorepoAnalyzer } from '../types';
 import { isMonorepo, type IsMonorepoFn } from './isMonorepo';
 import type { GetProjectsFunc } from './getProjects';

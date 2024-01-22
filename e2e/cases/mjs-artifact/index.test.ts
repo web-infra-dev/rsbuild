@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { execSync } from 'child_process';
-import path from 'path';
+import { execSync } from 'node:child_process';
+import path from 'node:path';
 
 // check for https://github.com/web-infra-dev/rsbuild/pull/809
 test('should import mjs artifact correctly', () => {

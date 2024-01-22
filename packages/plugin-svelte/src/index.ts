@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { logger } from '@rsbuild/core';
 import { deepmerge } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';

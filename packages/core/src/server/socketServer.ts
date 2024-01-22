@@ -1,5 +1,5 @@
-import type { IncomingMessage } from 'http';
-import type { Socket } from 'net';
+import type { IncomingMessage } from 'node:http';
+import type { Socket } from 'node:net';
 import ws from '../../compiled/ws';
 import { logger, type Stats, type DevMiddlewaresConfig } from '@rsbuild/shared';
 

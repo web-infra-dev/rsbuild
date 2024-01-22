@@ -63,7 +63,7 @@ export default {
 默认情况，`source.alias` 会自动匹配子路径，比如以下配置：
 
 ```js
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {
@@ -84,7 +84,7 @@ import b from '@common/util'; // 解析为 `./src/common/util`
 你可以添加 `$` 符号来开启精确匹配，开启后将不会自动匹配子路径。
 
 ```js
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {
@@ -109,7 +109,7 @@ import b from '@common/util'; // 保持 `@common/util` 不变
 比如项目中安装了多份 `react`，你可以将 `react` 统一指向根目录的 `node_modules` 中安装的版本，避免出现打包多份 React 代码的问题。
 
 ```js
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {

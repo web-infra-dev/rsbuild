@@ -1,4 +1,4 @@
-import assert from 'assert';
+import assert from 'node:assert';
 import type { FinalOptions, Options } from '../types';
 import codecs from './codecs';
 

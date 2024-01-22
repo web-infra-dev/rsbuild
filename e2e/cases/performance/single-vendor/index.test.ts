@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
-import { basename } from 'path';
+import { basename } from 'node:path';
 
 test('should generate vendor chunk when chunkSplit is "single-vendor"', async () => {
   const rsbuild = await build({

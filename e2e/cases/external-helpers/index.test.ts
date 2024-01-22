@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { build, providerType } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginSwc } from '@rsbuild/plugin-swc';

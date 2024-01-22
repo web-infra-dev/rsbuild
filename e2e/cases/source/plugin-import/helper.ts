@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';

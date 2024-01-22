@@ -1,4 +1,4 @@
-import nodePath from 'path';
+import nodePath from 'node:path';
 import * as t from '@babel/types';
 
 const REWRITE_TARGETS: Record<string, string> = {

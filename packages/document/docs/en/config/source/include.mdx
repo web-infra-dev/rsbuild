@@ -21,7 +21,7 @@ Through the `source.include` config, you can specify directories or modules that
 For example:
 
 ```ts
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {
@@ -37,7 +37,7 @@ A typical usage scenario is to compile npm packages under node_modules, because 
 Take `query-string` as an example, you can add the following config:
 
 ```ts
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {
@@ -83,7 +83,7 @@ export default {
 When developing in Monorepo, if you need to refer to the source code of other libraries in Monorepo, you can add the corresponding library to `source.include`:
 
 ```ts
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {

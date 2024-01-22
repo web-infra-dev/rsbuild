@@ -1,5 +1,5 @@
-import fs from 'fs';
-import { isAbsolute, join } from 'path';
+import fs from 'node:fs';
+import { isAbsolute, join } from 'node:path';
 import {
   color,
   logger,

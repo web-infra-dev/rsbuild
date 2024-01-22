@@ -1,5 +1,5 @@
-import type { IncomingMessage, ServerResponse } from 'http';
-import type { Socket } from 'net';
+import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { Socket } from 'node:net';
 import type {
   DevMiddlewaresConfig,
   DevMiddlewareAPI,

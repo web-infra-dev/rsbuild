@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import readChangesets from '@changesets/read';
 import { getPackages, type Package } from '@manypkg/get-packages';
 

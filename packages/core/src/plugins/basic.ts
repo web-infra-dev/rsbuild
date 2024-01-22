@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { TARGET_ID_MAP, getJsSourceMap, isUsingHMR } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 

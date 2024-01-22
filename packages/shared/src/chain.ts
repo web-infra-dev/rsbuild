@@ -1,4 +1,4 @@
-import { posix } from 'path';
+import { posix } from 'node:path';
 import { getDistPath, getFilename } from './fs';
 import { addTrailingSlash, isPlainObject } from './utils';
 import { castArray, ensureAbsolutePath } from './utils';

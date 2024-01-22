@@ -1,4 +1,4 @@
-import { dirname, join } from 'path';
+import { dirname, join } from 'node:path';
 import fs from 'fs-extra';
 import { TASKS, DIST_DIR, PACKAGES_DIR } from './constant';
 import type { ParsedTask } from './types';

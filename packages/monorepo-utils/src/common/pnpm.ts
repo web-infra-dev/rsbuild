@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { fse } from '@rsbuild/shared';
 import { parse } from '@rsbuild/shared/yaml';
 import glob, { type Options as GlobOptions } from 'fast-glob';

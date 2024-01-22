@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { mergeChainedOptions } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { Options as PugOptions } from 'pug';

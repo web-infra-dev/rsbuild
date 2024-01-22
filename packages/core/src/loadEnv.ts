@@ -1,5 +1,5 @@
-import fs from 'fs';
-import { join } from 'path';
+import fs from 'node:fs';
+import { join } from 'node:path';
 import { getNodeEnv, isFileSync } from '@rsbuild/shared';
 import { parse } from '../compiled/dotenv';
 import { expand } from '../compiled/dotenv-expand';

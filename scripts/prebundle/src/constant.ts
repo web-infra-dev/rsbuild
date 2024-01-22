@@ -1,4 +1,4 @@
-import path, { join } from 'path';
+import path, { join } from 'node:path';
 import type { ParsedTask, TaskConfig } from './types';
 import fs, { copySync } from 'fs-extra';
 import { replaceFileContent } from './helper';

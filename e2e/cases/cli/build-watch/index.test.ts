@@ -1,5 +1,5 @@
-import path from 'path';
-import { exec } from 'child_process';
+import path from 'node:path';
+import { exec } from 'node:child_process';
 import { test, expect } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
 import { awaitFileExists } from '@e2e/helper';

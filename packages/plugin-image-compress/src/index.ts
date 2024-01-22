@@ -1,5 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import assert from 'assert';
+import assert from 'node:assert';
 import { ImageMinimizerPlugin } from './minimizer';
 import { withDefaultOptions } from './shared/utils';
 import type { Codecs, Options } from './types';

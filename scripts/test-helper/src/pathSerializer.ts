@@ -1,4 +1,4 @@
-import os from 'os';
+import os from 'node:os';
 import _ from 'lodash';
 import {
   splitPathString,

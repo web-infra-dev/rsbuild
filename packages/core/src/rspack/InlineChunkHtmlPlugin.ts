@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  * modified from https://github.com/facebook/create-react-app/blob/master/packages/react-dev-utils/InlineChunkHtmlPlugin.js
  */
-import { join } from 'path';
+import { join } from 'node:path';
 import {
   isFunction,
   addTrailingSlash,

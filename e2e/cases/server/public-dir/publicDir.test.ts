@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { dev, build } from '@e2e/helper';
 

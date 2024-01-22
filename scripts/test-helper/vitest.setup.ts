@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { expect, beforeAll } from 'vitest';
 import { createSnapshotSerializer } from './dist';
 
