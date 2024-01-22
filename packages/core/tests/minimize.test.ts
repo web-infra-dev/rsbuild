@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginMinimize } from '../../src/provider/plugins/minimize';
+import { pluginMinimize } from '../src/provider/plugins/minimize';
 
 describe('plugin-minimize', () => {
   it('should not apply minimizer in development', async () => {

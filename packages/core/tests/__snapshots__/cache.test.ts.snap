@@ -7,8 +7,11 @@ exports[`plugin-cache > 'should add cache config correctly' 1`] = `
       "tailwindcss": [
         "/root/tailwind.config.ts",
       ],
+      "tsconfig": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
     },
-    "cacheDirectory": "<ROOT>/packages/core/tests/plugins/node_modules/.cache/rspack",
+    "cacheDirectory": "<ROOT>/packages/core/tests/node_modules/.cache/rspack",
     "name": "web-test",
     "type": "filesystem",
   },
@@ -22,8 +25,11 @@ exports[`plugin-cache > 'should apply cacheDigest' 1`] = `
       "tailwindcss": [
         "/root/tailwind.config.ts",
       ],
+      "tsconfig": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
     },
-    "cacheDirectory": "<ROOT>/packages/core/tests/plugins/node_modules/.cache/rspack",
+    "cacheDirectory": "<ROOT>/packages/core/tests/node_modules/.cache/rspack",
     "name": "web-test-c29a5747",
     "type": "filesystem",
   },
@@ -37,8 +43,11 @@ exports[`plugin-cache > 'should custom cache directory by user' 1`] = `
       "tailwindcss": [
         "/root/tailwind.config.ts",
       ],
+      "tsconfig": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
     },
-    "cacheDirectory": "<ROOT>/packages/core/tests/plugins/node_modules/.cache/tmp",
+    "cacheDirectory": "<ROOT>/packages/core/tests/node_modules/.cache/tmp",
     "name": "web-test",
     "type": "filesystem",
   },
@@ -58,8 +67,11 @@ exports[`plugin-cache > 'should not apply cacheDigest' 1`] = `
       "tailwindcss": [
         "/root/tailwind.config.ts",
       ],
+      "tsconfig": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
     },
-    "cacheDirectory": "<ROOT>/packages/core/tests/plugins/node_modules/.cache/rspack",
+    "cacheDirectory": "<ROOT>/packages/core/tests/node_modules/.cache/rspack",
     "name": "web-test",
     "type": "filesystem",
   },
@@ -73,8 +85,11 @@ exports[`plugin-cache > 'should watch tsconfig change' 1`] = `
       "tailwindcss": [
         "/root/tailwind.config.ts",
       ],
+      "tsconfig": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
     },
-    "cacheDirectory": "<ROOT>/packages/core/tests/plugins/node_modules/.cache/rspack",
+    "cacheDirectory": "<ROOT>/packages/core/tests/node_modules/.cache/rspack",
     "name": "web-test",
     "type": "filesystem",
   },

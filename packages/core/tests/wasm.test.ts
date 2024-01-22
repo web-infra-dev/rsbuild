@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginWasm } from '../../src/plugins/wasm';
+import { pluginWasm } from '../src/plugins/wasm';
 
 describe('plugin-wasm', () => {
   it('should add wasm rule properly', async () => {

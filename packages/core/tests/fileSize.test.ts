@@ -1,4 +1,4 @@
-import { filterAsset } from '../../src/plugins/fileSize';
+import { filterAsset } from '../src/plugins/fileSize';
 
 describe('plugin-file-size', () => {
   it('#filterAsset - should filter asset correctly', () => {

@@ -1,4 +1,4 @@
-import { pluginResolve } from '../../src/provider/plugins/resolve';
+import { pluginResolve } from '../src/provider/plugins/resolve';
 import { createStubRsbuild } from '@scripts/test-helper';
 
 describe('plugin-resolve', () => {
@@ -17,7 +17,7 @@ describe('plugin-resolve', () => {
       '.mjs',
       '.json',
     ]);
-    expect(bundlerConfigs[0].resolve?.tsConfigPath).toBeUndefined();
+    expect(bundlerConfigs[0].resolve?.tsConfigPath).toBeDefined();
   });
 
   it('should not apply tsConfigPath when aliasStrategy is "prefer-alias"', async () => {

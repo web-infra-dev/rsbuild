@@ -11,7 +11,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       },
     },
   },
-  "context": "<ROOT>/packages/core/tests/plugins",
+  "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
@@ -470,7 +470,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "include": [
           {
             "and": [
-              "<ROOT>/packages/core/tests/plugins",
+              "<ROOT>/packages/core/tests",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -592,7 +592,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/packages/core/tests/plugins/dist",
+    "path": "<ROOT>/packages/core/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -659,6 +659,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       ".mjs",
       ".json",
     ],
+    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
   },
   "target": [
     "web",
@@ -678,7 +679,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       },
     },
   },
-  "context": "<ROOT>/packages/core/tests/plugins",
+  "context": "<ROOT>/packages/core/tests",
   "devtool": false,
   "entry": {
     "index": [
@@ -1137,7 +1138,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "include": [
           {
             "and": [
-              "<ROOT>/packages/core/tests/plugins",
+              "<ROOT>/packages/core/tests",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -1281,7 +1282,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "cssFilename": "static/css/[name].[contenthash:8].css",
     "filename": "static/js/[name].[contenthash:8].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/packages/core/tests/plugins/dist",
+    "path": "<ROOT>/packages/core/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1372,6 +1373,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       ".mjs",
       ".json",
     ],
+    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
   },
   "target": [
     "web",
@@ -1391,7 +1393,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       },
     },
   },
-  "context": "<ROOT>/packages/core/tests/plugins",
+  "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
@@ -1665,7 +1667,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "include": [
           {
             "and": [
-              "<ROOT>/packages/core/tests/plugins",
+              "<ROOT>/packages/core/tests",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -1752,7 +1754,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "filename": "server/[name].js",
     "hashFunction": "xxhash64",
     "libraryTarget": "commonjs2",
-    "path": "<ROOT>/packages/core/tests/plugins/dist",
+    "path": "<ROOT>/packages/core/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1786,6 +1788,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       ".mjs",
       ".json",
     ],
+    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
   },
   "target": "node",
 }
@@ -1802,7 +1805,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       },
     },
   },
-  "context": "<ROOT>/packages/core/tests/plugins",
+  "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
@@ -2269,7 +2272,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "include": [
           {
             "and": [
-              "<ROOT>/packages/core/tests/plugins",
+              "<ROOT>/packages/core/tests",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -2391,7 +2394,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/packages/core/tests/plugins/dist",
+    "path": "<ROOT>/packages/core/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -2461,6 +2464,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       ".mjs",
       ".json",
     ],
+    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
   },
   "target": [
     "web",

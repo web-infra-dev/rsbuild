@@ -1,7 +1,7 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginCss } from '../../src/provider/plugins/css';
-import { pluginLess } from '../../src/provider/plugins/less';
-import { pluginSass } from '../../src/provider/plugins/sass';
+import { pluginCss } from '../src/provider/plugins/css';
+import { pluginLess } from '../src/provider/plugins/less';
+import { pluginSass } from '../src/provider/plugins/sass';
 
 describe('plugin-css', () => {
   it('should override browserslist of autoprefixer when using output.overrideBrowserslist config', async () => {

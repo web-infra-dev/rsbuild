@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginBundleAnalyzer } from '../../src/plugins/bundleAnalyzer';
+import { pluginBundleAnalyzer } from '../src/plugins/bundleAnalyzer';
 
 describe('plugin-bundle-analyze', () => {
   it('should add bundle analyze plugin', async () => {

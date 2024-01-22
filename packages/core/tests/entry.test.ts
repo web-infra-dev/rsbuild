@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginEntry } from '../../src/plugins/entry';
+import { pluginEntry } from '../src/plugins/entry';
 
 describe('plugin-entry', () => {
   const cases = [
