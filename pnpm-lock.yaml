@@ -917,8 +917,8 @@ importers:
         specifier: ^2.0.4
         version: 2.0.12
       tty-browserify:
-        specifier: 0.0.0
-        version: 0.0.0
+        specifier: 0.0.1
+        version: 0.0.1
       url:
         specifier: ^0.11.0
         version: 0.11.3
@@ -12856,8 +12856,8 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /tty-browserify@0.0.0:
-    resolution: {integrity: sha512-JVa5ijo+j/sOoHGjw0sxw734b1LhBkQ3bvUGNdxnVXDCX81Yx7TFgnZygxrIIWn23hbfTaMYLwRmAxFyDuFmIw==}
+  /tty-browserify@0.0.1:
+    resolution: {integrity: sha512-C3TaO7K81YvjCgQH9Q1S3R3P3BtN3RIM8n+OvX4il1K1zgE8ZhI0op7kClgkxtutIE8hQrcrHBXvIheqKUUCxw==}
     dev: false
 
   /tty-table@4.2.2:
