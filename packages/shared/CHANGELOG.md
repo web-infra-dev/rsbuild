@@ -1,5 +1,11 @@
 # @rsbuild/shared
 
+## 0.3.6
+
+### Patch Changes
+
+- d2d84d7: release: 0.3.6
+
 ## 0.3.5
 
 ### Patch Changes
