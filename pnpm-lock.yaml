@@ -859,9 +859,75 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
-      node-libs-browser:
-        specifier: 2.2.1
-        version: 2.2.1
+      assert:
+        specifier: ^1.1.1
+        version: 1.5.1
+      browserify-zlib:
+        specifier: ^0.2.0
+        version: 0.2.0
+      buffer:
+        specifier: ^4.3.0
+        version: 4.9.2
+      console-browserify:
+        specifier: ^1.1.0
+        version: 1.2.0
+      constants-browserify:
+        specifier: ^1.0.0
+        version: 1.0.0
+      crypto-browserify:
+        specifier: ^3.11.0
+        version: 3.12.0
+      domain-browser:
+        specifier: ^1.1.1
+        version: 1.2.0
+      events:
+        specifier: ^3.0.0
+        version: 3.3.0
+      https-browserify:
+        specifier: ^1.0.0
+        version: 1.0.0
+      os-browserify:
+        specifier: ^0.3.0
+        version: 0.3.0
+      path-browserify:
+        specifier: 0.0.1
+        version: 0.0.1
+      process:
+        specifier: ^0.11.10
+        version: 0.11.10
+      punycode:
+        specifier: ^1.2.4
+        version: 1.4.1
+      querystring-es3:
+        specifier: ^0.2.0
+        version: 0.2.1
+      readable-stream:
+        specifier: ^2.3.3
+        version: 2.3.8
+      stream-browserify:
+        specifier: ^2.0.1
+        version: 2.0.2
+      stream-http:
+        specifier: ^2.7.2
+        version: 2.8.3
+      string_decoder:
+        specifier: ^1.0.0
+        version: 1.3.0
+      timers-browserify:
+        specifier: ^2.0.4
+        version: 2.0.12
+      tty-browserify:
+        specifier: 0.0.0
+        version: 0.0.0
+      url:
+        specifier: ^0.11.0
+        version: 0.11.3
+      util:
+        specifier: ^0.11.0
+        version: 0.11.1
+      vm-browserify:
+        specifier: ^1.0.1
+        version: 1.1.2
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -4118,19 +4184,9 @@ packages:
     engines: {node: '>=12.4.0'}
     dev: false
 
-  /@nolyfill/isarray@1.0.25:
-    resolution: {integrity: sha512-wAC/8sqF2qaHrZpIxTR/9qc0XFyLW4WHX6gHVNpzKtCP8DuAL3L7eQwsMUWCg1ANL/Da3XiuueTx1J/S9piqtQ==}
-    engines: {node: '>=12.4.0'}
-    dev: false
-
   /@nolyfill/shared@1.0.24:
     resolution: {integrity: sha512-TGCpg3k5N7jj9AgU/1xFw9K1g4AC1vEE5ZFkW77oPNNLzprxT17PvFaNr/lr3BkkT5fJ5LNMntaTIq+pyWaeEA==}
     dev: true
-
-  /@nolyfill/side-channel@1.0.24:
-    resolution: {integrity: sha512-v6Ook3sifnCVUtvvKedU6KNL1/W27Sj+XrLOVxBgid7+F5nFaaCUbvsfkN1R4Aw91zCt0/l4u4LzfC+NyIXQKA==}
-    engines: {node: '>=12.4.0'}
-    dev: false
 
   /@nrwl/tao@17.2.6:
     resolution: {integrity: sha512-cgtUKTRSxDZ94S9IpC27/qYZJ1YttJDET+veKrtRYvwnHFgkq1peyeTTtnM25yJon7PRdm2lYrlIVdPm0vXupw==}
@@ -6181,7 +6237,7 @@ packages:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
-      isarray: /@nolyfill/isarray@1.0.25
+      isarray: 1.0.0
     dev: false
 
   /buffer@5.7.1:
@@ -8713,6 +8769,10 @@ packages:
       is-docker: 2.2.1
     dev: true
 
+  /isarray@1.0.0:
+    resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
+    dev: false
+
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
@@ -9992,34 +10052,6 @@ packages:
       formdata-polyfill: 4.0.10
     dev: true
 
-  /node-libs-browser@2.2.1:
-    resolution: {integrity: sha512-h/zcD8H9kaDZ9ALUWwlBUDo6TKF8a7qBSCSEGfjTVIYeqsioSKaAX+BN7NgiMGp6iSIXZ3PxgCu8KS3b71YK5Q==}
-    dependencies:
-      assert: 1.5.1
-      browserify-zlib: 0.2.0
-      buffer: 4.9.2
-      console-browserify: 1.2.0
-      constants-browserify: 1.0.0
-      crypto-browserify: 3.12.0
-      domain-browser: 1.2.0
-      events: 3.3.0
-      https-browserify: 1.0.0
-      os-browserify: 0.3.0
-      path-browserify: 0.0.1
-      process: 0.11.10
-      punycode: 1.4.1
-      querystring-es3: 0.2.1
-      readable-stream: 2.3.8
-      stream-browserify: 2.0.2
-      stream-http: 2.8.3
-      string_decoder: 1.3.0
-      timers-browserify: 2.0.12
-      tty-browserify: 0.0.0
-      url: 0.11.3
-      util: 0.11.1
-      vm-browserify: 1.1.2
-    dev: false
-
   /node-loader@2.0.0(webpack@5.89.0):
     resolution: {integrity: sha512-I5VN34NO4/5UYJaUBtkrODPWxbobrE4hgDqPrjB25yPkonFhCmZ146vTH+Zg417E9Iwoh1l/MbRs1apc5J295Q==}
     engines: {node: '>= 10.13.0'}
@@ -10157,6 +10189,10 @@ packages:
     resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
     engines: {node: '>= 6'}
     dev: true
+
+  /object-inspect@1.13.1:
+    resolution: {integrity: sha512-5qoj1RUiKOMsCCNLV1CBiPYE10sziTsnmNxkAI/rZhiD63CF7IqdFGC/XzjWjpSgLf0LxXX3bDFIh0E18f6UhQ==}
+    dev: false
 
   /object-keys@1.1.1:
     resolution: {integrity: sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==}
@@ -11251,7 +11287,7 @@ packages:
     resolution: {integrity: sha512-tDNIz22aBzCDxLtVH++VnTfzxlfeK5CbqohpSqpJgj1Wg/cQbStNAz3NuqCs5vV+pjBsK4x4pN9HlVh7rcYRiA==}
     engines: {node: '>=0.6'}
     dependencies:
-      side-channel: /@nolyfill/side-channel@1.0.24
+      side-channel: 1.0.4
     dev: false
 
   /querystring-es3@0.2.1:
@@ -11416,7 +11452,7 @@ packages:
     dependencies:
       core-util-is: 1.0.3
       inherits: 2.0.4
-      isarray: /@nolyfill/isarray@1.0.25
+      isarray: 1.0.0
       process-nextick-args: 2.0.1
       safe-buffer: 5.1.2
       string_decoder: 1.1.1
@@ -11959,6 +11995,14 @@ packages:
   /shell-quote@1.8.1:
     resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
     dev: true
+
+  /side-channel@1.0.4:
+    resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
+    dependencies:
+      call-bind: 1.0.5
+      get-intrinsic: 1.2.2
+      object-inspect: 1.13.1
+    dev: false
 
   /siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
