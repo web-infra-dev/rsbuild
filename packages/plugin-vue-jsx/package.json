@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
-    "@vue/babel-plugin-jsx": "1.2.0"
+    "@vue/babel-plugin-jsx": "1.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
