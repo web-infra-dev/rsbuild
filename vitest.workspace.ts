@@ -1,5 +1,4 @@
 import { defineWorkspace } from 'vitest/config';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import { Console } from 'console';
 
 // Disable color in test
@@ -11,7 +10,6 @@ global.console.Console = Console;
 
 export default defineWorkspace([
   {
-    plugins: [tsconfigPaths()],
     define: {
       RSBUILD_VERSION: JSON.stringify(
         require('./packages/core/package.json').version,
