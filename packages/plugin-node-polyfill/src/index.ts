@@ -1,18 +1,21 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import * as nodeLibs from './libs';
 
-const getResolveFallback = (nodeLibs: Record<string, any>) =>
-  Object.keys(nodeLibs).reduce<Record<string, string | false>>(
-    (previous, name) => {
-      if (nodeLibs[name]) {
-        previous[name] = nodeLibs[name];
-      } else {
-        previous[name] = false;
-      }
-      return previous;
-    },
-    {},
-  );
+const getResolveFallback = (protocolImports?: boolean) => {
+  const fallback: Record<string, string | false> = {};
+
+  Object.keys(nodeLibs).forEach((name) => {
+    const libPath = nodeLibs[name as keyof typeof nodeLibs];
+
+    fallback[name] = libPath ?? false;
+
+    if (protocolImports) {
+      fallback[`node:${name}`] = fallback[name];
+    }
+  });
+
+  return fallback;
+};
 
 const getProvideLibs = async () => {
   return {
@@ -21,7 +24,20 @@ const getProvideLibs = async () => {
   };
 };
 
-export function pluginNodePolyfill(): RsbuildPlugin {
+export type PluginNodePolyfillOptions = {
+  /**
+   * Whether to polyfill Node.js builtin modules starting with `node:`.
+   * @see https://nodejs.org/api/esm.html#node-imports
+   * @default true
+   */
+  protocolImports?: boolean;
+};
+
+export function pluginNodePolyfill(
+  options: PluginNodePolyfillOptions = {},
+): RsbuildPlugin {
+  const { protocolImports = true } = options;
+
   return {
     name: 'rsbuild:node-polyfill',
 
@@ -33,7 +49,7 @@ export function pluginNodePolyfill(): RsbuildPlugin {
         }
 
         // module polyfill
-        chain.resolve.fallback.merge(getResolveFallback(nodeLibs));
+        chain.resolve.fallback.merge(getResolveFallback(protocolImports));
 
         chain
           .plugin(CHAIN_ID.PLUGIN.NODE_POLYFILL_PROVIDE)

@@ -1,5 +1,8 @@
-// biome-ignore lint: node polyfill only supports non-prefix usage
+import path from 'node:path';
+// biome-ignore lint: test non-import protocol
 import querystring from 'querystring';
+
+console.log(path);
 
 const bufferData = Buffer.from('xxxx');
 
