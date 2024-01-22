@@ -36,6 +36,12 @@ export function loadEnv({
   /** Clear the environment variables mounted on `process.env` */
   cleanup: () => void;
 } {
+  if (mode === 'local') {
+    throw new Error(
+      `'local' cannot be used as a value for env mode, because ".env.local" represents a temporary local file. Please use another value.`,
+    );
+  }
+
   const filenames = [
     '.env',
     '.env.local',
