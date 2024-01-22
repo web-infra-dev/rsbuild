@@ -1,6 +1,6 @@
-import type { Server } from 'http';
+import type { Server } from 'node:http';
 import connect from '@rsbuild/shared/connect';
-import { join } from 'path';
+import { join } from 'node:path';
 import sirv from '../../compiled/sirv';
 import {
   getNodeEnv,

@@ -1,4 +1,4 @@
-import { join, isAbsolute } from 'path';
+import { join, isAbsolute } from 'node:path';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import {
   setNodeEnv,

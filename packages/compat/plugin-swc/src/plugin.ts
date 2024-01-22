@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { PLUGIN_SWC_NAME, PLUGIN_BABEL_NAME } from '@rsbuild/core';
 import {
   SCRIPT_REGEX,

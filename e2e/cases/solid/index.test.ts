@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { expect } from '@playwright/test';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';

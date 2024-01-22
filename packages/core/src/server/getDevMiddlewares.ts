@@ -1,4 +1,4 @@
-import url from 'url';
+import url from 'node:url';
 import type {
   ServerAPIs,
   Middlewares,
@@ -11,7 +11,7 @@ import {
   faviconFallbackMiddleware,
   getHtmlFallbackMiddleware,
 } from './middlewares';
-import { join, isAbsolute } from 'path';
+import { join, isAbsolute } from 'node:path';
 
 export type RsbuildDevMiddlewareOptions = {
   pwd: string;

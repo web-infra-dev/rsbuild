@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import semver from '@rsbuild/shared/semver';
 import { findUp } from '@rsbuild/shared';
 

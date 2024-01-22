@@ -141,7 +141,7 @@ When you find that a third-party dependencies causes compatibility issues, you c
 Taking the npm package `query-string` as an example, you can add the following config:
 
 ```ts
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {
@@ -159,7 +159,7 @@ When you import the code out of the current project, if the code has not been co
 For example, if you need to reference a module under the `packages` directory in the monorepo, you can add the following config:
 
 ```ts
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {

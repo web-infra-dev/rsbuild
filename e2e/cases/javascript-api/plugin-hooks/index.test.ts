@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { test, expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
 import { fse } from '@rsbuild/shared';

@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
 import { castArray, cloneDeep, SCRIPT_REGEX, isProd } from '@rsbuild/shared';
 import { applyUserBabelConfig, BABEL_JS_RULE } from './helper';

@@ -1,5 +1,5 @@
-import crypto from 'crypto';
-import { isAbsolute, join } from 'path';
+import crypto from 'node:crypto';
+import { isAbsolute, join } from 'node:path';
 import { fse } from '@rsbuild/shared';
 import {
   findExists,

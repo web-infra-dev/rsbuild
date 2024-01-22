@@ -1,5 +1,5 @@
-import path from 'path';
-import fs from 'fs';
+import path from 'node:path';
+import fs from 'node:fs';
 import { test, expect } from '@playwright/test';
 import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';

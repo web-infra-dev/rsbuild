@@ -1,5 +1,5 @@
 import { defineWorkspace } from 'vitest/config';
-import { Console } from 'console';
+import { Console } from 'node:console';
 
 // Disable color in test
 process.env.NO_COLOR = '1';

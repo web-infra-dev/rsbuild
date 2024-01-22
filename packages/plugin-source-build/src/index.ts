@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { setConfig, TS_CONFIG_FILE } from '@rsbuild/shared';
 import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
 import {

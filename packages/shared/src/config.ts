@@ -30,7 +30,7 @@ import type {
   NormalizedConfig,
 } from './types';
 import { logger } from './logger';
-import { join } from 'path';
+import { join } from 'node:path';
 import type { minify } from 'terser';
 import fse from '../compiled/fs-extra';
 import { pick, color, upperFirst } from './utils';

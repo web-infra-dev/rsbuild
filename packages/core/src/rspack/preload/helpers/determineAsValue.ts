@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-import path from 'path';
-import { URL } from 'url';
+import path from 'node:path';
+import { URL } from 'node:url';
 import type { As } from './type';
 
 export function determineAsValue({

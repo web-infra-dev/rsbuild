@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { expect } from '@playwright/test';
 import { build, webpackOnlyTest } from '@e2e/helper';
 import { fse } from '@rsbuild/shared';

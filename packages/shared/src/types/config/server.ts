@@ -1,5 +1,5 @@
-import type { IncomingMessage, ServerResponse } from 'http';
-import type { ServerOptions as HttpsServerOptions } from 'https';
+import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { ServerOptions as HttpsServerOptions } from 'node:https';
 import type {
   Options as BaseProxyOptions,
   Filter as ProxyFilter,

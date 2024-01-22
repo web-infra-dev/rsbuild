@@ -1,4 +1,4 @@
-import { join, dirname } from 'path';
+import { join, dirname } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
 import { build } from '@e2e/helper';

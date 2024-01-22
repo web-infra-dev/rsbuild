@@ -63,7 +63,7 @@ export default {
 By default, `source.alias` will automatically match sub-paths, for example, with the following configuration:
 
 ```js
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {
@@ -84,7 +84,7 @@ import b from '@common/util'; // resolved to `./src/common/util`
 You can add the `$` symbol to enable exact matching, which will not automatically match sub-paths.
 
 ```js
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {
@@ -109,7 +109,7 @@ You can use `alias` to resolve an npm package to a specific directory.
 For example, if multiple versions of the `react` are installed in the project, you can alias `react` to the version installed in the root `node_modules` directory to avoid bundling multiple copies of the React code.
 
 ```js
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {

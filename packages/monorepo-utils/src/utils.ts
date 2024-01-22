@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { fse } from '@rsbuild/shared';
 import json5 from '@rsbuild/shared/json5';
 import { RUSH_JSON_FILE } from './constants';

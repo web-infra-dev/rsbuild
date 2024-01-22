@@ -1,4 +1,4 @@
-import { Console } from 'console';
+import { Console } from 'node:console';
 import patchConsole from '../../../compiled/patch-console';
 import cliTruncate from '../../../compiled/cli-truncate';
 import type { Props } from './type';

@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { build, globContentJSON } from '@e2e/helper';
 

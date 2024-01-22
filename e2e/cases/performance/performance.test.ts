@@ -1,4 +1,4 @@
-import { join, resolve } from 'path';
+import { join, resolve } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';

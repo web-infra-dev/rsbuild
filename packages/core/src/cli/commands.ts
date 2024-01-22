@@ -1,5 +1,5 @@
-import { join } from 'path';
-import { existsSync } from 'fs';
+import { join } from 'node:path';
+import { existsSync } from 'node:fs';
 import { color, isDev, logger } from '@rsbuild/shared';
 import { program, type Command } from '@rsbuild/shared/commander';
 import { loadEnv } from '../loadEnv';

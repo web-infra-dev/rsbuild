@@ -5,7 +5,7 @@ import {
   isClientCompiler,
   type DevMiddleware,
 } from '@rsbuild/shared';
-import type { IncomingMessage, ServerResponse } from 'http';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 
 const applyHMREntry = (
   compiler: Compiler | MultiCompiler,

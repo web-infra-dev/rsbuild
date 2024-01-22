@@ -1,6 +1,6 @@
 import type { RsbuildPlugin } from '@rsbuild/shared';
-import fs from 'fs';
-import { join, isAbsolute } from 'path';
+import fs from 'node:fs';
+import { join, isAbsolute } from 'node:path';
 
 // For Rsbuild Server Config
 export const pluginServer = (): RsbuildPlugin => ({

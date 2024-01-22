@@ -10,8 +10,8 @@
  * https://github.com/seek-oss/css-modules-typescript-loader/blob/master/LICENSE
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import LineDiff from '../../compiled/line-diff';
 import type { LoaderContext } from '@rspack/core';
 import { isCssModules, type CssLoaderModules, isInNodeModules } from '../css';

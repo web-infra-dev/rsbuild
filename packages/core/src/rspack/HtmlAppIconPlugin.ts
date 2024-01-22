@@ -1,5 +1,5 @@
-import fs from 'fs';
-import { posix, basename } from 'path';
+import fs from 'node:fs';
+import { posix, basename } from 'node:path';
 import type { Compiler, Compilation } from '@rspack/core';
 import WebpackSources from '@rsbuild/shared/webpack-sources';
 import { withPublicPath, getPublicPathFromCompiler } from '@rsbuild/shared';

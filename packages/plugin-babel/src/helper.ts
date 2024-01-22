@@ -1,4 +1,4 @@
-import { isAbsolute, normalize, sep } from 'path';
+import { isAbsolute, normalize, sep } from 'node:path';
 import {
   castArray,
   mergeChainedOptions,

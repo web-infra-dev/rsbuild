@@ -1,4 +1,4 @@
-import { posix } from 'path';
+import { posix } from 'node:path';
 import {
   getDistPath,
   getFilename,

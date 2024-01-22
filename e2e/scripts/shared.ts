@@ -1,7 +1,7 @@
-import net from 'net';
-import { URL } from 'url';
-import assert from 'assert';
-import { join } from 'path';
+import net from 'node:net';
+import { URL } from 'node:url';
+import assert from 'node:assert';
+import { join } from 'node:path';
 import { fse } from '@rsbuild/shared';
 import { globContentJSON } from './helper';
 import { pluginSwc } from '@rsbuild/plugin-swc';

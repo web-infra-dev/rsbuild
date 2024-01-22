@@ -1,5 +1,5 @@
-import fs from 'fs';
-import { join } from 'path';
+import fs from 'node:fs';
+import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
 

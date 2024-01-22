@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { expect } from '@playwright/test';
 import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
