@@ -158,4 +158,25 @@ describe('mergeRsbuildConfig', () => {
       d: { test: [2] },
     });
   });
+
+  test('should merge dev.startUrl correctly', async () => {
+    expect(
+      mergeRsbuildConfig(
+        {
+          dev: {
+            startUrl: ['http://localhost:8080'],
+          },
+        },
+        {
+          dev: {
+            startUrl: false,
+          },
+        },
+      ),
+    ).toEqual({
+      dev: {
+        startUrl: false,
+      },
+    });
+  });
 });

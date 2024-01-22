@@ -18,6 +18,8 @@ export const isOverriddenConfigKey = (key: string) =>
     'targets',
     // server.printUrls
     'printUrls',
+    // dev.startUrl
+    'startUrl',
   ].includes(key);
 
 export const mergeRsbuildConfig = <T>(...configs: T[]): T =>
