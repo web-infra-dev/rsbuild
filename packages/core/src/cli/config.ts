@@ -3,6 +3,7 @@ import { isAbsolute, join } from 'path';
 import {
   color,
   logger,
+  isObject,
   debounce,
   getNodeEnv,
   type RsbuildConfig,
@@ -123,6 +124,14 @@ export async function loadConfigByPath(configFile: string) {
       }
 
       return result;
+    }
+
+    if (!isObject(configExport)) {
+      throw new Error(
+        `Rsbuild config must be an object or a function that returns an object, get ${color.yellow(
+          configExport,
+        )}`,
+      );
     }
 
     return configExport;
