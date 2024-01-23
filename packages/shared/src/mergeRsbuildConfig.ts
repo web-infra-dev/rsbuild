@@ -1,54 +1,75 @@
-import _ from 'lodash';
-import { castArray, isFunction, isUndefined } from './utils';
+import { castArray, isFunction, isPlainObject } from './utils';
 import type { RsbuildConfig } from './types/config';
 
+const OVERRIDE_PATH = [
+  'performance.removeConsole',
+  'output.inlineScripts',
+  'output.inlineStyles',
+  'output.cssModules.auto',
+  'output.targets',
+  'server.printUrls',
+  'dev.startUrl',
+];
+
 /**
- * When merging config, some properties prefer `override` rather than `merge to array`
+ * When merging configs, some properties prefer `override` over `merge to array`
  */
-export const isOverriddenConfigKey = (key: string) =>
-  [
-    // performance.removeConsole
-    'removeConsole',
-    // output.inlineScripts
-    'inlineScripts',
-    // output.inlineStyles
-    'inlineStyles',
-    // cssModules.auto
-    'auto',
-    // output.targets
-    'targets',
-    // server.printUrls
-    'printUrls',
-    // dev.startUrl
-    'startUrl',
-  ].includes(key);
+const isOverridePath = (key: string) => OVERRIDE_PATH.includes(key);
+
+const merge = (x: unknown, y: unknown, path = '') => {
+  // force some keys to override
+  if (isOverridePath(path)) {
+    return y ?? x;
+  }
+
+  // ignore undefined property
+  if (x === undefined) {
+    return y;
+  }
+  if (y === undefined) {
+    return x;
+  }
+
+  const pair = [x, y];
+
+  // combine array
+  if (pair.some(Array.isArray)) {
+    return [...castArray(x), ...castArray(y)];
+  }
+
+  // convert function to chained function
+  if (pair.some(isFunction)) {
+    return pair;
+  }
+
+  if (!isPlainObject(x) || !isPlainObject(y)) {
+    return y;
+  }
+
+  const merged: Record<string, unknown> = {};
+  const keys = new Set([...Object.keys(x), ...Object.keys(y)]);
+
+  keys.forEach((key) => {
+    const childPath = path ? `${path}.${key}` : key;
+    merged[key] = merge(x[key], y[key], childPath);
+  });
+
+  return merged;
+};
 
 export const mergeRsbuildConfig = (
   ...configs: RsbuildConfig[]
-): RsbuildConfig =>
-  _.mergeWith(
+): RsbuildConfig => {
+  if (configs.length === 2) {
+    return merge(configs[0], configs[1]) as RsbuildConfig;
+  }
+
+  if (configs.length < 2) {
+    return configs[0];
+  }
+
+  return configs.reduce(
+    (result, config) => merge(result, config) as RsbuildConfig,
     {},
-    ...configs,
-    (target: unknown, source: unknown, key: string) => {
-      const pair = [target, source];
-      if (pair.some(isUndefined)) {
-        // fallback to lodash default merge behavior
-        return undefined;
-      }
-
-      // Some keys should use source to override target
-      if (isOverriddenConfigKey(key)) {
-        return source ?? target;
-      }
-
-      if (pair.some(Array.isArray)) {
-        return [...castArray(target), ...castArray(source)];
-      }
-      // convert function to chained function
-      if (pair.some(isFunction)) {
-        return [target, source];
-      }
-      // fallback to lodash default merge behavior
-      return undefined;
-    },
   );
+};
