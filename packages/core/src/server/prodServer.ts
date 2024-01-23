@@ -5,6 +5,7 @@ import sirv from '../../compiled/sirv';
 import {
   ROOT_DIST_DIR,
   getAddressUrls,
+  isDebug,
   type ServerConfig,
   type RsbuildConfig,
   type RequestHandler,
@@ -12,7 +13,10 @@ import {
   type PreviewServerOptions,
 } from '@rsbuild/shared';
 import { formatRoutes, getServerOptions, printServerURLs } from './helper';
-import { faviconFallbackMiddleware } from './middlewares';
+import {
+  faviconFallbackMiddleware,
+  getRequestLoggerMiddleware,
+} from './middlewares';
 import type { InternalContext } from '../types';
 import { createHttpServer } from './httpServer';
 
@@ -44,6 +48,10 @@ export class RsbuildProdServer {
   private async applyDefaultMiddlewares() {
     const { headers, proxy, historyApiFallback, compress } =
       this.options.serverConfig;
+
+    if (isDebug()) {
+      this.middlewares.use(await getRequestLoggerMiddleware());
+    }
 
     // compression should be the first middleware
     if (compress) {

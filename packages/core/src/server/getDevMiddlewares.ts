@@ -6,9 +6,11 @@ import type {
   DevMiddlewaresConfig,
   CompileMiddlewareAPI,
 } from '@rsbuild/shared';
+import { isDebug } from '@rsbuild/shared';
 import {
   faviconFallbackMiddleware,
   getHtmlFallbackMiddleware,
+  getRequestLoggerMiddleware,
 } from './middlewares';
 import { join, isAbsolute } from 'path';
 
@@ -166,6 +168,10 @@ const applyDefaultMiddlewares = async ({
 export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
   const middlewares: RequestHandler[] = [];
   const { compileMiddlewareAPI } = options;
+
+  if (isDebug()) {
+    middlewares.push(await getRequestLoggerMiddleware());
+  }
 
   // Order: setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push
   const { before, after } = applySetupMiddlewares(

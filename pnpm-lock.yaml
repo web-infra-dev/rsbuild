@@ -653,6 +653,9 @@ importers:
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.5.7
         version: /html-rspack-plugin@5.5.7
+      on-finished:
+        specifier: 2.4.1
+        version: 2.4.1
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -660,6 +663,9 @@ importers:
       '@types/node':
         specifier: 16.x
         version: 16.18.59
+      '@types/on-finished':
+        specifier: 2.3.4
+        version: 2.3.4
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
@@ -761,6 +767,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../core
+      '@rsbuild/plugin-assets-retry':
+        specifier: workspace:*
+        version: link:../../plugin-assets-retry
       '@rsbuild/plugin-react':
         specifier: workspace:*
         version: link:../../plugin-react
@@ -5426,6 +5435,12 @@ packages:
 
   /@types/normalize-package-data@2.4.3:
     resolution: {integrity: sha512-ehPtgRgaULsFG8x0NeYJvmyH1hmlfsNLujHe9dQEia/7MAJYdzMSi19JtchUHjmBA6XC/75dK55mzZH+RyieSg==}
+    dev: true
+
+  /@types/on-finished@2.3.4:
+    resolution: {integrity: sha512-Ld4UQD3udYcKPaAWlI1EYXKhefkZcTlpqOLkQRmN3u5Ml/tUypMivUHbNH8LweP4H4FlhGGO+uBjJI1Y1dkE1g==}
+    dependencies:
+      '@types/node': 16.18.59
     dev: true
 
   /@types/parse-json@4.0.1:

@@ -18,6 +18,49 @@ export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
   }
 };
 
+export const getRequestLoggerMiddleware: () => Promise<Middleware> =
+  async () => {
+    const { default: onFinished } = await import('on-finished');
+
+    return (req, res, next) => {
+      const _startAt = process.hrtime();
+
+      const logRequest = () => {
+        const method = req.method;
+        const url: string = (req as any).originalUrl || req.url;
+        const status = Number(res.statusCode);
+
+        // get status color
+        const statusColor =
+          status >= 500
+            ? color.red
+            : status >= 400
+            ? color.yellow
+            : status >= 300
+            ? color.cyan
+            : status >= 200
+            ? color.green
+            : (res: number) => res;
+
+        const endAt = process.hrtime();
+
+        const totalTime =
+          (endAt[0] - _startAt[0]) * 1e3 + (endAt[1] - _startAt[1]) * 1e-6;
+
+        // :method :url :status :total-time ms
+        logger.debug(
+          `${method} ${color.gray(url)} ${statusColor(status)} ${color.gray(
+            `${totalTime.toFixed(3)} ms`,
+          )}`,
+        );
+      };
+
+      onFinished(res, logRequest);
+
+      next();
+    };
+  };
+
 export const notFoundMiddleware: Middleware = (_req, res, _next) => {
   res.statusCode = 404;
   res.end();
@@ -75,8 +118,14 @@ export const getHtmlFallbackMiddleware: (params: {
       outputFileSystem = devMiddleware.outputFileSystem;
     }
 
-    const rewrite = (newUrl: string) => {
-      debug?.(`Rewriting ${req.method} ${req.url} to ${newUrl}`);
+    const rewrite = (newUrl: string, isFallback = false) => {
+      isFallback &&
+        debug?.(
+          `${color.yellow('Fallback')} ${req.method} ${color.gray(
+            `${req.url} to ${newUrl}`,
+          )}`,
+          false,
+        );
 
       req.url = newUrl;
 
@@ -110,7 +159,7 @@ export const getHtmlFallbackMiddleware: (params: {
 
     if (htmlFallback === 'index') {
       if (outputFileSystem.existsSync(path.join(distPath, 'index.html'))) {
-        return rewrite('/index.html');
+        return rewrite('/index.html', true);
       }
     }
 

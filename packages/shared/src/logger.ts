@@ -19,12 +19,16 @@ export const isDebug = () => {
   );
 };
 
-export const debug = (message: string | (() => string)) => {
+export const debug = (message: string | (() => string), showTime = true) => {
   if (isDebug()) {
     const { performance } = require('perf_hooks');
     const result = typeof message === 'string' ? message : message();
-    const time = color.gray(`[${performance.now().toFixed(2)} ms]`);
-    logger.debug(`${result} ${time}`);
+    if (showTime) {
+      const time = color.gray(`[${performance.now().toFixed(2)} ms]`);
+      logger.debug(`${result} ${time}`);
+    } else {
+      logger.debug(result);
+    }
   }
 };
 
