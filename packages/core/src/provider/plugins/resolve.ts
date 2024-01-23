@@ -1,5 +1,5 @@
 import type { RsbuildPlugin } from '../../types';
-import { setConfig, applyResolvePlugin } from '@rsbuild/shared';
+import { applyResolvePlugin } from '@rsbuild/shared';
 
 export const pluginResolve = (): RsbuildPlugin => ({
   name: 'rsbuild:resolve',
@@ -11,12 +11,10 @@ export const pluginResolve = (): RsbuildPlugin => ({
       const isTsProject = Boolean(api.context.tsconfigPath);
       const config = api.getNormalizedConfig();
 
+      rspackConfig.resolve ||= {};
+
       if (isTsProject && config.source.aliasStrategy === 'prefer-tsconfig') {
-        setConfig(
-          rspackConfig,
-          'resolve.tsConfigPath',
-          api.context.tsconfigPath,
-        );
+        rspackConfig.resolve.tsConfigPath = api.context.tsconfigPath;
       }
 
       if (isServer) {
@@ -24,8 +22,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
         // When targe = node, we no need to specify conditionsNames.
         // We guess the webpack would auto specify reference to target.
         // Rspack has't the action, so we need manually specify.
-        const nodeConditionNames = ['require', 'node'];
-        setConfig(rspackConfig, 'resolve.conditionNames', nodeConditionNames);
+        rspackConfig.resolve.conditionNames = ['require', 'node'];
       }
     });
   },
