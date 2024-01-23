@@ -29,7 +29,7 @@ exports[`plugin-asset(image) > 'should add image rules correctly' 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
       },
       {
         "oneOf": [
@@ -83,7 +83,7 @@ exports[`plugin-asset(image) > 'should add image rules correctly' 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\|m4a\\|opus\\)\\$/i,
       },
       {
         "oneOf": [
@@ -146,7 +146,7 @@ exports[`plugin-asset(image) > 'should allow to use distPath.image to be empty s
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
       },
       {
         "oneOf": [
@@ -200,7 +200,7 @@ exports[`plugin-asset(image) > 'should allow to use distPath.image to be empty s
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\|m4a\\|opus\\)\\$/i,
       },
       {
         "oneOf": [
@@ -263,7 +263,7 @@ exports[`plugin-asset(image) > 'should allow to use distPath.image to modify dis
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
       },
       {
         "oneOf": [
@@ -317,7 +317,7 @@ exports[`plugin-asset(image) > 'should allow to use distPath.image to modify dis
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\|m4a\\|opus\\)\\$/i,
       },
       {
         "oneOf": [
@@ -380,7 +380,7 @@ exports[`plugin-asset(image) > 'should allow to use filename.image to modify fil
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
       },
       {
         "oneOf": [
@@ -434,7 +434,7 @@ exports[`plugin-asset(image) > 'should allow to use filename.image to modify fil
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\|m4a\\|opus\\)\\$/i,
       },
       {
         "oneOf": [
