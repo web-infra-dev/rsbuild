@@ -19,6 +19,12 @@
 import path from 'node:path';
 import { URL } from 'node:url';
 import type { As } from './type';
+import {
+  FONT_EXTENSIONS,
+  AUDIO_EXTENSIONS,
+  IMAGE_EXTENSIONS,
+  VIDEO_EXTENSIONS,
+} from '@rsbuild/shared';
 
 export function determineAsValue({
   href,
@@ -34,48 +40,29 @@ export function determineAsValue({
   // Use file instead of href option because the publicPath part may be malformed.
   // See https://github.com/vuejs/vue-cli/issues/5672
   const url = new URL(file || href, 'https://example.com');
-  const extension = path.extname(url.pathname);
+  const extension = path.extname(url.pathname).slice(1);
 
-  if (['.css'].includes(extension)) {
+  if (['css'].includes(extension)) {
     return 'style';
   }
 
-  if (
-    [
-      '.png',
-      '.jpg',
-      '.jpeg',
-      '.jfif',
-      '.pjpeg',
-      '.pjp',
-      '.svg',
-      '.webp',
-      '.bmp',
-      '.apng',
-      '.avif',
-      '.gif',
-      '.ico',
-      '.cur',
-      '.tif',
-      '.tiff',
-    ].includes(extension)
-  ) {
+  if (IMAGE_EXTENSIONS.includes(extension)) {
     return 'image';
   }
 
-  if (['.mp4', '.ogg', '.webm'].includes(extension)) {
+  if (VIDEO_EXTENSIONS.includes(extension)) {
     return 'video';
   }
 
-  if (['.mp3', '.wav'].includes(extension)) {
+  if (AUDIO_EXTENSIONS.includes(extension)) {
     return 'audio';
   }
 
-  if (['.woff2', '.otf', '.ttf', '.woff', '.eot'].includes(extension)) {
+  if (FONT_EXTENSIONS.includes(extension)) {
     return 'font';
   }
 
-  if (['.vtt'].includes(extension)) {
+  if (['vtt'].includes(extension)) {
     return 'track';
   }
 
