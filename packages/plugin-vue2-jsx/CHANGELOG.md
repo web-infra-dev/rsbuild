@@ -1,5 +1,14 @@
 # @rsbuild/plugin-vue2-jsx
 
+## 0.3.7
+
+### Patch Changes
+
+- Updated dependencies [4074bf9]
+  - @rsbuild/core@0.3.7
+  - @rsbuild/plugin-babel@0.3.7
+  - @rsbuild/shared@0.3.7
+
 ## 0.3.6
 
 ### Patch Changes

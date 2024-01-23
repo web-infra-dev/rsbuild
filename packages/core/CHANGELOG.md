@@ -1,5 +1,12 @@
 # @rsbuild/core
 
+## 0.3.7
+
+### Patch Changes
+
+- 4074bf9: release: 0.3.7
+  - @rsbuild/shared@0.3.7
+
 ## 0.3.6
 
 ### Patch Changes
