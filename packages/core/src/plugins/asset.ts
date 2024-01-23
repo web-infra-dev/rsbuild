@@ -2,9 +2,10 @@ import path from 'node:path';
 import {
   getDistPath,
   getFilename,
-  MEDIA_EXTENSIONS,
   FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
+  VIDEO_EXTENSIONS,
+  AUDIO_EXTENSIONS,
   chainStaticAssetRule,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
@@ -48,7 +49,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
 
       createAssetRule('image', IMAGE_EXTENSIONS);
       createAssetRule('svg', ['svg']);
-      createAssetRule('media', MEDIA_EXTENSIONS);
+      createAssetRule('media', [...VIDEO_EXTENSIONS, ...AUDIO_EXTENSIONS]);
       createAssetRule('font', FONT_EXTENSIONS);
     });
   },

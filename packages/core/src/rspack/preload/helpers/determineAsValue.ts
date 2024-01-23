@@ -19,6 +19,12 @@
 import path from 'node:path';
 import { URL } from 'node:url';
 import type { As } from './type';
+import {
+  FONT_EXTENSIONS,
+  AUDIO_EXTENSIONS,
+  IMAGE_EXTENSIONS,
+  VIDEO_EXTENSIONS,
+} from '@rsbuild/shared';
 
 export function determineAsValue({
   href,
@@ -40,38 +46,19 @@ export function determineAsValue({
     return 'style';
   }
 
-  if (
-    [
-      '.png',
-      '.jpg',
-      '.jpeg',
-      '.jfif',
-      '.pjpeg',
-      '.pjp',
-      '.svg',
-      '.webp',
-      '.bmp',
-      '.apng',
-      '.avif',
-      '.gif',
-      '.ico',
-      '.cur',
-      '.tif',
-      '.tiff',
-    ].includes(extension)
-  ) {
+  if (IMAGE_EXTENSIONS.includes(extension)) {
     return 'image';
   }
 
-  if (['.mp4', '.ogg', '.webm'].includes(extension)) {
+  if (VIDEO_EXTENSIONS.includes(extension)) {
     return 'video';
   }
 
-  if (['.mp3', '.wav'].includes(extension)) {
+  if (AUDIO_EXTENSIONS.includes(extension)) {
     return 'audio';
   }
 
-  if (['.woff2', '.otf', '.ttf', '.woff', '.eot'].includes(extension)) {
+  if (FONT_EXTENSIONS.includes(extension)) {
     return 'font';
   }
 

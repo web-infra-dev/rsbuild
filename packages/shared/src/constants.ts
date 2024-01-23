@@ -51,18 +51,8 @@ export const IMAGE_EXTENSIONS = [
   'tiff',
   'jfif',
 ];
-export const MEDIA_EXTENSIONS = [
-  'mp4',
-  'webm',
-  'ogg',
-  'mp3',
-  'wav',
-  'flac',
-  'aac',
-  'mov',
-  'm4a',
-  'opus',
-];
+export const VIDEO_EXTENSIONS = ['mp4', 'webm', 'ogg', 'mov'];
+export const AUDIO_EXTENSIONS = ['mp3', 'wav', 'flac', 'aac', 'm4a', 'opus'];
 export const DEFAULT_ASSET_PREFIX = '/';
 
 // RegExp
