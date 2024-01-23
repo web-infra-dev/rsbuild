@@ -88,7 +88,7 @@ exports[`transformImport > should apply antd & arco transformImport 1`] = `
   "include": [
     {
       "and": [
-        "<ROOT>",
+        "<ROOT>/packages/plugin-react/tests",
         {
           "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
         },
@@ -159,7 +159,7 @@ exports[`transformImport > should not apply antd & arco when transformImport is 
   "include": [
     {
       "and": [
-        "<ROOT>",
+        "<ROOT>/packages/plugin-react/tests",
         {
           "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
         },

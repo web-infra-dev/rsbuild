@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/shared",
-  "version": "0.3.1",
+  "version": "0.3.6",
   "description": "The internal shared modules and dependencies of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -15,10 +15,6 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./format-stats": {
-      "types": "./dist/formatStats.d.ts",
-      "default": "./dist/formatStats.js"
-    },
     "./jiti": {
       "types": "./compiled/jiti/types/jiti.d.ts",
       "default": "./compiled/jiti/index.js"
@@ -27,6 +23,10 @@
       "types": "./compiled/rslog/dist/index.d.ts",
       "default": "./compiled/rslog/index.js"
     },
+    "./yaml": {
+      "types": "./compiled/yaml/index.d.ts",
+      "default": "./compiled/yaml/index.js"
+    },
     "./json5": {
       "types": "./compiled/json5/lib/index.d.ts",
       "default": "./compiled/json5/index.js"
@@ -34,6 +34,10 @@
     "./gzip-size": {
       "types": "./compiled/gzip-size/index.d.ts",
       "default": "./compiled/gzip-size/index.js"
+    },
+    "./picocolors": {
+      "types": "./compiled/picocolors/picocolors.d.ts",
+      "default": "./compiled/picocolors/index.js"
     },
     "./browserslist": {
       "types": "./compiled/browserslist/index.d.ts",
@@ -129,15 +133,15 @@
     "@rspack/core": "0.5.0",
     "caniuse-lite": "^1.0.30001559",
     "lodash": "^4.17.21",
-    "postcss": "8.4.31"
+    "postcss": "^8.4.33"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.200",
     "@types/node": "16.x",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
-    "mini-css-extract-plugin": "2.7.6",
-    "terser": "5.19.2",
-    "terser-webpack-plugin": "5.3.9",
+    "mini-css-extract-plugin": "2.7.7",
+    "terser": "5.27.0",
+    "terser-webpack-plugin": "5.3.10",
     "typescript": "^5.3.0",
     "webpack": "^5.89.0"
   },

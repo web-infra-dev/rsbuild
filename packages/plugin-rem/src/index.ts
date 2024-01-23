@@ -1,4 +1,10 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
+import {
+  PLUGIN_CSS_NAME,
+  PLUGIN_SASS_NAME,
+  PLUGIN_LESS_NAME,
+  PLUGIN_STYLUS_NAME,
+  type RsbuildPlugin,
+} from '@rsbuild/core';
 import { getDistPath } from '@rsbuild/shared';
 import { cloneDeep } from '@rsbuild/shared';
 import type { PluginRemOptions, PxToRemOptions } from './types';
@@ -13,7 +19,12 @@ export type { PluginRemOptions };
 export const pluginRem = (options: PluginRemOptions = {}): RsbuildPlugin => ({
   name: 'rsbuild:rem',
 
-  pre: ['rsbuild:css', 'rsbuild:less', 'rsbuild:sass', 'rsbuild:stylus'],
+  pre: [
+    PLUGIN_CSS_NAME,
+    PLUGIN_SASS_NAME,
+    PLUGIN_LESS_NAME,
+    PLUGIN_STYLUS_NAME,
+  ],
 
   setup(api) {
     api.modifyBundlerChain(

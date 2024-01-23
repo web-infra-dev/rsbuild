@@ -1,7 +1,13 @@
-import fs from 'fs';
-import { isAbsolute, join } from 'path';
-import { color, logger, debounce, type RsbuildConfig } from '@rsbuild/shared';
-import { getEnvFiles } from '../loadEnv';
+import fs from 'node:fs';
+import { isAbsolute, join } from 'node:path';
+import {
+  color,
+  logger,
+  isObject,
+  debounce,
+  getNodeEnv,
+  type RsbuildConfig,
+} from '@rsbuild/shared';
 import { restartDevServer } from '../server/restart';
 
 export type ConfigParams = {
@@ -65,11 +71,13 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
   return null;
 };
 
-async function watchConfig(root: string, configFile: string) {
-  const chokidar = await import('@rsbuild/shared/chokidar');
-  const envFiles = getEnvFiles().map((filename) => join(root, filename));
+export async function watchFiles(files: string[]) {
+  if (!files.length) {
+    return;
+  }
 
-  const watcher = chokidar.watch([configFile, ...envFiles], {
+  const chokidar = await import('@rsbuild/shared/chokidar');
+  const watcher = chokidar.watch(files, {
     // do not trigger add for initial files
     ignoreInitial: true,
     // If watching fails due to read permissions, the errors will be suppressed silently.
@@ -90,6 +98,49 @@ async function watchConfig(root: string, configFile: string) {
   watcher.on('unlink', callback);
 }
 
+export async function loadConfigByPath(configFile: string) {
+  try {
+    const { default: jiti } = await import('@rsbuild/shared/jiti');
+    const loadConfig = jiti(__filename, {
+      esmResolve: true,
+      // disable require cache to support restart CLI and read the new config
+      requireCache: false,
+      interopDefault: true,
+    });
+
+    const configExport = loadConfig(configFile) as RsbuildConfigExport;
+
+    if (typeof configExport === 'function') {
+      const command = process.argv[2];
+      const params: ConfigParams = {
+        env: getNodeEnv(),
+        command,
+      };
+
+      const result = await configExport(params);
+
+      if (result === undefined) {
+        throw new Error('Rsbuild config function must return a config object.');
+      }
+
+      return result;
+    }
+
+    if (!isObject(configExport)) {
+      throw new Error(
+        `Rsbuild config must be an object or a function that returns an object, get ${color.yellow(
+          configExport,
+        )}`,
+      );
+    }
+
+    return configExport;
+  } catch (err) {
+    logger.error(`Failed to load file: ${color.dim(configFile)}`);
+    throw err;
+  }
+}
+
 export async function loadConfig({
   cwd,
   path,
@@ -103,40 +154,28 @@ export async function loadConfig({
     return {};
   }
 
-  try {
-    const { default: jiti } = await import('@rsbuild/shared/jiti');
-    const loadConfig = jiti(__filename, {
-      esmResolve: true,
-      // disable require cache to support restart CLI and read the new config
-      requireCache: false,
-      interopDefault: true,
-    });
+  return loadConfigByPath(configFile);
+}
 
-    const command = process.argv[2];
-    if (command === 'dev') {
-      watchConfig(cwd, configFile);
-    }
+// TODO replace loadConfig in v0.4.0
+export async function loadConfigV2({
+  cwd,
+  path,
+}: {
+  cwd: string;
+  path?: string;
+}): Promise<{ content: RsbuildConfig; filePath: string | null }> {
+  const configFile = resolveConfigPath(cwd, path);
 
-    const configExport = loadConfig(configFile) as RsbuildConfigExport;
-
-    if (typeof configExport === 'function') {
-      const params: ConfigParams = {
-        env: process.env.NODE_ENV!,
-        command,
-      };
-
-      const result = await configExport(params);
-
-      if (result === undefined) {
-        throw new Error('Rsbuild config function must return a config object.');
-      }
-
-      return result;
-    }
-
-    return configExport;
-  } catch (err) {
-    logger.error(`Failed to load file: ${color.dim(configFile)}`);
-    throw err;
+  if (!configFile) {
+    return {
+      content: {},
+      filePath: configFile,
+    };
   }
+
+  return {
+    content: await loadConfigByPath(configFile),
+    filePath: configFile,
+  };
 }

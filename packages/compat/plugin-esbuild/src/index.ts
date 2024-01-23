@@ -1,5 +1,5 @@
 import { JS_REGEX, TS_REGEX, applyScriptCondition } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '@rsbuild/core';
+import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
 import type {
   LoaderOptions,
   MinifyPluginOptions,
@@ -16,7 +16,7 @@ export function pluginEsbuild(
   return {
     name: 'rsbuild-webpack:esbuild',
 
-    pre: ['rsbuild:babel', 'uni-builder:babel'],
+    pre: [PLUGIN_BABEL_NAME, 'uni-builder:babel'],
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {

@@ -3,7 +3,6 @@ import {
   moduleTools,
   type PartialBaseBuildConfig,
 } from '@modern-js/module-tools';
-import path from 'path';
 
 const define = {
   RSBUILD_VERSION: require('../packages/core/package.json').version,
@@ -11,17 +10,36 @@ const define = {
 
 const BUILD_TARGET = 'es2020' as const;
 
-export const baseBuildConfig = {
+const requireShim = {
+  // use import.meta['url'] to bypass bundle-require replacement of import.meta.url
+  js: `import { createRequire } from 'module';
+var require = createRequire(import.meta['url']);\n`,
+};
+
+export const baseBuildConfig = defineConfig({
   plugins: [moduleTools()],
   buildConfig: {
-    buildType: 'bundleless' as const,
-    format: 'cjs' as const,
+    buildType: 'bundleless',
+    format: 'cjs',
     target: BUILD_TARGET,
     define,
   },
-};
+});
 
-export default defineConfig(baseBuildConfig);
+export const bundleMjsOnlyConfig = defineConfig({
+  plugins: [moduleTools()],
+  buildConfig: {
+    buildType: 'bundle',
+    format: 'esm',
+    target: BUILD_TARGET,
+    define,
+    autoExtension: true,
+    shims: true,
+    banner: requireShim,
+  },
+});
+
+export default baseBuildConfig;
 
 const externals = ['@rsbuild/core', /[\\/]compiled[\\/]/];
 
@@ -44,19 +62,7 @@ export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
     autoExtension: true,
     shims: true,
     externals,
-    esbuildOptions: (option) => {
-      let { inject } = option;
-      const filepath = path.join(__dirname, 'requireShims.js');
-      if (inject) {
-        inject.push(filepath);
-      } else {
-        inject = [filepath];
-      }
-      return {
-        ...option,
-        inject,
-      };
-    },
+    banner: requireShim,
   },
 ];
 

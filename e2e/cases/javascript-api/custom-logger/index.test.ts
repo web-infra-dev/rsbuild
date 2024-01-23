@@ -1,6 +1,5 @@
 import { expect } from '@playwright/test';
-import { build } from '@scripts/shared';
-import { rspackOnlyTest, proxyConsole } from '@scripts/helper';
+import { build, rspackOnlyTest, proxyConsole } from '@e2e/helper';
 
 rspackOnlyTest('should allow to customize logger', async () => {
   const { logs, restore } = proxyConsole('log');

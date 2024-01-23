@@ -1,6 +1,23 @@
 # printUrls
 
-- **类型：** `boolean | Function`
+- **类型：**
+
+```ts
+type Routes = Array<{
+  entryName: string;
+  pathname: string;
+}>;
+
+type PrintUrls =
+  | boolean
+  | ((params: {
+      urls: string[];
+      port: number;
+      routes: Routes;
+      protocol: string;
+    }) => string[] | void);
+```
+
 - **默认值：** `true`
 
 是否输出 server 的 URL 地址。
@@ -14,7 +31,7 @@
 
 ## 自定义日志
 
-`server.printUrls` 可以设置为一个函数，函数的入参包括 `port`，`protocol` 和 `urls`。
+`server.printUrls` 可以设置为一个函数，函数的入参包括 `port`，`protocol`、`urls` 和 `routes`。
 
 ### 修改 URL
 
@@ -48,6 +65,28 @@ export default {
       console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
       console.log(port); // 8080
       console.log(protocol); // 'http' or 'https'
+    },
+  },
+};
+```
+
+### 多页面输出
+
+如果当前项目包含多个页面，你可以基于 `routes` 参数，为每个页面单独输出一份 URL。
+
+比如项目包含 `index` 和 `detail` 两个页面时，routes 的内容如下：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ routes }) {
+      /**
+       * [
+       *   { entryName: 'index', pathname: '/' },
+       *   { entryName: 'detail', pathname: '/detail' }
+       * ]
+       */
+      console.log(routes);
     },
   },
 };

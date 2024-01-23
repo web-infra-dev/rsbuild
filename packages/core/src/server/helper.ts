@@ -18,6 +18,19 @@ import type {
   OutputStructure,
 } from '@rsbuild/shared';
 
+/**
+ * Make sure there is slash before and after prefix
+ */
+const formatPrefix = (prefix: string | undefined) => {
+  if (!prefix) {
+    return '/';
+  }
+
+  const hasLeadingSlash = prefix.startsWith('/');
+  const hasTailSlash = prefix.endsWith('/');
+  return `${hasLeadingSlash ? '' : '/'}${prefix}${hasTailSlash ? '' : '/'}`;
+};
+
 /*
  * format route by entry and adjust the index route to be the first
  */
@@ -26,17 +39,21 @@ export const formatRoutes = (
   prefix: string | undefined,
   outputStructure: OutputStructure | undefined,
 ): Routes => {
+  const formattedPrefix = formatPrefix(prefix);
+
   return (
     Object.keys(entry)
-      .map((name) => ({
-        name,
-        route:
-          (prefix ? `${prefix}/` : '') +
-          // fix case: /html/index/index.html
-          (name === 'index' && outputStructure !== 'nested' ? '' : name),
-      }))
+      .map((entryName) => {
+        // fix case: /html/index/index.html
+        const isIndex = entryName === 'index' && outputStructure !== 'nested';
+        const displayName = isIndex ? '' : entryName;
+        return {
+          entryName,
+          pathname: formattedPrefix + displayName,
+        };
+      })
       // adjust the index route to be the first
-      .sort((a) => (a.name === 'index' ? -1 : 1))
+      .sort((a) => (a.entryName === 'index' ? -1 : 1))
   );
 };
 
@@ -49,14 +66,14 @@ function getURLMessages(
       .map(
         ({ label, url }) =>
           `  ${`> ${label.padEnd(10)}`}${color.cyan(
-            normalizeUrl(`${url}/${routes[0].route}`),
+            normalizeUrl(`${url}${routes[0].pathname}`),
           )}\n`,
       )
       .join('');
   }
 
   let message = '';
-  const maxNameLength = Math.max(...routes.map((r) => r.name.length));
+  const maxNameLength = Math.max(...routes.map((r) => r.entryName.length));
   urls.forEach(({ label, url }, index) => {
     if (index > 0) {
       message += '\n';
@@ -64,8 +81,8 @@ function getURLMessages(
     message += `  ${`> ${label}`}\n`;
     routes.forEach((r) => {
       message += `  ${color.dim('-')} ${color.dim(
-        r.name.padEnd(maxNameLength + 4),
-      )}${color.cyan(normalizeUrl(`${url}/${r.route}`))}\n`;
+        r.entryName.padEnd(maxNameLength + 4),
+      )}${color.cyan(normalizeUrl(`${url}${r.pathname}`))}\n`;
     });
   });
 
@@ -95,6 +112,7 @@ export function printServerURLs({
     const newUrls = printUrls({
       urls: urls.map((item) => item.url),
       port,
+      routes,
       protocol,
     });
 

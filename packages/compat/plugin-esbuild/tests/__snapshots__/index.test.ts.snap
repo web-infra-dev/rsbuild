@@ -21,7 +21,7 @@ exports[`plugin-esbuild > should not set format iife when target is not web 1`] 
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "<ROOT>/packages/compat/plugin-esbuild/tests",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -81,7 +81,7 @@ exports[`plugin-esbuild > should set esbuild minimizer in production 1`] = `
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "<ROOT>/packages/compat/plugin-esbuild/tests",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
@@ -141,7 +141,7 @@ exports[`plugin-esbuild > should set esbuild-loader 1`] = `
         "include": [
           {
             "and": [
-              "<ROOT>",
+              "<ROOT>/packages/compat/plugin-esbuild/tests",
               {
                 "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },

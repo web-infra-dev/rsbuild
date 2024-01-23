@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { logger } from 'rslog';
 import { text, select, isCancel, cancel, note, outro } from '@clack/prompts';
 
@@ -26,7 +26,7 @@ function pkgFromUserAgent(userAgent: string | undefined) {
   };
 }
 
-async function main() {
+export async function main() {
   console.log('');
   logger.greet('◆  Create Rsbuild Project');
 

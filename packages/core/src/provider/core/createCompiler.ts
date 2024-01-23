@@ -5,7 +5,6 @@ import {
   color,
   logger,
   prettyTime,
-  formatStats,
   TARGET_ID_MAP,
   type RspackConfig,
   type RspackCompiler,
@@ -15,7 +14,11 @@ import {
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import type { InternalContext } from '../../types';
 import type { Stats, MultiStats, StatsCompilation } from '@rspack/core';
-import { isSatisfyRspackVersion, rspackMinVersion } from '../shared';
+import {
+  formatStats,
+  rspackMinVersion,
+  isSatisfyRspackVersion,
+} from '../shared';
 
 export async function createCompiler({
   context,
@@ -50,7 +53,7 @@ export async function createCompiler({
 
   const logRspackVersion = () => {
     if (!isVersionLogged) {
-      logger.debug(`Use Rspack v${rspack.rspackVersion}`);
+      debug(`Use Rspack v${rspack.rspackVersion}`);
       isVersionLogged = true;
     }
   };

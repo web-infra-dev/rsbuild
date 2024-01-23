@@ -72,8 +72,18 @@ export type BabelConfigUtils = {
 };
 
 export type PluginBabelOptions = {
+  /**
+   * Used to specify the files that need to be compiled by Babel.
+   */
   include?: RuleCondition;
+  /**
+   * Used to specify the files that do not need to be compiled by Babel.
+   */
   exclude?: RuleCondition;
+  /**
+   * Options passed to `babel-loader`.
+   * @see https://github.com/babel/babel-loader
+   */
   babelLoaderOptions?: ChainedConfigWithUtils<
     BabelTransformOptions,
     BabelConfigUtils

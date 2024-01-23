@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "0.3.1",
+  "version": "0.3.6",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.dev",
   "bugs": {
@@ -25,10 +25,6 @@
     "./client/*": {
       "types": "./dist/client/*.d.ts",
       "default": "./dist/client/*.js"
-    },
-    "./cli": {
-      "types": "./dist/cli/commands.d.ts",
-      "default": "./dist/cli/commands.js"
     },
     "./plugins/*": {
       "types": "./dist/plugins/*.d.ts",
@@ -66,7 +62,7 @@
     "@swc/helpers": "0.5.3",
     "core-js": "~3.32.2",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
-    "postcss": "8.4.31"
+    "postcss": "^8.4.33"
   },
   "devDependencies": {
     "@types/on-finished": "2.3.4",

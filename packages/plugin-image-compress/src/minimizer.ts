@@ -1,4 +1,4 @@
-import { Buffer } from 'buffer';
+import { Buffer } from 'node:buffer';
 import type { webpack } from '@rsbuild/webpack';
 import Codecs from './shared/codecs';
 import type { FinalOptions } from './types';

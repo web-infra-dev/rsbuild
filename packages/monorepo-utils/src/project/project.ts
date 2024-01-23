@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import type { INodePackageJson, ExportsConfig } from '../types/packageJson';
 import { readPackageJson } from '../utils';
 import { PACKAGE_JSON } from '../constants';
@@ -48,7 +48,7 @@ export class Project {
     computedSet.add(this.name);
 
     const queue = this.getDirectDependentProjects(allProjectMap).filter(
-      p => !computedSet.has(p.name),
+      (p) => !computedSet.has(p.name),
     );
     const result = [];
 
@@ -159,7 +159,7 @@ export class Project {
       }
     }
 
-    return Array.from(commonRootPathsSet).map(p => path.join(this.dir, p));
+    return Array.from(commonRootPathsSet).map((p) => path.join(this.dir, p));
   }
 
   #getRootPath(p: string) {

@@ -11,6 +11,7 @@
       "coverage/**/*",
       "cspell.json",
       "compiled/**/*",
+      "node_modules/**/*",
       "plugin-swc/tests/fixtures/**/*",
       "*.css.d.ts"
     ],
@@ -35,7 +36,8 @@
       },
       "nursery": {
         "useImportType": "error",
-        "useExportType": "error"
+        "useExportType": "error",
+        "useNodejsImportProtocol": "error"
       }
     }
   }

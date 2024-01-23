@@ -1,7 +1,7 @@
-const path = require('path');
-const { readFile, writeFile } = require('fs/promises');
+const path = require('node:path');
+const { readFile, writeFile } = require('node:fs/promises');
 const { transformAsync } = require('@babel/core');
-const { performance } = require('perf_hooks');
+const { performance } = require('node:perf_hooks');
 
 async function compileRetryRuntime() {
   const { minify } = await import('terser');

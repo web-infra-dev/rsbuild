@@ -19,7 +19,7 @@ Rsbuild 默认集成 PostCSS，你可以通过 `tools.postcss` 对 [postcss-load
 
 注意，出于性能的考虑，Rsbuild 使用 [postcss-load-config](https://github.com/postcss/postcss-load-config) 加载外部配置文件，并将其和默认配置合并。
 
-### Function 类型
+## Function 类型
 
 值为 Function 类型时，内部默认配置作为第一参数传入，可以直接修改配置对象不做返回，也可以返回一个对象作为最终结果；第二个参数为修改 postcss-loader 配置的工具函数集合。
 
@@ -66,7 +66,7 @@ export default {
 };
 ```
 
-### Object 类型
+## Object 类型
 
 当此值为 Object 类型时，与默认配置通过 `Object.assign` 合并。注意 `Object.assign` 是浅拷贝，会完全覆盖内置的 `plugins` 数组，请谨慎使用。
 
@@ -83,9 +83,9 @@ export default {
 };
 ```
 
-### 工具函数
+## 工具函数
 
-#### addPlugins
+### addPlugins
 
 - **类型：** `(plugins: PostCSSPlugin | PostCSSPlugin[]) => void`
 

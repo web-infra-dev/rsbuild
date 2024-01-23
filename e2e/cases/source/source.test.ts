@@ -1,6 +1,6 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 
 const fixtures = __dirname;
 
@@ -30,12 +30,12 @@ test.describe('source configure multi', () => {
   });
 
   test('alias', async ({ page }) => {
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    await gotoPage(page, rsbuild);
     await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
   });
 
   test('pre-entry', async ({ page }) => {
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    await gotoPage(page, rsbuild);
     await expect(page.innerHTML('#test-el')).resolves.toBe('aaaaa');
 
     // test order
@@ -56,59 +56,10 @@ test('define', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const testEl = page.locator('#test-el');
   await expect(testEl).toHaveText('aaaaa');
-
-  await rsbuild.close();
-});
-
-test('tsconfig paths should work and override the alias config', async ({
-  page,
-}) => {
-  const cwd = join(fixtures, 'tsconfig-paths');
-  const rsbuild = await build({
-    cwd,
-    runServer: true,
-    rsbuildConfig: {
-      source: {
-        alias: {
-          '@common': './src/common2',
-        },
-      },
-    },
-  });
-
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
-
-  const foo = page.locator('#foo');
-  await expect(foo).toHaveText('tsconfig paths worked');
-
-  await rsbuild.close();
-});
-
-test('tsconfig paths should not work when aliasStrategy is "prefer-alias"', async ({
-  page,
-}) => {
-  const cwd = join(fixtures, 'tsconfig-paths');
-  const rsbuild = await build({
-    cwd,
-    runServer: true,
-    rsbuildConfig: {
-      source: {
-        alias: {
-          '@/common': './src/common2',
-        },
-        aliasStrategy: 'prefer-alias',
-      },
-    },
-  });
-
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
-
-  const foo = page.locator('#foo');
-  await expect(foo).toHaveText('source.alias worked');
 
   await rsbuild.close();
 });

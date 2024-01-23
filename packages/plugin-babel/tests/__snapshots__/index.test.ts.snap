@@ -8,7 +8,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
   "include": [
     {
       "and": [
-        "<ROOT>",
+        "<ROOT>/packages/plugin-babel/tests",
         {
           "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
         },

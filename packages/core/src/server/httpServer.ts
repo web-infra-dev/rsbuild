@@ -6,10 +6,10 @@ export const createHttpServer = async (options: {
   middlewares: connect.Server;
 }) => {
   if (options.https) {
-    const { createServer } = await import('https');
+    const { createServer } = await import('node:https');
     return createServer(options.https, options.middlewares);
   }
 
-  const { createServer } = await import('http');
+  const { createServer } = await import('node:http');
   return createServer(options.middlewares);
 };

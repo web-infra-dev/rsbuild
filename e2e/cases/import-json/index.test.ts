@@ -1,6 +1,5 @@
 import { expect } from '@playwright/test';
-import { rspackOnlyTest } from '@scripts/helper';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest('should import JSON correctly', async ({ page }) => {
   const rsbuild = await build({
@@ -8,7 +7,7 @@ rspackOnlyTest('should import JSON correctly', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
   expect(await page.evaluate('window.age')).toBe(1);
   expect(await page.evaluate('window.b')).toBe('{"list":[1,2]}');
 

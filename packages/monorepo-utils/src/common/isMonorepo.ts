@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { fse } from '@rsbuild/shared';
 import { PNPM_WORKSPACE_FILE, RUSH_JSON_FILE } from '../constants';
 

@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
+import { PLUGIN_STYLUS_NAME, type RsbuildPlugin } from '@rsbuild/core';
 import { deepmerge, mergeChainedOptions } from '@rsbuild/shared';
 
 type StylusOptions = {
@@ -11,7 +11,13 @@ type StylusOptions = {
 };
 
 type StylusLoaderOptions = {
+  /**
+   * Options passed to Stylus.
+   */
   stylusOptions?: StylusOptions;
+  /**
+   * Whether to generate Source Map.
+   */
   sourceMap?: boolean;
 };
 
@@ -19,7 +25,7 @@ export type PluginStylusOptions = StylusLoaderOptions;
 
 export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
   return {
-    name: 'rsbuild:stylus',
+    name: PLUGIN_STYLUS_NAME,
 
     setup(api) {
       const STYLUS_REGEX = /\.styl(us)?$/;

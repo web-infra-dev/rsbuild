@@ -1,7 +1,7 @@
-import fs from 'fs';
-import { join } from 'path';
+import fs from 'node:fs';
+import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 
 test('html.outputStructure', async ({ page }) => {
   const rsbuild = await build({
@@ -14,7 +14,7 @@ test('html.outputStructure', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const pagePath = join(rsbuild.distPath, 'index/index.html');
 

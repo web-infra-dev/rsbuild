@@ -5,7 +5,7 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
   "include": [
     {
       "and": [
-        "<ROOT>",
+        "<ROOT>/packages/plugin-styled-components/tests",
         {
           "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
         },
@@ -58,7 +58,7 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
   "include": [
     {
       "and": [
-        "<ROOT>",
+        "<ROOT>/packages/plugin-styled-components/tests",
         {
           "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
         },
@@ -117,7 +117,7 @@ exports[`plugins/styled-components > should works in rspack mode 1`] = `
   "include": [
     {
       "and": [
-        "<ROOT>",
+        "<ROOT>/packages/plugin-styled-components/tests",
         {
           "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
         },

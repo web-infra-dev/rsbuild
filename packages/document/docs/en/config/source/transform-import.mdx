@@ -23,7 +23,7 @@ type Config =
 
 - **Default:** When you use [React plugin](/plugins/list/plugin-react), [React component library on-demand import](/plugins/list/plugin-react#import-component-library-on-demand) is automatically supported.
 
-### Example
+## Example
 
 When using the above antd default configuration:
 
@@ -54,7 +54,7 @@ import Button from 'antd/es/button';
 import 'antd/es/button/style';
 ```
 
-### Disable Default Config
+## Disable Default Config
 
 You can manually set `transformImport: false` to disable the default config.
 
@@ -68,15 +68,15 @@ export default {
 
 For example, if you use `externals` to avoid bundling antd, because `transformImport` will convert the imported path of antd by default, the matching path changes and externals cannot take effect. At this time, you can disable `transformImport` to avoid this problem.
 
-### Configuration
+## Configuration
 
-#### libraryName
+### libraryName
 
 - **Type:** `string`
 
 The original import path that needs to be transformed.
 
-#### libraryDirectory
+### libraryDirectory
 
 - **Type:** `string`
 - **Default:** `'lib'`
@@ -95,7 +95,7 @@ Out:
 import Button from 'foo/lib/button';
 ```
 
-#### style
+### style
 
 - **Type:** `boolean`
 - **Default:** `undefined`
@@ -115,7 +115,7 @@ import Button from 'foo/lib/button';
 import 'foo/lib/button/style';
 ```
 
-#### styleLibraryDirectory
+### styleLibraryDirectory
 
 - **Type:** `string`
 - **Default:** `undefined`
@@ -135,7 +135,7 @@ import Button from 'foo/lib/button';
 import 'foo/styles/button';
 ```
 
-#### camelToDashComponentName
+### camelToDashComponentName
 
 - **Type:** `boolean`
 - **Default:** `true`
@@ -157,7 +157,7 @@ import ButtonGroup from 'foo/button-group';
 import ButtonGroup from 'foo/ButtonGroup';
 ```
 
-#### transformToDefaultImport
+### transformToDefaultImport
 
 - **Type:** `boolean`
 - **Default:** `true`
@@ -179,7 +179,7 @@ import Button from 'foo/button';
 import { Button } from 'foo/button';
 ```
 
-#### customName
+### customName
 
 - **Type:** `((member: string) => string | undefined) | string`
 - **Default:** `undefined`
@@ -195,7 +195,7 @@ Customize the imported path after conversion. The input is the imported member. 
 
 When using Rspack to build, function configurations cannot be used, but you can use [handlebars](https://handlebarsjs.com/) template strings. For the above function configuration, you can use the following template instead of `my-lib/{{ member }}`, or use some built-in helper methods, such as `my-lib/{{ kebabCase member }}` to convert it to kebab-case format. In addition to kebabCase, there are also camelCase, snakeCase, upperCase, and lowerCase that can be used.
 
-#### customStyleName
+### customStyleName
 
 - **Type:** `((member: string) => string | undefined) | string`
 - **Default:** `undefined`

@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { test, expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
 import { fse } from '@rsbuild/shared';
@@ -67,9 +67,9 @@ test('should run plugin hooks correctly when running startDevServer', async () =
   const result = await rsbuild.startDevServer();
 
   expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
+    'BeforeStartDevServer',
     'BeforeCreateCompiler',
     'AfterCreateCompiler',
-    'BeforeStartDevServer',
     'AfterStartDevServer',
   ]);
 

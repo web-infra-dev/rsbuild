@@ -30,12 +30,11 @@ import type {
   NormalizedConfig,
 } from './types';
 import { logger } from './logger';
-import { join } from 'path';
+import { join } from 'node:path';
 import type { minify } from 'terser';
 import fse from '../compiled/fs-extra';
 import { pick, color, upperFirst } from './utils';
 
-import _ from 'lodash';
 import { DEFAULT_DEV_HOST } from './constants';
 import { getTerserMinifyOptions } from './minimize';
 
@@ -219,14 +218,6 @@ export type GetTypeByPath<
   : T extends `${infer K}.${infer P}`
   ? GetTypeByPath<P, K extends '' ? C : NonNullable<C[K]>>
   : C[T];
-
-export const setConfig = <T extends Record<string, any>, P extends string>(
-  config: T,
-  path: P,
-  value: GetTypeByPath<P, T>,
-) => {
-  _.set(config, path, value);
-};
 
 type MinifyOptions = NonNullable<Parameters<typeof minify>[1]>;
 

@@ -2,7 +2,7 @@
  * modified from https://github.com/facebook/create-react-app
  * license at https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
-import path from 'path';
+import path from 'node:path';
 import { fse } from '@rsbuild/shared';
 import { color, logger } from '@rsbuild/shared';
 import type {

@@ -1,7 +1,7 @@
-import { join } from 'path';
-import { logger, castArray, normalizeUrl, type Routes } from '@rsbuild/shared';
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { join } from 'node:path';
+import { debug, logger, castArray, type Routes } from '@rsbuild/shared';
+import { exec } from 'node:child_process';
+import { promisify } from 'node:util';
 import type { RsbuildPlugin } from '../types';
 
 const execAsync = promisify(exec);
@@ -59,9 +59,9 @@ export async function openBrowser(url: string): Promise<boolean> {
 
         return true;
       }
-      logger.debug('Failed to find the target browser.');
+      debug('Failed to find the target browser.');
     } catch (err) {
-      logger.debug('Failed to open start URL with apple script.');
+      debug('Failed to open start URL with apple script.');
       logger.debug(err);
     }
   }
@@ -108,11 +108,7 @@ export function pluginStartUrl(): RsbuildPlugin {
           const protocol = https ? 'https' : 'http';
           if (routes.length) {
             // auto open the first one
-            urls.push(
-              normalizeUrl(
-                `${protocol}://localhost:${port}/${routes[0].route}`,
-              ),
-            );
+            urls.push(`${protocol}://localhost:${port}${routes[0].pathname}`);
           }
         } else {
           urls.push(

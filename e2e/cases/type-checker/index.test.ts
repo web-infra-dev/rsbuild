@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '../../scripts/shared';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
-import { proxyConsole } from '@scripts/helper';
+import { proxyConsole } from '../../scripts/helper';
 
 test('should throw error when exist type errors', async () => {
   const { logs, restore } = proxyConsole();

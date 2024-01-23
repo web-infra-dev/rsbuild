@@ -6,9 +6,9 @@
  * modified from https://github.com/gregberge/svgr/blob/7595d378b73d4826a4cead165b3f32386b07315b/packages/webpack/src/index.ts
  */
 
-import { callbackify } from 'util';
+import { callbackify } from 'node:util';
 import { transform, type Config, type State } from '@svgr/core';
-import { normalize } from 'path';
+import { normalize } from 'node:path';
 import svgo from '@svgr/plugin-svgo';
 import jsx from '@svgr/plugin-jsx';
 import type { Rspack } from '@rsbuild/core';

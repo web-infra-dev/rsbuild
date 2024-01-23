@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/monorepo-utils",
-  "version": "0.3.1",
+  "version": "0.3.6",
   "description": "The monorepo utils of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -27,11 +27,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@types/js-yaml": "^4.0.6",
-    "fast-glob": "^3.3.1",
-    "js-yaml": "^4.1.0",
-    "json5": "^2.2.3",
-    "p-map": "^4.0.0"
+    "fast-glob": "^3.3.1"
   },
   "devDependencies": {
     "@types/node": "16.x",

@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import {
   JS_REGEX,
   TS_REGEX,
@@ -8,7 +8,8 @@ import {
   getFilename,
   chainStaticAssetRule,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '@rsbuild/core';
+import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
+import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
 import type { Config } from '@svgr/core';
 
 export type SvgDefaultExport = 'component' | 'url';
@@ -16,6 +17,7 @@ export type SvgDefaultExport = 'component' | 'url';
 export type PluginSvgrOptions = {
   /**
    * Configure SVGR options.
+   * @see https://react-svgr.com/docs/options/
    */
   svgrOptions?: Config;
 
@@ -49,10 +51,9 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
   pre: [
     // SVGR needs to reuse the SWC loader options with react config
-    'rsbuild:react',
-    'rsbuild:babel',
+    PLUGIN_REACT_NAME,
+    PLUGIN_BABEL_NAME,
     'uni-builder:babel',
-    'rsbuild-webpack:swc',
   ],
 
   setup(api) {

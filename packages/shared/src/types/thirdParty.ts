@@ -43,7 +43,7 @@ export type LessLoaderOptions = {
     | ((
         content: string,
         loaderContext: LoaderContext<LessLoaderOptions>,
-      ) => string);
+      ) => string | Promise<string>);
   sourceMap?: boolean;
   webpackImporter?: boolean;
   implementation?: unknown;

@@ -1,7 +1,7 @@
 /**
  * In this script, we will find all the Modern.js dependencies and update the version.
  */
-import path from 'path';
+import path from 'node:path';
 import fs from 'fs-extra';
 import { getPackages } from '@manypkg/get-packages';
 import { getPackageVersion } from './utils';

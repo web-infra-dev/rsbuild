@@ -26,8 +26,8 @@ export type OnBeforeStartDevServerFn = () => PromiseOrNot<void>;
 export type OnBeforeStartProdServerFn = () => PromiseOrNot<void>;
 
 export type Routes = Array<{
-  name: string;
-  route: string;
+  entryName: string;
+  pathname: string;
 }>;
 
 export type OnAfterStartDevServerFn = (params: {

@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 
 test('should inline assets retry runtime code to html by default', async () => {

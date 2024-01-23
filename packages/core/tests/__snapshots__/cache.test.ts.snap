@@ -1,0 +1,97 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugin-cache > 'should add cache config correctly' 1`] = `
+{
+  "cache": {
+    "buildDependencies": {
+      "tailwindcss": [
+        "/root/tailwind.config.ts",
+      ],
+      "tsconfig": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
+    },
+    "cacheDirectory": "<ROOT>/packages/core/tests/node_modules/.cache/rspack",
+    "name": "web-test",
+    "type": "filesystem",
+  },
+}
+`;
+
+exports[`plugin-cache > 'should apply cacheDigest' 1`] = `
+{
+  "cache": {
+    "buildDependencies": {
+      "tailwindcss": [
+        "/root/tailwind.config.ts",
+      ],
+      "tsconfig": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
+    },
+    "cacheDirectory": "<ROOT>/packages/core/tests/node_modules/.cache/rspack",
+    "name": "web-test-c29a5747",
+    "type": "filesystem",
+  },
+}
+`;
+
+exports[`plugin-cache > 'should custom cache directory by user' 1`] = `
+{
+  "cache": {
+    "buildDependencies": {
+      "tailwindcss": [
+        "/root/tailwind.config.ts",
+      ],
+      "tsconfig": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
+    },
+    "cacheDirectory": "<ROOT>/packages/core/tests/node_modules/.cache/tmp",
+    "name": "web-test",
+    "type": "filesystem",
+  },
+}
+`;
+
+exports[`plugin-cache > 'should disable cache' 1`] = `
+{
+  "cache": false,
+}
+`;
+
+exports[`plugin-cache > 'should not apply cacheDigest' 1`] = `
+{
+  "cache": {
+    "buildDependencies": {
+      "tailwindcss": [
+        "/root/tailwind.config.ts",
+      ],
+      "tsconfig": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
+    },
+    "cacheDirectory": "<ROOT>/packages/core/tests/node_modules/.cache/rspack",
+    "name": "web-test",
+    "type": "filesystem",
+  },
+}
+`;
+
+exports[`plugin-cache > 'should watch tsconfig change' 1`] = `
+{
+  "cache": {
+    "buildDependencies": {
+      "tailwindcss": [
+        "/root/tailwind.config.ts",
+      ],
+      "tsconfig": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
+    },
+    "cacheDirectory": "<ROOT>/packages/core/tests/node_modules/.cache/rspack",
+    "name": "web-test",
+    "type": "filesystem",
+  },
+}
+`;

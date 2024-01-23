@@ -102,3 +102,16 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           REPOSITORY: ${{ github.repository }}
           REF: ${{ github.ref }}
+
+      - name: Trigger Modern Update Rsbuild
+        uses: actions/github-script@v6
+        if: ${{github.event.inputs.version == 'latest'}}
+        with:
+          github-token: ${{ secrets.REPO_SCOPED_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+                owner: context.repo.owner,
+                repo: 'modern.js',
+                workflow_id: 'update-rsbuild.yml',
+                ref: 'main'
+            })

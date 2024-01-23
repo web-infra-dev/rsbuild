@@ -1,6 +1,6 @@
-import path from 'path';
+import path from 'node:path';
 import fse from '../compiled/fs-extra';
-import { promises, constants, statSync } from 'fs';
+import { promises, constants, statSync } from 'node:fs';
 import type {
   RsbuildConfig,
   DistPathConfig,

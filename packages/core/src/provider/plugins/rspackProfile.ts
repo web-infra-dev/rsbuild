@@ -1,6 +1,6 @@
 import type { RsbuildPlugin } from '../../types';
-import path from 'path';
-import inspector from 'inspector';
+import path from 'node:path';
+import inspector from 'node:inspector';
 import { fse } from '@rsbuild/shared';
 import { logger } from '@rsbuild/shared';
 

@@ -1,7 +1,6 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { expect } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
-import { rspackOnlyTest } from '@scripts/helper';
+import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 const fixture = join(__dirname, 'app');
 
@@ -13,7 +12,7 @@ rspackOnlyTest(
       runServer: true,
     });
 
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    await gotoPage(page, rsbuild);
 
     const locator = page.locator('#root');
     await expect(locator).toHaveText(

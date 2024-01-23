@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 
 /** @type {import('tailwindcss').Config} */
 export default {

@@ -1,4 +1,4 @@
-import { posix } from 'path';
+import { posix } from 'node:path';
 import { getDistPath, getFilename, applyOutputPlugin } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../../types';
 

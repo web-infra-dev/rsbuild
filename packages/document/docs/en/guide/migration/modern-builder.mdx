@@ -85,11 +85,43 @@ export default defineConfig({
 });
 ```
 
+## Add React-related Plugins
+
+Rsbuild is not coupled with any front-end UI framework. Therefore, if you are a React project, you need to manually add [React Plugin](/plugins/list/plugin-react):
+
+```ts title="rsbuild.config.ts"
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default {
+  plugins: [pluginReact()],
+};
+```
+
+If you are using SVGR in your current project, you also need to register [SVGR Plugin](/plugins/list/plugin-svgr):
+
+```ts title="rsbuild.config.ts"
+import { pluginSvgr } from '@rsbuild/plugin-svgr';
+
+export default {
+  plugins: [pluginSvgr()],
+};
+```
+
+If you are a user of other frameworks, you can refer to [Rsbuild Plugin List](/plugins/list/index) to select the corresponding framework plugin.
+
 ## Configuration Migration
 
 Most configs in Rsbuild and Builder are consistent, with only a few adjustments.
 
 You can refer to the [Rsbuild options](/config/index) to view the configs of Rsbuild.
+
+It is worth noting that, compared to Builder, **there are some differences in default values and behaviors in Rsbuild**:
+
+- **Browserslist:** The default is minimum compatible with browsers that support [Native ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), refer to [Default Browserslist](/guide/advanced/browserslist#default-browserslist).
+- **HTML file output path:** default output to the root of dist directory, refer to [Default Directory Structure](/guide/basic/output-files#default-directory-structure).
+- **Polyfill injection method:** Inject on demand by default, refer to [output.polyfill](/config/output/polyfill).
+- **TypeScript type check:** not enabled by default, you need to manually register the [Type Check Plugin](/plugins/list/plugin-type-check).
+- **Modify DevServer configuration:** Modify `dev` and `server` configuration instead.
 
 ## Validating Results
 

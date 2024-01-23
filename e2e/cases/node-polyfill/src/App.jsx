@@ -1,6 +1,6 @@
+// biome-ignore lint: node polyfill only supports non-prefix usage
 import querystring from 'querystring';
 
-// eslint-disable-next-line node/prefer-global/buffer
 const bufferData = Buffer.from('xxxx');
 
 const qsRes = querystring.stringify({

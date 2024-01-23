@@ -1,6 +1,6 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import glob from 'fast-glob';
-import path from 'path';
+import path from 'node:path';
 import type { Group } from './components/Overview';
 
 const camelCase = (input: string): string =>

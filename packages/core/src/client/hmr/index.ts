@@ -5,7 +5,7 @@
  * Tips: this package will be bundled and running in the browser, do not import from the entry of @rsbuild/core.
  */
 import type { StatsError } from '@rsbuild/shared';
-import { formatStatsMessages } from '@rsbuild/shared/format-stats';
+import { formatStatsMessages } from '../formatStats';
 import { createSocketUrl } from './createSocketUrl';
 
 // declare any to fix the type of `module.hot`
@@ -111,10 +111,9 @@ function handleAvailableHash(hash: string) {
   mostRecentCompilationHash = hash;
 }
 
-// Is there a newer version of this code available?
 function isUpdateAvailable() {
   // __webpack_hash__ is the hash of the current compilation.
-  // It's a global variable injected by webpack.
+  // It's a global variable injected by webpack / Rspack.
   return mostRecentCompilationHash !== __webpack_hash__;
 }
 
@@ -125,13 +124,18 @@ function canApplyUpdates() {
 
 // Attempt to update code on the fly, fall back to a hard reload.
 function tryApplyUpdates() {
+  // detect is there a newer version of this code available
+  if (!isUpdateAvailable()) {
+    return;
+  }
+
   if (!module.hot) {
-    // HotModuleReplacementPlugin is not in webpack configuration.
+    // HotModuleReplacementPlugin is not in Rspack configuration.
     window.location.reload();
     return;
   }
 
-  if (!isUpdateAvailable() || !canApplyUpdates()) {
+  if (!canApplyUpdates()) {
     return;
   }
 

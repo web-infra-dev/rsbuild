@@ -1,6 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
-import { webpackOnlyTest } from '@scripts/helper';
+import { build, webpackOnlyTest } from '@e2e/helper';
 
 // todo: https://github.com/web-infra-dev/rspack/issues/3346
 webpackOnlyTest('removeMomentLocale false (default)', async () => {

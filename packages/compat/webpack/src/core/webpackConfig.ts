@@ -2,10 +2,10 @@ import {
   debug,
   CHAIN_ID,
   castArray,
+  getNodeEnv,
   chainToConfig,
   modifyBundlerChain,
   mergeChainedOptions,
-  type NodeEnv,
   type BundlerChain,
   type RsbuildTarget,
   type WebpackChain,
@@ -70,8 +70,7 @@ async function getChainUtils(
   const { default: webpack } = await import('webpack');
   const { getHTMLPlugin } = await import('@rsbuild/core/provider');
   const HtmlPlugin = getHTMLPlugin();
-
-  const nodeEnv = process.env.NODE_ENV as NodeEnv;
+  const nodeEnv = getNodeEnv();
 
   const nameMap = {
     web: 'client',

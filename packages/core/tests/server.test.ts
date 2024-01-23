@@ -1,4 +1,4 @@
-import webpack from 'webpack';
+import { rspack } from '@rspack/core';
 import {
   mergeDevOptions,
   formatRoutes,
@@ -19,16 +19,56 @@ test('formatRoutes', () => {
     ),
   ).toEqual([
     {
-      name: 'index',
-      route: '',
+      entryName: 'index',
+      pathname: '/',
     },
     {
-      name: 'foo',
-      route: 'foo',
+      entryName: 'foo',
+      pathname: '/foo',
     },
     {
-      name: 'bar',
-      route: 'bar',
+      entryName: 'bar',
+      pathname: '/bar',
+    },
+  ]);
+
+  expect(
+    formatRoutes(
+      {
+        index: 'src/index.ts',
+        foo: 'src/index.ts',
+      },
+      '/hello',
+      undefined,
+    ),
+  ).toEqual([
+    {
+      entryName: 'index',
+      pathname: '/hello/',
+    },
+    {
+      entryName: 'foo',
+      pathname: '/hello/foo',
+    },
+  ]);
+
+  expect(
+    formatRoutes(
+      {
+        index: 'src/index.ts',
+        foo: 'src/index.ts',
+      },
+      '/hello/',
+      undefined,
+    ),
+  ).toEqual([
+    {
+      entryName: 'index',
+      pathname: '/hello/',
+    },
+    {
+      entryName: 'foo',
+      pathname: '/hello/foo',
     },
   ]);
 
@@ -44,16 +84,16 @@ test('formatRoutes', () => {
     ),
   ).toEqual([
     {
-      name: 'index',
-      route: '',
+      entryName: 'index',
+      pathname: '/',
     },
     {
-      name: 'foo',
-      route: 'foo',
+      entryName: 'foo',
+      pathname: '/foo',
     },
     {
-      name: 'bar',
-      route: 'bar',
+      entryName: 'bar',
+      pathname: '/bar',
     },
   ]);
 
@@ -67,8 +107,8 @@ test('formatRoutes', () => {
     ),
   ).toEqual([
     {
-      name: 'foo',
-      route: 'foo',
+      entryName: 'foo',
+      pathname: '/foo',
     },
   ]);
 
@@ -84,16 +124,16 @@ test('formatRoutes', () => {
     ),
   ).toEqual([
     {
-      name: 'index',
-      route: 'html/',
+      entryName: 'index',
+      pathname: '/html/',
     },
     {
-      name: 'foo',
-      route: 'html/foo',
+      entryName: 'foo',
+      pathname: '/html/foo',
     },
     {
-      name: 'bar',
-      route: 'html/bar',
+      entryName: 'bar',
+      pathname: '/html/bar',
     },
   ]);
 
@@ -107,8 +147,8 @@ test('formatRoutes', () => {
     ),
   ).toEqual([
     {
-      name: 'index',
-      route: 'html/index',
+      entryName: 'index',
+      pathname: '/html/index',
     },
   ]);
 });
@@ -131,8 +171,8 @@ test('printServerURLs', () => {
     ],
     routes: [
       {
-        name: 'index',
-        route: '',
+        entryName: 'index',
+        pathname: '/',
       },
     ],
   });
@@ -158,16 +198,16 @@ test('printServerURLs', () => {
     ],
     routes: [
       {
-        name: 'index',
-        route: '',
+        entryName: 'index',
+        pathname: '/',
       },
       {
-        name: 'foo',
-        route: 'html/foo',
+        entryName: 'foo',
+        pathname: '/html/foo',
       },
       {
-        name: 'bar',
-        route: 'bar',
+        entryName: 'bar',
+        pathname: '/bar',
       },
     ],
   });
@@ -188,7 +228,7 @@ test('printServerURLs', () => {
 
 describe('test dev server', () => {
   test('should setupServerHooks correctly', () => {
-    const compiler = webpack({});
+    const compiler = rspack({});
     const onDoneFn = vi.fn();
     const onInvalidFn = vi.fn();
 
@@ -216,7 +256,7 @@ describe('test dev server', () => {
     expect(isInvalidHookRegistered).toBeTruthy();
   });
   test('should not setupServerHooks when compiler is server', () => {
-    const compiler = webpack({
+    const compiler = rspack({
       name: 'server',
     });
     const onDoneFn = vi.fn();
@@ -235,11 +275,11 @@ describe('test dev server', () => {
   });
 
   test('check isClientCompiler', () => {
-    expect(isClientCompiler(webpack({}))).toBeTruthy();
+    expect(isClientCompiler(rspack({}))).toBeTruthy();
 
     expect(
       isClientCompiler(
-        webpack({
+        rspack({
           target: ['web', 'es5'],
         }),
       ),
@@ -247,7 +287,7 @@ describe('test dev server', () => {
 
     expect(
       isClientCompiler(
-        webpack({
+        rspack({
           target: 'node',
         }),
       ),
@@ -255,7 +295,7 @@ describe('test dev server', () => {
 
     expect(
       isClientCompiler(
-        webpack({
+        rspack({
           target: ['node'],
         }),
       ),

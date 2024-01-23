@@ -141,7 +141,7 @@ if (!String.prototype.replaceAll) {
 以 `query-string` 这个 npm 包为例，你可以做如下的配置：
 
 ```ts
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {
@@ -159,7 +159,7 @@ export default {
 比如，你需要引用 monorepo 中 `packages` 目录下的某个模块，可以添加如下的配置：
 
 ```ts
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {

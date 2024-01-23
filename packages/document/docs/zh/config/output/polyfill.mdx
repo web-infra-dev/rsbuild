@@ -5,9 +5,9 @@
 
 通过 `output.polyfill` 选项，你可以控制 polyfills 的注入方式。
 
-### 配置项
+## 可选值
 
-#### usage
+### usage
 
 当 `output.polyfill` 配置为 `'usage'` 时，Rsbuild 会在每个文件中根据代码中使用的 API 注入 polyfills。
 
@@ -19,7 +19,7 @@ export default {
 };
 ```
 
-#### entry
+### entry
 
 当 `output.polyfill` 配置为 `'entry'` 时，Rsbuild 会在每个入口文件中注入 polyfills。
 
@@ -31,7 +31,7 @@ export default {
 };
 ```
 
-#### off
+### off
 
 当 `output.polyfill` 配置为 `'off'` 时，Rsbuild 不会注入 polyfills，开发者需要自行保证代码的兼容性。
 

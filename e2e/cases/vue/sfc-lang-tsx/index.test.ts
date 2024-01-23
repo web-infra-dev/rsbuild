@@ -1,6 +1,5 @@
 import { expect } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
-import { rspackOnlyTest } from '@scripts/helper';
+import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should build Vue sfc with lang="tsx" correctly',
@@ -10,7 +9,7 @@ rspackOnlyTest(
       runServer: true,
     });
 
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    await gotoPage(page, rsbuild);
 
     const button = page.locator('#button');
     await expect(button).toHaveText('0');

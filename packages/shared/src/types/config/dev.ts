@@ -1,5 +1,5 @@
 import type { ArrayOrNot } from '../utils';
-import type { IncomingMessage, ServerResponse } from 'http';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 
 export type ProgressBarConfig = {
   id?: string;

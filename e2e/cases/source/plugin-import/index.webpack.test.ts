@@ -1,4 +1,4 @@
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginSwc } from '@rsbuild/plugin-swc';
 import { findEntry, copyPkgToNodeModules, cases, shareTest } from './helper';

@@ -7,8 +7,7 @@
     "module": "ES2022",
     "target": "ES2017",
     "paths": {
-      "@/*": ["./src/*"],
-      "@scripts/*": ["../../scripts/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src", "*.test.ts"]

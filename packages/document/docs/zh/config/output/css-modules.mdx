@@ -12,7 +12,7 @@ type CssModules = {
 
 用于自定义 CSS Modules 配置。
 
-### cssModules.auto
+## cssModules.auto
 
 auto 配置项允许基于文件名自动启用 CSS 模块。
 
@@ -38,7 +38,7 @@ export default {
 };
 ```
 
-### cssModules.exportLocalsConvention
+## cssModules.exportLocalsConvention
 
 导出的类名称的样式。
 
@@ -73,7 +73,7 @@ export default {
 };
 ```
 
-### cssModules.localIdentName
+## cssModules.localIdentName
 
 - **类型：** `string`
 - **默认值：**
@@ -87,7 +87,7 @@ const localIdentName = isProd
 
 设置 CSS Modules 编译后生成的 className 格式。
 
-#### 默认值
+### 默认值
 
 `localIdentName` 在开发环境和生产环境有不同的默认值。
 
@@ -101,7 +101,7 @@ import styles from './index.module.scss';
 console.log(styles.header);
 ```
 
-#### 模板字符串
+### 模板字符串
 
 在 `localIdentName` 中，你可以使用以下模板字符串：
 
@@ -118,7 +118,7 @@ console.log(styles.header);
 在使用 Rspack 作为打包工具时, 暂不支持配置 `<hashDigest>`。
 :::
 
-#### 示例
+### 示例
 
 将 `localIdentName` 设置为其他值：
 

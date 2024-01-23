@@ -11,24 +11,24 @@ export const isDebug = () => {
     return false;
   }
 
-  const flag = process.env.DEBUG.toLocaleLowerCase();
-  return (
-    flag === 'rsbuild' ||
-    // compat the legacy usage from Modern.js Builder
-    flag === 'builder'
-  );
+  const values = process.env.DEBUG.toLocaleLowerCase().split(',');
+  return ['rsbuild', 'builder', '*'].some((key) => values.includes(key));
 };
 
-export const debug = (message: string | (() => string), showTime = true) => {
+function getTime() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+
+  return `${hours}:${minutes}:${seconds}`;
+}
+
+export const debug = (message: string | (() => string)) => {
   if (isDebug()) {
-    const { performance } = require('perf_hooks');
     const result = typeof message === 'string' ? message : message();
-    if (showTime) {
-      const time = color.gray(`[${performance.now().toFixed(2)} ms]`);
-      logger.debug(`${result} ${time}`);
-    } else {
-      logger.debug(result);
-    }
+    const time = color.gray(`${getTime()}`);
+    logger.debug(`${time} ${result}`);
   }
 };
 

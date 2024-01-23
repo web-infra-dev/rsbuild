@@ -1,4 +1,4 @@
-import path, { join } from 'path';
+import path, { join } from 'node:path';
 import type { ParsedTask, TaskConfig } from './types';
 import fs, { copySync } from 'fs-extra';
 import { replaceFileContent } from './helper';
@@ -44,6 +44,13 @@ export const TASKS: TaskConfig[] = [
       'dotenv-expand',
       'ws',
       {
+        name: 'launch-editor-middleware',
+        ignoreDts: true,
+        externals: {
+          picocolors: '@rsbuild/shared/picocolors',
+        },
+      },
+      {
         name: 'sirv',
         afterBundle(task) {
           replaceFileContent(
@@ -64,6 +71,13 @@ export const TASKS: TaskConfig[] = [
         name: 'connect-history-api-fallback',
         ignoreDts: true,
       },
+      {
+        name: 'node-loader',
+        ignoreDts: true,
+        externals: {
+          'loader-utils': '@rsbuild/shared/loader-utils2',
+        },
+      },
     ],
   },
   {
@@ -76,7 +90,6 @@ export const TASKS: TaskConfig[] = [
       'deepmerge',
       'fs-extra',
       'chokidar',
-      'webpack-chain',
       'webpack-merge',
       'mime-types',
       'connect',
@@ -84,8 +97,20 @@ export const TASKS: TaskConfig[] = [
       'gzip-size',
       'json5',
       {
+        name: 'webpack-chain',
+        externals: {
+          deepmerge: '../deepmerge',
+        },
+      },
+      {
         name: 'yaml',
         ignoreDts: true,
+        afterBundle(task) {
+          fs.writeFileSync(
+            join(task.distPath, 'index.d.ts'),
+            'export declare function parse(src: string, options?: any): any;',
+          );
+        },
       },
       {
         name: 'line-diff',
@@ -100,12 +125,20 @@ export const TASKS: TaskConfig[] = [
         ignoreDts: true,
       },
       {
+        name: 'icss-utils',
+        ignoreDts: true,
+      },
+      {
         name: 'postcss-value-parser',
         ignoreDts: true,
       },
       {
         name: 'postcss-modules-local-by-default',
         ignoreDts: true,
+        externals: {
+          'icss-utils': '../icss-utils',
+          'postcss-value-parser': '../postcss-value-parser',
+        },
       },
       {
         name: 'postcss-modules-extract-imports',
@@ -118,9 +151,12 @@ export const TASKS: TaskConfig[] = [
       {
         name: 'postcss-modules-values',
         ignoreDts: true,
+        externals: {
+          'icss-utils': '../icss-utils',
+        },
       },
       {
-        name: 'icss-utils',
+        name: 'postcss-flexbugs-fixes',
         ignoreDts: true,
       },
       {
@@ -175,6 +211,7 @@ export const TASKS: TaskConfig[] = [
         ignoreDts: true,
         externals: {
           semver: '../semver',
+          'postcss-value-parser': '../postcss-value-parser',
           'postcss-modules-local-by-default':
             '../postcss-modules-local-by-default',
           'postcss-modules-extract-imports':
@@ -229,6 +266,13 @@ export const TASKS: TaskConfig[] = [
           if (fs.existsSync(typesFile)) {
             fs.renameSync(typesFile, path.join(depPath, 'types.d.ts'));
           }
+        },
+      },
+      {
+        name: 'resolve-url-loader',
+        ignoreDts: true,
+        externals: {
+          'loader-utils': '../loader-utils2',
         },
       },
       {

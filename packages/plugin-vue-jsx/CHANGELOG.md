@@ -1,5 +1,39 @@
 # @rsbuild/plugin-vue-jsx
 
+## 0.3.6
+
+### Patch Changes
+
+- @rsbuild/core@0.3.6
+- @rsbuild/plugin-babel@0.3.6
+
+## 0.3.5
+
+### Patch Changes
+
+- @rsbuild/core@0.3.5
+- @rsbuild/plugin-babel@0.3.5
+
+## 0.3.4
+
+### Patch Changes
+
+- Updated dependencies [3ebf3b5]
+  - @rsbuild/core@0.3.4
+  - @rsbuild/plugin-babel@0.3.4
+
+## 0.3.3
+
+### Patch Changes
+
+- @rsbuild/plugin-babel@0.3.3
+
+## 0.3.2
+
+### Patch Changes
+
+- @rsbuild/plugin-babel@0.3.2
+
 ## 0.3.1
 
 ### Patch Changes

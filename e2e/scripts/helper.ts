@@ -1,5 +1,5 @@
-import { platform } from 'os';
-import { join } from 'path';
+import { platform } from 'node:os';
+import { join } from 'node:path';
 import { test } from '@playwright/test';
 import { fse, type ConsoleType, castArray } from '@rsbuild/shared';
 import glob, {

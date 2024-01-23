@@ -4,7 +4,8 @@
   "workspaces": {
     "packages": [
       "packages/*",
-      "packages/compat/*"
+      "packages/compat/*",
+      "scripts/*"
     ]
   },
   "scripts": {
@@ -35,10 +36,10 @@
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.5.1",
+    "@biomejs/biome": "1.5.3",
     "@changesets/cli": "^2.27.1",
     "@ls-lint/ls-lint": "^2.2.2",
-    "@modern-js/module-tools": "^2.45.0",
+    "@modern-js/module-tools": "^2.46.1",
     "@rsbuild/tsconfig": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
@@ -47,21 +48,33 @@
     "nano-staged": "^0.8.0",
     "nx": "^17.2.6",
     "prettier": "^3.0.3",
-    "vite-tsconfig-paths": "4.2.1",
     "vitest": "1.0.1"
   },
-  "packageManager": "pnpm@8.14.0",
+  "packageManager": "pnpm@8.14.1",
   "engines": {
     "node": ">=16.18.1",
     "pnpm": ">=8.7.0"
   },
   "pnpm": {
     "overrides": {
-      "esbuild": "~0.19.0"
+      "esbuild": "~0.19.0",
+      "eslint": "npm:@biomejs/biome@1.x",
+      "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@1.0.24",
+      "@rsbuild/core": "link:packages/core",
+      "@rsbuild/plugin-react": "link:packages/plugin-react",
+      "@rsbuild/plugin-svgr": "link:packages/plugin-svgr"
     },
     "allowedDeprecatedVersions": {
       "vue": "2.7.14",
       "consolidate": "0.15.1"
+    },
+    "packageExtensions": {
+      "dts-packer": {
+        "//": "`resolve >= 1.21.0` breaks dts-packer",
+        "dependencies": {
+          "resolve": "1.20.0"
+        }
+      }
     }
   }
 }

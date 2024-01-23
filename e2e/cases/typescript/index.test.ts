@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 // TODO not supported yet
 test.skip('should compile const enum correctly', async () => {

@@ -1,5 +1,41 @@
 # @rsbuild/core
 
+## 0.3.6
+
+### Patch Changes
+
+- Updated dependencies [d2d84d7]
+  - @rsbuild/shared@0.3.6
+
+## 0.3.5
+
+### Patch Changes
+
+- Updated dependencies [8a98fe4]
+  - @rsbuild/shared@0.3.5
+
+## 0.3.4
+
+### Patch Changes
+
+- 3ebf3b5: release: bump 0.3.4
+- Updated dependencies [3ebf3b5]
+  - @rsbuild/shared@0.3.4
+
+## 0.3.3
+
+### Patch Changes
+
+- 4725522: release: 0.3.3
+  - @rsbuild/shared@0.3.3
+
+## 0.3.2
+
+### Patch Changes
+
+- 13fe4d8: chore: bump 0.3.2
+  - @rsbuild/shared@0.3.2
+
 ## 0.3.1
 
 ### Patch Changes

@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { deepmerge, getCoreJsVersion } from '@rsbuild/shared';
 import { generateBaseConfig } from './base';
 import type { BabelConfig, WebPresetOptions } from './types';

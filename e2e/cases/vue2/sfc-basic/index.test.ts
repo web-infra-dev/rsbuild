@@ -1,6 +1,5 @@
 import { expect } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
-import { rspackOnlyTest } from '@scripts/helper';
+import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest('should build basic Vue sfc correctly', async ({ page }) => {
   const rsbuild = await build({
@@ -8,7 +7,7 @@ rspackOnlyTest('should build basic Vue sfc correctly', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const button1 = page.locator('#button1');
   const button2 = page.locator('#button2');

@@ -1,3 +1,3 @@
-import baseConfig from '../../scripts/modern.base.config';
+import { bundleMjsOnlyConfig } from '../../scripts/modern.base.config';
 
-export default baseConfig;
+export default bundleMjsOnlyConfig;

@@ -1,8 +1,10 @@
-import type { Server } from 'http';
+import type { Server } from 'node:http';
 import connect from '@rsbuild/shared/connect';
-import { join } from 'path';
+import { join } from 'node:path';
 import sirv from '../../compiled/sirv';
 import {
+  getNodeEnv,
+  setNodeEnv,
   ROOT_DIST_DIR,
   getAddressUrls,
   isDebug,
@@ -142,8 +144,8 @@ export async function startProdServer(
   rsbuildConfig: RsbuildConfig,
   { getPortSilently }: PreviewServerOptions = {},
 ) {
-  if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'production';
+  if (!getNodeEnv()) {
+    setNodeEnv('production');
   }
 
   const { serverConfig, port, host, https } = await getServerOptions({

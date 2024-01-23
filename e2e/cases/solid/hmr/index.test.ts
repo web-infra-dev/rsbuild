@@ -1,8 +1,7 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { test, expect } from '@playwright/test';
-import { rspackOnlyTest } from '@scripts/helper';
-import { dev, getHrefByEntryName } from '@scripts/shared';
+import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest('hmr should work properly', async ({ page }) => {
   // HMR cases will fail in Windows
@@ -12,11 +11,11 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
 
   const root = __dirname;
 
-  const handle = await dev({
+  const rsbuild = await dev({
     cwd: root,
   });
 
-  await page.goto(getHrefByEntryName('index', handle.port));
+  await gotoPage(page, rsbuild);
 
   const a = page.locator('#A');
   const b = page.locator('#B');
@@ -47,5 +46,5 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
 
   // recover the source code
   fs.writeFileSync(filePath, sourceCodeB, 'utf-8');
-  handle.server.close();
+  rsbuild.server.close();
 });

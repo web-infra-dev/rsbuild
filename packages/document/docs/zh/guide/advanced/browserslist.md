@@ -24,7 +24,7 @@ polyfill 是一种用于解决浏览器兼容问题的技术。它用于模拟�
 
 通过 `package.json` 的 `browserslist` 设置：
 
-```json
+```json title="package.json"
 {
   "browserslist": [
     "iOS >= 9",
@@ -38,7 +38,7 @@ polyfill 是一种用于解决浏览器兼容问题的技术。它用于模拟�
 
 通过独立的 `.browserslistrc` 文件设置：
 
-```yaml
+```yaml title=".browserslistrc"
 iOS >= 9
 Android >= 4.4
 last 2 versions
@@ -52,13 +52,52 @@ not dead
 
 当你同时构建多种产物，比如 target 包含 `web` 和 `node` 两种产物时，只有 `web` 产物会受到 `.browserslistrc` 文件的影响。如果你希望对 `node` 产物进行修改，可以使用下方的 `output.overrideBrowserslist` 配置。
 
-### 使用 output.overrideBrowserslist 配置
+### 按环境设置
+
+你可以基于 `NODE_ENV` 来设置不同的 browserslist，这样可以为开发环境和生产环境指定不同浏览器范围。
+
+比如在 `package.json` 中基于 key 设置：
+
+```json title="package.json"
+{
+  "browserslist": {
+    "production": [
+      "chrome >= 87",
+      "edge >= 88",
+      "firefox >= 78",
+      "safari >= 14"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
+```
+
+也可以通过 `.browserslistrc`：
+
+```yaml title=".browserslistrc"
+[production]
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
+
+[development]
+last 1 chrome version
+last 1 firefox version
+last 1 safari version
+```
+
+### overrideBrowserslist
 
 除了上述的标准用法，Rsbuild 还提供了 [output.overrideBrowserslist](/config/output/override-browserslist) 配置项，同样可以设置 Browserslist 的值。
 
 `overrideBrowserslist` 可以被设置为一个数组，数组的写法与 `browserslistrc` 配置是一样的，但比 `browserslistrc` 拥有更高的优先级。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     overrideBrowserslist: [
@@ -72,13 +111,13 @@ export default {
 };
 ```
 
-当 `.overrideBrowserslist` 被设置为数组时，同样只对浏览器端的构建产物生效。
+当 `output.overrideBrowserslist` 被设置为数组时，同样只对浏览器端的构建产物生效。
 
 当你同时构建多种类型的产物时，你可以为不同的产物类型设置不同的目标浏览器范围。此时，你需要把 `overrideBrowserslist` 设置为一个对象，对象的 key 为对应的产物类型。
 
 比如为 `web` 和 `node` 设置不同的范围：
 
-```js
+```js title="rsbuild.config.ts"
 export default {
   output: {
     overrideBrowserslist: {
@@ -117,7 +156,7 @@ IE 11
 
 - 设置为支持原生 ES Modules 的浏览器（推荐）：
 
-```yaml
+```yaml title=".browserslistrc"
 chrome >= 87
 edge >= 88
 firefox >= 78
@@ -126,7 +165,7 @@ safari >= 14
 
 - 设置为支持 ES6 的浏览器：
 
-```yaml
+```yaml title=".browserslistrc"
 chrome >= 51
 edge >= 15
 firefox >= 54
@@ -138,7 +177,7 @@ ios_saf >= 10
 
 移动端 H5 场景主要兼容 `iOS` 和 `Android` 系统，通常我们将 Browserslist 设置为：
 
-```yaml
+```yaml title=".browserslistrc"
 iOS >= 9
 Android >= 4.4
 last 2 versions
@@ -152,7 +191,7 @@ not dead
 
 你也可以选择在 H5 场景使用 ES6 规范，这样会让页面的性能表现更好，对应的 Browserslist 如下：
 
-```yaml
+```yaml title=".browserslistrc"
 iOS >= 10
 Chrome >= 51
 > 0.5%
@@ -168,7 +207,7 @@ Rsbuild 会根据 [output.targets](/config/output/targets) 来设置不同的 Br
 
 Web 产物的默认值如下所示：
 
-```yaml
+```yaml title=".browserslistrc"
 chrome >= 87
 edge >= 88
 firefox >= 78
@@ -181,7 +220,7 @@ safari >= 14
 
 Node 产物默认最低兼容到 Node.js 16.0 版本。
 
-```yaml
+```yaml title=".browserslistrc"
 node >= 16
 ```
 
@@ -189,7 +228,7 @@ node >= 16
 
 Web Worker 产物默认的浏览器范围与 Web 一致。
 
-```yaml
+```yaml title=".browserslistrc"
 chrome >= 87
 edge >= 88
 firefox >= 78

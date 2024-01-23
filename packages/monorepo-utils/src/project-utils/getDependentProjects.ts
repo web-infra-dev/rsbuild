@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { fse } from '@rsbuild/shared';
 import { getMonorepoBaseData, getMonorepoSubProjects } from '../common';
 import type { Project } from '../project/project';

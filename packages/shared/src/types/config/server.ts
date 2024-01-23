@@ -1,9 +1,10 @@
-import type { IncomingMessage, ServerResponse } from 'http';
-import type { ServerOptions as HttpsServerOptions } from 'https';
+import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { ServerOptions as HttpsServerOptions } from 'node:https';
 import type {
   Options as BaseProxyOptions,
   Filter as ProxyFilter,
 } from '../../../compiled/http-proxy-middleware';
+import type { Routes } from '../hooks';
 
 export type HtmlFallback = false | 'index';
 
@@ -45,6 +46,7 @@ export type PrintUrls =
   | ((params: {
       urls: string[];
       port: number;
+      routes: Routes;
       protocol: string;
     }) => string[] | void);
 
@@ -52,7 +54,7 @@ export type PublicDir =
   | false
   | {
       /**
-       * Directory to serve as static assets
+       * The name of the public directory, can be set as a relative path or an absolute path.
        * @default 'public'
        */
       name?: string;

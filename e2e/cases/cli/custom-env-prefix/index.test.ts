@@ -1,7 +1,7 @@
-import path from 'path';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { execSync } from 'child_process';
+import { execSync } from 'node:child_process';
 
 test('should allow to custom env prefix via loadEnv method', async () => {
   execSync('npx rsbuild build', {

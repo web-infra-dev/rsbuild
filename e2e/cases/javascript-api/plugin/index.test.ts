@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { expect } from '@playwright/test';
 import { rspackOnlyTest, globContentJSON } from '../../../scripts/helper';
 import { createRsbuild } from '@rsbuild/core';

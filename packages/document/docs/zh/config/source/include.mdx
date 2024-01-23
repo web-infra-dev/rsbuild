@@ -21,7 +21,7 @@ const defaultInclude = [
 比如:
 
 ```ts
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {
@@ -37,7 +37,7 @@ export default {
 以 `query-string` 为例，你可以做如下的配置：
 
 ```ts
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {
@@ -83,7 +83,7 @@ export default {
 在 Monorepo 中进行开发时，如果需要引用 Monorepo 中其他库的 JavaScript 代码，也可以直接在 `source.include` 进行配置:
 
 ```ts
-import path from 'path';
+import path from 'node:path';
 
 export default {
   source: {

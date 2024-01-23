@@ -4,3 +4,4 @@ packages:
   - 'packages/**'
   - 'examples/**'
   - '!**/compiled/**'
+  - '!**/create-rsbuild/template-*'
