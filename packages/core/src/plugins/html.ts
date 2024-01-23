@@ -2,6 +2,7 @@ import path, { isAbsolute } from 'node:path';
 import {
   fse,
   color,
+  isNil,
   isURL,
   castArray,
   getMinify,
@@ -11,7 +12,6 @@ import {
   isHtmlDisabled,
   removeTailSlash,
   mergeChainedOptions,
-  isNil,
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
 import type {
