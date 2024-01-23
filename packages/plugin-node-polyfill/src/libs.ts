@@ -22,15 +22,21 @@ export const querystring = require.resolve('querystring-es3/');
 export const readline = null;
 export const repl = null;
 export const stream = require.resolve('stream-browserify');
-export const _stream_duplex = require.resolve('readable-stream/duplex.js');
+export const _stream_duplex = require.resolve(
+  'readable-stream/lib/_stream_duplex.js',
+);
 export const _stream_passthrough = require.resolve(
-  'readable-stream/passthrough.js',
+  'readable-stream/lib/_stream_passthrough.js',
 );
-export const _stream_readable = require.resolve('readable-stream/readable.js');
+export const _stream_readable = require.resolve(
+  'readable-stream/lib/_stream_readable.js',
+);
 export const _stream_transform = require.resolve(
-  'readable-stream/transform.js',
+  'readable-stream/lib/_stream_transform.js',
 );
-export const _stream_writable = require.resolve('readable-stream/writable.js');
+export const _stream_writable = require.resolve(
+  'readable-stream/lib/_stream_writable.js',
+);
 export const string_decoder = require.resolve('string_decoder/');
 export const sys = require.resolve('util/util.js');
 export const timers = require.resolve('timers-browserify');
