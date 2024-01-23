@@ -39,13 +39,17 @@ export const IMAGE_EXTENSIONS = [
   'png',
   'jpg',
   'jpeg',
+  'pjpeg',
+  'pjp',
   'gif',
   'bmp',
   'webp',
   'ico',
   'apng',
   'avif',
+  'tif',
   'tiff',
+  'jfif',
 ];
 export const MEDIA_EXTENSIONS = [
   'mp4',
@@ -56,6 +60,8 @@ export const MEDIA_EXTENSIONS = [
   'flac',
   'aac',
   'mov',
+  'm4a',
+  'opus',
 ];
 export const DEFAULT_ASSET_PREFIX = '/';
 

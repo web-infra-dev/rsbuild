@@ -10,9 +10,9 @@ Rsbuild 支持在代码中引用图片、字体、媒体类型的静态资源。
 
 以下是 Rsbuild 默认支持的静态资源格式：
 
-- **图片**：png、jpg、jpeg、gif、svg、bmp、webp、ico、apng、avif、tiff、svg。
+- **图片**：png、jpg、jpeg、gif、svg、bmp、webp、ico、apng、avif、tif、tiff、jfif、pjpeg、pjp。
+- **媒体**：mp4、webm、ogg、mp3、wav、flac、aac、mov、m4a、opus。
 - **字体**：woff、woff2、eot、ttf、otf、ttc。
-- **媒体**：mp4、webm、ogg、mp3、wav、flac、aac、mov。
 
 如果你需要引用其他格式的静态资源，请参考 [扩展静态资源类型](#扩展静态资源类型)。
 

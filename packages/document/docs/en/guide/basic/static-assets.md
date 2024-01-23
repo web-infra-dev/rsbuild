@@ -10,9 +10,9 @@ Static assets are files that are part of a web application and do not change, ev
 
 The following are the formats supported by Rsbuild by default:
 
-- **Image**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tiff, svg.
+- **Image**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tif, tiff, jfif, pjpeg, pjp.
+- **Media**: mp4, webm, ogg, mp3, wav, flac, aac, mov, m4a, opus.
 - **Fonts**: woff, woff2, eot, ttf, otf, ttc.
-- **Media**: mp4, webm, ogg, mp3, wav, flac, aac, mov.
 
 If you need to import assets in other formats, please refer to [Extend Asset Types](#extend-asset-types).
 
