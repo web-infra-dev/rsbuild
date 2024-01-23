@@ -50,7 +50,7 @@
     "prettier": "^3.0.3",
     "vitest": "1.0.1"
   },
-  "packageManager": "pnpm@8.14.1",
+  "packageManager": "pnpm@8.14.2",
   "engines": {
     "node": ">=16.18.1",
     "pnpm": ">=8.7.0"
