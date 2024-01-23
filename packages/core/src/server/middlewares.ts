@@ -47,9 +47,9 @@ export const getRequestLoggerMiddleware: () => Promise<Middleware> =
         const totalTime =
           (endAt[0] - _startAt[0]) * 1e3 + (endAt[1] - _startAt[1]) * 1e-6;
 
-        // :method :url :status :total-time ms
-        logger.debug(
-          `${method} ${color.gray(url)} ${statusColor(status)} ${color.gray(
+        // :status :method :url :total-time ms
+        debug(
+          `${statusColor(status)} ${method} ${color.gray(url)} ${color.gray(
             `${totalTime.toFixed(3)} ms`,
           )}`,
         );
@@ -120,9 +120,9 @@ export const getHtmlFallbackMiddleware: (params: {
 
     const rewrite = (newUrl: string, isFallback = false) => {
       isFallback &&
-        debug?.(
-          `${color.yellow('Fallback')} ${req.method} ${color.gray(
-            `${req.url} to ${newUrl}`,
+        debug(
+          `${req.method} ${color.gray(
+            `${req.url} ${color.yellow('fallback')} to ${newUrl}`,
           )}`,
         );
 
