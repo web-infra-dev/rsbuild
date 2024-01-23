@@ -40,9 +40,9 @@ export function determineAsValue({
   // Use file instead of href option because the publicPath part may be malformed.
   // See https://github.com/vuejs/vue-cli/issues/5672
   const url = new URL(file || href, 'https://example.com');
-  const extension = path.extname(url.pathname);
+  const extension = path.extname(url.pathname).slice(1);
 
-  if (['.css'].includes(extension)) {
+  if (['css'].includes(extension)) {
     return 'style';
   }
 
@@ -62,7 +62,7 @@ export function determineAsValue({
     return 'font';
   }
 
-  if (['.vtt'].includes(extension)) {
+  if (['vtt'].includes(extension)) {
     return 'track';
   }
 
