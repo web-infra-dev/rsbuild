@@ -20,7 +20,7 @@
     "activeMatch": "/api/"
   },
   {
-    "text": "Community",
+    "text": "社区",
     "link": "/community/releases/",
     "activeMatch": "/community/"
   }
