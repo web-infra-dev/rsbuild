@@ -12,14 +12,19 @@ describe('getRegExpForExts', () => {
   });
 });
 
-describe('plugin-asset(image)', () => {
-  const cases = [
-    {
-      name: 'should add image rules correctly',
-      rsbuildConfig: {},
-    },
-    {
-      name: 'should allow to use distPath.image to modify dist path',
+describe('plugin-asset', () => {
+  test('should add image rules correctly', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginAsset()],
+    });
+
+    const config = await rsbuild.unwrapConfig();
+    expect(config).toMatchSnapshot();
+  });
+
+  test('should allow to use distPath.image to modify dist path', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginAsset()],
       rsbuildConfig: {
         output: {
           distPath: {
@@ -27,9 +32,15 @@ describe('plugin-asset(image)', () => {
           },
         },
       },
-    },
-    {
-      name: 'should allow to use distPath.image to be empty string',
+    });
+
+    const config = await rsbuild.unwrapConfig();
+    expect(config).toMatchSnapshot();
+  });
+
+  test('should add image rules correctly', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginAsset()],
       rsbuildConfig: {
         output: {
           distPath: {
@@ -37,9 +48,15 @@ describe('plugin-asset(image)', () => {
           },
         },
       },
-    },
-    {
-      name: 'should allow to use filename.image to modify filename',
+    });
+
+    const config = await rsbuild.unwrapConfig();
+    expect(config).toMatchSnapshot();
+  });
+
+  test('should allow to use filename.image to modify filename', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginAsset()],
       rsbuildConfig: {
         output: {
           filename: {
@@ -47,17 +64,9 @@ describe('plugin-asset(image)', () => {
           },
         },
       },
-    },
-  ];
-
-  it.each(cases)('$name', async (item) => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginAsset()],
-      rsbuildConfig: item.rsbuildConfig,
     });
 
     const config = await rsbuild.unwrapConfig();
-
     expect(config).toMatchSnapshot();
   });
 });

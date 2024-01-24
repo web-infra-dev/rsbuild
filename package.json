@@ -47,8 +47,8 @@
     "husky": "^8.0.3",
     "nano-staged": "^0.8.0",
     "nx": "^17.2.6",
-    "prettier": "^3.0.3",
-    "vitest": "1.0.1"
+    "prettier": "^3.2.4",
+    "vitest": "^1.2.1"
   },
   "packageManager": "pnpm@8.14.2",
   "engines": {
