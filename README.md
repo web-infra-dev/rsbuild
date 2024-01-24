@@ -72,8 +72,9 @@ To get started with Rsbuild, see the [Quick Start](https://rsbuild.dev/guide/sta
 
 ## 🦀 Ecosystem
 
-- [Rspack](https://github.com/web-infra-dev/rspack): the underlying bundler of Rsbuild.
+- [Rspack](https://github.com/web-infra-dev/rspack): A fast Rust-based web bundler.
 - [Rspress](https://github.com/web-infra-dev/rspress): A fast static site generator based on Rsbuild.
+- [Rsdoctor](https://github.com/web-infra-dev/rsdoctor): A one-stop build analyzer for Rspack and Webpack.
 - [Modern.js](https://github.com/web-infra-dev/modern.js): A progressive React framework based on Rsbuild.
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rspack and Rsbuild.
 
