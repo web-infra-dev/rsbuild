@@ -43,11 +43,30 @@ export default {
 };
 ```
 
+### isDev
+
+- **Type:** `boolean`
+
+Used to determine whether the current build is a development build, such as:
+
+```js
+export default {
+  tools: {
+    bundlerChain: (config, { isDev }) => {
+      if (isDev) {
+        config.devtool = 'eval-cheap-source-map';
+      }
+      return config;
+    },
+  },
+};
+```
+
 ### isProd
 
 - **Type:** `boolean`
 
-The `isProd` parameter can be used to determine whether the current environment is production. For example:
+Used to determine whether the current build is a production build, such as:
 
 ```js
 export default {

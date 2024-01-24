@@ -67,20 +67,38 @@ export default {
 };
 ```
 
-### isProd
+### isDev
 
 - **类型：** `boolean`
 
-通过 isProd 参数可以判断当前环境是否为 production。比如：
+用于判断当前是否为开发环境构建，比如：
 
 ```js
 export default {
   tools: {
-    rspack: (config, { isProd }) => {
-      if (isProd) {
-        config.devtool = 'source-map';
+    rspack: (config, { isDev }) => {
+      if (isDev) {
+        config.devtool = 'eval-cheap-source-map';
       }
       return config;
+    },
+  },
+};
+```
+
+### isProd
+
+- **类型：** `boolean`
+
+用于判断当前是否为生产环境构建，比如：
+
+```js
+export default {
+  tools: {
+    rspack: (chain, { isProd }) => {
+      if (isProd) {
+        chain.devtool('source-map');
+      }
     },
   },
 };

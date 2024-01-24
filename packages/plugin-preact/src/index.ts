@@ -23,7 +23,7 @@ export const pluginPreact = (
   setup(api) {
     const { reactAliasesEnabled = true } = options;
 
-    api.modifyBundlerChain(async (chain, { isProd }) => {
+    api.modifyBundlerChain(async (chain, { isDev }) => {
       if (reactAliasesEnabled) {
         chain.resolve.alias.merge({
           react: 'preact/compat',
@@ -34,7 +34,7 @@ export const pluginPreact = (
       }
 
       const reactOptions: SwcReactConfig = {
-        development: !isProd,
+        development: isDev,
         runtime: 'automatic',
         importSource: 'preact',
       };

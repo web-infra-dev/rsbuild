@@ -19,7 +19,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
     pre: [PLUGIN_BABEL_NAME],
 
     setup(api) {
-      api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
+      api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev }) => {
         const rsbuildConfig = api.getNormalizedConfig();
 
         modifyBabelLoaderOptions({
@@ -32,7 +32,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
               options.solidPresetOptions || {},
             ]);
 
-            if (!isProd && rsbuildConfig.dev.hmr) {
+            if (isDev && rsbuildConfig.dev.hmr) {
               babelOptions.plugins ??= [];
               babelOptions.plugins.push([
                 require.resolve('solid-refresh/babel'),

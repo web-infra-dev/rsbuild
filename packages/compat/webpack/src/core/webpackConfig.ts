@@ -1,8 +1,6 @@
 import {
   debug,
-  CHAIN_ID,
   castArray,
-  getNodeEnv,
   chainToConfig,
   modifyBundlerChain,
   mergeChainedOptions,
@@ -12,7 +10,10 @@ import {
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
 } from '@rsbuild/shared';
-import type { InternalContext } from '@rsbuild/core/provider';
+import {
+  getChainUtils as getBaseChainUtils,
+  type InternalContext,
+} from '@rsbuild/core/provider';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import type { WebpackConfig } from '../types';
@@ -69,9 +70,6 @@ async function getChainUtils(
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
   const { getHTMLPlugin } = await import('@rsbuild/core/provider');
-  const HtmlPlugin = getHTMLPlugin();
-  const nodeEnv = getNodeEnv();
-
   const nameMap = {
     web: 'client',
     node: 'server',
@@ -80,18 +78,11 @@ async function getChainUtils(
   };
 
   return {
-    env: nodeEnv,
+    ...getBaseChainUtils(target),
     name: nameMap[target] || '',
-    target,
     webpack,
-    isProd: nodeEnv === 'production',
-    isServer: target === 'node',
-    isServiceWorker: target === 'service-worker',
-    isWebWorker: target === 'web-worker',
-    CHAIN_ID,
     getCompiledPath,
-    HtmlPlugin,
-    HtmlWebpackPlugin: HtmlPlugin,
+    HtmlWebpackPlugin: getHTMLPlugin(),
   };
 }
 

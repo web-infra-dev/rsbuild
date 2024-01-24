@@ -27,8 +27,8 @@ export function pluginCheckSyntax(
     name: 'rsbuild:check-syntax',
 
     setup(api) {
-      api.modifyBundlerChain(async (chain, { isProd, target }) => {
-        if (!isProd || target !== 'web') {
+      api.modifyBundlerChain(async (chain, { isDev, target }) => {
+        if (isDev || target !== 'web') {
           return;
         }
 

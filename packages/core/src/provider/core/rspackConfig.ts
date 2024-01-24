@@ -90,16 +90,17 @@ async function getConfigUtils(
   };
 }
 
-async function getChainUtils(target: RsbuildTarget): Promise<ModifyChainUtils> {
+export function getChainUtils(target: RsbuildTarget): ModifyChainUtils {
   const nodeEnv = getNodeEnv();
 
   return {
     env: nodeEnv,
     target,
+    isDev: nodeEnv === 'development',
     isProd: nodeEnv === 'production',
     isServer: target === 'node',
-    isServiceWorker: target === 'service-worker',
     isWebWorker: target === 'web-worker',
+    isServiceWorker: target === 'service-worker',
     getCompiledPath,
     CHAIN_ID,
     HtmlPlugin: getHTMLPlugin(),
@@ -113,7 +114,7 @@ export async function generateRspackConfig({
   target: RsbuildTarget;
   context: InternalContext;
 }): Promise<RspackConfig> {
-  const chainUtils = await getChainUtils(target);
+  const chainUtils = getChainUtils(target);
   const {
     BannerPlugin,
     DefinePlugin,

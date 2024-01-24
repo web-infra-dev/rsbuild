@@ -62,6 +62,7 @@ export type ModifyRsbuildConfigFn = (
 
 export type ModifyChainUtils = {
   env: NodeEnv;
+  isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
   isServer: boolean;

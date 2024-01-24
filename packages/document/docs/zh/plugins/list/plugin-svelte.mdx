@@ -40,11 +40,11 @@ export default {
 ```js
 const defaultOptions = {
   compilerOptions: {
-    dev: !isProd,
+    dev: isDev,
   },
   preprocess: require('svelte-preprocess')(),
   emitCss: !rsbuildConfig.output.injectStyles,
-  hotReload: !isProd && rsbuildConfig.dev.hmr,
+  hotReload: isDev && rsbuildConfig.dev.hmr,
 };
 ```
 

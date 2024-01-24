@@ -13,11 +13,7 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
               "babelrc": false,
               "compact": false,
               "configFile": false,
-              "plugins": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
-                ],
-              ],
+              "plugins": [],
               "presets": [
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
@@ -43,11 +39,6 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
       },
     ],
   },
-  "resolve": {
-    "alias": {
-      "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
-    },
-  },
 }
 `;
 
@@ -64,11 +55,7 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
               "babelrc": false,
               "compact": false,
               "configFile": false,
-              "plugins": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
-                ],
-              ],
+              "plugins": [],
               "presets": [
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
@@ -90,11 +77,6 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
         ],
       },
     ],
-  },
-  "resolve": {
-    "alias": {
-      "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
-    },
   },
 }
 `;
@@ -112,11 +94,7 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
               "babelrc": false,
               "compact": false,
               "configFile": false,
-              "plugins": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
-                ],
-              ],
+              "plugins": [],
               "presets": [
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
@@ -138,11 +116,6 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
         ],
       },
     ],
-  },
-  "resolve": {
-    "alias": {
-      "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
-    },
   },
 }
 `;

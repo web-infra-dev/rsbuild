@@ -11,10 +11,10 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
   name: 'rsbuild:inline-chunk',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { target, CHAIN_ID, isProd }) => {
+    api.modifyBundlerChain(async (chain, { target, CHAIN_ID, isDev }) => {
       const config = api.getNormalizedConfig();
 
-      if (isHtmlDisabled(config, target) || !isProd) {
+      if (isHtmlDisabled(config, target) || isDev) {
         return;
       }
 
