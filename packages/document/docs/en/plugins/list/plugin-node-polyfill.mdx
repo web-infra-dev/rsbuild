@@ -35,10 +35,23 @@ export default {
 - `Buffer`
 - `process`
 
-When the above global variables are used directly in code, the corresponding polyfill will be injected.
+When you use the above global variables in your code, the corresponding polyfill will be automatically injected.
+
+For instance, the following code would inject the `Buffer` polyfill:
 
 ```ts
 const bufferData = Buffer.from('xxxx');
+```
+
+You can disable this behavior through the `globals` option of the plugin:
+
+```ts
+pluginNodePolyfill({
+  globals: {
+    Buffer: false,
+    process: false,
+  },
+});
 ```
 
 ### Modules
