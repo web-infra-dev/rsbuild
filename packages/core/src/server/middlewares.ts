@@ -2,6 +2,7 @@ import {
   color,
   debug,
   logger,
+  isDebug,
   type HtmlFallback,
   type RequestHandler as Middleware,
 } from '@rsbuild/shared';
@@ -127,12 +128,13 @@ export const getHtmlFallbackMiddleware: (params: {
     }
 
     const rewrite = (newUrl: string, isFallback = false) => {
-      isFallback &&
+      if (isFallback && isDebug()) {
         debug(
           `${req.method} ${color.gray(
             `${req.url} ${color.yellow('fallback')} to ${newUrl}`,
           )}`,
         );
+      }
 
       req.url = newUrl;
 
