@@ -1,6 +1,23 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import * as nodeLibs from './libs';
 
+type Globals = {
+  process?: boolean;
+  Buffer?: boolean;
+};
+
+export type PluginNodePolyfillOptions = {
+  /**
+   * Whether to provide polyfill of globals.
+   * @default
+   * {
+   *   Buffer: true,
+   *   process: true,
+   * }
+   */
+  globals?: Globals;
+};
+
 const getResolveFallback = (nodeLibs: Record<string, any>) =>
   Object.keys(nodeLibs).reduce<Record<string, string | false>>(
     (previous, name) => {
@@ -14,20 +31,28 @@ const getResolveFallback = (nodeLibs: Record<string, any>) =>
     {},
   );
 
-const getProvideLibs = async () => {
-  return {
-    Buffer: [nodeLibs.buffer, 'Buffer'],
-    process: [nodeLibs.process],
-  };
+const getProvideGlobals = async (globals?: Globals) => {
+  const result: Record<string, string | string[]> = {};
+
+  if (globals?.Buffer !== false) {
+    result.Buffer = [nodeLibs.buffer, 'Buffer'];
+  }
+  if (globals?.process !== false) {
+    result.process = [nodeLibs.process];
+  }
+
+  return result;
 };
 
-export function pluginNodePolyfill(): RsbuildPlugin {
+export function pluginNodePolyfill(
+  options: PluginNodePolyfillOptions = {},
+): RsbuildPlugin {
   return {
     name: 'rsbuild:node-polyfill',
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID, isServer, bundler }) => {
-        // it had not need `node polyfill`, if the target is 'node'(server runtime).
+        // The server bundle does not require node polyfill
         if (isServer) {
           return;
         }
@@ -35,9 +60,12 @@ export function pluginNodePolyfill(): RsbuildPlugin {
         // module polyfill
         chain.resolve.fallback.merge(getResolveFallback(nodeLibs));
 
-        chain
-          .plugin(CHAIN_ID.PLUGIN.NODE_POLYFILL_PROVIDE)
-          .use(bundler.ProvidePlugin, [await getProvideLibs()]);
+        const provideGlobals = await getProvideGlobals(options.globals);
+        if (Object.keys(provideGlobals).length) {
+          chain
+            .plugin(CHAIN_ID.PLUGIN.NODE_POLYFILL_PROVIDE)
+            .use(bundler.ProvidePlugin, [provideGlobals]);
+        }
       });
     },
   };

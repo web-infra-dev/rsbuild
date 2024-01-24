@@ -35,10 +35,23 @@ export default {
 - `Buffer`
 - `process`
 
-当你在代码中使用以上全局变量时，对应 polyfill 会被自动注入。
+当你在代码中使用以上全局变量时，对应的 polyfill 会被自动注入。
+
+比如以下代码会注入 `Buffer` 的 polyfill：
 
 ```ts
 const bufferData = Buffer.from('xxxx');
+```
+
+你可以通过插件的 `globals` 选项来关闭该行为：
+
+```ts
+pluginNodePolyfill({
+  globals: {
+    Buffer: false,
+    process: false,
+  },
+});
 ```
 
 ### Modules
