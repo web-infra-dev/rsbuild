@@ -1433,6 +1433,9 @@ importers:
       '@types/less':
         specifier: 3.0.6
         version: 3.0.6
+      '@types/on-finished':
+        specifier: 2.3.4
+        version: 2.3.4
       '@types/sass-loader':
         specifier: 8.0.8
         version: 8.0.8
@@ -1517,6 +1520,9 @@ importers:
       node-loader:
         specifier: 2.0.0
         version: 2.0.0(webpack@5.89.0)
+      on-finished:
+        specifier: 2.4.1
+        version: 2.4.1
       open:
         specifier: ^8.4.0
         version: 8.4.0
@@ -5132,6 +5138,12 @@ packages:
 
   /@types/normalize-package-data@2.4.3:
     resolution: {integrity: sha512-ehPtgRgaULsFG8x0NeYJvmyH1hmlfsNLujHe9dQEia/7MAJYdzMSi19JtchUHjmBA6XC/75dK55mzZH+RyieSg==}
+    dev: true
+
+  /@types/on-finished@2.3.4:
+    resolution: {integrity: sha512-Ld4UQD3udYcKPaAWlI1EYXKhefkZcTlpqOLkQRmN3u5Ml/tUypMivUHbNH8LweP4H4FlhGGO+uBjJI1Y1dkE1g==}
+    dependencies:
+      '@types/node': 16.18.59
     dev: true
 
   /@types/parse5@6.0.3:
@@ -10255,6 +10267,13 @@ packages:
 
   /on-finished@2.3.0:
     resolution: {integrity: sha512-ikqdkGAAyf/X/gPhXGvfgAytDZtDbr+bkNUJ0N9h5MI/dmdgCs3l6hoHrcUv41sRKew3jIwrp4qQDXiK99Utww==}
+    engines: {node: '>= 0.8'}
+    dependencies:
+      ee-first: 1.1.1
+    dev: true
+
+  /on-finished@2.4.1:
+    resolution: {integrity: sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==}
     engines: {node: '>= 0.8'}
     dependencies:
       ee-first: 1.1.1

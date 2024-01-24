@@ -5,6 +5,7 @@ import {
   type HtmlFallback,
   type RequestHandler as Middleware,
 } from '@rsbuild/shared';
+import type { NextHandleFunction } from '@rsbuild/shared/connect';
 import { parse } from 'node:url';
 import path from 'node:path';
 import fs from 'node:fs';
@@ -17,6 +18,56 @@ export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
     next();
   }
 };
+
+const getStatusCodeColor = (status: number) => {
+  if (status >= 500) {
+    return color.red;
+  }
+  if (status >= 400) {
+    return color.yellow;
+  }
+  if (status >= 300) {
+    return color.cyan;
+  }
+  if (status >= 200) {
+    return color.green;
+  }
+  return (res: number) => res;
+};
+
+export const getRequestLoggerMiddleware: () => Promise<NextHandleFunction> =
+  async () => {
+    const { default: onFinished } = await import('../../compiled/on-finished');
+
+    return (req, res, next) => {
+      const _startAt = process.hrtime();
+
+      const logRequest = () => {
+        const method = req.method;
+        const url = req.originalUrl || req.url;
+        const status = Number(res.statusCode);
+
+        // get status color
+        const statusColor = getStatusCodeColor(status);
+
+        const endAt = process.hrtime();
+
+        const totalTime =
+          (endAt[0] - _startAt[0]) * 1e3 + (endAt[1] - _startAt[1]) * 1e-6;
+
+        // :status :method :url :total-time ms
+        debug(
+          `${statusColor(status)} ${method} ${color.gray(url)} ${color.gray(
+            `${totalTime.toFixed(3)} ms`,
+          )}`,
+        );
+      };
+
+      onFinished(res, logRequest);
+
+      next();
+    };
+  };
 
 export const notFoundMiddleware: Middleware = (_req, res, _next) => {
   res.statusCode = 404;
@@ -75,8 +126,13 @@ export const getHtmlFallbackMiddleware: (params: {
       outputFileSystem = devMiddleware.outputFileSystem;
     }
 
-    const rewrite = (newUrl: string) => {
-      debug?.(`Rewriting ${req.method} ${req.url} to ${newUrl}`);
+    const rewrite = (newUrl: string, isFallback = false) => {
+      isFallback &&
+        debug(
+          `${req.method} ${color.gray(
+            `${req.url} ${color.yellow('fallback')} to ${newUrl}`,
+          )}`,
+        );
 
       req.url = newUrl;
 
@@ -110,7 +166,7 @@ export const getHtmlFallbackMiddleware: (params: {
 
     if (htmlFallback === 'index') {
       if (outputFileSystem.existsSync(path.join(distPath, 'index.html'))) {
-        return rewrite('/index.html');
+        return rewrite('/index.html', true);
       }
     }
 
