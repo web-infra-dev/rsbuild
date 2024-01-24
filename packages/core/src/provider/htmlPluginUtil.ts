@@ -1,7 +1,7 @@
 /**
  * This file is used to provide/set a global html-plugin singleton
  */
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-webpack-plugin';
 
 let htmlPlugin: typeof HtmlWebpackPlugin;
 
@@ -9,9 +9,14 @@ let htmlPlugin: typeof HtmlWebpackPlugin;
  * This method is used to override the Rsbuild default html-plugin (html-rspack-plugin).
  */
 export const setHTMLPlugin = (plugin: typeof HtmlWebpackPlugin) => {
-  htmlPlugin = plugin;
+  if (plugin) {
+    htmlPlugin = plugin;
+  }
 };
 
 export const getHTMLPlugin = () => {
-  return htmlPlugin || HtmlWebpackPlugin;
+  if (!htmlPlugin) {
+    htmlPlugin = require('html-webpack-plugin');
+  }
+  return htmlPlugin;
 };
