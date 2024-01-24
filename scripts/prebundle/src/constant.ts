@@ -43,6 +43,7 @@ export const TASKS: TaskConfig[] = [
       'dotenv',
       'dotenv-expand',
       'ws',
+      'on-finished',
       {
         name: 'launch-editor-middleware',
         ignoreDts: true,

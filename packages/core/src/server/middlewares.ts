@@ -5,6 +5,7 @@ import {
   type HtmlFallback,
   type RequestHandler as Middleware,
 } from '@rsbuild/shared';
+import type { NextHandleFunction } from '@rsbuild/shared/connect';
 import { parse } from 'node:url';
 import path from 'node:path';
 import fs from 'node:fs';
@@ -18,29 +19,36 @@ export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
   }
 };
 
-export const getRequestLoggerMiddleware: () => Promise<Middleware> =
+const getStatusCodeColor = (status: number) => {
+  if (status >= 500) {
+    return color.red;
+  }
+  if (status >= 400) {
+    return color.yellow;
+  }
+  if (status >= 300) {
+    return color.cyan;
+  }
+  if (status >= 200) {
+    return color.green;
+  }
+  return (res: number) => res;
+};
+
+export const getRequestLoggerMiddleware: () => Promise<NextHandleFunction> =
   async () => {
-    const { default: onFinished } = await import('on-finished');
+    const { default: onFinished } = await import('../../compiled/on-finished');
 
     return (req, res, next) => {
       const _startAt = process.hrtime();
 
       const logRequest = () => {
         const method = req.method;
-        const url: string = (req as any).originalUrl || req.url;
+        const url = req.originalUrl || req.url;
         const status = Number(res.statusCode);
 
         // get status color
-        const statusColor =
-          status >= 500
-            ? color.red
-            : status >= 400
-            ? color.yellow
-            : status >= 300
-            ? color.cyan
-            : status >= 200
-            ? color.green
-            : (res: number) => res;
+        const statusColor = getStatusCodeColor(status);
 
         const endAt = process.hrtime();
 

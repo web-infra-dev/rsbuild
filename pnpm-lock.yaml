@@ -633,9 +633,6 @@ importers:
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.5.7
         version: /html-rspack-plugin@5.5.7
-      on-finished:
-        specifier: 2.4.1
-        version: 2.4.1
       postcss:
         specifier: ^8.4.33
         version: 8.4.33
@@ -643,9 +640,6 @@ importers:
       '@types/node':
         specifier: 16.x
         version: 16.18.59
-      '@types/on-finished':
-        specifier: 2.3.4
-        version: 2.3.4
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
@@ -1439,6 +1433,9 @@ importers:
       '@types/less':
         specifier: 3.0.6
         version: 3.0.6
+      '@types/on-finished':
+        specifier: 2.3.4
+        version: 2.3.4
       '@types/sass-loader':
         specifier: 8.0.8
         version: 8.0.8
@@ -1523,6 +1520,9 @@ importers:
       node-loader:
         specifier: 2.0.0
         version: 2.0.0(webpack@5.89.0)
+      on-finished:
+        specifier: 2.4.1
+        version: 2.4.1
       open:
         specifier: ^8.4.0
         version: 8.4.0
@@ -7418,6 +7418,7 @@ packages:
 
   /ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
+    dev: true
 
   /electron-to-chromium@1.4.559:
     resolution: {integrity: sha512-iS7KhLYCSJbdo3rUSkhDTVuFNCV34RKs2UaB9Ecr7VlqzjjWW//0nfsFF5dtDmyXlZQaDYYtID5fjtC/6lpRug==}
@@ -10294,7 +10295,7 @@ packages:
     engines: {node: '>= 0.8'}
     dependencies:
       ee-first: 1.1.1
-    dev: false
+    dev: true
 
   /once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
