@@ -18,5 +18,10 @@
     "text": "API",
     "link": "/api/start/",
     "activeMatch": "/api/"
+  },
+  {
+    "text": "Community",
+    "link": "/community/releases/",
+    "activeMatch": "/community/"
   }
 ]
