@@ -525,7 +525,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
                   "react": {
-                    "development": true,
+                    "development": false,
                     "refresh": true,
                     "runtime": "automatic",
                   },
@@ -571,7 +571,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
                   "react": {
-                    "development": true,
+                    "development": false,
                     "refresh": true,
                     "runtime": "automatic",
                   },

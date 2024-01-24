@@ -126,7 +126,7 @@ exports[`transformImport > should apply antd & arco transformImport 1`] = `
             "decoratorMetadata": true,
             "legacyDecorator": true,
             "react": {
-              "development": true,
+              "development": false,
               "refresh": true,
               "runtime": "automatic",
             },
@@ -197,7 +197,7 @@ exports[`transformImport > should not apply antd & arco when transformImport is 
             "decoratorMetadata": true,
             "legacyDecorator": true,
             "react": {
-              "development": true,
+              "development": false,
               "refresh": true,
               "runtime": "automatic",
             },

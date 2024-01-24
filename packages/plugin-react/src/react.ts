@@ -15,11 +15,11 @@ export const applyBasicReactSupport = (
   api: RsbuildPluginAPI,
   options: PluginReactOptions,
 ) => {
-  api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
+  api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev, isProd, target }) => {
     const config = api.getNormalizedConfig();
     const usingHMR = isUsingHMR(config, { isProd, target });
     const reactOptions: SwcReactConfig = {
-      development: !isProd,
+      development: isDev,
       refresh: usingHMR,
       runtime: 'automatic',
       ...options.swcReactOptions,

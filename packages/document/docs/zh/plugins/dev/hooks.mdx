@@ -78,6 +78,7 @@ export default () => ({
 ```ts
 type ModifyRspackConfigUtils = {
   env: NodeEnv;
+  isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
   isServer: boolean;
@@ -123,6 +124,7 @@ import BundlerChain from '@zh/shared/bundlerChain.md';
 ```ts
 type ModifyBundlerChainUtils = {
   env: NodeEnv;
+  isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
   isServer: boolean;

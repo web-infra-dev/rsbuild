@@ -84,7 +84,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
                 "decoratorMetadata": true,
                 "legacyDecorator": true,
                 "react": {
-                  "development": true,
+                  "development": false,
                   "refresh": true,
                   "runtime": "automatic",
                 },
@@ -211,7 +211,7 @@ exports[`svgr > 'export default Component' 1`] = `
                 "decoratorMetadata": true,
                 "legacyDecorator": true,
                 "react": {
-                  "development": true,
+                  "development": false,
                   "refresh": true,
                   "runtime": "automatic",
                 },
@@ -330,7 +330,7 @@ exports[`svgr > 'export default url' 1`] = `
                 "decoratorMetadata": true,
                 "legacyDecorator": true,
                 "react": {
-                  "development": true,
+                  "development": false,
                   "refresh": true,
                   "runtime": "automatic",
                 },

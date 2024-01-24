@@ -59,7 +59,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
         });
       }
 
-      api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
+      api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev }) => {
         const { default: sveltePreprocess } = await import('svelte-preprocess');
 
         const rsbuildConfig = api.getNormalizedConfig();
@@ -87,11 +87,11 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
         const svelteLoaderOptions = deepmerge(
           {
             compilerOptions: {
-              dev: !isProd,
+              dev: isDev,
             },
             preprocess: sveltePreprocess(options.preprocessOptions),
             emitCss: !rsbuildConfig.output.injectStyles,
-            hotReload: !isProd && rsbuildConfig.dev.hmr,
+            hotReload: isDev && rsbuildConfig.dev.hmr,
           },
           options.svelteLoaderOptions ?? {},
         );
