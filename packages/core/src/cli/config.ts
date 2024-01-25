@@ -116,7 +116,7 @@ export async function loadConfigByPath(configFile: string, envMode?: string) {
       const params: ConfigParams = {
         env: getNodeEnv(),
         command,
-        envMode,
+        envMode: envMode || getNodeEnv(),
       };
 
       const result = await configExport(params);
