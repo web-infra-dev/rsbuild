@@ -127,7 +127,6 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     media: DEFAULT_DATA_URL_SIZE,
   },
   legalComments: 'linked',
-  cleanDistPath: true,
   injectStyles: false,
   disableMinimize: false,
   sourceMap: {
@@ -216,8 +215,8 @@ export type GetTypeByPath<
 > = T extends `${infer K}[${infer P}]${infer S}`
   ? GetTypeByPath<`${K}.${P}${S}`, C>
   : T extends `${infer K}.${infer P}`
-  ? GetTypeByPath<P, K extends '' ? C : NonNullable<C[K]>>
-  : C[T];
+    ? GetTypeByPath<P, K extends '' ? C : NonNullable<C[K]>>
+    : C[T];
 
 type MinifyOptions = NonNullable<Parameters<typeof minify>[1]>;
 

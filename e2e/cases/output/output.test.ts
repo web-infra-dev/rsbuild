@@ -40,10 +40,6 @@ test.describe('output configure multi', () => {
     await rsbuild.clean();
   });
 
-  test('cleanDistPath default (enable)', async () => {
-    expect(fse.existsSync(distFilePath)).toBeFalsy();
-  });
-
   test('copy', async () => {
     expect(fse.existsSync(join(fixtures, 'rem/dist-1/icon.png'))).toBeTruthy();
   });
@@ -55,34 +51,4 @@ test.describe('output configure multi', () => {
 
     expect(fse.existsSync(join(fixtures, 'rem/dist-1/aa/js'))).toBeTruthy();
   });
-});
-
-test('cleanDistPath disable', async () => {
-  const distFilePath = join(fixtures, 'rem/dist-2/test.json');
-
-  await fse.mkdir(dirname(distFilePath), { recursive: true });
-  await fse.writeFile(
-    distFilePath,
-    `{
-    "test": 1
-  }`,
-  );
-
-  const rsbuild = await build({
-    cwd: join(fixtures, 'rem'),
-    plugins: [pluginReact()],
-    rsbuildConfig: {
-      output: {
-        distPath: {
-          root: 'dist-2',
-        },
-        cleanDistPath: false,
-      },
-    },
-  });
-
-  expect(fse.existsSync(distFilePath)).toBeTruthy();
-
-  await rsbuild.close();
-  rsbuild.clean();
 });
