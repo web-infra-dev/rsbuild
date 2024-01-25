@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-vue2-jsx",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Vue 2 JSX plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -38,7 +38,7 @@
     "typescript": "^5.3.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.3.7"
+    "@rsbuild/core": "workspace:^0.3.8"
   },
   "publishConfig": {
     "access": "public",
