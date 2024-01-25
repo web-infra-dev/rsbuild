@@ -1,21 +1,41 @@
 # cleanDistPath
 
 - **Type:** `boolean`
-- **Default:** `true`
+- **Default:** `undefined`
 
-Whether to clean up all files under the output directory (default is `dist`) before the build starts.
+Whether to clean up all files under the output directory before the build starts (the output directory defaults to `dist`).
 
-By default, Rsbuild automatically cleans the files under the output directory. You can set `cleanDistPath` to `false` to disable this behavior.
+## Default Behavior
+
+By default, if the output directory is a subdir of the project root path, Rsbuild will automatically clean all files under the build directory.
+
+When `output.distPath.root` is an external directory, or equals to the project root directory, `cleanDistPath` is not enabled by default, to avoid accidentally deleting files from other directories.
 
 ```js
 export default {
   output: {
-    cleanDistPath: false,
+    distPath: {
+      root: '../../some-dir',
+    },
   },
 };
 ```
 
-If you only need to clean files before the production build, and not in the development build, you can configure it as follows:
+## Forced Switch
+
+You can set `cleanDistPath` to `true` to force it to be enabled, or set it to `false` to force it to be disabled.
+
+```js
+export default {
+  output: {
+    cleanDistPath: true,
+  },
+};
+```
+
+## Conditional
+
+If you only need to clean files before the production build, but not before the development build, you can configure it as:
 
 ```js
 export default {

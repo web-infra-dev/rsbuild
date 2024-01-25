@@ -207,7 +207,6 @@ export interface NormalizedOutputConfig extends OutputConfig {
   };
   assetPrefix: string;
   dataUriLimit: NormalizedDataUriLimit;
-  cleanDistPath: boolean;
   disableMinimize: boolean;
   disableFilenameHash: boolean;
   enableLatestDecorators: boolean;

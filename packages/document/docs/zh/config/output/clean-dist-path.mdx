@@ -1,19 +1,39 @@
 # cleanDistPath
 
 - **类型：** `boolean`
-- **默认值：** `true`
+- **默认值：** `undefined`
 
-是否在构建开始前清理产物目录（默认为 `dist`）下的所有文件。
+是否在构建开始前清理产物目录下的所有文件（产物目录默认为 `dist`）。
 
-默认情况下，Rsbuild 会自动清理产物目录下的文件，你可以把 `cleanDistPath` 设置为 `false` 来禁用该行为。
+## 默认行为
+
+默认情况下，如果产物目录是项目根路径的子目录，Rsbuild 会自动清空产物目录下的文件。
+
+当 `output.distPath.root` 为外部目录，或等于项目根目录时，`cleanDistPath` 不会默认开启，这是为了避免误删其他目录的文件。
 
 ```js
 export default {
   output: {
-    cleanDistPath: false,
+    distPath: {
+      root: '../../some-dir',
+    },
   },
 };
 ```
+
+## 强制开关
+
+你可以把 `cleanDistPath` 设置为 `true` 来强制开启，也可以设置为 `false` 来强制关闭该行为。
+
+```js
+export default {
+  output: {
+    cleanDistPath: true,
+  },
+};
+```
+
+## 条件判断
 
 如果你只需要在生产环境构建前清理文件，而在开发环境构建前不需要，那么可以配置为：
 
