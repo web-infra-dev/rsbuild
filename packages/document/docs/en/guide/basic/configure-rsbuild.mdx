@@ -136,18 +136,36 @@ export default defineConfig(({ env, command, envMode }) => ({
 }));
 ```
 
-The function accepts the following parameters:
-
-- `env`: the value of `process.env.NODE_ENV`.
-  - When running `rsbuild dev`, the value of `env` is `development`.
-  - When running `rsbuild build` or `rsbuild preview`, the value of `env` is `production`.
-- `command`: the current command being run, such as `dev`, `build`, `preview`.
-- `envMode`: the value of the `env-mode` parameter for the current command being run.
-  - When running `rsbuild build --env-mode test`, the value of `envMode` is `test`.
-
 :::tip
 The exported config function must provide a return value. If you do not need to return any config, you can return an empty object.
 :::
+
+The function accepts the following parameters:
+
+### env
+
+- **Type:** `string`
+- **Default:** `process.env.NODE_ENV`
+
+The current running environment.
+
+- When running `rsbuild dev`, the default value of env is `development`.
+- When running `rsbuild build` or `rsbuild preview`, the default value of env is `production`.
+
+### envMode
+
+- **Type:** `string`
+- **Default:** `process.env.NODE_ENV`
+
+The current value of the CLI parameter `--env-mode`.
+
+For example, when running `rsbuild build --env-mode test`, the value of `envMode` is `test`.
+
+### command
+
+- **Type:** `string`
+
+The current running CLI command, such as `dev`, `build`, `preview`.
 
 ## Export Async Function
 
