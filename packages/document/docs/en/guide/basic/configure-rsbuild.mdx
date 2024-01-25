@@ -127,7 +127,7 @@ Rsbuild supports the export of a function in the config file, where you can dyna
 ```js title="rsbuild.config.js"
 import { defineConfig } from '@rsbuild/core';
 
-export default defineConfig(({ env, command }) => ({
+export default defineConfig(({ env, command, envMode }) => ({
   source: {
     alias: {
       '@foo': env === 'development' ? './src/foo.dev.ts' : './src/foo.prod.ts',
@@ -142,6 +142,8 @@ The function accepts the following parameters:
   - When running `rsbuild dev`, the value of `env` is `development`.
   - When running `rsbuild build` or `rsbuild preview`, the value of `env` is `production`.
 - `command`: the current command being run, such as `dev`, `build`, `preview`.
+- `envMode`: the value of the `env-mode` parameter for the current command being run.
+  - When running `rsbuild build --env-mode test`, the value of `envMode` is `test`.
 
 :::tip
 The exported config function must provide a return value. If you do not need to return any config, you can return an empty object.

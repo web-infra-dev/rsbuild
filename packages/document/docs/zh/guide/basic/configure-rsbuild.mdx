@@ -127,7 +127,7 @@ Rsbuild 支持在配置文件中导出一个函数，你可以在函数中动态
 ```js title="rsbuild.config.js"
 import { defineConfig } from '@rsbuild/core';
 
-export default defineConfig(({ env, command }) => ({
+export default defineConfig(({ env, command, envMode }) => ({
   source: {
     alias: {
       '@foo': env === 'development' ? './src/foo.dev.ts' : './src/foo.prod.ts',
@@ -142,6 +142,8 @@ export default defineConfig(({ env, command }) => ({
   - 当运行 `rsbuild dev` 时，`env` 的值为 `development`。
   - 当运行 `rsbuild build` 或 `rsbuild preview` 时，`env` 的值为 `production`。
 - `command`：对应当前运行的命令，如 `dev`、`build`、`preview`。
+- `envMode`：对应当前运行命令参数 `env-mode` 的值。
+  - 当运行 `rsbuild build --env-mode test` 时，`envMode` 的值为 `test`。
 
 :::tip
 导出的配置函数必须提供一个返回值，如果你不需要返回任何配置，可以 return 一个空对象。

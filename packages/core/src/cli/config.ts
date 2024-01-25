@@ -13,6 +13,7 @@ import { restartDevServer } from '../server/restart';
 export type ConfigParams = {
   env: string;
   command: string;
+  envMode?: string;
 };
 
 export type RsbuildConfigAsyncFn = (
@@ -98,7 +99,7 @@ export async function watchFiles(files: string[]) {
   watcher.on('unlink', callback);
 }
 
-export async function loadConfigByPath(configFile: string) {
+export async function loadConfigByPath(configFile: string, envMode?: string) {
   try {
     const { default: jiti } = await import('@rsbuild/shared/jiti');
     const loadConfig = jiti(__filename, {
@@ -115,6 +116,7 @@ export async function loadConfigByPath(configFile: string) {
       const params: ConfigParams = {
         env: getNodeEnv(),
         command,
+        envMode: envMode || getNodeEnv(),
       };
 
       const result = await configExport(params);
@@ -161,9 +163,11 @@ export async function loadConfig({
 export async function loadConfigV2({
   cwd,
   path,
+  envMode,
 }: {
   cwd: string;
   path?: string;
+  envMode?: string;
 }): Promise<{ content: RsbuildConfig; filePath: string | null }> {
   const configFile = resolveConfigPath(cwd, path);
 
@@ -175,7 +179,7 @@ export async function loadConfigV2({
   }
 
   return {
-    content: await loadConfigByPath(configFile),
+    content: await loadConfigByPath(configFile, envMode),
     filePath: configFile,
   };
 }
