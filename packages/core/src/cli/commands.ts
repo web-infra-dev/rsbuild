@@ -56,7 +56,7 @@ export async function init({
     const { content: config, filePath: configFilePath } = await loadConfigV2({
       cwd: root,
       path: commonOpts.config,
-      mode: commonOpts.envMode,
+      envMode: commonOpts.envMode,
     });
 
     const command = process.argv[2];
