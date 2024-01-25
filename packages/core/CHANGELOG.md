@@ -1,5 +1,12 @@
 # @rsbuild/core
 
+## 0.3.8
+
+### Patch Changes
+
+- e52622e: release: 0.3.8
+  - @rsbuild/shared@0.3.8
+
 ## 0.3.7
 
 ### Patch Changes
