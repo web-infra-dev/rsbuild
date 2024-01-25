@@ -42,7 +42,7 @@ module.exports = {
 ```
 
 :::tip
-上述配置仅供参考，你可以根据项目需要进行调整。
+上述配置仅供参考，你可以根据项目需要进行调整，比如非 TypeScript 项目不需要包含 ts 和 tsx 文件。
 :::
 
 ## 引入 CSS
@@ -74,3 +74,22 @@ module.exports = {
 Tailwind CSS 提供了 [Tailwind CSS IntelliSense](https://github.com/tailwindlabs/tailwindcss-intellisense) 插件，用于在 VS Code 中自动补全 Tailwind CSS 的 class names、CSS functions 和 directives。
 
 你可以在 VS Code 中安装该插件，即可开启自动补全功能。
+
+## 构建性能
+
+在使用 Tailwind CSS 时，如果没有正确地配置 `tailwind.config.js` 中的 `content` 字段，可能会导致构建性能和热更新性能下降。这是因为 Tailwind CSS 内部会基于 `content` 定义的 glob 来匹配文件，扫描的文件数量越多，产生的性能开销越大。
+
+因此，我们建议精确地指定需要扫描的路径，以避免不必要的性能开销。例如，仅包括项目源码中实际包含 Tailwind 类名的 HTML 或 JS 文件，避免包含不相关的文件或目录，尤其是 `node_modules` 目录。
+
+下面是一个扫描 `node_modules` 的错误示例：
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/**/*.{html,js,ts,jsx,tsx}',
+    // 扫描大量文件，导致性能下降
+    './node_modules/**/*.js',
+  ],
+};
+```

@@ -40,7 +40,7 @@ module.exports = {
 ```
 
 :::tip
-The above configuration is for reference only and can be modified to suit the needs of your project.
+The above configuration is for reference only and can be modified to suit the needs of your project. For example, non-TypeScript projects do not need to include ts and tsx files.
 :::
 
 ## Importing CSS
@@ -72,3 +72,22 @@ For more usage details, refer to the [Tailwind CSS documentation](https://tailwi
 Tailwind CSS provides a [Tailwind CSS IntelliSense](https://github.com/tailwindlabs/tailwindcss-intellisense) plugin for VS Code to automatically complete Tailwind CSS class names, CSS functions, and directives.
 
 You can install this plugin in VS Code to enable the autocompletion feature.
+
+## Build Performance
+
+When using Tailwind CSS, if the `content` field in `tailwind.config.js` is not correctly configured, this can lead to poor build performance and HMR performance. This is because Tailwind CSS internally matches files based on the glob defined in `content`. The more files it matches, the greater the performance overhead.
+
+Therefore, we recommend that you specify the paths to be scanned accurately to avoid unnecessary performance overhead. For example, only include HTML or JS files in the project source code that actually contain Tailwind class names, and avoid including irrelevant files or directories, especially the `node_modules` directory.
+
+Here is an bad example of scanning the `node_modules`:
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/**/*.{html,js,ts,jsx,tsx}',
+    // Scanning a large number of files, leading to performance degradation
+    './node_modules/**/*.js',
+  ],
+};
+```
