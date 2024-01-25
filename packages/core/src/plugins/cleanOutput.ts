@@ -1,4 +1,4 @@
-import { sep } from 'path';
+import { sep } from 'node:path';
 import { fse, color, logger } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
