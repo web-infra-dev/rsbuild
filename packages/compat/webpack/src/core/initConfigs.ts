@@ -53,7 +53,7 @@ export async function initConfigs({
 
     // run inspect later to avoid cleaned by cleanOutput plugin
     context.hooks.onBeforeBuild.tap(inspect);
-    context.hooks.onBeforeStartDevServer.tap(inspect);
+    context.hooks.onAfterStartDevServer.tap(inspect);
   }
 
   return {
