@@ -13,14 +13,7 @@
 - [onAfterCreateCompiler](#onaftercreatecompiler)：在创建 compiler 实例后、执行构建前调用。
 - [onExit](#onexit)：在进程即将退出时调用。
 
-### Build Hooks
-
-仅在执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时调用。
-
-- [onBeforeBuild](#onbeforebuild)：在执行生产环境构建前调用。
-- [onAfterBuild](#onafterbuild)：在执行生产环境构建后调用，可以获取到构建结果信息。
-
-### Dev Server Hooks
+### Dev Hooks
 
 仅在执行 `rsbuild dev` 命令或 `rsbuild.startDevServer()` 方法时调用。
 
@@ -28,12 +21,59 @@
 - [onAfterStartDevServer](#onafterstartdevserver)：在启动开发服务器后调用。
 - [onDevCompileDone](#ondevcompiledone)：在每次开发环境构建结束后调用。
 
-### Prod Server Hooks
+### Build Hooks
+
+仅在执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时调用。
+
+- [onBeforeBuild](#onbeforebuild)：在执行生产环境构建前调用。
+- [onAfterBuild](#onafterbuild)：在执行生产环境构建后调用，可以获取到构建结果信息。
+
+### Preview Hooks
 
 仅在执行 `rsbuild preview` 命令或 `rsbuild.preview()` 方法时调用。
 
 - [onBeforeStartProdServer](#onbeforestartprodserver)：在启动生产服务器前调用。
 - [onAfterStartProdServer](#onafterstartprodserver)：在启动生产服务器后调用。
+
+---
+
+## 执行顺序
+
+### Dev Hooks
+
+执行 `rsbuild dev` 命令或 `rsbuild.startDevServer()` 方法时，Rsbuild 会依次执行以下 hooks：
+
+- [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [onBeforeStartDevServer](#onbeforestartdevserver)
+- [modifyBundlerChain](#modifybundlerchain)
+- [modifyRspackConfig](#modifyrspackconfig)
+- [onBeforeCreateCompiler](#onbeforecreatecompiler)
+- [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onAfterStartDevServer](#onafterstartdevserver)
+- [onDevCompileDone](#ondevcompiledone)
+- [onExit](#onexit)
+
+### Build Hooks
+
+执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时，Rsbuild 会依次执行以下 hooks：
+
+- [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [modifyBundlerChain](#modifybundlerchain)
+- [modifyRspackConfig](#modifyrspackconfig)
+- [onBeforeCreateCompiler](#onbeforecreatecompiler)
+- [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onBeforeBuild](#onbeforebuild)
+- [onAfterBuild](#onafterbuild)
+- [onExit](#onexit)
+
+### Preview Hooks
+
+执行 `rsbuild preview` 命令或 `rsbuild.preview()` 方法时，Rsbuild 会依次执行以下 hooks：
+
+- [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [onBeforeStartProdServer](#onbeforestartprodserver)
+- [onAfterStartProdServer](#onafterstartprodserver)
+- [onExit](#onexit)
 
 ---
 
@@ -244,7 +284,7 @@ const myPlugin = () => ({
 });
 ```
 
-## Dev Server Hooks
+## Dev Hooks
 
 ### onBeforeStartDevServer
 
@@ -305,7 +345,7 @@ const myPlugin = () => ({
 });
 ```
 
-## Prod Server Hooks
+## Preview Hooks
 
 ### onBeforeStartProdServer
 
