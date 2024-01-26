@@ -1,5 +1,12 @@
 # @rsbuild/core
 
+## 0.3.9
+
+### Patch Changes
+
+- f90c127: release: 0.3.9
+  - @rsbuild/shared@0.3.9
+
 ## 0.3.8
 
 ### Patch Changes
