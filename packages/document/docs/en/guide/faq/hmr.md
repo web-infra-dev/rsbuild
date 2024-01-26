@@ -8,8 +8,8 @@ Before starting the troubleshooting process, it is helpful to have a basic under
 
 :::tip HMR Principle
 
-1. The browser establishes a WebSocket connection with the development server for real-time communication.
-2. Whenever the development server finishes recompiling, it sends a notification to the browser via the WebSocket. The browser then sends a `hot-update.xxx` request to the development server to load the newly compiled module.
+1. The browser establishes a WebSocket connection with the dev server for real-time communication.
+2. Whenever the dev server finishes recompiling, it sends a notification to the browser via the WebSocket. The browser then sends a `hot-update.xxx` request to the dev server to load the newly compiled module.
 3. After receiving the new module, if it is a React project, React Refresh, an official React tool, is used to update React components. Other frameworks have similar tools.
 
 :::
@@ -23,15 +23,15 @@ Open the browser console and check for the presence of the `[HMR] connected.` lo
 - If it is present, the WebSocket connection is working correctly. You can continue with the following steps.
 - If it is not present, open the Network panel in Chrome and check the status of the `ws://[host]:[port]/rsbuild-hmr` request. If the request is failed, this indicates that the HMR failed because the WebSocket connection was not successfully established.
 
-There can be various reasons why the WebSocket connection fails to establish, such as using a network proxy that prevents the WebSocket request from reaching the development server. You can check whether the WebSocket request address matches your development server address. If it does not match, you can configure the WebSocket request address using [dev.client](/config/dev/client).
+There can be various reasons why the WebSocket connection fails to establish, such as using a network proxy that prevents the WebSocket request from reaching the dev server. You can check whether the WebSocket request address matches your dev server address. If it does not match, you can configure the WebSocket request address using [dev.client](/config/dev/client).
 
 #### 2. Check the hot-update Requests
 
-When you modify the code of a module and trigger a recompilation, the browser sends several `hot-update.json` and `hot-update.js` requests to the development server to fetch the updated code.
+When you modify the code of a module and trigger a recompilation, the browser sends several `hot-update.json` and `hot-update.js` requests to the dev server to fetch the updated code.
 
 You can try modifying a module and inspect the content of the `hot-update.xxx` requests. If the content of the request is the latest code, it indicates that the hot update request is working correctly.
 
-If the content of the request is incorrect, it is likely due to a network proxy. Check whether the address of the `hot-update.xxx` request matches your development server address. If it does not match, you need to adjust the proxy rules to route the `hot-update.xxx` request to the development server address.
+If the content of the request is incorrect, it is likely due to a network proxy. Check whether the address of the `hot-update.xxx` request matches your dev server address. If it does not match, you need to adjust the proxy rules to route the `hot-update.xxx` request to the dev server address.
 
 #### 3. Check for Other Causes
 

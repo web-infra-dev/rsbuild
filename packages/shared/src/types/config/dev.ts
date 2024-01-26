@@ -40,7 +40,7 @@ export interface DevConfig {
    */
   beforeStartUrl?: ArrayOrNot<() => Promise<void> | void>;
   /**
-   * Set the URL prefix of static assets in the development environment,
+   * Set the URL prefix of static assets during development,
    * similar to the [output.publicPath](https://webpack.js.org/guides/public-path/) config of webpack.
    */
   assetPrefix?: string | boolean;

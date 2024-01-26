@@ -1,4 +1,4 @@
-Called before starting the development server.
+Called before starting the dev server.
 
 - **Type:**
 

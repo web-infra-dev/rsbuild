@@ -42,7 +42,7 @@ The following are strategies for improve build performance in development enviro
 
 ### Adjust Source Map format
 
-In order to provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format Source Map by default in the development environment, which is a high-quality Source Map format and will bring certain performance overhead.
+In order to provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format Source Map by default during development, which is a high-quality Source Map format and will bring certain performance overhead.
 
 You can improve build speed by adjusting the source map format of your development environment.
 
@@ -74,9 +74,9 @@ export default {
 
 ### Adjust Browserslist for development
 
-This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist), the difference is that we can set different browserslist for development and production environment, thereby reducing the compilation overhead in the development environment.
+This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist), the difference is that we can set different browserslist for development and production environment, thereby reducing the compilation overhead during development.
 
-For example, you can add the following config to `package.json`, which means that only the latest browsers are compatible in the development environment, and the actual browsers are compatible in the production environment:
+For example, you can add the following config to `package.json`, which means that only the latest browsers are compatible during development, and the actual browsers are compatible in the production environment:
 
 ```json
 {

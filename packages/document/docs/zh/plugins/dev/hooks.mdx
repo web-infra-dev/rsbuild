@@ -1,36 +1,41 @@
 # Plugin Hooks
 
-本章节描述了 Rsbuild 插件提供的生命周期钩子。
+本章节介绍 Rsbuild 插件可用的 plugin hooks。
 
-## 概览
+## 总览
 
-**Common Hooks**
+### Common Hooks
 
-- `modifyRsbuildConfig`：修改传递给 Rsbuild 的配置项。
-- `modifyRspackConfig`：修改最终的 Rspack 配置对象。
-- `modifyBundlerChain`：通过 chain api 修改 Rspack / webpack 配置对象。
-- `onBeforeCreateCompiler`：在创建 compiler 实例前调用。
-- `onAfterCreateCompiler`：在创建 compiler 实例后、执行构建前调用。
+- [modifyRsbuildConfig](#modifyrsbuildconfig)：修改传递给 Rsbuild 的配置对象。
+- [modifyRspackConfig](#modifyrspackconfig)：修改传递给 Rspack 的配置对象。
+- [modifyBundlerChain](#modifybundlerchain)：通过 chain API 修改 Rspack 的配置对象。
+- [onBeforeCreateCompiler](#onbeforecreatecompiler)：在创建 compiler 实例前调用。
+- [onAfterCreateCompiler](#onaftercreatecompiler)：在创建 compiler 实例后、执行构建前调用。
+- [onExit](#onexit)：在进程即将退出时调用。
 
-**Build Hooks**：仅在执行 build 方法构建生产环境产物时调用。
+### Build Hooks
 
-- `onBeforeBuild`：在执行生产环境构建前调用。
-- `onAfterBuild`：在执行生产环境构建后调用，可以获取到构建结果信息。
+仅在执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时调用。
 
-**Dev Server Hooks**：仅在执行 startDevServer 方法运行开发服务器时调用。
+- [onBeforeBuild](#onbeforebuild)：在执行生产环境构建前调用。
+- [onAfterBuild](#onafterbuild)：在执行生产环境构建后调用，可以获取到构建结果信息。
 
-- `onBeforeStartDevServer`：在启动开发服务器前调用。
-- `onAfterStartDevServer`：在启动开发服务器后调用。
-- `onDevCompileDone`：在每次开发环境构建结束后调用。
+### Dev Server Hooks
 
-**Prod Server Hooks**：仅在执行 preview 方法运行生产预览服务器时调用。
+仅在执行 `rsbuild dev` 命令或 `rsbuild.startDevServer()` 方法时调用。
 
-- `onBeforeStartProdServer`：在启动开发服务器前调用。
-- `onAfterStartProdServer`：在启动开发服务器后调用。
+- [onBeforeStartDevServer](#onbeforestartdevserver)：在启动开发服务器前调用。
+- [onAfterStartDevServer](#onafterstartdevserver)：在启动开发服务器后调用。
+- [onDevCompileDone](#ondevcompiledone)：在每次开发环境构建结束后调用。
 
-**Other Hooks**
+### Prod Server Hooks
 
-- `onExit`：在进程即将退出时调用。
+仅在执行 `rsbuild preview` 命令或 `rsbuild.preview()` 方法时调用。
+
+- [onBeforeStartProdServer](#onbeforestartprodserver)：在启动生产服务器前调用。
+- [onAfterStartProdServer](#onafterstartprodserver)：在启动生产服务器后调用。
+
+---
 
 ## Common Hooks
 
@@ -56,7 +61,7 @@ function ModifyRsbuildConfig(
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
       config.html = config.html || {};
@@ -97,7 +102,7 @@ function ModifyRspackConfig(
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.modifyRspackConfig((config, utils) => {
       if (utils.env === 'development') {
@@ -152,7 +157,7 @@ function ModifyBundlerChain(
 ```ts
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.modifyBundlerChain((chain, utils) => {
       if (utils.env === 'development') {
@@ -174,7 +179,7 @@ import OnBeforeCreateCompiler from '@zh/shared/onBeforeCreateCompiler.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
       console.log('the bundler config is ', bundlerConfigs);
@@ -192,7 +197,7 @@ import OnAfterCreateCompiler from '@zh/shared/onAfterCreateCompiler.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onAfterCreateCompiler(({ compiler }) => {
       console.log('the compiler is ', compiler);
@@ -212,7 +217,7 @@ import OnBeforeBuild from '@zh/shared/onBeforeBuild.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onBeforeBuild(({ bundlerConfigs }) => {
       console.log('the bundler config is ', bundlerConfigs);
@@ -230,7 +235,7 @@ import OnAfterBuild from '@zh/shared/onAfterBuild.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onAfterBuild(({ stats }) => {
       console.log(stats?.toJson());
@@ -250,7 +255,7 @@ import OnBeforeStartDevServer from '@zh/shared/onBeforeStartDevServer.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onBeforeStartDevServer(() => {
       console.log('before start!');
@@ -268,7 +273,7 @@ import OnAfterStartDevServer from '@zh/shared/onAfterStartDevServer.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onAfterStartDevServer(({ port, routes }) => {
       console.log('this port is: ', port);
@@ -287,7 +292,7 @@ import OnDevCompileDone from '@zh/shared/onDevCompileDone.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onDevCompileDone(({ isFirstCompile }) => {
       if (isFirstCompile) {
@@ -311,7 +316,7 @@ import OnBeforeStartProdServer from '@zh/shared/onBeforeStartProdServer.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onBeforeStartProdServer(() => {
       console.log('before start!');
@@ -329,7 +334,7 @@ import OnAfterStartProdServer from '@zh/shared/onAfterStartProdServer.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onAfterStartProdServer(({ port, routes }) => {
       console.log('this port is: ', port);
@@ -350,7 +355,7 @@ import OnExit from '@zh/shared/onExit.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onExit(() => {
       console.log('exit!');
