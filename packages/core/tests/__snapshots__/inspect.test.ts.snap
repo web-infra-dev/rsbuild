@@ -27,6 +27,7 @@ exports[`inspectConfig > should print plugin names when inspect config 1`] = `
   "rsbuild:start-url",
   "rsbuild:inline-chunk",
   "rsbuild:bundle-analyzer",
+  "rsbuild:rsdoctor",
   "plugin-network-performance",
   "plugin-preload-or-prefetch",
   "rsbuild:performance",
