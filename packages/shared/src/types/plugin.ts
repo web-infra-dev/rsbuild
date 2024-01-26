@@ -123,6 +123,7 @@ export type Plugins = {
   splitChunks: PluginsFn;
   inlineChunk: PluginsFn;
   bundleAnalyzer: PluginsFn;
+  rsdoctor: PluginsFn;
   asset: PluginsFn;
   html: PluginsFn;
   wasm: PluginsFn;

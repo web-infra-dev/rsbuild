@@ -13,6 +13,7 @@ export const plugins: Plugins = {
   inlineChunk: () => import('./inlineChunk').then((m) => m.pluginInlineChunk()),
   bundleAnalyzer: () =>
     import('./bundleAnalyzer').then((m) => m.pluginBundleAnalyzer()),
+  rsdoctor: () => import('./rsdoctor').then((m) => m.pluginRsdoctor()),
   asset: () => import('./asset').then((m) => m.pluginAsset()),
   wasm: () => import('./wasm').then((m) => m.pluginWasm()),
   moment: () => import('./moment').then((m) => m.pluginMoment()),
