@@ -148,7 +148,7 @@ dist
 
 ## Writing Outputs to Disk
 
-By default, Rsbuild does not write the output files to disk in the development environment. Instead, the files are stored in the memory of the dev server to reduce the overhead of file operations.
+By default, Rsbuild does not write the output files to disk during development. Instead, the files are stored in the memory of the dev server to reduce the overhead of file operations.
 
 You can write the output files to disk, which is typically used for inspecting the contents of the build artifacts or configuring proxy rules for static assets.
 

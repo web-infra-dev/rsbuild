@@ -1,12 +1,12 @@
 # Debug Mode
 
-Rsbuild provides a debug mode to troubleshoot problems, you can add the `DEBUG=rsbuild` environment variable when executing a build to enable Rsbuild's debug mode.
+Rsbuild provides a debug mode to troubleshoot problems, you can add the `DEBUG=rsbuild` environment variable when building to enable Rsbuild's debug mode.
 
 ```bash
-# Debug development environment
+# Debug for development build
 DEBUG=rsbuild pnpm dev
 
-# Debug production environment
+# Debug for production build
 DEBUG=rsbuild pnpm build
 ```
 

@@ -1,4 +1,4 @@
-Called after starting the development server, you can get the port number with the `port` parameter, and the page routes info with the `routes` parameter.
+Called after starting the dev server, you can get the port number with the `port` parameter, and the page routes info with the `routes` parameter.
 
 - **Type:**
 

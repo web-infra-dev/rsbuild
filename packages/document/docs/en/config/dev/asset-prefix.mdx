@@ -3,11 +3,11 @@
 - **Type:** `boolean | string`
 - **Default:** `'/'`
 
-Set the URL prefix of static assets in the development environment.
+Set the URL prefix of static assets during development.
 
 `assetPrefix` will affect the URLs of most of the static assets, including JavaScript files, CSS files, images, videos, etc. If an incorrect value is specified, you'll receive 404 errors while loading these resources.
 
-This config is only used in the development environment. In the production environment, please use the `output.assetPrefix` to set the URL prefix.
+This config is only used during development. In the production environment, please use the `output.assetPrefix` to set the URL prefix.
 
 ### Boolean Type
 
@@ -56,6 +56,6 @@ The script URL will be:
 
 The differences from the native configuration are as follows:
 
-- `dev.assetPrefix` only takes effect in the development environment.
+- `dev.assetPrefix` only takes effect during development.
 - `dev.assetPrefix` automatically appends a trailing `/` by default.
 - The value of `dev.assetPrefix` is written to the `process.env.ASSET_PREFIX` environment variable (can only be accessed in client code).
