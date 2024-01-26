@@ -40,6 +40,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.startUrl(),
     plugins.inlineChunk(),
     plugins.bundleAnalyzer(),
+    plugins.rsdoctor(),
     plugins.networkPerformance(),
     plugins.preloadOrPrefetch(),
     plugins.performance(),

@@ -225,6 +225,8 @@ importers:
         specifier: ^15
         version: 15.7.9
 
+  e2e/cases/rsdoctor/mock: {}
+
   e2e/cases/server/custom-server:
     dependencies:
       polka:
