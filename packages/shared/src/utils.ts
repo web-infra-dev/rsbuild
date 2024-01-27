@@ -222,10 +222,13 @@ export const generateScriptTag = () => ({
 
 export const getPublicPathFromCompiler = (compiler: Compiler) => {
   const { publicPath } = compiler.options.output;
-  if (typeof publicPath === 'string' && publicPath !== 'auto') {
-    return addTrailingSlash(publicPath);
+
+  if (typeof publicPath === 'string') {
+    // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
+    return publicPath === 'auto' ? '' : addTrailingSlash(publicPath);
   }
-  // publicPath function is not supported yet
+
+  // publicPath function is not supported yet, fallback to default value
   return DEFAULT_ASSET_PREFIX;
 };
 
