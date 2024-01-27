@@ -226,7 +226,7 @@ export const getPublicPathFromCompiler = (compiler: Compiler) => {
   if (typeof publicPath === 'string') {
     // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
     if (publicPath === 'auto') {
-      return publicPath;
+      return '';
     }
     return addTrailingSlash(publicPath);
   }
