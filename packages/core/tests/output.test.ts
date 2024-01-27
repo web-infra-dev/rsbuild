@@ -109,4 +109,18 @@ describe('plugin-output', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
+
+  it('should allow dev.assetPrefix to be `auto`', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginOutput()],
+      rsbuildConfig: {
+        dev: {
+          assetPrefix: 'auto',
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(bundlerConfigs[0]?.output?.publicPath).toEqual('auto');
+  });
 });
