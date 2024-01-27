@@ -282,45 +282,50 @@ export function applyScriptCondition({
   });
 }
 
-export function applyOutputPlugin(api: RsbuildPluginAPI) {
-  function getPublicPath({
-    config,
-    isProd,
-    context,
-  }: {
-    config: NormalizedConfig;
-    isProd: boolean;
-    context: RsbuildContext;
-  }) {
-    const { dev, output } = config;
+function getPublicPath({
+  config,
+  isProd,
+  context,
+}: {
+  config: NormalizedConfig;
+  isProd: boolean;
+  context: RsbuildContext;
+}) {
+  const { dev, output } = config;
 
-    let publicPath = DEFAULT_ASSET_PREFIX;
+  let publicPath = DEFAULT_ASSET_PREFIX;
 
-    if (isProd) {
-      if (output.assetPrefix) {
-        publicPath = output.assetPrefix;
-      }
-    } else if (typeof dev.assetPrefix === 'string') {
-      publicPath = dev.assetPrefix;
-    } else if (dev.assetPrefix === true) {
-      const protocol = context.devServer?.https ? 'https' : 'http';
-      const hostname = context.devServer?.hostname || DEFAULT_DEV_HOST;
-      const port = context.devServer?.port || DEFAULT_PORT;
-      if (hostname === DEFAULT_DEV_HOST) {
-        const localHostname = 'localhost';
-        // If user not specify the hostname, it would use 0.0.0.0
-        // The http://0.0.0.0:port can't visit in windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
-        // Relative to docs:
-        // - https://github.com/quarkusio/quarkus/issues/12246
-        publicPath = `${protocol}://${localHostname}:${port}/`;
-      } else {
-        publicPath = `${protocol}://${hostname}:${port}/`;
-      }
+  if (isProd) {
+    if (typeof output.assetPrefix === 'string') {
+      publicPath = output.assetPrefix;
     }
-
-    return addTrailingSlash(publicPath);
+  } else if (typeof dev.assetPrefix === 'string') {
+    publicPath = dev.assetPrefix;
+  } else if (dev.assetPrefix === true) {
+    const protocol = context.devServer?.https ? 'https' : 'http';
+    const hostname = context.devServer?.hostname || DEFAULT_DEV_HOST;
+    const port = context.devServer?.port || DEFAULT_PORT;
+    if (hostname === DEFAULT_DEV_HOST) {
+      const localHostname = 'localhost';
+      // If user not specify the hostname, it would use 0.0.0.0
+      // The http://0.0.0.0:port can't visit in windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
+      // Relative to docs:
+      // - https://github.com/quarkusio/quarkus/issues/12246
+      publicPath = `${protocol}://${localHostname}:${port}/`;
+    } else {
+      publicPath = `${protocol}://${hostname}:${port}/`;
+    }
   }
 
+  // 'auto' is a magic value in Rspack and we should not add trailing slash
+  if (publicPath === 'auto') {
+    return publicPath;
+  }
+
+  return addTrailingSlash(publicPath);
+}
+
+export function applyOutputPlugin(api: RsbuildPluginAPI) {
   api.modifyBundlerChain(
     async (chain, { isProd, isServer, isServiceWorker }) => {
       const config = api.getNormalizedConfig();
