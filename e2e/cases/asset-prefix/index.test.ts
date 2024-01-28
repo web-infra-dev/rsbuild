@@ -49,3 +49,25 @@ test('should allow output.assetPrefix to be `auto`', async ({ page }) => {
   await expect(testEl).toHaveText('Hello Rsbuild!');
   await rsbuild.close();
 });
+
+test('should inject assetPrefix to env var and template correctly', async ({
+  page,
+}) => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    runServer: true,
+    rsbuildConfig: {
+      html: {
+        template: './src/template.html',
+      },
+      output: {
+        assetPrefix: 'http://example.com',
+      },
+    },
+  });
+
+  await gotoPage(page, rsbuild);
+  await expect(page.locator('#prefix1')).toHaveText('http://example.com');
+  await expect(page.locator('#prefix2')).toHaveText('http://example.com');
+  await rsbuild.close();
+});
