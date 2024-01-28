@@ -1,6 +1,7 @@
-const { dependencies } = require('./package.json');
+import { dependencies } from './package.json';
+import type { Rspack } from '@rsbuild/core';
 
-module.exports = {
+export const mfConfig: Rspack.ModuleFederationPluginOptions = {
   name: 'host',
   remotes: {
     remote: 'remote@http://localhost:3002/remoteEntry.js',

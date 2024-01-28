@@ -138,13 +138,13 @@ export type CacheGroup = Configuration extends {
 export type ForceSplitting = RegExp[] | Record<string, RegExp>;
 
 export interface BaseSplitRules {
-  strategy: string;
+  strategy?: string;
   forceSplitting?: ForceSplitting;
   override?: SplitChunks;
 }
 
 export interface BaseChunkSplit extends BaseSplitRules {
-  strategy:
+  strategy?:
     | 'split-by-module'
     | 'split-by-experience'
     | 'all-in-one'

@@ -1,6 +1,7 @@
-const { dependencies } = require('./package.json');
+import { dependencies } from './package.json';
+import type { Rspack } from '@rsbuild/core';
 
-module.exports = {
+export const mfConfig: Rspack.ModuleFederationPluginOptions = {
   name: 'remote',
   exposes: {
     './Button': './src/Button',

@@ -1,6 +1,6 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
-import mfConfig from './module-federation.config';
+import { mfConfig } from './module-federation.config';
 
 export default defineConfig({
   plugins: [pluginReact()],
@@ -12,10 +12,8 @@ export default defineConfig({
   },
   performance: {
     chunkSplit: {
-      strategy: 'split-by-experience',
       override: {
         chunks: 'async',
-        minSize: 30000,
       },
     },
   },

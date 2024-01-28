@@ -32,7 +32,7 @@ interface SplitChunksContext {
   /**
    * User Rsbuild `chunkSplit` config
    */
-  rsbuildConfig: RsbuildChunkSplit;
+  userConfig: RsbuildChunkSplit;
   /**
    * The root path of current project
    */
@@ -149,14 +149,13 @@ function splitByModule(ctx: SplitChunksContext): SplitChunks {
 }
 
 function splitBySize(ctx: SplitChunksContext): SplitChunks {
-  const { override, userDefinedCacheGroups, defaultConfig, rsbuildConfig } =
-    ctx;
-  assert(rsbuildConfig.strategy === 'split-by-size');
+  const { override, userDefinedCacheGroups, defaultConfig, userConfig } = ctx;
+  assert(userConfig.strategy === 'split-by-size');
 
   return {
     ...defaultConfig,
-    minSize: rsbuildConfig.minSize ?? 0,
-    maxSize: rsbuildConfig.maxSize ?? Infinity,
+    minSize: userConfig.minSize ?? 0,
+    maxSize: userConfig.maxSize ?? Infinity,
     ...override,
     cacheGroups: {
       ...defaultConfig.cacheGroups,
@@ -223,67 +222,69 @@ const SPLIT_STRATEGY_DISPATCHER: Record<
   'single-vendor': singleVendor,
 };
 
-export function pluginSplitChunks(): RsbuildPlugin {
-  return {
-    name: 'rsbuild:split-chunks',
-    setup(api) {
-      api.modifyBundlerChain(
-        async (chain, { isServer, isWebWorker, isServiceWorker }) => {
-          if (isServer || isWebWorker || isServiceWorker) {
-            chain.optimization.splitChunks(false);
+export const pluginSplitChunks = (): RsbuildPlugin => ({
+  name: 'rsbuild:split-chunks',
+  setup(api) {
+    api.modifyBundlerChain(
+      async (chain, { isServer, isWebWorker, isServiceWorker }) => {
+        if (isServer || isWebWorker || isServiceWorker) {
+          chain.optimization.splitChunks(false);
 
-            // web worker does not support dynamic imports, dynamicImportMode need set to eager
-            if (isWebWorker || isServiceWorker) {
-              chain.module.parser.merge({
-                javascript: {
-                  dynamicImportMode: 'eager',
-                },
-              });
-            }
-
-            return;
+          // web worker does not support dynamic imports, dynamicImportMode need set to eager
+          if (isWebWorker || isServiceWorker) {
+            chain.module.parser.merge({
+              javascript: {
+                dynamicImportMode: 'eager',
+              },
+            });
           }
 
-          const config = api.getNormalizedConfig();
-          const defaultConfig: Exclude<SplitChunks, false> = {
-            // Optimize both `initial` and `async` chunks
-            chunks: 'all',
-            // When chunk size >= 50000 bytes, split it into separate chunk
-            // @ts-expect-error Rspack type missing
-            enforceSizeThreshold: 50000,
-            cacheGroups: {},
-          };
-          const { chunkSplit } = config.performance;
-          let userDefinedCacheGroups = {};
-          if (chunkSplit.forceSplitting) {
-            userDefinedCacheGroups = getUserDefinedCacheGroups(
-              chunkSplit.forceSplitting,
-            );
-          }
-          // Patch the override config difference between the `custom` strategy and other strategy.
-          const override =
-            chunkSplit.strategy === 'custom'
-              ? // `chunkSplit.splitChunks` compat for Eden
-                chunkSplit.splitChunks ?? chunkSplit.override
-              : chunkSplit.override;
-          // Apply different strategy
-          const splitChunksOptions = await SPLIT_STRATEGY_DISPATCHER[
-            chunkSplit.strategy
-          ]({
-            defaultConfig,
-            override: override || {},
-            userDefinedCacheGroups,
-            rsbuildConfig: chunkSplit,
-            rootPath: api.context.rootPath,
-            polyfill: config.output.polyfill,
-          });
+          return;
+        }
 
-          chain.optimization.splitChunks(
-            // @ts-expect-error splitChunks type mismatch
-            splitChunksOptions,
+        const config = api.getNormalizedConfig();
+        const defaultConfig: Exclude<SplitChunks, false> = {
+          // Optimize both `initial` and `async` chunks
+          chunks: 'all',
+          // When chunk size >= 50000 bytes, split it into separate chunk
+          // @ts-expect-error Rspack type missing
+          enforceSizeThreshold: 50000,
+          cacheGroups: {},
+        };
+
+        const { chunkSplit } = config.performance;
+        let userDefinedCacheGroups = {};
+
+        if (chunkSplit.forceSplitting) {
+          userDefinedCacheGroups = getUserDefinedCacheGroups(
+            chunkSplit.forceSplitting,
           );
-        },
-      );
-    },
-  };
-}
+        }
+
+        // Patch the override config difference between the `custom` strategy and other strategy.
+        const override =
+          chunkSplit.strategy === 'custom'
+            ? // `chunkSplit.splitChunks` compat for Eden
+              chunkSplit.splitChunks ?? chunkSplit.override
+            : chunkSplit.override;
+
+        // Apply different strategy
+        const splitChunksOptions = await SPLIT_STRATEGY_DISPATCHER[
+          chunkSplit.strategy || 'split-by-experience'
+        ]({
+          defaultConfig,
+          override: override || {},
+          userDefinedCacheGroups,
+          userConfig: chunkSplit,
+          rootPath: api.context.rootPath,
+          polyfill: config.output.polyfill,
+        });
+
+        chain.optimization.splitChunks(
+          // @ts-expect-error splitChunks type mismatch
+          splitChunksOptions,
+        );
+      },
+    );
+  },
+});
