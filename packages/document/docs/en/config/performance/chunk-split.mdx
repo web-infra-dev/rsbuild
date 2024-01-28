@@ -19,7 +19,7 @@ interface BaseChunkSplit {
 }
 
 interface SplitBySize {
-  strategy?: 'split-by-size';
+  strategy: 'split-by-size';
   minSize?: number;
   maxSize?: number;
   override?: SplitChunks;
@@ -27,7 +27,7 @@ interface SplitBySize {
 }
 
 interface SplitCustom {
-  strategy?: 'custom';
+  strategy: 'custom';
   splitChunks?: SplitChunks;
   forceSplitting?: ForceSplitting;
 }
@@ -111,7 +111,6 @@ For example, split the `axios` library under node_modules into `axios.js`:
 export default {
   performance: {
     chunkSplit: {
-      strategy: 'split-by-experience',
       forceSplitting: {
         axios: /node_modules[\\/]axios/,
       },
@@ -157,7 +156,6 @@ When `performance.chunkSplit.strategy` is `split-by-experience`, `split-by-modul
 export default {
   performance: {
     chunkSplit: {
-      strategy: 'split-by-experience',
       override: {
         cacheGroups: {
           react: {

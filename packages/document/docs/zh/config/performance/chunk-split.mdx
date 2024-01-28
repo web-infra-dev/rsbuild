@@ -19,7 +19,7 @@ interface BaseChunkSplit {
 }
 
 interface SplitBySize {
-  strategy?: 'split-by-size';
+  strategy: 'split-by-size';
   minSize?: number;
   maxSize?: number;
   override?: SplitChunks;
@@ -27,7 +27,7 @@ interface SplitBySize {
 }
 
 interface SplitCustom {
-  strategy?: 'custom';
+  strategy: 'custom';
   splitChunks?: SplitChunks;
   forceSplitting?: ForceSplitting;
 }
@@ -111,7 +111,6 @@ export default {
 export default {
   performance: {
     chunkSplit: {
-      strategy: 'split-by-experience',
       forceSplitting: {
         axios: /node_modules[\\/]axios/,
       },
@@ -157,7 +156,6 @@ export default {
 export default {
   performance: {
     chunkSplit: {
-      strategy: 'split-by-experience',
       override: {
         cacheGroups: {
           react: {
