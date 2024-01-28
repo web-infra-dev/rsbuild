@@ -1,6 +1,6 @@
 import { posix } from 'node:path';
 import { getDistPath, getFilename } from './fs';
-import { addTrailingSlash, isPlainObject } from './utils';
+import { addTrailingSlash, isPlainObject, removeTailingSlash } from './utils';
 import { castArray, ensureAbsolutePath } from './utils';
 import { debug } from './logger';
 import {
@@ -282,6 +282,30 @@ export function applyScriptCondition({
   });
 }
 
+export const formatPublicPath = (publicPath: string, withSlash = true) => {
+  // 'auto' is a magic value in Rspack and we should not add trailing slash
+  if (publicPath === 'auto') {
+    return publicPath;
+  }
+
+  return withSlash
+    ? addTrailingSlash(publicPath)
+    : removeTailingSlash(publicPath);
+};
+
+export const getPublicPathFromChain = (
+  chain: BundlerChain,
+  withSlash = true,
+) => {
+  const publicPath = chain.output.get('publicPath');
+
+  if (typeof publicPath === 'string') {
+    return formatPublicPath(publicPath, withSlash);
+  }
+
+  return formatPublicPath(DEFAULT_ASSET_PREFIX, withSlash);
+};
+
 function getPublicPath({
   config,
   isProd,
@@ -317,12 +341,7 @@ function getPublicPath({
     }
   }
 
-  // 'auto' is a magic value in Rspack and we should not add trailing slash
-  if (publicPath === 'auto') {
-    return publicPath;
-  }
-
-  return addTrailingSlash(publicPath);
+  return formatPublicPath(publicPath);
 }
 
 export function applyOutputPlugin(api: RsbuildPluginAPI) {

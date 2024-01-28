@@ -10,8 +10,8 @@ import {
   isFileExists,
   isPlainObject,
   isHtmlDisabled,
-  removeTailSlash,
   mergeChainedOptions,
+  getPublicPathFromChain,
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
 import type {
@@ -242,9 +242,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
         }
 
         const minify = await getMinify(isProd, config);
-        const assetPrefix = removeTailSlash(
-          chain.output.get('publicPath') || '',
-        );
+        const assetPrefix = getPublicPathFromChain(chain, false);
         const entries = chain.entryPoints.entries() || {};
         const entryNames = Object.keys(entries);
         const htmlPaths = api.getHTMLPaths();
