@@ -19,7 +19,7 @@ interface BaseChunkSplit {
 }
 
 interface SplitBySize {
-  strategy?: 'split-by-size';
+  strategy: 'split-by-size';
   minSize?: number;
   maxSize?: number;
   override?: SplitChunks;
@@ -27,7 +27,7 @@ interface SplitBySize {
 }
 
 interface SplitCustom {
-  strategy?: 'custom';
+  strategy: 'custom';
   splitChunks?: SplitChunks;
   forceSplitting?: ForceSplitting;
 }
