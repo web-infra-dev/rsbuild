@@ -82,7 +82,7 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
   await expect(a).toHaveText('A: 5');
 
   fs.writeFileSync(bPath, sourceCodeB, 'utf-8'); // recover the source code
-  rsbuild.server.close();
+  rsbuild.close();
 });
 
 rspackOnlyTest(

@@ -164,7 +164,12 @@ export async function dev({
 
   const rsbuild = await createRsbuild(options, plugins);
 
-  return rsbuild.startDevServer();
+  const result = await rsbuild.startDevServer();
+
+  return {
+    ...result,
+    close: () => result.server.close(),
+  };
 }
 
 export async function build({

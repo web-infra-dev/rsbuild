@@ -58,5 +58,5 @@ test('should generate config files when dev (with DEBUG)', async ({ page }) => {
 
   delete process.env.DEBUG;
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });

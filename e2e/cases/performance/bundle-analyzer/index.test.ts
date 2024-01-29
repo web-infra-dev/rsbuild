@@ -19,7 +19,7 @@ test('should emit bundle analyze report correctly when dev', async ({
   );
   expect(filePaths.length).toBe(1);
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should emit bundle analyze report correctly when build', async () => {
