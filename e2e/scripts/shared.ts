@@ -23,7 +23,10 @@ export const gotoPage = async (
   page: Page,
   rsbuild: { port: number },
   path = 'index',
-) => page.goto(getHrefByEntryName(path, rsbuild.port));
+) => {
+  const url = getHrefByEntryName(path, rsbuild.port);
+  return page.goto(url);
+};
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = async () => {};
@@ -114,7 +117,7 @@ const updateConfigForTest = async (
   config.server = {
     ...(config.server || {}),
     printUrls: config.server?.printUrls || false,
-    port: await getRandomPort(config.server?.port),
+    port: config.server?.port || (await getRandomPort(config.server?.port)),
   };
 
   config.dev ??= {};
