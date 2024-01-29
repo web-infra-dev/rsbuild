@@ -14,7 +14,7 @@ test('should allow dev.assetPrefix to be `auto`', async ({ page }) => {
   await gotoPage(page, rsbuild);
   const testEl = page.locator('#test');
   await expect(testEl).toHaveText('Hello Rsbuild!');
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should allow dev.assetPrefix to be true', async ({ page }) => {
@@ -30,7 +30,7 @@ test('should allow dev.assetPrefix to be true', async ({ page }) => {
   await gotoPage(page, rsbuild);
   const testEl = page.locator('#test');
   await expect(testEl).toHaveText('Hello Rsbuild!');
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should allow output.assetPrefix to be `auto`', async ({ page }) => {

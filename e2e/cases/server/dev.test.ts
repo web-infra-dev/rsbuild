@@ -82,7 +82,7 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
 }`,
   );
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('dev.port & output.distPath', async ({ page }) => {
@@ -121,7 +121,7 @@ test('dev.port & output.distPath', async ({ page }) => {
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 
   expect(errors).toEqual([]);
 
@@ -184,7 +184,7 @@ rspackOnlyTest(
       fse.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
     );
 
-    await rsbuild.server.close();
+    await rsbuild.close();
   },
 );
 
@@ -246,5 +246,5 @@ test('devServer', async ({ page }) => {
 
   expect(i).toBeGreaterThanOrEqual(1);
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });

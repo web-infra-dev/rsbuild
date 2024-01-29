@@ -17,7 +17,7 @@ test('should read browserslist for development env correctly', async ({
 
   expect(content.includes('es.string.replace-all')).toBeFalsy();
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should read browserslist for production env correctly', async () => {

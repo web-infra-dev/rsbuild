@@ -46,5 +46,5 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
 
   // recover the source code
   fs.writeFileSync(filePath, sourceCodeB, 'utf-8');
-  rsbuild.server.close();
+  rsbuild.close();
 });

@@ -39,7 +39,7 @@ rspackOnlyTest(
     await page.goto(`http://localhost:${rsbuild.port}/b`);
     expect(await page.innerHTML('body')).toContain('<div>B</div>');
 
-    await rsbuild.server.close();
+    await rsbuild.close();
   },
 );
 

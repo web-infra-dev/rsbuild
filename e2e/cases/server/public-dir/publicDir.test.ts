@@ -25,7 +25,7 @@ test('should serve publicDir for dev server correctly', async ({ page }) => {
 
   expect((await res?.body())?.toString().trim()).toBe('aaaa');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should serve custom publicDir for dev server correctly', async ({
@@ -56,7 +56,7 @@ test('should serve custom publicDir for dev server correctly', async ({
 
   expect((await res?.body())?.toString().trim()).toBe('aaaa111');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should not serve publicDir when publicDir is false', async ({ page }) => {
@@ -84,7 +84,7 @@ test('should not serve publicDir when publicDir is false', async ({ page }) => {
 
   expect(res?.status()).toBe(404);
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should serve publicDir for preview server correctly', async ({

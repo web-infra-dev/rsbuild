@@ -29,7 +29,7 @@ test('should print server urls correctly when printUrls is true', async ({
   expect(localLog).toBeTruthy();
   expect(networkLog).toBeTruthy();
 
-  await rsbuild.server.close();
+  await rsbuild.close();
   restore();
 });
 
@@ -59,7 +59,7 @@ test('should not print server urls when printUrls is false', async ({
   expect(localLog).toBeFalsy();
   expect(networkLog).toBeFalsy();
 
-  await rsbuild.server.close();
+  await rsbuild.close();
   restore();
 });
 
@@ -91,7 +91,7 @@ test('should allow to custom urls', async ({ page }) => {
   expect(localLog).toBeFalsy();
   expect(networkLog).toBeFalsy();
 
-  await rsbuild.server.close();
+  await rsbuild.close();
   restore();
 });
 
@@ -124,6 +124,6 @@ test('should allow to modify and return new urls', async ({ page }) => {
   expect(localLog).toBeFalsy();
   expect(networkLog).toBeFalsy();
 
-  await rsbuild.server.close();
+  await rsbuild.close();
   restore();
 });

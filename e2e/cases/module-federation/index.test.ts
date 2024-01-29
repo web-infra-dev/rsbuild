@@ -27,7 +27,7 @@ rspackOnlyTest(
     await expect(page.locator('#title')).toHaveText('Host');
     await expect(page.locator('#button')).toHaveText('Button from remote');
 
-    await hostApp.server.close();
-    await remoteApp.server.close();
+    await hostApp.close();
+    await remoteApp.close();
   },
 );
