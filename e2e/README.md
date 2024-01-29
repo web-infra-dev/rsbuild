@@ -47,5 +47,3 @@ rspackOnlyTest('test 1 + 1', () => {
   expect(1 + 1).toBe(2);
 });
 ```
-
-In addition, `*.rspack.test.ts` files will only run for Rspack.
