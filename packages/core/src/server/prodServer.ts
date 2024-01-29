@@ -124,7 +124,11 @@ export class RsbuildProdServer {
       const url = req.url;
 
       // handler assetPrefix
-      if (assetPrefix && url?.startsWith(assetPrefix)) {
+      if (
+        assetPrefix &&
+        url?.startsWith(assetPrefix) &&
+        assetPrefix !== 'auto'
+      ) {
         req.url = url.slice(assetPrefix.length);
         assetMiddleware(req, res, (...args) => {
           req.url = url;

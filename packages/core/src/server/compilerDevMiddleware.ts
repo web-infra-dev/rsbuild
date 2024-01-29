@@ -124,7 +124,7 @@ export class CompilerDevMiddleware {
         url && publicPaths.find((prefix) => url.startsWith(prefix));
 
       // slice publicPath, static asset have publicPath but html does not.
-      if (assetPrefix && assetPrefix !== '/') {
+      if (assetPrefix && assetPrefix !== '/' && assetPrefix !== 'auto') {
         req.url = url.slice(assetPrefix.length - 1);
 
         middleware(req, res, (...args) => {
