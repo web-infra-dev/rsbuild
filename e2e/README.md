@@ -8,46 +8,44 @@ This folder contains the e2e test cases of Rsbuild.
 
 ## Commands
 
+Most of the E2E tests in Rsbuild are run by both Rspack and Webpack at the same time. This is to check that the functionality of Rspack is correctly aligned with Webpack.
+
 ```bash
 # Run all test cases, including Rspack and Webpack
-pnpm run test
+pnpm test
 
 # Run test cases for Rspack
-pnpm run test:rspack
+pnpm test:rspack
 
 # Run test cases for Webpack
-pnpm run test:webpack
+pnpm test:webpack
 
 # Run specific test case, such as "css"
-pnpm run test:webpack css
-pnpm run test:rspack css
+pnpm test:webpack css
+pnpm test:rspack css
 ```
 
 ## Add Test Cases
 
-### Add test cases for common capabilities
-
-Test cases added using the `test` method will run in webpack and Rspack.
+Test cases added using the `test` method will run in both Rspack and Webpack.
 
 ```ts
-import { expect, test } from '@playwright/test';
-// will passed in webpack, and rspack
+import { test, expect } from '@playwright/test';
+
+// both Webpack and Rspack
 test('test 1 + 1', () => {
   expect(1 + 1).toBe(2);
 });
 ```
 
-If the capability corresponding to the test case is not yet supported in other bundlers,
-you can use the `webpackOnlyTest` or `rspackOnlyTest` methods for testing. Once other bundlers also support it, you can replace it with the `test` method.
+You can run tests for Rspack only by using the `rspackOnlyTest` method.
 
 ```ts
-import { webpackOnlyTest } from '@e2e/helper';
-// will passed in webpack, and skipped in rspack
-webpackOnlyTest('test 1 + 1', () => {
+import { rspackOnlyTest } from '@e2e/helper';
+
+rspackOnlyTest('test 1 + 1', () => {
   expect(1 + 1).toBe(2);
 });
 ```
 
-### Add test cases for a bundler's unique capability
-
-If you want to add test cases for a bundler's unique capability and do not need to be supported by other bundlers, such as `tools.webpack` or `tools.webpackChain`, you can add the infix `.webpack` or `.rspack` to the file name, for example, `index.webpack.test.ts`.
+In addition, `*.rspack.test.ts` files will only run for Rspack.
