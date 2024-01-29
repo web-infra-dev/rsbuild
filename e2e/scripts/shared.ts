@@ -168,9 +168,7 @@ export async function dev({
 
   return {
     ...result,
-    close: () => {
-      result.server.close();
-    },
+    close: () => result.server.close(),
   };
 }
 
