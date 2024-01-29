@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { execSync } from 'node:child_process';
 import { expect, test } from '@playwright/test';
-import { globContentJSON } from '../../../scripts/helper';
+import { globContentJSON } from '@e2e/helper';
 
 test('should set NODE_ENV correctly when running build command', async () => {
   execSync('npx rsbuild build', {

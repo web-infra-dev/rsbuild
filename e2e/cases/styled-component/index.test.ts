@@ -1,8 +1,9 @@
-import { build } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
+import type { CreateRsbuildOptions } from '@rsbuild/shared';
 
-const commonConfig = {
+const commonConfig: CreateRsbuildOptions = {
   cwd: __dirname,
   rsbuildConfig: {
     tools: {
@@ -25,15 +26,18 @@ test('should not compiled styled-components by default', async () => {
   expect(content).toContain('div`');
 });
 
-test('should transform styled-components', async () => {
-  const rsbuild = await build({
-    ...commonConfig,
-    plugins: [pluginStyledComponents()],
-  });
-  const files = await rsbuild.unwrapOutputJSON();
+rspackOnlyTest(
+  'should transform styled-components with pluginStyledComponents',
+  async () => {
+    const rsbuild = await build({
+      ...commonConfig,
+      plugins: [pluginStyledComponents()],
+    });
+    const files = await rsbuild.unwrapOutputJSON();
 
-  const content =
-    files[Object.keys(files).find((file) => file.endsWith('.js'))!];
+    const content =
+      files[Object.keys(files).find((file) => file.endsWith('.js'))!];
 
-  expect(content).toContain('div.withConfig');
-});
+    expect(content).toContain('div.withConfig');
+  },
+);
