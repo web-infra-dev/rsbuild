@@ -9,6 +9,16 @@ export type Define = Record<string, any>;
 
 export type AliasStrategy = 'prefer-tsconfig' | 'prefer-alias';
 
+export type Decorators = {
+  /**
+   * Specify the version of decorators to use.
+   * @default 'legacy''
+   */
+  version?:
+    | 'legacy' // stage 1
+    | '2022-03'; // stage 3
+};
+
 export interface SourceConfig {
   /**
    * Create aliases to import or require certain modules,
@@ -45,6 +55,10 @@ export interface SourceConfig {
    */
   define?: Define;
   /**
+   * Configuring decorators syntax.
+   */
+  decorators?: Decorators;
+  /**
    * Used to import the code and style of the component library on demand.
    */
   transformImport?: false | TransformImport[];
@@ -73,4 +87,5 @@ export interface NormalizedSourceConfig extends SourceConfig {
   alias: ChainedConfig<Alias>;
   aliasStrategy: AliasStrategy;
   preEntry: string[];
+  decorators: Required<Decorators>;
 }

@@ -160,10 +160,6 @@ export interface OutputConfig {
    */
   disableFilenameHash?: boolean;
   /**
-   * Whether to use the new decorator proposal.
-   */
-  enableLatestDecorators?: boolean;
-  /**
    * Whether to generate a TypeScript declaration file for CSS modules.
    */
   enableCssModuleTSDeclaration?: boolean;
@@ -209,7 +205,6 @@ export interface NormalizedOutputConfig extends OutputConfig {
   dataUriLimit: NormalizedDataUriLimit;
   disableMinimize: boolean;
   disableFilenameHash: boolean;
-  enableLatestDecorators: boolean;
   enableCssModuleTSDeclaration: boolean;
   inlineScripts: boolean | InlineChunkTest;
   inlineStyles: boolean | InlineChunkTest;

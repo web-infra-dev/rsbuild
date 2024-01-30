@@ -63,6 +63,9 @@ export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
   define: {},
   aliasStrategy: 'prefer-tsconfig',
   preEntry: [],
+  decorators: {
+    version: 'legacy',
+  },
 });
 
 export const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
@@ -134,7 +137,6 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     css: false,
   },
   disableFilenameHash: false,
-  enableLatestDecorators: false,
   enableCssModuleTSDeclaration: false,
   inlineScripts: false,
   inlineStyles: false,

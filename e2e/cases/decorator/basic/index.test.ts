@@ -1,11 +1,10 @@
 import { expect, test } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
 
-test('decorator legacy(default)', async ({ page }) => {
+test('should use legacy decorators by default', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     runServer: true,
-    rsbuildConfig: {},
   });
 
   await gotoPage(page, rsbuild);
@@ -15,13 +14,15 @@ test('decorator legacy(default)', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('decorator latest', async ({ page }) => {
+test('should allow to use stage 3 decorators', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     runServer: true,
     rsbuildConfig: {
-      output: {
-        enableLatestDecorators: true,
+      source: {
+        decorators: {
+          version: '2022-03',
+        },
       },
     },
   });
