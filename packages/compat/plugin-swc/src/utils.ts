@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { logger } from '@rsbuild/core';
 import { isBeyondReact17 } from '@rsbuild/plugin-react';
 import {
   isUsingHMR,
@@ -16,6 +15,7 @@ import type {
   TransformConfig,
 } from './types';
 import { CORE_JS_DIR_PATH, SWC_HELPERS_DIR_PATH } from './constants';
+import { applySwcDecoratorConfig } from '@rsbuild/core/provider';
 
 /**
  * Determine react runtime mode based on react version
@@ -204,12 +204,7 @@ export async function applyPluginConfig(
     swcHelpers: SWC_HELPERS_DIR_PATH,
   };
 
-  /**
-   * SWC can't use latestDecorator in TypeScript file for now
-   */
-  if (rsbuildConfig.output.enableLatestDecorators) {
-    logger.warn('Cannot use latestDecorator in SWC compiler.');
-  }
+  applySwcDecoratorConfig(swc, rsbuildConfig);
 
   return await finalizeConfig(rawOptions, swc);
 }

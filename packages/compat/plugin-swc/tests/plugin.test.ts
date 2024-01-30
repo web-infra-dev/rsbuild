@@ -10,6 +10,11 @@ import type {
 const TEST_BUILDER_CONFIG = {
   output: {},
   tools: {},
+  source: {
+    decorators: {
+      version: 'legacy',
+    },
+  },
 } as unknown as NormalizedConfig;
 
 const UTILS = { target: 'web', isProd: true } as ModifyWebpackChainUtils;

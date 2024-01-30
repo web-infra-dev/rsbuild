@@ -1,5 +1,4 @@
 import {
-  logger,
   cloneDeep,
   isWebTarget,
   SCRIPT_REGEX,
@@ -77,8 +76,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
       );
 
       applyTransformImport(swcConfig, config.source.transformImport);
-
-      applyDecorator(swcConfig, config.output.enableLatestDecorators);
+      applySwcDecoratorConfig(swcConfig, config);
 
       if (swcConfig.jsc?.externalHelpers) {
         chain.resolve.alias.set(
@@ -157,18 +155,25 @@ function applyTransformImport(
   }
 }
 
-function applyDecorator(
+export function applySwcDecoratorConfig(
   swcConfig: BuiltinSwcLoaderOptions,
-  enableLatestDecorators: boolean,
+  config: NormalizedConfig,
 ) {
-  /**
-   * SWC can't use latestDecorator in TypeScript file for now
-   */
-  if (enableLatestDecorators) {
-    logger.warn('Cannot use latestDecorator in Rspack mode.');
-  }
+  swcConfig.jsc ||= {};
+  swcConfig.jsc.transform ||= {};
 
-  swcConfig.jsc!.transform ??= {};
-  swcConfig.jsc!.transform.legacyDecorator = true;
-  swcConfig.jsc!.transform.decoratorMetadata = true;
+  const { version } = config.source.decorators;
+
+  switch (version) {
+    case 'legacy':
+      swcConfig.jsc.transform.legacyDecorator = true;
+      swcConfig.jsc.transform.decoratorMetadata = true;
+      break;
+    case '2022-03':
+      swcConfig.jsc.transform.legacyDecorator = false;
+      swcConfig.jsc.transform.decoratorVersion = '2022-03';
+      break;
+    default:
+      throw new Error('Unknown decorators version: ${version}');
+  }
 }

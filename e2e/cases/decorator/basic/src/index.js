@@ -1,7 +1,5 @@
 function logged() {
-  // eslint-disable-next-line no-undef
   window.bbb = 'world';
-  console.log('hhhhh');
 }
 
 class C {
@@ -13,5 +11,4 @@ class C {
   }
 }
 
-// eslint-disable-next-line no-undef
 window.aaa = new C().m();
