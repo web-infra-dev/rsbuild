@@ -1,0 +1,46 @@
+# decorators
+
+- **类型：**
+
+```ts
+type Decorators = {
+  version?: 'legacy' | '2022-03';
+};
+```
+
+用于配置装饰器语法。
+
+## decorators.version
+
+- **类型：** `'legacy' | '2022-03'`
+- **默认值：** `'legacy'`
+
+指定需要使用的装饰器语法版本。
+
+### legacy
+
+Rsbuild 默认使用 `legacy` 语法（Stage 1 提案），等价于 TypeScript 的 `experimentalDecorators: true`。
+
+参考文档：
+
+- [A Complete Guide to TypeScript Decorators](https://mirone.me/a-complete-guide-to-typescript-decorator/)
+- [TypeScript Decorators](https://www.typescriptlang.org/docs/handbook/decorators.html)
+
+### 2022-03
+
+`2022-03` 对应装饰器 Stage 3 提案，等价于 TypeScript 5.0 默认支持的装饰器语法。
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    decorators: {
+      version: '2022-03',
+    },
+  },
+};
+```
+
+参考文档：
+
+- [JavaScript metaprogramming with the 2022-03 decorators API](https://2ality.com/2022/10/javascript-decorators.html)
+- [TypeScript 5.0 Decorators](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#decorators)
