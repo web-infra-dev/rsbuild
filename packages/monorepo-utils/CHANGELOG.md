@@ -1,5 +1,12 @@
 # @rsbuild/monorepo-utils
 
+## 0.3.10
+
+### Patch Changes
+
+- Updated dependencies [91852e7]
+  - @rsbuild/shared@0.3.10
+
 ## 0.3.9
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @rsbuild/shared
 
+## 0.3.10
+
+### Patch Changes
+
+- 91852e7: release: 0.3.10
+
 ## 0.3.9
 
 ## 0.3.8
