@@ -63,7 +63,7 @@
     "postcss-modules-values": "4.0.0",
     "postcss-value-parser": "4.2.0",
     "resolve-url-loader": "5.0.0",
-    "rslog": "^1.2.0",
+    "rslog": "^1.2.1",
     "sass": "1.70.0",
     "sass-loader": "13.3.3",
     "semver": "^7.5.4",
