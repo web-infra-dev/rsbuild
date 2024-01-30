@@ -690,8 +690,8 @@ importers:
         specifier: 16.x
         version: 16.18.59
       rslog:
-        specifier: ^1.2.0
-        version: 1.2.0
+        specifier: ^1.2.1
+        version: 1.2.1
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
@@ -1600,8 +1600,8 @@ importers:
         specifier: 5.0.0
         version: 5.0.0
       rslog:
-        specifier: ^1.2.0
-        version: 1.2.0
+        specifier: ^1.2.1
+        version: 1.2.1
       sass:
         specifier: 1.70.0
         version: 1.70.0
@@ -4046,7 +4046,7 @@ packages:
       '@swc/helpers': 0.5.3
       caniuse-lite: 1.0.30001578
       lodash: 4.17.21
-      rslog: 1.2.0
+      rslog: 1.2.1
     dev: true
 
   /@module-federation/runtime-tools@0.0.8:
@@ -11845,8 +11845,8 @@ packages:
     resolution: {integrity: sha512-TJdyzLpFfmEGfJiPAwZqn1TdXwoR7j/Y0j9ejovNk3zABzJ1FRQ6WZl7DVQQTHoJnABlRgXphMuxnAZ2UMePdQ==}
     dev: true
 
-  /rslog@1.2.0:
-    resolution: {integrity: sha512-2ZFW7Jtkzt4VkwCFRTE+0lKbzSLSH7U5OM9qZ5YuKk4xVrlIJJZx9Qh/fCyfsk8H+qXbermMc7+18qKJxLQ/bw==}
+  /rslog@1.2.1:
+    resolution: {integrity: sha512-XDMoa858LLZnf4i2kUwyjBQGplXaoSoIfMQf9iji2ano5t1OfSiJsSYpHeOH26DJEc5hdje/4K3wiT6TWL3cRA==}
     engines: {node: '>=14.17.6'}
     dev: true
 
