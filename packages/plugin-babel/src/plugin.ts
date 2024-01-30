@@ -22,7 +22,18 @@ export const getDefaultBabelOptions = () => {
     babelrc: false,
     configFile: false,
     compact: isProd(),
-    plugins: [],
+    plugins: [
+      [
+        require.resolve('@babel/plugin-proposal-decorators'),
+        {
+          decoratorsBeforeExport: true,
+        },
+      ],
+      [
+        require.resolve('@babel/plugin-transform-class-properties'),
+        { loose: true },
+      ],
+    ],
     presets: [
       // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
       [
