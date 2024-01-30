@@ -17,7 +17,7 @@ export function pluginSass(): RsbuildPlugin {
 
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
-        const { applyBaseCSSRule } = await import('./css');
+        const { applyBaseCSSRule } = await import('./css-new');
 
         const { excludes, options } = getSassLoaderOptions(
           config.tools.sass,

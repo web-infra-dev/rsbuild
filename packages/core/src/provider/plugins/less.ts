@@ -11,7 +11,7 @@ export function pluginLess(): RsbuildPlugin {
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
-        const { applyBaseCSSRule } = await import('./css');
+        const { applyBaseCSSRule } = await import('./css-new');
 
         const rule = chain.module
           .rule(utils.CHAIN_ID.RULE.LESS)

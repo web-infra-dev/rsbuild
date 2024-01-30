@@ -62,7 +62,9 @@
       "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@1.0.24",
       "@rsbuild/core": "link:packages/core",
       "@rsbuild/plugin-react": "link:packages/plugin-react",
-      "@rsbuild/plugin-svgr": "link:packages/plugin-svgr"
+      "@rsbuild/plugin-svgr": "link:packages/plugin-svgr",
+      "@rspack/core": "0.5.1-canary-04e1bb1-20240129082050",
+      "@rspack/plugin-react-refresh": "0.5.1-canary-04e1bb1-20240129082050"
     },
     "allowedDeprecatedVersions": {
       "vue": "2.7.14",
