@@ -12,36 +12,31 @@ export type AsyncHook<Callback extends (...args: any[]) => any> = {
   call: (...args: Parameters<Callback>) => Promise<Parameters<Callback>>;
 };
 
-const orderToValue = (order: HookOrder) => {
-  if (order === 'pre') {
-    return -1;
-  }
-  if (order === 'post') {
-    return 1;
-  }
-  return 0;
-};
-
 export function createAsyncHook<
   Callback extends (...args: any[]) => any,
 >(): AsyncHook<Callback> {
-  const descriptors: HookDescriptor<Callback>[] = [];
+  const preGroup: Callback[] = [];
+  const postGroup: Callback[] = [];
+  const defaultGroup: Callback[] = [];
 
   const tap = (cb: Callback | HookDescriptor<Callback>) => {
     if (isFunction(cb)) {
-      descriptors.push({ handler: cb, order: 'default' });
+      defaultGroup.push(cb);
+    } else if (cb.order === 'pre') {
+      preGroup.push(cb.handler);
+    } else if (cb.order === 'post') {
+      postGroup.push(cb.handler);
     } else {
-      descriptors.push(cb);
+      defaultGroup.push(cb.handler);
     }
   };
 
   const call = async (...args: Parameters<Callback>) => {
     const params = args.slice(0) as Parameters<Callback>;
+    const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
 
-    descriptors.sort((a, b) => orderToValue(a.order) - orderToValue(b.order));
-
-    for (const descriptor of descriptors) {
-      const result = await descriptor.handler(...params);
+    for (const callback of callbacks) {
+      const result = await callback(...params);
 
       if (result !== undefined) {
         params[0] = result;
