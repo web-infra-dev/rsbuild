@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { JS_REGEX, TS_REGEX, applyScriptCondition } from '@rsbuild/shared';
 import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
 import type {
@@ -21,7 +22,10 @@ export function pluginEsbuild(
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
         const rsbuildConfig = api.getNormalizedConfig();
-        const esbuildLoaderPath = require.resolve('../compiled/esbuild-loader');
+        const esbuildLoaderPath = path.join(
+          __dirname,
+          '../compiled/esbuild-loader/index.js',
+        );
 
         const options: PluginEsbuildOptions = {
           loader: {

@@ -3,8 +3,8 @@ import type { BabelConfig, NodePresetOptions } from './types';
 
 export const getBabelConfigForNode = (options: NodePresetOptions = {}) => {
   if (options.presetEnv !== false) {
-    options.presetEnv ||= {};
-    options.presetEnv.targets ||= ['node >= 16'];
+    options.presetEnv ??= {};
+    options.presetEnv.targets ??= ['node >= 16'];
   }
 
   const config = generateBaseConfig(options);
