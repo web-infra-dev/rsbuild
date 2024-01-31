@@ -1593,6 +1593,9 @@ importers:
       postcss-modules-values:
         specifier: 4.0.0
         version: 4.0.0(postcss@8.4.33)
+      postcss-pxtorem:
+        specifier: 6.1.0
+        version: 6.1.0(postcss@8.4.33)
       postcss-value-parser:
         specifier: 4.2.0
         version: 4.2.0
@@ -11128,6 +11131,14 @@ packages:
       postcss: 8.4.33
       postcss-value-parser: 4.2.0
     dev: false
+
+  /postcss-pxtorem@6.1.0(postcss@8.4.33):
+    resolution: {integrity: sha512-ROODSNci9ADal3zUcPHOF/K83TiCgNSPXQFSbwyPHNV8ioHIE4SaC+FPOufd8jsr5jV2uIz29v1Uqy1c4ov42g==}
+    peerDependencies:
+      postcss: ^8.0.0
+    dependencies:
+      postcss: 8.4.33
+    dev: true
 
   /postcss-reduce-initial@6.0.0(postcss@8.4.33):
     resolution: {integrity: sha512-s2UOnidpVuXu6JiiI5U+fV2jamAw5YNA9Fdi/GRK0zLDLCfXmSGqQtzpUPtfN66RtCbb9fFHoyZdQaxOB3WxVA==}
