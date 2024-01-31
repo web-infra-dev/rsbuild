@@ -1,4 +1,4 @@
-import { PLUGIN_SWC_NAME, type RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   deepmerge,
   modifySwcLoaderOptions,
@@ -17,8 +17,6 @@ export const pluginPreact = (
   options: PluginPreactOptions = {},
 ): RsbuildPlugin => ({
   name: 'rsbuild:preact',
-
-  pre: [PLUGIN_SWC_NAME],
 
   setup(api) {
     const { reactAliasesEnabled = true } = options;
