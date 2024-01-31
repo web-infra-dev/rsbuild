@@ -70,7 +70,7 @@ export type ModifyWebpackConfigFn = (
   utils: ModifyWebpackConfigUtils,
 ) => Promise<WebpackConfig | void> | WebpackConfig | void;
 
-export type PluginStore = {
+export type PluginManager = {
   readonly plugins: RsbuildPlugin[];
   addPlugins: (plugins: RsbuildPlugins, options?: { before?: string }) => void;
   removePlugins: (pluginNames: string[]) => void;
@@ -153,7 +153,7 @@ type PluginHook<T extends (...args: any[]) => any> = (
  */
 export type RsbuildPluginAPI = {
   context: Readonly<RsbuildContext>;
-  isPluginExists: PluginStore['isPluginExists'];
+  isPluginExists: PluginManager['isPluginExists'];
 
   onExit: PluginHook<OnExitFn>;
   onAfterBuild: PluginHook<OnAfterBuildFn>;

@@ -1,6 +1,5 @@
 export * from './constants';
 export * from './createHook';
-export * from './pluginStore';
 export * from './utils';
 export * from './fs';
 export * from './getBrowserslist';
@@ -14,5 +13,4 @@ export * from './getLoaderOptions';
 export * from './patch';
 export * from './css';
 export * from './minimize';
-export * from './port';
 export * from './url';

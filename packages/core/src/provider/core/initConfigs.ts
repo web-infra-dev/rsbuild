@@ -1,9 +1,8 @@
 import {
   debug,
   isDebug,
-  initPlugins,
   mergeRsbuildConfig,
-  type PluginStore,
+  type PluginManager,
   type RspackConfig,
   type InspectConfigOptions,
   type CreateRsbuildOptions,
@@ -12,6 +11,7 @@ import { updateContextByNormalizedConfig } from './createContext';
 import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
 import { normalizeConfig } from '../config';
+import { initPlugins } from '../../pluginManager';
 import type { InternalContext, NormalizedConfig } from '../../types';
 
 async function modifyRsbuildConfig(context: InternalContext) {
@@ -27,16 +27,16 @@ async function modifyRsbuildConfig(context: InternalContext) {
 
 export type InitConfigsOptions = {
   context: InternalContext;
-  pluginStore: PluginStore;
+  pluginManager: PluginManager;
   rsbuildOptions: Required<CreateRsbuildOptions>;
 };
 
 export async function initRsbuildConfig({
   context,
-  pluginStore,
+  pluginManager,
 }: Pick<
   InitConfigsOptions,
-  'context' | 'pluginStore'
+  'context' | 'pluginManager'
 >): Promise<NormalizedConfig> {
   // inited
   if (context.normalizedConfig) {
@@ -45,7 +45,7 @@ export async function initRsbuildConfig({
 
   await initPlugins({
     pluginAPI: context.pluginAPI,
-    pluginStore,
+    pluginManager,
   });
 
   await modifyRsbuildConfig(context);
@@ -57,12 +57,12 @@ export async function initRsbuildConfig({
 
 export async function initConfigs({
   context,
-  pluginStore,
+  pluginManager,
   rsbuildOptions,
 }: InitConfigsOptions): Promise<{
   rspackConfigs: RspackConfig[];
 }> {
-  const normalizedConfig = await initRsbuildConfig({ context, pluginStore });
+  const normalizedConfig = await initRsbuildConfig({ context, pluginManager });
   const { targets } = normalizedConfig.output;
 
   const rspackConfigs = await Promise.all(
@@ -78,7 +78,7 @@ export async function initConfigs({
       };
       inspectConfig({
         context,
-        pluginStore,
+        pluginManager,
         inspectOptions,
         rsbuildOptions,
         bundlerConfigs: rspackConfigs,

@@ -15,12 +15,12 @@ import { initConfigs } from './core/initConfigs';
 
 export const webpackProvider: RsbuildProvider<'webpack'> = async ({
   plugins,
-  pluginStore,
+  pluginManager,
   rsbuildOptions,
 }) => {
   const rsbuildConfig = pickRsbuildConfig(rsbuildOptions.rsbuildConfig);
   const context = await createContext(rsbuildOptions, rsbuildConfig, 'webpack');
-  const pluginAPI = getPluginAPI({ context, pluginStore });
+  const pluginAPI = getPluginAPI({ context, pluginManager });
 
   context.pluginAPI = pluginAPI;
 
@@ -28,7 +28,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     const { createCompiler } = await import('./core/createCompiler');
     const { webpackConfigs } = await initConfigs({
       context,
-      pluginStore,
+      pluginManager,
       rsbuildOptions,
     });
     return createCompiler({ context, webpackConfigs });
@@ -44,13 +44,13 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     publicContext: createPublicContext(context),
 
     async applyDefaultPlugins() {
-      pluginStore.addPlugins(await applyDefaultPlugins(plugins));
+      pluginManager.addPlugins(await applyDefaultPlugins(plugins));
     },
 
     async initConfigs() {
       const { webpackConfigs } = await initConfigs({
         context,
-        pluginStore,
+        pluginManager,
         rsbuildOptions,
       });
       return webpackConfigs;
@@ -59,9 +59,9 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     async getServerAPIs(options) {
       const { getServerAPIs } = await import('@rsbuild/core/server');
       const { createDevMiddleware } = await import('./core/createCompiler');
-      await initRsbuildConfig({ context, pluginStore });
+      await initRsbuildConfig({ context, pluginManager });
       return getServerAPIs(
-        { context, pluginStore, rsbuildOptions },
+        { context, pluginManager, rsbuildOptions },
         createDevMiddleware,
         options,
       );
@@ -72,12 +72,12 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
       const { createDevMiddleware } = await import('./core/createCompiler');
       await initRsbuildConfig({
         context,
-        pluginStore,
+        pluginManager,
       });
       return startDevServer(
         {
           context,
-          pluginStore,
+          pluginManager,
           rsbuildOptions,
         },
         createDevMiddleware,
@@ -89,21 +89,21 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
       const { startProdServer } = await import('@rsbuild/core/server');
       await initRsbuildConfig({
         context,
-        pluginStore,
+        pluginManager,
       });
       return startProdServer(context, context.config, options);
     },
 
     async build(options) {
       const { build } = await import('./core/build');
-      return build({ context, pluginStore, rsbuildOptions }, options);
+      return build({ context, pluginManager, rsbuildOptions }, options);
     },
 
     async inspectConfig(inspectOptions) {
       const { inspectConfig } = await import('./core/inspectConfig');
       return await inspectConfig({
         context,
-        pluginStore,
+        pluginManager,
         rsbuildOptions,
         inspectOptions,
       });

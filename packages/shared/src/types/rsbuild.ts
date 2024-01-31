@@ -1,4 +1,4 @@
-import type { PluginStore } from './plugin';
+import type { PluginManager } from './plugin';
 import type { RsbuildConfig } from './config';
 import type { RsbuildContext } from './context';
 import type { RsbuildProvider, ProviderInstance } from './provider';
@@ -22,9 +22,9 @@ export type RsbuildInstance<
 > = {
   context: RsbuildContext;
 
-  addPlugins: PluginStore['addPlugins'];
-  removePlugins: PluginStore['removePlugins'];
-  isPluginExists: PluginStore['isPluginExists'];
+  addPlugins: PluginManager['addPlugins'];
+  removePlugins: PluginManager['removePlugins'];
+  isPluginExists: PluginManager['isPluginExists'];
 
   build: ProviderInstance['build'];
   preview: ProviderInstance['preview'];

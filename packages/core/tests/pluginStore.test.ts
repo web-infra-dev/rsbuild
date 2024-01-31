@@ -1,11 +1,11 @@
-import { initPlugins, createPluginStore } from '../src';
+import { initPlugins, createPluginManager } from '../src/pluginManager';
 
 describe('initPlugins', () => {
   it('should sort plugin correctly', async () => {
-    const pluginStore = createPluginStore();
+    const pluginManager = createPluginManager();
     const result: number[] = [];
 
-    pluginStore.addPlugins([
+    pluginManager.addPlugins([
       {
         name: 'plugin0',
         setup() {
@@ -34,16 +34,16 @@ describe('initPlugins', () => {
       },
     ]);
 
-    await initPlugins({ pluginStore });
+    await initPlugins({ pluginManager });
 
     expect(result).toEqual([2, 0, 3, 1]);
   });
 
   it('should allow to remove plugin', async () => {
-    const pluginStore = createPluginStore();
+    const pluginManager = createPluginManager();
     const result: number[] = [];
 
-    pluginStore.addPlugins([
+    pluginManager.addPlugins([
       {
         name: 'plugin0',
         setup() {
@@ -65,7 +65,7 @@ describe('initPlugins', () => {
       },
     ]);
 
-    await initPlugins({ pluginStore });
+    await initPlugins({ pluginManager });
 
     expect(result).toEqual([0, 2]);
   });
