@@ -37,7 +37,7 @@ Called only when running the `rsbuild preview` command or the `rsbuild.preview()
 
 ---
 
-## Execution Order
+## Hooks Order
 
 ### Dev Hooks
 
@@ -74,6 +74,64 @@ When executing the `rsbuild preview` command or `rsbuild.preview()` method, Rsbu
 - [onBeforeStartProdServer](#onbeforestartprodserver)
 - [onAfterStartProdServer](#onafterstartprodserver)
 - [onExit](#onexit)
+
+---
+
+## Callback Order
+
+### Default Behavior
+
+If multiple plugins register the same hook, the callback functions of the hook will execute in the order in which they were registered.
+
+In the following example, the console will output `'1'` and `'2'` in sequence:
+
+```ts
+const plugin1 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig(() => console.log('1'));
+  },
+});
+
+const plugin2 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig(() => console.log('2'));
+  },
+});
+
+rsbuild.addPlugins([plugin1, plugin2]);
+```
+
+### `order` Field
+
+When registering a hook, you can declare the order of hook through the `order` field.
+
+```ts
+type HookDescriptor<T extends (...args: any[]) => any> = {
+  handler: T;
+  order: 'pre' | 'post' | 'default';
+};
+```
+
+In the following example, the console will sequentially output `'2'` and `'1'`, because `order` was set to `pre` when plugin2 called `modifyRsbuildConfig`.
+
+```ts
+const plugin1 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig(() => console.log('1'));
+  },
+});
+
+const plugin2 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig({
+      handler: () => console.log('2'),
+      order: 'pre',
+    });
+  },
+});
+
+rsbuild.addPlugins([plugin1, plugin2]);
+```
 
 ---
 
