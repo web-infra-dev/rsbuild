@@ -13,3 +13,11 @@ test('should allow to override target node version', () => {
     }),
   ).toMatchSnapshot();
 });
+
+test('should provide node preset as expected when presetEnv is false', () => {
+  expect(
+    getBabelConfigForNode({
+      presetEnv: false,
+    }).presets,
+  ).toMatchSnapshot();
+});
