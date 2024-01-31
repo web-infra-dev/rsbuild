@@ -32,6 +32,11 @@
   },
   {
     "type": "dir",
+    "name": "security",
+    "label": "security"
+  },
+  {
+    "type": "dir",
     "name": "tools",
     "label": "tools"
   },
@@ -39,10 +44,5 @@
     "type": "dir",
     "name": "performance",
     "label": "performance"
-  },
-  {
-    "type": "dir",
-    "name": "security",
-    "label": "security"
   }
 ]
