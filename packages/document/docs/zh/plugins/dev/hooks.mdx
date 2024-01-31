@@ -37,7 +37,7 @@
 
 ---
 
-## 执行顺序
+## Hooks 顺序
 
 ### Dev Hooks
 
@@ -74,6 +74,64 @@
 - [onBeforeStartProdServer](#onbeforestartprodserver)
 - [onAfterStartProdServer](#onafterstartprodserver)
 - [onExit](#onexit)
+
+---
+
+## 回调函数顺序
+
+### 默认行为
+
+如果多个插件注册了相同的 hook，那么 hook 的回调函数会按照注册时的顺序执行。
+
+在以下例子中，控制台会依次输出 `'1'` 和 `'2'`：
+
+```ts
+const plugin1 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig(() => console.log('1'));
+  },
+});
+
+const plugin2 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig(() => console.log('2'));
+  },
+});
+
+rsbuild.addPlugins([plugin1, plugin2]);
+```
+
+### order 字段
+
+在注册 hook 时，可以通过 `order` 字段来声明 hook 的顺序。
+
+```ts
+type HookDescriptor<T extends (...args: any[]) => any> = {
+  handler: T;
+  order: 'pre' | 'post' | 'default';
+};
+```
+
+在以下例子中，控制台会依次输出 `'2'` 和 `'1'`，因为 plugin2 在调用 modifyRsbuildConfig 时设置了 order 为 `pre`。
+
+```ts
+const plugin1 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig(() => console.log('1'));
+  },
+});
+
+const plugin2 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig({
+      handler: () => console.log('2'),
+      order: 'pre',
+    });
+  },
+});
+
+rsbuild.addPlugins([plugin1, plugin2]);
+```
 
 ---
 

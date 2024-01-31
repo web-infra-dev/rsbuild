@@ -28,6 +28,7 @@ import type {
   Configuration as WebpackConfig,
 } from 'webpack';
 import type { ChainIdentifier } from '../chain';
+import type { HookDescriptor } from '../createHook';
 
 export type ModifyRspackConfigFn = (
   config: RspackConfig,
@@ -143,6 +144,10 @@ export type GetRsbuildConfig = {
   (type: 'normalized'): NormalizedConfig;
 };
 
+type PluginHook<T extends (...args: any[]) => any> = (
+  options: T | HookDescriptor<T>,
+) => void;
+
 /**
  * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
@@ -150,16 +155,25 @@ export type RsbuildPluginAPI = {
   context: Readonly<RsbuildContext>;
   isPluginExists: PluginStore['isPluginExists'];
 
-  onExit: (fn: OnExitFn) => void;
-  onAfterBuild: (fn: OnAfterBuildFn) => void;
-  onBeforeBuild: (fn: OnBeforeBuildFn) => void;
-  onDevCompileDone: (fn: OnDevCompileDoneFn) => void;
-  onAfterStartDevServer: (fn: OnAfterStartDevServerFn) => void;
-  onBeforeStartDevServer: (fn: OnBeforeStartDevServerFn) => void;
-  onAfterStartProdServer: (fn: OnAfterStartProdServerFn) => void;
-  onBeforeStartProdServer: (fn: OnBeforeStartProdServerFn) => void;
-  onAfterCreateCompiler: (fn: OnAfterCreateCompilerFn) => void;
-  onBeforeCreateCompiler: (fn: OnBeforeCreateCompilerFn) => void;
+  onExit: PluginHook<OnExitFn>;
+  onAfterBuild: PluginHook<OnAfterBuildFn>;
+  onBeforeBuild: PluginHook<OnBeforeBuildFn>;
+  onDevCompileDone: PluginHook<OnDevCompileDoneFn>;
+  onAfterStartDevServer: PluginHook<OnAfterStartDevServerFn>;
+  onBeforeStartDevServer: PluginHook<OnBeforeStartDevServerFn>;
+  onAfterStartProdServer: PluginHook<OnAfterStartProdServerFn>;
+  onBeforeStartProdServer: PluginHook<OnBeforeStartProdServerFn>;
+  onAfterCreateCompiler: PluginHook<OnAfterCreateCompilerFn>;
+  onBeforeCreateCompiler: PluginHook<OnBeforeCreateCompilerFn>;
+
+  modifyRsbuildConfig: PluginHook<ModifyRsbuildConfigFn>;
+  modifyBundlerChain: PluginHook<ModifyBundlerChainFn>;
+  /** Only works when bundler is Rspack */
+  modifyRspackConfig: PluginHook<ModifyRspackConfigFn>;
+  /** Only works when bundler is Webpack */
+  modifyWebpackChain: PluginHook<ModifyWebpackChainFn>;
+  /** Only works when bundler is Webpack */
+  modifyWebpackConfig: PluginHook<ModifyWebpackConfigFn>;
 
   /**
    * Get the relative paths of generated HTML files.
@@ -168,14 +182,4 @@ export type RsbuildPluginAPI = {
   getHTMLPaths: () => Record<string, string>;
   getRsbuildConfig: GetRsbuildConfig;
   getNormalizedConfig: () => NormalizedConfig;
-
-  modifyRsbuildConfig: (fn: ModifyRsbuildConfigFn) => void;
-  modifyBundlerChain: (fn: ModifyBundlerChainFn) => void;
-
-  /** Only works when bundler is Rspack */
-  modifyRspackConfig: (fn: ModifyRspackConfigFn) => void;
-  /** Only works when bundler is Webpack */
-  modifyWebpackChain: (fn: ModifyWebpackChainFn) => void;
-  /** Only works when bundler is Webpack */
-  modifyWebpackConfig: (fn: ModifyWebpackConfigFn) => void;
 };
