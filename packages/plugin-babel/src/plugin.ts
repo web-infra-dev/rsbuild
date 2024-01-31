@@ -49,65 +49,68 @@ export const pluginBabel = (
   name: PLUGIN_BABEL_NAME,
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-      const config = api.getNormalizedConfig();
-      const getBabelOptions = () => {
-        const baseConfig = getDefaultBabelOptions(config.source.decorators);
+    api.modifyBundlerChain({
+      order: 'pre',
+      handler: async (chain, { CHAIN_ID }) => {
+        const config = api.getNormalizedConfig();
+        const getBabelOptions = () => {
+          const baseConfig = getDefaultBabelOptions(config.source.decorators);
 
-        const userBabelConfig = applyUserBabelConfig(
-          cloneDeep(baseConfig),
-          options.babelLoaderOptions,
+          const userBabelConfig = applyUserBabelConfig(
+            cloneDeep(baseConfig),
+            options.babelLoaderOptions,
+          );
+
+          return userBabelConfig;
+        };
+
+        const babelOptions = getBabelOptions();
+        const babelLoader = path.resolve(
+          __dirname,
+          '../compiled/babel-loader/index.js',
         );
+        const { include, exclude } = options;
 
-        return userBabelConfig;
-      };
+        if (include || exclude) {
+          const rule = chain.module.rule(BABEL_JS_RULE);
 
-      const babelOptions = getBabelOptions();
-      const babelLoader = path.resolve(
-        __dirname,
-        '../compiled/babel-loader/index.js',
-      );
-      const { include, exclude } = options;
+          if (include) {
+            castArray(include).forEach((condition) => {
+              rule.include.add(condition);
+            });
+          }
+          if (exclude) {
+            castArray(exclude).forEach((condition) => {
+              rule.exclude.add(condition);
+            });
+          }
 
-      if (include || exclude) {
-        const rule = chain.module.rule(BABEL_JS_RULE);
+          const swcRule = chain.module.rules
+            .get(CHAIN_ID.RULE.JS)
+            .use(CHAIN_ID.USE.SWC);
+          const swcLoader = swcRule.get('loader');
+          const swcOptions = swcRule.get('options');
 
-        if (include) {
-          castArray(include).forEach((condition) => {
-            rule.include.add(condition);
-          });
+          rule
+            .test(SCRIPT_REGEX)
+            .use(CHAIN_ID.USE.SWC)
+            .loader(swcLoader)
+            .options(swcOptions)
+            .end()
+            .use(CHAIN_ID.USE.BABEL)
+            .loader(babelLoader)
+            .options(babelOptions);
+        } else {
+          // already set source.include / exclude in plugin-swc
+          const rule = chain.module.rule(CHAIN_ID.RULE.JS);
+          rule
+            .test(SCRIPT_REGEX)
+            .use(CHAIN_ID.USE.BABEL)
+            .after(CHAIN_ID.USE.SWC)
+            .loader(babelLoader)
+            .options(babelOptions);
         }
-        if (exclude) {
-          castArray(exclude).forEach((condition) => {
-            rule.exclude.add(condition);
-          });
-        }
-
-        const swcRule = chain.module.rules
-          .get(CHAIN_ID.RULE.JS)
-          .use(CHAIN_ID.USE.SWC);
-        const swcLoader = swcRule.get('loader');
-        const swcOptions = swcRule.get('options');
-
-        rule
-          .test(SCRIPT_REGEX)
-          .use(CHAIN_ID.USE.SWC)
-          .loader(swcLoader)
-          .options(swcOptions)
-          .end()
-          .use(CHAIN_ID.USE.BABEL)
-          .loader(babelLoader)
-          .options(babelOptions);
-      } else {
-        // already set source.include / exclude in plugin-swc
-        const rule = chain.module.rule(CHAIN_ID.RULE.JS);
-        rule
-          .test(SCRIPT_REGEX)
-          .use(CHAIN_ID.USE.BABEL)
-          .after(CHAIN_ID.USE.SWC)
-          .loader(babelLoader)
-          .options(babelOptions);
-      }
+      },
     });
   },
 });

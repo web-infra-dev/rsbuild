@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { TS_CONFIG_FILE } from '@rsbuild/shared';
-import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   filterByField,
   getDependentProjects,
@@ -52,8 +52,6 @@ export function pluginSourceBuild(
 
   return {
     name: PLUGIN_SOURCE_BUILD_NAME,
-
-    pre: [PLUGIN_BABEL_NAME, 'uni-builder:babel', 'uni-builder:ts-loader'],
 
     setup(api) {
       const projectRootPath = api.context.rootPath;
