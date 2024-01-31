@@ -1,9 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import {
-  deepmerge,
-  modifySwcLoaderOptions,
-  type SwcReactConfig,
-} from '@rsbuild/shared';
+import { modifySwcLoaderOptions, type SwcReactConfig } from '@rsbuild/shared';
 
 export type PluginPreactOptions = {
   /**
@@ -39,14 +35,14 @@ export const pluginPreact = (
 
       modifySwcLoaderOptions({
         chain,
-        modifier: (options) => {
-          return deepmerge(options, {
-            jsc: {
-              transform: {
-                react: reactOptions,
-              },
-            },
-          });
+        modifier: (opts) => {
+          opts.jsc ??= {};
+          opts.jsc.transform ??= {};
+          opts.jsc.transform.react = {
+            ...opts.jsc.transform.react,
+            ...reactOptions,
+          };
+          return opts;
         },
       });
     });
