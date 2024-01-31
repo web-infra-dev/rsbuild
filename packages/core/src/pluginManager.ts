@@ -1,12 +1,11 @@
-import { logger, debug } from './logger';
+import { color, debug, logger, isFunction } from '@rsbuild/shared';
 import type {
-  PluginStore,
+  PluginManager,
   RsbuildPlugin,
   RsbuildPlugins,
   RsbuildPluginAPI,
   BundlerPluginInstance,
-} from './types';
-import { color, isFunction } from './utils';
+} from '@rsbuild/shared';
 
 function validatePlugin(plugin: unknown) {
   const type = typeof plugin;
@@ -51,7 +50,7 @@ function validatePlugin(plugin: unknown) {
   );
 }
 
-export function createPluginStore(): PluginStore {
+export function createPluginManager(): PluginManager {
   let plugins: RsbuildPlugin[] = [];
 
   const addPlugins = (
@@ -167,14 +166,14 @@ export const pluginDagSort = (plugins: RsbuildPlugin[]): RsbuildPlugin[] => {
 
 export async function initPlugins({
   pluginAPI,
-  pluginStore,
+  pluginManager,
 }: {
   pluginAPI?: RsbuildPluginAPI;
-  pluginStore: PluginStore;
+  pluginManager: PluginManager;
 }) {
   debug('init plugins');
 
-  const plugins = pluginDagSort(pluginStore.plugins);
+  const plugins = pluginDagSort(pluginManager.plugins);
 
   const removedPlugins = plugins.reduce<string[]>((ret, plugin) => {
     if (plugin.remove) {

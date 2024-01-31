@@ -1,5 +1,5 @@
-import type { RsbuildPlugin } from '../src';
-import { pluginDagSort } from '../src/pluginStore';
+import type { RsbuildPlugin } from '@rsbuild/shared';
+import { pluginDagSort } from '../src/pluginManager';
 
 describe('sort plugins', () => {
   it('should verify each plugin', () => {

@@ -1,12 +1,12 @@
 import {
   pick,
   debug,
-  createPluginStore,
   type RsbuildInstance,
   type RsbuildProvider,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
 import { plugins } from './plugins';
+import { createPluginManager } from './pluginManager';
 
 const getRspackProvider = async () => {
   const { rspackProvider } = await import('./provider');
@@ -27,7 +27,7 @@ export async function createRsbuild(
     ...options,
   };
 
-  const pluginStore = createPluginStore();
+  const pluginManager = createPluginManager();
   const {
     build,
     preview,
@@ -41,16 +41,16 @@ export async function createRsbuild(
     applyDefaultPlugins,
   } = await provider({
     plugins,
-    pluginStore,
+    pluginManager,
     rsbuildOptions,
   });
 
   debug('add default plugins');
-  await applyDefaultPlugins(pluginStore);
+  await applyDefaultPlugins(pluginManager);
   debug('add default plugins done');
 
   const rsbuild = {
-    ...pick(pluginStore, ['addPlugins', 'removePlugins', 'isPluginExists']),
+    ...pick(pluginManager, ['addPlugins', 'removePlugins', 'isPluginExists']),
     ...pick(pluginAPI, [
       'onBeforeBuild',
       'onBeforeCreateCompiler',

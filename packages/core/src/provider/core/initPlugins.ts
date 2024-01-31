@@ -2,7 +2,7 @@ import {
   getDistPath,
   onExitProcess,
   removeLeadingSlash,
-  type PluginStore,
+  type PluginManager,
   type RsbuildPluginAPI,
   type GetRsbuildConfig,
 } from '@rsbuild/shared';
@@ -24,10 +24,10 @@ export function getHTMLPathByEntry(
 
 export function getPluginAPI({
   context,
-  pluginStore,
+  pluginManager,
 }: {
   context: InternalContext;
-  pluginStore: PluginStore;
+  pluginManager: PluginManager;
 }): RsbuildPluginAPI {
   const { hooks } = context;
   const publicContext = createPublicContext(context);
@@ -72,7 +72,7 @@ export function getPluginAPI({
     getHTMLPaths,
     getRsbuildConfig,
     getNormalizedConfig,
-    isPluginExists: pluginStore.isPluginExists,
+    isPluginExists: pluginManager.isPluginExists,
 
     // Hooks
     onExit: hooks.onExit.tap,

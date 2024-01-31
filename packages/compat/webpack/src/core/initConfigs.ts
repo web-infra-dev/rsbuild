@@ -1,6 +1,6 @@
 import {
   isDebug,
-  type PluginStore,
+  type PluginManager,
   type InspectConfigOptions,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
@@ -14,20 +14,20 @@ import type { WebpackConfig } from '../types';
 
 export type InitConfigsOptions = {
   context: InternalContext;
-  pluginStore: PluginStore;
+  pluginManager: PluginManager;
   rsbuildOptions: Required<CreateRsbuildOptions>;
 };
 
 export async function initConfigs({
   context,
-  pluginStore,
+  pluginManager,
   rsbuildOptions,
 }: InitConfigsOptions): Promise<{
   webpackConfigs: WebpackConfig[];
 }> {
   const normalizedConfig = await initRsbuildConfig({
     context,
-    pluginStore,
+    pluginManager,
   });
   const { targets } = normalizedConfig.output;
 
@@ -44,7 +44,7 @@ export async function initConfigs({
       };
       inspectConfig({
         context,
-        pluginStore,
+        pluginManager,
         inspectOptions,
         rsbuildOptions,
         bundlerConfigs: webpackConfigs,

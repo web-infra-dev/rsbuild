@@ -13,7 +13,7 @@ import {
 
 export async function inspectConfig({
   context,
-  pluginStore,
+  pluginManager,
   rsbuildOptions,
   bundlerConfigs,
   inspectOptions = {},
@@ -32,7 +32,7 @@ export async function inspectConfig({
     (
       await initConfigs({
         context,
-        pluginStore,
+        pluginManager,
         rsbuildOptions,
       })
     ).rspackConfigs;
@@ -41,7 +41,7 @@ export async function inspectConfig({
     pluginNames: string[];
   } = {
     ...context.normalizedConfig!,
-    pluginNames: pluginStore.plugins.map((p) => p.name),
+    pluginNames: pluginManager.plugins.map((p) => p.name),
   };
 
   const rawRsbuildConfig = await stringifyConfig(
