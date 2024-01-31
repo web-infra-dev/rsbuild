@@ -33,8 +33,8 @@ const getDefaultPresetEnvOption = (options: WebPresetOptions) => {
 export const getBabelConfigForWeb = (options: WebPresetOptions) => {
   if (options.presetEnv !== false) {
     options.presetEnv = {
-      ...options.presetEnv,
       ...getDefaultPresetEnvOption(options),
+      ...options.presetEnv,
     };
   }
 
