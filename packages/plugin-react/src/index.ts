@@ -1,4 +1,4 @@
-import { PLUGIN_SWC_NAME, type RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { applyAntdSupport } from './antd';
 import { applyArcoSupport } from './arco';
 import { applySplitChunksRule } from './splitChunks';
@@ -40,8 +40,6 @@ export const pluginReact = (
   options: PluginReactOptions = {},
 ): RsbuildPlugin => ({
   name: PLUGIN_REACT_NAME,
-
-  pre: [PLUGIN_SWC_NAME],
 
   setup(api) {
     if (api.context.bundlerType === 'rspack') {
