@@ -44,6 +44,7 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
       'output',
       'html',
       'server',
+      'security',
       'dev',
       'tools',
       'performance',
