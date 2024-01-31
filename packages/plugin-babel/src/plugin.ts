@@ -30,7 +30,6 @@ export const getDefaultBabelOptions = (decorators: Decorators) => {
     compact: isProd(),
     plugins: [
       [require.resolve('@babel/plugin-proposal-decorators'), decorators],
-      require.resolve('@babel/plugin-transform-class-static-block'),
     ],
     presets: [
       // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
