@@ -1,22 +1,13 @@
-import { deepmerge } from '@rsbuild/shared';
 import { generateBaseConfig } from './base';
 import type { BabelConfig, NodePresetOptions } from './types';
 
 export const getBabelConfigForNode = (options: NodePresetOptions = {}) => {
-  let mergedOptions = options;
-
-  if (!options.presetEnv || !options.presetEnv.targets) {
-    mergedOptions = deepmerge(
-      {
-        presetEnv: {
-          targets: ['node >= 16'],
-        },
-      },
-      options,
-    );
+  if (options.presetEnv !== false) {
+    options.presetEnv ||= {};
+    options.presetEnv.targets ||= ['node >= 16'];
   }
 
-  const config = generateBaseConfig(mergedOptions);
+  const config = generateBaseConfig(options);
 
   config.plugins?.push(require.resolve('babel-plugin-dynamic-import-node'));
 

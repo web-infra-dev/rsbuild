@@ -1,7 +1,17 @@
 import { join } from 'node:path';
-import { deepmerge, getCoreJsVersion } from '@rsbuild/shared';
+import { readFileSync } from 'node:fs';
 import { generateBaseConfig } from './base';
 import type { BabelConfig, WebPresetOptions } from './types';
+
+const getCoreJsVersion = (corejsPkgPath: string) => {
+  try {
+    const { version } = JSON.parse(readFileSync(corejsPkgPath, 'utf-8'));
+    const [major, minor] = version.split('.');
+    return `${major}.${minor}`;
+  } catch (err) {
+    return '3';
+  }
+};
 
 const getDefaultPresetEnvOption = (options: WebPresetOptions) => {
   if (options.presetEnv === false) {
@@ -21,15 +31,15 @@ const getDefaultPresetEnvOption = (options: WebPresetOptions) => {
 };
 
 export const getBabelConfigForWeb = (options: WebPresetOptions) => {
-  const mergedOptions = deepmerge(
-    {
-      presetEnv: getDefaultPresetEnvOption(options),
-    },
-    options,
-  );
+  if (options.presetEnv !== false) {
+    options.presetEnv = {
+      ...options.presetEnv,
+      ...getDefaultPresetEnvOption(options),
+    };
+  }
 
-  const config = generateBaseConfig(mergedOptions);
-  const { pluginTransformRuntime = {} } = mergedOptions;
+  const config = generateBaseConfig(options);
+  const { pluginTransformRuntime = {} } = options;
 
   // Skip plugin-transform-runtime when testing
   if (pluginTransformRuntime) {

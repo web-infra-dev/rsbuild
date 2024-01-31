@@ -1,4 +1,3 @@
-import { isTest } from '@rsbuild/shared';
 import type { BabelConfig, BasePresetOptions } from './types';
 
 export const generateBaseConfig = (
@@ -20,7 +19,7 @@ export const generateBaseConfig = (
       require.resolve('@babel/preset-env'),
       {
         // Jest only supports commonjs
-        modules: isTest() ? 'commonjs' : false,
+        modules: process.env.NODE_ENV === 'test' ? 'commonjs' : false,
         exclude: ['transform-typeof-symbol'],
         ...presetEnv,
       },
