@@ -14,7 +14,7 @@ import type {
   PluginSwcOptions,
   TransformConfig,
 } from './types';
-import { CORE_JS_DIR_PATH, SWC_HELPERS_DIR_PATH } from './constants';
+import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
 import { applySwcDecoratorConfig } from '@rsbuild/core/provider';
 
 /**
@@ -24,7 +24,7 @@ export async function determinePresetReact(
   root: string,
   pluginConfig: ObjPluginSwcOptions,
 ) {
-  pluginConfig.presetReact ||= {};
+  pluginConfig.presetReact ??= {};
   pluginConfig.presetReact.runtime ??= (await isBeyondReact17(root))
     ? 'automatic'
     : 'classic';
@@ -158,8 +158,7 @@ export async function applyPluginConfig(
   }
 
   if (!swc.env.coreJs) {
-    const CORE_JS_PATH = require.resolve('core-js/package.json');
-    swc.env.coreJs = getCoreJsVersion(CORE_JS_PATH);
+    swc.env.coreJs = getCoreJsVersion(CORE_JS_PKG_PATH);
   }
 
   // If `targets` is not specified manually, we get `browserslist` from project.
@@ -200,8 +199,8 @@ export async function applyPluginConfig(
   }
 
   extensions.lockCorejsVersion ??= {
-    corejs: CORE_JS_DIR_PATH,
-    swcHelpers: SWC_HELPERS_DIR_PATH,
+    corejs: CORE_JS_DIR,
+    swcHelpers: SWC_HELPERS_DIR,
   };
 
   applySwcDecoratorConfig(swc, rsbuildConfig);

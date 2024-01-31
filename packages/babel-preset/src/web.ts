@@ -1,18 +1,8 @@
 import { join } from 'node:path';
-import { readFileSync } from 'node:fs';
 import { generateBaseConfig } from './base';
 import type { BabelConfig, WebPresetOptions } from './types';
 import type { PresetEnvOptions } from '@rsbuild/plugin-babel';
-
-const getCoreJsVersion = (corejsPkgPath: string) => {
-  try {
-    const { version } = JSON.parse(readFileSync(corejsPkgPath, 'utf-8'));
-    const [major, minor] = version.split('.');
-    return `${major}.${minor}`;
-  } catch (err) {
-    return '3';
-  }
-};
+import { getCoreJsVersion } from './pluginLockCorejsVersion';
 
 const getDefaultPresetEnvOption = (
   options: WebPresetOptions,
@@ -26,7 +16,7 @@ const getDefaultPresetEnvOption = (
     // core-js is required for web target
     corejs: options.presetEnv?.useBuiltIns
       ? {
-          version: getCoreJsVersion(require.resolve('core-js/package.json')),
+          version: getCoreJsVersion(),
           proposals: true,
         }
       : undefined,
