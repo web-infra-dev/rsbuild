@@ -784,6 +784,9 @@ importers:
       '@babel/core':
         specifier: ^7.23.2
         version: 7.23.2
+      '@babel/plugin-proposal-decorators':
+        specifier: ^7.23.2
+        version: 7.23.2(@babel/core@7.23.2)
       '@babel/preset-typescript':
         specifier: ^7.23.2
         version: 7.23.2(@babel/core@7.23.2)

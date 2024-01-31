@@ -1,6 +1,12 @@
 import path from 'node:path';
 import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
-import { castArray, cloneDeep, SCRIPT_REGEX, isProd } from '@rsbuild/shared';
+import {
+  castArray,
+  cloneDeep,
+  SCRIPT_REGEX,
+  isProd,
+  type Decorators,
+} from '@rsbuild/shared';
 import { applyUserBabelConfig, BABEL_JS_RULE } from './helper';
 import type { PluginBabelOptions } from './types';
 
@@ -17,12 +23,14 @@ export const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
   isTSX: true,
 };
 
-export const getDefaultBabelOptions = () => {
+export const getDefaultBabelOptions = (decorators: Decorators) => {
   return {
     babelrc: false,
     configFile: false,
     compact: isProd(),
-    plugins: [],
+    plugins: [
+      [require.resolve('@babel/plugin-proposal-decorators'), decorators],
+    ],
     presets: [
       // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
       [
@@ -42,8 +50,9 @@ export const pluginBabel = (
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+      const config = api.getNormalizedConfig();
       const getBabelOptions = () => {
-        const baseConfig = getDefaultBabelOptions();
+        const baseConfig = getDefaultBabelOptions(config.source.decorators);
 
         const userBabelConfig = applyUserBabelConfig(
           cloneDeep(baseConfig),
