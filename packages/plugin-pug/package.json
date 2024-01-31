@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-pug",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "description": "Pug plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -37,7 +37,7 @@
     "typescript": "^5.3.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.3.10"
+    "@rsbuild/core": "workspace:^0.3.11"
   },
   "publishConfig": {
     "access": "public",
