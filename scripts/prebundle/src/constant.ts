@@ -380,4 +380,14 @@ export const TASKS: TaskConfig[] = [
       },
     ],
   },
+  {
+    packageDir: 'plugin-rem',
+    packageName: '@rsbuild/plugin-rem',
+    dependencies: [
+      {
+        name: 'postcss-pxtorem',
+        ignoreDts: true,
+      },
+    ],
+  },
 ];
