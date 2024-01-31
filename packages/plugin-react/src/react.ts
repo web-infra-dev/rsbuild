@@ -1,6 +1,5 @@
 import path from 'node:path';
 import {
-  deepmerge,
   isUsingHMR,
   modifySwcLoaderOptions,
   type SwcReactConfig,
@@ -27,14 +26,14 @@ export const applyBasicReactSupport = (
 
     modifySwcLoaderOptions({
       chain,
-      modifier: (options) => {
-        return deepmerge(options, {
-          jsc: {
-            transform: {
-              react: reactOptions,
-            },
-          },
-        });
+      modifier: (opts) => {
+        opts.jsc ??= {};
+        opts.jsc.transform ??= {};
+        opts.jsc.transform.react = {
+          ...opts.jsc.transform.react,
+          ...reactOptions,
+        };
+        return opts;
       },
     });
 
