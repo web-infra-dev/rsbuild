@@ -85,17 +85,16 @@ export default {
 ```ts
 import path from 'node:path';
 
+const packagesDir = path.resolve(__dirname, '../../packages');
+
 export default {
   source: {
     include: [
-      // 方法一:
       // 编译 Monorepo 的 package 目录下的所有文件
-      path.resolve(__dirname, '../../packages'),
-
-      // 方法二:
-      // 编译 Monorepo 的 package 目录里某个包的源代码
-      // 这种写法匹配的范围更加精准，对整体编译性能的影响更小
-      path.resolve(__dirname, '../../packages/xxx/src'),
+      // 建议排除 node_modules
+      {
+        and: [packagesDir, { not: /[\\/]node_modules[\\/]/ }],
+      },
     ],
   },
 };
