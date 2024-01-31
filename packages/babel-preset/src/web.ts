@@ -2,6 +2,7 @@ import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { generateBaseConfig } from './base';
 import type { BabelConfig, WebPresetOptions } from './types';
+import type { PresetEnvOptions } from '@rsbuild/plugin-babel';
 
 const getCoreJsVersion = (corejsPkgPath: string) => {
   try {
@@ -13,7 +14,9 @@ const getCoreJsVersion = (corejsPkgPath: string) => {
   }
 };
 
-const getDefaultPresetEnvOption = (options: WebPresetOptions) => {
+const getDefaultPresetEnvOption = (
+  options: WebPresetOptions,
+): PresetEnvOptions | false => {
   if (options.presetEnv === false) {
     return false;
   }
