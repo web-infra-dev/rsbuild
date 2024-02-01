@@ -23,7 +23,7 @@ jobs:
   # ======== ut ========
   ut-mac:
     # run ut in MacOS, as SWC cases will fail in Ubuntu CI
-    runs-on: macos-latest
+    runs-on: macos-14
     strategy:
       matrix:
         node-version: [18.x] 
