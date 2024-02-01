@@ -138,21 +138,6 @@ export const castArray = <T>(arr?: T | T[]): T[] => {
   return Array.isArray(arr) ? arr : [arr];
 };
 
-/**
- * Try to resolve npm package, return true if package is installed.
- */
-export const isPackageInstalled = (
-  name: string,
-  resolvePaths: string | string[],
-) => {
-  try {
-    require.resolve(name, { paths: castArray(resolvePaths) });
-    return true;
-  } catch (err) {
-    return false;
-  }
-};
-
 export const camelCase = (input: string): string =>
   input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
 
