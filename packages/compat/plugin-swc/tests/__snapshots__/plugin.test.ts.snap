@@ -78,6 +78,9 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
             "application/javascript",
           ],
         },
+        "resolve": {
+          "fullySpecified": false,
+        },
         "use": [
           {
             "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -206,6 +209,9 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
           "application/javascript",
         ],
       },
+      "resolve": {
+        "fullySpecified": false,
+      },
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -330,6 +336,9 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
           "application/javascript",
         ],
       },
+      "resolve": {
+        "fullySpecified": false,
+      },
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -453,6 +462,9 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
           "text/javascript",
           "application/javascript",
         ],
+      },
+      "resolve": {
+        "fullySpecified": false,
       },
       "use": [
         {
@@ -581,6 +593,9 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
           "application/javascript",
         ],
       },
+      "resolve": {
+        "fullySpecified": false,
+      },
       "use": [
         {
           "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -707,6 +722,9 @@ exports[`plugin-swc > should disable react refresh when target is not web 4`] = 
           "text/javascript",
           "application/javascript",
         ],
+      },
+      "resolve": {
+        "fullySpecified": false,
       },
       "use": [
         {
@@ -928,6 +946,9 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
         "application/javascript",
       ],
     },
+    "resolve": {
+      "fullySpecified": false,
+    },
     "use": [
       {
         "loader": "<ROOT>/packages/compat/plugin-swc/src/loader",
@@ -1074,6 +1095,9 @@ exports[`plugin-swc > should set swc-loader 1`] = `
             "text/javascript",
             "application/javascript",
           ],
+        },
+        "resolve": {
+          "fullySpecified": false,
         },
         "use": [
           {

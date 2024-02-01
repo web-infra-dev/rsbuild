@@ -410,14 +410,6 @@ export function applyResolvePlugin(api: RsbuildPluginAPI) {
       applyFullySpecified({ chain, config, CHAIN_ID });
     },
   });
-
-  api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-    if (chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI)) {
-      chain.module
-        .rule(CHAIN_ID.RULE.JS_DATA_URI)
-        .resolve.set('fullySpecified', false);
-    }
-  });
 }
 
 // compatible with legacy packages with type="module"
