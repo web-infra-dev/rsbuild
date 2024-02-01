@@ -1,14 +1,16 @@
 import path from 'node:path';
-import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
+  isProd,
   castArray,
   cloneDeep,
   SCRIPT_REGEX,
-  isProd,
   type Decorators,
 } from '@rsbuild/shared';
 import { applyUserBabelConfig, BABEL_JS_RULE } from './helper';
 import type { PluginBabelOptions } from './types';
+
+export const PLUGIN_BABEL_NAME = 'rsbuild:babel';
 
 /**
  * The `@babel/preset-typescript` default options.
@@ -40,8 +42,6 @@ export const getDefaultBabelOptions = (decorators: Decorators) => {
     ],
   };
 };
-
-export { PLUGIN_BABEL_NAME };
 
 export const pluginBabel = (
   options: PluginBabelOptions = {},

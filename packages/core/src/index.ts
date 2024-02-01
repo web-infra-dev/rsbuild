@@ -19,7 +19,6 @@ export {
   PLUGIN_CSS_NAME,
   PLUGIN_SASS_NAME,
   PLUGIN_LESS_NAME,
-  PLUGIN_BABEL_NAME,
   PLUGIN_STYLUS_NAME,
 } from './constants';
 
