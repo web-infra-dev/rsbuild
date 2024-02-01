@@ -51,7 +51,10 @@ function loadConfig(params: {
   cwd: string;
   // 指定配置文件路径，可以为相对路径或绝对路径
   path?: string;
-}): Promise<RsbuildConfig>;
+}): Promise<{
+  content: RsbuildConfig;
+  filePath: string | null;
+}>;
 ```
 
 - **示例：**
@@ -59,9 +62,9 @@ function loadConfig(params: {
 ```ts
 import { loadConfig } from '@rsbuild/core';
 
-const config = await loadConfig();
+const { content } = await loadConfig();
 
-console.log(config); // -> RsbuildConfig
+console.log(content); // -> Rsbuild config object
 ```
 
 ## loadEnv

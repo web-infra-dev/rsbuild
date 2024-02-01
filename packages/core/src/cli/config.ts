@@ -99,7 +99,24 @@ export async function watchFiles(files: string[]) {
   watcher.on('unlink', callback);
 }
 
-export async function loadConfigByPath(configFile: string, envMode?: string) {
+export async function loadConfig({
+  cwd,
+  path,
+  envMode,
+}: {
+  cwd: string;
+  path?: string;
+  envMode?: string;
+}): Promise<{ content: RsbuildConfig; filePath: string | null }> {
+  const configFile = resolveConfigPath(cwd, path);
+
+  if (!configFile) {
+    return {
+      content: {},
+      filePath: configFile,
+    };
+  }
+
   try {
     const { default: jiti } = await import('@rsbuild/shared/jiti');
     const loadConfig = jiti(__filename, {
@@ -125,7 +142,10 @@ export async function loadConfigByPath(configFile: string, envMode?: string) {
         throw new Error('Rsbuild config function must return a config object.');
       }
 
-      return result;
+      return {
+        content: result,
+        filePath: configFile,
+      };
     }
 
     if (!isObject(configExport)) {
@@ -136,50 +156,12 @@ export async function loadConfigByPath(configFile: string, envMode?: string) {
       );
     }
 
-    return configExport;
+    return {
+      content: configExport,
+      filePath: configFile,
+    };
   } catch (err) {
     logger.error(`Failed to load file: ${color.dim(configFile)}`);
     throw err;
   }
-}
-
-export async function loadConfig({
-  cwd,
-  path,
-}: {
-  cwd: string;
-  path?: string;
-}): Promise<RsbuildConfig> {
-  const configFile = resolveConfigPath(cwd, path);
-
-  if (!configFile) {
-    return {};
-  }
-
-  return loadConfigByPath(configFile);
-}
-
-// TODO replace loadConfig in v0.4.0
-export async function loadConfigV2({
-  cwd,
-  path,
-  envMode,
-}: {
-  cwd: string;
-  path?: string;
-  envMode?: string;
-}): Promise<{ content: RsbuildConfig; filePath: string | null }> {
-  const configFile = resolveConfigPath(cwd, path);
-
-  if (!configFile) {
-    return {
-      content: {},
-      filePath: configFile,
-    };
-  }
-
-  return {
-    content: await loadConfigByPath(configFile, envMode),
-    filePath: configFile,
-  };
 }

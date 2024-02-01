@@ -51,7 +51,10 @@ function loadConfig(params: {
   cwd: string;
   // Specify the configuration file, can be a relative or absolute path
   path?: string;
-}): Promise<RsbuildConfig>;
+}): Promise<{
+  content: RsbuildConfig;
+  filePath: string | null;
+}>;
 ```
 
 - **Example:**
@@ -59,9 +62,9 @@ function loadConfig(params: {
 ```ts
 import { loadConfig } from '@rsbuild/core';
 
-const config = await loadConfig();
+const { content } = await loadConfig();
 
-console.log(config); // -> RsbuildConfig
+console.log(content); // -> Rsbuild config object
 ```
 
 ## loadEnv
