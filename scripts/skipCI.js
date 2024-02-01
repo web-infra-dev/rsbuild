@@ -3,7 +3,7 @@ const { execSync } = require('node:child_process');
 const SKIP_FOLDERS = [
   'cspell.json',
   '.changeset',
-  // '.github',
+  '.github',
   '.vscode',
   'packages/document',
   'scripts/skipCI.js',
