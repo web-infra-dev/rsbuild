@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import { isBeyondReact17 } from '@rsbuild/plugin-react';
+import fs from 'node:fs';
 import {
+  findUp,
   isUsingHMR,
   getCoreJsVersion,
   getBrowserslistWithDefault,
@@ -8,6 +9,7 @@ import {
   type ModifyChainUtils,
   type NormalizedConfig,
 } from '@rsbuild/shared';
+import semver from '@rsbuild/shared/semver';
 import { getDefaultSwcConfig } from './plugin';
 import type {
   ObjPluginSwcOptions,
@@ -16,6 +18,26 @@ import type {
 } from './types';
 import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
 import { applySwcDecoratorConfig } from '@rsbuild/core/provider';
+
+const isBeyondReact17 = async (cwd: string) => {
+  const pkgPath = await findUp({ cwd, filename: 'package.json' });
+
+  if (!pkgPath) {
+    return false;
+  }
+
+  const pkgInfo = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+  const deps = {
+    ...pkgInfo.devDependencies,
+    ...pkgInfo.dependencies,
+  };
+
+  if (typeof deps.react !== 'string') {
+    return false;
+  }
+
+  return semver.satisfies(semver.minVersion(deps.react)!, '>=17.0.0');
+};
 
 /**
  * Determine react runtime mode based on react version

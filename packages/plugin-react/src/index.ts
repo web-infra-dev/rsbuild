@@ -1,11 +1,7 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { applyAntdSupport } from './antd';
-import { applyArcoSupport } from './arco';
+import type { SwcReactConfig } from '@rsbuild/shared';
 import { applySplitChunksRule } from './splitChunks';
 import { applyBasicReactSupport } from './react';
-import type { SwcReactConfig } from '@rsbuild/shared';
-
-export { isBeyondReact17 } from './utils';
 
 export type SplitReactChunkOptions = {
   /**
@@ -45,8 +41,7 @@ export const pluginReact = (
     if (api.context.bundlerType === 'rspack') {
       applyBasicReactSupport(api, options);
     }
-    applyAntdSupport(api);
-    applyArcoSupport(api);
+
     applySplitChunksRule(api, options?.splitChunks);
   },
 });
