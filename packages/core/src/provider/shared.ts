@@ -96,14 +96,14 @@ export const getCompiledPath = (packageName: string) => {
 
 export const BUILTIN_LOADER = 'builtin:';
 
-const addNodePolyfillTip = (message: string) => {
+const addNodePolyfillTip = (message: string): string => {
   if (!message.includes(`Can't resolve`)) {
-    return;
+    return message;
   }
 
   const matchArray = message.match(/Can't resolve '(\w+)'/);
   if (!matchArray) {
-    return;
+    return message;
   }
 
   const moduleName = matchArray[1];
@@ -145,6 +145,8 @@ const addNodePolyfillTip = (message: string) => {
     ];
     return `${message}\n\n${color.yellow(tips.join('\n'))}`;
   }
+
+  return message;
 };
 
 function formatErrorMessage(errors: string[]) {
