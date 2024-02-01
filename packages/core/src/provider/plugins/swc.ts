@@ -116,6 +116,10 @@ export const pluginSwc = (): RsbuildPlugin => ({
           .mimetype({
             or: ['text/javascript', 'application/javascript'],
           })
+          // compatible with legacy packages with type="module"
+          // https://github.com/webpack/webpack/issues/11467
+          .resolve.set('fullySpecified', false)
+          .end()
           .use(CHAIN_ID.USE.SWC)
           .loader(builtinSwcLoaderName)
           // Using cloned options to keep options separate from each other
