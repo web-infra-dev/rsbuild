@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import { color, isDev, logger } from '@rsbuild/shared';
 import { program, type Command } from '@rsbuild/shared/commander';
 import { loadEnv } from '../loadEnv';
-import { loadConfigV2, watchFiles } from './config';
+import { loadConfig, watchFiles } from './config';
 import type { RsbuildMode } from '..';
 import { onBeforeRestartServer } from '../server/restart';
 
@@ -53,7 +53,7 @@ export async function init({
       onBeforeRestartServer(envs.cleanup);
     }
 
-    const { content: config, filePath: configFilePath } = await loadConfigV2({
+    const { content: config, filePath: configFilePath } = await loadConfig({
       cwd: root,
       path: commonOpts.config,
       envMode: commonOpts.envMode,
