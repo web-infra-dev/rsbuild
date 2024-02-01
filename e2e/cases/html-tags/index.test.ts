@@ -1,6 +1,6 @@
-import path from 'path';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 const isHtmlMatch = (html: string, pattern: RegExp): boolean =>
   Boolean(html.match(pattern));
@@ -8,7 +8,6 @@ const isHtmlMatch = (html: string, pattern: RegExp): boolean =>
 test('should inject tags', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.ts') },
     rsbuildConfig: {
       html: {
         tags: [
@@ -24,7 +23,8 @@ test('should inject tags', async () => {
 
   const files = await rsbuild.unwrapOutputJSON();
 
-  const indexHtml = files[path.resolve(__dirname, './dist/index.html')];
+  const indexHtml =
+    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 
   expect(isHtmlMatch(indexHtml, /foo\.js/)).toBeTruthy();
   expect(

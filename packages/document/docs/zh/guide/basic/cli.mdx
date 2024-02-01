@@ -2,9 +2,36 @@
 
 Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令。
 
-## 命令
+---
 
-### rsbuild dev
+## rsbuild -h
+
+如果你需要查看所有可用的 CLI 命令，请在项目目录中运行以下命令：
+
+```bash
+npx rsbuild -h
+```
+
+The output is as follows:
+
+```text
+Usage: rsbuild <command> [options]
+
+Options:
+  -V, --version      output the version number
+  -h, --help         display help for command
+
+Commands:
+  dev [options]      starting the dev server
+  build [options]    build the app for production
+  preview [options]  preview the production build locally
+  inspect [options]  inspect the Rspack and Rsbuild configs
+  help [command]     display help for command
+```
+
+---
+
+## rsbuild dev
 
 `rsbuild dev` 命令用于启动一个本地开发服务器，对源代码进行开发环境编译。
 
@@ -12,10 +39,37 @@ Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令�
 Usage: rsbuild dev [options]
 
 Options:
-  -h, --help            display help for command
+  -o, --open [url]      启动时是否在浏览器中打开页面
+  --port <port>         设置 Rsbuild Server 监听的端口号
+  --host <host>         指定 Rsbuild Server 启动时监听的 host
+  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
+  -h, --help            显示命令帮助
 ```
 
-### rsbuild build
+### 打开页面
+
+通过 `--open` 选项可以在启动 dev server 时自动打开页面，等同于将 [dev.startUrl](/config/dev/start-url) 设置为 `true`。
+
+```bash
+rsbuild dev --open
+```
+
+`--open` 选项也支持指定需要打开的 URL 地址，比如：
+
+```bash
+rsbuild dev --open http://localhost:8080/foo
+```
+
+`--open` 选项也可以缩写为 `-o`：
+
+```bash
+rsbuild dev -o
+```
+
+---
+
+## rsbuild build
 
 `rsbuild build` 命令默认会在 `dist/` 目录下构建出可用于生产环境的产物。
 
@@ -23,19 +77,33 @@ Options:
 Usage: rsbuild build [options]
 
 Options:
-  -h, --help            display help for command
+  -w --watch            开启 watch 模式, 监听文件变更并重新构建
+  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
+  -h, --help            显示命令帮助
 ```
 
-### rsbuild preview
+---
+
+## rsbuild preview
 
 `rsbuild preview` 命令用于在本地预览生产环境构建的产物, 注意你需要提前执行 `rsbuild build` 命令构建出对应产物。
+
+请勿将 preview 命令用作生产服务，因为它不是为此而设计的。
 
 ```bash
 Usage: rsbuild preview [options]
 
 Options:
-  -h, --help            display help for command
+  --open [url]          启动时是否在浏览器中打开页面
+  --port <port>         设置 Rsbuild Server 监听的端口号
+  --host <host>         指定 Rsbuild Server 启动时监听的 host
+  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
+  -h, --help            显示命令帮助
 ```
+
+---
 
 ## rsbuild inspect
 
@@ -49,21 +117,22 @@ Options:
   --output <output>     指定在 dist 目录下输出的路径 (default: "/")
   --verbose             在结果中展示函数的完整内容
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   -h, --help            显示命令帮助
 ```
 
 当你在项目根目录下执行命令 `npx rsbuild inspect` 后，会在项目的 `dist` 目录生成以下文件：
 
-- `rsbuild.config.js`: 表示在构建时使用的 Rsbuild 配置。
-- `rspack.config.web.js`: 表示在构建时使用的 Rspack 配置。
+- `rsbuild.config.mjs`: 表示在构建时使用的 Rsbuild 配置。
+- `rspack.config.web.mjs`: 表示在构建时使用的 Rspack 配置。
 
 ```bash
 ➜ npx rsbuild inspect
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /project/dist/rsbuild.config.js
-  - Rspack Config (web): /project/dist/rspack.config.web.js
+  - Rsbuild Config: /project/dist/rsbuild.config.mjs
+  - Rspack Config (web): /project/dist/rspack.config.web.mjs
 ```
 
 ### 指定环境
@@ -91,7 +160,7 @@ rsbuild inspect --verbose
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /project/dist/rsbuild.config.js
-  - Rspack Config (web): /project/dist/rspack.config.web.js
-  - Rspack Config (node): /project/dist/rspack.config.node.js
+  - Rsbuild Config: /project/dist/rsbuild.config.mjs
+  - Rspack Config (web): /project/dist/rspack.config.web.mjs
+  - Rspack Config (node): /project/dist/rspack.config.node.mjs
 ```

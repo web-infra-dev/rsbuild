@@ -6,7 +6,7 @@ A variety of chunk splitting strategies are built into Rsbuild, which can meet t
 
 ## Splitting Strategies
 
-> The chunk splitting config of Rsbuild is in [performance.chunkSplit](/config/options/performance.html#performancechunksplit).
+> The chunk splitting config of Rsbuild is in [performance.chunkSplit](/config/performance/chunk-split).
 
 Rsbuild supports the following chunk splitting strategies:
 
@@ -24,12 +24,9 @@ Rsbuild supports the following chunk splitting strategies:
 Rsbuild adopts the `split-by-experience` strategy by default, which is a strategy we have developed from experience. Specifically, when the following npm packages are referenced in your project, they will automatically be split into separate chunks:
 
 - `lib-polyfill.js`: includes `core-js`, `@babel/runtime`, `@swc/helpers`, `tslib`.
-- `lib-react.js`: includes `react`, `react-dom`.
+- `lib-react.js`: includes `react`, `react-dom`, `scheduler`.
 - `lib-router.js`: includes `react-router`, `react-router-dom`, `history`, `@remix-run/router`.
 - `lib-lodash.js`: includes `lodash`, `lodash-es`.
-- `lib-antd.js`: includes `antd`.
-- `lib-arco.js`: includes `@arco-design/web-react` and related packages under the `@arco-design` organization.
-- `lib-semi.js`: includes `@douyinfe/semi-ui` and related packages under the `@ies` & `@douyinfe` organization.
 - `lib-axios.js`: includes `axios` and related packages.
 
 This strategy groups commonly used packages and then splits them into separate chunks. Generally, the number of chunks is not large, which is suitable for most applications and is also our recommended strategy.
@@ -164,7 +161,7 @@ export default {
     chunkSplit: {
       strategy: 'split-by-experience',
       forceSplitting: {
-        axios: /node_modules\/axios/,
+        axios: /node_modules[\\/]axios/,
       },
     },
   },
@@ -195,14 +192,14 @@ export default {
 };
 ```
 
-The config in `override` will be merged with the bundler config. For specific config details, please refer to [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) or [Rspack - splitChunks](https://rspack.dev/config/optimization.html#optimization-splitchunks).
+The config in `override` will be merged with the bundler config. For specific config details, please refer to [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) or [Rspack - splitChunks](https://rspack.dev/config/optimization#optimization-splitchunks).
 
 ## Using Dynamic Import for Code Splitting
 
 In addition to the `chunkSplit` configurations, using dynamic import for code splitting is also an important optimization technique that can effectively reduce the initial bundle size.
 
 :::tip About dynamic import
-Dynamic import is a new feature introduced in ECMAScript 2020 that allows you to dynamically load JavaScript modules. The underlying Rspack/webpack used by the Rsbuild supports dynamic import by default, so you can use it directly in your code.
+Dynamic import is a new feature introduced in ECMAScript 2020 that allows you to dynamically load JavaScript modules. The underlying Rspack used by the Rsbuild supports dynamic import by default, so you can use it directly in your code.
 :::
 
 When the bundler encounters the `import()` syntax, it automatically splits the relevant code into a new chunk and loads it on-demand at runtime.

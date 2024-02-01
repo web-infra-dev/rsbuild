@@ -1,39 +1,57 @@
 # Introduction
 
-**Rsbuild is an Rspack-based build tool for the web.** The main goal of Rsbuild is to provide out-of-the-box build capabilities for Rspack users, allowing developers to start a web project with zero configuration.
+## 💡 What is Rsbuild?
 
-Rsbuild integrates high-performance Rust-based tools from the community, including [Rspack](https://github.com/web-infra-dev/rspack), [Oxc](https://github.com/web-infra-dev/oxc), and [SWC](https://swc.rs/), to provide first-class build speed and development experience.
+- Rsbuild is an Rspack-based build tool for the web.
+- Rsbuild is an enhanced Rspack CLI, which is more user-friendly and out-of-the-box.
+- Rsbuild is the Rspack team's exploration and implementation of best practices for web building.
+- Rsbuild is the best solution for migrating from Webpack to Rspack, reducing configuration by 90% and getting 10x build speed.
 
-![rsbuild-toolchain](https://github.com/web-infra-dev/rsbuild/assets/7237365/204dadf8-b923-4f9c-8823-f3d75cb133ae)
+## 🚀 Performance
 
-Rsbuild also provides universal build capabilities for higher level solutions, such as Rspress and Modern.js. In fact, Rsbuild is a rebrand of the Modern.js Builder. It has been decoupled from Modern.js to provide greater flexibility and to meet the diverse needs of community users.
+The build performance of Rsbuild is on a par with native Rspack. Considering that Rsbuild includes more out-of-the-box features, its performance will be slightly lower than Rspack.
 
-## Position
+This is the time it takes to build 1000 React components:
+
+![benchmark](https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/benchmark-12111918.png)
+
+> The data is based on the benchmark built by the Farm team, more info in [performance-compare](https://github.com/rspack-contrib/performance-compare).
+
+## 🔥 Features
+
+Rsbuild has the following features:
+
+- **Easy to Configure**: One of the goals of Rsbuild is to provide out-of-the-box build capabilities for Rspack users, allowing developers to start a web project with zero configuration. In addition, Rsbuild provides semantic build configuration to reduce the learning curve for Rspack configuration.
+
+- **Performance Oriented**: Rsbuild integrates high-performance Rust-based tools from the community, including [Rspack](https://github.com/web-infra-dev/rspack) and [SWC](https://swc.rs/), to deliver top-notch build speed and development experience. Compared to webpack-based tools like Create React App and Vue CLI, Rsbuild provides 5 to 10 times faster build performance and lighter dependencies.
+
+- **Plugin Ecosystem**: Rsbuild has a lightweight plugin system and includes a range of high-quality official plugins. Furthermore, Rsbuild is compatible with most webpack plugins and all Rspack plugins, allowing users to leverage existing community or in-house plugins in Rsbuild without the need for rewriting code.
+
+- **Stable Artifacts**: Rsbuild is designed with a strong focus on the stability of build artifacts. It ensures high consistency between artifacts in the development and production builds, and automatically completes syntax downgrading and polyfill injection. Rsbuild also provides plugins for type checking and artifact syntax validation to prevent quality and compatibility issues in production code.
+
+- **Framework Agnostic**: Rsbuild is not coupled with any front-end UI framework. It supports frameworks like React, Vue 3, Vue 2, Svelte, Solid, and Lit through plugins, and plans to support more UI frameworks from the community in the future.
+
+## 🎯 Position
+
+In addition to being used as a build tool, Rsbuild also provides universal build capabilities for higher-level solutions, such as [Rspress](https://github.com/web-infra-dev/rspress) and [Modern.js](https://github.com/web-infra-dev/modern.js), allowing them to focus on the development of their own domain specific capabilities.
 
 The following diagram illustrates the relationship between Rsbuild and other tools in the ecosystem:
 
 ![Rspack Ecosystem](https://github.com/web-infra-dev/rsbuild/assets/7237365/1ec93ad6-b8b1-475b-963f-cba1e7d79dec)
 
-## Features
+## 🦀 Ecosystem
 
-### Deep optimization
+- [Rspack](https://github.com/web-infra-dev/rspack): A fast Rust-based web bundler.
+- [Rspress](https://github.com/web-infra-dev/rspress): A fast static site generator based on Rsbuild.
+- [Rsdoctor](https://github.com/web-infra-dev/rsdoctor): A one-stop build analyzer for Rspack and Webpack.
+- [Modern.js](https://github.com/web-infra-dev/modern.js): A progressive React framework based on Rsbuild.
+- [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rspack and Rsbuild.
 
-Rsbuild **makes full use of various optimization strategies** in the Rspack and webpack ecosystem to ensure the artifacts performance in the production environment.
+## 🧑‍💻 Community
 
-Taking the chunk splitting scenario as an example, the Rspack's splitChunks config is complex, and Rsbuild makes it as an out-of-the-box [performance.chunkSplit](/config/options/performance.html#performancechunksplit) config, it will split common third-party libraries into chunks to make page loading faster.
+Come and chat with us on [Discord](https://discord.gg/XsaKEEk4mW)! The Rspack / Rsbuild team and users are active there, and we're always looking for contributions.
 
-### Extensible Plugin System
-
-Provides rich configuration options and a flexible plugin system to support in-depth customization of all features.
-
-For Rsbuild, all building abilities are achieved through plugins:
-
-- Most of the plugins are lightweight, built in Rsbuild, and developers can enable or disable them through configs.
-- Some plugins are more complex and developed as independent npm packages, developers can install and use them as needed.
-
-Rsbuild also supports custom plugins, so framework developers can develop custom plugins to meet customized requirements.
-
-## Next Step
+## ✨ Next Step
 
 You may want:
 
@@ -42,17 +60,17 @@ import Step from '@components/Step';
 
 <NextSteps>
   <Step
-    href="/guide/start/quick-start.html"
+    href="/guide/start/quick-start"
     title="Quick Start"
     description="Learn how to use Rsbuild"
   />
   <Step
-    href="/guide/start/features.html"
+    href="/guide/start/features"
     title="All Features"
     description="Learn all features of Rsbuild"
   />
   <Step
-    href="/guide/basic/config.html"
+    href="/guide/basic/configure-rsbuild"
     title="Config"
     description="Learn how to configure Rsbuild"
   />

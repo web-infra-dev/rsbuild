@@ -1,15 +1,17 @@
-import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 test('should compile Node addons correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
-    target: 'node',
+    rsbuildConfig: {
+      output: {
+        targets: ['node'],
+      },
+    },
   });
   const files = await rsbuild.unwrapOutputJSON();
   const addonFile = Object.keys(files).find((file) => file.endsWith('a.node'));
 
-  expect(addonFile?.includes('bundles/a.node')).toBeTruthy();
+  expect(addonFile?.includes('server/a.node')).toBeTruthy();
 });

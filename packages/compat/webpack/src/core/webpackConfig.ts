@@ -1,31 +1,31 @@
 import {
   debug,
-  CHAIN_ID,
   castArray,
+  chainToConfig,
   modifyBundlerChain,
   mergeChainedOptions,
-  type NodeEnv,
-  type WebpackChain,
+  type BundlerChain,
   type RsbuildTarget,
+  type WebpackChain,
+  type ModifyWebpackChainUtils,
+  type ModifyWebpackConfigUtils,
 } from '@rsbuild/shared';
+import {
+  getChainUtils as getBaseChainUtils,
+  type InternalContext,
+} from '@rsbuild/core/provider';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
-
-import type {
-  Context,
-  WebpackConfig,
-  ModifyWebpackChainUtils,
-  ModifyWebpackConfigUtils,
-} from '../types';
+import type { WebpackConfig } from '../types';
 
 async function modifyWebpackChain(
-  context: Context,
+  context: InternalContext,
   utils: ModifyWebpackChainUtils,
   chain: WebpackChain,
-) {
+): Promise<WebpackChain> {
   debug('modify webpack chain');
 
-  const [modifiedChain] = await context.hooks.modifyWebpackChainHook.call(
+  const [modifiedChain] = await context.hooks.modifyWebpackChain.call(
     chain,
     utils,
   );
@@ -42,23 +42,23 @@ async function modifyWebpackChain(
 }
 
 async function modifyWebpackConfig(
-  context: Context,
+  context: InternalContext,
   webpackConfig: WebpackConfig,
   utils: ModifyWebpackConfigUtils,
-) {
+): Promise<WebpackConfig> {
   debug('modify webpack config');
-  let [modifiedConfig] = await context.hooks.modifyWebpackConfigHook.call(
+  let [modifiedConfig] = await context.hooks.modifyWebpackConfig.call(
     webpackConfig,
     utils,
   );
 
   if (context.config.tools?.webpack) {
-    modifiedConfig = mergeChainedOptions(
-      modifiedConfig,
-      context.config.tools.webpack,
+    modifiedConfig = mergeChainedOptions({
+      defaults: modifiedConfig,
+      options: context.config.tools.webpack,
       utils,
-      utils.mergeConfig,
-    );
+      mergeFn: utils.mergeConfig,
+    });
   }
 
   debug('modify webpack config done');
@@ -69,9 +69,7 @@ async function getChainUtils(
   target: RsbuildTarget,
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
-  const { default: HtmlPlugin } = await import('html-webpack-plugin');
-  const nodeEnv = process.env.NODE_ENV as NodeEnv;
-
+  const { getHTMLPlugin } = await import('@rsbuild/core/provider');
   const nameMap = {
     web: 'client',
     node: 'server',
@@ -80,18 +78,11 @@ async function getChainUtils(
   };
 
   return {
-    env: nodeEnv,
+    ...getBaseChainUtils(target),
     name: nameMap[target] || '',
-    target,
     webpack,
-    isProd: nodeEnv === 'production',
-    isServer: target === 'node',
-    isServiceWorker: target === 'service-worker',
-    isWebWorker: target === 'web-worker',
-    CHAIN_ID,
     getCompiledPath,
-    HtmlPlugin,
-    HtmlWebpackPlugin: HtmlPlugin,
+    HtmlWebpackPlugin: getHTMLPlugin(),
   };
 }
 
@@ -148,10 +139,15 @@ export async function generateWebpackConfig({
   context,
 }: {
   target: RsbuildTarget;
-  context: Context;
+  context: InternalContext;
 }) {
   const chainUtils = await getChainUtils(target);
-  const { BannerPlugin, DefinePlugin, ProvidePlugin } = await import('webpack');
+  const {
+    BannerPlugin,
+    DefinePlugin,
+    ProvidePlugin,
+    HotModuleReplacementPlugin,
+  } = await import('webpack');
 
   const bundlerChain = await modifyBundlerChain(context, {
     ...chainUtils,
@@ -159,6 +155,7 @@ export async function generateWebpackConfig({
       BannerPlugin,
       DefinePlugin,
       ProvidePlugin,
+      HotModuleReplacementPlugin,
     },
   });
 
@@ -167,10 +164,12 @@ export async function generateWebpackConfig({
     chainUtils,
     // module rules not support merge
     // need a special rule merge or use bundlerChain as WebpackChain
-    bundlerChain as WebpackChain,
+    bundlerChain as unknown as WebpackChain,
   );
 
-  let webpackConfig = chain.toConfig();
+  let webpackConfig = chainToConfig(
+    chain as unknown as BundlerChain,
+  ) as WebpackConfig;
 
   webpackConfig = await modifyWebpackConfig(
     context,

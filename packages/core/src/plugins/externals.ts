@@ -1,8 +1,8 @@
-import { DefaultRsbuildPlugin, BundlerConfig } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export function pluginExternals(): DefaultRsbuildPlugin {
+export function pluginExternals(): RsbuildPlugin {
   return {
-    name: 'plugin-externals',
+    name: 'rsbuild:externals',
     setup(api) {
       api.modifyBundlerChain((chain) => {
         const { externals } = api.getNormalizedConfig().output;
@@ -12,7 +12,7 @@ export function pluginExternals(): DefaultRsbuildPlugin {
       });
 
       api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
-        (bundlerConfigs as BundlerConfig[]).forEach((config) => {
+        bundlerConfigs.forEach((config) => {
           const isWebWorker = Array.isArray(config.target)
             ? config.target.includes('webworker')
             : config.target === 'webworker';

@@ -1,6 +1,5 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
-import { webpackProvider } from '@rsbuild/webpack';
-import { pluginBabel } from '@rsbuild/webpack/plugin-babel';
+import { createStubRsbuild } from '@scripts/test-helper';
+import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginVueJsx } from '../src';
 
 describe('plugin-vue-jsx', () => {
@@ -16,7 +15,6 @@ describe('plugin-vue-jsx', () => {
 
   it('should apply jsx babel plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
-      provider: webpackProvider,
       rsbuildConfig: {},
       plugins: [pluginVueJsx(), pluginBabel()],
     });
@@ -27,7 +25,6 @@ describe('plugin-vue-jsx', () => {
 
   it('should allow to configure jsx babel plugin options', async () => {
     const rsbuild = await createStubRsbuild({
-      provider: webpackProvider,
       rsbuildConfig: {},
       plugins: [
         pluginVueJsx({

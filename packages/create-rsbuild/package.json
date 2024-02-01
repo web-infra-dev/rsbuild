@@ -1,6 +1,6 @@
 {
   "name": "create-rsbuild",
-  "version": "0.0.12",
+  "version": "0.3.11",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -9,34 +9,39 @@
     "directory": "packages/create-rsbuild"
   },
   "license": "MIT",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "main": "./dist/index.js",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "bin": {
     "create-rsbuild": "./dist/index.js"
   },
+  "files": [
+    "template-*",
+    "dist"
+  ],
   "scripts": {
     "build": "modern build",
     "dev": "modern build --watch",
     "start": "node ./dist/index.js"
   },
-  "dependencies": {
-    "@clack/prompts": "^0.7.0",
-    "rslog": "^1.1.0"
-  },
   "devDependencies": {
-    "@types/node": "^16",
-    "typescript": "^5.2.2"
+    "@clack/prompts": "^0.7.0",
+    "@types/node": "16.x",
+    "rslog": "^1.2.1",
+    "typescript": "^5.3.0"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "https://registry.npmjs.org/",
-    "types": "./dist/index.d.ts"
+    "registry": "https://registry.npmjs.org/"
   }
 }

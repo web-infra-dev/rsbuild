@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-react",
-  "version": "0.0.12",
+  "version": "0.3.11",
   "description": "React plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -8,14 +8,16 @@
     "directory": "packages/plugin-react"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
       "default": "./dist/index.js"
     }
   },
   "main": "./dist/index.js",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -25,19 +27,21 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/plugin-react-refresh": "0.3.10",
+    "@rspack/plugin-react-refresh": "0.5.3",
     "react-refresh": "^0.14.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/test-helper": "workspace:*",
-    "@types/node": "^16",
-    "typescript": "^5.2.2"
+    "@scripts/test-helper": "workspace:*",
+    "@types/node": "16.x",
+    "typescript": "^5.3.0"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": "workspace:^0.3.11"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "https://registry.npmjs.org/",
-    "types": "./dist/index.d.ts"
+    "registry": "https://registry.npmjs.org/"
   }
 }

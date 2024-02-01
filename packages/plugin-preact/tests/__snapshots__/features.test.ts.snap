@@ -1,0 +1,211 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is installed 1`] = `
+{
+  "cacheGroups": {
+    "lib-axios": {
+      "name": "lib-axios",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
+    },
+    "lib-lodash": {
+      "name": "lib-lodash",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
+    },
+    "lib-polyfill": {
+      "name": "lib-polyfill",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+    },
+    "lib-react": {
+      "name": "lib-react",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\|react-refresh\\|@rspack\\[\\\\\\\\/\\]plugin-react-refresh\\)\\[\\\\\\\\/\\]/,
+    },
+    "lib-router": {
+      "name": "lib-router",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|history\\|@remix-run\\[\\\\\\\\/\\]router\\)\\[\\\\\\\\/\\]/,
+    },
+  },
+  "chunks": "all",
+  "enforceSizeThreshold": 50000,
+}
+`;
+
+exports[`splitChunks > should apply splitChunks.react/router plugin option when strategy is split-by-experience 1`] = `
+{
+  "cacheGroups": {
+    "lib-axios": {
+      "name": "lib-axios",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
+    },
+    "lib-lodash": {
+      "name": "lib-lodash",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
+    },
+    "lib-polyfill": {
+      "name": "lib-polyfill",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+    },
+  },
+  "chunks": "all",
+  "enforceSizeThreshold": 50000,
+}
+`;
+
+exports[`splitChunks > should not apply splitChunks rule when strategy is not split-by-experience 1`] = `
+{
+  "cacheGroups": {
+    "singleVendor": {
+      "chunks": "all",
+      "enforce": true,
+      "name": "vendor",
+      "priority": 0,
+      "reuseExistingChunk": true,
+      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+    },
+  },
+  "chunks": "all",
+  "enforceSizeThreshold": 50000,
+}
+`;
+
+exports[`transformImport > should apply antd & arco transformImport 1`] = `
+{
+  "include": [
+    {
+      "and": [
+        "<ROOT>",
+        {
+          "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+        },
+      ],
+    },
+    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+  ],
+  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+  "type": "javascript/auto",
+  "use": [
+    {
+      "loader": "builtin:swc-loader",
+      "options": {
+        "env": {
+          "coreJs": "3.32",
+          "mode": "usage",
+          "shippedProposals": true,
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+        "isModule": "unknown",
+        "jsc": {
+          "externalHelpers": true,
+          "parser": {
+            "decorators": true,
+            "syntax": "typescript",
+            "tsx": true,
+          },
+          "preserveAllComments": true,
+          "transform": {
+            "decoratorMetadata": true,
+            "legacyDecorator": true,
+            "react": {
+              "development": true,
+              "refresh": true,
+              "runtime": "automatic",
+            },
+          },
+        },
+        "rspackExperiments": {
+          "import": [
+            {
+              "camelToDashComponentName": false,
+              "libraryDirectory": "es",
+              "libraryName": "@arco-design/web-react",
+              "style": true,
+            },
+            {
+              "camelToDashComponentName": false,
+              "libraryDirectory": "react-icon",
+              "libraryName": "@arco-design/web-react/icon",
+            },
+          ],
+        },
+        "sourceMaps": true,
+      },
+    },
+  ],
+}
+`;
+
+exports[`transformImport > should not apply antd & arco when transformImport is false 1`] = `
+{
+  "include": [
+    {
+      "and": [
+        "<ROOT>",
+        {
+          "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+        },
+      ],
+    },
+    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+  ],
+  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+  "type": "javascript/auto",
+  "use": [
+    {
+      "loader": "builtin:swc-loader",
+      "options": {
+        "env": {
+          "coreJs": "3.32",
+          "mode": "usage",
+          "shippedProposals": true,
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+        "isModule": "unknown",
+        "jsc": {
+          "externalHelpers": true,
+          "parser": {
+            "decorators": true,
+            "syntax": "typescript",
+            "tsx": true,
+          },
+          "preserveAllComments": true,
+          "transform": {
+            "decoratorMetadata": true,
+            "legacyDecorator": true,
+            "react": {
+              "development": true,
+              "refresh": true,
+              "runtime": "automatic",
+            },
+          },
+        },
+        "sourceMaps": true,
+      },
+    },
+  ],
+}
+`;

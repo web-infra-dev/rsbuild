@@ -1,19 +1,29 @@
-import path from 'path';
+import path from 'node:path';
 import {
   JS_REGEX,
   TS_REGEX,
   SVG_REGEX,
+  deepmerge,
   getDistPath,
   getFilename,
   chainStaticAssetRule,
-  DefaultRsbuildPlugin,
 } from '@rsbuild/shared';
+import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import type { Config } from '@svgr/core';
 
 export type SvgDefaultExport = 'component' | 'url';
 
 export type PluginSvgrOptions = {
   /**
+   * Configure SVGR options.
+   * @see https://react-svgr.com/docs/options/
+   */
+  svgrOptions?: Config;
+
+  /**
    * Configure the default export type of SVG files.
+   * @default 'url'
    */
   svgDefaultExport?: SvgDefaultExport;
 };
@@ -36,10 +46,10 @@ function getSvgoDefaultConfig() {
   };
 }
 
-export const pluginSvgr = (
-  options: PluginSvgrOptions = {},
-): DefaultRsbuildPlugin => ({
-  name: 'plugin-svgr',
+export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
+  name: 'rsbuild:svgr',
+
+  pre: [PLUGIN_REACT_NAME],
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { isProd, CHAIN_ID }) => {
@@ -48,8 +58,8 @@ export const pluginSvgr = (
       const { svgDefaultExport = 'url' } = options;
       const assetType = 'svg';
 
-      const distDir = getDistPath(config.output, assetType);
-      const filename = getFilename(config.output, assetType, isProd);
+      const distDir = getDistPath(config, assetType);
+      const filename = getFilename(config, assetType, isProd);
       const outputName = path.posix.join(distDir, filename);
       const maxSize = config.output.dataUriLimit[assetType];
 
@@ -83,20 +93,40 @@ export const pluginSvgr = (
           filename: outputName,
         });
 
-      rule
-        .oneOf(CHAIN_ID.ONE_OF.SVG)
-        .type('javascript/auto')
-        .use(CHAIN_ID.USE.SVGR)
-        .loader(require.resolve('@svgr/webpack'))
-        .options({
+      const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+      const svgrRule = rule.oneOf(CHAIN_ID.ONE_OF.SVG).type('javascript/auto');
+
+      [CHAIN_ID.USE.SWC, CHAIN_ID.USE.BABEL].some((id) => {
+        const use = jsRule.uses.get(id);
+
+        if (use) {
+          svgrRule
+            .use(id)
+            .loader(use.get('loader'))
+            .options(use.get('options'));
+          return true;
+        }
+
+        return false;
+      });
+
+      const svgrOptions = deepmerge(
+        {
           svgo: true,
           svgoConfig: getSvgoDefaultConfig(),
-        })
+        },
+        options.svgrOptions || {},
+      );
+
+      svgrRule
+        .use(CHAIN_ID.USE.SVGR)
+        .loader(path.resolve(__dirname, './loader'))
+        .options(svgrOptions)
         .end()
         .when(svgDefaultExport === 'url', (c) =>
           c
             .use(CHAIN_ID.USE.URL)
-            .loader(require.resolve('url-loader'))
+            .loader(path.join(__dirname, '../compiled', 'url-loader'))
             .options({
               limit: config.output.dataUriLimit.svg,
               name: outputName,

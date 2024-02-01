@@ -82,8 +82,6 @@ export default {
 };
 ```
 
-If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
-
 ### Configuring Sub-projects
 
 When the Source Build plugin is registed, the Rsbuild will prioritize reading the file specified in the `source` field of the sub-project during the build process. Therefore, you need to configure the `source` field in the package.json file of the sub-project and point it to the source code file.
@@ -98,7 +96,7 @@ For example, in the following example, when the lib package is referenced, the `
 }
 ```
 
-If the sub-project uses [exports](https://nodejs.org/api/packages.html#package-entry-points) field, you also need to add the `source` field in the `exports` field.
+If the sub-project uses [exports](https://nodejs.org/api/packages#package-entry-points) field, you also need to add the `source` field in the `exports` field.
 
 ```json title="package.json"
 {
@@ -118,7 +116,7 @@ If the sub-project uses [exports](https://nodejs.org/api/packages.html#package-e
 
 ## Configure Project Reference
 
-In a TypeScript project, you need to use the capability provided by TypeScript called [Project Reference](https://www.typescriptlang.org/docs/handbook/project-references.html). It helps you develop source code more effectively.
+In a TypeScript project, you need to use the capability provided by TypeScript called [Project Reference](https://typescriptlang.org/docs/handbook/project-references). It helps you develop source code more effectively.
 
 ### Introduction
 
@@ -150,7 +148,72 @@ After adding these two options, the project reference is already configured. You
 Note that the above example is a simplified one. In real monorepo projects, there may be more complex dependency relationships. You need to add a complete `references` configuration for the functionality to work correctly.
 
 :::tip
-If you want to learn more about project reference, please refer to the official documentation on [TypeScript - Project References](https://www.typescriptlang.org/docs/handbook/project-references.html).
+If you want to learn more about project reference, please refer to the official documentation on [TypeScript - Project References](https://typescriptlang.org/docs/handbook/project-references).
+:::
+
+## Options
+
+### sourceField
+
+- **Type:** `string`
+- **Default:** `'source'`
+
+Used to configure the resolve field of the source code files.
+
+For example, when configured as `my-source`:
+
+```ts
+pluginSourceBuild({
+  sourceField: 'my-source',
+});
+```
+
+In `package.json`, the source code file path can be specified using `my-source`:
+
+```json title="package.json"
+{
+  "name": "lib",
+  "main": "./dist/index.js",
+  "my-source": "./src/index.ts",
+  "exports": {
+    ".": {
+      "my-source": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  }
+}
+```
+
+### resolvePriority
+
+- **Type:** `'source' | 'output'`
+- **Default:** `'source'`
+
+Used to control the priority of reading the source code or the output code.
+
+By default, Source Build plugin will reading the source code first, for example, in the following example, it will read the `source` field.
+
+```json title="package.json"
+{
+  "name": "lib",
+  "main": "./dist/index.js",
+  "source": "./src/index.ts"
+}
+```
+
+When `resolvePriority` is set to `'output'`, Source Build plugin will read the output code first, i.e., the code from the `main` or `module` field.
+
+```ts
+pluginSourceBuild({
+  resolvePriority: 'output',
+});
+```
+
+:::tip
+The `exports` field in package.json is not affected by `resolvePriority`.
+
+The keys order in `exports` determines the resolving order, earlier declared keys having higher priority.
+
 :::
 
 ## Caveat

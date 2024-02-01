@@ -1,5 +1,5 @@
-import { Compiler as RawCompiler, Output } from '@modern-js/swc-plugins';
-import { TransformConfig } from './types';
+import { Compiler as RawCompiler, type Output } from '@modern-js/swc-plugins';
+import type { TransformConfig } from './types';
 
 export {
   minify,
@@ -34,7 +34,7 @@ export function transform(
   code: string,
   map?: string,
 ): Promise<Output> {
-  let compiler;
+  let compiler: Compiler;
   try {
     compiler = new Compiler(config);
   } catch (e) {

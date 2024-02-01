@@ -2,9 +2,32 @@
 
 ## Setup Environment
 
-import NodeVersion from '@en/shared/nodeVersion.md';
+Before getting started, you will need to install [Node.js](https://nodejs.org/), and ensure that your Node.js version is not lower than 16. **We recommend using the LTS version of Node.js 18.**
 
-<NodeVersion />
+You can check the currently used Node.js version with the following command:
+
+```bash
+node -v
+```
+
+If you do not have Node.js installed in your current environment, or the installed version is lower than 16, you can use [nvm](https://github.com/nvm-sh/nvm) or [fnm](https://github.com/Schniz/fnm) to install the required version.
+
+Here is an example of how to install the Node.js 18 LTS version via nvm:
+
+```bash
+# Install the long-term support version of Node.js 18
+nvm install 18 --lts
+
+# Make the newly installed Node.js 18 as the default version
+nvm alias default 18
+
+# Switch to the newly installed Node.js 18
+nvm use 18
+```
+
+:::tip nvm and fnm
+Both nvm and fnm are Node.js version management tools. Relatively speaking, nvm is more mature and stable, while fnm is implemented using Rust, which provides better performance than nvm.
+:::
 
 ## Creating an Rsbuild Project
 
@@ -14,13 +37,33 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="create rsbuild@latest" />
 
-Then follow the prompts to complete the operation.
+Then follow the prompts to complete the operation. You can choose from the following templates provided by `create-rsbuild`:
+
+| Template | Description                     | Optional Features |
+| -------- | ------------------------------- | ----------------- |
+| react    | [React 18](https://react.dev/)  | TypeScript        |
+| vue3     | [Vue 3](https://vuejs.org/)     | TypeScript        |
+| vue2     | [Vue 2](https://v2.vuejs.org/)  | TypeScript        |
+| lit      | [Lit](https://lit.dev/)         | TypeScript        |
+| preact   | [Preact](https://preactjs.com/) | TypeScript        |
+| svelte   | [Svelte](https://svelte.dev/)   | TypeScript        |
+| solid    | [Solid](https://solidjs.com/)   | TypeScript        |
+| vanilla  | Vanilla JavaScript              | TypeScript        |
+
+## Migrate from Existing Projects
+
+If you need to migrate from an existing project to Rsbuild, you can refer to the following guides:
+
+- [Migrate from Webpack](/guide/migration/webpack)
+- [Migrate from Create React App](/guide/migration/cra)
+- [Migrate from Vue CLI](/guide/migration/vue-cli)
+- [Migrate from Modern.js Builder](/guide/migration/modern-builder)
 
 ## Command Line Interface
 
 Rsbuild comes with a lightweight CLI that includes commands such as `dev` and `build`.
 
-```json
+```json title="package.json"
 {
   "scripts": {
     // starting the dev server
@@ -35,38 +78,9 @@ Rsbuild comes with a lightweight CLI that includes commands such as `dev` and `b
 
 Refer to the [CLI Tool](/guide/basic/cli) to learn about all available commands and options.
 
-## Build Entry
+## Entry Module
 
-By default, Rsbuild CLI uses `src/index.(js|ts|jsx|tsx)` as the build entry. You can modify the build entry using the `source.entries` configuration option.
-
-- **Type:**
-
-```ts
-type Entries = Record<string, string>;
-```
-
-- **Default:**
-
-```ts
-const defaultEntry = {
-  index: 'src/index.(js|ts|jsx|tsx)',
-};
-```
-
-- **Example:**
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
-  source: {
-    entries: {
-      foo: './src/pages/foo/index.ts',
-      bar: './src/pages/bar/index.ts',
-    },
-  },
-});
-```
+By default, Rsbuild CLI uses `src/index.(js|ts|jsx|tsx)` as the entry module. You can modify the entry module using the [source.entry](/config/source/entry) option.
 
 ## Next Step
 
@@ -77,17 +91,17 @@ import Step from '@components/Step';
 
 <NextSteps>
   <Step
-    href="/guide/start/features.html"
+    href="/guide/start/features"
     title="All Features"
     description="Learn all features of Rsbuild"
   />
   <Step
-    href="/guide/basic/config.html"
+    href="/guide/basic/configure-rsbuild"
     title="Config"
     description="Learn how to configure Rsbuild"
   />
   <Step
-    href="/guide/start/glossary.html"
+    href="/guide/start/glossary"
     title="Glossary"
     description="Learn about Rsbuild related concepts"
   />

@@ -10,14 +10,15 @@ Static assets are files that are part of a web application and do not change, ev
 
 The following are the formats supported by Rsbuild by default:
 
-- **Image**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tiff, svg.
-- **Fonts**: woff, woff2, eot, ttf, otf, ttc.
-- **Media**: mp4, webm, ogg, mp3, wav, flac, aac, mov.
+- **image**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tif, tiff, jfif, pjpeg, pjp.
+- **fonts**: woff, woff2, eot, ttf, otf, ttc.
+- **audio**: mp3, wav, flac, aac, m4a, opus.
+- **video**: mp4, webm, ogg, mov.
 
 If you need to import assets in other formats, please refer to [Extend Asset Types](#extend-asset-types).
 
 :::tip SVG images
-SVG image is a special case. Rsbuild support convert SVG to React components, so SVG is processed separately. For details, see [Svgr Plugin](/plugins/list/plugin-svgr.html).
+SVG image is a special case. Rsbuild support convert SVG to React components, so SVG is processed separately. For details, see [SVGR Plugin](/plugins/list/plugin-svgr).
 :::
 
 ## Import Assets in JS file
@@ -31,7 +32,7 @@ import logo from './static/logo.png';
 export default = () => <img src={logo} />;
 ```
 
-Import with [alias](/guide/advanced/alias.html) are also supported:
+Import with [alias](/guide/advanced/alias) are also supported:
 
 ```tsx
 import logo from '@/static/logo.png';
@@ -49,7 +50,7 @@ In CSS files, you can reference static assets in relative paths:
 }
 ```
 
-Import with [alias](/guide/advanced/alias.html) are also supported:
+Import with [alias](/guide/advanced/alias) are also supported:
 
 ```css
 .logo {
@@ -72,23 +73,23 @@ console.log(largeImage); // "/static/largeImage.6c12aba3.png"
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
-For a more detailed introduction to asset inlining, please refer to the [Static Asset Inlining](/guide/optimization/inline-assets.html) chapter.
+For a more detailed introduction to asset inlining, please refer to the [Static Asset Inlining](/guide/optimization/inline-assets) chapter.
 
 ## Output Files
 
 When static assets are imported, they will be output to the dist directory. You can:
 
-- Modify the output filename through [output.filename](/config/options/output.html#outputfilename).
-- Modify the output path through [output.distPath](/config/options/output.html#outputdistpath).
+- Modify the output filename through [output.filename](/config/output/filename).
+- Modify the output path through [output.distPath](/config/output/dist-path).
 
-Please read [Output Files](/guide/basic/output-files.html) for details.
+Please read [Output Files](/guide/basic/output-files) for details.
 
 ## URL Prefix
 
 The URL returned after importing a asset will automatically include the path prefix:
 
-- In development, using [dev.assetPrefix](/config/options/dev.html#devassetprefix) to set the path prefix.
-- In production, using [output.assetPrefix](/config/options/output.html#outputassetprefix) to set the path prefix.
+- In development, using [dev.assetPrefix](/config/dev/asset-prefix) to set the path prefix.
+- In production, using [output.assetPrefix](/config/output/asset-prefix) to set the path prefix.
 
 For example, you can set `output.assetPrefix` to `https://modern.com`:
 
@@ -98,7 +99,7 @@ import logo from './static/logo.png';
 console.log(logo); // "https://modern.com/static/logo.6c12aba3.png"
 ```
 
-## Add Type Declaration
+## Type Declaration
 
 When you import static assets in TypeScript code, TypeScript may prompt that the module is missing a type definition:
 
@@ -106,31 +107,43 @@ When you import static assets in TypeScript code, TypeScript may prompt that the
 TS2307: Cannot find module './logo.png' or its corresponding type declarations.
 ```
 
-To fix this, you need to add a type declaration file for the static assets, please create a `src/global.d.ts` file, and add the corresponding type declaration. Taking png images as an example, you need to add the following declarations:
+To fix this, you need to add a type declaration file for the static assets, please create a `src/env.d.ts` file, and add the corresponding type declaration.
 
-```ts title="src/global.d.ts"
+- Method 1: If the `@rsbuild/core` package is installed, you can directly reference the type declarations provided by `@rsbuild/core`:
+
+```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+- Method 2: Manually add the required type declarations:
+
+```ts title="src/env.d.ts"
+// Taking png images as an example
 declare module '*.png' {
   const content: string;
   export default content;
 }
 ```
 
-After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `global.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
+After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `env.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
 
 ## Extend Asset Types
 
-If the built-in asset types in Rsbuild cannot meet your requirements, you can modify the built-in webpack/Rspack configuration and extend the asset types you need using [tools.bundlerChain](/config/options/tools.html#toolsbundlerchain).
+If the built-in asset types in Rsbuild cannot meet your requirements, you can modify the built-in Rspack configuration and extend the asset types you need using [tools.rspack](/config/tools/rspack).
 
 For example, if you want to treat `*.pdf` files as assets and directly output them to the dist directory, you can add the following configuration:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
-    bundlerChain(chain) {
-      chain.module
-        .rule('pdf')
-        .test(/\.pdf$/)
-        .type('asset/resource');
+    rspack(config, { addRules }) {
+      addRules([
+        {
+          test: /\.pdf$/,
+          // converts asset to a separate file and exports the URL address.
+          type: 'asset/resource',
+        },
+      ]);
     },
   },
 };
@@ -144,10 +157,38 @@ import myFile from './static/myFile.pdf';
 console.log(myFile); // "/static/myFile.6c12aba3.pdf"
 ```
 
-For more information about asset modules, please refer to:
+For more information about asset modules, please refer to [Rspack - Asset modules](https://rspack.dev/guide/asset-module#asset-modules).
 
-- [Rspack Documentation - Asset modules](https://www.rspack.dev/guide/asset-module.html#asset-modules)
-- [webpack Documentation - Asset modules](https://webpack.js.org/guides/asset-modules/)
+## Custom Rules
+
+In some scenarios, you may need to bypass the built-in assets processing rules of Rsbuild and add some custom rules.
+
+Taking PNG image as an example, you need to:
+
+1. Modify the built-in Rspack config via [tools.bundlerChain](/config/tools/bundler-chain) to exclude `.png` files using the `exclude` method.
+2. Add custom asset processing rules via [tools.rspack](/config/tools/rspack).
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      chain.module
+        // Use `CHAIN_ID.RULE.IMAGE` to locate the built-in image rule
+        .rule(CHAIN_ID.RULE.IMAGE)
+        .exclude.add(/\.png$/);
+    },
+    rspack(config, { addRules }) {
+      addRules([
+        {
+          test: /\.png$/,
+          // Add a custom loader to handle png images
+          loader: 'custom-png-loader',
+        },
+      ]);
+    },
+  },
+};
+```
 
 ## Image Format
 

@@ -1,6 +1,6 @@
 import { expect, describe, it, vi } from 'vitest';
 import { pluginReact } from '../src';
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 
 describe('plugins/react', () => {
   it('should work with swc-loader', async () => {
@@ -30,8 +30,11 @@ describe('plugins/react', () => {
 
   it('should not apply react refresh when target is node', async () => {
     const rsbuild = await createStubRsbuild({
-      target: 'node',
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        output: {
+          targets: ['node'],
+        },
+      },
     });
 
     rsbuild.addPlugins([pluginReact()]);
@@ -41,8 +44,11 @@ describe('plugins/react', () => {
 
   it('should not apply react refresh when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
-      target: 'web-worker',
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        output: {
+          targets: ['web-worker'],
+        },
+      },
     });
 
     rsbuild.addPlugins([pluginReact()]);
@@ -66,5 +72,22 @@ describe('plugins/react', () => {
     const config = await rsbuild.unwrapConfig();
 
     expect(config.optimization.splitChunks).toMatchSnapshot();
+  });
+
+  it('should allow to custom jsxImportSource', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {},
+    });
+
+    rsbuild.addPlugins([
+      pluginReact({
+        swcReactOptions: {
+          importSource: '@emotion/react',
+        },
+      }),
+    ]);
+    const config = await rsbuild.unwrapConfig();
+
+    expect(JSON.stringify(config)).toContain(`"importSource":"@emotion/react"`);
   });
 });

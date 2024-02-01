@@ -1,4 +1,4 @@
-const { execSync } = require('child_process');
+const { execSync } = require('node:child_process');
 
 const SKIP_FOLDERS = [
   'cspell.json',
@@ -17,7 +17,7 @@ async function main() {
   }).toString();
   const changedFiles = changedFilesOutput
     .split('\n')
-    .map((file) => file && file.trim())
+    .map((file) => file?.trim())
     .filter(Boolean);
 
   const shouldNotSkipCI =

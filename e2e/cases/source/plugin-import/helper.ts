@@ -1,13 +1,13 @@
-import path from 'path';
-import { build } from '@scripts/shared';
+import path from 'node:path';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fs } from '@rsbuild/shared/fs-extra';
-import type { SharedTransformImport } from '@rsbuild/shared';
-import { RsbuildConfig } from '@rsbuild/core';
+import { fse } from '@rsbuild/shared';
+import type { RsbuildConfig } from '@rsbuild/core';
+import type { TransformImport } from '@rsbuild/shared';
 
 export const cases: Parameters<typeof shareTest>[] = [
   [
-    `camelCase test`,
+    'camelCase test',
     './src/camel.js',
     {
       libraryName: 'foo',
@@ -16,7 +16,7 @@ export const cases: Parameters<typeof shareTest>[] = [
     },
   ],
   [
-    `kebab-case test`,
+    'kebab-case test',
     './src/kebab.js',
     {
       libraryName: 'foo',
@@ -52,26 +52,29 @@ export function findEntry(
 export function copyPkgToNodeModules() {
   const nodeModules = path.resolve(__dirname, 'node_modules');
 
-  fs.ensureDirSync(nodeModules);
-  fs.copySync(path.resolve(__dirname, 'foo'), path.resolve(nodeModules, 'foo'));
+  fse.ensureDirSync(nodeModules);
+  fse.copySync(
+    path.resolve(__dirname, 'foo'),
+    path.resolve(nodeModules, 'foo'),
+  );
 }
 
 export function shareTest(
   msg: string,
   entry: string,
-  transformImport: SharedTransformImport,
+  transformImport: TransformImport,
   otherConfigs: {
     plugins?: any[];
   } = {},
 ) {
   const setupConfig = {
     cwd: __dirname,
-    entry: {
-      index: entry,
-    },
   };
   const config: RsbuildConfig = {
     source: {
+      entry: {
+        index: entry,
+      },
       transformImport: [transformImport],
     },
     performance: {

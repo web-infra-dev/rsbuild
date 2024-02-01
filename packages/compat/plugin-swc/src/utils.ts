@@ -1,35 +1,33 @@
 import _ from 'lodash';
-import { NormalizedConfig } from '@rsbuild/webpack';
+import { isBeyondReact17 } from '@rsbuild/plugin-react';
 import {
-  logger,
   isUsingHMR,
-  isBeyondReact17,
   getCoreJsVersion,
   getBrowserslistWithDefault,
-  type ModifyChainUtils,
   getDefaultStyledComponentsConfig,
+  type ModifyChainUtils,
+  type NormalizedConfig,
 } from '@rsbuild/shared';
-import { Extensions } from '@modern-js/swc-plugins';
 import { getDefaultSwcConfig } from './plugin';
-import {
+import type {
   ObjPluginSwcOptions,
-  OuterExtensions,
   PluginSwcOptions,
   TransformConfig,
 } from './types';
-import { CORE_JS_DIR_PATH, SWC_HELPERS_DIR_PATH } from './constants';
+import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
+import { applySwcDecoratorConfig } from '@rsbuild/core/provider';
 
 /**
  * Determine react runtime mode based on react version
  */
-export function determinePresetReact(
+export async function determinePresetReact(
   root: string,
   pluginConfig: ObjPluginSwcOptions,
 ) {
-  const presetReact =
-    pluginConfig.presetReact || (pluginConfig.presetReact = {});
-
-  presetReact.runtime ??= isBeyondReact17(root) ? 'automatic' : 'classic';
+  pluginConfig.presetReact ??= {};
+  pluginConfig.presetReact.runtime ??= (await isBeyondReact17(root))
+    ? 'automatic'
+    : 'classic';
 }
 
 export function checkUseMinify(
@@ -132,7 +130,7 @@ export async function applyPluginConfig(
   // and then invoke function with this config
   const pluginOptions = isUsingFnOptions ? {} : rawOptions;
 
-  determinePresetReact(rootPath, pluginOptions);
+  await determinePresetReact(rootPath, pluginOptions);
 
   const swc = {
     jsc: {
@@ -160,8 +158,7 @@ export async function applyPluginConfig(
   }
 
   if (!swc.env.coreJs) {
-    const CORE_JS_PATH = require.resolve('core-js/package.json');
-    swc.env.coreJs = getCoreJsVersion(CORE_JS_PATH);
+    swc.env.coreJs = getCoreJsVersion(CORE_JS_PKG_PATH);
   }
 
   // If `targets` is not specified manually, we get `browserslist` from project.
@@ -185,7 +182,9 @@ export async function applyPluginConfig(
     };
   }
 
-  const extensions: Extensions | OuterExtensions = (swc.extensions ??= {});
+  swc.extensions ??= {};
+
+  const extensions = swc.extensions;
 
   if (rsbuildConfig.source?.transformImport) {
     extensions.pluginImport ??= [];
@@ -200,16 +199,11 @@ export async function applyPluginConfig(
   }
 
   extensions.lockCorejsVersion ??= {
-    corejs: CORE_JS_DIR_PATH,
-    swcHelpers: SWC_HELPERS_DIR_PATH,
+    corejs: CORE_JS_DIR,
+    swcHelpers: SWC_HELPERS_DIR,
   };
 
-  /**
-   * SWC can't use latestDecorator in TypeScript file for now
-   */
-  if (rsbuildConfig.output.enableLatestDecorators) {
-    logger.warn('Cannot use latestDecorator in SWC compiler.');
-  }
+  applySwcDecoratorConfig(swc, rsbuildConfig);
 
   return await finalizeConfig(rawOptions, swc);
 }

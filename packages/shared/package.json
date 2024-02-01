@@ -1,7 +1,7 @@
 {
   "name": "@rsbuild/shared",
-  "version": "0.0.12",
-  "description": "The shared modules and dependencies of Rsbuild.",
+  "version": "0.3.11",
+  "description": "The internal shared modules and dependencies of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
@@ -9,26 +9,63 @@
     "directory": "packages/shared"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./chalk": {
-      "types": "./dist/re-exports/chalk.d.ts",
-      "default": "./dist/re-exports/chalk.js"
+    "./jiti": {
+      "types": "./compiled/jiti/types/jiti.d.ts",
+      "default": "./compiled/jiti/index.js"
     },
-    "./deepmerge": {
-      "types": "./dist/re-exports/deepmerge.d.ts",
-      "default": "./dist/re-exports/deepmerge.js"
+    "./rslog": {
+      "types": "./compiled/rslog/dist/index.d.ts",
+      "default": "./compiled/rslog/index.js"
     },
-    "./fs-extra": {
-      "types": "./dist/re-exports/fs-extra.d.ts",
-      "default": "./dist/re-exports/fs-extra.js"
+    "./yaml": {
+      "types": "./compiled/yaml/index.d.ts",
+      "default": "./compiled/yaml/index.js"
     },
-    "./open": {
-      "types": "./compiled/open/index.d.ts",
-      "default": "./compiled/open/index.js"
+    "./json5": {
+      "types": "./compiled/json5/lib/index.d.ts",
+      "default": "./compiled/json5/index.js"
+    },
+    "./gzip-size": {
+      "types": "./compiled/gzip-size/index.d.ts",
+      "default": "./compiled/gzip-size/index.js"
+    },
+    "./picocolors": {
+      "types": "./compiled/picocolors/picocolors.d.ts",
+      "default": "./compiled/picocolors/index.js"
+    },
+    "./browserslist": {
+      "types": "./compiled/browserslist/index.d.ts",
+      "default": "./compiled/browserslist/index.js"
+    },
+    "./chokidar": {
+      "types": "./compiled/chokidar/types/index.d.ts",
+      "default": "./compiled/chokidar/index.js"
+    },
+    "./connect": {
+      "types": "./compiled/connect/index.d.ts",
+      "default": "./compiled/connect/index.js"
+    },
+    "./commander": {
+      "types": "./compiled/commander/typings/index.d.ts",
+      "default": "./compiled/commander/index.js"
+    },
+    "./mime-types": {
+      "types": "./compiled/mime-types/index.d.ts",
+      "default": "./compiled/mime-types/index.js"
+    },
+    "./loader-utils2": {
+      "types": "./compiled/loader-utils2/index.d.ts",
+      "default": "./compiled/loader-utils2/index.js"
+    },
+    "./webpack-sources": {
+      "types": "./compiled/webpack-sources/index.d.ts",
+      "default": "./compiled/webpack-sources/index.js"
     },
     "./webpack-dev-middleware": {
       "types": "./compiled/webpack-dev-middleware/types/index.d.ts",
@@ -38,17 +75,13 @@
       "types": "./compiled/webpack-bundle-analyzer/index.d.ts",
       "default": "./compiled/webpack-bundle-analyzer/index.js"
     },
-    "./babel-loader": {
-      "types": "./compiled/babel-loader/index.d.ts",
-      "default": "./compiled/babel-loader/index.js"
-    },
     "./css-modules-typescript-loader": {
-      "types": "./dist/loaders/css-modules-typescript-loader.d.ts",
-      "default": "./dist/loaders/css-modules-typescript-loader.js"
+      "types": "./dist/loaders/cssModulesTypescriptLoader.d.ts",
+      "default": "./dist/loaders/cssModulesTypescriptLoader.js"
     },
     "./ignore-css-loader": {
-      "types": "./dist/loaders/ignore-css-loader.d.ts",
-      "default": "./dist/loaders/ignore-css-loader.js"
+      "types": "./dist/loaders/ignoreCssLoader.d.ts",
+      "default": "./dist/loaders/ignoreCssLoader.js"
     },
     "./icss-utils": {
       "types": "./compiled/icss-utils/index.d.ts",
@@ -70,112 +103,51 @@
       "types": "./compiled/postcss-modules-values/index.d.ts",
       "default": "./compiled/postcss-modules-values/index.js"
     },
+    "./semver": {
+      "types": "./compiled/semver/index.d.ts",
+      "default": "./compiled/semver/index.js"
+    },
     "./webpack-merge": {
-      "types": "./compiled/webpack-merge/index.d.ts",
+      "types": "./compiled/webpack-merge/types/index.d.ts",
       "default": "./compiled/webpack-merge/index.js"
+    },
+    "./http-proxy-middleware": {
+      "types": "./compiled/http-proxy-middleware/types/index.d.ts",
+      "default": "./compiled/http-proxy-middleware/index.js"
     }
   },
   "main": "./dist/index.js",
-  "types": "./src/index.ts",
-  "typesVersions": {
-    "*": {
-      "chalk": [
-        "./dist/re-exports/chalk.d.ts"
-      ],
-      "deepmerge": [
-        "./dist/re-exports/deepmerge.d.ts"
-      ],
-      "fs-extra": [
-        "./dist/re-exports/fs-extra.d.ts"
-      ],
-      "open": [
-        "./compiled/open/index.d.ts"
-      ],
-      "webpack-bundle-analyzer": [
-        "./compiled/webpack-bundle-analyzer/index.d.ts"
-      ],
-      "webpack-dev-middleware": [
-        "./compiled/webpack-dev-middleware/types/index.d.ts"
-      ],
-      "css-modules-typescript-loader": [
-        "./dist/loaders/css-modules-typescript-loader.d.ts",
-        "./src/loaders/css-modules-typescript-loader.ts"
-      ],
-      "ignore-css-loader": [
-        "./dist/loaders/ignore-css-loader.d.ts",
-        "./src/loaders/ignore-css-loader.ts"
-      ],
-      "icss-utils": [
-        "./compiled/icss-utils/index.d.ts"
-      ],
-      "postcss-modules-extract-imports": [
-        "./compiled/postcss-modules-extract-imports/index.d.ts"
-      ],
-      "postcss-modules-local-by-default": [
-        "./compiled/postcss-modules-local-by-default/index.d.ts"
-      ],
-      "postcss-modules-scope": [
-        "./compiled/postcss-modules-scope/index.d.ts"
-      ],
-      "postcss-modules-values": [
-        "./compiled/postcss-modules-values/index.d.ts"
-      ],
-      "webpack-merge": [
-        "./compiled/webpack-merge/types/index.d.ts"
-      ]
-    }
-  },
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "compiled",
-    "static"
+    "compiled"
   ],
   "scripts": {
-    "build": "modern build && node scripts/postCompile.js",
+    "build": "modern build",
     "dev": "modern build --watch",
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@modern-js/prod-server": "^2.39.2",
-    "@modern-js/server": "^2.39.2",
-    "acorn": "^8.10.0",
-    "browserslist": "^4.22.1",
-    "chalk": "^4.1.2",
-    "cssnano": "6.0.1",
-    "deepmerge": "^4.3.1",
-    "fs-extra": "^11.1.1",
-    "line-diff": "2.1.1",
+    "@rspack/core": "0.5.3",
+    "caniuse-lite": "^1.0.30001559",
     "lodash": "^4.17.21",
-    "pkg-up": "^3.1.0",
-    "postcss": "8.4.31",
-    "rslog": "^1.1.0",
-    "semver": "^7.5.4",
-    "url-join": "^4.0.1",
-    "webpack": "^5.89.0",
-    "webpack-chain": "npm:webpack-5-chain@8.0.1",
-    "webpack-sources": "^3.2.3"
+    "postcss": "^8.4.33"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
-    "@babel/preset-env": "^7.23.2",
-    "@babel/preset-typescript": "^7.23.2",
-    "@rspack/core": "0.3.10",
-    "@types/fs-extra": "^11.0.2",
     "@types/lodash": "^4.14.200",
-    "@types/node": "^16",
-    "@types/semver": "^7.5.4",
-    "@types/url-join": "^4.0.2",
-    "html-webpack-plugin": "5.5.3",
-    "terser": "5.19.2",
-    "terser-webpack-plugin": "5.3.9",
-    "typescript": "^5.2.2"
+    "@types/node": "16.x",
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
+    "mini-css-extract-plugin": "2.7.7",
+    "terser": "5.27.0",
+    "terser-webpack-plugin": "5.3.10",
+    "typescript": "^5.3.0",
+    "webpack": "^5.89.0"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "https://registry.npmjs.org/",
-    "types": "./dist/index.d.ts"
+    "registry": "https://registry.npmjs.org/"
   }
 }

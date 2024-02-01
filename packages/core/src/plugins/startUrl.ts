@@ -1,6 +1,10 @@
-import { join } from 'path';
-import { logger, castArray, type DefaultRsbuildPlugin } from '@rsbuild/shared';
-import { execSync } from 'child_process';
+import { join } from 'node:path';
+import { debug, logger, castArray, type Routes } from '@rsbuild/shared';
+import { exec } from 'node:child_process';
+import { promisify } from 'node:util';
+import type { RsbuildPlugin } from '../types';
+
+const execAsync = promisify(exec);
 
 const supportedChromiumBrowsers = [
   'Google Chrome Canary',
@@ -13,12 +17,12 @@ const supportedChromiumBrowsers = [
   'Chromium',
 ];
 
-const getTargetBrowser = () => {
+const getTargetBrowser = async () => {
   // Use user setting first
   let targetBrowser = process.env.BROWSER;
   // If user setting not found or not support, use opening browser first
   if (!targetBrowser || !supportedChromiumBrowsers.includes(targetBrowser)) {
-    const ps = execSync('ps cax').toString();
+    const { stdout: ps } = await execAsync('ps cax');
     targetBrowser = supportedChromiumBrowsers.find((b) => ps.includes(b));
   }
   return targetBrowser;
@@ -41,32 +45,31 @@ export async function openBrowser(url: string): Promise<boolean> {
 
   if (shouldTryOpenChromeWithAppleScript) {
     try {
-      const targetBrowser = getTargetBrowser();
+      const targetBrowser = await getTargetBrowser();
       if (targetBrowser) {
         // Try to reuse existing tab with AppleScript
-        execSync(
+        await execAsync(
           `osascript openChrome.applescript "${encodeURI(
             url,
           )}" "${targetBrowser}"`,
           {
-            stdio: 'ignore',
             cwd: join(__dirname, '../../static'),
           },
         );
+
         return true;
       }
-      return false;
+      debug('Failed to find the target browser.');
     } catch (err) {
-      logger.error('Failed to open start URL with apple script.');
-      logger.error(err);
-      return false;
+      debug('Failed to open start URL with apple script.');
+      logger.debug(err);
     }
   }
 
   // Fallback to open
   // (It will always open new tab)
   try {
-    const { default: open } = await import('open');
+    const { default: open } = await import('../../compiled/open');
     await open(url);
     return true;
   } catch (err) {
@@ -81,34 +84,32 @@ export const replacePlaceholder = (url: string, port: number) =>
 
 const openedURLs: string[] = [];
 
-export function pluginStartUrl(): DefaultRsbuildPlugin {
+export function pluginStartUrl(): RsbuildPlugin {
   return {
-    name: 'plugin-start-url',
-    async setup(api) {
-      let port: number;
-
-      api.onAfterStartDevServer(async (params) => {
-        ({ port } = params);
-      });
-
-      api.onDevCompileDone(async ({ isFirstCompile }) => {
-        if (!isFirstCompile || !port) {
-          return;
-        }
-
+    name: 'rsbuild:start-url',
+    setup(api) {
+      const onStartServer = async (params: {
+        port: number;
+        routes: Routes;
+      }) => {
+        const { port, routes } = params;
         const config = api.getNormalizedConfig();
         const { startUrl, beforeStartUrl } = config.dev;
         const { https } = api.context.devServer || {};
+        const shouldOpen = Boolean(startUrl);
 
-        if (!startUrl) {
+        if (!shouldOpen) {
           return;
         }
 
         const urls: string[] = [];
 
-        if (startUrl === true) {
+        if (startUrl === true || !startUrl) {
           const protocol = https ? 'https' : 'http';
-          urls.push(`${protocol}://localhost:${port}`);
+          if (routes.length) {
+            // auto open the first one
+            urls.push(`${protocol}://localhost:${port}${routes[0].pathname}`);
+          }
         } else {
           urls.push(
             ...castArray(startUrl).map((item) =>
@@ -137,7 +138,10 @@ export function pluginStartUrl(): DefaultRsbuildPlugin {
         } else {
           openUrls();
         }
-      });
+      };
+
+      api.onAfterStartDevServer(onStartServer);
+      api.onAfterStartProdServer(onStartServer);
     },
   };
 }

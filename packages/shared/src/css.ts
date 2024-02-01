@@ -1,18 +1,13 @@
-import assert from 'assert';
-import {
-  CSS_MODULES_REGEX,
-  GLOBAL_CSS_REGEX,
-  NODE_MODULES_REGEX,
-} from './constants';
-import type { AcceptedPlugin, ProcessOptions } from 'postcss';
-import deepmerge from 'deepmerge';
-import { getSharedPkgCompiledPath as getCompiledPath } from './utils';
+import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
+import type { AcceptedPlugin } from 'postcss';
+import deepmerge from '../compiled/deepmerge';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
-  CssModules,
   RsbuildTarget,
+  PostCSSOptions,
   CSSLoaderOptions,
   NormalizedConfig,
+  PostCSSLoaderOptions,
 } from './types';
 
 export const getCssModuleLocalIdentName = (
@@ -27,14 +22,6 @@ export const getCssModuleLocalIdentName = (
 
 export const isInNodeModules = (path: string) => NODE_MODULES_REGEX.test(path);
 
-/** Determine if a file path is a CSS module when disableCssModuleExtension is enabled. */
-export const isLooseCssModules = (path: string) => {
-  if (NODE_MODULES_REGEX.test(path)) {
-    return CSS_MODULES_REGEX.test(path);
-  }
-  return !GLOBAL_CSS_REGEX.test(path);
-};
-
 export type CssLoaderModules =
   | boolean
   | string
@@ -47,62 +34,69 @@ export const isCssModules = (filename: string, modules: CssLoaderModules) => {
     return modules;
   }
 
-  // todo: this configuration is not common and more complex.
+  // Same as the `mode` option
+  // https://github.com/webpack-contrib/css-loader?tab=readme-ov-file#mode
   if (typeof modules === 'string') {
-    return true;
+    // CSS Modules will be disabled if mode is 'global'
+    return modules !== 'global';
   }
 
   const { auto } = modules;
 
   if (typeof auto === 'boolean') {
     return auto && CSS_MODULES_REGEX.test(filename);
-  } else if (auto instanceof RegExp) {
+  }
+  if (auto instanceof RegExp) {
     return auto.test(filename);
-  } else if (typeof auto === 'function') {
+  }
+  if (typeof auto === 'function') {
     return auto(filename);
   }
   return true;
 };
 
-export const getCssModulesAutoRule = (
-  config?: CssModules,
-  disableCssModuleExtension = false,
-) => {
-  if (!config || config?.auto === undefined) {
-    return disableCssModuleExtension ? isLooseCssModules : true;
+const userPostcssrcCache = new Map<
+  string,
+  PostCSSOptions | Promise<PostCSSOptions>
+>();
+
+async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
+  const cached = userPostcssrcCache.get(root);
+
+  if (cached) {
+    return cached;
   }
 
-  return config.auto;
-};
+  const { default: postcssrc } = await import(
+    '../compiled/postcss-load-config'
+  );
 
-type CssNanoOptions = {
-  configFile?: string | undefined;
-  preset?: [string, object] | string | undefined;
-};
+  const promise = postcssrc({}, root).catch((err: Error) => {
+    // ignore the config not found error
+    if (err.message?.includes('No PostCSS Config found')) {
+      return {};
+    }
+    throw err;
+  });
 
-export const getCssnanoDefaultOptions = (): CssNanoOptions => ({
-  preset: [
-    'default',
-    {
-      // merge longhand will break safe-area-inset-top, so disable it
-      // https://github.com/cssnano/cssnano/issues/803
-      // https://github.com/cssnano/cssnano/issues/967
-      mergeLonghand: false,
-    },
-  ],
-});
+  userPostcssrcCache.set(root, promise);
 
-export const getPostcssConfig = async ({
-  enableCssMinify,
-  enableSourceMap,
+  promise.then((config: PostCSSOptions) => {
+    userPostcssrcCache.set(root, config);
+  });
+
+  return promise;
+}
+
+export const getPostcssLoaderOptions = async ({
   browserslist,
   config,
+  root,
 }: {
-  enableCssMinify: boolean;
-  enableSourceMap: boolean;
   browserslist: string[];
   config: NormalizedConfig;
-}) => {
+  root: string;
+}): Promise<PostCSSLoaderOptions> => {
   const extraPlugins: AcceptedPlugin[] = [];
 
   const utils = {
@@ -115,41 +109,49 @@ export const getPostcssConfig = async ({
     },
   };
 
-  const mergedConfig = mergeChainedOptions(
-    {
-      postcssOptions: {
-        plugins: [
-          require(getCompiledPath('postcss-flexbugs-fixes')),
-          require(getCompiledPath('autoprefixer'))(
-            mergeChainedOptions(
-              {
-                flexbox: 'no-2009',
-                overrideBrowserslist: browserslist,
-              },
-              config.tools.autoprefixer,
-            ),
-          ),
-          enableCssMinify
-            ? require('cssnano')(getCssnanoDefaultOptions())
-            : false,
-        ].filter(Boolean),
-      },
-      sourceMap: enableSourceMap,
+  const autoprefixerOptions = mergeChainedOptions({
+    defaults: {
+      flexbox: 'no-2009',
+      overrideBrowserslist: browserslist,
     },
-    config.tools.postcss || {},
-    utils,
+    options: config.tools.autoprefixer,
+  });
+
+  const userPostcssConfig = await loadUserPostcssrc(root);
+  const { default: autoprefixer } = await import('../compiled/autoprefixer');
+  const { default: postcssFlexbugs } = await import(
+    '../compiled/postcss-flexbugs-fixes'
   );
+
+  const defaultPostcssConfig: PostCSSLoaderOptions = {
+    postcssOptions: {
+      ...userPostcssConfig,
+      plugins: [
+        ...(userPostcssConfig.plugins || []),
+        postcssFlexbugs,
+        // Place autoprefixer as the last plugin to correctly process the results of other plugins
+        // such as tailwindcss
+        autoprefixer(autoprefixerOptions),
+      ],
+    },
+    sourceMap: config.output.sourceMap.css,
+  };
+
+  const mergedConfig = mergeChainedOptions({
+    defaults: defaultPostcssConfig,
+    options: config.tools.postcss,
+    utils,
+  });
+
   if (extraPlugins.length) {
-    assert('postcssOptions' in mergedConfig);
-    assert('plugins' in mergedConfig.postcssOptions!);
-    mergedConfig.postcssOptions.plugins!.push(...extraPlugins);
+    mergedConfig?.postcssOptions?.plugins!.push(...extraPlugins);
   }
 
-  return mergedConfig as ProcessOptions & {
-    postcssOptions: {
-      plugins?: AcceptedPlugin[];
-    };
-  };
+  // always use postcss-load-config to load external config
+  mergedConfig.postcssOptions ||= {};
+  mergedConfig.postcssOptions.config = false;
+
+  return mergedConfig;
 };
 
 // If the target is 'node' or 'web-worker' and the modules option of css-loader is enabled,
@@ -183,16 +185,14 @@ export const normalizeCssLoaderOptions = (
   return options;
 };
 
-export const getCssLoaderOptions = async ({
+export const getCssLoaderOptions = ({
   config,
-  enableSourceMap,
   importLoaders,
   isServer,
   isWebWorker,
   localIdentName,
 }: {
   config: NormalizedConfig;
-  enableSourceMap: boolean;
   importLoaders: number;
   isServer: boolean;
   isWebWorker: boolean;
@@ -200,23 +200,22 @@ export const getCssLoaderOptions = async ({
 }) => {
   const { cssModules } = config.output;
 
-  const mergedCssLoaderOptions = mergeChainedOptions<CSSLoaderOptions, null>(
-    {
-      importLoaders,
-      modules: {
-        auto: getCssModulesAutoRule(
-          cssModules,
-          config.output.disableCssModuleExtension,
-        ),
-        exportLocalsConvention: cssModules.exportLocalsConvention,
-        localIdentName,
-      },
-      sourceMap: enableSourceMap,
+  const defaultOptions = {
+    importLoaders,
+    modules: {
+      auto: cssModules.auto,
+      exportLocalsConvention: cssModules.exportLocalsConvention,
+      localIdentName,
     },
-    config.tools.cssLoader,
-    undefined,
-    deepmerge,
-  );
+    sourceMap: config.output.sourceMap.css,
+  };
+
+  const mergedCssLoaderOptions = mergeChainedOptions({
+    defaults: defaultOptions,
+    options: config.tools.cssLoader,
+    mergeFn: deepmerge,
+  });
+
   const cssLoaderOptions = normalizeCssLoaderOptions(
     mergedCssLoaderOptions,
     isServer || isWebWorker,
@@ -229,9 +228,7 @@ export const isUseCssExtract = (
   config: NormalizedConfig,
   target: RsbuildTarget,
 ) =>
-  !config.output.disableCssExtract &&
-  target !== 'node' &&
-  target !== 'web-worker';
+  !config.output.injectStyles && target !== 'node' && target !== 'web-worker';
 
 /**
  * fix resolve-url-loader can't deal with resolve.alias config (such as @xxx、xxx)

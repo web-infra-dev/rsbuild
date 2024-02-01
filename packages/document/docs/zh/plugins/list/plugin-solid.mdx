@@ -1,0 +1,62 @@
+# Solid 插件
+
+Solid 插件提供了对 Solid 的支持，插件内部集成了 [babel-preset-solid](https://github.com/solidjs/solid/tree/main/packages/babel-preset-solid)。
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+
+export default {
+  plugins: [
+    pluginBabel({
+      include: /\.(?:jsx|tsx)$/,
+      exclude: /[\\/]node_modules[\\/]/,
+    }),
+    pluginSolid(),
+  ],
+};
+```
+
+注册完插件后，你可以直接进行 Solid 开发。
+
+:::tip
+由于 Solid 的 JSX 依赖 Babel 进行编译，因此你需要额外添加 [Babel 插件](/plugins/list/plugin-babel)。
+
+Babel 编译会产生额外的编译开销，在上述例子中，我们通过 `include` 来匹配 `.jsx` 和 `.tsx` 文件，从而减少 Babel 带来的性能开销。
+
+:::
+
+## 选项
+
+如果你需要自定义 Solid 的编译行为，可以使用以下配置项。
+
+### solidPresetOptions
+
+传递给 `babel-preset-solid` 的选项，请查阅 [babel-preset-solid 文档](https://www.npmjs.com/package/babel-preset-solid) 来了解具体用法。
+
+- **类型：** `SolidPresetOptions`
+- **默认值：** `{}`
+- **示例：**
+
+```ts
+pluginSolid({
+  solidPresetOptions: {
+    generate: 'ssr',
+    hydratable: true,
+  },
+});
+```

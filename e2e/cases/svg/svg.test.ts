@@ -1,6 +1,7 @@
-import { join } from 'path';
+import fs from 'node:fs';
+import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
@@ -9,13 +10,17 @@ const fixtures = __dirname;
 test('svg (assets)', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'svg-assets'),
-    entry: {
-      main: join(fixtures, 'svg-assets', 'src/index.js'),
-    },
     runServer: true,
+    rsbuildConfig: {
+      source: {
+        entry: {
+          index: join(fixtures, 'svg-assets', 'src/index.js'),
+        },
+      },
+    },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   // test svg asset
   await expect(
@@ -31,54 +36,12 @@ test('svg (assets)', async ({ page }) => {
     ),
   ).resolves.toBeTruthy();
 
-  rsbuild.close();
-});
-
-test('svgr (defaultExport url)', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: join(fixtures, 'svg'),
-    entry: {
-      main: join(fixtures, 'svg', 'src/index.js'),
-    },
-    runServer: true,
-    plugins: [
-      pluginReact(),
-      pluginSvgr({
-        svgDefaultExport: 'url',
-      }),
-    ],
-  });
-
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
-
-  // test svgr（namedExport）
-  await expect(
-    page.evaluate(`document.getElementById('test-svg').tagName === 'svg'`),
-  ).resolves.toBeTruthy();
-
-  // test svg asset
-  await expect(
-    page.evaluate(
-      `document.getElementById('test-img').src.startsWith('data:image/svg')`,
-    ),
-  ).resolves.toBeTruthy();
-
-  // test svg asset in css
-  await expect(
-    page.evaluate(
-      `getComputedStyle(document.getElementById('test-css')).backgroundImage.includes('url("data:image/svg')`,
-    ),
-  ).resolves.toBeTruthy();
-
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('svgr (defaultExport component)', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'svg-default-export-component'),
-    entry: {
-      main: join(fixtures, 'svg-default-export-component', 'src/index.js'),
-    },
     runServer: true,
     rsbuildConfig: {},
     plugins: [
@@ -89,56 +52,29 @@ test('svgr (defaultExport component)', async ({ page }) => {
     ],
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   await expect(
     page.evaluate(`document.getElementById('test-svg').tagName === 'svg'`),
   ).resolves.toBeTruthy();
 
-  rsbuild.close();
-});
-
-test('svgr (query url)', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: join(fixtures, 'svg-url'),
-    entry: {
-      main: join(fixtures, 'svg-url', 'src/index.js'),
-    },
-    plugins: [
-      pluginReact(),
-      pluginSvgr({
-        svgDefaultExport: 'component',
-      }),
-    ],
-    runServer: true,
-  });
-
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
-
-  // test svg asset
-  await expect(
-    page.evaluate(
-      `document.getElementById('test-img').src.includes('static/svg/app')`,
-    ),
-  ).resolves.toBeTruthy();
-
-  // test svg asset in css
-  await expect(
-    page.evaluate(
-      `getComputedStyle(document.getElementById('test-css')).backgroundImage.includes('static/svg/app')`,
-    ),
-  ).resolves.toBeTruthy();
-
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 // It's an old bug when use svgr in css and external react.
 test('svgr (external react)', async ({ page }) => {
+  const nodeModulesPath = join(__dirname, '../../node_modules');
+  const reactCode = fs.readFileSync(
+    join(nodeModulesPath, 'react/umd/react.production.min.js'),
+    'utf-8',
+  );
+  const reactDomCode = fs.readFileSync(
+    join(nodeModulesPath, 'react-dom/umd/react-dom.production.min.js'),
+    'utf-8',
+  );
+
   const rsbuild = await build({
     cwd: join(fixtures, 'svg-external-react'),
-    entry: {
-      main: join(fixtures, 'svg-external-react', 'src/index.js'),
-    },
     runServer: true,
     plugins: [
       pluginReact(),
@@ -154,12 +90,26 @@ test('svgr (external react)', async ({ page }) => {
         },
       },
       html: {
+        tags: [
+          {
+            tag: 'script',
+            head: true,
+            append: false,
+            children: reactCode,
+          },
+          {
+            tag: 'script',
+            head: true,
+            append: false,
+            children: reactDomCode,
+          },
+        ],
         template: './static/index.html',
       },
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   // test svgr（namedExport）
   await expect(
@@ -180,5 +130,5 @@ test('svgr (external react)', async ({ page }) => {
     ),
   ).resolves.toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });

@@ -1,13 +1,13 @@
-import crypto from 'crypto';
-import { isAbsolute, join } from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import crypto from 'node:crypto';
+import { isAbsolute, join } from 'node:path';
+import { fse } from '@rsbuild/shared';
 import {
   findExists,
-  BuildCacheOptions,
-  Context,
   isFileExists,
-  DefaultRsbuildPlugin,
+  type RsbuildContext,
+  type BuildCacheOptions,
 } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
 async function validateCache(
   cacheDirectory: string,
@@ -16,7 +16,7 @@ async function validateCache(
   const configFile = join(cacheDirectory, 'buildDependencies.json');
 
   if (await isFileExists(configFile)) {
-    const prevBuildDependencies = await fs.readJSON(configFile);
+    const prevBuildDependencies = await fse.readJSON(configFile);
 
     if (
       JSON.stringify(prevBuildDependencies) ===
@@ -29,10 +29,10 @@ async function validateCache(
      * If the filenames in the buildDependencies are changed, webpack will not invalidate the previous cache.
      * So we need to remove the cache directory to make sure the cache is invalidated.
      */
-    await fs.remove(cacheDirectory);
+    await fse.remove(cacheDirectory);
   }
 
-  await fs.outputJSON(configFile, buildDependencies);
+  await fse.outputJSON(configFile, buildDependencies);
 }
 
 function getDigestHash(digest: Array<string | undefined>) {
@@ -43,7 +43,7 @@ function getDigestHash(digest: Array<string | undefined>) {
 
 function getCacheDirectory(
   { cacheDirectory }: BuildCacheOptions,
-  context: Context,
+  context: RsbuildContext,
 ) {
   if (cacheDirectory) {
     return isAbsolute(cacheDirectory)
@@ -57,7 +57,7 @@ function getCacheDirectory(
  * webpack can't detect the changes of framework config, tsconfig, tailwind config and browserslist config.
  * but they will affect the compilation result, so they need to be added to buildDependencies.
  */
-async function getBuildDependencies(context: Readonly<Context>) {
+async function getBuildDependencies(context: Readonly<RsbuildContext>) {
   const rootPackageJson = join(context.rootPath, 'package.json');
   const browserslistConfig = join(context.rootPath, '.browserslistrc');
 
@@ -65,10 +65,6 @@ async function getBuildDependencies(context: Readonly<Context>) {
 
   if (await isFileExists(rootPackageJson)) {
     buildDependencies.packageJson = [rootPackageJson];
-  }
-
-  if (context.configPath) {
-    buildDependencies.config = [context.configPath];
   }
 
   if (context.tsconfigPath) {
@@ -92,8 +88,8 @@ async function getBuildDependencies(context: Readonly<Context>) {
   return buildDependencies;
 }
 
-export const pluginCache = (): DefaultRsbuildPlugin => ({
-  name: 'plugin-cache',
+export const pluginCache = (): RsbuildPlugin => ({
+  name: 'rsbuild:cache',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { target, env }) => {

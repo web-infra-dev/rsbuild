@@ -1,6 +1,6 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
@@ -62,15 +62,12 @@ cases.forEach((_case) => {
   test(_case.name, async ({ page }) => {
     const rsbuild = await build({
       cwd: _case.cwd,
-      entry: {
-        main: join(_case.cwd, 'src/index.js'),
-      },
       runServer: true,
       plugins: [pluginReact()],
       rsbuildConfig: _case.config || {},
     });
 
-    await page.goto(getHrefByEntryName('main', rsbuild.port));
+    await gotoPage(page, rsbuild);
 
     if (_case.expected === 'url') {
       await expect(
@@ -86,6 +83,6 @@ cases.forEach((_case) => {
       ).resolves.toBeTruthy();
     }
 
-    rsbuild.close();
+    await rsbuild.close();
   });
 });

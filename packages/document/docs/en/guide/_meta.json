@@ -26,6 +26,11 @@
   },
   {
     "type": "dir",
+    "name": "migration",
+    "label": "Migration"
+  },
+  {
+    "type": "dir",
     "name": "debug",
     "label": "Debug"
   },

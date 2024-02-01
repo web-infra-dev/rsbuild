@@ -10,7 +10,7 @@ Rsbuild will automatically inline static assets that are less than 10KB, but som
 
 By default, Rsbuild will inline assets when the file size of is less than a threshold (the default is 10KB). When inlined, the asset will be converted to a Base64 encoded string and will no longer send a separate HTTP request. When the file size is greater than this threshold, it is loaded as a separate file with a separate HTTP request.
 
-The threshold can be modified with the [output.dataUriLimit](/config/options/output.html#outputdataurilimit) config. For example, set the threshold of images to 5000 Bytes, and set media assets not to be inlined:
+The threshold can be modified with the [output.dataUriLimit](/config/output/data-uri-limit) config. For example, set the threshold of images to 5000 Bytes, and set media assets not to be inlined:
 
 ```ts
 export default {
@@ -38,15 +38,9 @@ export default function Foo() {
 
 In the above example, the `foo.png` image will always be inlined, regardless of whether the size of the image is larger than the threshold.
 
-In addition to the `inline` query, you can also use the `__inline` query to force inlining of the asset:
-
-```tsx
-import img from '. /foo.png?__inline';
-```
-
 ### Referenced from CSS file
 
-When you reference a static asset in your CSS file, you can also force inline the asset with the `inline` or `__inline` queries.
+When you reference a static asset in your CSS file, you can also force inline the asset with the `inline` query.
 
 ```css
 .foo {
@@ -73,15 +67,9 @@ export default function Foo() {
 
 In the above example, the `foo.png` image will always be loaded as a separate file, even if the size of the image is smaller than the threshold.
 
-In addition to the `url` query, you can also use the `__inline=false` query to force the asset not to be inlined:
-
-```tsx
-import img from '. /foo.png?__inline=false';
-```
-
 ### Referenced from CSS file
 
-When you reference a static asset in your CSS file, you can also force the asset not to be inlined with `url` or `__inline=false` queries.
+When you reference a static asset in your CSS file, you can also force the asset not to be inlined with `url` query.
 
 ```css
 .foo {
@@ -96,12 +84,12 @@ Excluding assets from inlining will increase the number of assets that the Web A
 
 In addition to inlining static assets into JS files, Rsbuild also supports inlining JS files into HTML files.
 
-Just enable the [output.enableInlineScripts](/config/options/output.html#outputenableinlinescripts) config, and the generated JS files will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
+Just enable the [output.inlineScripts](/config/output/inline-scripts) config, and the generated JS files will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
 
 ```ts
 export default {
   output: {
-    enableInlineScripts: true,
+    inlineScripts: true,
   },
 };
 ```
@@ -114,17 +102,17 @@ Inline JS files may cause the single HTML file to be too large, and it will brea
 
 You can also inline CSS files into HTML files.
 
-Just enable the [output.enableInlineStyles](/config/options/output.html#outputenableinlinestyles) config, the generated CSS file will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
+Just enable the [output.inlineStyles](/config/output/inline-styles) config, the generated CSS file will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
 
 ```ts
 export default {
   output: {
-    enableInlineStyles: true,
+    inlineStyles: true,
   },
 };
 ```
 
-## Add Type Declaration
+## Type Declaration
 
 When you use URL queries such as `?inline` and `?url` in TypeScript code, TypeScript may prompt that the module is missing a type definition:
 
@@ -132,25 +120,22 @@ When you use URL queries such as `?inline` and `?url` in TypeScript code, TypeSc
 TS2307: Cannot find module './logo.png?inline' or its corresponding type declarations.
 ```
 
-To fix this, you can add type declarations for these URL queries, please create `src/global.d.ts` file and add the following type declarations:
+To fix this, you can add type declarations for these URL queries, please create `src/env.d.ts` file and add the following type declarations.
+
+- Method 1: If the `@rsbuild/core` package is installed, you can directly reference the type declarations provided by `@rsbuild/core`:
 
 ```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+- Method 2: Manually add the required type declarations:
+
+```ts
+declare module '*?url' {
+  const content: string;
+  export default content;
+}
 declare module '*?inline' {
-  const content: string;
-  export default content;
-}
-
-declare module '*?inline' {
-  const content: string;
-  export default content;
-}
-
-declare module '*?__inline' {
-  const content: string;
-  export default content;
-}
-
-declare module '*?inline=false' {
   const content: string;
   export default content;
 }

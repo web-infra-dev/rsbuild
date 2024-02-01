@@ -1,26 +1,26 @@
 import { expect, describe, it } from 'vitest';
 import { pluginBabel } from '../src';
-import { createStubRsbuild } from '@rsbuild/test-helper';
-import { mergeRegex, JS_REGEX, TS_REGEX } from '@rsbuild/shared';
+import { createStubRsbuild } from '@scripts/test-helper';
+import { SCRIPT_REGEX } from '@rsbuild/shared';
 
 describe('plugins/babel', () => {
   it('babel-loader should works with builtin:swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        source: {
+          include: [/[\\/]node_modules[\\/]query-string[\\/]/],
+          exclude: ['src/example'],
+        },
+      },
     });
 
-    rsbuild.addPlugins([
-      pluginBabel((_config: any, { addExcludes, addIncludes }: any) => {
-        addIncludes(/\/node_modules\/query-string\//);
-        addExcludes('src/example');
-      }),
-    ]);
+    rsbuild.addPlugins([pluginBabel()]);
 
     const config = await rsbuild.unwrapConfig();
 
     expect(
       config.module.rules.find(
-        (r) => r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
+        (r) => r.test.toString() === SCRIPT_REGEX.toString(),
       ),
     ).toMatchSnapshot();
   });
@@ -39,31 +39,17 @@ describe('plugins/babel', () => {
   it('should set babel-loader when config is add', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [
-        pluginBabel((config: any) => {
-          config.plugins.push([
-            'babel-plugin-import',
-            {
-              libraryName: 'xxx-components',
-              libraryDirectory: 'es',
-              style: true,
-            },
-          ]);
-        }),
-      ],
-      rsbuildConfig: {},
-    });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    expect(bundlerConfigs[0]).toMatchSnapshot();
-  });
-
-  it('babel-loader addIncludes & addExcludes should works', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [
-        pluginBabel((_config: any, { addExcludes, addIncludes }: any) => {
-          addIncludes(/\/node_modules\/query-string\//);
-          addExcludes('src/example');
+        pluginBabel({
+          babelLoaderOptions: (config) => {
+            config.plugins?.push([
+              'babel-plugin-import',
+              {
+                libraryName: 'xxx-components',
+                libraryDirectory: 'es',
+                style: true,
+              },
+            ]);
+          },
         }),
       ],
       rsbuildConfig: {},

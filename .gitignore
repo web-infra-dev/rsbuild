@@ -1,9 +1,11 @@
 .DS_Store
 *.log*
+*.cpuprofile
 node_modules/
 
 dist/
 dist-*
+!packages/shared/compiled/rslog/dist
 coverage/
 doc_build/
 playwright-report/
@@ -14,3 +16,6 @@ tsconfig.tsbuildinfo
 !.vscode/extensions.json
 .idea/
 .nx/
+.history/
+.env.local
+.env.*.local

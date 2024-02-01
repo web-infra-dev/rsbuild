@@ -1,46 +1,58 @@
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
 
 type VueJSXPresetOptions = {
+  /**
+   * Whether to enable the Composition API in Vue.js JSX.
+   */
   compositionAPI?: boolean | string;
+  /**
+   * Whether to enable stateless functional components in Vue.js JSX.
+   */
   functional?: boolean;
+  /**
+   * Whether to enable automatic 'h' injection syntactic sugar.
+   * @default true
+   */
   injectH?: boolean;
+  /**
+   * Whether to enable `vModel` syntactic sugar
+   */
   vModel?: boolean;
+  /**
+   * Whether to enable `vOn` syntactic sugar
+   */
   vOn?: boolean;
 };
 
 export type PluginVueOptions = {
+  /**
+   * Options passed to `@vue/babel-preset-jsx`.
+   * @see https://github.com/vuejs/jsx-vue2
+   */
   vueJsxOptions?: VueJSXPresetOptions;
 };
 
-export function pluginVue2Jsx(
-  options: PluginVueOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> {
+export function pluginVue2Jsx(options: PluginVueOptions = {}): RsbuildPlugin {
   return {
-    name: 'plugin-vue2-jsx',
+    name: 'rsbuild:vue2-jsx',
 
-    pre: ['plugin-babel'],
-
-    async setup(api) {
-      api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-        [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI].forEach((ruleId) => {
-          if (chain.module.rules.has(ruleId)) {
-            const rule = chain.module.rule(ruleId);
-
-            if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
-              // add babel preset
-              rule.use(CHAIN_ID.USE.BABEL).tap((babelConfig) => {
-                babelConfig.presets ??= [];
-                babelConfig.presets.push([
-                  require.resolve('@vue/babel-preset-jsx'),
-                  {
-                    injectH: true,
-                    ...options.vueJsxOptions,
-                  },
-                ]);
-                return babelConfig;
-              });
-            }
-          }
+    setup(api) {
+      api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+        modifyBabelLoaderOptions({
+          chain,
+          CHAIN_ID,
+          modifier: (babelOptions) => {
+            babelOptions.presets ??= [];
+            babelOptions.presets.push([
+              require.resolve('@vue/babel-preset-jsx'),
+              {
+                injectH: true,
+                ...options.vueJsxOptions,
+              },
+            ]);
+            return babelOptions;
+          },
         });
       });
     },

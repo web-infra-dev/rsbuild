@@ -1,5 +1,5 @@
-import { IsMonorepoFn } from '../common/isMonorepo';
-import { GetProjectsFunc } from '../common/getProjects';
+import type { IsMonorepoFn } from '../common/isMonorepo';
+import type { GetProjectsFunc } from '../common/getProjects';
 
 export * from './packageJson';
 export * from './rushJson';

@@ -2,33 +2,30 @@ import {
   CSS_REGEX,
   resolvePackage,
   isUseCssExtract,
-  getPostcssConfig,
-  ModifyChainUtils,
-  isUseCssSourceMap,
+  getPostcssLoaderOptions,
   mergeChainedOptions,
   getCssLoaderOptions,
   getBrowserslistWithDefault,
   getCssModuleLocalIdentName,
-  type Context,
+  getSharedPkgCompiledPath,
+  type RsbuildContext,
+  type RsbuildPlugin,
+  type NormalizedConfig,
   type BundlerChainRule,
-  type StyleLoaderOptions,
+  type ModifyChainUtils,
+  type CSSExtractOptions,
 } from '@rsbuild/shared';
-import type {
-  RsbuildPlugin,
-  CSSExtractOptions,
-  NormalizedConfig,
-} from '../types';
 
 export async function applyBaseCSSRule({
   rule,
   config,
   context,
-  utils: { target, isProd, isServer, CHAIN_ID, isWebWorker, getCompiledPath },
+  utils: { target, isProd, isServer, CHAIN_ID, isWebWorker },
   importLoaders = 1,
 }: {
   rule: BundlerChainRule;
   config: NormalizedConfig;
-  context: Context;
+  context: RsbuildContext;
   utils: ModifyChainUtils;
   importLoaders?: number;
 }) {
@@ -40,28 +37,13 @@ export async function applyBaseCSSRule({
 
   // 1. Check user config
   const enableExtractCSS = isUseCssExtract(config, target);
-  const enableCssMinify = !enableExtractCSS && isProd;
-
-  const enableSourceMap = isUseCssSourceMap(config);
   const enableCSSModuleTS = Boolean(config.output.enableCssModuleTSDeclaration);
-  // 2. Prepare loader options
-  const extraCSSOptions: Required<CSSExtractOptions> =
-    typeof config.tools.cssExtract === 'object'
-      ? config.tools.cssExtract
-      : {
-          loaderOptions: {},
-          pluginOptions: {},
-        };
-  const styleLoaderOptions = mergeChainedOptions<StyleLoaderOptions, null>(
-    {},
-    config.tools.styleLoader,
-  );
 
+  // 2. Prepare loader options
   const localIdentName = getCssModuleLocalIdentName(config, isProd);
 
-  const cssLoaderOptions = await getCssLoaderOptions({
+  const cssLoaderOptions = getCssLoaderOptions({
     config,
-    enableSourceMap,
     importLoaders,
     isServer,
     isWebWorker,
@@ -73,6 +55,14 @@ export async function applyBaseCSSRule({
   if (!isServer && !isWebWorker) {
     // use mini-css-extract-plugin loader
     if (enableExtractCSS) {
+      const extraCSSOptions: Required<CSSExtractOptions> =
+        typeof config.tools.cssExtract === 'object'
+          ? config.tools.cssExtract
+          : {
+              loaderOptions: {},
+              pluginOptions: {},
+            };
+
       rule
         .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
         .loader(require('mini-css-extract-plugin').loader)
@@ -81,9 +71,14 @@ export async function applyBaseCSSRule({
     }
     // use style-loader
     else {
+      const styleLoaderOptions = mergeChainedOptions({
+        defaults: {},
+        options: config.tools.styleLoader,
+      });
+
       rule
         .use(CHAIN_ID.USE.STYLE)
-        .loader(require.resolve('style-loader'))
+        .loader(getSharedPkgCompiledPath('style-loader'))
         .options(styleLoaderOptions)
         .end();
     }
@@ -112,21 +107,20 @@ export async function applyBaseCSSRule({
 
   rule
     .use(CHAIN_ID.USE.CSS)
-    .loader(getCompiledPath('css-loader'))
+    .loader(getSharedPkgCompiledPath('css-loader'))
     .options(cssLoaderOptions)
     .end();
 
   if (!isServer && !isWebWorker) {
-    const postcssLoaderOptions = await getPostcssConfig({
-      enableSourceMap,
+    const postcssLoaderOptions = await getPostcssLoaderOptions({
       browserslist,
       config,
-      enableCssMinify,
+      root: context.rootPath,
     });
 
     rule
       .use(CHAIN_ID.USE.POSTCSS)
-      .loader(getCompiledPath('postcss-loader'))
+      .loader(getSharedPkgCompiledPath('postcss-loader'))
       .options(postcssLoaderOptions)
       .end();
   }
@@ -141,7 +135,7 @@ export async function applyBaseCSSRule({
 
 export const pluginCss = (): RsbuildPlugin => {
   return {
-    name: 'plugin-css',
+    name: 'rsbuild-webpack:css',
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);

@@ -1,0 +1,1221 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugin-css > should apply custom css-modules-typescript-loader when enableCssModuleTSDeclarationg 1`] = `
+{
+  "builtins": {
+    "css": {
+      "modules": {
+        "exportsOnly": false,
+        "localIdentName": "[path][name]__[local]-[hash:6]",
+        "localsConvention": "camelCase",
+      },
+    },
+  },
+  "module": {
+    "rules": [
+      {
+        "oneOf": [
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
+            "type": "css/module",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/src/provider/css-modules-typescript-pre-loader",
+                "options": {
+                  "modules": {
+                    "auto": true,
+                    "exportLocalsConvention": "camelCase",
+                  },
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "type": "css",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/src/provider/css-modules-typescript-pre-loader",
+                "options": {
+                  "modules": {
+                    "auto": true,
+                    "exportLocalsConvention": "camelCase",
+                  },
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.css\\$/,
+      },
+    ],
+  },
+  "plugins": [
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
+    },
+  ],
+}
+`;
+
+exports[`plugin-css > should override browserslist of autoprefixer when using output.overrideBrowserslist config 1`] = `
+{
+  "builtins": {
+    "css": {
+      "modules": {
+        "exportsOnly": false,
+        "localIdentName": "[path][name]__[local]-[hash:6]",
+        "localsConvention": "camelCase",
+      },
+    },
+  },
+  "module": {
+    "rules": [
+      {
+        "oneOf": [
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
+            "type": "css/module",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "Chrome 80",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "Chrome 80",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "type": "css",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "Chrome 80",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "Chrome 80",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.css\\$/,
+      },
+    ],
+  },
+  "plugins": [
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
+    },
+  ],
+}
+`;
+
+exports[`plugin-css > should use custom cssModules rule when using output.cssModules config 1`] = `
+{
+  "builtins": {
+    "css": {
+      "modules": {
+        "exportsOnly": false,
+        "localIdentName": "[path][name]__[local]-[hash:6]",
+        "localsConvention": "camelCase",
+      },
+    },
+  },
+  "module": {
+    "rules": [
+      {
+        "oneOf": [
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "test": [Function],
+            "type": "css/module",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "type": "css",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.css\\$/,
+      },
+    ],
+  },
+  "plugins": [
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
+    },
+  ],
+}
+`;
+
+exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyles is true and target is node 1`] = `
+{
+  "experiments": {
+    "css": false,
+  },
+  "module": {
+    "rules": [
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "use": [
+          {
+            "loader": "@rsbuild/shared/ignore-css-loader",
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "options": {
+              "importLoaders": 1,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "exportOnlyLocals": true,
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`plugin-css injectStyles > should use css-loader + style-loader when injectStyles is true 1`] = `
+{
+  "experiments": {
+    "css": false,
+  },
+  "module": {
+    "rules": [
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/style-loader",
+            "options": {
+              "esModule": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "options": {
+              "importLoaders": 1,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "options": {
+              "postcssOptions": {
+                "config": false,
+                "plugins": [
+                  [Function],
+                  {
+                    "browsers": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "info": [Function],
+                    "options": {
+                      "flexbox": "no-2009",
+                      "overrideBrowserslist": [
+                        "chrome >= 87",
+                        "edge >= 88",
+                        "firefox >= 78",
+                        "safari >= 14",
+                      ],
+                    },
+                    "postcssPlugin": "autoprefixer",
+                    "prepare": [Function],
+                  },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`plugin-less > should add less-loader 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "oneOf": [
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
+            "type": "css/module",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
+                "options": {
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
+                  "lessOptions": {
+                    "javascriptEnabled": true,
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "type": "css",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
+                "options": {
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
+                  "lessOptions": {
+                    "javascriptEnabled": true,
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.less\\$/,
+      },
+    ],
+  },
+}
+`;
+
+exports[`plugin-less > should add less-loader and css-loader when injectStyles 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.less\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/style-loader",
+            "options": {
+              "esModule": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "options": {
+              "postcssOptions": {
+                "config": false,
+                "plugins": [
+                  [Function],
+                  {
+                    "browsers": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "info": [Function],
+                    "options": {
+                      "flexbox": "no-2009",
+                      "overrideBrowserslist": [
+                        "chrome >= 87",
+                        "edge >= 88",
+                        "firefox >= 78",
+                        "safari >= 14",
+                      ],
+                    },
+                    "postcssPlugin": "autoprefixer",
+                    "prepare": [Function],
+                  },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/less-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/less",
+              "lessOptions": {
+                "javascriptEnabled": true,
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`plugin-less > should add less-loader with excludes 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "oneOf": [
+          {
+            "exclude": [
+              /node_modules/,
+            ],
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
+            "type": "css/module",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
+                "options": {
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
+                  "lessOptions": {
+                    "javascriptEnabled": true,
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
+          },
+          {
+            "exclude": [
+              /node_modules/,
+            ],
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "type": "css",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
+                "options": {
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
+                  "lessOptions": {
+                    "javascriptEnabled": true,
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.less\\$/,
+      },
+    ],
+  },
+}
+`;
+
+exports[`plugin-less > should add less-loader with tools.less 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "oneOf": [
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
+            "type": "css/module",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
+                "options": {
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
+                  "lessOptions": {
+                    "javascriptEnabled": false,
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "type": "css",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/less-loader",
+                "options": {
+                  "implementation": "<ROOT>/packages/shared/compiled/less",
+                  "lessOptions": {
+                    "javascriptEnabled": false,
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.less\\$/,
+      },
+    ],
+  },
+}
+`;
+
+exports[`plugin-sass > should add sass-loader 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "oneOf": [
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
+            "type": "css/module",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+                "options": {
+                  "join": [Function],
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
+                "options": {
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
+                  "sourceMap": true,
+                },
+              },
+            ],
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "type": "css",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+                "options": {
+                  "join": [Function],
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
+                "options": {
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
+                  "sourceMap": true,
+                },
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+      },
+    ],
+  },
+}
+`;
+
+exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/shared/compiled/style-loader",
+            "options": {
+              "esModule": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "options": {
+              "importLoaders": 3,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "options": {
+              "postcssOptions": {
+                "config": false,
+                "plugins": [
+                  [Function],
+                  {
+                    "browsers": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "info": [Function],
+                    "options": {
+                      "flexbox": "no-2009",
+                      "overrideBrowserslist": [
+                        "chrome >= 87",
+                        "edge >= 88",
+                        "firefox >= 78",
+                        "safari >= 14",
+                      ],
+                    },
+                    "postcssPlugin": "autoprefixer",
+                    "prepare": [Function],
+                  },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+            "options": {
+              "join": [Function],
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/sass",
+              "sourceMap": true,
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`plugin-sass > should add sass-loader with excludes 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "oneOf": [
+          {
+            "exclude": [
+              /node_modules/,
+            ],
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
+            "type": "css/module",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+                "options": {
+                  "join": [Function],
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
+                "options": {
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
+                  "sourceMap": true,
+                },
+              },
+            ],
+          },
+          {
+            "exclude": [
+              /node_modules/,
+            ],
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "type": "css",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+                "options": {
+                  "postcssOptions": {
+                    "config": false,
+                    "plugins": [
+                      [Function],
+                      {
+                        "browsers": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                        "info": [Function],
+                        "options": {
+                          "flexbox": "no-2009",
+                          "overrideBrowserslist": [
+                            "chrome >= 87",
+                            "edge >= 88",
+                            "firefox >= 78",
+                            "safari >= 14",
+                          ],
+                        },
+                        "postcssPlugin": "autoprefixer",
+                        "prepare": [Function],
+                      },
+                    ],
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+                "options": {
+                  "join": [Function],
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
+                "options": {
+                  "implementation": "<ROOT>/packages/shared/compiled/sass",
+                  "sourceMap": true,
+                },
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+      },
+    ],
+  },
+}
+`;

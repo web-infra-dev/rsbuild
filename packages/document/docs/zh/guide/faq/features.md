@@ -2,7 +2,7 @@
 
 ### 如何配置组件库按需引入？
 
-如果需要配置组件库的按需引入，你可以通过 [source.transformImport](/config/options/source.html#sourcetransformimport) 配置，这个配置的能力等价于 [babel-plugin-import](https://www.npmjs.com/package/babel-plugin-import)。
+如果需要配置组件库的按需引入，你可以通过 [source.transformImport](/config/source/transform-import) 配置，这个配置的能力等价于 [babel-plugin-import](https://npmjs.com/package/babel-plugin-import)。
 
 ```ts
 export default {
@@ -34,7 +34,7 @@ export default {
     bundlerChain(chain) {
       chain.plugin('eslint-plugin').use(ESLintPlugin, [
         {
-          extensions: ['.js', '.ts', '.jsx', 'tsx', '.mjs'],
+          extensions: ['.js', '.ts', '.jsx', 'tsx', '.mjs', '.cjs'],
         },
       ]);
     },
@@ -48,7 +48,7 @@ export default {
 
 ### 如何配置静态资源的 CDN 路径？
 
-如果需要将 JS、CSS 等静态资源上传到 CDN 使用，那么可以通过 [output.assetPrefix](/config/options/output.html#outputassetprefix) 配置来设置静态资源的 URL 前缀。
+如果需要将 JS、CSS 等静态资源上传到 CDN 使用，那么可以通过 [output.assetPrefix](/config/output/asset-prefix) 配置来设置静态资源的 URL 前缀。
 
 ```js
 export default {
@@ -60,23 +60,11 @@ export default {
 
 ---
 
-### 如何清空 webpack 编译缓存？
-
-默认情况下，Rsbuild 的 webpack 编译缓存生成在 `./node_modules/.cache/webpack` 目录下。
-
-如果需要清空本地的编译缓存，可以执行以下命令：
-
-```bash
-rm -rf ./node_modules/.cache
-```
-
----
-
 ### 如何移除代码中的 console？
 
 在生产环境构建时，我们可以移除代码中的 `console`，从而避免开发环境的日志被输出到生产环境。
 
-Rsbuild 默认提供了移除 console 的配置项，请查看 [performance.removeConsole](/config/options/performance.html#performanceremoveconsole)。
+Rsbuild 默认提供了移除 console 的配置项，请查看 [performance.removeConsole](/config/performance/remove-console)。
 
 ---
 
@@ -84,7 +72,7 @@ Rsbuild 默认提供了移除 console 的配置项，请查看 [performance.remo
 
 通过 Rsbuild 调试模式可以查看 Rsbuild 生成的 Rspack 配置。
 
-你可以在执行构建时添加 `DEBUG=rsbuild` 环境变量，即可开启 Rsbuild 的[调试模式](/guide/debug/debug-mode.html)，此时会输出内部生成的 Rspack 配置到 dist 目录下。
+你可以在执行构建时添加 `DEBUG=rsbuild` 环境变量，即可开启 Rsbuild 的[调试模式](/guide/debug/debug-mode)，此时会输出内部生成的 Rspack 配置到 dist 目录下。
 
 ```bash
 ➜ DEBUG=rsbuild pnpm dev
@@ -96,8 +84,8 @@ debug   add default plugins done [1938.57 ms]
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /root/my-project/dist/rsbuild.config.js
-  - Rspack Config (web): /root/my-project/dist/rspack.config.web.js
+  - Rsbuild Config: /root/my-project/dist/rsbuild.config.mjs
+  - Rspack Config (web): /root/my-project/dist/rspack.config.web.mjs
 ```
 
 ---

@@ -10,7 +10,7 @@ Rsbuild 默认会自动内联体积小于 10KB 的静态资源，但有时候你
 
 默认情况下，当图片、字体、媒体等类型的文件体积小于阈值（默认为 10KB）时，Rsbuild 会将资源进行内联处理，资源内联后，会被转换成一个 Base64 编码的字符串，不再会发送独立的 HTTP 请求。当文件体积大于或等于该阈值时，则会被作为单独的资源文件，通过独立的 HTTP 请求来加载。
 
-自动内联的体积阈值可以通过 [output.dataUriLimit](/config/options/output.html#outputdataurilimit) 配置项修改。例如，修改图片资源的阈值为 5000 字节，设置视频资源不内联：
+自动内联的体积阈值可以通过 [output.dataUriLimit](/config/output/data-uri-limit) 配置项修改。例如，修改图片资源的阈值为 5000 字节，设置视频资源不内联：
 
 ```ts
 export default {
@@ -38,15 +38,9 @@ export default function Foo() {
 
 在上面这个例子中，`foo.png` 图片将始终被内联，无论该图片的大小是否大于阈值。
 
-除了 `inline` 参数以外，你也可以使用 `__inline` 参数来强制内联该资源：
-
-```tsx
-import img from './foo.png?__inline';
-```
-
 ### 从 CSS 文件中引用
 
-当你在 CSS 文件中引用静态资源时，同样可以通过 `inline` 或 `__inline` 参数来强制内联资源。
+当你在 CSS 文件中引用静态资源时，同样可以通过 `inline` 参数来强制内联资源。
 
 ```css
 .foo {
@@ -73,15 +67,9 @@ export default function Foo() {
 
 在上面这个例子中，`foo.png` 图片将始终通过单独的资源文件加载，无论该图片的大小是否小于阈值。
 
-除了 `url` 参数以外，你也可以使用 `__inline=false` 参数来强制不内联该资源：
-
-```tsx
-import img from './foo.png?__inline=false';
-```
-
 ### 从 CSS 文件中引用
 
-当你在 CSS 文件中引用静态资源时，同样可以通过 `url` 或 `__inline=false` 参数来强制不内联资源。
+当你在 CSS 文件中引用静态资源时，同样可以通过 `url` 参数来强制不内联资源。
 
 ```css
 .foo {
@@ -97,12 +85,12 @@ import img from './foo.png?__inline=false';
 
 除了将静态资源文件内联到 JS 文件里，Rsbuild 也支持将 JS 文件内联到 HTML 文件中。
 
-只需要开启 [output.enableInlineScripts](/config/options/output.html#outputenableinlinescripts) 配置项，构建生成的 JS 文件将不会被写入产物目录下，而是会直接内联到对应的 HTML 文件中。
+只需要开启 [output.inlineScripts](/config/output/inline-scripts) 配置项，构建生成的 JS 文件将不会被写入产物目录下，而是会直接内联到对应的 HTML 文件中。
 
 ```ts
 export default {
   output: {
-    enableInlineScripts: true,
+    inlineScripts: true,
   },
 };
 ```
@@ -115,17 +103,17 @@ export default {
 
 你也可以将 CSS 文件内联到 HTML 文件中。
 
-只需要开启 [output.enableInlineStyles](/config/options/output.html#outputenableinlinestyles) 配置项，构建生成的 CSS 文件将不会被写入产物目录下，而是会直接内联到对应的 HTML 文件中。
+只需要开启 [output.inlineStyles](/config/output/inline-styles) 配置项，构建生成的 CSS 文件将不会被写入产物目录下，而是会直接内联到对应的 HTML 文件中。
 
 ```ts
 export default {
   output: {
-    enableInlineStyles: true,
+    inlineStyles: true,
   },
 };
 ```
 
-## 添加类型声明
+## 类型声明
 
 当你在 TypeScript 代码中使用 `?inline` 和 `?url` 等 URL 参数时，TypeScript 可能会提示该模块缺少类型定义：
 
@@ -133,25 +121,22 @@ export default {
 TS2307: Cannot find module './logo.png?inline' or its corresponding type declarations.
 ```
 
-此时你需要为这些 URL 参数添加类型声明，请在项目中创建 `src/global.d.ts` 文件，并添加以下类型声明：
+此时你需要为这些 URL 参数添加类型声明，请在项目中创建 `src/env.d.ts` 文件，并添加类型声明。
+
+- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的类型声明：
 
 ```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+- 方法二：手动添加需要的类型声明：
+
+```ts
+declare module '*?url' {
+  const content: string;
+  export default content;
+}
 declare module '*?inline' {
-  const content: string;
-  export default content;
-}
-
-declare module '*?inline' {
-  const content: string;
-  export default content;
-}
-
-declare module '*?__inline' {
-  const content: string;
-  export default content;
-}
-
-declare module '*?inline=false' {
   const content: string;
   export default content;
 }

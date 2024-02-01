@@ -1,0 +1,58 @@
+# client
+
+Configure the client code injected by Rsbuild during the development process. This can be used to set the WebSocket URL for HMR.
+
+- **Type:**
+
+```ts
+type Client = {
+  /** Specify the protocol name for the WebSocket request */
+  protocol?: string;
+  /** Specify the path for the WebSocket request */
+  path?: string;
+  /** Specify the port number for the WebSocket request */
+  port?: string;
+  /** Specify the host for the WebSocket request */
+  host?: string;
+};
+```
+
+- **Default:**
+
+```js
+const defaultConfig = {
+  path: '/rsbuild-hmr',
+  // Defaults to the port number of the dev server
+  port: '',
+  // Defaults to "location.hostname"
+  host: '',
+  // Defaults to "location.protocol === 'https:' ? 'wss' : 'ws'"
+  protocol: '',
+};
+```
+
+## Configure WebSocket URL
+
+By default, when you start the dev server and visit the `http://localhost:8080/`, a WebSocket request is made to `ws://localhost:8080/rsbuild-hmr`, establishing a connection between the page and the dev server.
+
+In some development scenarios, you may need to adjust the WebSocket URL to ensure that the WebSocket request can connect correctly.
+
+For example, if you are developing using a proxy tool, you may actually be accessing an online domain. In this case, you can manually configure `dev.client` to point the WebSocket URL to your local dev server. Below is an example where the WebSocket request URL is `ws://127.0.0.1:8080/rsbuild-hmr`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      protocol: 'ws',
+      // Usually `127.0.0.1` is used to avoid cross-origin requests being blocked by the browser
+      host: '127.0.0.1',
+    },
+  },
+};
+```
+
+## hot-update files
+
+During the HMR process, the page will make GET requests to get hot-update files, including `*.hot-update.json` and `*.hot-update.js`. These files contain the necessary information for hot updates, such as the updated modules and their code.
+
+Hot-update files are considered to be static assets. If you need to configure the URL for hot-update files, please use the [dev.assetPrefix](/config/dev/asset-prefix) option.

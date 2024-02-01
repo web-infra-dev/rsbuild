@@ -1,16 +1,11 @@
-import { join } from 'path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
-import { webpackOnlyTest } from '@scripts/helper';
+import { build, gotoPage } from '@e2e/helper';
 
 const fixtures = __dirname;
 
 test('should minify template js & css', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     rsbuildConfig: {
       html: {
@@ -22,14 +17,14 @@ test('should minify template js & css', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const test = page.locator('#test');
 
   await expect(test).toHaveCSS('text-align', 'center');
   await expect(test).toHaveCSS('font-size', '146px');
   await expect(test).toHaveText('Hello Rsbuild!');
-  await expect(page.evaluate(`window.b`)).resolves.toBe(2);
+  await expect(page.evaluate('window.b')).resolves.toBe(2);
 
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -49,50 +44,46 @@ test('should minify template js & css', async ({ page }) => {
   // keep html comments
   expect(content.includes('<!-- HTML COMMENT-->')).toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
-webpackOnlyTest(
-  'should minify template success when enableInlineScripts & enableInlineStyles',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: fixtures,
-      entry: {
-        main: join(fixtures, 'src/index.ts'),
+test('should minify template success when inlineScripts & inlineStyles', async ({
+  page,
+}) => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    runServer: true,
+    rsbuildConfig: {
+      html: {
+        template: './static/index.html',
+        // avoid Minified React error #200;
+        inject: 'body',
       },
-      runServer: true,
-      rsbuildConfig: {
-        html: {
-          template: './static/index.html',
-          // avoid Minified React error #200;
-          inject: 'body',
-        },
-        output: {
-          enableInlineScripts: true,
-          enableInlineStyles: true,
-        },
+      output: {
+        inlineScripts: true,
+        inlineStyles: true,
       },
-    });
+    },
+  });
 
-    await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
-    const test = page.locator('#test');
+  const test = page.locator('#test');
 
-    await expect(test).toHaveCSS('text-align', 'center');
-    await expect(test).toHaveCSS('font-size', '146px');
-    await expect(test).toHaveText('Hello Rsbuild!');
-    await expect(page.evaluate(`window.b`)).resolves.toBe(2);
+  await expect(test).toHaveCSS('text-align', 'center');
+  await expect(test).toHaveCSS('font-size', '146px');
+  await expect(test).toHaveText('Hello Rsbuild!');
+  await expect(page.evaluate('window.b')).resolves.toBe(2);
 
-    const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.unwrapOutputJSON();
 
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('.html'))!];
+  const content =
+    files[Object.keys(files).find((file) => file.endsWith('.html'))!];
 
-    expect(
-      content.includes('.test{font-size:146px;background-color:green}'),
-    ).toBeTruthy();
-    expect(content.includes('window.a=1,window.b=2')).toBeTruthy();
+  expect(
+    content.includes('.test{font-size:146px;background-color:green}'),
+  ).toBeTruthy();
+  expect(content.includes('window.a=1,window.b=2')).toBeTruthy();
 
-    rsbuild.close();
-  },
-);
+  await rsbuild.close();
+});

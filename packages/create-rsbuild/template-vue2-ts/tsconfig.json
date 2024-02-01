@@ -3,11 +3,13 @@
     "target": "ES2020",
     "lib": ["DOM", "ES2020"],
     "module": "ESNext",
+    "jsx": "preserve",
     "strict": true,
     "skipLibCheck": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "useDefineForClassFields": true
   },
   "include": ["src"]
 }

@@ -1,15 +1,14 @@
-import {
+import type {
   ToolsSassConfig,
   ToolsLessConfig,
   FileFilterUtil,
   SassLoaderOptions,
   LessLoaderOptions,
 } from './types';
-import { castArray, getSharedPkgCompiledPath } from './utils';
+import { castArray, deepmerge, getSharedPkgCompiledPath } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
-import _ from 'lodash';
 
-export const getSassLoaderOptions = async (
+export const getSassLoaderOptions = (
   rsbuildSassConfig: ToolsSassConfig | undefined,
   isUseCssSourceMap: boolean,
 ) => {
@@ -19,24 +18,36 @@ export const getSassLoaderOptions = async (
     excludes.push(...castArray(items));
   };
 
-  const mergedOptions = mergeChainedOptions<
-    SassLoaderOptions,
-    { addExcludes: FileFilterUtil }
-  >(
-    {
+  const mergeFn = (
+    defaults: SassLoaderOptions,
+    userOptions: SassLoaderOptions,
+  ) => {
+    const getSassOptions = () => {
+      if (defaults.sassOptions && userOptions.sassOptions) {
+        return deepmerge<SassLoaderOptions['sassOptions']>(
+          defaults.sassOptions,
+          userOptions.sassOptions,
+        );
+      }
+      return userOptions.sassOptions || defaults.sassOptions;
+    };
+
+    return {
+      ...defaults,
+      ...userOptions,
+      sassOptions: getSassOptions(),
+    };
+  };
+
+  const mergedOptions = mergeChainedOptions({
+    defaults: {
       sourceMap: isUseCssSourceMap,
       implementation: getSharedPkgCompiledPath('sass'),
     },
-    rsbuildSassConfig,
-    { addExcludes },
-    (defaults: SassLoaderOptions, userOptions: SassLoaderOptions) => {
-      return {
-        ...defaults,
-        ...userOptions,
-        sassOptions: _.merge(defaults.sassOptions, userOptions.sassOptions),
-      };
-    },
-  );
+    options: rsbuildSassConfig,
+    utils: { addExcludes },
+    mergeFn,
+  });
 
   return {
     options: mergedOptions,
@@ -44,7 +55,7 @@ export const getSassLoaderOptions = async (
   };
 };
 
-export const getLessLoaderOptions = async (
+export const getLessLoaderOptions = (
   rsbuildLessConfig: ToolsLessConfig | undefined,
   isUseCssSourceMap: boolean,
 ) => {
@@ -61,21 +72,31 @@ export const getLessLoaderOptions = async (
     sourceMap: isUseCssSourceMap,
     implementation: getSharedPkgCompiledPath('less'),
   };
-  const mergedOptions = mergeChainedOptions(
-    defaultLessLoaderOptions,
-    rsbuildLessConfig,
-    { addExcludes },
-    (
-      defaults: LessLoaderOptions,
-      userOptions: LessLoaderOptions,
-    ): LessLoaderOptions => {
-      return {
-        ...defaults,
-        ...userOptions,
-        lessOptions: _.merge(defaults.lessOptions, userOptions.lessOptions),
-      };
-    },
-  );
+
+  const mergeFn = (
+    defaults: LessLoaderOptions,
+    userOptions: LessLoaderOptions,
+  ): LessLoaderOptions => {
+    const getLessOptions = () => {
+      if (defaults.lessOptions && userOptions.lessOptions) {
+        return deepmerge(defaults.lessOptions, userOptions.lessOptions);
+      }
+      return userOptions.lessOptions || defaults.lessOptions;
+    };
+
+    return {
+      ...defaults,
+      ...userOptions,
+      lessOptions: getLessOptions(),
+    };
+  };
+
+  const mergedOptions = mergeChainedOptions({
+    defaults: defaultLessLoaderOptions,
+    options: rsbuildLessConfig,
+    utils: { addExcludes },
+    mergeFn,
+  });
 
   return {
     options: mergedOptions,

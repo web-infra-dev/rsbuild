@@ -1,20 +1,21 @@
-import { join } from 'path';
-import { getDistPath, type DefaultRsbuildPlugin } from '@rsbuild/shared';
+import { posix } from 'node:path';
+import { getDistPath } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginWasm = (): DefaultRsbuildPlugin => ({
-  name: 'plugin-wasm',
+export const pluginWasm = (): RsbuildPlugin => ({
+  name: 'rsbuild:wasm',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
-      const distPath = getDistPath(config.output, 'wasm');
+      const distPath = getDistPath(config, 'wasm');
 
       chain.experiments({
         ...chain.get('experiments'),
         asyncWebAssembly: true,
       });
 
-      const wasmFilename = join(distPath, '[hash].module.wasm');
+      const wasmFilename = posix.join(distPath, '[hash].module.wasm');
 
       chain.output.merge({
         webassemblyModuleFilename: wasmFilename,

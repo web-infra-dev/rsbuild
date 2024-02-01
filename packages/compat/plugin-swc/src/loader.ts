@@ -1,8 +1,8 @@
 import { getBrowserslist } from '@rsbuild/shared';
 import type { LoaderContext, LoaderDefinitionFunction } from 'webpack';
-import { Options as SwcOptions } from '@modern-js/swc-plugins';
+import type { Options as SwcOptions } from '@modern-js/swc-plugins';
 import { Compiler } from './binding';
-import { TransformConfig } from './types';
+import type { TransformConfig } from './types';
 
 function setReactDevMode(
   swc: SwcOptions,

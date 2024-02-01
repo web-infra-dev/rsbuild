@@ -1,0 +1,61 @@
+# injectStyles
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Whether to inject styles into DOM.
+
+By default, Rsbuild will extract CSS into a separate `.css` file and output it to the dist directory. When this option is set to `true`, CSS files will be inlined into JS files and inserted on the page at runtime via `<style>` tags. This feature is implemented based on [style-loader](https://www.npmjs.com/package/style-loader).
+
+### Example
+
+```ts
+export default {
+  output: {
+    injectStyles: true,
+  },
+};
+```
+
+## Configure style-loader
+
+When `output.injectStyles` is enabled, you can modify the options of `style-loader` through [tools.styleLoader](/config/tools/style-loader).
+
+### Usage Scenario
+
+It is recommended to only enable the `injectStyles` option during development.
+
+For production builds, it is recommended to use the default behavior of Rsbuild, which extracts CSS into separate bundles to allow browsers to load CSS and JS assets in parallel.
+
+For example:
+
+```ts
+export default {
+  output: {
+    injectStyles: process.env.NODE_ENV === 'development',
+  },
+};
+```
+
+If you need to enable this option in the production environment, please note that the inlined CSS code will not go through Rsbuild's default CSS minimizer. You can manually register the [cssnano](https://cssnano.co/) plugin for PostCSS to compress the inlined code.
+
+1. Install cssnano:
+
+```bash
+npm add cssnano -D
+```
+
+2. Register cssnano using `tools.postcss`:
+
+```ts
+export default {
+  tools: {
+    postcss: (opts) => {
+      // apply cssnano in production build
+      if (process.env.NODE_ENV === 'production') {
+        opts.postcssOptions?.plugins?.push(require('cssnano'));
+      }
+    },
+  },
+};
+```

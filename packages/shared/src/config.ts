@@ -16,12 +16,10 @@ import {
   DEFAULT_ASSET_PREFIX,
 } from './constants';
 import type {
-  RsbuildTarget,
   BundlerChainRule,
-  HtmlConfig,
   RsbuildConfig,
   InspectConfigOptions,
-  CreateRsbuildOptions,
+  NormalizedServerConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
   NormalizedOutputConfig,
@@ -31,25 +29,33 @@ import type {
   NormalizedToolsConfig,
   NormalizedConfig,
 } from './types';
-import { pick } from './pick';
-import { logger } from 'rslog';
-import { join } from 'path';
-import chalk from 'chalk';
+import { logger } from './logger';
+import { join } from 'node:path';
 import type { minify } from 'terser';
-import fs from 'fs-extra';
+import fse from '../compiled/fs-extra';
+import { pick, color, upperFirst } from './utils';
 
-import _ from 'lodash';
 import { DEFAULT_DEV_HOST } from './constants';
-import { getJSMinifyOptions } from './minimize';
+import { getTerserMinifyOptions } from './minimize';
 
 export const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
-  https: false,
-  port: DEFAULT_PORT,
+  liveReload: true,
   assetPrefix: DEFAULT_ASSET_PREFIX,
   startUrl: false,
-  progressBar: true,
+});
+
+export const getDefaultServerConfig = (): NormalizedServerConfig => ({
+  port: DEFAULT_PORT,
   host: DEFAULT_DEV_HOST,
+  htmlFallback: 'index',
+  compress: true,
+  printUrls: true,
+  strictPort: false,
+  publicDir: {
+    name: 'public',
+    copyOnBuild: true,
+  },
 });
 
 export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
@@ -57,11 +63,17 @@ export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
   define: {},
   aliasStrategy: 'prefer-tsconfig',
   preEntry: [],
-  globalVars: {},
-  compileJsDataURI: true,
+  decorators: {
+    version: 'legacy',
+  },
 });
 
 export const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
+  meta: {
+    charset: { charset: 'UTF-8' },
+    viewport: 'width=device-width, initial-scale=1.0',
+  },
+  title: 'Rsbuild App',
   inject: 'head',
   mountId: DEFAULT_MOUNT_ID,
   crossorigin: false,
@@ -73,7 +85,12 @@ export const getDefaultSecurityConfig = (): NormalizedSecurityConfig => ({
   nonce: '',
 });
 
-export const getDefaultToolsConfig = (): NormalizedToolsConfig => ({});
+export const getDefaultToolsConfig = (): NormalizedToolsConfig => ({
+  cssExtract: {
+    loaderOptions: {},
+    pluginOptions: {},
+  },
+});
 
 export const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
   profile: false,
@@ -88,6 +105,7 @@ export const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
 });
 
 export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
+  targets: ['web'],
   distPath: {
     root: ROOT_DIST_DIR,
     js: JS_DIST_DIR,
@@ -112,64 +130,58 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     media: DEFAULT_DATA_URL_SIZE,
   },
   legalComments: 'linked',
-  cleanDistPath: true,
-  disableCssExtract: false,
+  injectStyles: false,
   disableMinimize: false,
-  disableSourceMap: {
-    js: false,
-    css: undefined,
+  sourceMap: {
+    js: undefined,
+    css: false,
   },
   disableFilenameHash: false,
-  disableCssModuleExtension: false,
-  disableInlineRuntimeChunk: false,
-  enableAssetFallback: false,
-  enableAssetManifest: false,
-  enableLatestDecorators: false,
   enableCssModuleTSDeclaration: false,
-  enableInlineScripts: false,
-  enableInlineStyles: false,
+  inlineScripts: false,
+  inlineStyles: false,
   cssModules: {
+    auto: true,
     exportLocalsConvention: 'camelCase',
   },
 });
 
 export async function outputInspectConfigFiles({
   rsbuildConfig,
+  rawRsbuildConfig,
   bundlerConfigs,
   inspectOptions,
-  rsbuildOptions,
   configType,
 }: {
   configType: string;
-  rsbuildConfig: string;
+  rsbuildConfig: NormalizedConfig;
+  rawRsbuildConfig: string;
   bundlerConfigs: string[];
   inspectOptions: InspectConfigOptions & {
     outputPath: string;
   };
-  rsbuildOptions: Required<CreateRsbuildOptions>;
 }) {
   const { outputPath } = inspectOptions;
 
-  const { target } = rsbuildOptions;
   const files = [
     {
-      path: join(outputPath, 'rsbuild.config.js'),
+      path: join(outputPath, 'rsbuild.config.mjs'),
       label: 'Rsbuild Config',
-      content: rsbuildConfig,
+      content: rawRsbuildConfig,
     },
     ...bundlerConfigs.map((content, index) => {
-      const suffix = Array.isArray(target) ? target[index] : target;
-      const outputFile = `${configType}.config.${suffix}.js`;
+      const suffix = rsbuildConfig.output.targets[index];
+      const outputFile = `${configType}.config.${suffix}.mjs`;
       let outputFilePath = join(outputPath, outputFile);
 
       // if filename is conflict, add a random id to the filename.
-      if (fs.existsSync(outputFilePath)) {
-        outputFilePath = outputFilePath.replace(/\.js$/, `.${Date.now()}.js`);
+      if (fse.existsSync(outputFilePath)) {
+        outputFilePath = outputFilePath.replace(/\.mjs$/, `.${Date.now()}.mjs`);
       }
 
       return {
         path: outputFilePath,
-        label: `${_.upperFirst(configType)} Config (${suffix})`,
+        label: `${upperFirst(configType)} Config (${suffix})`,
         content,
       };
     }),
@@ -177,14 +189,16 @@ export async function outputInspectConfigFiles({
 
   await Promise.all(
     files.map((item) =>
-      fs.outputFile(item.path, `module.exports = ${item.content}`),
+      fse.outputFile(item.path, `export default ${item.content}`),
     ),
   );
 
   const fileInfos = files
     .map(
       (item) =>
-        `  - ${chalk.bold.yellow(item.label)}: ${chalk.underline(item.path)}`,
+        `  - ${color.bold(color.yellow(item.label))}: ${color.underline(
+          item.path,
+        )}`,
     )
     .join('\n');
 
@@ -203,53 +217,8 @@ export type GetTypeByPath<
 > = T extends `${infer K}[${infer P}]${infer S}`
   ? GetTypeByPath<`${K}.${P}${S}`, C>
   : T extends `${infer K}.${infer P}`
-  ? GetTypeByPath<P, K extends '' ? C : NonNullable<C[K]>>
-  : C[T];
-
-export const setConfig = <T extends Record<string, any>, P extends string>(
-  config: T,
-  path: P,
-  value: GetTypeByPath<P, T>,
-) => {
-  _.set(config, path, value);
-};
-
-export function getExtensions({
-  target = 'web',
-  resolveExtensionPrefix,
-  isTsProject,
-}: {
-  target?: RsbuildTarget;
-  resolveExtensionPrefix?: NormalizedSourceConfig['resolveExtensionPrefix'];
-  isTsProject?: boolean;
-} = {}) {
-  let extensions = [
-    // only resolve .ts(x) files if it's a ts project
-    // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
-    ...(isTsProject ? ['.ts', '.tsx'] : []),
-    '.js',
-    '.jsx',
-    '.mjs',
-    '.json',
-  ];
-
-  // add an extra prefix to all extensions
-  if (resolveExtensionPrefix) {
-    const extensionPrefix =
-      typeof resolveExtensionPrefix === 'string'
-        ? resolveExtensionPrefix
-        : resolveExtensionPrefix[target];
-
-    if (extensionPrefix) {
-      extensions = extensions.reduce<string[]>(
-        (ret, ext) => [...ret, extensionPrefix + ext, ext],
-        [],
-      );
-    }
-  }
-
-  return extensions;
-}
+    ? GetTypeByPath<P, K extends '' ? C : NonNullable<C[K]>>
+    : C[T];
 
 type MinifyOptions = NonNullable<Parameters<typeof minify>[1]>;
 
@@ -257,7 +226,7 @@ export async function getMinify(isProd: boolean, config: NormalizedConfig) {
   if (config.output.disableMinimize || !isProd) {
     return false;
   }
-  const minifyJS: MinifyOptions = (await getJSMinifyOptions(config))
+  const minifyJS: MinifyOptions = (await getTerserMinifyOptions(config))
     .terserOptions!;
 
   return {
@@ -275,28 +244,8 @@ export async function getMinify(isProd: boolean, config: NormalizedConfig) {
   };
 }
 
-export function getTitle(entryName: string, config: { html: HtmlConfig }) {
-  const { title, titleByEntries } = config.html;
-  return titleByEntries?.[entryName] || title || '';
-}
-
-export function getInject(entryName: string, config: { html: HtmlConfig }) {
-  const { inject, injectByEntries } = config.html;
-  return injectByEntries?.[entryName] || inject || true;
-}
-
-export function getFavicon(
-  entryName: string,
-  config: {
-    html: HtmlConfig;
-  },
-) {
-  const { favicon, faviconByEntries } = config.html;
-  return faviconByEntries?.[entryName] || favicon;
-}
-
 export async function stringifyConfig(config: unknown, verbose?: boolean) {
-  const { default: WebpackChain } = await import('webpack-chain');
+  const { default: WebpackChain } = await import('../compiled/webpack-chain');
 
   // webpackChain.toString can be used as a common stringify method
   const stringify = WebpackChain.toString as (
@@ -375,13 +324,13 @@ export const pickRsbuildConfig = (
 ): RsbuildConfig => {
   const keys: Array<keyof RsbuildConfig> = [
     'dev',
+    'server',
     'html',
     'tools',
     'source',
     'output',
     'security',
     'performance',
-    'experiments',
   ];
   return pick(rsbuildConfig, keys);
 };

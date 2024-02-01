@@ -1,9 +1,8 @@
-import { fs } from '@rsbuild/shared/fs-extra';
-import { chalk } from '@rsbuild/shared/chalk';
+import { fse, color } from '@rsbuild/shared';
 import { SourceMapConsumer } from 'source-map';
 import { checkIsExcludeSource } from './utils';
 import {
-  SyntaxError,
+  ECMASyntaxError,
   type AcornParseError,
   type CheckSyntaxExclude,
 } from '../types';
@@ -13,7 +12,7 @@ export function displayCodePointer(code: string, pos: number) {
   const start = Math.max(pos - SUB_LEN / 2, 0);
   const subCode = code.slice(start, start + SUB_LEN);
   const arrowPos = pos - start;
-  const arrowLine = chalk.yellow('^'.padStart(arrowPos + 11, ' '));
+  const arrowLine = color.yellow('^'.padStart(arrowPos + 11, ' '));
   return `${subCode}\n${arrowLine}`;
 }
 
@@ -38,7 +37,7 @@ export async function generateError({
 
   if (!error) {
     const path = filepath.replace(rootPath, '');
-    error = new SyntaxError(err.message, {
+    error = new ECMASyntaxError(err.message, {
       source: {
         path,
         line: err.loc.line,
@@ -63,10 +62,10 @@ export function makeCodeFrame(lines: string[], highlightIndex: number) {
   for (let i = startLine; i < endLine; i++) {
     if (i === highlightIndex) {
       const lineNumber = `> ${i + 1}`.padStart(6, ' ');
-      ret.push(chalk.yellow(`${lineNumber} | ${lines[i]}`));
+      ret.push(color.yellow(`${lineNumber} | ${lines[i]}`));
     } else {
       const lineNumber = ` ${i + 1}`.padStart(6, ' ');
-      ret.push(chalk.gray(`${lineNumber} | ${lines[i]}`));
+      ret.push(color.gray(`${lineNumber} | ${lines[i]}`));
     }
   }
 
@@ -81,14 +80,14 @@ async function tryGenerateErrorFromSourceMap({
   err: AcornParseError;
   filepath: string;
   rootPath: string;
-}): Promise<SyntaxError | null> {
+}): Promise<ECMASyntaxError | null> {
   const sourceMapPath = `${filepath}.map`;
-  if (!fs.existsSync(sourceMapPath)) {
+  if (!fse.existsSync(sourceMapPath)) {
     return null;
   }
 
   try {
-    const sourcemap = await fs.readFile(sourceMapPath, 'utf-8');
+    const sourcemap = await fse.readFile(sourceMapPath, 'utf-8');
     const consumer = await new SourceMapConsumer(sourcemap);
     const sm = consumer.originalPositionFor({
       line: err.loc.line,
@@ -112,7 +111,7 @@ async function tryGenerateErrorFromSourceMap({
     const rawLines = smContent.split(/\r?\n/g);
     const highlightLine = (sm.line ?? 1) - 1;
 
-    return new SyntaxError(err.message, {
+    return new ECMASyntaxError(err.message, {
       source: {
         path,
         line: sm.line ?? 0,

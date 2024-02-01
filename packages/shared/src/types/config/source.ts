@@ -1,22 +1,23 @@
-import type { RsbuildTarget } from '../rsbuild';
-import type { ModifyChainUtils } from '../hooks';
-import type { ChainedConfig, JSONValue } from '../utils';
+import type { RsbuildEntry } from '../rsbuild';
+import type { ChainedConfig } from '../utils';
+import type { RuleSetCondition } from '@rspack/core';
 
-export type Alias = Record<string, string | string[]>;
+export type Alias = Record<string, string | false | (string | false)[]>;
 
 // Use a loose type to compat webpack
 export type Define = Record<string, any>;
 
-export type MainFields = (string | string[])[];
-
-export type GlobalVars = Record<string, JSONValue>;
-
-export type ChainedGlobalVars = ChainedConfig<
-  GlobalVars,
-  Pick<ModifyChainUtils, 'env' | 'target'>
->;
-
 export type AliasStrategy = 'prefer-tsconfig' | 'prefer-alias';
+
+export type Decorators = {
+  /**
+   * Specify the version of decorators to use.
+   * @default 'legacy''
+   */
+  version?:
+    | 'legacy' // stage 1
+    | '2022-03'; // stage 3
+};
 
 export interface SourceConfig {
   /**
@@ -34,11 +35,15 @@ export interface SourceConfig {
    * In order to maintain faster compilation speed, Rsbuild will not compile files under node_modules through
    * `babel-loader` or `ts-loader` by default, as will as the files outside the current project directory.
    */
-  include?: (string | RegExp)[];
+  include?: RuleSetCondition[];
+  /**
+   * Set the entry modules.
+   */
+  entry?: RsbuildEntry;
   /**
    * Specifies that certain files that will be excluded from compilation.
    */
-  exclude?: (string | RegExp)[];
+  exclude?: RuleSetCondition[];
   /**
    * Add a script before the entry file of each page.
    * This script will be executed before the page code.
@@ -46,33 +51,25 @@ export interface SourceConfig {
    */
   preEntry?: string | string[];
   /**
-   * Define global variables. It can replace expressions like `process.env.FOO` in your code after compile.
-   */
-  globalVars?: ChainedGlobalVars;
-  /**
-   * Whether to compile JavaScript code imported via Data URI.
-   */
-  compileJsDataURI?: boolean;
-  /**
-   * This configuration will determine which field of `package.json` you use to import the `npm` module.
-   * Same as the [resolve.mainFields](https://webpack.js.org/configuration/resolve/#resolvemainfields) config of webpack.
-   */
-  resolveMainFields?: MainFields | Partial<Record<RsbuildTarget, MainFields>>;
-  /**
-   * Add a prefix to [resolve.extensions](https://webpack.js.org/configuration/resolve/#resolveextensions).
-   */
-  resolveExtensionPrefix?: string | Partial<Record<RsbuildTarget, string>>;
-  /**
    * Used to replaces variables in your code with other values or expressions at compile time.
    */
   define?: Define;
   /**
-   * Used to import the code and style of the component library on demand
+   * Configuring decorators syntax.
    */
-  transformImport?: false | SharedTransformImport[];
+  decorators?: Decorators;
+  /**
+   * Used to import the code and style of the component library on demand.
+   */
+  transformImport?: false | TransformImport[];
+  /**
+   * Configure a custom tsconfig.json file path to use, can be a relative or absolute path.
+   * @default 'tsconfig.json'
+   */
+  tsconfigPath?: string;
 }
 
-export type SharedTransformImport = {
+export type TransformImport = {
   libraryName: string;
   libraryDirectory?: string;
   style?: string | boolean;
@@ -90,6 +87,5 @@ export interface NormalizedSourceConfig extends SourceConfig {
   alias: ChainedConfig<Alias>;
   aliasStrategy: AliasStrategy;
   preEntry: string[];
-  globalVars: ChainedGlobalVars;
-  compileJsDataURI: boolean;
+  decorators: Required<Decorators>;
 }

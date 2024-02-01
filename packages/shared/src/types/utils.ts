@@ -1,10 +1,8 @@
-export type JSONPrimitive = string | number | boolean | null | undefined;
+import type WebpackChain from '../../compiled/webpack-chain';
 
-export type JSONArray = Array<JSONValue>;
+export type { WebpackChain };
 
-export type JSONObject = { [key: string]: JSONValue };
-
-export type JSONValue = JSONPrimitive | JSONObject | JSONArray;
+export type Falsy = false | null | undefined;
 
 export type ArrayOrNot<T> = T | T[];
 
@@ -12,11 +10,16 @@ export type PromiseOrNot<T> = T | Promise<T>;
 
 export type NodeEnv = 'development' | 'production' | 'test';
 
-export type ChainedConfig<Config, Utils = unknown> = ArrayOrNot<
-  | Config
-  | (keyof Utils extends never
-      ? (config: Config) => Config | void
-      : (config: Config, utils: Utils) => Config | void)
+export type ChainedConfig<Config> = ArrayOrNot<
+  Config | ((config: Config) => Config | void)
+>;
+
+export type ChainedConfigWithUtils<Config, Utils> = ArrayOrNot<
+  Config | ((config: Config, utils: Utils) => Config | void)
+>;
+
+export type ChainedConfigCombineUtils<Config, Utils> = ArrayOrNot<
+  Config | ((params: { value: Config } & Utils) => Config | void)
 >;
 
 export type DeepReadonly<T> = keyof T extends never
@@ -30,15 +33,12 @@ export type SharedCompiledPkgNames =
   | 'less'
   | 'css-loader'
   | 'postcss-loader'
-  | 'postcss-pxtorem'
   | 'postcss-flexbugs-fixes'
   | 'autoprefixer'
   | 'sass-loader'
+  | 'style-loader'
   | 'less-loader'
-  | 'node-loader'
-  | 'toml-loader'
   | 'yaml-loader'
-  | 'assetsRetry.js'
   | 'resolve-url-loader';
 
 export type CompilerTapFn<

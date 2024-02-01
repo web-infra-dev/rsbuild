@@ -1,8 +1,16 @@
-import { DefaultRsbuildPlugin } from '@rsbuild/shared';
-import { JS_REGEX, TS_REGEX, mergeRegex } from '@rsbuild/shared';
-import { cloneDeep } from 'lodash';
-import { applyUserBabelConfig, type BabelConfig } from './helper';
+import path from 'node:path';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import {
+  isProd,
+  castArray,
+  cloneDeep,
+  SCRIPT_REGEX,
+  type Decorators,
+} from '@rsbuild/shared';
+import { applyUserBabelConfig, BABEL_JS_RULE } from './helper';
 import type { PluginBabelOptions } from './types';
+
+export const PLUGIN_BABEL_NAME = 'rsbuild:babel';
 
 /**
  * The `@babel/preset-typescript` default options.
@@ -17,89 +25,92 @@ export const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
   isTSX: true,
 };
 
+export const getDefaultBabelOptions = (decorators: Decorators) => {
+  return {
+    babelrc: false,
+    configFile: false,
+    compact: isProd(),
+    plugins: [
+      [require.resolve('@babel/plugin-proposal-decorators'), decorators],
+    ],
+    presets: [
+      // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
+      [
+        require.resolve('@babel/preset-typescript'),
+        DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS,
+      ],
+    ],
+  };
+};
+
 export const pluginBabel = (
   options: PluginBabelOptions = {},
-): DefaultRsbuildPlugin => ({
-  name: 'plugin-babel',
+): RsbuildPlugin => ({
+  name: PLUGIN_BABEL_NAME,
 
   setup(api) {
-    if (api.context.bundlerType === 'webpack') {
-      return;
-    }
+    api.modifyBundlerChain({
+      order: 'pre',
+      handler: async (chain, { CHAIN_ID }) => {
+        const config = api.getNormalizedConfig();
+        const getBabelOptions = () => {
+          const baseConfig = getDefaultBabelOptions(config.source.decorators);
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
-      const getBabelOptions = () => {
-        // 1. Create babel utils function about include/exclude,
-        const includes: Array<string | RegExp> = [];
-        const excludes: Array<string | RegExp> = [];
+          const userBabelConfig = applyUserBabelConfig(
+            cloneDeep(baseConfig),
+            options.babelLoaderOptions,
+          );
 
-        const babelUtils = {
-          addIncludes(items: string | RegExp | Array<string | RegExp>) {
-            if (Array.isArray(items)) {
-              includes.push(...items);
-            } else {
-              includes.push(items);
-            }
-          },
-          addExcludes(items: string | RegExp | Array<string | RegExp>) {
-            if (Array.isArray(items)) {
-              excludes.push(...items);
-            } else {
-              excludes.push(items);
-            }
-          },
+          return userBabelConfig;
         };
 
-        const baseConfig = {
-          plugins: [],
-          presets: [
-            // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
-            [
-              require.resolve('@babel/preset-typescript'),
-              DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS,
-            ],
-          ],
-        };
-
-        const userBabelConfig = applyUserBabelConfig(
-          cloneDeep(baseConfig),
-          options,
-          babelUtils,
+        const babelOptions = getBabelOptions();
+        const babelLoader = path.resolve(
+          __dirname,
+          '../compiled/babel-loader/index.js',
         );
+        const { include, exclude } = options;
 
-        const babelOptions: BabelConfig = {
-          babelrc: false,
-          configFile: false,
-          compact: isProd,
-          ...userBabelConfig,
-        };
+        if (include || exclude) {
+          const rule = chain.module.rule(BABEL_JS_RULE);
 
-        return {
-          babelOptions,
-          includes,
-          excludes,
-        };
-      };
+          if (include) {
+            castArray(include).forEach((condition) => {
+              rule.include.add(condition);
+            });
+          }
+          if (exclude) {
+            castArray(exclude).forEach((condition) => {
+              rule.exclude.add(condition);
+            });
+          }
 
-      const { babelOptions, includes = [], excludes = [] } = getBabelOptions();
+          const swcRule = chain.module.rules
+            .get(CHAIN_ID.RULE.JS)
+            .use(CHAIN_ID.USE.SWC);
+          const swcLoader = swcRule.get('loader');
+          const swcOptions = swcRule.get('options');
 
-      // already set source.include / exclude in plugin-swc
-      const rule = chain.module.rule(CHAIN_ID.RULE.JS);
-
-      includes.forEach((condition) => {
-        rule.include.add(condition);
-      });
-
-      excludes.forEach((condition) => {
-        rule.exclude.add(condition);
-      });
-
-      rule
-        .test(mergeRegex(JS_REGEX, TS_REGEX))
-        .use(CHAIN_ID.USE.BABEL)
-        .after(CHAIN_ID.USE.SWC)
-        .loader(require.resolve('babel-loader'))
-        .options(babelOptions);
+          rule
+            .test(SCRIPT_REGEX)
+            .use(CHAIN_ID.USE.SWC)
+            .loader(swcLoader)
+            .options(swcOptions)
+            .end()
+            .use(CHAIN_ID.USE.BABEL)
+            .loader(babelLoader)
+            .options(babelOptions);
+        } else {
+          // already set source.include / exclude in plugin-swc
+          const rule = chain.module.rule(CHAIN_ID.RULE.JS);
+          rule
+            .test(SCRIPT_REGEX)
+            .use(CHAIN_ID.USE.BABEL)
+            .after(CHAIN_ID.USE.SWC)
+            .loader(babelLoader)
+            .options(babelOptions);
+        }
+      },
     });
   },
 });

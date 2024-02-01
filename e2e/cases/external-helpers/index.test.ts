@@ -1,14 +1,22 @@
-import path from 'path';
-import { build } from '@scripts/shared';
-import { providerType } from '@scripts/helper';
+import path from 'node:path';
+import { build, providerType } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginSwc } from '@rsbuild/plugin-swc';
 
 test('should externalHelpers by default', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/main.ts') },
     plugins: providerType === 'rspack' ? [] : [pluginSwc()],
+    rsbuildConfig: {
+      source: {
+        entry: { index: path.resolve(__dirname, './src/main.ts') },
+      },
+      output: {
+        sourceMap: {
+          js: 'source-map',
+        },
+      },
+    },
   });
   const files = await rsbuild.unwrapOutputJSON(false);
 

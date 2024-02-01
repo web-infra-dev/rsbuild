@@ -1,16 +1,11 @@
-import path from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
-import json5 from 'json5';
-import { PACKAGE_JSON, RUSH_JSON_FILE } from './constants';
+import path from 'node:path';
+import { fse } from '@rsbuild/shared';
+import json5 from '@rsbuild/shared/json5';
+import { RUSH_JSON_FILE } from './constants';
 import type { INodePackageJson, IRushConfig } from './types';
 
 export const readPackageJson = async (pkgJsonFilePath: string) => {
-  const packageJson = readJson<INodePackageJson>(
-    pkgJsonFilePath.includes(PACKAGE_JSON)
-      ? pkgJsonFilePath
-      : path.join(pkgJsonFilePath, PACKAGE_JSON),
-  );
-  return packageJson;
+  return readJson<INodePackageJson>(pkgJsonFilePath);
 };
 
 export const readRushJson = async (rushJsonFilePath: string) => {
@@ -23,11 +18,11 @@ export const readRushJson = async (rushJsonFilePath: string) => {
 };
 
 export const readJson = async <T>(jsonFileAbsPath: string) => {
-  if (!(await fs.pathExists(jsonFileAbsPath))) {
+  if (!(await fse.pathExists(jsonFileAbsPath))) {
     return {} as T;
   }
 
-  const content = await fs.readFile(jsonFileAbsPath, 'utf-8');
+  const content = await fse.readFile(jsonFileAbsPath, 'utf-8');
   const json: T = json5.parse(content);
   return json;
 };

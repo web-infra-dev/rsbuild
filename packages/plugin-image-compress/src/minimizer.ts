@@ -1,17 +1,17 @@
-import { Buffer } from 'buffer';
+import { Buffer } from 'node:buffer';
 import type { webpack } from '@rsbuild/webpack';
 import Codecs from './shared/codecs';
 import type { FinalOptions } from './types';
 
-export const MODERN_JS_IMAGE_MINIMIZER_PLUGIN_NAME =
+export const IMAGE_MINIMIZER_PLUGIN_NAME =
   '@rsbuild/plugin-image-compress/minimizer' as const;
 
 export interface MinimizedResult {
   source: webpack.sources.RawSource;
 }
 
-export class ModernJsImageMinimizerPlugin {
-  name = MODERN_JS_IMAGE_MINIMIZER_PLUGIN_NAME;
+export class ImageMinimizerPlugin {
+  name = IMAGE_MINIMIZER_PLUGIN_NAME;
 
   options: FinalOptions;
 
@@ -24,17 +24,22 @@ export class ModernJsImageMinimizerPlugin {
     compilation: webpack.Compilation,
     assets: Record<string, webpack.sources.Source>,
   ): Promise<void> {
-    const cache = compilation.getCache(MODERN_JS_IMAGE_MINIMIZER_PLUGIN_NAME);
+    const cache = compilation.getCache(IMAGE_MINIMIZER_PLUGIN_NAME);
     const { RawSource } = compiler.webpack.sources;
     const { matchObject } = compiler.webpack.ModuleFilenameHelpers;
+
     const buildError = (error: unknown, file?: string, context?: string) => {
       const cause = error instanceof Error ? error : new Error();
       const message =
         file && context
-          ? `"${file}" in "${context}" from Modern.js Image Minimizer:\n${cause.message}`
+          ? `"${file}" in "${context}" from Image Minimizer:\n${cause.message}`
           : cause.message;
       const ret = new compiler.webpack.WebpackError(message);
-      error instanceof Error && ((ret as any).error = error);
+
+      if (error instanceof Error) {
+        (ret as any).error = error;
+      }
+
       return ret;
     };
 
@@ -48,10 +53,11 @@ export class ModernJsImageMinimizerPlugin {
 
     const handleAsset = async (name: string) => {
       const info = compilation.getAsset(name)?.info;
+      const fileName = name.split('?')[0];
 
       // 1. Skip double minimize assets from child compilation
       // 2. Test file by options (e.g. test, include, exclude)
-      if (info?.minimized || !matchObject(opts, name)) {
+      if (info?.minimized || !matchObject(opts, fileName)) {
         return;
       }
 
@@ -59,7 +65,7 @@ export class ModernJsImageMinimizerPlugin {
 
       const eTag = cache.getLazyHashedEtag(inputSource);
       const cacheItem = cache.getItemCache(name, eTag);
-      let result = await cacheItem.getPromise<MinimizedResult | void>();
+      let result = await cacheItem.getPromise<MinimizedResult | undefined>();
 
       try {
         if (!result) {

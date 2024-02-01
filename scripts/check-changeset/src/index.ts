@@ -1,6 +1,6 @@
-import path from 'path';
+import path from 'node:path';
 import readChangesets from '@changesets/read';
-import { getPackages, Package } from '@manypkg/get-packages';
+import { getPackages, type Package } from '@manypkg/get-packages';
 
 type VersionType = 'major' | 'minor' | 'patch' | 'none';
 type Release = {
@@ -37,9 +37,10 @@ function validatePackagePeerDependencies(packages: Package[]) {
     Object.keys(peerDependencies).forEach((dep) => {
       const depPkg = packages.find((pkg) => pkg.packageJson.name === dep);
       if (depPkg) {
-        if (
-          peerDependencies[dep] !== `workspace:^${depPkg.packageJson.version}`
-        ) {
+        const version = peerDependencies[dep];
+        const isInvalid =
+          version !== `workspace:^${depPkg.packageJson.version}`;
+        if (isInvalid) {
           throw Error(
             `${packageJson.name}'s peerDependencies ${dep} version is not right, expect "workspace:^${depPkg.packageJson.version}"`,
           );

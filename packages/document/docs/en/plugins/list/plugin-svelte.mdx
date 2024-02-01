@@ -1,0 +1,100 @@
+# Svelte Plugin
+
+The Svelte plugin provides support for Svelte components (`.svelte` files). The plugin internally integrates [svelte-loader](https://github.com/sveltejs/svelte-loader).
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-svelte -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginSvelte } from '@rsbuild/plugin-svelte';
+
+export default {
+  plugins: [pluginSvelte()],
+};
+```
+
+After registering the plugin, you can directly import `*.svelte` files in your code.
+
+## Options
+
+If you need to customize the compilation behavior of Svelte, you can use the following configs.
+
+### svelteLoaderOptions
+
+Options passed to `svelte-loader`, please refer to the [svelte-loader documentation](https://github.com/sveltejs/svelte-loader) for detailed usage.
+
+- **Type:** `Object`
+- **Default:**
+
+```js
+const defaultOptions = {
+  compilerOptions: {
+    dev: isDev,
+  },
+  preprocess: require('svelte-preprocess')(),
+  emitCss: !rsbuildConfig.output.injectStyles,
+  hotReload: isDev && rsbuildConfig.dev.hmr,
+};
+```
+
+- **Example:**
+
+```ts
+pluginSvelte({
+  svelteLoaderOptions: {
+    preprocess: null,
+  },
+});
+```
+
+### preprocessOptions
+
+Options passed to `svelte-preprocess`, please refer to the [svelte-preprocess documentation](https://github.com/sveltejs/svelte-preprocess/blob/c2107e529da9438ea5b8060aa471119940896e40/docs/preprocessing.md) for detailed usage.
+
+- **Type:** `AutoPreprocessOptions`
+- **Default:** `undefined`
+
+```ts
+interface AutoPreprocessOptions {
+  globalStyle: { ... },
+  replace: { ... },
+  typescript: { ... },
+  scss: { ... },
+  sass: { ... },
+  less: { ... },
+  stylus: { ... },
+  babel: { ... },
+  postcss: { ... },
+  coffeescript: { ... },
+  pug: { ... },
+}
+```
+
+- **Example:**
+
+```ts
+pluginSvelte({
+  preprocessOptions: {
+    aliases: [
+      ['potato', 'potatoLanguage'],
+      ['pot', 'potatoLanguage'],
+    ],
+    /** Add a custom language preprocessor */
+    potatoLanguage({ content, filename, attributes }) {
+      const { code, map } = require('potato-language').render(content);
+      return { code, map };
+    },
+  },
+});
+```

@@ -1,12 +1,10 @@
-import path from 'path';
-import { expect } from '@playwright/test';
-import { webpackOnlyTest } from '@scripts/helper';
-import { build } from '@scripts/shared';
+import { test, expect } from '@playwright/test';
+import { build } from '@e2e/helper';
 
-webpackOnlyTest('should compile const enum correctly', async () => {
+// TODO not supported yet
+test.skip('should compile const enum correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.ts') },
     rsbuildConfig: {
       output: {
         polyfill: 'off',

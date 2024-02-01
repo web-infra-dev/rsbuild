@@ -1,4 +1,4 @@
-import { Buffer } from 'buffer';
+import { Buffer } from 'node:buffer';
 import {
   compressJpeg,
   losslessCompressPng,
@@ -6,14 +6,14 @@ import {
   Transformer,
 } from '@napi-rs/image';
 import svgo from 'svgo';
-import { Codec, Codecs } from '../types';
+import type { Codec, Codecs } from '../types';
 
 export const jpegCodec: Codec<'jpeg'> = {
   handler(buf, options) {
     return compressJpeg(buf, options);
   },
   defaultOptions: {
-    test: /\.(jpg|jpeg)$/,
+    test: /\.(?:jpg|jpeg)$/,
   },
 };
 
@@ -40,7 +40,7 @@ export const icoCodec: Codec<'ico'> = {
     return new Transformer(buf).ico();
   },
   defaultOptions: {
-    test: /\.(ico|icon)$/,
+    test: /\.(?:ico|icon)$/,
   },
 };
 

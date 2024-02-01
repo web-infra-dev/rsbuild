@@ -1,0 +1,105 @@
+# printUrls
+
+- **类型：**
+
+```ts
+type Routes = Array<{
+  entryName: string;
+  pathname: string;
+}>;
+
+type PrintUrls =
+  | boolean
+  | ((params: {
+      urls: string[];
+      port: number;
+      routes: Routes;
+      protocol: string;
+    }) => string[] | void);
+```
+
+- **默认值：** `true`
+
+是否输出 server 的 URL 地址。
+
+默认情况下，当你启动 dev server 或 preview server 后，Rsbuild 会输出以下日志信息：
+
+```text
+> Local:    http://localhost:8080
+> Network:  http://192.168.0.1:8080
+```
+
+## 自定义日志
+
+`server.printUrls` 可以设置为一个函数，函数的入参包括 `port`，`protocol`、`urls` 和 `routes`。
+
+### 修改 URL
+
+如果 `printUrls` 函数返回了一组新的 URLs，那么 Rsbuild 将会把这组 URLs 按照默认格式输出到 terminal：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ urls }) {
+      return urls.map((url) => `${url}/base`);
+    },
+  },
+};
+```
+
+输出为：
+
+```text
+> Local:    http://localhost:8080/base/
+> Network:  http://192.168.0.1:8080/base/
+```
+
+### 完全自定义
+
+如果 `printUrls` 函数没有返回值，Rsbuild 将不会输出 server 的 URL 地址，你可以基于入参来自定义日志内容，并自行输出到 terminal。
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ urls, port, protocol }) {
+      console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
+      console.log(port); // 8080
+      console.log(protocol); // 'http' or 'https'
+    },
+  },
+};
+```
+
+### 多页面输出
+
+如果当前项目包含多个页面，你可以基于 `routes` 参数，为每个页面单独输出一份 URL。
+
+比如项目包含 `index` 和 `detail` 两个页面时，routes 的内容如下：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ routes }) {
+      /**
+       * [
+       *   { entryName: 'index', pathname: '/' },
+       *   { entryName: 'detail', pathname: '/detail' }
+       * ]
+       */
+      console.log(routes);
+    },
+  },
+};
+```
+
+## 禁用输出
+
+将 `server.printUrls` 设置为 `false`，Rsbuild 将不会输出 server 的 URL 地址。
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls: false,
+  },
+};
+```

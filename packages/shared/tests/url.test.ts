@@ -1,12 +1,27 @@
-import { withPublicPath } from '../src/url';
+import { withPublicPath, normalizeUrl } from '../src/url';
 
 const PUBLIC_PATH = 'https://www.example.com/static';
+
+it('normalizeUrl', () => {
+  expect(normalizeUrl('https://www.example.com/static//a')).toBe(
+    'https://www.example.com/static/a',
+  );
+
+  expect(normalizeUrl('https://www.example.com/static/a')).toBe(
+    'https://www.example.com/static/a',
+  );
+
+  expect(normalizeUrl('https://www.example.com/static/')).toBe(
+    'https://www.example.com/static/',
+  );
+});
 
 describe('withPublicPath', () => {
   it('should handle relative url', () => {
     expect(withPublicPath('foo/bar.js', PUBLIC_PATH)).toBe(
       'https://www.example.com/static/foo/bar.js',
     );
+    expect(withPublicPath('foo/bar.js', '')).toBe('foo/bar.js');
     expect(withPublicPath('foo/bar.js', '/')).toBe('/foo/bar.js');
     expect(withPublicPath('/foo/bar.js', PUBLIC_PATH)).toBe(
       'https://www.example.com/static/foo/bar.js',

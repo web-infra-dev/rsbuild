@@ -6,6 +6,10 @@
   "plugin-vue-jsx",
   "plugin-vue2",
   "plugin-vue2-jsx",
+  "plugin-preact",
+  "plugin-svelte",
+  "plugin-solid",
+  "plugin-assets-retry",
   "plugin-babel",
   "plugin-type-check",
   "plugin-image-compress",
@@ -15,5 +19,9 @@
   "plugin-styled-components",
   "plugin-check-syntax",
   "plugin-css-minimizer",
-  "plugin-pug"
+  "plugin-pug",
+  "plugin-rem",
+  "plugin-umd",
+  "plugin-yaml",
+  "plugin-toml"
 ]

@@ -1,10 +1,10 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginStylus } from '../src';
 
 describe('plugin-stylus', () => {
   it('should add stylus loader config correctly', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginStylus() as any],
+      plugins: [pluginStylus()],
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
@@ -18,7 +18,7 @@ describe('plugin-stylus', () => {
           stylusOptions: {
             lineNumbers: false,
           },
-        }) as any,
+        }),
       ],
     });
     const bundlerConfigs = await rsbuild.initConfigs();

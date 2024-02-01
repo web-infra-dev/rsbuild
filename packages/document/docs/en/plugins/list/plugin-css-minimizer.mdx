@@ -4,15 +4,19 @@ The Rsbuild by default uses the SWC built-in by Rspack to minify CSS code. You c
 
 The CSS Minimizer plugin internally integrates [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
 
+:::tip About cssnano
+[cssnano](https://cssnano.co/) is a tool for optimizing and minifying CSS files. It reduces the size of CSS files by removing unused rules, merging similar rules, removing comments and whitespace, and converting length units, among other techniques, to improve the loading speed of websites.
+:::
+
 ## Quick Start
 
 ### Install Plugin
 
 You can install the plugin using the following command:
 
-```bash
-npm install @rsbuild/plugin-css-minimizer -D
-```
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-css-minimizer -D" />
 
 ### Register Plugin
 
@@ -25,8 +29,6 @@ export default {
   plugins: [pluginCssMinimizer()],
 };
 ```
-
-If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
 
 ## Options
 

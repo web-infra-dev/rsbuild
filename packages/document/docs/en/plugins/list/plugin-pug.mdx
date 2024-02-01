@@ -24,8 +24,6 @@ export default {
 };
 ```
 
-If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
-
 ### Using Pug Templates
 
 After the plugin registration is completed, Rsbuild will automatically parse template files with the `.pug` extension and compile them using the Pug template engine.
@@ -51,6 +49,30 @@ p Hello #{text}!
 ```
 
 Please refer to the [Pug documentation](https://pugjs.org/) for a complete understanding of Pug's usage.
+
+### Using in Vue
+
+When using Vue, you can use Pug syntax in the template of `.vue` files:
+
+```vue title="App.vue"
+<template lang="pug">
+button.my-button(@click='count++') Count is: {{ count }}
+</template>
+
+<script>
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    const count = ref(0);
+
+    return {
+      count,
+    };
+  },
+};
+</script>
+```
 
 ## Options
 

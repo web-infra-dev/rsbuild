@@ -1,8 +1,0 @@
-{
-  "name": "@e2e/source-build-app-ts-loader",
-  "private": true,
-  "version": "1.0.0",
-  "dependencies": {
-    "@e2e/source-build-common": "workspace:*"
-  }
-}

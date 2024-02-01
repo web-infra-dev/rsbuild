@@ -1,19 +1,39 @@
-import { deepmerge } from '@rsbuild/shared/deepmerge';
+import { deepmerge } from '@rsbuild/shared';
 import { VueLoaderPlugin } from 'vue-loader';
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { VueLoaderOptions } from 'vue-loader';
+import { applySplitChunksRule } from './splitChunks';
 
-export type PluginVueOptions = {
-  vueLoaderOptions?: VueLoaderOptions;
+export type SplitVueChunkOptions = {
+  /**
+   * Whether to enable split chunking for Vue-related dependencies (e.g., vue, vue-loader).
+   * @default true
+   */
+  vue?: boolean;
+  /**
+   * Whether to enable split chunking for vue-router.
+   * @default true
+   */
+  router?: boolean;
 };
 
-export function pluginVue(
-  options: PluginVueOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> {
-  return {
-    name: 'plugin-vue',
+export type PluginVueOptions = {
+  /**
+   * Options passed to `vue-loader`.
+   * @see https://vue-loader.vuejs.org/
+   */
+  vueLoaderOptions?: VueLoaderOptions;
+  /**
+   * This option is used to control the split chunks behavior.
+   */
+  splitChunks?: SplitVueChunkOptions;
+};
 
-    async setup(api) {
+export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
+  return {
+    name: 'rsbuild:vue',
+
+    setup(api) {
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
         return mergeRsbuildConfig(config, {
           source: {
@@ -21,6 +41,7 @@ export function pluginVue(
               // https://link.vuejs.org/feature-flags
               __VUE_OPTIONS_API__: true,
               __VUE_PROD_DEVTOOLS__: false,
+              __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
             },
           },
         });
@@ -48,6 +69,8 @@ export function pluginVue(
 
         chain.plugin(CHAIN_ID.PLUGIN.VUE_LOADER_PLUGIN).use(VueLoaderPlugin);
       });
+
+      applySplitChunksRule(api, options.splitChunks);
     },
   };
 }

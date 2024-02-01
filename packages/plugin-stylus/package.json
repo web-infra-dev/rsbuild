@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-stylus",
-  "version": "0.0.12",
+  "version": "0.3.11",
   "description": "Stylus plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -9,14 +9,16 @@
     "directory": "packages/plugin-stylus"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
       "default": "./dist/index.js"
     }
   },
   "main": "./dist/index.js",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -26,28 +28,22 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "stylus": "0.59.0",
-    "stylus-loader": "7.1.0"
+    "stylus": "0.62.0",
+    "stylus-loader": "7.1.3"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/test-helper": "workspace:*",
+    "@scripts/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "typescript": "^5.2.2",
+    "typescript": "^5.3.0",
     "webpack": "^5.89.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.0.12"
-  },
-  "peerDependenciesMeta": {
-    "@rsbuild/core": {
-      "optional": true
-    }
+    "@rsbuild/core": "workspace:^0.3.11"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "https://registry.npmjs.org/",
-    "types": "./dist/index.d.ts"
+    "registry": "https://registry.npmjs.org/"
   }
 }

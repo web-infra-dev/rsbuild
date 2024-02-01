@@ -1,14 +1,10 @@
----
-extractApiHeaders: [2]
----
-
 # Rsbuild Types
 
 本章节描述了 Rsbuild 提供的一些类型定义。
 
 ## RsbuildInstance
 
-Rsbuild 实例的类型。
+Rsbuild 实例的类型，对应 [createRsbuild](/api/javascript-api/core#creatersbuild) 方法的返回值。
 
 ```ts
 import type { RsbuildInstance } from '@rsbuild/core';
@@ -16,26 +12,89 @@ import type { RsbuildInstance } from '@rsbuild/core';
 let rsbuild: RsbuildInstance;
 ```
 
-## Context
+## RsbuildConfig
 
-Rsbuild 实例中 context 属性的类型定义。
+Rsbuild 配置的类型。
 
 ```ts
-import type { Context } from '@rsbuild/core';
+import type { RsbuildConfig } from '@rsbuild/core';
 
-const context: Context = rsbuild.context;
+const config: RsbuildConfig = {
+  // ...
+};
+```
+
+你也可以引用 Rsbuild 配置中各个字段的类型定义：
+
+```ts
+import type {
+  DevConfig,
+  HtmlConfig,
+  ToolsConfig,
+  SourceConfig,
+  OutputConfig,
+  SecurityConfig,
+  PerformanceConfig,
+} from '@rsbuild/core';
+```
+
+## NormalizedConfig
+
+Rsbuild 配置归一化后的类型，对应 [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) 方法的返回值。
+
+```ts
+import type { NormalizedConfig } from '@rsbuild/core';
+
+const config: NormalizedConfig = api.getNormalizedConfig();
+```
+
+你也可以引用归一化后的 Rsbuild 配置中各个字段的类型定义：
+
+```ts
+import type {
+  NormalizedDevConfig,
+  NormalizedHtmlConfig,
+  NormalizedToolsConfig,
+  NormalizedSourceConfig,
+  NormalizedOutputConfig,
+  NormalizedSecurityConfig,
+  NormalizedPerformanceConfig,
+} from '@rsbuild/core';
+```
+
+## RsbuildContext
+
+Rsbuild 实例中 [context 属性](/api/javascript-api/instance#rsbuildcontext)的类型定义。
+
+```ts
+import type { RsbuildContext } from '@rsbuild/core';
+
+const context: RsbuildContext = rsbuild.context;
 ```
 
 ## RsbuildPlugin
 
-Rsbuild 插件的类型，需要配合 provider 中提供的 `RsbuildPluginAPI` 类型来使用。
+Rsbuild 插件的类型。
 
 ```ts
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
-const myPlugin: RsbuildPlugin<RsbuildPluginAPI> = {
+const myPlugin: RsbuildPlugin = {
   name: 'my-plugin',
   setup() {},
+};
+```
+
+## RsbuildPluginAPI
+
+Rsbuild 插件中，setup 函数传入的 api 对象的类型。
+
+```ts
+import type { RsbuildPluginAPI } from '@rsbuild/core';
+
+const myPlugin = {
+  name: 'my-plugin',
+  setup(api: RsbuildPluginAPI) {},
 };
 ```
 
@@ -47,18 +106,18 @@ Rsbuild 构建产物的类型。
 import type { RsbuildTarget } from '@rsbuild/core';
 ```
 
-## RsbuildEntry
-
-对应 `createRsbuild` 方法的 `entry` 选项的类型。
-
-```ts
-import type { RsbuildEntry } from '@rsbuild/core';
-```
-
 ## CreateRsbuildOptions
 
-对应 `createRsbuild` 方法的入参类型。
+[createRsbuild](/api/javascript-api/core#creatersbuild) 方法的入参类型。
 
 ```ts
 import type { CreateRsbuildOptions } from '@rsbuild/core';
+```
+
+## InspectConfigOptions
+
+[rsbuild.inspectConfig](/api/javascript-api/instance#rsbuildinspectconfig) 方法的入参类型。
+
+```ts
+import type { InspectConfigOptions } from '@rsbuild/core';
 ```

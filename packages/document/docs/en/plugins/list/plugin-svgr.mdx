@@ -1,8 +1,8 @@
-# Svgr Plugin
+# SVGR Plugin
 
-By default, Rsbuild will treat SVG files as static resources. For processing rules, please refer to: [Import Static Assets](/guide/basic/static-assets.html)。
+By default, Rsbuild will treat SVG files as static assets. For processing rules, please refer to: [Import Static Assets](/guide/basic/static-assets)。
 
-With Svgr plugin, Rsbuild supports convert SVG to React components via [SVGR](https://react-svgr.com/).
+With SVGR plugin, Rsbuild supports convert SVG to React components via [SVGR](https://react-svgr.com/).
 
 ## Quick Start
 
@@ -25,8 +25,6 @@ export default {
   plugins: [pluginSvgr()],
 };
 ```
-
-If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
 
 ## Example
 
@@ -55,26 +53,63 @@ If you need to customize the compilation behavior of Svgr, you can use the follo
 ```ts
 type PluginSvgrOptions = {
   /**
+   * Configure SVGR options.
+   */
+  svgrOptions?: import('@svgr/core').Config;
+
+  /**
    * Configure the default export type of SVG files.
    */
   svgDefaultExport?: 'component' | 'url';
 };
 ```
 
+### svgrOptions
+
+Modify the options of SVGR, the passed object will be deep merged with the default value. See [SVGR - Options](https://react-svgr.com/docs/options/) for details.
+
+- **Type:** `import('@svgr/core').Config`
 - **Default:**
 
 ```ts
-{
-  svgDefaultExport: 'component';
-}
+const defaultSvgrOptions = {
+  svgo: true,
+  svgoConfig: {
+    plugins: [
+      {
+        name: 'preset-default',
+        params: {
+          overrides: {
+            removeViewBox: false,
+          },
+        },
+      },
+      'prefixIds',
+    ],
+  },
+};
+```
+
+- **Example:**
+
+```ts
+pluginSvgr({
+  svgrOptions: {
+    svgoConfig: {
+      datauri: 'base64',
+    },
+  },
+});
 ```
 
 ### svgDefaultExport
 
+Modify the default export type of SVG files.
+
 - **Type:** `'component' | 'url'`
 - **Default:** `'url'`
 
-Modify the default export type of SVG files. For example, set the default export as a React component:
+For example, set the default export as a React component:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -102,7 +137,7 @@ import logo from './logo.svg?url';
 console.log(logo); // => asset url
 ```
 
-## Add type declaration
+## Type Declaration
 
 When you reference an SVG asset in TypeScript code, TypeScript may prompt that the module is missing a type definition:
 
@@ -110,14 +145,13 @@ When you reference an SVG asset in TypeScript code, TypeScript may prompt that t
 TS2307: Cannot find module './logo.svg' or its corresponding type declarations.
 ```
 
-To fix this, you need to add a type declaration file for the SVG asset, please create a `src/global.d.ts` file, and add the following type declaration:
+To fix this, you need to add a type declaration file for the SVG asset, please create a `src/env.d.ts` file, and add the following type declaration:
 
 ```ts
 declare module '*.svg' {
   export const ReactComponent: React.FunctionComponent<
     React.SVGProps<SVGSVGElement>
   >;
-
   const content: string;
   export default content;
 }
@@ -130,52 +164,8 @@ declare module '*.svg' {
   export const ReactComponent: React.FunctionComponent<
     React.SVGProps<SVGSVGElement>
   >;
-
   export default ReactComponent;
 }
 ```
 
-After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `global.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
-
-## Modify the SVGR configuration
-
-When [SVGR](https://react-svgr.com/) is enabled, its default configuration is as follows:
-
-```js
-{
-  svgo: true,
-  svgoConfig: {
-    plugins: [
-      {
-        name: 'preset-default',
-        params: {
-          overrides: {
-            removeViewBox: false,
-          },
-        },
-      },
-      'prefixIds',
-    ],
-  },
-}
-```
-
-If you need to modify the SVGR configuration, you can do the following:
-
-```js
-export default {
-  tools: {
-    bundlerChain: (chain, { CHAIN_ID }) => {
-      chain.module
-        .rule(CHAIN_ID.RULE.SVG)
-        .oneOf(CHAIN_ID.ONE_OF.SVG)
-        .use(CHAIN_ID.USE.SVGR)
-        .tap((options) => {
-          // modify svgoConfig
-          options.svgoConfig.plugins[0].params.overrides.removeUselessDefs = false;
-          return options;
-        });
-    },
-  },
-};
-```
+After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `env.d.ts` is located, making sure the TypeScript can correctly identify the type definition.

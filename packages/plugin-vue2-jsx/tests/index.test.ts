@@ -1,13 +1,11 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
-import { webpackProvider } from '@rsbuild/webpack';
-import { pluginBabel } from '@rsbuild/webpack/plugin-babel';
+import { createStubRsbuild } from '@scripts/test-helper';
+import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginVue2Jsx } from '../src';
 
 describe('plugin-vue2-jsx', () => {
   it('should apply jsx babel plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginVue2Jsx(), pluginBabel()],
-      provider: webpackProvider,
       rsbuildConfig: {},
     });
     const config = await rsbuild.unwrapConfig();
@@ -25,7 +23,6 @@ describe('plugin-vue2-jsx', () => {
         }),
         pluginBabel(),
       ],
-      provider: webpackProvider,
       rsbuildConfig: {},
     });
     const config = await rsbuild.unwrapConfig();

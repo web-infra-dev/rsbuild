@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-css-minimizer",
-  "version": "0.0.12",
+  "version": "0.3.11",
   "description": "CSS minimizer for Rsbuild",
   "repository": {
     "type": "git",
@@ -8,14 +8,16 @@
     "directory": "packages/plugin-css-minimizer"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
       "default": "./dist/index.js"
     }
   },
   "main": "./dist/index.js",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -29,15 +31,17 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/test-helper": "workspace:*",
+    "@scripts/test-helper": "workspace:*",
     "@types/lodash": "^4.14.200",
-    "@types/node": "^16",
-    "typescript": "^5.2.2"
+    "@types/node": "16.x",
+    "typescript": "^5.3.0"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": "workspace:^0.3.11"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "https://registry.npmjs.org/",
-    "types": "./dist/index.d.ts"
+    "registry": "https://registry.npmjs.org/"
   }
 }

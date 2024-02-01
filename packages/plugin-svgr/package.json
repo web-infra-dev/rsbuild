@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-svgr",
-  "version": "0.0.12",
+  "version": "0.3.11",
   "description": "svgr plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -8,16 +8,19 @@
     "directory": "packages/plugin-svgr"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
       "default": "./dist/index.js"
     }
   },
   "main": "./dist/index.js",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "compiled"
   ],
   "scripts": {
     "build": "modern build",
@@ -25,19 +28,23 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@svgr/webpack": "8.0.1",
-    "url-loader": "4.1.1"
+    "@rsbuild/plugin-react": "workspace:*",
+    "@svgr/core": "8.1.0",
+    "@svgr/plugin-jsx": "8.1.0",
+    "@svgr/plugin-svgo": "8.1.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/test-helper": "workspace:*",
-    "@types/node": "^16",
-    "typescript": "^5.2.2"
+    "@scripts/test-helper": "workspace:*",
+    "@types/node": "16.x",
+    "typescript": "^5.3.0"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": "workspace:^0.3.11"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "https://registry.npmjs.org/",
-    "types": "./dist/index.d.ts"
+    "registry": "https://registry.npmjs.org/"
   }
 }

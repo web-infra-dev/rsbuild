@@ -1,17 +1,13 @@
-import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 
 test('output.charset default (ascii)', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
   expect(await page.evaluate('window.a')).toBe('你好 world!');
 
   const files = await rsbuild.unwrapOutputJSON();
@@ -25,15 +21,12 @@ test('output.charset default (ascii)', async ({ page }) => {
     content.toLocaleLowerCase().includes('\\u4f60\\u597d world!'),
   ).toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('output.charset (utf8)', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.js'),
-    },
     rsbuildConfig: {
       output: {
         charset: 'utf8',
@@ -42,7 +35,7 @@ test('output.charset (utf8)', async ({ page }) => {
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
   expect(await page.evaluate('window.a')).toBe('你好 world!');
 
   const files = await rsbuild.unwrapOutputJSON();
@@ -53,5 +46,5 @@ test('output.charset (utf8)', async ({ page }) => {
 
   expect(content.includes('你好 world!')).toBeTruthy();
 
-  rsbuild.close();
+  await rsbuild.close();
 });

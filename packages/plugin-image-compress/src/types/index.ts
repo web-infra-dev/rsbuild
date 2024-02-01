@@ -1,5 +1,5 @@
-import type { Buffer } from 'buffer';
-import {
+import type { Buffer } from 'node:buffer';
+import type {
   JpegCompressOptions,
   PNGLosslessOptions,
   PngQuantOptions,
@@ -16,9 +16,7 @@ export interface CodecBaseOptions {
   jpeg: JpegCompressOptions;
   png: PngQuantOptions;
   pngLossless: PNGLosslessOptions;
-  ico: {
-    /* empty */
-  };
+  ico: Record<string, never>;
   svg: SvgoConfig;
 }
 

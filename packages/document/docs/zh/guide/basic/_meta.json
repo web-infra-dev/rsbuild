@@ -1,13 +1,16 @@
 [
-  "config",
   "cli",
+  "server",
   "output-files",
   "css-usage",
   "static-assets",
   "json-files",
   "wasm-assets",
   "configure-rspack",
+  "configure-rsbuild",
   "html-template",
   "css-modules",
-  "typescript"
+  "typescript",
+  "tailwindcss",
+  "unocss"
 ]

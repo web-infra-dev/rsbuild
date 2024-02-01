@@ -1,43 +1,36 @@
-import { join } from 'path';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
-test('should inline style when disableCssExtract is false', async ({
-  page,
-}) => {
+test('should inline style when injectStyles is true', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
-        disableCssExtract: true,
+        injectStyles: true,
       },
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
-  // disableCssExtract worked
+  // injectStyles worked
   const files = await rsbuild.unwrapOutputJSON();
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
   expect(cssFiles.length).toBe(0);
 
   // should inline minified css
-  const mainJsFile = Object.keys(files).find(
-    (file) => file.includes('main.') && file.endsWith('.js'),
+  const indexJsFile = Object.keys(files).find(
+    (file) => file.includes('index.') && file.endsWith('.js'),
   )!;
-  expect(
-    files[mainJsFile].includes(
-      'body,html{margin:0;padding:0}*{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;box-sizing:border-box}',
-    ),
-  ).toBeTruthy();
+
+  expect(files[indexJsFile].includes('padding: 0;')).toBeTruthy();
+  expect(files[indexJsFile].includes('margin: 0;')).toBeTruthy();
+  expect(files[indexJsFile].includes('text-align: center;')).toBeTruthy();
 
   // scss worked
   const header = page.locator('#header');
@@ -47,5 +40,5 @@ test('should inline style when disableCssExtract is false', async ({
   const title = page.locator('#header');
   await expect(title).toHaveCSS('font-size', '20px');
 
-  rsbuild.close();
+  await rsbuild.close();
 });

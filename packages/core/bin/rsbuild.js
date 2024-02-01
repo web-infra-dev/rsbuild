@@ -1,22 +1,14 @@
 #!/usr/bin/env node
-const { logger } = require('rslog');
+const { prepareCli } = require('../dist/cli/prepare');
 
 async function main() {
-  const { version } = require('../package.json');
-
-  // If not called through a package manager,
-  // output a blank line to keep the greet log nice.
-  const { npm_execpath } = process.env;
-  if (!npm_execpath || npm_execpath.includes('npx-cli.js')) {
-    console.log();
-  }
-
-  logger.greet(`  ${`Rsbuild v${version}`}\n`);
+  prepareCli();
 
   try {
-    const { runCli } = require('@rsbuild/core/cli');
-    await runCli();
+    const { runCli } = require('../dist/cli/commands');
+    runCli();
   } catch (err) {
+    const { logger } = require('@rsbuild/shared/rslog');
     logger.error(err);
   }
 }

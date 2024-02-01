@@ -5,7 +5,7 @@ Rsbuild optimizes build performance by default, but as the project becomes large
 This document provides some optional speed-up strategies, developers can choose some of them to improve the build performance.
 
 :::tip 📢 Notice
-The strategies in [Bundle Size Optimization](/guide/optimization/optimize-bundle.html) can also be used to improve build performance, so we won't repeat them here.
+The strategies in [Bundle Size Optimization](/guide/optimization/optimize-bundle) can also be used to improve build performance, so we won't repeat them here.
 :::
 
 ## General optimization strategy
@@ -42,7 +42,7 @@ The following are strategies for improve build performance in development enviro
 
 ### Adjust Source Map format
 
-In order to provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format Source Map by default in the development environment, which is a high-quality Source Map format and will bring certain performance overhead.
+In order to provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format Source Map by default during development, which is a high-quality Source Map format and will bring certain performance overhead.
 
 You can improve build speed by adjusting the source map format of your development environment.
 
@@ -50,11 +50,9 @@ For example to disable Source Map:
 
 ```js
 export default {
-  tools: {
-    bundlerChain(chain, { env }) {
-      if (env === 'development') {
-        chain.devtool(false);
-      }
+  output: {
+    sourceMap: {
+      js: false,
     },
   },
 };
@@ -64,11 +62,9 @@ Or set the source map format of the development environment to the cheapest `eva
 
 ```js
 export default {
-  tools: {
-    bundlerChain(chain, { env }) {
-      if (env === 'development') {
-        chain.devtool('eval');
-      }
+  output: {
+    sourceMap: {
+      js: process.env.NODE_ENV === 'development' ? 'eval' : false,
     },
   },
 };
@@ -78,9 +74,9 @@ export default {
 
 ### Adjust Browserslist for development
 
-This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle.html#adjust-browserslist), the difference is that we can set different browserslist for development and production environment, thereby reducing the compilation overhead in the development environment.
+This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist), the difference is that we can set different browserslist for development and production environment, thereby reducing the compilation overhead during development.
 
-For example, you can add the following config to `package.json`, which means that only the latest browsers are compatible in the development environment, and the actual browsers are compatible in the production environment:
+For example, you can add the following config to `package.json`, which means that only the latest browsers are compatible during development, and the actual browsers are compatible in the production environment:
 
 ```json
 {
@@ -96,21 +92,3 @@ For example, you can add the following config to `package.json`, which means tha
 ```
 
 Note that this strategy can lead to some differences in the build result of development production environment.
-
-## Production optimization strategies
-
-The following are strategies for improve build performance in production environment.
-
-### Disable Source Map
-
-If your project does not need Source Map in the production, you can turn it off through the `disableSourceMap` config to improve the build speed.
-
-```js
-export default {
-  output: {
-    disableSourceMap: true,
-  },
-};
-```
-
-See [output.disableSourceMap](/config/options/output.html#outputdisablesourcemap) for details.

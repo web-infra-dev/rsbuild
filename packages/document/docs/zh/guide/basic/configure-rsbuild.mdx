@@ -1,0 +1,228 @@
+# 配置 Rsbuild
+
+Rsbuild 提供了丰富的配置项，并为每个配置项预设了一个通用的默认值，它可以满足大部分使用场景。因此，在大多数情况下，你不需要声明任何 Rsbuild 配置，直接开箱使用即可。
+
+如果你需要定制一些构建行为，那么可以这些配置项。
+
+## 配置结构
+
+Rsbuild 的配置结构如下所示：
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    // 与本地开发有关的选项
+  },
+  html: {
+    // 与 HTML 有关的选项
+  },
+  tools: {
+    // 与底层工具有关的选项
+  },
+  server: {
+    // 与 Rsbuild 服务器有关的选项，在本地开发和预览时都会生效
+  },
+  source: {
+    // 与源代码解析、编译方式相关的选项
+  },
+  output: {
+    // 与构建产物有关的选项
+  },
+  performance: {
+    // 与构建性能、运行时性能有关的选项
+  },
+  security: {
+    // 与安全有关的选项
+  },
+};
+```
+
+你可以在 [Config 总览](/config/) 页面找到所有配置项的详细说明。
+
+## 使用配置
+
+当你使用 Rsbuild 的 CLI 命令时，Rsbuild 会自动读取当前项目根目录下的配置文件，按照以下顺序进行解析：
+
+- rsbuild.config.ts
+- rsbuild.config.js
+- rsbuild.config.mjs
+- rsbuild.config.cjs
+- rsbuild.config.mts
+- rsbuild.config.cts
+
+我们推荐使用 `.ts` 格式的配置文件，并从 `@rsbuild/core` 中导入 `defineConfig` 工具函数, 它提供了友好的 TypeScript 类型推导和自动补全，可以帮助你避免配置中的错误。
+
+比如在 `rsbuild.config.ts` 中，你可以定义 Rsbuild 的 [source.alias](/config/source/alias) 配置：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  source: {
+    alias: {
+      '@common': './src/common',
+    },
+  },
+});
+```
+
+如果你在开发一个非 TypeScript 项目，可以使用 `.mjs` 格式的配置文件：
+
+```js title="rsbuild.config.mjs"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  source: {
+    alias: (opts) => {
+      opts['@common'] = './src/common';
+    },
+  },
+});
+```
+
+:::tip
+Rsbuild 使用 [jiti](https://github.com/unjs/jiti) 来加载配置文件，提供 ESM 与 CommonJS 的互操作性，模块解析的行为与 Node.js 原生行为存在一定差异。
+:::
+
+## 指定配置文件
+
+Rsbuild CLI 通过 `--config` 选项来指定配置文件，可以设置为相对路径或绝对路径。
+
+例如，你需要在执行 `build` 命令时使用 `rsbuild.prod.config.ts` 文件，可以在 `package.json` 中添加如下配置：
+
+```json title="package.json"
+{
+  "scripts": {
+    "build": "rsbuild build --config rsbuild.prod.config.ts"
+  }
+}
+```
+
+你也可以将 `--config` 选项缩写为 `-c`：
+
+```bash
+rsbuild build -c rsbuild.prod.config.js
+```
+
+## 使用环境变量
+
+在配置文件中，你可以使用 `process.env.NODE_ENV` 等 Node.js 环境变量，来动态写入不同的配置：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  source: {
+    alias: {
+      '@request':
+        process.env.NODE_ENV === 'development'
+          ? './src/request.dev.js'
+          : './src/request.prod.js',
+    },
+  },
+});
+```
+
+## 导出配置函数
+
+Rsbuild 支持在配置文件中导出一个函数，你可以在函数中动态计算配置，并返回给 Rsbuild。
+
+```js title="rsbuild.config.js"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig(({ env, command, envMode }) => ({
+  source: {
+    alias: {
+      '@foo': env === 'development' ? './src/foo.dev.ts' : './src/foo.prod.ts',
+    },
+  },
+}));
+```
+
+:::tip
+导出的配置函数必须提供一个返回值，如果你不需要返回任何配置，可以 return 一个空对象。
+:::
+
+该函数接受以下入参：
+
+### env
+
+- **类型：** `string`
+- **默认值：** `process.env.NODE_ENV`
+
+当前运行的环境。
+
+- 运行 `rsbuild dev` 时，env 的默认值为 `development`。
+- 运行 `rsbuild build` 或 `rsbuild preview` 时，env 的默认值为 `production`。
+
+### envMode
+
+- **类型：** `string`
+- **默认值：** `process.env.NODE_ENV`
+
+CLI 参数 `--env-mode` 当前的值。
+
+比如，当运行 `rsbuild build --env-mode test` 时，`envMode` 的值为 `test`。
+
+### command
+
+- **类型：** `string`
+
+当前运行的 CLI 命令，如 `dev`、`build`、`preview`。
+
+## 导出异步函数
+
+Rsbuild 也支持在配置文件中导出一个异步函数，你可以在函数中进行一些异步操作：
+
+```js title="rsbuild.config.js"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig(async ({ env, command }) => {
+  const result = await someAsyncFunction();
+
+  return {
+    html: {
+      title: result,
+    },
+  };
+});
+```
+
+## 合并配置
+
+你可以使用 `@rspack/core` 导出的 [mergeRsbuildConfig](/api/javascript-api/core#mergersbuildconfig) 函数来合并多个配置。
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, mergeRsbuildConfig } from '@rsbuild/core';
+
+const config1 = defineConfig({
+  dev: { port: '8080' },
+});
+const config2 = defineConfig({
+  dev: { port: '8081' },
+});
+
+// { dev: { port: '8081' }
+export default mergeRsbuildConfig(config1, config2);
+```
+
+## 调试配置
+
+在执行构建时，你可以添加 `DEBUG=rsbuild` 环境变量来开启 Rsbuild 的调试模式。
+
+```bash
+DEBUG=rsbuild pnpm dev
+```
+
+在调试模式下，Rsbuild 会将内部最终生成的 Rsbuild 配置写入到产物目录下，便于开发者查看和调试。
+
+```
+Inspect config succeed, open following files to view the content:
+
+  - Rsbuild Config: /Project/demo/dist/rsbuild.config.mjs
+  - Rspack Config (web): /Project/demo/dist/rspack.config.web.mjs
+```
+
+打开生成的 `/dist/rsbuild.config.mjs` 文件，即可查看 Rsbuild 配置的完整内容。
+
+关于调试模式的完整介绍，请查看 [开启调试模式](/guide/debug/debug-mode) 章节。

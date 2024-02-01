@@ -1,0 +1,18 @@
+# exclude
+
+- **Type:** [RuleSetCondition[]](https://rspack.dev/config/module#condition)
+- **Default:** `[]`
+
+Specifies JavaScript/TypeScript files that do not need to be compiled. The usage is consistent with [Rule.exclude](https://rspack.dev/config/module#ruleexclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
+
+For example:
+
+```js
+import path from 'node:path';
+
+export default {
+  source: {
+    exclude: [path.resolve(__dirname, 'src/module-a'), /src\/module-b/],
+  },
+};
+```

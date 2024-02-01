@@ -1,14 +1,18 @@
-import path from 'path';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 test('should emit multiple css files correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      entry1: path.resolve(__dirname, './src/entry1/index.js'),
-      entry2: path.resolve(__dirname, './src/entry2/index.js'),
-      entry3: path.resolve(__dirname, './src/entry3/index.js'),
+    rsbuildConfig: {
+      source: {
+        entry: {
+          entry1: path.resolve(__dirname, './src/entry1/index.js'),
+          entry2: path.resolve(__dirname, './src/entry2/index.js'),
+          entry3: path.resolve(__dirname, './src/entry3/index.js'),
+        },
+      },
     },
   });
 

@@ -15,13 +15,11 @@ export const generateBaseConfig = (
   } = options;
 
   if (presetEnv) {
-    const isTest = process.env.NODE_ENV === 'test';
-
     config.presets?.push([
       require.resolve('@babel/preset-env'),
       {
         // Jest only supports commonjs
-        modules: isTest ? 'commonjs' : false,
+        modules: process.env.NODE_ENV === 'test' ? 'commonjs' : false,
         exclude: ['transform-typeof-symbol'],
         ...presetEnv,
       },

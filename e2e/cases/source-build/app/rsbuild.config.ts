@@ -1,8 +1,8 @@
 import { defineConfig } from '@rsbuild/core';
-import { webpackProvider } from '@rsbuild/webpack';
 import { pluginSourceBuild } from '@rsbuild/plugin-source-build';
+import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
-  provider: webpackProvider,
-  plugins: [pluginSourceBuild()],
+  plugins: [pluginSourceBuild(), pluginReact(), pluginTypeCheck()],
 });

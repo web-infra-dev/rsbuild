@@ -1,17 +1,34 @@
-import { logger, type Logger } from 'rslog';
-import chalk from 'chalk';
+import { logger, type Logger } from '../compiled/rslog';
+import { color } from './utils';
 
-export const isDebug = () =>
-  process.env.DEBUG === 'rsbuild' ||
-  // the legacy usage
-  process.env.DEBUG === 'builder';
+// setup the logger level
+if (process.env.DEBUG) {
+  logger.level = 'verbose';
+}
+
+export const isDebug = () => {
+  if (!process.env.DEBUG) {
+    return false;
+  }
+
+  const values = process.env.DEBUG.toLocaleLowerCase().split(',');
+  return ['rsbuild', 'builder', '*'].some((key) => values.includes(key));
+};
+
+function getTime() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+
+  return `${hours}:${minutes}:${seconds}`;
+}
 
 export const debug = (message: string | (() => string)) => {
   if (isDebug()) {
-    const { performance } = require('perf_hooks');
     const result = typeof message === 'string' ? message : message();
-    const time = chalk.gray(`[${performance.now().toFixed(2)} ms]`);
-    console.error(`${chalk.yellow.bold('debug')}   ${result} ${time}`);
+    const time = color.gray(`${getTime()}`);
+    logger.debug(`${time} ${result}`);
   }
 };
 

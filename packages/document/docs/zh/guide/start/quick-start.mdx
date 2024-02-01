@@ -2,9 +2,32 @@
 
 ## 环境准备
 
-import NodeVersion from '@zh/shared/nodeVersion.md';
+在开始使用前，你需要安装 [Node.js](https://nodejs.org/)，并保证 Node.js 版本不低于 16，**我们推荐使用 Node.js 18 的 LTS 版本**。
 
-<NodeVersion />
+你可以通过以下命令检查当前使用的 Node.js 版本：
+
+```bash
+node -v
+```
+
+如果你当前的环境中尚未安装 Node.js，或是安装的版本低于 16，可以通过 [nvm](https://github.com/nvm-sh/nvm) 或 [fnm](https://github.com/Schniz/fnm) 安装需要的版本。
+
+下面是通过 nvm 安装 Node.js 18 LTS 版本的例子：
+
+```bash
+# 安装 Node.js 18 的长期支持版本
+nvm install 18 --lts
+
+# 将刚安装的 Node.js 18 设置为默认版本
+nvm alias default 18
+
+# 切换到刚安装的 Node.js 18
+nvm use 18
+```
+
+:::tip nvm 和 fnm
+nvm 和 fnm 都是 Node.js 版本管理工具。相对来说，nvm 较为成熟和稳定，而 fnm 是使用 Rust 实现的，比 nvm 提供了更好的性能。
+:::
 
 ## 创建 Rsbuild 项目
 
@@ -14,13 +37,33 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="create rsbuild@latest" />
 
-然后按照提示操作即可。
+然后按照提示操作即可，你可以选择 `create-rsbuild` 提供的下列模板：
+
+| 模板    | 描述                            | 可选功能   |
+| ------- | ------------------------------- | ---------- |
+| react   | [React 18](https://react.dev/)  | TypeScript |
+| vue3    | [Vue 3](https://vuejs.org/)     | TypeScript |
+| vue2    | [Vue 2](https://v2.vuejs.org/)  | TypeScript |
+| lit     | [Lit](https://lit.dev/)         | TypeScript |
+| preact  | [Preact](https://preactjs.com/) | TypeScript |
+| svelte  | [Svelte](https://svelte.dev/)   | TypeScript |
+| solid   | [Solid](https://solidjs.com/)   | TypeScript |
+| vanilla | 原生 JavaScript                 | TypeScript |
+
+## 从现有项目迁移
+
+如果你需要从一个现有项目迁移迁移到 Rsbuild，可以参考以下指南：
+
+- [从 Webpack 迁移](/guide/migration/webpack)
+- [从 Create React App 迁移](/guide/migration/cra)
+- [从 Vue CLI 迁移](/guide/migration/vue-cli)
+- [从 Modern.js Builder 迁移](/guide/migration/modern-builder)
 
 ## 命令行工具
 
 Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令。
 
-```json
+```json title="package.json"
 {
   "scripts": {
     // 启动开发服务器
@@ -35,38 +78,9 @@ Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令�
 
 请参考 [CLI 工具](/guide/basic/cli) 来了解所有可用的命令以及选项。
 
-## 构建入口
+## 入口模块
 
-Rsbuild CLI 默认会使用 `src/index.(js|ts|jsx|tsx)` 作为构建入口，你可以使用 `source.entries` 配置项来修改构建入口。
-
-- **类型：**
-
-```ts
-type Entries = Record<string, string>;
-```
-
-- **默认值：**
-
-```ts
-const defaultEntry = {
-  index: 'src/index.(js|ts|jsx|tsx)',
-};
-```
-
-- **示例：**
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
-  source: {
-    entries: {
-      foo: './src/pages/foo/index.ts',
-      bar: './src/pages/bar/index.ts',
-    },
-  },
-});
-```
+Rsbuild CLI 默认会使用 `src/index.(js|ts|jsx|tsx)` 作为入口模块，你可以使用 [source.entry](/config/source/entry) 配置项来修改入口模块。
 
 ## 下一步
 
@@ -77,17 +91,17 @@ import Step from '@components/Step';
 
 <NextSteps>
   <Step
-    href="/guide/start/features.html"
+    href="/guide/start/features"
     title="功能导航"
     description="了解 Rsbuild 提供的所有功能"
   />
   <Step
-    href="/guide/basic/config.html"
+    href="/guide/basic/configure-rsbuild"
     title="查阅配置"
     description="了解如何配置 Rsbuild"
   />
   <Step
-    href="/guide/start/glossary.html"
+    href="/guide/start/glossary"
     title="名词解释"
     description="了解 Rsbuild 相关的概念"
   />

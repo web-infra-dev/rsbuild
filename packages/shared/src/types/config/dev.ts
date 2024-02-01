@@ -1,9 +1,23 @@
 import type { ArrayOrNot } from '../utils';
-
-export type DevServerHttpsOptions = boolean | { key: string; cert: string };
+import type { IncomingMessage, ServerResponse } from 'node:http';
 
 export type ProgressBarConfig = {
   id?: string;
+};
+
+export type NextFunction = () => void;
+
+export type RequestHandler = (
+  req: IncomingMessage,
+  res: ServerResponse,
+  next: NextFunction,
+) => void;
+
+export type ServerAPIs = {
+  sockWrite: (
+    type: string,
+    data?: string | boolean | Record<string, any>,
+  ) => void;
 };
 
 export interface DevConfig {
@@ -12,13 +26,9 @@ export interface DevConfig {
    */
   hmr?: boolean;
   /**
-   * Specify a port number for Dev Server to listen.
+   * Whether to reload the page when file changes are detected.
    */
-  port?: number;
-  /**
-   * After configuring this option, you can enable HTTPS Dev Server, and disabling the HTTP Dev Server.
-   */
-  https?: DevServerHttpsOptions;
+  liveReload?: boolean;
   /**
    * Used to set the page URL to open automatically when the Dev Server starts.
    * By default, no page will be opened.
@@ -30,7 +40,7 @@ export interface DevConfig {
    */
   beforeStartUrl?: ArrayOrNot<() => Promise<void> | void>;
   /**
-   * Set the URL prefix of static assets in the development environment,
+   * Set the URL prefix of static assets during development,
    * similar to the [output.publicPath](https://webpack.js.org/guides/public-path/) config of webpack.
    */
   assetPrefix?: string | boolean;
@@ -38,11 +48,32 @@ export interface DevConfig {
    * Whether to display progress bar during compilation.
    */
   progressBar?: boolean | ProgressBarConfig;
+
+  /** config of hmr client. */
+  client?: {
+    path?: string;
+    port?: string;
+    host?: string;
+    protocol?: string;
+  };
+  /** Provides the ability to execute a custom function and apply custom middlewares */
+  setupMiddlewares?: Array<
+    (
+      /** Order: `unshift` => internal middlewares => `push` */
+      middlewares: {
+        /** Use the `unshift` method if you want to run a middleware before all other middlewares */
+        unshift: (...handlers: RequestHandler[]) => void;
+        /** Use the `push` method if you want to run a middleware after all other middlewares */
+        push: (...handlers: RequestHandler[]) => void;
+      },
+      server: ServerAPIs,
+    ) => void
+  >;
   /**
-   * Used to set the host of Dev Server.
+   * Used to control whether the build artifacts of the development environment are written to the disk.
    */
-  host?: string;
+  writeToDisk?: boolean | ((filename: string) => boolean);
 }
 
 export type NormalizedDevConfig = DevConfig &
-  Required<Omit<DevConfig, 'beforeStartUrl'>>;
+  Required<Pick<DevConfig, 'hmr' | 'liveReload' | 'startUrl' | 'assetPrefix'>>;

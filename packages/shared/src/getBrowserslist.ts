@@ -1,4 +1,5 @@
-import browserslist from 'browserslist';
+import { getNodeEnv } from './utils';
+import browserslist from '../compiled/browserslist';
 import { DEFAULT_BROWSERSLIST } from './constants';
 import type { RsbuildTarget, OverrideBrowserslist } from './types';
 
@@ -6,14 +7,17 @@ import type { RsbuildTarget, OverrideBrowserslist } from './types';
 const browsersListCache = new Map<string, string[]>();
 
 export async function getBrowserslist(path: string) {
-  if (browsersListCache.has(path)) {
-    return browsersListCache.get(path)!;
+  const env = getNodeEnv();
+  const cacheKey = path + env;
+
+  if (browsersListCache.has(cacheKey)) {
+    return browsersListCache.get(cacheKey)!;
   }
 
-  const result = browserslist.loadConfig({ path });
+  const result = browserslist.loadConfig({ path, env });
 
   if (result) {
-    browsersListCache.set(path, result);
+    browsersListCache.set(cacheKey, result);
     return result;
   }
 

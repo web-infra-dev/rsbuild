@@ -1,11 +1,9 @@
-import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 test('should emit app icon to dist path', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       html: {
         appIcon: './src/icon.png',
@@ -29,7 +27,6 @@ test('should emit app icon to dist path', async () => {
 test('should apply asset prefix to app icon URL', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       html: {
         appIcon: './src/icon.png',

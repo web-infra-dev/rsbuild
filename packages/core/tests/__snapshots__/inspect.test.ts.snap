@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`inspectConfig > should print plugin names when inspect config 1`] = `
+[
+  "rsbuild:transition",
+  "rsbuild:basic",
+  "rsbuild:entry",
+  "rsbuild:target",
+  "rsbuild:output",
+  "rsbuild:resolve",
+  "rsbuild:file-size",
+  "rsbuild:clean-output",
+  "rsbuild:asset",
+  "rsbuild:html",
+  "rsbuild:wasm",
+  "rsbuild:moment",
+  "rsbuild:node-addons",
+  "rsbuild:define",
+  "rsbuild:css",
+  "rsbuild:less",
+  "rsbuild:sass",
+  "rsbuild:minimize",
+  "rsbuild:progress",
+  "rsbuild:swc",
+  "rsbuild:externals",
+  "rsbuild:split-chunks",
+  "rsbuild:start-url",
+  "rsbuild:inline-chunk",
+  "rsbuild:bundle-analyzer",
+  "rsbuild:rsdoctor",
+  "plugin-network-performance",
+  "plugin-preload-or-prefetch",
+  "rsbuild:performance",
+  "rsbuild:server",
+  "rsbuild:rspack-profile",
+]
+`;

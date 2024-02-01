@@ -1,8 +1,7 @@
-import path from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
+import fs from 'node:fs';
+import path from 'node:path';
 import { TS_CONFIG_FILE } from '@rsbuild/shared';
-import type { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
-import type { RsbuildPluginAPI as RsbuildWebpackPluginAPI } from '@rsbuild/webpack';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   filterByField,
   getDependentProjects,
@@ -10,7 +9,7 @@ import {
   type ExtraMonorepoStrategies,
 } from '@rsbuild/monorepo-utils';
 
-export const pluginName = 'plugin-source-build';
+export const PLUGIN_SOURCE_BUILD_NAME = 'rsbuild:source-build';
 
 export const getSourceInclude = async (options: {
   projects: Project[];
@@ -27,37 +26,35 @@ export const getSourceInclude = async (options: {
 };
 
 export interface PluginSourceBuildOptions {
-  projectName?: string;
+  /**
+   * Used to configure the resolve field of the source code files.
+   * @default 'source''
+   */
   sourceField?: string;
+  /**
+   * Whether to read source code or output code first.
+   * @default 'source'
+   */
+  resolvePriority?: 'source' | 'output';
+  projectName?: string;
   extraMonorepoStrategies?: ExtraMonorepoStrategies;
 }
 
 export function pluginSourceBuild(
   options?: PluginSourceBuildOptions,
-): RsbuildPlugin<RsbuildPluginAPI> {
+): RsbuildPlugin {
   const {
     projectName,
     sourceField = 'source',
+    resolvePriority = 'source',
     extraMonorepoStrategies,
   } = options ?? {};
 
   return {
-    name: pluginName,
+    name: PLUGIN_SOURCE_BUILD_NAME,
 
-    async setup(api) {
+    setup(api) {
       const projectRootPath = api.context.rootPath;
-
-      // TODO: when rspack support tsconfig paths functionality, this comment will remove
-      // if (api.context.bundlerType === 'rspack') {
-      //   (api as RspackBuilderPluginAPI).modifyRspackConfig(async config => {
-      //     // when support chain.resolve.conditionNames API, remove this logic
-      //     setConfig(config, 'resolve.conditionNames', [
-      //       '...', // Special syntax: retain the original value
-      //       sourceField,
-      //       ...(config.resolve?.conditionNames ?? []),
-      //     ]);
-      //   });
-      // }
 
       let projects: Project[] = [];
 
@@ -78,48 +75,64 @@ export function pluginSourceBuild(
         config.source.include = [...(config.source.include ?? []), ...includes];
       });
 
-      if (api.context.bundlerType === 'webpack') {
-        (api as unknown as RsbuildWebpackPluginAPI).modifyWebpackChain(
-          (chain, { CHAIN_ID }) => {
-            const {
-              tools: { tsLoader },
-            } = (
-              api as unknown as RsbuildWebpackPluginAPI
-            ).getNormalizedConfig();
+      api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+        [CHAIN_ID.RULE.TS, CHAIN_ID.RULE.JS].forEach((ruleId) => {
+          if (chain.module.rules.get(ruleId)) {
+            const rule = chain.module.rule(ruleId);
 
-            const useTsLoader = Boolean(tsLoader);
-            // webpack.js.org/configuration/module/#ruleresolve
-            chain.module
-              .rule(useTsLoader ? CHAIN_ID.RULE.TS : CHAIN_ID.RULE.JS)
-              // source > webpack default mainFiedls.
-              // when source is not exist, other mainFields will effect.
-              .resolve.mainFields.merge([sourceField, '...']);
+            // https://rspack.dev/config/resolve
+            // when source is not exist, other mainFields will effect. // source > Rspack default mainFields.
+            rule.resolve.mainFields.merge(
+              resolvePriority === 'source'
+                ? [sourceField, '...']
+                : ['...', sourceField],
+            );
 
-            // webpack chain not support resolve.conditionNames
-            chain.module
-              .rule(useTsLoader ? CHAIN_ID.RULE.TS : CHAIN_ID.RULE.JS)
-              .resolve.merge({
-                conditionNames: ['...', sourceField],
-              });
+            // bundler-chain do not support resolve.conditionNames yet
+            rule.resolve.merge({
+              // `conditionNames` is not affected by `resolvePriority`.
+              // The priority is controlled by the order of fields declared in `exports`.
+              conditionNames: ['...', sourceField],
+            });
+          }
+        });
+      });
 
-            const { TS_CONFIG_PATHS } = CHAIN_ID.RESOLVE_PLUGIN;
+      const getReferences = () =>
+        projects
+          .map((project) => path.join(project.dir, TS_CONFIG_FILE))
+          .filter((filePath) => fs.existsSync(filePath));
 
-            // set references config
-            // https://github.com/dividab/tsconfig-paths-webpack-plugin#options
-            if (chain.resolve.plugins.has(TS_CONFIG_PATHS)) {
-              chain.resolve.plugin(TS_CONFIG_PATHS).tap((options) => {
-                const references = projects
-                  .map((project) => path.join(project.dir, TS_CONFIG_FILE))
-                  .filter((filePath) => fs.existsSync(filePath));
+      if (api.context.bundlerType === 'rspack') {
+        api.modifyRspackConfig((config) => {
+          if (!api.context.tsconfigPath) {
+            return;
+          }
 
-                return options.map((option) => ({
-                  ...option,
-                  references,
-                }));
-              });
-            }
-          },
-        );
+          config.resolve ||= {};
+          config.resolve.tsConfig = {
+            ...config.resolve.tsConfig,
+            configFile: api.context.tsconfigPath,
+            references: getReferences(),
+          };
+        });
+      } else {
+        api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+          const { TS_CONFIG_PATHS } = CHAIN_ID.RESOLVE_PLUGIN;
+
+          if (!chain.resolve.plugins.has(TS_CONFIG_PATHS)) {
+            return;
+          }
+
+          // set references config
+          // https://github.com/dividab/tsconfig-paths-webpack-plugin#options
+          chain.resolve.plugin(TS_CONFIG_PATHS).tap((options) =>
+            options.map((option) => ({
+              ...option,
+              references: getReferences(),
+            })),
+          );
+        });
       }
     },
   };

@@ -8,8 +8,8 @@ Before starting the troubleshooting process, it is helpful to have a basic under
 
 :::tip HMR Principle
 
-1. The browser establishes a WebSocket connection with the development server for real-time communication.
-2. Whenever the development server finishes recompiling, it sends a notification to the browser via the WebSocket. The browser then sends a `hot-update.xxx` request to the development server to load the newly compiled module.
+1. The browser establishes a WebSocket connection with the dev server for real-time communication.
+2. Whenever the dev server finishes recompiling, it sends a notification to the browser via the WebSocket. The browser then sends a `hot-update.xxx` request to the dev server to load the newly compiled module.
 3. After receiving the new module, if it is a React project, React Refresh, an official React tool, is used to update React components. Other frameworks have similar tools.
 
 :::
@@ -21,17 +21,17 @@ After understanding the principle of HMR, you can follow these steps for basic t
 Open the browser console and check for the presence of the `[HMR] connected.` log.
 
 - If it is present, the WebSocket connection is working correctly. You can continue with the following steps.
-- If it is not present, open the Network panel in Chrome and check the status of the `ws://[host]:[port]/webpack-hmr` request. If the request is failed, this indicates that the HMR failed because the WebSocket connection was not successfully established.
+- If it is not present, open the Network panel in Chrome and check the status of the `ws://[host]:[port]/rsbuild-hmr` request. If the request is failed, this indicates that the HMR failed because the WebSocket connection was not successfully established.
 
-There can be various reasons why the WebSocket connection fails to establish, such as using a network proxy that prevents the WebSocket request from reaching the development server. You can check whether the WebSocket request address matches your development server address. If it does not match, you can configure the WebSocket request address using [tools.devServer.client](/config/options/tools.html#client).
+There can be various reasons why the WebSocket connection fails to establish, such as using a network proxy that prevents the WebSocket request from reaching the dev server. You can check whether the WebSocket request address matches your dev server address. If it does not match, you can configure the WebSocket request address using [dev.client](/config/dev/client).
 
 #### 2. Check the hot-update Requests
 
-When you modify the code of a module and trigger a recompilation, the browser sends several `hot-update.json` and `hot-update.js` requests to the development server to fetch the updated code.
+When you modify the code of a module and trigger a recompilation, the browser sends several `hot-update.json` and `hot-update.js` requests to the dev server to fetch the updated code.
 
 You can try modifying a module and inspect the content of the `hot-update.xxx` requests. If the content of the request is the latest code, it indicates that the hot update request is working correctly.
 
-If the content of the request is incorrect, it is likely due to a network proxy. Check whether the address of the `hot-update.xxx` request matches your development server address. If it does not match, you need to adjust the proxy rules to route the `hot-update.xxx` request to the development server address.
+If the content of the request is incorrect, it is likely due to a network proxy. Check whether the address of the `hot-update.xxx` request matches your dev server address. If it does not match, you need to adjust the proxy rules to route the `hot-update.xxx` request to the dev server address.
 
 #### 3. Check for Other Causes
 
@@ -56,7 +56,7 @@ export default {
 };
 ```
 
-To solve this problem, you need to reference the development builds of React or not configure `externals` in the development environment.
+To solve this problem, you need to reference the React development artifacts and install React Devtools, then hot reloading will work properly.
 
 If you are unsure about the type of React build you are using, you can refer to the [React documentation - Use the Production Build](https://legacy.reactjs.org/docs/optimizing-performance.html#use-the-production-build).
 
@@ -66,7 +66,7 @@ If you are unsure about the type of React build you are using, you can refer to 
 
 Usually, we only set the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
 
-If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing tools like [mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin) from reading the latest file content.
+If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing tools like [mini-css-extract-plugin](https://npmjs.com/package/mini-css-extract-plugin) from reading the latest file content.
 
 - Correct usage:
 
@@ -93,40 +93,6 @@ export default {
     },
   },
 };
-```
-
----
-
-### HMR not working when updating React components?
-
-Rsbuild uses React's official [Fast Refresh](https://github.com/pmmmwh/react-refresh-webpack-plugin) capability to perform component hot updates.
-
-If there is a problem that the hot update of the React component cannot take effect, or the state of the React component is lost after the hot update, it is usually because your React component uses an anonymous function. In the official practice of React Fast Refresh, it is required that the component cannot be an anonymous function, otherwise the state of the React component cannot be preserved after hot update.
-
-Here are some examples of wrong usage:
-
-```tsx
-// bad
-export default function () {
-  return <div>Hello World</div>;
-}
-
-// bad
-export default () => <div>Hello World</div>;
-```
-
-The correct usage is to declare a name for each component function:
-
-```tsx
-// good
-export default function MyComponent() {
-  return <div>Hello World</div>;
-}
-
-// good
-const MyComponent = () => <div>Hello World</div>;
-
-export default MyComponent;
 ```
 
 ---

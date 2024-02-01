@@ -36,7 +36,7 @@ npx yarn-deduplicate && yarn
 BUNDLE_ANALYZE=true pnpm build
 ```
 
-详见 [performance.bundleAnalyze](/config/options/performance.html#performancebundleanalyze) 配置项。
+详见 [performance.bundleAnalyze](/config/performance/bundle-analyze) 配置项。
 
 ## 提升 Browserslist 范围
 
@@ -55,12 +55,12 @@ Rsbuild 默认的 Browserslist 配置为：
 ```
 
 :::tip
-请阅读 [设置浏览器范围](/guide/advanced/browserslist.html) 章节来了解更多关于 Browserslist 的用法。
+请阅读 [设置浏览器范围](/guide/advanced/browserslist) 章节来了解更多关于 Browserslist 的用法。
 :::
 
 ## 按需引入 polyfill
 
-在明确第三方依赖不需要额外 polyfill 的情况下，你可以将 [output.polyfill](/config/options/output.html#outputpolyfill) 设置为 `usage`。
+在明确第三方依赖不需要额外 polyfill 的情况下，你可以将 [output.polyfill](/config/output/polyfill) 设置为 `usage`。
 
 在 `usage` 模式下，Rsbuild 会分析源代码中使用的语法，按需注入所需的 polyfill 代码，从而减少 polyfill 的代码量。
 
@@ -73,7 +73,7 @@ export default {
 ```
 
 :::tip
-请阅读 [浏览器兼容性](/guide/advanced/browser-compatibility.html) 章节来了解更多关于 polyfill 的用法。
+请阅读 [浏览器兼容性](/guide/advanced/browser-compatibility) 章节来了解更多关于 polyfill 的用法。
 :::
 
 ## 使用图片压缩
@@ -104,7 +104,7 @@ export default {
     chunkSplit: {
       strategy: 'split-by-experience',
       forceSplitting: {
-        axios: /node_modules\/axios/,
+        axios: /node_modules[\\/]axios/,
       },
     },
   },

@@ -2,6 +2,10 @@
 
 Vue 2 插件提供了对 Vue 2 SFC（单文件组件）的支持，插件内部集成了 [vue-loader](https://vue-loader.vuejs.org/) v15 版本。
 
+:::tip
+Vue 2 插件仅支持 Vue >= 2.7.0 版本。
+:::
+
 ## 快速开始
 
 ### 安装插件
@@ -23,8 +27,6 @@ export default {
   plugins: [pluginVue2()],
 };
 ```
-
-如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
 
 注册完插件后，你可以直接在代码中引入 `*.vue` 单文件组件。
 
@@ -61,3 +63,41 @@ pluginVue2({
 :::tip
 Vue 2 插件使用的是 `vue-loader` v15 版本，请注意区分 v15 版本与最新版本之间可能存在配置差异。
 :::
+
+### splitChunks
+
+在 [chunkSplit.strategy](/config/performance/chunk-split) 设置为 `split-by-experience` 时，Rsbuild 默认会自动将 `vue` 和 `router` 相关的包拆分为单独的 chunk:
+
+- `lib-vue.js`：包含 vue，vue-loader。
+- `lib-router.js`：包含 vue-router。
+
+该选项用于控制这一行为，决定是否需要将 `vue` 和 `router` 相关的包拆分为单独的 chunk。
+
+- **类型：**
+
+```ts
+type SplitVueChunkOptions = {
+  vue?: boolean;
+  router?: boolean;
+};
+```
+
+- **默认值：**
+
+```ts
+const defaultOptions = {
+  vue: true,
+  router: true,
+};
+```
+
+- **示例：**
+
+```ts
+pluginVue({
+  splitChunks: {
+    vue: false,
+    router: false,
+  },
+});
+```

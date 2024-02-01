@@ -1,6 +1,6 @@
-import { join, resolve } from 'path';
+import { join, resolve } from 'node:path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
@@ -12,13 +12,14 @@ test.describe('performance configure multi', () => {
   test.beforeAll(async () => {
     const rsbuild = await build({
       cwd: basicFixtures,
-      entry: {
-        main: join(basicFixtures, 'src/index.ts'),
-      },
       plugins: [pluginReact()],
       rsbuildConfig: {
+        output: {
+          distPath: {
+            root: 'dist-1',
+          },
+        },
         performance: {
-          bundleAnalyze: {},
           chunkSplit: {
             strategy: 'all-in-one',
           },
@@ -29,14 +30,6 @@ test.describe('performance configure multi', () => {
     files = await rsbuild.unwrapOutputJSON();
   });
 
-  test('bundleAnalyze', async () => {
-    const filePaths = Object.keys(files).filter((file) =>
-      file.endsWith('report-web.html'),
-    );
-
-    expect(filePaths.length).toBe(1);
-  });
-
   test('chunkSplit all-in-one', async () => {
     // expect only one bundle (end with .js)
     const filePaths = Object.keys(files).filter((file) => file.endsWith('.js'));
@@ -45,37 +38,9 @@ test.describe('performance configure multi', () => {
   });
 });
 
-test('should generate vendor chunk when chunkSplit is "single-vendor"', async () => {
-  const rsbuild = await build({
-    cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic/src/index.ts'),
-    },
-    plugins: [pluginReact()],
-    rsbuildConfig: {
-      performance: {
-        chunkSplit: {
-          strategy: 'single-vendor',
-        },
-      },
-    },
-  });
-
-  const files = await rsbuild.unwrapOutputJSON();
-
-  const [vendorFile] = Object.entries(files).find(
-    ([name, content]) => name.includes('vendor') && content.includes('React'),
-  )!;
-
-  expect(vendorFile).toBeTruthy();
-});
-
 test('should generate preconnect link when preconnect is defined', async () => {
   const rsbuild = await build({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic/src/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
@@ -112,9 +77,6 @@ test('should generate preconnect link when preconnect is defined', async () => {
 test('should generate dnsPrefetch link when dnsPrefetch is defined', async () => {
   const rsbuild = await build({
     cwd: join(fixtures, 'basic'),
-    entry: {
-      main: join(fixtures, 'basic/src/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {

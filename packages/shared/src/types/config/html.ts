@@ -1,4 +1,8 @@
-import type { ArrayOrNot, ChainedConfig } from '../utils';
+import type {
+  ArrayOrNot,
+  ChainedConfigWithUtils,
+  ChainedConfigCombineUtils,
+} from '../utils';
 
 export type CrossOrigin = 'anonymous' | 'use-credentials';
 
@@ -8,13 +12,18 @@ export type ScriptLoading = 'defer' | 'module' | 'blocking';
 
 export type OutputStructure = 'flat' | 'nested';
 
-export type MetaAttributes = { [attributeName: string]: string | boolean };
+/**
+ * custom properties
+ * e.g. { name: 'viewport' content: 'width=500, initial-scale=1' }
+ * */
+export type MetaAttrs = { [attrName: string]: string | boolean };
 
 export type MetaOptions = {
-  [name: string]:
-    | string
-    | false // name content pair e.g. {viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'}`
-    | MetaAttributes; // custom properties e.g. { name:"viewport" content:"width=500, initial-scale=1" }
+  /**
+   * name content pair
+   * e.g. { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' }`
+   * */
+  [name: string]: string | false | MetaAttrs;
 };
 
 export interface HtmlInjectTag {
@@ -40,37 +49,21 @@ export type HtmlInjectTagHandler = (
 
 export type HtmlInjectTagDescriptor = HtmlInjectTag | HtmlInjectTagHandler;
 
+type ChainedHtmlOption<O> = ChainedConfigCombineUtils<O, { entryName: string }>;
+
 export interface HtmlConfig {
   /**
    * Configure the `<meta>` tag of the HTML.
    */
-  meta?: MetaOptions;
-  /**
-   * Set different meta tags for different pages.
-   * The usage is same as `meta`, and you can use the "entry name" as the key to set each page individually.
-   * `metaByEntries` will overrides the value set in `meta`.
-   */
-  metaByEntries?: Record<string, MetaOptions>;
+  meta?: ChainedHtmlOption<MetaOptions>;
   /**
    * Set the title tag of the HTML page.
    */
-  title?: string;
-  /**
-   * Set different title for different pages.
-   * The usage is same as `title`, and you can use the "entry name" as the key to set each page individually.
-   * `titleByEntries` will overrides the value set in `title`.
-   */
-  titleByEntries?: Record<string, string>;
+  title?: ChainedHtmlOption<string>;
   /**
    * Set the inject position of the `<script>` tag.
    */
-  inject?: ScriptInject;
-  /**
-   * Set different script tag inject positions for different pages.
-   * The usage is same as `inject`, and you can use the "entry name" as the key to set each page individually.
-   * `injectByEntries` will overrides the value set in `inject`.
-   */
-  injectByEntries?: Record<string, ScriptInject>;
+  inject?: ChainedHtmlOption<ScriptInject>;
   /**
    * Inject custom html tags into the output html files.
    */
@@ -84,13 +77,7 @@ export interface HtmlConfig {
   /**
    * Set the favicon icon for all pages.
    */
-  favicon?: string;
-  /**
-   * Set different favicon for different pages.
-   * The usage is same as `favicon`, and you can use the "entry name" as the key to set each page individually.
-   * `faviconByEntries` will overrides the value set in `favicon`.
-   */
-  faviconByEntries?: Record<string, string | undefined>;
+  favicon?: ChainedHtmlOption<string>;
   /**
    * Set the file path of the app icon, which can be a relative path or an absolute path.
    */
@@ -112,26 +99,14 @@ export interface HtmlConfig {
    * Define the path to the HTML template,
    * corresponding to the `template` config of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
    */
-  template?: string;
-  /**
-   * Set different template file for different pages.
-   * The usage is same as `template`, and you can use the "entry name" as the key to set each page individually.
-   * `templateByEntries` will overrides the value set in `template`.
-   */
-  templateByEntries?: Partial<Record<string, string>>;
+  template?: ChainedHtmlOption<string>;
   /**
    * Define the parameters in the HTML template,
    * corresponding to the `templateParameters` config of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
    */
-  templateParameters?: ChainedConfig<Record<string, unknown>>;
-  /**
-   * Set different template parameters for different pages.
-   * The usage is same as `templateParameters`, and you can use the "entry name" as the key to set each page individually.
-   * `templateParametersByEntries` will overrides the value set in `templateParameters`.
-   */
-  templateParametersByEntries?: Record<
-    string,
-    ChainedConfig<Record<string, unknown>>
+  templateParameters?: ChainedConfigWithUtils<
+    Record<string, unknown>,
+    { entryName: string }
   >;
   /**
    * Set the loading mode of the `<script>` tag.
@@ -140,8 +115,10 @@ export interface HtmlConfig {
 }
 
 export type NormalizedHtmlConfig = HtmlConfig & {
+  meta: ChainedHtmlOption<MetaOptions>;
+  title: ChainedHtmlOption<string>;
   mountId: string;
-  inject: ScriptInject;
+  inject: ChainedHtmlOption<ScriptInject>;
   crossorigin: boolean | CrossOrigin;
   outputStructure: OutputStructure;
   scriptLoading: ScriptLoading;

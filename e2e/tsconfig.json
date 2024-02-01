@@ -5,9 +5,15 @@
     "baseUrl": "./",
     "outDir": "./dist",
     "paths": {
-      "@/*": ["./src/*"],
-      "@scripts/*": ["./scripts/*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "scripts", "cases", "playwright.config.ts"]
+  "include": [
+    "src",
+    "scripts",
+    "cases",
+    "playwright.config.ts",
+    "cases/**/*.test.ts"
+  ],
+  "exclude": ["**/node_modules", "**/.*/"]
 }

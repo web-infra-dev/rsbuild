@@ -1,26 +1,71 @@
-export { createRsbuild, getCreateRsbuildDefaultOptions } from './createRsbuild';
-export { mergeRsbuildConfig } from '@rsbuild/shared';
+/**
+ * The methods and types exported from this file are considered as
+ * the public API of @rsbuild/core.
+ */
 
-export { defineConfig } from './cli';
+// Core Methods
+export { loadEnv } from './loadEnv';
+export { createRsbuild } from './createRsbuild';
+export { loadConfig, defineConfig } from './cli/config';
 
-export type { RsbuildPluginAPI, RsbuildConfig } from './rspack-provider';
+export const version = RSBUILD_VERSION;
+
+// Helpers
+export { logger, mergeRsbuildConfig } from '@rsbuild/shared';
+
+// Constants
+export {
+  PLUGIN_SWC_NAME,
+  PLUGIN_CSS_NAME,
+  PLUGIN_SASS_NAME,
+  PLUGIN_LESS_NAME,
+  PLUGIN_STYLUS_NAME,
+} from './constants';
+
+// Types
+export type { Rspack } from './provider';
+export type {
+  // Config Types
+  RsbuildConfig,
+  DevConfig,
+  HtmlConfig,
+  ToolsConfig,
+  SourceConfig,
+  OutputConfig,
+  SecurityConfig,
+  PerformanceConfig,
+  // Normalized Config Types
+  NormalizedConfig,
+  NormalizedDevConfig,
+  NormalizedHtmlConfig,
+  NormalizedToolsConfig,
+  NormalizedSourceConfig,
+  NormalizedOutputConfig,
+  NormalizedSecurityConfig,
+  NormalizedPerformanceConfig,
+  // Plugin Types
+  RsbuildPlugin,
+  RsbuildPlugins,
+  RsbuildPluginAPI,
+} from './types';
+
 export type {
   RsbuildMode,
   RsbuildEntry,
   RsbuildTarget,
-  RsbuildPlugin,
-  Context,
+  RsbuildContext,
   RsbuildInstance,
   CreateRsbuildOptions,
   InspectConfigOptions,
-
   // Hook Callback Types
   OnExitFn,
   OnAfterBuildFn,
   OnAfterCreateCompilerFn,
   OnAfterStartDevServerFn,
+  OnAfterStartProdServerFn,
   OnBeforeBuildFn,
   OnBeforeStartDevServerFn,
+  OnBeforeStartProdServerFn,
   OnBeforeCreateCompilerFn,
   OnDevCompileDoneFn,
   ModifyRsbuildConfigFn,

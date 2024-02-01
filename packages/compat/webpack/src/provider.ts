@@ -1,96 +1,112 @@
 import {
-  startProdServer,
   pickRsbuildConfig,
-  createPublicContext,
+  type CreateCompiler,
   type RsbuildProvider,
+  type PreviewServerOptions,
 } from '@rsbuild/shared';
-import { createContext } from './core/createContext';
-import { applyDefaultPlugins } from './shared/plugin';
-import { RsbuildConfig, NormalizedConfig, WebpackConfig } from './types';
+import {
+  getPluginAPI,
+  createContext,
+  initRsbuildConfig,
+  createPublicContext,
+} from '@rsbuild/core/provider';
+import { applyDefaultPlugins } from './shared';
 import { initConfigs } from './core/initConfigs';
-import { getPluginAPI } from './core/initPlugins';
-import type { Compiler, MultiCompiler } from 'webpack';
 
-export type WebpackProvider = RsbuildProvider<
-  RsbuildConfig,
-  WebpackConfig,
-  NormalizedConfig,
-  Compiler | MultiCompiler
->;
+export const webpackProvider: RsbuildProvider<'webpack'> = async ({
+  plugins,
+  pluginManager,
+  rsbuildOptions,
+}) => {
+  const rsbuildConfig = pickRsbuildConfig(rsbuildOptions.rsbuildConfig);
+  const context = await createContext(rsbuildOptions, rsbuildConfig, 'webpack');
+  const pluginAPI = getPluginAPI({ context, pluginManager });
 
-export function webpackProvider({
-  rsbuildConfig: originalRsbuildConfig,
-}: {
-  rsbuildConfig: RsbuildConfig;
-}): WebpackProvider {
-  const rsbuildConfig = pickRsbuildConfig(originalRsbuildConfig);
+  context.pluginAPI = pluginAPI;
 
-  return async ({ pluginStore, rsbuildOptions, plugins }) => {
-    const context = await createContext(rsbuildOptions, rsbuildConfig);
-    const pluginAPI = getPluginAPI({ context, pluginStore });
+  const createCompiler = (async () => {
+    const { createCompiler } = await import('./core/createCompiler');
+    const { webpackConfigs } = await initConfigs({
+      context,
+      pluginManager,
+      rsbuildOptions,
+    });
+    return createCompiler({ context, webpackConfigs });
+  }) as CreateCompiler;
 
-    context.pluginAPI = pluginAPI;
+  return {
+    bundler: 'webpack',
 
-    return {
-      bundler: 'webpack',
+    pluginAPI,
 
-      pluginAPI,
+    createCompiler,
 
-      publicContext: createPublicContext(context),
+    publicContext: createPublicContext(context),
 
-      async applyDefaultPlugins() {
-        pluginStore.addPlugins(await applyDefaultPlugins(plugins));
-      },
+    async applyDefaultPlugins() {
+      pluginManager.addPlugins(await applyDefaultPlugins(plugins));
+    },
 
-      async initConfigs() {
-        const { webpackConfigs } = await initConfigs({
+    async initConfigs() {
+      const { webpackConfigs } = await initConfigs({
+        context,
+        pluginManager,
+        rsbuildOptions,
+      });
+      return webpackConfigs;
+    },
+
+    async getServerAPIs(options) {
+      const { getServerAPIs } = await import('@rsbuild/core/server');
+      const { createDevMiddleware } = await import('./core/createCompiler');
+      await initRsbuildConfig({ context, pluginManager });
+      return getServerAPIs(
+        { context, pluginManager, rsbuildOptions },
+        createDevMiddleware,
+        options,
+      );
+    },
+
+    async startDevServer(options) {
+      const { startDevServer } = await import('@rsbuild/core/server');
+      const { createDevMiddleware } = await import('./core/createCompiler');
+      await initRsbuildConfig({
+        context,
+        pluginManager,
+      });
+      return startDevServer(
+        {
           context,
-          pluginStore,
+          pluginManager,
           rsbuildOptions,
-        });
-        return webpackConfigs;
-      },
+        },
+        createDevMiddleware,
+        options,
+      );
+    },
 
-      async createCompiler() {
-        const { createCompiler } = await import('./core/createCompiler');
-        const { webpackConfigs } = await initConfigs({
-          context,
-          pluginStore,
-          rsbuildOptions,
-        });
-        return createCompiler({ context, webpackConfigs });
-      },
+    async preview(options?: PreviewServerOptions) {
+      const { startProdServer } = await import('@rsbuild/core/server');
+      await initRsbuildConfig({
+        context,
+        pluginManager,
+      });
+      return startProdServer(context, context.config, options);
+    },
 
-      async startDevServer(options) {
-        const { startDevServer } = await import('./core/startDevServer');
-        return startDevServer(
-          { context, pluginStore, rsbuildOptions },
-          options,
-        );
-      },
+    async build(options) {
+      const { build } = await import('./core/build');
+      return build({ context, pluginManager, rsbuildOptions }, options);
+    },
 
-      async preview() {
-        return startProdServer(context, context.config);
-      },
-
-      async build(options) {
-        const { build: buildImpl, webpackBuild } = await import('./core/build');
-        return buildImpl(
-          { context, pluginStore, rsbuildOptions },
-          options,
-          webpackBuild,
-        );
-      },
-
-      async inspectConfig(inspectOptions) {
-        const { inspectConfig } = await import('./core/inspectConfig');
-        return await inspectConfig({
-          context,
-          pluginStore,
-          rsbuildOptions,
-          inspectOptions,
-        });
-      },
-    };
+    async inspectConfig(inspectOptions) {
+      const { inspectConfig } = await import('./core/inspectConfig');
+      return await inspectConfig({
+        context,
+        pluginManager,
+        rsbuildOptions,
+        inspectOptions,
+      });
+    },
   };
-}
+};

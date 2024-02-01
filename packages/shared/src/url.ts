@@ -1,24 +1,42 @@
-import os from 'os';
-import { URL } from 'url';
-import urlJoin from 'url-join';
+import os from 'node:os';
+import { URL } from 'node:url';
+import { posix } from 'node:path';
+import { isIPv6 } from 'node:net';
 import { DEFAULT_DEV_HOST } from './constants';
+
+// remove repeat '/'
+export const normalizeUrl = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
+
+const urlJoin = (base: string, path: string) => {
+  const fullUrl = new URL(base);
+  fullUrl.pathname = posix.join(fullUrl.pathname, path);
+  return fullUrl.toString();
+};
 
 export const withPublicPath = (str: string, base: string) => {
   // The use of an absolute URL without a protocol is technically legal,
-  // however it cannot be parsed as a URL instance.
-  // Just return it.
+  // however it cannot be parsed as a URL instance, just return it.
   // e.g. str is //example.com/foo.js
   if (str.startsWith('//')) {
     return str;
   }
 
+  // If str is an complete URL, just return it.
   // Only absolute url with hostname & protocol can be parsed into URL instance.
   // e.g. str is https://example.com/foo.js
   try {
     return new URL(str).toString();
   } catch {}
 
-  return urlJoin(base, str);
+  if (base.startsWith('http')) {
+    return urlJoin(base, str);
+  }
+
+  if (base.startsWith('//')) {
+    return urlJoin(`https:${base}`, str).replace('https:', '');
+  }
+
+  return posix.join(base, str);
 };
 
 export type AddressUrl = { label: string; url: string };
@@ -43,38 +61,74 @@ const getIpv4Interfaces = () => {
   return Array.from(ipv4Interfaces.values());
 };
 
-export const getAddressUrls = (
-  protocol = 'http',
-  port: number,
-  host?: string,
-) => {
-  const LOCAL_LABEL = 'Local:  ';
-  const NETWORK_LABEL = 'Network:  ';
-  const isLocalhost = (url: string) => url?.includes('localhost');
+const isLoopbackHost = (host: string) => {
+  const loopbackHosts = ['localhost', '127.0.0.1', '::1'];
+  return loopbackHosts.includes(host);
+};
 
+const getHostInUrl = (host: string) => {
+  if (isIPv6(host)) {
+    return host === '::' ? '[::1]' : `${host}`;
+  }
+  return host;
+};
+
+const concatUrl = ({
+  host,
+  port,
+  protocol,
+}: {
+  host: string;
+  port: number;
+  protocol: string;
+}) => `${protocol}://${host}:${port}`;
+
+const LOCAL_LABEL = 'Local:  ';
+const NETWORK_LABEL = 'Network:  ';
+
+export const getUrlLabel = (url: string) => {
+  try {
+    const { host } = new URL(url);
+    return isLoopbackHost(host) ? LOCAL_LABEL : NETWORK_LABEL;
+  } catch (err) {
+    return NETWORK_LABEL;
+  }
+};
+
+export const getAddressUrls = ({
+  protocol = 'http',
+  port,
+  host,
+}: {
+  protocol?: string;
+  port: number;
+  host?: string;
+}) => {
   if (host && host !== DEFAULT_DEV_HOST) {
     return [
       {
-        label: isLocalhost(host) ? LOCAL_LABEL : NETWORK_LABEL,
-        url: `${protocol}://${host}:${port}`,
+        label: isLoopbackHost(host) ? LOCAL_LABEL : NETWORK_LABEL,
+        url: concatUrl({
+          port,
+          host: getHostInUrl(host),
+          protocol,
+        }),
       },
     ];
   }
 
   const ipv4Interfaces = getIpv4Interfaces();
 
-  return ipv4Interfaces.reduce((memo: AddressUrl[], detail) => {
-    if (isLocalhost(detail.address) || detail.internal) {
-      memo.push({
+  return ipv4Interfaces.map((detail) => {
+    if (isLoopbackHost(detail.address) || detail.internal) {
+      return {
         label: LOCAL_LABEL,
-        url: `${protocol}://localhost:${port}`,
-      });
-    } else {
-      memo.push({
-        label: NETWORK_LABEL,
-        url: `${protocol}://${detail.address}:${port}`,
-      });
+        url: concatUrl({ host: 'localhost', port, protocol }),
+      };
     }
-    return memo;
-  }, []);
+    return {
+      label: NETWORK_LABEL,
+      url: concatUrl({ host: detail.address, port, protocol }),
+    };
+  });
 };

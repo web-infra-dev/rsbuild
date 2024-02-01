@@ -1,23 +1,57 @@
-import jiti from 'jiti';
-import { join } from 'path';
-import { findExists } from '@rsbuild/shared';
-import type {
-  RsbuildEntry,
-  RsbuildPlugin,
-  RsbuildConfig as BaseRsbuildConfig,
+import fs from 'node:fs';
+import { isAbsolute, join } from 'node:path';
+import {
+  color,
+  logger,
+  isObject,
+  debounce,
+  getNodeEnv,
+  type RsbuildConfig,
 } from '@rsbuild/shared';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { restartDevServer } from '../server/restart';
 
-export type RsbuildConfig = BaseRsbuildConfig & {
-  source?: {
-    entries?: RsbuildEntry;
-  };
-  plugins?: RsbuildPlugin[];
+export type ConfigParams = {
+  env: string;
+  command: string;
+  envMode?: string;
 };
 
-export const defineConfig = (config: RsbuildConfig) => config;
+export type RsbuildConfigAsyncFn = (
+  env: ConfigParams,
+) => Promise<RsbuildConfig>;
 
-const resolveConfigPath = () => {
+export type RsbuildConfigSyncFn = (env: ConfigParams) => RsbuildConfig;
+
+export type RsbuildConfigExport =
+  | RsbuildConfig
+  | RsbuildConfigSyncFn
+  | RsbuildConfigAsyncFn;
+
+/**
+ * This function helps you to autocomplete configuration types.
+ * It accepts a Rsbuild config object, or a function that returns a config.
+ */
+export function defineConfig(config: RsbuildConfig): RsbuildConfig;
+export function defineConfig(config: RsbuildConfigSyncFn): RsbuildConfigSyncFn;
+export function defineConfig(
+  config: RsbuildConfigAsyncFn,
+): RsbuildConfigAsyncFn;
+export function defineConfig(config: RsbuildConfigExport): RsbuildConfigExport;
+export function defineConfig(config: RsbuildConfigExport) {
+  return config;
+}
+
+const resolveConfigPath = (root: string, customConfig?: string) => {
+  if (customConfig) {
+    const customConfigPath = isAbsolute(customConfig)
+      ? customConfig
+      : join(root, customConfig);
+    if (fs.existsSync(customConfigPath)) {
+      return customConfigPath;
+    }
+    logger.warn(`Cannot find config file: ${color.dim(customConfigPath)}\n`);
+  }
+
   const CONFIG_FILES = [
     'rsbuild.config.ts',
     'rsbuild.config.js',
@@ -26,8 +60,6 @@ const resolveConfigPath = () => {
     'rsbuild.config.mts',
     'rsbuild.config.cts',
   ];
-
-  const root = process.cwd();
 
   for (const file of CONFIG_FILES) {
     const configFile = join(root, file);
@@ -40,35 +72,96 @@ const resolveConfigPath = () => {
   return null;
 };
 
-export async function loadConfig(): Promise<ReturnType<typeof defineConfig>> {
-  const configFile = resolveConfigPath();
-
-  if (configFile) {
-    const loadConfig = jiti(__filename, {
-      esmResolve: true,
-      interopDefault: true,
-    });
-    return loadConfig(configFile);
+export async function watchFiles(files: string[]) {
+  if (!files.length) {
+    return;
   }
 
-  return {};
-}
+  const chokidar = await import('@rsbuild/shared/chokidar');
+  const watcher = chokidar.watch(files, {
+    // do not trigger add for initial files
+    ignoreInitial: true,
+    // If watching fails due to read permissions, the errors will be suppressed silently.
+    ignorePermissionErrors: true,
+  });
 
-export function getDefaultEntries() {
-  const cwd = process.cwd();
-  const files = ['ts', 'tsx', 'js', 'jsx'].map((ext) =>
-    join(cwd, `src/index.${ext}`),
+  const callback = debounce(
+    async (filePath) => {
+      watcher.close();
+      await restartDevServer({ filePath });
+    },
+    // set 300ms debounce to avoid restart frequently
+    300,
   );
 
-  const entryFile = findExists(files);
+  watcher.on('add', callback);
+  watcher.on('change', callback);
+  watcher.on('unlink', callback);
+}
 
-  if (entryFile) {
+export async function loadConfig({
+  cwd,
+  path,
+  envMode,
+}: {
+  cwd: string;
+  path?: string;
+  envMode?: string;
+}): Promise<{ content: RsbuildConfig; filePath: string | null }> {
+  const configFile = resolveConfigPath(cwd, path);
+
+  if (!configFile) {
     return {
-      index: entryFile,
+      content: {},
+      filePath: configFile,
     };
   }
 
-  throw new Error(
-    'Could not find the entry file, please make sure that `src/index.(js|ts|tsx|jsx)` exists, or customize entry through the `source.entries` configuration.',
-  );
+  try {
+    const { default: jiti } = await import('@rsbuild/shared/jiti');
+    const loadConfig = jiti(__filename, {
+      esmResolve: true,
+      // disable require cache to support restart CLI and read the new config
+      requireCache: false,
+      interopDefault: true,
+    });
+
+    const configExport = loadConfig(configFile) as RsbuildConfigExport;
+
+    if (typeof configExport === 'function') {
+      const command = process.argv[2];
+      const params: ConfigParams = {
+        env: getNodeEnv(),
+        command,
+        envMode: envMode || getNodeEnv(),
+      };
+
+      const result = await configExport(params);
+
+      if (result === undefined) {
+        throw new Error('Rsbuild config function must return a config object.');
+      }
+
+      return {
+        content: result,
+        filePath: configFile,
+      };
+    }
+
+    if (!isObject(configExport)) {
+      throw new Error(
+        `Rsbuild config must be an object or a function that returns an object, get ${color.yellow(
+          configExport,
+        )}`,
+      );
+    }
+
+    return {
+      content: configExport,
+      filePath: configFile,
+    };
+  } catch (err) {
+    logger.error(`Failed to load file: ${color.dim(configFile)}`);
+    throw err;
+  }
 }

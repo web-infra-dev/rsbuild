@@ -1,8 +1,6 @@
-import type { InlineChunkTest } from '../../plugins/InlineChunkHtmlPlugin';
+import type { RspackConfig } from '../rspack';
 import type { RsbuildTarget } from '../rsbuild';
-import type { CrossOrigin } from './html';
-import type { Externals } from 'webpack';
-import type { Builtins } from '@rspack/core';
+import type { CopyRspackPluginOptions, Externals } from '@rspack/core';
 
 export type DistPathConfig = {
   /** The root directory of all files. */
@@ -25,7 +23,7 @@ export type DistPathConfig = {
   media?: string;
   /** The output directory of server bundles when target is `node`. */
   server?: string;
-  /** The output directory of server bundles when target is `service-worker`. */
+  /** The output directory of service worker bundles when target is `service-worker`. */
   worker?: string;
 };
 
@@ -55,25 +53,6 @@ export type DataUriLimit = {
   media?: number;
 };
 
-export type AssetsRetryHookContext = {
-  url: string;
-  times: number;
-  domain: string;
-  tagName: string;
-};
-
-export type AssetsRetryOptions = {
-  max?: number;
-  type?: string[];
-  test?: string | ((url: string) => boolean);
-  domain?: string[];
-  crossOrigin?: boolean | CrossOrigin;
-  inlineScript?: boolean;
-  onFail?: (options: AssetsRetryHookContext) => void;
-  onRetry?: (options: AssetsRetryHookContext) => void;
-  onSuccess?: (options: AssetsRetryHookContext) => void;
-};
-
 export type Charset = 'ascii' | 'utf8';
 
 export type LegalComments = 'none' | 'inline' | 'linked';
@@ -82,56 +61,9 @@ export type NormalizedDataUriLimit = Required<DataUriLimit>;
 
 export type Polyfill = 'usage' | 'entry' | 'ua' | 'off';
 
-export type DisableSourceMapOption =
-  | boolean
-  | {
-      js?: boolean;
-      css?: boolean;
-    };
-
-/**
- * postcss-pxtorem options
- * https://github.com/cuth/postcss-pxtorem#options
- */
-export type PxToRemOptions = {
-  rootValue?: number;
-  unitPrecision?: number;
-  propList?: Array<string>;
-  selectorBlackList?: Array<string>;
-  replace?: boolean;
-  mediaQuery?: boolean;
-  minPixelValue?: number;
-  exclude?: string | RegExp | ((filePath: string) => boolean);
-};
-
-export type RemOptions = {
-  /**
-   * Whether to generate runtime code to set root font size.
-   * @default true
-   */
-  enableRuntime?: boolean;
-  /**
-   *  Whether to inline runtime code to HTML.
-   * @default true
-   */
-  inlineRuntime?: boolean;
-  /** Usually, `fontSize = (clientWidth * rootFontSize) / screenWidth` */
-  screenWidth?: number;
-  rootFontSize?: number;
-  maxRootFontSize?: number;
-  /** Get clientWidth from the url query based on widthQueryKey */
-  widthQueryKey?: string;
-  /** The entries to ignore */
-  excludeEntries?: string[];
-  /**
-   * Whether to use height to calculate rem in landscape.
-   * @default false
-   */
-  supportLandscape?: boolean;
-  /** Whether to use rootFontSize when large than maxRootFontSize（scene：pc） */
-  useRootFontSizeBeyondMax?: boolean;
-  /** CSS (postcss-pxtorem) option */
-  pxtorem?: PxToRemOptions;
+export type SourceMap = {
+  js?: RspackConfig['devtool'];
+  css?: boolean;
 };
 
 export type CssModuleLocalsConvention =
@@ -150,9 +82,20 @@ export type CssModules = {
   exportLocalsConvention?: CssModuleLocalsConvention;
 };
 
-export type CopyPluginOptions = NonNullable<Builtins['copy']>;
+export type CopyPluginOptions = CopyRspackPluginOptions;
+
+export type InlineChunkTestFunction = (params: {
+  size: number;
+  name: string;
+}) => boolean;
+
+export type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
 export interface OutputConfig {
+  /**
+   * Specify build targets to run in different target environments.
+   */
+  targets?: RsbuildTarget[];
   /**
    * At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
    * For more information, please see: [webpack Externals](https://webpack.js.org/configuration/externals/)
@@ -177,10 +120,6 @@ export interface OutputConfig {
    * Configure how the polyfill is injected.
    */
   polyfill?: Polyfill;
-  /**
-   * Configure the retry of assets.
-   */
-  assetsRetry?: AssetsRetryOptions;
   /**
    * When using CDN in the production environment,
    * you can use this option to set the URL prefix of static assets,
@@ -209,46 +148,17 @@ export interface OutputConfig {
    */
   cssModules?: CssModules;
   /**
-   * Convert px to rem in CSS.
-   */
-  convertToRem?: boolean | RemOptions;
-  /**
-   * Disable css extract and inline CSS files into the JS bundle.
-   */
-  disableCssExtract?: boolean;
-  /**
    * Whether to disable code minification in production build.
    */
   disableMinimize?: boolean;
   /**
-   * Whether to disable source map.
+   * Whether to generate source map files, and which format of source map to generate
    */
-  disableSourceMap?: DisableSourceMapOption;
+  sourceMap?: SourceMap;
   /**
    * Remove the hash from the name of static files after production build.
    */
   disableFilenameHash?: boolean;
-  /**
-   * Controls whether to the inline the runtime chunk to HTML.
-   */
-  disableInlineRuntimeChunk?: boolean;
-  /**
-   * Whether to treat all .css files in the source directory as CSS Modules.
-   */
-  disableCssModuleExtension?: boolean;
-  /**
-   * Whether to generate a manifest file that contains information of all assets.
-   */
-  enableAssetManifest?: boolean;
-  /**
-   * If this option is enabled, all unrecognized files will be emitted to the dist directory.
-   * Otherwise, an exception will be thrown.
-   */
-  enableAssetFallback?: boolean;
-  /**
-   * Whether to use the new decorator proposal.
-   */
-  enableLatestDecorators?: boolean;
   /**
    * Whether to generate a TypeScript declaration file for CSS modules.
    */
@@ -256,11 +166,15 @@ export interface OutputConfig {
   /**
    * Whether to inline output scripts files (.js files) into HTML with `<script>` tags.
    */
-  enableInlineScripts?: boolean | InlineChunkTest;
+  inlineScripts?: boolean | InlineChunkTest;
   /**
    * Whether to inline output style files (.css files) into html with `<style>` tags.
    */
-  enableInlineStyles?: boolean | InlineChunkTest;
+  inlineStyles?: boolean | InlineChunkTest;
+  /**
+   * Whether to inject styles into the DOM via `style-loader`.
+   */
+  injectStyles?: boolean;
   /**
    * Specifies the range of target browsers that the project is compatible with.
    * This value will be used by [@babel/preset-env](https://babeljs.io/docs/en/babel-preset-env) and
@@ -279,23 +193,22 @@ export type OverrideBrowserslist =
   | Partial<Record<RsbuildTarget, string[]>>;
 
 export interface NormalizedOutputConfig extends OutputConfig {
+  targets: RsbuildTarget[];
   filename: FilenameConfig;
   distPath: DistPathConfig;
   polyfill: Polyfill;
+  sourceMap: {
+    js?: RspackConfig['devtool'];
+    css: boolean;
+  };
   assetPrefix: string;
   dataUriLimit: NormalizedDataUriLimit;
-  cleanDistPath: boolean;
-  disableCssExtract: boolean;
   disableMinimize: boolean;
-  disableSourceMap: DisableSourceMapOption;
   disableFilenameHash: boolean;
-  disableInlineRuntimeChunk: boolean;
-  enableAssetManifest: boolean;
-  enableAssetFallback: boolean;
-  enableLatestDecorators: boolean;
   enableCssModuleTSDeclaration: boolean;
-  enableInlineScripts: boolean | InlineChunkTest;
-  enableInlineStyles: boolean | InlineChunkTest;
+  inlineScripts: boolean | InlineChunkTest;
+  inlineStyles: boolean | InlineChunkTest;
+  injectStyles: boolean;
   cssModules: {
     localIdentName?: string;
     exportLocalsConvention: CssModuleLocalsConvention;

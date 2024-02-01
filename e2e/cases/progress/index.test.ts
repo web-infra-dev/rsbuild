@@ -1,7 +1,5 @@
-import path from 'path';
 import { expect } from '@playwright/test';
-import { webpackOnlyTest } from '@scripts/helper';
-import { build } from '@scripts/shared';
+import { build, webpackOnlyTest } from '@e2e/helper';
 import { logger } from '@rsbuild/shared';
 
 webpackOnlyTest('should emit progress log in non-TTY environment', async () => {
@@ -20,7 +18,6 @@ webpackOnlyTest('should emit progress log in non-TTY environment', async () => {
 
   await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       dev: {
         progressBar: true,

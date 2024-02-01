@@ -1,34 +1,42 @@
-import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build, dev, getHrefByEntryName } from '@scripts/shared';
+import { build, dev, gotoPage } from '@e2e/helper';
 
 test('multi compiler build', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { main: path.resolve(__dirname, 'src/index.js') },
-    target: ['web', 'node'],
     runServer: true,
+    rsbuildConfig: {
+      output: {
+        targets: ['web', 'node'],
+      },
+    },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('multi compiler dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
-    entry: { main: path.resolve(__dirname, 'src/index.js') },
-    target: ['web', 'node'],
+    rsbuildConfig: {
+      output: {
+        targets: ['web', 'node'],
+        distPath: {
+          root: 'dist-dev',
+        },
+      },
+    },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });

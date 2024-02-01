@@ -1,16 +1,18 @@
 import webpackDevMiddleware from '@rsbuild/shared/webpack-dev-middleware';
 import type { Compiler, MultiCompiler } from 'webpack';
-import type { ModernDevServerOptions } from '@modern-js/server';
-import { setupServerHooks, isClientCompiler } from '@rsbuild/shared';
-import { IncomingMessage, ServerResponse } from 'http';
-
-type DevMiddlewareOptions = ModernDevServerOptions['devMiddleware'];
+import {
+  setupServerHooks,
+  isClientCompiler,
+  type DevMiddleware,
+} from '@rsbuild/shared';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 
 const applyHMREntry = (
   compiler: Compiler | MultiCompiler,
   clientPath: string,
 ) => {
   const applyEntry = (clientEntry: string, compiler: Compiler) => {
+    // @ts-expect-error compiler type mismatch
     if (isClientCompiler(compiler)) {
       new compiler.webpack.EntryPlugin(compiler.context, clientEntry, {
         name: undefined,
@@ -48,7 +50,7 @@ const setupHooks = (
 
 export const getDevMiddleware: (
   compiler: Compiler | MultiCompiler,
-) => NonNullable<DevMiddlewareOptions> = (compiler) => (options) => {
+) => NonNullable<DevMiddleware> = (compiler) => (options) => {
   const { hmrClientPath, callbacks, ...restOptions } = options;
 
   hmrClientPath && applyHMREntry(compiler, hmrClientPath);

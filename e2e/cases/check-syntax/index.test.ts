@@ -1,8 +1,9 @@
-import path from 'path';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build, proxyConsole } from '@e2e/helper';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import type { RsbuildConfig } from '@rsbuild/shared';
+import { normalizeToPosixPath } from '@scripts/test-helper';
 
 function getCommonBuildConfig(cwd: string): RsbuildConfig {
   return {
@@ -10,13 +11,15 @@ function getCommonBuildConfig(cwd: string): RsbuildConfig {
       exclude: [path.resolve(cwd, './src/test.js')],
     },
     output: {
+      sourceMap: {
+        js: 'source-map',
+      },
       overrideBrowserslist: ['ie 11'],
     },
     tools: {
-      // @ts-expect-error
       rspack: (config) => {
         config.target = ['web'];
-        config.builtins.presetEnv = undefined;
+        config.builtins!.presetEnv = undefined;
       },
     },
   };
@@ -24,14 +27,33 @@ function getCommonBuildConfig(cwd: string): RsbuildConfig {
 
 test('should throw error when exist syntax errors', async () => {
   const cwd = path.join(__dirname, 'fixtures/basic');
+  const { logs, restore } = proxyConsole();
+
   await expect(
     build({
       cwd,
-      entry: { index: path.resolve(cwd, './src/index.js') },
       rsbuildConfig: getCommonBuildConfig(cwd),
       plugins: [pluginCheckSyntax()],
     }),
   ).rejects.toThrowError('[Syntax Checker]');
+
+  restore();
+
+  expect(logs.find((log) => log.includes('ERROR 1'))).toBeTruthy();
+  expect(
+    logs.find((log) => log.includes('source:') && log.includes('src/test.js')),
+  ).toBeTruthy();
+  expect(
+    logs.find(
+      (log) =>
+        log.includes('output:') &&
+        normalizeToPosixPath(log).includes('/dist/static/js/index'),
+    ),
+  ).toBeTruthy();
+  expect(logs.find((log) => log.includes('reason:'))).toBeTruthy();
+  expect(
+    logs.find((log) => log.includes('> 1 | export const printLog = () => {')),
+  ).toBeTruthy();
 });
 
 test('should not throw error when the file is excluded', async () => {
@@ -39,7 +61,6 @@ test('should not throw error when the file is excluded', async () => {
   await expect(
     build({
       cwd,
-      entry: { index: path.resolve(cwd, './src/index.js') },
       plugins: [
         pluginCheckSyntax({
           exclude: /src\/test/,
@@ -56,7 +77,6 @@ test('should not throw error when the targets are support es6', async () => {
   await expect(
     build({
       cwd,
-      entry: { index: path.resolve(cwd, './src/index.js') },
       plugins: [
         pluginCheckSyntax({
           targets: ['chrome >= 60', 'edge >= 15'],
@@ -69,11 +89,11 @@ test('should not throw error when the targets are support es6', async () => {
 
 test('should throw error when using optional chaining and target is es6 browsers', async () => {
   const cwd = path.join(__dirname, 'fixtures/esnext');
+  const { logs, restore } = proxyConsole();
 
   await expect(
     build({
       cwd,
-      entry: { index: path.resolve(cwd, './src/index.js') },
       plugins: [
         pluginCheckSyntax({
           targets: ['chrome >= 53'],
@@ -82,6 +102,28 @@ test('should throw error when using optional chaining and target is es6 browsers
       rsbuildConfig: getCommonBuildConfig(cwd),
     }),
   ).rejects.toThrowError('[Syntax Checker]');
+
+  restore();
+
+  expect(logs.find((log) => log.includes('ERROR 1'))).toBeTruthy();
+  expect(
+    logs.find((log) => log.includes('source:') && log.includes('src/test.js')),
+  ).toBeTruthy();
+  expect(
+    logs.find(
+      (log) =>
+        log.includes('output:') &&
+        normalizeToPosixPath(log).includes('/dist/static/js/index'),
+    ),
+  ).toBeTruthy();
+  expect(
+    logs.find(
+      (log) => log.includes('reason:') && log.includes('Unexpected token'),
+    ),
+  ).toBeTruthy();
+  expect(
+    logs.find((log) => log.includes('> 3 |   console.log(arr, arr?.flat());')),
+  ).toBeTruthy();
 });
 
 test('should not throw error when using optional chaining and ecmaVersion is 2020', async () => {
@@ -90,7 +132,6 @@ test('should not throw error when using optional chaining and ecmaVersion is 202
   await expect(
     build({
       cwd,
-      entry: { index: path.resolve(cwd, './src/index.js') },
       plugins: [
         pluginCheckSyntax({
           ecmaVersion: 2020,

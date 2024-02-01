@@ -1,6 +1,6 @@
-import { chalk } from '@rsbuild/shared/chalk';
-import { logger } from '@rsbuild/shared';
-import type { SyntaxError } from '../types';
+import { logger } from '@rsbuild/core';
+import { color } from '@rsbuild/shared';
+import type { ECMASyntaxError } from '../types';
 
 type Error = {
   source: string;
@@ -9,7 +9,7 @@ type Error = {
   code: string;
 };
 
-export function printErrors(errors: SyntaxError[]) {
+export function printErrors(errors: ECMASyntaxError[]) {
   if (errors.length === 0) {
     logger.success('The syntax check success.');
     return;
@@ -30,7 +30,7 @@ export function printErrors(errors: SyntaxError[]) {
   );
 
   errs.forEach((err, index) => {
-    console.info(chalk.red.bold(`  ERROR ${index + 1}`));
+    console.log(color.bold(color.red(`  ERROR ${index + 1}`)));
     printMain(err, longest);
   });
 
@@ -42,10 +42,10 @@ export function printErrors(errors: SyntaxError[]) {
   );
 }
 
-function printMain(error: Error, logest: number) {
-  const fillWhiteSpace = (s: string, logest: number) => {
-    if (s.length < logest) {
-      const rightPadding = ' '.repeat(logest - s.length);
+function printMain(error: Error, longest: number) {
+  const fillWhiteSpace = (s: string, longest: number) => {
+    if (s.length < longest) {
+      const rightPadding = ' '.repeat(longest - s.length);
       return s + rightPadding;
     }
     return s;
@@ -54,7 +54,7 @@ function printMain(error: Error, logest: number) {
     if (!content) {
       return;
     }
-    const title = chalk.magenta(`${fillWhiteSpace(`${key}:`, logest + 1)}`);
+    const title = color.magenta(`${fillWhiteSpace(`${key}:`, longest + 1)}`);
     console.info(`  ${title}  ${content}`);
   });
   console.info('');

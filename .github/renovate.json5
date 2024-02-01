@@ -1,0 +1,45 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": ["config:recommended"],
+	"ignorePaths": ["**/tests/**", "**/compiled/**", "**/node_modules/**"],
+	"packageRules": [
+		// Use chore as semantic commit type for commit messages
+		{
+			"matchPackagePatterns": ["*"],
+			"semanticCommitType": "chore"
+		},
+		{
+			"groupName": "babel",
+			"packagePatterns": ["babel"],
+			"groupSlug": "babel"
+		},
+		{
+			"groupName": "types",
+			"packagePatterns": ["^@types/"],
+			"groupSlug": "types"
+		},
+		// manually update major versions
+		{
+			"matchUpdateTypes": ["major"],
+			"enabled": false
+		},
+		// manually update peer dependencies
+		{
+			"depTypeList": ["peerDependencies"],
+			"enabled": false
+		},
+		// use GitHub actions to update rspress and modern, manually update rspack
+		{
+			"packagePatterns": ["rspack", "rspress", "modern"],
+			"enabled": false
+		}
+	],
+	"ignoreDeps": [
+		// manually update some packages
+		"core-js",
+		"esbuild",
+		"typescript",
+		// https://github.com/web-infra-dev/rsbuild/pull/1105
+		"webpack-bundle-analyzer"
+	]
+}

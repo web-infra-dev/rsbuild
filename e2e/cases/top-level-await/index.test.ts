@@ -1,19 +1,15 @@
-import * as path from 'path';
 import { test, expect } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 
 test('should run top level await correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.ts'),
-    },
     runServer: true,
   });
 
-  await page.goto(getHrefByEntryName('index', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   expect(await page.evaluate('window.foo')).toEqual('hello');
 
-  rsbuild.close();
+  await rsbuild.close();
 });

@@ -24,8 +24,6 @@ export default {
 };
 ```
 
-如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
-
 ### 使用 Pug 模板
 
 插件注册完成后，Rsbuild 会自动解析后缀为 `.pug` 的模板文件，并使用 Pug 模板引擎对其进行编译。
@@ -51,6 +49,30 @@ p Hello #{text}!
 ```
 
 请阅读 [Pug 文档](https://pugjs.org/) 来了解 Pug 的完整用法。
+
+### 在 Vue 中使用
+
+当你使用 Vue 时，可以在 `.vue` 文件的 template 中使用 Pug 语法：
+
+```vue title="App.vue"
+<template lang="pug">
+button.my-button(@click='count++') Count is: {{ count }}
+</template>
+
+<script>
+import { ref } from 'vue';
+
+export default {
+  setup() {
+    const count = ref(0);
+
+    return {
+      count,
+    };
+  },
+};
+</script>
+```
 
 ## 选项
 

@@ -1,64 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/babel > babel-loader addIncludes & addExcludes should works 1`] = `
-{
-  "module": {
-    "rules": [
-      {
-        "exclude": [
-          "src/example",
-        ],
-        "include": [
-          /\\\\/node_modules\\\\/query-string\\\\//,
-        ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
-            "options": {
-              "babelrc": false,
-              "compact": false,
-              "configFile": false,
-              "plugins": [],
-              "presets": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-                  {
-                    "allExtensions": true,
-                    "allowDeclareFields": true,
-                    "allowNamespaces": true,
-                    "isTSX": true,
-                    "optimizeConstEnums": true,
-                  },
-                ],
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
-}
-`;
-
 exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] = `
 {
   "exclude": [
-    "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     "src/example",
   ],
   "include": [
     {
       "and": [
-        "<ROOT>",
+        "<ROOT>/packages/plugin-babel/tests",
         {
           "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
         },
       ],
     },
-    /\\\\/node_modules\\\\/query-string\\\\//,
+    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+    /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]query-string\\[\\\\\\\\/\\]/,
   ],
-  "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
     {
@@ -75,8 +34,6 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
             "safari >= 14",
           ],
         },
-        "exclude": [],
-        "inlineSourcesContent": true,
         "isModule": "unknown",
         "jsc": {
           "externalHelpers": true,
@@ -85,22 +42,29 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
             "syntax": "typescript",
             "tsx": true,
           },
+          "preserveAllComments": true,
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,
           },
         },
-        "minify": false,
         "sourceMaps": true,
       },
     },
     {
-      "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
+      "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
       "options": {
         "babelrc": false,
         "compact": false,
         "configFile": false,
-        "plugins": [],
+        "plugins": [
+          [
+            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+            {
+              "version": "legacy",
+            },
+          ],
+        ],
         "presets": [
           [
             "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
@@ -124,15 +88,22 @@ exports[`plugins/babel > should set babel-loader 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
+            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
               "configFile": false,
-              "plugins": [],
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+              ],
               "presets": [
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
@@ -159,15 +130,21 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/babel-loader/lib/index.js",
+            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
             "options": {
               "babelrc": false,
               "compact": false,
               "configFile": false,
               "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
                 [
                   "babel-plugin-import",
                   {

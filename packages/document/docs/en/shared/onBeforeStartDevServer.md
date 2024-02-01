@@ -1,6 +1,6 @@
-Called before starting the development server.
+Called before starting the dev server.
 
-- **Type**
+- **Type:**
 
 ```ts
 function OnBeforeStartDevServer(callback: () => Promise<void> | void): void;

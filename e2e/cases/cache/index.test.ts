@@ -1,8 +1,7 @@
-import path from 'path';
+import path from 'node:path';
 import { expect } from '@playwright/test';
-import { webpackOnlyTest } from '@scripts/helper';
-import { build } from '@scripts/shared';
-import { fs } from '@rsbuild/shared/fs-extra';
+import { build, webpackOnlyTest } from '@e2e/helper';
+import { fse } from '@rsbuild/shared';
 
 webpackOnlyTest(
   'should save the buildDependencies to cache directory and hit cache',
@@ -16,7 +15,6 @@ webpackOnlyTest(
 
     const buildConfig = {
       cwd: __dirname,
-      entry: { index: path.resolve(__dirname, './src/index.js') },
       rsbuildConfig: {
         tools: {
           bundlerChain: (chain: any) => {
@@ -35,7 +33,7 @@ webpackOnlyTest(
 
     const configFile = path.resolve(cacheDirectory, 'buildDependencies.json');
 
-    fs.emptyDirSync(cacheDirectory);
+    fse.emptyDirSync(cacheDirectory);
 
     // first build no cache
     let rsbuild = await build(buildConfig);
@@ -44,7 +42,7 @@ webpackOnlyTest(
       (await rsbuild.getIndexFile()).content.includes('222222'),
     ).toBeTruthy();
 
-    const buildDependencies = await fs.readJSON(configFile);
+    const buildDependencies = await fse.readJSON(configFile);
     expect(Object.keys(buildDependencies)).toEqual(['tsconfig']);
 
     process.env.TEST_ENV = 'a';
@@ -68,7 +66,6 @@ webpackOnlyTest('cacheDigest should work', async () => {
 
   const getBuildConfig = () => ({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       tools: {
         bundlerChain: (chain: any) => {
@@ -88,7 +85,7 @@ webpackOnlyTest('cacheDigest should work', async () => {
 
   const configFile = path.resolve(cacheDirectory, 'buildDependencies.json');
 
-  fs.emptyDirSync(cacheDirectory);
+  fse.emptyDirSync(cacheDirectory);
 
   // first build no cache
   let rsbuild = await build(getBuildConfig());
@@ -97,7 +94,7 @@ webpackOnlyTest('cacheDigest should work', async () => {
     (await rsbuild.getIndexFile()).content.includes('222222'),
   ).toBeTruthy();
 
-  const buildDependencies = await fs.readJSON(configFile);
+  const buildDependencies = await fse.readJSON(configFile);
   expect(Object.keys(buildDependencies)).toEqual(['tsconfig']);
 
   process.env.TEST_ENV = 'a';

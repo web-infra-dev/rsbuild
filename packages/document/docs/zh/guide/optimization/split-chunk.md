@@ -6,7 +6,7 @@
 
 ## 拆包策略
 
-> Rsbuild 的拆包配置集中在 [performance.chunkSplit](/config/options/performance.html#performancechunksplit) 中。
+> Rsbuild 的拆包配置集中在 [performance.chunkSplit](/config/performance/chunk-split) 中。
 
 Rsbuild 支持设置以下几种拆包策略：
 
@@ -24,12 +24,9 @@ Rsbuild 支持设置以下几种拆包策略：
 Rsbuild 默认采用 `split-by-experience` 策略，这是我们根据经验制定的策略。具体来说，当你的项目中引用了以下 npm 包时，它们会自动被拆分为单独的 chunk：
 
 - `lib-polyfill.js`：包含 `core-js`，`@babel/runtime`，`@swc/helpers`，`tslib`。
-- `lib-react.js`：包含 `react`，`react-dom`。
+- `lib-react.js`：包含 `react`，`react-dom`，`scheduler`。
 - `lib-router.js`：包含 `react-router`，`react-router-dom`，`history`，`@remix-run/router`。
 - `lib-lodash.js`：包含 `lodash`，`lodash-es`。
-- `lib-antd.js`：包含 `antd`。
-- `lib-arco.js`：包含 `@arco-design/web-react` 以及 `@arco-design` 组织下相关的包。
-- `lib-semi.js`：包含 `@douyinfe/semi-ui` 以及 `@ies` 和 `@douyinfe` 组织下相关的包。
 - `lib-axios.js`：包含 `axios` 以及相关的包。
 
 这种拆包策略将常用的包进行分组，然后拆分为单独的 chunk，一般 chunk 的数量不会很多，适合绝大部分应用，同时也是我们推荐的拆包策略。
@@ -160,7 +157,7 @@ export default {
     chunkSplit: {
       strategy: 'split-by-experience',
       forceSplitting: {
-        axios: /node_modules\/axios/,
+        axios: /node_modules[\\/]axios/,
       },
     },
   },
@@ -191,14 +188,14 @@ export default {
 };
 ```
 
-其中 `override` 中的配置会和 bundler 的配置进行合并，具体配置项请参考 [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) 或 [Rspack - splitChunks](https://rspack.dev/zh/config/optimization.html#optimization-splitchunks)。
+其中 `override` 中的配置会和 bundler 的配置进行合并，具体配置项请参考 [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) 或 [Rspack - splitChunks](https://rspack.dev/zh/config/optimization#optimization-splitchunks)。
 
 ## 使用 Dynamic Import 拆包
 
 除了 `chunkSplit` 配置，使用 dynamic import 拆包也是一项重要的优化手段，它可以有效减少首屏的包体积。
 
 :::tip 关于 dynamic import
-Dynamic import 是 ECMAScript 2020 引入的一个新特性，它允许你动态地加载一些 JavaScript 模块。Rsbuild 底层的 Rspack / webpack 默认支持 dynamic import，所以你可以直接在代码中使用它。
+Dynamic import 是 ECMAScript 2020 引入的一个新特性，它允许你动态地加载一些 JavaScript 模块。Rsbuild 底层的 Rspack 默认支持 dynamic import，所以你可以直接在代码中使用它。
 :::
 
 当打包工具遇到 `import()` 语法时，它会自动将相关的代码分割成一个新的 chunk，并在运行时按需加载。

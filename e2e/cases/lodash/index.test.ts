@@ -1,15 +1,11 @@
-import * as path from 'path';
 import { expect, test } from '@playwright/test';
-import { webpackOnlyTest } from '@scripts/helper';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 // TODO: needs builtin:swc-loader wasm plugin
-webpackOnlyTest('should optimize lodash bundle size by default', async () => {
+// Not supported yet
+test.skip('should optimize lodash bundle size by default', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.ts'),
-    },
     rsbuildConfig: {
       performance: {
         chunkSplit: {
@@ -25,12 +21,10 @@ webpackOnlyTest('should optimize lodash bundle size by default', async () => {
   expect(size < 10).toBeTruthy();
 });
 
-test('should not optimize lodash bundle size when transformLodash is false', async () => {
+// Not supported yet
+test.skip('should not optimize lodash bundle size when transformLodash is false', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: {
-      index: path.resolve(__dirname, './src/index.ts'),
-    },
     rsbuildConfig: {
       performance: {
         transformLodash: false,

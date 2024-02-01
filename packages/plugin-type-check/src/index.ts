@@ -1,11 +1,11 @@
-import { RsbuildPlugin, RsbuildPluginAPI } from '@rsbuild/core';
+import { logger, type RsbuildPlugin } from '@rsbuild/core';
 import {
-  logger,
+  fse,
   CHAIN_ID,
+  deepmerge,
   mergeChainedOptions,
   type ChainedConfig,
 } from '@rsbuild/shared';
-import { deepmerge } from '@rsbuild/shared/deepmerge';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
 type ForkTsCheckerOptions = ConstructorParameters<
@@ -13,18 +13,26 @@ type ForkTsCheckerOptions = ConstructorParameters<
 >[0];
 
 export type PluginTypeCheckerOptions = {
+  /**
+   * Whether to enable TypeScript type checking.
+   * @default true
+   */
   enable?: boolean;
+  /**
+   * To modify the options of `fork-ts-checker-webpack-plugin`.
+   * @see https://github.com/TypeStrong/fork-ts-checker-webpack-plugin#readme
+   */
   forkTsCheckerOptions?: ChainedConfig<ForkTsCheckerOptions>;
 };
 
 export const pluginTypeCheck = (
   options: PluginTypeCheckerOptions = {},
-): RsbuildPlugin<RsbuildPluginAPI> => {
+): RsbuildPlugin => {
   return {
-    name: 'plugin-type-check',
+    name: 'rsbuild:type-check',
 
     setup(api) {
-      api.modifyBundlerChain(async (chain, { target }) => {
+      api.modifyBundlerChain(async (chain, { target, isProd }) => {
         const { enable = true, forkTsCheckerOptions } = options;
 
         if (!api.context.tsconfigPath || enable === false) {
@@ -33,16 +41,9 @@ export const pluginTypeCheck = (
 
         // If there is multiple target, only apply type checker to the first target
         // to avoid multiple type checker running at the same time
-        if (
-          Array.isArray(api.context.target) &&
-          target !== api.context.target[0]
-        ) {
+        if (target !== api.context.targets[0]) {
           return;
         }
-
-        const { default: ForkTsCheckerWebpackPlugin } = await import(
-          'fork-ts-checker-webpack-plugin'
-        );
 
         // use typescript of user project
         let typescriptPath: string;
@@ -57,40 +58,54 @@ export const pluginTypeCheck = (
           return;
         }
 
-        const typeCheckerOptions = mergeChainedOptions(
-          {
-            typescript: {
-              // avoid OOM issue
-              memoryLimit: 8192,
-              // use tsconfig of user project
-              configFile: api.context.tsconfigPath,
-              typescriptPath,
-            },
-            issue: {
-              exclude: [
-                { file: '**/*.(spec|test).ts' },
-                { file: '**/node_modules/**/*' },
-              ],
-            },
-            logger: {
-              log() {
-                // do nothing
-                // we only want to display error messages
-              },
-              error(message: string) {
-                console.error(message.replace(/ERROR/g, 'Type Error'));
-              },
-            },
-          },
-          forkTsCheckerOptions,
-          undefined,
-          deepmerge,
+        const { default: ForkTsCheckerWebpackPlugin } = await import(
+          'fork-ts-checker-webpack-plugin'
         );
 
-        if (
-          api.context.bundlerType === 'rspack' &&
-          chain.get('mode') === 'production'
-        ) {
+        const { default: json5 } = await import('@rsbuild/shared/json5');
+        const { references } = json5.parse(
+          fse.readFileSync(api.context.tsconfigPath, 'utf-8'),
+        );
+        const useReference = Array.isArray(references) && references.length > 0;
+
+        const defaultOptions: ForkTsCheckerOptions = {
+          typescript: {
+            // set 'readonly' to avoid emitting tsbuildinfo,
+            // as the generated tsbuildinfo will break fork-ts-checker
+            mode: 'readonly',
+            // enable build when using project reference
+            build: useReference,
+            // avoid OOM issue
+            memoryLimit: 8192,
+            // use tsconfig of user project
+            configFile: api.context.tsconfigPath,
+            // use typescript of user project
+            typescriptPath,
+          },
+          issue: {
+            exclude: [
+              { file: '**/*.(spec|test).ts' },
+              { file: '**/node_modules/**/*' },
+            ],
+          },
+          logger: {
+            log() {
+              // do nothing
+              // we only want to display error messages
+            },
+            error(message: string) {
+              console.error(message.replace(/ERROR/g, 'Type Error'));
+            },
+          },
+        };
+
+        const typeCheckerOptions = mergeChainedOptions({
+          defaults: defaultOptions,
+          options: forkTsCheckerOptions,
+          mergeFn: deepmerge,
+        });
+
+        if (api.context.bundlerType === 'rspack' && isProd) {
           logger.info('Ts checker running...');
           logger.info(
             'Ts checker is running slowly and will block builds until it is complete, please be patient and wait.',

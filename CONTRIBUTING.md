@@ -147,30 +147,34 @@ pnpm run --filter @rsbuild/some-package test
 
 In addition to the unit tests, the Rsbuild also includes end-to-end (E2E) tests, which checks the functionality of the application as a whole.
 
-You can run the `test:e2e` command to run the E2E tests:
+You can run the `e2e` command to run the E2E tests:
 
 ```sh
-pnpm run test:e2e
+pnpm run e2e
 ```
 
 If you need to run a specified test, you can add keywords to filter:
 
 ```sh
-# Only run test cases with the copy-assets keyword
-npx jest copy-assets
+# Only run test cases which contains `vue` keyword in file path with Rspack
+pnpm e2e:rspack vue
+# Only run test cases which contains `vue` keyword in test name with Rspack
+pnpm e2e:rspack -g vue
 ```
 
 ---
 
 ## Linting
 
-To help maintain consistency and readability of the codebase, we use a [Oxc](https://github.com/web-infra-dev/oxc) to lint the codes.
+To help maintain consistency and readability of the codebase, we use [Biome](https://github.com/biomejs/biome) to lint the codes, [ls-lint](https://github.com/loeffel-io/ls-lint) to lint the directory and filename.
 
-You can run the Linter by executing the following command:
+You can run the linters by executing the following command:
 
 ```sh
 pnpm run lint
 ```
+
+For VS Code users, you can install the [Biome VS Code extension](https://marketplace.visualstudio.com/items?itemName=biomejs.biome) to see lints while typing.
 
 ---
 
@@ -194,16 +198,6 @@ The source code of Rspress can be found in [this repo](https://github.com/web-in
 
 ## Submitting Changes
 
-### Add a Changeset
-
-Rsbuild is using [Changesets](https://github.com/changesets/changesets) to manage the versioning and changelogs.
-
-If you've changed some packages, you need add a new changeset for the changes. Please run `change` command to select the changed packages and add the changeset info.
-
-```sh
-pnpm run change
-```
-
 ### Committing your Changes
 
 Commit your changes to your forked repo, and [create a pull request](https://help.github.com/articles/creating-a-pull-request/).
@@ -221,6 +215,16 @@ feat(plugin-swc): Add `xxx` config
 |    |_______ Scope
 |____________ Type
 ```
+
+---
+
+## Benchmarking
+
+You can input `!bench` in the comment area of ​​the PR to do benchmarking on `rsbuild` (you need to have Collaborator and above permissions).
+
+You can focus on metrics related to build time and bundle size based on the comparison table output by comments to assist you in making relevant performance judgments and decisions.
+
+Dependencies installation-related metrics base on publishing process, so the data is relatively lagging and is for reference only.
 
 ---
 

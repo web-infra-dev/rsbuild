@@ -1,68 +1,62 @@
-import { createDependenciesRegExp } from '@rsbuild/core/plugins/splitChunks';
+import type { RsbuildPluginAPI } from '@rsbuild/core';
 import {
-  isPackageInstalled,
-  type CacheGroup,
-  type SharedRsbuildPluginAPI,
+  isProd,
+  isPlainObject,
+  createCacheGroups,
+  type SplitChunks,
 } from '@rsbuild/shared';
+import type { SplitReactChunkOptions } from '.';
 
-export async function splitByExperience(rootPath: string): Promise<CacheGroup> {
-  const experienceCacheGroup: CacheGroup = {};
-
-  const packageRegExps: Record<string, RegExp> = {
-    react: createDependenciesRegExp('react', 'react-dom', 'scheduler'),
-    router: createDependenciesRegExp(
-      'react-router',
-      'react-router-dom',
-      '@remix-run/router',
-      'history',
-    ),
-  };
-
-  // Detect if the package is installed in current project
-  // If installed, add the package to cache group
-  if (isPackageInstalled('antd', rootPath)) {
-    packageRegExps.antd = createDependenciesRegExp('antd');
-  }
-  if (isPackageInstalled('@arco-design/web-react', rootPath)) {
-    packageRegExps.arco = createDependenciesRegExp(/@?arco-design/);
-  }
-  if (isPackageInstalled('@douyinfe/semi-ui', rootPath)) {
-    packageRegExps.semi = createDependenciesRegExp(
-      /@(ies|douyinfe)[\\/]semi-.*/,
-    );
-  }
-
-  Object.entries(packageRegExps).forEach(([name, test]) => {
-    const key = `lib-${name}`;
-
-    experienceCacheGroup[key] = {
-      test,
-      priority: 0,
-      name: key,
-      reuseExistingChunk: true,
-    };
-  });
-
-  return experienceCacheGroup;
-}
-
-export const applySplitChunksRule = (api: SharedRsbuildPluginAPI) => {
-  api.modifyRsbuildConfig(async (rsbuildConfig) => {
-    const { chunkSplit } = rsbuildConfig.performance || {};
-
-    if (chunkSplit?.strategy !== 'split-by-experience') {
+export const applySplitChunksRule = (
+  api: RsbuildPluginAPI,
+  options: SplitReactChunkOptions = {
+    react: true,
+    router: true,
+  },
+) => {
+  api.modifyBundlerChain((chain) => {
+    const config = api.getNormalizedConfig();
+    if (config.performance.chunkSplit.strategy !== 'split-by-experience') {
       return;
     }
 
-    const cacheGroups = await splitByExperience(api.context.rootPath);
-    const override = rsbuildConfig.performance!.chunkSplit!.override;
+    const currentConfig = chain.optimization.splitChunks.values();
+    if (!isPlainObject(currentConfig)) {
+      return;
+    }
 
-    rsbuildConfig.performance!.chunkSplit!.override = {
+    const extraGroups: Record<string, (string | RegExp)[]> = {};
+
+    if (options.react) {
+      extraGroups.react = [
+        'react',
+        'react-dom',
+        'scheduler',
+        ...(isProd()
+          ? []
+          : ['react-refresh', /@rspack[\\/]plugin-react-refresh/]),
+      ];
+    }
+
+    if (options.router) {
+      extraGroups.router = [
+        'react-router',
+        'react-router-dom',
+        'history',
+        /@remix-run[\\/]router/,
+      ];
+    }
+
+    if (!Object.keys(extraGroups).length) {
+      return;
+    }
+
+    chain.optimization.splitChunks({
+      ...currentConfig,
       cacheGroups: {
-        ...cacheGroups,
-        ...(override ? override.cacheGroups : {}),
+        ...(currentConfig as Exclude<SplitChunks, false>).cacheGroups,
+        ...createCacheGroups(extraGroups),
       },
-      ...(override || {}),
-    };
+    });
   });
 };

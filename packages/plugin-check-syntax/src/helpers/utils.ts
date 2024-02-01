@@ -1,4 +1,4 @@
-import { CheckSyntaxExclude } from '../types';
+import type { CheckSyntaxExclude } from '../types';
 
 export function checkIsExcludeSource(
   path: string,

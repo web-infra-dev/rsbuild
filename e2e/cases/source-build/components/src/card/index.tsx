@@ -1,4 +1,3 @@
-import React from 'react';
 import { strAdd } from '@e2e/source-build-utils';
 import './index.less';
 

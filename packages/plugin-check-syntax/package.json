@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-check-syntax",
-  "version": "0.0.12",
+  "version": "0.3.11",
   "description": "Check syntax plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -9,14 +9,16 @@
     "directory": "packages/plugin-check-syntax"
   },
   "license": "MIT",
+  "type": "commonjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
       "default": "./dist/index.js"
     }
   },
   "main": "./dist/index.js",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -27,24 +29,22 @@
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
     "acorn": "^8.10.0",
-    "browserslist": "^4.22.1",
     "caniuse-lite": "^1.0.30001559",
-    "htmlparser2": "9.0.0",
+    "htmlparser2": "9.1.0",
     "source-map": "^0.7.4"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/test-helper": "workspace:*",
+    "@scripts/test-helper": "workspace:*",
     "@types/caniuse-lite": "^1.0.3",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.0.12"
+    "@rsbuild/core": "workspace:^0.3.11"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "https://registry.npmjs.org/",
-    "types": "./dist/index.d.ts"
+    "registry": "https://registry.npmjs.org/"
   }
 }

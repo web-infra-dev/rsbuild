@@ -1,23 +1,18 @@
-import { join } from 'path';
-import { expect } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
-import { webpackOnlyTest } from '@scripts/helper';
+import { test, expect } from '@playwright/test';
+import { build, gotoPage } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
 // TODO: needs builtin:swc-loader
-webpackOnlyTest('should remove prop-types by default', async ({ page }) => {
+test.skip('should remove prop-types by default', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.js'),
-    },
     runServer: true,
     plugins: [pluginReact()],
   });
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   expect(await page.evaluate('window.testAppPropTypes')).toBeUndefined();
-  rsbuild.close();
+  await rsbuild.close();
 });

@@ -1,28 +1,21 @@
-import { isAbsolute, join } from 'path';
-import { MODULE_PATH_REGEX } from './constants';
-import { removeLeadingSlash } from './utils';
-import { promises, constants, existsSync, statSync } from 'fs';
-import {
+import path from 'node:path';
+import fse from '../compiled/fs-extra';
+import { promises, constants, statSync } from 'node:fs';
+import type {
+  RsbuildConfig,
   DistPathConfig,
-  NormalizedOutputConfig,
-  HtmlConfig,
   FilenameConfig,
+  NormalizedConfig,
 } from './types';
 
-export function getAbsoluteDistPath(
-  cwd: string,
-  outputConfig: NormalizedOutputConfig,
-) {
-  const root = getDistPath(outputConfig, 'root');
-  return isAbsolute(root) ? root : join(cwd, root);
-}
+export { fse };
 
 export const getDistPath = (
-  outputConfig: NormalizedOutputConfig,
+  config: RsbuildConfig | NormalizedConfig,
   type: keyof DistPathConfig,
 ): string => {
-  const { distPath } = outputConfig;
-  const ret = distPath[type];
+  const { distPath } = config.output || {};
+  const ret = distPath?.[type];
   if (typeof ret !== 'string') {
     throw new Error(`unknown key ${type} in "output.distPath"`);
   }
@@ -36,6 +29,14 @@ export async function isFileExists(file: string) {
     .catch(() => false);
 }
 
+export const isFileSync = (filePath: string) => {
+  try {
+    return statSync(filePath, { throwIfNoEntry: false })?.isFile();
+  } catch (_) {
+    return false;
+  }
+};
+
 /**
  * Find first already exists file.
  * @param files - Absolute file paths with extension.
@@ -43,51 +44,20 @@ export async function isFileExists(file: string) {
  */
 export const findExists = (files: string[]): string | false => {
   for (const file of files) {
-    if (existsSync(file) && statSync(file).isFile()) {
+    if (isFileSync(file)) {
       return file;
     }
   }
   return false;
 };
 
-export function getPackageNameFromModulePath(modulePath: string) {
-  const handleModuleContext = modulePath?.match(MODULE_PATH_REGEX);
-
-  if (!handleModuleContext) {
-    return false;
-  }
-
-  const [, , scope, name] = handleModuleContext;
-  const packageName = ['npm', (scope ?? '').replace('@', ''), name]
-    .filter(Boolean)
-    .join('.');
-
-  return packageName;
-}
-
-export function getHTMLPathByEntry(
-  entryName: string,
-  config: {
-    output: NormalizedOutputConfig;
-    html: HtmlConfig;
-  },
-) {
-  const htmlPath = getDistPath(config.output, 'html');
-  const filename =
-    config.html.outputStructure === 'flat'
-      ? `${entryName}.html`
-      : `${entryName}/index.html`;
-
-  return removeLeadingSlash(`${htmlPath}/${filename}`);
-}
-
 export const getFilename = (
-  output: NormalizedOutputConfig,
+  config: NormalizedConfig,
   type: keyof FilenameConfig,
   isProd: boolean,
 ) => {
-  const { filename } = output;
-  const useHash = !output.disableFilenameHash;
+  const { filename } = config.output;
+  const useHash = !config.output.disableFilenameHash;
   const hash = useHash ? '.[contenthash:8]' : '';
 
   switch (type) {
@@ -107,3 +77,50 @@ export const getFilename = (
       throw new Error(`unknown key ${type} in "output.filename"`);
   }
 };
+
+export async function findUp({
+  filename,
+  cwd = process.cwd(),
+}: {
+  filename: string;
+  cwd?: string;
+}) {
+  const { root } = path.parse(cwd);
+
+  let dir = cwd;
+  while (dir && dir !== root) {
+    const filePath = path.join(dir, filename);
+
+    try {
+      const stats = await promises.stat(filePath);
+      if (stats?.isFile()) {
+        return filePath;
+      }
+    } catch {}
+
+    dir = path.dirname(dir);
+  }
+}
+
+export function findUpSync({
+  filename,
+  cwd = process.cwd(),
+}: {
+  filename: string;
+  cwd?: string;
+}) {
+  const { root } = path.parse(cwd);
+
+  let dir = cwd;
+  while (dir && dir !== root) {
+    const filePath = path.join(dir, filename);
+
+    try {
+      if (isFileSync(filePath)) {
+        return filePath;
+      }
+    } catch {}
+
+    dir = path.dirname(dir);
+  }
+}

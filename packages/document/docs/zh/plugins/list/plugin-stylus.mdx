@@ -24,11 +24,9 @@ export default {
 };
 ```
 
-如果你使用了 Rsbuild 的 JavaScript API，可以通过 [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) 方法来注册插件。
-
 ## 示例
 
-安装完插件后，你可以直接在代码中引入 `*.styl` 或 `*.module.styl` 文件，无须添加其他配置。
+安装完插件后，你可以直接在代码中引入 `*.styl`, `*.stylus`, `*.module.styl` 或 `*.module.stylus` 文件，无须添加其他配置。
 
 - `normalize.styl`:
 
@@ -75,7 +73,7 @@ type StylusOptions = {
 
 - **默认值：** `undefined`
 
-传递给 Stylus 的选项，请查阅 [Stylus 文档](https://stylus-lang.com/docs/js.html) 来了解具体用法。
+传递给 Stylus 的选项，请查阅 [Stylus 文档](https://stylus-lang.com/docs/js) 来了解具体用法。
 
 ```ts
 pluginStylus({
@@ -88,9 +86,9 @@ pluginStylus({
 ### sourceMap
 
 - **类型：** `boolean`
-- **默认值：** `isDev`
+- **默认值：** 与 [output.sourceMap.css](/config/output/source-map) 一致
 
-是否生成 Source Map，默认在开发环境下启用。
+是否生成 source map 文件。
 
 ```ts
 pluginStylus({

@@ -1,11 +1,10 @@
-import path from 'path';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 test('should apply defer by default', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
   });
   const files = await rsbuild.unwrapOutputJSON();
   const html =
@@ -17,7 +16,6 @@ test('should apply defer by default', async () => {
 test('should remove defer when scriptLoading is "blocking"', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       html: {
         scriptLoading: 'blocking',
@@ -34,7 +32,6 @@ test('should remove defer when scriptLoading is "blocking"', async () => {
 test('should allow to set scriptLoading to "module"', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       html: {
         scriptLoading: 'module',

@@ -3,14 +3,23 @@
 // implementations.
 
 export {
+  AsyncCompiler,
   CompileResult,
+  Compiler,
   compile,
   compileAsync,
   compileString,
   compileStringAsync,
+  initCompiler,
+  initAsyncCompiler,
 } from './compile';
 export {Exception} from './exception';
-export {FileImporter, Importer, ImporterResult} from './importer';
+export {
+  CanonicalizeContext,
+  FileImporter,
+  Importer,
+  ImporterResult,
+} from './importer';
 export {Logger, SourceSpan, SourceLocation} from './logger';
 export {
   CustomFunction,
@@ -23,13 +32,19 @@ export {
 } from './options';
 export {PromiseOr} from './util/promise_or';
 export {
+  CalculationInterpolation,
+  CalculationOperation,
+  CalculationOperator,
+  CalculationValue,
   ListSeparator,
   SassArgumentList,
   SassBoolean,
+  SassCalculation,
   SassColor,
   SassFunction,
   SassList,
   SassMap,
+  SassMixin,
   SassNumber,
   SassString,
   Value,

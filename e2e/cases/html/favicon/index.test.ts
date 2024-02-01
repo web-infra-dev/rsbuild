@@ -1,11 +1,10 @@
-import path from 'path';
+import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 test('should emit local favicon to dist path', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       html: {
         favicon: './src/icon.png',
@@ -27,7 +26,6 @@ test('should emit local favicon to dist path', async () => {
 test('should apply asset prefix to favicon URL', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       html: {
         favicon: './src/icon.png',
@@ -50,7 +48,6 @@ test('should apply asset prefix to favicon URL', async () => {
 test('should allow favicon to be a CDN URL', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       html: {
         favicon: 'https://foo.com/icon.png',
@@ -63,4 +60,40 @@ test('should allow favicon to be a CDN URL', async () => {
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 
   expect(html).toContain('<link rel="icon" href="https://foo.com/icon.png">');
+});
+
+test('should generate favicon via function correctly', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      source: {
+        entry: {
+          foo: path.resolve(__dirname, './src/foo.js'),
+          bar: path.resolve(__dirname, './src/foo.js'),
+        },
+      },
+      html: {
+        favicon({ entryName }) {
+          const icons: Record<string, string> = {
+            foo: 'https://example.com/foo.ico',
+            bar: 'https://example.com/bar.ico',
+          };
+          return icons[entryName] || 'https://example.com/default.ico';
+        },
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const fooHtml =
+    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  expect(fooHtml).toContain(
+    '<link rel="icon" href="https://example.com/foo.ico">',
+  );
+
+  const barHtml =
+    files[Object.keys(files).find((file) => file.endsWith('bar.html'))!];
+  expect(barHtml).toContain(
+    '<link rel="icon" href="https://example.com/bar.ico">',
+  );
 });

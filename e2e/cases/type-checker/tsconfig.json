@@ -5,9 +5,8 @@
     "baseUrl": "./",
     "outDir": "./dist",
     "paths": {
-      "@/*": ["./src/*"],
-      "@scripts/*": ["../../scripts/*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "*.test.ts"]
+  "include": ["src"]
 }

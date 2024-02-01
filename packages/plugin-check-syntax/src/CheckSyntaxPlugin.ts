@@ -1,6 +1,5 @@
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 import { parse } from 'acorn';
-import { fs } from '@rsbuild/shared/fs-extra';
 import {
   printErrors,
   generateError,
@@ -8,21 +7,21 @@ import {
   generateHtmlScripts,
   checkIsExcludeSource,
 } from './helpers';
-import { JS_REGEX, HTML_REGEX } from '@rsbuild/shared';
+import { fse, JS_REGEX, HTML_REGEX } from '@rsbuild/shared';
 import type {
-  SyntaxError,
+  ECMASyntaxError,
   EcmaVersion,
   CheckSyntaxOptions,
   CheckSyntaxExclude,
   AcornParseError,
 } from './types';
-import type { Rspack } from '@rsbuild/core/rspack-provider';
+import type { Rspack } from '@rsbuild/core';
 
 type Compiler = Rspack.Compiler;
 type Compilation = Rspack.Compilation;
 
 export class CheckSyntaxPlugin {
-  errors: SyntaxError[] = [];
+  errors: ECMASyntaxError[] = [];
 
   ecmaVersion: EcmaVersion;
 
@@ -34,7 +33,7 @@ export class CheckSyntaxPlugin {
 
   constructor(
     options: CheckSyntaxOptions &
-      Required<Pick<CheckSyntaxOptions, 'targets' | 'exclude'>> & {
+      Required<Pick<CheckSyntaxOptions, 'targets'>> & {
         rootPath: string;
       },
   ) {
@@ -83,7 +82,7 @@ export class CheckSyntaxPlugin {
     }
 
     if (JS_REGEX.test(filepath)) {
-      const jsScript = await fs.readFile(filepath, 'utf-8');
+      const jsScript = await fse.readFile(filepath, 'utf-8');
       await this.tryParse(filepath, jsScript);
     }
   }

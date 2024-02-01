@@ -1,14 +1,16 @@
-import { LoaderContext, LoaderDefinitionFunction } from 'webpack';
+import type { LoaderContext, LoaderDefinitionFunction } from 'webpack';
 import { createLoader } from '../src/loader';
 
 const mockSwcLoaderRunner = (): [
   Promise<ReturnType<LoaderDefinitionFunction>>,
-  LoaderContext<{}>,
+  LoaderContext<Record<string, never>>,
 ] => {
-  let resolve;
-  const p = new Promise<ReturnType<LoaderDefinitionFunction>>(
-    (r) => (resolve = r),
-  );
+  let resolve: unknown;
+
+  const p = new Promise<ReturnType<LoaderDefinitionFunction>>((r) => {
+    resolve = r;
+  });
+
   return [
     p,
     {
@@ -19,7 +21,7 @@ const mockSwcLoaderRunner = (): [
         return resolve;
       },
       resourcePath: '/test.js',
-    } as LoaderContext<{}>,
+    } as LoaderContext<Record<string, never>>,
   ];
 };
 

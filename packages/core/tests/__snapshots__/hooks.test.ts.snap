@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`initHooks > should init hooks correctly 1`] = `
+[
+  "onExit",
+  "onDevCompileDone",
+  "onAfterStartDevServer",
+  "onBeforeStartDevServer",
+  "onAfterStartProdServer",
+  "onBeforeStartProdServer",
+  "onAfterBuild",
+  "onBeforeBuild",
+  "modifyRspackConfig",
+  "modifyBundlerChain",
+  "modifyWebpackChain",
+  "modifyWebpackConfig",
+  "modifyRsbuildConfig",
+  "onAfterCreateCompiler",
+  "onBeforeCreateCompiler",
+]
+`;

@@ -1,13 +1,15 @@
 import type { ChainIdentifier } from '../chain';
 import type { Stats, MultiStats } from './stats';
-import { NodeEnv, PromiseOrNot } from './utils';
-import { RsbuildTarget } from './rsbuild';
-import { BundlerChain } from './bundlerConfig';
-import { mergeRsbuildConfig } from '../mergeRsbuildConfig';
-import type { WebpackPluginInstance } from 'webpack';
+import type { NodeEnv, PromiseOrNot } from './utils';
+import type { RsbuildTarget } from './rsbuild';
+import type { BundlerChain } from './bundlerConfig';
+import type { mergeRsbuildConfig } from '../mergeRsbuildConfig';
+import type { Rspack, RspackConfig } from './rspack';
+import type { RsbuildConfig } from './config';
+import type { WebpackConfig } from './thirdParty';
 
-export type OnBeforeBuildFn<BundlerConfig = unknown> = (params: {
-  bundlerConfigs?: BundlerConfig[];
+export type OnBeforeBuildFn<B = 'rspack'> = (params: {
+  bundlerConfigs?: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
 }) => PromiseOrNot<void>;
 
 export type OnAfterBuildFn = (params: {
@@ -16,21 +18,35 @@ export type OnAfterBuildFn = (params: {
 
 export type OnDevCompileDoneFn = (params: {
   isFirstCompile: boolean;
+  stats: Stats | MultiStats;
 }) => PromiseOrNot<void>;
 
 export type OnBeforeStartDevServerFn = () => PromiseOrNot<void>;
 
+export type OnBeforeStartProdServerFn = () => PromiseOrNot<void>;
+
+export type Routes = Array<{
+  entryName: string;
+  pathname: string;
+}>;
+
 export type OnAfterStartDevServerFn = (params: {
   port: number;
+  routes: Routes;
 }) => PromiseOrNot<void>;
 
-export type OnBeforeCreateCompilerFn<BundlerConfig = unknown> = (params: {
-  bundlerConfigs: BundlerConfig[];
+export type OnAfterStartProdServerFn = (params: {
+  port: number;
+  routes: Routes;
 }) => PromiseOrNot<void>;
 
-export type OnAfterCreateCompilerFn<Compiler = unknown> = (params: {
-  compiler: Compiler;
+export type OnBeforeCreateCompilerFn<B = 'rspack'> = (params: {
+  bundlerConfigs: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
 }) => PromiseOrNot<void>;
+
+export type OnAfterCreateCompilerFn<
+  Compiler = Rspack.Compiler | Rspack.MultiCompiler,
+> = (params: { compiler: Compiler }) => PromiseOrNot<void>;
 
 export type OnExitFn = () => void;
 
@@ -39,32 +55,38 @@ export type ModifyRsbuildConfigUtils = {
   mergeRsbuildConfig: typeof mergeRsbuildConfig;
 };
 
-export type ModifyRsbuildConfigFn<RsbuildConfig> = (
+export type ModifyRsbuildConfigFn = (
   config: RsbuildConfig,
   utils: ModifyRsbuildConfigUtils,
 ) => PromiseOrNot<RsbuildConfig | void>;
 
 export type ModifyChainUtils = {
   env: NodeEnv;
+  isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
   isServer: boolean;
   isServiceWorker: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
-  getCompiledPath: (name: string) => string;
   HtmlPlugin: typeof import('html-webpack-plugin');
   /**
-   * @private should only used in Rsbuild
+   * @private internal API
    */
-  webpack: typeof import('webpack');
+  getCompiledPath: (name: string) => string;
 };
+
+interface PluginInstance {
+  apply: (compiler: any) => void;
+  [k: string]: any;
+}
 
 export type ModifyBundlerChainUtils = ModifyChainUtils & {
   bundler: {
-    BannerPlugin: WebpackPluginInstance;
-    DefinePlugin: WebpackPluginInstance;
-    ProvidePlugin: WebpackPluginInstance;
+    BannerPlugin: PluginInstance;
+    DefinePlugin: PluginInstance;
+    ProvidePlugin: PluginInstance;
+    HotModuleReplacementPlugin: PluginInstance;
   };
 };
 

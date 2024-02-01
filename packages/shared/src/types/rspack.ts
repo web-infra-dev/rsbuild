@@ -1,23 +1,30 @@
 import type * as Rspack from '@rspack/core';
-
-type RspackOptions = Rspack.RspackOptions;
-export type RspackCompiler = Rspack.Compiler;
-export type RspackMultiCompiler = Rspack.MultiCompiler;
+import type { BundlerPluginInstance } from './bundlerConfig';
 
 export type { Rspack };
 
-type BuiltinsOptions = NonNullable<RspackOptions['builtins']>;
+type BuiltinsOptions = NonNullable<Rspack.Configuration['builtins']>;
 
-export type RspackBuiltinsConfig = Omit<
-  BuiltinsOptions,
-  | 'html'
-  | 'react'
-  | 'pluginImport'
-  | 'decorator'
-  | 'presetEnv'
-  | 'emotion'
-  | 'relay'
+export type RspackConfig = Omit<Rspack.Configuration, 'plugins'> & {
+  builtins?: Omit<BuiltinsOptions, 'html'>;
+  // Use a loose type here, so that user can pass webpack plugins
+  plugins?: BundlerPluginInstance[];
+};
+export type RspackCompiler = Rspack.Compiler;
+export type RspackMultiCompiler = Rspack.MultiCompiler;
+
+/** T[] => T */
+type GetElementType<T extends any[]> = T extends (infer U)[] ? U : never;
+
+export type RspackRule = GetElementType<
+  NonNullable<NonNullable<RspackConfig['module']>['rules']>
 >;
+export type RuleSetRule = Rspack.RuleSetRule;
+export type RspackPluginInstance = GetElementType<
+  NonNullable<RspackConfig['plugins']>
+>;
+
+export type RspackBuiltinsConfig = BuiltinsOptions;
 
 export declare type JscTarget =
   | 'es3'
@@ -47,20 +54,30 @@ export interface EsParserConfig {
   importAssertions?: boolean;
 }
 
-export interface ReactConfig {
+export interface SwcReactConfig {
   pragma?: string;
   pragmaFrag?: string;
   throwIfNamespace?: boolean;
   development?: boolean;
   useBuiltins?: boolean;
   refresh?: boolean;
+  /**
+   * Decides which React JSX runtime to use.
+   * `automatic` auto imports the functions for transpiled JSX. `classic` does not automatic import anything.
+   * @default 'automatic'
+   */
   runtime?: 'automatic' | 'classic';
+  /**
+   * Specify the import path of the JSX runtime when `jsxRuntime` is `'automatic'`.
+   * @default 'react'
+   */
   importSource?: string;
 }
 
 export interface TransformConfig {
-  react?: ReactConfig;
+  react?: SwcReactConfig;
   legacyDecorator?: boolean;
+  decoratorVersion?: '2021-12' | '2022-03';
   decoratorMetadata?: boolean;
   treatConstEnumAsEnum?: boolean;
   useDefineForClassFields?: boolean;
@@ -97,11 +114,39 @@ export type BuiltinSwcLoaderOptions = {
     };
     preserveAllComments?: boolean;
   };
-  rspackExperiments?: Pick<
-    BuiltinsOptions,
-    'react' | 'decorator' | 'presetEnv' | 'emotion' | 'relay'
-  > & {
-    import?: BuiltinsOptions['pluginImport'];
+  rspackExperiments?: {
+    relay?:
+      | boolean
+      | {
+          artifactDirectory?: string;
+          language: 'javascript' | 'typescript' | 'flow';
+        };
+    emotion?:
+      | boolean
+      | {
+          sourceMap?: boolean;
+          autoLabel?: 'never' | 'dev-only' | 'always';
+          labelFormat?: string;
+          importMap?: {
+            [packageName: string]: {
+              [exportName: string]: {
+                canonicalImport?: [string, string];
+              };
+            };
+          };
+        };
+    import?: {
+      libraryName: string;
+      libraryDirectory?: string;
+      customName?: string;
+      customStyleName?: string;
+      style?: string | boolean;
+      styleLibraryDirectory?: string;
+      camelToDashComponentName?: boolean;
+      transformToDefaultImport?: boolean;
+      ignoreEsComponent?: Array<string>;
+      ignoreStyleComponent?: Array<string>;
+    }[];
     styledComponents?: {
       displayName?: boolean;
       ssr?: boolean;
@@ -116,32 +161,3 @@ export type BuiltinSwcLoaderOptions = {
     };
   };
 };
-
-export interface RspackConfig extends RspackOptions {
-  /** multi type is useless in Rsbuild and make get value difficult */
-  entry?: Record<string, string | string[]>;
-  /**
-   * `builtins.react / pluginImport / decorator / presetEnv / emotion / relay` are no longer supported by Rspack,
-   * please migrate to [builtin:swc-loader options](https://rsbuild.dev/guide/advanced/rspack-start.html#5-swc-configuration-support)
-   *
-   * `builtins.html` are no longer supported by Rspack, please use [tools.htmlPlugin](https://rsbuild.dev/api/config-tools.html#toolshtmlplugin) instead.
-   */
-  builtins?: Omit<BuiltinsOptions, 'html'>;
-  /** rspack-dev-server is not used in modern.js */
-  devServer?: {
-    hot?: boolean;
-  };
-}
-
-/** T[] => T */
-type GetElementType<T extends any[]> = T extends (infer U)[] ? U : never;
-
-export type RspackRule = GetElementType<
-  NonNullable<NonNullable<RspackConfig['module']>['rules']>
->;
-
-export type RuleSetRule = Rspack.RuleSetRule;
-
-export type RspackPluginInstance = GetElementType<
-  NonNullable<RspackConfig['plugins']>
->;

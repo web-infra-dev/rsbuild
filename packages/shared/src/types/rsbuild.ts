@@ -1,36 +1,37 @@
-import type { Context } from './context';
-import type { PluginStore } from './plugin';
+import type { PluginManager } from './plugin';
+import type { RsbuildConfig } from './config';
+import type { RsbuildContext } from './context';
 import type { RsbuildProvider, ProviderInstance } from './provider';
+import type { EntryDescription } from '@rspack/core';
 
 export type RsbuildTarget = 'web' | 'node' | 'web-worker' | 'service-worker';
 
-export type RsbuildEntry = Record<string, string | string[]>;
+export type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 
 export type RsbuildMode = 'development' | 'production';
 
 export type CreateRsbuildOptions = {
   /** The root path of current project. */
   cwd?: string;
-  /** The entry points object. */
-  entry?: RsbuildEntry;
-  /** Type of build target. */
-  target?: RsbuildTarget | RsbuildTarget[];
-  /** Absolute path to the config file of higher-level solutions. */
-  configPath?: string | null;
+  /** Configurations of Rsbuild. */
+  rsbuildConfig?: RsbuildConfig;
 };
 
-export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {
-  context: Context;
+export type RsbuildInstance<
+  P extends RsbuildProvider | RsbuildProvider<'webpack'> = RsbuildProvider,
+> = {
+  context: RsbuildContext;
 
-  addPlugins: PluginStore['addPlugins'];
-  removePlugins: PluginStore['removePlugins'];
-  isPluginExists: PluginStore['isPluginExists'];
+  addPlugins: PluginManager['addPlugins'];
+  removePlugins: PluginManager['removePlugins'];
+  isPluginExists: PluginManager['isPluginExists'];
 
   build: ProviderInstance['build'];
   preview: ProviderInstance['preview'];
   initConfigs: ProviderInstance['initConfigs'];
   inspectConfig: ProviderInstance['inspectConfig'];
   createCompiler: ProviderInstance['createCompiler'];
+  getServerAPIs: ProviderInstance['getServerAPIs'];
   startDevServer: ProviderInstance['startDevServer'];
 
   getHTMLPaths: Awaited<ReturnType<P>>['pluginAPI']['getHTMLPaths'];
@@ -46,6 +47,9 @@ export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {
   onBeforeStartDevServer: Awaited<
     ReturnType<P>
   >['pluginAPI']['onBeforeStartDevServer'];
+  onBeforeStartProdServer: Awaited<
+    ReturnType<P>
+  >['pluginAPI']['onBeforeStartProdServer'];
   onAfterBuild: Awaited<ReturnType<P>>['pluginAPI']['onAfterBuild'];
   onAfterCreateCompiler: Awaited<
     ReturnType<P>
@@ -53,6 +57,9 @@ export type RsbuildInstance<P extends RsbuildProvider = RsbuildProvider> = {
   onAfterStartDevServer: Awaited<
     ReturnType<P>
   >['pluginAPI']['onAfterStartDevServer'];
+  onAfterStartProdServer: Awaited<
+    ReturnType<P>
+  >['pluginAPI']['onAfterStartProdServer'];
   onDevCompileDone: Awaited<ReturnType<P>>['pluginAPI']['onDevCompileDone'];
   onExit: Awaited<ReturnType<P>>['pluginAPI']['onExit'];
 };

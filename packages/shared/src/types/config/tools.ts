@@ -1,72 +1,42 @@
-import type { ArrayOrNot, ChainedConfig, FileFilterUtil } from '../utils';
 import type {
-  AutoprefixerOptions,
-  SassLoaderOptions,
-  LessLoaderOptions,
-  PostCSSLoaderOptions,
+  ArrayOrNot,
+  WebpackChain,
+  ChainedConfig,
+  FileFilterUtil,
+  ChainedConfigWithUtils,
+} from '../utils';
+import type {
+  WebpackConfig,
   PostCSSPlugin,
   CSSLoaderOptions,
+  SassLoaderOptions,
+  LessLoaderOptions,
+  CSSExtractOptions,
   StyleLoaderOptions,
+  AutoprefixerOptions,
+  PostCSSLoaderOptions,
+  TerserPluginOptions,
 } from '../thirdParty';
 import type { BundlerChain } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
-import type { DevServerHttpsOptions } from './dev';
-import type { RspackConfig, RspackRule, RspackPluginInstance } from '../rspack';
+import type { RspackConfig, RspackRule } from '../rspack';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+import type { BundlerPluginInstance } from '../bundlerConfig';
+import type {
+  ModifyWebpackChainUtils,
+  ModifyWebpackConfigUtils,
+} from '../plugin';
 
 export type { HTMLPluginOptions };
 
-export type DevServerOptions = {
-  /** config of hmr client. */
-  client?: {
-    path?: string;
-    port?: string;
-    host?: string;
-    protocol?: string;
-  };
-  /** Whether to enable gzip compression */
-  compress?: boolean;
-  devMiddleware?: {
-    writeToDisk?: boolean | ((filename: string) => boolean);
-    outputFileSystem?: Record<string, any>;
-  };
-  headers?: Record<string, string | string[]>;
-  /** Provides the ability to execute a custom function and apply custom middlewares */
-  /** Whether to watch files change. */
-  watch?: boolean;
-  /** Whether to enable hot reload. */
-  hot?: boolean | string;
-  /** Whether to enable page reload. */
-  liveReload?: boolean;
-  /** Whether to enable https. */
-  https?: DevServerHttpsOptions;
-  /** see https://github.com/bripkens/connect-history-api-fallback */
-  historyApiFallback?:
-    | boolean
-    | {
-        index?: string;
-        verbose?: boolean;
-        logger?: typeof console.log;
-        htmlAcceptHeaders?: string[];
-        disableDotRule?: true;
-        rewrites?: Array<{
-          from: RegExp;
-          to: string | RegExp | Function;
-        }>;
-      };
-  [propName: string]: any;
-};
-
-export type ToolsDevServerConfig = ChainedConfig<DevServerOptions>;
-
 export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
 
-export type ToolsSassConfig = ChainedConfig<
+export type ToolsSassConfig = ChainedConfigWithUtils<
   SassLoaderOptions,
   { addExcludes: FileFilterUtil }
 >;
 
-export type ToolsLessConfig = ChainedConfig<
+export type ToolsLessConfig = ChainedConfigWithUtils<
   LessLoaderOptions,
   { addExcludes: FileFilterUtil }
 >;
@@ -75,7 +45,7 @@ export type ToolsBundlerChainConfig = ArrayOrNot<
   (chain: BundlerChain, utils: ModifyBundlerChainUtils) => void
 >;
 
-export type ToolsPostCSSLoaderConfig = ChainedConfig<
+export type ToolsPostCSSLoaderConfig = ChainedConfigWithUtils<
   PostCSSLoaderOptions,
   { addPlugins: (plugins: PostCSSPlugin | PostCSSPlugin[]) => void }
 >;
@@ -84,7 +54,7 @@ export type ToolsCSSLoaderConfig = ChainedConfig<CSSLoaderOptions>;
 
 export type ToolsStyleLoaderConfig = ChainedConfig<StyleLoaderOptions>;
 
-export type ToolsHtmlPluginConfig = ChainedConfig<
+export type ToolsHtmlPluginConfig = ChainedConfigWithUtils<
   HTMLPluginOptions,
   {
     entryName: string;
@@ -95,20 +65,31 @@ export type ToolsHtmlPluginConfig = ChainedConfig<
 export type ModifyRspackConfigUtils = ModifyChainUtils & {
   addRules: (rules: RspackRule | RspackRule[]) => void;
   prependPlugins: (
-    plugins: RspackPluginInstance | RspackPluginInstance[],
+    plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;
   appendPlugins: (
-    plugins: RspackPluginInstance | RspackPluginInstance[],
+    plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
   mergeConfig: typeof import('../../../compiled/webpack-merge').merge;
   rspack: typeof import('@rspack/core');
 };
 
-export type ToolsRspackConfig = ChainedConfig<
+export type ToolsRspackConfig = ChainedConfigWithUtils<
   RspackConfig,
   ModifyRspackConfigUtils
 >;
+
+export type ToolsWebpackConfig = ChainedConfigWithUtils<
+  WebpackConfig,
+  ModifyWebpackConfigUtils
+>;
+
+export type ToolsWebpackChainConfig = ArrayOrNot<
+  (chain: WebpackChain, utils: ModifyWebpackChainUtils) => void
+>;
+
+export type ToolsTerserConfig = ChainedConfig<TerserPluginOptions>;
 
 export interface ToolsConfig {
   /**
@@ -128,10 +109,6 @@ export interface ToolsConfig {
    */
   autoprefixer?: ToolsAutoprefixerConfig;
   /**
-   * Modify the options of DevServer.
-   */
-  devServer?: ToolsDevServerConfig;
-  /**
    * Modify the options of [css-loader](https://github.com/webpack-contrib/css-loader).
    */
   cssLoader?: ToolsCSSLoaderConfig;
@@ -149,8 +126,31 @@ export interface ToolsConfig {
   htmlPlugin?: false | ToolsHtmlPluginConfig;
   /**
    * Configure Rspack.
+   * @requires rspack
    */
   rspack?: ToolsRspackConfig;
+  /**
+   * Modify the options of [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin).
+   * @requires webpack
+   */
+  cssExtract?: CSSExtractOptions;
+  /**
+   * Configure [webpack](https://webpack.js.org/).
+   * @requires webpack
+   */
+  webpack?: ToolsWebpackConfig;
+  /**
+   * Configure webpack by [webpack-chain](https://github.com/neutrinojs/webpack-chain).
+   * @requires webpack
+   */
+  webpackChain?: ToolsWebpackChainConfig;
+  /**
+   * Modify the options of [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin).
+   * @requires webpack
+   */
+  terser?: ToolsTerserConfig;
 }
 
-export type NormalizedToolsConfig = ToolsConfig;
+export type NormalizedToolsConfig = ToolsConfig & {
+  cssExtract: Required<CSSExtractOptions>;
+};

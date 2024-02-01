@@ -1,4 +1,4 @@
-import type webpack from 'webpack';
+import type { Configuration } from '@rspack/core';
 import type { BundleAnalyzerPlugin } from '../../../compiled/webpack-bundle-analyzer';
 
 export type ConsoleType = 'log' | 'info' | 'warn' | 'error' | 'table' | 'group';
@@ -8,6 +8,11 @@ export type BuildCacheOptions = {
   /** Base directory for the filesystem cache. */
   cacheDirectory?: string;
   cacheDigest?: Array<string | undefined>;
+};
+
+export type PrintFileSizeOptions = {
+  total?: boolean;
+  detail?: boolean;
 };
 
 export interface PreconnectOption {
@@ -47,7 +52,7 @@ export interface PerformanceConfig {
    */
   removeMomentLocale?: boolean;
   /**
-   * Specifies whether to modularize the import of [lodash](https://www.npmjs.com/package/lodash)
+   * Specifies whether to modularize the import of [lodash](https://npmjs.com/package/lodash)
    * and remove unused lodash modules to reduce the code size of lodash.
    */
   transformLodash?: boolean;
@@ -58,7 +63,7 @@ export interface PerformanceConfig {
   /**
    * Whether to print the file sizes after production build.
    */
-  printFileSize?: boolean;
+  printFileSize?: PrintFileSizeOptions | boolean;
   /**
    * Configure the chunk splitting strategy.
    */
@@ -105,12 +110,12 @@ export interface PerformanceConfig {
 }
 
 export interface NormalizedPerformanceConfig extends PerformanceConfig {
-  printFileSize: boolean;
+  printFileSize: PrintFileSizeOptions | boolean;
   buildCache: BuildCacheOptions | boolean;
   chunkSplit: RsbuildChunkSplit;
 }
 
-export type SplitChunks = webpack.Configuration extends {
+export type SplitChunks = Configuration extends {
   optimization?: {
     splitChunks?: infer P;
   };
@@ -118,7 +123,7 @@ export type SplitChunks = webpack.Configuration extends {
   ? P
   : never;
 
-export type CacheGroup = webpack.Configuration extends {
+export type CacheGroup = Configuration extends {
   optimization?: {
     splitChunks?:
       | {
@@ -133,14 +138,13 @@ export type CacheGroup = webpack.Configuration extends {
 export type ForceSplitting = RegExp[] | Record<string, RegExp>;
 
 export interface BaseSplitRules {
-  strategy: string;
+  strategy?: string;
   forceSplitting?: ForceSplitting;
   override?: SplitChunks;
 }
 
 export interface BaseChunkSplit extends BaseSplitRules {
-  /** todo: split-by-module not support in Rspack */
-  strategy:
+  strategy?:
     | 'split-by-module'
     | 'split-by-experience'
     | 'all-in-one'

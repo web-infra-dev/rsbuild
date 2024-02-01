@@ -1,7 +1,11 @@
-import { join } from 'path';
+import { platform } from 'node:os';
+import { join } from 'node:path';
 import { test } from '@playwright/test';
-import { fs } from '@rsbuild/shared/fs-extra';
-import glob, { Options as GlobOptions } from 'fast-glob';
+import { fse, type ConsoleType, castArray } from '@rsbuild/shared';
+import glob, {
+  convertPathToPattern,
+  type Options as GlobOptions,
+} from 'fast-glob';
 
 export const providerType = process.env.PROVIDE_TYPE || 'rspack';
 
@@ -24,15 +28,64 @@ export const getProviderTest = (supportType: string[] = ['rspack']) => {
 export const webpackOnlyTest = getProviderTest(['webpack']);
 export const rspackOnlyTest = getProviderTest(['rspack']);
 
+// fast-glob only accepts posix path
+// https://github.com/mrmlnc/fast-glob#convertpathtopatternpath
+const convertPath = (path: string) => {
+  if (platform() === 'win32') {
+    return convertPathToPattern(path);
+  }
+  return path;
+};
+
 export const globContentJSON = async (path: string, options?: GlobOptions) => {
-  const files = await glob(join(path, '**/*'), options);
+  const files = await glob(convertPath(join(path, '**/*')), options);
   const ret: Record<string, string> = {};
 
   for await (const file of files) {
-    ret[file] = await fs.readFile(file, 'utf-8');
+    ret[file] = await fse.readFile(file, 'utf-8');
   }
 
   return ret;
 };
 
-export { runStaticServer } from './static';
+export const awaitFileExists = async (dir: string) => {
+  const maxChecks = 100;
+  const interval = 100;
+  let checks = 0;
+
+  while (checks < maxChecks) {
+    if (fse.existsSync(dir)) {
+      return;
+    }
+    checks++;
+    await new Promise((resolve) => setTimeout(resolve, interval));
+  }
+
+  throw new Error(`awaitFileExists failed: ${dir}`);
+};
+
+export const proxyConsole = (
+  types: ConsoleType | ConsoleType[] = ['log', 'warn', 'info', 'error'],
+) => {
+  const logs: string[] = [];
+  const restores: Array<() => void> = [];
+
+  castArray(types).forEach((type) => {
+    const method = console[type];
+
+    restores.push(() => {
+      console[type] = method;
+    });
+
+    console[type] = (log) => {
+      logs.push(log);
+    };
+  });
+
+  return {
+    logs,
+    restore: () => {
+      restores.forEach((restore) => restore());
+    },
+  };
+};

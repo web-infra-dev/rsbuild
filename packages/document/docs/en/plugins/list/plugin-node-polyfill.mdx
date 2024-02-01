@@ -28,8 +28,6 @@ export default {
 };
 ```
 
-If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance.html#rsbuildaddplugins) method.
-
 ## Node Polyfills
 
 ### Globals
@@ -37,10 +35,23 @@ If you are using Rsbuild's JavaScript API, you can register the plugin using the
 - `Buffer`
 - `process`
 
-When the above global variables are used directly in code, the corresponding polyfill will be injected.
+When you use the above global variables in your code, the corresponding polyfill will be automatically injected.
+
+For instance, the following code would inject the `Buffer` polyfill:
 
 ```ts
 const bufferData = Buffer.from('xxxx');
+```
+
+You can disable this behavior through the `globals` option of the plugin:
+
+```ts
+pluginNodePolyfill({
+  globals: {
+    Buffer: false,
+    process: false,
+  },
+});
 ```
 
 ### Modules

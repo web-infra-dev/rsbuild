@@ -1,87 +1,72 @@
 # Plugin List
 
+## Plugin System
+
+You can read about the functionality of Rsbuild plugins and how to develop an Rsbuild plugin in the [Plugin System](/plugins/dev/index) documentation.
+
 ## Using Plugins
 
-You can register Rsbuild plugins using the `plugins` option in `rsbuild.config.ts`.
+You can register Rsbuild plugins in the `rsbuild.config.ts` file using the `plugins` option. For more details, refer to [plugins](/config/plugins).
 
-For example, to register a Vue plugin:
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginVue } from '@rsbuild/plugin-vue';
-
-export default defineConfig({
-  plugins: [pluginVue()],
-});
-```
+If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance#rsbuildaddplugins) method.
 
 ## Official Plugins
 
 The following are official plugins that can be used in Rsbuild.
 
-### [React Plugin](/plugins/list/plugin-react.html)
+### For React
 
-Provides support for React.
+Plugins available for the React framework:
 
-### [Svgr Plugin](/plugins/list/plugin-svgr.html)
+- [React Plugin](/plugins/list/plugin-react): Provides support for React.
+- [SVGR Plugin](/plugins/list/plugin-svgr): Support convert SVG to React components.
+- [Styled Components Plugin](/plugins/list/plugin-styled-components): Provides compile-time support for styled-components.
 
-Support convert SVG to React components.
+### For Vue
 
-### [Vue Plugin](/plugins/list/plugin-vue.html)
+Plugins available for the Vue framework:
 
-Provides support for Vue 3 SFC (Single File Components).
+- [Vue Plugin](/plugins/list/plugin-vue): Provides support for Vue 3 SFC (Single File Components).
+- [Vue JSX Plugin](/plugins/list/plugin-vue-jsx): Provides support for Vue 3 JSX / TSX syntax.
+- [Vue2 Plugin](/plugins/list/plugin-vue2): Provides support for Vue 2 SFC (Single File Components).
+- [Vue2 JSX Plugin](/plugins/list/plugin-vue2-jsx): Provides support for Vue 2 JSX / TSX syntax.
 
-### [Vue JSX Plugin](/plugins/list/plugin-vue-jsx.html)
+### For Preact
 
-Provides support for Vue 3 JSX / TSX syntax.
+Plugins available for the Preact framework:
 
-### [Vue2 Plugin](/plugins/list/plugin-vue2.html)
+- [Preact Plugin](/plugins/list/plugin-preact): Provides support for Preact.
 
-Provides support for Vue 2 SFC (Single File Components).
+### For Svelte
 
-### [Vue2 JSX Plugin](/plugins/list/plugin-vue2-jsx.html)
+Plugins available for the Svelte framework:
 
-Provides support for Vue 2 JSX / TSX syntax.
+- [Svelte Plugin](/plugins/list/plugin-svelte): Provides support for Svelte components (`.svelte` files).
 
-### [Babel Plugin](/plugins/list/plugin-babel.html)
+### For Solid
 
-Provides support for Babel transpilation capabilities.
+Plugins available for the Solid framework:
 
-### [Type Check Plugin](/plugins/list/plugin-type-check.html)
+- [Solid Plugin](/plugins/list/plugin-solid): Provides support for Solid.
 
-Used to run TypeScript type checker on a separate process.
+### Common
 
-### [Image Compress Plugin](/plugins/list/plugin-image-compress.html)
+The following are common framework-agnostic plugins:
 
-Compress the image resources used in the project.
-
-### [Node Polyfill Plugin](/plugins/list/plugin-node-polyfill.html)
-
-Used to inject polyfills of Node core modules in the browser side.
-
-### [Source Build Plugin](/plugins/list/plugin-source-build.html)
-
-This plugin is designed for the monorepo scenario. It supports referencing source code from other subdirectories and performs build and hot update.
-
-### [Stylus Plugin](/plugins/list/plugin-stylus.html)
-
-Use Stylus as the CSS preprocessor.
-
-### [Styled Components Plugin](/plugins/list/plugin-styled-components.html)
-
-Provides compile-time support for styled-components.
-
-### [Check Syntax Plugin](/plugins/list/plugin-check-syntax.html)
-
-Used to analyze the syntax compatibility of artifacts, to see if there are any advanced syntaxes that may cause compatibility issues.
-
-### [CSS Minimizer Plugin](/plugins/list/plugin-css-minimizer.html)
-
-Used to customize CSS minimizer, switch to [cssnano] or other tools for CSS compression.
-
-### [Pug Plugin](/plugins/list/plugin-pug.html)
-
-Provides support for the Pug template engine.
+- [Assets Retry Plugin](/plugins/list/plugin-assets-retry): Used to automatically resend requests when static assets fail to load.
+- [Babel Plugin](/plugins/list/plugin-babel): Provides support for Babel transpilation capabilities.
+- [Type Check Plugin](/plugins/list/plugin-type-check): Used to run TypeScript type checker on a separate process.
+- [Image Compress Plugin](/plugins/list/plugin-image-compress): Compress the image resources used in the project.
+- [Node Polyfill Plugin](/plugins/list/plugin-node-polyfill): Used to inject polyfills of Node core modules in the browser side.
+- [Source Build Plugin](/plugins/list/plugin-source-build): This plugin is designed for the monorepo scenario. It supports referencing source code from other subdirectories and performs build and hot update.
+- [Stylus Plugin](/plugins/list/plugin-stylus): Use Stylus as the CSS preprocessor.
+- [Check Syntax Plugin](/plugins/list/plugin-check-syntax): Used to analyze the syntax compatibility of artifacts, to see if there are any advanced syntaxes that may cause compatibility issues.
+- [CSS Minimizer Plugin](/plugins/list/plugin-css-minimizer): Used to customize CSS minimizer, switch to [cssnano](https://cssnano.co/) or other tools for CSS compression.
+- [Pug Plugin](/plugins/list/plugin-pug): Provides support for the Pug template engine.
+- [Rem Plugin](/plugins/list/plugin-rem): Implements the rem adaptive layout for mobile pages.
+- [UMD Plugin](/plugins/list/plugin-umd): Used to build outputs in UMD format.
+- [YAML Plugin](/plugins/list/plugin-yaml): Used to import YAML files and convert them into JavaScript objects.
+- [TOML Plugin](/plugins/list/plugin-toml): Used to import TOML files and convert them into JavaScript objects.
 
 :::tip
 You can find the source code of all official plugins in the [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) repository.

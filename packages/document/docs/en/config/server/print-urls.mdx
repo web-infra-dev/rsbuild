@@ -1,0 +1,105 @@
+# printUrls
+
+- **Type:**
+
+```ts
+type Routes = Array<{
+  entryName: string;
+  pathname: string;
+}>;
+
+type PrintUrls =
+  | boolean
+  | ((params: {
+      urls: string[];
+      port: number;
+      routes: Routes;
+      protocol: string;
+    }) => string[] | void);
+```
+
+- **Default:** `true`
+
+Whether to print the server's urls.
+
+By default, when you start the dev server or preview server, Rsbuild will print the following logs:
+
+```text
+> Local:    http://localhost:8080
+> Network:  http://192.168.0.1:8080
+```
+
+## Custom Logging
+
+`server.printUrls` can be set to a function, with parameters including `port`, `protocol`, `urls` and `routes`.
+
+### Modify URL
+
+If the `printUrls` function returns an URLs array, Rsbuild prints these URLs to the terminal in the default format:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ urls }) {
+      return urls.map((url) => `${url}/base`);
+    },
+  },
+};
+```
+
+Output:
+
+```text
+> Local:    http://localhost:8080/base/
+> Network:  http://192.168.0.1:8080/base/
+```
+
+### Fully Customizable
+
+If the `printUrls` function does not return a value, Rsbuild will not print the server's URL addresses. You can customize the log content based on the parameters and output it to the terminal yourself.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ urls, port, protocol }) {
+      console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
+      console.log(port); // 8080
+      console.log(protocol); // 'http' or 'https'
+    },
+  },
+};
+```
+
+### MPA Output
+
+If the current project contains multiple pages, you can generate a separate URL for each page based on the `routes` parameter.
+
+For example, when the project contains two pages, `index` and `detail`, the content of the `routes` would be:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ routes }) {
+      /**
+       * [
+       *   { entryName: 'index', pathname: '/' },
+       *   { entryName: 'detail', pathname: '/detail' }
+       * ]
+       */
+      console.log(routes);
+    },
+  },
+};
+```
+
+## Disable Output
+
+Setting `server.printUrls` to `false` will prevent Rsbuild from printing the server urls.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls: false,
+  },
+};
+```

@@ -12,6 +12,21 @@ import { PackageManagerTabs } from '@theme';
 
 然后在 `Select framework` 时选择 `Svelte` 即可。
 
+## 在已有项目中使用 Svelte
+
+为了能够编译 Svelte 组件（`.svelte` 文件），你需要注册 Rsbuild 的 [Svelte 插件](/plugins/list/plugin-svelte)，插件会自动添加 Svelte 构建所需的配置。
+
+例如，在 `rsbuild.config.ts` 中注册：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginSvelte } from '@rsbuild/plugin-svelte';
+
+export default defineConfig({
+  plugins: [pluginSvelte()],
+});
+```
+
 import DeployApp from '@zh/shared/deployApp.md';
 
 <DeployApp />

@@ -1,64 +1,23 @@
-import path from 'path';
 import { expect, test } from '@playwright/test';
-import { build } from '@scripts/shared';
+import { build } from '@e2e/helper';
 
 test('should compile CSS modules correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
-    rsbuildConfig: {
-      output: {
-        disableSourceMap: true,
-      },
-    },
   });
   const files = await rsbuild.unwrapOutputJSON();
 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
-  if (rsbuild.providerType === 'rspack') {
-    expect(content).toEqual(
-      '.the-a-class{color:red}.the-b-class-_6773e{color:blue}.the-c-class-c855fd{color:yellow}.the-d-class{color:green}',
-    );
-  } else {
-    expect(content).toEqual(
-      '.the-a-class{color:red}.the-b-class-_HnKpz{color:blue}.the-c-class-e94QZl{color:#ff0}.the-d-class{color:green}',
-    );
-  }
-});
-
-test('should treat normal CSS as CSS modules when disableCssModuleExtension is true', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
-    rsbuildConfig: {
-      output: {
-        disableSourceMap: true,
-        disableCssModuleExtension: true,
-      },
-    },
-  });
-  const files = await rsbuild.unwrapOutputJSON();
-
-  const content =
-    files[Object.keys(files).find((file) => file.endsWith('.css'))!];
-
-  if (rsbuild.providerType === 'rspack') {
-    expect(content).toEqual(
-      '.the-a-class-_932a3{color:red}.the-b-class-_6773e{color:blue}.the-c-class-c855fd{color:yellow}.the-d-class{color:green}',
-    );
-  } else {
-    expect(content).toEqual(
-      '.the-a-class-azoWcU{color:red}.the-b-class-_HnKpz{color:blue}.the-c-class-e94QZl{color:#ff0}.the-d-class{color:green}',
-    );
-  }
+  expect(content).toMatch(
+    /\.the-a-class{color:red}\.the-b-class-\w{6}{color:blue}\.the-c-class-\w{6}{color:yellow}\.the-d-class{color:green}/,
+  );
 });
 
 test('should compile CSS modules follow by output.cssModules', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    entry: { index: path.resolve(__dirname, './src/index.js') },
     rsbuildConfig: {
       output: {
         cssModules: {
@@ -66,7 +25,6 @@ test('should compile CSS modules follow by output.cssModules', async () => {
             return resource.includes('.scss');
           },
         },
-        disableSourceMap: true,
       },
     },
   });
@@ -75,13 +33,7 @@ test('should compile CSS modules follow by output.cssModules', async () => {
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
-  if (rsbuild.providerType === 'rspack') {
-    expect(content).toEqual(
-      '.the-a-class{color:red}.the-b-class-_6773e{color:blue}.the-c-class{color:yellow}.the-d-class{color:green}',
-    );
-  } else {
-    expect(content).toEqual(
-      '.the-a-class{color:red}.the-b-class-_HnKpz{color:blue}.the-c-class{color:#ff0}.the-d-class{color:green}',
-    );
-  }
+  expect(content).toMatch(
+    /.the-a-class{color:red}.the-b-class-\w{6}{color:blue}.the-c-class{color:yellow}.the-d-class{color:green}/,
+  );
 });

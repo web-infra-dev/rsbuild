@@ -1,9 +1,9 @@
 /**
  * In this script, we will find all the rspress dependencies and update the version.
  */
-import path from 'path';
+import path from 'node:path';
 import fs from 'fs-extra';
-import { getPackageVersion } from '@modern-js/generator-utils';
+import { getPackageVersion } from './utils';
 
 const versionMap = new Map();
 

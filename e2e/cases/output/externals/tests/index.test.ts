@@ -1,6 +1,6 @@
-import { join, resolve } from 'path';
+import { join, resolve } from 'node:path';
 import { expect, test } from '@playwright/test';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { build, gotoPage } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = resolve(__dirname, '../');
@@ -8,9 +8,6 @@ const fixtures = resolve(__dirname, '../');
 test('externals', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.js'),
-    },
     runServer: true,
     plugins: [pluginReact()],
     rsbuildConfig: {
@@ -25,7 +22,7 @@ test('externals', async ({ page }) => {
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');
@@ -33,22 +30,21 @@ test('externals', async ({ page }) => {
   const testExternal = page.locator('#test-external');
   await expect(testExternal).toHaveText('1');
 
-  const externalVar = await page.evaluate(`window.aa`);
+  const externalVar = await page.evaluate('window.aa');
 
   expect(externalVar).toBeDefined();
 
   rsbuild.clean();
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('should not external dependencies when target is web worker', async () => {
   const rsbuild = await build({
     cwd: fixtures,
-    target: 'web-worker',
-    entry: { index: resolve(fixtures, './src/index.js') },
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
+        targets: ['web-worker'],
         externals: {
           react: 'MyReact',
         },

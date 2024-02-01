@@ -1,7 +1,7 @@
 import { expect, describe, it, vi } from 'vitest';
 import { pluginReact } from '../src';
-import { createStubRsbuild } from '@rsbuild/test-helper';
-import { mergeRegex, JS_REGEX, TS_REGEX } from '@rsbuild/shared';
+import { createStubRsbuild } from '@scripts/test-helper';
+import { SCRIPT_REGEX } from '@rsbuild/shared';
 
 vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();
@@ -43,6 +43,31 @@ describe('splitChunks', () => {
 
     expect(config.optimization.splitChunks).toMatchSnapshot();
   });
+
+  it('should apply splitChunks.react/router plugin option when strategy is split-by-experience', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        performance: {
+          chunkSplit: {
+            strategy: 'split-by-experience',
+          },
+        },
+      },
+    });
+
+    rsbuild.addPlugins([
+      pluginReact({
+        splitChunks: {
+          react: false,
+          router: false,
+        },
+      }),
+    ]);
+
+    const config = await rsbuild.unwrapConfig();
+
+    expect(config.optimization.splitChunks).toMatchSnapshot();
+  });
 });
 
 describe('transformImport', () => {
@@ -57,7 +82,7 @@ describe('transformImport', () => {
 
     expect(
       config.module.rules.find(
-        (r) => r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
+        (r) => r.test.toString() === SCRIPT_REGEX.toString(),
       ),
     ).toMatchSnapshot();
   });
@@ -77,7 +102,7 @@ describe('transformImport', () => {
 
     expect(
       config.module.rules.find(
-        (r) => r.test.toString() === mergeRegex(JS_REGEX, TS_REGEX).toString(),
+        (r) => r.test.toString() === SCRIPT_REGEX.toString(),
       ),
     ).toMatchSnapshot();
   });

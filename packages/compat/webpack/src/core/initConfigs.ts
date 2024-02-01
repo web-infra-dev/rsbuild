@@ -1,50 +1,36 @@
 import {
-  debug,
   isDebug,
-  castArray,
-  initPlugins,
-  mergeRsbuildConfig,
-  type PluginStore,
+  type PluginManager,
   type InspectConfigOptions,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
+import {
+  initRsbuildConfig,
+  type InternalContext,
+} from '@rsbuild/core/provider';
 import { inspectConfig } from './inspectConfig';
 import { generateWebpackConfig } from './webpackConfig';
-import { normalizeConfig } from '../config/normalize';
-import type { Context, WebpackConfig } from '../types';
-
-async function modifyRsbuildConfig(context: Context) {
-  debug('modify Rsbuild config');
-  const [modified] = await context.hooks.modifyRsbuildConfigHook.call(
-    context.config,
-    { mergeRsbuildConfig },
-  );
-  context.config = modified;
-  debug('modify Rsbuild config done');
-}
+import type { WebpackConfig } from '../types';
 
 export type InitConfigsOptions = {
-  context: Context;
-  pluginStore: PluginStore;
+  context: InternalContext;
+  pluginManager: PluginManager;
   rsbuildOptions: Required<CreateRsbuildOptions>;
 };
 
 export async function initConfigs({
   context,
-  pluginStore,
+  pluginManager,
   rsbuildOptions,
 }: InitConfigsOptions): Promise<{
   webpackConfigs: WebpackConfig[];
 }> {
-  await initPlugins({
-    pluginAPI: context.pluginAPI,
-    pluginStore,
+  const normalizedConfig = await initRsbuildConfig({
+    context,
+    pluginManager,
   });
+  const { targets } = normalizedConfig.output;
 
-  await modifyRsbuildConfig(context);
-  context.normalizedConfig = normalizeConfig(context.config);
-
-  const targets = castArray(rsbuildOptions.target);
   const webpackConfigs = await Promise.all(
     targets.map((target) => generateWebpackConfig({ target, context })),
   );
@@ -58,7 +44,7 @@ export async function initConfigs({
       };
       inspectConfig({
         context,
-        pluginStore,
+        pluginManager,
         inspectOptions,
         rsbuildOptions,
         bundlerConfigs: webpackConfigs,
@@ -66,8 +52,8 @@ export async function initConfigs({
     };
 
     // run inspect later to avoid cleaned by cleanOutput plugin
-    context.hooks.onBeforeBuildHook.tap(inspect);
-    context.hooks.onBeforeStartDevServerHook.tap(inspect);
+    context.hooks.onBeforeBuild.tap(inspect);
+    context.hooks.onAfterStartDevServer.tap(inspect);
   }
 
   return {

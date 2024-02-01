@@ -1,17 +1,11 @@
-import {
-  HTMLPreloadOrPrefetchPlugin,
-  type DefaultRsbuildPlugin,
-} from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../types';
 
-export const pluginPreloadOrPrefetch = (): DefaultRsbuildPlugin => ({
-  name: `plugin-preload-or-prefetch`,
+export const pluginPreloadOrPrefetch = (): RsbuildPlugin => ({
+  name: 'plugin-preload-or-prefetch',
 
   setup(api) {
     api.modifyBundlerChain(
-      async (
-        chain,
-        { CHAIN_ID, isServer, isWebWorker, isServiceWorker, HtmlPlugin },
-      ) => {
+      async (chain, { CHAIN_ID, isServer, isWebWorker, isServiceWorker }) => {
         const config = api.getNormalizedConfig();
         const {
           performance: { preload, prefetch },
@@ -23,13 +17,16 @@ export const pluginPreloadOrPrefetch = (): DefaultRsbuildPlugin => ({
 
         const HTMLCount = chain.entryPoints.values().length;
 
+        const { HtmlPreloadOrPrefetchPlugin } = await import(
+          '../rspack/preload/HtmlPreloadOrPrefetchPlugin'
+        );
+
         if (prefetch) {
           chain
             .plugin(CHAIN_ID.PLUGIN.HTML_PREFETCH)
-            .use(HTMLPreloadOrPrefetchPlugin, [
+            .use(HtmlPreloadOrPrefetchPlugin, [
               prefetch,
               'prefetch',
-              HtmlPlugin,
               HTMLCount,
             ]);
         }
@@ -37,12 +34,7 @@ export const pluginPreloadOrPrefetch = (): DefaultRsbuildPlugin => ({
         if (preload) {
           chain
             .plugin(CHAIN_ID.PLUGIN.HTML_PRELOAD)
-            .use(HTMLPreloadOrPrefetchPlugin, [
-              preload,
-              'preload',
-              HtmlPlugin,
-              HTMLCount,
-            ]);
+            .use(HtmlPreloadOrPrefetchPlugin, [preload, 'preload', HTMLCount]);
         }
       },
     );

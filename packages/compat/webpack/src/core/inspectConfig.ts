@@ -1,26 +1,30 @@
-import { join, isAbsolute } from 'path';
-import { initConfigs, InitConfigsOptions } from './initConfigs';
+import { join, isAbsolute } from 'node:path';
+import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import {
-  InspectConfigOptions,
-  outputInspectConfigFiles,
+  setNodeEnv,
+  getNodeEnv,
   stringifyConfig,
+  outputInspectConfigFiles,
+  type NormalizedConfig,
+  type InspectConfigResult,
+  type InspectConfigOptions,
 } from '@rsbuild/shared';
 import type { WebpackConfig } from '../types';
 
 export async function inspectConfig({
   context,
-  pluginStore,
+  pluginManager,
   rsbuildOptions,
   bundlerConfigs,
   inspectOptions = {},
 }: InitConfigsOptions & {
   inspectOptions?: InspectConfigOptions;
   bundlerConfigs?: WebpackConfig[];
-}) {
+}): Promise<InspectConfigResult<'webpack'>> {
   if (inspectOptions.env) {
-    process.env.NODE_ENV = inspectOptions.env;
-  } else if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'development';
+    setNodeEnv(inspectOptions.env);
+  } else if (!getNodeEnv()) {
+    setNodeEnv('development');
   }
 
   const webpackConfigs =
@@ -28,13 +32,20 @@ export async function inspectConfig({
     (
       await initConfigs({
         context,
-        pluginStore,
+        pluginManager,
         rsbuildOptions,
       })
     ).webpackConfigs;
 
+  const rsbuildDebugConfig: NormalizedConfig & {
+    pluginNames: string[];
+  } = {
+    ...context.normalizedConfig!,
+    pluginNames: pluginManager.plugins.map((p) => p.name),
+  };
+
   const rawRsbuildConfig = await stringifyConfig(
-    context.config,
+    rsbuildDebugConfig,
     inspectOptions.verbose,
   );
   const rawBundlerConfigs = await Promise.all(
@@ -50,13 +61,13 @@ export async function inspectConfig({
 
   if (inspectOptions.writeToDisk) {
     await outputInspectConfigFiles({
-      rsbuildConfig: rawRsbuildConfig,
+      rsbuildConfig: context.normalizedConfig!,
+      rawRsbuildConfig,
       bundlerConfigs: rawBundlerConfigs,
       inspectOptions: {
         ...inspectOptions,
         outputPath,
       },
-      rsbuildOptions,
       configType: 'webpack',
     });
   }
@@ -65,7 +76,7 @@ export async function inspectConfig({
     rsbuildConfig: rawRsbuildConfig,
     bundlerConfigs: rawBundlerConfigs,
     origin: {
-      rsbuildConfig: context.config,
+      rsbuildConfig: rsbuildDebugConfig,
       bundlerConfigs: webpackConfigs,
     },
   };

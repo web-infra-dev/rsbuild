@@ -1,8 +1,7 @@
-import path from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
-import { load } from 'js-yaml';
-import glob, { Options as GlobOptions } from 'fast-glob';
-import pMap from 'p-map';
+import path from 'node:path';
+import { fse } from '@rsbuild/shared';
+import { parse } from '@rsbuild/shared/yaml';
+import glob, { type Options as GlobOptions } from 'fast-glob';
 import { Project } from '../project/project';
 import { PNPM_WORKSPACE_FILE, PACKAGE_JSON } from '../constants';
 import { readPackageJson } from '../utils';
@@ -10,19 +9,15 @@ import type { IPnpmWorkSpace } from '../types';
 
 export const getPatternsFromYaml = async (monorepoRoot: string) => {
   const workspaceYamlFilePath = path.join(monorepoRoot, PNPM_WORKSPACE_FILE);
-  const yamlContent = await fs.readFile(workspaceYamlFilePath, 'utf8');
-  const pnpmWorkspace = load(yamlContent) as IPnpmWorkSpace;
+  const yamlContent = await fse.readFile(workspaceYamlFilePath, 'utf8');
+  const pnpmWorkspace = parse(yamlContent) as IPnpmWorkSpace;
   return pnpmWorkspace.packages || [];
 };
 
 export const normalize = (results: string[]) =>
   results.map((fp: string) => path.normalize(fp));
 
-const getGlobOpts = (
-  rootPath: string,
-  patterns: string[],
-  ignore: string[] = [],
-): GlobOptions => {
+const getGlobOpts = (rootPath: string, patterns: string[]): GlobOptions => {
   const globOpts: GlobOptions = {
     cwd: rootPath,
     absolute: true,
@@ -35,45 +30,30 @@ const getGlobOpts = (
       // but avoid picking up node_modules/**/package.json and dist/**/package.json
       '**/dist/**',
       '**/node_modules/**',
-      ...(ignore || []),
     ];
   }
 
   return globOpts;
 };
 
-export const makeFileFinder = (
-  rootPath: string,
-  patterns: string[],
-  ignore: string[] = [],
-) => {
-  const globOpts = getGlobOpts(rootPath, patterns, ignore);
+export const makeFileFinder = (rootPath: string, patterns: string[]) => {
+  const globOpts = getGlobOpts(rootPath, patterns);
 
   return async <FileMapperType>(
     fileName: string,
     fileMapper: (filepath: string[]) => Promise<FileMapperType[]>,
-    customGlobOpts: GlobOptions = {},
   ) => {
-    const options = { ...customGlobOpts, ...globOpts };
-    const promise = pMap(
-      Array.from(patterns).sort(),
-      async (globPath: string) => {
-        let result = await glob(path.posix.join(globPath, fileName), options);
-
-        // fast-glob does not respect pattern order, so we re-sort by absolute path
-        result = result.sort();
-        // POSIX results always need to be normalized
-        result = normalize(result);
-
-        return fileMapper(result);
-      },
-      { concurrency: patterns.length || Infinity },
+    let result = await glob(
+      patterns.map((globPath) => path.posix.join(globPath, fileName)),
+      globOpts,
     );
 
-    // always flatten the results
-    const results = await promise;
+    // fast-glob does not respect pattern order, so we re-sort by absolute path
+    result = result.sort();
+    // POSIX results always need to be normalized
+    result = normalize(result);
 
-    return results.reduce((acc, result) => acc.concat(result), []);
+    return fileMapper(result);
   };
 };
 
@@ -81,7 +61,7 @@ export const readPnpmProjects = async (
   monorepoRoot: string,
   patterns: string[],
 ) => {
-  const finder = makeFileFinder(monorepoRoot, patterns, []);
+  const finder = makeFileFinder(monorepoRoot, patterns);
   const mapper = async (pkgJsonFilePath: string) => {
     const pkgJson = await readPackageJson(pkgJsonFilePath);
     return {
@@ -89,12 +69,11 @@ export const readPnpmProjects = async (
       manifest: pkgJson,
     };
   };
-  const projects = await finder(
-    PACKAGE_JSON,
-    (filePaths) =>
-      pMap(filePaths, mapper, { concurrency: filePaths.length || Infinity }),
-    {},
+
+  const projects = await finder(PACKAGE_JSON, (filePaths) =>
+    Promise.all(filePaths.map(mapper)),
   );
+
   return projects;
 };
 

@@ -6,7 +6,9 @@ Rsbuild 默认支持 TypeScript，你可以直接在项目中使用 `.ts` 和 `.
 
 Rsbuild 默认使用 SWC 来转译 TypeScript 代码，也支持切换到 Babel 进行转译。
 
-与 TypeScript 原生编译器不同，像 SWC 和 Babel 这样的工具会将每个文件单独编译，它无法确定导入的名称是一个类型还是一个值。因此，当你在 Rsbuild 中使用 TypeScript 时，需要启用 `tsconfig.json` 中的 [isolatedModules](https://www.typescriptlang.org/tsconfig/#isolatedModules) 选项：
+### isolatedModules
+
+与 TypeScript 原生编译器不同，像 SWC 和 Babel 这样的工具会将每个文件单独编译，它无法确定导入的名称是一个类型还是一个值。因此，当你在 Rsbuild 中使用 TypeScript 时，需要启用 `tsconfig.json` 中的 [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) 选项：
 
 ```json title="tsconfig.json"
 {
@@ -32,4 +34,16 @@ export type { SomeType } from './types';
 
 Rsbuild 提供了 Type Check 插件，用于在单独的进程中运行 TypeScript 类型检查，插件内部集成了 [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)。
 
-请参考 [Type Check 插件](/plugins/list/plugin-type-check.html) 了解用法。
+请参考 [Type Check 插件](/plugins/list/plugin-type-check) 了解用法。
+
+## tsconfig.json 路径
+
+Rsbuild 默认读取根目录的 `tsconfig.json` 文件，你可以使用 [source.tsconfigPath](/config/source/tsconfig-path) 配置自定义的 tsconfig.json 文件路径。
+
+```ts
+export default {
+  source: {
+    tsconfigPath: './tsconfig.custom.json',
+  },
+};
+```

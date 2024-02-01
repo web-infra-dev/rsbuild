@@ -2,8 +2,20 @@
   "extends": "@rsbuild/tsconfig/base",
   "compilerOptions": {
     "outDir": "./dist",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "rootDir": "src",
+    "composite": true
   },
-  "include": ["src"],
-  "exclude": ["./tests/fixtures"]
+  "references": [
+    {
+      "path": "../core"
+    },
+    {
+      "path": "../shared"
+    },
+    {
+      "path": "../plugin-react"
+    }
+  ],
+  "include": ["src"]
 }

@@ -1,30 +1,24 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { expect } from '@playwright/test';
-import { webpackOnlyTest } from '@scripts/helper';
-import { dev, getHrefByEntryName } from '@scripts/shared';
-import { pluginSourceBuild } from '@rsbuild/plugin-source-build';
-import { pluginReact } from '@rsbuild/plugin-react';
+import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 const fixture = join(__dirname, 'app');
 
-webpackOnlyTest(
+rspackOnlyTest(
   'should build succeed with source build plugin',
   async ({ page }) => {
-    const rsbuild = await dev({
+    const rsbuild = await build({
       cwd: fixture,
-      entry: {
-        index: join(fixture, 'src/index.tsx'),
-      },
-      plugins: [pluginSourceBuild(), pluginReact()],
+      runServer: true,
     });
 
-    await page.goto(getHrefByEntryName('index', rsbuild.port));
+    await gotoPage(page, rsbuild);
 
     const locator = page.locator('#root');
     await expect(locator).toHaveText(
       'Card Comp Title: AppCARD COMP CONTENT:hello world',
     );
 
-    await rsbuild.server.close();
+    await rsbuild.close();
   },
 );

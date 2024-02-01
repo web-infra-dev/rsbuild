@@ -12,22 +12,25 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     },
   },
   "context": "<ROOT>",
-  "devServer": {
-    "hot": true,
-  },
   "devtool": "cheap-module-source-map",
+  "entry": {
+    "index": [
+      "src/index.js",
+    ],
+  },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "disableTransformByDefault": true,
-      "newResolver": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
   },
   "mode": "development",
   "module": {
+    "parser": {
+      "javascript": {
+        "exportsPresence": "error",
+      },
+    },
     "rules": [
       {
         "resolve": {
@@ -36,31 +39,96 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "test": /\\\\\\.m\\?js/,
       },
       {
-        "oneOf": [
+        "include": [
           {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
+            "and": [
+              "<ROOT>",
+              {
+                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
               },
+            ],
+          },
+          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+        ],
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "builtin:swc-loader",
+            "options": {
+              "env": {
+                "coreJs": "3.32",
+                "mode": "usage",
+                "shippedProposals": true,
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+              "isModule": "unknown",
+              "jsc": {
+                "externalHelpers": true,
+                "parser": {
+                  "decorators": true,
+                  "syntax": "typescript",
+                  "tsx": true,
+                },
+                "preserveAllComments": true,
+                "transform": {
+                  "decoratorMetadata": true,
+                  "legacyDecorator": true,
+                },
+              },
+              "sourceMaps": true,
             },
-            "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+      },
+      {
+        "mimetype": {
+          "or": [
+            "text/javascript",
+            "application/javascript",
+          ],
+        },
+        "resolve": {
+          "fullySpecified": false,
+        },
+        "use": [
+          {
+            "loader": "builtin:swc-loader",
+            "options": {
+              "env": {
+                "coreJs": "3.32",
+                "mode": "usage",
+                "shippedProposals": true,
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+              "isModule": "unknown",
+              "jsc": {
+                "externalHelpers": true,
+                "parser": {
+                  "decorators": true,
+                  "syntax": "typescript",
+                  "tsx": true,
+                },
+                "preserveAllComments": true,
+                "transform": {
+                  "decoratorMetadata": true,
+                  "legacyDecorator": true,
+                },
+              },
+              "sourceMaps": true,
+            },
+          },
+        ],
       },
       {
         "oneOf": [
@@ -87,34 +155,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 10000,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
       },
       {
         "oneOf": [
@@ -144,6 +185,60 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "test": /\\\\\\.svg\\$/i,
       },
       {
+        "oneOf": [
+          {
+            "generator": {
+              "filename": "static/media/[name].[contenthash:8][ext]",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/media/[name].[contenthash:8][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "generator": {
+              "filename": "static/font/[name].[contenthash:8][ext]",
+            },
+            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "type": "asset/resource",
+          },
+          {
+            "resourceQuery": /inline/,
+            "type": "asset/inline",
+          },
+          {
+            "generator": {
+              "filename": "static/font/[name].[contenthash:8][ext]",
+            },
+            "parser": {
+              "dataUrlCondition": {
+                "maxSize": 10000,
+              },
+            },
+            "type": "asset",
+          },
+        ],
+        "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+      },
+      {
         "dependency": "url",
         "generator": {
           "filename": "static/wasm/[hash].module.wasm",
@@ -165,6 +260,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -189,7 +285,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -205,6 +301,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -229,7 +326,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -251,6 +348,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -275,7 +373,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -285,7 +383,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -301,6 +399,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -325,7 +424,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -335,7 +434,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "lessOptions": {
                     "javascriptEnabled": true,
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
             ],
@@ -357,6 +456,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -381,7 +481,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -411,6 +511,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
                 "options": {
                   "postcssOptions": {
+                    "config": false,
                     "plugins": [
                       [Function],
                       {
@@ -435,7 +536,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                       },
                     ],
                   },
-                  "sourceMap": true,
+                  "sourceMap": false,
                 },
               },
               {
@@ -455,129 +556,13 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
             ],
           },
         ],
-        "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
-      },
-      {
-        "exclude": [
-          "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-        ],
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-        ],
-        "test": /\\\\\\.\\(js\\|mjs\\|cjs\\|jsx\\)\\$\\|\\\\\\.\\(ts\\|mts\\|cts\\|tsx\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
-          ],
-        },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "exclude": [],
-              "inlineSourcesContent": true,
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "minify": false,
-              "sourceMaps": true,
-            },
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.toml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/toml-loader",
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.ya\\?ml\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/shared/compiled/yaml-loader",
-          },
-        ],
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
       },
     ],
   },
   "name": "Client",
   "optimization": {
     "minimize": false,
-    "runtimeChunk": {
-      "name": "bundler-runtime",
-    },
     "splitChunks": {
       "cacheGroups": {
         "lib-axios": {
@@ -607,6 +592,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     "chunkFilename": "static/js/async/[name].js",
     "cssChunkFilename": "static/css/async/[name].css",
     "cssFilename": "static/css/[name].css",
+    "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
     "path": "<ROOT>/dist",
@@ -614,27 +600,63 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
+  "performance": {
+    "hints": false,
+  },
   "plugins": [
-    Plugin {
+    HotModuleReplacementPlugin {
+      "name": "HotModuleReplacementPlugin",
+    },
+    HtmlWebpackPlugin {
+      "userOptions": {
+        "chunks": [
+          "index",
+        ],
+        "entryName": "index",
+        "filename": "index.html",
+        "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
+        "minify": false,
+        "scriptLoading": "defer",
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateParameters": [Function],
+        "title": "Rsbuild App",
+      },
+      "version": 5,
+    },
+    HtmlBasicPlugin {
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "info": {
+          "index": {},
+        },
+      },
+    },
+    DefinePlugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""development"",
       },
+      "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
-    Plugin {
-      "_options": {
-        "prefix": "Client",
-        "profile": false,
-      },
-      "name": "ProgressPlugin",
+    RemoveCssSourcemapPlugin {
+      "name": "RemoveCssSourcemapPlugin",
     },
   ],
   "resolve": {
     "alias": {
+      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
+      ".ts",
+      ".tsx",
       ".js",
       ".jsx",
       ".mjs",

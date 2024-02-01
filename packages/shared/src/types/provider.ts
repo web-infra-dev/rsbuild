@@ -1,10 +1,11 @@
-import type { PluginStore, Plugins, DefaultRsbuildPluginAPI } from './plugin';
-import type { Context } from './context';
-import type { Compiler, MultiCompiler } from 'webpack';
+import type { PluginManager, Plugins, RsbuildPluginAPI } from './plugin';
+import type { RsbuildContext } from './context';
+import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
-import type { Server, ModernDevServerOptions } from '@modern-js/server';
-import type { AddressUrl } from '../url';
-import { Logger } from '@modern-js/prod-server';
+import type { StartServerResult, DevServerAPIs } from './server';
+import type { NormalizedConfig } from './config';
+import type { WebpackConfig } from './thirdParty';
+import type { RspackConfig } from './rspack';
 
 export type Bundler = 'rspack' | 'webpack';
 
@@ -12,13 +13,11 @@ export type CreateCompilerOptions = { watch?: boolean };
 
 export type StartDevServerOptions = {
   compiler?: Compiler | MultiCompiler;
-  printURLs?: boolean | ((urls: AddressUrl[]) => AddressUrl[]);
-  logger?: Logger;
-  strictPort?: boolean;
   getPortSilently?: boolean;
-  serverOptions?: Partial<Omit<ModernDevServerOptions, 'config'>> & {
-    config?: Partial<ModernDevServerOptions['config']>;
-  };
+};
+
+export type PreviewServerOptions = {
+  getPortSilently?: boolean;
 };
 
 export type BuildOptions = {
@@ -34,65 +33,59 @@ export type InspectConfigOptions = {
   writeToDisk?: boolean;
 };
 
-export type StartServerResult = {
-  urls: string[];
-  port: number;
-  server: Server;
+export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
+  rsbuildConfig: string;
+  bundlerConfigs: string[];
+  origin: {
+    rsbuildConfig: NormalizedConfig & {
+      pluginNames: string[];
+    };
+    bundlerConfigs: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
+  };
 };
 
-export type RsbuildProvider<
-  RsbuildConfig extends Record<string, any> = Record<string, any>,
-  BundlerConfig extends Record<string, any> = Record<string, any>,
-  NormalizedConfig extends Record<string, any> = Record<string, any>,
-  Compiler extends Record<string, any> = Record<string, any>,
-> = (options: {
-  pluginStore: PluginStore;
-  rsbuildOptions: Required<CreateRsbuildOptions>;
-  plugins: Plugins;
-}) => Promise<
-  ProviderInstance<RsbuildConfig, BundlerConfig, NormalizedConfig, Compiler>
->;
+export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
+  (options: {
+    plugins: Plugins;
+    pluginManager: PluginManager;
+    rsbuildOptions: Required<CreateRsbuildOptions>;
+  }) => Promise<ProviderInstance<B>>;
 
-export type ProviderInstance<
-  RsbuildConfig extends Record<string, any> = Record<string, any>,
-  BundlerConfig extends Record<string, any> = Record<string, any>,
-  NormalizedConfig extends Record<string, any> = Record<string, any>,
-  CommonCompiler extends Record<string, any> = Record<string, any>,
-> = {
+export type CreateCompiler =
+  // Allow user to manually narrow Compiler type
+  <C = Compiler | MultiCompiler>(options?: CreateCompilerOptions) => Promise<C>;
+
+export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   readonly bundler: Bundler;
 
-  readonly publicContext: Readonly<Context>;
+  readonly publicContext: Readonly<RsbuildContext>;
 
-  pluginAPI: DefaultRsbuildPluginAPI<
-    RsbuildConfig,
-    NormalizedConfig,
-    BundlerConfig,
-    CommonCompiler
-  >;
+  pluginAPI: RsbuildPluginAPI;
 
-  applyDefaultPlugins: (pluginStore: PluginStore) => Promise<void>;
+  applyDefaultPlugins: (pluginManager: PluginManager) => Promise<void>;
 
-  // TODO using common compiler type
-  createCompiler: (
-    options?: CreateCompilerOptions,
-  ) => Promise<Compiler | MultiCompiler>;
+  createCompiler: CreateCompiler;
+
+  /**
+   * This API is not stable
+   *
+   * It is designed for high-level frameworks that require a custom server
+   */
+  getServerAPIs: (options?: StartDevServerOptions) => Promise<DevServerAPIs>;
 
   startDevServer: (
     options?: StartDevServerOptions,
   ) => Promise<StartServerResult>;
 
-  preview: () => Promise<StartServerResult>;
+  preview: (options?: PreviewServerOptions) => Promise<StartServerResult>;
 
   build: (options?: BuildOptions) => Promise<void>;
 
-  initConfigs: () => Promise<BundlerConfig[]>;
+  initConfigs: () => Promise<
+    B extends 'rspack' ? RspackConfig[] : WebpackConfig[]
+  >;
 
-  inspectConfig: (options?: InspectConfigOptions) => Promise<{
-    rsbuildConfig: string;
-    bundlerConfigs: string[];
-    origin: {
-      rsbuildConfig: RsbuildConfig;
-      bundlerConfigs: BundlerConfig[];
-    };
-  }>;
+  inspectConfig: (
+    options?: InspectConfigOptions,
+  ) => Promise<InspectConfigResult<B>>;
 };

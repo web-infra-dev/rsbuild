@@ -1,20 +1,17 @@
-import { join, resolve } from 'path';
-import { fs } from '@rsbuild/shared/fs-extra';
-import { build, getHrefByEntryName } from '@scripts/shared';
+import { join, resolve } from 'node:path';
+import { fse } from '@rsbuild/shared';
+import { build, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = resolve(__dirname);
 
 test('enableCssModuleTSDeclaration', async () => {
-  fs.removeSync(join(fixtures, 'src/App.module.less.d.ts'));
-  fs.removeSync(join(fixtures, 'src/App.module.scss.d.ts'));
+  fse.removeSync(join(fixtures, 'src/App.module.less.d.ts'));
+  fse.removeSync(join(fixtures, 'src/App.module.scss.d.ts'));
 
   await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
@@ -24,48 +21,45 @@ test('enableCssModuleTSDeclaration', async () => {
   });
 
   expect(
-    fs.existsSync(join(fixtures, 'src/App.module.less.d.ts')),
+    fse.existsSync(join(fixtures, 'src/App.module.less.d.ts')),
   ).toBeTruthy();
 
   expect(
-    fs
+    fse
       .readFileSync(join(fixtures, 'src/App.module.less.d.ts'), {
         encoding: 'utf-8',
       })
-      .includes(`title: string;`),
+      .includes('title: string;'),
   ).toBeTruthy();
 
   expect(
-    fs.existsSync(join(fixtures, 'src/App.module.scss.d.ts')),
+    fse.existsSync(join(fixtures, 'src/App.module.scss.d.ts')),
   ).toBeTruthy();
 
   expect(
-    fs
+    fse
       .readFileSync(join(fixtures, 'src/App.module.scss.d.ts'), {
         encoding: 'utf-8',
       })
-      .includes(`header: string;`),
+      .includes('header: string;'),
   ).toBeTruthy();
 });
 
-test('disableCssExtract', async ({ page }) => {
+test('injectStyles', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    entry: {
-      main: join(fixtures, 'src/index.ts'),
-    },
     runServer: true,
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
-        disableCssExtract: true,
+        injectStyles: true,
       },
     },
   });
 
-  await page.goto(getHrefByEntryName('main', rsbuild.port));
+  await gotoPage(page, rsbuild);
 
-  // disableCssExtract worked
+  // injectStyles worked
   const files = await rsbuild.unwrapOutputJSON();
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
 
@@ -79,5 +73,5 @@ test('disableCssExtract', async ({ page }) => {
   const title = page.locator('#title');
   await expect(title).toHaveCSS('font-size', '20px');
 
-  rsbuild.close();
+  await rsbuild.close();
 });

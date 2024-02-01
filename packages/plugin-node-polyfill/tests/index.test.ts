@@ -1,5 +1,4 @@
-import { createStubRsbuild } from '@rsbuild/test-helper';
-import { webpackProvider } from '@rsbuild/webpack';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginNodePolyfill } from '../src';
 
 describe('plugin-node-polyfill', () => {
@@ -12,11 +11,16 @@ describe('plugin-node-polyfill', () => {
     expect(configs[0]).toMatchSnapshot();
   });
 
-  it('should add node-polyfill config when use webpack', async () => {
+  it('should allow to disable globals', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginNodePolyfill()],
-      provider: webpackProvider,
-      rsbuildConfig: {},
+      plugins: [
+        pluginNodePolyfill({
+          globals: {
+            Buffer: false,
+            process: false,
+          },
+        }),
+      ],
     });
     const configs = await rsbuild.initConfigs();
 

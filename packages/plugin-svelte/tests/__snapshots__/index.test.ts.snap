@@ -11,10 +11,10 @@ exports[`plugin-svelte > should add svelte loader properly 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
             "options": {
               "compilerOptions": {
-                "dev": true,
+                "dev": false,
               },
               "emitCss": true,
-              "hotReload": true,
+              "hotReload": false,
               "preprocess": {
                 "markup": [Function],
                 "script": [Function],
@@ -32,14 +32,60 @@ exports[`plugin-svelte > should add svelte loader properly 1`] = `
     },
     "conditionNames": [
       "svelte",
-      "browser",
-      "import",
+      "...",
     ],
     "extensions": [
       ".svelte",
     ],
     "mainFields": [
       "svelte",
+      "...",
+    ],
+  },
+  "resolveLoader": {
+    "alias": {
+      "svelte-loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+    },
+  },
+}
+`;
+
+exports[`plugin-svelte > should override default svelte-loader options throw options.svelteLoaderOptions 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.svelte\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+            "options": {
+              "compilerOptions": {
+                "dev": false,
+              },
+              "emitCss": true,
+              "hotReload": false,
+              "preprocess": null,
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "resolve": {
+    "alias": {
+      "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
+    },
+    "conditionNames": [
+      "svelte",
+      "...",
+    ],
+    "extensions": [
+      ".svelte",
+    ],
+    "mainFields": [
+      "svelte",
+      "...",
     ],
   },
   "resolveLoader": {
@@ -82,14 +128,64 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
     },
     "conditionNames": [
       "svelte",
-      "browser",
-      "import",
+      "...",
     ],
     "extensions": [
       ".svelte",
     ],
     "mainFields": [
       "svelte",
+      "...",
+    ],
+  },
+  "resolveLoader": {
+    "alias": {
+      "svelte-loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+    },
+  },
+}
+`;
+
+exports[`plugin-svelte > should support pass custom preprocess options 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.svelte\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+            "options": {
+              "compilerOptions": {
+                "dev": false,
+              },
+              "emitCss": true,
+              "hotReload": false,
+              "preprocess": {
+                "markup": [Function],
+                "script": [Function],
+                "style": [Function],
+              },
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "resolve": {
+    "alias": {
+      "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
+    },
+    "conditionNames": [
+      "svelte",
+      "...",
+    ],
+    "extensions": [
+      ".svelte",
+    ],
+    "mainFields": [
+      "svelte",
+      "...",
     ],
   },
   "resolveLoader": {
@@ -132,14 +228,14 @@ exports[`plugin-svelte > should turn off hmr by hand correctly 1`] = `
     },
     "conditionNames": [
       "svelte",
-      "browser",
-      "import",
+      "...",
     ],
     "extensions": [
       ".svelte",
     ],
     "mainFields": [
       "svelte",
+      "...",
     ],
   },
   "resolveLoader": {

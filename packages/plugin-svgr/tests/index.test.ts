@@ -1,10 +1,11 @@
 import { expect, describe, it } from 'vitest';
-import { pluginSvgr } from '../src';
-import { createStubRsbuild } from '@rsbuild/test-helper';
+import { type PluginSvgrOptions, pluginSvgr } from '../src';
+import { createStubRsbuild } from '@scripts/test-helper';
+import { pluginReact } from '@rsbuild/plugin-react';
 import { SVG_REGEX } from '@rsbuild/shared';
 
 describe('svgr', () => {
-  const cases = [
+  const cases: Array<{ name: string; pluginConfig: PluginSvgrOptions }> = [
     {
       name: 'export default url',
       pluginConfig: {},
@@ -12,7 +13,17 @@ describe('svgr', () => {
     {
       name: 'export default Component',
       pluginConfig: {
-        svgDefaultExport: 'component' as const,
+        svgDefaultExport: 'component',
+      },
+    },
+    {
+      name: 'configure SVGR options',
+      pluginConfig: {
+        svgrOptions: {
+          svgoConfig: {
+            datauri: 'base64',
+          },
+        },
       },
     },
   ];
@@ -22,7 +33,7 @@ describe('svgr', () => {
       rsbuildConfig: {},
     });
 
-    rsbuild.addPlugins([pluginSvgr(item.pluginConfig)]);
+    rsbuild.addPlugins([pluginSvgr(item.pluginConfig), pluginReact()]);
 
     const config = await rsbuild.unwrapConfig();
 
