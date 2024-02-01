@@ -132,8 +132,12 @@ export const CHAIN_ID = {
     PUG: 'pug',
     /** vue-loader */
     VUE: 'vue',
+    /** swc-loader */
+    SWC: 'swc',
     /** @svgr/webpack */
     SVGR: 'svgr',
+    /** plugin-image-compress svgo-loader */
+    SVGO: 'svgo',
     /** yaml-loader */
     YAML: 'yaml',
     /** toml-loader */
@@ -142,12 +146,12 @@ export const CHAIN_ID = {
     NODE: 'node',
     /** babel-loader */
     BABEL: 'babel',
-    /** esbuild-loader */
-    ESBUILD: 'esbuild',
-    /** swc-loader */
-    SWC: 'swc',
     /** style-loader */
     STYLE: 'style-loader',
+    /** svelte-loader */
+    SVELTE: 'svelte',
+    /** esbuild-loader */
+    ESBUILD: 'esbuild',
     /** postcss-loader */
     POSTCSS: 'postcss',
     /** ignore-css-loader */
@@ -160,10 +164,6 @@ export const CHAIN_ID = {
     RESOLVE_URL: 'resolve-url-loader',
     /** plugin-image-compress.loader */
     IMAGE_COMPRESS: 'image-compress',
-    /** plugin-image-compress svgo-loader */
-    SVGO: 'svgo',
-    /** svelte-loader */
-    SVELTE: 'svelte',
   },
   /** Predefined plugins */
   PLUGIN: {
@@ -175,14 +175,8 @@ export const CHAIN_ID = {
     HTML: 'html',
     /** DefinePlugin */
     DEFINE: 'define',
-    /** IgnorePlugin */
-    IGNORE: 'ignore',
-    /** BannerPlugin */
-    BANNER: 'banner',
     /** ProgressPlugin */
     PROGRESS: 'progress',
-    /** Inspector */
-    INSPECTOR: 'inspector',
     /** AppIconPlugin */
     APP_ICON: 'app-icon',
     /** WebpackManifestPlugin */
@@ -213,8 +207,6 @@ export const CHAIN_ID = {
     MINI_CSS_EXTRACT: 'mini-css-extract',
     /** VueLoaderPlugin */
     VUE_LOADER_PLUGIN: 'vue-loader-plugin',
-    /** PreactRefreshPlugin */
-    PREACT_REFRESH: 'preact-refresh',
     /** ReactFastRefreshPlugin */
     REACT_FAST_REFRESH: 'react-fast-refresh',
     /** ProvidePlugin for node polyfill */
@@ -225,8 +217,6 @@ export const CHAIN_ID = {
     ASSETS_RETRY: 'assets-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
-    /** HtmlAsyncChunkPlugin */
-    HTML_ASYNC_CHUNK: 'html-async-chunk',
   },
   /** Predefined minimizers */
   MINIMIZER: {
