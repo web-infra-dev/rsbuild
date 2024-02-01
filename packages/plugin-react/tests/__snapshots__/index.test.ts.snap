@@ -50,6 +50,12 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     },
     "rules": [
       {
+        "resolve": {
+          "fullySpecified": false,
+        },
+        "test": /\\\\\\.m\\?js/,
+      },
+      {
         "include": [
           {
             "and": [
@@ -150,12 +156,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             },
           },
         ],
-      },
-      {
-        "resolve": {
-          "fullySpecified": false,
-        },
-        "test": /\\\\\\.m\\?js/,
       },
       {
         "oneOf": [

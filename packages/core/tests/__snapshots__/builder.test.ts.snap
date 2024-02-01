@@ -33,6 +33,12 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     },
     "rules": [
       {
+        "resolve": {
+          "fullySpecified": false,
+        },
+        "test": /\\\\\\.m\\?js/,
+      },
+      {
         "include": [
           {
             "and": [
@@ -123,12 +129,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
             },
           },
         ],
-      },
-      {
-        "resolve": {
-          "fullySpecified": false,
-        },
-        "test": /\\\\\\.m\\?js/,
       },
       {
         "oneOf": [
