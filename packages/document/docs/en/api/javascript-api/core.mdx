@@ -67,6 +67,8 @@ const { content } = await loadConfig();
 console.log(content); // -> Rsbuild config object
 ```
 
+If the Rsbuild config file does not exist in the cwd directory, the return value of the loadConfig method is `{ content: {}, filePath: null }`.
+
 ## loadEnv
 
 Load the `.env` file and return all environment variables starting with the specified prefixes.

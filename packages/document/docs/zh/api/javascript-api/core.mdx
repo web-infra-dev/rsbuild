@@ -67,6 +67,8 @@ const { content } = await loadConfig();
 console.log(content); // -> Rsbuild config object
 ```
 
+如果 cwd 目录下不存在 Rsbuild 配置文件，loadConfig 方法的返回值为 `{ content: {}, filePath: null }`。
+
 ## loadEnv
 
 加载 `.env` 文件，并返回所有以 prefixes 开头的环境变量。
