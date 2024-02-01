@@ -393,18 +393,30 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
 }
 
 export function applyResolvePlugin(api: RsbuildPluginAPI) {
+  api.modifyBundlerChain({
+    order: 'pre',
+    handler: (chain, { CHAIN_ID }) => {
+      const config = api.getNormalizedConfig();
+
+      applyExtensions({ chain });
+
+      applyAlias({
+        chain,
+        config,
+        rootPath: api.context.rootPath,
+      });
+
+      // in some cases (modern.js), get error when fullySpecified rule after js rule
+      applyFullySpecified({ chain, config, CHAIN_ID });
+    },
+  });
+
   api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-    const config = api.getNormalizedConfig();
-
-    applyExtensions({ chain });
-
-    applyAlias({
-      chain,
-      config,
-      rootPath: api.context.rootPath,
-    });
-
-    applyFullySpecified({ chain, config, CHAIN_ID });
+    if (chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI)) {
+      chain.module
+        .rule(CHAIN_ID.RULE.JS_DATA_URI)
+        .resolve.set('fullySpecified', false);
+    }
   });
 }
 
@@ -422,12 +434,6 @@ function applyFullySpecified({
     .rule(CHAIN_ID.RULE.MJS)
     .test(/\.m?js/)
     .resolve.set('fullySpecified', false);
-
-  if (chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI)) {
-    chain.module
-      .rule(CHAIN_ID.RULE.JS_DATA_URI)
-      .resolve.set('fullySpecified', false);
-  }
 }
 
 function applyExtensions({ chain }: { chain: BundlerChain }) {

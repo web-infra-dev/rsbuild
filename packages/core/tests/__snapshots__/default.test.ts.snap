@@ -33,6 +33,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
     "rules": [
       {
+        "resolve": {
+          "fullySpecified": false,
+        },
+        "test": /\\\\\\.m\\?js/,
+      },
+      {
         "include": [
           {
             "and": [
@@ -123,12 +129,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
         ],
-      },
-      {
-        "resolve": {
-          "fullySpecified": false,
-        },
-        "test": /\\\\\\.m\\?js/,
       },
       {
         "oneOf": [
@@ -704,6 +704,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     "rules": [
       {
+        "resolve": {
+          "fullySpecified": false,
+        },
+        "test": /\\\\\\.m\\?js/,
+      },
+      {
         "include": [
           {
             "and": [
@@ -794,12 +800,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             },
           },
         ],
-      },
-      {
-        "resolve": {
-          "fullySpecified": false,
-        },
-        "test": /\\\\\\.m\\?js/,
       },
       {
         "oneOf": [
@@ -1421,6 +1421,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     },
     "rules": [
       {
+        "resolve": {
+          "fullySpecified": false,
+        },
+        "test": /\\\\\\.m\\?js/,
+      },
+      {
         "include": [
           {
             "and": [
@@ -1499,12 +1505,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
         ],
-      },
-      {
-        "resolve": {
-          "fullySpecified": false,
-        },
-        "test": /\\\\\\.m\\?js/,
       },
       {
         "oneOf": [
@@ -1844,6 +1844,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
         ],
       },
       {
+        "resolve": {
+          "fullySpecified": false,
+        },
+        "test": /\\\\\\.m\\?js/,
+      },
+      {
         "include": [
           {
             "and": [
@@ -1934,12 +1940,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
             },
           },
         ],
-      },
-      {
-        "resolve": {
-          "fullySpecified": false,
-        },
-        "test": /\\\\\\.m\\?js/,
       },
       {
         "oneOf": [
