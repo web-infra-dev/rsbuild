@@ -96,6 +96,9 @@ export const getCompiledPath = (packageName: string) => {
 
 export const BUILTIN_LOADER = 'builtin:';
 
+/**
+ * Add node polyfill tip when failed to resolve node built-in modules.
+ */
 const addNodePolyfillTip = (message: string): string => {
   if (!message.includes(`Can't resolve`)) {
     return message;
