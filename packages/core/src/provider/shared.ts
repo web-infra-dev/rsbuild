@@ -96,7 +96,7 @@ export const getCompiledPath = (packageName: string) => {
 
 export const BUILTIN_LOADER = 'builtin:';
 
-export function formatStats(stats: Stats | MultiStats, showWarnings = true) {
+export function formatStats(stats: Stats | MultiStats) {
   const statsData = stats.toJson({
     preset: 'errors-warnings',
   });
@@ -121,8 +121,7 @@ export function formatStats(stats: Stats | MultiStats, showWarnings = true) {
     };
   }
 
-  // always show warnings in tty mode
-  if (warnings.length && (showWarnings || process.stdout.isTTY)) {
+  if (warnings.length) {
     const title = color.bold(color.yellow('Compile Warning: \n'));
     return {
       message: `${title}${`${warnings.join('\n\n')}\n`}`,
