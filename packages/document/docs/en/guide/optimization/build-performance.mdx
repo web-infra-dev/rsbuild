@@ -4,9 +4,38 @@ Rsbuild optimizes build performance by default, but as the project becomes large
 
 This document provides some optional speed-up strategies, developers can choose some of them to improve the build performance.
 
-:::tip 📢 Notice
+:::tip
 The strategies in [Bundle Size Optimization](/guide/optimization/optimize-bundle) can also be used to improve build performance, so we won't repeat them here.
 :::
+
+## Performance Profiling
+
+Performing a performance analysis can help you identify performance bottlenecks in your project, allowing for targeted optimization.
+
+### Node.js Profiling
+
+In general, the performance overhead on the JS side will be greater than that on the Rust side, and you can use Node.js profiling to analyze the overhead on the JS side.
+
+Run the following command in the project root:
+
+```bash
+# dev
+node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js dev
+
+# build
+node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js build
+```
+
+The above commands will generate a cpuprofile file. We can use [speedscope](https://github.com/jlfwong/speedscope) to visualize this file:
+
+```bash
+# Install speedscope
+npm install -g speedscope
+
+# View cpuprofile content
+# Replace the name with the local file name
+speedscope CPU.date.000000.00000.0.001.cpuprofile
+```
 
 ## General optimization strategy
 
