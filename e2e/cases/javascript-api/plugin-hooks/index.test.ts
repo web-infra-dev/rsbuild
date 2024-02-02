@@ -29,6 +29,7 @@ const plugin: RsbuildPlugin = {
     api.onBeforeBuild(() => write('BeforeBuild'));
     api.onAfterBuild(() => write('AfterBuild'));
     api.onBeforeStartProdServer(() => write('BeforeStartProdServer'));
+    api.onCloseDevServer(() => write('OnCloseDevServer'));
     api.onAfterStartProdServer(() => write('AfterStartProdServer'));
   },
 };
@@ -76,6 +77,7 @@ test('should run plugin hooks correctly when running startDevServer', async () =
     'BeforeCreateCompiler',
     'AfterCreateCompiler',
     'AfterStartDevServer',
+    'OnCloseDevServer',
   ]);
 
   await result.server.close();

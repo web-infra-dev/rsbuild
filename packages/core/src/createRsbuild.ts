@@ -60,6 +60,7 @@ export async function createRsbuild(
       'onAfterCreateCompiler',
       'onAfterStartDevServer',
       'onAfterStartProdServer',
+      'onCloseDevServer',
       'onDevCompileDone',
       'onExit',
       'getHTMLPaths',

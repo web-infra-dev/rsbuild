@@ -539,6 +539,20 @@ rsbuild.onAfterStartDevServer(({ port, routes }) => {
 });
 ```
 
+## rsbuild.onCloseDevServer
+
+import OnCloseDevServer from '@en/shared/onCloseDevServer.md';
+
+<OnCloseDevServer />
+
+- **Example:**
+
+```ts
+rsbuild.onCloseDevServer(async () => {
+  console.log('close dev server!');
+});
+```
+
 ## rsbuild.onBeforeStartProdServer
 
 import OnBeforeStartProdServer from '@en/shared/onBeforeStartProdServer.md';

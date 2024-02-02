@@ -3,6 +3,7 @@ import type {
   OnExitFn,
   OnAfterBuildFn,
   OnBeforeBuildFn,
+  OnCloseDevServerFn,
   OnDevCompileDoneFn,
   OnAfterStartDevServerFn,
   OnBeforeStartDevServerFn,
@@ -158,6 +159,7 @@ export type RsbuildPluginAPI = {
   onExit: PluginHook<OnExitFn>;
   onAfterBuild: PluginHook<OnAfterBuildFn>;
   onBeforeBuild: PluginHook<OnBeforeBuildFn>;
+  onCloseDevServer: PluginHook<OnCloseDevServerFn>;
   onDevCompileDone: PluginHook<OnDevCompileDoneFn>;
   onAfterStartDevServer: PluginHook<OnAfterStartDevServerFn>;
   onBeforeStartDevServer: PluginHook<OnBeforeStartDevServerFn>;
