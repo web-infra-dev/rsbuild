@@ -50,6 +50,10 @@ Rsbuild 内置了一些 PostCSS 插件，会对 CSS 进行以下转换：
 - [autoprefixer](https://github.com/postcss/autoprefixer)：在默认情况下，我们开启了 autoprefixer 来自动补齐 CSS 的浏览器前缀。如果你需要配置目标浏览器，可以使用 [browserslist](/guide/advanced/browserslist) 进行配置。
 - [postcss-flexbugs-fixes](https://npmjs.com/package/postcss-flexbugs-fixes)：用于修复已知的 [Flex Bugs](https://github.com/philipwalton/flexbugs)。
 
+:::tip
+如果你的项目中已经注册了 autoprefixer 插件，Rsbuild 不会再次注册 autoprefixer 插件。
+:::
+
 ## 使用 CSS Modules
 
 请阅读 [使用 CSS Modules](/guide/basic/css-modules) 章节来了解 CSS Modules 的完整用法。

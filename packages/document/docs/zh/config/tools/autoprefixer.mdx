@@ -4,15 +4,19 @@
 - **默认值：**
 
 ```js
-{
+const defaultConfig = {
   flexbox: 'no-2009',
   // browserslist 取决于项目中的 browserslist 配置
   // 以及 `output.overrideBrowserslist`(优先级更高) 配置
   overrideBrowserslist: browserslist,
-}
+};
 ```
 
-通过 `tools.autoprefixer` 可以修改 [autoprefixer](https://github.com/postcss/autoprefixer) 的配置。
+通过 `tools.autoprefixer` 可以修改 Rsbuild 内置的 [autoprefixer](https://github.com/postcss/autoprefixer) 插件的配置。
+
+:::tip
+如果你的项目中自行注册了 autoprefixer 插件，`tools.autoprefixer` 将不会生效。
+:::
 
 ### Object 类型
 
