@@ -289,7 +289,10 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
+                      {
+                        "Once": [Function],
+                        "postcssPlugin": "postcss-flexbugs-fixes",
+                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -330,7 +333,10 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
+                      {
+                        "Once": [Function],
+                        "postcssPlugin": "postcss-flexbugs-fixes",
+                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -377,7 +383,10 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
+                      {
+                        "Once": [Function],
+                        "postcssPlugin": "postcss-flexbugs-fixes",
+                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -428,7 +437,10 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
+                      {
+                        "Once": [Function],
+                        "postcssPlugin": "postcss-flexbugs-fixes",
+                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -485,7 +497,10 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
+                      {
+                        "Once": [Function],
+                        "postcssPlugin": "postcss-flexbugs-fixes",
+                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -540,7 +555,10 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
+                      {
+                        "Once": [Function],
+                        "postcssPlugin": "postcss-flexbugs-fixes",
+                      },
                       {
                         "browsers": [
                           "chrome >= 87",
