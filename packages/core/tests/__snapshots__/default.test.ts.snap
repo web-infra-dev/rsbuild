@@ -263,10 +263,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -306,10 +302,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -356,10 +348,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -410,10 +398,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -471,10 +455,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -528,10 +508,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -952,10 +928,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -995,10 +967,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -1045,10 +1013,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -1099,10 +1063,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -1160,10 +1120,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -1217,10 +1173,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -2110,10 +2062,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -2153,10 +2101,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -2203,10 +2147,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -2257,10 +2197,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -2318,10 +2254,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -2375,10 +2307,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",

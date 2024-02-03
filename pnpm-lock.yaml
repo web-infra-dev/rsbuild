@@ -1572,9 +1572,6 @@ importers:
       picocolors:
         specifier: 1.0.0
         version: 1.0.0
-      postcss-flexbugs-fixes:
-        specifier: 5.0.2
-        version: 5.0.2(postcss@8.4.33)
       postcss-load-config:
         specifier: 4.0.2
         version: 4.0.2(postcss@8.4.33)
@@ -10779,14 +10776,6 @@ packages:
     dependencies:
       postcss: 8.4.33
     dev: false
-
-  /postcss-flexbugs-fixes@5.0.2(postcss@8.4.33):
-    resolution: {integrity: sha512-18f9voByak7bTktR2QgDveglpn9DTbBWPUzSOe9g0N4WR/2eSt6Vrcbf0hmspvMI6YWGywz6B9f7jzpFNJJgnQ==}
-    peerDependencies:
-      postcss: ^8.1.4
-    dependencies:
-      postcss: 8.4.33
-    dev: true
 
   /postcss-import@15.1.0(postcss@8.4.31):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}

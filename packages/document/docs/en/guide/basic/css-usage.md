@@ -45,10 +45,7 @@ When you configure both the `postcss.config.js` file and the `tools.postcss` opt
 
 ### Builtin PostCSS plugins
 
-Rsbuild has some builtin PostCSS plugins, which will perform the following transformations on CSS:
-
-- [autoprefixer](https://github.com/postcss/autoprefixer): we have enabled [autoprefixer](https://github.com/postcss/autoprefixer) to add vendor prefixes to CSS rules. If you want to configure the target browser, you can use [browserslist](/guide/advanced/browserslist).
-- [postcss-flexbugs-fixes](https://npmjs.com/package/postcss-flexbugs-fixes): Used to fix known [Flex Bugs](https://github.com/philipwalton/flexbugs).
+Rsbuild has built-in [autoprefixer](https://github.com/postcss/autoprefixer) plugin, which is used to add vendor prefixes to CSS rules. If you need to configure the target browser, you can use [browserslist](/guide/advanced/browserslist).
 
 :::tip
 If the autoprefixer plugin is already registered in your project, Rsbuild will not register the autoprefixer plugin again.

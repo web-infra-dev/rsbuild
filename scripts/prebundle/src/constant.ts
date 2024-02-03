@@ -157,10 +157,6 @@ export const TASKS: TaskConfig[] = [
         },
       },
       {
-        name: 'postcss-flexbugs-fixes',
-        ignoreDts: true,
-      },
-      {
         name: 'sass-loader',
         externals: {
           sass: '../sass',

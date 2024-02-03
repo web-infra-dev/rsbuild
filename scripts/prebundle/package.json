@@ -54,7 +54,6 @@
     "on-finished": "2.4.1",
     "open": "^8.4.0",
     "picocolors": "1.0.0",
-    "postcss-flexbugs-fixes": "5.0.2",
     "postcss-load-config": "4.0.2",
     "postcss-loader": "7.3.4",
     "postcss-modules-extract-imports": "3.0.0",
