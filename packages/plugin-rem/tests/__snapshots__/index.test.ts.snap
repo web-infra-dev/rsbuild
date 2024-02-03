@@ -30,10 +30,6 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -79,10 +75,6 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -159,10 +151,6 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -208,10 +196,6 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -264,10 +248,6 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -324,10 +304,6 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -391,10 +367,6 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -454,10 +426,6 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -567,10 +535,6 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -616,10 +580,6 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -720,10 +680,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -769,10 +725,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -825,10 +777,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -885,10 +833,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -952,10 +896,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -1015,10 +955,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",

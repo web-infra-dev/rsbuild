@@ -67,10 +67,6 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
                 "config": false,
                 "plugins": [
                   {
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-flexbugs-fixes",
-                  },
-                  {
                     "browsers": [
                       "Chrome 80",
                     ],
@@ -128,10 +124,6 @@ exports[`plugin-css > should remove some postcss plugins based on browserslist 1
               "postcssOptions": {
                 "config": false,
                 "plugins": [
-                  {
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-flexbugs-fixes",
-                  },
                   {
                     "browsers": [
                       "Chrome 100",

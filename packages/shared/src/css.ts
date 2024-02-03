@@ -151,11 +151,7 @@ export const getPostcssLoaderOptions = async ({
 
   const userPostcssConfig = await loadUserPostcssrc(root);
 
-  const { default: postcssFlexbugs } = await import(
-    '../compiled/postcss-flexbugs-fixes'
-  );
-
-  let postcssPlugins = [...(userPostcssConfig.plugins || []), postcssFlexbugs];
+  let postcssPlugins = userPostcssConfig.plugins?.slice() || [];
 
   postcssPlugins = await applyAutoprefixer(
     postcssPlugins,

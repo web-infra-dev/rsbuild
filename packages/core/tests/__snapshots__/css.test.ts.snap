@@ -39,10 +39,6 @@ exports[`plugin-css > should apply custom css-modules-typescript-loader when ena
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -91,10 +87,6 @@ exports[`plugin-css > should apply custom css-modules-typescript-loader when ena
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -165,10 +157,6 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "Chrome 80",
                         ],
@@ -202,10 +190,6 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "Chrome 80",
@@ -270,10 +254,6 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -313,10 +293,6 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -433,10 +409,6 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
                 "config": false,
                 "plugins": [
                   {
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-flexbugs-fixes",
-                  },
-                  {
                     "browsers": [
                       "chrome >= 87",
                       "edge >= 88",
@@ -489,10 +461,6 @@ exports[`plugin-less > should add less-loader 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -542,10 +510,6 @@ exports[`plugin-less > should add less-loader 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -627,10 +591,6 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
                 "config": false,
                 "plugins": [
                   {
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-flexbugs-fixes",
-                  },
-                  {
                     "browsers": [
                       "chrome >= 87",
                       "edge >= 88",
@@ -696,10 +656,6 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -752,10 +708,6 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -822,10 +774,6 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -875,10 +823,6 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -945,10 +889,6 @@ exports[`plugin-sass > should add sass-loader 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -1002,10 +942,6 @@ exports[`plugin-sass > should add sass-loader 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -1091,10 +1027,6 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
                 "config": false,
                 "plugins": [
                   {
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-flexbugs-fixes",
-                  },
-                  {
                     "browsers": [
                       "chrome >= 87",
                       "edge >= 88",
@@ -1164,10 +1096,6 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -1224,10 +1152,6 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",

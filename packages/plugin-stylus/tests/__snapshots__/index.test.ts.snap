@@ -21,10 +21,6 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -70,10 +66,6 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -136,10 +128,6 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
                     "config": false,
                     "plugins": [
                       {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
-                      {
                         "browsers": [
                           "chrome >= 87",
                           "edge >= 88",
@@ -188,10 +176,6 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      {
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-flexbugs-fixes",
-                      },
                       {
                         "browsers": [
                           "chrome >= 87",

@@ -6,10 +6,7 @@
 ```js
 const defaultOptions = {
   postcssOptions: {
-    plugins: [
-      require('postcss-flexbugs-fixes'),
-      require('autoprefixer')({ flexbox: 'no-2009' }),
-    ],
+    plugins: [require('autoprefixer')({ flexbox: 'no-2009' })],
     sourceMap: rsbuildConfig.output.sourceMap.css,
   },
 };

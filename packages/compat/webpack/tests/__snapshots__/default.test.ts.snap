@@ -184,10 +184,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "config": false,
                 "plugins": [
                   {
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-flexbugs-fixes",
-                  },
-                  {
                     "browsers": [
                       "chrome >= 87",
                       "edge >= 88",
@@ -242,10 +238,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "postcssOptions": {
                 "config": false,
                 "plugins": [
-                  {
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-flexbugs-fixes",
-                  },
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -315,10 +307,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "postcssOptions": {
                 "config": false,
                 "plugins": [
-                  {
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-flexbugs-fixes",
-                  },
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -695,10 +683,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                 "config": false,
                 "plugins": [
                   {
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-flexbugs-fixes",
-                  },
-                  {
                     "browsers": [
                       "chrome >= 87",
                       "edge >= 88",
@@ -753,10 +737,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               "postcssOptions": {
                 "config": false,
                 "plugins": [
-                  {
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-flexbugs-fixes",
-                  },
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -826,10 +806,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               "postcssOptions": {
                 "config": false,
                 "plugins": [
-                  {
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-flexbugs-fixes",
-                  },
                   {
                     "browsers": [
                       "chrome >= 87",
