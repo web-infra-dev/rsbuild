@@ -4,15 +4,19 @@
 - **Default:**
 
 ```js
-{
+const defaultConfig = {
   flexbox: 'no-2009',
   // Depends on the browserslist config in the project
   // and the `output.overrideBrowserslist` (higher priority) config
   overrideBrowserslist: browserslist,
-}
+};
 ```
 
-You can modify the config of [autoprefixer](https://github.com/postcss/autoprefixer) by `tools.autoprefixer`.
+Use `tools.autoprefixer` to modify the configuration of the [autoprefixer](https://github.com/postcss/autoprefixer) plugin that is built into Rsbuild.
+
+:::tip
+If you have registered the autoprefixer plugin in the project yourself, `tools.autoprefixer` will not work.
+:::
 
 ### Object Type
 

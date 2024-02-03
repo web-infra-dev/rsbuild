@@ -2,6 +2,7 @@ import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
 import type { AcceptedPlugin } from 'postcss';
 import deepmerge from '../compiled/deepmerge';
 import { mergeChainedOptions } from './mergeChainedOptions';
+import { isFunction, isPlainObject } from './utils';
 import type {
   RsbuildTarget,
   PostCSSOptions,
@@ -88,6 +89,45 @@ async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
   return promise;
 }
 
+/**
+ * Apply autoprefixer to the postcss plugins
+ * Check if autoprefixer is already in the plugins, if not, add it
+ */
+export const applyAutoprefixer = async (
+  plugins: unknown[],
+  browserslist: string[],
+  config: NormalizedConfig,
+) => {
+  const pluginObjects: AcceptedPlugin[] = plugins.map((plugin) =>
+    isFunction(plugin) ? plugin({}) : plugin,
+  );
+
+  const hasAutoprefixer = pluginObjects.some((pluginObject) => {
+    if (isPlainObject(pluginObject) && 'postcssPlugin' in pluginObject) {
+      return pluginObject.postcssPlugin === 'autoprefixer';
+    }
+    return false;
+  });
+
+  if (!hasAutoprefixer) {
+    const { default: autoprefixer } = await import('../compiled/autoprefixer');
+
+    const autoprefixerOptions = mergeChainedOptions({
+      defaults: {
+        flexbox: 'no-2009',
+        overrideBrowserslist: browserslist,
+      },
+      options: config.tools.autoprefixer,
+    });
+
+    // Place autoprefixer as the last plugin to correctly process the results of other plugins
+    // such as tailwindcss
+    pluginObjects.push(autoprefixer(autoprefixerOptions));
+  }
+
+  return pluginObjects;
+};
+
 export const getPostcssLoaderOptions = async ({
   browserslist,
   config,
@@ -109,30 +149,24 @@ export const getPostcssLoaderOptions = async ({
     },
   };
 
-  const autoprefixerOptions = mergeChainedOptions({
-    defaults: {
-      flexbox: 'no-2009',
-      overrideBrowserslist: browserslist,
-    },
-    options: config.tools.autoprefixer,
-  });
-
   const userPostcssConfig = await loadUserPostcssrc(root);
-  const { default: autoprefixer } = await import('../compiled/autoprefixer');
+
   const { default: postcssFlexbugs } = await import(
     '../compiled/postcss-flexbugs-fixes'
+  );
+
+  let postcssPlugins = [...(userPostcssConfig.plugins || []), postcssFlexbugs];
+
+  postcssPlugins = await applyAutoprefixer(
+    postcssPlugins,
+    browserslist,
+    config,
   );
 
   const defaultPostcssConfig: PostCSSLoaderOptions = {
     postcssOptions: {
       ...userPostcssConfig,
-      plugins: [
-        ...(userPostcssConfig.plugins || []),
-        postcssFlexbugs,
-        // Place autoprefixer as the last plugin to correctly process the results of other plugins
-        // such as tailwindcss
-        autoprefixer(autoprefixerOptions),
-      ],
+      plugins: postcssPlugins,
     },
     sourceMap: config.output.sourceMap.css,
   };

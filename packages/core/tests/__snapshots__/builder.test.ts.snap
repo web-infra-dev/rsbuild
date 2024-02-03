@@ -262,7 +262,10 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
+                      {
+                        "Once": [Function],
+                        "postcssPlugin": "postcss-flexbugs-fixes",
+                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -303,7 +306,10 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
+                      {
+                        "Once": [Function],
+                        "postcssPlugin": "postcss-flexbugs-fixes",
+                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -350,7 +356,10 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
+                      {
+                        "Once": [Function],
+                        "postcssPlugin": "postcss-flexbugs-fixes",
+                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -401,7 +410,10 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
+                      {
+                        "Once": [Function],
+                        "postcssPlugin": "postcss-flexbugs-fixes",
+                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -458,7 +470,10 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
+                      {
+                        "Once": [Function],
+                        "postcssPlugin": "postcss-flexbugs-fixes",
+                      },
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -513,7 +528,10 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
+                      {
+                        "Once": [Function],
+                        "postcssPlugin": "postcss-flexbugs-fixes",
+                      },
                       {
                         "browsers": [
                           "chrome >= 87",

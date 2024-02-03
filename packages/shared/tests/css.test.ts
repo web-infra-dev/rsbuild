@@ -1,4 +1,10 @@
-import { isCssModules, normalizeCssLoaderOptions } from '../src/css';
+import {
+  isCssModules,
+  applyAutoprefixer,
+  normalizeCssLoaderOptions,
+} from '../src/css';
+import autoprefixer from '../compiled/autoprefixer';
+import type { NormalizedConfig } from '../src';
 
 describe('normalizeCssLoaderOptions', () => {
   it('should enable exportOnlyLocals correctly', () => {
@@ -71,4 +77,23 @@ it('check isCssModules', () => {
       auto: /\.module\./i,
     }),
   ).toBeFalsy();
+});
+
+it('should not apply autoprefixer if user config contains autoprefixer', async () => {
+  const config = {
+    tools: {},
+  } as NormalizedConfig;
+
+  expect(
+    (await applyAutoprefixer([autoprefixer()], ['Chrome >= 100'], config))
+      .length,
+  ).toEqual(1);
+
+  expect(
+    (await applyAutoprefixer([autoprefixer], ['Chrome >= 100'], config)).length,
+  ).toEqual(1);
+
+  expect(
+    (await applyAutoprefixer([], ['Chrome >= 100'], config)).length,
+  ).toEqual(1);
 });

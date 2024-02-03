@@ -50,6 +50,10 @@ Rsbuild has some builtin PostCSS plugins, which will perform the following trans
 - [autoprefixer](https://github.com/postcss/autoprefixer): we have enabled [autoprefixer](https://github.com/postcss/autoprefixer) to add vendor prefixes to CSS rules. If you want to configure the target browser, you can use [browserslist](/guide/advanced/browserslist).
 - [postcss-flexbugs-fixes](https://npmjs.com/package/postcss-flexbugs-fixes): Used to fix known [Flex Bugs](https://github.com/philipwalton/flexbugs).
 
+:::tip
+If the autoprefixer plugin is already registered in your project, Rsbuild will not register the autoprefixer plugin again.
+:::
+
 ## Using CSS Modules
 
 Please read the [Using CSS Modules](/guide/basic/css-modules) chapter for a complete usage of CSS Modules.
