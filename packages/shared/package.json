@@ -131,12 +131,10 @@
   },
   "dependencies": {
     "@rspack/core": "0.5.3",
-    "caniuse-lite": "^1.0.30001559",
-    "lodash": "^4.17.21",
+    "caniuse-lite": "^1.0.30001583",
     "postcss": "^8.4.33"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.200",
     "@types/node": "16.x",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
     "mini-css-extract-plugin": "2.8.0",

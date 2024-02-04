@@ -38,8 +38,6 @@
 		// manually update some packages
 		"core-js",
 		"esbuild",
-		"typescript",
-		// https://github.com/web-infra-dev/rsbuild/pull/1105
-		"webpack-bundle-analyzer"
+		"typescript"
 	]
 }
