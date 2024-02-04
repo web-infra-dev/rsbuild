@@ -55,8 +55,10 @@ export function pluginSourceBuild(
 
     setup(api) {
       const projectRootPath = api.context.rootPath;
+      const SOURCE_BUILD_RULE = 'SOURCE_BUILD_RULE';
 
       let projects: Project[] = [];
+      let includes: string[] = [];
 
       api.modifyRsbuildConfig(async (config) => {
         projects = await getDependentProjects(projectName || projectRootPath, {
@@ -66,7 +68,7 @@ export function pluginSourceBuild(
           extraMonorepoStrategies,
         });
 
-        const includes = await getSourceInclude({
+        includes = await getSourceInclude({
           projects,
           sourceField,
         });
@@ -75,26 +77,22 @@ export function pluginSourceBuild(
         config.source.include = [...(config.source.include ?? []), ...includes];
       });
 
-      api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-        [CHAIN_ID.RULE.TS, CHAIN_ID.RULE.JS].forEach((ruleId) => {
-          if (chain.module.rules.get(ruleId)) {
-            const rule = chain.module.rule(ruleId);
+      api.modifyBundlerChain((chain) => {
+        const rule = chain.module.rule(SOURCE_BUILD_RULE);
 
-            // https://rspack.dev/config/resolve
-            // when source is not exist, other mainFields will effect. // source > Rspack default mainFields.
-            rule.resolve.mainFields.merge(
-              resolvePriority === 'source'
-                ? [sourceField, '...']
-                : ['...', sourceField],
-            );
+        rule.include.merge([...includes, projectRootPath]);
 
-            // bundler-chain do not support resolve.conditionNames yet
-            rule.resolve.merge({
-              // `conditionNames` is not affected by `resolvePriority`.
-              // The priority is controlled by the order of fields declared in `exports`.
-              conditionNames: ['...', sourceField],
-            });
-          }
+        rule.resolve.mainFields.merge(
+          resolvePriority === 'source'
+            ? [sourceField, '...']
+            : ['...', sourceField],
+        );
+
+        // bundler-chain do not support resolve.conditionNames yet
+        rule.resolve.merge({
+          // `conditionNames` is not affected by `resolvePriority`.
+          // The priority is controlled by the order of fields declared in `exports`.
+          conditionNames: ['...', sourceField],
         });
       });
 

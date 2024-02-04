@@ -5,16 +5,6 @@ exports[`plugin-source-build > should allow to set resolve priority 1`] = `
   "module": {
     "rules": [
       {
-        "resolve": {
-          "conditionNames": [
-            "...",
-            "source",
-          ],
-          "mainFields": [
-            "...",
-            "source",
-          ],
-        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
@@ -46,6 +36,21 @@ exports[`plugin-source-build > should allow to set resolve priority 1`] = `
             },
           },
         ],
+      },
+      {
+        "include": [
+          "<ROOT>/packages/plugin-source-build/tests",
+        ],
+        "resolve": {
+          "conditionNames": [
+            "...",
+            "source",
+          ],
+          "mainFields": [
+            "...",
+            "source",
+          ],
+        },
       },
     ],
   },
