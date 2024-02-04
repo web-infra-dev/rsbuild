@@ -20,6 +20,7 @@
 - [onBeforeStartDevServer](#onbeforestartdevserver)：在启动开发服务器前调用。
 - [onAfterStartDevServer](#onafterstartdevserver)：在启动开发服务器后调用。
 - [onDevCompileDone](#ondevcompiledone)：在每次开发环境构建结束后调用。
+- [onCloseDevServer](#onclosedevserver)]：在关闭开发服务器时调用。
 
 ### Build Hooks
 
@@ -51,6 +52,7 @@
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [onDevCompileDone](#ondevcompiledone)
+- [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
 
 ### Build Hooks
@@ -400,6 +402,20 @@ const myPlugin = () => ({
       }
     });
   },
+});
+```
+
+### onCloseDevServer
+
+import OnCloseDevServer from '@zh/shared/onCloseDevServer.md';
+
+<OnCloseDevServer />
+
+- **示例：**
+
+```ts
+rsbuild.onCloseDevServer(async () => {
+  console.log('close dev server!');
 });
 ```
 

@@ -67,6 +67,7 @@ export type {
   OnBeforeStartDevServerFn,
   OnBeforeStartProdServerFn,
   OnBeforeCreateCompilerFn,
+  OnCloseDevServerFn,
   OnDevCompileDoneFn,
   ModifyRsbuildConfigFn,
 } from '@rsbuild/shared';

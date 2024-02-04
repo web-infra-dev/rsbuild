@@ -60,6 +60,7 @@ export type RsbuildInstance<
   onAfterStartProdServer: Awaited<
     ReturnType<P>
   >['pluginAPI']['onAfterStartProdServer'];
+  onCloseDevServer: Awaited<ReturnType<P>>['pluginAPI']['onCloseDevServer'];
   onDevCompileDone: Awaited<ReturnType<P>>['pluginAPI']['onDevCompileDone'];
   onExit: Awaited<ReturnType<P>>['pluginAPI']['onExit'];
 };

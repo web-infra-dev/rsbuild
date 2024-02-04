@@ -3,6 +3,7 @@ import type {
   OnExitFn,
   OnAfterBuildFn,
   OnBeforeBuildFn,
+  OnCloseDevServerFn,
   OnDevCompileDoneFn,
   ModifyBundlerChainFn,
   ModifyRspackConfigFn,
@@ -22,6 +23,7 @@ export function initHooks() {
     /** parameters are not bundler-related */
     onExit: createAsyncHook<OnExitFn>(),
     onDevCompileDone: createAsyncHook<OnDevCompileDoneFn>(),
+    onCloseDevServer: createAsyncHook<OnCloseDevServerFn>(),
     onAfterStartDevServer: createAsyncHook<OnAfterStartDevServerFn>(),
     onBeforeStartDevServer: createAsyncHook<OnBeforeStartDevServerFn>(),
     onAfterStartProdServer: createAsyncHook<OnAfterStartProdServerFn>(),

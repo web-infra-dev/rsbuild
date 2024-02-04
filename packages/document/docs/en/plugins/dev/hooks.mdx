@@ -19,6 +19,7 @@ Called only when running the `rsbuild dev` command or the `rsbuild.startDevServe
 
 - [onBeforeStartDevServer](#onbeforestartdevserver): Called before starting the dev server.
 - [onAfterStartDevServer](#onafterstartdevserver): Called after starting the dev server.
+- [onCloseDevServer](#onclosedevserver): Called when the dev server is closed.
 - [onDevCompileDone](#ondevcompiledone): Called after each build during development.
 
 ### Build Hooks
@@ -51,6 +52,7 @@ When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed,
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [onDevCompileDone](#ondevcompiledone)
+- [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
 
 ### Build Hooks
@@ -397,6 +399,20 @@ const myPlugin = () => ({
       }
     });
   },
+});
+```
+
+### onCloseDevServer
+
+import OnCloseDevServer from '@en/shared/onCloseDevServer.md';
+
+<OnCloseDevServer />
+
+- **Example:**
+
+```ts
+rsbuild.onCloseDevServer(async () => {
+  console.log('close dev server!');
 });
 ```
 

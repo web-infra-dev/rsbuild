@@ -220,6 +220,7 @@ export async function startDevServer<
         await serverAPIs.afterStart();
 
         const closeServer = async () => {
+          await options.context.hooks.onCloseDevServer.call();
           await devMiddlewares.close();
           httpServer.close();
         };
