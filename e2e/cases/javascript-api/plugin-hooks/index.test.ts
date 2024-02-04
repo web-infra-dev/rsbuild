@@ -69,6 +69,8 @@ test('should run plugin hooks correctly when running startDevServer', async () =
 
   const result = await rsbuild.startDevServer();
 
+  await result.server.close();
+
   expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
     'ModifyRsbuildConfig',
     'BeforeStartDevServer',
@@ -77,10 +79,8 @@ test('should run plugin hooks correctly when running startDevServer', async () =
     'BeforeCreateCompiler',
     'AfterCreateCompiler',
     'AfterStartDevServer',
-    'OnCloseDevServer',
+    'OnCloseDevServer'
   ]);
-
-  await result.server.close();
 });
 
 test('should run plugin hooks correctly when running preview', async () => {
