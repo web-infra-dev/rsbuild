@@ -491,6 +491,9 @@ exports[`plugin-less > should add less-loader 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/packages/core/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -541,6 +544,9 @@ exports[`plugin-less > should add less-loader 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/packages/core/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -621,6 +627,9 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/core/tests/node_modules",
+                ],
               },
               "sourceMap": false,
             },
@@ -686,6 +695,9 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/packages/core/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -739,6 +751,9 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/packages/core/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -804,6 +819,9 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": false,
+                    "paths": [
+                      "<ROOT>/packages/core/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -854,6 +872,9 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": false,
+                    "paths": [
+                      "<ROOT>/packages/core/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },

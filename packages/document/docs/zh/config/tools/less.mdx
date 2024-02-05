@@ -7,6 +7,7 @@
 const defaultOptions = {
   lessOptions: {
     javascriptEnabled: true,
+    paths: [path.join(rootPath, 'node_modules')],
   },
   sourceMap: rsbuildConfig.output.sourceMap.css,
 };

@@ -406,6 +406,9 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/packages/plugin-react/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -456,6 +459,9 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/packages/plugin-react/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
