@@ -3,7 +3,7 @@ import {
   NODE_MODULES_REGEX,
   createDependenciesRegExp,
   type Polyfill,
-  type CacheGroup,
+  type CacheGroups,
   type SplitChunks,
   type ForceSplitting,
   type RsbuildChunkSplit,
@@ -20,7 +20,7 @@ interface SplitChunksContext {
   /**
    * User defined cache groups which can be reused across different split strategies
    */
-  userDefinedCacheGroups: CacheGroup;
+  userDefinedCacheGroups: CacheGroups;
   /**
    * Default split config in webpack
    */
@@ -43,8 +43,10 @@ interface SplitChunksContext {
   polyfill: Polyfill;
 }
 
-function getUserDefinedCacheGroups(forceSplitting: ForceSplitting): CacheGroup {
-  const cacheGroups: CacheGroup = {};
+function getUserDefinedCacheGroups(
+  forceSplitting: ForceSplitting,
+): CacheGroups {
+  const cacheGroups: CacheGroups = {};
   const pairs = Array.isArray(forceSplitting)
     ? forceSplitting.map(
         (regexp, index) => [`force-split-${index}`, regexp] as const,
@@ -66,7 +68,7 @@ function getUserDefinedCacheGroups(forceSplitting: ForceSplitting): CacheGroup {
 
 function splitByExperience(ctx: SplitChunksContext): SplitChunks {
   const { override, polyfill, defaultConfig, userDefinedCacheGroups } = ctx;
-  const experienceCacheGroup: CacheGroup = {};
+  const experienceCacheGroup: CacheGroups = {};
 
   const packageRegExps: Record<string, RegExp> = {
     lodash: createDependenciesRegExp('lodash', 'lodash-es'),
@@ -187,7 +189,7 @@ function allInOne(_ctx: SplitChunksContext): SplitChunks {
 function singleVendor(ctx: SplitChunksContext): SplitChunks {
   const { override, defaultConfig, userDefinedCacheGroups } = ctx;
 
-  const singleVendorCacheGroup: CacheGroup = {
+  const singleVendorCacheGroup: CacheGroups = {
     singleVendor: {
       test: NODE_MODULES_REGEX,
       priority: 0,

@@ -4,13 +4,6 @@ import { mfConfig } from './module-federation.config';
 
 export default defineConfig({
   plugins: [pluginReact()],
-  performance: {
-    chunkSplit: {
-      override: {
-        chunks: 'async',
-      },
-    },
-  },
   moduleFederation: {
     options: mfConfig,
   },

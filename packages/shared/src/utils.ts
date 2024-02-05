@@ -2,7 +2,7 @@ import path from 'node:path';
 import type { Compiler } from '@rspack/core';
 import type {
   NodeEnv,
-  CacheGroup,
+  CacheGroups,
   CompilerTapFn,
   RsbuildTarget,
   ModifyChainUtils,
@@ -158,8 +158,8 @@ export const createDependenciesRegExp = (
 
 export function createCacheGroups(
   group: Record<string, (string | RegExp)[]>,
-): CacheGroup {
-  const experienceCacheGroup: CacheGroup = {};
+): CacheGroups {
+  const experienceCacheGroup: CacheGroups = {};
 
   Object.entries(group).forEach(([name, pkgs]) => {
     const key = `lib-${name}`;
