@@ -4,9 +4,6 @@ import { mfConfig } from './module-federation.config';
 
 export default defineConfig({
   plugins: [pluginReact()],
-  dev: {
-    assetPrefix: 'auto',
-  },
   server: {
     port: 3002,
   },
@@ -17,9 +14,7 @@ export default defineConfig({
       },
     },
   },
-  tools: {
-    rspack(config, { rspack, appendPlugins }) {
-      appendPlugins(new rspack.container.ModuleFederationPlugin(mfConfig));
-    },
+  moduleFederation: {
+    options: mfConfig,
   },
 });

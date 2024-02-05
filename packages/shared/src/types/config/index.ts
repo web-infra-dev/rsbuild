@@ -11,6 +11,13 @@ import type {
 import type { ToolsConfig, NormalizedToolsConfig } from './tools';
 import type { DeepReadonly } from '../utils';
 import type { RsbuildPlugins, RsbuildProvider } from '..';
+import type { ModuleFederationPluginOptions } from '@rspack/core';
+
+export type ModuleFederationConfig = {
+  options: ModuleFederationPluginOptions;
+};
+
+export type NormalizedModuleFederationConfig = ModuleFederationConfig;
 
 /**
  * The shared Rsbuild config.
@@ -18,35 +25,37 @@ import type { RsbuildPlugins, RsbuildProvider } from '..';
  * */
 export interface RsbuildConfig {
   dev?: DevConfig;
-  server?: ServerConfig;
   html?: HtmlConfig;
   tools?: ToolsConfig;
   source?: SourceConfig;
+  server?: ServerConfig;
   output?: OutputConfig;
+  plugins?: RsbuildPlugins;
   security?: SecurityConfig;
   performance?: PerformanceConfig;
-  plugins?: RsbuildPlugins;
+  moduleFederation?: ModuleFederationConfig;
   provider?: RsbuildProvider<'rspack'> | RsbuildProvider<'webpack'>;
 }
 
 export type NormalizedConfig = DeepReadonly<{
   dev: NormalizedDevConfig;
-  server: NormalizedServerConfig;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
   source: NormalizedSourceConfig;
+  server: NormalizedServerConfig;
   output: NormalizedOutputConfig;
+  plugins?: RsbuildPlugins;
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;
-  plugins?: RsbuildPlugins;
+  moduleFederation: ModuleFederationConfig;
   provider?: RsbuildProvider<'rspack'> | RsbuildProvider<'webpack'>;
 }>;
 
 export * from './dev';
-export * from './server';
 export * from './html';
-export * from './output';
+export * from './tools';
 export * from './source';
+export * from './server';
+export * from './output';
 export * from './security';
 export * from './performance';
-export * from './tools';

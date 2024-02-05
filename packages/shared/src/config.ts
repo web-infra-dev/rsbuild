@@ -16,18 +16,18 @@ import {
   DEFAULT_ASSET_PREFIX,
 } from './constants';
 import type {
-  BundlerChainRule,
   RsbuildConfig,
+  BundlerChainRule,
+  NormalizedConfig,
   InspectConfigOptions,
-  NormalizedServerConfig,
   NormalizedDevConfig,
+  NormalizedToolsConfig,
   NormalizedHtmlConfig,
   NormalizedOutputConfig,
   NormalizedSourceConfig,
+  NormalizedServerConfig,
   NormalizedSecurityConfig,
   NormalizedPerformanceConfig,
-  NormalizedToolsConfig,
-  NormalizedConfig,
 } from './types';
 import { logger } from './logger';
 import { join } from 'node:path';
@@ -324,13 +324,14 @@ export const pickRsbuildConfig = (
 ): RsbuildConfig => {
   const keys: Array<keyof RsbuildConfig> = [
     'dev',
-    'server',
     'html',
     'tools',
-    'source',
     'output',
+    'source',
+    'server',
     'security',
     'performance',
+    'moduleFederation',
   ];
   return pick(rsbuildConfig, keys);
 };

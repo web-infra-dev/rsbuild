@@ -26,4 +26,6 @@ export const plugins: Plugins = {
   performance: () => import('./performance').then((m) => m.pluginPerformance()),
   define: () => import('./define').then((m) => m.pluginDefine()),
   server: () => import('./server').then((m) => m.pluginServer()),
+  moduleFederation: () =>
+    import('./moduleFederation').then((m) => m.pluginModuleFederation()),
 };

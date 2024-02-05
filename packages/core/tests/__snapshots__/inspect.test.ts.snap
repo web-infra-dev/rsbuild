@@ -32,6 +32,7 @@ exports[`inspectConfig > should print plugin names when inspect config 1`] = `
   "plugin-preload-or-prefetch",
   "rsbuild:performance",
   "rsbuild:server",
+  "rsbuild:module-federation",
   "rsbuild:rspack-profile",
 ]
 `;
