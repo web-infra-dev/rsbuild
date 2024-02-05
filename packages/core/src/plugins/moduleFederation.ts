@@ -26,57 +26,47 @@ class PatchSplitChunksPlugin implements RspackPluginInstance {
     }
 
     const applyPatch = (cacheGroup: CacheGroup) => {
-      switch (typeof cacheGroup) {
-        case 'boolean':
-        case 'string':
-        case 'function':
-          break;
-        //  cacheGroup.chunks will inherit splitChunks.chunks, so you only need to modify the chunks that are set separately.
-        case 'object': {
-          if (cacheGroup instanceof RegExp) {
-            break;
+      if (typeof cacheGroup !== 'object' || cacheGroup instanceof RegExp) {
+        return;
+      }
+
+      // cacheGroup.chunks will inherit splitChunks.chunks
+      // so we only need to modify the chunks that are set separately.
+      const { chunks } = cacheGroup;
+      if (!chunks) {
+        return;
+      }
+
+      if (typeof chunks === 'function') {
+        const prevChunks = chunks;
+
+        cacheGroup.chunks = (chunk) => {
+          if (chunk.name && chunk.name === this.name) {
+            return false;
           }
+          return prevChunks(chunk);
+        };
+        return;
+      }
 
-          const { chunks } = cacheGroup;
-
-          if (!chunks) {
-            break;
+      if (chunks === 'all') {
+        cacheGroup.chunks = (chunk) => {
+          if (chunk.name && chunk.name === this.name) {
+            return false;
           }
+          return true;
+        };
+        return;
+      }
 
-          if (typeof chunks === 'function') {
-            const prevChunks = chunks;
-
-            cacheGroup.chunks = (chunk) => {
-              if (chunk.name && chunk.name === this.name) {
-                return false;
-              }
-              return prevChunks(chunk);
-            };
-            break;
+      if (chunks === 'initial') {
+        cacheGroup.chunks = (chunk) => {
+          if (chunk.name && chunk.name === this.name) {
+            return false;
           }
-
-          if (chunks === 'all') {
-            cacheGroup.chunks = (chunk) => {
-              if (chunk.name && chunk.name === this.name) {
-                return false;
-              }
-              return true;
-            };
-            break;
-          }
-
-          if (chunks === 'initial') {
-            cacheGroup.chunks = (chunk) => {
-              if (chunk.name && chunk.name === this.name) {
-                return false;
-              }
-              return chunk.isOnlyInitial();
-            };
-            break;
-          }
-        }
-        default:
-          break;
+          return chunk.isOnlyInitial();
+        };
+        return;
       }
     };
 
