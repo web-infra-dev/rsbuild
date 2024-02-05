@@ -1,0 +1,63 @@
+# options
+
+- **Type:** `ModuleFederationConfig`
+- **Default:** `undefined`
+- **Version:** `>= 0.4.0`
+
+Used to configure the Rspack module federation plugin.
+
+After setting the `moduleFederation.options` option, Rsbuild will automatically register the [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) plugin and pass the value of `options` to the plugin.
+
+## Options
+
+Please refer to the [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) document for all available options.
+
+## Example
+
+Here is a minimal example:
+
+- Remote App
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  server: {
+    port: 3002,
+  },
+  moduleFederation: {
+    options: {
+      name: 'remote',
+      exposes: {
+        './Button': './src/Button',
+      },
+      filename: 'remoteEntry.js',
+    },
+  },
+});
+```
+
+- Host App
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  server: {
+    port: 3002,
+  },
+  moduleFederation: {
+    options: {
+      name: 'host',
+      remotes: {
+        remote: 'remote@http://localhost:3002/remoteEntry.js',
+      },
+    },
+  },
+});
+```
+
+For more examples, please see:
+
+- [Rsbuild - module-federation example](https://github.com/web-infra-dev/rsbuild/tree/main/examples/module-federation)
+- [module-federation/module-federation-examples](https://github.com/module-federation/module-federation-examples)

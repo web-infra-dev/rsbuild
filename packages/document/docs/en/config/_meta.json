@@ -44,5 +44,10 @@
     "type": "dir",
     "name": "performance",
     "label": "performance"
+  },
+  {
+    "type": "dir",
+    "name": "module-federation",
+    "label": "moduleFederation"
   }
 ]

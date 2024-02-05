@@ -26,14 +26,14 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
 
       const group = groups.find((group) => group.name === pair[0]);
       const item = {
-        text: `${pair[0]}.${camelCase(pair[1])}`,
+        text: `${camelCase(pair[0])}.${camelCase(pair[1])}`,
         link: `/config/${filename}`,
       };
       if (group) {
         group.items.push(item);
       } else {
         groups.push({
-          name: pair[0],
+          name: camelCase(pair[0]),
           items: [item],
         });
       }
@@ -45,6 +45,7 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
       'html',
       'server',
       'security',
+      'moduleFederation',
       'dev',
       'tools',
       'performance',
