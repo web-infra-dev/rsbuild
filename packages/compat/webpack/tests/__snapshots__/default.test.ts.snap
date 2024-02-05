@@ -338,6 +338,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/compat/webpack/tests/node_modules",
+                ],
               },
               "sourceMap": false,
             },
@@ -837,6 +840,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/compat/webpack/tests/node_modules",
+                ],
               },
               "sourceMap": false,
             },
@@ -1294,6 +1300,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/compat/webpack/tests/node_modules",
+                ],
               },
               "sourceMap": false,
             },
@@ -1652,6 +1661,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/compat/webpack/tests/node_modules",
+                ],
               },
               "sourceMap": false,
             },

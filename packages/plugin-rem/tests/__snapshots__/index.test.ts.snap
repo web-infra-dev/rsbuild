@@ -285,6 +285,9 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/packages/plugin-rem/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -341,6 +344,9 @@ exports[`plugin-rem > should order plugins and run rem plugin with default confi
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/packages/plugin-rem/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -814,6 +820,9 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/packages/plugin-rem/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -870,6 +879,9 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/packages/plugin-rem/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
