@@ -25,7 +25,7 @@ export const pluginUmd = (options: PluginUmdOptions): RsbuildPlugin => ({
             js: userConfig.output?.distPath?.js ?? '',
             css: userConfig.output?.distPath?.css ?? '',
           },
-          disableFilenameHash: userConfig.output?.disableFilenameHash ?? true,
+          filenameHash: userConfig.output?.filenameHash ?? false,
         },
         html: {
           // allows to test the umd bundle in the browser

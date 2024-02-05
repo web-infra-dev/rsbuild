@@ -136,7 +136,7 @@ export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     js: undefined,
     css: false,
   },
-  disableFilenameHash: false,
+  filenameHash: true,
   enableCssModuleTSDeclaration: false,
   inlineScripts: false,
   inlineStyles: false,

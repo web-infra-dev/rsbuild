@@ -7,6 +7,6 @@ export default defineConfig({
     define: publicVars,
   },
   output: {
-    disableFilenameHash: true,
+    filenameHash: false,
   },
 });

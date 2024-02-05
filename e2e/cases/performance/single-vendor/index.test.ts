@@ -9,7 +9,7 @@ test('should generate vendor chunk when chunkSplit is "single-vendor"', async ()
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
-        disableFilenameHash: true,
+        filenameHash: false,
       },
       performance: {
         chunkSplit: {
