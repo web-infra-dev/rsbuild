@@ -187,6 +187,8 @@ export const CHAIN_ID = {
     INLINE_HTML: 'inline-html',
     /** WebpackBundleAnalyzer */
     BUNDLE_ANALYZER: 'bundle-analyze',
+    /** ModuleFederationPlugin */
+    MODULE_FEDERATION: 'module-federation',
     /** HtmlTagsPlugin */
     HTML_TAGS: 'html-tags-plugin',
     /** HtmlBasicPlugin */

@@ -4,9 +4,6 @@ import { mfConfig } from './module-federation.config';
 
 export default defineConfig({
   plugins: [pluginReact()],
-  dev: {
-    assetPrefix: 'auto',
-  },
   performance: {
     chunkSplit: {
       override: {
@@ -14,9 +11,7 @@ export default defineConfig({
       },
     },
   },
-  tools: {
-    rspack(_config, { rspack, appendPlugins }) {
-      appendPlugins(new rspack.container.ModuleFederationPlugin(mfConfig));
-    },
+  moduleFederation: {
+    options: mfConfig,
   },
 });

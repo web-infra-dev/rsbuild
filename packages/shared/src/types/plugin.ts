@@ -137,6 +137,7 @@ export type Plugins = {
   performance: PluginsFn;
   define: PluginsFn;
   server: PluginsFn;
+  moduleFederation: PluginsFn;
 };
 
 export type GetRsbuildConfig = {
