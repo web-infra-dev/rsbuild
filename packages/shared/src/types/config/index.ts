@@ -47,7 +47,7 @@ export type NormalizedConfig = DeepReadonly<{
   plugins?: RsbuildPlugins;
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;
-  moduleFederation: ModuleFederationConfig;
+  moduleFederation?: ModuleFederationConfig;
   provider?: RsbuildProvider<'rspack'> | RsbuildProvider<'webpack'>;
 }>;
 

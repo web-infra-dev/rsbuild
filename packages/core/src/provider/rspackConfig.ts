@@ -11,9 +11,9 @@ import {
   type ModifyChainUtils,
   type ModifyRspackConfigUtils,
 } from '@rsbuild/shared';
-import { getCompiledPath } from '../shared';
-import type { InternalContext } from '../../types';
-import { getHTMLPlugin } from '../htmlPluginUtil';
+import { getCompiledPath } from './shared';
+import type { InternalContext } from '../types';
+import { getHTMLPlugin } from './htmlPluginUtil';
 
 async function modifyRspackConfig(
   context: InternalContext,

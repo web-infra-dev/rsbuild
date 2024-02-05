@@ -1,13 +1,13 @@
 export { rspackProvider } from './provider';
 export type { Rspack, RspackConfig } from '@rsbuild/shared';
-export { createContext, createPublicContext } from './core/createContext';
+export { createContext, createPublicContext } from './createContext';
 export { initPlugins, createPluginManager } from '../pluginManager';
-export { initHooks, type Hooks } from './core/initHooks';
-export { initRsbuildConfig } from './core/initConfigs';
-export { getPluginAPI } from './core/initPlugins';
+export { initHooks, type Hooks } from './initHooks';
+export { initRsbuildConfig } from './initConfigs';
+export { getPluginAPI } from './initPlugins';
 export { applyBaseCSSRule, applyCSSModuleRule } from './plugins/css';
 export type { InternalContext } from '../types';
 export { setHTMLPlugin, getHTMLPlugin } from './htmlPluginUtil';
 export { formatStats } from './shared';
-export { getChainUtils } from './core/rspackConfig';
+export { getChainUtils } from './rspackConfig';
 export { applySwcDecoratorConfig } from './plugins/swc';
