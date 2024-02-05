@@ -31,3 +31,9 @@ export default {
 dist/static/css/index.css
 dist/static/js/index.js
 ```
+
+### 注意事项
+
+- 你可以使用 [output.filename](/config/output/filename) 来修改 hash 的长度或格式，`output.filename` 的优先级高于 `output.filenameHash`。
+- 默认情况下，当 target 不是 `web` 时，产物的文件名不会包含 hash，比如 Node.js 产物。
+- 默认情况下，开发环境构建产物的文件名不会包含 hash。
