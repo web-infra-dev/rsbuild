@@ -1,0 +1,63 @@
+# options
+
+- **类型：** `ModuleFederationConfig`
+- **默认值：** `undefined`
+- **版本：** `>= 0.4.0`
+
+用于配置 Rspack 模块联邦插件。
+
+设置 `moduleFederation.options` 选项后，Rsbuild 会自动注册 [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) 插件，并将 `options` 的值透传给插件。
+
+## 选项
+
+请参考 [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) 文档来了解所有可用的选项。
+
+## 示例
+
+下面是一个最小示例：
+
+- Remote App
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  server: {
+    port: 3002,
+  },
+  moduleFederation: {
+    options: {
+      name: 'remote',
+      exposes: {
+        './Button': './src/Button',
+      },
+      filename: 'remoteEntry.js',
+    },
+  },
+});
+```
+
+- Host App
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  server: {
+    port: 3002,
+  },
+  moduleFederation: {
+    options: {
+      name: 'host',
+      remotes: {
+        remote: 'remote@http://localhost:3002/remoteEntry.js',
+      },
+    },
+  },
+});
+```
+
+更多示例请查看：
+
+- [Rsbuild - module-federation exmaple](https://github.com/web-infra-dev/rsbuild/tree/main/examples/module-federation)
+- [module-federation/module-federation-examples](https://github.com/module-federation/module-federation-examples)
