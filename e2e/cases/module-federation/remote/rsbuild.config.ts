@@ -7,13 +7,6 @@ export default defineConfig({
   server: {
     port: Number(process.env.REMOTE_PORT) || 3002,
   },
-  performance: {
-    chunkSplit: {
-      override: {
-        chunks: 'async',
-      },
-    },
-  },
   moduleFederation: {
     options: mfConfig,
   },

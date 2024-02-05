@@ -123,7 +123,7 @@ export type SplitChunks = Configuration extends {
   ? P
   : never;
 
-export type CacheGroup = Configuration extends {
+export type CacheGroups = Configuration extends {
   optimization?: {
     splitChunks?:
       | {
@@ -134,6 +134,12 @@ export type CacheGroup = Configuration extends {
 }
   ? P
   : never;
+
+export type CacheGroup = CacheGroups extends {
+  [key: string]: infer P;
+}
+  ? P
+  : null;
 
 export type ForceSplitting = RegExp[] | Record<string, RegExp>;
 

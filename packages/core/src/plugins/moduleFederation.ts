@@ -1,5 +1,99 @@
-import { DEFAULT_ASSET_PREFIX } from '@rsbuild/shared';
+import {
+  DEFAULT_ASSET_PREFIX,
+  type CacheGroup,
+  type RspackCompiler,
+} from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
+import type { RspackPluginInstance } from '@rspack/core';
+
+/**
+ * Force remote entry not be affected by user's chunkSplit strategy,
+ * Otherwise, the remote chunk will not be loaded correctly.
+ * @see https://github.com/web-infra-dev/rsbuild/discussions/1461#discussioncomment-8329790
+ */
+class PatchSplitChunksPlugin implements RspackPluginInstance {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  apply(compiler: RspackCompiler) {
+    const { splitChunks } = compiler.options.optimization;
+
+    if (!splitChunks) {
+      return;
+    }
+
+    const applyPatch = (cacheGroup: CacheGroup) => {
+      switch (typeof cacheGroup) {
+        case 'boolean':
+        case 'string':
+        case 'function':
+          break;
+        //  cacheGroup.chunks will inherit splitChunks.chunks, so you only need to modify the chunks that are set separately.
+        case 'object': {
+          if (cacheGroup instanceof RegExp) {
+            break;
+          }
+
+          const { chunks } = cacheGroup;
+
+          if (!chunks) {
+            break;
+          }
+
+          if (typeof chunks === 'function') {
+            const prevChunks = chunks;
+
+            cacheGroup.chunks = (chunk) => {
+              if (chunk.name && chunk.name === this.name) {
+                return false;
+              }
+              return prevChunks(chunk);
+            };
+            break;
+          }
+
+          if (chunks === 'all') {
+            cacheGroup.chunks = (chunk) => {
+              if (chunk.name && chunk.name === this.name) {
+                return false;
+              }
+              return true;
+            };
+            break;
+          }
+
+          if (chunks === 'initial') {
+            cacheGroup.chunks = (chunk) => {
+              if (chunk.name && chunk.name === this.name) {
+                return false;
+              }
+              return chunk.isOnlyInitial();
+            };
+            break;
+          }
+        }
+        default:
+          break;
+      }
+    };
+
+    // patch splitChunk.chunks
+    applyPatch(splitChunks);
+
+    const { cacheGroups } = splitChunks;
+    if (!cacheGroups) {
+      return;
+    }
+
+    // patch splitChunk.cacheGroups[key].chunks
+    Object.keys(cacheGroups).forEach((cacheGroupKey) => {
+      applyPatch(cacheGroups[cacheGroupKey]);
+    });
+  }
+}
 
 export function pluginModuleFederation(): RsbuildPlugin {
   return {
@@ -19,6 +113,12 @@ export function pluginModuleFederation(): RsbuildPlugin {
         chain
           .plugin(CHAIN_ID.PLUGIN.MODULE_FEDERATION)
           .use(rspack.container.ModuleFederationPlugin, [options]);
+
+        if (options.name) {
+          chain
+            .plugin('mf-patch-split-chunks')
+            .use(PatchSplitChunksPlugin, [options.name]);
+        }
 
         const publicPath = chain.output.get('publicPath');
 

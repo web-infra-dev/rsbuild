@@ -7,13 +7,6 @@ export default defineConfig({
   server: {
     port: 3002,
   },
-  performance: {
-    chunkSplit: {
-      override: {
-        chunks: 'async',
-      },
-    },
-  },
   moduleFederation: {
     options: mfConfig,
   },
