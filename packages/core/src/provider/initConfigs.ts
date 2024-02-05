@@ -10,9 +10,9 @@ import {
 import { updateContextByNormalizedConfig } from './createContext';
 import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
-import { normalizeConfig } from '../config';
-import { initPlugins } from '../../pluginManager';
-import type { InternalContext, NormalizedConfig } from '../../types';
+import { normalizeConfig } from './config';
+import { initPlugins } from '../pluginManager';
+import type { InternalContext, NormalizedConfig } from '../types';
 
 async function modifyRsbuildConfig(context: InternalContext) {
   debug('modify Rsbuild config');

@@ -1,150 +1,15 @@
-import {
-  DEFAULT_PORT,
-  ROOT_DIST_DIR,
-  HTML_DIST_DIR,
-  JS_DIST_DIR,
-  CSS_DIST_DIR,
-  SVG_DIST_DIR,
-  FONT_DIST_DIR,
-  WASM_DIST_DIR,
-  IMAGE_DIST_DIR,
-  MEDIA_DIST_DIR,
-  SERVER_DIST_DIR,
-  SERVER_WORKER_DIST_DIR,
-  DEFAULT_MOUNT_ID,
-  DEFAULT_DATA_URL_SIZE,
-  DEFAULT_ASSET_PREFIX,
-} from './constants';
 import type {
   RsbuildConfig,
   BundlerChainRule,
   NormalizedConfig,
   InspectConfigOptions,
-  NormalizedDevConfig,
-  NormalizedToolsConfig,
-  NormalizedHtmlConfig,
-  NormalizedOutputConfig,
-  NormalizedSourceConfig,
-  NormalizedServerConfig,
-  NormalizedSecurityConfig,
-  NormalizedPerformanceConfig,
 } from './types';
 import { logger } from './logger';
 import { join } from 'node:path';
 import type { minify } from 'terser';
 import fse from '../compiled/fs-extra';
 import { pick, color, upperFirst } from './utils';
-
-import { DEFAULT_DEV_HOST } from './constants';
 import { getTerserMinifyOptions } from './minimize';
-
-export const getDefaultDevConfig = (): NormalizedDevConfig => ({
-  hmr: true,
-  liveReload: true,
-  assetPrefix: DEFAULT_ASSET_PREFIX,
-  startUrl: false,
-});
-
-export const getDefaultServerConfig = (): NormalizedServerConfig => ({
-  port: DEFAULT_PORT,
-  host: DEFAULT_DEV_HOST,
-  htmlFallback: 'index',
-  compress: true,
-  printUrls: true,
-  strictPort: false,
-  publicDir: {
-    name: 'public',
-    copyOnBuild: true,
-  },
-});
-
-export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
-  alias: {},
-  define: {},
-  aliasStrategy: 'prefer-tsconfig',
-  preEntry: [],
-  decorators: {
-    version: 'legacy',
-  },
-});
-
-export const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
-  meta: {
-    charset: { charset: 'UTF-8' },
-    viewport: 'width=device-width, initial-scale=1.0',
-  },
-  title: 'Rsbuild App',
-  inject: 'head',
-  mountId: DEFAULT_MOUNT_ID,
-  crossorigin: false,
-  outputStructure: 'flat',
-  scriptLoading: 'defer',
-});
-
-export const getDefaultSecurityConfig = (): NormalizedSecurityConfig => ({
-  nonce: '',
-});
-
-export const getDefaultToolsConfig = (): NormalizedToolsConfig => ({
-  cssExtract: {
-    loaderOptions: {},
-    pluginOptions: {},
-  },
-});
-
-export const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
-  profile: false,
-  buildCache: true,
-  printFileSize: true,
-  removeConsole: false,
-  transformLodash: true,
-  removeMomentLocale: false,
-  chunkSplit: {
-    strategy: 'split-by-experience',
-  },
-});
-
-export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
-  targets: ['web'],
-  distPath: {
-    root: ROOT_DIST_DIR,
-    js: JS_DIST_DIR,
-    css: CSS_DIST_DIR,
-    svg: SVG_DIST_DIR,
-    font: FONT_DIST_DIR,
-    html: HTML_DIST_DIR,
-    wasm: WASM_DIST_DIR,
-    image: IMAGE_DIST_DIR,
-    media: MEDIA_DIST_DIR,
-    server: SERVER_DIST_DIR,
-    worker: SERVER_WORKER_DIST_DIR,
-  },
-  assetPrefix: DEFAULT_ASSET_PREFIX,
-  filename: {},
-  charset: 'ascii',
-  polyfill: 'usage',
-  dataUriLimit: {
-    svg: DEFAULT_DATA_URL_SIZE,
-    font: DEFAULT_DATA_URL_SIZE,
-    image: DEFAULT_DATA_URL_SIZE,
-    media: DEFAULT_DATA_URL_SIZE,
-  },
-  legalComments: 'linked',
-  injectStyles: false,
-  disableMinimize: false,
-  sourceMap: {
-    js: undefined,
-    css: false,
-  },
-  filenameHash: true,
-  enableCssModuleTSDeclaration: false,
-  inlineScripts: false,
-  inlineStyles: false,
-  cssModules: {
-    auto: true,
-    exportLocalsConvention: 'camelCase',
-  },
-});
 
 export async function outputInspectConfigFiles({
   rsbuildConfig,
