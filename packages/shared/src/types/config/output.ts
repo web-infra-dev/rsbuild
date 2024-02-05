@@ -156,9 +156,9 @@ export interface OutputConfig {
    */
   sourceMap?: SourceMap;
   /**
-   * Remove the hash from the name of static files after production build.
+   * Whether to add filename hash after production build.
    */
-  disableFilenameHash?: boolean;
+  filenameHash?: boolean;
   /**
    * Whether to generate a TypeScript declaration file for CSS modules.
    */
@@ -201,10 +201,10 @@ export interface NormalizedOutputConfig extends OutputConfig {
     js?: RspackConfig['devtool'];
     css: boolean;
   };
+  filenameHash: boolean;
   assetPrefix: string;
   dataUriLimit: NormalizedDataUriLimit;
   disableMinimize: boolean;
-  disableFilenameHash: boolean;
   enableCssModuleTSDeclaration: boolean;
   inlineScripts: boolean | InlineChunkTest;
   inlineStyles: boolean | InlineChunkTest;

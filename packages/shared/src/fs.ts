@@ -56,9 +56,8 @@ export const getFilename = (
   type: keyof FilenameConfig,
   isProd: boolean,
 ) => {
-  const { filename } = config.output;
-  const useHash = !config.output.disableFilenameHash;
-  const hash = useHash ? '.[contenthash:8]' : '';
+  const { filename, filenameHash } = config.output;
+  const hash = filenameHash ? '.[contenthash:8]' : '';
 
   switch (type) {
     case 'js':
