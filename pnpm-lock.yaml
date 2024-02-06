@@ -1477,8 +1477,8 @@ importers:
         specifier: 8.0.8
         version: 8.0.8
       '@types/webpack-bundle-analyzer':
-        specifier: 4.6.3
-        version: 4.6.3
+        specifier: 4.6.4
+        version: 4.6.4
       autoprefixer:
         specifier: 10.4.17
         version: 10.4.17(postcss@8.4.33)
@@ -5262,8 +5262,8 @@ packages:
     resolution: {integrity: sha512-zC0iXxAv1C1ERURduJueYzkzZ2zaGyc+P2c95hgkikHPr3z8EdUZOlgEQ5X0DRmwDZn+hekycQnoeiiRVrmilQ==}
     dev: true
 
-  /@types/webpack-bundle-analyzer@4.6.3:
-    resolution: {integrity: sha512-XYU3m7oRb1tlE8YhwkKLi1xba2buNB9V4VkQtOVTfJuUm/413pE/UCMVcPDFFBwpzGkr9y1WbSEvdPjKVPt0gw==}
+  /@types/webpack-bundle-analyzer@4.6.4:
+    resolution: {integrity: sha512-7q9Gh0A936YKbFWu/CzRJ8uINqrYYn2tqpO5EdRI6cxYPwcrtxbrf4v9UtktSQDZlW3OMARl7IDgu7D07lQvkw==}
     dependencies:
       '@types/node': 16.18.59
       tapable: 2.2.1
