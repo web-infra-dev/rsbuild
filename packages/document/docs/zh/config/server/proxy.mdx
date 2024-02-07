@@ -64,9 +64,8 @@ export default {
 export default {
   server: {
     proxy: {
-      '/api': {
+      '/rsbuild-hmr': {
         target: 'http://localhost:3000',
-        pathRewrite: { '^/api': '' },
         ws: true,
       },
     },

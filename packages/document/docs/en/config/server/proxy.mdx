@@ -64,9 +64,8 @@ If you want to proxy WebSocket requests, you can enable it through set `ws` to `
 export default {
   server: {
     proxy: {
-      '/api': {
+      '/rsbuild-hmr': {
         target: 'http://localhost:3000',
-        pathRewrite: { '^/api': '' },
         ws: true,
       },
     },
