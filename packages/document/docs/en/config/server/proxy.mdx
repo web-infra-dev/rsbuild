@@ -56,6 +56,24 @@ export default {
 };
 ```
 
+### Proxy WebSocket
+
+If you want to proxy WebSocket requests, you can enable it through set `ws` to `true`:
+
+```js
+export default {
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        pathRewrite: { '^/api': '' },
+        ws: true,
+      },
+    },
+  },
+};
+```
+
 ## Options
 
 The Rsbuild Server Proxy makes use of the [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) package. Check out its documentation for more advanced usages.
