@@ -68,7 +68,10 @@ export const createProxyMiddleware = (proxyOptions: ProxyOptions) => {
     };
 
     middlewares.push(middleware);
-    proxyMiddlewares.push(proxyMiddleware);
+
+    // only proxy WebSocket request when user specified
+    // fix WebSocket error when user forget filter hmr path
+    opts.ws && proxyMiddlewares.push(proxyMiddleware);
   }
 
   const handleUpgrade: UpgradeEvent = (req, socket, head) => {

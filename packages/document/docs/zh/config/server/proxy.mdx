@@ -56,6 +56,23 @@ export default {
 };
 ```
 
+### 代理 WebSocket 请求
+
+如果你希望代理 WebSocket 请求，可以通过 `ws` 开启：
+
+```js
+export default {
+  server: {
+    proxy: {
+      '/rsbuild-hmr': {
+        target: 'http://localhost:3000', // 将会代理到 ws://localhost:3000/rsbuild-hmr
+        ws: true,
+      },
+    },
+  },
+};
+```
+
 ## 选项
 
 Rsbuild Server Proxy 基于 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) 实现。你可以使用 http-proxy-middleware 的所有配置项，具体可以查看文档。
