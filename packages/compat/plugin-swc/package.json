@@ -40,7 +40,7 @@
     "@modern-js/swc-plugins": "0.6.6",
     "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/shared": "workspace:*",
-    "@swc/helpers": "0.5.3",
+    "@swc/helpers": "0.5.6",
     "core-js": "~3.32.2",
     "lodash": "^4.17.21"
   },

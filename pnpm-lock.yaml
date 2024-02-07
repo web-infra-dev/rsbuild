@@ -571,7 +571,7 @@ importers:
     dependencies:
       '@modern-js/swc-plugins':
         specifier: 0.6.6
-        version: 0.6.6(@swc/helpers@0.5.3)
+        version: 0.6.6(@swc/helpers@0.5.6)
       '@rsbuild/plugin-react':
         specifier: link:../../plugin-react
         version: link:../../plugin-react
@@ -579,8 +579,8 @@ importers:
         specifier: workspace:*
         version: link:../../shared
       '@swc/helpers':
-        specifier: 0.5.3
-        version: 0.5.3
+        specifier: 0.5.6
+        version: 0.5.6
       core-js:
         specifier: ~3.32.2
         version: 3.32.2
@@ -654,10 +654,10 @@ importers:
         version: link:../shared
       '@rspack/core':
         specifier: 0.5.4
-        version: 0.5.4(@swc/helpers@0.5.3)
+        version: 0.5.4(@swc/helpers@0.5.6)
       '@swc/helpers':
-        specifier: 0.5.3
-        version: 0.5.3
+        specifier: 0.5.6
+        version: 0.5.6
       core-js:
         specifier: ~3.32.2
         version: 3.32.2
@@ -4013,6 +4013,25 @@ packages:
       '@modern-js/swc-plugins-linux-x64-musl': 0.6.6
       '@modern-js/swc-plugins-win32-arm64-msvc': 0.6.6
       '@modern-js/swc-plugins-win32-x64-msvc': 0.6.6
+    dev: true
+
+  /@modern-js/swc-plugins@0.6.6(@swc/helpers@0.5.6):
+    resolution: {integrity: sha512-/aBu5RnYq5o+93gZohc2Rb0PrbqMXzTnLOTu6Mth9hyR+POGJq2k8eOurSezccjvLNIQbXvgv2KtADOoYSgDxg==}
+    engines: {node: '>=14.17.6'}
+    peerDependencies:
+      '@swc/helpers': 0.5.3
+    dependencies:
+      '@swc/helpers': 0.5.6
+    optionalDependencies:
+      '@modern-js/swc-plugins-darwin-arm64': 0.6.6
+      '@modern-js/swc-plugins-darwin-x64': 0.6.6
+      '@modern-js/swc-plugins-linux-arm64-gnu': 0.6.6
+      '@modern-js/swc-plugins-linux-arm64-musl': 0.6.6
+      '@modern-js/swc-plugins-linux-x64-gnu': 0.6.6
+      '@modern-js/swc-plugins-linux-x64-musl': 0.6.6
+      '@modern-js/swc-plugins-win32-arm64-msvc': 0.6.6
+      '@modern-js/swc-plugins-win32-x64-msvc': 0.6.6
+    dev: false
 
   /@modern-js/tsconfig@2.46.1:
     resolution: {integrity: sha512-LaDAQwzy59X3QP5YR4iH3ZGlI3nUFhzQ7LLFMbbI6yx3CtP5/RCOPpk9aPG4RMQwcf1FR4bEJQAJvUNhfKclHQ==}
@@ -4569,6 +4588,32 @@ packages:
       zod-validation-error: 1.3.1(zod@3.22.4)
     dev: false
 
+  /@rspack/core@0.5.4(@swc/helpers@0.5.6):
+    resolution: {integrity: sha512-3yxOllEC93gf4pNiLlgtzE8dPo0QV2naQY24gAPk+EoWlwpmR6p1r7ZdD53etFZPGB4hMm78J/zgwx8jy1TRsw==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      '@swc/helpers': '>=0.5.1'
+    peerDependenciesMeta:
+      '@swc/helpers':
+        optional: true
+    dependencies:
+      '@module-federation/runtime-tools': 0.0.8
+      '@rspack/binding': 0.5.4
+      '@swc/helpers': 0.5.6
+      browserslist: 4.22.3
+      enhanced-resolve: 5.12.0
+      events: 3.3.0
+      graceful-fs: 4.2.10
+      json-parse-even-better-errors: 3.0.0
+      neo-async: 2.6.2
+      tapable: 2.2.1
+      terminal-link: 2.1.1
+      watchpack: 2.4.0
+      webpack-sources: 3.2.3
+      zod: 3.22.4
+      zod-validation-error: 1.3.1(zod@3.22.4)
+    dev: false
+
   /@rspack/plugin-react-refresh@0.5.4(react-refresh@0.14.0):
     resolution: {integrity: sha512-neyCo1bBhTUriu2dSCu6FHQuILKDiKRokIy8B4V3hhequvW6F8EZ1rLcLoHfeikRIzC3ehJxOIuAj2sq6AiJMg==}
     peerDependencies:
@@ -4982,6 +5027,12 @@ packages:
     resolution: {integrity: sha512-FaruWX6KdudYloq1AHD/4nU+UsMTdNE8CKyrseXWEcgjDAbvkwJg2QGPAnfIJLIWsjZOSPLOAykK6fuYp4vp4A==}
     dependencies:
       tslib: 2.6.2
+
+  /@swc/helpers@0.5.6:
+    resolution: {integrity: sha512-aYX01Ke9hunpoCexYAgQucEpARGQ5w/cqHFrIR+e9gdKb1QWTsVJuTJ2ozQzIAxLyRQe/m+2RqzkyOOGiMKRQA==}
+    dependencies:
+      tslib: 2.6.2
+    dev: false
 
   /@szmarczak/http-timer@4.0.6:
     resolution: {integrity: sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==}
