@@ -65,7 +65,7 @@ export default {
   server: {
     proxy: {
       '/rsbuild-hmr': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:3000', // 将会代理到 ws://localhost:3000/rsbuild-hmr
         ws: true,
       },
     },
