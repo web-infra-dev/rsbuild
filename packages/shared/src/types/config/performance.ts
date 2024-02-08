@@ -47,18 +47,22 @@ export interface PerformanceConfig {
    * Whether to remove `console.xx` in production build.
    */
   removeConsole?: boolean | ConsoleType[];
+
   /**
    * Whether to remove the locales of [moment.js](https://momentjs.com/).
    */
   removeMomentLocale?: boolean;
+
   /**
    * Controls the Rsbuild's caching behavior during the build process.
    */
   buildCache?: BuildCacheOptions | boolean;
+
   /**
    * Whether to print the file sizes after production build.
    */
   printFileSize?: PrintFileSizeOptions | boolean;
+
   /**
    * Configure the chunk splitting strategy.
    */
