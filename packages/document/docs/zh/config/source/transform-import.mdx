@@ -1,13 +1,9 @@
 # source.transformImport
 
-用于按需引入组件库的代码和样式，能力等价于 [babel-plugin-import](https://npmjs.com/package/babel-plugin-import)。
-
-它与 [babel-plugin-import](https://npmjs.com/package/babel-plugin-import) 的区别在于，`source.transformImport` 不与 Babel 耦合。Rsbuild 会自动识别当前使用的编译工具是 Babel、SWC 还是 Rspack，并添加相应的按需引入配置。
-
 - **类型：**
 
 ```ts
-type Config =
+type TransformImport =
   | false
   | Array<{
       libraryName: string;
@@ -16,16 +12,20 @@ type Config =
       styleLibraryDirectory?: string;
       camelToDashComponentName?: boolean;
       transformToDefaultImport?: boolean;
-      customName?: ((member: string) => string | undefined) | string;
-      customStyleName?: ((member: string) => string | undefined) | string;
+      customName?: string;
+      customStyleName?: string;
     }>;
 ```
 
-- **默认值：** 当你使用 [React 插件](/plugins/list/plugin-react)时，自动支持 [React 组件库的按需引入](/plugins/list/plugin-react#组件库按需引入)。
+- **默认值：** `undefined`
+
+转换 import 的路径，可以用于模块化引用三方包的子路径，能力类似于 [babel-plugin-import](https://npmjs.com/package/babel-plugin-import)。
 
 ## 示例
 
-当使用上述 antd 默认配置：
+### 按需引入 antd 组件
+
+在使用 [antd](https://github.com/ant-design/ant-design) 组件库时（低于 v5 版本），你可以通过以下配置来按需引入组件：
 
 ```js
 export default {
@@ -54,21 +54,36 @@ import Button from 'antd/es/button';
 import 'antd/es/button/style';
 ```
 
-## 禁用默认配置
+### 按需引入 lodash
 
-你可以手动设置 `transformImport: false` 来关掉 transformImport 的默认行为。
+在使用 lodash 时，你可以通过 `transformImport` 来自动引用子路径，减小包体积。
 
 ```js
 export default {
   source: {
-    transformImport: false,
+    transformImport: [
+      {
+        libraryName: 'lodash',
+        customName: 'lodash/{{ member }}',
+      },
+    ],
   },
 };
 ```
 
-比如，当你使用了 `externals` 来避免打包 antd 时，由于 `transformImport` 默认会转换 antd 的引用路径，导致匹配的路径发生了变化，因此 externals 无法正确生效，此时你可以设置关闭 `transformImport` 来避免该问题。
+源代码如下：
 
-## 配置
+```js
+import { get } from 'lodash';
+```
+
+会被转换成：
+
+```js
+import get from 'lodash/get';
+```
+
+## 选项
 
 ### libraryName
 
@@ -100,8 +115,7 @@ import Button from 'foo/lib/button';
 - **类型：** `boolean`
 - **默认值：** `undefined`
 
-确定是否需要引入相关样式，若为 `true`，则会引入路径 `${libraryName}/${libraryDirectory}/${member}/style`。
-若为 `false` 或 `undefined` 则不会引入样式。
+确定是否需要引入相关样式，若为 `true`，则会引入路径 `${libraryName}/${libraryDirectory}/${member}/style`。若为 `false` 或 `undefined` 则不会引入样式。
 
 当配置为 `true` 时：
 
@@ -182,32 +196,39 @@ import { Button } from 'foo/button';
 
 ### customName
 
-- **类型：** `((member: string) => string | undefined) | string`
+- **类型：** `string`
 - **默认值：** `undefined`
 
-:::tip 注意
+自定义转换后的导入路径。
 
-- 函数类型的配置只能在 Webpack 构建中使用。
-- 模版类型的配置只能在 Rspack 构建或者使用了 SWC 的 Webpack 构建中使用。
+比如下面的配置，会将 `import { foo } from 'my-lib'` 转换为 `import foo from 'my-lib/foo'`。
 
-:::
+```js
+export default {
+  source: {
+    transformImport: [
+      {
+        libraryName: 'my-lib',
+        customName: `my-lib/{{ member }}`,
+      },
+    ],
+  },
+};
+```
 
-自定义转换后的导入路径，输入是引入的成员，例如配置成 `` (member) => `my-lib/${member}` ``，会将 `import { foo } from 'bar'` 转换成 `import foo from 'my-lib/foo'`。
+此外，你还可以声明转换后的路径格式，例如设置为 `my-lib/{{ camelCase member }}`，来将 member 转换成驼峰格式。
 
-在使用 Rspack 构建时，不能使用函数配置，但可以使用 [handlebars](https://handlebarsjs.com/) 模版字符串，对于上面的函数配置，在使用模版字符串时可以用以下模版代替 `my-lib/{{ member }}`，也可以使用一些内置帮助方法，例如 `my-lib/{{ kebabCase member }}` 来转换成 kebab-case 格式，除了 kebabCase 以外还有 camelCase，snakeCase，upperCase，lowerCase 可以使用。
+支持以下格式：
+
+- `kebabCase`：字母小写，单词之间使用连字符连接。例如：`my-variable-name`。
+- `snakeCase`：字母小写，单词之间使用下划线连接。例如：`my_variable_name`。
+- `camelCase`：首字母小写，随后每个单词的首字母大写。例如：`myVariableName`。
+- `upperCase`：字母大写，其他字符不变。例如：`MY-VARIABLE-NAME`。
+- `lowerCase`：字母小写，其他字符不变。例如：`my-variable-name`。
 
 ### customStyleName
 
-- **类型：** `((member: string) => string | undefined) | string`
+- **类型：** `string`
 - **默认值：** `undefined`
 
-:::tip 注意
-
-- 函数类型的配置只能在 Webpack 构建中使用。
-- 模版类型的配置只能在 Rspack 构建或者使用了 SWC 的 Webpack 构建中使用。
-
-:::
-
-自定义转换后的样式导入路径，输入是引入的成员，例如配置成 `` (member) => `my-lib/${member}` ``，会将 `import { foo } from 'bar'` 转换成 `import foo from 'my-lib/foo'`。
-
-在使用 Rspack 构建时，不能使用函数配置，但可以使用 [handlebars](https://handlebarsjs.com/) 模版字符串，对于上面的函数配置，在使用模版字符串时可以用以下模版代替 `my-lib/{{ member }}`，也可以使用一些内置帮助方法，例如 `my-lib/{{ kebabCase member }}` 来转换成 kebab-case 格式，除了 kebabCase 以外还有 camelCase，snakeCase，upperCase，lowerCase 可以使用。
+自定义转换后的样式导入路径，用法与 `customName` 一致。
