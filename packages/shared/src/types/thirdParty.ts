@@ -107,7 +107,40 @@ export type StyleLoaderInjectType =
   | 'linkTag';
 
 export interface StyleLoaderOptions {
+  /**
+   * By default, style-loader generates JS modules that use the ES modules syntax.
+   * There are some cases in which using ES modules is beneficial, like in the case of module concatenation and tree shaking.
+   *
+   * @default true
+   */
+  esModule?: boolean;
+  /**
+   * Allows to setup how styles will be injected into the DOM.
+   *
+   * @default 'styleTag'
+   */
   injectType?: StyleLoaderInjectType;
+  /**
+   * If defined, the style-loader will attach given attributes with their values on <style> / <link> element.
+   * @default {}
+   */
   attributes?: Record<string, string>;
+  /**
+   * By default, the style-loader appends <style>/<link> elements to the end of the style target, which is the <head> tag of the page unless specified by insert.
+   * This will cause CSS created by the loader to take priority over CSS already present in the target.
+   * You can use other values if the standard behavior is not suitable for you, but we do not recommend doing this.
+   *
+   * @default 'head'
+   */
   insert?: string | ((element: HTMLElement) => void);
+  /**
+   * Allows to setup absolute path to custom function that allows to override default behavior styleTagTransform.
+   */
+  styleTagTransform?:
+    | string
+    | ((
+        css: string,
+        styleElement: HTMLStyleElement,
+        options: Record<string, any>,
+      ) => void);
 }
