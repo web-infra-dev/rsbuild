@@ -213,7 +213,7 @@ export async function applyPluginConfig(
     extensions.pluginImport.push(...rsbuildConfig.source.transformImport);
   }
 
-  if (rsbuildConfig.performance?.transformLodash) {
+  if (pluginOptions?.transformLodash !== false) {
     extensions.lodash = {
       cwd: rootPath,
       ids: ['lodash', 'lodash-es'],

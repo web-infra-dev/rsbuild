@@ -93,7 +93,6 @@ const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
   buildCache: true,
   printFileSize: true,
   removeConsole: false,
-  transformLodash: true,
   removeMomentLocale: false,
   chunkSplit: {
     strategy: 'split-by-experience',

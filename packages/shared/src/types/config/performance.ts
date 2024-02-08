@@ -47,23 +47,22 @@ export interface PerformanceConfig {
    * Whether to remove `console.xx` in production build.
    */
   removeConsole?: boolean | ConsoleType[];
+
   /**
    * Whether to remove the locales of [moment.js](https://momentjs.com/).
    */
   removeMomentLocale?: boolean;
-  /**
-   * Specifies whether to modularize the import of [lodash](https://npmjs.com/package/lodash)
-   * and remove unused lodash modules to reduce the code size of lodash.
-   */
-  transformLodash?: boolean;
+
   /**
    * Controls the Rsbuild's caching behavior during the build process.
    */
   buildCache?: BuildCacheOptions | boolean;
+
   /**
    * Whether to print the file sizes after production build.
    */
   printFileSize?: PrintFileSizeOptions | boolean;
+
   /**
    * Configure the chunk splitting strategy.
    */

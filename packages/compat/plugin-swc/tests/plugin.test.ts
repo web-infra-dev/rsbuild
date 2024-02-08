@@ -206,6 +206,7 @@ describe('plugin-swc', () => {
       await applyPluginConfig(
         (config, { setConfig }) => {
           setConfig(config, 'jsc.transform.react.runtime', 'foo');
+          return config;
         },
         UTILS,
         TEST_BUILDER_CONFIG,
@@ -272,6 +273,7 @@ describe('plugin-swc', () => {
         await applyPluginConfig(
           (config) => {
             config.env!.coreJs = '2';
+            return config;
           },
           UTILS,
           TEST_BUILDER_CONFIG,
@@ -312,5 +314,20 @@ describe('plugin-swc', () => {
     const config = await rsbuild.unwrapConfig();
 
     expect(config.module!.rules).toMatchSnapshot();
+  });
+
+  it('should allow to disable transformLodash', async () => {
+    const config = (
+      await applyPluginConfig(
+        {
+          transformLodash: false,
+        },
+        UTILS,
+        TEST_BUILDER_CONFIG,
+        process.cwd(),
+      )
+    )[0].swcConfig;
+
+    expect(config.extensions?.lodash).toBeFalsy();
   });
 });
