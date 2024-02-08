@@ -1,13 +1,9 @@
 # source.transformImport
 
-Used to import the code and style of the component library on demand, which is equivalent to [babel-plugin-import](https://npmjs.com/package/babel-plugin-import).
-
-The difference between it and [babel-plugin-import](https://npmjs.com/package/babel-plugin-import) is that `source.transformImport` is not coupled with Babel. Rsbuild will automatically identify whether the currently used tools is Babel, SWC or Rspack, and apply the corresponding on-demand import configuration.
-
 - **Type:**
 
 ```ts
-type Config =
+type TransformImport =
   | false
   | Array<{
       libraryName: string;
@@ -16,16 +12,20 @@ type Config =
       styleLibraryDirectory?: string;
       camelToDashComponentName?: boolean;
       transformToDefaultImport?: boolean;
-      customName?: ((member: string) => string | undefined) | string;
-      customStyleName?: ((member: string) => string | undefined) | string;
+      customName?: string;
+      customStyleName?: string;
     }>;
 ```
 
-- **Default:** When you use [React plugin](/plugins/list/plugin-react), [React component library on-demand import](/plugins/list/plugin-react#import-component-library-on-demand) is automatically supported.
+- **Default:** `undefined`
+
+Transform the import path, which can be used to modularly import the subpath of third-party packages. The functionality is similar to [babel-plugin-import](https://npmjs.com/package/babel-plugin-import).
 
 ## Example
 
-When using the above antd default configuration:
+### Import antd on demand
+
+When using the [antd](https://github.com/ant-design/ant-design) component library (versions below v5), you can import components on demand with the following config:
 
 ```js
 export default {
@@ -41,34 +41,49 @@ export default {
 };
 ```
 
-The source code is as follows:
+The source code is:
 
 ```js
 import { Button } from 'antd';
 ```
 
-It will be transformed into:
+Will be transformed into:
 
 ```js
 import Button from 'antd/es/button';
 import 'antd/es/button/style';
 ```
 
-## Disable Default Config
+### Import lodash on demand
 
-You can manually set `transformImport: false` to disable the default config.
+When using lodash, you can automatically refer to the subpath through `transformImport` to reduce bundle size.
 
 ```js
 export default {
   source: {
-    transformImport: false,
+    transformImport: [
+      {
+        libraryName: 'lodash',
+        customName: 'lodash/{{ member }}',
+      },
+    ],
   },
 };
 ```
 
-For example, if you use `externals` to avoid bundling antd, because `transformImport` will convert the imported path of antd by default, the matching path changes and externals cannot take effect. At this time, you can disable `transformImport` to avoid this problem.
+The source code is:
 
-## Configuration
+```js
+import { get } from 'lodash';
+```
+
+Will be transformed to:
+
+```js
+import get from 'lodash/get';
+```
+
+## Options
 
 ### libraryName
 
@@ -181,32 +196,39 @@ import { Button } from 'foo/button';
 
 ### customName
 
-- **Type:** `((member: string) => string | undefined) | string`
+- **Type:** `string`
 - **Default:** `undefined`
 
-:::tip Note
+Customize the transformed path.
 
-- Function-type configurations can only be used in Webpack builds.
-- Template-type configurations can only be used in Rspack builds or Webpack builds that use SWC.
+For example, the following config will transform `import { foo } from 'my-lib'` into `import foo from 'my-lib/foo'`.
 
-:::
+```js
+export default {
+  source: {
+    transformImport: [
+      {
+        libraryName: 'my-lib',
+        customName: `my-lib/{{ member }}`,
+      },
+    ],
+  },
+};
+```
 
-Customize the imported path after conversion. The input is the imported member. For example, configure it as `` (member) => `my-lib/${member}` ``, which will convert `import { foo } from 'bar'` to `import foo from 'my-lib/foo'`.
+In addition, you can also declare the format of the path after transformation, such as setting it to `my-lib/{{ camelCase member }}` to convert member into camel case.
 
-When using Rspack to build, function configurations cannot be used, but you can use [handlebars](https://handlebarsjs.com/) template strings. For the above function configuration, you can use the following template instead of `my-lib/{{ member }}`, or use some built-in helper methods, such as `my-lib/{{ kebabCase member }}` to convert it to kebab-case format. In addition to kebabCase, there are also camelCase, snakeCase, upperCase, and lowerCase that can be used.
+The following formats are supported:
+
+- `kebabCase`: lowercase letters, words joined by hyphens. For example: `my-variable-name`.
+- `snakeCase`: lowercase letters, words joined by underscores. For example: `my_variable_name`.
+- `camelCase`: first letter lowercase, the first letter of each following word uppercase. For example: `myVariableName`.
+- `upperCase`: uppercase letters, other characters unchanged. For example: `MY-VARIABLE-NAME`.
+- `lowerCase`: lowercase letters, other characters unchanged. For example: `my-variable-name`.
 
 ### customStyleName
 
-- **Type:** `((member: string) => string | undefined) | string`
+- **Type:** `string`
 - **Default:** `undefined`
 
-:::tip Note
-
-- Function-type configurations can only be used in Webpack builds.
-- Template-type configurations can only be used in Rspack builds or Webpack builds that use SWC.
-
-:::
-
-Customize the imported style path after conversion. The input is the imported member. For example, configure it as `` (member) => `my-lib/${member}` ``, which will convert `import { foo } from 'bar'` to `import foo from 'my-lib/foo'`.
-
-When using Rspack to build, function configurations cannot be used, but you can use [handlebars](https://handlebarsjs.com/) template strings. For the above function configuration, you can use the following template instead of `my-lib/{{ member }}`, or use some built-in helper methods, such as `my-lib/{{ kebabCase member }}` to convert it to kebab-case format. In addition to kebabCase, there are also camelCase, snakeCase, upperCase, and lowerCase that can be used.
+Customize the transformed style path, the usage is consistent with `customName`.
