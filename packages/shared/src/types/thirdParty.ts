@@ -89,14 +89,49 @@ export interface CSSModulesOptions {
 }
 
 export interface CSSLoaderOptions {
+  /**
+   * Allow to enable/disables handling the CSS functions url and image-set.
+   * If set to false, css-loader will not parse any paths specified in url or image-set
+   *
+   * @default true
+   */
   url?: boolean | ((url: string, resourcePath: string) => boolean);
+  /**
+   * Allows to enables/disables @import at-rules handling.
+   *
+   * @default true
+   */
   import?:
     | boolean
     | ((url: string, media: string, resourcePath: string) => boolean);
+  /**
+   * Allows to enable/disable CSS Modules or ICSS and setup configuration:
+   */
   modules?: boolean | string | CSSModulesOptions;
+  /**
+   * By default generation of source maps depends on the devtool option.
+   */
   sourceMap?: boolean;
+  /**
+   * Allows to enables/disables or setups number of loaders applied before CSS loader for @import at-rules,
+   * CSS modules and ICSS imports, i.e. @import/composes/@value value from './values.css'/etc.
+   *
+   * @default 0
+   */
   importLoaders?: number;
+  /**
+   * By default, css-loader generates JS modules that use the ES modules syntax.
+   * There are some cases in which using ES modules is beneficial, like in the case of module concatenation and tree shaking.
+   *
+   * @default true
+   */
   esModule?: boolean;
+  /**
+   * Allows exporting styles as array with modules, string or constructable stylesheet (i.e. CSSStyleSheet)
+   *
+   * @default 'array'
+   */
+  exportType?: 'array' | 'string' | 'css-style-sheet';
 }
 
 export type StyleLoaderInjectType =
