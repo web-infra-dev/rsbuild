@@ -34,7 +34,7 @@ export default {
       {
         libraryName: 'antd',
         libraryDirectory: 'es',
-        style: true,
+        style: 'css',
       },
     ],
   },
@@ -81,6 +81,13 @@ Will be transformed to:
 
 ```js
 import get from 'lodash/get';
+```
+
+Please avoid the following usage, otherwise all of lodash's code will be imported:
+
+```js
+import _ from 'lodash';
+import lodash from 'lodash';
 ```
 
 ## Options

@@ -34,7 +34,7 @@ export default {
       {
         libraryName: 'antd',
         libraryDirectory: 'es',
-        style: true,
+        style: 'css',
       },
     ],
   },
@@ -81,6 +81,13 @@ import { get } from 'lodash';
 
 ```js
 import get from 'lodash/get';
+```
+
+请避免以下用法，否则会引入所有的 lodash 代码：
+
+```js
+import _ from 'lodash';
+import lodash from 'lodash';
 ```
 
 ## 选项
