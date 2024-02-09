@@ -39,7 +39,7 @@
     "file-loader": "6.2.0",
     "fs-extra": "^11.1.1",
     "gzip-size": "^6.0.0",
-    "http-compression": "1.0.17",
+    "http-compression": "1.0.19",
     "http-proxy-middleware": "^2.0.6",
     "icss-utils": "5.1.0",
     "jiti": "^1.21.0",

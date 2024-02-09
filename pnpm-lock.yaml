@@ -1522,8 +1522,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       http-compression:
-        specifier: 1.0.17
-        version: 1.0.17
+        specifier: 1.0.19
+        version: 1.0.19
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6
@@ -8503,8 +8503,8 @@ packages:
     resolution: {integrity: sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ==}
     dev: false
 
-  /http-compression@1.0.17:
-    resolution: {integrity: sha512-j3FvUl79mZ30sOZOLGlP6K2NK4eu5rPwe3IMsmjysCiMqNypg0y/RGm2UmUW5VG2979nNhHLOsPOWfky0PHG5w==}
+  /http-compression@1.0.19:
+    resolution: {integrity: sha512-RQfMPzMo01N18NL2X0WyXcTONIe3GLJDXULcjb9VtIGOlTukkYeP2Ijt7f6/ncjDgatuan5CjBnpPmtj44Khmw==}
     engines: {node: '>= 4'}
     dev: true
 
