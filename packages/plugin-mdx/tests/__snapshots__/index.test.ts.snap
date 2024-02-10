@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugin-mdx > should register mdx loader correctly 1`] = `
+{
+  "test": /\\\\\\.mdx\\?\\$/,
+  "use": [
+    {
+      "loader": "builtin:swc-loader",
+      "options": {
+        "env": {
+          "coreJs": "3.32",
+          "mode": "usage",
+          "shippedProposals": true,
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+        "isModule": "unknown",
+        "jsc": {
+          "externalHelpers": true,
+          "parser": {
+            "decorators": true,
+            "syntax": "typescript",
+            "tsx": true,
+          },
+          "preserveAllComments": true,
+          "transform": {
+            "decoratorMetadata": true,
+            "legacyDecorator": true,
+          },
+        },
+        "sourceMaps": true,
+      },
+    },
+    {
+      "loader": "<ROOT>/node_modules/<PNPM_INNER>/@mdx-js/loader/index.cjs",
+    },
+  ],
+}
+`;
