@@ -37,7 +37,7 @@
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/serialize-javascript": "^5.0.1",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.6.0",
     "terser": "5.27.0",
     "typescript": "^5.3.0"
   },
