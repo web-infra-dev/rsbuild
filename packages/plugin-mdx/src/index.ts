@@ -1,10 +1,15 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
+import type { Options as MdxLoaderOptions } from '@mdx-js/loader';
 
-// export type PluginMdxOptions = {
-// };
+export type PluginMdxOptions = {
+  /**
+   * Options passed to `@mdx-js/loader`.
+   * @see https://npmjs.com/package/@mdx-js/loader#api
+   */
+  mdxLoaderOptions?: MdxLoaderOptions;
+};
 
-export const pluginMdx = () // options: PluginMdxOptions = {}
-: RsbuildPlugin => ({
+export const pluginMdx = (options: PluginMdxOptions = {}): RsbuildPlugin => ({
   name: 'rsbuild:mdx',
 
   setup(api) {
@@ -29,7 +34,7 @@ export const pluginMdx = () // options: PluginMdxOptions = {}
         .test(/\.mdx?$/)
         .use('mdx')
         .loader(require.resolve('@mdx-js/loader'))
-        .options({});
+        .options(options.mdxLoaderOptions ?? {});
     });
   },
 });
