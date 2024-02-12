@@ -6,7 +6,7 @@ import { pluginMdx } from '@rsbuild/plugin-mdx';
 export default defineConfig({
   plugins: [
     pluginBabel({
-      include: /\.(?:jsx|tsx)$/,
+      include: /\.(?:jsx|tsx|mdx)$/,
       exclude: /[\\/]node_modules[\\/]/,
     }),
     pluginSolid(),
