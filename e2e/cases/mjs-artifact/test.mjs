@@ -21,6 +21,7 @@ import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
 import { pluginVue2Jsx } from '@rsbuild/plugin-vue2-jsx';
 import { pluginToml } from '@rsbuild/plugin-toml';
 import { pluginYaml } from '@rsbuild/plugin-yaml';
+import { pluginMdx } from '@rsbuild/plugin-mdx';
 
 export default {
   pluginAssetsRetry,
@@ -46,4 +47,5 @@ export default {
   pluginVue2Jsx,
   pluginToml,
   pluginYaml,
+  pluginMdx,
 };
