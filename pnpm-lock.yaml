@@ -78,6 +78,9 @@ importers:
       react-router-dom:
         specifier: ^6.17.0
         version: 6.17.0(react-dom@18.2.0)(react@18.2.0)
+      solid-js:
+        specifier: ^1.8.5
+        version: 1.8.5
       vue:
         specifier: ^3.3.4
         version: 3.3.4
@@ -109,6 +112,9 @@ importers:
       '@rsbuild/plugin-image-compress':
         specifier: workspace:*
         version: link:../packages/plugin-image-compress
+      '@rsbuild/plugin-mdx':
+        specifier: workspace:*
+        version: link:../packages/plugin-mdx
       '@rsbuild/plugin-node-polyfill':
         specifier: workspace:*
         version: link:../packages/plugin-node-polyfill
@@ -232,12 +238,6 @@ importers:
       polka:
         specifier: ^0.5.2
         version: 0.5.2
-
-  e2e/cases/solid:
-    dependencies:
-      solid-js:
-        specifier: ^1.8.5
-        version: 1.8.5
 
   e2e/cases/source-build/app:
     dependencies:
