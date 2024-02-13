@@ -18,6 +18,12 @@
 			"packagePatterns": ["^@types/"],
 			"groupSlug": "types"
 		},
+		{
+      "groupName": "all patch dependencies",
+      "groupSlug": "all-patch",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["patch"]
+    },
 		// manually update major versions
 		{
 			"matchUpdateTypes": ["major"],
