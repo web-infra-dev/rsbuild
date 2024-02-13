@@ -1,6 +1,7 @@
 import path from 'node:path';
 import {
   isUsingHMR,
+  SCRIPT_REGEX,
   modifySwcLoaderOptions,
   type SwcReactConfig,
 } from '@rsbuild/shared';
@@ -48,6 +49,6 @@ export const applyBasicReactSupport = (
 
     chain
       .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
-      .use(ReactRefreshRspackPlugin);
+      .use(ReactRefreshRspackPlugin, [{ include: [SCRIPT_REGEX] }]);
   });
 };

@@ -30,11 +30,24 @@ export const pluginMdx = (options: PluginMdxOptions = {}): RsbuildPlugin => ({
         return false;
       });
 
+      const MDX_REGEXP = /\.mdx?$/;
+
       mdxRule
-        .test(/\.mdx?$/)
+        .test(MDX_REGEXP)
         .use('mdx')
         .loader(require.resolve('@mdx-js/loader'))
         .options(options.mdxLoaderOptions ?? {});
+
+      // support for React fast refresh
+      const { REACT_FAST_REFRESH } = CHAIN_ID.PLUGIN;
+      if (chain.plugins.has(REACT_FAST_REFRESH)) {
+        chain.plugins.get(REACT_FAST_REFRESH).tap((options) => {
+          const firstOption = options[0] ?? {};
+          firstOption.include = [...(firstOption.include || []), MDX_REGEXP];
+          options[0] = firstOption;
+          return options;
+        });
+      }
     });
   },
 });
