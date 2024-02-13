@@ -50,3 +50,18 @@ pluginMdx({
   },
 });
 ```
+
+### extensions
+
+Specify the file extensions to be compiled with MDX loader, including .md files and .mdx files by default.
+
+- **Type:** `string[]`
+- **Default:** `['.mdx', '.md']`
+
+For example, to only compile .mdx files, you can set it as:
+
+```ts
+pluginMdx({
+  extensions: ['.mdx'],
+});
+```

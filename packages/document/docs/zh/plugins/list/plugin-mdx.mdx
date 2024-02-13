@@ -50,3 +50,18 @@ pluginMdx({
   },
 });
 ```
+
+### extensions
+
+指定使用 MDX loader 编译的文件后缀，默认包括 .md 文件和 .mdx 文件。
+
+- **类型：** `string[]`
+- **默认值：** `['.mdx', '.md']`
+
+比如仅编译 .mdx 文件，可以设置为：
+
+```ts
+pluginMdx({
+  extensions: ['.mdx'],
+});
+```
