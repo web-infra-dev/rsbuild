@@ -57,6 +57,7 @@
 - [Babel 插件](/plugins/list/plugin-babel)：提供对 Babel 转译能力的支持。
 - [Type Check 插件](/plugins/list/plugin-type-check)：用于在单独的进程中运行 TypeScript 类型检查。
 - [Image Compress 插件](/plugins/list/plugin-image-compress)：将项目中用到的图片资源进行压缩处理。
+- [MDX 插件](/plugins/list/plugin-mdx)：提供 MDX 支持。
 - [Node Polyfill 插件](/plugins/list/plugin-node-polyfill)：用于注入 Node 核心模块在浏览器端的 polyfills。
 - [Source Build 插件](/plugins/list/plugin-source-build)：用于 monorepo 场景，支持引用其他子目录的源代码，并完成构建和热更新。
 - [Stylus 插件](/plugins/list/plugin-stylus)：使用 Stylus 作为 CSS 预处理器。

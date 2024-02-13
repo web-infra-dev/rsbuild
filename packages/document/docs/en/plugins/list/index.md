@@ -57,6 +57,7 @@ The following are common framework-agnostic plugins:
 - [Babel Plugin](/plugins/list/plugin-babel): Provides support for Babel transpilation capabilities.
 - [Type Check Plugin](/plugins/list/plugin-type-check): Used to run TypeScript type checker on a separate process.
 - [Image Compress Plugin](/plugins/list/plugin-image-compress): Compress the image resources used in the project.
+- [MDX Plugin](/plugins/list/plugin-mdx): Provide support for MDX.
 - [Node Polyfill Plugin](/plugins/list/plugin-node-polyfill): Used to inject polyfills of Node core modules in the browser side.
 - [Source Build Plugin](/plugins/list/plugin-source-build): This plugin is designed for the monorepo scenario. It supports referencing source code from other subdirectories and performs build and hot update.
 - [Stylus Plugin](/plugins/list/plugin-stylus): Use Stylus as the CSS preprocessor.
