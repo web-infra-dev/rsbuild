@@ -13,9 +13,9 @@
     "preact": "^10.19.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.17.0",
+    "react-router-dom": "^6.22.0",
     "solid-js": "^1.8.5",
-    "vue": "^3.3.4",
+    "vue": "^3.4.19",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
