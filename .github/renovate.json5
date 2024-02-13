@@ -44,6 +44,7 @@
 		// manually update some packages
 		"core-js",
 		"esbuild",
-		"typescript"
+		"typescript",
+		"@swc/helpers"
 	]
 }
