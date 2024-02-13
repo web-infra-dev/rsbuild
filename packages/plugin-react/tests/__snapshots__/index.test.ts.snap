@@ -720,7 +720,9 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       "options": {
         "exclude": /node_modules/i,
         "forceEnable": false,
-        "include": /\\\\\\.\\(\\[cm\\]js\\|\\[jt\\]sx\\?\\|flow\\)\\$/i,
+        "include": [
+          /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        ],
       },
     },
   ],
