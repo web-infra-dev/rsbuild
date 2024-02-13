@@ -7,14 +7,30 @@ export type PluginMdxOptions = {
    * @see https://npmjs.com/package/@mdx-js/loader#api
    */
   mdxLoaderOptions?: MdxLoaderOptions;
+  /**
+   * @default ['.mdx', '.md']
+   */
+  extensions?: string[];
 };
+
+function createRegExp(exts: string[]): RegExp {
+  const matcher = exts.map((ext) => ext.slice(1)).join('|');
+  return new RegExp(
+    exts.length === 1 ? `\\.${matcher}$` : `\\.(?:${matcher})$`,
+    'i',
+  );
+}
 
 export const pluginMdx = (options: PluginMdxOptions = {}): RsbuildPlugin => ({
   name: 'rsbuild:mdx',
 
   setup(api) {
     api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-      chain.resolve.extensions.add('.mdx');
+      const { extensions = ['.mdx', '.md'] } = options;
+
+      extensions.forEach((ext) => {
+        chain.resolve.extensions.add(ext);
+      });
 
       const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
       const mdxRule = chain.module.rule('mdx');
@@ -30,7 +46,7 @@ export const pluginMdx = (options: PluginMdxOptions = {}): RsbuildPlugin => ({
         return false;
       });
 
-      const MDX_REGEXP = /\.mdx?$/;
+      const MDX_REGEXP = createRegExp(extensions);
 
       mdxRule
         .test(MDX_REGEXP)

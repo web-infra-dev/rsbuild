@@ -2,7 +2,7 @@
 
 exports[`plugin-mdx > should allow to configure mdx loader 1`] = `
 {
-  "test": /\\\\\\.mdx\\?\\$/,
+  "test": /\\\\\\.\\(\\?:mdx\\|md\\)\\$/i,
   "use": [
     {
       "loader": "builtin:swc-loader",
@@ -47,7 +47,7 @@ exports[`plugin-mdx > should allow to configure mdx loader 1`] = `
 
 exports[`plugin-mdx > should register mdx loader correctly 1`] = `
 {
-  "test": /\\\\\\.mdx\\?\\$/,
+  "test": /\\\\\\.\\(\\?:mdx\\|md\\)\\$/i,
   "use": [
     {
       "loader": "builtin:swc-loader",
