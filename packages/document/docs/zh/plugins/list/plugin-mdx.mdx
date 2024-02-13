@@ -1,0 +1,52 @@
+# MDX 插件
+
+提供 [MDX](https://mdxjs.com/) 支持。
+
+:::tip 什么是 MDX
+MDX 让你可以在 markdown 内容中使用 JSX。你可以导入组件，例如图表或 alert，并将其嵌入到你的内容中。这使得使用组件编写长篇内容变得轻松有趣。
+:::
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-mdx -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginMdx } from '@rsbuild/plugin-mdx';
+
+export default {
+  plugins: [pluginMdx()],
+};
+```
+
+注册完插件后，你可以在代码中引入 `*.mdx` 或 `.md` 文件作为组件使用。
+
+## 选项
+
+如果你需要自定义 MDX 的编译行为，可以使用以下配置项。
+
+### mdxLoaderOptions
+
+传递给 `@mdx-js/loader` 的选项，请查阅 [@mdx-js/loader 文档](https://www.npmjs.com/package/@mdx-js/loader) 来了解具体用法。
+
+- **类型：** `MdxLoaderOptions`
+- **默认值：** `{}`
+- **示例：**
+
+```ts
+pluginMdx({
+  mdxLoaderOptions: {
+    // 使用 Vue JSX
+    jsxImportSource: 'vue',
+  },
+});
+```

@@ -1,0 +1,52 @@
+# MDX Plugin
+
+Provide support for [MDX](https://mdxjs.com/).
+
+:::tip what is MDX
+MDX lets you use JSX in your markdown content. You can import components, such as interactive charts or alerts, and embed them within your content. This makes writing long-form content with components a blast.
+:::
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-mdx -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginMdx } from '@rsbuild/plugin-mdx';
+
+export default {
+  plugins: [pluginMdx()],
+};
+```
+
+After registering the plugin, you can import `*.mdx` or `.md` files as components in your code.
+
+## Options
+
+If you need to customize the compilation behavior of MDX, you can use the following configs.
+
+### mdxLoaderOptions
+
+Options passed to `@mdx-js/loader`, please refer to [@mdx-js/loader documentation](https://www.npmjs.com/package/@mdx-js/loader) for detailed usage.
+
+- **Type:** `MdxLoaderOptions`
+- **Default:** `{}`
+- **Example:**
+
+```ts
+pluginMdx({
+  mdxLoaderOptions: {
+    // Use Vue JSX
+    jsxImportSource: 'vue',
+  },
+});
+```
