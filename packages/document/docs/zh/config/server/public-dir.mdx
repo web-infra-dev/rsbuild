@@ -30,10 +30,7 @@ const defaultValue = {
 
 默认情况下，Rsbuild 会将 `public` 目录作为静态资源服务的文件夹，该目录中的文件可在 `/` 路径下访问。
 
-需要注意的是：
-
-- 引入 public 中的资源永远应该使用根绝对路径。例如，`public/icon.png` 应该在源码中被引用为 `/icon.png`。
-- 在生产环境构建过程中，public 目录中的文件将会被拷贝到构建产物目录（默认为 `dist`）下，请注意不要和产物文件出现名称冲突。当 public 下的文件和产物重名时，构建产物具有更高的优先级，会覆盖 public 下的同名文件。这个功能可以通过将 `copyOnBuild` 设置为 false 来禁用。
+> 相关文档：[public 目录](/guide/basic/static-assets#public-目录)。
 
 ### Boolean 类型
 

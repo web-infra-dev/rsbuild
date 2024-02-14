@@ -30,10 +30,7 @@ const defaultValue = {
 
 By default, Rsbuild will use the `public` directory as the directory for serving public assets, files in this directory will be served at `/`.
 
-Note that:
-
-- You should always reference public assets using root absolute path. For example, `public/icon.png` should be referenced in source code as `/icon.png`.
-- During the production build, the files in public directory will be copied to the output directory (default is `dist`). Please be careful to avoid name conflicts with the output files. When files in the `public` directory have the same name as outputs, the outputs have higher priority and will overwrite the files with the same name in the `public` directory. This feature can be disabled by setting `copyOnBuild` to false.
+> Related document: [Public Folder](/guide/basic/static-assets#public-folder).
 
 ### Boolean Type
 
