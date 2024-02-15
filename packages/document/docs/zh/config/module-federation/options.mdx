@@ -6,7 +6,11 @@
 
 用于配置 Rspack 模块联邦插件。
 
-设置 `moduleFederation.options` 选项后，Rsbuild 会自动注册 [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) 插件，并将 `options` 的值透传给插件。
+设置 `moduleFederation.options` 选项后，Rsbuild 会执行以下操作，以保证模块联邦可以正确运行：
+
+- 自动注册 [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) 插件，并将 `options` 的值透传给插件。
+- 将 Rspack `output.publicPath` 配置的默认值设置为 `'auto'`。
+- 关闭 remote entry 的 splitChunks 规则。
 
 ## 选项
 
@@ -18,7 +22,7 @@
 
 - Remote App
 
-```ts title="rsbuild.config.ts"
+```ts title="remote/rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
@@ -39,7 +43,7 @@ export default defineConfig({
 
 - Host App
 
-```ts title="rsbuild.config.ts"
+```ts title="host/rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({

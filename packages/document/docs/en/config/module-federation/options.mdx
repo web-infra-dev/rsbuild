@@ -6,7 +6,11 @@
 
 Used to configure the Rspack module federation plugin.
 
-After setting the `moduleFederation.options` option, Rsbuild will automatically register the [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) plugin and pass the value of `options` to the plugin.
+After setting the `moduleFederation.options` option, Rsbuild will take the following actions to ensure that the module federation runs correctly:
+
+- Automatically register the [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) plugin, and pass the value of `options` to the plugin.
+- Set the default value of the Rspack `output.publicPath` config to `'auto'`.
+- Turn off the splitChunks rules of the remote entry.
 
 ## Options
 
@@ -18,7 +22,7 @@ Here is a minimal example:
 
 - Remote App
 
-```ts title="rsbuild.config.ts"
+```ts title="remote/rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
@@ -39,7 +43,7 @@ export default defineConfig({
 
 - Host App
 
-```ts title="rsbuild.config.ts"
+```ts title="host/rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
