@@ -15,7 +15,7 @@ import type {
   RsbuildEntry,
   RspackConfig,
   RsbuildConfig,
-  ChainedConfig,
+  RsbuildTarget,
   RsbuildContext,
   CreateAsyncHook,
   BundlerChainRule,
@@ -387,13 +387,14 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
 export function applyResolvePlugin(api: RsbuildPluginAPI) {
   api.modifyBundlerChain({
     order: 'pre',
-    handler: (chain, { CHAIN_ID }) => {
+    handler: (chain, { target, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
 
       applyExtensions({ chain });
 
       applyAlias({
         chain,
+        target,
         config,
         rootPath: api.context.rootPath,
       });
@@ -436,16 +437,16 @@ function applyExtensions({ chain }: { chain: BundlerChain }) {
 
 function applyAlias({
   chain,
+  target,
   config,
   rootPath,
 }: {
   chain: BundlerChain;
+  target: RsbuildTarget;
   config: NormalizedConfig;
   rootPath: string;
 }) {
-  const { alias } = config.source as {
-    alias?: ChainedConfig<Record<string, string>>;
-  };
+  const { alias } = config.source;
 
   if (!alias) {
     return;
@@ -454,6 +455,7 @@ function applyAlias({
   const mergedAlias = mergeChainedOptions({
     defaults: {},
     options: alias,
+    utils: { target },
   });
 
   /**
@@ -472,7 +474,9 @@ function applyAlias({
 
     chain.resolve.alias.set(
       name,
-      formattedValues.length === 1 ? formattedValues[0] : formattedValues,
+      (formattedValues.length === 1 ? formattedValues[0] : formattedValues) as
+        | string
+        | string[],
     );
   });
 }
