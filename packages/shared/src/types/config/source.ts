@@ -1,5 +1,5 @@
-import type { RsbuildEntry } from '../rsbuild';
-import type { ChainedConfig } from '../utils';
+import type { RsbuildEntry, RsbuildTarget } from '../rsbuild';
+import type { ChainedConfigWithUtils } from '../utils';
 import type { RuleSetCondition } from '@rspack/core';
 
 export type Alias = Record<string, string | false | (string | false)[]>;
@@ -24,7 +24,7 @@ export interface SourceConfig {
    * Create aliases to import or require certain modules,
    * same as the [resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) config of webpack.
    */
-  alias?: ChainedConfig<Alias>;
+  alias?: ChainedConfigWithUtils<Alias, { target: RsbuildTarget }>;
   /**
    * Used to control the priority between the `paths` option in `tsconfig.json`
    * and the `alias` option in the bundler.
@@ -84,7 +84,7 @@ export type TransformImport = {
 
 export interface NormalizedSourceConfig extends SourceConfig {
   define: Define;
-  alias: ChainedConfig<Alias>;
+  alias: ChainedConfigWithUtils<Alias, { target: RsbuildTarget }>;
   aliasStrategy: AliasStrategy;
   preEntry: string[];
   decorators: Required<Decorators>;

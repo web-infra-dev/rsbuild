@@ -58,6 +58,22 @@ export default {
 };
 ```
 
+函数提供了 target 参数，可以用于判断构建的目标运行时环境，比如针对 web 产物和 node 产物设置不同的 alias：
+
+```js
+export default {
+  source: {
+    alias: (alias, { target }) => {
+      if (target === 'node') {
+        alias['@common'] = './src/node/common';
+      } else if (target === 'web') {
+        alias['@common'] = './src/web/common';
+      }
+    },
+  },
+};
+```
+
 ### 精确匹配
 
 默认情况，`source.alias` 会自动匹配子路径，比如以下配置：
