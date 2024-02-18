@@ -1,0 +1,49 @@
+# 使用 Rsdoctor
+
+[Rsdoctor](https://rsdoctor.dev/) 是一个构建分析工具，能够可视化地展示构建过程，比如编译耗时、编译前后代码变化、模块引用关系、重复模块等。
+
+当你需要调试构建产物或构建过程时，可以借助 Rsdoctor 来提升排查问题的效率。
+
+## 快速上手
+
+在基于 Rsbuild 的项目中，你可以通过以下步骤开启 Rsdoctor 分析：
+
+1. 安装 Rsdoctor 插件：
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsdoctor/rspack-plugin -D" />
+
+2. 在 CLI 命令前添加 `RSDOCTOR=true` 环境变量：
+
+```bash
+# dev
+RSDOCTOR=true rsbuild dev
+
+# build
+RSDOCTOR=true rsbuild build
+```
+
+在项目内执行上述命令后，Rsbuild 会自动注册 Rsdoctor 的插件，并在构建完成后打开本次构建的分析页面，请参考 [Rsdoctor 文档](https://rsdoctor.dev/) 来了解完整功能。
+
+## 配置项
+
+如果你需要配置 Rsdoctor 插件提供的[选项](https://rsdoctor.dev/config/options)，请手动注册 Rsdoctor 插件：
+
+```ts title="rsbuild.config.ts"
+import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+
+export default {
+  tools: {
+    rspack(config, { appendPlugins }) {
+      if (process.env.RSDOCTOR === 'true') {
+        appendPlugins(
+          new RsdoctorRspackPlugin({
+            // 插件选项
+          }),
+        );
+      }
+    },
+  },
+};
+```
