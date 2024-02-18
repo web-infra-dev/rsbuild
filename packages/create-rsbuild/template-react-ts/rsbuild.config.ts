@@ -3,9 +3,4 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
   plugins: [pluginReact()],
-  tools: {
-    // bundlerChain: (chain) => {
-    //   chain.plugin('css-extract-plugin').tap(options => ([{}]));
-    // }
-  },
 });

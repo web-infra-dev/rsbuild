@@ -1,6 +1,13 @@
 import { posix } from 'node:path';
-import { getDistPath, getFilename, applyOutputPlugin } from '@rsbuild/shared';
+import {
+  getDistPath,
+  getFilename,
+  applyOutputPlugin,
+  isUseCssExtract,
+  mergeChainedOptions,
+} from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../../types';
+import { RspackCssExtractPlugin } from '@rspack/core';
 
 export const pluginOutput = (): RsbuildPlugin => ({
   name: 'rsbuild:output',
@@ -8,7 +15,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
   setup(api) {
     applyOutputPlugin(api);
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, target, isProd }) => {
       const config = api.getNormalizedConfig();
 
       if (config.output.copy) {
@@ -18,20 +25,29 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
         chain.plugin(CHAIN_ID.PLUGIN.COPY).use(CopyRspackPlugin, [options]);
       }
-    });
-
-    api.modifyRspackConfig(async (rspackConfig, { isProd }) => {
-      const config = api.getNormalizedConfig();
 
       const cssPath = getDistPath(config, 'css');
-      const cssFilename = getFilename(config, 'css', isProd);
 
-      rspackConfig.output ||= {};
-      rspackConfig.output.cssFilename = posix.join(cssPath, cssFilename);
-      rspackConfig.output.cssChunkFilename = posix.join(
-        cssPath,
-        `async/${cssFilename}`,
-      );
+      // css output
+      if (isUseCssExtract(config, target)) {
+        const extractPluginOptions = mergeChainedOptions({
+          defaults: {},
+          options: config.tools.cssExtract?.pluginOptions,
+        });
+
+        const cssFilename = getFilename(config, 'css', isProd);
+
+        chain
+          .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
+          .use(RspackCssExtractPlugin, [
+            {
+              filename: posix.join(cssPath, cssFilename),
+              chunkFilename: posix.join(cssPath, `async/${cssFilename}`),
+              ignoreOrder: true,
+              ...extractPluginOptions,
+            },
+          ]);
+      }
     });
   },
 });

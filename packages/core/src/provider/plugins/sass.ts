@@ -17,7 +17,7 @@ export function pluginSass(): RsbuildPlugin {
 
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
-        const { applyBaseCSSRule } = await import('./css-new');
+        const { applyBaseCSSRule } = await import('./css');
 
         const { excludes, options } = getSassLoaderOptions(
           config.tools.sass,
@@ -57,15 +57,6 @@ export function pluginSass(): RsbuildPlugin {
           .use(utils.CHAIN_ID.USE.SASS)
           .loader(getSharedPkgCompiledPath('sass-loader'))
           .options(options);
-      });
-
-      api.modifyRspackConfig(async (rspackConfig) => {
-        const { applyCSSModuleRule } = await import('./css');
-        const config = api.getNormalizedConfig();
-
-        const rules = rspackConfig.module?.rules;
-
-        applyCSSModuleRule(rules, SASS_REGEX, config);
       });
     },
   };

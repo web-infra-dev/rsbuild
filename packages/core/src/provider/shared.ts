@@ -29,7 +29,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.moment(),
     plugins.nodeAddons(),
     plugins.define(),
-    import('./plugins/css-new').then((m) => m.pluginCss()),
+    import('./plugins/css').then((m) => m.pluginCss()),
     import('./plugins/less').then((m) => m.pluginLess()),
     import('./plugins/sass').then((m) => m.pluginSass()),
     import('./plugins/minimize').then((m) => m.pluginMinimize()),

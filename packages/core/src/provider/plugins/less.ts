@@ -11,7 +11,7 @@ export function pluginLess(): RsbuildPlugin {
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
-        const { applyBaseCSSRule } = await import('./css-new');
+        const { applyBaseCSSRule } = await import('./css');
 
         const rule = chain.module
           .rule(utils.CHAIN_ID.RULE.LESS)
@@ -38,15 +38,6 @@ export function pluginLess(): RsbuildPlugin {
           .use(utils.CHAIN_ID.USE.LESS)
           .loader(getSharedPkgCompiledPath('less-loader'))
           .options(options);
-      });
-
-      api.modifyRspackConfig(async (rspackConfig) => {
-        const { applyCSSModuleRule } = await import('./css');
-        const config = api.getNormalizedConfig();
-
-        const rules = rspackConfig.module?.rules;
-
-        applyCSSModuleRule(rules, LESS_REGEX, config);
       });
     },
   };
