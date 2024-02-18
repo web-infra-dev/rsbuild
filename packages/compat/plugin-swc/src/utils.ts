@@ -70,6 +70,7 @@ const PLUGIN_ONLY_OPTIONS: (keyof ObjPluginSwcOptions)[] = [
   'jsMinify',
   'cssMinify',
   'overrides',
+  'transformLodash',
   'test',
   'exclude',
   'include' as unknown as keyof ObjPluginSwcOptions, // include is not in SWC config, but we need it as loader condition
