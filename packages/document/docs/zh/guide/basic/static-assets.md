@@ -91,13 +91,54 @@ console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 - 在开发环境下，通过 [dev.assetPrefix](/config/dev/asset-prefix) 设置路径前缀。
 - 在生产环境下，通过 [output.assetPrefix](/config/output/asset-prefix) 设置路径前缀。
 
-比如将 `output.assetPrefix` 设置为 `https://modern.com`：
+比如将 `output.assetPrefix` 设置为 `https://example.com`：
 
 ```js
 import logo from './static/logo.png';
 
-console.log(logo); // "https://modern.com/static/logo.6c12aba3.png"
+console.log(logo); // "https://example.com/static/logo.6c12aba3.png"
 ```
+
+## public 目录
+
+项目根目录下的 public 目录可以用于放置一些静态资源，这些资源不会被 Rsbuild 打包。
+
+- 当你启动开发服务器时，这些资源会被托管在 `/` 根路径下。
+- 当你执行生产环境构建时，这些资源会被拷贝到 dist 目录。
+
+比如，你可以在 public 目录下放置 `robots.txt`、`manifest.json` 或 `favicon.ico` 等文件。
+
+### 引用方式
+
+在 HTML 模板中，你可以通过以下方式来引用 public 目录下的文件，`assetPrefix` 对应静态资源的 URL 前缀。
+
+```html title="index.html"
+<link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
+```
+
+在 JavaScript 代码中，你可以通过 `process.env.ASSET_PREFIX` 来拼接 URL：
+
+```js title="index.js"
+const faviconURL = `${process.env.ASSET_PREFIX}/favicon.ico`;
+```
+
+### 自定义行为
+
+Rsbuild 提供了 [server.publicDir](/config/server/public-dir) 选项，可以用于自定义 public 目录的名称和行为，也可以用于禁用 public 目录。
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    publicDir: false,
+  },
+};
+```
+
+### 注意事项
+
+- 请避免在源代码中通过 import 来引用 public 目录下的文件，正确的方式是通过 URL 引用。
+- 通过 URL 引用 public 目录中的资源时，请使用绝对路径，而不是相对路径。
+- 在生产环境构建过程中，public 目录中的文件将会被拷贝到构建产物目录（默认为 `dist`）下，请注意不要和产物文件出现名称冲突。当 public 下的文件和产物重名时，构建产物具有更高的优先级，会覆盖 public 下的同名文件。这个功能可以通过将 `server.publicDir.copyOnBuild` 设置为 false 来禁用。
 
 ## 类型声明
 

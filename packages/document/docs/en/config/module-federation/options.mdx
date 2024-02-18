@@ -1,0 +1,67 @@
+# moduleFederation.options
+
+- **Type:** `ModuleFederationConfig`
+- **Default:** `undefined`
+- **Version:** `>= 0.4.0`
+
+Used to configure the Rspack module federation plugin.
+
+After setting the `moduleFederation.options` option, Rsbuild will take the following actions to ensure that the module federation runs correctly:
+
+- Automatically register the [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) plugin, and pass the value of `options` to the plugin.
+- Set the default value of the Rspack `output.publicPath` config to `'auto'`.
+- Turn off the splitChunks rules of the remote entry.
+
+## Options
+
+Please refer to the [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) document for all available options.
+
+## Example
+
+Here is a minimal example:
+
+- Remote App
+
+```ts title="remote/rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  server: {
+    port: 3002,
+  },
+  moduleFederation: {
+    options: {
+      name: 'remote',
+      exposes: {
+        './Button': './src/Button',
+      },
+      filename: 'remoteEntry.js',
+    },
+  },
+});
+```
+
+- Host App
+
+```ts title="host/rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  server: {
+    port: 3002,
+  },
+  moduleFederation: {
+    options: {
+      name: 'host',
+      remotes: {
+        remote: 'remote@http://localhost:3002/remoteEntry.js',
+      },
+    },
+  },
+});
+```
+
+For more examples, please see:
+
+- [Rsbuild - module-federation example](https://github.com/web-infra-dev/rsbuild/tree/main/examples/module-federation)
+- [module-federation/module-federation-examples](https://github.com/module-federation/module-federation-examples)

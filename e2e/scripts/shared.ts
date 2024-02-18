@@ -107,7 +107,7 @@ const updateConfigForTest = async (
   cwd: string = process.cwd(),
 ) => {
   const { loadConfig, mergeRsbuildConfig } = await import('@rsbuild/core');
-  const loadedConfig = await loadConfig({
+  const { content: loadedConfig } = await loadConfig({
     cwd,
   });
 

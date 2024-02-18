@@ -73,7 +73,10 @@ export async function applyBaseCSSRule({
     // use style-loader
     else {
       const styleLoaderOptions = mergeChainedOptions({
-        defaults: {},
+        defaults: {
+          // todo: hmr does not work while esModule is true
+          esModule: false,
+        },
         options: config.tools.styleLoader,
       });
 

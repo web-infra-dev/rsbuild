@@ -19,7 +19,7 @@
     "e2e:rspack": "cd ./e2e && pnpm test:rspack",
     "e2e:webpack": "cd ./e2e && pnpm test:webpack",
     "lint": "biome lint . --diagnostic-level=warn && ls-lint",
-    "prepare": "pnpm run build && husky install",
+    "prepare": "pnpm run build && husky",
     "test": "cross-env NODE_OPTIONS=--max-old-space-size=8192 pnpm run ut",
     "update-modern": "cd ./scripts/update-packages && pnpm start:modern",
     "update-rspack": "cd ./scripts/update-packages && pnpm start:rspack",
@@ -44,13 +44,13 @@
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
-    "husky": "^8.0.3",
+    "husky": "^9.0.10",
     "nano-staged": "^0.8.0",
     "nx": "^17.2.6",
     "prettier": "^3.2.4",
     "vitest": "^1.2.1"
   },
-  "packageManager": "pnpm@8.14.2",
+  "packageManager": "pnpm@8.15.2",
   "engines": {
     "node": ">=16.18.1",
     "pnpm": ">=8.7.0"

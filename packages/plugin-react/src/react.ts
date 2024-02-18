@@ -1,20 +1,19 @@
 import path from 'node:path';
 import {
-  deepmerge,
   isUsingHMR,
+  SCRIPT_REGEX,
   modifySwcLoaderOptions,
   type SwcReactConfig,
 } from '@rsbuild/shared';
 import type { RsbuildPluginAPI } from '@rsbuild/core';
 import type { PluginReactOptions } from '.';
 
-export const REACT_REFRESH_PATH = require.resolve('react-refresh');
-const REACT_REFRESH_DIR_PATH = path.dirname(REACT_REFRESH_PATH);
-
 export const applyBasicReactSupport = (
   api: RsbuildPluginAPI,
   options: PluginReactOptions,
 ) => {
+  const REACT_REFRESH_PATH = require.resolve('react-refresh');
+
   api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev, isProd, target }) => {
     const config = api.getNormalizedConfig();
     const usingHMR = isUsingHMR(config, { isProd, target });
@@ -27,14 +26,14 @@ export const applyBasicReactSupport = (
 
     modifySwcLoaderOptions({
       chain,
-      modifier: (options) => {
-        return deepmerge(options, {
-          jsc: {
-            transform: {
-              react: reactOptions,
-            },
-          },
-        });
+      modifier: (opts) => {
+        opts.jsc ??= {};
+        opts.jsc.transform ??= {};
+        opts.jsc.transform.react = {
+          ...opts.jsc.transform.react,
+          ...reactOptions,
+        };
+        return opts;
       },
     });
 
@@ -42,7 +41,7 @@ export const applyBasicReactSupport = (
       return;
     }
 
-    chain.resolve.alias.set('react-refresh', REACT_REFRESH_DIR_PATH);
+    chain.resolve.alias.set('react-refresh', path.dirname(REACT_REFRESH_PATH));
 
     const { default: ReactRefreshRspackPlugin } = await import(
       '@rspack/plugin-react-refresh'
@@ -50,6 +49,6 @@ export const applyBasicReactSupport = (
 
     chain
       .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
-      .use(ReactRefreshRspackPlugin);
+      .use(ReactRefreshRspackPlugin, [{ include: [SCRIPT_REGEX] }]);
   });
 };

@@ -1,4 +1,4 @@
-import { PLUGIN_BABEL_NAME, type RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { VueJSXPluginOptions } from '@vue/babel-plugin-jsx';
 import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
 
@@ -13,8 +13,6 @@ export type PluginVueJsxOptions = {
 export function pluginVueJsx(options: PluginVueJsxOptions = {}): RsbuildPlugin {
   return {
     name: 'rsbuild:vue-jsx',
-
-    pre: [PLUGIN_BABEL_NAME],
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {

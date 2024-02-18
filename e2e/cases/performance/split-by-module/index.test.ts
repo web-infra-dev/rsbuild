@@ -9,7 +9,7 @@ test('should generate module chunks when chunkSplit is "split-by-module"', async
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
-        disableFilenameHash: true,
+        filenameHash: false,
       },
       performance: {
         chunkSplit: {

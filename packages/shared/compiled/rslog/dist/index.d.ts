@@ -63,4 +63,4 @@ declare let createLogger: (options?: Options) => Logger;
 
 declare let logger: Logger;
 
-export { LogFunction, LogLevel, LogMessage, LogType, Logger, Options, createLogger, logger };
+export { type LogFunction, type LogLevel, type LogMessage, type LogType, type Logger, type Options, createLogger, logger };

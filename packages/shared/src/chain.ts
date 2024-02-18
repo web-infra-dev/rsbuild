@@ -15,7 +15,7 @@ import type {
   RsbuildEntry,
   RspackConfig,
   RsbuildConfig,
-  ChainedConfig,
+  RsbuildTarget,
   RsbuildContext,
   CreateAsyncHook,
   BundlerChainRule,
@@ -132,8 +132,12 @@ export const CHAIN_ID = {
     PUG: 'pug',
     /** vue-loader */
     VUE: 'vue',
+    /** swc-loader */
+    SWC: 'swc',
     /** @svgr/webpack */
     SVGR: 'svgr',
+    /** plugin-image-compress svgo-loader */
+    SVGO: 'svgo',
     /** yaml-loader */
     YAML: 'yaml',
     /** toml-loader */
@@ -142,12 +146,12 @@ export const CHAIN_ID = {
     NODE: 'node',
     /** babel-loader */
     BABEL: 'babel',
-    /** esbuild-loader */
-    ESBUILD: 'esbuild',
-    /** swc-loader */
-    SWC: 'swc',
     /** style-loader */
     STYLE: 'style-loader',
+    /** svelte-loader */
+    SVELTE: 'svelte',
+    /** esbuild-loader */
+    ESBUILD: 'esbuild',
     /** postcss-loader */
     POSTCSS: 'postcss',
     /** ignore-css-loader */
@@ -160,10 +164,6 @@ export const CHAIN_ID = {
     RESOLVE_URL: 'resolve-url-loader',
     /** plugin-image-compress.loader */
     IMAGE_COMPRESS: 'image-compress',
-    /** plugin-image-compress svgo-loader */
-    SVGO: 'svgo',
-    /** svelte-loader */
-    SVELTE: 'svelte',
   },
   /** Predefined plugins */
   PLUGIN: {
@@ -175,14 +175,8 @@ export const CHAIN_ID = {
     HTML: 'html',
     /** DefinePlugin */
     DEFINE: 'define',
-    /** IgnorePlugin */
-    IGNORE: 'ignore',
-    /** BannerPlugin */
-    BANNER: 'banner',
     /** ProgressPlugin */
     PROGRESS: 'progress',
-    /** Inspector */
-    INSPECTOR: 'inspector',
     /** AppIconPlugin */
     APP_ICON: 'app-icon',
     /** WebpackManifestPlugin */
@@ -193,6 +187,8 @@ export const CHAIN_ID = {
     INLINE_HTML: 'inline-html',
     /** WebpackBundleAnalyzer */
     BUNDLE_ANALYZER: 'bundle-analyze',
+    /** ModuleFederationPlugin */
+    MODULE_FEDERATION: 'module-federation',
     /** HtmlTagsPlugin */
     HTML_TAGS: 'html-tags-plugin',
     /** HtmlBasicPlugin */
@@ -213,8 +209,6 @@ export const CHAIN_ID = {
     MINI_CSS_EXTRACT: 'mini-css-extract',
     /** VueLoaderPlugin */
     VUE_LOADER_PLUGIN: 'vue-loader-plugin',
-    /** PreactRefreshPlugin */
-    PREACT_REFRESH: 'preact-refresh',
     /** ReactFastRefreshPlugin */
     REACT_FAST_REFRESH: 'react-fast-refresh',
     /** ProvidePlugin for node polyfill */
@@ -225,8 +219,6 @@ export const CHAIN_ID = {
     ASSETS_RETRY: 'assets-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
-    /** HtmlAsyncChunkPlugin */
-    HTML_ASYNC_CHUNK: 'html-async-chunk',
   },
   /** Predefined minimizers */
   MINIMIZER: {
@@ -393,18 +385,23 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
 }
 
 export function applyResolvePlugin(api: RsbuildPluginAPI) {
-  api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-    const config = api.getNormalizedConfig();
+  api.modifyBundlerChain({
+    order: 'pre',
+    handler: (chain, { target, CHAIN_ID }) => {
+      const config = api.getNormalizedConfig();
 
-    applyExtensions({ chain });
+      applyExtensions({ chain });
 
-    applyAlias({
-      chain,
-      config,
-      rootPath: api.context.rootPath,
-    });
+      applyAlias({
+        chain,
+        target,
+        config,
+        rootPath: api.context.rootPath,
+      });
 
-    applyFullySpecified({ chain, config, CHAIN_ID });
+      // in some cases (modern.js), get error when fullySpecified rule after js rule
+      applyFullySpecified({ chain, config, CHAIN_ID });
+    },
   });
 }
 
@@ -422,12 +419,6 @@ function applyFullySpecified({
     .rule(CHAIN_ID.RULE.MJS)
     .test(/\.m?js/)
     .resolve.set('fullySpecified', false);
-
-  if (chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI)) {
-    chain.module
-      .rule(CHAIN_ID.RULE.JS_DATA_URI)
-      .resolve.set('fullySpecified', false);
-  }
 }
 
 function applyExtensions({ chain }: { chain: BundlerChain }) {
@@ -446,16 +437,16 @@ function applyExtensions({ chain }: { chain: BundlerChain }) {
 
 function applyAlias({
   chain,
+  target,
   config,
   rootPath,
 }: {
   chain: BundlerChain;
+  target: RsbuildTarget;
   config: NormalizedConfig;
   rootPath: string;
 }) {
-  const { alias } = config.source as {
-    alias?: ChainedConfig<Record<string, string>>;
-  };
+  const { alias } = config.source;
 
   if (!alias) {
     return;
@@ -464,6 +455,7 @@ function applyAlias({
   const mergedAlias = mergeChainedOptions({
     defaults: {},
     options: alias,
+    utils: { target },
   });
 
   /**
@@ -482,7 +474,9 @@ function applyAlias({
 
     chain.resolve.alias.set(
       name,
-      formattedValues.length === 1 ? formattedValues[0] : formattedValues,
+      (formattedValues.length === 1 ? formattedValues[0] : formattedValues) as
+        | string
+        | string[],
     );
   });
 }

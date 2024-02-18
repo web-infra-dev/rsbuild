@@ -42,6 +42,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.networkPerformance(),
     plugins.preloadOrPrefetch(),
     plugins.server(),
+    plugins.moduleFederation(),
   ]);
 
 export const getCompiledPath = (packageName: string) => {

@@ -16,6 +16,8 @@ export type OnAfterBuildFn = (params: {
   stats?: Stats | MultiStats;
 }) => PromiseOrNot<void>;
 
+export type OnCloseDevServerFn = () => PromiseOrNot<void>;
+
 export type OnDevCompileDoneFn = (params: {
   isFirstCompile: boolean;
   stats: Stats | MultiStats;

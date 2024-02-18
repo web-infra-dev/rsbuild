@@ -4,9 +4,38 @@ Rsbuild 默认对构建性能进行了充分优化，但是随着业务场景变
 
 本文档提供了一些可选的提速策略，**开发者可以根据实际场景选取其中的部分策略**，从而进一步提升构建速度。
 
-:::tip 📢 注意
+:::tip
 在[优化产物体积](/guide/optimization/optimize-bundle)一文中介绍的策略也可以用于提升构建性能，这里不再重复介绍。
 :::
+
+## 性能分析
+
+进行性能分析可以帮助你确定项目中的性能瓶颈，从而采取针对性的优化。
+
+### Node.js Profiling
+
+通常而言，JS 侧的性能开销会大于 Rust 侧的性能开销，你可以使用 Node.js Profiling 分析 JS 侧的开销。
+
+在项目根目录执行以下命令：
+
+```bash
+# dev
+node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js dev
+
+# build
+node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js build
+```
+
+以上命令执行后会生成一个 cpuprofile 文件，我们可以使用 [speedscope](https://github.com/jlfwong/speedscope) 来可视化查看该文件：
+
+```bash
+# 安装 speedscope
+npm install -g speedscope
+
+# 查看 cpuprofile 内容
+# 请将文件名替换为本地文件的名称
+speedscope CPU.date.000000.00000.0.001.cpuprofile
+```
 
 ## 通用优化策略
 

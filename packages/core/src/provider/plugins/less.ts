@@ -20,6 +20,7 @@ export function pluginLess(): RsbuildPlugin {
         const { excludes, options } = getLessLoaderOptions(
           config.tools.less,
           config.output.sourceMap.css,
+          api.context.rootPath,
         );
 
         excludes.forEach((item) => {

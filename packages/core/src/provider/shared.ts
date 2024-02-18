@@ -45,6 +45,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.preloadOrPrefetch(),
     plugins.performance(),
     plugins.server(),
+    plugins.moduleFederation(),
     import('./plugins/rspackProfile').then((m) => m.pluginRspackProfile()),
   ]);
 
@@ -96,7 +97,91 @@ export const getCompiledPath = (packageName: string) => {
 
 export const BUILTIN_LOADER = 'builtin:';
 
-export function formatStats(stats: Stats | MultiStats, showWarnings = true) {
+/**
+ * Add node polyfill tip when failed to resolve node built-in modules.
+ */
+const addNodePolyfillTip = (message: string): string => {
+  if (!message.includes(`Can't resolve`)) {
+    return message;
+  }
+
+  const matchArray = message.match(/Can't resolve '(\w+)'/);
+  if (!matchArray) {
+    return message;
+  }
+
+  const moduleName = matchArray[1];
+  const nodeModules = [
+    'assert',
+    'buffer',
+    'child_process',
+    'cluster',
+    'console',
+    'constants',
+    'crypto',
+    'dgram',
+    'dns',
+    'domain',
+    'events',
+    'fs',
+    'http',
+    'https',
+    'module',
+    'net',
+    'os',
+    'path',
+    'punycode',
+    'process',
+    'querystring',
+    'readline',
+    'repl',
+    'stream',
+    '_stream_duplex',
+    '_stream_passthrough',
+    '_stream_readable',
+    '_stream_transform',
+    '_stream_writable',
+    'string_decoder',
+    'sys',
+    'timers',
+    'tls',
+    'tty',
+    'url',
+    'util',
+    'vm',
+    'zlib',
+  ];
+
+  if (moduleName && nodeModules.includes(moduleName)) {
+    const tips = [
+      `Tip: "${moduleName}" is a built-in Node.js module and cannot be imported in client-side code.`,
+      `Check if you need to import Node.js module. If needed, you can use "@rsbuild/plugin-node-polyfill".`,
+    ];
+    return `${message}\n\n${color.yellow(tips.join('\n'))}`;
+  }
+
+  return message;
+};
+
+function formatErrorMessage(errors: string[]) {
+  const messages = errors.map((error) => addNodePolyfillTip(error));
+
+  const text = `${messages.join('\n\n')}\n`;
+  const isTerserError = text.includes('from Terser');
+  const title = color.bold(
+    color.red(isTerserError ? 'Minify error: ' : 'Compile error: '),
+  );
+
+  const tip = color.yellow(
+    isTerserError
+      ? 'Failed to minify with terser, check for syntax errors.'
+      : 'Failed to compile, check the errors for troubleshooting.',
+  );
+
+  return `${title}\n${tip}\n${text}`;
+}
+
+export function formatStats(stats: Stats | MultiStats) {
   const statsData = stats.toJson({
     preset: 'errors-warnings',
   });
@@ -104,25 +189,13 @@ export function formatStats(stats: Stats | MultiStats, showWarnings = true) {
   const { errors, warnings } = formatStatsMessages(statsData);
 
   if (errors.length) {
-    const errorMsgs = `${errors.join('\n\n')}\n`;
-    const isTerserError = errorMsgs.includes('from Terser');
-    const title = color.bold(
-      color.red(isTerserError ? 'Minify error: ' : 'Compile error: '),
-    );
-    const tip = color.yellow(
-      isTerserError
-        ? 'Failed to minify with terser, check for syntax errors.'
-        : 'Failed to compile, check the errors for troubleshooting.',
-    );
-
     return {
-      message: `${title}\n${tip}\n${errorMsgs}`,
+      message: formatErrorMessage(errors),
       level: 'error',
     };
   }
 
-  // always show warnings in tty mode
-  if (warnings.length && (showWarnings || process.stdout.isTTY)) {
+  if (warnings.length) {
     const title = color.bold(color.yellow('Compile Warning: \n'));
     return {
       message: `${title}${`${warnings.join('\n\n')}\n`}`,

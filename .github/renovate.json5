@@ -18,6 +18,12 @@
 			"packagePatterns": ["^@types/"],
 			"groupSlug": "types"
 		},
+		{
+      "groupName": "all patch dependencies",
+      "groupSlug": "all-patch",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["patch"]
+    },
 		// manually update major versions
 		{
 			"matchUpdateTypes": ["major"],
@@ -39,7 +45,6 @@
 		"core-js",
 		"esbuild",
 		"typescript",
-		// https://github.com/web-infra-dev/rsbuild/pull/1105
-		"webpack-bundle-analyzer"
+		"@swc/helpers"
 	]
 }

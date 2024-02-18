@@ -19,6 +19,7 @@ Called only when running the `rsbuild dev` command or the `rsbuild.startDevServe
 
 - [onBeforeStartDevServer](#onbeforestartdevserver): Called before starting the dev server.
 - [onAfterStartDevServer](#onafterstartdevserver): Called after starting the dev server.
+- [onCloseDevServer](#onclosedevserver): Called when the dev server is closed.
 - [onDevCompileDone](#ondevcompiledone): Called after each build during development.
 
 ### Build Hooks
@@ -37,7 +38,7 @@ Called only when running the `rsbuild preview` command or the `rsbuild.preview()
 
 ---
 
-## Execution Order
+## Hooks Order
 
 ### Dev Hooks
 
@@ -51,6 +52,7 @@ When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed,
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [onDevCompileDone](#ondevcompiledone)
+- [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
 
 ### Build Hooks
@@ -74,6 +76,64 @@ When executing the `rsbuild preview` command or `rsbuild.preview()` method, Rsbu
 - [onBeforeStartProdServer](#onbeforestartprodserver)
 - [onAfterStartProdServer](#onafterstartprodserver)
 - [onExit](#onexit)
+
+---
+
+## Callback Order
+
+### Default Behavior
+
+If multiple plugins register the same hook, the callback functions of the hook will execute in the order in which they were registered.
+
+In the following example, the console will output `'1'` and `'2'` in sequence:
+
+```ts
+const plugin1 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig(() => console.log('1'));
+  },
+});
+
+const plugin2 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig(() => console.log('2'));
+  },
+});
+
+rsbuild.addPlugins([plugin1, plugin2]);
+```
+
+### `order` Field
+
+When registering a hook, you can declare the order of hook through the `order` field.
+
+```ts
+type HookDescriptor<T extends (...args: any[]) => any> = {
+  handler: T;
+  order: 'pre' | 'post' | 'default';
+};
+```
+
+In the following example, the console will sequentially output `'2'` and `'1'`, because `order` was set to `pre` when plugin2 called `modifyRsbuildConfig`.
+
+```ts
+const plugin1 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig(() => console.log('1'));
+  },
+});
+
+const plugin2 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig({
+      handler: () => console.log('2'),
+      order: 'pre',
+    });
+  },
+});
+
+rsbuild.addPlugins([plugin1, plugin2]);
+```
 
 ---
 
@@ -339,6 +399,20 @@ const myPlugin = () => ({
       }
     });
   },
+});
+```
+
+### onCloseDevServer
+
+import OnCloseDevServer from '@en/shared/onCloseDevServer.md';
+
+<OnCloseDevServer />
+
+- **Example:**
+
+```ts
+rsbuild.onCloseDevServer(async () => {
+  console.log('close dev server!');
 });
 ```
 

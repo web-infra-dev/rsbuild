@@ -1,4 +1,4 @@
-# proxy
+# server.proxy
 
 - **类型：** `Record<string, string> | Record<string, ProxyDetail>`
 - **默认值：** `undefined`
@@ -50,6 +50,23 @@ export default {
       '/api': {
         target: 'http://localhost:3000',
         pathRewrite: { '^/api': '' },
+      },
+    },
+  },
+};
+```
+
+### 代理 WebSocket 请求
+
+如果你希望代理 WebSocket 请求，可以通过 `ws` 开启：
+
+```js
+export default {
+  server: {
+    proxy: {
+      '/rsbuild-hmr': {
+        target: 'http://localhost:3000', // 将会代理到 ws://localhost:3000/rsbuild-hmr
+        ws: true,
       },
     },
   },

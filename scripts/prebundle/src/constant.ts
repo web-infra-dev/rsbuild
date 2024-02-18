@@ -157,10 +157,6 @@ export const TASKS: TaskConfig[] = [
         },
       },
       {
-        name: 'postcss-flexbugs-fixes',
-        ignoreDts: true,
-      },
-      {
         name: 'sass-loader',
         externals: {
           sass: '../sass',
@@ -376,6 +372,16 @@ export const TASKS: TaskConfig[] = [
     dependencies: [
       {
         name: 'yaml-loader',
+        ignoreDts: true,
+      },
+    ],
+  },
+  {
+    packageDir: 'plugin-rem',
+    packageName: '@rsbuild/plugin-rem',
+    dependencies: [
+      {
+        name: 'postcss-pxtorem',
         ignoreDts: true,
       },
     ],

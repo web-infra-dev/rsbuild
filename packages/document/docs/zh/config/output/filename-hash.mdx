@@ -1,0 +1,39 @@
+# output.filenameHash
+
+- **类型：** `boolean`
+- **默认值：** `true`
+- **版本：** `>= 0.4.0`
+
+在生产环境构建后，是否在产物的文件名中添加 hash 值。
+
+### 禁用 hash
+
+默认情况下，构建后的产物名称会包含 hash 值：
+
+```bash
+dist/static/css/index.7879e19d.css
+dist/static/js/index.18a568e5.js
+```
+
+你可以将 `output.filenameHash` 设置为 false 来禁用这个行为：
+
+```js
+export default {
+  output: {
+    filenameHash: false,
+  },
+};
+```
+
+重新构建后，产物的名称变为：
+
+```bash
+dist/static/css/index.css
+dist/static/js/index.js
+```
+
+### 注意事项
+
+- 你可以使用 [output.filename](/config/output/filename) 来修改 hash 的长度或格式，`output.filename` 的优先级高于 `output.filenameHash`。
+- 默认情况下，当 target 不是 `web` 时，产物的文件名不会包含 hash，比如 Node.js 产物。
+- 默认情况下，开发环境构建产物的文件名不会包含 hash。

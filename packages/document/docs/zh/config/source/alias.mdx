@@ -1,4 +1,4 @@
-# alias
+# source.alias
 
 - **类型：**
 
@@ -53,6 +53,22 @@ export default {
       return {
         '@common': './src/common',
       };
+    },
+  },
+};
+```
+
+函数提供了 target 参数，可以用于判断构建的目标运行时环境，比如针对 web 产物和 node 产物设置不同的 alias：
+
+```js
+export default {
+  source: {
+    alias: (alias, { target }) => {
+      if (target === 'node') {
+        alias['@common'] = './src/node/common';
+      } else if (target === 'web') {
+        alias['@common'] = './src/web/common';
+      }
     },
   },
 };
