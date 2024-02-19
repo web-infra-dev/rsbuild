@@ -100,7 +100,7 @@ describe('plugin-css', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(JSON.stringify(bundlerConfigs[0])).toContain(
-      '"localIdentName":"[hash:5]"',
+      '"localIdentName":"[hash:base64:5]"',
     );
   });
 

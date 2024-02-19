@@ -1294,7 +1294,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "@rsbuild/shared/ignore-css-loader",
+            "loader": "<ROOT>/packages/shared/dist/loaders/ignoreCssLoader",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -1319,7 +1319,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
         "use": [
           {
-            "loader": "@rsbuild/shared/ignore-css-loader",
+            "loader": "<ROOT>/packages/shared/dist/loaders/ignoreCssLoader",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -1358,7 +1358,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "@rsbuild/shared/ignore-css-loader",
+            "loader": "<ROOT>/packages/shared/dist/loaders/ignoreCssLoader",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -1655,7 +1655,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "@rsbuild/shared/ignore-css-loader",
+            "loader": "<ROOT>/packages/shared/dist/loaders/ignoreCssLoader",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -1680,7 +1680,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
         "use": [
           {
-            "loader": "@rsbuild/shared/ignore-css-loader",
+            "loader": "<ROOT>/packages/shared/dist/loaders/ignoreCssLoader",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -1719,7 +1719,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "@rsbuild/shared/ignore-css-loader",
+            "loader": "<ROOT>/packages/shared/dist/loaders/ignoreCssLoader",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
