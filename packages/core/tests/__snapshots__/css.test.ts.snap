@@ -386,9 +386,6 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
         "use": [
           {
             "loader": "<ROOT>/packages/shared/compiled/style-loader",
-            "options": {
-              "esModule": false,
-            },
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -574,9 +571,6 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
         "use": [
           {
             "loader": "<ROOT>/packages/shared/compiled/style-loader",
-            "options": {
-              "esModule": false,
-            },
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -1025,9 +1019,6 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
         "use": [
           {
             "loader": "<ROOT>/packages/shared/compiled/style-loader",
-            "options": {
-              "esModule": false,
-            },
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
