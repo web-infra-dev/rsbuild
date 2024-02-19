@@ -58,10 +58,7 @@ export async function applyBaseCSSRule({
 
     if (!isServer && !isWebWorker) {
       const styleLoaderOptions = mergeChainedOptions({
-        defaults: {
-          // todo: hmr does not work while esModule is true
-          esModule: false,
-        },
+        defaults: {},
         options: config.tools.styleLoader,
       });
 
