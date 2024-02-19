@@ -19,7 +19,6 @@ function getCommonBuildConfig(cwd: string): RsbuildConfig {
     tools: {
       rspack: (config) => {
         config.target = ['web'];
-        config.builtins!.presetEnv = undefined;
       },
     },
   };
