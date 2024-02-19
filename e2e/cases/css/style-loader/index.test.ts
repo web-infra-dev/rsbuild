@@ -41,6 +41,11 @@ test('should inline style when injectStyles is true', async ({ page }) => {
 rspackOnlyTest(
   'hmr should work well when injectStyles is true',
   async ({ page }) => {
+    // HMR cases will fail in Windows
+    if (process.platform === 'win32') {
+      test.skip();
+    }
+
     await fse.copy(join(fixtures, 'src'), join(fixtures, 'test-src'));
 
     const rsbuild = await dev({
