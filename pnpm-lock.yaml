@@ -792,8 +792,8 @@ importers:
         specifier: npm:html-rspack-plugin@5.6.0
         version: /html-rspack-plugin@5.6.0
       terser:
-        specifier: 5.27.0
-        version: 5.27.0
+        specifier: 5.27.2
+        version: 5.27.2
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
@@ -1092,8 +1092,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       terser:
-        specifier: 5.27.0
-        version: 5.27.0
+        specifier: 5.27.2
+        version: 5.27.2
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1120,8 +1120,8 @@ importers:
         specifier: ^1.8.6
         version: 1.8.6(@babel/core@7.23.2)
       solid-refresh:
-        specifier: 0.7.2
-        version: 0.7.2(solid-js@1.8.5)
+        specifier: 0.7.5
+        version: 0.7.5(solid-js@1.8.5)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1447,8 +1447,8 @@ importers:
         specifier: 2.8.0
         version: 2.8.0(webpack@5.89.0)
       terser:
-        specifier: 5.27.0
-        version: 5.27.0
+        specifier: 5.27.2
+        version: 5.27.2
       terser-webpack-plugin:
         specifier: 5.3.10
         version: 5.3.10(webpack@5.89.0)
@@ -1548,8 +1548,8 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
       dotenv:
-        specifier: 16.4.3
-        version: 16.4.3
+        specifier: 16.4.4
+        version: 16.4.4
       dotenv-expand:
         specifier: 10.0.0
         version: 10.0.0
@@ -7407,8 +7407,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /dotenv@16.4.3:
-    resolution: {integrity: sha512-II98GFrje5psQTSve0E7bnwMFybNLqT8Vu8JIFWRjsE3khyNUm/loZupuy5DVzG2IXf/ysxvrixYOQnM6mjD3A==}
+  /dotenv@16.4.4:
+    resolution: {integrity: sha512-XvPXc8XAQThSjAbY6cQ/9PcBXmFoWuw1sQ3b8HqUCR6ziGXjkTi//kB9SWa2UwqlgdAIuRqAa/9hVljzPehbYg==}
     engines: {node: '>=12'}
     dev: true
 
@@ -12662,13 +12662,12 @@ packages:
       seroval: 0.12.4
     dev: false
 
-  /solid-refresh@0.7.2(solid-js@1.8.5):
-    resolution: {integrity: sha512-dY3LuXIMCKZZaX3bczdOFQyfUxGWUwcUJgVZeo18tGvZqUTvfacy7lCR2iWR627AvbQUcCrdN6w3GmZicglPjA==}
+  /solid-refresh@0.7.5(solid-js@1.8.5):
+    resolution: {integrity: sha512-ZYMbjWsy7IwSF3+oZCNnReiTYSyCAFRvC7oLUKxxh1wPa6/6YIWqsxa+Ma2kM4F/ypWT69B1c0fmKeZRdLueGw==}
     peerDependencies:
       solid-js: ^1.3
     dependencies:
       '@babel/generator': 7.23.6
-      '@babel/helper-module-imports': 7.22.15
       '@babel/types': 7.23.6
       solid-js: 1.8.5
     dev: false
@@ -13212,7 +13211,7 @@ packages:
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.1
-      terser: 5.27.0
+      terser: 5.27.2
       webpack: 5.89.0(esbuild@0.19.8)
     dev: false
 
@@ -13252,6 +13251,16 @@ packages:
 
   /terser@5.27.0:
     resolution: {integrity: sha512-bi1HRwVRskAjheeYl291n3JC4GgO/Ty4z1nVs5AAsmonJulGxpSektecnNedrwK9C7vpvVtcX3cw00VSLt7U2A==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      '@jridgewell/source-map': 0.3.5
+      acorn: 8.10.0
+      commander: 2.20.3
+      source-map-support: 0.5.21
+
+  /terser@5.27.2:
+    resolution: {integrity: sha512-sHXmLSkImesJ4p5apTeT63DsV4Obe1s37qT8qvwHRmVxKTBH7Rv9Wr26VcAMmLbmk9UliiwK8z+657NyJHHy/w==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
