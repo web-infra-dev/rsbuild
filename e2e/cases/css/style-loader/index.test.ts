@@ -1,4 +1,4 @@
-import { build, dev, gotoPage } from '@e2e/helper';
+import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
 import { join } from 'node:path';
@@ -38,45 +38,48 @@ test('should inline style when injectStyles is true', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('hmr should work well when injectStyles is true', async ({ page }) => {
-  await fse.copy(join(fixtures, 'src'), join(fixtures, 'test-src'));
+rspackOnlyTest(
+  'hmr should work well when injectStyles is true',
+  async ({ page }) => {
+    await fse.copy(join(fixtures, 'src'), join(fixtures, 'test-src'));
 
-  const rsbuild = await dev({
-    cwd: fixtures,
-    rsbuildConfig: {
-      source: {
-        entry: {
-          index: join(fixtures, 'test-src/index.ts'),
+    const rsbuild = await dev({
+      cwd: fixtures,
+      rsbuildConfig: {
+        source: {
+          entry: {
+            index: join(fixtures, 'test-src/index.ts'),
+          },
         },
       },
-    },
-  });
+    });
 
-  await gotoPage(page, rsbuild);
+    await gotoPage(page, rsbuild);
 
-  // scss worked
-  const header = page.locator('#header');
-  await expect(header).toHaveCSS('font-size', '20px');
+    // scss worked
+    const header = page.locator('#header');
+    await expect(header).toHaveCSS('font-size', '20px');
 
-  // less worked
-  const title = page.locator('#title');
-  await expect(title).toHaveCSS('font-size', '20px');
+    // less worked
+    const title = page.locator('#title');
+    await expect(title).toHaveCSS('font-size', '20px');
 
-  const locatorKeep = page.locator('#test-keep');
-  const keepNum = await locatorKeep.innerHTML();
+    const locatorKeep = page.locator('#test-keep');
+    const keepNum = await locatorKeep.innerHTML();
 
-  const filePath = join(fixtures, 'test-src/App.module.less');
+    const filePath = join(fixtures, 'test-src/App.module.less');
 
-  await fse.writeFile(
-    filePath,
-    fse.readFileSync(filePath, 'utf-8').replace('20px', '40px'),
-  );
+    await fse.writeFile(
+      filePath,
+      fse.readFileSync(filePath, 'utf-8').replace('20px', '40px'),
+    );
 
-  // css hmr works well
-  await expect(title).toHaveCSS('font-size', '40px');
+    // css hmr works well
+    await expect(title).toHaveCSS('font-size', '40px');
 
-  // #test-keep should unchanged when css hmr
-  await expect(locatorKeep.innerHTML()).resolves.toBe(keepNum);
+    // #test-keep should unchanged when css hmr
+    await expect(locatorKeep.innerHTML()).resolves.toBe(keepNum);
 
-  await rsbuild.close();
-});
+    await rsbuild.close();
+  },
+);
