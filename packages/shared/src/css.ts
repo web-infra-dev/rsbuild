@@ -367,9 +367,7 @@ export async function applyCSSRule({
     if (enableCSSModuleTS && cssLoaderOptions.modules) {
       rule
         .use(CHAIN_ID.USE.CSS_MODULES_TS)
-        .loader(
-          path.resolve(__dirname, './loaders/css-modules-typescript-loader'),
-        )
+        .loader(path.resolve(__dirname, './loaders/cssModulesTypescriptLoader'))
         .options({
           modules: cssLoaderOptions.modules,
         })
@@ -378,7 +376,7 @@ export async function applyCSSRule({
   } else {
     rule
       .use(CHAIN_ID.USE.IGNORE_CSS)
-      .loader(path.resolve(__dirname, './loaders/ignore-css-loader'))
+      .loader(path.resolve(__dirname, './loaders/ignoreCssLoader'))
       .end();
   }
 
