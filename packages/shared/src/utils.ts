@@ -250,9 +250,9 @@ export function pick<T, U extends keyof T>(obj: T, keys: ReadonlyArray<U>) {
 }
 
 export const prettyTime = (seconds: number) => {
-  const format = (time: string) => color.bold(Number(time));
+  const format = (time: string) => color.bold(time);
 
-  if (seconds < 1) {
+  if (seconds < 10) {
     const digits = seconds >= 0.01 ? 2 : 3;
     return `${format(seconds.toFixed(digits))} s`;
   }
