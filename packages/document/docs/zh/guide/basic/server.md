@@ -99,7 +99,7 @@ Rsbuild 应用不能使用 Rspack 的 [devServer](https://rspack.dev/config/dev-
 Rsbuild server 未使用任何 Node.js 框架，Rsbuild 中间件提供的 req 和 res 均为 Node.js 原生对象。
 这意味着，当你从其他服务端框架迁移时（如 Express），原本的中间件不一定能直接在 Rsbuild 中使用，例如，无法在 Rsbuild 中间件中访问 Express 所提供的 `req.params`、`req.path`、`req.search`、`req.query` 等属性。
 
-如果你希望原本使用的中间件在 Rsbuild 中仍然可用，可以使用以下方式，将服务端应用作为中间件传入：
+如果你需要在 Rsbuild 中使用原有的中间件，可以采取以下方式，将服务端应用作为中间件传入：
 
 ```ts file=rsbuild.config.ts
 import expressMiddleware from 'my-express-middleware';
