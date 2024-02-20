@@ -101,7 +101,7 @@ Rsbuild server 未使用任何 Node.js 框架，Rsbuild 中间件提供的 req �
 
 如果你需要在 Rsbuild 中使用原有的中间件，可以采取以下方式，将服务端应用作为中间件传入：
 
-```ts file=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 import expressMiddleware from 'my-express-middleware';
 import express from 'express';
 
