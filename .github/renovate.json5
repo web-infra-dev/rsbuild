@@ -19,15 +19,10 @@
 			"groupSlug": "types"
 		},
 		{
-      "groupName": "all patch dependencies",
-      "groupSlug": "all-patch",
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["patch"]
-    },
-		// manually update major versions
-		{
-			"matchUpdateTypes": ["major"],
-			"enabled": false
+			"groupName": "all patch dependencies",
+			"groupSlug": "all-patch",
+			"matchPackagePatterns": ["*"],
+			"matchUpdateTypes": ["patch"]
 		},
 		// manually update peer dependencies
 		{
@@ -45,6 +40,9 @@
 		"core-js",
 		"esbuild",
 		"typescript",
-		"@swc/helpers"
+		// related to the SWC version built into Rspack
+		"@swc/helpers",
+		// plugin-vue2 depends on vue-loader v15
+		"vue-loader"
 	]
 }
