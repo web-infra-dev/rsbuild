@@ -96,6 +96,14 @@ import lodash from 'lodash';
 
 If you want to process the code in node_modules through `transformImport`, please add the relevant modules to the [source.include](/config/source/include) config.
 
+```ts
+export default {
+  source: {
+    include: [/[\\/]node_modules[\\/]some-package[\\/]/],
+  },
+};
+```
+
 ## Options
 
 ### libraryName

@@ -96,6 +96,14 @@ import lodash from 'lodash';
 
 如果你希望通过 `transformImport` 对 node_modules 下的代码进行处理，请将相关模块添加到 [source.include](/config/source/include) 配置中。
 
+```ts
+export default {
+  source: {
+    include: [/[\\/]node_modules[\\/]some-package[\\/]/],
+  },
+};
+```
+
 ## 选项
 
 ### libraryName
