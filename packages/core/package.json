@@ -22,9 +22,9 @@
       "types": "./dist/server/index.d.ts",
       "default": "./dist/server/index.js"
     },
-    "./client/*": {
-      "types": "./dist/client/*.d.ts",
-      "default": "./dist/client/*.js"
+    "./client/hmr": {
+      "types": "./dist/client/hmr/index.d.ts",
+      "default": "./dist/client/hmr.mjs"
     },
     "./plugins/*": {
       "types": "./dist/plugins/*.d.ts",
