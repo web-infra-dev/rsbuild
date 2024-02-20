@@ -30,6 +30,23 @@ export default {
 
 After registering the plugin, you can import `.mdx` or `.md` files as components in your code.
 
+## Type Declarations
+
+In a TypeScript project, you need to add type definitions for `*.mdx` files so that TypeScript can recognize them correctly.
+
+Create `env.d.ts` in the `src` directory and add the following content:
+
+```ts title="src/env.d.ts"
+declare module '*.md' {
+  let MDXComponent: () => JSX.Element;
+  export default MDXComponent;
+}
+declare module '*.mdx' {
+  let MDXComponent: () => JSX.Element;
+  export default MDXComponent;
+}
+```
+
 ## Options
 
 If you need to customize the compilation behavior of MDX, you can use the following configs.
