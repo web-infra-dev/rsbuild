@@ -30,7 +30,7 @@
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "babel-preset-solid": "^1.8.6",
-    "solid-refresh": "0.7.2"
+    "solid-refresh": "0.7.5"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
