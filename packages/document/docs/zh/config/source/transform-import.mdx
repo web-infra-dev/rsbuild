@@ -90,6 +90,20 @@ import _ from 'lodash';
 import lodash from 'lodash';
 ```
 
+## 适用范围
+
+`transformImport` 只适用于经过 Rsbuild 编译的模块。需要注意的是，Rsbuild 默认并不会编译位于 node_modules 目录下的 JavaScript 文件。这意味着，node_modules 目录内的代码将不会被 `transformImport` 处理。
+
+如果你希望通过 `transformImport` 对 node_modules 下的代码进行处理，请将相关模块添加到 [source.include](/config/source/include) 配置中。
+
+```ts
+export default {
+  source: {
+    include: [/[\\/]node_modules[\\/]some-package[\\/]/],
+  },
+};
+```
+
 ## 选项
 
 ### libraryName
