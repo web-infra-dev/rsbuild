@@ -100,7 +100,7 @@ Rsbuild server does not use any Node.js frameworks, and the `req` and `res` prov
 
 This means that when you migrate from other server-side frameworks (such as Express), the original middleware may not necessarily be used directly in Rsbuild. For example, the `req.params`,`req.path`, `req.search`, `req.query` and other properties provided by Express cannot be accessed in the Rsbuild middleware.
 
-If you want the middleware you originally used to still be available in Rsbuild, you can use the following method to pass in the server-side application as middleware:
+If you need to use existing middleware in Rsbuild, this can be done by passing the server application as middleware as follows:
 
 ```ts title="rsbuild.config.ts"
 import expressMiddleware from 'my-express-middleware';
