@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
+    "webpack": "^5.89.0",
     "fork-ts-checker-webpack-plugin": "9.0.2"
   },
   "devDependencies": {
