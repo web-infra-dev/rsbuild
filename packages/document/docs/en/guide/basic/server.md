@@ -96,7 +96,7 @@ Rsbuild applications cannot use Rspack's [devServer](https://rspack.dev/config/d
 
 ## Extend middleware
 
-Rsbuild does not use any framework, and the `req` and `res` in the Rsbuild middleware are all native Node objects.
+Rsbuild server does not use any Node.js frameworks, and the `req` and `res` provided by Rsbuild middleware are both native Node.js objects.
 
 This means that when you migrate from other server-side frameworks (such as Express), the original middleware may not necessarily be used directly in Rsbuild. For example, the `req.params`,`req.path`, `req.search`, `req.query` and other properties provided by Express cannot be accessed in the Rsbuild middleware.
 
