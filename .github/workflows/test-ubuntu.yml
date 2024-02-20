@@ -47,7 +47,7 @@ jobs:
 
       - name: Setup Node.js ${{ matrix.node-version }}
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
@@ -86,7 +86,7 @@ jobs:
 
       - name: Setup Node.js ${{ matrix.node-version }}
         if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
