@@ -102,7 +102,7 @@ This means that when you migrate from other server-side frameworks (such as Expr
 
 If you want the middleware you originally used to still be available in Rsbuild, you can use the following method to pass in the server-side application as middleware:
 
-```ts file=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 import expressMiddleware from 'my-express-middleware';
 import express from 'express';
 
