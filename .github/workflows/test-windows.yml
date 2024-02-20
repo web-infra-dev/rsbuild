@@ -35,7 +35,7 @@ jobs:
           git config --system core.longpaths true
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 10
 
@@ -80,7 +80,7 @@ jobs:
           git config --system core.longpaths true
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 10
 
