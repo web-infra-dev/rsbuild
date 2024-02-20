@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-umd",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "UMD plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -35,7 +35,7 @@
     "typescript": "^5.3.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.4.3"
+    "@rsbuild/core": "workspace:^0.4.4"
   },
   "publishConfig": {
     "access": "public",
