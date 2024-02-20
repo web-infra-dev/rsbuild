@@ -30,7 +30,7 @@
     "@rsbuild/shared": "workspace:*",
     "assert": "^2.1.0",
     "browserify-zlib": "^0.2.0",
-    "buffer": "^5.7.1",
+    "buffer": "^6.0.0",
     "console-browserify": "^1.2.0",
     "constants-browserify": "^1.0.0",
     "crypto-browserify": "^3.12.0",
