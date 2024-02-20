@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "16.x",
+    "@types/node": "20.x",
     "typescript": "^5.3.0"
   },
   "publishConfig": {

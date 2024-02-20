@@ -64,7 +64,7 @@
     "postcss": "^8.4.33"
   },
   "devDependencies": {
-    "@types/node": "16.x",
+    "@types/node": "20.x",
     "typescript": "^5.3.0",
     "webpack": "^5.89.0"
   },
