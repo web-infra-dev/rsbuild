@@ -62,7 +62,7 @@ export default {
 
 ### How to remove console after production build?
 
-When the production environment is built, we can remove the `console` from the code, so as to avoid the log of the development environment being output to the production environment.
+For the production build, we can remove the `console` from the code, so as to avoid the log of the development environment being output to the production.
 
 Rsbuild provides a configuration option to remove console by default, please see [performance.removeConsole](/config/performance/remove-console).
 
