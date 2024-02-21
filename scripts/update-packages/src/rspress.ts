@@ -17,7 +17,7 @@ const updateRspressVersion = async (dependencies?: Record<string, string>) => {
       if (versionMap.get(dep)) {
         dependencies[dep] = `^${versionMap.get(dep)}`;
       } else {
-        const version = await getPackageVersion(`${dep}@latest`);
+        const version = getPackageVersion(`${dep}@latest`);
         dependencies[dep] = `^${version}`;
         versionMap.set(dep, version);
       }
