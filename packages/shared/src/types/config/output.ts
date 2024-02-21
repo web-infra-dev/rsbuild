@@ -158,7 +158,7 @@ export interface OutputConfig {
   /**
    * Whether to add filename hash after production build.
    */
-  filenameHash?: boolean;
+  filenameHash?: boolean | string;
   /**
    * Whether to generate a TypeScript declaration file for CSS modules.
    */
@@ -201,7 +201,7 @@ export interface NormalizedOutputConfig extends OutputConfig {
     js?: RspackConfig['devtool'];
     css: boolean;
   };
-  filenameHash: boolean;
+  filenameHash: boolean | string;
   assetPrefix: string;
   dataUriLimit: NormalizedDataUriLimit;
   disableMinimize: boolean;

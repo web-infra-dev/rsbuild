@@ -1,6 +1,6 @@
 # output.filenameHash
 
-- **类型：** `boolean`
+- **类型：** `boolean | string`
 - **默认值：** `true`
 - **版本：** `>= 0.4.0`
 
@@ -32,8 +32,28 @@ dist/static/css/index.css
 dist/static/js/index.js
 ```
 
+### hash 格式
+
+hash 的默认格式为 `contenthash:8`，即基于文件内容生成 8 位 hash。
+
+你可以将 `output.filenameHash` 设置为 Rspack 支持的其他格式，并自定义长度。
+
+```js
+export default {
+  output: {
+    filenameHash: 'fullhash:16',
+  },
+};
+```
+
+可选的 hash 格式为：
+
+- `fullhash`：整个编译过程的哈希值，如果任何一个文件发生变动，整个项目的所有输出文件的哈希值都会改变
+- `chunkhash`：chunk 的哈希值，如果 chunk 内容（及其包含的模块）发生改变，哈希值才会改变。
+- `contenthash`：文件内容的哈希值，只有当文件本身的内容发生变更时，哈希值才会改变。
+
 ### 注意事项
 
-- 你可以使用 [output.filename](/config/output/filename) 来修改 hash 的长度或格式，`output.filename` 的优先级高于 `output.filenameHash`。
+- [output.filename](/config/output/filename) 的优先级高于 `output.filenameHash`。
 - 默认情况下，当 target 不是 `web` 时，产物的文件名不会包含 hash，比如 Node.js 产物。
 - 默认情况下，开发环境构建产物的文件名不会包含 hash。
