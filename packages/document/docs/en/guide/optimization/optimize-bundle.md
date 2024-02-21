@@ -1,6 +1,6 @@
 # Bundle Size Optimization
 
-Bundle size optimization is an important part in production environment because it directly affects the user experience of online users. In this document, we will introduce some common bundle size optimization methods in Rsbuild.
+Bundle size optimization is an important part in production build because it directly affects the user experience of online users. In this document, we will introduce some common bundle size optimization methods in Rsbuild.
 
 ## Reduce duplicate dependencies
 

@@ -121,7 +121,7 @@ export interface OutputConfig {
    */
   polyfill?: Polyfill;
   /**
-   * When using CDN in the production environment,
+   * When using CDN in the production,
    * you can use this option to set the URL prefix of static assets,
    * similar to the output.publicPath config of webpack.
    */

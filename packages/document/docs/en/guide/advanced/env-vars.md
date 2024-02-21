@@ -62,13 +62,13 @@ Then we can access the image URL in the client code:
 const Image = <img src={`${process.env.ASSET_PREFIX}/static/icon.png`} />;
 ```
 
-In the development environment, the above code will be compiled as:
+In the development build, the above code will be compiled as:
 
 ```jsx
 const Image = <img src={`/static/icon.png`} />;
 ```
 
-In the production environment, the above code will be compiled as:
+In the production build, the above code will be compiled as:
 
 ```jsx
 const Image = <img src={`https://example.com/static/icon.png`} />;
