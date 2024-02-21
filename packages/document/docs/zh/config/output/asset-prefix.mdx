@@ -7,11 +7,11 @@
 
 `assetPrefix` 会影响构建产物中绝大部分静态资源的 URL，包括 JavaScript 文件、CSS 文件、图片、视频等。如果指定了一个错误的值，则在加载这些资源时可能会出现 404 错误。
 
-该配置项仅用于生产环境。在开发环境下，请使用 `dev.assetPrefix` 配置项进行设置。
+该配置项仅用于生产环境。在开发环境下，请使用 [dev.assetPrefix](/config/dev/asset-prefix) 配置项进行设置。
+
+## 示例
 
 设置后，项目的 JavaScript、CSS、图片等静态资源的 URL 都会加上 `output.assetPrefix` 作为前缀：
-
-### 示例
 
 ```js
 export default {
@@ -30,15 +30,12 @@ export default {
 ></script>
 ```
 
-### 对比 `publicPath`
+## 对比 `publicPath`
 
-`output.assetPrefix` 对应以下原生配置：
-
-- webpack 的 [output.publicPath](https://webpack.js.org/guides/public-path/) 配置。
-- Rspack 的 [output.publicPath](https://rspack.dev/zh/config/output#outputpublicpath) 配置。
+`output.assetPrefix` 的功能与 Rspack 的 [output.publicPath](https://rspack.dev/zh/config/output#outputpublicpath) 配置基本一致。
 
 它与原生配置的区别在于：
 
 - `output.assetPrefix` 仅在生产环境下生效。
 - `output.assetPrefix` 默认会自动补全尾部的 `/`。
-- `output.assetPrefix` 的值会写入 [process.env.ASSET_PREFIX](/guide/advanced/env-vars#processenvasset_prefix) 环境变量（只能在 client 代码中访问），。
+- `output.assetPrefix` 的值会写入 [process.env.ASSET_PREFIX](/guide/advanced/env-vars#processenvasset_prefix) 环境变量（只能在 client 代码中访问）。

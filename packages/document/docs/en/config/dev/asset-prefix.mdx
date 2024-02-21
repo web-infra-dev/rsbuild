@@ -7,11 +7,11 @@ Set the URL prefix of static assets during development.
 
 `assetPrefix` will affect the URLs of most of the static assets, including JavaScript files, CSS files, images, videos, etc. If an incorrect value is specified, you'll receive 404 errors while loading these resources.
 
-This config is only used during development. In the production environment, please use the `output.assetPrefix` to set the URL prefix.
+This config is only used during development. In the production build, please use the [output.assetPrefix](/config/output/asset-prefix) to set the URL prefix.
 
-### Boolean Type
+## Boolean Type
 
-If `assetPrefix` is set to `true`, the URL prefix will be `http://localhost:port/`:
+If `assetPrefix` is set to `true`, the URL prefix will be `http://localhost:<port>/`:
 
 ```js
 export default {
@@ -21,38 +21,53 @@ export default {
 };
 ```
 
-The script URL will be:
+The resource URL loaded in the browser is as follows:
 
-```js
+```html
 <script defer src="http://localhost:8080/static/js/main.js"></script>
 ```
 
 If `assetPrefix` is set to `false` or not set, `/` is used as the default value.
 
-### String type
+## String type
 
-When the value of `assetPrefix` is `string` type, the string will be used as the URL prefix:
+When the value of `assetPrefix` is a `string` type, the string will be used as a prefix and automatically appended to the static resource URL.
+
+- For example, set to a path relative to the root directory:
 
 ```js
 export default {
   dev: {
-    assetPrefix: 'http://example.com/assets/',
+    assetPrefix: '/example/',
   },
 };
 ```
 
-The script URL will be:
+The resource URL loaded in the browser is as follows:
 
-```js
-<script defer src="http://example.com/assets/static/js/main.js"></script>
+```html
+<script defer src="http://localhost:8080/example/static/js/index.js"></script>
 ```
 
-### Compare with `publicPath`
+- For example, set to a complete URL:
 
-`dev.assetPrefix` corresponds to the following native configurations:
+```js
+export default {
+  dev: {
+    assetPrefix: 'https://example.com/assets/',
+  },
+};
+```
 
-- [output.publicPath](https://webpack.js.org/guides/public-path/) configuration in webpack.
-- [output.publicPath](https://rspack.dev/config/output#outputpublicpath) configuration in Rspack.
+The resource URL loaded in the browser is as follows:
+
+```html
+<script defer src="https://example.com/assets/static/js/index.js"></script>
+```
+
+## Compare with `publicPath`
+
+The functionality of `dev.assetPrefix` is basically the same as the [output.publicPath](https://rspack.dev/zh/config/output#outputpublicpath) config in Rspack.
 
 The differences from the native configuration are as follows:
 
