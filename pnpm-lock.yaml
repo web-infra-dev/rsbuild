@@ -1593,8 +1593,8 @@ importers:
         specifier: 2.1.1
         version: 2.1.1
       loader-utils2:
-        specifier: npm:loader-utils@2.0.4
-        version: /loader-utils@2.0.4
+        specifier: npm:loader-utils@3.2.1
+        version: /loader-utils@3.2.1
       mime-types:
         specifier: ^2.1.35
         version: 2.1.35
