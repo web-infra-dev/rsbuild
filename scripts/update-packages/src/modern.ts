@@ -56,7 +56,7 @@ const updateModernVersion = async (
       if (versionMap.get(dep)) {
         dependencies[dep] = `^${versionMap.get(dep)}`;
       } else {
-        const version = await getPackageVersion(`${dep}@${modernVersion}`);
+        const version = getPackageVersion(`${dep}@${modernVersion}`);
         dependencies[dep] = `^${version}`;
         versionMap.set(dep, version);
       }

@@ -57,7 +57,7 @@ const updateRspackVersion = async (
       if (versionMap.get(dep)) {
         dependencies[dep] = `${versionMap.get(dep)}`;
       } else {
-        const version = await getPackageVersion(`${dep}@${rspackVersion}`);
+        const version = getPackageVersion(`${dep}@${rspackVersion}`);
         dependencies[dep] = `${version}`;
         versionMap.set(dep, version);
       }

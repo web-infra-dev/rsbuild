@@ -1,12 +1,7 @@
-import execa from 'execa';
+import { execSync } from 'node:child_process';
 
-export async function getPackageVersion(packageName: string) {
-  const args = [
-    'view',
-    packageName,
-    'version',
-    '--registry=https://registry.npmjs.org/',
-  ];
-  const result = await execa('npm', args);
-  return result.stdout;
+export function getPackageVersion(packageName: string) {
+  const command = `npm view ${packageName} version --registry=https://registry.npmjs.org/`;
+  const result = execSync(command, { encoding: 'utf-8' });
+  return result.trim();
 }
