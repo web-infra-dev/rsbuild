@@ -42,7 +42,16 @@
 		"typescript",
 		// related to the SWC version built into Rspack
 		"@swc/helpers",
-		// plugin-vue2 depends on vue-loader v15
-		"vue-loader"
+		// plugin-vue2 depends on vue 2 and vue-loader v15
+		"vue",
+		"vue-loader",
+		"loader-utils2",
+		// pure esm packages can not be used now
+		"gzip-size",
+		"globby",
+		// buffer v6 has compatibility issues as node polyfill
+		"buffer",
+		// align Node.js version minimum requirements
+		"@types/node"
 	]
 }
