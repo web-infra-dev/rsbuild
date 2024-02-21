@@ -3,8 +3,7 @@
  */
 import path from 'node:path';
 import fs from 'fs-extra';
-import { getPackages } from '@manypkg/get-packages';
-import { getPackageVersion } from './utils';
+import { getPackages, getPackageVersion } from './utils';
 
 async function run() {
   const modernVersion = process.env.MODERN_VERSION || 'latest';
