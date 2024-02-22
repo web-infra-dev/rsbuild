@@ -71,6 +71,29 @@ export type BabelConfigUtils = {
   addExcludes: (excludes: RuleCondition) => void;
 };
 
+export type BabelLoaderOptions = BabelTransformOptions & {
+  /**
+   * When set, the given directory will be used to cache the results of the loader.
+   */
+  cacheDirectory?: string | boolean;
+  /**
+   * Can be set to a custom value to force cache busting if the identifier changes.
+   */
+  cacheIdentifier?: string;
+  /**
+   * When set, each Babel transform output will be compressed with Gzip.
+   */
+  cacheCompression?: boolean;
+  /**
+   * The path of a module that exports a custom callback.
+   */
+  customize?: string | null;
+  /**
+   * Takes an array of context function names. E.g.
+   */
+  metadataSubscribers?: string[];
+};
+
 export type PluginBabelOptions = {
   /**
    * Used to specify the files that need to be compiled by Babel.
@@ -85,7 +108,7 @@ export type PluginBabelOptions = {
    * @see https://github.com/babel/babel-loader
    */
   babelLoaderOptions?: ChainedConfigWithUtils<
-    BabelTransformOptions,
+    BabelLoaderOptions,
     BabelConfigUtils
   >;
 };
