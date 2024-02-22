@@ -1,20 +1,41 @@
 // TypeScript Version: 3.0
 /// <reference types="node" />
 
+export interface DotenvPopulateInput {
+  [name: string]: string;
+}
+
+export interface DotenvParseInput {
+  [name: string]: string;
+}
+
+export interface DotenvParseOutput {
+  [name: string]: string;
+}
+
 export interface DotenvExpandOptions {
-  ignoreProcessEnv?: boolean;
   error?: Error;
-  parsed?: {
-    [name: string]: string;
-  }
+
+  /**
+   * Default: `process.env`
+   *
+   * Specify an object to write your secrets to. Defaults to process.env environment variables.
+   *
+   * example: `const processEnv = {}; require('dotenv').config({ processEnv: processEnv })`
+   */
+  processEnv?: DotenvPopulateInput;
+
+  /**
+   * Default: `object`
+   *
+   * Object coming from dotenv's parsed result.
+   */
+  parsed?: DotenvParseInput;
 }
 
 export interface DotenvExpandOutput {
-  ignoreProcessEnv?: boolean;
   error?: Error;
-  parsed?: {
-    [name: string]: string;
-  };
+  parsed?: DotenvParseOutput;
 }
 
 /**
@@ -22,7 +43,7 @@ export interface DotenvExpandOutput {
  *
  * See https://docs.dotenv.org
  *
- * @param options - additional options. example: `{ ignoreProcessEnv: false, error: null, parsed: { { KEY: 'value' } }`
+ * @param options - additional options. example: `{ processEnv: {}, error: null, parsed: { { KEY: 'value' } }`
  * @returns an object with a `parsed` key if successful or `error` key if an error occurred. example: { parsed: { KEY: 'value' } }
  *
  */

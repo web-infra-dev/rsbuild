@@ -62,6 +62,7 @@ test('should inject assetPrefix to env var and template correctly', async ({
       },
       output: {
         assetPrefix: 'http://example.com',
+        inlineScripts: true,
       },
     },
   });

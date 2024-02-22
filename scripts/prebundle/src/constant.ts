@@ -237,7 +237,7 @@ export const TASKS: TaskConfig[] = [
         // https://github.com/vercel/ncc/issues/935
         beforeBundle(task) {
           replaceFileContent(
-            join(task.depPath, 'src/index.js'),
+            join(task.depPath, 'src/req.js'),
             (content) => `${content.replace('await import', 'await __import')}`,
           );
         },
