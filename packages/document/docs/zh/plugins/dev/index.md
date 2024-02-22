@@ -4,10 +4,59 @@ Rsbuild 提供了一套轻量强大的插件系统，用以实现自身的大多
 
 开发者编写的插件能够修改 Rsbuild 的默认行为，并添加各类额外功能，包括但不限于：
 
+- 获取上下文信息
+- 注册生命周期钩子
 - 修改 Rspack 配置
-- 处理新的文件类型
-- 修改或编译文件
-- 部署产物
+- 修改 Rsbuild 配置
+- ...
+
+## 对比其他插件
+
+在开发 Rsbuild 插件之前，你可能已经接触过 Webpack、Vite、esbuild 等工具的插件系统。
+
+总体而言，Rsbuild 的插件 API 和 esbuild 相似，与 Webpack / Rspack 插件相比，Rsbuild 的插件 API 更加简洁和容易上手。
+
+```ts
+// esbuild plugin
+const esbuildPlugin = {
+  name: 'example',
+  setup(build) {
+    build.onEnd(() => console.log('done'));
+  },
+};
+
+// Rsbuild plugin
+const rsbuildPlugin = () => ({
+  name: 'example',
+  setup(api) {
+    api.onAfterBuild(() => console.log('done'));
+  },
+});
+
+// Rspack plugin
+class RspackExamplePlugin {
+  apply(compiler) {
+    compiler.hooks.done.tap('RspackExamplePlugin', () => {
+      console.log('done');
+    });
+  }
+}
+```
+
+从功能上看，Rsbuild 的插件 API 主要围绕 Rsbuild 的运行流程和构建配置，并提供一些 hooks 用于扩展。而 Rspack 的插件 API 则更加复杂和丰富，能够修改打包过程的每一个环节。
+
+Rsbuild 插件中可以集成 Rspack 插件，如果 Rsbuild 提供的 hooks 无法满足你的需求，你也可以通过 Rspack 插件来实现功能，并在 Rsbuild 插件中注册 Rspack 插件：
+
+```ts
+const rsbuildPlugin = () => ({
+  name: 'example',
+  setup(api) {
+    api.modifyRspackConfig((config) => {
+      config.plugins.push(new RspackExamplePlugin());
+    });
+  },
+});
+```
 
 ## 开发插件
 

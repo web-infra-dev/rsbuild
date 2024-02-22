@@ -4,10 +4,59 @@ Rsbuild provides a lightweight yet powerful plugin system to implement most of i
 
 Plugins written by developers can modify the default behavior of Rsbuild and add various additional features, including but not limited to:
 
-- Modifying Rspack configurations
-- Processing new file types
-- Modifying or compiling files
-- Deploying artifacts
+- Obtain context information
+- Register lifecycle hooks
+- Modify Rspack configuration
+- Modify Rsbuild configuration
+- ...
+
+## Comparison
+
+Before developing a Rsbuild plugin, you may have been familiar with the plugin systems of tools such as Webpack, Vite, esbuild, etc.
+
+Generally, Rsbuild's plugin API is similar to esbuild, and compared with Webpack / Rspack plugins, Rsbuild's plugin API is more simple and easier to get started with.
+
+```ts
+// esbuild plugin
+const esbuildPlugin = {
+  name: 'example',
+  setup(build) {
+    build.onEnd(() => console.log('done'));
+  },
+};
+
+// Rsbuild plugin
+const rsbuildPlugin = () => ({
+  name: 'example',
+  setup(api) {
+    api.onAfterBuild(() => console.log('done'));
+  },
+});
+
+// Rspack plugin
+class RspackExamplePlugin {
+  apply(compiler) {
+    compiler.hooks.done.tap('RspackExamplePlugin', () => {
+      console.log('done');
+    });
+  }
+}
+```
+
+From a functional perspective, Rsbuild's plugin API mainly revolves around Rsbuild's operation process and build configuration and provides some hooks for extension. On the other hand, Rspack's plugin API is more complex and rich, capable of modifying every aspect of the bundling process.
+
+Rspack plugins can be integrated into Rsbuild plugins. If the hooks provided by Rsbuild do not meet your requirements, you can also implement the functionality using Rspack plugin and register Rspack plugins in the Rsbuild plugin:
+
+```ts
+const rsbuildPlugin = () => ({
+  name: 'example',
+  setup(api) {
+    api.modifyRspackConfig((config) => {
+      config.plugins.push(new RspackExamplePlugin());
+    });
+  },
+});
+```
 
 ## Developing Plugins
 
