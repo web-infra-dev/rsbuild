@@ -11,6 +11,11 @@ describe('plugin-source-build', () => {
           resolvePriority: 'output',
         }),
       ],
+      rsbuildConfig: {
+        performance: {
+          buildCache: false,
+        },
+      },
     });
     const config = await rsbuild.unwrapConfig();
 
