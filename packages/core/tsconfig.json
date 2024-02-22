@@ -4,12 +4,13 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "rootDir": "src",
-    "composite": true
+    "composite": true,
+    "types": ["webpack/module"],
   },
   "references": [
     {
-      "path": "../shared"
-    }
+      "path": "../shared",
+    },
   ],
-  "include": ["src"]
+  "include": ["src"],
 }

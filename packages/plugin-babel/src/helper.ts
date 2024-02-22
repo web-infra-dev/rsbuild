@@ -14,6 +14,7 @@ import type {
   PresetReactOptions,
   BabelTransformOptions,
   PluginBabelOptions,
+  BabelLoaderOptions,
 } from './types';
 import type { PluginOptions as BabelPluginOptions } from '@babel/core';
 
@@ -150,10 +151,10 @@ export const getBabelUtils = (
 };
 
 export const applyUserBabelConfig = (
-  defaultOptions: BabelTransformOptions,
+  defaultOptions: BabelLoaderOptions,
   userBabelConfig?: PluginBabelOptions['babelLoaderOptions'],
   extraBabelUtils?: Partial<BabelConfigUtils>,
-): BabelTransformOptions => {
+): BabelLoaderOptions => {
   if (userBabelConfig) {
     const babelUtils = {
       ...getBabelUtils(defaultOptions),

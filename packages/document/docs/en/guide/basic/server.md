@@ -93,3 +93,31 @@ Rsbuild dev server and the dev server of Rspack CLI (`@rspack/dev-server`) share
 :::tip
 Rsbuild applications cannot use Rspack's [devServer](https://rspack.dev/config/dev-server) config. You can configure the behavior of the server through Rsbuild's `dev` and `server` configs, see [Config Overview](/config/index) for details.
 :::
+
+## Extend middleware
+
+Rsbuild server does not use any Node.js frameworks, and the `req` and `res` provided by Rsbuild middleware are both native Node.js objects.
+
+This means that when you migrate from other server-side frameworks (such as Express), the original middleware may not necessarily be used directly in Rsbuild. For example, the `req.params`,`req.path`, `req.search`, `req.query` and other properties provided by Express cannot be accessed in the Rsbuild middleware.
+
+If you need to use existing middleware in Rsbuild, this can be done by passing the server application as middleware as follows:
+
+```ts title="rsbuild.config.ts"
+import expressMiddleware from 'my-express-middleware';
+import express from 'express';
+
+// Initialize Express app
+const app = express();
+
+app.use(expressMiddleware);
+
+export default {
+  dev: {
+    setupMiddlewares: [
+      (middleware) => {
+        middleware.unshift(app);
+      },
+    ],
+  },
+};
+```

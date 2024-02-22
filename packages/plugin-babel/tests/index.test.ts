@@ -11,6 +11,9 @@ describe('plugins/babel', () => {
           include: [/[\\/]node_modules[\\/]query-string[\\/]/],
           exclude: ['src/example'],
         },
+        performance: {
+          buildCache: false,
+        },
       },
     });
 
@@ -28,7 +31,11 @@ describe('plugins/babel', () => {
   it('should set babel-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        performance: {
+          buildCache: false,
+        },
+      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
@@ -41,6 +48,7 @@ describe('plugins/babel', () => {
       plugins: [
         pluginBabel({
           babelLoaderOptions: (config) => {
+            config.cacheIdentifier = 'test';
             config.plugins?.push([
               'babel-plugin-import',
               {

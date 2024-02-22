@@ -1,14 +1,19 @@
-import path from 'node:path';
-import type { RsbuildPlugin } from '@rsbuild/core';
+import path, { isAbsolute, join } from 'node:path';
+import type {
+  RsbuildPlugin,
+  RsbuildContext,
+  NormalizedConfig,
+} from '@rsbuild/core';
 import {
+  fse,
   isProd,
   castArray,
   cloneDeep,
+  getNodeEnv,
   SCRIPT_REGEX,
-  type Decorators,
 } from '@rsbuild/shared';
 import { applyUserBabelConfig, BABEL_JS_RULE } from './helper';
-import type { PluginBabelOptions } from './types';
+import type { BabelLoaderOptions, PluginBabelOptions } from './types';
 
 export const PLUGIN_BABEL_NAME = 'rsbuild:babel';
 
@@ -25,13 +30,42 @@ export const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
   isTSX: true,
 };
 
-export const getDefaultBabelOptions = (decorators: Decorators) => {
-  return {
+function getCacheDirectory(context: RsbuildContext, cacheDirectory?: string) {
+  if (cacheDirectory) {
+    return isAbsolute(cacheDirectory)
+      ? cacheDirectory
+      : join(context.rootPath, cacheDirectory);
+  }
+  return join(context.cachePath);
+}
+
+async function getCacheIdentifier(options: BabelLoaderOptions) {
+  let identifier = `${getNodeEnv()}${JSON.stringify(options)}`;
+
+  const { version: coreVersion } = await import('@babel/core');
+  const loaderVersion = (
+    await fse.readJSON(join(__dirname, '../compiled/babel-loader/package.json'))
+  ).version;
+
+  identifier += `@babel/core@${coreVersion}`;
+  identifier += `babel-loader@${loaderVersion}`;
+
+  return identifier;
+}
+
+export const getDefaultBabelOptions = (
+  config: NormalizedConfig,
+  context: RsbuildContext,
+): BabelLoaderOptions => {
+  const options: BabelLoaderOptions = {
     babelrc: false,
     configFile: false,
     compact: isProd(),
     plugins: [
-      [require.resolve('@babel/plugin-proposal-decorators'), decorators],
+      [
+        require.resolve('@babel/plugin-proposal-decorators'),
+        config.source.decorators,
+      ],
     ],
     presets: [
       // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
@@ -41,6 +75,23 @@ export const getDefaultBabelOptions = (decorators: Decorators) => {
       ],
     ],
   };
+
+  const { buildCache } = config.performance;
+
+  // Rspack does not yet support persistent cache
+  // so we use babel-loader's cache to improve rebuild performance
+  if (buildCache && context.bundlerType === 'rspack') {
+    const cacheDirectory = getCacheDirectory(
+      context,
+      typeof buildCache === 'boolean' ? undefined : buildCache.cacheDirectory,
+    );
+
+    // turn off compression to reduce overhead
+    options.cacheCompression = false;
+    options.cacheDirectory = join(cacheDirectory, 'babel-loader');
+  }
+
+  return options;
 };
 
 export const pluginBabel = (
@@ -49,22 +100,27 @@ export const pluginBabel = (
   name: PLUGIN_BABEL_NAME,
 
   setup(api) {
+    const getBabelOptions = async () => {
+      const config = api.getNormalizedConfig();
+      const baseOptions = getDefaultBabelOptions(config, api.context);
+
+      const mergedOptions = applyUserBabelConfig(
+        cloneDeep(baseOptions),
+        options.babelLoaderOptions,
+      );
+
+      // calculate cacheIdentifier with the merged options
+      if (mergedOptions.cacheDirectory && !mergedOptions.cacheIdentifier) {
+        mergedOptions.cacheIdentifier = await getCacheIdentifier(mergedOptions);
+      }
+
+      return mergedOptions;
+    };
+
     api.modifyBundlerChain({
       order: 'pre',
       handler: async (chain, { CHAIN_ID }) => {
-        const config = api.getNormalizedConfig();
-        const getBabelOptions = () => {
-          const baseConfig = getDefaultBabelOptions(config.source.decorators);
-
-          const userBabelConfig = applyUserBabelConfig(
-            cloneDeep(baseConfig),
-            options.babelLoaderOptions,
-          );
-
-          return userBabelConfig;
-        };
-
-        const babelOptions = getBabelOptions();
+        const babelOptions = await getBabelOptions();
         const babelLoader = path.resolve(
           __dirname,
           '../compiled/babel-loader/index.js',

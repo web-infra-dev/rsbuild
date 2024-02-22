@@ -2,10 +2,6 @@
 
 Rsbuild uses SWC transpilation by default. When existing functions cannot meet the requirements, and some Babel presets or plugins need to be added for additional processing, you can use Rsbuild's Babel Plugin.
 
-:::tip
-Adding the Babel Plugin will perform additional Babel transpilation before the original SWC transpilation, resulting in additional compilation overhead and causing a significant decrease in build performance.
-:::
-
 ## Quick Start
 
 ### Install Plugin
@@ -25,6 +21,20 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 
 export default {
   plugins: [pluginBabel()],
+};
+```
+
+## Compilation Cache
+
+After using the Babel plugin, Rsbuild will perform the Babel transpilation in addition to the standard SWC transpilation, which adds additional compilation overhead. This can cause a noticeable decrease in build speed.
+
+To reduce the overhead of Babel transpilation, the `@rsbuild/plugin-babel` enables Babel compilation cache by default. If you want to disable the cache, you can set `performance.buildCache` to `false`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    buildCache: false,
+  },
 };
 ```
 

@@ -6,7 +6,7 @@ The Type Check plugin provides the ability to run TypeScript type checks in a se
 
 The type checking logic of `fork-ts-checker-webpack-plugin` is similar to the native `tsc` command of TypeScript. It automatically reads the configuration options from `tsconfig.json` and can also be modified via the configuration options provided by the Type Check plugin.
 
-The behavior of the plugin differs in the development and production environments:
+The behavior of the plugin differs in the development and production builds:
 
 - During development builds, type errors do not block the build process. They are only logged in the terminal.
 - During production builds, type errors cause the build to fail in order to ensure the stability of the production code.
@@ -194,7 +194,7 @@ For example, properly configuring the `include` and `exclude` scopes in `tsconfi
 }
 ```
 
-3. Since the production build uses `vue-tsc` for type checking, you can disable the Type Check plugin in the production environment to avoid redundant checks.
+3. Since the production build uses `vue-tsc` for type checking, you can disable the Type Check plugin in the production build to avoid redundant checks.
 
 ```js
 pluginTypeCheck({

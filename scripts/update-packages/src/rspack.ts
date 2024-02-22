@@ -3,8 +3,7 @@
  */
 import path from 'node:path';
 import fs from 'fs-extra';
-import { getPackages } from '@manypkg/get-packages';
-import { getPackageVersion } from './utils';
+import { getPackages, getPackageVersion } from './utils';
 
 async function run() {
   // eg. pnpm update-rspack 0.4.3-canary-xxx
@@ -57,7 +56,7 @@ const updateRspackVersion = async (
       if (versionMap.get(dep)) {
         dependencies[dep] = `${versionMap.get(dep)}`;
       } else {
-        const version = await getPackageVersion(`${dep}@${rspackVersion}`);
+        const version = getPackageVersion(`${dep}@${rspackVersion}`);
         dependencies[dep] = `${version}`;
         versionMap.set(dep, version);
       }

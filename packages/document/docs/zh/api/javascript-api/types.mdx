@@ -32,9 +32,11 @@ import type {
   HtmlConfig,
   ToolsConfig,
   SourceConfig,
+  ServerConfig,
   OutputConfig,
   SecurityConfig,
   PerformanceConfig,
+  ModuleFederationConfig,
 } from '@rsbuild/core';
 ```
 
@@ -56,9 +58,11 @@ import type {
   NormalizedHtmlConfig,
   NormalizedToolsConfig,
   NormalizedSourceConfig,
+  NormalizedServerConfig,
   NormalizedOutputConfig,
   NormalizedSecurityConfig,
   NormalizedPerformanceConfig,
+  NormalizedModuleFederationConfig,
 } from '@rsbuild/core';
 ```
 
@@ -121,3 +125,28 @@ import type { CreateRsbuildOptions } from '@rsbuild/core';
 ```ts
 import type { InspectConfigOptions } from '@rsbuild/core';
 ```
+
+## Rspack
+
+包含 `@rspack/core` 导出的所有类型，比如 `Rspack.Configuration`
+
+```ts
+import type { Rspack } from '@rsbuild/core';
+
+const rspackConfig: Rspack.Configuration = {};
+```
+
+## Others
+
+- OnExitFn
+- OnAfterBuildFn
+- OnAfterCreateCompilerFn
+- OnAfterStartDevServerFn
+- OnAfterStartProdServerFn
+- OnBeforeBuildFn
+- OnBeforeStartDevServerFn
+- OnBeforeStartProdServerFn
+- OnBeforeCreateCompilerFn
+- OnCloseDevServerFn
+- OnDevCompileDoneFn
+- ModifyRsbuildConfigFn

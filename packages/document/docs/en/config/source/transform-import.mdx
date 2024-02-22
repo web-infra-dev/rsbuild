@@ -90,6 +90,20 @@ import _ from 'lodash';
 import lodash from 'lodash';
 ```
 
+## Scope
+
+`transformImport` is only applicable to modules compiled by Rsbuild. Note that Rsbuild does not compile JavaScript files in the node_modules by default. This means that the code in the node_modules directory will not be processed by `transformImport`.
+
+If you want to process the code in node_modules through `transformImport`, please add the relevant modules to the [source.include](/config/source/include) config.
+
+```ts
+export default {
+  source: {
+    include: [/[\\/]node_modules[\\/]some-package[\\/]/],
+  },
+};
+```
+
 ## Options
 
 ### libraryName

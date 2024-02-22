@@ -93,3 +93,30 @@ Rsbuild 的开发服务器与 Rspack CLI 的开发服务器（`@rspack/dev-serve
 :::tip
 Rsbuild 应用不能使用 Rspack 的 [devServer](https://rspack.dev/config/dev-server) 配置项。你可以通过 Rsbuild 的 `dev` 和 `server` 配置 Server 的行为，详见 [Config 总览](/config/index)。
 :::
+
+## 扩展中间件
+
+Rsbuild server 未使用任何 Node.js 框架，Rsbuild 中间件提供的 req 和 res 均为 Node.js 原生对象。
+这意味着，当你从其他服务端框架迁移时（如 Express），原本的中间件不一定能直接在 Rsbuild 中使用，例如，无法在 Rsbuild 中间件中访问 Express 所提供的 `req.params`、`req.path`、`req.search`、`req.query` 等属性。
+
+如果你需要在 Rsbuild 中使用原有的中间件，可以采取以下方式，将服务端应用作为中间件传入：
+
+```ts title="rsbuild.config.ts"
+import expressMiddleware from 'my-express-middleware';
+import express from 'express';
+
+// 初始化 Express app
+const app = express();
+
+app.use(expressMiddleware);
+
+export default {
+  dev: {
+    setupMiddlewares: [
+      (middleware) => {
+        middleware.unshift(app);
+      },
+    ],
+  },
+};
+```

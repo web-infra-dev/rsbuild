@@ -136,6 +136,9 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
             "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
             "options": {
               "babelrc": false,
+              "cacheCompression": false,
+              "cacheDirectory": "<ROOT>/packages/plugin-babel/tests/node_modules/.cache/babel-loader",
+              "cacheIdentifier": "test",
               "compact": false,
               "configFile": false,
               "plugins": [
