@@ -4152,7 +4152,7 @@ packages:
     resolution: {integrity: sha512-kdvLqdue7HglesSM+dQ5U4NZ31YOhEKYoqHWHTY4wM20xaJERUzn5l9t+0tn1MPe6kflmM3DwGJD855wicQpQg==}
     dependencies:
       '@swc/helpers': 0.5.3
-      caniuse-lite: 1.0.30001587
+      caniuse-lite: 1.0.30001588
       lodash: 4.17.21
       rslog: 1.2.1
     dev: true
