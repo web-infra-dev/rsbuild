@@ -63,8 +63,8 @@
       "@rsbuild/core": "link:packages/core",
       "@rsbuild/plugin-react": "link:packages/plugin-react",
       "@rsbuild/plugin-svgr": "link:packages/plugin-svgr",
-      "@rspack/core": "0.5.4-canary-b653def-20240218123159",
-      "@rspack/plugin-react-refresh": "0.5.4-canary-b653def-20240218123159"
+      "@rspack/core": "0.5.4-canary-ea0d21b-20240222091430",
+      "@rspack/plugin-react-refresh": "0.5.4-canary-ea0d21b-20240222091430"
     },
     "allowedDeprecatedVersions": {
       "vue": "2.7.14",

@@ -178,8 +178,6 @@ export async function dev({
                 config[0].exclude = [/node_modules/, /css-loader/];
                 return config;
               });
-
-              chain.devServer.hot(true);
             }
           },
         });
