@@ -79,7 +79,7 @@ test('should run plugin hooks correctly when running startDevServer', async () =
     'BeforeCreateCompiler',
     'AfterCreateCompiler',
     'AfterStartDevServer',
-    'OnCloseDevServer'
+    'OnCloseDevServer',
   ]);
 });
 

@@ -5,7 +5,7 @@ export { initPlugins, createPluginManager } from '../pluginManager';
 export { initHooks, type Hooks } from './initHooks';
 export { initRsbuildConfig } from './initConfigs';
 export { getPluginAPI } from './initPlugins';
-export { applyBaseCSSRule, applyCSSModuleRule } from './plugins/css';
+export { applyBaseCSSRule } from './plugins/css';
 export type { InternalContext } from '../types';
 export { setHTMLPlugin, getHTMLPlugin } from './htmlPluginUtil';
 export { formatStats } from './shared';

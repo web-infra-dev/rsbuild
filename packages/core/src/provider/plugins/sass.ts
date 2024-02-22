@@ -58,15 +58,6 @@ export function pluginSass(): RsbuildPlugin {
           .loader(getSharedPkgCompiledPath('sass-loader'))
           .options(options);
       });
-
-      api.modifyRspackConfig(async (rspackConfig) => {
-        const { applyCSSModuleRule } = await import('./css');
-        const config = api.getNormalizedConfig();
-
-        const rules = rspackConfig.module?.rules;
-
-        applyCSSModuleRule(rules, SASS_REGEX, config);
-      });
     },
   };
 }
