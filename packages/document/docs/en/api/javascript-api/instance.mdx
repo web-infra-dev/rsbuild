@@ -18,13 +18,15 @@ type Version = string;
 
 ### context.entry
 
-The entry object from the `source.entry` option.
+The entry object from the [source.entry](/config/source/entry) option.
 
 - **Type:**
 
 ```ts
 type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 ```
+
+> If `source.entry` is set as a function, and different entry objects are returned for different targets, then context.entry will only contain the entry object corresponding to the web target.
 
 ### context.targets
 

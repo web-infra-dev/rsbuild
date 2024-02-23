@@ -1,5 +1,8 @@
 import type { RsbuildEntry, RsbuildTarget } from '../rsbuild';
-import type { ChainedConfigWithUtils } from '../utils';
+import type {
+  ChainedConfigWithUtils,
+  ChainedConfigCombineUtils,
+} from '../utils';
 import type { RuleSetCondition } from '@rspack/core';
 
 export type Alias = Record<string, string | false | (string | false)[]>;
@@ -39,7 +42,7 @@ export interface SourceConfig {
   /**
    * Set the entry modules.
    */
-  entry?: ChainedConfigWithUtils<RsbuildEntry, { target: RsbuildTarget }>;
+  entry?: ChainedConfigCombineUtils<RsbuildEntry, { target: RsbuildTarget }>;
   /**
    * Specifies that certain files that will be excluded from compilation.
    */

@@ -2,13 +2,17 @@ import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
   source: {
-    entry(entry, { target }) {
+    entry({ target }) {
       if (target === 'web') {
-        entry.index = './src/index.client.js';
-      } else if (target === 'node') {
-        entry.index = './src/index.server.js';
+        return {
+          index: './src/index.client.js',
+        };
       }
-      return entry;
+      if (target === 'node') {
+        return {
+          index: './src/index.server.js',
+        };
+      }
     },
   },
   output: {

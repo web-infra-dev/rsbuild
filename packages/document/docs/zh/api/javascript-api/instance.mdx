@@ -18,13 +18,15 @@ type Version = string;
 
 ### context.entry
 
-构建入口对象，对应 `source.entry` 选项。
+构建入口对象，对应 [source.entry](/config/source/entry) 选项。
 
 - **类型：**
 
 ```ts
 type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 ```
+
+> 如果 `source.entry` 被设置为函数，并针对不同的 target 返回了不同的 entry 对象，那么 context.entry 仅会包含 web target 对应的入口对象。
 
 ### context.targets
 
