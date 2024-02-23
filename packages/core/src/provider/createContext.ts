@@ -12,6 +12,7 @@ import {
 import type { InternalContext } from '../types';
 import { initHooks } from './initHooks';
 import { withDefaultConfig } from './config';
+import { getEntryObject } from '../plugins/entry';
 
 function getAbsolutePath(root: string, filepath: string) {
   return isAbsolute(filepath) ? filepath : join(root, filepath);
@@ -40,7 +41,7 @@ async function createContextByConfig(
   const tsconfigPath = config.source?.tsconfigPath;
 
   const context: RsbuildContext = {
-    entry: config.source?.entry || {},
+    entry: getEntryObject(config, 'web'),
     targets: config.output?.targets || [],
     version: RSBUILD_VERSION,
     rootPath,
@@ -63,8 +64,9 @@ export function updateContextByNormalizedConfig(
   context.distPath = getAbsoluteDistPath(context.rootPath, config);
 
   if (config.source.entry) {
-    context.entry = config.source.entry;
+    context.entry = getEntryObject(config, 'web');
   }
+
   if (config.source.tsconfigPath) {
     context.tsconfigPath = getAbsolutePath(
       context.rootPath,
