@@ -39,7 +39,7 @@ export interface SourceConfig {
   /**
    * Set the entry modules.
    */
-  entry?: RsbuildEntry;
+  entry?: ChainedConfigWithUtils<RsbuildEntry, { target: RsbuildTarget }>;
   /**
    * Specifies that certain files that will be excluded from compilation.
    */

@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
 
-test('should allow to set alias by build target', async () => {
+test('should allow to set entry by build target', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
