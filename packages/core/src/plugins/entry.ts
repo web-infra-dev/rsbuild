@@ -21,6 +21,7 @@ export function getEntryObject(
     defaults: {},
     options: config.source?.entry,
     utils: { target },
+    useObjectParam: true,
   });
 }
 
