@@ -1,1 +1,1 @@
-{"name":"webpack-dev-middleware","author":"Tobias Koppers @sokra","version":"6.1.1","funding":{"type":"opencollective","url":"https://opencollective.com/webpack"},"license":"MIT","types":"types/index.d.ts","type":"commonjs"}
+{"name":"webpack-dev-middleware","author":"Tobias Koppers @sokra","version":"7.0.0","funding":{"type":"opencollective","url":"https://opencollective.com/webpack"},"license":"MIT","types":"types/index.d.ts","type":"commonjs"}
