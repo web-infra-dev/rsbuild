@@ -135,10 +135,10 @@ export = wdm;
  */
 declare function wdm<
   RequestInternal extends import('http').IncomingMessage,
-  ResponseInternal extends ServerResponse
+  ResponseInternal extends ServerResponse,
 >(
   compiler: Compiler | MultiCompiler,
-  options?: Options<RequestInternal, ResponseInternal> | undefined
+  options?: Options<RequestInternal, ResponseInternal> | undefined,
 ): API<RequestInternal, ResponseInternal>;
 declare namespace wdm {
   export {
@@ -173,34 +173,11 @@ declare namespace wdm {
     API,
   };
 }
-type ServerResponse = import('http').ServerResponse & ExtendedServerResponse;
 type Compiler = import('webpack').Compiler;
 type MultiCompiler = import('webpack').MultiCompiler;
-type Options<
-  RequestInternal extends import('http').IncomingMessage,
-  ResponseInternal extends ServerResponse
-> = {
-  mimeTypes?:
-    | {
-        [key: string]: string;
-      }
-    | undefined;
-  mimeTypeDefault?: string | undefined;
-  writeToDisk?: boolean | ((targetPath: string) => boolean) | undefined;
-  methods?: string[] | undefined;
-  headers?: Headers<RequestInternal, ResponseInternal>;
-  publicPath?: NonNullable<Configuration["output"]>["publicPath"];
-  stats?: Configuration["stats"];
-  serverSideRender?: boolean | undefined;
-  outputFileSystem?: OutputFileSystem | undefined;
-  index?: string | boolean | undefined;
-  modifyResponseData?:
-    | ModifyResponseData<RequestInternal, ResponseInternal>
-    | undefined;
-};
 type API<
   RequestInternal extends import('http').IncomingMessage,
-  ResponseInternal extends ServerResponse
+  ResponseInternal extends ServerResponse,
 > = Middleware<RequestInternal, ResponseInternal> &
   AdditionalMethods<RequestInternal, ResponseInternal>;
 type Schema = import('./schema-utils/declarations/validate').Schema;
@@ -222,6 +199,7 @@ type ExtendedServerResponse = {
     | undefined;
 };
 type IncomingMessage = import('http').IncomingMessage;
+type ServerResponse = import('http').ServerResponse & ExtendedServerResponse;
 type NextFunction = (err?: any) => void;
 type WatchOptions = NonNullable<Configuration["watchOptions"]>;
 type Watching = Compiler["watching"];
@@ -234,7 +212,7 @@ type OutputFileSystem = Compiler["outputFileSystem"] & {
 };
 type Logger = ReturnType<Compiler["getInfrastructureLogger"]>;
 type Callback = (
-  stats?: import('webpack').Stats | import('webpack').MultiStats | undefined
+  stats?: import('webpack').Stats | import('webpack').MultiStats | undefined,
 ) => any;
 type ResponseData = {
   data: string | Buffer | ReadStream;
@@ -242,16 +220,16 @@ type ResponseData = {
 };
 type ModifyResponseData<
   RequestInternal extends import('http').IncomingMessage,
-  ResponseInternal extends ServerResponse
+  ResponseInternal extends ServerResponse,
 > = (
   req: RequestInternal,
   res: ResponseInternal,
   data: string | Buffer | ReadStream,
-  byteLength: number
+  byteLength: number,
 ) => ResponseData;
 type Context<
   RequestInternal extends import('http').IncomingMessage,
-  ResponseInternal extends ServerResponse
+  ResponseInternal extends ServerResponse,
 > = {
   state: boolean;
   stats: Stats | MultiStats | undefined;
@@ -264,7 +242,7 @@ type Context<
 };
 type Headers<
   RequestInternal extends import('http').IncomingMessage,
-  ResponseInternal extends ServerResponse
+  ResponseInternal extends ServerResponse,
 > =
   | Record<string, string | number>
   | {
@@ -274,16 +252,38 @@ type Headers<
   | ((
       req: RequestInternal,
       res: ResponseInternal,
-      context: Context<RequestInternal, ResponseInternal>
+      context: Context<RequestInternal, ResponseInternal>,
     ) => void | undefined | Record<string, string | number>)
   | undefined;
+type Options<
+  RequestInternal extends import('http').IncomingMessage,
+  ResponseInternal extends ServerResponse,
+> = {
+  mimeTypes?:
+    | {
+        [key: string]: string;
+      }
+    | undefined;
+  mimeTypeDefault?: string | undefined;
+  writeToDisk?: boolean | ((targetPath: string) => boolean) | undefined;
+  methods?: string[] | undefined;
+  headers?: Headers<RequestInternal, ResponseInternal>;
+  publicPath?: NonNullable<Configuration["output"]>["publicPath"];
+  stats?: Configuration["stats"];
+  serverSideRender?: boolean | undefined;
+  outputFileSystem?: OutputFileSystem | undefined;
+  index?: string | boolean | undefined;
+  modifyResponseData?:
+    | ModifyResponseData<RequestInternal, ResponseInternal>
+    | undefined;
+};
 type Middleware<
   RequestInternal extends import('http').IncomingMessage,
-  ResponseInternal extends ServerResponse
+  ResponseInternal extends ServerResponse,
 > = (
   req: RequestInternal,
   res: ResponseInternal,
-  next: NextFunction
+  next: NextFunction,
 ) => Promise<void>;
 type GetFilenameFromUrl = (url: string) => string | undefined;
 type WaitUntilValid = (callback: Callback) => any;
@@ -291,7 +291,7 @@ type Invalidate = (callback: Callback) => any;
 type Close = (callback: (err: Error | null | undefined) => void) => any;
 type AdditionalMethods<
   RequestInternal extends import('http').IncomingMessage,
-  ResponseInternal extends ServerResponse
+  ResponseInternal extends ServerResponse,
 > = {
   getFilenameFromUrl: GetFilenameFromUrl;
   waitUntilValid: WaitUntilValid;
