@@ -1668,8 +1668,8 @@ importers:
         specifier: npm:webpack-5-chain@8.0.1
         version: /webpack-5-chain@8.0.1
       webpack-dev-middleware:
-        specifier: 6.1.1
-        version: 6.1.1(webpack@5.89.0)
+        specifier: 7.0.0
+        version: 7.0.0(webpack@5.89.0)
       webpack-merge:
         specifier: 5.10.0
         version: 5.10.0
@@ -8014,6 +8014,7 @@ packages:
 
   /fs-monkey@1.0.5:
     resolution: {integrity: sha512-8uMbBjrhzW76TYgEV27Y5E//W2f/lTFmx78P2w19FZSxarhI/798APGQyuGCwmkNxgwGRhrLfvWyLBvNtuOmew==}
+    dev: false
 
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
@@ -9796,6 +9797,14 @@ packages:
     engines: {node: '>= 4.0.0'}
     dependencies:
       fs-monkey: 1.0.5
+    dev: false
+
+  /memfs@4.7.7:
+    resolution: {integrity: sha512-x9qc6k88J/VVwnfTkJV8pRRswJ2156Rc4w5rciRqKceFDZ0y1MqsNL9pkg5sE0GOcDzZYbonreALhaHzg1siFw==}
+    engines: {node: '>= 4.0.0'}
+    dependencies:
+      tslib: 2.6.2
+    dev: true
 
   /meow@6.1.1:
     resolution: {integrity: sha512-3YffViIt2QWgTy6Pale5QpopX/IvU3LPL03jOTqp6pGj3VjesdO/U8CuHMKpnQr4shCNCM5fd5XFFvIIl6JBHg==}
@@ -14136,9 +14145,9 @@ packages:
       - utf-8-validate
     dev: true
 
-  /webpack-dev-middleware@6.1.1(webpack@5.89.0):
-    resolution: {integrity: sha512-y51HrHaFeeWir0YO4f0g+9GwZawuigzcAdRNon6jErXy/SqV/+O6eaVAzDqE6t3e3NpGeR5CS+cCDaTC+V3yEQ==}
-    engines: {node: '>= 14.15.0'}
+  /webpack-dev-middleware@7.0.0(webpack@5.89.0):
+    resolution: {integrity: sha512-tZ5hqsWwww/8DislmrzXE3x+4f+v10H1z57mA2dWFrILb4i3xX+dPhTkcdR0DLyQztrhF2AUmO5nN085UYjd/Q==}
+    engines: {node: '>= 18.12.0'}
     peerDependencies:
       webpack: ^5.0.0
     peerDependenciesMeta:
@@ -14146,7 +14155,7 @@ packages:
         optional: true
     dependencies:
       colorette: 2.0.20
-      memfs: 3.5.3
+      memfs: 4.7.7
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.2.0
