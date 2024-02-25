@@ -48,7 +48,7 @@ Load Rsbuild configuration file.
 ```ts
 function loadConfig(params: {
   // Default is process.cwd()
-  cwd: string;
+  cwd?: string;
   // Specify the configuration file, can be a relative or absolute path
   path?: string;
 }): Promise<{

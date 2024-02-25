@@ -100,11 +100,11 @@ export async function watchFiles(files: string[]) {
 }
 
 export async function loadConfig({
-  cwd,
+  cwd = process.cwd(),
   path,
   envMode,
 }: {
-  cwd: string;
+  cwd?: string;
   path?: string;
   envMode?: string;
 }): Promise<{ content: RsbuildConfig; filePath: string | null }> {
