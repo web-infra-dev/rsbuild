@@ -1,6 +1,6 @@
 {
   "name": "@scripts/update-packages",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "private": true,
   "scripts": {
     "start:modern": "tsx ./src/modern.ts",
