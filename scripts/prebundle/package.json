@@ -55,7 +55,7 @@
     "open": "^8.4.0",
     "picocolors": "1.0.0",
     "postcss-load-config": "5.0.3",
-    "postcss-loader": "7.3.4",
+    "postcss-loader": "8.1.0",
     "postcss-modules-extract-imports": "3.0.0",
     "postcss-modules-local-by-default": "4.0.4",
     "postcss-modules-scope": "3.1.1",
