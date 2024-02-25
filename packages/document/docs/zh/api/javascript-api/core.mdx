@@ -18,7 +18,9 @@ function createRsbuild(options: CreateRsbuildOptions): Promise<RsbuildInstance>;
 import { createRsbuild } from '@rsbuild/core';
 
 const rsbuild = await createRsbuild({
-  // options
+  rsbuildConfig: {
+    // rsbuild configs
+  },
 });
 ```
 
@@ -36,7 +38,6 @@ type CreateRsbuildOptions = {
 各个选项的作用：
 
 - `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
-- `provider`：用于切换底层的打包工具。
 - `rsbuildConfig`：Rsbuild 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制，你可以在[配置](/config/)中找到所有可用的配置项。
 
 ## loadConfig
@@ -65,6 +66,10 @@ import { loadConfig } from '@rsbuild/core';
 const { content } = await loadConfig();
 
 console.log(content); // -> Rsbuild config object
+
+const rsbuild = await createRsbuild({
+  rsbuildConfig: content,
+});
 ```
 
 如果 cwd 目录下不存在 Rsbuild 配置文件，loadConfig 方法的返回值为 `{ content: {}, filePath: null }`。
