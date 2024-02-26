@@ -175,6 +175,8 @@ export function applySwcDecoratorConfig(
     case 'legacy':
       swcConfig.jsc.transform.legacyDecorator = true;
       swcConfig.jsc.transform.decoratorMetadata = true;
+      // see: https://github.com/swc-project/swc/issues/6571
+      swcConfig.jsc.transform.useDefineForClassFields = false;
       break;
     case '2022-03':
       swcConfig.jsc.transform.legacyDecorator = false;

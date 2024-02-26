@@ -79,6 +79,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -123,6 +124,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,

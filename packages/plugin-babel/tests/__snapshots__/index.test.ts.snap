@@ -46,6 +46,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,
+            "useDefineForClassFields": false,
           },
         },
         "sourceMaps": true,

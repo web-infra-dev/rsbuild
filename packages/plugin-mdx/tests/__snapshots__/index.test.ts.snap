@@ -30,6 +30,7 @@ exports[`plugin-mdx > should allow to configure mdx loader 1`] = `
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,
+            "useDefineForClassFields": false,
           },
         },
         "sourceMaps": true,
@@ -75,6 +76,7 @@ exports[`plugin-mdx > should register mdx loader correctly 1`] = `
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,
+            "useDefineForClassFields": false,
           },
         },
         "sourceMaps": true,
