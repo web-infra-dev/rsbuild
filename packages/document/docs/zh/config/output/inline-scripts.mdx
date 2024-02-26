@@ -46,12 +46,29 @@ dist/static/css/style.css
 
 ```html
 <html>
-  <body>
+  <head>
     <script>
       // content of dist/static/js/main.js
     </script>
-  </body>
+  </head>
 </html>
+```
+
+### script 标签位置
+
+在开启 `output.inlineScripts` 时，建议将 [html.inject](/config/html/inject) 设置为 `'body'`。
+
+因为 script 标签的默认插入位置是 \<head\> 标签，将插入位置修改为 \<body\> 标签后，可以保证 inlined script 能获取到 \<body\> 中的 DOM 元素。
+
+```diff
+export default {
++  html: {
++    inject: 'body',
++  },
+   output: {
+     inlineScripts: true,
+   },
+};
 ```
 
 ### 通过正则匹配
