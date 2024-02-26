@@ -79,7 +79,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "useDefineForClassFields": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -124,7 +124,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "useDefineForClassFields": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -782,7 +782,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "useDefineForClassFields": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": false,
@@ -827,7 +827,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "useDefineForClassFields": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": false,
@@ -1544,7 +1544,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "useDefineForClassFields": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -1583,7 +1583,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "useDefineForClassFields": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -1981,7 +1981,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "useDefineForClassFields": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -2026,7 +2026,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
-                  "useDefineForClassFields": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
