@@ -237,10 +237,10 @@ type ModifyBundlerChainUtils = {
   CHAIN_ID: ChainIdentifier;
   HtmlPlugin: typeof import('html-webpack-plugin');
   bundler: {
-    // 取决于 bundler 类型
-    BannerPlugin: typeof webpack.BannerPlugin | typeof rspack.BannerPlugin;
-    DefinePlugin: typeof webpack.DefinePlugin | typeof rspack.DefinePlugin;
-    ProvidePlugin: typeof webpack.ProvidePlugin | typeof rspack.ProvidePlugin;
+    BannerPlugin: rspack.BannerPlugin;
+    DefinePlugin: rspack.DefinePlugin;
+    ProvidePlugin: rspack.ProvidePlugin;
+    HotModuleReplacementPlugin: rspack.HotModuleReplacementPlugin;
   };
 };
 
