@@ -46,12 +46,29 @@ And `dist/static/js/main.js` will be inlined in `index.html`:
 
 ```html
 <html>
-  <body>
+  <head>
     <script>
       // content of dist/static/js/main.js
     </script>
-  </body>
+  </head>
 </html>
+```
+
+### Script Tag Position
+
+When `output.inlineScripts` is used, it is recommended to set [html.inject](/config/html/inject) to `'body'`.
+
+As the default injection position of the script tag is the \<head\> tag, changing the injection position to the \<body\> tag can ensure that the inlined script can access the DOM elements in \<body\>.
+
+```diff
+export default {
++  html: {
++    inject: 'body',
++  },
+   output: {
+     inlineScripts: true,
+   },
+};
 ```
 
 ### Using RegExp
