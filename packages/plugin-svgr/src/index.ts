@@ -1,11 +1,10 @@
 import path from 'node:path';
 import {
-  JS_REGEX,
-  TS_REGEX,
   SVG_REGEX,
   deepmerge,
   getDistPath,
   getFilename,
+  SCRIPT_REGEX,
   chainStaticAssetRule,
 } from '@rsbuild/shared';
 import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
@@ -76,22 +75,9 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         assetType,
         issuer: {
           // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
-          not: [JS_REGEX, TS_REGEX],
+          not: [SCRIPT_REGEX],
         },
       });
-
-      rule
-        .oneOf(CHAIN_ID.ONE_OF.SVG_INLINE)
-        .type('asset/inline')
-        .resourceQuery(/inline/);
-
-      rule
-        .oneOf(CHAIN_ID.ONE_OF.SVG_URL)
-        .type('asset/resource')
-        .resourceQuery(/url/)
-        .set('generator', {
-          filename: outputName,
-        });
 
       const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
       const svgrRule = rule.oneOf(CHAIN_ID.ONE_OF.SVG).type('javascript/auto');

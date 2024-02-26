@@ -7,22 +7,10 @@ exports[`svgr > 'configure SVGR options' 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "issuer": {
-        "not": [
-          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
-        ],
-      },
       "resourceQuery": /\\(__inline=false\\|url\\)/,
       "type": "asset/resource",
     },
     {
-      "issuer": {
-        "not": [
-          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
-        ],
-      },
       "resourceQuery": /inline/,
       "type": "asset/inline",
     },
@@ -32,8 +20,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         ],
       },
       "parser": {
@@ -42,17 +29,6 @@ exports[`svgr > 'configure SVGR options' 1`] = `
         },
       },
       "type": "asset",
-    },
-    {
-      "resourceQuery": /inline/,
-      "type": "asset/inline",
-    },
-    {
-      "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
-      },
-      "resourceQuery": /url/,
-      "type": "asset/resource",
     },
     {
       "type": "javascript/auto",
@@ -134,22 +110,10 @@ exports[`svgr > 'export default Component' 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "issuer": {
-        "not": [
-          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
-        ],
-      },
       "resourceQuery": /\\(__inline=false\\|url\\)/,
       "type": "asset/resource",
     },
     {
-      "issuer": {
-        "not": [
-          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
-        ],
-      },
       "resourceQuery": /inline/,
       "type": "asset/inline",
     },
@@ -159,8 +123,7 @@ exports[`svgr > 'export default Component' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         ],
       },
       "parser": {
@@ -169,17 +132,6 @@ exports[`svgr > 'export default Component' 1`] = `
         },
       },
       "type": "asset",
-    },
-    {
-      "resourceQuery": /inline/,
-      "type": "asset/inline",
-    },
-    {
-      "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
-      },
-      "resourceQuery": /url/,
-      "type": "asset/resource",
     },
     {
       "type": "javascript/auto",
@@ -253,22 +205,10 @@ exports[`svgr > 'export default url' 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "issuer": {
-        "not": [
-          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
-        ],
-      },
       "resourceQuery": /\\(__inline=false\\|url\\)/,
       "type": "asset/resource",
     },
     {
-      "issuer": {
-        "not": [
-          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
-        ],
-      },
       "resourceQuery": /inline/,
       "type": "asset/inline",
     },
@@ -278,8 +218,7 @@ exports[`svgr > 'export default url' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         ],
       },
       "parser": {
@@ -288,17 +227,6 @@ exports[`svgr > 'export default url' 1`] = `
         },
       },
       "type": "asset",
-    },
-    {
-      "resourceQuery": /inline/,
-      "type": "asset/inline",
-    },
-    {
-      "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
-      },
-      "resourceQuery": /url/,
-      "type": "asset/resource",
     },
     {
       "type": "javascript/auto",

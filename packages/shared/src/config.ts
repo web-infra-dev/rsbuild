@@ -10,6 +10,7 @@ import type { minify } from 'terser';
 import fse from '../compiled/fs-extra';
 import { pick, color, upperFirst } from './utils';
 import { getTerserMinifyOptions } from './minimize';
+import type { RuleSetCondition } from '@rspack/core';
 
 export async function outputInspectConfigFiles({
   rsbuildConfig,
@@ -132,7 +133,7 @@ export const chainStaticAssetRule = ({
   maxSize: number;
   filename: string;
   assetType: string;
-  issuer?: any;
+  issuer?: RuleSetCondition;
 }) => {
   // Rspack not support dataUrlCondition function
   // forceNoInline: "foo.png?__inline=false" or "foo.png?url",
@@ -142,15 +143,13 @@ export const chainStaticAssetRule = ({
     .resourceQuery(/(__inline=false|url)/)
     .set('generator', {
       filename,
-    })
-    .set('issuer', issuer);
+    });
 
   // forceInline: "foo.png?inline" or "foo.png?__inline",
   rule
     .oneOf(`${assetType}-asset-inline`)
     .type('asset/inline')
-    .resourceQuery(/inline/)
-    .set('issuer', issuer);
+    .resourceQuery(/inline/);
 
   // default: when size < dataUrlCondition.maxSize will inline
   rule

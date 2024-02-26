@@ -110,9 +110,9 @@ export const CHAIN_ID = {
   /** Predefined rule groups */
   ONE_OF: {
     SVG: 'svg',
-    SVG_URL: 'svg-url',
+    SVG_URL: 'svg-asset-url',
     SVG_ASSET: 'svg-asset',
-    SVG_INLINE: 'svg-inline',
+    SVG_INLINE: 'svg-asset-inline',
   },
   /** Predefined loaders */
   USE: {
