@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import { color, isDev, logger } from '@rsbuild/shared';
 import { program, type Command } from '@rsbuild/shared/commander';
 import { loadEnv } from '../loadEnv';
-import { loadConfig, watchFiles } from './config';
+import { loadConfig, watchFiles } from '../config';
 import type { RsbuildMode } from '..';
 import { onBeforeRestartServer } from '../server/restart';
 

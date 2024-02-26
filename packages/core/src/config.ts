@@ -8,7 +8,7 @@ import {
   getNodeEnv,
   type RsbuildConfig,
 } from '@rsbuild/shared';
-import { restartDevServer } from '../server/restart';
+import { restartDevServer } from './server/restart';
 
 export type ConfigParams = {
   env: string;

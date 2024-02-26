@@ -1,10 +1,21 @@
 # plugins
 
-用于注册 Rsbuild 插件。
+用于注册 Rsbuild 插件，请查看[插件列表](/plugins/list/index) 来发现可用的插件。
 
 - **类型：** `RsbuildPlugin[]`
 - **默认值：** `undefined`
-- **示例：** 注册 Stylus 插件。
+
+## 示例
+
+比如注册 Rsbuild 的 Stylus 插件。
+
+- 安装插件：
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-stylus -D" />
+
+- 注册插件：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
