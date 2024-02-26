@@ -6,7 +6,7 @@
 // Core Methods
 export { loadEnv } from './loadEnv';
 export { createRsbuild } from './createRsbuild';
-export { loadConfig, defineConfig } from './cli/config';
+export { loadConfig, defineConfig } from './config';
 
 export const version = RSBUILD_VERSION;
 

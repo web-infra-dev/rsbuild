@@ -1,10 +1,21 @@
 # plugins
 
-Used to register Rsbuild plugins.
+Used to register Rsbuild plugins. Please check the [Plugin List](/plugins/list/index) to discover available plugins.
 
 - **Type:** `RsbuildPlugin[]`
 - **Default:** `undefined`
-- **Example:** Registering the Stylus plugin.
+
+## Example
+
+For example, register the Stylus plugin in Rsbuild.
+
+- Installing the plugin:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-stylus -D" />
+
+- Registering the plugin:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';

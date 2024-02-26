@@ -72,3 +72,9 @@
 :::tip
 你可以在 [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) 仓库中找到所有官方插件的源代码。
 :::
+
+## 社区插件
+
+你可以在 [awesome-rspack - Rsbuild Plugins](https://github.com/web-infra-dev/awesome-rspack?tab=readme-ov-file#rsbuild-plugins) 中查看社区提供的 Rsbuild 插件。
+
+也可以在 npm 上搜索 [rsbuild-plugin](https://www.npmjs.com/search?q=rsbuild-plugin&ranking=popularity) 关键词来发现更多 Rsbuild 插件。
