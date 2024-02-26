@@ -1,8 +1,8 @@
 import { color, debug, logger, isFunction } from '@rsbuild/shared';
 import type {
+  Falsy,
   PluginManager,
   RsbuildPlugin,
-  RsbuildPlugins,
   RsbuildPluginAPI,
   BundlerPluginInstance,
 } from '@rsbuild/shared';
@@ -54,7 +54,7 @@ export function createPluginManager(): PluginManager {
   let plugins: RsbuildPlugin[] = [];
 
   const addPlugins = (
-    newPlugins: RsbuildPlugins,
+    newPlugins: Array<RsbuildPlugin | Falsy>,
     options?: { before?: string },
   ) => {
     const { before } = options || {};

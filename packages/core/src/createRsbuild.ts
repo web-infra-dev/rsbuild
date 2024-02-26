@@ -78,7 +78,8 @@ export async function createRsbuild(
   };
 
   if (rsbuildConfig.plugins) {
-    rsbuild.addPlugins(rsbuildConfig.plugins);
+    const plugins = await Promise.all(rsbuildConfig.plugins);
+    rsbuild.addPlugins(plugins);
   }
 
   return rsbuild;

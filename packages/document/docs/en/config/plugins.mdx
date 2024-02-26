@@ -1,9 +1,24 @@
 # plugins
 
-Used to register Rsbuild plugins. Please check the [Plugin List](/plugins/list/index) to discover available plugins.
+Used to register Rsbuild plugins.
 
-- **Type:** `RsbuildPlugin[]`
+Async plugin (promise) in the plugins array will be resolved, and falsy values will be ignored.
+
+- **Type:**
+
+```ts
+type Falsy = false | null | undefined;
+
+type RsbuildPlugins = (
+  | RsbuildPlugin
+  | Falsy
+  | Promise<RsbuildPlugin | Falsy>
+)[];
+```
+
 - **Default:** `undefined`
+
+> Please check out the [Plugin List](/plugins/list/index) page to discover all available plugins.
 
 ## Example
 

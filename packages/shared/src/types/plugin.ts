@@ -73,7 +73,10 @@ export type ModifyWebpackConfigFn = (
 
 export type PluginManager = {
   readonly plugins: RsbuildPlugin[];
-  addPlugins: (plugins: RsbuildPlugins, options?: { before?: string }) => void;
+  addPlugins: (
+    plugins: Array<RsbuildPlugin | Falsy>,
+    options?: { before?: string },
+  ) => void;
   removePlugins: (pluginNames: string[]) => void;
   isPluginExists: (pluginName: string) => boolean;
   /** The plugin API. */
@@ -108,7 +111,11 @@ export type RsbuildPlugin = {
   remove?: string[];
 };
 
-export type RsbuildPlugins = (RsbuildPlugin | Falsy)[];
+export type RsbuildPlugins = (
+  | RsbuildPlugin
+  | Falsy
+  | Promise<RsbuildPlugin | Falsy>
+)[];
 
 type PluginsFn<T = undefined> = T extends undefined
   ? () => Promise<RsbuildPlugin>
