@@ -20,8 +20,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         ],
       },
       "parser": {
@@ -124,8 +123,7 @@ exports[`svgr > 'export default Component' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         ],
       },
       "parser": {
@@ -220,8 +218,7 @@ exports[`svgr > 'export default url' 1`] = `
       },
       "issuer": {
         "not": [
-          /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-          /\\\\\\.\\(\\?:ts\\|mts\\|cts\\|tsx\\)\\$/,
+          /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         ],
       },
       "parser": {
