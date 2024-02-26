@@ -80,19 +80,6 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         },
       });
 
-      rule
-        .oneOf(CHAIN_ID.ONE_OF.SVG_INLINE)
-        .type('asset/inline')
-        .resourceQuery(/inline/);
-
-      rule
-        .oneOf(CHAIN_ID.ONE_OF.SVG_URL)
-        .type('asset/resource')
-        .resourceQuery(/url/)
-        .set('generator', {
-          filename: outputName,
-        });
-
       const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
       const svgrRule = rule.oneOf(CHAIN_ID.ONE_OF.SVG).type('javascript/auto');
 
