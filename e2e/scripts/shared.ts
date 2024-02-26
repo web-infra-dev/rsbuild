@@ -8,6 +8,7 @@ import { pluginSwc } from '@rsbuild/plugin-swc';
 import type {
   RsbuildConfig,
   RsbuildPlugin,
+  RsbuildPlugins,
   CreateRsbuildOptions,
 } from '@rsbuild/core';
 import type { Page } from 'playwright';
@@ -33,30 +34,27 @@ const noop = async () => {};
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions,
-  plugins: RsbuildPlugin[] = [],
+  plugins: RsbuildPlugins = [],
 ) => {
   const { createRsbuild } = await import('@rsbuild/core');
 
+  rsbuildOptions.rsbuildConfig ||= {};
+  rsbuildOptions.rsbuildConfig.plugins = [
+    ...(rsbuildOptions.rsbuildConfig.plugins || []),
+    ...(plugins || []),
+  ];
+
   if (process.env.PROVIDE_TYPE === 'rspack') {
     const rsbuild = await createRsbuild(rsbuildOptions);
-
-    if (plugins) {
-      rsbuild.addPlugins(plugins);
-    }
 
     return rsbuild;
   }
 
   const { webpackProvider } = await import('@rsbuild/webpack');
 
-  rsbuildOptions.rsbuildConfig ||= {};
   rsbuildOptions.rsbuildConfig.provider = webpackProvider;
 
   const rsbuild = await createRsbuild(rsbuildOptions);
-
-  if (plugins) {
-    rsbuild.addPlugins(plugins);
-  }
 
   const swc = pluginSwc();
   if (!rsbuild.isPluginExists(swc.name)) {
@@ -177,7 +175,7 @@ export async function build({
   runServer = false,
   ...options
 }: CreateRsbuildOptions & {
-  plugins?: RsbuildPlugin[];
+  plugins?: RsbuildPlugins;
   runServer?: boolean;
 }) {
   process.env.NODE_ENV = 'production';
