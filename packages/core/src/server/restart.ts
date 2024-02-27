@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { color, logger } from '@rsbuild/shared';
-import { init } from '../cli/commands';
+import { init } from '../cli/init';
 
 type Cleaner = () => Promise<unknown> | unknown;
 

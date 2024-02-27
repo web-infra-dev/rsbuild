@@ -7,7 +7,7 @@ import {
   type RsbuildContext,
   type BuildCacheOptions,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
+import type { NormalizedConfig, RsbuildPlugin } from '../types';
 
 async function validateCache(
   cacheDirectory: string,
@@ -57,7 +57,10 @@ function getCacheDirectory(
  * webpack can't detect the changes of framework config, tsconfig, tailwind config and browserslist config.
  * but they will affect the compilation result, so they need to be added to buildDependencies.
  */
-async function getBuildDependencies(context: Readonly<RsbuildContext>) {
+async function getBuildDependencies(
+  context: Readonly<RsbuildContext>,
+  config: NormalizedConfig,
+) {
   const rootPackageJson = join(context.rootPath, 'package.json');
   const browserslistConfig = join(context.rootPath, '.browserslistrc');
 
@@ -69,6 +72,10 @@ async function getBuildDependencies(context: Readonly<RsbuildContext>) {
 
   if (context.tsconfigPath) {
     buildDependencies.tsconfig = [context.tsconfigPath];
+  }
+
+  if (config._privateMeta?.configFilePath) {
+    buildDependencies.rsbuildConfig = [config._privateMeta.configFilePath];
   }
 
   if (await isFileExists(browserslistConfig)) {
@@ -93,7 +100,8 @@ export const pluginCache = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { target, env }) => {
-      const { buildCache } = api.getNormalizedConfig().performance;
+      const config = api.getNormalizedConfig();
+      const { buildCache } = config.performance;
 
       if (buildCache === false) {
         chain.cache(false);
@@ -103,7 +111,7 @@ export const pluginCache = (): RsbuildPlugin => ({
       const { context } = api;
       const cacheConfig = typeof buildCache === 'boolean' ? {} : buildCache;
       const cacheDirectory = getCacheDirectory(cacheConfig, context);
-      const buildDependencies = await getBuildDependencies(context);
+      const buildDependencies = await getBuildDependencies(context, config);
 
       await validateCache(cacheDirectory, buildDependencies);
 

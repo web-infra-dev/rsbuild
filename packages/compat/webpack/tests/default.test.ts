@@ -5,7 +5,13 @@ describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctly', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'development';
-    const rsbuild = await createStubRsbuild({});
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        _privateMeta: {
+          configFilePath: '/path/to/rsbuild.config.ts',
+        },
+      },
+    });
 
     const config = await rsbuild.unwrapConfig();
 

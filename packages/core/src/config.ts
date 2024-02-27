@@ -108,14 +108,19 @@ export async function loadConfig({
   path?: string;
   envMode?: string;
 }): Promise<{ content: RsbuildConfig; filePath: string | null }> {
-  const configFile = resolveConfigPath(cwd, path);
+  const configFilePath = resolveConfigPath(cwd, path);
 
-  if (!configFile) {
+  if (!configFilePath) {
     return {
       content: {},
-      filePath: configFile,
+      filePath: configFilePath,
     };
   }
+
+  const applyMetaInfo = (config: RsbuildConfig) => {
+    config._privateMeta = { configFilePath };
+    return config;
+  };
 
   try {
     const { default: jiti } = await import('@rsbuild/shared/jiti');
@@ -126,7 +131,7 @@ export async function loadConfig({
       interopDefault: true,
     });
 
-    const configExport = loadConfig(configFile) as RsbuildConfigExport;
+    const configExport = loadConfig(configFilePath) as RsbuildConfigExport;
 
     if (typeof configExport === 'function') {
       const command = process.argv[2];
@@ -143,8 +148,8 @@ export async function loadConfig({
       }
 
       return {
-        content: result,
-        filePath: configFile,
+        content: applyMetaInfo(result),
+        filePath: configFilePath,
       };
     }
 
@@ -157,11 +162,11 @@ export async function loadConfig({
     }
 
     return {
-      content: configExport,
-      filePath: configFile,
+      content: applyMetaInfo(configExport),
+      filePath: configFilePath,
     };
   } catch (err) {
-    logger.error(`Failed to load file: ${color.dim(configFile)}`);
+    logger.error(`Failed to load file: ${color.dim(configFilePath)}`);
     throw err;
   }
 }
