@@ -78,7 +78,7 @@ export function loadEnv({
 
     Object.keys(parsed).forEach((key) => {
       // do not cleanup NODE_ENV,
-      // otherwise the .env.${mode} file will not load
+      // otherwise the .env.${mode} file will not be loaded
       if (key === 'NODE_ENV') {
         return;
       }
