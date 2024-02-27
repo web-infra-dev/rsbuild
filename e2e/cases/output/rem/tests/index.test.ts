@@ -83,4 +83,9 @@ test('should extract runtime code when inlineRuntime is false', async () => {
   expect(htmlFile).toBeTruthy();
   expect(retryFile).toBeTruthy();
   expect(files[htmlFile!].includes('function setRootPixel')).toBeFalsy();
+  expect(
+    files[htmlFile!].match(
+      /<script src="\/static\/js\/convert-rem.\w+.\w+.\w+.js"/,
+    ),
+  );
 });
