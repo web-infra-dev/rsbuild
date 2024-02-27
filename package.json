@@ -39,7 +39,7 @@
     "@biomejs/biome": "1.5.3",
     "@changesets/cli": "^2.27.1",
     "@ls-lint/ls-lint": "^2.2.2",
-    "@modern-js/module-tools": "^2.47.0",
+    "@modern-js/module-tools": "^2.47.1",
     "@rsbuild/tsconfig": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
