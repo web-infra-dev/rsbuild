@@ -60,7 +60,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
 
   options: Required<AutoSetRootFontSizeOptions>;
 
-  webpackEntries: Array<string>;
+  entries: Array<string>;
 
   scriptPath: string;
 
@@ -75,7 +75,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
     this.options = { ...DEFAULT_OPTIONS, ...(options || {}) };
     this.scriptPath = '';
     this.distDir = distDir;
-    this.webpackEntries = entries;
+    this.entries = entries;
     this.HtmlPlugin = HtmlPlugin;
   }
 
@@ -129,7 +129,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
         this.name,
         async (data) => {
           const isExclude = this.options.excludeEntries.find((item: string) => {
-            if (!this.webpackEntries.includes(item)) {
+            if (!this.entries.includes(item)) {
               logger.error(`convertToRem: can't find the entryName: ${item}`);
               return false;
             }

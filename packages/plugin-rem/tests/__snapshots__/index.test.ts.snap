@@ -241,6 +241,7 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
     AutoSetRootFontSizePlugin {
       "HtmlPlugin": [Function],
       "distDir": "static/js",
+      "entries": [],
       "name": "AutoSetRootFontSizePlugin",
       "options": {
         "enableRuntime": true,
@@ -260,7 +261,6 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
         "widthQueryKey": "",
       },
       "scriptPath": "",
-      "webpackEntries": [],
     },
   ],
 }
@@ -636,6 +636,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
     AutoSetRootFontSizePlugin {
       "HtmlPlugin": [Function],
       "distDir": "static/js",
+      "entries": [],
       "name": "AutoSetRootFontSizePlugin",
       "options": {
         "enableRuntime": true,
@@ -650,7 +651,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
         "widthQueryKey": "",
       },
       "scriptPath": "",
-      "webpackEntries": [],
     },
   ],
 }

@@ -76,12 +76,38 @@ test('should extract runtime code when inlineRuntime is false', async () => {
   const files = await rsbuild.unwrapOutputJSON();
 
   const htmlFile = Object.keys(files).find((file) => file.endsWith('.html'));
-  const retryFile = Object.keys(files).find(
+  const remFile = Object.keys(files).find(
     (file) => file.includes('/convert-rem') && file.endsWith('.js'),
   );
 
   expect(htmlFile).toBeTruthy();
-  expect(retryFile).toBeTruthy();
+  expect(remFile).toBeTruthy();
+  expect(files[htmlFile!].includes('function setRootPixel')).toBeFalsy();
+});
+
+test('should apply crossorigin to rem runtime script', async () => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    plugins: [
+      pluginReact(),
+      pluginRem({
+        inlineRuntime: false,
+      }),
+    ],
+    rsbuildConfig: {
+      html: {
+        crossorigin: 'use-credentials',
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const htmlFile = Object.keys(files).find((file) => file.endsWith('.html'));
+
+  expect(htmlFile).toBeTruthy();
+  expect(files[htmlFile!]).toMatch(
+    /<script src="\/static\/js\/convert-rem.\w+.\w+.\w+.js" crossorigin="use-credentials">/,
+  );
   expect(files[htmlFile!].includes('function setRootPixel')).toBeFalsy();
   expect(
     files[htmlFile!].match(
