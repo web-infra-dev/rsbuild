@@ -148,7 +148,6 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
           const scriptTag = generateScriptTag();
 
           if (this.options.inlineRuntime) {
-            // At iOS webview, the meta of viewport should be placed before the rem runtime code.
             data.assetTags.scripts.unshift({
               ...scriptTag,
               innerHTML: await getRuntimeCode(),
