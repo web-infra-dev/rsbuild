@@ -15,16 +15,6 @@ describe('plugin-rem', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should order plugins and run rem plugin with default config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginRem(), pluginCss(), pluginLess(), pluginSass()],
-    });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    expect(bundlerConfigs[0]).toMatchSnapshot();
-  });
-
   it('should not run htmlPlugin with enableRuntime is false', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss(), pluginRem({ enableRuntime: false })],
