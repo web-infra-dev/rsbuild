@@ -1,4 +1,4 @@
-import type { CrossOrigin } from '@rsbuild/shared';
+import { DEFAULT_ASSET_PREFIX, type CrossOrigin } from '@rsbuild/shared';
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
 import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
@@ -18,14 +18,22 @@ export class HtmlCrossOriginPlugin implements RspackPluginInstance {
   }
 
   apply(compiler: Compiler): void {
-    if (
-      !this.crossOrigin ||
-      // align with crossOriginLoading logic
-      // https://github.com/web-infra-dev/rspack/blob/bc8e67b5419adda15c2b389517c9b37d02c8240f/crates/rspack_plugin_runtime/src/runtime_module/load_script.rs#L39
-      (compiler.options.output.publicPath === '/' &&
-        this.crossOrigin !== ('use-credentials' as const))
-    ) {
+    if (!this.crossOrigin) {
       return;
+    }
+
+    // no need to set crossorigin="anonymous" if asset domain is the same as
+    // the page domain, align with webpack's crossOriginLoading logic.
+    // see: https://github.com/webpack/webpack/blob/611bded369b5a9ea695f2669b25a6f88b67d7826/lib/runtime/LoadScriptRuntimeModule.js#L100-L111
+    if (this.crossOrigin !== 'use-credentials') {
+      const { publicPath } = compiler.options.output;
+      if (
+        !publicPath ||
+        publicPath === DEFAULT_ASSET_PREFIX ||
+        publicPath === 'auto'
+      ) {
+        return;
+      }
     }
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
