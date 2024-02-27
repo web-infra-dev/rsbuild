@@ -9,6 +9,7 @@ const OVERRIDE_PATH = [
   'output.targets',
   'server.printUrls',
   'dev.startUrl',
+  'provider',
 ];
 
 /**
