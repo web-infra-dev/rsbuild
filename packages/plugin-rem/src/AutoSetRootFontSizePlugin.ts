@@ -148,7 +148,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
           const scriptTag = generateScriptTag();
 
           if (this.options.inlineRuntime) {
-            data.headTags.unshift({
+            data.headTags.push({
               ...scriptTag,
               innerHTML: await getRuntimeCode(),
             });
