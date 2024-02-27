@@ -72,12 +72,21 @@ export function loadEnv({
 
   let cleaned = false;
   const cleanup = () => {
-    if (cleaned) return;
+    if (cleaned) {
+      return;
+    }
+
     Object.keys(parsed).forEach((key) => {
+      // should not cleanup NODE_ENV
+      if (key === 'NODE_ENV') {
+        return;
+      }
+
       if (process.env[key] === parsed[key]) {
         delete process.env[key];
       }
     });
+
     cleaned = true;
   };
 
