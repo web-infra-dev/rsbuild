@@ -15,7 +15,10 @@ export const pluginProgress = (): RsbuildPlugin => ({
         return;
       }
 
-      const prefix = options !== true ? options.id : TARGET_ID_MAP[target];
+      const prefix =
+        options !== true && options.id !== undefined
+          ? options.id
+          : TARGET_ID_MAP[target];
 
       const { ProgressPlugin } = await import('@rspack/core');
       chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(ProgressPlugin, [
