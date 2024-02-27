@@ -10,11 +10,14 @@ Rsbuild 的配置结构如下所示：
 
 ```ts title="rsbuild.config.ts"
 export default {
+  plugins: [
+    // 配置 Rsbuild 插件
+  ],
   dev: {
     // 与本地开发有关的选项
   },
   html: {
-    // 与 HTML 有关的选项
+    // 与 HTML 生成有关的选项
   },
   tools: {
     // 与底层工具有关的选项
@@ -26,10 +29,11 @@ export default {
     // 与源代码解析、编译方式相关的选项
   },
   server: {
-    // 与 Rsbuild 服务器有关的选项，在本地开发和预览时都会生效
+    // 与 Rsbuild 服务器有关的选项
+    // 在本地开发和预览时都会生效
   },
   security: {
-    // 与安全有关的选项
+    // 与 Web 安全有关的选项
   },
   performance: {
     // 与构建性能、运行时性能有关的选项
