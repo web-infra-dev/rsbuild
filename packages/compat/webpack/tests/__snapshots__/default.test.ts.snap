@@ -4,6 +4,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
 {
   "cache": {
     "buildDependencies": {
+      "rsbuildConfig": [
+        "/path/to/rsbuild.config.ts",
+      ],
       "tsconfig": [
         "<ROOT>/packages/compat/webpack/tests/tsconfig.json",
       ],

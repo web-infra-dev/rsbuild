@@ -19,6 +19,13 @@ export type ModuleFederationConfig = {
 
 export type NormalizedModuleFederationConfig = ModuleFederationConfig;
 
+export type RsbuildConfigMeta = {
+  /**
+   * Path to the rsbuild config file
+   */
+  configFilePath: string;
+};
+
 /**
  * The shared Rsbuild config.
  * Can be used with both Rspack and Webpack.
@@ -35,6 +42,7 @@ export interface RsbuildConfig {
   performance?: PerformanceConfig;
   moduleFederation?: ModuleFederationConfig;
   provider?: RsbuildProvider<'rspack'> | RsbuildProvider<'webpack'>;
+  _privateMeta?: RsbuildConfigMeta;
 }
 
 export type NormalizedConfig = DeepReadonly<{
@@ -49,6 +57,7 @@ export type NormalizedConfig = DeepReadonly<{
   performance: NormalizedPerformanceConfig;
   moduleFederation?: ModuleFederationConfig;
   provider?: RsbuildProvider<'rspack'> | RsbuildProvider<'webpack'>;
+  _privateMeta?: RsbuildConfigMeta;
 }>;
 
 export * from './dev';
