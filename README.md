@@ -107,6 +107,11 @@ Some of the implementations of Rsbuild have drawn inspiration from outstanding p
 
 This Rsbuild website is powered by [Netlify](https://www.netlify.com/).
 
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=web-infra-dev/rsbuild&type=Date)](https://star-history.com/#web-infra-dev/rsbuild&Date)
+
 ## 📖 License
 
 Rsbuild is licensed under the [MIT License](https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE).

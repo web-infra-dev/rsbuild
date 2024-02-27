@@ -109,6 +109,12 @@ Rsbuild 的一些实现参考了社区中杰出的项目，对他们表示感谢
 
 Rsbuild 网站由 [Netlify](https://www.netlify.com/) 提供支持。
 
+## Star 趋势
+
+[![Star History Chart](https://api.star-history.com/svg?repos=web-infra-dev/rsbuild&type=Date)](https://star-history.com/#web-infra-dev/rsbuild&Date)
+
 ## 📖 License
 
 Rsbuild 项目基于 [MIT 协议](https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE)，请自由地享受和参与开源。
+
+
