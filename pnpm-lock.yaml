@@ -413,6 +413,9 @@ importers:
       '@rsbuild/plugin-react':
         specifier: link:../../packages/plugin-react
         version: link:../../packages/plugin-react
+      '@rsbuild/plugin-rem':
+        specifier: workspace:*
+        version: link:../../packages/plugin-rem
       typescript:
         specifier: ^5.3.0
         version: 5.3.2

@@ -1,9 +1,8 @@
-import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
 import { pluginRem } from '@rsbuild/plugin-rem';
 
-test('html with rem runtime code', async () => {
+test('should inject rem runtime code after meta tags', async () => {
   const viewportValue =
     'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover';
   const remRuntimeCodeKeyWord = 'setRootPixel';
@@ -11,11 +10,6 @@ test('html with rem runtime code', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       plugins: [pluginRem()],
-      source: {
-        entry: {
-          index: path.resolve(__dirname, './src/index.js'),
-        },
-      },
       html: {
         meta: {
           viewport: viewportValue,

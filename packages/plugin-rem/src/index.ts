@@ -60,6 +60,8 @@ export const pluginRem = (options: PluginRemOptions = {}): RsbuildPlugin => ({
 
       chain
         .plugin(CHAIN_ID.PLUGIN.AUTO_SET_ROOT_SIZE)
+        // apply crossorigin to the rem runtime script
+        .before(CHAIN_ID.PLUGIN.HTML_CROSS_ORIGIN)
         .use(AutoSetRootFontSizePlugin, [
           userOptions,
           entries,
