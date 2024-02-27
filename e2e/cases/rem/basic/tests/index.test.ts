@@ -109,4 +109,9 @@ test('should apply crossorigin to rem runtime script', async () => {
     /<script src="\/static\/js\/convert-rem.\w+.\w+.\w+.js" crossorigin="use-credentials">/,
   );
   expect(files[htmlFile!].includes('function setRootPixel')).toBeFalsy();
+  expect(
+    files[htmlFile!].match(
+      /<script src="\/static\/js\/convert-rem.\w+.\w+.\w+.js"/,
+    ),
+  );
 });

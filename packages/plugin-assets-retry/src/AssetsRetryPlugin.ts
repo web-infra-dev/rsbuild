@@ -54,7 +54,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
 
   async getScriptPath() {
     if (!this.scriptPath) {
-      this.scriptPath = path.join(
+      this.scriptPath = path.posix.join(
         this.distDir,
         `assets-retry.${RSBUILD_VERSION}.js`,
       );
