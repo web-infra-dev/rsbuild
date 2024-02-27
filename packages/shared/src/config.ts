@@ -196,6 +196,7 @@ export const pickRsbuildConfig = (
     'security',
     'performance',
     'moduleFederation',
+    '_privateMeta',
   ];
   return pick(rsbuildConfig, keys);
 };
