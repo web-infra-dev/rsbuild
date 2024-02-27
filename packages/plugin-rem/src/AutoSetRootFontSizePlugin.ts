@@ -155,7 +155,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
           } else {
             const publicPath = getPublicPathFromCompiler(compiler);
             const url = withPublicPath(await this.getScriptPath(), publicPath);
-            data.headTags.push({
+            data.headTags.unshift({
               ...scriptTag,
               attributes: {
                 ...scriptTag.attributes,
