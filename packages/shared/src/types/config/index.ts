@@ -21,7 +21,7 @@ export type NormalizedModuleFederationConfig = ModuleFederationConfig;
 
 export type RsbuildConfigMeta = {
   /**
-   * Path to the rsbuild config file
+   * Path to the rsbuild config file.
    */
   configFilePath: string;
 };
@@ -31,17 +31,54 @@ export type RsbuildConfigMeta = {
  * Can be used with both Rspack and Webpack.
  * */
 export interface RsbuildConfig {
+  /**
+   * Options for local development.
+   */
   dev?: DevConfig;
+  /**
+   * Options for HTML generation.
+   */
   html?: HtmlConfig;
+  /**
+   * Options for the low-level tools.
+   */
   tools?: ToolsConfig;
+  /**
+   * Options for source code parsing and compilation.
+   */
   source?: SourceConfig;
+  /**
+   * Options for the Rsbuild Server,
+   * will take effect during local development and preview.
+   */
   server?: ServerConfig;
+  /**
+   * Options for build outputs.
+   */
   output?: OutputConfig;
+  /**
+   * Configure Rsbuild plugins.
+   */
   plugins?: RsbuildPlugins;
+  /**
+   * Options for Web security.
+   */
   security?: SecurityConfig;
+  /**
+   * Options for build performance and runtime performance.
+   */
   performance?: PerformanceConfig;
+  /**
+   * Options for module federation.
+   */
   moduleFederation?: ModuleFederationConfig;
+  /**
+   * Used to switch the bundler type.
+   */
   provider?: RsbuildProvider<'rspack'> | RsbuildProvider<'webpack'>;
+  /**
+   * @private
+   */
   _privateMeta?: RsbuildConfigMeta;
 }
 
