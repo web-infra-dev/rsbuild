@@ -58,6 +58,7 @@ const getIpv4Interfaces = () => {
       }
     });
   });
+
   return Array.from(ipv4Interfaces.values());
 };
 
@@ -103,7 +104,7 @@ export const getAddressUrls = ({
   protocol?: string;
   port: number;
   host?: string;
-}) => {
+}): AddressUrl[] => {
   if (host && host !== DEFAULT_DEV_HOST) {
     return [
       {
@@ -118,17 +119,29 @@ export const getAddressUrls = ({
   }
 
   const ipv4Interfaces = getIpv4Interfaces();
+  const addressUrls: AddressUrl[] = [];
+  let hasLocalUrl = false;
 
-  return ipv4Interfaces.map((detail) => {
+  ipv4Interfaces.forEach((detail) => {
     if (isLoopbackHost(detail.address) || detail.internal) {
-      return {
+      // avoid multiple prints of localhost
+      // https://github.com/web-infra-dev/rsbuild/discussions/1543
+      if (hasLocalUrl) {
+        return;
+      }
+
+      addressUrls.push({
         label: LOCAL_LABEL,
         url: concatUrl({ host: 'localhost', port, protocol }),
-      };
+      });
+      hasLocalUrl = true;
+    } else {
+      addressUrls.push({
+        label: NETWORK_LABEL,
+        url: concatUrl({ host: detail.address, port, protocol }),
+      });
     }
-    return {
-      label: NETWORK_LABEL,
-      url: concatUrl({ host: detail.address, port, protocol }),
-    };
   });
+
+  return addressUrls;
 };
