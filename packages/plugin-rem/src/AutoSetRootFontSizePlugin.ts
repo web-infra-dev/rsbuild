@@ -125,7 +125,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       // @ts-expect-error compilation type mismatch
-      this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapPromise(
+      this.HtmlPlugin.getHooks(compilation).alterAssetTags.tapPromise(
         this.name,
         async (data) => {
           const isExclude = this.options.excludeEntries.find((item: string) => {
@@ -148,14 +148,14 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
           const scriptTag = generateScriptTag();
 
           if (this.options.inlineRuntime) {
-            data.headTags.push({
+            data.assetTags.scripts.unshift({
               ...scriptTag,
               innerHTML: await getRuntimeCode(),
             });
           } else {
             const publicPath = getPublicPathFromCompiler(compiler);
             const url = withPublicPath(await this.getScriptPath(), publicPath);
-            data.headTags.unshift({
+            data.assetTags.scripts.unshift({
               ...scriptTag,
               attributes: {
                 ...scriptTag.attributes,
