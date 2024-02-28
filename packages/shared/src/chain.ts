@@ -173,6 +173,8 @@ export const CHAIN_ID = {
     COPY: 'copy',
     /** HtmlWebpackPlugin */
     HTML: 'html',
+    /** ESLintWebpackPlugin */
+    ESLINT: 'eslint',
     /** DefinePlugin */
     DEFINE: 'define',
     /** ProgressPlugin */
