@@ -17,14 +17,14 @@ describe('mergeRsbuildConfig', () => {
     expect(
       mergeRsbuildConfig(
         { source: { alias: {} } },
-        { output: { disableMinimize: true } },
+        { output: { minify: false } },
       ),
     ).toEqual({
       source: {
         alias: {},
       },
       output: {
-        disableMinimize: true,
+        minify: false,
       },
     });
   });

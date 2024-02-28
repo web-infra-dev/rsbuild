@@ -1,7 +1,12 @@
 import { isObject } from './utils';
 import { mergeChainedOptions } from './mergeChainedOptions';
-import type { NormalizedConfig, TerserPluginOptions } from './types';
+import type {
+  HTMLPluginOptions,
+  NormalizedConfig,
+  TerserPluginOptions,
+} from './types';
 import type { SwcJsMinimizerRspackPluginOptions } from '@rspack/core';
+import deepmerge from '../compiled/deepmerge';
 
 function applyRemoveConsole(
   options: TerserPluginOptions,
@@ -110,5 +115,51 @@ export const getSwcMinimizerOptions = (config: NormalizedConfig) => {
 
   options.format.asciiOnly = config.output.charset === 'ascii';
 
+  const jsOptions = parseMinifyOptions(config).jsOptions;
+  if (jsOptions) {
+    return deepmerge(options, jsOptions);
+  }
+
   return options;
+};
+
+export const parseMinifyOptions = (
+  config: NormalizedConfig,
+  isProd = true,
+): {
+  minifyJs: boolean;
+  minifyCss: boolean;
+  minifyHtml: boolean;
+  jsOptions?: SwcJsMinimizerRspackPluginOptions;
+  htmlOptions?: HTMLPluginOptions['minify'];
+} => {
+  const minify = config.output.minify;
+
+  if (minify === false || !isProd) {
+    return {
+      minifyJs: false,
+      minifyCss: false,
+      minifyHtml: false,
+      jsOptions: undefined,
+      htmlOptions: undefined,
+    };
+  }
+
+  if (minify === true) {
+    return {
+      minifyJs: true,
+      minifyCss: true,
+      minifyHtml: true,
+      jsOptions: undefined,
+      htmlOptions: undefined,
+    };
+  }
+
+  return {
+    minifyJs: minify.js !== false,
+    minifyCss: minify.css !== false,
+    minifyHtml: minify.html !== false,
+    jsOptions: minify.jsOptions,
+    htmlOptions: minify.htmlOptions,
+  };
 };

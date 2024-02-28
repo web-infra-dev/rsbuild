@@ -4,6 +4,7 @@ import {
   DEFAULT_BROWSERSLIST,
   applyScriptCondition,
   type RsbuildPlugin,
+  parseMinifyOptions,
 } from '@rsbuild/shared';
 import type { PluginSwcOptions, TransformConfig } from './types';
 import {
@@ -119,13 +120,17 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
             minimizersChain.delete(CHAIN_ID.MINIMIZER.CSS).end();
           }
 
+          const { minifyJs, minifyCss } = parseMinifyOptions(rsbuildConfig);
+
           minimizersChain
             .end()
             .minimizer(CHAIN_ID.MINIMIZER.SWC)
             .use(SwcMinimizerPlugin, [
               {
-                jsMinify: mainConfig.jsMinify ?? mainConfig.jsc?.minify,
-                cssMinify: mainConfig.cssMinify,
+                jsMinify: minifyJs
+                  ? mainConfig.jsMinify ?? mainConfig.jsc?.minify
+                  : false,
+                cssMinify: minifyCss ? mainConfig.cssMinify : false,
                 rsbuildConfig,
               },
             ]);

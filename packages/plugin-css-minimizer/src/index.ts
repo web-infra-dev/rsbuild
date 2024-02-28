@@ -4,6 +4,7 @@ import {
   type BundlerChain,
   type ChainedConfig,
   type ChainIdentifier,
+  parseMinifyOptions,
 } from '@rsbuild/shared';
 import type CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
@@ -68,7 +69,11 @@ export const pluginCssMinimizer = (
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
       const config = api.getNormalizedConfig();
-      const isMinimize = isProd && !config.output.disableMinimize;
+      const isMinimize =
+        isProd &&
+        !config.output.disableMinimize &&
+        config.output.minify !== false &&
+        parseMinifyOptions(config).minifyCss;
 
       if (isMinimize) {
         await applyCSSMinimizer(chain, CHAIN_ID, options);

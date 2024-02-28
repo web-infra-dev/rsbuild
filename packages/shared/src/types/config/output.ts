@@ -1,6 +1,11 @@
 import type { RspackConfig } from '../rspack';
 import type { RsbuildTarget } from '../rsbuild';
-import type { CopyRspackPluginOptions, Externals } from '@rspack/core';
+import type {
+  CopyRspackPluginOptions,
+  Externals,
+  SwcJsMinimizerRspackPluginOptions,
+} from '@rspack/core';
+import type { HTMLPluginOptions } from '../../types';
 
 export type DistPathConfig = {
   /**
@@ -147,6 +152,31 @@ export type CssModules = {
   exportLocalsConvention?: CssModuleLocalsConvention;
 };
 
+export type Minify =
+  | boolean
+  | {
+      /**
+       * Whether to enable JavaScript minification.
+       */
+      js?: boolean;
+      /**
+       * Minimizer options of JavaScript, which will be passed to swc.
+       */
+      jsOptions?: SwcJsMinimizerRspackPluginOptions;
+      /**
+       * Whether to enable CSS minimization.
+       */
+      css?: boolean;
+      /**
+       * Whether to enable HTML minimization.
+       */
+      html?: boolean;
+      /**
+       * Minimizer options of HTML, which will be passed to html-rspack-plugin.
+       */
+      htmlOptions?: HTMLPluginOptions['minify'];
+    };
+
 export type CopyPluginOptions = CopyRspackPluginOptions;
 
 export type InlineChunkTestFunction = (params: {
@@ -214,8 +244,13 @@ export interface OutputConfig {
   cssModules?: CssModules;
   /**
    * Whether to disable code minification in production build.
+   * @deprecated will be removed in v0.5.0, use `minify` instead.
    */
   disableMinimize?: boolean;
+  /**
+   * Whether to disable code minification in production build.
+   */
+  minify?: Minify;
   /**
    * Whether to generate source map files, and which format of source map to generate
    */
@@ -270,6 +305,7 @@ export interface NormalizedOutputConfig extends OutputConfig {
   assetPrefix: string;
   dataUriLimit: NormalizedDataUriLimit;
   disableMinimize: boolean;
+  minify: Minify;
   enableCssModuleTSDeclaration: boolean;
   inlineScripts: boolean | InlineChunkTest;
   inlineStyles: boolean | InlineChunkTest;

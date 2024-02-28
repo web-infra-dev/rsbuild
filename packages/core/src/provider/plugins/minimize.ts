@@ -1,4 +1,8 @@
-import { CHAIN_ID, getSwcMinimizerOptions } from '@rsbuild/shared';
+import {
+  CHAIN_ID,
+  getSwcMinimizerOptions,
+  parseMinifyOptions,
+} from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../../types';
 
 export const pluginMinimize = (): RsbuildPlugin => ({
@@ -7,7 +11,8 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { isProd }) => {
       const config = api.getNormalizedConfig();
-      const isMinimize = isProd && !config.output.disableMinimize;
+      const isMinimize =
+        isProd && config.output.minify && !config.output.disableMinimize;
 
       // set minimize to allow users to disable minimize
       chain.optimization.minimize(isMinimize);
@@ -19,13 +24,21 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       const { SwcJsMinimizerRspackPlugin, SwcCssMinimizerRspackPlugin } =
         await import('@rspack/core');
 
-      chain.optimization
-        .minimizer(CHAIN_ID.MINIMIZER.JS)
-        .use(SwcJsMinimizerRspackPlugin, [getSwcMinimizerOptions(config)])
-        .end()
-        .minimizer(CHAIN_ID.MINIMIZER.CSS)
-        .use(SwcCssMinimizerRspackPlugin, [])
-        .end();
+      const { minifyJs, minifyCss } = parseMinifyOptions(config);
+
+      if (minifyJs) {
+        chain.optimization
+          .minimizer(CHAIN_ID.MINIMIZER.JS)
+          .use(SwcJsMinimizerRspackPlugin, [getSwcMinimizerOptions(config)])
+          .end();
+      }
+
+      if (minifyCss) {
+        chain.optimization
+          .minimizer(CHAIN_ID.MINIMIZER.CSS)
+          .use(SwcCssMinimizerRspackPlugin, [])
+          .end();
+      }
     });
   },
 });

@@ -60,6 +60,7 @@ export function checkUseMinify(
   return (
     isProd &&
     !config.output.disableMinimize &&
+    config.output.minify &&
     (options.jsMinify !== false || options.cssMinify !== false)
   );
 }

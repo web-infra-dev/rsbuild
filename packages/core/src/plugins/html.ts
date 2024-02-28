@@ -5,7 +5,7 @@ import {
   isNil,
   isURL,
   castArray,
-  getMinify,
+  getHtmlMinifyOptions,
   getDistPath,
   isFileExists,
   isPlainObject,
@@ -241,7 +241,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
           return;
         }
 
-        const minify = await getMinify(isProd, config);
+        const minify = await getHtmlMinifyOptions(isProd, config);
         const assetPrefix = getPublicPathFromChain(chain, false);
         const entries = chain.entryPoints.entries() || {};
         const entryNames = Object.keys(entries);
