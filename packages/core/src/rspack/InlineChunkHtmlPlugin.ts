@@ -222,7 +222,6 @@ export class InlineChunkHtmlPlugin {
       const tagFunction = (tag: HtmlTagObject) =>
         this.getInlinedTag(publicPath, tag, compilation);
 
-      // @ts-expect-error compilation type mismatch
       const hooks = getHTMLPlugin().getHooks(compilation);
 
       hooks.alterAssetTagGroups.tap(this.name, (assets) => {

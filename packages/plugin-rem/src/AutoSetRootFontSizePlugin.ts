@@ -124,7 +124,6 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
     }
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
-      // @ts-expect-error compilation type mismatch
       this.HtmlPlugin.getHooks(compilation).alterAssetTags.tapPromise(
         this.name,
         async (data) => {

@@ -58,7 +58,6 @@ export class HtmlBasicPlugin {
 
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       getHTMLPlugin()
-        // @ts-expect-error compilation type mismatch
         .getHooks(compilation)
         .alterAssetTagGroups.tap(this.name, (data) => {
           const entryName = data.plugin.options?.entryName;

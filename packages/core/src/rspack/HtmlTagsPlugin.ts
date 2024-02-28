@@ -74,7 +74,6 @@ export class HtmlTagsPlugin {
   apply(compiler: Compiler) {
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       const compilationHash = compilation.hash || '';
-      // @ts-expect-error compilation type mismatch
       const hooks = getHTMLPlugin().getHooks(compilation);
       hooks.alterAssetTagGroups.tap(this.name, (params) => {
         // skip unmatched file and empty tag list.
