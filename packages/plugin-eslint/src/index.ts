@@ -1,3 +1,4 @@
+import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { Options } from 'eslint-webpack-plugin';
 
@@ -20,7 +21,7 @@ export const pluginEslint = (
   name: 'rsbuild:eslint',
 
   setup(api) {
-    const { enable = true } = options;
+    const { enable = true, eslintPluginOptions } = options;
 
     if (!enable) {
       return;
@@ -34,13 +35,20 @@ export const pluginEslint = (
       }
 
       const { default: ESLintPlugin } = await import('eslint-webpack-plugin');
-
-      const pluginOptions: Options = {
+      const defaultOptions = {
         extensions: ['js', 'jsx', 'mjs', 'cjs', 'ts', 'tsx', 'mts', 'cts'],
-        ...options.eslintPluginOptions,
+        exclude: [
+          'node_modules',
+          path.relative(api.context.rootPath, api.context.distPath),
+        ],
       };
 
-      chain.plugin(CHAIN_ID.PLUGIN.ESLINT).use(ESLintPlugin, [pluginOptions]);
+      chain.plugin(CHAIN_ID.PLUGIN.ESLINT).use(ESLintPlugin, [
+        {
+          ...defaultOptions,
+          ...eslintPluginOptions,
+        },
+      ]);
     });
   },
 });

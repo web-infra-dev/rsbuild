@@ -66,35 +66,3 @@ exports[`plugin-type-check > should apply fork-ts-checker-webpack-plugin correct
   ],
 }
 `;
-
-exports[`plugin-type-check > should only apply one ts-checker plugin when there is multiple targets 1`] = `
-{
-  "plugins": [
-    ForkTsCheckerWebpackPlugin {
-      "options": {
-        "issue": {
-          "exclude": [
-            {
-              "file": "**/*.(spec|test).ts",
-            },
-            {
-              "file": "**/node_modules/**/*",
-            },
-          ],
-        },
-        "logger": {
-          "error": [Function],
-          "log": [Function],
-        },
-        "typescript": {
-          "build": false,
-          "configFile": "<ROOT>/packages/plugin-type-check/tests/tsconfig.json",
-          "memoryLimit": 8192,
-          "mode": "readonly",
-          "typescriptPath": "<ROOT>/node_modules/<PNPM_INNER>/typescript/lib/typescript.js",
-        },
-      },
-    },
-  ],
-}
-`;
