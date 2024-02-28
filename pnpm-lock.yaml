@@ -108,6 +108,9 @@ importers:
       '@rsbuild/plugin-css-minimizer':
         specifier: workspace:*
         version: link:../packages/plugin-css-minimizer
+      '@rsbuild/plugin-eslint':
+        specifier: workspace:*
+        version: link:../packages/plugin-eslint
       '@rsbuild/plugin-image-compress':
         specifier: workspace:*
         version: link:../packages/plugin-image-compress
@@ -207,6 +210,12 @@ importers:
       typescript:
         specifier: ^5.3.0
         version: 5.3.2
+
+  e2e/cases/eslint:
+    dependencies:
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
 
   e2e/cases/pug/vue2-template:
     dependencies:
