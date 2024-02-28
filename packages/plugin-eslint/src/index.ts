@@ -26,7 +26,13 @@ export const pluginEslint = (
       return;
     }
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { target, CHAIN_ID }) => {
+      // If there is multiple target, only apply eslint plugin to the first target
+      // to avoid multiple eslint running at the same time
+      if (target !== api.context.targets[0]) {
+        return;
+      }
+
       const { default: ESLintPlugin } = await import('eslint-webpack-plugin');
 
       const pluginOptions: Options = {

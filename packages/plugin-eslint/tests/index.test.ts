@@ -8,8 +8,12 @@ describe('plugin-type-check', () => {
       rsbuildConfig: {},
       plugins: [pluginEslint()],
     });
-    const config = await rsbuild.unwrapConfig();
 
+    expect(
+      await rsbuild.matchBundlerPlugin('ESLintWebpackPlugin'),
+    ).toBeTruthy();
+
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -30,6 +34,25 @@ describe('plugin-type-check', () => {
     expect(config).toMatchSnapshot();
   });
 
+  it('should only apply one eslint plugin when there are multiple targets', async () => {
+    const rsbuild = await createStubRsbuild({
+      cwd: __dirname,
+      plugins: [pluginEslint()],
+      rsbuildConfig: {
+        output: {
+          targets: ['web', 'node'],
+        },
+      },
+    });
+
+    expect(
+      await rsbuild.matchBundlerPlugin('ESLintWebpackPlugin'),
+    ).toBeTruthy();
+
+    const configs = await rsbuild.initConfigs();
+    expect(configs[1].plugins).toBeFalsy();
+  });
+
   it('should disable eslint plugin when enable is false', async () => {
     const rsbuild = await createStubRsbuild({
       cwd: __dirname,
@@ -40,7 +63,6 @@ describe('plugin-type-check', () => {
       ],
     });
 
-    const configs = await rsbuild.unwrapConfig();
-    expect(configs).toMatchSnapshot();
+    expect(await rsbuild.matchBundlerPlugin('ESLintWebpackPlugin')).toBeFalsy();
   });
 });

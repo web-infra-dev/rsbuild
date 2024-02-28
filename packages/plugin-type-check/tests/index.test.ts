@@ -8,8 +8,12 @@ describe('plugin-type-check', () => {
       rsbuildConfig: {},
       plugins: [pluginTypeCheck()],
     });
-    const config = await rsbuild.unwrapConfig();
 
+    expect(
+      await rsbuild.matchBundlerPlugin('ForkTsCheckerWebpackPlugin'),
+    ).toBeTruthy();
+
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -27,8 +31,8 @@ describe('plugin-type-check', () => {
         }),
       ],
     });
-    const config = await rsbuild.unwrapConfig();
 
+    const config = await rsbuild.unwrapConfig();
     expect(config).toMatchSnapshot();
   });
 
@@ -43,8 +47,12 @@ describe('plugin-type-check', () => {
       },
     });
 
-    const configs = await rsbuild.unwrapConfig();
-    expect(configs).toMatchSnapshot();
+    expect(
+      await rsbuild.matchBundlerPlugin('ForkTsCheckerWebpackPlugin'),
+    ).toBeTruthy();
+
+    const configs = await rsbuild.initConfigs();
+    expect(configs[1].plugins).toBeFalsy();
   });
 
   it('should disable type checker when enable is false', async () => {
@@ -57,7 +65,8 @@ describe('plugin-type-check', () => {
       ],
     });
 
-    const configs = await rsbuild.unwrapConfig();
-    expect(configs).toMatchSnapshot();
+    expect(
+      await rsbuild.matchBundlerPlugin('ForkTsCheckerWebpackPlugin'),
+    ).toBeFalsy();
   });
 });

@@ -61,5 +61,3 @@ exports[`plugin-type-check > should apply eslint-webpack-plugin correctly 1`] = 
   ],
 }
 `;
-
-exports[`plugin-type-check > should disable eslint plugin when enable is false 1`] = `{}`;
