@@ -141,6 +141,10 @@ import logo from './logo.svg?url';
 console.log(logo); // => asset url
 ```
 
+:::tip
+When `svgDefaultExport` is set to `'component'`, the named imports (ReactComponent) cannot be used.
+:::
+
 ## Type Declaration
 
 When you reference an SVG asset in TypeScript code, TypeScript may prompt that the module is missing a type definition:
@@ -165,9 +169,7 @@ If you set `svgDefaultExport` to `'component'`, then change the type declaration
 
 ```ts
 declare module '*.svg' {
-  export const ReactComponent: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement>
-  >;
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
 ```
