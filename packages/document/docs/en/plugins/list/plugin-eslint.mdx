@@ -1,0 +1,94 @@
+# ESLint Plugin
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-eslint" />
+
+The ESLint plugin is used to run ESLint checks during the compilation. The plugin has integrated [eslint-webpack-plugin](https://www.npmjs.com/package/eslint-webpack-plugin) internally.
+
+:::tip
+Due to the high overhead of ESLint, running ESLint checks may significantly increase the build time.
+:::
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-eslint -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginEslint } from '@rsbuild/plugin-eslint';
+
+export default {
+  plugins: [pluginEslint()],
+};
+```
+
+## Options
+
+### enable
+
+Whether to enable ESLint checking.
+
+- **Type:** `boolean`
+- **Default:** `true`
+- **Example:**
+
+Disable ESLint checking:
+
+```js
+pluginEslint({
+  enable: false,
+});
+```
+
+Enable ESLint checking only during production builds:
+
+```js
+pluginEslint({
+  enable: process.env.NODE_ENV === 'production',
+});
+```
+
+Enable ESLint checking only during development builds:
+
+```js
+pluginEslint({
+  enable: process.env.NODE_ENV === 'development',
+});
+```
+
+### eslintPluginOptions
+
+To modify the options of `eslint-webpack-plugin`, please refer to [eslint-webpack-plugin - README](https://github.com/webpack-contrib/eslint-webpack-plugin#readme) to learn about available options.
+
+- **Type:** [Options](https://github.com/webpack-contrib/eslint-webpack-plugin/blob/master/types/options.d.ts)
+- **Default:**
+
+```ts
+const defaultOptions = {
+  extensions: ['js', 'jsx', 'mjs', 'cjs', 'ts', 'tsx', 'mts', 'cts'],
+  exclude: [
+    'node_modules',
+    'dist', // -> rsbuildConfig.output.distPath.root
+  ],
+};
+```
+
+The `eslintPluginOptions` object will be shallowly merged with the default configuration object.
+
+```ts
+pluginEslint({
+  eslintPluginOptions: {
+    exclude: ['node_modules', 'dist', './src/foo.js'],
+  },
+});
+```

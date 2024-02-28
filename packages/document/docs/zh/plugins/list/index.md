@@ -55,6 +55,7 @@
 
 - [Assets Retry 插件](/plugins/list/plugin-assets-retry)：用于在静态资源加载失败时自动发起重试请求。
 - [Babel 插件](/plugins/list/plugin-babel)：提供对 Babel 转译能力的支持。
+- [ESLint 插件](/plugins/list/plugin-eslint)：用于在编译过程中运行 ESLint 检查。
 - [Type Check 插件](/plugins/list/plugin-type-check)：用于在单独的进程中运行 TypeScript 类型检查。
 - [Image Compress 插件](/plugins/list/plugin-image-compress)：将项目中用到的图片资源进行压缩处理。
 - [MDX 插件](/plugins/list/plugin-mdx)：提供 MDX 支持。
