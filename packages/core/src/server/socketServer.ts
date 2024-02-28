@@ -16,7 +16,7 @@ export class SocketServer {
 
   private stats?: Stats;
 
-  private timer: NodeJS.Timeout | null = null;
+  private timer: ReturnType<typeof setInterval> | null = null;
 
   constructor(options: DevMiddlewaresConfig) {
     this.options = options;
