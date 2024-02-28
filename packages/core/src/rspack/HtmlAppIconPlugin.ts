@@ -35,7 +35,6 @@ export class HtmlAppIconPlugin {
     // add html asset tags
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       getHTMLPlugin()
-        // @ts-expect-error compilation type mismatch
         .getHooks(compilation)
         .alterAssetTagGroups.tap(this.name, (data) => {
           const publicPath = getPublicPathFromCompiler(compiler);

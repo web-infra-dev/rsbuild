@@ -136,7 +136,7 @@
   },
   "devDependencies": {
     "@types/node": "16.x",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.6.0",
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.6.1",
     "mini-css-extract-plugin": "2.8.0",
     "terser": "5.28.1",
     "terser-webpack-plugin": "5.3.10",

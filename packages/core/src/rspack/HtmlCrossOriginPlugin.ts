@@ -38,7 +38,6 @@ export class HtmlCrossOriginPlugin implements RspackPluginInstance {
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       getHTMLPlugin()
-        // @ts-expect-error compilation type mismatch
         .getHooks(compilation)
         .alterAssetTags.tap(this.name, (alterAssetTags) => {
           const {
