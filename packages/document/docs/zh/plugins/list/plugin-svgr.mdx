@@ -141,6 +141,10 @@ import logo from './logo.svg?url';
 console.log(logo); // => 资源 url
 ```
 
+:::tip
+当 `svgDefaultExport` 被设置为 `'component'` 时，具名导入（ReactComponent）将无法使用。
+:::
+
 ## 类型声明
 
 当你在 TypeScript 代码中引用 SVG 资源时，TypeScript 可能会提示该模块缺少类型定义：
@@ -165,9 +169,7 @@ declare module '*.svg' {
 
 ```ts
 declare module '*.svg' {
-  export const ReactComponent: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement>
-  >;
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
 ```
