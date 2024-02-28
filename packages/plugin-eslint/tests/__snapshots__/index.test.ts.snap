@@ -43,6 +43,10 @@ exports[`plugin-type-check > should apply eslint-webpack-plugin correctly 1`] = 
         "cacheLocation": "node_modules/.cache/eslint-webpack-plugin/.eslintcache",
         "emitError": true,
         "emitWarning": true,
+        "exclude": [
+          "node_modules",
+          "dist",
+        ],
         "extensions": [
           "js",
           "jsx",
