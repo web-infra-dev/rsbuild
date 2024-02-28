@@ -26,6 +26,7 @@
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/plugin-check-syntax": "workspace:*",
     "@rsbuild/plugin-css-minimizer": "workspace:*",
+    "@rsbuild/plugin-eslint": "workspace:*",
     "@rsbuild/plugin-image-compress": "workspace:*",
     "@rsbuild/plugin-mdx": "workspace:*",
     "@rsbuild/plugin-node-polyfill": "workspace:*",
