@@ -10,26 +10,30 @@ The configuration structure of Rsbuild looks like this:
 
 ```ts title="rsbuild.config.ts"
 export default {
+  plugins: [
+    // configure Rsbuild plugins
+  ],
   dev: {
     // options for local development
   },
   html: {
-    // options for HTML
+    // options for HTML generation
   },
   tools: {
     // options for the low-level tools
   },
   output: {
-    // options for build outputs.
+    // options for build outputs
   },
   source: {
     // options for source code parsing and compilation
   },
   server: {
-    // options for the Rsbuild Server, which will take effect during local development and preview
+    // options for the Rsbuild Server,
+    // will take effect during local development and preview
   },
   security: {
-    // options for security
+    // options for Web security
   },
   performance: {
     // options for build performance and runtime performance
