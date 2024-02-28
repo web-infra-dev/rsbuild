@@ -64,7 +64,7 @@
       "@rsbuild/plugin-svgr": "link:packages/plugin-svgr"
     },
     "allowedDeprecatedVersions": {
-      "vue": "2.7.14",
+      "vue": "2.x",
       "consolidate": "0.15.1"
     },
     "packageExtensions": {
