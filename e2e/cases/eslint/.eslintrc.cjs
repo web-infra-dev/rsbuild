@@ -7,17 +7,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  overrides: [
-    {
-      env: {
-        node: true,
-      },
-      files: ['.eslintrc.{js,cjs}'],
-      parserOptions: {
-        sourceType: 'script',
-      },
-    },
-  ],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
   rules: {
     'no-undef': 'error',
   },
