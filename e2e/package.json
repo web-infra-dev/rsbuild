@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
-    "@playwright/test": "1.41.2",
+    "@playwright/test": "1.42.0",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
@@ -57,7 +57,7 @@
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
     "fast-glob": "^3.3.1",
-    "playwright": "1.41.2",
+    "playwright": "1.42.0",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.3.0"
   }
