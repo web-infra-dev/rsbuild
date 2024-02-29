@@ -36,7 +36,7 @@
     "fast-glob": "^3.3.1",
     "globby": "^11.1.0",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.6.1",
-    "mini-css-extract-plugin": "2.8.0",
+    "mini-css-extract-plugin": "2.8.1",
     "postcss": "^8.4.33",
     "terser-webpack-plugin": "5.3.10",
     "tsconfig-paths-webpack-plugin": "4.1.0",

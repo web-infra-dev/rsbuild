@@ -652,8 +652,8 @@ importers:
         specifier: npm:html-rspack-plugin@5.6.1
         version: /html-rspack-plugin@5.6.1(@rspack/core@0.5.5)(webpack@5.90.3)
       mini-css-extract-plugin:
-        specifier: 2.8.0
-        version: 2.8.0(webpack@5.90.3)
+        specifier: 2.8.1
+        version: 2.8.1(webpack@5.90.3)
       postcss:
         specifier: ^8.4.33
         version: 8.4.35
@@ -1480,8 +1480,8 @@ importers:
         specifier: npm:html-rspack-plugin@5.6.1
         version: /html-rspack-plugin@5.6.1(@rspack/core@0.5.5)(webpack@5.90.3)
       mini-css-extract-plugin:
-        specifier: 2.8.0
-        version: 2.8.0(webpack@5.90.3)
+        specifier: 2.8.1
+        version: 2.8.1(webpack@5.90.3)
       terser:
         specifier: 5.28.1
         version: 5.28.1
@@ -1584,8 +1584,8 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
       dotenv:
-        specifier: 16.4.4
-        version: 16.4.4
+        specifier: 16.4.5
+        version: 16.4.5
       dotenv-expand:
         specifier: 11.0.6
         version: 11.0.6
@@ -1647,8 +1647,8 @@ importers:
         specifier: 5.0.3
         version: 5.0.3(jiti@1.21.0)(postcss@8.4.35)
       postcss-loader:
-        specifier: 8.1.0
-        version: 8.1.0(postcss@8.4.35)(typescript@5.3.3)(webpack@5.90.3)
+        specifier: 8.1.1
+        version: 8.1.1(postcss@8.4.35)(typescript@5.3.3)(webpack@5.90.3)
       postcss-modules-extract-imports:
         specifier: 3.0.0
         version: 3.0.0(postcss@8.4.35)
@@ -7610,7 +7610,7 @@ packages:
     resolution: {integrity: sha512-8NHi73otpWsZGBSZwwknTXS5pqMOrk9+Ssrna8xCaxkzEpU9OTf9R5ArQGVw03//Zmk9MOwLPng9WwndvpAJ5g==}
     engines: {node: '>=12'}
     dependencies:
-      dotenv: 16.4.4
+      dotenv: 16.4.5
     dev: true
 
   /dotenv@16.3.2:
@@ -7618,8 +7618,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /dotenv@16.4.4:
-    resolution: {integrity: sha512-XvPXc8XAQThSjAbY6cQ/9PcBXmFoWuw1sQ3b8HqUCR6ziGXjkTi//kB9SWa2UwqlgdAIuRqAa/9hVljzPehbYg==}
+  /dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
     dev: true
 
@@ -10894,8 +10894,8 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
 
-  /mini-css-extract-plugin@2.8.0(webpack@5.90.3):
-    resolution: {integrity: sha512-CxmUYPFcTgET1zImteG/LZOy/4T5rTojesQXkSNBiquhydn78tfbCE9sjIjnJ/UcjNjOC1bphTCCW5rrS7cXAg==}
+  /mini-css-extract-plugin@2.8.1(webpack@5.90.3):
+    resolution: {integrity: sha512-/1HDlyFRxWIZPI1ZpgqlZ8jMw/1Dp/dl3P0L1jtZ+zVcHqwPhGwaJwKL00WVgfnBy6PWCde9W65or7IIETImuA==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^5.0.0
@@ -11769,8 +11769,8 @@ packages:
       yaml: 2.4.0
     dev: true
 
-  /postcss-loader@8.1.0(postcss@8.4.35)(typescript@5.3.3)(webpack@5.90.3):
-    resolution: {integrity: sha512-AbperNcX3rlob7Ay7A/HQcrofug1caABBkopoFeOQMspZBqcqj6giYn1Bwey/0uiOPAcR+NQD0I2HC7rXzk91w==}
+  /postcss-loader@8.1.1(postcss@8.4.35)(typescript@5.3.3)(webpack@5.90.3):
+    resolution: {integrity: sha512-0IeqyAsG6tYiDRCYKQJLAmgQr47DX6N7sFSWvQxt6AcupX8DIdmykuk/o/tx0Lze3ErGHJEp5OSRxrelC6+NdQ==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
