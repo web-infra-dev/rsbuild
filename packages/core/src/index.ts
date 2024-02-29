@@ -11,7 +11,8 @@ export { loadConfig, defineConfig } from './config';
 export const version = RSBUILD_VERSION;
 
 // Helpers
-export { logger, mergeRsbuildConfig } from '@rsbuild/shared';
+export { logger } from '@rsbuild/shared';
+export { mergeRsbuildConfig } from './mergeConfig';
 
 // Constants
 export {

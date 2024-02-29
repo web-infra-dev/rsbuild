@@ -1,4 +1,4 @@
-import { createAsyncHook } from '../src/createHook';
+import { createAsyncHook } from '../src/initHooks';
 
 describe('createAsyncHook', () => {
   test('should execute callback functions in order', async () => {

@@ -10,7 +10,7 @@ import {
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
 import type { InternalContext } from '../types';
-import { initHooks } from './initHooks';
+import { initHooks } from '../initHooks';
 import { withDefaultConfig } from './config';
 import { getEntryObject } from '../plugins/entry';
 

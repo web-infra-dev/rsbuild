@@ -2,7 +2,7 @@ export { rspackProvider } from './provider';
 export type { Rspack, RspackConfig } from '@rsbuild/shared';
 export { createContext, createPublicContext } from './createContext';
 export { initPlugins, createPluginManager } from '../pluginManager';
-export { initHooks, type Hooks } from './initHooks';
+export { initHooks, type Hooks } from '../initHooks';
 export { initRsbuildConfig } from './initConfigs';
 export { getPluginAPI } from './initPlugins';
 export { applyBaseCSSRule, applyCSSModuleRule } from './plugins/css';

@@ -3,7 +3,6 @@ import type { Stats, MultiStats } from './stats';
 import type { NodeEnv, PromiseOrNot } from './utils';
 import type { RsbuildTarget } from './rsbuild';
 import type { BundlerChain } from './bundlerConfig';
-import type { mergeRsbuildConfig } from '../mergeRsbuildConfig';
 import type { Rspack, RspackConfig } from './rspack';
 import type { RsbuildConfig } from './config';
 import type { WebpackConfig } from './thirdParty';
@@ -54,7 +53,7 @@ export type OnExitFn = () => void;
 
 export type ModifyRsbuildConfigUtils = {
   /** Merge multiple Rsbuild config objects into one. */
-  mergeRsbuildConfig: typeof mergeRsbuildConfig;
+  mergeRsbuildConfig: (...configs: RsbuildConfig[]) => RsbuildConfig;
 };
 
 export type ModifyRsbuildConfigFn = (
