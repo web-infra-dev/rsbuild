@@ -1,12 +1,12 @@
 import {
   debug,
   isDebug,
-  mergeRsbuildConfig,
   type PluginManager,
   type RspackConfig,
   type InspectConfigOptions,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
+import { mergeRsbuildConfig } from '../mergeConfig';
 import { updateContextByNormalizedConfig } from './createContext';
 import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';

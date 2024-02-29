@@ -6,7 +6,7 @@ import type {
   NormalizedConfig,
   RsbuildPluginAPI,
 } from '@rsbuild/shared';
-import type { Hooks } from './provider/initHooks';
+import type { Hooks } from './initHooks';
 
 export type { RsbuildPlugin, RsbuildPlugins, RsbuildPluginAPI };
 

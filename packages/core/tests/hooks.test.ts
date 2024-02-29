@@ -1,4 +1,4 @@
-import { initHooks } from '../src/provider/initHooks';
+import { initHooks } from '../src/initHooks';
 import { createStubRsbuild } from '@scripts/test-helper';
 
 describe('initHooks', () => {

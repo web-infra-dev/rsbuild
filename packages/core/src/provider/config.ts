@@ -2,7 +2,6 @@ import { join } from 'node:path';
 import {
   findExists,
   isFileExists,
-  mergeRsbuildConfig,
   DEFAULT_PORT,
   JS_DIST_DIR,
   CSS_DIST_DIR,
@@ -34,6 +33,8 @@ import type {
   NormalizedSecurityConfig,
   NormalizedPerformanceConfig,
 } from '@rsbuild/shared';
+import { mergeRsbuildConfig } from '../mergeConfig';
+
 const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
   liveReload: true,

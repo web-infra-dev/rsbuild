@@ -29,7 +29,18 @@ import type {
   Configuration as WebpackConfig,
 } from 'webpack';
 import type { ChainIdentifier } from '../chain';
-import type { HookDescriptor } from '../createHook';
+
+type HookOrder = 'pre' | 'post' | 'default';
+
+export type HookDescriptor<T extends (...args: any[]) => any> = {
+  handler: T;
+  order: HookOrder;
+};
+
+export type AsyncHook<Callback extends (...args: any[]) => any> = {
+  tap: (cb: Callback | HookDescriptor<Callback>) => void;
+  call: (...args: Parameters<Callback>) => Promise<Parameters<Callback>>;
+};
 
 export type ModifyRspackConfigFn = (
   config: RspackConfig,

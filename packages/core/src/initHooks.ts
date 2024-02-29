@@ -1,6 +1,8 @@
-import { createAsyncHook } from '@rsbuild/shared';
+import { isFunction } from '@rsbuild/shared';
 import type {
   OnExitFn,
+  AsyncHook,
+  HookDescriptor,
   OnAfterBuildFn,
   OnBeforeBuildFn,
   OnCloseDevServerFn,
@@ -17,6 +19,46 @@ import type {
   OnAfterCreateCompilerFn,
   OnBeforeCreateCompilerFn,
 } from '@rsbuild/shared';
+
+export function createAsyncHook<
+  Callback extends (...args: any[]) => any,
+>(): AsyncHook<Callback> {
+  const preGroup: Callback[] = [];
+  const postGroup: Callback[] = [];
+  const defaultGroup: Callback[] = [];
+
+  const tap = (cb: Callback | HookDescriptor<Callback>) => {
+    if (isFunction(cb)) {
+      defaultGroup.push(cb);
+    } else if (cb.order === 'pre') {
+      preGroup.push(cb.handler);
+    } else if (cb.order === 'post') {
+      postGroup.push(cb.handler);
+    } else {
+      defaultGroup.push(cb.handler);
+    }
+  };
+
+  const call = async (...args: Parameters<Callback>) => {
+    const params = args.slice(0) as Parameters<Callback>;
+    const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
+
+    for (const callback of callbacks) {
+      const result = await callback(...params);
+
+      if (result !== undefined) {
+        params[0] = result;
+      }
+    }
+
+    return params;
+  };
+
+  return {
+    tap,
+    call,
+  };
+}
 
 export function initHooks() {
   return {
