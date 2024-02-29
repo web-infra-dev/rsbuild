@@ -59,7 +59,7 @@ export default {
 
 ### Proxy
 
-If you are proxying an online page to local development, WebSocket requests will fail to connect. You can try configuring `dev.client` to the following values so that HMR requests can reach the local Dev Server.
+WHen you proxy an online site for local development, WebSocket requests will fail to connect. You can try configuring `dev.client` to the following values so that HMR requests can reach the local Dev Server.
 
 ```ts
 export default {
