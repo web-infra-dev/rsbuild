@@ -32,6 +32,11 @@ export default {
 };
 ```
 
+## Example Projects
+
+- [React + ESLint project](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/react-eslint)
+- [Vue 3 + ESLint project](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/vue3-eslint)
+
 ## Options
 
 ### enable
@@ -85,10 +90,22 @@ const defaultOptions = {
 
 The `eslintPluginOptions` object will be shallowly merged with the default configuration object.
 
+- For example, exclude some files using `exclude`:
+
 ```ts
 pluginEslint({
   eslintPluginOptions: {
     exclude: ['node_modules', 'dist', './src/foo.js'],
+  },
+});
+```
+
+- Extend `extensions` to validate `.vue` or `.svelte` files:
+
+```ts
+pluginEslint({
+  eslintPluginOptions: {
+    extensions: ['js', 'jsx', 'mjs', 'cjs', 'ts', 'tsx', 'mts', 'cts', 'vue'],
   },
 });
 ```

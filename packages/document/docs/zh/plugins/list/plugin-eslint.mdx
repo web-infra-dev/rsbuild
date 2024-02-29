@@ -32,6 +32,11 @@ export default {
 };
 ```
 
+## 示例项目
+
+- [React + ESLint 项目](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/react-eslint)
+- [Vue 3 + ESLint 项目](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/vue3-eslint)
+
 ## 选项
 
 ### enable
@@ -85,10 +90,22 @@ const defaultOptions = {
 
 `eslintPluginOptions` 对象会与默认配置对象进行浅合并。
 
+- 比如通过 `exclude` 排除一些文件：
+
 ```ts
 pluginEslint({
   eslintPluginOptions: {
     exclude: ['node_modules', 'dist', './src/foo.js'],
+  },
+});
+```
+
+- 比如扩展 extensions 来校验 `.vue` 或 `.svelte` 文件：
+
+```ts
+pluginEslint({
+  eslintPluginOptions: {
+    extensions: ['js', 'jsx', 'mjs', 'cjs', 'ts', 'tsx', 'mts', 'cts', 'vue'],
   },
 });
 ```
