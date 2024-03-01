@@ -9,6 +9,7 @@ type DistPathConfig = {
   js?: string;
   jsAsync?: string;
   css?: string;
+  cssAsync?: string;
   svg?: string;
   font?: string;
   wasm?: string;
@@ -28,6 +29,7 @@ const defaultDistPath = {
   js: 'static/js',
   jsAsync: 'static/js/async',
   css: 'static/css',
+  cssAsync: 'static/css/async',
   svg: 'static/svg',
   font: 'static/font',
   wasm: 'static/wasm',
@@ -47,6 +49,7 @@ Detail:
 - `js`: The output directory of JavaScript files.
 - `jsAsync`: The output directory of async JavaScript files, which by default will be output to the `async` subdirectory of `distPath.js`.
 - `css`: The output directory of CSS style files.
+- `cssAsync`: The output directory of async CSS files, which by default will be output to the `async` subdirectory of `distPath.css`.
 - `svg`: The output directory of SVG images.
 - `font`: The output directory of font files.
 - `wasm`: The output directory of WebAssembly files.

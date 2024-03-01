@@ -9,6 +9,7 @@ type DistPathConfig = {
   js?: string;
   jsAsync?: string;
   css?: string;
+  cssAsync?: string;
   svg?: string;
   font?: string;
   wasm?: string;
@@ -28,6 +29,7 @@ const defaultDistPath = {
   js: 'static/js',
   jsAsync: 'static/js/async',
   css: 'static/css',
+  cssAsync: 'static/css/async',
   svg: 'static/svg',
   font: 'static/font',
   wasm: 'static/wasm',
@@ -46,7 +48,8 @@ const defaultDistPath = {
 - `html`：表示 HTML 文件的输出目录。
 - `js`：表示 JavaScript 文件的输出目录。
 - `jsAsync`：表示异步 JavaScript 文件的输出目录，默认会输出到 `distPath.js` 的 `async` 子目录。
-- `css`：表示 CSS 样式文件的输出目录。
+- `css`：表示 CSS 文件的输出目录。
+- `cssAsync`：表示异步 CSS 文件的输出目录，默认会输出到 `distPath.css` 的 `async` 子目录。
 - `svg`：表示 SVG 图片的输出目录。
 - `font`：表示字体文件的输出目录。
 - `wasm`：表示 WebAssembly 文件的输出目录。
