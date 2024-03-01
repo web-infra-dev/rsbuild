@@ -14,6 +14,11 @@ export type DistPathConfig = {
    */
   js?: string;
   /**
+   * The output directory of async JavaScript files.
+   * @default 'static/js/async'
+   */
+  jsAsync?: string;
+  /**
    * The output directory of CSS style files.
    * @default 'static/css'
    */

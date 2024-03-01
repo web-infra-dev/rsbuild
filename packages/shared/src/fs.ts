@@ -16,9 +16,16 @@ export const getDistPath = (
 ): string => {
   const { distPath } = config.output || {};
   const ret = distPath?.[type];
+
   if (typeof ret !== 'string') {
+    if (type === 'jsAsync') {
+      const jsPath = getDistPath(config, 'js');
+      return jsPath ? `${jsPath}/async` : 'async';
+    }
+
     throw new Error(`unknown key ${type} in "output.distPath"`);
   }
+
   return ret;
 };
 

@@ -7,6 +7,7 @@ type DistPathConfig = {
   root?: string;
   html?: string;
   js?: string;
+  jsAsync?: string;
   css?: string;
   svg?: string;
   font?: string;
@@ -25,6 +26,7 @@ const defaultDistPath = {
   root: 'dist',
   html: '/',
   js: 'static/js',
+  jsAsync: 'static/js/async',
   css: 'static/css',
   svg: 'static/svg',
   font: 'static/font',
@@ -43,6 +45,7 @@ Detail:
 - `root`: The root directory of all files.
 - `html`: The output directory of HTML files.
 - `js`: The output directory of JavaScript files.
+- `jsAsync`: The output directory of async JavaScript files, which by default will be output to the `async` subdirectory of `distPath.js`.
 - `css`: The output directory of CSS style files.
 - `svg`: The output directory of SVG images.
 - `font`: The output directory of font files.
