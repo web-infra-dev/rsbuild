@@ -19,10 +19,15 @@ export type DistPathConfig = {
    */
   jsAsync?: string;
   /**
-   * The output directory of CSS style files.
+   * The output directory of CSS files.
    * @default 'static/css'
    */
   css?: string;
+  /**
+   * The output directory of async CSS files.
+   * @default 'static/css/async'
+   */
+  cssAsync?: string;
   /**
    * The output directory of SVG images.
    * @default 'static/svg'
