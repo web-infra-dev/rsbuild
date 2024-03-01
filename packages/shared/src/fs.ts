@@ -22,6 +22,10 @@ export const getDistPath = (
       const jsPath = getDistPath(config, 'js');
       return jsPath ? `${jsPath}/async` : 'async';
     }
+    if (type === 'cssAsync') {
+      const cssPath = getDistPath(config, 'css');
+      return cssPath ? `${cssPath}/async` : 'async';
+    }
 
     throw new Error(`unknown key ${type} in "output.distPath"`);
   }
