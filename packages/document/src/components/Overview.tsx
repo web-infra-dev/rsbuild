@@ -1,4 +1,3 @@
-import { NoSSR } from 'rspress/runtime';
 import { useUrl } from '../utils';
 import styles from './Overview.module.scss';
 
@@ -32,9 +31,5 @@ export default function Overview() {
     </>
   ));
 
-  return (
-    <NoSSR>
-      <div className={styles.root}>{Nodes}</div>
-    </NoSSR>
-  );
+  return <div className={styles.root}>{Nodes}</div>;
 }
