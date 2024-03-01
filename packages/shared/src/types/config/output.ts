@@ -3,42 +3,97 @@ import type { RsbuildTarget } from '../rsbuild';
 import type { CopyRspackPluginOptions, Externals } from '@rspack/core';
 
 export type DistPathConfig = {
-  /** The root directory of all files. */
+  /**
+   * The root directory of all files.
+   * @default 'dist'
+   **/
   root?: string;
-  /** The output directory of JavaScript files. */
+  /**
+   * The output directory of JavaScript files.
+   * @default 'static/js'
+   */
   js?: string;
-  /** The output directory of CSS style files. */
+  /**
+   * The output directory of CSS style files.
+   * @default 'static/css'
+   */
   css?: string;
-  /** The output directory of SVG images. */
+  /**
+   * The output directory of SVG images.
+   * @default 'static/svg'
+   */
   svg?: string;
-  /** The output directory of font files. */
+  /**
+   * The output directory of font files.
+   * @default 'static/font'
+   */
   font?: string;
-  /** The output directory of HTML files. */
+  /**
+   * The output directory of HTML files.
+   * @default '/'
+   */
   html?: string;
-  /** The output directory of Wasm files. */
+  /**
+   * The output directory of Wasm files.
+   * @default 'static/wasm'
+   */
   wasm?: string;
-  /** The output directory of non-SVG images. */
+  /**
+   * The output directory of non-SVG images.
+   * @default 'static/image'
+   */
   image?: string;
-  /** The output directory of media resources, such as videos. */
+  /**
+   * The output directory of media resources, such as videos.
+   * @default 'static/media'
+   */
   media?: string;
-  /** The output directory of server bundles when target is `node`. */
+  /**
+   * The output directory of server bundles when target is `node`.
+   * @default 'server'
+   */
   server?: string;
-  /** The output directory of service worker bundles when target is `service-worker`. */
+  /**
+   * The output directory of service worker bundles when target is `service-worker`.
+   * @default 'worker'
+   */
   worker?: string;
 };
 
 export type FilenameConfig = {
-  /** The name of the JavaScript file. */
+  /**
+   * The name of the JavaScript files.
+   * @default
+   * - dev: '[name].js'
+   * - prod: '[name].[contenthash:8].js'
+   */
   js?: string;
-  /** The name of the CSS style file. */
+  /**
+   * The name of the CSS files.
+   * @default
+   * - dev: '[name].css'
+   * - prod: '[name].[contenthash:8].css'
+   */
   css?: string;
-  /** The name of the SVG image. */
+  /**
+   * The name of the SVG images.
+   * @default '[name].[contenthash:8].svg'
+   */
   svg?: string;
-  /** The name of the font file. */
+  /**
+   * The name of the font files.
+   * @default '[name].[contenthash:8][ext]'
+   */
   font?: string;
-  /** The name of a non-SVG image. */
+  /**
+   * The name of non-SVG images.
+   * @default '[name].[contenthash:8][ext]'
+   */
   image?: string;
-  /** The name of a media resource, such as a video. */
+  /**
+   * The name of media assets, such as video.
+   * @default '[name].[contenthash:8][ext]'
+   */
   media?: string;
 };
 
