@@ -342,7 +342,6 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
   api.modifyBundlerChain(
     async (chain, { isProd, isServer, isServiceWorker }) => {
       const config = api.getNormalizedConfig();
-      const jsPath = getDistPath(config, 'js');
 
       const publicPath = getPublicPath({
         config,
@@ -351,12 +350,14 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
       });
 
       // js output
+      const jsPath = getDistPath(config, 'js');
+      const jsAsyncPath = getDistPath(config, 'jsAsync');
       const jsFilename = getFilename(config, 'js', isProd);
 
       chain.output
         .path(api.context.distPath)
         .filename(posix.join(jsPath, jsFilename))
-        .chunkFilename(posix.join(jsPath, `async/${jsFilename}`))
+        .chunkFilename(posix.join(jsAsyncPath, jsFilename))
         .publicPath(publicPath)
         // disable pathinfo to improve compile performance
         // the path info is useless in most cases
