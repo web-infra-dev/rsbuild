@@ -158,17 +158,39 @@ function ModifyRsbuildConfig(
 ): void;
 ```
 
-- **示例：**
+- **示例：** 为某个配置项设置一个默认值：
 
 ```ts
 const myPlugin = () => ({
   setup: (api) => {
-    api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
-      config.html = config.html || {};
-      config.html.title = 'Hello World!';
-      return mergeRsbuildConfig(config, {
-        source: { preEntry: 'foo.js' },
-      });
+    api.modifyRsbuildConfig((config) => {
+      config.html ||= {};
+      config.html.title = 'My Default Title';
+    });
+  },
+});
+```
+
+- **示例：** 通过 `mergeRsbuildConfig` 合并配置多个对象，并返回合并后的对象。
+
+```ts
+import type { RsbuildConfig } from '@rsbuild/core';
+
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
+      const extraConfig: RsbuildConfig = {
+        source: {
+          // ...
+        },
+        output: {
+          // ...
+        },
+      };
+
+      // extraConfig 会覆盖 userConfig 里的字段，
+      // 如果你不希望覆盖 userConfig，可以调整为 `mergeRsbuildConfig(extraConfig, userConfig)`
+      return mergeRsbuildConfig(userConfig, extraConfig);
     });
   },
 });

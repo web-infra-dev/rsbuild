@@ -158,17 +158,40 @@ function ModifyRsbuildConfig(
 ): void;
 ```
 
-- **Example:**
+- **Example:** Setting a default value for a specific config option:
 
 ```ts
 const myPlugin = () => ({
   setup: (api) => {
-    api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
-      config.html = config.html || {};
-      config.html.title = 'Hello World!';
-      return mergeRsbuildConfig(config, {
-        source: { preEntry: 'foo.js' },
-      });
+    api.modifyRsbuildConfig((config) => {
+      config.html ||= {};
+      config.html.title = 'My Default Title';
+    });
+  },
+});
+```
+
+- **Example:** Using `mergeRsbuildConfig` to merge config objects, and return the merged object.
+
+```ts
+import type { RsbuildConfig } from '@rsbuild/core';
+
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
+      const extraConfig: RsbuildConfig = {
+        source: {
+          // ...
+        },
+        output: {
+          // ...
+        },
+      };
+
+      // extraConfig will override fields in userConfig,
+      // If you do not want to override the fields in userConfig,
+      // you can adjust to `mergeRsbuildConfig(extraConfig, userConfig)`
+      return mergeRsbuildConfig(userConfig, extraConfig);
     });
   },
 });
