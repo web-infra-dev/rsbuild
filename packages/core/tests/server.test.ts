@@ -314,7 +314,7 @@ describe('test dev server', () => {
           "host": "",
           "path": "/rsbuild-hmr",
           "port": "8080",
-          "protocol": "",
+          "protocol": undefined,
         },
         "writeToDisk": false,
       }
@@ -339,7 +339,7 @@ describe('test dev server', () => {
           "host": "",
           "path": "",
           "port": "8081",
-          "protocol": "",
+          "protocol": undefined,
         },
         "hmr": false,
         "writeToDisk": false,
