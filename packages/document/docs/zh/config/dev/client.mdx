@@ -7,7 +7,7 @@
 ```ts
 type Client = {
   /** 指定 WebSocket 请求的协议名称 */
-  protocol?: string;
+  protocol?: 'ws' | 'wss';
   /** 指定 WebSocket 请求的路径 */
   path?: string;
   /** 指定 WebSocket 请求的端口号 */
@@ -24,10 +24,8 @@ const defaultConfig = {
   path: '/rsbuild-hmr',
   // 默认为开发服务器的端口号
   port: '',
-  // 默认为 "location.hostname"
-  host: '',
-  // 默认为 "location.protocol === 'https:' ? 'wss' : 'ws'"
-  protocol: '',
+  host: location.hostname,
+  protocol: location.protocol === 'https:' ? 'wss' : 'ws',
 };
 ```
 

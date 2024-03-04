@@ -54,7 +54,7 @@ export interface DevConfig {
     path?: string;
     port?: string;
     host?: string;
-    protocol?: string;
+    protocol?: 'ws' | 'wss';
   };
   /** Provides the ability to execute a custom function and apply custom middlewares */
   setupMiddlewares?: Array<

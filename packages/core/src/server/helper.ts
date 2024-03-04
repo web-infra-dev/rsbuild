@@ -161,7 +161,7 @@ export const mergeDevOptions = ({
       // By default it is set to "location.hostname"
       host: '',
       // By default it is set to "location.protocol === 'https:' ? 'wss' : 'ws'""
-      protocol: '',
+      protocol: undefined,
     },
     writeToDisk: false,
   };
