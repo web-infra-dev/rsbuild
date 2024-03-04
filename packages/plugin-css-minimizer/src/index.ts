@@ -43,6 +43,7 @@ export function applyCSSMinimizer(
 ) {
   const mergedOptions: CssMinimizerPluginOptions = mergeChainedOptions({
     defaults: {
+      minify: CssMinimizerWebpackPlugin.cssnanoMinify,
       minimizerOptions: getCssnanoDefaultOptions(),
     },
     options: options.pluginOptions,

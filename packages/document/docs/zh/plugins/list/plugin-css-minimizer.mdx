@@ -27,19 +27,10 @@ import { PackageManagerTabs } from '@theme';
 你可以在 `rsbuild.config.ts` 文件中注册插件：
 
 ```ts title="rsbuild.config.ts"
-import {
-  pluginCssMinimizer,
-  CssMinimizerWebpackPlugin,
-} from '@rsbuild/plugin-css-minimizer';
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 
 export default {
-  plugins: [
-    pluginCssMinimizer({
-      pluginOptions: {
-        minify: CssMinimizerWebpackPlugin.cssnanoMinify,
-      },
-    }),
-  ],
+  plugins: [pluginCssMinimizer()],
 };
 ```
 
@@ -56,6 +47,7 @@ export default {
 
 ```ts
 const defaultOptions = {
+  minify: CssMinimizerWebpackPlugin.cssnanoMinify,
   minimizerOptions: {
     preset: [
       'default',
@@ -89,4 +81,26 @@ pluginCssMinimizer({
     };
   },
 });
+```
+
+- **示例三：** 切换到其他工具进行 CSS 压缩
+
+```js
+import {
+  pluginCssMinimizer,
+  CssMinimizerWebpackPlugin,
+} from '@rsbuild/plugin-css-minimizer';
+
+pluginCssMinimizer({
+  pluginOptions: {
+    minify: CssMinimizerWebpackPlugin.cleanCssMinify,
+    minimizerOptions: {
+      level: {
+        1: {
+          roundingPrecision: "all=3,px=5",
+        },
+      },
+    },
+  },
+}),
 ```

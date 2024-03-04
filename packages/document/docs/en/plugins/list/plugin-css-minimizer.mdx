@@ -27,19 +27,10 @@ import { PackageManagerTabs } from '@theme';
 You can register the plugin in the `rsbuild.config.ts` file:
 
 ```ts title="rsbuild.config.ts"
-import {
-  pluginCssMinimizer,
-  CssMinimizerWebpackPlugin,
-} from '@rsbuild/plugin-css-minimizer';
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 
 export default {
-  plugins: [
-    pluginCssMinimizer({
-      pluginOptions: {
-        minify: CssMinimizerWebpackPlugin.cssnanoMinify,
-      },
-    }),
-  ],
+  plugins: [pluginCssMinimizer()],
 };
 ```
 
@@ -56,6 +47,7 @@ The value of `pluginOptions` will be merged with the default options inside the 
 
 ```ts
 const defaultOptions = {
+  minify: CssMinimizerWebpackPlugin.cssnanoMinify,
   minimizerOptions: {
     preset: [
       'default',
@@ -89,4 +81,26 @@ pluginCssMinimizer({
     };
   },
 });
+```
+
+- **Example 3:** Switch to other tools for CSS minification
+
+```js
+import {
+  pluginCssMinimizer,
+  CssMinimizerWebpackPlugin,
+} from '@rsbuild/plugin-css-minimizer';
+
+pluginCssMinimizer({
+  pluginOptions: {
+    minify: CssMinimizerWebpackPlugin.cleanCssMinify,
+    minimizerOptions: {
+      level: {
+        1: {
+          roundingPrecision: "all=3,px=5",
+        },
+      },
+    },
+  },
+}),
 ```
