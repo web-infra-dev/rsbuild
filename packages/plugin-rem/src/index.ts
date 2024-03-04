@@ -67,6 +67,7 @@ export const pluginRem = (options: PluginRemOptions = {}): RsbuildPlugin => ({
           entries,
           HtmlPlugin,
           distDir,
+          config.html.scriptLoading,
         ]);
     });
   },

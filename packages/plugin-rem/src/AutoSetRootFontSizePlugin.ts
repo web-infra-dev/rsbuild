@@ -6,6 +6,7 @@ import {
   generateScriptTag,
   getPublicPathFromCompiler,
   type Rspack,
+  type ScriptLoading,
 } from '@rsbuild/shared';
 import WebpackSources from '@rsbuild/shared/webpack-sources';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -66,17 +67,21 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
 
   HtmlPlugin: typeof HtmlWebpackPlugin;
 
+  scriptLoading: ScriptLoading;
+
   constructor(
     options: PluginRemOptions,
     entries: Array<string>,
     HtmlPlugin: typeof HtmlWebpackPlugin,
     distDir: string,
+    scriptLoading: ScriptLoading,
   ) {
     this.options = { ...DEFAULT_OPTIONS, ...(options || {}) };
     this.scriptPath = '';
     this.distDir = distDir;
     this.entries = entries;
     this.HtmlPlugin = HtmlPlugin;
+    this.scriptLoading = scriptLoading;
   }
 
   async getScriptPath() {
@@ -154,12 +159,22 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
           } else {
             const publicPath = getPublicPathFromCompiler(compiler);
             const url = withPublicPath(await this.getScriptPath(), publicPath);
+
+            const attributes: Record<string, string> = {
+              ...scriptTag.attributes,
+              src: url,
+            };
+
+            if (this.scriptLoading === 'defer') {
+              attributes.defer = '';
+            }
+            if (this.scriptLoading === 'module') {
+              attributes.type = 'module';
+            }
+
             data.assetTags.scripts.unshift({
               ...scriptTag,
-              attributes: {
-                ...scriptTag.attributes,
-                src: url,
-              },
+              attributes,
             });
           }
 
