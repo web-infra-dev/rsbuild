@@ -48,10 +48,8 @@ export default {
       path: '/rsbuild-hmr',
       // Equivalent to port of the dev server
       port: '',
-      // Equivalent to location.hostname
-      host: '',
-      // Equivalent to location.protocol === 'https:' ? 'wss' : 'ws'
-      protocol: '',
+      host: location.hostname,
+      protocol: location.protocol === 'https:' ? 'wss' : 'ws',
     },
   },
 };

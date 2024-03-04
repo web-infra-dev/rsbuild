@@ -2,7 +2,7 @@ type ParsedSearch = {
   host: string;
   port: string;
   path: string;
-  protocol?: string;
+  protocol?: 'ws' | 'wss';
 };
 
 /**
