@@ -1,10 +1,21 @@
 import type { Project } from '../project/project';
-import { getExportsSourceDirs } from './getExportsSourceDirs';
+import type { ExportsConfig } from '../types/packageJson';
 
 export type Filter = FilterFunction;
 export type FilterFunction = (
   projects: Project[],
 ) => Project[] | Promise<Project[]>;
+
+function hasExportsSourceField(
+  exportsConfig: ExportsConfig,
+  sourceField: string,
+) {
+  return Object.values(exportsConfig).some(
+    (moduleRules) =>
+      typeof moduleRules === 'object' &&
+      typeof moduleRules[sourceField] === 'string',
+  );
+}
 
 export const defaultFilter: FilterFunction = (projects) => projects;
 
@@ -15,7 +26,7 @@ export const filterByField =
       return (
         fieldName in p.metaData ||
         (checkExports &&
-          getExportsSourceDirs(p.metaData.exports || {}, fieldName).length)
+          hasExportsSourceField(p.metaData.exports || {}, fieldName))
       );
     });
   };

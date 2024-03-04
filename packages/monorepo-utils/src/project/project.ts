@@ -1,8 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { INodePackageJson } from '../types/packageJson';
+import type { INodePackageJson, ExportsConfig } from '../types/packageJson';
 import { readPackageJson } from '../utils';
-import { getExportsSourceDirs } from '../project-utils';
 import { PACKAGE_JSON } from '../constants';
 
 export class Project {
@@ -110,7 +109,7 @@ export class Project {
        *   }
        * },
        */
-      const exportsSourceDirs = getExportsSourceDirs(
+      const exportsSourceDirs = this.#getExportsSourceDirs(
         pkgJson.exports ?? {},
         sourceField,
       );
@@ -118,10 +117,30 @@ export class Project {
     }
 
     if (!sourceDirs.length) {
-      throw new Error(`${this.name} 的 package.json 没有 ${sourceField} 字段`);
+      throw new Error(
+        `"${sourceField}" field is not found in ${this.name} package.json`,
+      );
     }
 
     return this.#getCommonRootPaths(sourceDirs);
+  }
+
+  #getExportsSourceDirs(exportsConfig: ExportsConfig, sourceField: string) {
+    const exportsSourceDirs: string[] = [];
+
+    for (const moduleRules of Object.values(exportsConfig)) {
+      if (
+        typeof moduleRules === 'object' &&
+        typeof moduleRules[sourceField] === 'string'
+      ) {
+        exportsSourceDirs.push(
+          path.normalize(moduleRules[sourceField] as string),
+        );
+      }
+    }
+
+    // normalize strings
+    return exportsSourceDirs;
   }
 
   /**
