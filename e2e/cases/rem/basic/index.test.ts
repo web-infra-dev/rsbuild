@@ -1,29 +1,11 @@
-import { join, resolve } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginRem } from '@rsbuild/plugin-rem';
 
-const fixtures = resolve(__dirname, '../');
+const fixtures = __dirname;
 
-test('rem default (disable)', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: fixtures,
-    plugins: [pluginReact()],
-    runServer: true,
-  });
-  await gotoPage(page, rsbuild);
-
-  const title = page.locator('#title');
-  await expect(title).toHaveCSS('font-size', '20px');
-
-  const description = page.locator('#description');
-  await expect(description).toHaveCSS('font-size', '16px');
-
-  await rsbuild.close();
-});
-
-test('rem enable', async ({ page }) => {
+test('should convert rem unit correctly', async ({ page }) => {
   // convert to rem
   const rsbuild = await build({
     cwd: fixtures,
@@ -85,7 +67,7 @@ test('should extract runtime code when inlineRuntime is false', async () => {
   expect(files[htmlFile!].includes('function setRootPixel')).toBeFalsy();
 });
 
-test('should apply crossorigin to rem runtime script', async () => {
+test('should apply crossorigin to rem runtime script', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
     plugins: [
@@ -94,6 +76,7 @@ test('should apply crossorigin to rem runtime script', async () => {
         inlineRuntime: false,
       }),
     ],
+    runServer: true,
     rsbuildConfig: {
       html: {
         crossorigin: 'use-credentials',
@@ -106,12 +89,52 @@ test('should apply crossorigin to rem runtime script', async () => {
 
   expect(htmlFile).toBeTruthy();
   expect(files[htmlFile!]).toMatch(
-    /<script src="\/static\/js\/convert-rem.\w+.\w+.\w+.js" crossorigin="use-credentials">/,
+    /<script src="\/static\/js\/convert-rem.\w+.\w+.\w+.js" defer="" crossorigin="use-credentials">/,
   );
   expect(files[htmlFile!].includes('function setRootPixel')).toBeFalsy();
-  expect(
-    files[htmlFile!].match(
-      /<script src="\/static\/js\/convert-rem.\w+.\w+.\w+.js"/,
-    ),
+
+  await gotoPage(page, rsbuild);
+  const root = page.locator('html');
+  await expect(root).toHaveCSS('font-size', '64px');
+  const description = page.locator('#description');
+  await expect(description).toHaveCSS('font-size', '20.48px');
+
+  await rsbuild.close();
+});
+
+test('should apply html.scriptLoading to rem runtime script', async ({
+  page,
+}) => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    plugins: [
+      pluginReact(),
+      pluginRem({
+        inlineRuntime: false,
+      }),
+    ],
+    runServer: true,
+    rsbuildConfig: {
+      html: {
+        scriptLoading: 'module',
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const htmlFile = Object.keys(files).find((file) => file.endsWith('.html'));
+
+  expect(htmlFile).toBeTruthy();
+  expect(files[htmlFile!]).toMatch(
+    /<script type="module" src="\/static\/js\/convert-rem.\w+.\w+.\w+.js">/,
   );
+  expect(files[htmlFile!].includes('function setRootPixel')).toBeFalsy();
+
+  await gotoPage(page, rsbuild);
+  const root = page.locator('html');
+  await expect(root).toHaveCSS('font-size', '64px');
+  const description = page.locator('#description');
+  await expect(description).toHaveCSS('font-size', '20.48px');
+
+  await rsbuild.close();
 });
