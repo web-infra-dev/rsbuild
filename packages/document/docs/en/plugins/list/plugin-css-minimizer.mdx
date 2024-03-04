@@ -27,10 +27,19 @@ import { PackageManagerTabs } from '@theme';
 You can register the plugin in the `rsbuild.config.ts` file:
 
 ```ts title="rsbuild.config.ts"
-import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+import {
+  pluginCssMinimizer,
+  CssMinimizerWebpackPlugin,
+} from '@rsbuild/plugin-css-minimizer';
 
 export default {
-  plugins: [pluginCssMinimizer()],
+  plugins: [
+    pluginCssMinimizer({
+      pluginOptions: {
+        minify: CssMinimizerWebpackPlugin.cssnanoMinify,
+      },
+    }),
+  ],
 };
 ```
 
