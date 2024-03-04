@@ -5,6 +5,7 @@ import {
   type ChainedConfig,
   type ChainIdentifier,
 } from '@rsbuild/shared';
+import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
 import type CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
 export type CssMinimizerPluginOptions = CssMinimizerPlugin.BasePluginOptions &
@@ -35,15 +36,11 @@ const getCssnanoDefaultOptions = (): CssNanoOptions => ({
   ],
 });
 
-export async function applyCSSMinimizer(
+export function applyCSSMinimizer(
   chain: BundlerChain,
   CHAIN_ID: ChainIdentifier,
   options: PluginCssMinimizerOptions = {},
 ) {
-  const { default: CssMinimizerPlugin } = await import(
-    'css-minimizer-webpack-plugin'
-  );
-
   const mergedOptions: CssMinimizerPluginOptions = mergeChainedOptions({
     defaults: {
       minimizerOptions: getCssnanoDefaultOptions(),
@@ -53,7 +50,7 @@ export async function applyCSSMinimizer(
 
   chain.optimization
     .minimizer(CHAIN_ID.MINIMIZER.CSS)
-    .use(CssMinimizerPlugin, [
+    .use(CssMinimizerWebpackPlugin, [
       // @ts-expect-error type mismatch
       mergedOptions,
     ])
@@ -71,8 +68,10 @@ export const pluginCssMinimizer = (
       const isMinimize = isProd && !config.output.disableMinimize;
 
       if (isMinimize) {
-        await applyCSSMinimizer(chain, CHAIN_ID, options);
+        applyCSSMinimizer(chain, CHAIN_ID, options);
       }
     });
   },
 });
+
+export { CssMinimizerWebpackPlugin };
