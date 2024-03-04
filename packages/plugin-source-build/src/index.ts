@@ -19,7 +19,9 @@ export const getSourceInclude = async (options: {
 
   const includes = [];
   for (const project of projects) {
-    includes.push(...project.getSourceEntryPaths({ field: sourceField }));
+    includes.push(
+      ...project.getSourceEntryPaths({ field: sourceField, exports: true }),
+    );
   }
 
   return includes;
@@ -62,7 +64,7 @@ export function pluginSourceBuild(
         projects = await getDependentProjects(projectName || projectRootPath, {
           cwd: projectRootPath,
           recursive: true,
-          filter: filterByField(sourceField),
+          filter: filterByField(sourceField, true),
           extraMonorepoStrategies,
         });
 
