@@ -85,6 +85,51 @@ Rsbuild 具备以下特性：
 
 请阅读 [贡献指南](https://github.com/web-infra-dev/rsbuild/blob/main/CONTRIBUTING.md) 来共同参与 Rsbuild 的建设。
 
+<a href="https://github.com/web-infra-dev/rsbuild/graphs/contributors" target="_blank">
+  <table>
+    <tr>
+      <th colspan="2">
+        <br/>
+        <img src="https://contrib.rocks/image?repo=web-infra-dev/rsbuild"><br/><br/>
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source 
+            media="(prefers-color-scheme: dark)" 
+            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_28_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=dark"
+          />
+          <img 
+            alt="Contributors of web-infra-dev/rsbuild" 
+            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_28_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=light"
+          />
+        </picture>
+      </td>
+      <td rowspan="2">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_28_days&owner_id=87694465&repo_ids=701750420&image_size=4x7&color_scheme=dark">
+          <img alt="New trends of web-infra-dev" src="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_28_days&owner_id=87694465&repo_ids=701750420&image_size=4x7&color_scheme=light">
+        </picture>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source 
+            media="(prefers-color-scheme: dark)" 
+            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_28_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=dark"
+          />
+          <img 
+            alt="Contributors of web-infra-dev/rsbuild" 
+            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_28_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=light"
+          />
+        </picture>
+      </td>
+    </tr>
+  </table>
+</a>
+
 ## 🧑‍💻 社区
 
 欢迎加入我们的 [Discord](https://discord.gg/XsaKEEk4mW) 交流频道！Rspack / Rsbuild 团队和用户都在那里活跃，并且我们一直期待着各种贡献。
