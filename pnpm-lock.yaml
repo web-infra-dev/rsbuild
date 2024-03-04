@@ -93,6 +93,9 @@ importers:
       '@playwright/test':
         specifier: 1.42.0
         version: 1.42.0
+      '@rsbuild/babel-preset':
+        specifier: workspace:*
+        version: link:../packages/babel-preset
       '@rsbuild/core':
         specifier: link:../packages/core
         version: link:../packages/core
