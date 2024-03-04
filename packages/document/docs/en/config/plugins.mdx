@@ -95,3 +95,30 @@ export default {
   },
 };
 ```
+
+## Unplugin
+
+[unplugin](https://github.com/unjs/unplugin) is a unified plugin system for various build tools. You can use plugins implemented based on unplugin in Rsbuild, just import the `/rspack` subpath of the plugin and register it via [tools.rspack](/config/tools/rspack).
+
+Here is an example of using [unplugin-vue-components](https://www.npmjs.com/package/unplugin-vue-components):
+
+```ts
+import { defineConfig } from '@rsbuild/core';
+import { pluginVue } from '@rsbuild/plugin-vue';
+import Components from 'unplugin-vue-components/rspack';
+
+export default defineConfig({
+  plugins: [pluginVue()],
+  tools: {
+    rspack: {
+      plugins: [
+        Components({
+          // options
+        }),
+      ],
+    },
+  },
+});
+```
+
+> Please ensure that the version of `unplugin` package is >= v1.6.0.
