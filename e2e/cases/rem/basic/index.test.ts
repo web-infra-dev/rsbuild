@@ -1,29 +1,11 @@
-import { join, resolve } from 'node:path';
 import { expect, test } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginRem } from '@rsbuild/plugin-rem';
 
-const fixtures = resolve(__dirname, '../');
+const fixtures = __dirname;
 
-test('rem default (disable)', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: fixtures,
-    plugins: [pluginReact()],
-    runServer: true,
-  });
-  await gotoPage(page, rsbuild);
-
-  const title = page.locator('#title');
-  await expect(title).toHaveCSS('font-size', '20px');
-
-  const description = page.locator('#description');
-  await expect(description).toHaveCSS('font-size', '16px');
-
-  await rsbuild.close();
-});
-
-test('rem enable', async ({ page }) => {
+test('should convert rem unit correctly', async ({ page }) => {
   // convert to rem
   const rsbuild = await build({
     cwd: fixtures,
