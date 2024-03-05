@@ -1,5 +1,8 @@
+import { pluginHtml } from '../../../core/src/plugins/html';
 import { pluginMinimize } from '../src/plugins/minimize';
 import { createStubRsbuild } from './helper';
+import { pluginEntry } from '../../../core/src/plugins/entry';
+import { pluginSwc } from '../../plugin-swc/src';
 
 describe('plugin-minimize', () => {
   it('should not apply minimizer in development', async () => {
@@ -28,6 +31,20 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
+  it.fails('Terser and SWC minimizer should not coexist', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginMinimize(), pluginSwc()],
+    });
+
+    const config = await rsbuild.unwrapConfig();
+    // TODO: it's 2, now.
+    expect(config.optimization?.minimizer.length).toBe(1);
+
+    process.env.NODE_ENV = 'test';
+  });
+
   it('should not apply minimizer when output.disableMinimize is true', async () => {
     process.env.NODE_ENV = 'production';
 
@@ -42,6 +59,159 @@ describe('plugin-minimize', () => {
 
     const config = await rsbuild.unwrapConfig();
     expect(config.optimization?.minimize).toEqual(false);
+
+    process.env.NODE_ENV = 'test';
+  });
+
+  it('should not apply minimizer when output.minify is false', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginMinimize()],
+      rsbuildConfig: {
+        output: {
+          minify: false,
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    expect(bundlerConfigs[0].optimization?.minimize).toEqual(false);
+
+    process.env.NODE_ENV = 'test';
+  });
+
+  it('should not minimizer for JS when output.minify.js is false', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginMinimize(), pluginSwc()],
+      rsbuildConfig: {
+        output: {
+          minify: {
+            js: false,
+          },
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    expect(bundlerConfigs[0].optimization?.minimizer?.length).toBe(1);
+    expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
+      minifyOptions: {
+        jsMinify: undefined,
+      },
+    });
+
+    process.env.NODE_ENV = 'test';
+  });
+
+  it('should not minimizer for CSS when output.minify.css is false', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginMinimize(), pluginSwc()],
+      rsbuildConfig: {
+        output: {
+          minify: {
+            css: false,
+          },
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    expect(bundlerConfigs[0].optimization?.minimizer?.length).toEqual(2);
+    expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
+      minifyOptions: {
+        cssMinify: undefined,
+      },
+    });
+
+    process.env.NODE_ENV = 'test';
+  });
+
+  it('should not minimizer for HTML when output.minify.html is false', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginEntry(), pluginHtml()],
+      rsbuildConfig: {
+        output: {
+          minify: {
+            html: false,
+          },
+        },
+      },
+    });
+
+    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toMatchObject(
+      {
+        options: {
+          minify: false,
+        },
+      },
+    );
+
+    process.env.NODE_ENV = 'test';
+  });
+
+  it('should accept and merge options for JS minimizer', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginMinimize()],
+      rsbuildConfig: {
+        // `tools.terser` is not documented, but it's a valid option though
+        tools: {
+          terser: {
+            exclude: 'no_js_minify',
+          },
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    // implicit assert the order of minimizers here,
+    // could also be a guard for the order of minimizers
+    expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
+      options: {
+        exclude: 'no_js_minify',
+      },
+    });
+
+    process.env.NODE_ENV = 'test';
+  });
+
+  it('should accept and merge options for HTML minimizer', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginEntry(), pluginHtml()],
+      rsbuildConfig: {
+        output: {
+          minify: {
+            htmlOptions: {
+              minifyJS: false,
+            },
+          },
+        },
+      },
+    });
+
+    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toMatchObject(
+      {
+        options: {
+          minify: {
+            minifyJS: false,
+          },
+        },
+      },
+    );
 
     process.env.NODE_ENV = 'test';
   });

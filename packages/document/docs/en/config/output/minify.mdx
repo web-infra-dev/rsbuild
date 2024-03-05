@@ -1,0 +1,94 @@
+# output.minify
+
+- **Type:**
+
+```ts
+export type Minify =
+  | boolean
+  | {
+      js?: boolean;
+      jsOptions?: SwcJsMinimizerRspackPluginOptions;
+      css?: boolean;
+      html?: boolean;
+      htmlOptions?: HTMLPluginOptions['minify'];
+    };
+```
+
+- **Default:** `true`
+
+Configure whether to enable code minification in the production build, or to configure minimizer options.
+
+By default, JS, CSS, and HTML code will be automatically minimized during production builds to enhance page performance. If you do not want to minify the code, you can set `minify` to `false` to disable minification for all code. Alternatively, you can control the behavior of code minification through detailed configuration of the `minify` option. Below are detailed explanations for each configuration option:
+
+Here are explanations for each field:
+
+- `js`: Whether to enable minification for JavaScript code.
+- `jsOptions`: JS code minification configuration, which will be merged with the default configuration and passed to SWC.
+- `css`: Whether to enable minification for CSS code.
+- `html`: Whether to enable minification for HTML code.
+- `htmlOptions`: HTML code minification configuration, which will be merged with the default configuration and passed to html-rspack-plugin.
+
+## Example
+
+### Disable all code minification
+
+```js
+export default {
+  output: {
+    minify: false,
+  },
+};
+```
+
+:::tip
+This configuration is usually used for debugging and troubleshooting. It is not recommended to disable code minification in production builds, as it will significantly degrade the page performance.
+:::
+
+### Disable JavaScript code minification
+
+```js
+export default {
+  output: {
+    minify: {
+      js: false,
+    },
+  },
+};
+```
+
+### Customize JavaScript code minification
+
+`output.minify.jsOptions` is used to configure SWC's minification options. For specific configuration items, please refer to [SWC Documentation](https://swc.rs/docs/configuration/minification#configuration). The following configuration will override the default settings, turning off code obfuscation and the removal of `console` statements.
+
+```js
+export default {
+  output: {
+    minify: {
+      jsOptions: {
+        mangle: false,
+        compress: {
+          drop_console: false,
+        },
+      },
+    },
+  },
+};
+```
+
+### Customize HTML code minification
+
+`output.minify.htmlOptions` is used to configure the minification options of the html-rspack-plugin. For specific configuration options, please refer to the [html-rspack-plugin documentation](https://github.com/rspack-contrib/html-rspack-plugin). The following configuration will override the default settings to disable minification of JS code in HTML.
+
+```js
+export default {
+  output: {
+    minify: {
+      minify: {
+        htmlOptions: {
+          minifyJS: false,
+        },
+      },
+    },
+  },
+};
+```

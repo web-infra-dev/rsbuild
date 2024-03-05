@@ -128,6 +128,7 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   legalComments: 'linked',
   injectStyles: false,
   disableMinimize: false,
+  minify: true,
   sourceMap: {
     js: undefined,
     css: false,

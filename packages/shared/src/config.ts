@@ -8,9 +8,10 @@ import { logger } from './logger';
 import { join } from 'node:path';
 import type { minify } from 'terser';
 import fse from '../compiled/fs-extra';
-import { pick, color, upperFirst } from './utils';
+import { pick, color, upperFirst, deepmerge } from './utils';
 import { getTerserMinifyOptions } from './minimize';
 import type { RuleSetCondition } from '@rspack/core';
+import { parseMinifyOptions } from './minimize';
 
 export async function outputInspectConfigFiles({
   rsbuildConfig,
@@ -88,14 +89,23 @@ export type GetTypeByPath<
 
 type MinifyOptions = NonNullable<Parameters<typeof minify>[1]>;
 
-export async function getMinify(isProd: boolean, config: NormalizedConfig) {
-  if (config.output.disableMinimize || !isProd) {
+export async function getHtmlMinifyOptions(
+  isProd: boolean,
+  config: NormalizedConfig,
+) {
+  if (
+    config.output.disableMinimize ||
+    !isProd ||
+    !config.output.minify ||
+    !parseMinifyOptions(config).minifyHtml
+  ) {
     return false;
   }
+
   const minifyJS: MinifyOptions = (await getTerserMinifyOptions(config))
     .terserOptions!;
 
-  return {
+  const htmlMinifyDefaultOptions = {
     removeComments: false,
     useShortDoctype: true,
     keepClosingSlash: true,
@@ -108,6 +118,11 @@ export async function getMinify(isProd: boolean, config: NormalizedConfig) {
     minifyCSS: true,
     minifyURLs: true,
   };
+
+  const htmlMinifyOptions = parseMinifyOptions(config).htmlOptions;
+  return typeof htmlMinifyOptions === 'object'
+    ? deepmerge(htmlMinifyDefaultOptions, htmlMinifyOptions)
+    : htmlMinifyDefaultOptions;
 }
 
 export async function stringifyConfig(config: unknown, verbose?: boolean) {

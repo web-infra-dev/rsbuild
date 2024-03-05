@@ -4,6 +4,7 @@ import {
   type BundlerChain,
   type RsbuildPlugin,
   type NormalizedConfig,
+  parseMinifyOptions,
 } from '@rsbuild/shared';
 
 async function applyJSMinimizer(chain: BundlerChain, config: NormalizedConfig) {
@@ -27,12 +28,15 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { isProd }) => {
       const config = api.getNormalizedConfig();
-      const isMinimize = isProd && !config.output.disableMinimize;
+      const doesMinimize =
+        isProd &&
+        !config.output.disableMinimize &&
+        config.output.minify !== false;
 
       // set minimize to allow users to disable minimize
-      chain.optimization.minimize(isMinimize);
+      chain.optimization.minimize(doesMinimize);
 
-      if (isMinimize) {
+      if (parseMinifyOptions(config, isProd).minifyJs) {
         await applyJSMinimizer(chain, config);
       }
     });

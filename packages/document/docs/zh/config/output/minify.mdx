@@ -1,0 +1,94 @@
+# output.minify
+
+- **类型：**
+
+```ts
+export type Minify =
+  | boolean
+  | {
+      js?: boolean;
+      jsOptions?: SwcJsMinimizerRspackPluginOptions;
+      css?: boolean;
+      html?: boolean;
+      htmlOptions?: HTMLPluginOptions['minify'];
+    };
+```
+
+- **默认值：** `true`
+
+用于设置是否在生产环境下开启代码压缩，或是配置压缩工具的选项。
+
+默认情况下，JS, CSS 及 HTML 代码会在生产环境构建时被自动压缩，从而提升页面性能。如果你不希望执行代码压缩，可以将 `minify` 设置为 `false` 关闭对所有代码的压缩。或者可以通过 `minify` 选项的详细配置来控制代码压缩的行为。
+
+下面是各个字段的说明：
+
+- `js`: 是否开启对 JavaScript 代码的压缩
+- `jsOptions`: JS 代码压缩配置，将会与默认配置合并传给 SWC
+- `css`: 是否开启对 CSS 代码的压缩
+- `html`: 是否开启对 HTML 代码的压缩
+- `htmlOptions`: HTML 代码压缩配置，将会与默认配置合并传给 html-rspack-plugin
+
+## 示例
+
+### 禁用所有代码压缩
+
+```js
+export default {
+  output: {
+    minify: false,
+  },
+};
+```
+
+:::tip
+该配置项通常用于代码调试和问题排查，不建议在生产环境禁用代码压缩，否则会导致页面性能显著下降。
+:::
+
+### 禁用 JavaScript 代码压缩
+
+```js
+export default {
+  output: {
+    minify: {
+      js: false,
+    },
+  },
+};
+```
+
+### 对 JavaScript 代码进行自定义压缩
+
+`output.minify.jsOptions` 用于配置 SWC 的压缩选项，具体配置项请参考 [SWC 文档](https://swc.rs/docs/configuration/minification#configuration)。如下配置将覆盖默认配置，关闭代码混淆和移除 `console` 语句。
+
+```js
+export default {
+  output: {
+    minify: {
+      jsOptions: {
+        mangle: false,
+        compress: {
+          drop_console: false,
+        },
+      },
+    },
+  },
+};
+```
+
+### 对 HTML 代码进行自定义压缩
+
+`output.minify.htmlOptions` 用于配置 html-rspack-plugin 的压缩选项，具体配置项请参考 [html-rspack-plugin 文档](https://github.com/rspack-contrib/html-rspack-plugin)。如下配置将覆盖默认配置，关闭对 HTML 中 JS 代码的压缩。
+
+```js
+export default {
+  output: {
+    minify: {
+      minify: {
+        htmlOptions: {
+          minifyJS: false,
+        },
+      },
+    },
+  },
+};
+```
