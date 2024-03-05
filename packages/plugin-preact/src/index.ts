@@ -1,5 +1,5 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
-import { modifySwcLoaderOptions, type SwcReactConfig } from '@rsbuild/shared';
+import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
+import { getNodeEnv, type SwcReactConfig } from '@rsbuild/shared';
 
 export type PluginPreactOptions = {
   /**
@@ -17,34 +17,38 @@ export const pluginPreact = (
   setup(api) {
     const { reactAliasesEnabled = true } = options;
 
-    api.modifyBundlerChain(async (chain, { isDev }) => {
-      if (reactAliasesEnabled) {
-        chain.resolve.alias.merge({
-          react: 'preact/compat',
-          'react-dom/test-utils': 'preact/test-utils',
-          'react-dom': 'preact/compat',
-          'react/jsx-runtime': 'preact/jsx-runtime',
-        });
-      }
-
+    api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
       const reactOptions: SwcReactConfig = {
-        development: isDev,
+        development: getNodeEnv() === 'development',
         runtime: 'automatic',
         importSource: 'preact',
       };
 
-      modifySwcLoaderOptions({
-        chain,
-        modifier: (opts) => {
-          opts.jsc ??= {};
-          opts.jsc.transform ??= {};
-          opts.jsc.transform.react = {
-            ...opts.jsc.transform.react,
-            ...reactOptions,
-          };
-          return opts;
+      const extraConfig: RsbuildConfig = {
+        tools: {
+          swc(opts) {
+            opts.jsc ??= {};
+            opts.jsc.transform ??= {};
+            opts.jsc.transform.react = {
+              ...opts.jsc.transform.react,
+              ...reactOptions,
+            };
+            return opts;
+          },
         },
-      });
+      };
+
+      if (reactAliasesEnabled) {
+        extraConfig.source ||= {};
+        extraConfig.source.alias = {
+          react: 'preact/compat',
+          'react-dom/test-utils': 'preact/test-utils',
+          'react-dom': 'preact/compat',
+          'react/jsx-runtime': 'preact/jsx-runtime',
+        };
+      }
+
+      return mergeRsbuildConfig(extraConfig, userConfig);
     });
   },
 });
