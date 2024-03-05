@@ -26,7 +26,7 @@ export type PluginLightningcssOptions = {
    *   targets: browserslistToTargets(browserslist)
    * }
    */
-  loaderOptions?: false | LightningCssLoaderOptions;
+  transform?: false | LightningCssLoaderOptions;
   /**
    * The 'insert-before'/'insert-after' define the insertion order of the lightningcss-loader based on the postcss-loader.
    * @default false
@@ -39,5 +39,5 @@ export type PluginLightningcssOptions = {
    *   targets: browserslistToTargets(browserslist)
    * }
    */
-  minimizerOptions?: false | LightningCssMinifyPluginOptions;
+  minify?: false | LightningCssMinifyPluginOptions;
 };

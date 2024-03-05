@@ -34,7 +34,7 @@ const applyLightningcssLoader = async ({
 
   const mergedOptions: LightningCssLoaderOptions = mergeChainedOptions({
     defaults: defaultOptions,
-    options: options?.loaderOptions,
+    options: options?.transform,
   });
 
   [CHAIN_ID.RULE.CSS, CHAIN_ID.RULE.SASS, CHAIN_ID.RULE.LESS].forEach(
@@ -94,7 +94,7 @@ const applyLightningCssMinifyPlugin = async ({
 
   const mergedOptions: LightningCssLoaderOptions = mergeChainedOptions({
     defaults: defaultOptions,
-    options: options?.minimizerOptions,
+    options: options?.minify,
   });
 
   const { LightningCssMinifyPlugin } = await import('./minimizer');
@@ -120,13 +120,13 @@ export const pluginLightningcss = (
         target,
       );
 
-      if (!isServer && !isWebWorker && Boolean(options?.loaderOptions)) {
+      if (!isServer && !isWebWorker && Boolean(options?.transform)) {
         await applyLightningcssLoader({ chain, utils, browserslist, options });
       }
 
       const isMinimize = isProd && !config.output.disableMinimize;
 
-      if (isMinimize && Boolean(options?.minimizerOptions)) {
+      if (isMinimize && Boolean(options?.minify)) {
         applyLightningCssMinifyPlugin({ chain, utils, browserslist, options });
       }
     });
