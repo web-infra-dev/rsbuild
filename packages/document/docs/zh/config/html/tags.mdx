@@ -31,7 +31,7 @@ export interface HtmlInjectTag {
 ```js
 export default {
   output: {
-    assetPrefix: '//example.com/',
+    assetPrefix: 'https://example.com/',
   },
   html: {
     tags: [
@@ -54,7 +54,7 @@ export default {
 <html>
   <head>
     <!-- some other headTags... -->
-    <script src="//example.com/a.js?8327ec63"></script>
+    <script src="https://example.com/a.js?8327ec63"></script>
   </head>
   <body>
     <!-- some other bodyTags... -->
@@ -133,14 +133,14 @@ export default {
     <!-- tags with `{ head: true, append: false }` here. -->
     <!-- some other headTags... -->
     <!-- tags with `{ head: true, append: true }` here. -->
-    <script src="//example.com/c.js"></script>
-    <script src="//example.com/d.js"></script>
+    <script src="https://example.com/c.js"></script>
+    <script src="https://example.com/d.js"></script>
   </head>
   <body>
     <!-- tags with `{ head: false, append: false }` here. -->
     <!-- some other bodyTags... -->
     <!-- tags with `{ head: false, append: true }` here. -->
-    <script src="//example.com/a.js"></script>
+    <script src="https://example.com/a.js"></script>
   </body>
 </html>
 ```
@@ -162,7 +162,7 @@ web-app
 ```ts title="modern.config.ts"
 export default {
   output: {
-    assetPrefix: '//example.com/',
+    assetPrefix: 'https://example.com/',
   },
   html: {
     tags: [{ tag: 'script', attrs: { src: './src/polyfill.ts' } }],
@@ -174,7 +174,7 @@ export default {
 
 ```html
 <body>
-  <script src="//example.com/src/polyfill.ts"></script>
+  <script src="https://example.com/src/polyfill.ts"></script>
 </body>
 ```
 
@@ -202,7 +202,7 @@ function report() {
 export default {
   html: {
     output: {
-      assetPrefix: '//example.com/',
+      assetPrefix: 'https://example.com/',
     },
     tags: [
       // Inject asset from the `public` directory.
@@ -227,7 +227,7 @@ export default {
 
 ```html
 <body>
-  <script src="//example.com/service-worker.js"></script>
+  <script src="https://example.com/service-worker.js"></script>
   <script src="https://cdn.example.com/foo.js"></script>
   <script>
     function report() {

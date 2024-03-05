@@ -28,7 +28,11 @@ const defaultHtmlPluginOptions = {
 };
 ```
 
-The configs of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) can be modified through `tools.htmlPlugin`.
+The configs of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) can be modified through `tools.htmlPlugin`.
+
+:::tip
+Rsbuild internally implements HTML-related features based on [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin). It is a fork of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin), with the same features and options.
+:::
 
 ### Object Type
 
@@ -64,9 +68,9 @@ export default {
 };
 ```
 
-### Boolean Type
+## Disable HTML
 
-The built-in `html-webpack-plugin` plugins can be disabled by set `tools.htmlPlugin` to `false`. After disabling, Rsbuild will no longer generate HTML files.
+Setting `tools.htmlPlugin` to `false` can disable the built-in `html-rspack-plugin` in Rsbuild, and no HTML files will be generated.
 
 ```js
 export default {
