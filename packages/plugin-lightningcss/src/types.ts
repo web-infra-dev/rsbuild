@@ -28,11 +28,6 @@ export type PluginLightningcssOptions = {
    */
   transform?: false | LightningCssLoaderOptions;
   /**
-   * The 'insert-before'/'insert-after' define the insertion order of the lightningcss-loader based on the postcss-loader.
-   * @default false
-   */
-  disableRemovePostCSS?: false | 'insert-before' | 'insert-after';
-  /**
    * @see https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts
    * @default
    * {

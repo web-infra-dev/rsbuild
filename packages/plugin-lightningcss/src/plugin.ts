@@ -17,7 +17,7 @@ import type {
 
 const PLUGIN_NAME = 'rsbuild:lightningcss';
 
-const applyLightningcssLoader = async ({
+const applyLightningcssLoader = ({
   chain,
   utils: { CHAIN_ID },
   browserslist: browserslistUserConfig,
@@ -40,39 +40,22 @@ const applyLightningcssLoader = async ({
   [CHAIN_ID.RULE.CSS, CHAIN_ID.RULE.SASS, CHAIN_ID.RULE.LESS].forEach(
     (ruleId) => {
       const rule = chain.module.rule(ruleId);
-      let use = rule.use(CHAIN_ID.USE.LIGHTNINGCSS);
-
-      const disableRemovePostCSS = options?.disableRemovePostCSS ?? false;
+      const use = rule.use(CHAIN_ID.USE.LIGHTNINGCSS);
 
       use.loader(path.resolve(__dirname, './loader')).options(mergedOptions);
 
-      if (disableRemovePostCSS) {
-        switch (disableRemovePostCSS) {
-          case 'insert-before':
-            use = use.before(CHAIN_ID.USE.POSTCSS);
-            break;
-          case 'insert-after':
-            use = use.after(CHAIN_ID.USE.POSTCSS);
-            break;
-          default:
-            throw new TypeError(
-              `[${PLUGIN_NAME}]: Expected type of disableRemovePostCSS should be 'false | "insert-before" | "insert-after"'`,
-            );
-        }
-      } else {
-        switch (ruleId) {
-          case CHAIN_ID.RULE.SASS:
-            use = use.before(CHAIN_ID.USE.RESOLVE_URL);
-            break;
-          case CHAIN_ID.RULE.LESS:
-            use = use.before(CHAIN_ID.USE.LESS);
-            break;
-          case CHAIN_ID.RULE.CSS:
-            use = use.after(CHAIN_ID.USE.CSS);
-            break;
-        }
-        rule.uses.delete(CHAIN_ID.USE.POSTCSS);
+      switch (ruleId) {
+        case CHAIN_ID.RULE.SASS:
+          use.before(CHAIN_ID.USE.RESOLVE_URL);
+          break;
+        case CHAIN_ID.RULE.LESS:
+          use.before(CHAIN_ID.USE.LESS);
+          break;
+        case CHAIN_ID.RULE.CSS:
+          use.after(CHAIN_ID.USE.CSS);
+          break;
       }
+      rule.uses.delete(CHAIN_ID.USE.POSTCSS);
     },
   );
 };
@@ -120,13 +103,13 @@ export const pluginLightningcss = (
         target,
       );
 
-      if (!isServer && !isWebWorker && Boolean(options?.transform)) {
-        await applyLightningcssLoader({ chain, utils, browserslist, options });
+      if (!isServer && !isWebWorker && options?.transform !== false) {
+        applyLightningcssLoader({ chain, utils, browserslist, options });
       }
 
       const isMinimize = isProd && !config.output.disableMinimize;
 
-      if (isMinimize && Boolean(options?.minify)) {
+      if (isMinimize && options?.minify !== false) {
         applyLightningCssMinifyPlugin({ chain, utils, browserslist, options });
       }
     });

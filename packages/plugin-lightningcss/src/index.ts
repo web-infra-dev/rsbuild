@@ -1,4 +1,4 @@
-import * as lightningcss from 'lightningcss';
+import lightningcss from 'lightningcss';
 export { lightningcss };
 
 export { default as lightningcssLoader } from './loader';
