@@ -1,0 +1,63 @@
+# tools.swc
+
+- **Type:** `Object | Function`
+- **Version:** `>= 0.4.11`
+- **Default:**
+
+```js
+const defaultOptions = {
+  jsc: {
+    externalHelpers: true,
+    parser: {
+      tsx: true,
+      syntax: 'typescript',
+      decorators: true,
+    },
+    preserveAllComments: true,
+  },
+  isModule: 'unknown',
+  // ...some other conditional options
+};
+```
+
+You can set the options of [builtin:swc-loader](https://www.rspack.dev/guide/builtin-swc-loader) through `tools.swc`.
+
+:::tip
+Rsbuild uses `builtin:swc-loader` by default to transform JavaScript code. It is the Rust version of [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader), and its options align with the JS version of swc-loader.
+:::
+
+## Object Type
+
+`tools.swc` can be configured as an object, this object will be deeply merged with the built-in `builtin:swc-loader` option.
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        externalHelpers: false,
+      },
+    },
+  },
+};
+```
+
+## Function Type
+
+`tools.swc` can also be configured as a function, this function takes one argument, which is the built-in `builtin:swc-loader` option. You can modify this object then return a new config. For example:
+
+```js
+export default {
+  tools: {
+    swc: (config) => {
+      config.jsc ||= {};
+      config.jsc.externalHelpers = false;
+      return config;
+    },
+  },
+};
+```
+
+:::tip
+The object returned by the `tools.swc` function will be used directly as the final `builtin:swc-loader` option, and will not be merged with the built-in `builtin:swc-loader` option anymore.
+:::

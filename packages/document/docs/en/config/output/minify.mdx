@@ -3,7 +3,7 @@
 - **Type:**
 
 ```ts
-export type Minify =
+type Minify =
   | boolean
   | {
       js?: boolean;
@@ -14,6 +14,7 @@ export type Minify =
     };
 ```
 
+- **Version:** `>= 0.4.11`
 - **Default:** `true`
 
 Configure whether to enable code minification in the production build, or to configure minimizer options.

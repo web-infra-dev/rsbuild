@@ -3,7 +3,7 @@
 - **类型：**
 
 ```ts
-export type Minify =
+type Minify =
   | boolean
   | {
       js?: boolean;
@@ -14,6 +14,7 @@ export type Minify =
     };
 ```
 
+- **版本：** `>= 0.4.11`
 - **默认值：** `true`
 
 用于设置是否在生产环境下开启代码压缩，或是配置压缩工具的选项。

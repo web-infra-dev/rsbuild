@@ -1,0 +1,63 @@
+# tools.swc
+
+- **类型：** `Object | Function`
+- **版本：** `>= 0.4.11`
+- **默认值：**
+
+```js
+const defaultOptions = {
+  jsc: {
+    externalHelpers: true,
+    parser: {
+      tsx: true,
+      syntax: 'typescript',
+      decorators: true,
+    },
+    preserveAllComments: true,
+  },
+  isModule: 'unknown',
+  // ...some other conditional options
+};
+```
+
+通过 `tools.swc` 可以设置 [builtin:swc-loader](https://www.rspack.dev/guide/builtin-swc-loader) 的选项。
+
+:::tip
+Rsbuild 默认使用 `builtin:swc-loader` 来转换 JavaScript 代码，它是 [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader) 的 Rust 版本，选项与 JS 版本的 swc-loader 保持对齐。
+:::
+
+## Object 类型
+
+`tools.swc` 可以配置为一个对象，这个对象将会和内置的 `builtin:swc-loader` 选项进行深层合并。
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        externalHelpers: false,
+      },
+    },
+  },
+};
+```
+
+## Function 类型
+
+`tools.swc` 也可以配置为一个函数，这个函数接收一个参数，即内置的 `builtin:swc-loader` 选项，你可以对这个对象进行修改，然后返回一份新的配置。比如：
+
+```js
+export default {
+  tools: {
+    swc: (config) => {
+      config.jsc ||= {};
+      config.jsc.externalHelpers = false;
+      return config;
+    },
+  },
+};
+```
+
+:::tip
+`tools.swc` 函数返回的对象会直接作为最终使用的 `builtin:swc-loader` 选项，不会再与内置的 `builtin:swc-loader` 选项进行合并。
+:::
