@@ -1,15 +1,11 @@
 // https://github.com/fz6m/lightningcss-loader/blob/main/src/minify.ts
 import { transform as _transform } from 'lightningcss';
 import { Buffer } from 'node:buffer';
-import path from 'node:path';
 import type { Compilation, Compiler } from 'webpack';
 import type { LightningCssMinifyPluginOptions } from './types';
 
-const PLUGIN_NAME = 'lightning-css-minify';
+const PLUGIN_NAME = 'lightningcss-minify-plugin';
 const CSS_FILE_REG = /\.css(?:\?.*)?$/i;
-
-const pkgJsonPath = path.join(__dirname, '../../');
-const pkgJson = require(pkgJsonPath);
 
 export class LightningCssMinifyPlugin {
   private readonly options: Omit<
@@ -31,21 +27,11 @@ export class LightningCssMinifyPlugin {
   }
 
   apply(compiler: Compiler) {
-    const meta = JSON.stringify({
-      name: pkgJson,
-      version: pkgJson.version,
-      options: this.options,
-    });
-
     compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
-      compilation.hooks.chunkHash.tap(PLUGIN_NAME, (_, hash) =>
-        hash.update(meta),
-      );
-
       compilation.hooks.processAssets.tapPromise(
         {
           name: PLUGIN_NAME,
-          stage: (compilation as any).PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE,
+          stage: (compilation as any)?.PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE,
           additionalAssets: true,
         },
         async () => await this.transformAssets(compilation),

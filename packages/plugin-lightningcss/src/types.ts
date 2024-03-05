@@ -7,15 +7,16 @@ export type LightningCssTransformOptions = Omit<
   'filename' | 'code' | 'inputSourceMap'
 >;
 
-export interface LightningCssLoaderOptions
-  extends LightningCssTransformOptions {
+export type LightningCssLoaderOptions = LightningCssTransformOptions & {
   implementation?: Implementation;
-}
+};
 
-export interface LightningCssMinifyPluginOptions
-  extends LightningCssTransformOptions {
+export type LightningCssMinifyPluginOptions = Omit<
+  LightningCssTransformOptions,
+  'minify'
+> & {
   implementation?: Implementation;
-}
+};
 
 export type PluginLightningcssOptions = {
   /**
