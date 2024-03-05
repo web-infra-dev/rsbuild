@@ -41,9 +41,6 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
-      husky:
-        specifier: ^9.0.10
-        version: 9.0.11
       nano-staged:
         specifier: ^0.8.0
         version: 0.8.0
@@ -53,6 +50,9 @@ importers:
       prettier:
         specifier: ^3.2.4
         version: 3.2.5
+      simple-git-hooks:
+        specifier: ^2.10.0
+        version: 2.10.0
       vitest:
         specifier: ^1.2.1
         version: 1.3.1
@@ -8819,12 +8819,6 @@ packages:
     hasBin: true
     dev: true
 
-  /husky@9.0.11:
-    resolution: {integrity: sha512-AB6lFlbwwyIqMdHYhwPe+kjOC3Oc5P3nThEoW/AaO2BX3vJDjWPFxYLxokUZOo6RNX20He3AaT8sESs9NJcmEw==}
-    engines: {node: '>=18'}
-    hasBin: true
-    dev: true
-
   /iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
@@ -12844,6 +12838,12 @@ packages:
   /signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
+    dev: true
+
+  /simple-git-hooks@2.10.0:
+    resolution: {integrity: sha512-TtCytVYfV77pILCkzVxpOSgYKHQyaO7fBI/iwG5bLGb0dIo/v/K1Y1IZ5DN40RQu6WNNJiN0gkuRvSYjxOhFog==}
+    hasBin: true
+    requiresBuild: true
     dev: true
 
   /sirv@2.0.4:
