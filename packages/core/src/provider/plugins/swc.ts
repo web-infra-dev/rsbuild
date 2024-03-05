@@ -4,6 +4,7 @@ import {
   SCRIPT_REGEX,
   getJsSourceMap,
   getCoreJsVersion,
+  mergeChainedOptions,
   applyScriptCondition,
   getBrowserslistWithDefault,
   type Polyfill,
@@ -100,10 +101,15 @@ export const pluginSwc = (): RsbuildPlugin => ({
           }
         }
 
+        const mergedSwcConfig = mergeChainedOptions({
+          defaults: swcConfig,
+          options: config.tools.swc,
+        });
+
         rule
           .use(CHAIN_ID.USE.SWC)
           .loader(builtinSwcLoaderName)
-          .options(swcConfig);
+          .options(mergedSwcConfig);
 
         /**
          * If a script is imported with data URI, it can be compiled by babel too.
@@ -123,7 +129,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           .use(CHAIN_ID.USE.SWC)
           .loader(builtinSwcLoaderName)
           // Using cloned options to keep options separate from each other
-          .options(cloneDeep(swcConfig));
+          .options(cloneDeep(mergedSwcConfig));
       },
     });
   },

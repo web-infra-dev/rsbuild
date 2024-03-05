@@ -464,6 +464,134 @@ exports[`plugin-swc > should add pluginImport 1`] = `
 ]
 `;
 
+exports[`plugin-swc > should allow to use \`tools.swc\` to be function type 1`] = `
+[
+  {
+    "include": [
+      {
+        "and": [
+          "<ROOT>/packages/core/tests",
+          {
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+          },
+        ],
+      },
+      /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+    ],
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "jsc": {
+            "externalHelpers": false,
+          },
+        },
+      },
+    ],
+  },
+  {
+    "mimetype": {
+      "or": [
+        "text/javascript",
+        "application/javascript",
+      ],
+    },
+    "resolve": {
+      "fullySpecified": false,
+    },
+    "use": [
+      {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "jsc": {
+            "externalHelpers": false,
+          },
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader options 1`] = `
+[
+  {
+    "include": [
+      {
+        "and": [
+          "<ROOT>/packages/core/tests",
+          {
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+          },
+        ],
+      },
+      /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+    ],
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "env": {
+            "coreJs": "3.32",
+            "mode": "usage",
+            "shippedProposals": true,
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "isModule": "unknown",
+          "jsc": {
+            "externalHelpers": false,
+          },
+          "sourceMaps": true,
+        },
+      },
+    ],
+  },
+  {
+    "mimetype": {
+      "or": [
+        "text/javascript",
+        "application/javascript",
+      ],
+    },
+    "resolve": {
+      "fullySpecified": false,
+    },
+    "use": [
+      {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "env": {
+            "coreJs": "3.32",
+            "mode": "usage",
+            "shippedProposals": true,
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "isModule": "unknown",
+          "jsc": {
+            "externalHelpers": false,
+          },
+          "sourceMaps": true,
+        },
+      },
+    ],
+  },
+]
+`;
+
 exports[`plugin-swc > should disable all pluginImport 1`] = `
 {
   "entry": {

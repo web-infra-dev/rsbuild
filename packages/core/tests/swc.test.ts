@@ -128,6 +128,50 @@ describe('plugin-swc', () => {
       expect(bundlerConfig).toMatchSnapshot();
     });
   });
+
+  it('should allow to use `tools.swc` to configure swc-loader options', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        tools: {
+          swc: {
+            jsc: {
+              externalHelpers: false,
+            },
+          },
+        },
+      },
+      plugins: [pluginSwc()],
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    bundlerConfigs.forEach((bundlerConfig) => {
+      expect(bundlerConfig.module?.rules).toMatchSnapshot();
+    });
+  });
+
+  it('should allow to use `tools.swc` to be function type', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        tools: {
+          swc() {
+            return {
+              jsc: {
+                externalHelpers: false,
+              },
+            };
+          },
+        },
+      },
+      plugins: [pluginSwc()],
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    bundlerConfigs.forEach((bundlerConfig) => {
+      expect(bundlerConfig.module?.rules).toMatchSnapshot();
+    });
+  });
 });
 
 async function matchConfigSnapshot(rsbuildConfig: RsbuildConfig) {
