@@ -549,6 +549,17 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
           "isModule": "unknown",
           "jsc": {
             "externalHelpers": false,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": true,
+            },
+            "preserveAllComments": true,
+            "transform": {
+              "decoratorMetadata": true,
+              "legacyDecorator": true,
+              "useDefineForClassFields": false,
+            },
           },
           "sourceMaps": true,
         },
@@ -583,6 +594,17 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
           "isModule": "unknown",
           "jsc": {
             "externalHelpers": false,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": true,
+            },
+            "preserveAllComments": true,
+            "transform": {
+              "decoratorMetadata": true,
+              "legacyDecorator": true,
+              "useDefineForClassFields": false,
+            },
           },
           "sourceMaps": true,
         },

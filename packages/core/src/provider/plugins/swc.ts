@@ -1,5 +1,6 @@
 import {
   cloneDeep,
+  deepmerge,
   isWebTarget,
   SCRIPT_REGEX,
   getJsSourceMap,
@@ -104,6 +105,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
         const mergedSwcConfig = mergeChainedOptions({
           defaults: swcConfig,
           options: config.tools.swc,
+          mergeFn: deepmerge,
         });
 
         rule
