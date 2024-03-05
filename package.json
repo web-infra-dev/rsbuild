@@ -19,7 +19,7 @@
     "e2e:rspack": "cd ./e2e && pnpm test:rspack",
     "e2e:webpack": "cd ./e2e && pnpm test:webpack",
     "lint": "biome lint . --diagnostic-level=warn && ls-lint",
-    "prepare": "pnpm run build && husky",
+    "prepare": "pnpm run build && simple-git-hooks",
     "test": "cross-env NODE_OPTIONS=--max-old-space-size=8192 pnpm run ut",
     "update-modern": "cd ./scripts/update-packages && pnpm start:modern",
     "update-rspack": "cd ./scripts/update-packages && pnpm start:rspack",
@@ -27,6 +27,9 @@
     "sort-package-json": "npx sort-package-json \"packages/*/package.json\" \"packages/compat/*/package.json\"",
     "ut": "vitest run",
     "ut:watch": "vitest"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx nano-staged"
   },
   "nano-staged": {
     "*.{md,mdx,json,css,less,scss}": "prettier --write",
@@ -44,10 +47,10 @@
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
-    "husky": "^9.0.10",
     "nano-staged": "^0.8.0",
     "nx": "^18.0.4",
     "prettier": "^3.2.4",
+    "simple-git-hooks": "^2.10.0",
     "vitest": "^1.2.1"
   },
   "packageManager": "pnpm@8.15.4",
