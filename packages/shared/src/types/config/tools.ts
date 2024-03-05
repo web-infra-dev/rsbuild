@@ -19,7 +19,11 @@ import type {
 } from '../thirdParty';
 import type { BundlerChain } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
-import type { RspackConfig, RspackRule } from '../rspack';
+import type {
+  RspackRule,
+  RspackConfig,
+  BuiltinSwcLoaderOptions,
+} from '../rspack';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
 import type { BundlerPluginInstance } from '../bundlerConfig';
 import type {
@@ -28,6 +32,8 @@ import type {
 } from '../plugin';
 
 export type { HTMLPluginOptions };
+
+export type ToolsSwcConfig = ChainedConfig<BuiltinSwcLoaderOptions>;
 
 export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
 
@@ -124,6 +130,10 @@ export interface ToolsConfig {
    * Configure the html-webpack-plugin.
    */
   htmlPlugin?: false | ToolsHtmlPluginConfig;
+  /**
+   * Configure the `builtin:swc-loader` of Rspack.
+   */
+  swc?: ToolsSwcConfig;
   /**
    * Configure Rspack.
    * @requires rspack
