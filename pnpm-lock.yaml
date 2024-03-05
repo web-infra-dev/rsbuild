@@ -1065,9 +1065,6 @@ importers:
       '@rsbuild/core':
         specifier: link:../core
         version: link:../core
-      '@scripts/test-helper':
-        specifier: workspace:*
-        version: link:../../scripts/test-helper
       '@types/node':
         specifier: 16.x
         version: 16.18.84
