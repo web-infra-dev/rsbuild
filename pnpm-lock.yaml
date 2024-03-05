@@ -298,8 +298,8 @@ importers:
         specifier: ^1.70.0
         version: 1.71.1
       stylus:
-        specifier: 0.62.0
-        version: 0.62.0
+        specifier: 0.63.0
+        version: 0.63.0
 
   e2e/cases/vue:
     dependencies:
@@ -1222,11 +1222,11 @@ importers:
         specifier: workspace:*
         version: link:../shared
       stylus:
-        specifier: 0.62.0
-        version: 0.62.0
+        specifier: 0.63.0
+        version: 0.63.0
       stylus-loader:
         specifier: 7.1.3
-        version: 7.1.3(stylus@0.62.0)(webpack@5.90.3)
+        version: 7.1.3(stylus@0.63.0)(webpack@5.90.3)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -13190,7 +13190,7 @@ packages:
     resolution: {integrity: sha512-EQepAV+wMsIaGVGX1RECzgrcqRRU/0sYOHkeLsZ3fzHaHXZy4DaOOX0vOlGQdlsjkh3mFHAIlVimpwAs4dslyQ==}
     dev: false
 
-  /stylus-loader@7.1.3(stylus@0.62.0)(webpack@5.90.3):
+  /stylus-loader@7.1.3(stylus@0.63.0)(webpack@5.90.3):
     resolution: {integrity: sha512-TY0SKwiY7D2kMd3UxaWKSf3xHF0FFN/FAfsSqfrhxRT/koXTwffq2cgEWDkLQz7VojMu7qEEHt5TlMjkPx9UDw==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -13199,12 +13199,12 @@ packages:
     dependencies:
       fast-glob: 3.3.2
       normalize-path: 3.0.0
-      stylus: 0.62.0
+      stylus: 0.63.0
       webpack: 5.90.3
     dev: false
 
-  /stylus@0.62.0:
-    resolution: {integrity: sha512-v3YCf31atbwJQIMtPNX8hcQ+okD4NQaTuKGUWfII8eaqn+3otrbttGL1zSMZAAtiPsBztQnujVBugg/cXFUpyg==}
+  /stylus@0.63.0:
+    resolution: {integrity: sha512-OMlgrTCPzE/ibtRMoeLVhOY0RcNuNWh0rhAVqeKnk/QwcuUKQbnqhZ1kg2vzD8VU/6h3FoPTq4RJPHgLBvX6Bw==}
     hasBin: true
     dependencies:
       '@adobe/css-tools': 4.3.3
