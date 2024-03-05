@@ -110,7 +110,12 @@ export const pluginLightningcss = (
       const isMinimize = isProd && !config.output.disableMinimize;
 
       if (isMinimize && options?.minify !== false) {
-        applyLightningCssMinifyPlugin({ chain, utils, browserslist, options });
+        await applyLightningCssMinifyPlugin({
+          chain,
+          utils,
+          browserslist,
+          options,
+        });
       }
     });
   },

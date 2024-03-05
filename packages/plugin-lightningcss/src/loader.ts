@@ -1,4 +1,8 @@
-// https://github.com/fz6m/lightningcss-loader/blob/main/src/loader.ts
+/**
+ * modified from https://github.com/fz6m/lightningcss-loader
+ * MIT License https://github.com/fz6m/lightningcss-loader/blob/main/LICENSE
+ * Author @fz6m
+ */
 import type { LoaderContext } from 'webpack';
 import { transform as _transform } from 'lightningcss';
 import { Buffer } from 'node:buffer';
