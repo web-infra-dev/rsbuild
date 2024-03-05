@@ -20,9 +20,9 @@ import type {
 import type { BundlerChain } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type {
-  BuiltinSwcLoaderOptions,
-  RspackConfig,
   RspackRule,
+  RspackConfig,
+  BuiltinSwcLoaderOptions,
 } from '../rspack';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
 import type { BundlerPluginInstance } from '../bundlerConfig';
