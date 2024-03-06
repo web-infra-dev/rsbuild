@@ -61,3 +61,41 @@ export default {
 :::tip
 The object returned by the `tools.swc` function will be used directly as the final `builtin:swc-loader` option, and will not be merged with the built-in `builtin:swc-loader` option anymore.
 :::
+
+## Example
+
+### Enable emotion support
+
+Example of enabling the emotion support using the `builtin:swc-loader`:
+
+```js
+export default {
+  tools: {
+    swc: {
+      rspackExperiments: {
+        emotion: true,
+      },
+    },
+  },
+};
+```
+
+For more options, please refer to [Rspack - rspackExperiments.emotion](https://www.rspack.dev/guide/builtin-swc-loader#optionsrspackexperimentsemotion).
+
+### Enable relay support
+
+Example of enabling the relay support using the `builtin:swc-loader`:
+
+```js
+export default {
+  tools: {
+    swc: {
+      rspackExperiments: {
+        relay: true,
+      },
+    },
+  },
+};
+```
+
+For more options, please refer to [Rspack - rspackExperiments.relay](https://www.rspack.dev/guide/builtin-swc-loader#optionsrspackexperimentsrelay).
