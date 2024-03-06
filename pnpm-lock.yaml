@@ -803,8 +803,8 @@ importers:
         specifier: npm:html-rspack-plugin@5.6.1
         version: /html-rspack-plugin@5.6.1(@rspack/core@0.5.6)(webpack@5.90.3)
       terser:
-        specifier: 5.28.1
-        version: 5.28.1
+        specifier: 5.29.0
+        version: 5.29.0
       typescript:
         specifier: ^5.3.0
         version: 5.3.3
@@ -1125,8 +1125,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       terser:
-        specifier: 5.28.1
-        version: 5.28.1
+        specifier: 5.29.0
+        version: 5.29.0
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1480,8 +1480,8 @@ importers:
         specifier: 2.8.1
         version: 2.8.1(webpack@5.90.3)
       terser:
-        specifier: 5.28.1
-        version: 5.28.1
+        specifier: 5.29.0
+        version: 5.29.0
       terser-webpack-plugin:
         specifier: 5.3.10
         version: 5.3.10(webpack@5.90.3)
@@ -13448,7 +13448,7 @@ packages:
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
-      terser: 5.28.1
+      terser: 5.29.0
       webpack: 5.90.3(esbuild@0.19.12)
     dev: false
 
@@ -13488,6 +13488,16 @@ packages:
 
   /terser@5.28.1:
     resolution: {integrity: sha512-wM+bZp54v/E9eRRGXb5ZFDvinrJIOaTapx3WUokyVGZu5ucVCK55zEgGd5Dl2fSr3jUo5sDiERErUWLY6QPFyA==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      '@jridgewell/source-map': 0.3.5
+      acorn: 8.11.3
+      commander: 2.20.3
+      source-map-support: 0.5.21
+
+  /terser@5.29.0:
+    resolution: {integrity: sha512-RXY80V6CBOVdZhyVwqsUHxOGcdFYSU1pCHTEF9UcQ2OWsacZiSyykd7CfAKfZFI6yfbRntv9EaoMW2TQNpyXjg==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
