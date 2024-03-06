@@ -1,11 +1,71 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/styled-components > should enable ssr when target contain node 1`] = `
+exports[`plugins/styled-components > should apply styledComponents option to swc-loader 1`] = `
 {
   "include": [
     {
       "and": [
-        "<ROOT>/packages/plugin-styled-components/tests",
+        "<ROOT>",
+        {
+          "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+        },
+      ],
+    },
+    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+  ],
+  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+  "type": "javascript/auto",
+  "use": [
+    {
+      "loader": "builtin:swc-loader",
+      "options": {
+        "env": {
+          "coreJs": "3.32",
+          "mode": "usage",
+          "shippedProposals": true,
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+        "isModule": "unknown",
+        "jsc": {
+          "externalHelpers": true,
+          "parser": {
+            "decorators": true,
+            "syntax": "typescript",
+            "tsx": true,
+          },
+          "preserveAllComments": true,
+          "transform": {
+            "decoratorMetadata": true,
+            "legacyDecorator": true,
+            "useDefineForClassFields": false,
+          },
+        },
+        "rspackExperiments": {
+          "styledComponents": {
+            "displayName": true,
+            "pure": false,
+            "ssr": false,
+            "transpileTemplateLiterals": true,
+          },
+        },
+        "sourceMaps": true,
+      },
+    },
+  ],
+}
+`;
+
+exports[`plugins/styled-components > should enable ssr option when target contains node 1`] = `
+{
+  "include": [
+    {
+      "and": [
+        "<ROOT>",
         {
           "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
         },
@@ -54,12 +114,12 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
 }
 `;
 
-exports[`plugins/styled-components > should enable ssr when target contain node 2`] = `
+exports[`plugins/styled-components > should enable ssr option when target contains node 2`] = `
 {
   "include": [
     {
       "and": [
-        "<ROOT>/packages/plugin-styled-components/tests",
+        "<ROOT>",
         {
           "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
         },
@@ -104,66 +164,6 @@ exports[`plugins/styled-components > should enable ssr when target contain node 
             "displayName": true,
             "pure": false,
             "ssr": true,
-            "transpileTemplateLiterals": true,
-          },
-        },
-        "sourceMaps": true,
-      },
-    },
-  ],
-}
-`;
-
-exports[`plugins/styled-components > should works in rspack mode 1`] = `
-{
-  "include": [
-    {
-      "and": [
-        "<ROOT>/packages/plugin-styled-components/tests",
-        {
-          "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-        },
-      ],
-    },
-    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-  ],
-  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-  "type": "javascript/auto",
-  "use": [
-    {
-      "loader": "builtin:swc-loader",
-      "options": {
-        "env": {
-          "coreJs": "3.32",
-          "mode": "usage",
-          "shippedProposals": true,
-          "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
-          ],
-        },
-        "isModule": "unknown",
-        "jsc": {
-          "externalHelpers": true,
-          "parser": {
-            "decorators": true,
-            "syntax": "typescript",
-            "tsx": true,
-          },
-          "preserveAllComments": true,
-          "transform": {
-            "decoratorMetadata": true,
-            "legacyDecorator": true,
-            "useDefineForClassFields": false,
-          },
-        },
-        "rspackExperiments": {
-          "styledComponents": {
-            "displayName": true,
-            "pure": false,
-            "ssr": false,
             "transpileTemplateLiterals": true,
           },
         },
