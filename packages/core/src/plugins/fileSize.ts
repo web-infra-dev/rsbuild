@@ -3,7 +3,7 @@
  * license at https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
 import path from 'node:path';
-import { fse } from '@rsbuild/shared';
+import { fse, JS_REGEX, CSS_REGEX, HTML_REGEX } from '@rsbuild/shared';
 import { color, logger } from '@rsbuild/shared';
 import type {
   Stats,
@@ -48,6 +48,19 @@ async function printHeader(
 const calcFileSize = (len: number) => {
   const val = len / 1000;
   return `${val.toFixed(val < 1 ? 2 : 1)} kB`;
+};
+
+const coloringAssetName = (assetName: string) => {
+  if (JS_REGEX.test(assetName)) {
+    return color.cyan(assetName);
+  }
+  if (CSS_REGEX.test(assetName)) {
+    return color.yellow(assetName);
+  }
+  if (HTML_REGEX.test(assetName)) {
+    return color.green(assetName);
+  }
+  return color.magenta(assetName);
 };
 
 async function printFileSizes(
@@ -135,7 +148,7 @@ async function printFileSizes(
       }
 
       let fileNameLabel =
-        color.dim(asset.folder + path.sep) + color.cyan(asset.name);
+        color.dim(asset.folder + path.sep) + coloringAssetName(asset.name);
 
       if (fileNameLength < longestFileLength) {
         const rightPadding = ' '.repeat(longestFileLength - fileNameLength);
