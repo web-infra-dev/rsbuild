@@ -26,14 +26,12 @@ export const pluginPreact = (
 
       const extraConfig: RsbuildConfig = {
         tools: {
-          swc(opts) {
-            opts.jsc ??= {};
-            opts.jsc.transform ??= {};
-            opts.jsc.transform.react = {
-              ...opts.jsc.transform.react,
-              ...reactOptions,
-            };
-            return opts;
+          swc: {
+            jsc: {
+              transform: {
+                react: reactOptions,
+              },
+            },
           },
         },
       };
