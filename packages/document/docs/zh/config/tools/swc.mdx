@@ -61,3 +61,41 @@ export default {
 :::tip
 `tools.swc` 函数返回的对象会直接作为最终使用的 `builtin:swc-loader` 选项，不会再与内置的 `builtin:swc-loader` 选项进行合并。
 :::
+
+## 示例
+
+### 启用 emotion 支持
+
+启用 `builtin:swc-loader` 对 emotion 支持的示例：
+
+```js
+export default {
+  tools: {
+    swc: {
+      rspackExperiments: {
+        emotion: true,
+      },
+    },
+  },
+};
+```
+
+更多选项可参考 [Rspack - rspackExperiments.emotion](https://www.rspack.dev/guide/builtin-swc-loader#optionsrspackexperimentsemotion)。
+
+### 启用 relay 支持
+
+启用 `builtin:swc-loader` 对 relay 支持的示例：
+
+```js
+export default {
+  tools: {
+    swc: {
+      rspackExperiments: {
+        relay: true,
+      },
+    },
+  },
+};
+```
+
+更多选项可参考 [Rspack - rspackExperiments.relay](https://www.rspack.dev/guide/builtin-swc-loader#optionsrspackexperimentsrelay)。
