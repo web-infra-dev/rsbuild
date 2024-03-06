@@ -31,7 +31,7 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it.fails('Terser and SWC minimizer should not coexist', async () => {
+  it('Terser and SWC minimizer should not coexist', async () => {
     process.env.NODE_ENV = 'production';
 
     const rsbuild = await createStubRsbuild({
@@ -39,7 +39,6 @@ describe('plugin-minimize', () => {
     });
 
     const config = await rsbuild.unwrapConfig();
-    // TODO: it's 2, now.
     expect(config.optimization?.minimizer.length).toBe(1);
 
     process.env.NODE_ENV = 'test';
@@ -124,7 +123,7 @@ describe('plugin-minimize', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].optimization?.minimizer?.length).toEqual(2);
+    expect(bundlerConfigs[0].optimization?.minimizer?.length).toEqual(1);
     expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
       minifyOptions: {
         cssMinify: undefined,
