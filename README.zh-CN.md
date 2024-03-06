@@ -83,6 +83,8 @@ Rsbuild 具备以下特性：
 
 请阅读 [贡献指南](https://github.com/web-infra-dev/rsbuild/blob/main/CONTRIBUTING.md) 来共同参与 Rsbuild 的建设。
 
+### 贡献者
+
 <a href="https://github.com/web-infra-dev/rsbuild/graphs/contributors" target="_blank">
   <table>
     <tr>
@@ -128,6 +130,10 @@ Rsbuild 具备以下特性：
   </table>
 </a>
 
+### 行为准则
+
+本仓库采纳了字节跳动的开源项目行为准则。请点击 [行为准则](./CODE_OF_CONDUCT.md) 查看更多的信息。
+
 ## 🧑‍💻 社区
 
 欢迎加入我们的 [Discord](https://discord.gg/XsaKEEk4mW) 交流频道！Rspack / Rsbuild 团队和用户都在那里活跃，并且我们一直期待着各种贡献。
@@ -137,10 +143,6 @@ Rsbuild 具备以下特性：
 ## 🌟 质量
 
 Rsbuild 通过 [Web Infra QoS](https://web-infra-qos.netlify.app?product=rsbuild&metrics=bundle-size) 来观测核心指标的变化情况，比如 bundle size、compile speed 和 install size。
-
-## 🙌 行为准则
-
-本仓库采纳了字节跳动的开源项目行为准则。请点击 [行为准则](./CODE_OF_CONDUCT.md) 查看更多的信息。
 
 ## 🙏 致谢
 
