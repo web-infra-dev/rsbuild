@@ -116,6 +116,9 @@ importers:
       '@rsbuild/plugin-image-compress':
         specifier: workspace:*
         version: link:../packages/plugin-image-compress
+      '@rsbuild/plugin-lightningcss':
+        specifier: workspace:*
+        version: link:../packages/plugin-lightningcss
       '@rsbuild/plugin-mdx':
         specifier: workspace:*
         version: link:../packages/plugin-mdx

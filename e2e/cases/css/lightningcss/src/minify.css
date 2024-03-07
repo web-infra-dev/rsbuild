@@ -1,0 +1,18 @@
+.test-minify {
+  /* Reduce calc */
+  width: calc(100px * 2);
+  height: calc(((75.37% - 63.5px) - 900px) + (2 * 100px));
+
+  /* Minify colors */
+  color: rgba(255, 255, 0, 0.7);
+  border-color: rgb(from rebeccapurple r calc(g * 2) b);
+  background-color: color-mix(in hsl, hsl(120deg 10% 20%), hsl(30deg 30% 40%));
+
+  /* Remove prefixes  */
+  -webkit-transition: background 200ms;
+  -moz-transition: background 200ms;
+  transition: background 200ms;
+
+  /* Reduce transforms */
+  transform: translate(0, 50px);
+}
