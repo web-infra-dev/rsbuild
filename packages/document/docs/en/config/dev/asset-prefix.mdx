@@ -65,6 +65,17 @@ The resource URL loaded in the browser is as follows:
 <script defer src="https://example.com/assets/static/js/index.js"></script>
 ```
 
+## Path Types
+
+assetPrefix can be set to the following types of paths:
+
+- **absolute path**: This is the most common practice, can be specific server paths, like `/assets/`.
+- **'auto'**: Rspack will automatically calculate the path and generate relative paths based on file location.
+
+:::tip
+It's not recommended to set assetPrefix as a relative path, such as `'./assets/'`. This is because when assets are at different path depths, using relative paths may cause assets to load incorrectly.
+:::
+
 ## Compare with `publicPath`
 
 The functionality of `dev.assetPrefix` is basically the same as the [output.publicPath](https://rspack.dev/zh/config/output#outputpublicpath) config in Rspack.

@@ -3,7 +3,7 @@
 - **Type:** `string | 'auto'`
 - **Default:** `'/'`
 
-When using CDN in the production build, you can use this option to set the URL prefix of static assets.
+When deploying to the production environment, you can use this option to set the URL prefix for static assets, such as setting it to a CDN URL.
 
 `assetPrefix` will affect the URLs of most of the static assets, including JavaScript files, CSS files, images, videos, etc. If an incorrect value is specified, you'll receive 404 errors while loading these resources.
 
@@ -29,6 +29,17 @@ After building, you can see that the JS files are loaded from:
   src="https://cdn.example.com/assets/static/js/main.ebc4ff4f.js"
 ></script>
 ```
+
+## Path Types
+
+assetPrefix can be set to the following types of paths:
+
+- **absolute path**: This is the most common practice, can be specific server paths, like `/assets/`, or setting to CDN paths, like `https://cdn.example.com/assets/`.
+- **'auto'**: Rspack will automatically calculate the path and generate relative paths based on file location.
+
+:::tip
+It's not recommended to set assetPrefix as a relative path, such as `'./assets/'`. This is because when assets are at different path depths, using relative paths may cause assets to load incorrectly.
+:::
 
 ## Compare with `publicPath`
 
