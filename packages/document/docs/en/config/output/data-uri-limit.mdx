@@ -3,12 +3,14 @@
 - **Type:**
 
 ```ts
-type DataUriLimitConfig = {
-  svg?: number;
-  font?: number;
-  image?: number;
-  media?: number;
-};
+type DataUriLimitConfig =
+  | number
+  | {
+      svg?: number;
+      font?: number;
+      image?: number;
+      media?: number;
+    };
 ```
 
 - **Default:**
@@ -37,7 +39,37 @@ Detail:
 
 ### Example
 
-Set the threshold of images to 5000 Bytes, and set media assets not to be inlined:
+- Inline all static assets less than 4kB:
+
+```js
+export default {
+  output: {
+    dataUriLimit: 4000,
+  },
+};
+```
+
+- Disable inlining of static assets:
+
+```js
+export default {
+  output: {
+    dataUriLimit: 0,
+  },
+};
+```
+
+- Inline all static assets:
+
+```js
+export default {
+  output: {
+    dataUriLimit: Number.MAX_SAFE_INTEGER,
+  },
+};
+```
+
+- Set the threshold for image assets to 5kB, do not inline video assets:
 
 ```js
 export default {

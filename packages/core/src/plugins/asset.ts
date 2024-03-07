@@ -36,7 +36,11 @@ export const pluginAsset = (): RsbuildPlugin => ({
         const regExp = getRegExpForExts(exts);
         const distDir = getDistPath(config, assetType);
         const filename = getFilename(config, assetType, isProd);
-        const maxSize = config.output.dataUriLimit[assetType];
+        const { dataUriLimit } = config.output;
+        const maxSize =
+          typeof dataUriLimit === 'number'
+            ? dataUriLimit
+            : dataUriLimit[assetType];
         const rule = chain.module.rule(assetType).test(regExp);
 
         chainStaticAssetRule({
