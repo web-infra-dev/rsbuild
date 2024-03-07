@@ -56,11 +56,14 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
       const { svgDefaultExport = 'url' } = options;
       const assetType = 'svg';
-
       const distDir = getDistPath(config, assetType);
       const filename = getFilename(config, assetType, isProd);
       const outputName = path.posix.join(distDir, filename);
-      const maxSize = config.output.dataUriLimit[assetType];
+      const { dataUriLimit } = config.output;
+      const maxSize =
+        typeof dataUriLimit === 'number'
+          ? dataUriLimit
+          : dataUriLimit[assetType];
 
       // delete origin rules
       chain.module.rules.delete(CHAIN_ID.RULE.SVG);
@@ -114,7 +117,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
             .use(CHAIN_ID.USE.URL)
             .loader(path.join(__dirname, '../compiled', 'url-loader'))
             .options({
-              limit: config.output.dataUriLimit.svg,
+              limit: maxSize,
               name: outputName,
             }),
         );
