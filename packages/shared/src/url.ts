@@ -69,7 +69,7 @@ const isLoopbackHost = (host: string) => {
 
 const getHostInUrl = (host: string) => {
   if (isIPv6(host)) {
-    return host === '::' ? '[::1]' : `${host}`;
+    return host === '::' ? '[::1]' : `[${host}]`;
   }
   return host;
 };
