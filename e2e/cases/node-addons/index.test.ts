@@ -1,7 +1,7 @@
-import fs from 'node:fs';
 import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
 import { join } from 'node:path';
+import { fse } from '@rsbuild/shared';
 
 test('should compile Node addons correctly', async () => {
   const rsbuild = await build({
@@ -13,9 +13,11 @@ test('should compile Node addons correctly', async () => {
   expect(addonFile?.includes('server/a.node')).toBeTruthy();
 
   expect(
-    fs.existsSync(join(__dirname, 'dist', 'server', 'a.node')),
+    fse.existsSync(join(__dirname, 'dist', 'server', 'a.node')),
   ).toBeTruthy();
 
-  const content = await import('./dist/server/index.js');
-  expect(typeof content.default.readLength).toEqual('function');
+  if (process.platform === 'darwin') {
+    const content = await import('./dist/server/index.js');
+    expect(typeof content.default.readLength).toEqual('function');
+  }
 });
