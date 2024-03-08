@@ -49,7 +49,7 @@ export const build = async (
 
   const { stats } = await new Promise<{ stats?: Stats | MultiStats }>(
     (resolve, reject) => {
-      compiler.run((err: any, stats?: Stats) => {
+      compiler.run((err: any, stats?: Stats | MultiStats) => {
         if (err || stats?.hasErrors()) {
           const buildError = err || new Error('Rspack build failed!');
           reject(buildError);

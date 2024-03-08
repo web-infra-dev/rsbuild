@@ -66,7 +66,7 @@ const coloringAssetName = (assetName: string) => {
 async function printFileSizes(
   config: PrintFileSizeOptions,
   stats: Stats | MultiStats,
-  distPath: string,
+  rootPath: string,
 ) {
   if (config.detail === false && config.total === false) {
     return;
@@ -74,7 +74,11 @@ async function printFileSizes(
 
   const { default: gzipSize } = await import('@rsbuild/shared/gzip-size');
 
-  const formatAsset = (asset: StatsAsset) => {
+  const formatAsset = (
+    asset: StatsAsset,
+    distPath: string,
+    distFolder: string,
+  ) => {
     const fileName = asset.name.split('?')[0];
     const contents = fse.readFileSync(path.join(distPath, fileName));
     const size = contents.length;
@@ -82,7 +86,7 @@ async function printFileSizes(
 
     return {
       size,
-      folder: path.join(path.basename(distPath), path.dirname(fileName)),
+      folder: path.join(distFolder, path.dirname(fileName)),
       name: path.basename(fileName),
       gzippedSize,
       sizeLabel: calcFileSize(size),
@@ -93,6 +97,12 @@ async function printFileSizes(
   const multiStats = 'stats' in stats ? stats.stats : [stats];
   const assets = multiStats
     .map((stats) => {
+      const distPath = stats.compilation.outputOptions.path;
+
+      if (!distPath) {
+        return [];
+      }
+
       const origin = stats.toJson({
         all: false,
         assets: true,
@@ -107,8 +117,11 @@ async function printFileSizes(
       const filteredAssets = origin.assets!.filter((asset) =>
         filterAsset(asset.name),
       );
+      const distFolder = distPath.replace(rootPath + path.sep, '');
 
-      return filteredAssets.map(formatAsset);
+      return filteredAssets.map((asset) =>
+        formatAsset(asset, distPath, distFolder),
+      );
     })
     .reduce((single, all) => all.concat(single), []);
 
@@ -194,7 +207,7 @@ export const pluginFileSize = (): RsbuildPlugin => ({
           await printFileSizes(
             printFileSizeConfig,
             stats,
-            api.context.distPath,
+            api.context.rootPath,
           );
         } catch (err) {
           logger.warn('Failed to print file size.');
