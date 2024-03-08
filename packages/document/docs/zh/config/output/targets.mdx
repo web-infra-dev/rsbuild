@@ -58,6 +58,7 @@ export default {
 
 当 `target` 设置为 `'node'` 时，Rsbuild 会进行以下处理：
 
+- 将构建产物输出到 `dist/server` 目录下，可通过 [output.distPath](/config/output/dist-path) 配置。
 - 不会生成 HTML 文件，与 HTML 相关的逻辑也不会执行，因为 Node.js 环境不需要 HTML。
 - 不会打包或抽取 CSS 代码，但产物中会包含 CSS Modules 的 id 信息。
 - 不会开启默认的拆包策略，但 dynamic import 依然可以生效。

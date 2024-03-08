@@ -369,11 +369,11 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
 
       if (isServer) {
         const serverPath = getDistPath(config, 'server');
-        const filename = posix.join(serverPath, '[name].js');
 
         chain.output
-          .filename(filename)
-          .chunkFilename(filename)
+          .path(posix.join(api.context.distPath, serverPath))
+          .filename('[name].js')
+          .chunkFilename('[name].js')
           .libraryTarget('commonjs2');
       }
 
