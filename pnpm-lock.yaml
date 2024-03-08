@@ -1628,9 +1628,6 @@ importers:
       mime-types:
         specifier: ^2.1.35
         version: 2.1.35
-      node-loader:
-        specifier: 2.0.0
-        version: 2.0.0(webpack@5.90.3)
       on-finished:
         specifier: 2.4.1
         version: 2.4.1
@@ -10820,16 +10817,6 @@ packages:
       data-uri-to-buffer: 4.0.1
       fetch-blob: 3.2.0
       formdata-polyfill: 4.0.10
-    dev: true
-
-  /node-loader@2.0.0(webpack@5.90.3):
-    resolution: {integrity: sha512-I5VN34NO4/5UYJaUBtkrODPWxbobrE4hgDqPrjB25yPkonFhCmZ146vTH+Zg417E9Iwoh1l/MbRs1apc5J295Q==}
-    engines: {node: '>= 10.13.0'}
-    peerDependencies:
-      webpack: ^5.0.0
-    dependencies:
-      loader-utils: 2.0.4
-      webpack: 5.90.3
     dev: true
 
   /node-machine-id@1.1.12:

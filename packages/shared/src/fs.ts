@@ -119,26 +119,3 @@ export async function findUp({
     dir = path.dirname(dir);
   }
 }
-
-export function findUpSync({
-  filename,
-  cwd = process.cwd(),
-}: {
-  filename: string;
-  cwd?: string;
-}) {
-  const { root } = path.parse(cwd);
-
-  let dir = cwd;
-  while (dir && dir !== root) {
-    const filePath = path.join(dir, filename);
-
-    try {
-      if (isFileSync(filePath)) {
-        return filePath;
-      }
-    } catch {}
-
-    dir = path.dirname(dir);
-  }
-}
