@@ -1,4 +1,5 @@
 import type {
+  Compilation,
   StatsOptions as RspackStatsOptions,
   StatsCompilation,
 } from '@rspack/core';
@@ -21,6 +22,7 @@ export declare class Stats {
   hasWarnings(): boolean;
   toJson(opts?: StatsOptions): StatsCompilation;
   toString(opts?: StatsOptions): string;
+  compilation: Compilation;
 }
 
 export declare class MultiStats {
