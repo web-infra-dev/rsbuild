@@ -3,10 +3,12 @@
 - If the current bundler is Rspack, you will get Rspack Stats.
 - If the current bundler is webpack, you will get webpack Stats.
 
+Moreover, you can use `isFirstCompile` to determine whether it is the first build on watch mode.
+
 - **Type:**
 
 ```ts
 function OnAfterBuild(
-  callback: (params: { stats?: Stats | MultiStats }) => Promise<void> | void,
+  callback: (params: { isFirstCompile: boolean, stats?: Stats | MultiStats }) => Promise<void> | void,
 ): void;
 ```
