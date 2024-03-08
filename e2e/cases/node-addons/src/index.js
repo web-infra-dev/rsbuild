@@ -1,3 +1,3 @@
-import node from './a.node';
+import addon from './test.darwin.node';
 
-export default node;
+export default addon;
