@@ -1,3 +1,3 @@
 import node from './a.node';
 
-console.log(node);
+export default node;

@@ -36,3 +36,6 @@ try {
 }
 `;
 }
+
+// make the loader to receive the raw Buffer and avoid breaking node addons
+export const raw = true;
