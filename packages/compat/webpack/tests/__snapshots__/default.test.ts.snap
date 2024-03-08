@@ -1282,10 +1282,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/compiled/node-loader",
-            "options": {
-              "name": [Function],
-            },
+            "loader": "<ROOT>/packages/core/dist/rspack/nodeAddonsLoader",
           },
         ],
       },
