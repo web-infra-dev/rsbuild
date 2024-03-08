@@ -72,13 +72,6 @@ export const TASKS: TaskConfig[] = [
         name: 'connect-history-api-fallback',
         ignoreDts: true,
       },
-      {
-        name: 'node-loader',
-        ignoreDts: true,
-        externals: {
-          'loader-utils': '@rsbuild/shared/loader-utils2',
-        },
-      },
     ],
   },
   {

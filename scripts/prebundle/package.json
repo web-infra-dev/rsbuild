@@ -50,7 +50,6 @@
     "line-diff": "2.1.1",
     "loader-utils2": "npm:loader-utils@2.0.4",
     "mime-types": "^2.1.35",
-    "node-loader": "2.0.0",
     "on-finished": "2.4.1",
     "open": "^8.4.0",
     "picocolors": "1.0.0",
