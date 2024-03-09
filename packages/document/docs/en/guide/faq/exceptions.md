@@ -116,7 +116,7 @@ Rsbuild will enable the tree shaking function of Rspack by default during produc
 
 If you encounter the problem that tree shaking does not take effect, you can check whether the `sideEffects` configuration of the relevant npm package is correct. If you don't know what `sideEffects` is, or are interested in the principles behind tree shaking, you can read the following two documents:
 
-- [Rspack official documentation - Tree Shaking](https://www.rspack.dev/guide/tree-shaking)
+- [Rspack official documentation - Tree Shaking](https://rspack.dev/guide/tree-shaking)
 - [Tree Shaking Troubleshooting Guide](https://bytedance.feishu.cn/docs/doccn8E1ldDct5uv1EEDQs8Ycwe)
 
 ---
