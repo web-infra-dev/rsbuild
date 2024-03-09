@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@types/node": "16.x",
-    "typescript": "^5.3.0",
+    "typescript": "^5.4.2",
     "webpack": "^5.89.0"
   },
   "engines": {

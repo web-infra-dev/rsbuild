@@ -64,7 +64,7 @@
   "devDependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
     "@types/node": "16.x",
-    "typescript": "^5.3.0"
+    "typescript": "^5.4.2"
   },
   "publishConfig": {
     "access": "public",
