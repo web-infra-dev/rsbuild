@@ -83,9 +83,9 @@ export default {
 ### chunkSplit.maxSize
 
 - **类型：** `number`
-- **默认值：** `Infinity`
+- **默认值：** `Number.POSITIVE_INFINITY`
 
-当 `performance.chunkSplit.strategy` 为 `split-by-size` 时，可以通过 `performance.chunkSplit.maxSize` 配置项来指定 chunk 的最大大小，单位为字节。默认值为 `Infinity`。比如:
+当 `performance.chunkSplit.strategy` 为 `split-by-size` 时，可以通过 `performance.chunkSplit.maxSize` 配置项来指定 chunk 的最大大小，单位为字节。默认值为 `Number.POSITIVE_INFINITY`。比如:
 
 ```js
 export default {

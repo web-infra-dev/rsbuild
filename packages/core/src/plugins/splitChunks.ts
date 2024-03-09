@@ -130,7 +130,7 @@ function splitByModule(ctx: SplitChunksContext): SplitChunks {
   return {
     ...defaultConfig,
     minSize: 0,
-    maxInitialRequests: Infinity,
+    maxInitialRequests: Number.POSITIVE_INFINITY,
     ...override,
     cacheGroups: {
       ...defaultConfig.cacheGroups,
@@ -157,7 +157,7 @@ function splitBySize(ctx: SplitChunksContext): SplitChunks {
   return {
     ...defaultConfig,
     minSize: userConfig.minSize ?? 0,
-    maxSize: userConfig.maxSize ?? Infinity,
+    maxSize: userConfig.maxSize ?? Number.POSITIVE_INFINITY,
     ...override,
     cacheGroups: {
       ...defaultConfig.cacheGroups,

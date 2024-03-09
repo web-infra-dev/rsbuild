@@ -55,6 +55,7 @@ describe('test runtime', () => {
   });
 
   const runRootPixelCode = (code: string) => {
+    // biome-ignore lint/security/noGlobalEval: allow eval
     eval(code);
   };
 

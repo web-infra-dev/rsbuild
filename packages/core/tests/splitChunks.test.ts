@@ -4,7 +4,6 @@ import {
   MODULE_PATH_REGEX,
   getPackageNameFromModulePath,
 } from '../src/plugins/splitChunks';
-import type { RsbuildConfig } from '@rsbuild/shared';
 
 describe('plugin-split-chunks', () => {
   it('should set split-by-experience config', async () => {
