@@ -3,10 +3,12 @@
 - 如果当前打包工具为 Rspack，则获取到的是 Rspack Stats。
 - 如果当前打包工具为 webpack，则获取到的是 webpack Stats。
 
+另外，在 watch 模式下你可以通过 `isFirstCompile` 来判断是否为首次构建。
+
 - **类型：**
 
 ```ts
 function OnAfterBuild(
-  callback: (params: { stats?: Stats | MultiStats }) => Promise<void> | void,
+  callback: (params: { isFirstCompile: boolean, stats?: Stats | MultiStats }) => Promise<void> | void,
 ): void;
 ```
