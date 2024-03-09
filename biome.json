@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.4.1/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.6.0/schema.json",
   "organizeImports": {
     "enabled": true
   },
@@ -13,6 +13,8 @@
       "compiled/**/*",
       "node_modules/**/*",
       "plugin-swc/tests/fixtures/**/*",
+      "*.vue",
+      "*.svelte",
       "*.css.d.ts"
     ],
     "ignoreUnknown": true
@@ -33,11 +35,6 @@
       },
       "performance": {
         "noDelete": "off"
-      },
-      "nursery": {
-        "useImportType": "error",
-        "useExportType": "error",
-        "useNodejsImportProtocol": "error"
       }
     }
   }
