@@ -39,7 +39,7 @@
     "@types/serialize-javascript": "^5.0.1",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
     "terser": "5.29.1",
-    "typescript": "^5.3.0"
+    "typescript": "^5.4.2"
   },
   "peerDependencies": {
     "@rsbuild/core": "workspace:^0.4.12"
