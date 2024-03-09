@@ -1,8 +1,6 @@
-`onBeforeBuild` is a callback function that is triggered before the production build is executed. You can access the final configuration array of the underlying bundler through the `bundlerConfigs' parameter:
+`onBeforeBuild` is a callback function that is triggered before the production build is executed.
 
-- If the current bundler is Rspack, you will get an Rspack configuration array.
-- If the current bundler is webpack, you will get a webpack configuration array.
-- The configuration array can contain one or more configurations, depending on the current `target` config of Rsbuild.
+You can access the Rspack configuration array through the `bundlerConfigs` parameter. The array may contain one or more [Rspack configurations](https://rspack.dev/config.html), depending on the value of the Rsbuild's [output.targets](/config/output/targets) configuration.
 
 - **Type:**
 

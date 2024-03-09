@@ -116,7 +116,7 @@ Rsbuild 在生产构建时会默认开启 Rspack 的 tree shaking 功能，tree 
 
 如果你遇到了 tree shaking 不生效的问题，可以检查下相关 npm 包的 `sideEffects` 配置是否正确，如果你不了解 `sideEffects` 的作用，或是对 tree shaking 背后的原理感兴趣，可以阅读以下两篇文档：
 
-- [Rspack 官方文档 - Tree Shaking](https://www.rspack.dev/zh/guide/tree-shaking)
+- [Rspack 官方文档 - Tree Shaking](https://rspack.dev/zh/guide/tree-shaking)
 - [Tree Shaking 问题排查指南](https://bytedance.feishu.cn/docs/doccn8E1ldDct5uv1EEDQs8Ycwe)
 
 如果你是 npm 包的开发者，可以阅读这篇文章：
