@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-toml",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "description": "TOML plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -36,7 +36,7 @@
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.4.12"
+    "@rsbuild/core": "workspace:^0.4.13"
   },
   "publishConfig": {
     "access": "public",
