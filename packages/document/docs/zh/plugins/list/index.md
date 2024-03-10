@@ -60,6 +60,7 @@
 - [Image Compress 插件](/plugins/list/plugin-image-compress)：将项目中用到的图片资源进行压缩处理。
 - [MDX 插件](/plugins/list/plugin-mdx)：提供 MDX 支持。
 - [Node Polyfill 插件](/plugins/list/plugin-node-polyfill)：用于注入 Node 核心模块在浏览器端的 polyfills。
+- [Lightning CSS 插件](/plugins/list/plugin-lightningcss)：用于使用 LightningCSS 作为 CSS 的转译和压缩工具。
 - [Source Build 插件](/plugins/list/plugin-source-build)：用于 monorepo 场景，支持引用其他子目录的源代码，并完成构建和热更新。
 - [Stylus 插件](/plugins/list/plugin-stylus)：使用 Stylus 作为 CSS 预处理器。
 - [Check Syntax 插件](/plugins/list/plugin-check-syntax)：用于分析产物的语法兼容性，判断是否存在导致兼容性问题的高级语法。

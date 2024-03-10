@@ -1,0 +1,61 @@
+# Lightning CSS Plugin
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-lightningcss" />
+
+:::tip About Lightning CSS
+[lightningcss](https://lightningcss.dev) is a high-performance CSS parsing, translation and compression tool written in Rust. It supports parsing and converting many modern CSS features into syntax supported by specified browsers, and Lightning CSS has better compression ratios.
+:::
+
+The LightningCSS plug-in can use `lightningcss-loader` to replace the built-in `postcss-loader` in Rsbuild to solve the problem of excessive performance overhead of postcss and autoprefixer, and can use `LightningCssMinifyPlugin` to replace the built-in CSS compression tool in Rspack to obtain greater compression. Proportion.
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-lightningcss -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+
+export default {
+  plugins: [pluginLightningcss()],
+};
+```
+
+## Options
+
+### transform
+
+Use `lightningcss-loader` instead of `postcss-loader`. For options passed to `lightningcss-loader`, please check [lightningcss Repo](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) to learn how to use it.
+
+- **Type:** `false | LightningCssLoaderOptions`
+- **Default:**
+
+```ts
+const defaultOptions = {
+  targets: browserslistToTargets(browserslist),
+}
+```
+
+### minify
+
+Use Lightning CSS instead of Rspack's built-in CSS compression tool for CSS compression. For options passed to `lightningcss`, please check [lightningcss repository](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) to learn how to use it.
+
+- **Type:** `false | LightningCssMinifyPluginOptions`
+- **Default:**
+
+```ts
+const defaultOptions = {
+  targets: browserslistToTargets(browserslist(browserslistUserConfig)),
+} 
+```
