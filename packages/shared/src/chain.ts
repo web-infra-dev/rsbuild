@@ -112,6 +112,7 @@ export const CHAIN_ID = {
     SVG: 'svg',
     SVG_URL: 'svg-asset-url',
     SVG_ASSET: 'svg-asset',
+    SVG_REACT: 'svg-react',
     SVG_INLINE: 'svg-asset-inline',
   },
   /** Predefined loaders */
@@ -134,7 +135,7 @@ export const CHAIN_ID = {
     VUE: 'vue',
     /** swc-loader */
     SWC: 'swc',
-    /** @svgr/webpack */
+    /** svgr */
     SVGR: 'svgr',
     /** plugin-image-compress svgo-loader */
     SVGO: 'svgo',

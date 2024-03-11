@@ -1,6 +1,5 @@
 import type {
   RsbuildConfig,
-  BundlerChainRule,
   NormalizedConfig,
   InspectConfigOptions,
 } from './types';
@@ -10,7 +9,6 @@ import type { minify } from 'terser';
 import fse from '../compiled/fs-extra';
 import { pick, color, upperFirst, deepmerge } from './utils';
 import { getTerserMinifyOptions } from './minimize';
-import type { RuleSetCondition } from '@rspack/core';
 import { parseMinifyOptions } from './minimize';
 
 export async function outputInspectConfigFiles({
@@ -136,50 +134,6 @@ export async function stringifyConfig(config: unknown, verbose?: boolean) {
 
   return stringify(config as any, { verbose });
 }
-
-export const chainStaticAssetRule = ({
-  rule,
-  maxSize,
-  filename,
-  assetType,
-  issuer,
-}: {
-  rule: BundlerChainRule;
-  maxSize: number;
-  filename: string;
-  assetType: string;
-  issuer?: RuleSetCondition;
-}) => {
-  // Rspack not support dataUrlCondition function
-  // forceNoInline: "foo.png?__inline=false" or "foo.png?url",
-  rule
-    .oneOf(`${assetType}-asset-url`)
-    .type('asset/resource')
-    .resourceQuery(/(__inline=false|url)/)
-    .set('generator', {
-      filename,
-    });
-
-  // forceInline: "foo.png?inline" or "foo.png?__inline",
-  rule
-    .oneOf(`${assetType}-asset-inline`)
-    .type('asset/inline')
-    .resourceQuery(/inline/);
-
-  // default: when size < dataUrlCondition.maxSize will inline
-  rule
-    .oneOf(`${assetType}-asset`)
-    .type('asset')
-    .parser({
-      dataUrlCondition: {
-        maxSize,
-      },
-    })
-    .set('generator', {
-      filename,
-    })
-    .set('issuer', issuer);
-};
 
 export const getDefaultStyledComponentsConfig = (
   isProd: boolean,
