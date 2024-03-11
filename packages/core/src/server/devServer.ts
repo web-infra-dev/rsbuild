@@ -4,12 +4,12 @@ import {
   setNodeEnv,
   ROOT_DIST_DIR,
   getAddressUrls,
+  isMultiCompiler,
   getPublicPathFromCompiler,
   type Routes,
   type DevServerAPIs,
   type RspackCompiler,
   type StartServerResult,
-  type RspackMultiCompiler,
   type CompileMiddlewareAPI,
   type DevMiddlewaresConfig,
   type StartDevServerOptions,
@@ -81,10 +81,8 @@ export async function getServerAPIs<
       );
       const { CompilerDevMiddleware } = await import('./compilerDevMiddleware');
 
-      const publicPaths = (compiler as RspackMultiCompiler).compilers
-        ? (compiler as RspackMultiCompiler).compilers.map(
-            getPublicPathFromCompiler,
-          )
+      const publicPaths = isMultiCompiler(compiler)
+        ? compiler.compilers.map(getPublicPathFromCompiler)
         : [getPublicPathFromCompiler(compiler as RspackCompiler)];
 
       // create dev middleware instance

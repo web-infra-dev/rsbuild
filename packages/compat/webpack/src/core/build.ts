@@ -4,6 +4,7 @@ import {
   logger,
   getNodeEnv,
   setNodeEnv,
+  isMultiCompiler,
   type Stats,
   type Rspack,
   type MultiStats,
@@ -49,10 +50,11 @@ export const build = async (
     await p;
   };
 
-  try {
-    (compiler as Rspack.Compiler).hooks.done.tapPromise('rsbuild:done', onDone);
-  } catch {
-    (compiler as Rspack.MultiCompiler).hooks.done.tap('rsbuild:done', onDone);
+  // MultiCompiler does not supports `done.tapPromise`
+  if (isMultiCompiler(compiler)) {
+    compiler.hooks.done.tap('rsbuild:done', onDone);
+  } else {
+    compiler.hooks.done.tapPromise('rsbuild:done', onDone);
   }
 
   if (watch) {
