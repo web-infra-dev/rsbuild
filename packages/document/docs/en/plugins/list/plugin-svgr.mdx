@@ -32,20 +32,32 @@ export default {
 
 ## Example
 
-After installing the plugin, When import an SVG in a JS file, if you import `ReactComponent`, Rsbuild will call SVGR to convert the SVG into a React component.
+After installing the plugin, when import an SVG in a JS file, if the imported path contains the `?react` suffix, Rsbuild will call SVGR to convert the SVG into a React component.
 
-```js
-import { ReactComponent as Logo } from './logo.svg';
+```jsx title="App.jsx"
+import Logo from './logo.svg?react';
 
-export default () => <Logo />;
+export const App = () => <Logo />;
 ```
 
-At this time，if you use the default import, then the SVG will be treated as a normal static asset and you will get a URL:
+:::tip
+@rsbuild/plugin-svgr supports the above usage since v0.4.14.
+:::
+
+If the imported path does not contain the `?react` suffix, then the SVG will be treated as a normal static asset and you will get a URL:
 
 ```js
 import logoURL from './static/logo.svg';
 
 console.log(logoURL); // => "/static/logo.6c12aba3.png"
+```
+
+Rsbuild also supports named imports of the `ReactComponent` to use SVGR:
+
+```jsx title="App.jsx"
+import { ReactComponent as Logo } from './logo.svg';
+
+export const App = () => <Logo />;
 ```
 
 ## Options
@@ -156,6 +168,11 @@ TS2307: Cannot find module './logo.svg' or its corresponding type declarations.
 To fix this, you need to add a type declaration file for the SVG asset, please create a `src/env.d.ts` file, and add the following type declaration:
 
 ```ts
+declare module '*.svg?react' {
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+
 declare module '*.svg' {
   export const ReactComponent: React.FunctionComponent<
     React.SVGProps<SVGSVGElement>
