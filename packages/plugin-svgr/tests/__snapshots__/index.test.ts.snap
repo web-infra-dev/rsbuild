@@ -15,6 +15,70 @@ exports[`svgr > 'configure SVGR options' 1`] = `
       "type": "asset/inline",
     },
     {
+      "resourceQuery": /react/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "builtin:swc-loader",
+          "options": {
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "shippedProposals": true,
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "isModule": "unknown",
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "decoratorMetadata": true,
+                "legacyDecorator": true,
+                "react": {
+                  "development": false,
+                  "refresh": true,
+                  "runtime": "automatic",
+                },
+                "useDefineForClassFields": false,
+              },
+            },
+            "sourceMaps": true,
+          },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader",
+          "options": {
+            "exportType": "default",
+            "svgo": true,
+            "svgoConfig": {
+              "datauri": "base64",
+              "plugins": [
+                {
+                  "name": "preset-default",
+                  "params": {
+                    "overrides": {
+                      "removeViewBox": false,
+                    },
+                  },
+                },
+                "prefixIds",
+              ],
+            },
+          },
+        },
+      ],
+    },
+    {
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
@@ -73,6 +137,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
         {
           "loader": "<ROOT>/packages/plugin-svgr/src/loader",
           "options": {
+            "exportType": "named",
             "svgo": true,
             "svgoConfig": {
               "datauri": "base64",
@@ -119,6 +184,69 @@ exports[`svgr > 'export default Component' 1`] = `
       "type": "asset/inline",
     },
     {
+      "resourceQuery": /react/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "builtin:swc-loader",
+          "options": {
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "shippedProposals": true,
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "isModule": "unknown",
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "decoratorMetadata": true,
+                "legacyDecorator": true,
+                "react": {
+                  "development": false,
+                  "refresh": true,
+                  "runtime": "automatic",
+                },
+                "useDefineForClassFields": false,
+              },
+            },
+            "sourceMaps": true,
+          },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader",
+          "options": {
+            "exportType": "default",
+            "svgo": true,
+            "svgoConfig": {
+              "plugins": [
+                {
+                  "name": "preset-default",
+                  "params": {
+                    "overrides": {
+                      "removeViewBox": false,
+                    },
+                  },
+                },
+                "prefixIds",
+              ],
+            },
+          },
+        },
+      ],
+    },
+    {
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
@@ -177,6 +305,7 @@ exports[`svgr > 'export default Component' 1`] = `
         {
           "loader": "<ROOT>/packages/plugin-svgr/src/loader",
           "options": {
+            "exportType": "default",
             "svgo": true,
             "svgoConfig": {
               "plugins": [
@@ -215,6 +344,69 @@ exports[`svgr > 'export default url' 1`] = `
       "type": "asset/inline",
     },
     {
+      "resourceQuery": /react/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "builtin:swc-loader",
+          "options": {
+            "env": {
+              "coreJs": "3.32",
+              "mode": "usage",
+              "shippedProposals": true,
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "isModule": "unknown",
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "decoratorMetadata": true,
+                "legacyDecorator": true,
+                "react": {
+                  "development": false,
+                  "refresh": true,
+                  "runtime": "automatic",
+                },
+                "useDefineForClassFields": false,
+              },
+            },
+            "sourceMaps": true,
+          },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader",
+          "options": {
+            "exportType": "default",
+            "svgo": true,
+            "svgoConfig": {
+              "plugins": [
+                {
+                  "name": "preset-default",
+                  "params": {
+                    "overrides": {
+                      "removeViewBox": false,
+                    },
+                  },
+                },
+                "prefixIds",
+              ],
+            },
+          },
+        },
+      ],
+    },
+    {
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
@@ -273,6 +465,7 @@ exports[`svgr > 'export default url' 1`] = `
         {
           "loader": "<ROOT>/packages/plugin-svgr/src/loader",
           "options": {
+            "exportType": "named",
             "svgo": true,
             "svgoConfig": {
               "plugins": [
