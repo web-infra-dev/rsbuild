@@ -72,11 +72,6 @@ type PluginSvgrOptions = {
    * Configure SVGR options.
    */
   svgrOptions?: import('@svgr/core').Config;
-
-  /**
-   * Configure the default export type of SVG files.
-   */
-  svgDefaultExport?: 'component' | 'url';
 };
 ```
 
@@ -118,23 +113,21 @@ pluginSvgr({
 });
 ```
 
-### svgDefaultExport
+### svgrOptions.exportType
 
 Modify the default export type of SVG files.
 
-- **Type:** `'component' | 'url'`
-- **Default:** `'url'`
+- **Type:** `'named' | 'default'`
+- **Default:** `'named'`
 
 For example, set the default export as a React component:
 
-```ts title="rsbuild.config.ts"
-export default {
-  plugins: [
-    pluginSvgr({
-      svgDefaultExport: 'component',
-    }),
-  ],
-};
+```ts
+pluginSvgr({
+  svgrOptions: {
+    exportType: 'default',
+  },
+});
 ```
 
 Then import the SVG, you'll get a React component instead of a URL:
@@ -154,7 +147,7 @@ console.log(logo); // => asset url
 ```
 
 :::tip
-When `svgDefaultExport` is set to `'component'`, the named imports (ReactComponent) cannot be used.
+When `svgrOptions.exportType` is set to `'default'`, the named imports (ReactComponent) cannot be used.
 :::
 
 ## Type Declaration
@@ -182,7 +175,7 @@ declare module '*.svg' {
 }
 ```
 
-If you set `svgDefaultExport` to `'component'`, then change the type declaration to:
+If you set `svgrOptions.exportType` to `'default'`, then change the type declaration to:
 
 ```ts
 declare module '*.svg' {

@@ -6,7 +6,9 @@ export default defineConfig({
   plugins: [
     pluginReact(),
     pluginSvgr({
-      svgDefaultExport: 'url',
+      svgrOptions: {
+        exportType: 'named',
+      },
     }),
   ],
   output: {

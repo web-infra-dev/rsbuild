@@ -13,7 +13,9 @@ describe('svgr', () => {
     {
       name: 'export default Component',
       pluginConfig: {
-        svgDefaultExport: 'component',
+        svgrOptions: {
+          exportType: 'default',
+        },
       },
     },
     {
