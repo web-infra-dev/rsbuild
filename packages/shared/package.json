@@ -51,10 +51,6 @@
       "types": "./compiled/connect/index.d.ts",
       "default": "./compiled/connect/index.js"
     },
-    "./commander": {
-      "types": "./compiled/commander/typings/index.d.ts",
-      "default": "./compiled/commander/index.js"
-    },
     "./mime-types": {
       "types": "./compiled/mime-types/index.d.ts",
       "default": "./compiled/mime-types/index.js"
