@@ -34,11 +34,15 @@ export default {
 
 After installing the plugin, when import an SVG in a JS file, if the imported path contains the `?react` suffix, Rsbuild will call SVGR to convert the SVG into a React component.
 
-```js
+```jsx title="App.jsx"
 import Logo from './logo.svg?react';
 
-export default () => <Logo />;
+export const App = () => <Logo />;
 ```
+
+:::tip
+@rsbuild/plugin-svgr supports the above usage since v0.4.14.
+:::
 
 If the imported path does not contain the `?react` suffix, then the SVG will be treated as a normal static asset and you will get a URL:
 
@@ -50,10 +54,10 @@ console.log(logoURL); // => "/static/logo.6c12aba3.png"
 
 Rsbuild also supports named imports of the `ReactComponent` to use SVGR:
 
-```js
+```jsx title="App.jsx"
 import { ReactComponent as Logo } from './logo.svg';
 
-export default () => <Logo />;
+export const App = () => <Logo />;
 ```
 
 ## Options
