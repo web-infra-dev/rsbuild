@@ -26,7 +26,7 @@ permissions:
 jobs:
   issue_comment:
     name: Release with comment
-    if: github.event.issue.pull_request && contains(github.event.comment.body, '!canary')
+    if: github.repository == 'web-infra-dev/rsbuild' && (github.event.issue.pull_request && contains(github.event.comment.body, '!canary'))
     runs-on: ubuntu-latest
 
     steps:
@@ -67,7 +67,7 @@ jobs:
 
   release:
     name: Release
-    if: ${{ github.event_name == 'workflow_dispatch' }}
+    if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
