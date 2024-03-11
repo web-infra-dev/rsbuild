@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-eslint",
-  "version": "0.4.13",
+  "version": "0.4.14",
   "description": "ESLint plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -38,7 +38,7 @@
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.4.13"
+    "@rsbuild/core": "workspace:^0.4.14"
   },
   "publishConfig": {
     "access": "public",
