@@ -2,6 +2,7 @@ import webpackDevMiddleware from '@rsbuild/shared/webpack-dev-middleware';
 import type { Compiler, MultiCompiler } from 'webpack';
 import {
   setupServerHooks,
+  isMultiCompiler,
   isClientCompiler,
   type DevMiddleware,
 } from '@rsbuild/shared';
@@ -21,12 +22,12 @@ const applyHMREntry = (
   };
 
   // apply dev server to client compiler, add hmr client to entry.
-  if ((compiler as MultiCompiler).compilers) {
-    (compiler as MultiCompiler).compilers.forEach((target) => {
+  if (isMultiCompiler(compiler)) {
+    compiler.compilers.forEach((target) => {
       applyEntry(clientPath, target);
     });
   } else {
-    applyEntry(clientPath, compiler as Compiler);
+    applyEntry(clientPath, compiler);
   }
 };
 
@@ -39,12 +40,12 @@ const setupHooks = (
   compiler: Compiler | MultiCompiler,
   hookCallbacks: IHookCallbacks,
 ) => {
-  if ((compiler as MultiCompiler).compilers) {
-    (compiler as MultiCompiler).compilers.forEach((compiler) =>
+  if (isMultiCompiler(compiler)) {
+    compiler.compilers.forEach((compiler) =>
       setupServerHooks(compiler, hookCallbacks),
     );
   } else {
-    setupServerHooks(compiler as Compiler, hookCallbacks);
+    setupServerHooks(compiler, hookCallbacks);
   }
 };
 
