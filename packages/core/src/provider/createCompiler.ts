@@ -6,6 +6,7 @@ import {
   logger,
   prettyTime,
   TARGET_ID_MAP,
+  isMultiCompiler,
   type RspackConfig,
   type RspackCompiler,
   type RspackMultiCompiler,
@@ -70,7 +71,7 @@ export async function createCompiler({
     compiler.hooks.run.tap('rsbuild:run', logRspackVersion);
   }
 
-  compiler.hooks.done.tap('rsbuild:done', async (stats: Stats | MultiStats) => {
+  const done = async (stats: Stats | MultiStats) => {
     const obj = stats.toJson({
       all: false,
       timings: true,
@@ -113,7 +114,14 @@ export async function createCompiler({
 
     isCompiling = false;
     isFirstCompile = false;
-  });
+  };
+
+  // MultiCompiler does not supports `done.tapPromise`
+  if (isMultiCompiler(compiler)) {
+    compiler.hooks.done.tap('rsbuild:done', done);
+  } else {
+    compiler.hooks.done.tapPromise('rsbuild:done', done);
+  }
 
   await context.hooks.onAfterCreateCompiler.call({ compiler });
   debug('create compiler done');
