@@ -1,3 +1,4 @@
+import { Link } from 'rspress/theme';
 import { useUrl } from '../utils';
 import styles from './Overview.module.scss';
 
@@ -22,7 +23,7 @@ export default function Overview() {
           <ul>
             {group.items.map((item) => (
               <li key={item.text}>
-                <a href={useUrl(item.link)}>{item.text}</a>
+                <Link href={useUrl(item.link)}>{item.text}</Link>
               </li>
             ))}
           </ul>
