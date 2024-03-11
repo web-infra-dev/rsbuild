@@ -18,6 +18,7 @@ jobs:
   release:
     name: Create Release Pull Request
     runs-on: ubuntu-latest
+    if: github.repository == 'web-infra-dev/rsbuild'
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
