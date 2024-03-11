@@ -15,18 +15,18 @@
     "check-changeset": "cd ./scripts/check-changeset && pnpm start",
     "check-dependency-version": "check-dependency-version-consistency . --ignore-dep vue-loader",
     "dev:doc": "cd packages/document && pnpm run dev",
-    "e2e": "cd ./e2e && pnpm test",
-    "e2e:rspack": "cd ./e2e && pnpm test:rspack",
-    "e2e:webpack": "cd ./e2e && pnpm test:webpack",
     "lint": "biome lint . --diagnostic-level=warn && ls-lint",
     "prepare": "pnpm run build && simple-git-hooks",
-    "test": "cross-env NODE_OPTIONS=--max-old-space-size=8192 pnpm run ut",
     "update-modern": "cd ./scripts/update-packages && pnpm start:modern",
     "update-rspack": "cd ./scripts/update-packages && pnpm start:rspack",
     "update-rspress": "cd ./scripts/update-packages && pnpm start:rspress",
     "sort-package-json": "npx sort-package-json \"packages/*/package.json\" \"packages/compat/*/package.json\"",
+    "test": "pnpm run ut",
     "ut": "vitest run",
-    "ut:watch": "vitest"
+    "ut:watch": "vitest",
+    "e2e": "cd ./e2e && pnpm test",
+    "e2e:rspack": "cd ./e2e && pnpm test:rspack",
+    "e2e:webpack": "cd ./e2e && pnpm test:webpack"
   },
   "simple-git-hooks": {
     "pre-commit": "npx nano-staged"
