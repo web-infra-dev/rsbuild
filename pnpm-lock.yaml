@@ -9,7 +9,6 @@ overrides:
   array.prototype.flat: npm:@nolyfill/array.prototype.flat@1.0.24
   '@rsbuild/core': link:packages/core
   '@rsbuild/plugin-react': link:packages/plugin-react
-  '@rsbuild/plugin-svgr': link:packages/plugin-svgr
 
 packageExtensionsChecksum: 18212998c4ac9d0b24113807ba3e5d6f
 
@@ -151,7 +150,7 @@ importers:
         specifier: workspace:*
         version: link:../packages/plugin-svelte
       '@rsbuild/plugin-svgr':
-        specifier: link:../packages/plugin-svgr
+        specifier: workspace:*
         version: link:../packages/plugin-svgr
       '@rsbuild/plugin-swc':
         specifier: workspace:*

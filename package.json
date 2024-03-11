@@ -63,8 +63,7 @@
       "esbuild": "~0.19.0",
       "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@1.0.24",
       "@rsbuild/core": "link:packages/core",
-      "@rsbuild/plugin-react": "link:packages/plugin-react",
-      "@rsbuild/plugin-svgr": "link:packages/plugin-svgr"
+      "@rsbuild/plugin-react": "link:packages/plugin-react"
     },
     "allowedDeprecatedVersions": {
       "vue": "2.x",
