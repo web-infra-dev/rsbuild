@@ -7,7 +7,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
   setup(api) {
     applyResolvePlugin(api);
 
-    api.modifyRspackConfig(async (rspackConfig, { isServer }) => {
+    api.modifyRspackConfig(async (rspackConfig) => {
       const isTsProject = Boolean(api.context.tsconfigPath);
       const config = api.getNormalizedConfig();
 
@@ -15,14 +15,6 @@ export const pluginResolve = (): RsbuildPlugin => ({
 
       if (isTsProject && config.source.aliasStrategy === 'prefer-tsconfig') {
         rspackConfig.resolve.tsConfigPath = api.context.tsconfigPath;
-      }
-
-      if (isServer) {
-        // FIXME:
-        // When targe = node, we no need to specify conditionsNames.
-        // We guess the webpack would auto specify reference to target.
-        // Rspack has't the action, so we need manually specify.
-        rspackConfig.resolve.conditionNames = ['require', 'node'];
       }
     });
   },

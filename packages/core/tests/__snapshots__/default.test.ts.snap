@@ -1873,10 +1873,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
     },
-    "conditionNames": [
-      "require",
-      "node",
-    ],
     "extensions": [
       ".ts",
       ".tsx",
