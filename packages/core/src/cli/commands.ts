@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import { existsSync } from 'node:fs';
 import { color, logger, type RsbuildMode } from '@rsbuild/shared';
-import { program, type Command } from '@rsbuild/shared/commander';
+import { program, type Command } from '../../compiled/commander';
 import { init } from './init';
 
 export type CommonOptions = {

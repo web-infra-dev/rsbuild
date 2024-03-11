@@ -40,6 +40,7 @@ export const TASKS: TaskConfig[] = [
     packageName: '@rsbuild/core',
     dependencies: [
       'open',
+      'commander',
       'dotenv',
       'dotenv-expand',
       'ws',
@@ -80,7 +81,6 @@ export const TASKS: TaskConfig[] = [
     dependencies: [
       'jiti',
       'rslog',
-      'commander',
       'deepmerge',
       'fs-extra',
       'chokidar',
@@ -295,7 +295,6 @@ export const TASKS: TaskConfig[] = [
         // If we need to upgrade the version, please check if the chunk detail can be displayed correctly
         name: 'webpack-bundle-analyzer',
         externals: {
-          commander: '../commander',
           'gzip-size': '../gzip-size',
         },
       },
