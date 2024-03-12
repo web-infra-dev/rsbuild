@@ -3,15 +3,15 @@
  * MIT License https://github.com/fz6m/lightningcss-loader/blob/main/LICENSE
  * Author @fz6m
  */
-import type { LoaderContext } from 'webpack';
+import type { LoaderContext } from '@rspack/core';
 import { transform as _transform } from 'lightningcss';
 import { Buffer } from 'node:buffer';
-import type { LightningCssLoaderOptions } from './types';
+import type { LightningCSSLoaderOptions } from './types';
 
 const LOADER_NAME = 'lightningcss-loader';
 
-async function LightningCssLoader(
-  this: LoaderContext<LightningCssLoaderOptions>,
+async function LightningCSSLoader(
+  this: LoaderContext<LightningCSSLoaderOptions>,
   source: string,
   prevMap?: Record<string, any>,
 ): Promise<void> {
@@ -19,16 +19,20 @@ async function LightningCssLoader(
   const options = this.getOptions();
   const { implementation, targets, ...opts } = options;
 
-  if (implementation && typeof implementation.transform !== 'function') {
+  if (
+    implementation &&
+    typeof (implementation as any).transform !== 'function'
+  ) {
     done(
       new TypeError(
-        `[${LOADER_NAME}]: options.implementation.transform must be an 'lightningcss' transform function. Received ${typeof implementation.transform}`,
+        `[${LOADER_NAME}]: options.implementation.transform must be an 'lightningcss' transform function. Received ${typeof (implementation as any).transform}`,
       ),
     );
     return;
   }
 
-  const transform = implementation?.transform ?? _transform;
+  const transform: typeof _transform =
+    (implementation as any)?.transform ?? _transform;
 
   try {
     const { code, map } = transform({
@@ -47,4 +51,4 @@ async function LightningCssLoader(
   }
 }
 
-export default LightningCssLoader;
+export default LightningCSSLoader;

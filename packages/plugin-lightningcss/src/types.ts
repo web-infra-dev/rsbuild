@@ -1,18 +1,18 @@
 import type { CustomAtRules, TransformOptions } from 'lightningcss';
 
-type Implementation = typeof import('lightningcss');
-
-export type LightningCssTransformOptions = Omit<
+export type LightningCSSTransformOptions = Omit<
   TransformOptions<CustomAtRules>,
   'filename' | 'code' | 'inputSourceMap'
 >;
 
-export type LightningCssLoaderOptions = LightningCssTransformOptions & {
+type Implementation = unknown;
+
+export type LightningCSSLoaderOptions = LightningCSSTransformOptions & {
   implementation?: Implementation;
 };
 
-export type LightningCssMinifyPluginOptions = Omit<
-  LightningCssTransformOptions,
+export type LightningCSSMinifyPluginOptions = Omit<
+  LightningCSSTransformOptions,
   'minify'
 > & {
   implementation?: Implementation;
@@ -26,7 +26,7 @@ export type PluginLightningcssOptions = {
    *   targets: browserslistToTargets(browserslist)
    * }
    */
-  transform?: false | LightningCssLoaderOptions;
+  transform?: false | LightningCSSTransformOptions;
   /**
    * @see https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts
    * @default
@@ -34,5 +34,14 @@ export type PluginLightningcssOptions = {
    *   targets: browserslistToTargets(browserslist)
    * }
    */
-  minify?: false | LightningCssMinifyPluginOptions;
+  minify?: false | LightningCSSTransformOptions;
+  /**
+   * lightningcss instance
+   * @example
+   * import lightningcss from 'lightningcss';
+   * pluginLightningcss({
+   *    implementation: lightningcss
+   * })
+   */
+  implementation?: Implementation;
 };

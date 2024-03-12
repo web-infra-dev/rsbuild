@@ -5,28 +5,30 @@
  */
 import { transform as _transform } from 'lightningcss';
 import { Buffer } from 'node:buffer';
-import type { Compilation, Compiler } from 'webpack';
-import type { LightningCssMinifyPluginOptions } from './types';
+import { CSS_REGEX } from '@rsbuild/shared';
+import type { Compilation, Compiler } from '@rspack/core';
+import type { LightningCSSMinifyPluginOptions } from './types';
 
 const PLUGIN_NAME = 'lightningcss-minify-plugin';
-const CSS_FILE_REG = /\.css(?:\?.*)?$/i;
 
-export class LightningCssMinifyPlugin {
-  private readonly options: Omit<
-    LightningCssMinifyPluginOptions,
-    'implementation'
-  >;
+export class LightningCSSMinifyPlugin {
+  private readonly options: LightningCSSMinifyPluginOptions;
+
   private readonly transform: typeof _transform;
 
-  constructor(opts: LightningCssMinifyPluginOptions = {}) {
+  constructor(opts: LightningCSSMinifyPluginOptions = {}) {
     const { implementation, ...otherOpts } = opts;
-    if (implementation && typeof implementation.transform !== 'function') {
+
+    if (
+      implementation &&
+      typeof (implementation as any).transform !== 'function'
+    ) {
       throw new TypeError(
-        `[${PLUGIN_NAME}]: implementation.transform must be an 'lightningcss' transform function. Received ${typeof implementation.transform}`,
+        `[${PLUGIN_NAME}]: implementation.transform must be an 'lightningcss' transform function. Received ${typeof (implementation as any).transform}`,
       );
     }
 
-    this.transform = implementation?.transform ?? _transform;
+    this.transform = (implementation as any)?.transform ?? _transform;
     this.options = otherOpts;
   }
 
@@ -36,7 +38,6 @@ export class LightningCssMinifyPlugin {
         {
           name: PLUGIN_NAME,
           stage: (compilation as any)?.PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE,
-          additionalAssets: true,
         },
         async () => await this.transformAssets(compilation),
       );
@@ -44,11 +45,11 @@ export class LightningCssMinifyPlugin {
       compilation.hooks.statsPrinter.tap(PLUGIN_NAME, (statsPrinter) => {
         statsPrinter.hooks.print
           .for('asset.info.minimized')
-          // @ts-ignore
-          .tap(PLUGIN_NAME, (minimized, { green, formatFlag }) => {
-            // @ts-ignore
-            return minimized ? green(formatFlag('minimized')) : undefined;
-          });
+          .tap(PLUGIN_NAME, (minimized, { green, formatFlag }) =>
+            minimized && green && formatFlag
+              ? green(formatFlag('minimized'))
+              : '',
+          );
       });
     });
   }
@@ -73,7 +74,7 @@ export class LightningCssMinifyPlugin {
         // Filter out already minimized
         !asset.info.minimized &&
         // Filter out by file type
-        CSS_FILE_REG.test(asset.name),
+        CSS_REGEX.test(asset.name),
     );
 
     await Promise.all(
@@ -114,4 +115,4 @@ export class LightningCssMinifyPlugin {
   }
 }
 
-export default LightningCssMinifyPlugin;
+export default LightningCSSMinifyPlugin;

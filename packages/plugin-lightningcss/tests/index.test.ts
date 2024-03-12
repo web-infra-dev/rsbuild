@@ -1,16 +1,40 @@
 import { expect, describe, it } from 'vitest';
 import { pluginLightningcss, lightningcss } from '../src';
 import { createStubRsbuild } from '@scripts/test-helper';
+import { createRsbuild } from '@rsbuild/core';
+import {
+  type RuleSetRule,
+  isPlainObject,
+  type RspackConfig,
+} from '@rsbuild/shared';
+
+const getCssRules = (rspackConfig: RspackConfig) => {
+  const CSS_RULES = ['css', 'scss', 'sass', 'less', 'stylus'];
+
+  return (
+    (rspackConfig.module?.rules?.filter((item) => {
+      const isRule =
+        isPlainObject(item) &&
+        CSS_RULES.some((txt) =>
+          item.test?.toString().replace(/[\W]/g, '').includes(txt),
+        );
+      return isRule;
+    }) as RuleSetRule[]) ?? []
+  );
+};
 
 describe('plugins/lightningcss', () => {
   it('plugin-lightningcss should replace postcss-loader with lightningcss-loader with default options', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginLightningcss()],
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [pluginLightningcss()],
+      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-
-    expect(bundlerConfigs).toMatchSnapshot();
+    const cssRules = getCssRules(bundlerConfigs[0]);
+    expect(cssRules).toMatchSnapshot();
+    expect(cssRules).not.contain('postcss');
   });
 
   it('plugin-lightningcss should set lightningCssMinifyPlugin with default options', async () => {
@@ -80,6 +104,7 @@ describe('plugins/lightningcss', () => {
       plugins: [
         pluginLightningcss({
           transform: {
+            errorRecovery: true,
             cssModules: {
               dashedIdents: true,
               pattern: '[hash]-[local]',
@@ -96,6 +121,10 @@ describe('plugins/lightningcss', () => {
           minify: {
             errorRecovery: true,
             exclude: lightningcss.Features.Colors,
+            cssModules: {
+              dashedIdents: true,
+              pattern: '[hash]-[local]',
+            },
           },
         }),
       ],

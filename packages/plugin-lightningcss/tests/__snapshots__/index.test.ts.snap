@@ -15,6 +15,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
                 "dashedIdents": true,
                 "pattern": "[hash]-[local]",
               },
+              "errorRecovery": true,
               "targets": {
                 "chrome": 5701632,
                 "edge": 5767168,
@@ -37,6 +38,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
                 "dashedIdents": true,
                 "pattern": "[hash]-[local]",
               },
+              "errorRecovery": true,
               "targets": {
                 "chrome": 5701632,
                 "edge": 5767168,
@@ -59,6 +61,30 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
                 "dashedIdents": true,
                 "pattern": "[hash]-[local]",
               },
+              "errorRecovery": true,
+              "targets": {
+                "chrome": 5701632,
+                "edge": 5767168,
+                "firefox": 5111808,
+                "safari": 917504,
+              },
+              "visitor": {
+                "Length": [Function],
+              },
+            },
+          },
+        ],
+      },
+      {
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+            "options": {
+              "cssModules": {
+                "dashedIdents": true,
+                "pattern": "[hash]-[local]",
+              },
+              "errorRecovery": true,
               "targets": {
                 "chrome": 5701632,
                 "edge": 5767168,
@@ -76,100 +102,12 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
   },
   "optimization": {
     "minimizer": [
-      LightningCssMinifyPlugin {
+      LightningCSSMinifyPlugin {
         "options": {
-          "errorRecovery": true,
-          "exclude": 64512,
-          "targets": {
-            "chrome": 5701632,
-            "edge": 5767168,
-            "firefox": 5111808,
-            "safari": 917504,
+          "cssModules": {
+            "dashedIdents": true,
+            "pattern": "[hash]-[local]",
           },
-        },
-        "transform": [Function],
-      },
-    ],
-  },
-}
-`;
-
-exports[`plugins/lightningcss > plugin-lightningcss should be configurable by users 2`] = `
-{
-  "module": {
-    "rules": [
-      {
-        "use": [
-          {
-            "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
-            "options": {
-              "cssModules": {
-                "dashedIdents": true,
-                "pattern": "[hash]-[local]",
-              },
-              "targets": {
-                "chrome": 5701632,
-                "edge": 5767168,
-                "firefox": 5111808,
-                "safari": 917504,
-              },
-              "visitor": {
-                "Length": [Function],
-              },
-            },
-          },
-        ],
-      },
-      {
-        "use": [
-          {
-            "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
-            "options": {
-              "cssModules": {
-                "dashedIdents": true,
-                "pattern": "[hash]-[local]",
-              },
-              "targets": {
-                "chrome": 5701632,
-                "edge": 5767168,
-                "firefox": 5111808,
-                "safari": 917504,
-              },
-              "visitor": {
-                "Length": [Function],
-              },
-            },
-          },
-        ],
-      },
-      {
-        "use": [
-          {
-            "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
-            "options": {
-              "cssModules": {
-                "dashedIdents": true,
-                "pattern": "[hash]-[local]",
-              },
-              "targets": {
-                "chrome": 5701632,
-                "edge": 5767168,
-                "firefox": 5111808,
-                "safari": 917504,
-              },
-              "visitor": {
-                "Length": [Function],
-              },
-            },
-          },
-        ],
-      },
-    ],
-  },
-  "optimization": {
-    "minimizer": [
-      LightningCssMinifyPlugin {
-        "options": {
           "errorRecovery": true,
           "exclude": 64512,
           "targets": {
@@ -193,55 +131,196 @@ exports[`plugins/lightningcss > plugin-lightningcss should not set lightningCssM
 exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loader with lightningcss-loader with default options 1`] = `
 [
   {
-    "module": {
-      "rules": [
-        {
-          "use": [
-            {
-              "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
-              "options": {
-                "targets": {
-                  "chrome": 5701632,
-                  "edge": 5767168,
-                  "firefox": 5111808,
-                  "safari": 917504,
-                },
+    "oneOf": [
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
+        "type": "css/module",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+            "options": {
+              "targets": {
+                "chrome": 5701632,
+                "edge": 5767168,
+                "firefox": 5111808,
+                "safari": 917504,
               },
             },
-          ],
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
         },
-        {
-          "use": [
-            {
-              "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
-              "options": {
-                "targets": {
-                  "chrome": 5701632,
-                  "edge": 5767168,
-                  "firefox": 5111808,
-                  "safari": 917504,
-                },
+        "sideEffects": true,
+        "type": "css",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+            "options": {
+              "targets": {
+                "chrome": 5701632,
+                "edge": 5767168,
+                "firefox": 5111808,
+                "safari": 917504,
               },
             },
-          ],
+          },
+        ],
+      },
+    ],
+    "test": /\\\\\\.css\\$/,
+  },
+  {
+    "oneOf": [
+      {
+        "resolve": {
+          "preferRelative": true,
         },
-        {
-          "use": [
-            {
-              "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
-              "options": {
-                "targets": {
-                  "chrome": 5701632,
-                  "edge": 5767168,
-                  "firefox": 5111808,
-                  "safari": 917504,
-                },
+        "sideEffects": true,
+        "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
+        "type": "css/module",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+            "options": {
+              "targets": {
+                "chrome": 5701632,
+                "edge": 5767168,
+                "firefox": 5111808,
+                "safari": 917504,
               },
             },
-          ],
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/less-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/less",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
         },
-      ],
-    },
+        "sideEffects": true,
+        "type": "css",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+            "options": {
+              "targets": {
+                "chrome": 5701632,
+                "edge": 5767168,
+                "firefox": 5111808,
+                "safari": 917504,
+              },
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/less-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/less",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+    ],
+    "test": /\\\\\\.less\\$/,
+  },
+  {
+    "oneOf": [
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
+        "type": "css/module",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+            "options": {
+              "targets": {
+                "chrome": 5701632,
+                "edge": 5767168,
+                "firefox": 5111808,
+                "safari": 917504,
+              },
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+            "options": {
+              "join": [Function],
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/sass",
+              "sourceMap": true,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "type": "css",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+            "options": {
+              "targets": {
+                "chrome": 5701632,
+                "edge": 5767168,
+                "firefox": 5111808,
+                "safari": 917504,
+              },
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+            "options": {
+              "join": [Function],
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/sass",
+              "sourceMap": true,
+            },
+          },
+        ],
+      },
+    ],
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
   },
 ]
 `;
@@ -249,7 +328,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
 exports[`plugins/lightningcss > plugin-lightningcss should set lightningCssMinifyPlugin with default options 1`] = `
 {
   "minimizer": [
-    LightningCssMinifyPlugin {
+    LightningCSSMinifyPlugin {
       "options": {
         "targets": {
           "chrome": 5701632,
