@@ -88,7 +88,7 @@ pluginLightningcss({
 
 ### minify
 
-Use Lightning CSS instead of Rspack's built-in CSS compression tool for CSS compression. For options passed to `lightningcss`, please refer to the [lightningcss repository](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) for detailed usage.
+Use Lightning CSS instead of Rspack's builtin CSS minifier. For options passed to `lightningcss`, please refer to the [lightningcss repository](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) for detailed usage.
 
 - **Type:** `false | lightningcss.TransformOptions<CustomAtRules>`
 - **Default:**
@@ -114,13 +114,13 @@ pluginLightningcss({
 
 ```ts
 pluginLightningcss({
-  transform: false
+  minify: false
 });
 ```
 
 ### implementation
 
-Used to inject lightningcss instances. This configuration can be used when a lightningcss instance has been installed and exists in the project.
+Used to inject lightningcss instance. This configuration can be used when a lightningcss instance has been installed and exists in the project.
 
 - **Type:** `typeof import('lightningcss')`
 - **Example:**
