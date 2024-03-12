@@ -59,7 +59,7 @@
     "@rsbuild/shared": "workspace:*",
     "@rspack/core": "0.5.7",
     "@swc/helpers": "0.5.3",
-    "core-js": "~3.32.2",
+    "core-js": "~3.36.0",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
     "postcss": "^8.4.33"
   },

@@ -231,7 +231,7 @@ exports[`should support inject core-js polyfills by entry 1`] = `
         "bugfixes": true,
         "corejs": {
           "proposals": true,
-          "version": "3.32",
+          "version": "3.36",
         },
         "exclude": [
           "transform-typeof-symbol",
@@ -284,7 +284,7 @@ exports[`should support inject core-js polyfills by usage 1`] = `
         "bugfixes": true,
         "corejs": {
           "proposals": true,
-          "version": "3.32",
+          "version": "3.36",
         },
         "exclude": [
           "transform-typeof-symbol",

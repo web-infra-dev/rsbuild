@@ -22,7 +22,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.32",
+              "coreJs": "3.36",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -101,7 +101,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.32",
+              "coreJs": "3.36",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -191,7 +191,7 @@ exports[`svgr > 'export default Component' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.32",
+              "coreJs": "3.36",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -269,7 +269,7 @@ exports[`svgr > 'export default Component' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.32",
+              "coreJs": "3.36",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -351,7 +351,7 @@ exports[`svgr > 'export default url' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.32",
+              "coreJs": "3.36",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -429,7 +429,7 @@ exports[`svgr > 'export default url' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.32",
+              "coreJs": "3.36",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [

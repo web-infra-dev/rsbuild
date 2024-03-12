@@ -57,7 +57,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -102,7 +102,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -760,7 +760,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -805,7 +805,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -1952,7 +1952,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -1997,7 +1997,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
