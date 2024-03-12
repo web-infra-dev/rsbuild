@@ -113,27 +113,26 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         svgrOptions.exportType ??
         (svgDefaultExport === 'url' ? 'named' : 'default');
 
-      // SVG in non-JS files
-      // default: when size < dataUrlCondition.maxSize will inline
-      rule
+      // SVG as assets
+      const svgAssetRule = rule
         .oneOf(CHAIN_ID.ONE_OF.SVG_ASSET)
         .type('asset')
         .parser({
+          // Inline SVG if size < maxSize 
           dataUrlCondition: {
             maxSize,
           },
         })
         .set('generator', {
           filename: outputName,
-        })
-        .when(mixedImport, (c) => {
-          c.set('issuer', {
-            // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
-            not: [SCRIPT_REGEX],
-          });
         });
 
-      if (mixedImport) {
+      if (mixedImport || exportType === 'default') {
+        svgAssetRule.set('issuer', {
+          // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
+          not: [SCRIPT_REGEX],
+        });
+
         rule
           .oneOf(CHAIN_ID.ONE_OF.SVG)
           .type('javascript/auto')
