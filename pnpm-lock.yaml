@@ -190,7 +190,7 @@ importers:
         version: link:../scripts/test-helper
       '@types/lodash':
         specifier: ^4.14.200
-        version: 4.14.202
+        version: 4.17.0
       '@types/node':
         specifier: 16.x
         version: 16.18.84
@@ -634,7 +634,7 @@ importers:
         version: link:../webpack
       '@types/lodash':
         specifier: ^4.14.200
-        version: 4.14.202
+        version: 4.17.0
       typescript:
         specifier: ^5.4.2
         version: 5.4.2
@@ -896,7 +896,7 @@ importers:
         version: link:../../scripts/test-helper
       '@types/lodash':
         specifier: ^4.14.200
-        version: 4.14.202
+        version: 4.17.0
       '@types/node':
         specifier: 16.x
         version: 16.18.84
@@ -1731,7 +1731,7 @@ importers:
         version: 0.5.7(@swc/helpers@0.5.3)
       '@types/lodash':
         specifier: ^4.14.200
-        version: 4.14.202
+        version: 4.17.0
       '@types/node':
         specifier: 16.x
         version: 16.18.84
@@ -5177,8 +5177,8 @@ packages:
     resolution: {integrity: sha512-PecSzorDGdabF57OBeQO/xFbAkYWo88g4Xvnsx7LRwqLC17I7OoKtA3bQB9uXkY6UkMWCOsA8HSVpaoitscdXw==}
     dev: true
 
-  /@types/lodash@4.14.202:
-    resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
+  /@types/lodash@4.17.0:
+    resolution: {integrity: sha512-t7dhREVv6dbNj0q17X12j7yDG4bD/DHYX7o5/DbDxobP0HnGPgpRz2Ej77aL7TZT3DSw13fqUTj8J4mMnqa7WA==}
 
   /@types/mdast@3.0.15:
     resolution: {integrity: sha512-LnwD+mUEfxWMa1QpDraczIn6k0Ee3SMicuYSSzS6ZYl2gKS09EClnJYGd8Du6rfc5r/GZEk5o1mRb8TaTj03sQ==}
