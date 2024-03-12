@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-solid",
-  "version": "0.4.14",
+  "version": "0.4.15",
   "description": "Solid plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -39,7 +39,7 @@
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.4.14"
+    "@rsbuild/core": "workspace:^0.4.15"
   },
   "publishConfig": {
     "access": "public",
