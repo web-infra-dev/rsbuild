@@ -17,7 +17,7 @@ export class LightningCSSMinifyPlugin {
   private readonly transform: typeof _transform;
 
   constructor(opts: LightningCSSMinifyPluginOptions = {}) {
-    const { implementation, ...otherOpts } = opts;
+    const { implementation } = opts;
 
     if (
       implementation &&
@@ -29,7 +29,7 @@ export class LightningCSSMinifyPlugin {
     }
 
     this.transform = (implementation as any)?.transform ?? _transform;
-    this.options = otherOpts;
+    this.options = opts;
   }
 
   apply(compiler: Compiler) {

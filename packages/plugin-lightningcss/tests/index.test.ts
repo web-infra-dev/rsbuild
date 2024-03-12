@@ -34,7 +34,7 @@ describe('plugins/lightningcss', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
     const cssRules = getCssRules(bundlerConfigs[0]);
     expect(cssRules).toMatchSnapshot();
-    expect(cssRules).not.contain('postcss');
+    expect(cssRules).not.contain('postcss-loader');
   });
 
   it('plugin-lightningcss should set lightningCssMinifyPlugin with default options', async () => {
@@ -100,43 +100,54 @@ describe('plugins/lightningcss', () => {
 
   it('plugin-lightningcss should be configurable by users', async () => {
     process.env.NODE_ENV = 'production';
-    const rsbuild = await createStubRsbuild({
-      plugins: [
-        pluginLightningcss({
-          transform: {
-            errorRecovery: true,
-            cssModules: {
-              dashedIdents: true,
-              pattern: '[hash]-[local]',
+
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [
+          pluginLightningcss({
+            implementation: {
+              transform: lightningcss.transform,
+              browserslistToTargets: lightningcss.browserslistToTargets,
             },
-            visitor: {
-              Length(len) {
-                return {
-                  unit: 'rem',
-                  value: len.value,
-                };
+            transform: {
+              errorRecovery: true,
+              cssModules: {
+                dashedIdents: true,
+                pattern: '[hash]-[local]',
+              },
+              visitor: {
+                Length(len) {
+                  return {
+                    unit: 'rem',
+                    value: len.value,
+                  };
+                },
               },
             },
-          },
-          minify: {
-            errorRecovery: true,
-            exclude: lightningcss.Features.Colors,
-            cssModules: {
-              dashedIdents: true,
-              pattern: '[hash]-[local]',
+            minify: {
+              errorRecovery: true,
+              exclude: lightningcss.Features.Colors,
+              cssModules: {
+                dashedIdents: true,
+                pattern: '[hash]-[local]',
+              },
             },
-          },
-        }),
-      ],
+          }),
+        ],
+      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    const cssRules = getCssRules(bundlerConfigs[0]);
+    expect(cssRules).toMatchSnapshot();
+    expect(cssRules).not.contain('postcss-loader');
+
+    expect(bundlerConfigs[0].optimization?.minimizer).toMatchSnapshot();
 
     process.env.NODE_ENV = 'test';
   });
 
-  it('plugin-lightningcss should be cancelable by users with false value', async () => {
+  it('plugin-lightningcss should be cancelable by users with false options', async () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [

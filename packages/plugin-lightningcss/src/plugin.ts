@@ -87,6 +87,11 @@ const applyLightningCSSLoader = ({
     CHAIN_ID.RULE.LESS,
     CHAIN_ID.RULE.STYLUS,
   ].forEach((ruleId) => {
+    const existRule = chain.module.rules.has(ruleId);
+    if (!existRule) {
+      return;
+    }
+
     const rule = chain.module.rule(ruleId);
     const use = rule.use(CHAIN_ID.USE.LIGHTNINGCSS);
 
