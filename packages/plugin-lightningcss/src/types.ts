@@ -5,7 +5,7 @@ export type LightningCSSTransformOptions = Omit<
   'filename' | 'code' | 'inputSourceMap'
 >;
 
-type Implementation = unknown;
+type Implementation = unknown; // loose type of `typeof import('lightningcss')`
 
 export type LightningCSSLoaderOptions = LightningCSSTransformOptions & {
   implementation?: Implementation;
@@ -38,9 +38,13 @@ export type PluginLightningcssOptions = {
   /**
    * lightningcss instance
    * @example
+   * import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
    * import lightningcss from 'lightningcss';
    * pluginLightningcss({
-   *    implementation: lightningcss
+   *    implementation: lightningcss,
+   *    minify: {
+   *      exclude: lightningcss.Features.ColorFunction
+   *    }
    * })
    */
   implementation?: Implementation;

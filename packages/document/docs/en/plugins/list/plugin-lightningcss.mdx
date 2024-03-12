@@ -5,10 +5,10 @@ import { SourceCode } from 'rspress/theme';
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-lightningcss" />
 
 :::tip About Lightning CSS
-[lightningcss](https://lightningcss.dev) is a high-performance CSS parser, transformer and bundler written in Rust. It supports parsing and converting many modern CSS features into syntax supported by target browsers, and Lightning CSS has better compression ratios.
+[lightningcss](https://lightningcss.dev) is a high-performance CSS parser, transformer and minifier written in Rust. It supports parsing and converting many modern CSS features into syntax supported by target browsers, and Lightning CSS has better compression ratios.
 :::
 
-The Lightning CSS plugin will use `lightningcss-loader` to replace the builtin `postcss-loader` in Rsbuild to solve the performance overhead of postcss and autoprefixer, and will use `LightningCssMinifyPlugin` to replace the default builtin CSS minifier in Rspack to obtain greater compression ratios.
+The Lightning CSS plugin will use `lightningcss-loader` to replace the builtin `postcss-loader` in Rsbuild to solve the performance overhead of postcss and autoprefixer, and will use `LightningCSSMinifyPlugin` to replace the default builtin CSS minifier in Rspack to obtain greater compression ratios.
 
 ## Quick Start
 
@@ -47,6 +47,45 @@ const defaultOptions = {
 }
 ```
 
+- **Example:** Enable or disable lightningcss features, which can be configured by importing a lightningcss instance from the plugin.
+
+```ts
+import { lightnincss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+
+pluginLightningcss({
+  transform: {
+    include: lightningcss.Features.Nesting
+  }
+});
+```
+
+- **Example:** Convert all length units to rem through lightningcss's custom vistor.
+
+```ts
+pluginLightningcss({
+  transform: {
+    transform: {
+      visitor: {
+        Length(len) {
+          return {
+            unit: 'rem',
+            value: len.value,
+          };
+        },
+},
+    },
+  }
+});
+```
+
+- **Example:** Disable CSS transform of lightningcss, leaving only CSS minify.
+
+```ts
+pluginLightningcss({
+  transform: false
+});
+```
+
 ### minify
 
 Use Lightning CSS instead of Rspack's built-in CSS compression tool for CSS compression. For options passed to `lightningcss`, please refer to the [lightningcss repository](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) for detailed usage.
@@ -58,4 +97,42 @@ Use Lightning CSS instead of Rspack's built-in CSS compression tool for CSS comp
 const defaultOptions = {
   targets: browserslistToTargets(browserslist(browserslistUserConfig)),
 } 
+```
+
+- **Example:** Disable lightning CSS minify for `ColorFunctions` and `HexAlphaColors`
+
+```ts
+import { lightnincss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+
+pluginLightningcss({
+  minify: {
+    exclude: lightningcss.Features.ColorFunction | lightningcss.Features.HexAlphaColors
+  }
+});
+```
+- **Example:** Disable the CSS minify of lightningcss, leaving only the CSS transform.
+
+```ts
+pluginLightningcss({
+  transform: false
+});
+```
+
+### implementation
+
+Used to inject lightningcss instances. This configuration can be used when a lightningcss instance has been installed and exists in the project.
+
+- **Type:** `typeof import('lightningcss')`
+- **Example:**
+
+```ts
+import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+import lightningcss from 'lightningcss';
+
+pluginLightningcss({
+  implementation: lightningcss,
+  minify: {
+    exclude: lightningcss.Features.ColorFunction
+  }
+});
 ```
