@@ -36,9 +36,9 @@ export default {
 
 ### transform
 
-Use `lightningcss-loader` instead of `postcss-loader`. For options passed to `lightningcss-loader`, please check [lightningcss Repo](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) to learn how to use it.
+Use `lightningcss-loader` instead of Rsbuild's builtin `postcss-loader` to transform CSS files. For options passed to `lightningcss-loader`, please refer to the [lightningcss Repo](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) for detailed usage.
 
-- **Type:** `false | LightningCssLoaderOptions`
+- **Type:** `false | lightningcss.TransformOptions<CustomAtRules>`
 - **Default:**
 
 ```ts
@@ -49,9 +49,9 @@ const defaultOptions = {
 
 ### minify
 
-Use Lightning CSS instead of Rspack's built-in CSS compression tool for CSS compression. For options passed to `lightningcss`, please check [lightningcss repository](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) to learn how to use it.
+Use Lightning CSS instead of Rspack's built-in CSS compression tool for CSS compression. For options passed to `lightningcss`, please refer to the [lightningcss repository](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) for detailed usage.
 
-- **Type:** `false | LightningCssMinifyPluginOptions`
+- **Type:** `false | lightningcss.TransformOptions<CustomAtRules>`
 - **Default:**
 
 ```ts

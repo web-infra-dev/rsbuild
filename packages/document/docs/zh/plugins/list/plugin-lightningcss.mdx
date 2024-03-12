@@ -36,9 +36,9 @@ export default {
 
 ### transform
 
-使用 `lightningcss-loader` 替代 Rsbuild 内置的 `postcss-loader`，传递给 `lightningcss-loader` 的选项，请查阅 [lightningcss 仓库](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) 来了解具体用法。
+使用 `lightningcss-loader` 替换 Rsbuild 内置的 `postcss-loader` 进行 CSS 转译，传递给 `lightningcss-loader` 的选项，请查阅 [lightningcss 仓库](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) 了解具体用法。
 
-- **类型：** `false | LightningCssLoaderOptions`
+- **类型：** `false | lightningcss.TransformOptions<CustomAtRules>`
 - **默认值：**
 
 ```ts
@@ -49,9 +49,9 @@ const defaultOptions = {
 
 ### minify
 
-使用 Lightning CSS 来代替 Rspack 内置的 CSS 压缩工具进行 CSS 压缩，传递给 `lightningcss` 的选项，请查阅 [lightningcss 仓库](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) 来了解具体用法。
+使用 Lightning CSS 替换 Rspack 内置的 CSS 压缩工具进行 CSS 压缩，传递给 `lightningcss` 的选项，请查阅 [lightningcss 仓库](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) 了解具体用法。
 
-- **类型：** `false | LightningCssMinifyPluginOptions`
+- **类型：** `false | lightningcss.TransformOptions<CustomAtRules>`
 - **默认值：**
 
 ```ts
