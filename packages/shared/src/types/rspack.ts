@@ -113,6 +113,9 @@ export type BuiltinSwcLoaderOptions = {
       [from: string]: [string];
     };
     preserveAllComments?: boolean;
+    experimental?: {
+      plugins?: Array<[string, Record<string, any>]>;
+    };
   };
   rspackExperiments?: {
     relay?:
