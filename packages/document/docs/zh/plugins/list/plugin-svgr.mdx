@@ -72,11 +72,6 @@ type PluginSvgrOptions = {
    * 修改 SVGR 配置
    */
   svgrOptions?: import('@svgr/core').Config;
-
-  /**
-   * 修改 SVG 文件的默认导出类型
-   */
-  svgDefaultExport?: 'component' | 'url';
 };
 ```
 
@@ -118,23 +113,21 @@ pluginSvgr({
 });
 ```
 
-### svgDefaultExport
+### svgrOptions.exportType
 
-修改 SVG 文件的默认导出类型。
+修改 SVG 文件的 default export 类型。
 
-- **类型：** `'component' | 'url'`
-- **默认值：** `'url'`
+- **类型：** `'named' | 'default'`
+- **默认值：** `'named'`
 
 比如把默认导出的内容设置为 React 组件：
 
-```ts title="rsbuild.config.ts"
-export default {
-  plugins: [
-    pluginSvgr({
-      svgDefaultExport: 'component',
-    }),
-  ],
-};
+```ts
+pluginSvgr({
+  svgrOptions: {
+    exportType: 'default',
+  },
+});
 ```
 
 此时再使用默认导入，你会得到一个 React 组件，而不是 URL：
@@ -154,7 +147,7 @@ console.log(logo); // => 资源 url
 ```
 
 :::tip
-当 `svgDefaultExport` 被设置为 `'component'` 时，具名导入（ReactComponent）将无法使用。
+当 `svgrOptions.exportType` 被设置为 `'default'` 时，具名导入（ReactComponent）将无法使用。
 :::
 
 ## 类型声明
@@ -182,7 +175,7 @@ declare module '*.svg' {
 }
 ```
 
-如果你将 `svgDefaultExport` 设置为 `'component'`，则将类型声明修改为：
+如果你将 `svgrOptions.exportType` 设置为 `'default'`，则将类型声明修改为：
 
 ```ts
 declare module '*.svg' {

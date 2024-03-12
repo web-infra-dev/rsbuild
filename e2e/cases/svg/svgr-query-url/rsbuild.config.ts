@@ -5,7 +5,9 @@ export default {
   plugins: [
     pluginReact(),
     pluginSvgr({
-      svgDefaultExport: 'component',
+      svgrOptions: {
+        exportType: 'default',
+      },
     }),
   ],
 };

@@ -47,7 +47,9 @@ test('svgr (defaultExport component)', async ({ page }) => {
     plugins: [
       pluginReact(),
       pluginSvgr({
-        svgDefaultExport: 'component',
+        svgrOptions: {
+          exportType: 'default',
+        },
       }),
     ],
   });
@@ -79,7 +81,9 @@ test('svgr (external react)', async ({ page }) => {
     plugins: [
       pluginReact(),
       pluginSvgr({
-        svgDefaultExport: 'url',
+        svgrOptions: {
+          exportType: 'named',
+        },
       }),
     ],
     rsbuildConfig: {

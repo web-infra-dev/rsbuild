@@ -22,6 +22,7 @@ export type PluginSvgrOptions = {
   /**
    * Configure the default export type of SVG files.
    * @default 'url'
+   * @deprecated use `svgrOptions.exportType` instead
    */
   svgDefaultExport?: SvgDefaultExport;
 };
@@ -52,7 +53,6 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { isProd, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
-      const { svgDefaultExport = 'url' } = options;
       const distDir = getDistPath(config, 'svg');
       const filename = getFilename(config, 'svg', isProd);
       const outputName = path.posix.join(distDir, filename);
@@ -120,7 +120,11 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         });
 
       // SVG in JS files
-      const exportType = svgDefaultExport === 'url' ? 'named' : 'default';
+      const { svgDefaultExport = 'url' } = options;
+      const exportType =
+        svgrOptions.exportType ??
+        (svgDefaultExport === 'url' ? 'named' : 'default');
+
       rule
         .oneOf(CHAIN_ID.ONE_OF.SVG)
         .type('javascript/auto')
