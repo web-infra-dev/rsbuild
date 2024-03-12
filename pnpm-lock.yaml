@@ -975,6 +975,9 @@ importers:
       '@rsbuild/core':
         specifier: link:../core
         version: link:../core
+      '@rspack/core':
+        specifier: 0.5.7
+        version: 0.5.7(@swc/helpers@0.5.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -987,9 +990,6 @@ importers:
       typescript:
         specifier: ^5.4.2
         version: 5.4.2
-      webpack:
-        specifier: ^5.89.0
-        version: 5.90.3
 
   packages/plugin-mdx:
     dependencies:
