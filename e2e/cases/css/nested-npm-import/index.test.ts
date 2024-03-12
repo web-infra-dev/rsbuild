@@ -1,9 +1,11 @@
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import { build } from '@e2e/helper';
+import { build, proxyConsole } from '@e2e/helper';
 import { fse } from '@rsbuild/shared';
 
 test('should compile nested npm import correctly', async () => {
+  const { restore, logs } = proxyConsole();
+
   fse.copySync(
     path.resolve(__dirname, '_node_modules'),
     path.resolve(__dirname, 'node_modules'),
@@ -19,4 +21,11 @@ test('should compile nested npm import correctly', async () => {
   expect(files[cssFiles]).toEqual(
     '#b{color:yellow}#c{color:green}#a{font-size:10px}html{font-size:18px}',
   );
+
+  // there will be a deprecation log for `~`.
+  expect(
+    logs.some((log) => log.includes(`a request starts with '~' is deprecated`)),
+  );
+
+  restore();
 });
