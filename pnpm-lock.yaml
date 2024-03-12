@@ -984,9 +984,6 @@ importers:
       '@types/node':
         specifier: 16.x
         version: 16.18.84
-      '@types/webpack-sources':
-        specifier: ^3.2.0
-        version: 3.2.3
       typescript:
         specifier: ^5.4.2
         version: 5.4.2
