@@ -41,7 +41,7 @@
     "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "@swc/helpers": "0.5.3",
-    "core-js": "~3.32.2",
+    "core-js": "~3.36.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {

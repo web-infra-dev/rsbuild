@@ -567,8 +567,8 @@ importers:
         specifier: 2.3.3
         version: 2.3.3
       core-js:
-        specifier: ~3.32.2
-        version: 3.32.2
+        specifier: ~3.36.0
+        version: 3.36.0
     devDependencies:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
@@ -620,8 +620,8 @@ importers:
         specifier: 0.5.3
         version: 0.5.3
       core-js:
-        specifier: ~3.32.2
-        version: 3.32.2
+        specifier: ~3.36.0
+        version: 3.36.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -697,8 +697,8 @@ importers:
         specifier: 0.5.3
         version: 0.5.3
       core-js:
-        specifier: ~3.32.2
-        version: 3.32.2
+        specifier: ~3.36.0
+        version: 3.36.0
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.6.2
         version: /html-rspack-plugin@5.6.2(@rspack/core@0.5.7)
@@ -6871,8 +6871,8 @@ packages:
     dependencies:
       browserslist: 4.23.0
 
-  /core-js@3.32.2:
-    resolution: {integrity: sha512-pxXSw1mYZPDGvTQqEc5vgIb83jGQKFGYWY76z4a7weZXUolw3G+OvpZqSRcfYOoOVUQJYEPsWeQK8pKEnUtWxQ==}
+  /core-js@3.36.0:
+    resolution: {integrity: sha512-mt7+TUBbTFg5+GngsAxeKBTl5/VS0guFeJacYge9OmHb+m058UwwIm41SE9T4Den7ClatV57B6TYTuJ0CX1MAw==}
     requiresBuild: true
     dev: false
 

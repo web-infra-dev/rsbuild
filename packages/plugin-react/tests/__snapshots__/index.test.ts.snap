@@ -74,7 +74,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -124,7 +124,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
