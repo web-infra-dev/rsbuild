@@ -58,6 +58,7 @@ Refers to the build target running in the Node.js environment, usually used in s
 
 When `target` is set to `'node'`, Rsbuild will:
 
+- Output the build files to the `dist/server` directory, which can be configured via [output.distPath](/config/output/dist-path).
 - No HTML files will be generated, and HTML-related logic will not be executed, since HTML is not required by the Node.js environment.
 - CSS code will not be bundled or extracted, but the id information of CSS Modules will be included in the bundle.
 - The default code split strategy will be disabled, but dynamic import can still work.

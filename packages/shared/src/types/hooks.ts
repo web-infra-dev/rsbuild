@@ -12,6 +12,7 @@ export type OnBeforeBuildFn<B = 'rspack'> = (params: {
 }) => PromiseOrNot<void>;
 
 export type OnAfterBuildFn = (params: {
+  isFirstCompile: boolean;
   stats?: Stats | MultiStats;
 }) => PromiseOrNot<void>;
 

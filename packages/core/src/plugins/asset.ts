@@ -6,9 +6,49 @@ import {
   IMAGE_EXTENSIONS,
   VIDEO_EXTENSIONS,
   AUDIO_EXTENSIONS,
-  chainStaticAssetRule,
+  type BundlerChainRule,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
+
+const chainStaticAssetRule = ({
+  rule,
+  maxSize,
+  filename,
+  assetType,
+}: {
+  rule: BundlerChainRule;
+  maxSize: number;
+  filename: string;
+  assetType: string;
+}) => {
+  // force to url: "foo.png?url" or "foo.png?__inline=false"
+  rule
+    .oneOf(`${assetType}-asset-url`)
+    .type('asset/resource')
+    .resourceQuery(/(__inline=false|url)/)
+    .set('generator', {
+      filename,
+    });
+
+  // force to inline: "foo.png?inline"
+  rule
+    .oneOf(`${assetType}-asset-inline`)
+    .type('asset/inline')
+    .resourceQuery(/inline/);
+
+  // default: when size < dataUrlCondition.maxSize will inline
+  rule
+    .oneOf(`${assetType}-asset`)
+    .type('asset')
+    .parser({
+      dataUrlCondition: {
+        maxSize,
+      },
+    })
+    .set('generator', {
+      filename,
+    });
+};
 
 export function getRegExpForExts(exts: string[]): RegExp {
   const matcher = exts
@@ -36,7 +76,11 @@ export const pluginAsset = (): RsbuildPlugin => ({
         const regExp = getRegExpForExts(exts);
         const distDir = getDistPath(config, assetType);
         const filename = getFilename(config, assetType, isProd);
-        const maxSize = config.output.dataUriLimit[assetType];
+        const { dataUriLimit } = config.output;
+        const maxSize =
+          typeof dataUriLimit === 'number'
+            ? dataUriLimit
+            : dataUriLimit[assetType];
         const rule = chain.module.rule(assetType).test(regExp);
 
         chainStaticAssetRule({

@@ -1,9 +1,6 @@
 `onBeforeCreateCompiler` is a callback function that is triggered after the Compiler instance has been created, but before the build process begins. This hook is called when you run `rsbuild.startDevServer`, `rsbuild.build`, or `rsbuild.createCompiler`.
 
-You can access the Compiler instance object through the `compiler` parameter:
-
-- If the current bundler is Rspack, you will get the Rspack Compiler object.
-- If the current bundler is webpack, you will get the webpack Compiler object.
+You can access the Rspack configuration array through the `bundlerConfigs` parameter. The array may contain one or more [Rspack configurations](https://rspack.dev/config.html), depending on the value of the Rsbuild's [output.targets](/config/output/targets) configuration.
 
 - **Type:**
 

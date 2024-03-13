@@ -83,9 +83,9 @@ export default {
 ### chunkSplit.maxSize
 
 - **Type:** `number`
-- **Default:** `Infinity`
+- **Default:** `Number.POSITIVE_INFINITY`
 
-When `performance.chunkSplit.strategy` is `split-by-size`, you can specify the maximum size of a chunk via `performance.chunkSplit.maxSize`, the unit is bytes. The default value is `Infinity`. For example:
+When `performance.chunkSplit.strategy` is `split-by-size`, you can specify the maximum size of a chunk via `performance.chunkSplit.maxSize`, the unit is bytes. The default value is `Number.POSITIVE_INFINITY`. For example:
 
 ```js
 export default {

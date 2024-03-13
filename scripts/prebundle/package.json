@@ -1,7 +1,7 @@
 {
   "name": "@rsbuild/prebundle",
   "private": true,
-  "version": "0.4.11",
+  "version": "0.4.15",
   "main": "./dist/index.js",
   "scripts": {
     "dev": "tsc --watch",
@@ -16,7 +16,7 @@
     "dts-packer": "0.0.3",
     "fast-glob": "^3.3.1",
     "postcss": "^8.4.33",
-    "typescript": "^5.3.0"
+    "typescript": "^5.4.2"
   },
   "devDependencies": {
     "@types/connect": "3.4.38",
@@ -50,7 +50,6 @@
     "line-diff": "2.1.1",
     "loader-utils2": "npm:loader-utils@2.0.4",
     "mime-types": "^2.1.35",
-    "node-loader": "2.0.0",
     "on-finished": "2.4.1",
     "open": "^8.4.0",
     "picocolors": "1.0.0",

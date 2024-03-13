@@ -303,7 +303,7 @@ export interface NormalizedOutputConfig extends OutputConfig {
   };
   filenameHash: boolean | string;
   assetPrefix: string;
-  dataUriLimit: NormalizedDataUriLimit;
+  dataUriLimit: number | NormalizedDataUriLimit;
   disableMinimize: boolean;
   minify: Minify;
   enableCssModuleTSDeclaration: boolean;

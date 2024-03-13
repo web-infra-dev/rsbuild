@@ -1,0 +1,139 @@
+# Lightning CSS 插件
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-lightningcss" />
+
+:::tip Lightning CSS 介绍
+[lightningcss](https://lightningcss.dev) 是一个基于 Rust 编写的高性能 CSS 解析、转译和压缩工具。它支持将许多现代的 CSS 特性解析并转化为指定浏览器支持的语法，并且 Lightning CSS 有更好的压缩比例。
+:::
+
+LightningCSS 插件可以使用 `lightningcss-loader` 替代 Rsbuild 中内置的 `postcss-loader`，解决 postcss 和 autoprefixer 性能开销过大的问题，并可以使用 `LightningCSSMinifyPlugin` 替代 Rspack 中内置的默认 CSS 压缩工具获取更好的压缩比例。
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-lightningcss -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+
+export default {
+  plugins: [pluginLightningcss()],
+};
+```
+
+## 选项
+
+### transform
+
+使用 `lightningcss-loader` 替换 Rsbuild 内置的 `postcss-loader` 进行 CSS 转译，传递给 `lightningcss-loader` 的选项，请查阅 [lightningcss 仓库](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) 了解具体用法。
+
+- **类型：** `false | lightningcss.TransformOptions<CustomAtRules>`
+- **默认值：**
+
+```ts
+const defaultOptions = {
+  targets: browserslistToTargets(browserslist),
+}
+```
+
+- **示例：** 启用或禁用 lightningcss 的特性，可以通过从插件中导入 lightningcss 实例进行配置。
+
+```ts
+import { lightnincss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+
+pluginLightningcss({
+  transform: {
+    include: lightningcss.Features.Nesting
+  }
+});
+```
+
+- **示例：** 通过 lightningcss 的自定义 vistor 将所有的长度单位转化为 rem。
+
+```ts
+pluginLightningcss({
+  transform: {
+    transform: {
+      visitor: {
+        Length(len) {
+          return {
+            unit: 'rem',
+            value: len.value,
+          };
+        },
+      },
+    },
+  }
+});
+```
+
+- **示例：** 禁用 CSS 转译功能，仅保留 CSS 压缩功能。
+
+```ts
+pluginLightningcss({
+  transform: false
+});
+```
+
+### minify
+
+使用 Lightning CSS 替换 Rspack 内置的 CSS 压缩工具进行 CSS 压缩，传递给 `lightningcss` 的选项，请查阅 [lightningcss 仓库](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) 了解具体用法。
+
+- **类型：** `false | lightningcss.TransformOptions<CustomAtRules>`
+- **默认值：**
+
+```ts
+const defaultOptions = {
+  targets: browserslistToTargets(browserslist),
+} 
+```
+
+- **示例：** 禁用 lightningcss 对于 `ColorFunctions` 和 `HexAlphaColors` 的压缩功能
+
+```ts
+import { lightnincss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+
+pluginLightningcss({
+  minify: {
+    exclude: lightningcss.Features.ColorFunction | lightningcss.Features.HexAlphaColors
+  }
+});
+```
+
+- **示例：** 禁用 lightningcss 的 CSS 压缩功能，仅保留转译功能。
+
+```ts
+pluginLightningcss({
+  minify: false
+});
+```
+
+### implementation
+
+用于注入 lightningcss 实例，当项目内已经安装且存在 lightningcss 实例时可以使用该配置。
+
+- **类型：** `typeof import('lightningcss')`
+- **示例：**
+
+```ts
+import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+import lightningcss from 'lightningcss';
+
+pluginLightningcss({
+  implementation: lightningcss,
+  minify: {
+    exclude: lightningcss.Features.ColorFunction
+  }
+});
+```

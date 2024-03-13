@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/babel-preset",
-  "version": "0.4.11",
+  "version": "0.4.15",
   "description": "The babel config of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -59,12 +59,12 @@
     "@babel/types": "^7.23.0",
     "@types/babel__core": "^7.20.3",
     "babel-plugin-dynamic-import-node": "2.3.3",
-    "core-js": "~3.32.2"
+    "core-js": "~3.36.0"
   },
   "devDependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
     "@types/node": "16.x",
-    "typescript": "^5.3.0"
+    "typescript": "^5.4.2"
   },
   "publishConfig": {
     "access": "public",

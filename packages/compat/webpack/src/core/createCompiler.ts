@@ -1,7 +1,8 @@
 import {
+  debug,
   isDev,
   logger,
-  debug,
+  isMultiCompiler,
   type Stats,
   type Rspack,
   type RspackConfig,
@@ -32,9 +33,7 @@ export async function createCompiler({
     | Rspack.Compiler
     | Rspack.MultiCompiler;
 
-  let isFirstCompile = true;
-
-  compiler.hooks.done.tap('rsbuild:done', async (stats: unknown) => {
+  const done = async (stats: unknown) => {
     const { message, level } = formatStats(stats as Stats);
 
     if (level === 'error') {
@@ -52,7 +51,16 @@ export async function createCompiler({
     }
 
     isFirstCompile = false;
-  });
+  };
+
+  let isFirstCompile = true;
+
+  // MultiCompiler does not supports `done.tapPromise`
+  if (isMultiCompiler(compiler)) {
+    compiler.hooks.done.tap('rsbuild:done', done);
+  } else {
+    compiler.hooks.done.tapPromise('rsbuild:done', done);
+  }
 
   await context.hooks.onAfterCreateCompiler.call({
     compiler,

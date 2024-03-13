@@ -6,7 +6,11 @@ import {
   type RsbuildPlugin,
   parseMinifyOptions,
 } from '@rsbuild/shared';
-import type { PluginSwcOptions, TransformConfig } from './types';
+import type {
+  TransformConfig,
+  PluginSwcOptions,
+  ObjPluginSwcOptions,
+} from './types';
 import {
   applyPluginConfig,
   checkUseMinify,
@@ -29,10 +33,14 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
       return;
     }
 
+    // first config is the main config
+    let mainConfig: ObjPluginSwcOptions<'inner'>;
+
     api.modifyBundlerChain({
+      // loader should be applied in the pre stage for customizing
       order: 'pre',
       handler: async (chain, utils) => {
-        const { CHAIN_ID, isProd } = utils;
+        const { CHAIN_ID } = utils;
         const rsbuildConfig = api.getNormalizedConfig();
         const { rootPath } = api.context;
 
@@ -85,7 +93,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
         }
 
         // first config is the main config
-        const mainConfig = swcConfigs[0].swcConfig;
+        mainConfig = swcConfigs[0].swcConfig;
 
         if (chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI)) {
           chain.module
@@ -106,36 +114,40 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
           .use(CHAIN_ID.USE.SWC)
           .loader(path.resolve(__dirname, './loader'))
           .options(removeUselessOptions(mainConfig) satisfies TransformConfig);
-
-        if (checkUseMinify(mainConfig, rsbuildConfig, isProd)) {
-          // Insert swc minify plugin
-          // @ts-expect-error webpack-chain missing minimizers type
-          const minimizersChain = chain.optimization.minimizers;
-
-          if (mainConfig.jsMinify !== false) {
-            minimizersChain.delete(CHAIN_ID.MINIMIZER.JS).end();
-          }
-
-          if (mainConfig.cssMinify !== false) {
-            minimizersChain.delete(CHAIN_ID.MINIMIZER.CSS).end();
-          }
-
-          const { minifyJs, minifyCss } = parseMinifyOptions(rsbuildConfig);
-
-          minimizersChain
-            .end()
-            .minimizer(CHAIN_ID.MINIMIZER.SWC)
-            .use(SwcMinimizerPlugin, [
-              {
-                jsMinify: minifyJs
-                  ? mainConfig.jsMinify ?? mainConfig.jsc?.minify
-                  : false,
-                cssMinify: minifyCss ? mainConfig.cssMinify : false,
-                rsbuildConfig,
-              },
-            ]);
-        }
       },
+    });
+
+    api.modifyBundlerChain((chain, { CHAIN_ID, isProd }) => {
+      const rsbuildConfig = api.getNormalizedConfig();
+
+      if (checkUseMinify(mainConfig, rsbuildConfig, isProd)) {
+        // Insert swc minify plugin
+        // @ts-expect-error webpack-chain missing minimizers type
+        const minimizersChain = chain.optimization.minimizers;
+
+        if (mainConfig.jsMinify !== false) {
+          minimizersChain.delete(CHAIN_ID.MINIMIZER.JS).end();
+        }
+
+        if (mainConfig.cssMinify !== false) {
+          minimizersChain.delete(CHAIN_ID.MINIMIZER.CSS).end();
+        }
+
+        const { minifyJs, minifyCss } = parseMinifyOptions(rsbuildConfig);
+
+        minimizersChain
+          .end()
+          .minimizer(CHAIN_ID.MINIMIZER.SWC)
+          .use(SwcMinimizerPlugin, [
+            {
+              jsMinify: minifyJs
+                ? mainConfig.jsMinify ?? mainConfig.jsc?.minify
+                : false,
+              cssMinify: minifyCss ? mainConfig.cssMinify : false,
+              rsbuildConfig,
+            },
+          ]);
+      }
     });
   },
 });

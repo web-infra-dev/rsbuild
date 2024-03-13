@@ -1,6 +1,11 @@
 import { createCompiler } from './createCompiler';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
-import { getNodeEnv, logger, setNodeEnv } from '@rsbuild/shared';
+import {
+  logger,
+  getNodeEnv,
+  setNodeEnv,
+  isMultiCompiler,
+} from '@rsbuild/shared';
 import type {
   Stats,
   MultiStats,
@@ -34,9 +39,23 @@ export const build = async (
     bundlerConfigs = rspackConfigs;
   }
 
+  let isFirstCompile = true;
   await context.hooks.onBeforeBuild.call({
     bundlerConfigs,
   });
+
+  const onDone = async (stats: Stats | MultiStats) => {
+    const p = context.hooks.onAfterBuild.call({ isFirstCompile, stats });
+    isFirstCompile = false;
+    await p;
+  };
+
+  // MultiCompiler does not supports `done.tapPromise`
+  if (isMultiCompiler(compiler)) {
+    compiler.hooks.done.tap('rsbuild:done', onDone);
+  } else {
+    compiler.hooks.done.tapPromise('rsbuild:done', onDone);
+  }
 
   if (watch) {
     compiler.watch({}, (err) => {
@@ -47,26 +66,22 @@ export const build = async (
     return;
   }
 
-  const { stats } = await new Promise<{ stats?: Stats | MultiStats }>(
-    (resolve, reject) => {
-      compiler.run((err: any, stats?: Stats) => {
-        if (err || stats?.hasErrors()) {
-          const buildError = err || new Error('Rspack build failed!');
-          reject(buildError);
-        }
-        // If there is a compilation error, the close method should not be called.
-        // Otherwise the bundler may generate an invalid cache.
-        else {
-          // When using run or watch, call close and wait for it to finish before calling run or watch again.
-          // Concurrent compilations will corrupt the output files.
-          compiler.close(() => {
-            // Assert type of stats must align to compiler.
-            resolve({ stats });
-          });
-        }
-      });
-    },
-  );
-
-  await context.hooks.onAfterBuild.call({ stats });
+  await new Promise<{ stats?: Stats | MultiStats }>((resolve, reject) => {
+    compiler.run((err: any, stats?: Stats | MultiStats) => {
+      if (err || stats?.hasErrors()) {
+        const buildError = err || new Error('Rspack build failed!');
+        reject(buildError);
+      }
+      // If there is a compilation error, the close method should not be called.
+      // Otherwise the bundler may generate an invalid cache.
+      else {
+        // When using run or watch, call close and wait for it to finish before calling run or watch again.
+        // Concurrent compilations will corrupt the output files.
+        compiler.close(() => {
+          // Assert type of stats must align to compiler.
+          resolve({ stats });
+        });
+      }
+    });
+  });
 };

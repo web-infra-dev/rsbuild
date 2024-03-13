@@ -12,7 +12,17 @@ const cases = [
     expected: 'inline',
   },
   {
-    name: 'assets(maxSize 0)',
+    name: 'assets(dataUriLimit 0)',
+    cwd: join(fixtures, 'assets'),
+    config: {
+      output: {
+        dataUriLimit: 0,
+      },
+    },
+    expected: 'url',
+  },
+  {
+    name: 'assets(dataUriLimit.image 0)',
     cwd: join(fixtures, 'assets'),
     config: {
       output: {
@@ -24,13 +34,12 @@ const cases = [
     expected: 'url',
   },
   {
-    name: 'assets(maxSize Infinity)',
+    name: 'assets(dataUriLimit max number)',
     cwd: join(fixtures, 'assets'),
     config: {
       output: {
         dataUriLimit: {
-          // Rspack not support Infinity
-          image: 5 * 1024,
+          image: Number.MAX_SAFE_INTEGER,
         },
       },
     },

@@ -63,13 +63,13 @@ const getIpv4Interfaces = () => {
 };
 
 const isLoopbackHost = (host: string) => {
-  const loopbackHosts = ['localhost', '127.0.0.1', '::1'];
+  const loopbackHosts = ['localhost', '127.0.0.1', '::1', '0000:0000:0000:0000:0000:0000:0000:0001'];
   return loopbackHosts.includes(host);
 };
 
 const getHostInUrl = (host: string) => {
   if (isIPv6(host)) {
-    return host === '::' ? '[::1]' : `${host}`;
+    return host === '::' ? '[::1]' : `[${host}]`;
   }
   return host;
 };
