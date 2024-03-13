@@ -298,7 +298,7 @@ importers:
         version: 4.2.0
       sass:
         specifier: ^1.70.0
-        version: 1.71.1
+        version: 1.72.0
       stylus:
         specifier: 0.63.0
         version: 0.63.0
@@ -1702,10 +1702,10 @@ importers:
         version: 1.2.1
       sass:
         specifier: ^1.70.0
-        version: 1.71.1
+        version: 1.72.0
       sass-loader:
         specifier: 14.1.1
-        version: 14.1.1(sass@1.71.1)(webpack@5.90.3)
+        version: 14.1.1(sass@1.72.0)(webpack@5.90.3)
       semver:
         specifier: ^7.6.0
         version: 7.6.0
@@ -5290,7 +5290,7 @@ packages:
       '@types/node': 16.18.84
       '@types/node-sass': 4.11.7
       '@types/webpack': 4.41.38
-      sass: 1.71.1
+      sass: 1.72.0
     dev: true
 
   /@types/scheduler@0.16.8:
@@ -12757,7 +12757,7 @@ packages:
       rimraf: 2.7.1
     dev: false
 
-  /sass-loader@14.1.1(sass@1.71.1)(webpack@5.90.3):
+  /sass-loader@14.1.1(sass@1.72.0)(webpack@5.90.3):
     resolution: {integrity: sha512-QX8AasDg75monlybel38BZ49JP5Z+uSKfKwF2rO7S74BywaRmGQMUBw9dtkS+ekyM/QnP+NOrRYq8ABMZ9G8jw==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
@@ -12779,12 +12779,12 @@ packages:
         optional: true
     dependencies:
       neo-async: 2.6.2
-      sass: 1.71.1
+      sass: 1.72.0
       webpack: 5.90.3
     dev: true
 
-  /sass@1.71.1:
-    resolution: {integrity: sha512-wovtnV2PxzteLlfNzbgm1tFXPLoZILYAMJtvoXXkD7/+1uP41eKkIt1ypWq5/q2uT94qHjXehEYfmjKOvjL9sg==}
+  /sass@1.72.0:
+    resolution: {integrity: sha512-Gpczt3WA56Ly0Mn8Sl21Vj94s1axi9hDIzDFn9Ph9x3C3p4nNyvsqJoQyVXKou6cBlfFWEgRW4rT8Tb4i3XnVA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
