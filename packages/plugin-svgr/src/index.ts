@@ -21,7 +21,7 @@ export type PluginSvgrOptions = {
 
   /**
    * Whether to allow the use of default import and named import at the same time.
-   * @default true
+   * @default false
    */
   mixedImport?: boolean;
 };
@@ -52,7 +52,6 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { isProd, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
-      const { mixedImport = true } = options;
       const distDir = getDistPath(config, 'svg');
       const filename = getFilename(config, 'svg', isProd);
       const outputName = path.posix.join(distDir, filename);
@@ -68,7 +67,6 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
       const svgrOptions = deepmerge(
         {
           svgo: true,
-          exportType: 'named',
           svgoConfig: getSvgoDefaultConfig(),
         },
         options.svgrOptions || {},
@@ -103,7 +101,8 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         .end();
 
       // SVG in JS files
-      const { exportType } = svgrOptions;
+      const { mixedImport = false } = options;
+      const { exportType = mixedImport ? 'named' : undefined } = svgrOptions;
       if (mixedImport || exportType === 'default') {
         const svgRule = rule
           .oneOf(CHAIN_ID.ONE_OF.SVG)

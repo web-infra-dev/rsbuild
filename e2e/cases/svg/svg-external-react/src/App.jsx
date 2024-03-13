@@ -1,4 +1,5 @@
-import svgImg, { ReactComponent as Logo } from './app.svg';
+import svgImg from './app.svg';
+import Logo from './app.svg?react';
 import './App.css';
 
 function App() {
