@@ -488,6 +488,71 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
       ],
     },
     {
+      "issuer": [
+        /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+      ],
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "builtin:swc-loader",
+          "options": {
+            "env": {
+              "coreJs": "3.36",
+              "mode": "usage",
+              "shippedProposals": true,
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "isModule": "unknown",
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "preserveAllComments": true,
+              "transform": {
+                "decoratorMetadata": true,
+                "legacyDecorator": true,
+                "react": {
+                  "development": false,
+                  "refresh": true,
+                  "runtime": "automatic",
+                },
+                "useDefineForClassFields": false,
+              },
+            },
+            "sourceMaps": true,
+          },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader",
+          "options": {
+            "exportType": "named",
+            "svgo": true,
+            "svgoConfig": {
+              "plugins": [
+                {
+                  "name": "preset-default",
+                  "params": {
+                    "overrides": {
+                      "removeViewBox": false,
+                    },
+                  },
+                },
+                "prefixIds",
+              ],
+            },
+          },
+        },
+      ],
+    },
+    {
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },

@@ -102,8 +102,9 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
       // SVG in JS files
       const { mixedImport = false } = options;
-      const { exportType = mixedImport ? 'named' : undefined } = svgrOptions;
-      if (mixedImport || exportType === 'default') {
+      if (mixedImport || svgrOptions.exportType) {
+        const { exportType = mixedImport ? 'named' : undefined } = svgrOptions;
+
         const svgRule = rule
           .oneOf(CHAIN_ID.ONE_OF.SVG)
           .type('javascript/auto')
@@ -121,7 +122,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
          * For mixed import.
          * @example import logoUrl, { ReactComponent } from './logo.svg';`
          */
-        if (exportType === 'named') {
+        if (mixedImport && exportType === 'named') {
           svgRule
             .use(CHAIN_ID.USE.URL)
             .loader(path.join(__dirname, '../compiled', 'url-loader'))
