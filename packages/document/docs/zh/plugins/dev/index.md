@@ -52,7 +52,7 @@ const rsbuildPlugin = () => ({
   name: 'example',
   setup(api) {
     api.modifyRspackConfig((config) => {
-      config.plugins.push(new RspackExamplePlugin());
+      config.plugins?.push(new RspackExamplePlugin());
     });
   },
 });

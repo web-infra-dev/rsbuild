@@ -81,6 +81,7 @@ pluginBabel({
   babelLoaderOptions: (config) => {
     // Add a Babel plugin
     // note: the plugin have been added to the default config to support antd load on demand
+    config.plugins ||= [];
     config.plugins.push([
       'babel-plugin-import',
       {
