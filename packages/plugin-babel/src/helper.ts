@@ -128,7 +128,6 @@ const modifyPresetOptions = <T>(
 export const getBabelUtils = (
   config: BabelTransformOptions,
 ): BabelConfigUtils => {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const noop = () => {};
 
   return {
