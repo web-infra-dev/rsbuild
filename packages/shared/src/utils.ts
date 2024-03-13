@@ -78,7 +78,6 @@ export const awaitableGetter = <T>(
 ): AwaitableGetter<T> => {
   const then: PromiseLike<T[]>['then'] = (...args) =>
     Promise.all(promises).then(...args);
-  // eslint-disable-next-line no-thenable
   return { then, promises };
 };
 

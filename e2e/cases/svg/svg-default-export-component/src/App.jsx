@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import Logo from './app.svg';
 
 function App() {

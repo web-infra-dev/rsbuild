@@ -18,10 +18,8 @@ let hasCompileErrors = false;
 
 function clearOutdatedErrors() {
   // Clean up outdated compile errors, if any.
-  // eslint-disable-next-line node/no-unsupported-features/node-builtins
   if (typeof console !== 'undefined' && typeof console.clear === 'function') {
     if (hasCompileErrors) {
-      // eslint-disable-next-line node/no-unsupported-features/node-builtins
       console.clear();
     }
   }
