@@ -108,34 +108,20 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         } satisfies Config)
         .end();
 
-      // SVG in JS files
       const exportType =
         svgrOptions.exportType ??
         (svgDefaultExport === 'url' ? 'named' : 'default');
 
-      // SVG as assets
-      const svgAssetRule = rule
-        .oneOf(CHAIN_ID.ONE_OF.SVG_ASSET)
-        .type('asset')
-        .parser({
-          // Inline SVG if size < maxSize 
-          dataUrlCondition: {
-            maxSize,
-          },
-        })
-        .set('generator', {
-          filename: outputName,
-        });
-
+      // SVG in JS files
       if (mixedImport || exportType === 'default') {
-        svgAssetRule.set('issuer', {
-          // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
-          not: [SCRIPT_REGEX],
-        });
-
         rule
           .oneOf(CHAIN_ID.ONE_OF.SVG)
           .type('javascript/auto')
+          .set(
+            'issuer',
+            // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
+            [SCRIPT_REGEX],
+          )
           .use(CHAIN_ID.USE.SVGR)
           .loader(path.resolve(__dirname, './loader'))
           .options({
@@ -154,28 +140,44 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
           );
       }
 
+      // SVG as assets
+      rule
+        .oneOf(CHAIN_ID.ONE_OF.SVG_ASSET)
+        .type('asset')
+        .parser({
+          // Inline SVG if size < maxSize
+          dataUrlCondition: {
+            maxSize,
+          },
+        })
+        .set('generator', {
+          filename: outputName,
+        });
+
       // apply current JS transform rule to SVGR rules
       const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
 
       [CHAIN_ID.USE.SWC, CHAIN_ID.USE.BABEL].some((jsUseId) => {
         const use = jsRule.uses.get(jsUseId);
 
-        if (use) {
-          [CHAIN_ID.ONE_OF.SVG, CHAIN_ID.ONE_OF.SVG_REACT].forEach(
-            (oneOfId) => {
-              rule
-                .oneOf(oneOfId)
-                .use(jsUseId)
-                .before(CHAIN_ID.USE.SVGR)
-                .loader(use.get('loader'))
-                .options(use.get('options'));
-            },
-          );
-
-          return true;
+        if (!use) {
+          return false;
         }
 
-        return false;
+        [CHAIN_ID.ONE_OF.SVG, CHAIN_ID.ONE_OF.SVG_REACT].forEach((oneOfId) => {
+          if (!rule.oneOfs.has(oneOfId)) {
+            return;
+          }
+
+          rule
+            .oneOf(oneOfId)
+            .use(jsUseId)
+            .before(CHAIN_ID.USE.SVGR)
+            .loader(use.get('loader'))
+            .options(use.get('options'));
+        });
+
+        return true;
       });
     });
   },
