@@ -109,7 +109,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
           .oneOf(CHAIN_ID.ONE_OF.SVG)
           .type('javascript/auto')
           // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
-          .set('issuer', [SCRIPT_REGEX])
+          .set('issuer', [SCRIPT_REGEX, /\.mdx$/])
           .use(CHAIN_ID.USE.SVGR)
           .loader(path.resolve(__dirname, './loader'))
           .options({
