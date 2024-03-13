@@ -2,7 +2,7 @@ import type { PluginManager, Plugins, RsbuildPluginAPI } from './plugin';
 import type { RsbuildContext } from './context';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
-import type { StartServerResult, DevServerAPIs } from './server';
+import type { StartServerResult, DevServerAPIs, DevMiddlewaresConfig } from './server';
 import type { NormalizedConfig } from './config';
 import type { WebpackConfig } from './thirdParty';
 import type { RspackConfig } from './rspack';
@@ -15,6 +15,22 @@ export type StartDevServerOptions = {
   compiler?: Compiler | MultiCompiler;
   getPortSilently?: boolean;
 };
+
+export type CreateDevServerOptions = StartDevServerOptions & {
+  defaultPort?: number;
+  /**
+   * Whether trigger rsbuild compile
+   * 
+   * @default true
+   */
+  runCompile?: boolean;
+  /**
+   * Overrides middleware configs
+   *
+   * By default, get config from rsbuild dev.xxx and server.xxx
+   */
+  overrides?: DevMiddlewaresConfig;
+}
 
 export type PreviewServerOptions = {
   getPortSilently?: boolean;
@@ -71,7 +87,7 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
    *
    * It is designed for high-level frameworks that require a custom server
    */
-  getServerAPIs: (options?: StartDevServerOptions) => Promise<DevServerAPIs>;
+  createDevServer: (options?: CreateDevServerOptions) => Promise<DevServerAPIs>;
 
   startDevServer: (
     options?: StartDevServerOptions,

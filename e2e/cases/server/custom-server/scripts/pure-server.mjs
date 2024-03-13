@@ -32,13 +32,12 @@ export async function startDevServerPure(fixtures) {
 
   const app = polka();
 
-  const serverAPIs = await rsbuild.getServerAPIs();
+  const rsbuildServer = await rsbuild.createDevServer({ runCompile: false });
 
   const {
     config: { host, port },
-  } = serverAPIs;
-
-  const { middlewares, close, onUpgrade } = await serverAPIs.getMiddlewares();
+    middlewares,
+  } = rsbuildServer;
 
   app.get('/aaa', (_req, res) => {
     res.end('Hello World!');
@@ -56,19 +55,17 @@ export async function startDevServerPure(fixtures) {
     res.end('Hello Express!');
   });
 
-  await serverAPIs.beforeStart();
-
   const { server } = app.listen({ host, port }, async () => {
-    await serverAPIs.afterStart();
+    await rsbuildServer.afterListen();
   });
 
   // subscribe the server's http upgrade event to handle WebSocket upgrade
-  server.on('upgrade', onUpgrade);
+  server.on('upgrade', rsbuildServer.onHTTPUpgrade);
 
   return {
-    config: serverAPIs.config,
+    config: rsbuildServer.config,
     close: async () => {
-      await close();
+      await rsbuildServer.close();
       server.close();
     },
   };

@@ -104,40 +104,28 @@ export type DevServerAPIs = {
     defaultRoutes: Routes;
   };
   /**
-   * Trigger rsbuild compile
+   * Use rsbuild inner server to listen
    */
-  startCompile: () => Promise<CompileMiddlewareAPI>;
-  /**
-   * Trigger rsbuild onBeforeStartDevServer hook
-   *
-   * It should called before listen and after compile
-   */
-  beforeStart: () => Promise<void>;
-  /**
-   * Trigger rsbuild onAfterStartDevServer hook
-   *
-   * It should called after listen
-   */
-  afterStart: (options?: { port?: number; routes?: Routes }) => Promise<void>;
-  /**
-   * Get the corresponding builtin middleware according to the rsbuild config
-   *
-   * Related config: proxy / publicDir / historyApiFallback / headers / ...
-   */
-  getMiddlewares: (options?: {
-    compileMiddlewareAPI?: CompileMiddlewareAPI;
-    /**
-     * Overrides middleware configs
-     *
-     * By default, get config from rsbuild dev.xxx and server.xxx
-     */
-    overrides?: DevMiddlewaresConfig;
-  }) => Promise<{
-    middlewares: Middlewares;
-    close: () => Promise<void>;
-    /**
-     * Subscribe http upgrade event
-     */
-    onUpgrade: UpgradeEvent;
+  listen: () => Promise<{
+    port: number,
+    urls: string[],
+    server: {
+      close: () => Promise<void>;
+    },
   }>;
+  /**
+   * 
+   * In rsbuild, we will trigger onAfterStartDevServer hook in this method
+   * 
+   * It will used when you use custom server
+  */
+  afterListen: (options?: { port?: number; routes?: Routes }) => Promise<void>;
+  middlewares: Middlewares;
+  /**
+   * Subscribe http upgrade event
+   * 
+   * It will used when you use custom server
+   */
+  onHTTPUpgrade: UpgradeEvent;
+  close: () => Promise<void>;
 };
