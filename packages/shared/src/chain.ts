@@ -155,6 +155,8 @@ export const CHAIN_ID = {
     ESBUILD: 'esbuild',
     /** postcss-loader */
     POSTCSS: 'postcss',
+    /** lightningcss-loader */
+    LIGHTNINGCSS: 'lightningcss',
     /** ignore-css-loader */
     IGNORE_CSS: 'ignore-css',
     /** css-modules-typescript-loader */

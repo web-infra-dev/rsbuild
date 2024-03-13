@@ -1,0 +1,138 @@
+# Lightning CSS Plugin
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-lightningcss" />
+
+:::tip About Lightning CSS
+[lightningcss](https://lightningcss.dev) is a high-performance CSS parser, transformer and minifier written in Rust. It supports parsing and converting many modern CSS features into syntax supported by target browsers, and Lightning CSS has better compression ratios.
+:::
+
+The Lightning CSS plugin will use `lightningcss-loader` to replace the builtin `postcss-loader` in Rsbuild to solve the performance overhead of postcss and autoprefixer, and will use `LightningCSSMinifyPlugin` to replace the default builtin CSS minifier in Rspack to obtain greater compression ratios.
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-lightningcss -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+
+export default {
+  plugins: [pluginLightningcss()],
+};
+```
+
+## Options
+
+### transform
+
+Use `lightningcss-loader` instead of Rsbuild's builtin `postcss-loader` to transform CSS files. For options passed to `lightningcss-loader`, please refer to the [lightningcss Repo](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) for detailed usage.
+
+- **Type:** `false | lightningcss.TransformOptions<CustomAtRules>`
+- **Default:**
+
+```ts
+const defaultOptions = {
+  targets: browserslistToTargets(browserslist),
+}
+```
+
+- **Example:** Enable or disable lightningcss features, which can be configured by importing a lightningcss instance from the plugin.
+
+```ts
+import { lightnincss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+
+pluginLightningcss({
+  transform: {
+    include: lightningcss.Features.Nesting
+  }
+});
+```
+
+- **Example:** Convert all length units to rem through lightningcss's custom vistor.
+
+```ts
+pluginLightningcss({
+  transform: {
+    transform: {
+      visitor: {
+        Length(len) {
+          return {
+            unit: 'rem',
+            value: len.value,
+          };
+        },
+},
+    },
+  }
+});
+```
+
+- **Example:** Disable CSS transform of lightningcss, leaving only CSS minify.
+
+```ts
+pluginLightningcss({
+  transform: false
+});
+```
+
+### minify
+
+Use Lightning CSS instead of Rspack's builtin CSS minifier. For options passed to `lightningcss`, please refer to the [lightningcss repository](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) for detailed usage.
+
+- **Type:** `false | lightningcss.TransformOptions<CustomAtRules>`
+- **Default:**
+
+```ts
+const defaultOptions = {
+  targets: browserslistToTargets(browserslist(browserslistUserConfig)),
+} 
+```
+
+- **Example:** Disable lightning CSS minify for `ColorFunctions` and `HexAlphaColors`
+
+```ts
+import { lightnincss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+
+pluginLightningcss({
+  minify: {
+    exclude: lightningcss.Features.ColorFunction | lightningcss.Features.HexAlphaColors
+  }
+});
+```
+- **Example:** Disable the CSS minify of lightningcss, leaving only the CSS transform.
+
+```ts
+pluginLightningcss({
+  minify: false
+});
+```
+
+### implementation
+
+Used to inject lightningcss instance. This configuration can be used when a lightningcss instance has been installed and exists in the project.
+
+- **Type:** `typeof import('lightningcss')`
+- **Example:**
+
+```ts
+import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+import lightningcss from 'lightningcss';
+
+pluginLightningcss({
+  implementation: lightningcss,
+  minify: {
+    exclude: lightningcss.Features.ColorFunction
+  }
+});
+```
