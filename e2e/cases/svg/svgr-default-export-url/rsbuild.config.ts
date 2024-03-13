@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [
     pluginReact(),
     pluginSvgr({
+      mixedImport: true,
       svgrOptions: {
         exportType: 'named',
       },
