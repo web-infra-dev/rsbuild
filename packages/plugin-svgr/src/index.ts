@@ -25,6 +25,12 @@ export type PluginSvgrOptions = {
    * @deprecated use `svgrOptions.exportType` instead
    */
   svgDefaultExport?: SvgDefaultExport;
+
+  /**
+   * Whether to allow the use of default import and named import at the same time.
+   * @default true
+   */
+  mixedImport?: boolean;
 };
 
 function getSvgoDefaultConfig() {
@@ -53,6 +59,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { isProd, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
+      const { svgDefaultExport = 'url', mixedImport = true } = options;
       const distDir = getDistPath(config, 'svg');
       const filename = getFilename(config, 'svg', isProd);
       const outputName = path.posix.join(distDir, filename);
@@ -101,49 +108,51 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         } satisfies Config)
         .end();
 
-      // SVG in non-JS files
-      // default: when size < dataUrlCondition.maxSize will inline
+      const exportType =
+        svgrOptions.exportType ??
+        (svgDefaultExport === 'url' ? 'named' : 'default');
+
+      // SVG in JS files
+      if (mixedImport || exportType === 'default') {
+        rule
+          .oneOf(CHAIN_ID.ONE_OF.SVG)
+          .type('javascript/auto')
+          .set(
+            'issuer',
+            // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
+            [SCRIPT_REGEX],
+          )
+          .use(CHAIN_ID.USE.SVGR)
+          .loader(path.resolve(__dirname, './loader'))
+          .options({
+            ...svgrOptions,
+            exportType,
+          })
+          .end()
+          .when(exportType === 'named', (c) =>
+            c
+              .use(CHAIN_ID.USE.URL)
+              .loader(path.join(__dirname, '../compiled', 'url-loader'))
+              .options({
+                limit: maxSize,
+                name: outputName,
+              }),
+          );
+      }
+
+      // SVG as assets
       rule
         .oneOf(CHAIN_ID.ONE_OF.SVG_ASSET)
         .type('asset')
         .parser({
+          // Inline SVG if size < maxSize
           dataUrlCondition: {
             maxSize,
           },
         })
         .set('generator', {
           filename: outputName,
-        })
-        .set('issuer', {
-          // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
-          not: [SCRIPT_REGEX],
         });
-
-      // SVG in JS files
-      const { svgDefaultExport = 'url' } = options;
-      const exportType =
-        svgrOptions.exportType ??
-        (svgDefaultExport === 'url' ? 'named' : 'default');
-
-      rule
-        .oneOf(CHAIN_ID.ONE_OF.SVG)
-        .type('javascript/auto')
-        .use(CHAIN_ID.USE.SVGR)
-        .loader(path.resolve(__dirname, './loader'))
-        .options({
-          ...svgrOptions,
-          exportType,
-        })
-        .end()
-        .when(exportType === 'named', (c) =>
-          c
-            .use(CHAIN_ID.USE.URL)
-            .loader(path.join(__dirname, '../compiled', 'url-loader'))
-            .options({
-              limit: maxSize,
-              name: outputName,
-            }),
-        );
 
       // apply current JS transform rule to SVGR rules
       const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
@@ -151,22 +160,24 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
       [CHAIN_ID.USE.SWC, CHAIN_ID.USE.BABEL].some((jsUseId) => {
         const use = jsRule.uses.get(jsUseId);
 
-        if (use) {
-          [CHAIN_ID.ONE_OF.SVG, CHAIN_ID.ONE_OF.SVG_REACT].forEach(
-            (oneOfId) => {
-              rule
-                .oneOf(oneOfId)
-                .use(jsUseId)
-                .before(CHAIN_ID.USE.SVGR)
-                .loader(use.get('loader'))
-                .options(use.get('options'));
-            },
-          );
-
-          return true;
+        if (!use) {
+          return false;
         }
 
-        return false;
+        [CHAIN_ID.ONE_OF.SVG, CHAIN_ID.ONE_OF.SVG_REACT].forEach((oneOfId) => {
+          if (!rule.oneOfs.has(oneOfId)) {
+            return;
+          }
+
+          rule
+            .oneOf(oneOfId)
+            .use(jsUseId)
+            .before(CHAIN_ID.USE.SVGR)
+            .loader(use.get('loader'))
+            .options(use.get('options'));
+        });
+
+        return true;
       });
     });
   },

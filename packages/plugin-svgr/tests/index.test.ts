@@ -7,15 +7,39 @@ import { SVG_REGEX } from '@rsbuild/shared';
 describe('svgr', () => {
   const cases: Array<{ name: string; pluginConfig: PluginSvgrOptions }> = [
     {
-      name: 'export default url',
-      pluginConfig: {},
+      name: 'exportType named / mixedImport true',
+      pluginConfig: {
+        svgrOptions: {
+          exportType: 'named',
+        },
+        mixedImport: true,
+      },
     },
     {
-      name: 'export default Component',
+      name: 'exportType named / mixedImport false',
+      pluginConfig: {
+        svgrOptions: {
+          exportType: 'named',
+        },
+        mixedImport: false,
+      },
+    },
+    {
+      name: 'exportType default / mixedImport false',
       pluginConfig: {
         svgrOptions: {
           exportType: 'default',
         },
+        mixedImport: false,
+      },
+    },
+    {
+      name: 'exportType default / mixedImport true',
+      pluginConfig: {
+        svgrOptions: {
+          exportType: 'default',
+        },
+        mixedImport: true,
       },
     },
     {
