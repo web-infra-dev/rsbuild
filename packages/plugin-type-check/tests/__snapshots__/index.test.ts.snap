@@ -7,12 +7,7 @@ exports[`plugin-type-check > should allow to configure fork-ts-checker-webpack-p
       "options": {
         "issue": {
           "exclude": [
-            {
-              "file": "**/*.(spec|test).ts",
-            },
-            {
-              "file": "**/node_modules/**/*",
-            },
+            [Function],
             {
               "file": "src/**/*.ts",
             },
@@ -42,12 +37,7 @@ exports[`plugin-type-check > should apply fork-ts-checker-webpack-plugin correct
       "options": {
         "issue": {
           "exclude": [
-            {
-              "file": "**/*.(spec|test).ts",
-            },
-            {
-              "file": "**/node_modules/**/*",
-            },
+            [Function],
           ],
         },
         "logger": {
