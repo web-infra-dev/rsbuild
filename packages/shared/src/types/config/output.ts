@@ -244,11 +244,6 @@ export interface OutputConfig {
   cssModules?: CssModules;
   /**
    * Whether to disable code minification in production build.
-   * @deprecated will be removed in v0.5.0, use `minify` instead.
-   */
-  disableMinimize?: boolean;
-  /**
-   * Whether to disable code minification in production build.
    */
   minify?: Minify;
   /**
@@ -304,7 +299,6 @@ export interface NormalizedOutputConfig extends OutputConfig {
   filenameHash: boolean | string;
   assetPrefix: string;
   dataUriLimit: number | NormalizedDataUriLimit;
-  disableMinimize: boolean;
   minify: Minify;
   enableCssModuleTSDeclaration: boolean;
   inlineScripts: boolean | InlineChunkTest;

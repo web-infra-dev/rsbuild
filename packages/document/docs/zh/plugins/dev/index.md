@@ -154,21 +154,23 @@ export const pluginUploadDist = (): RsbuildPlugin => ({
   name: 'plugin-upload-dist',
   setup(api) {
     api.modifyRsbuildConfig((config) => {
-      // 尝试关闭代码压缩，需要自己填充默认值
+      // 关闭代码压缩
       config.output ||= {};
-      config.output.disableMinimize = true;
+      config.output.minify = false;
       // 轮到其它插件修改配置...
     });
+
     api.onBeforeBuild(() => {
       // 读取最终的配置
       const config = api.getNormalizedConfig();
-      if (!config.output.disableMinimize) {
+      if (!config.output.minify !== false) {
         // 其它插件又启用了压缩则报错
         throw new Error(
           'You must disable minimize to upload readable dist files.',
         );
       }
     });
+
     api.onAfterBuild(() => {
       const config = api.getNormalizedConfig();
       const distRoot = config.output.distPath.root;
@@ -192,7 +194,7 @@ api.modifyRsbuildConfig((config: RsbuildConfig) => {});
 api.getRsbuildConfig() as RsbuildConfig;
 type RsbuildConfig = {
   output?: {
-    disableMinimize?: boolean;
+    minify?: boolean;
     distPath?: { root?: string };
   };
 };
@@ -200,7 +202,7 @@ type RsbuildConfig = {
 api.getNormalizedConfig() as NormalizedConfig;
 type NormalizedConfig = {
   output: {
-    disableMinimize: boolean;
+    minify: boolean;
     distPath: { root: string };
   };
 };

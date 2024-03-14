@@ -28,13 +28,10 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { isProd }) => {
       const config = api.getNormalizedConfig();
-      const doesMinimize =
-        isProd &&
-        !config.output.disableMinimize &&
-        config.output.minify !== false;
+      const isMinimize = isProd && config.output.minify !== false;
 
       // set minimize to allow users to disable minimize
-      chain.optimization.minimize(doesMinimize);
+      chain.optimization.minimize(isMinimize);
 
       if (parseMinifyOptions(config, isProd).minifyJs) {
         await applyJSMinimizer(chain, config);

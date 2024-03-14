@@ -92,7 +92,6 @@ export async function getHtmlMinifyOptions(
   config: NormalizedConfig,
 ) {
   if (
-    config.output.disableMinimize ||
     !isProd ||
     !config.output.minify ||
     !parseMinifyOptions(config).minifyHtml
