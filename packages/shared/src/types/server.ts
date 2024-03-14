@@ -92,7 +92,20 @@ export type CompileMiddlewareAPI = {
 
 export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
 
-export type DevServerAPIs = {
+export interface RsbuildDevServer {
+  /**
+   * Use rsbuild inner server to listen
+   */
+  listen: () => Promise<{
+    port: number;
+    urls: string[];
+    server: {
+      close: () => Promise<void>;
+    };
+  }>;
+
+  /** The following APIs will be used when you use a custom server */
+
   /**
    * The resolved rsbuild server config
    */
@@ -104,28 +117,25 @@ export type DevServerAPIs = {
     defaultRoutes: Routes;
   };
   /**
-   * Use rsbuild inner server to listen
+   * Rsbuild inner middlewares.
+   *
+   * Can be used to attach custom middlewares to the dev server.
    */
-  listen: () => Promise<{
-    port: number,
-    urls: string[],
-    server: {
-      close: () => Promise<void>;
-    },
-  }>;
-  /**
-   * 
-   * In rsbuild, we will trigger onAfterStartDevServer hook in this method
-   * 
-   * It will used when you use custom server
-  */
-  afterListen: (options?: { port?: number; routes?: Routes }) => Promise<void>;
   middlewares: Middlewares;
   /**
+   * In rsbuild, we will trigger onAfterStartDevServer hook in this stage
+   *
+   * It will used when you use custom server
+   */
+  afterListen: (options?: { port?: number; routes?: Routes }) => Promise<void>;
+  /**
    * Subscribe http upgrade event
-   * 
+   *
    * It will used when you use custom server
    */
   onHTTPUpgrade: UpgradeEvent;
+  /**
+   * Close the rsbuild server.
+   */
   close: () => Promise<void>;
-};
+}

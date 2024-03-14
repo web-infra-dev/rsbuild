@@ -7,7 +7,7 @@ import {
   isMultiCompiler,
   getPublicPathFromCompiler,
   type Routes,
-  type DevServerAPIs,
+  type RsbuildDevServer,
   type StartServerResult,
   type CreateDevServerOptions,
   type StartDevServerOptions,
@@ -40,7 +40,7 @@ export async function createDevServer<
     runCompile = true,
     overrides = {},
   }: CreateDevServerOptions = {},
-): Promise<DevServerAPIs> {
+): Promise<RsbuildDevServer> {
   if (!getNodeEnv()) {
     setNodeEnv('development');
   }
@@ -166,7 +166,6 @@ export async function createDevServer<
                 middlewares.use(item);
               }
             });
-
             middlewares.use(notFoundMiddleware);
 
             httpServer.on('upgrade', devMiddlewares.onUpgrade);
