@@ -189,12 +189,12 @@ export const modifyBabelLoaderOptions = ({
 }) => {
   const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI, BABEL_JS_RULE];
 
-  ruleIds.forEach((ruleId) => {
+  for (const ruleId of ruleIds) {
     if (chain.module.rules.has(ruleId)) {
       const rule = chain.module.rule(ruleId);
       if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
         rule.use(CHAIN_ID.USE.BABEL).tap(modifier);
       }
     }
-  });
+  }
 };

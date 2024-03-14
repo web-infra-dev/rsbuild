@@ -201,13 +201,13 @@ export async function startDevServer<
           compileMiddlewareAPI,
         });
 
-        devMiddlewares.middlewares.forEach((item) => {
+        for (const item of devMiddlewares.middlewares) {
           if (Array.isArray(item)) {
             middlewares.use(...item);
           } else {
             middlewares.use(item);
           }
-        });
+        }
 
         middlewares.use(notFoundMiddleware);
 

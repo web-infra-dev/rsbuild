@@ -157,9 +157,12 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
           return false;
         }
 
-        [CHAIN_ID.ONE_OF.SVG, CHAIN_ID.ONE_OF.SVG_REACT].forEach((oneOfId) => {
+        for (const oneOfId of [
+          CHAIN_ID.ONE_OF.SVG,
+          CHAIN_ID.ONE_OF.SVG_REACT,
+        ]) {
           if (!rule.oneOfs.has(oneOfId)) {
-            return;
+            continue;
           }
 
           rule
@@ -168,7 +171,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
             .before(CHAIN_ID.USE.SVGR)
             .loader(use.get('loader'))
             .options(use.get('options'));
-        });
+        }
 
         return true;
       });

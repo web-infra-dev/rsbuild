@@ -32,13 +32,13 @@ export async function startDevServer(fixtures) {
     res.end('Hello World!');
   });
 
-  middlewares.forEach((item) => {
+  for (const item of middlewares) {
     if (Array.isArray(item)) {
       app.use(...item);
     } else {
       app.use(item);
     }
-  });
+  }
 
   app.get('/bbb', (_req, res) => {
     res.end('Hello Express!');

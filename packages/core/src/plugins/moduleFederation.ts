@@ -79,9 +79,9 @@ class PatchSplitChunksPlugin implements RspackPluginInstance {
     }
 
     // patch splitChunk.cacheGroups[key].chunks
-    Object.keys(cacheGroups).forEach((cacheGroupKey) => {
+    for (const cacheGroupKey of Object.keys(cacheGroups)) {
       applyPatch(cacheGroups[cacheGroupKey]);
-    });
+    }
   }
 }
 

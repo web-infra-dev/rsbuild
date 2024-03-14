@@ -30,9 +30,6 @@
         "noExplicitAny": "off",
         "noConfusingVoidType": "off"
       },
-      "complexity": {
-        "noForEach": "off"
-      },
       "performance": {
         "noDelete": "off"
       }
