@@ -175,7 +175,6 @@ export const pluginLightningcss = (
 
       const isMinimize =
         isProd &&
-        !config.output.disableMinimize &&
         config.output.minify !== false &&
         parseMinifyOptions(config).minifyCss;
 
