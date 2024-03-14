@@ -9,9 +9,9 @@ import {
 } from '@rsbuild/shared';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
-type ForkTsCheckerOptions = ConstructorParameters<
-  typeof ForkTSCheckerPlugin
->[0];
+type ForkTsCheckerOptions = NonNullable<
+  ConstructorParameters<typeof ForkTSCheckerPlugin>[0]
+>;
 
 export type PluginTypeCheckerOptions = {
   /**
