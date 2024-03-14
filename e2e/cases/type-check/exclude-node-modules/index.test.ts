@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
-import { join } from 'path';
+import { join } from 'node:path';
 import { fse } from '@rsbuild/shared';
 
 function createFooPackage() {
