@@ -8,7 +8,14 @@
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="create rsbuild@latest" />
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rsbuild@latest',
+    yarn: 'yarn create rsbuild',
+    pnpm: 'pnpm create rsbuild@latest',
+    bun: 'bun create rsbuild@latest',
+  }}
+/>
 
 然后在 `Select framework` 时选择 `Vue 3` 即可。
 

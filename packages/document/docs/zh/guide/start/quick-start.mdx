@@ -31,7 +31,14 @@ nvm use 20
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="create rsbuild@latest" />
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rsbuild@latest',
+    yarn: 'yarn create rsbuild',
+    pnpm: 'pnpm create rsbuild@latest',
+    bun: 'bun create rsbuild@latest',
+  }}
+/>
 
 然后按照提示操作即可，你可以选择 `create-rsbuild` 提供的下列模板：
 
