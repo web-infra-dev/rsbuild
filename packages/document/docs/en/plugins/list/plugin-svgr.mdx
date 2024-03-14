@@ -60,6 +60,8 @@ import { ReactComponent as Logo } from './logo.svg';
 export const App = () => <Logo />;
 ```
 
+---
+
 ## Options
 
 If you need to customize the compilation behavior of Svgr, you can use the following configs.
@@ -72,6 +74,11 @@ type PluginSvgrOptions = {
    * Configure SVGR options.
    */
   svgrOptions?: import('@svgr/core').Config;
+  /**
+   * Whether to allow the use of default import and named import at the same time.
+   * @default false
+   */
+  mixedImport?: boolean;
 };
 ```
 
@@ -115,12 +122,17 @@ pluginSvgr({
 
 ### svgrOptions.exportType
 
-Modify the default export type of SVG files.
+Set the export type of SVG React components.
 
 - **Type:** `'named' | 'default'`
-- **Default:** `'named'`
+- **Default:** `undefined`
 
-For example, set the default export as a React component:
+`exportType` can be set as:
+
+- `named`: use default export
+- `export`: use named export (`ReactComponent`)
+
+For example, set the default export of SVG file as a React component:
 
 ```ts
 pluginSvgr({
@@ -149,6 +161,43 @@ console.log(logo); // => asset url
 :::tip
 When `svgrOptions.exportType` is set to `'default'`, the named imports (ReactComponent) cannot be used.
 :::
+
+### mixedImport
+
+- **Type：** `boolean`
+- **Default** `false`
+- **Version:** `>= 0.5.0`
+
+Whether to enable mixed import, allowing to use default import and named import at the same time.
+
+Mixed import is usually used with `svgrOptions.exportType: 'named'`, for example:
+
+```ts
+pluginSvgr({
+  mixedImport: true,
+  svgrOptions: {
+    exportType: 'named',
+  },
+});
+```
+
+At this time, the imported SVG file will export both URL and the React component:
+
+```js
+import logoUrl, { ReactComponent as Logo } from './logo.svg';
+
+console.log(logoUrl); // -> string
+console.log(Logo); // -> React component
+```
+
+#### Limitations
+
+It is recommended to use `?react` to convert SVG to React component instead of using mixed import. Because mixed import has the following limitations:
+
+1. Increased bundle size: Mixed import causes a single SVG module to be compiled into two types of code (even if some exports are not used), which will increase the bundle size.
+2. Slow down compiling: Mixed import will cause extra compilation overhead. Even if the ReactComponent export is not used in the code, the SVG file will still be compiled by SVGR. And SVGR is based on Babel, which has a high performance overhead.
+
+---
 
 ## Type Declaration
 

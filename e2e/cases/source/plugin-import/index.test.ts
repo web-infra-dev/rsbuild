@@ -28,7 +28,7 @@ test('should import with template config', async () => {
   expect(files[entry]).toContain('transformImport test succeed');
 });
 
-cases.forEach((c) => {
+for (const c of cases) {
   const [name, entry, config] = c;
   shareTest(`${name}-rspack`, entry, config);
-});
+}

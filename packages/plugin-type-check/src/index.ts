@@ -3,14 +3,15 @@ import {
   fse,
   CHAIN_ID,
   deepmerge,
+  NODE_MODULES_REGEX,
   mergeChainedOptions,
   type ChainedConfig,
 } from '@rsbuild/shared';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
-type ForkTsCheckerOptions = ConstructorParameters<
-  typeof ForkTSCheckerPlugin
->[0];
+type ForkTsCheckerOptions = NonNullable<
+  ConstructorParameters<typeof ForkTSCheckerPlugin>[0]
+>;
 
 export type PluginTypeCheckerOptions = {
   /**
@@ -83,10 +84,8 @@ export const pluginTypeCheck = (
             typescriptPath,
           },
           issue: {
-            exclude: [
-              { file: '**/*.(spec|test).ts' },
-              { file: '**/node_modules/**/*' },
-            ],
+            // ignore types errors from node_modules
+            exclude: [({ file = '' }) => NODE_MODULES_REGEX.test(file)],
           },
           logger: {
             log() {

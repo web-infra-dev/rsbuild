@@ -30,9 +30,13 @@ export default {
 };
 ```
 
-### 编译 npm 包
+## 编译 npm 包
 
 比较典型的使用场景是编译 node_modules 下的 npm 包，因为某些第三方依赖存在 ESNext 的语法，这可能导致在低版本浏览器上无法运行，你可以通过该选项指定需要编译的依赖，从而解决此类问题。
+
+:::tip
+如果你不确定 node_modules 中的哪些第三方依赖存在 ESNext 的语法，可以使用 Rsbuild 的 [Check Syntax 插件](/plugins/list/plugin-check-syntax) 进行检查，插件可以帮助你找到存在 ESNext 语法的模块。
+:::
 
 以 `query-string` 为例，你可以做如下的配置：
 
@@ -61,7 +65,7 @@ export default {
 在上述正则表达式的例子中，我们使用 `[\\/]` 来匹配路径分隔符，这是因为不同的操作系统使用了不同的路径分隔符，使用 `[\\/]` 可以保证 macOS 和 Windows 的路径都被匹配到。
 :::
 
-### 编译 npm 包的子依赖
+## 编译间接依赖
 
 当你通过 `source.include` 编译一个 npm 包时，Rsbuild 默认只会编译匹配到的模块，不会编译对应模块的**子依赖**。
 
@@ -78,7 +82,7 @@ export default {
 };
 ```
 
-### 编译 Monorepo 中的其他库
+## 编译 Monorepo 中的其他库
 
 在 Monorepo 中进行开发时，如果需要引用 Monorepo 中其他库的 JavaScript 代码，也可以直接在 `source.include` 进行配置:
 
@@ -100,13 +104,13 @@ export default {
 };
 ```
 
-### 匹配 Symlink
+## 匹配 Symlink
 
 如果你匹配的模块是通过 symlink 链接到当前项目中的，那么需要匹配这个模块的**真实路径**，而不是 symlink 后的路径。
 
 比如，你将 Monorepo 中的 `packages/foo` 路径 symlink 到当前项目的 `node_modules/foo` 路径下，则需要去匹配 `packages/foo` 路径，而不是 `node_modules/foo` 路径。
 
-### 编译 node_modules
+## 编译 node_modules
 
 通常来说，`source.include` 不应该用于编译整个 `node_modules` 目录，比如下面的写法是不推荐的：
 

@@ -23,9 +23,9 @@ export function pluginLess(): RsbuildPlugin {
           api.context.rootPath,
         );
 
-        excludes.forEach((item) => {
+        for (const item of excludes) {
           rule.exclude.add(item);
-        });
+        }
 
         await applyBaseCSSRule({
           rule,

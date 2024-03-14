@@ -69,7 +69,6 @@ export const pluginCssMinimizer = (
       const config = api.getNormalizedConfig();
       const isMinimize =
         isProd &&
-        !config.output.disableMinimize &&
         config.output.minify !== false &&
         parseMinifyOptions(config).minifyCss;
 

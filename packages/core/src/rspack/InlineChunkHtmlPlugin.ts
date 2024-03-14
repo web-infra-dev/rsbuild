@@ -242,7 +242,7 @@ export class InlineChunkHtmlPlugin {
         () => {
           const { devtool } = compiler.options;
 
-          this.inlinedAssets.forEach((name) => {
+          for (const name of this.inlinedAssets) {
             // If the source map reference is removed,
             // we do not need to preserve the source map of inlined files
             if (devtool === 'hidden-source-map') {
@@ -252,7 +252,8 @@ export class InlineChunkHtmlPlugin {
               // because we want to preserve the related files such as source map
               delete compilation.assets[name];
             }
-          });
+          }
+
           this.inlinedAssets.clear();
         },
       );

@@ -78,7 +78,7 @@ export function pluginSourceBuild(
       });
 
       api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-        [CHAIN_ID.RULE.TS, CHAIN_ID.RULE.JS].forEach((ruleId) => {
+        for (const ruleId of [CHAIN_ID.RULE.TS, CHAIN_ID.RULE.JS]) {
           if (chain.module.rules.get(ruleId)) {
             const rule = chain.module.rule(ruleId);
 
@@ -97,7 +97,7 @@ export function pluginSourceBuild(
               conditionNames: ['...', sourceField],
             });
           }
-        });
+        }
       });
 
       const getReferences = async (): Promise<string[]> => {

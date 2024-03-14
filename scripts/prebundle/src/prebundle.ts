@@ -31,12 +31,13 @@ function fixTypeExternalPath(
 
   replaceFileContent(filepath, (content) => {
     let newContent = content;
-    Object.keys(externals).forEach((name) => {
+
+    for (const name of Object.keys(externals)) {
       newContent = newContent.replace(
         new RegExp(`../../${name}`, 'g'),
         externals[name],
       );
-    });
+    }
     return newContent;
   });
 }
@@ -59,9 +60,9 @@ function emitDts(task: ParsedTask) {
       externals: Object.keys(externals),
     });
 
-    Object.keys(files).forEach((file) => {
+    for (const file of Object.keys(files)) {
       fixTypeExternalPath(file, task, externals);
-    });
+    }
   } catch (error) {
     console.error(`DtsPacker failed: ${task.depName}`);
     console.error(error);
@@ -107,24 +108,24 @@ function emitLicense(task: ParsedTask) {
 
 function emitExtraFiles(task: ParsedTask) {
   const { emitFiles } = task;
-  emitFiles.forEach((item) => {
+  for (const item of emitFiles) {
     const path = join(task.distPath, item.path);
     fs.outputFileSync(path, item.content);
-  });
+  }
 }
 
 function removeSourceMap(task: ParsedTask) {
   const maps = fastGlob.sync(join(task.distPath, '**/*.map'));
-  maps.forEach((mapPath) => {
+  for (const mapPath of maps) {
     fs.removeSync(mapPath);
-  });
+  }
 }
 
 function renameDistFolder(task: ParsedTask) {
   const pkgPath = join(task.distPath, 'package.json');
   const pkgJson = fs.readJsonSync(pkgPath, 'utf-8');
 
-  ['types', 'typing', 'typings'].forEach((key) => {
+  for (const key of ['types', 'typing', 'typings']) {
     if (pkgJson[key]?.startsWith('dist/')) {
       pkgJson[key] = pkgJson[key].replace('dist/', 'types/');
 
@@ -134,7 +135,7 @@ function renameDistFolder(task: ParsedTask) {
         fs.renameSync(distFolder, typesFolder);
       }
     }
-  });
+  }
 
   // compiled packages are always use commonjs
   pkgJson.type = 'commonjs';

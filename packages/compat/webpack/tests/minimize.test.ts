@@ -44,24 +44,6 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should not apply minimizer when output.disableMinimize is true', async () => {
-    process.env.NODE_ENV = 'production';
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
-      rsbuildConfig: {
-        output: {
-          disableMinimize: true,
-        },
-      },
-    });
-
-    const config = await rsbuild.unwrapConfig();
-    expect(config.optimization?.minimize).toEqual(false);
-
-    process.env.NODE_ENV = 'test';
-  });
-
   it('should not apply minimizer when output.minify is false', async () => {
     process.env.NODE_ENV = 'production';
 

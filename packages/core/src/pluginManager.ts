@@ -59,9 +59,9 @@ export function createPluginManager(): PluginManager {
   ) => {
     const { before } = options || {};
 
-    newPlugins.forEach((newPlugin) => {
+    for (const newPlugin of newPlugins) {
       if (!newPlugin) {
-        return;
+        continue;
       }
 
       validatePlugin(newPlugin);
@@ -81,7 +81,7 @@ export function createPluginManager(): PluginManager {
       } else {
         plugins.push(newPlugin);
       }
-    });
+    }
   };
 
   const removePlugins = (pluginNames: string[]) => {
@@ -112,19 +112,23 @@ export const pluginDagSort = (plugins: RsbuildPlugin[]): RsbuildPlugin[] => {
     return target;
   }
 
-  plugins.forEach((plugin) => {
-    plugin.pre?.forEach((pre) => {
-      if (pre && plugins.some((item) => item.name === pre)) {
-        allLines.push([pre, plugin.name]);
+  for (const plugin of plugins) {
+    if (plugin.pre) {
+      for (const pre of plugin.pre) {
+        if (pre && plugins.some((item) => item.name === pre)) {
+          allLines.push([pre, plugin.name]);
+        }
       }
-    });
+    }
 
-    plugin.post?.forEach((post) => {
-      if (post && plugins.some((item) => item.name === post)) {
-        allLines.push([plugin.name, post]);
+    if (plugin.post) {
+      for (const post of plugin.post) {
+        if (post && plugins.some((item) => item.name === post)) {
+          allLines.push([plugin.name, post]);
+        }
       }
-    });
-  });
+    }
+  }
 
   // search the zero input plugin
   let zeroEndPoints = plugins.filter(
@@ -149,10 +153,10 @@ export const pluginDagSort = (plugins: RsbuildPlugin[]): RsbuildPlugin[] => {
   // if has ring, throw error
   if (allLines.length) {
     const restInRingPoints: Record<string, boolean> = {};
-    allLines.forEach((l) => {
+    for (const l of allLines) {
       restInRingPoints[l[0]] = true;
       restInRingPoints[l[1]] = true;
-    });
+    }
 
     throw new Error(
       `plugins dependencies has loop: ${Object.keys(restInRingPoints).join(

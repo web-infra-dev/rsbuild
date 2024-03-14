@@ -80,9 +80,10 @@ export class RsbuildProdServer {
     if (proxy) {
       const { createProxyMiddleware } = await import('./proxy');
       const { middlewares, upgrade } = createProxyMiddleware(proxy);
-      middlewares.forEach((middleware) => {
+
+      for (const middleware of middlewares) {
         this.middlewares.use(middleware);
-      });
+      }
 
       this.app.on('upgrade', upgrade);
     }

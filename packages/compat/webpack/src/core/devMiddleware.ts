@@ -23,9 +23,9 @@ const applyHMREntry = (
 
   // apply dev server to client compiler, add hmr client to entry.
   if (isMultiCompiler(compiler)) {
-    compiler.compilers.forEach((target) => {
+    for (const target of compiler.compilers) {
       applyEntry(clientPath, target);
-    });
+    }
   } else {
     applyEntry(clientPath, compiler);
   }
@@ -41,9 +41,9 @@ const setupHooks = (
   hookCallbacks: IHookCallbacks,
 ) => {
   if (isMultiCompiler(compiler)) {
-    compiler.compilers.forEach((compiler) =>
-      setupServerHooks(compiler, hookCallbacks),
-    );
+    for (const target of compiler.compilers) {
+      setupServerHooks(target, hookCallbacks);
+    }
   } else {
     setupServerHooks(compiler, hookCallbacks);
   }

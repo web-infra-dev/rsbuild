@@ -78,9 +78,9 @@ describe('test runtime', () => {
     addEventListener.mockClear();
     listenerCbs = [];
 
-    ['document', 'window', 'location', 'screen'].forEach((key) => {
+    for (const key of ['document', 'window', 'location', 'screen'] as const) {
       delete global[key];
-    });
+    }
   });
 
   test('rem > maxRootFontSize', () => {
@@ -108,7 +108,9 @@ describe('test runtime', () => {
     document.documentElement.clientWidth = 555;
 
     // trigger resize
-    listenerCbs.forEach((cb) => cb());
+    for (const cb of listenerCbs) {
+      cb();
+    }
 
     // wait
     await new Promise((resolve) => setTimeout(resolve, 100));

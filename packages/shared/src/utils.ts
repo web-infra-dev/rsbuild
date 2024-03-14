@@ -164,7 +164,7 @@ export function createCacheGroups(
 ): CacheGroups {
   const experienceCacheGroup: CacheGroups = {};
 
-  Object.entries(group).forEach(([name, pkgs]) => {
+  for (const [name, pkgs] of Object.entries(group)) {
     const key = `lib-${name}`;
 
     experienceCacheGroup[key] = {
@@ -173,7 +173,7 @@ export function createCacheGroups(
       name: key,
       reuseExistingChunk: true,
     };
-  });
+  }
 
   return experienceCacheGroup;
 }

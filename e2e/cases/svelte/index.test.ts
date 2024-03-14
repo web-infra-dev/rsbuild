@@ -101,7 +101,7 @@ rspackOnlyTest(
 );
 
 // test cases for css preprocessors
-['less', 'scss', 'stylus'].forEach((name) => {
+for (const name of ['less', 'scss', 'stylus']) {
   rspackOnlyTest(
     `should build svelte component with ${name}`,
     async ({ page }) => {
@@ -118,4 +118,4 @@ rspackOnlyTest(
       rsbuild.close();
     },
   );
-});
+}

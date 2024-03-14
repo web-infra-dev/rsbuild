@@ -114,6 +114,16 @@ const App = () => (
 );
 ```
 
+You only need to install and register `@rsbuild/plugin-svgr`:
+
+```ts title="rsbuild.config.ts"
+import { pluginSvgr } from '@rsbuild/plugin-svgr';
+
+export default {
+  plugins: [pluginSvgr({ mixedImport: true })],
+};
+```
+
 Please refer to the [SVGR plugin](/plugins/list/plugin-svgr) documentation to learn how to use SVGR in Rsbuild.
 
 ## Configuration Migration

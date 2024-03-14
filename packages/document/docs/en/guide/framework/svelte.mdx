@@ -8,7 +8,14 @@ You can use `create-rsbuild` to create a project with Rsbuild + Svelte. Just exe
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="create rsbuild@latest" />
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rsbuild@latest',
+    yarn: 'yarn create rsbuild',
+    pnpm: 'pnpm create rsbuild@latest',
+    bun: 'bun create rsbuild@latest',
+  }}
+/>
 
 Then select `Svelte` when prompted to "Select framework".
 

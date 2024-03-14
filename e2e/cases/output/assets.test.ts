@@ -67,18 +67,18 @@ const cases = [
   },
 ];
 
-cases.forEach((_case) => {
-  test(_case.name, async ({ page }) => {
+for (const item of cases) {
+  test(item.name, async ({ page }) => {
     const rsbuild = await build({
-      cwd: _case.cwd,
+      cwd: item.cwd,
       runServer: true,
       plugins: [pluginReact()],
-      rsbuildConfig: _case.config || {},
+      rsbuildConfig: item.config || {},
     });
 
     await gotoPage(page, rsbuild);
 
-    if (_case.expected === 'url') {
+    if (item.expected === 'url') {
       await expect(
         page.evaluate(
           `document.getElementById('test-img').src.includes('static/image/icon')`,
@@ -94,4 +94,4 @@ cases.forEach((_case) => {
 
     await rsbuild.close();
   });
-});
+}
