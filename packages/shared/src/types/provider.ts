@@ -17,7 +17,6 @@ export type StartDevServerOptions = {
 };
 
 export type CreateDevServerOptions = StartDevServerOptions & {
-  defaultPort?: number;
   /**
    * Whether trigger rsbuild compile
    * 

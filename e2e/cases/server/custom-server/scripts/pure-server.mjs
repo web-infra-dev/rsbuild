@@ -13,6 +13,7 @@ export async function startDevServerPure(fixtures) {
         htmlFallback: false,
       },
       dev: {
+        printUrls: false,
         setupMiddlewares: [
           (middlewares, server) => {
             middlewares.unshift((req, res, next) => {
@@ -21,8 +22,9 @@ export async function startDevServerPure(fixtures) {
                   Location: '/bbb',
                 });
                 res.end();
+              } else {
+                next();
               }
-              next();
             });
           },
         ],
@@ -43,13 +45,7 @@ export async function startDevServerPure(fixtures) {
     res.end('Hello World!');
   });
 
-  middlewares.forEach((item) => {
-    if (Array.isArray(item)) {
-      app.use(...item);
-    } else {
-      app.use(item);
-    }
-  });
+  app.use(middlewares);
 
   app.get('/bbb', (_req, res) => {
     res.end('Hello Express!');

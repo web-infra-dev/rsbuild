@@ -136,12 +136,20 @@ export async function createDevServer<
     },
   });
 
+  const middlewares = connect();
+
+  devMiddlewares.middlewares.forEach((item) => {
+    if (Array.isArray(item)) {
+      middlewares.use(...item);
+    } else {
+      middlewares.use(item);
+    }
+  });
+
   const server = {
     config: { devServerConfig, port, host, https, defaultRoutes },
-    middlewares: devMiddlewares.middlewares,
+    middlewares,
     listen: async () => {
-      const middlewares = connect();
-
       const httpServer = await createHttpServer({
         https: devServerConfig.https,
         middlewares,
@@ -159,13 +167,6 @@ export async function createDevServer<
               throw err;
             }
 
-            devMiddlewares.middlewares.forEach((item) => {
-              if (Array.isArray(item)) {
-                middlewares.use(...item);
-              } else {
-                middlewares.use(item);
-              }
-            });
             middlewares.use(notFoundMiddleware);
 
             httpServer.on('upgrade', devMiddlewares.onUpgrade);

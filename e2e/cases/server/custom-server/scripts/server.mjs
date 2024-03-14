@@ -11,6 +11,9 @@ export async function startDevServer(fixtures) {
       server: {
         htmlFallback: false,
       },
+      dev: {
+        printUrls: false,
+      }
     },
   });
 
@@ -30,13 +33,7 @@ export async function startDevServer(fixtures) {
     res.end('Hello World!');
   });
 
-  middlewares.forEach((item) => {
-    if (Array.isArray(item)) {
-      app.use(...item);
-    } else {
-      app.use(item);
-    }
-  });
+  app.use(middlewares);
 
   app.get('/bbb', (_req, res) => {
     res.end('Hello Express!');

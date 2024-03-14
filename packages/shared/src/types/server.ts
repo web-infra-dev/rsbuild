@@ -9,6 +9,7 @@ import type {
 import type { ServerConfig } from './config/server';
 import type { Routes } from './hooks';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
+import type { Server as ConnectServer } from '../../compiled/connect';
 
 export type Middleware = (
   req: IncomingMessage,
@@ -117,11 +118,11 @@ export interface RsbuildDevServer {
     defaultRoutes: Routes;
   };
   /**
-   * Rsbuild inner middlewares.
+   * connect app instance.
    *
    * Can be used to attach custom middlewares to the dev server.
    */
-  middlewares: Middlewares;
+  middlewares: ConnectServer;
   /**
    * In rsbuild, we will trigger onAfterStartDevServer hook in this stage
    *
@@ -135,7 +136,7 @@ export interface RsbuildDevServer {
    */
   onHTTPUpgrade: UpgradeEvent;
   /**
-   * Close the rsbuild server.
+   * Close the Rsbuild server.
    */
   close: () => Promise<void>;
 }
