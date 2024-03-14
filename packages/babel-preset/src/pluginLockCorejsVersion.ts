@@ -27,7 +27,7 @@ export const getCoreJsVersion = () => {
 export default (_: any) => {
   return {
     post({ path }: any) {
-      path.node.body.forEach((node: t.Node) => {
+      for (const node of path.node.body as t.Node[]) {
         // import
         if (t.isImportDeclaration(node)) {
           const key = matchedKey(node.source.value);
@@ -55,7 +55,7 @@ export default (_: any) => {
             }
           }
         }
-      });
+      }
     },
   };
 };

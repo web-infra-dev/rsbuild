@@ -81,15 +81,17 @@ const applyLightningCSSLoader = ({
     },
   });
 
-  [
+  const ruleIds = [
     CHAIN_ID.RULE.CSS,
     CHAIN_ID.RULE.SASS,
     CHAIN_ID.RULE.LESS,
     CHAIN_ID.RULE.STYLUS,
-  ].forEach((ruleId) => {
+  ];
+
+  for (const ruleId of ruleIds) {
     const existRule = chain.module.rules.has(ruleId);
     if (!existRule) {
-      return;
+      continue;
     }
 
     const rule = chain.module.rule(ruleId);
@@ -112,7 +114,7 @@ const applyLightningCSSLoader = ({
         break;
     }
     rule.uses.delete(CHAIN_ID.USE.POSTCSS);
-  });
+  }
 };
 
 const applyLightningCSSMinifyPlugin = async ({

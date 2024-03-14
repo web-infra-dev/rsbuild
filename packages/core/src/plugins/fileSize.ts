@@ -145,7 +145,7 @@ async function printFileSizes(
   let totalSize = 0;
   let totalGzipSize = 0;
 
-  assets.forEach((asset) => {
+  for (const asset of assets) {
     let { sizeLabel } = asset;
     const { name, folder, gzipSizeLabel } = asset;
     const fileNameLength = (folder + path.sep + name).length;
@@ -170,7 +170,7 @@ async function printFileSizes(
 
       logger.log(`  ${fileNameLabel}    ${sizeLabel}    ${gzipSizeLabel}`);
     }
-  });
+  }
 
   if (config.total !== false) {
     const totalSizeLabel = `${color.bold(

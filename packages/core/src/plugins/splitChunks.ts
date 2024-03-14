@@ -53,7 +53,7 @@ function getUserDefinedCacheGroups(
       )
     : Object.entries(forceSplitting);
 
-  pairs.forEach(([key, regexp]) => {
+  for (const [key, regexp] of pairs) {
     cacheGroups[key] = {
       test: regexp,
       name: key,
@@ -61,7 +61,7 @@ function getUserDefinedCacheGroups(
       // Ignore minimum size, minimum chunks and maximum requests and always create chunks for user defined cache group.
       enforce: true,
     };
-  });
+  }
 
   return cacheGroups;
 }
@@ -84,7 +84,7 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
     );
   }
 
-  Object.entries(packageRegExps).forEach(([name, test]) => {
+  for (const [name, test] of Object.entries(packageRegExps)) {
     const key = `lib-${name}`;
 
     experienceCacheGroup[key] = {
@@ -93,7 +93,7 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
       name: key,
       reuseExistingChunk: true,
     };
-  });
+  }
 
   return {
     ...defaultConfig,

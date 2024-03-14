@@ -39,7 +39,7 @@ export const pluginEntry = (): RsbuildPlugin => ({
         const injectCoreJsEntry =
           config.output.polyfill === 'entry' && !isServer && !isServiceWorker;
 
-        Object.keys(entry).forEach((entryName) => {
+        for (const entryName of Object.keys(entry)) {
           const entryPoint = chain.entry(entryName);
           const addEntry = (item: string | EntryDescription) => {
             entryPoint.add(item);
@@ -52,7 +52,7 @@ export const pluginEntry = (): RsbuildPlugin => ({
           }
 
           castArray(entry[entryName]).forEach(addEntry);
-        });
+        }
       },
     );
 

@@ -131,14 +131,14 @@ export const pluginBabel = (
           const rule = chain.module.rule(BABEL_JS_RULE);
 
           if (include) {
-            castArray(include).forEach((condition) => {
+            for (const condition of castArray(include)) {
               rule.include.add(condition);
-            });
+            }
           }
           if (exclude) {
-            castArray(exclude).forEach((condition) => {
+            for (const condition of castArray(exclude)) {
               rule.exclude.add(condition);
-            });
+            }
           }
 
           const swcRule = chain.module.rules

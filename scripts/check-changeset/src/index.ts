@@ -18,7 +18,8 @@ type NewChangeset = Changeset & {
 function checkChangeset(packages: Package[], changesets: NewChangeset[]) {
   for (const changeset of changesets) {
     const { id, releases } = changeset;
-    releases.forEach((release) => {
+
+    for (const release of releases) {
       if (release.type === 'major') {
         throw Error(
           `packages ${release.name} not allow bump major version in ${id}.md file`,
@@ -27,14 +28,15 @@ function checkChangeset(packages: Package[], changesets: NewChangeset[]) {
       if (!packages.find((pkg) => pkg.packageJson.name === release.name)) {
         throw Error(`package ${release.name} is not found in ${id}.md file`);
       }
-    });
+    }
   }
 }
 
 function validatePackagePeerDependencies(packages: Package[]) {
-  packages.forEach(({ packageJson }) => {
+  for (const { packageJson } of packages) {
     const { peerDependencies = {} } = packageJson;
-    Object.keys(peerDependencies).forEach((dep) => {
+
+    for (const dep of Object.keys(peerDependencies)) {
       const depPkg = packages.find((pkg) => pkg.packageJson.name === dep);
       if (depPkg) {
         const version = peerDependencies[dep];
@@ -46,8 +48,8 @@ function validatePackagePeerDependencies(packages: Package[]) {
           );
         }
       }
-    });
-  });
+    }
+  }
 }
 async function run() {
   const cwd = process.cwd();

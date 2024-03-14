@@ -27,11 +27,11 @@ export function createSnapshotSerializer(options?: SnapshotSerializerOptions) {
     ...createDefaultPathMatchers(),
   ];
 
-  pathMatchers
-    .filter((matcher) => typeof matcher.match === 'string')
-    .forEach((matcher) => {
-      matcher.match = normalizeToPosixPath(matcher.match as string);
-    });
+  for (const matcher of pathMatchers) {
+    if (typeof matcher.match === 'string') {
+      matcher.match = normalizeToPosixPath(matcher.match);
+    }
+  }
 
   return {
     pathMatchers,

@@ -45,8 +45,8 @@ const getIpv4Interfaces = () => {
   const interfaces = os.networkInterfaces();
   const ipv4Interfaces: Map<string, os.NetworkInterfaceInfo> = new Map();
 
-  Object.keys(interfaces).forEach((key) => {
-    interfaces[key]!.forEach((detail) => {
+  for (const key of Object.keys(interfaces)) {
+    for (const detail of interfaces[key]!) {
       // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
       const familyV4Value = typeof detail.family === 'string' ? 'IPv4' : 4;
 
@@ -56,14 +56,19 @@ const getIpv4Interfaces = () => {
       ) {
         ipv4Interfaces.set(detail.address, detail);
       }
-    });
-  });
+    }
+  }
 
   return Array.from(ipv4Interfaces.values());
 };
 
 const isLoopbackHost = (host: string) => {
-  const loopbackHosts = ['localhost', '127.0.0.1', '::1', '0000:0000:0000:0000:0000:0000:0000:0001'];
+  const loopbackHosts = [
+    'localhost',
+    '127.0.0.1',
+    '::1',
+    '0000:0000:0000:0000:0000:0000:0000:0001',
+  ];
   return loopbackHosts.includes(host);
 };
 
@@ -122,12 +127,12 @@ export const getAddressUrls = ({
   const addressUrls: AddressUrl[] = [];
   let hasLocalUrl = false;
 
-  ipv4Interfaces.forEach((detail) => {
+  for (const detail of ipv4Interfaces) {
     if (isLoopbackHost(detail.address) || detail.internal) {
       // avoid multiple prints of localhost
       // https://github.com/web-infra-dev/rsbuild/discussions/1543
       if (hasLocalUrl) {
-        return;
+        continue;
       }
 
       addressUrls.push({
@@ -141,7 +146,7 @@ export const getAddressUrls = ({
         url: concatUrl({ host: detail.address, port, protocol }),
       });
     }
-  });
+  }
 
   return addressUrls;
 };

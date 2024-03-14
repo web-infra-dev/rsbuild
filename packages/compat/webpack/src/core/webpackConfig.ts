@@ -31,9 +31,9 @@ async function modifyWebpackChain(
   );
 
   if (context.config.tools?.webpackChain) {
-    castArray(context.config.tools.webpackChain).forEach((item) => {
+    for (const item of castArray(context.config.tools.webpackChain)) {
       item(modifiedChain, utils);
-    });
+    }
   }
 
   debug('modify webpack chain done');
