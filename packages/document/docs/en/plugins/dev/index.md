@@ -156,15 +156,14 @@ export const pluginUploadDist = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyRsbuildConfig((config) => {
       // try to disable minimize.
-      // should deal with optional value by self.
       config.output ||= {};
-      config.output.disableMinimize = true;
+      config.output.minify = false;
       // but also can be enable by other plugins...
     });
     api.onBeforeBuild(() => {
       // use the normalized config.
       const config = api.getNormalizedConfig();
-      if (!config.output.disableMinimize) {
+      if (config.output.minify !== false) {
         // let it crash when enable minimize.
         throw new Error(
           'You must disable minimize to upload readable dist files.',
@@ -196,7 +195,7 @@ api.modifyRsbuildConfig((config: RsbuildConfig) => {});
 api.getRsbuildConfig() as RsbuildConfig;
 type RsbuildConfig = {
   output?: {
-    disableMinimize?: boolean;
+    minify?: boolean;
     distPath?: { root?: string };
   };
 };
@@ -204,7 +203,7 @@ type RsbuildConfig = {
 api.getNormalizedConfig() as NormalizedConfig;
 type NormalizedConfig = {
   output: {
-    disableMinimize: boolean;
+    minify: boolean;
     distPath: { root: string };
   };
 };

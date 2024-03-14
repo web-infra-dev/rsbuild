@@ -12,7 +12,7 @@ const commonConfig: CreateRsbuildOptions = {
       },
     },
     output: {
-      disableMinimize: true,
+      minify: false,
     },
   },
 };
