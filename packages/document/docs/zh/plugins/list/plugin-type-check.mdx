@@ -116,10 +116,8 @@ const defaultOptions = {
     typescriptPath: require.resolve('typescript'),
   },
   issue: {
-    exclude: [
-      { file: '**/*.(spec|test).ts' },
-      { file: '**/node_modules/**/*' },
-    ],
+    // ignore types errors from node_modules
+    exclude: [({ file = '' }) => /[\\/]node_modules[\\/]/.test(file)],
   },
   logger: {
     log() {
@@ -141,7 +139,7 @@ const defaultOptions = {
 pluginTypeCheck({
   forkTsCheckerOptions: {
     issue: {
-      exclude: [{ file: '**/some-folder/**/*.ts' }],
+      exclude: [({ file = '' }) => /[\\/]some-folder[\\/]/.test(file)],
     },
   },
 });
@@ -154,9 +152,8 @@ pluginTypeCheck({
 ```ts
 pluginTypeCheck({
   forkTsCheckerOptions(options) {
-    options?.issue?.exclude.push({
-      file: '**/some-folder/**/*.ts',
-    });
+    options.async = false;
+    return options;
   },
 });
 ```
