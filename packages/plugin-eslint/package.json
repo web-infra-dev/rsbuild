@@ -29,7 +29,7 @@
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
     "eslint": "^8.57.0",
-    "eslint-webpack-plugin": "^4.0.1",
+    "eslint-webpack-plugin": "^4.1.0",
     "webpack": "^5.89.0"
   },
   "devDependencies": {
