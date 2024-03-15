@@ -698,7 +698,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;
@@ -1469,7 +1469,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;
@@ -2599,7 +2599,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;

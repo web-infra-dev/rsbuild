@@ -745,7 +745,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;

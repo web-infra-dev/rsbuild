@@ -697,7 +697,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;

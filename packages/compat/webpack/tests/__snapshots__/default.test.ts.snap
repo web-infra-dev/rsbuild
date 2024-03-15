@@ -530,7 +530,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;
@@ -1118,7 +1118,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;
@@ -1849,7 +1849,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "target": [
     "webworker",
-    "es5",
+    "es2017",
   ],
 }
 `;
