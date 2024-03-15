@@ -126,6 +126,45 @@ test('should throw error when using optional chaining and target is es6 browsers
   ).toBeTruthy();
 });
 
+test('should throw error when using optional chaining and target is fully supports es6-module', async () => {
+  const cwd = path.join(__dirname, 'fixtures/esnext');
+  const { logs, restore } = proxyConsole();
+
+  await expect(
+    build({
+      cwd,
+      plugins: [
+        pluginCheckSyntax({
+          targets: ['fully supports es6-module'],
+        }),
+      ],
+      rsbuildConfig: getCommonBuildConfig(cwd),
+    }),
+  ).rejects.toThrowError('[Syntax Checker]');
+
+  restore();
+
+  expect(logs.find((log) => log.includes('ERROR 1'))).toBeTruthy();
+  expect(
+    logs.find((log) => log.includes('source:') && log.includes('src/test.js')),
+  ).toBeTruthy();
+  expect(
+    logs.find(
+      (log) =>
+        log.includes('output:') &&
+        normalizeToPosixPath(log).includes('/dist/static/js/index'),
+    ),
+  ).toBeTruthy();
+  expect(
+    logs.find(
+      (log) => log.includes('reason:') && log.includes('Unexpected token'),
+    ),
+  ).toBeTruthy();
+  expect(
+    logs.find((log) => log.includes('> 3 |   console.log(arr, arr?.flat());')),
+  ).toBeTruthy();
+});
+
 test('should not throw error when using optional chaining and ecmaVersion is 2020', async () => {
   const cwd = path.join(__dirname, 'fixtures/esnext');
 

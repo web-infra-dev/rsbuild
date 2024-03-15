@@ -859,9 +859,6 @@ importers:
       acorn:
         specifier: ^8.10.0
         version: 8.11.3
-      caniuse-lite:
-        specifier: ^1.0.30001583
-        version: 1.0.30001597
       htmlparser2:
         specifier: 9.1.0
         version: 9.1.0
@@ -875,9 +872,6 @@ importers:
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
-      '@types/caniuse-lite':
-        specifier: ^1.0.3
-        version: 1.0.5
       typescript:
         specifier: ^5.4.2
         version: 5.4.2
@@ -5119,10 +5113,6 @@ packages:
       '@types/node': 16.18.84
       '@types/responselike': 1.0.3
     dev: false
-
-  /@types/caniuse-lite@1.0.5:
-    resolution: {integrity: sha512-ff4yGviVi4PrDKkCZJixHjYrgQG3kv/peiSCBabyZR+fXezFTYuS4uVOiRRzRqVxCEZT3ityfuAPuYa0usobKw==}
-    dev: true
 
   /@types/connect@3.4.38:
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}

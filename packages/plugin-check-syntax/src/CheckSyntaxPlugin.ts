@@ -3,11 +3,15 @@ import { parse } from 'acorn';
 import {
   printErrors,
   generateError,
-  getEcmaVersion,
   generateHtmlScripts,
   checkIsExcludeSource,
 } from './helpers';
-import { fse, JS_REGEX, HTML_REGEX } from '@rsbuild/shared';
+import {
+  fse,
+  JS_REGEX,
+  HTML_REGEX,
+  browserslistToESVersion,
+} from '@rsbuild/shared';
 import type {
   ECMASyntaxError,
   EcmaVersion,
@@ -40,7 +44,8 @@ export class CheckSyntaxPlugin {
     this.targets = options.targets;
     this.exclude = options.exclude;
     this.rootPath = options.rootPath;
-    this.ecmaVersion = options.ecmaVersion || getEcmaVersion(this.targets);
+    this.ecmaVersion =
+      options.ecmaVersion || browserslistToESVersion(this.targets);
   }
 
   apply(complier: Compiler) {

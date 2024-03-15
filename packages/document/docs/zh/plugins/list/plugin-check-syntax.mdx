@@ -91,9 +91,9 @@ export default {
 - **类型：** `string[]`
 - **默认值：** `当前项目的 browserslist 配置`
 
-`targets` 表示项目的目标浏览器范围，它的值为标准的 browserslist 数组，如果你不了解 browserslist 的用法，请参考 [「设置浏览器范围」](/guide/advanced/browser-compatibility)。
+`targets` 表示目标浏览器范围，它的值为标准的 browserslist。Check Syntax 插件默认会读取当前项目的 browserslist 配置，通常你不需要手动配置 `targets` 属性。
 
-Rsbuild 会读取 `targets` 的值，并自动推导出构建产物中可以使用的最低 ECMAScript 语法版本，比如 `ES5` 或 `ES6`。
+Rsbuild 会读取 `targets` 的值，并自动推导出构建产物中可以使用的最低 ECMAScript 语法版本，比如 ES5 或 ES2015。
 
 - **示例：**
 
@@ -105,10 +105,10 @@ pluginCheckSyntax({
 });
 ```
 
-Rsbuild 会推导出 `chrome >= 53` 可以使用的 ECMAScript 语法版本为 `ES6`，当构建产物中包含 `es2016` 或更高的语法时，就会触发语法错误提示。
+Rsbuild 会推导出 `chrome >= 53` 可以使用的 ECMAScript 语法版本为 ES2015，当构建产物中包含 ES2016 或更高的语法时，就会触发语法错误提示。
 
 :::tip
-请留意，Rsbuild 不支持基于 `targets` 来自动分析 ES6 以上的语法版本，如果你的构建产物兼容的语法版本超过 ES6，请通过 `checkSyntax.ecmaVersion` 进行设置。
+如果你想了解更多 browserslist 的用法，请参考 [「设置浏览器范围」](/guide/advanced/browser-compatibility)。
 :::
 
 ### ecmaVersion
@@ -116,11 +116,15 @@ Rsbuild 会推导出 `chrome >= 53` 可以使用的 ECMAScript 语法版本为 `
 - **类型：** `3 | 5 | 6 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 'latest'`
 - **默认值：** `基于 targets 自动分析`
 
-`ecmaVersion` 表示构建产物中可以使用的最低 ECMAScript 语法版本，`ecmaVersion` 的优先级高于 `targets`。
+`ecmaVersion` 表示构建产物中可以使用的最低 ECMAScript 语法版本。
+
+:::tip
+在未设置 `ecmaVersion` 的情况下，Check Syntax 插件会基于 `targets` 来推导出对应的 ECMAScript 版本，目前支持的推导范围为 `es5` ~ `es2018`。
+:::
 
 - **示例：**
 
-比如，构建产物中可以使用的最低 ECMAScript 语法版本为 `ES2020`，可以添加以下设置：
+比如，构建产物中可以使用的最低 ECMAScript 语法版本为 ES2020，可以添加以下设置：
 
 ```ts
 pluginCheckSyntax({
@@ -128,7 +132,7 @@ pluginCheckSyntax({
 });
 ```
 
-此时，构建产物中可以包含 `ES2020` 支持的所有语法，比如 optional chaining。
+此时，构建产物中可以包含 ES2020 支持的所有语法，比如 optional chaining。
 
 ### exclude
 
