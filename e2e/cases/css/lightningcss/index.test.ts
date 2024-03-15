@@ -94,7 +94,7 @@ test('should transform css by lightningcss-loader and work with @rsbuild/plugin-
         },
       },
       plugins: [
-        pluginStylus(),
+        pluginStylus(), // must before pluginLightningcss
         pluginLightningcss({
           minify: false,
         }),
@@ -104,4 +104,7 @@ test('should transform css by lightningcss-loader and work with @rsbuild/plugin-
   const bundlerConfigs = await rsbuild.instance.initConfigs();
   expect(bundlerConfigs[0]).not.toContain('postcss-loader');
   await expectPageToBeNormal(page, rsbuild);
+
+  const stylusModuleLocator = page.locator('#test-stylus');
+  await expect(stylusModuleLocator).toHaveCSS('color', 'rgb(165, 42, 42)');
 });
