@@ -104,11 +104,8 @@ export const pluginTypeCheck = (
           mergeFn: deepmerge,
         });
 
-        if (api.context.bundlerType === 'rspack' && isProd) {
-          logger.info('Ts checker running...');
-          logger.info(
-            'Ts checker is running slowly and will block builds until it is complete, please be patient and wait.',
-          );
+        if (isProd) {
+          logger.info('Type checker is enabled. It may take some time.');
         }
 
         chain
