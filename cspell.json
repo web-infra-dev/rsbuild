@@ -54,6 +54,7 @@
     "svgr",
     "systemjs",
     "transpiling",
+    "treeshaking",
     "tsbuildinfo",
     "unocss",
     "vitest",
