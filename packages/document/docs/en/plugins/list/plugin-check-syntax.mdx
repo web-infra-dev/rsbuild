@@ -91,9 +91,9 @@ If a syntax error is detected, you can handle it in the following ways:
 - **Type:** `string[]`
 - **Default:** `The browserslist configuration of the current project`
 
-`targets` is the target browser range of the project. Its value is a standard browserslist array. If you are not familiar with the usage of browserslist, please refer to ["Browserslist"](/guide/advanced/browser-compatibility).
+`targets` is the target browser range, its value is a standard browserslist. Check Syntax plugin will by default read the current project's browserslist configuration, so you usually don't need to manually configure the `targets` option.
 
-Rsbuild will read the value of `targets` and automatically deduce the minimum ECMAScript syntax version that can be used in the build artifacts, such as `ES5` or `ES6`.
+Rsbuild will read the value of `targets` and automatically deduce the minimum ECMAScript syntax version that can be used in the build artifacts, such as ES5 or ES2015.
 
 - **Example:**
 
@@ -105,10 +105,10 @@ pluginCheckSyntax({
 });
 ```
 
-Rsbuild will deduce that the ECMAScript syntax version that can be used with `chrome >= 53` is `ES6`. When the build artifacts contain `ES2016` or higher syntax, it triggers syntax error prompts.
+Rsbuild will deduce that the ECMAScript syntax version that can be used with `chrome >= 53` is ES2015. When the build artifacts contain `ES2016` or higher syntax, it triggers syntax error prompts.
 
 :::tip
-Please note that Rsbuild does not support automatic analysis of syntax versions above ES6 based on `targets`. If the syntax version compatible with your build artifacts exceeds ES6, please use `checkSyntax.ecmaVersion` to set it.
+If you want to learn more about how to use browserslist, please refer to ["Setting Browser Range"](/guide/advanced/browser-compatibility).
 :::
 
 ### ecmaVersion
@@ -116,11 +116,15 @@ Please note that Rsbuild does not support automatic analysis of syntax versions 
 - **Type:** `3 | 5 | 6 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 'latest'`
 - **Default:** `Automatically analyzed based on targets`
 
-`ecmaVersion` represents the minimum ECMAScript syntax version that can be used in the build artifact. The priority of `ecmaVersion` is higher than `targets`.
+`ecmaVersion` represents the minimum ECMAScript syntax version that can be used in the build artifact.
+
+:::tip
+If `ecmaVersion` is not set, Check Syntax plugin will infer the ECMAScript version based on `targets`. Currently, the supported inference range is `es5` ~ `es2018`.
+:::
 
 - **Example:**
 
-For example, if the minimum ECMAScript syntax version that can be used in the build artifacts is `ES2020`, you can add the following configuration:
+For example, if the minimum ECMAScript syntax version that can be used in the build artifacts is ES2020, you can add the following configuration:
 
 ```ts
 pluginCheckSyntax({
@@ -128,7 +132,7 @@ pluginCheckSyntax({
 });
 ```
 
-At this time, the build artifacts can include all syntax supported by `ES2020`, such as optional chaining.
+At this time, the build artifacts can include all syntax supported by ES2020, such as optional chaining.
 
 ### exclude
 
