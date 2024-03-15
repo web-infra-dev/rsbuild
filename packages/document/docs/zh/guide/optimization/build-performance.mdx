@@ -37,6 +37,28 @@ npm install -g speedscope
 speedscope CPU.date.000000.00000.0.001.cpuprofile
 ```
 
+### Rspack Profiling
+
+Rsbuild 支持使用 `RSPACK_PROFILE` 环境变量来对 Rspack 进行构建性能分析。
+
+在项目根目录执行以下命令：
+
+```bash
+# dev
+RSPACK_PROFILE=ALL rsbuild dev
+
+# build
+RSPACK_PROFILE=ALL rsbuild build
+```
+
+执行该命令后会在当前产物目录下生成一个 `rspack-profile-${timestamp}` 文件夹，该文件夹下会包含 `logging.json`、`trace.json` 和 `jscpuprofile.json` 三个文件：
+
+- `trace.json`：使用 tracing 细粒度地记录了 Rust 侧各个阶段的耗时，可以使用 [ui.perfetto.dev](https://ui.perfetto.dev/) 进行查看。
+- `jscpuprofile.json`：使用 [Node.js inspector](https://nodejs.org/dist/latest-v18.x/docs/api/inspector.html) 细粒度地记录了 JavaScript 侧的各个阶段的耗时，可以使用 [speedscope.app](https://www.speedscope.app/) 进行查看。
+- `logging.json`：包含一些日志信息，粗粒度地记录了构建的各个阶段耗时 (开发环境下暂不支持)。
+
+更多 Rspack 构建性能分析用法可参考 [Rspack - Profiling](https://web-infra-dev.github.io/rspack-dev-guide/profiling/intro.html#profiling)
+
 ## 通用优化策略
 
 以下是一些通用的优化策略，对开发环境和生产环境均有提速效果，其中部分策略对包体积也有优化。
