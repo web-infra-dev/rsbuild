@@ -105,18 +105,16 @@ describe('getBrowserslistWithDefault', () => {
 
 describe('browserslistToESVersion', () => {
   test('should get ecma version correctly', () => {
-    expect(browserslistToESVersion(['iOS 8'])).toEqual('es5');
-    expect(browserslistToESVersion(['ie >= 11'])).toEqual('es5');
-    expect(browserslistToESVersion(['android >= 4.4'])).toEqual('es5');
-    expect(browserslistToESVersion(['Chrome >= 33'])).toEqual('es5');
-    expect(browserslistToESVersion(['Edge >= 12'])).toEqual('es5');
-    expect(browserslistToESVersion(['Edge >= 15'])).toEqual('es2017');
-    expect(browserslistToESVersion(['Chrome >= 53'])).toEqual('es2016');
-    expect(browserslistToESVersion(['ie >= 11', 'Chrome >= 53'])).toEqual(
-      'es5',
-    );
+    expect(browserslistToESVersion(['iOS 8'])).toEqual(5);
+    expect(browserslistToESVersion(['ie >= 11'])).toEqual(5);
+    expect(browserslistToESVersion(['android >= 4.4'])).toEqual(5);
+    expect(browserslistToESVersion(['Chrome >= 33'])).toEqual(5);
+    expect(browserslistToESVersion(['Edge >= 12'])).toEqual(5);
+    expect(browserslistToESVersion(['Edge >= 15'])).toEqual(2017);
+    expect(browserslistToESVersion(['Chrome >= 53'])).toEqual(2016);
+    expect(browserslistToESVersion(['ie >= 11', 'Chrome >= 53'])).toEqual(5);
     expect(browserslistToESVersion(['Edge >= 15', 'Chrome >= 53'])).toEqual(
-      'es2016',
+      2016,
     );
     expect(
       browserslistToESVersion([
@@ -126,7 +124,7 @@ describe('browserslistToESVersion', () => {
         '> 0.2%',
         'not dead',
       ]),
-    ).toEqual('es5');
+    ).toEqual(5);
     expect(
       browserslistToESVersion([
         'chrome >= 87',
@@ -134,14 +132,14 @@ describe('browserslistToESVersion', () => {
         'firefox >= 78',
         'safari >= 14',
       ]),
-    ).toEqual('es2017');
+    ).toEqual(2017);
     expect(
       browserslistToESVersion([
         'last 1 chrome version',
         'last 1 firefox version',
         'last 1 safari version',
       ]),
-    ).toEqual('es2017');
+    ).toEqual(2018);
     expect(
       browserslistToESVersion([
         'iOS >= 10',
@@ -150,12 +148,12 @@ describe('browserslistToESVersion', () => {
         'not dead',
         'not op_mini all',
       ]),
-    ).toEqual('es6');
+    ).toEqual(2015);
+    expect(browserslistToESVersion(['fully supports es6'])).toEqual(2015);
+    expect(browserslistToESVersion(['fully supports es6-module'])).toEqual(
+      2017,
+    );
+    expect(browserslistToESVersion(['ie 11', 'baidu 7.12'])).toEqual(5);
+    expect(browserslistToESVersion(['ios_saf 11'])).toEqual(2017);
   });
-  expect(browserslistToESVersion(['fully supports es6'])).toEqual('es6');
-  expect(browserslistToESVersion(['fully supports es6-module'])).toEqual(
-    'es2017',
-  );
-  expect(browserslistToESVersion(['ie 11', 'baidu 7.12'])).toEqual('es5');
-  expect(browserslistToESVersion(['ios_saf 11'])).toEqual('es2017');
 });

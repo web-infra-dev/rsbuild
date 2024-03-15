@@ -53,50 +53,33 @@ export async function getBrowserslistWithDefault(
 }
 
 enum ESVersion {
-  es5 = 0,
-  es6 = 1,
-  es2016 = 2,
-  es2017 = 3,
+  es5 = 5,
+  es2015 = 2015,
+  es2016 = 2016,
+  es2017 = 2017,
+  es2018 = 2018,
 }
 
-// the minimal version for [es6, es2016, es2017]
+// the minimal version for [es2015, es2016, es2017, es2018]
 const ES_VERSIONS_MAP: Record<string, number[]> = {
-  chrome: [51, 52, 57],
-  edge: [15, 15, 15],
-  safari: [10, 10.3, 11],
-  firefox: [54, 54, 54],
-  opera: [38, 39, 44],
-  samsung: [5, 6.2, 6.2],
+  chrome: [51, 52, 57, 64],
+  edge: [15, 15, 15, 79],
+  safari: [10, 10.3, 11, 16.4],
+  firefox: [54, 54, 54, 78],
+  opera: [38, 39, 44, 51],
+  samsung: [5, 6.2, 6.2, 8.2],
 };
 
 const renameBrowser = (name: string) => {
-  if (name === 'ios_saf') {
-    return 'safari';
-  }
-  return name;
+  return name === 'ios_saf' ? 'safari' : name;
 };
 
-const getESVersionStr = (esVersion: ESVersion) => {
-  switch (esVersion) {
-    case ESVersion.es5:
-      return 'es5';
-    case ESVersion.es6:
-      return 'es6';
-    case ESVersion.es2016:
-      return 'es2016';
-    case ESVersion.es2017:
-      return 'es2017';
-  }
-};
-
-export function browserslistToESVersion(
-  browsers: string[],
-): ReturnType<typeof getESVersionStr> {
+export function browserslistToESVersion(browsers: string[]) {
   const projectBrowsers = browserslist(browsers, {
     ignoreUnknownVersions: true,
   });
 
-  let esVersion: ESVersion = ESVersion.es2017;
+  let esVersion: ESVersion = ESVersion.es2018;
 
   for (const item of projectBrowsers) {
     const pairs = item.split(' ');
@@ -107,7 +90,12 @@ export function browserslistToESVersion(
     }
 
     const browser = renameBrowser(pairs[0]);
-    const version = Number(pairs[1]);
+    const version = Number(pairs[1].split('-')[0]);
+
+    // ignore unknown version
+    if (Number.isNaN(version)) {
+      continue;
+    }
 
     // IE / Android 4.x ~ 5.x only supports es5
     if (browser === 'ie' || (browser === 'android' && Number(version) < 6)) {
@@ -124,11 +112,13 @@ export function browserslistToESVersion(
     if (version < versions[0]) {
       esVersion = Math.min(ESVersion.es5, esVersion);
     } else if (version < versions[1]) {
-      esVersion = Math.min(ESVersion.es6, esVersion);
+      esVersion = Math.min(ESVersion.es2015, esVersion);
     } else if (version < versions[2]) {
       esVersion = Math.min(ESVersion.es2016, esVersion);
+    } else if (version < versions[3]) {
+      esVersion = Math.min(ESVersion.es2017, esVersion);
     }
   }
 
-  return getESVersionStr(esVersion);
+  return esVersion;
 }
