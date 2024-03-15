@@ -20,16 +20,16 @@ describe('plugin-target', () => {
     },
     {
       browserslist: ['foo'],
-      expected: { target: ['web', 'browserslist'] },
+      expected: { target: ['web', 'es2017'] },
     },
     {
       browserslist: null,
-      expected: { target: ['web', 'es5'] },
+      expected: { target: ['web', 'es2017'] },
     },
     {
       targets: ['web-worker' as const],
       browserslist: null,
-      expected: { target: ['webworker', 'es5'] },
+      expected: { target: ['webworker', 'es2017'] },
     },
   ];
 

@@ -98,7 +98,7 @@ export function browserslistToESVersion(browsers: string[]) {
     }
 
     // IE / Android 4.x ~ 5.x only supports es5
-    if (browser === 'ie' || (browser === 'android' && Number(version) < 6)) {
+    if (browser === 'ie' || (browser === 'android' && version < 6)) {
       esVersion = ESVersion.es5;
       break;
     }
