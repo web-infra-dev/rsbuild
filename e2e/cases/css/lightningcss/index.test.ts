@@ -1,34 +1,36 @@
-import { type Page, expect } from '@playwright/test';
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { test, type Page, expect } from '@playwright/test';
+import { build, gotoPage } from '@e2e/helper';
 import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
+import { pluginSwc } from '@rsbuild/plugin-swc';
 
-rspackOnlyTest(
-  'should minimize CSS correctly by lightningcss-minify',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      rsbuildConfig: {
-        html: {
-          template: './src/index.html',
-        },
-        plugins: [
-          pluginLightningcss({
-            transform: false,
-          }),
-        ],
+test('should minimize CSS correctly by lightningcss-minify', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      html: {
+        template: './src/index.html',
       },
-    });
-    const files = await rsbuild.unwrapOutputJSON();
+      plugins:
+        process.env.PROVIDE_TYPE === 'rspack'
+          ? [
+              pluginLightningcss({
+                transform: false,
+              }),
+            ]
+          : [pluginSwc(), pluginLightningcss({ transform: false })],
+    },
+  });
 
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
+  const files = await rsbuild.unwrapOutputJSON();
 
-    expect(content).toContain(
-      '.test-minify{color:#ffff00b3;background-color:#545c3d;border-color:#669;width:200px;height:calc(75.37% - 763.5px);transition:background .2s;transform:translateY(50px)}',
-    );
-  },
-);
+  const content =
+    files[Object.keys(files).find((file) => file.endsWith('.css'))!];
+
+  expect(content).toContain(
+    '.test-minify{color:#ffff00b3;background-color:#545c3d;border-color:#669;width:200px;height:calc(75.37% - 763.5px);transition:background .2s;transform:translateY(50px)}',
+  );
+});
 
 async function expectPageToBeNormal(
   page: Page,
@@ -54,54 +56,55 @@ async function expectPageToBeNormal(
   await rsbuild.close();
 }
 
-rspackOnlyTest(
-  'should transform css by lightningcss-loader and work normally with other pre-processors',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      runServer: true,
-      rsbuildConfig: {
-        html: {
-          template: './src/index.html',
-        },
-        plugins: [
-          pluginLightningcss({
-            minify: false,
-          }),
-        ],
+test('should transform css by lightningcss-loader and work normally with other pre-processors', async ({
+  page,
+}) => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    runServer: true,
+    rsbuildConfig: {
+      html: {
+        template: './src/index.html',
       },
-    });
-    const bundlerConfigs = await rsbuild.instance.initConfigs();
-    expect(bundlerConfigs[0]).not.toContain('postcss-loader');
-    await expectPageToBeNormal(page, rsbuild);
-  },
-);
+      plugins: [
+        pluginLightningcss({
+          minify: false,
+        }),
+      ],
+    },
+  });
+  const bundlerConfigs = await rsbuild.instance.initConfigs();
+  expect(bundlerConfigs[0]).not.toContain('postcss-loader');
+  await expectPageToBeNormal(page, rsbuild);
+});
 
-rspackOnlyTest(
-  'should transform css by lightningcss-loader and work with @rsbuild/plugin-stylus',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      runServer: true,
-      rsbuildConfig: {
-        html: {
-          template: './src/index.html',
-        },
-        source: {
-          entry: {
-            index: './src/_styl.js',
-          },
-        },
-        plugins: [
-          pluginStylus(),
-          pluginLightningcss({
-            minify: false,
-          }),
-        ],
+test('should transform css by lightningcss-loader and work with @rsbuild/plugin-stylus', async ({
+  page,
+}) => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    runServer: true,
+    rsbuildConfig: {
+      html: {
+        template: './src/index.html',
       },
-    });
-    const bundlerConfigs = await rsbuild.instance.initConfigs();
-    expect(bundlerConfigs[0]).not.toContain('postcss-loader');
-    await expectPageToBeNormal(page, rsbuild);
-  },
-);
+      source: {
+        entry: {
+          index: './src/_styl.js',
+        },
+      },
+      plugins: [
+        pluginStylus(), // must before pluginLightningcss
+        pluginLightningcss({
+          minify: false,
+        }),
+      ],
+    },
+  });
+  const bundlerConfigs = await rsbuild.instance.initConfigs();
+  expect(bundlerConfigs[0]).not.toContain('postcss-loader');
+  await expectPageToBeNormal(page, rsbuild);
+
+  const stylusModuleLocator = page.locator('#test-stylus');
+  await expect(stylusModuleLocator).toHaveCSS('color', 'rgb(165, 42, 42)');
+});

@@ -13,5 +13,5 @@ scssDom.innerHTML = JSON.stringify(b);
 scssDom.setAttribute('class', b['test-scss']);
 
 const stylusDom = document.getElementById('test-stylus');
-scssDom.innerHTML = JSON.stringify(c);
-scssDom.setAttribute('class', c['test-stylus']);
+stylusDom.innerHTML = JSON.stringify(c);
+stylusDom.setAttribute('class', c['test-stylus']);
