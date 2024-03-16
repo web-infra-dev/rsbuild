@@ -204,17 +204,54 @@ console.log(Logo); // -> React component
 当你在 TypeScript 代码中引用 SVG 资源时，TypeScript 可能会提示该模块缺少类型定义：
 
 ```
-TS2307: Cannot find module './logo.svg' or its corresponding type declarations.
+TS2307: Cannot find module './logo.svg?react' or its corresponding type declarations.
 ```
 
-此时你需要为 SVG 资源添加类型声明文件，请在项目中创建 `src/env.d.ts` 文件，并添加相应的类型声明：
+此时你需要为 SVG 资源添加类型声明文件，请在项目中创建 `src/env.d.ts` 文件，并添加相应的类型声明。
+
+- 默认情况下，你可以添加如下类型声明：
 
 ```ts
+declare module '*.svg' {
+  const content: string;
+  export default content;
+}
 declare module '*.svg?react' {
   const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
+```
 
+- 如果 `svgrOptions.exportType` 的值为 `'default'`，则将类型声明设置为：
+
+```ts
+declare module '*.svg' {
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+declare module '*.svg?react' {
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+```
+
+- 如果 `svgrOptions.exportType` 的值为 `'named'`，则将类型声明设置为：
+
+```ts
+declare module '*.svg' {
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement>
+  >;
+}
+declare module '*.svg?react' {
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+```
+
+- 如果 `svgrOptions.exportType` 的值为 `'named'`，且开启了 `mixedImport`，则将类型声明设置为：
+
+```ts
 declare module '*.svg' {
   export const ReactComponent: React.FunctionComponent<
     React.SVGProps<SVGSVGElement>
@@ -222,12 +259,7 @@ declare module '*.svg' {
   const content: string;
   export default content;
 }
-```
-
-如果你将 `svgrOptions.exportType` 设置为 `'default'`，则将类型声明修改为：
-
-```ts
-declare module '*.svg' {
+declare module '*.svg?react' {
   const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
