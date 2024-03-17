@@ -304,7 +304,10 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
             const finalOptions = mergeChainedOptions({
               defaults: pluginOptions,
-              options: config.tools.htmlPlugin,
+              options:
+                typeof config.tools.htmlPlugin === 'boolean'
+                  ? {}
+                  : config.tools.htmlPlugin,
               utils: {
                 entryName,
                 entryValue,
