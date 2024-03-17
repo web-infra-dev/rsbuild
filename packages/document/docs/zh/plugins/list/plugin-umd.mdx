@@ -150,3 +150,21 @@ export default {
 ```
 
 最后运行 `npx rsbuild dev` 即可。
+
+## HTML 生成
+
+在使用 UMD 插件后，执行生产构建时默认不会生成 HTML 文件，这是因为 UMD 产物通常以 library 的形式进行分发，不依赖 HTML 文件。
+
+如果你需要生成 HTML 文件，可以将 [tools.htmlPlugin](/config/tools/html-plugin) 设置为 `true`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  plugins: [pluginUmd({ name: 'myLib' })],
+  html: {
+    template: './src/index.html',
+  },
+  tools: {
+    htmlPlugin: true,
+  },
+};
+```
