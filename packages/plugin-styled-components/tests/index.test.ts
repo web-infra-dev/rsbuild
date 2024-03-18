@@ -1,42 +1,48 @@
 import { expect, describe, it } from 'vitest';
 import { pluginStyledComponents } from '../src';
-import { createStubRsbuild } from '@scripts/test-helper';
+import { createRsbuild } from '@rsbuild/core';
 import { SCRIPT_REGEX } from '@rsbuild/shared';
 
 describe('plugins/styled-components', () => {
-  it('should enable ssr when target contain node', async () => {
-    const rsbuild = await createStubRsbuild({
+  it('should apply styledComponents option to swc-loader', async () => {
+    const rsbuild = await createRsbuild({
       rsbuildConfig: {
-        output: {
-          targets: ['node', 'web'],
-        },
+        plugins: [pluginStyledComponents()],
       },
     });
 
     rsbuild.addPlugins([pluginStyledComponents()]);
     const configs = await rsbuild.initConfigs();
 
+    expect(
+      configs[0].module?.rules?.find(
+        (rule) =>
+          (rule as { test: RegExp }).test.toString() ===
+          SCRIPT_REGEX.toString(),
+      ),
+    ).toMatchSnapshot();
+  });
+
+  it('should enable ssr option when target contains node', async () => {
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        output: {
+          targets: ['node', 'web'],
+        },
+        plugins: [pluginStyledComponents()],
+      },
+    });
+
+    const configs = await rsbuild.initConfigs();
+
     for (const config of configs) {
       expect(
-        config.module.rules.find(
-          (r) => r.test.toString() === SCRIPT_REGEX.toString(),
+        config.module?.rules?.find(
+          (rule) =>
+            (rule as { test: RegExp }).test.toString() ===
+            SCRIPT_REGEX.toString(),
         ),
       ).toMatchSnapshot();
     }
-  });
-
-  it('should works in rspack mode', async () => {
-    const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
-    });
-
-    rsbuild.addPlugins([pluginStyledComponents()]);
-    const config = await rsbuild.unwrapConfig();
-
-    expect(
-      config.module.rules.find(
-        (r) => r.test.toString() === SCRIPT_REGEX.toString(),
-      ),
-    ).toMatchSnapshot();
   });
 });

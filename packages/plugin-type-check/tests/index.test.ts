@@ -36,6 +36,24 @@ describe('plugin-type-check', () => {
     expect(config).toMatchSnapshot();
   });
 
+  it('should allow to configure fork-ts-checker-webpack-plugin options via function', async () => {
+    const rsbuild = await createStubRsbuild({
+      cwd: __dirname,
+      rsbuildConfig: {},
+      plugins: [
+        pluginTypeCheck({
+          forkTsCheckerOptions(options) {
+            options.async = false;
+            return options;
+          },
+        }),
+      ],
+    });
+
+    const config = await rsbuild.unwrapConfig();
+    expect(config).toMatchSnapshot();
+  });
+
   it('should only apply one ts-checker plugin when there is multiple targets', async () => {
     const rsbuild = await createStubRsbuild({
       cwd: __dirname,

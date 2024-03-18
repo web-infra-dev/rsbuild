@@ -129,7 +129,7 @@ export interface ToolsConfig {
   /**
    * Configure the html-webpack-plugin.
    */
-  htmlPlugin?: false | ToolsHtmlPluginConfig;
+  htmlPlugin?: boolean | ToolsHtmlPluginConfig;
   /**
    * Configure the `builtin:swc-loader` of Rspack.
    */

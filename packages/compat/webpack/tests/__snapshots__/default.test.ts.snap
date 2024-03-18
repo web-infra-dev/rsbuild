@@ -530,7 +530,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;
@@ -1118,7 +1118,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;
@@ -1282,10 +1282,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/compiled/node-loader",
-            "options": {
-              "name": [Function],
-            },
+            "loader": "<ROOT>/packages/core/dist/rspack/nodeAddonsLoader",
           },
         ],
       },
@@ -1421,11 +1418,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "splitChunks": false,
   },
   "output": {
-    "chunkFilename": "server/[name].js",
-    "filename": "server/[name].js",
+    "chunkFilename": "[name].js",
+    "filename": "[name].js",
     "hashFunction": "xxhash64",
     "libraryTarget": "commonjs2",
-    "path": "<ROOT>/packages/compat/webpack/tests/dist",
+    "path": "<ROOT>/packages/compat/webpack/tests/dist/server",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1852,7 +1849,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "target": [
     "webworker",
-    "es5",
+    "es2017",
   ],
 }
 `;

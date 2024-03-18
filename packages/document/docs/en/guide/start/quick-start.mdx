@@ -31,7 +31,14 @@ You can use the `create-rsbuild` to create a new Rsbuild project. Just execute t
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="create rsbuild@latest" />
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rsbuild@latest',
+    yarn: 'yarn create rsbuild',
+    pnpm: 'pnpm create rsbuild@latest',
+    bun: 'bun create rsbuild@latest',
+  }}
+/>
 
 Then follow the prompts to complete the operation. You can choose from the following templates provided by `create-rsbuild`:
 

@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
-    "@playwright/test": "1.42.0",
+    "@playwright/test": "1.42.1",
     "@rsbuild/babel-preset": "workspace:*",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
@@ -29,6 +29,7 @@
     "@rsbuild/plugin-css-minimizer": "workspace:*",
     "@rsbuild/plugin-eslint": "workspace:*",
     "@rsbuild/plugin-image-compress": "workspace:*",
+    "@rsbuild/plugin-lightningcss": "workspace:*",
     "@rsbuild/plugin-mdx": "workspace:*",
     "@rsbuild/plugin-node-polyfill": "workspace:*",
     "@rsbuild/plugin-preact": "workspace:*",
@@ -58,8 +59,8 @@
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
     "fast-glob": "^3.3.1",
-    "playwright": "1.42.0",
+    "playwright": "1.42.1",
     "tailwindcss": "^3.3.5",
-    "typescript": "^5.3.0"
+    "typescript": "^5.4.2"
   }
 }

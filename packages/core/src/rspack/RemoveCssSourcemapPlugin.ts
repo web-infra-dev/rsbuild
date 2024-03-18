@@ -15,11 +15,11 @@ export class RemoveCssSourcemapPlugin {
           stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_SUMMARIZE,
         },
         () => {
-          Object.keys(compilation.assets).forEach((name) => {
+          for (const name of Object.keys(compilation.assets)) {
             if (name.endsWith('.css.map')) {
               compilation.deleteAsset(name);
             }
-          });
+          }
         },
       );
     });

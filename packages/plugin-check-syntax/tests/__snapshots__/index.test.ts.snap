@@ -4,7 +4,7 @@ exports[`plugin-check-syntax > should add check-syntax plugin properly 1`] = `
 {
   "plugins": [
     CheckSyntaxPlugin {
-      "ecmaVersion": 6,
+      "ecmaVersion": 2017,
       "errors": [],
       "exclude": undefined,
       "rootPath": "<ROOT>/packages/plugin-check-syntax/tests",

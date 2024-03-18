@@ -159,13 +159,13 @@ export class HtmlTagsPlugin {
           ...fromWebpackTags(params.bodyTags, { head: false }),
         ];
 
-        this.ctx.tags.forEach((tag) => {
+        for (const tag of this.ctx.tags) {
           if (isFunction(tag)) {
             handlers.push(tag);
           } else {
             tags.push(tag);
           }
-        });
+        }
 
         const getPriority = (tag: HtmlInjectTag) => {
           const head = tag.head ?? HEAD_TAGS.includes(tag.tag);

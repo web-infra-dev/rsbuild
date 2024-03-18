@@ -37,7 +37,7 @@ const applySetupMiddlewares = (
   const before: RequestHandler[] = [];
   const after: RequestHandler[] = [];
 
-  setupMiddlewares.forEach((handler) => {
+  for (const handler of setupMiddlewares) {
     handler(
       {
         unshift: (...handlers) => before.unshift(...handlers),
@@ -45,7 +45,7 @@ const applySetupMiddlewares = (
       },
       serverOptions,
     );
-  });
+  }
 
   return { before, after };
 };
@@ -104,9 +104,10 @@ const applyDefaultMiddlewares = async ({
       dev.proxy,
     );
     upgradeEvents.push(upgrade);
-    proxyMiddlewares.forEach((middleware) => {
+
+    for (const middleware of proxyMiddlewares) {
       middlewares.push(middleware);
-    });
+    }
   }
 
   const { default: launchEditorMiddleware } = await import(
@@ -166,7 +167,9 @@ const applyDefaultMiddlewares = async ({
 
   return {
     onUpgrade: (...args) => {
-      upgradeEvents.forEach((cb) => cb(...args));
+      for (const cb of upgradeEvents) {
+        cb(...args);
+      }
     },
   };
 };
@@ -185,7 +188,7 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
     compileMiddlewareAPI,
   );
 
-  before.forEach((fn) => middlewares.push(fn));
+  middlewares.push(...before);
 
   const { onUpgrade } = await applyDefaultMiddlewares({
     middlewares,
@@ -195,7 +198,7 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
     pwd: options.pwd,
   });
 
-  after.forEach((fn) => middlewares.push(fn));
+  middlewares.push(...after);
 
   return {
     close: async () => {

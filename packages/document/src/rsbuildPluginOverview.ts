@@ -16,12 +16,12 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
     const files = await glob(globPath);
     const groups: Group[] = [];
 
-    files.forEach((file) => {
+    for (const file of files) {
       const filename = file.replace(root, '').replace(/\.mdx?/, '');
       const pair = filename.split('/');
 
       if (pair.length < 2) {
-        return;
+        continue;
       }
 
       const group = groups.find((group) => group.name === pair[0]);
@@ -37,7 +37,7 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
           items: [item],
         });
       }
-    });
+    }
 
     const order = [
       'source',

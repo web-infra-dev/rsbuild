@@ -28,9 +28,9 @@ export const pluginMdx = (options: PluginMdxOptions = {}): RsbuildPlugin => ({
     api.modifyBundlerChain((chain, { CHAIN_ID }) => {
       const { extensions = ['.mdx', '.md'] } = options;
 
-      extensions.forEach((ext) => {
+      for (const ext of extensions) {
         chain.resolve.extensions.add(ext);
-      });
+      }
 
       const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
       const mdxRule = chain.module.rule('mdx');

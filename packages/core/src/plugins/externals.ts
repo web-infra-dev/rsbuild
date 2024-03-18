@@ -12,7 +12,7 @@ export function pluginExternals(): RsbuildPlugin {
       });
 
       api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
-        bundlerConfigs.forEach((config) => {
+        for (const config of bundlerConfigs) {
           const isWebWorker = Array.isArray(config.target)
             ? config.target.includes('webworker')
             : config.target === 'webworker';
@@ -21,7 +21,7 @@ export function pluginExternals(): RsbuildPlugin {
           if (isWebWorker && config.externals) {
             delete config.externals;
           }
-        });
+        }
       });
     },
   };

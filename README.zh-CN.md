@@ -42,7 +42,7 @@ Rsbuild 具备以下特性：
 
 - **易于配置**：Rsbuild 的目标之一，是为 Rspack 用户提供开箱即用的构建能力，使开发者能够在零配置的情况下开发 web 项目。同时，Rsbuild 提供一套语义化的构建配置，以降低 Rspack 配置的学习成本。
 
-- **性能优先**：Rsbuild 集成了社区中基于 Rust 的高性能工具，包括 [Rspack](https://github.com/web-infra-dev/rspack) 和 [SWC](https://swc.rs/)，以提供一流的构建速度和开发体验。与基于 Webpack 的 Create React App 和 Vue CLI 等工具相比，Rsbuild 提供了 5 ~ 10 倍的构建性能，以及更轻量的依赖体积。
+- **性能优先**：Rsbuild 集成了社区中基于 Rust 的高性能工具，包括 [Rspack](https://github.com/web-infra-dev/rspack)，[SWC](https://swc.rs/) 和 [Lightning CSS](https://lightningcss.dev/)，以提供一流的构建速度和开发体验。与基于 Webpack 的 Create React App 和 Vue CLI 等工具相比，Rsbuild 提供了 5 ~ 10 倍的构建性能，以及更轻量的依赖体积。
 
 - **插件生态**：Rsbuild 内置一个轻量级的插件系统，提供一系列高质量的官方插件。此外，Rsbuild 兼容大部分的 webpack 插件和所有的 Rspack 插件，这意味着你可以在 Rsbuild 中使用社区或公司内沉淀的现有插件，而不需要重写相关代码。
 
@@ -82,6 +82,8 @@ Rsbuild 具备以下特性：
 > 欢迎参与 Rsbuild 贡献！
 
 请阅读 [贡献指南](https://github.com/web-infra-dev/rsbuild/blob/main/CONTRIBUTING.md) 来共同参与 Rsbuild 的建设。
+
+### 贡献者
 
 <a href="https://github.com/web-infra-dev/rsbuild/graphs/contributors" target="_blank">
   <table>
@@ -128,6 +130,10 @@ Rsbuild 具备以下特性：
   </table>
 </a>
 
+### 行为准则
+
+本仓库采纳了字节跳动的开源项目行为准则。请点击 [行为准则](./CODE_OF_CONDUCT.md) 查看更多的信息。
+
 ## 🧑‍💻 社区
 
 欢迎加入我们的 [Discord](https://discord.gg/XsaKEEk4mW) 交流频道！Rspack / Rsbuild 团队和用户都在那里活跃，并且我们一直期待着各种贡献。
@@ -137,10 +143,6 @@ Rsbuild 具备以下特性：
 ## 🌟 质量
 
 Rsbuild 通过 [Web Infra QoS](https://web-infra-qos.netlify.app?product=rsbuild&metrics=bundle-size) 来观测核心指标的变化情况，比如 bundle size、compile speed 和 install size。
-
-## 🙌 行为准则
-
-本仓库采纳了字节跳动的开源项目行为准则。请点击 [行为准则](./CODE_OF_CONDUCT.md) 查看更多的信息。
 
 ## 🙏 致谢
 

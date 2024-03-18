@@ -44,7 +44,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
 
       let isAutoRegister = false;
 
-      bundlerConfigs.forEach((config) => {
+      for (const config of bundlerConfigs) {
         const registered = config.plugins?.some(
           (plugin) => plugin?.constructor?.name === pluginName,
         );
@@ -56,7 +56,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
         config.plugins ||= [];
         config.plugins.push(new module[pluginName]());
         isAutoRegister = true;
-      });
+      }
 
       if (isAutoRegister) {
         logger.info(`${color.bold(color.yellow(packageName))} enabled.`);

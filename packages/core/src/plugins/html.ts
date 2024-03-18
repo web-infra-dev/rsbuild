@@ -180,9 +180,9 @@ export const applyInjectTags = (api: RsbuildPluginAPI) => {
     const tags = castArray(config.html.tags).filter(Boolean);
     const tagsByEntries = config.html.tagsByEntries || {};
 
-    Object.keys(tagsByEntries).forEach((key) => {
+    for (const key of Object.keys(tagsByEntries)) {
       tagsByEntries[key] = castArray(tagsByEntries[key]).filter(Boolean);
-    });
+    }
 
     const shouldByEntries = Object.values(tagsByEntries).some(
       (entry) => Array.isArray(entry) && entry.length > 0,
@@ -304,7 +304,10 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
             const finalOptions = mergeChainedOptions({
               defaults: pluginOptions,
-              options: config.tools.htmlPlugin,
+              options:
+                typeof config.tools.htmlPlugin === 'boolean'
+                  ? {}
+                  : config.tools.htmlPlugin,
               utils: {
                 entryName,
                 entryValue,

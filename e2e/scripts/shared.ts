@@ -29,7 +29,6 @@ export const gotoPage = async (
   return page.goto(url);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = async () => {};
 
 export const createRsbuild = async (

@@ -3,11 +3,11 @@
 exports[`plugin-output > should allow to custom server directory with distPath.server 1`] = `
 {
   "output": {
-    "chunkFilename": "server/[name].js",
-    "filename": "server/[name].js",
+    "chunkFilename": "[name].js",
+    "filename": "[name].js",
     "hashFunction": "xxhash64",
     "libraryTarget": "commonjs2",
-    "path": "<ROOT>/packages/compat/webpack/tests/dist",
+    "path": "<ROOT>/packages/compat/webpack/tests/dist/server",
     "pathinfo": false,
     "publicPath": "/",
   },

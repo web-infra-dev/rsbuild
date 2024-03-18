@@ -47,7 +47,7 @@ export class SocketServer {
     });
 
     this.timer = setInterval(() => {
-      this.wsServer.clients.forEach((socket) => {
+      for (const socket of this.wsServer.clients) {
         const extWs = socket as ExtWebSocket;
         if (!extWs.isAlive) {
           extWs.terminate();
@@ -57,7 +57,7 @@ export class SocketServer {
             // empty
           });
         }
-      });
+      }
     }, 30000);
 
     this.wsServer.on('connection', (socket) => {
@@ -75,9 +75,9 @@ export class SocketServer {
     type: string,
     data?: Record<string, any> | string | boolean,
   ) {
-    this.sockets.forEach((socket) => {
+    for (const socket of this.sockets) {
       this.send(socket, JSON.stringify({ type, data }));
-    });
+    }
   }
 
   public singleWrite(
@@ -89,9 +89,9 @@ export class SocketServer {
   }
 
   public close() {
-    this.sockets.forEach((socket) => {
+    for (const socket of this.sockets) {
       socket.close();
-    });
+    }
 
     if (this.timer) {
       clearInterval(this.timer);

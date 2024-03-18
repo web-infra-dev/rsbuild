@@ -9,11 +9,11 @@ rspackOnlyTest('should allow to set hash format to fullhash', async () => {
   const files = await rsbuild.unwrapOutputJSON();
   const filenames = Object.keys(files);
 
-  let firstHash: string;
+  let firstHash = '';
 
-  filenames.forEach((filename) => {
+  for (const filename of filenames) {
     if (!filename.includes('static')) {
-      return;
+      continue;
     }
 
     const hash = filename.match(/[a-f0-9]{12}\.js/)![0];
@@ -22,5 +22,5 @@ rspackOnlyTest('should allow to set hash format to fullhash', async () => {
     } else {
       expect(hash).toEqual(firstHash);
     }
-  });
+  }
 });

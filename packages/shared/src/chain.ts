@@ -55,9 +55,9 @@ export async function modifyBundlerChain(
   );
 
   if (context.config.tools?.bundlerChain) {
-    castArray(context.config.tools.bundlerChain).forEach((item) => {
+    for (const item of castArray(context.config.tools.bundlerChain)) {
       item(modifiedBundlerChain, utils);
-    });
+    }
   }
 
   debug('modify bundler chain done');
@@ -112,6 +112,7 @@ export const CHAIN_ID = {
     SVG: 'svg',
     SVG_URL: 'svg-asset-url',
     SVG_ASSET: 'svg-asset',
+    SVG_REACT: 'svg-react',
     SVG_INLINE: 'svg-asset-inline',
   },
   /** Predefined loaders */
@@ -134,7 +135,7 @@ export const CHAIN_ID = {
     VUE: 'vue',
     /** swc-loader */
     SWC: 'swc',
-    /** @svgr/webpack */
+    /** svgr */
     SVGR: 'svgr',
     /** plugin-image-compress svgo-loader */
     SVGO: 'svgo',
@@ -154,6 +155,8 @@ export const CHAIN_ID = {
     ESBUILD: 'esbuild',
     /** postcss-loader */
     POSTCSS: 'postcss',
+    /** lightningcss-loader */
+    LIGHTNINGCSS: 'lightningcss',
     /** ignore-css-loader */
     IGNORE_CSS: 'ignore-css',
     /** css-modules-typescript-loader */
@@ -267,13 +270,13 @@ export function applyScriptCondition({
   // Otherwise, it will lead to compilation errors and incorrect output.
   rule.include.add(TS_AND_JSX_REGEX);
 
-  [...includes, ...(config.source.include || [])].forEach((condition) => {
+  for (const condition of [...includes, ...(config.source.include || [])]) {
     rule.include.add(condition);
-  });
+  }
 
-  [...excludes, ...(config.source.exclude || [])].forEach((condition) => {
+  for (const condition of [...excludes, ...(config.source.exclude || [])]) {
     rule.exclude.add(condition);
-  });
+  }
 }
 
 export const formatPublicPath = (publicPath: string, withSlash = true) => {
@@ -369,11 +372,11 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
 
       if (isServer) {
         const serverPath = getDistPath(config, 'server');
-        const filename = posix.join(serverPath, '[name].js');
 
         chain.output
-          .filename(filename)
-          .chunkFilename(filename)
+          .path(posix.join(api.context.distPath, serverPath))
+          .filename('[name].js')
+          .chunkFilename('[name].js')
           .libraryTarget('commonjs2');
       }
 
@@ -466,7 +469,7 @@ function applyAlias({
    * - Relative paths need to be turned into absolute paths.
    * - Absolute paths or a package name are not processed.
    */
-  Object.keys(mergedAlias).forEach((name) => {
+  for (const name of Object.keys(mergedAlias)) {
     const values = castArray(mergedAlias[name]);
     const formattedValues = values.map((value) => {
       if (typeof value === 'string' && value.startsWith('.')) {
@@ -481,7 +484,7 @@ function applyAlias({
         | string
         | string[],
     );
-  });
+  }
 }
 
 export function chainToConfig(chain: BundlerChain): RspackConfig {
@@ -498,14 +501,14 @@ export function chainToConfig(chain: BundlerChain): RspackConfig {
    * webpack-chain can not handle entry description object correctly,
    * so we need to format the entry object and correct the entry description object.
    */
-  Object.entries(entry).forEach(([entryName, entryValue]) => {
+  for (const [entryName, entryValue] of Object.entries(entry)) {
     const entryImport: string[] = [];
     let entryDescription: EntryDescription | null = null;
 
-    castArray(entryValue).forEach((item) => {
+    for (const item of castArray(entryValue)) {
       if (typeof item === 'string') {
         entryImport.push(item);
-        return;
+        continue;
       }
 
       if (item.import) {
@@ -518,7 +521,7 @@ export function chainToConfig(chain: BundlerChain): RspackConfig {
       } else {
         entryDescription = item;
       }
-    });
+    }
 
     formattedEntry[entryName] = entryDescription
       ? {
@@ -526,7 +529,7 @@ export function chainToConfig(chain: BundlerChain): RspackConfig {
           import: entryImport,
         }
       : entryImport;
-  });
+  }
 
   config.entry = formattedEntry;
 
@@ -542,12 +545,12 @@ export const modifySwcLoaderOptions = ({
 }) => {
   const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI];
 
-  ruleIds.forEach((ruleId) => {
+  for (const ruleId of ruleIds) {
     if (chain.module.rules.has(ruleId)) {
       const rule = chain.module.rule(ruleId);
       if (rule.uses.has(CHAIN_ID.USE.SWC)) {
         rule.use(CHAIN_ID.USE.SWC).tap(modifier);
       }
     }
-  });
+  }
 };

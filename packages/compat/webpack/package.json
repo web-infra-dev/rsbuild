@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/webpack",
-  "version": "0.4.10",
+  "version": "0.4.15",
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "@rsbuild/shared": "workspace:*",
     "fast-glob": "^3.3.1",
     "globby": "^11.1.0",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.6.1",
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
     "mini-css-extract-plugin": "2.8.1",
     "postcss": "^8.4.33",
     "terser-webpack-plugin": "5.3.10",
@@ -45,7 +45,7 @@
   "devDependencies": {
     "@scripts/test-helper": "workspace:*",
     "@types/node": "16.x",
-    "typescript": "^5.3.0"
+    "typescript": "^5.4.2"
   },
   "publishConfig": {
     "access": "public",

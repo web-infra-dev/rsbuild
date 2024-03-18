@@ -1,0 +1,47 @@
+{
+  "name": "@rsbuild/plugin-lightningcss",
+  "version": "0.4.15",
+  "description": "lightningcss for Rsbuild",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/plugin-lightningcss"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "modern build",
+    "dev": "modern build --watch"
+  },
+  "dependencies": {
+    "@rsbuild/shared": "workspace:*",
+    "lightningcss": "^1.24.0"
+  },
+  "devDependencies": {
+    "@rspack/core": "0.5.7",
+    "@rsbuild/core": "workspace:*",
+    "@scripts/test-helper": "workspace:*",
+    "@types/node": "16.x",
+    "typescript": "^5.4.2"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": "workspace:^0.4.15"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}

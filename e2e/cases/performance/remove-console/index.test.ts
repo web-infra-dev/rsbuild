@@ -13,9 +13,9 @@ const expectConsoleType = async (
   )!;
   const content = files[indexFile];
 
-  Object.entries(consoleType).forEach(([key, value]) => {
+  for (const [key, value] of Object.entries(consoleType)) {
     expect(content.includes(`test-console-${key}`)).toEqual(value);
-  });
+  }
 };
 
 test('should remove specified console correctly', async () => {

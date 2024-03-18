@@ -54,10 +54,10 @@ const merge = (x: unknown, y: unknown, path = '') => {
   const merged: Record<string, unknown> = {};
   const keys = new Set([...Object.keys(x), ...Object.keys(y)]);
 
-  keys.forEach((key) => {
+  for (const key of keys) {
     const childPath = path ? `${path}.${key}` : key;
     merged[key] = merge(x[key], y[key], childPath);
-  });
+  }
 
   return merged;
 };

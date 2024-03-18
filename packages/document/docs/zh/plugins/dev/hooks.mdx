@@ -359,8 +359,8 @@ import OnAfterBuild from '@zh/shared/onAfterBuild.md';
 ```ts
 const myPlugin = () => ({
   setup: (api) => {
-    api.onAfterBuild(({ stats }) => {
-      console.log(stats?.toJson());
+    api.onAfterBuild(({ isFirstCompile, stats }) => {
+      console.log(stats?.toJson(), isFirstCompile);
     });
   },
 });

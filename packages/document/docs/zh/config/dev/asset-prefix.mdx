@@ -65,6 +65,17 @@ export default {
 <script defer src="https://example.com/assets/static/js/index.js"></script>
 ```
 
+## 路径类型
+
+assetPrefix 可以设置为以下类型的路径：
+
+- **绝对路径**：这是最常见的做法，可以为指定服务器路径，比如 `/assets/`。
+- **'auto'**：Rspack 将自动计算路径，并生成基于文件所在位置的相对路径。
+
+:::tip
+不建议将 assetPrefix 设置为相对路径，比如 `'./assets/'。因为当资源位于不同的路径深度时，使用相对路径可能会导致资源无法正确加载。
+:::
+
 ## 对比 `publicPath`
 
 `dev.assetPrefix` 的功能与 Rspack 的 [output.publicPath](https://rspack.dev/zh/config/output#outputpublicpath) 配置基本一致。

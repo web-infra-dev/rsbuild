@@ -10,6 +10,7 @@ coverage/
 doc_build/
 playwright-report/
 tsconfig.tsbuildinfo
+.swc
 
 .vscode/**/*
 !.vscode/settings.json

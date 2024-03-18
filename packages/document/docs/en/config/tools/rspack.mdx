@@ -33,6 +33,8 @@ export default {
 export default {
   tools: {
     rspack: (config) => {
+      config.resolve ||= {};
+      config.resolve.alias ||= {};
       config.resolve.alias['@util'] = 'src/util';
       return config;
     },
@@ -171,7 +173,7 @@ The Rspack instance. For example:
 export default {
   tools: {
     rspack: (config, { rspack }) => {
-      config.plugins.push(new rspack.BannerPlugin());
+      config.plugins?.push(new rspack.BannerPlugin());
       return config;
     },
   },

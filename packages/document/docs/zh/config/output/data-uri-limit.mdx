@@ -3,12 +3,14 @@
 - **类型：**
 
 ```ts
-type DataUriLimitConfig = {
-  svg?: number;
-  font?: number;
-  image?: number;
-  media?: number;
-};
+type DataUriLimitConfig =
+  | number
+  | {
+      svg?: number;
+      font?: number;
+      image?: number;
+      media?: number;
+    };
 ```
 
 - **默认值：**
@@ -37,7 +39,37 @@ const defaultDatUriLimit = {
 
 ### 示例
 
-修改图片资源的阈值为 5000 Bytes，设置视频资源不内联：
+- 内联小于 4kB 的所有静态资源：
+
+```js
+export default {
+  output: {
+    dataUriLimit: 4000,
+  },
+};
+```
+
+- 禁用静态资源内联：
+
+```js
+export default {
+  output: {
+    dataUriLimit: 0,
+  },
+};
+```
+
+- 内联所有静态资源：
+
+```js
+export default {
+  output: {
+    dataUriLimit: Number.MAX_SAFE_INTEGER,
+  },
+};
+```
+
+- 设置图片资源的阈值为 5kB，不内联视频资源：
 
 ```js
 export default {

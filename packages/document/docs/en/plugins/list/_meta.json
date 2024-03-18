@@ -16,6 +16,7 @@
   "plugin-image-compress",
   "plugin-mdx",
   "plugin-node-polyfill",
+  "plugin-lightningcss",
   "plugin-source-build",
   "plugin-stylus",
   "plugin-styled-components",

@@ -1,34 +1,38 @@
-import { expect, describe, it, vi } from 'vitest';
+import { expect, describe, it } from 'vitest';
 import { pluginPreact } from '../src';
-import { createStubRsbuild } from '@scripts/test-helper';
+import { createRsbuild } from '@rsbuild/core';
 
 describe('plugins/preact', () => {
+  const preactAlias = {
+    react: 'preact/compat',
+    'react-dom': 'preact/compat',
+    'react-dom/test-utils': 'preact/test-utils',
+    'react/jsx-runtime': 'preact/jsx-runtime',
+  };
+
   it('should apply react aliases by default', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginPreact()],
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [pluginPreact()],
+      },
     });
 
-    const config = await rsbuild.unwrapConfig();
-    expect(config.resolve.alias).toMatchInlineSnapshot(`
-      {
-        "react": "preact/compat",
-        "react-dom": "preact/compat",
-        "react-dom/test-utils": "preact/test-utils",
-        "react/jsx-runtime": "preact/jsx-runtime",
-      }
-    `);
+    const configs = await rsbuild.initConfigs();
+    expect(configs[0].resolve?.alias).toMatchObject(preactAlias);
   });
 
   it('should not apply react aliases if reactAliasesEnabled is false', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [
-        pluginPreact({
-          reactAliasesEnabled: false,
-        }),
-      ],
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [
+          pluginPreact({
+            reactAliasesEnabled: false,
+          }),
+        ],
+      },
     });
 
-    const config = await rsbuild.unwrapConfig();
-    expect(config.resolve?.alias).toBeFalsy();
+    const configs = await rsbuild.initConfigs();
+    expect(configs[0].resolve?.alias).not.toMatchObject(preactAlias);
   });
 });

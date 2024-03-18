@@ -1,3 +1,3 @@
-import { ReactComponent } from './viewBox.svg';
+import ViewBox from './viewBox.svg?react';
 
-console.log(ReactComponent);
+console.log(ViewBox);

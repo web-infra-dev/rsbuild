@@ -28,9 +28,9 @@ export function pluginSass(): RsbuildPlugin {
           .rule(utils.CHAIN_ID.RULE.SASS)
           .test(SASS_REGEX);
 
-        excludes.forEach((item) => {
+        for (const item of excludes) {
           rule.exclude.add(item);
-        });
+        }
 
         await applyBaseCSSRule({
           rule,
