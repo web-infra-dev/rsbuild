@@ -37,6 +37,7 @@ export interface HtmlInjectTag {
 }
 
 export type HtmlInjectTagUtils = {
+  entryName: string;
   outputName: string;
   publicPath: string;
   hash: string;
