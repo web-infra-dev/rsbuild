@@ -4,9 +4,19 @@ Bundle size optimization is an important part in production build because it dir
 
 ## Reduce duplicate dependencies
 
-In real projects, there will be some third-party dependencies installed with multiple versions. Duplicate dependencies can lead to larger bundles and slower builds.
+It is common for web projects to bundle multiple versions of third-party dependencies. Duplicate dependencies can lead to increased bundle size and slower build speed.
 
-We can detect or eliminate duplicate dependencies with some community tools.
+### Detect duplicate dependencies
+
+You can use [Rsdoctor](https://rsdoctor.dev) to detect whether there are duplicate dependencies in the project. Rsdoctor will analyze during the build process, find any duplicate bundled dependencies and display them visually:
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/lognuvj/rsdoctor/docs/usage/bundle/bundle-alerts.png)
+
+For more details, see [Rsdoctor - Duplicate Dependency Problem](https://rsdoctor.dev/blog/topic/duplicate-pkg-problem).
+
+### Eliminate duplicate dependencies
+
+We can eliminate duplicate dependencies with the package manager.
 
 - If you are using `pnpm >= 7.26.0`, you can use the [pnpm dedupe](https://pnpm.io/cli/dedupe) command to upgrade and eliminate duplicate dependencies.
 

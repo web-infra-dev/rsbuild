@@ -14,6 +14,19 @@ After setting the `moduleFederation.options` option, Rsbuild will take the follo
 
 ## Options
 
+The type of `moduleFederation.options` is exactly the same as the ModuleFederationPlugin plugin of Rspack:
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  moduleFederation: {
+    options: {
+      name: 'remote',
+      // other options
+    },
+  },
+});
+```
+
 Please refer to the [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) document for all available options.
 
 ## Example

@@ -14,6 +14,19 @@
 
 ## 选项
 
+`moduleFederation.options` 的类型与 Rspack 的 ModuleFederationPlugin 插件完全一致：
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  moduleFederation: {
+    options: {
+      name: 'remote',
+      // other options
+    },
+  },
+});
+```
+
 请参考 [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) 文档来了解所有可用的选项。
 
 ## 示例
