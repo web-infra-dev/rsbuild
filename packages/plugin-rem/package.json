@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "terser": "5.29.1"
+    "terser": "5.29.2"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

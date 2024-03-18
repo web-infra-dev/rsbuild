@@ -38,7 +38,7 @@
     "@scripts/test-helper": "workspace:*",
     "@types/serialize-javascript": "^5.0.1",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
-    "terser": "5.29.1",
+    "terser": "5.29.2",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {

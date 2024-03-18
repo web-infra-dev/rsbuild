@@ -50,7 +50,7 @@
     "simple-git-hooks": "^2.10.0",
     "vitest": "^1.2.1"
   },
-  "packageManager": "pnpm@8.15.4",
+  "packageManager": "pnpm@8.15.5",
   "engines": {
     "node": ">=16.18.1",
     "pnpm": ">=8.7.0"
