@@ -227,9 +227,9 @@ export const CHAIN_ID = {
   },
   /** Predefined minimizers */
   MINIMIZER: {
-    /** TerserWebpackPlugin */
+    /** SwcJsMinimizerRspackPlugin */
     JS: 'js',
-    /** CssMinimizerWebpackPlugin */
+    /** SwcCssMinimizerRspackPlugin */
     CSS: 'css',
     /** ESBuildPlugin */
     ESBUILD: 'js-css',

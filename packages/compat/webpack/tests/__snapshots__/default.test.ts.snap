@@ -887,28 +887,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   "name": "Client",
   "optimization": {
     "minimize": true,
-    "minimizer": [
-      TerserPlugin {
-        "options": {
-          "exclude": undefined,
-          "extractComments": true,
-          "include": undefined,
-          "minimizer": {
-            "implementation": [Function],
-            "options": {
-              "format": {
-                "ascii_only": true,
-              },
-              "mangle": {
-                "safari10": true,
-              },
-            },
-          },
-          "parallel": true,
-          "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-        },
-      },
-    ],
     "splitChunks": {
       "cacheGroups": {
         "lib-axios": {
@@ -1393,28 +1371,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "name": "Server",
   "optimization": {
     "minimize": true,
-    "minimizer": [
-      TerserPlugin {
-        "options": {
-          "exclude": undefined,
-          "extractComments": true,
-          "include": undefined,
-          "minimizer": {
-            "implementation": [Function],
-            "options": {
-              "format": {
-                "ascii_only": true,
-              },
-              "mangle": {
-                "safari10": true,
-              },
-            },
-          },
-          "parallel": true,
-          "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-        },
-      },
-    ],
     "splitChunks": false,
   },
   "output": {
@@ -1754,28 +1710,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "name": "Web Worker",
   "optimization": {
     "minimize": true,
-    "minimizer": [
-      TerserPlugin {
-        "options": {
-          "exclude": undefined,
-          "extractComments": true,
-          "include": undefined,
-          "minimizer": {
-            "implementation": [Function],
-            "options": {
-              "format": {
-                "ascii_only": true,
-              },
-              "mangle": {
-                "safari10": true,
-              },
-            },
-          },
-          "parallel": true,
-          "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-        },
-      },
-    ],
     "splitChunks": false,
   },
   "output": {

@@ -38,7 +38,6 @@
     "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
     "mini-css-extract-plugin": "2.8.1",
     "postcss": "^8.4.33",
-    "terser-webpack-plugin": "5.3.10",
     "tsconfig-paths-webpack-plugin": "4.1.0",
     "webpack": "^5.89.0"
   },

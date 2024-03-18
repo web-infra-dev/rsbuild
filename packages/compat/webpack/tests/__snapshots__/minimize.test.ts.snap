@@ -3,27 +3,5 @@
 exports[`plugin-minimize > should apply minimizer in production 1`] = `
 {
   "minimize": true,
-  "minimizer": [
-    TerserPlugin {
-      "options": {
-        "exclude": undefined,
-        "extractComments": true,
-        "include": undefined,
-        "minimizer": {
-          "implementation": [Function],
-          "options": {
-            "format": {
-              "ascii_only": true,
-            },
-            "mangle": {
-              "safari10": true,
-            },
-          },
-        },
-        "parallel": true,
-        "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-      },
-    },
-  ],
 }
 `;

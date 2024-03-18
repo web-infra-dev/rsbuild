@@ -15,7 +15,6 @@ import type {
   StyleLoaderOptions,
   AutoprefixerOptions,
   PostCSSLoaderOptions,
-  TerserPluginOptions,
 } from '../thirdParty';
 import type { BundlerChain } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
@@ -95,8 +94,6 @@ export type ToolsWebpackChainConfig = ArrayOrNot<
   (chain: WebpackChain, utils: ModifyWebpackChainUtils) => void
 >;
 
-export type ToolsTerserConfig = ChainedConfig<TerserPluginOptions>;
-
 export interface ToolsConfig {
   /**
    * Modify the config of [sass-loader](https://github.com/webpack-contrib/sass-loader).
@@ -154,11 +151,6 @@ export interface ToolsConfig {
    * @requires webpack
    */
   webpackChain?: ToolsWebpackChainConfig;
-  /**
-   * Modify the options of [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin).
-   * @requires webpack
-   */
-  terser?: ToolsTerserConfig;
 }
 
 export type NormalizedToolsConfig = ToolsConfig & {

@@ -46,6 +46,67 @@ describe('plugin-swc', () => {
     process.env.NODE_ENV = 'test';
   });
 
+  it('should remove all comments when output.legalComments is none', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginSwc()],
+      rsbuildConfig: {
+        output: {
+          legalComments: 'none',
+        },
+        provider: webpackProvider,
+      },
+    });
+
+    const config = await rsbuild.unwrapConfig();
+
+    expect(JSON.stringify(config.optimization)).toContain('"comments":false');
+
+    process.env.NODE_ENV = 'test';
+  });
+
+  it('should not enable ascii_only when output.charset is utf8', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginSwc()],
+      rsbuildConfig: {
+        output: {
+          charset: 'utf8',
+        },
+        provider: webpackProvider,
+      },
+    });
+
+    const config = await rsbuild.unwrapConfig();
+    expect(JSON.stringify(config.optimization)).toContain('"asciiOnly":false');
+
+    process.env.NODE_ENV = 'test';
+  });
+
+  it('should not extractComments when output.legalComments is inline', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginSwc()],
+      rsbuildConfig: {
+        output: {
+          legalComments: 'inline',
+        },
+        provider: webpackProvider,
+      },
+    });
+
+    const config = await rsbuild.unwrapConfig();
+
+    expect(JSON.stringify(config.optimization)).toContain(
+      '"comments":"some"',
+    );
+
+    process.env.NODE_ENV = 'test';
+  });
+
   it('should set correct swc minimizer options in production', async () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({

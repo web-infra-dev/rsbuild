@@ -31,19 +31,6 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('Terser and SWC minimizer should not coexist', async () => {
-    process.env.NODE_ENV = 'production';
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize(), pluginSwc()],
-    });
-
-    const config = await rsbuild.unwrapConfig();
-    expect(config.optimization?.minimizer.length).toBe(1);
-
-    process.env.NODE_ENV = 'test';
-  });
-
   it('should not apply minimizer when output.minify is false', async () => {
     process.env.NODE_ENV = 'production';
 
@@ -140,34 +127,6 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should accept and merge options for JS minimizer', async () => {
-    process.env.NODE_ENV = 'production';
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
-      rsbuildConfig: {
-        // `tools.terser` is not documented, but it's a valid option though
-        tools: {
-          terser: {
-            exclude: 'no_js_minify',
-          },
-        },
-      },
-    });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    // implicit assert the order of minimizers here,
-    // could also be a guard for the order of minimizers
-    expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
-      options: {
-        exclude: 'no_js_minify',
-      },
-    });
-
-    process.env.NODE_ENV = 'test';
-  });
-
   it('should accept and merge options for HTML minimizer', async () => {
     process.env.NODE_ENV = 'production';
 
@@ -193,68 +152,6 @@ describe('plugin-minimize', () => {
         },
       },
     );
-
-    process.env.NODE_ENV = 'test';
-  });
-
-  it('should not extractComments when output.legalComments is inline', async () => {
-    process.env.NODE_ENV = 'production';
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
-      rsbuildConfig: {
-        output: {
-          legalComments: 'inline',
-        },
-      },
-    });
-
-    const config = await rsbuild.unwrapConfig();
-    expect(JSON.stringify(config.optimization)).toContain(
-      '"extractComments":false',
-    );
-    expect(JSON.stringify(config.optimization)).not.toContain(
-      '"comments":false',
-    );
-
-    process.env.NODE_ENV = 'test';
-  });
-
-  it('should remove all comments when output.legalComments is none', async () => {
-    process.env.NODE_ENV = 'production';
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
-      rsbuildConfig: {
-        output: {
-          legalComments: 'none',
-        },
-      },
-    });
-
-    const config = await rsbuild.unwrapConfig();
-    expect(JSON.stringify(config.optimization)).toContain(
-      '"extractComments":false',
-    );
-    expect(JSON.stringify(config.optimization)).toContain('"comments":false');
-
-    process.env.NODE_ENV = 'test';
-  });
-
-  it('should not enable ascii_only when output.charset is utf8', async () => {
-    process.env.NODE_ENV = 'production';
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
-      rsbuildConfig: {
-        output: {
-          charset: 'utf8',
-        },
-      },
-    });
-
-    const config = await rsbuild.unwrapConfig();
-    expect(JSON.stringify(config.optimization)).toContain('"ascii_only":false');
 
     process.env.NODE_ENV = 'test';
   });

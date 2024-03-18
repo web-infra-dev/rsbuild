@@ -2,10 +2,10 @@ import type {
   RsbuildConfig,
   NormalizedConfig,
   InspectConfigOptions,
+  MinifyJSOptions,
 } from './types';
 import { logger } from './logger';
 import { join } from 'node:path';
-import type { minify } from 'terser';
 import fse from '../compiled/fs-extra';
 import { pick, color, upperFirst, deepmerge } from './utils';
 import { getTerserMinifyOptions } from './minimize';
@@ -72,21 +72,6 @@ export async function outputInspectConfigFiles({
   );
 }
 
-/**
- * lodash set type declare.
- * eg. a.b.c; a[0].b[1]
- */
-export type GetTypeByPath<
-  T extends string,
-  C extends Record<string, any>,
-> = T extends `${infer K}[${infer P}]${infer S}`
-  ? GetTypeByPath<`${K}.${P}${S}`, C>
-  : T extends `${infer K}.${infer P}`
-    ? GetTypeByPath<P, K extends '' ? C : NonNullable<C[K]>>
-    : C[T];
-
-type MinifyOptions = NonNullable<Parameters<typeof minify>[1]>;
-
 export async function getHtmlMinifyOptions(
   isProd: boolean,
   config: NormalizedConfig,
@@ -99,8 +84,7 @@ export async function getHtmlMinifyOptions(
     return false;
   }
 
-  const minifyJS: MinifyOptions = (await getTerserMinifyOptions(config))
-    .terserOptions!;
+  const minifyJS: MinifyJSOptions = getTerserMinifyOptions(config);
 
   const htmlMinifyDefaultOptions = {
     removeComments: false,
