@@ -1,6 +1,4 @@
-import {
-  type RsbuildPlugin,
-} from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/shared';
 
 export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'rsbuild-webpack:minimize',
