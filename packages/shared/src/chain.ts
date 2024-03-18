@@ -194,8 +194,6 @@ export const CHAIN_ID = {
     BUNDLE_ANALYZER: 'bundle-analyze',
     /** ModuleFederationPlugin */
     MODULE_FEDERATION: 'module-federation',
-    /** HtmlTagsPlugin */
-    HTML_TAGS: 'html-tags-plugin',
     /** HtmlBasicPlugin */
     HTML_BASIC: 'html-basic-plugin',
     /** HtmlNoncePlugin */
