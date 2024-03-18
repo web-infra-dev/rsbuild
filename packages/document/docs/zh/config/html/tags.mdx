@@ -75,13 +75,14 @@ export default {
 ## 函数形式
 
 ```ts
-export type HtmlInjectTagUtils = {
+type HtmlInjectTagUtils = {
+  hash: string;
+  entryName: string;
   outputName: string;
   publicPath: string;
-  hash: string;
 };
 
-export type HtmlInjectTagHandler = (
+type HtmlInjectTagHandler = (
   tags: HtmlInjectTag[],
   utils: HtmlInjectTagUtils,
 ) => HtmlInjectTag[] | void;

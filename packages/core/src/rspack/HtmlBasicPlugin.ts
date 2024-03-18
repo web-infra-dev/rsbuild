@@ -82,6 +82,7 @@ const modifyTags = (
   data: AlterAssetTagGroupsData,
   tagConfig: TagConfig,
   compilationHash: string,
+  entryName: string,
 ) => {
   // skip unmatched file and empty tag list.
   const includesCurrentFile =
@@ -92,7 +93,7 @@ const modifyTags = (
   }
 
   // convert tags between `HtmlInjectTag` and `HtmlWebpackPlugin.HtmlTagObject`.
-  const fromWebpackTags = (
+  const formatTags = (
     tags: HtmlWebpackPlugin.HtmlTagObject[],
     override?: Partial<HtmlInjectTag>,
   ) => {
@@ -162,8 +163,8 @@ const modifyTags = (
   // create tag list from html-webpack-plugin and options.
   const handlers: HtmlInjectTagHandler[] = [];
   let tags = [
-    ...fromWebpackTags(data.headTags, { head: true }),
-    ...fromWebpackTags(data.bodyTags, { head: false }),
+    ...formatTags(data.headTags, { head: true }),
+    ...formatTags(data.bodyTags, { head: false }),
   ];
 
   for (const tag of tagConfig.tags) {
@@ -193,6 +194,7 @@ const modifyTags = (
     outputName: data.outputName,
     publicPath: data.publicPath,
     hash: compilationHash,
+    entryName,
   };
   for (const handler of handlers) {
     tags = handler(tags, utils) || tags;
@@ -271,7 +273,7 @@ export class HtmlBasicPlugin {
           }
 
           if (tagConfig) {
-            modifyTags(data, tagConfig, compilationHash);
+            modifyTags(data, tagConfig, compilationHash, entryName);
           }
 
           addFavicon(headTags, entryName);

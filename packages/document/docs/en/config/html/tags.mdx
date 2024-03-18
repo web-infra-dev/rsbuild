@@ -75,13 +75,14 @@ You can also pass functions to those fields to control the path joining.
 ## Tags Handler
 
 ```ts
-export type HtmlInjectTagUtils = {
+type HtmlInjectTagUtils = {
+  hash: string;
+  entryName: string;
   outputName: string;
   publicPath: string;
-  hash: string;
 };
 
-export type HtmlInjectTagHandler = (
+type HtmlInjectTagHandler = (
   tags: HtmlInjectTag[],
   utils: HtmlInjectTagUtils,
 ) => HtmlInjectTag[] | void;
