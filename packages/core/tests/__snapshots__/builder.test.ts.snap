@@ -664,9 +664,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {

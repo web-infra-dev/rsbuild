@@ -664,9 +664,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
@@ -1427,9 +1425,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
@@ -2565,9 +2561,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
