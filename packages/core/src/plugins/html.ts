@@ -289,7 +289,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
-          .use(HtmlBasicPlugin, [{ info: htmlInfoMap }]);
+          .use(HtmlBasicPlugin, [htmlInfoMap]);
 
         if (config.security) {
           const { nonce } = config.security;

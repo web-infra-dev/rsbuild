@@ -1,23 +1,23 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type { HtmlTagObject } from 'html-webpack-plugin';
 import type { Compiler, Compilation } from '@rspack/core';
 import {
   partition,
   isFunction,
   withPublicPath,
-  type HtmlInjectTag,
-  type HtmlInjectTagHandler,
-  type HtmlInjectTagDescriptor,
-  type HtmlInjectTagUtils,
+  type HtmlTag,
+  type HtmlTagHandler,
+  type HtmlTagDescriptor,
+  type HtmlTagUtils,
 } from '@rsbuild/shared';
 import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
-export interface TagConfig {
-  hash?: HtmlInjectTag['hash'];
-  publicPath?: HtmlInjectTag['publicPath'];
-  append?: HtmlInjectTag['append'];
-  includes?: string[];
-  tags?: HtmlInjectTagDescriptor[];
-}
+export type TagConfig = {
+  hash?: HtmlTag['hash'];
+  publicPath?: HtmlTag['publicPath'];
+  append?: HtmlTag['append'];
+  tags?: HtmlTagDescriptor[];
+};
 
 /** @see {@link https://developer.mozilla.org/en-US/docs/Glossary/Void_element} */
 export const VOID_TAGS = [
@@ -55,21 +55,17 @@ export const FILE_ATTRS = {
   script: 'src',
 };
 
-const withHash = (url: string, hash: string) => `${url}?${hash}`;
-
 export type HtmlInfo = {
   favicon?: string;
   tagConfig?: TagConfig;
   templateContent?: string;
 };
 
-export type HtmlBasicPluginOptions = {
-  info: Record<string, HtmlInfo>;
-};
+export type HtmlBasicPluginOptions = Record<string, HtmlInfo>;
 
 export type AlterAssetTagGroupsData = {
-  headTags: HtmlWebpackPlugin.HtmlTagObject[];
-  bodyTags: HtmlWebpackPlugin.HtmlTagObject[];
+  headTags: HtmlTagObject[];
+  bodyTags: HtmlTagObject[];
   outputName: string;
   publicPath: string;
   plugin: HtmlWebpackPlugin;
@@ -78,40 +74,43 @@ export type AlterAssetTagGroupsData = {
 export const hasTitle = (html?: string): boolean =>
   html ? /<title/i.test(html) && /<\/title/i.test(html) : false;
 
+const getTagPriority = (tag: HtmlTag, tagConfig: TagConfig) => {
+  const head = tag.head ?? HEAD_TAGS.includes(tag.tag);
+  let priority = head ? -2 : 2;
+
+  const append = tag.append ?? tagConfig.append;
+  if (typeof append === 'boolean') {
+    priority += append ? 1 : -1;
+  }
+
+  return priority;
+};
+
+// convert tags between `HtmlTag` and `HtmlTagObject`.
+const formatTags = (
+  tags: HtmlTagObject[],
+  override?: Partial<HtmlTag>,
+): HtmlTag[] =>
+  tags.map((tag) => ({
+    tag: tag.tagName,
+    attrs: tag.attributes,
+    children: tag.innerHTML,
+    publicPath: false,
+    ...override,
+  }));
+
 const modifyTags = (
   data: AlterAssetTagGroupsData,
   tagConfig: TagConfig,
   compilationHash: string,
   entryName: string,
 ) => {
-  // skip unmatched file and empty tag list.
-  const includesCurrentFile =
-    !tagConfig.includes || tagConfig.includes.includes(data.outputName);
-
-  if (!includesCurrentFile || !tagConfig.tags?.length) {
+  if (!tagConfig.tags?.length) {
     return data;
   }
 
-  // convert tags between `HtmlInjectTag` and `HtmlWebpackPlugin.HtmlTagObject`.
-  const formatTags = (
-    tags: HtmlWebpackPlugin.HtmlTagObject[],
-    override?: Partial<HtmlInjectTag>,
-  ) => {
-    const ret: HtmlInjectTag[] = [];
-    for (const tag of tags) {
-      ret.push({
-        tag: tag.tagName,
-        attrs: tag.attributes,
-        children: tag.innerHTML,
-        publicPath: false,
-        ...override,
-      });
-    }
-    return ret;
-  };
-
-  const fromInjectTags = (tags: HtmlInjectTag[]) => {
-    const ret: HtmlWebpackPlugin.HtmlTagObject[] = [];
+  const fromInjectTags = (tags: HtmlTag[]) => {
+    const ret: HtmlTagObject[] = [];
 
     for (const tag of tags) {
       // apply publicPath and hash to filename attr.
@@ -138,11 +137,11 @@ const modifyTags = (
           }
         } else if (typeof optHash === 'string') {
           if (optHash.length) {
-            filename = withHash(filename, optHash);
+            filename = `${filename}?${optHash}`;
           }
         } else if (optHash === true) {
           if (compilationHash.length) {
-            filename = withHash(filename, compilationHash);
+            filename = `${filename}?${compilationHash}`;
           }
         }
 
@@ -160,8 +159,8 @@ const modifyTags = (
     return ret;
   };
 
-  // create tag list from html-webpack-plugin and options.
-  const handlers: HtmlInjectTagHandler[] = [];
+  // create tag list from html-webpack-plugin and options
+  const handlers: HtmlTagHandler[] = [];
   let tags = [
     ...formatTags(data.headTags, { head: true }),
     ...formatTags(data.bodyTags, { head: false }),
@@ -175,32 +174,23 @@ const modifyTags = (
     }
   }
 
-  const getPriority = (tag: HtmlInjectTag) => {
-    const head = tag.head ?? HEAD_TAGS.includes(tag.tag);
-    let priority = head ? -2 : 2;
+  // apply tag handler callbacks
+  tags = tags.sort(
+    (tag1, tag2) =>
+      getTagPriority(tag1, tagConfig) - getTagPriority(tag2, tagConfig),
+  );
 
-    const append = tag.append ?? tagConfig.append;
-    if (typeof append === 'boolean') {
-      priority += append ? 1 : -1;
-    }
-
-    return priority;
-  };
-
-  // apply tag handler callbacks.
-  tags = tags.sort((tag1, tag2) => getPriority(tag1) - getPriority(tag2));
-
-  const utils: HtmlInjectTagUtils = {
+  const utils: HtmlTagUtils = {
     outputName: data.outputName,
     publicPath: data.publicPath,
     hash: compilationHash,
     entryName,
   };
+
   for (const handler of handlers) {
     tags = handler(tags, utils) || tags;
   }
 
-  // apply to html-webpack-plugin.
   const [headTags, bodyTags] = partition(
     tags,
     (tag) => tag.head ?? HEAD_TAGS.includes(tag.tag),
@@ -209,6 +199,30 @@ const modifyTags = (
   data.bodyTags = fromInjectTags(bodyTags);
 
   return data;
+};
+
+const addTitleTag = (headTags: HtmlTagObject[], title = '') => {
+  headTags.unshift({
+    tagName: 'title',
+    innerHTML: title,
+    attributes: {},
+    voidTag: false,
+    meta: {},
+  });
+};
+
+const addFavicon = (headTags: HtmlTagObject[], favicon?: string) => {
+  if (favicon) {
+    headTags.unshift({
+      tagName: 'link',
+      voidTag: true,
+      attributes: {
+        rel: 'icon',
+        href: favicon,
+      },
+      meta: {},
+    });
+  }
 };
 
 export class HtmlBasicPlugin {
@@ -222,40 +236,7 @@ export class HtmlBasicPlugin {
   }
 
   apply(compiler: Compiler) {
-    const addTitleTag = (
-      headTags: HtmlWebpackPlugin.HtmlTagObject[],
-      title = '',
-    ) => {
-      headTags.unshift({
-        tagName: 'title',
-        innerHTML: title,
-        attributes: {},
-        voidTag: false,
-        meta: {},
-      });
-    };
-
-    const addFavicon = (
-      headTags: HtmlWebpackPlugin.HtmlTagObject[],
-      entryName: string,
-    ) => {
-      const { favicon } = this.options.info[entryName];
-      if (favicon) {
-        headTags.unshift({
-          tagName: 'link',
-          voidTag: true,
-          attributes: {
-            rel: 'icon',
-            href: favicon,
-          },
-          meta: {},
-        });
-      }
-    };
-
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
-      const compilationHash = compilation.hash || '';
-
       getHTMLPlugin()
         .getHooks(compilation)
         .alterAssetTagGroups.tap(this.name, (data) => {
@@ -266,17 +247,20 @@ export class HtmlBasicPlugin {
           }
 
           const { headTags } = data;
-          const { tagConfig, templateContent } = this.options.info[entryName];
+          const { favicon, tagConfig, templateContent } =
+            this.options[entryName];
 
           if (!hasTitle(templateContent)) {
             addTitleTag(headTags, data.plugin.options?.title);
           }
 
+          addFavicon(headTags, favicon);
+
           if (tagConfig) {
-            modifyTags(data, tagConfig, compilationHash, entryName);
+            const hash = compilation.hash ?? '';
+            modifyTags(data, tagConfig, hash, entryName);
           }
 
-          addFavicon(headTags, entryName);
           return data;
         });
     });

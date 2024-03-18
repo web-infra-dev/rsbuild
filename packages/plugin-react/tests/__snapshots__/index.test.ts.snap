@@ -702,9 +702,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {

@@ -118,36 +118,34 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "foo": {
-            "tagConfig": {
-              "append": true,
-              "hash": false,
-              "publicPath": true,
-              "tags": [
-                {
-                  "attrs": {
-                    "src": "jq.js",
-                  },
-                  "tag": "script",
+        "foo": {
+          "tagConfig": {
+            "append": true,
+            "hash": false,
+            "publicPath": true,
+            "tags": [
+              {
+                "attrs": {
+                  "src": "jq.js",
                 },
-              ],
-            },
+                "tag": "script",
+              },
+            ],
           },
-          "main": {
-            "tagConfig": {
-              "append": true,
-              "hash": false,
-              "publicPath": true,
-              "tags": [
-                {
-                  "attrs": {
-                    "src": "jq.js",
-                  },
-                  "tag": "script",
+        },
+        "main": {
+          "tagConfig": {
+            "append": true,
+            "hash": false,
+            "publicPath": true,
+            "tags": [
+              {
+                "attrs": {
+                  "src": "jq.js",
                 },
-              ],
-            },
+                "tag": "script",
+              },
+            ],
           },
         },
       },
@@ -195,9 +193,7 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
   ],
@@ -268,9 +264,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
   ],
@@ -340,9 +334,7 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
   ],
@@ -450,9 +442,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
   ],
@@ -522,9 +512,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
   ],
@@ -594,9 +582,7 @@ exports[`plugin-html > should stop injecting <script> if inject is '() => false'
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
   ],
@@ -666,9 +652,7 @@ exports[`plugin-html > should stop injecting <script> if inject is 'false' 1`] =
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
   ],
@@ -793,10 +777,8 @@ exports[`plugin-html > should support multi entry 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "foo": {},
-          "main": {},
-        },
+        "foo": {},
+        "main": {},
       },
     },
   ],

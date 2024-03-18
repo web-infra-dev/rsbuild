@@ -101,9 +101,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     InlineChunkHtmlPlugin {
@@ -223,9 +221,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     InlineChunkHtmlPlugin {

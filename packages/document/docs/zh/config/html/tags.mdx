@@ -1,6 +1,6 @@
 # html.tags
 
-- **类型：** `ArrayOrNot<HtmlInjectTag | HtmlInjectTagHandler>`
+- **类型：** `ArrayOrNot<HtmlTag | HtmlTagHandler>`
 - **默认值：** `undefined`
 
 添加和修改最终注入到 HTML 页面的标签。
@@ -8,7 +8,7 @@
 ## 对象形式
 
 ```ts
-export interface HtmlInjectTag {
+type HtmlTag = {
   tag: string;
   attrs?: Record<string, string | boolean | null | undefined>;
   children?: string;
@@ -23,7 +23,7 @@ export interface HtmlInjectTag {
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also}
    */
   head?: boolean;
-}
+};
 ```
 
 对象形式的配置项可以用于描述需要注入的标签，并可以通过参数控制注入的位置：
@@ -75,17 +75,17 @@ export default {
 ## 函数形式
 
 ```ts
-type HtmlInjectTagUtils = {
+type HtmlTagUtils = {
   hash: string;
   entryName: string;
   outputName: string;
   publicPath: string;
 };
 
-type HtmlInjectTagHandler = (
-  tags: HtmlInjectTag[],
-  utils: HtmlInjectTagUtils,
-) => HtmlInjectTag[] | void;
+type HtmlTagHandler = (
+  tags: HtmlTag[],
+  utils: HtmlTagUtils,
+) => HtmlTag[] | void;
 ```
 
 `html.tags` 也支持传入回调函数，通过在回调中编写逻辑可以任意修改标签列表，常用于修改标签列表或是在插入标签的同时确保其相对位置。

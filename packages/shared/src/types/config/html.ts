@@ -26,7 +26,7 @@ export type MetaOptions = {
   [name: string]: string | false | MetaAttrs;
 };
 
-export interface HtmlInjectTag {
+export type HtmlTag = {
   tag: string;
   attrs?: Record<string, string | boolean | null | undefined>;
   children?: string;
@@ -34,21 +34,21 @@ export interface HtmlInjectTag {
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
   append?: boolean;
   head?: boolean;
-}
+};
 
-export type HtmlInjectTagUtils = {
+export type HtmlTagUtils = {
+  hash: string;
   entryName: string;
   outputName: string;
   publicPath: string;
-  hash: string;
 };
 
-export type HtmlInjectTagHandler = (
-  tags: HtmlInjectTag[],
-  utils: HtmlInjectTagUtils,
-) => HtmlInjectTag[] | void;
+export type HtmlTagHandler = (
+  tags: HtmlTag[],
+  utils: HtmlTagUtils,
+) => HtmlTag[] | void;
 
-export type HtmlInjectTagDescriptor = HtmlInjectTag | HtmlInjectTagHandler;
+export type HtmlTagDescriptor = HtmlTag | HtmlTagHandler;
 
 type ChainedHtmlOption<O> = ChainedConfigCombineUtils<O, { entryName: string }>;
 
@@ -68,7 +68,7 @@ export interface HtmlConfig {
   /**
    * Inject custom html tags into the output html files.
    */
-  tags?: ArrayOrNot<HtmlInjectTagDescriptor>;
+  tags?: ArrayOrNot<HtmlTagDescriptor>;
   /**
    * Set the favicon icon for all pages.
    */

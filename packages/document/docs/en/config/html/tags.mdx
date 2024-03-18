@@ -1,6 +1,6 @@
 # html.tags
 
-- **Type:** `ArrayOrNot<HtmlInjectTag | HtmlInjectTagHandler>`
+- **Type:** `ArrayOrNot<HtmlTag | HtmlTagHandler>`
 - **Default:** `undefined`
 
 Modifies the tags that are injected into the HTML page.
@@ -8,7 +8,7 @@ Modifies the tags that are injected into the HTML page.
 ## Tag Object
 
 ```ts
-export interface HtmlInjectTag {
+type HtmlTag = {
   tag: string;
   attrs?: Record<string, string | boolean | null | undefined>;
   children?: string;
@@ -23,7 +23,7 @@ export interface HtmlInjectTag {
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also}
    */
   head?: boolean;
-}
+};
 ```
 
 A tag object can be used to describe the tag to be injected and the location of the injection can be controlled by the parameters.
@@ -75,17 +75,17 @@ You can also pass functions to those fields to control the path joining.
 ## Tags Handler
 
 ```ts
-type HtmlInjectTagUtils = {
+type HtmlTagUtils = {
   hash: string;
   entryName: string;
   outputName: string;
   publicPath: string;
 };
 
-type HtmlInjectTagHandler = (
-  tags: HtmlInjectTag[],
-  utils: HtmlInjectTagUtils,
-) => HtmlInjectTag[] | void;
+type HtmlTagHandler = (
+  tags: HtmlTag[],
+  utils: HtmlTagUtils,
+) => HtmlTag[] | void;
 ```
 
 `html.tags` can also accept functions that can arbitrarily modify tags by writing logic to the callback, often used to ensure the relative position of tags while inserting them.
