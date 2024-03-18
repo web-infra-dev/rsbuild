@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
+exports[`plugin-html > should allow to configure html.tags 1`] = `
 {
   "entry": {
     "foo": [
@@ -119,54 +119,38 @@ exports[`plugin-html > should add tags plugin instances for each entries 1`] = `
       "name": "HtmlBasicPlugin",
       "options": {
         "info": {
-          "foo": {},
-          "main": {},
+          "foo": {
+            "tagConfig": {
+              "append": true,
+              "hash": false,
+              "publicPath": true,
+              "tags": [
+                {
+                  "attrs": {
+                    "src": "jq.js",
+                  },
+                  "tag": "script",
+                },
+              ],
+            },
+          },
+          "main": {
+            "tagConfig": {
+              "append": true,
+              "hash": false,
+              "publicPath": true,
+              "tags": [
+                {
+                  "attrs": {
+                    "src": "jq.js",
+                  },
+                  "tag": "script",
+                },
+              ],
+            },
+          },
         },
       },
-    },
-    HtmlTagsPlugin {
-      "ctx": {
-        "append": true,
-        "hash": false,
-        "includes": [
-          "main.html",
-        ],
-        "publicPath": true,
-        "tags": [
-          {
-            "attrs": {
-              "src": "jq.js",
-            },
-            "tag": "script",
-          },
-        ],
-      },
-      "meta": {
-        "plugin": "HtmlTagsPlugin",
-      },
-      "name": "HtmlTagsPlugin",
-    },
-    HtmlTagsPlugin {
-      "ctx": {
-        "append": true,
-        "hash": false,
-        "includes": [
-          "foo.html",
-        ],
-        "publicPath": true,
-        "tags": [
-          {
-            "attrs": {
-              "src": "jq.js",
-            },
-            "tag": "script",
-          },
-        ],
-      },
-      "meta": {
-        "plugin": "HtmlTagsPlugin",
-      },
-      "name": "HtmlTagsPlugin",
     },
   ],
 }

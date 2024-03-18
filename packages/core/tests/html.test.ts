@@ -210,7 +210,7 @@ describe('plugin-html', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should add tags plugin instances for each entries', async () => {
+  it('should allow to configure html.tags', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       rsbuildConfig: {
@@ -226,10 +226,6 @@ describe('plugin-html', () => {
       },
     });
     const config = await rsbuild.unwrapConfig();
-    const plugins = config.plugins?.filter(
-      (p: { name: string }) => p.name === 'HtmlTagsPlugin',
-    );
-    expect(plugins?.length).toBe(2);
     expect(config).toMatchSnapshot();
   });
 

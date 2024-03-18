@@ -20,8 +20,7 @@ import type {
   NormalizedConfig,
   HTMLPluginOptions,
 } from '@rsbuild/shared';
-import type { HtmlTagsPluginOptions } from '../rspack/HtmlTagsPlugin';
-import type { HtmlInfo } from '../rspack/HtmlBasicPlugin';
+import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
 import type { RsbuildPlugin } from '../types';
 
 export function getTitle(entryName: string, config: NormalizedConfig) {
@@ -172,34 +171,21 @@ function getChunks(
   return [entryName];
 }
 
-export const applyInjectTags = (api: RsbuildPluginAPI) => {
-  api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-    const config = api.getNormalizedConfig();
-    const tags = castArray(config.html.tags).filter(Boolean);
+const getTagConfig = (api: RsbuildPluginAPI): TagConfig | undefined => {
+  const config = api.getNormalizedConfig();
+  const tags = castArray(config.html.tags).filter(Boolean);
 
-    // skip if options is empty.
-    if (!tags.length) {
-      return;
-    }
+  // skip if options is empty.
+  if (!tags.length) {
+    return undefined;
+  }
 
-    const { HtmlTagsPlugin } = await import('../rspack/HtmlTagsPlugin');
-
-    // create shared options used for entry without specified options.
-    const sharedOptions: HtmlTagsPluginOptions = {
-      append: true,
-      hash: false,
-      publicPath: true,
-      tags,
-    };
-
-    // apply webpack plugin for each entries.
-    for (const [entry, filename] of Object.entries(api.getHTMLPaths())) {
-      const opts = { ...sharedOptions, includes: [filename] };
-      chain
-        .plugin(`${CHAIN_ID.PLUGIN.HTML_TAGS}#${entry}`)
-        .use(HtmlTagsPlugin, [opts]);
-    }
-  });
+  return {
+    append: true,
+    hash: false,
+    publicPath: true,
+    tags,
+  };
 };
 
 export const pluginHtml = (): RsbuildPlugin => ({
@@ -262,6 +248,11 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
             if (templateContent) {
               htmlInfo.templateContent = templateContent;
+            }
+
+            const tagConfig = getTagConfig(api);
+            if (tagConfig) {
+              htmlInfo.tagConfig = tagConfig;
             }
 
             pluginOptions.title = getTitle(entryName, config);
@@ -351,7 +342,5 @@ export const pluginHtml = (): RsbuildPlugin => ({
         }
       },
     );
-
-    applyInjectTags(api);
   },
 });
