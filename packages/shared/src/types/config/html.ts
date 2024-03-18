@@ -69,12 +69,6 @@ export interface HtmlConfig {
    */
   tags?: ArrayOrNot<HtmlInjectTagDescriptor>;
   /**
-   * Inject custom html tags into the output html files.
-   * The usage is same as `inject`, and you can use the "entry name" as the key to set each page individually.
-   * `tagsByEntries` will overrides the value set in `tags`.
-   */
-  tagsByEntries?: Record<string, ArrayOrNot<HtmlInjectTagDescriptor>>;
-  /**
    * Set the favicon icon for all pages.
    */
   favicon?: ChainedHtmlOption<string>;
