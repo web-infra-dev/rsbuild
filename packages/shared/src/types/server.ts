@@ -93,7 +93,7 @@ export type CompileMiddlewareAPI = {
 
 export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
 
-export interface RsbuildDevServer {
+export type RsbuildDevServer = {
   /**
    * Use rsbuild inner server to listen
    */
@@ -124,9 +124,10 @@ export interface RsbuildDevServer {
    */
   middlewares: ConnectServer;
   /**
+   * Notify Rsbuild Server has started
+   * 
    * In rsbuild, we will trigger onAfterStartDevServer hook in this stage
    *
-   * It will used when you use custom server
    */
   afterListen: (options?: { port?: number; routes?: Routes }) => Promise<void>;
   /**

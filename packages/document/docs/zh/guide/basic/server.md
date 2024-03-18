@@ -120,3 +120,9 @@ export default {
   },
 };
 ```
+
+## 自定义 Server
+
+如果你希望将 Rsbuild DevServer 集成到已有 Server 中，可以通过 Rsbuild 的 `createDevServer` 方法获取 Rsbuild DevServer 的实例方法进行按需调用。
+
+详情可参考 [Rsbuild - createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver-experimental)。
