@@ -19,7 +19,6 @@ import type {
   RsbuildPluginAPI,
   NormalizedConfig,
   HTMLPluginOptions,
-  HtmlInjectTagDescriptor,
 } from '@rsbuild/shared';
 import type { HtmlTagsPluginOptions } from '../rspack/HtmlTagsPlugin';
 import type { HtmlInfo } from '../rspack/HtmlBasicPlugin';
@@ -176,20 +175,10 @@ function getChunks(
 export const applyInjectTags = (api: RsbuildPluginAPI) => {
   api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
     const config = api.getNormalizedConfig();
-
     const tags = castArray(config.html.tags).filter(Boolean);
-    const tagsByEntries = config.html.tagsByEntries || {};
-
-    for (const key of Object.keys(tagsByEntries)) {
-      tagsByEntries[key] = castArray(tagsByEntries[key]).filter(Boolean);
-    }
-
-    const shouldByEntries = Object.values(tagsByEntries).some(
-      (entry) => Array.isArray(entry) && entry.length > 0,
-    );
 
     // skip if options is empty.
-    if (!tags.length && !shouldByEntries) {
+    if (!tags.length) {
       return;
     }
 
@@ -203,24 +192,9 @@ export const applyInjectTags = (api: RsbuildPluginAPI) => {
       tags,
     };
 
-    // apply only one webpack plugin if `html.tagsByEntries` is empty.
-    if (tags.length && !shouldByEntries) {
-      chain
-        .plugin(CHAIN_ID.PLUGIN.HTML_TAGS)
-        .use(HtmlTagsPlugin, [sharedOptions]);
-      return;
-    }
-
     // apply webpack plugin for each entries.
     for (const [entry, filename] of Object.entries(api.getHTMLPaths())) {
       const opts = { ...sharedOptions, includes: [filename] };
-
-      if (entry in tagsByEntries) {
-        opts.tags = (
-          tagsByEntries as Record<string, HtmlInjectTagDescriptor[]>
-        )[entry];
-      }
-
       chain
         .plugin(`${CHAIN_ID.PLUGIN.HTML_TAGS}#${entry}`)
         .use(HtmlTagsPlugin, [opts]);
