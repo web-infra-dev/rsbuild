@@ -14,6 +14,21 @@
 			"groupSlug": "babel"
 		},
 		{
+			"groupName": "rspack",
+			"packagePatterns": ["rspack"],
+			"groupSlug": "rspack"
+		},
+		{
+			"groupName": "rspress",
+			"packagePatterns": ["rspress"],
+			"groupSlug": "rspress"
+		},
+		{
+			"groupName": "modern-js",
+			"packagePatterns": ["modern-js"],
+			"groupSlug": "modern-js"
+		},
+		{
 			"groupName": "types",
 			"packagePatterns": ["^@types/"],
 			"groupSlug": "types"
@@ -27,11 +42,6 @@
 		// manually update peer dependencies
 		{
 			"depTypeList": ["peerDependencies"],
-			"enabled": false
-		},
-		// use GitHub actions to update rspress and modern, manually update rspack
-		{
-			"packagePatterns": ["rspack", "rspress", "modern"],
 			"enabled": false
 		}
 	],
@@ -49,6 +59,7 @@
 		// pure esm packages can not be used now
 		"gzip-size",
 		"globby",
+		"open",
 		// buffer v6 has compatibility issues as node polyfill
 		"buffer",
 		// align Node.js version minimum requirements
