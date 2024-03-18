@@ -38,7 +38,6 @@ export async function createDevServer<
     compiler: customCompiler,
     getPortSilently,
     runCompile = true,
-    overrides = {},
   }: CreateDevServerOptions = {},
 ): Promise<RsbuildDevServer> {
   if (!getNodeEnv()) {
@@ -127,10 +126,7 @@ export async function createDevServer<
   const devMiddlewares = await getMiddlewares({
     pwd: options.context.rootPath,
     compileMiddlewareAPI,
-    dev: {
-      ...devServerConfig,
-      ...overrides,
-    },
+    dev: devServerConfig,
     output: {
       distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
     },
