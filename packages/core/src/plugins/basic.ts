@@ -39,6 +39,11 @@ export const pluginBasic = (): RsbuildPlugin => ({
           },
         });
 
+        const isMinimize = isProd && config.output.minify !== false;
+      
+        // set minimize to allow users to disable minimize
+        chain.optimization.minimize(isMinimize);
+
         const usingHMR = isUsingHMR(config, { target, isProd });
 
         if (usingHMR) {

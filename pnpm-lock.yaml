@@ -668,9 +668,6 @@ importers:
       postcss:
         specifier: ^8.4.33
         version: 8.4.35
-      terser-webpack-plugin:
-        specifier: 5.3.10
-        version: 5.3.10(webpack@5.90.3)
       tsconfig-paths-webpack-plugin:
         specifier: 4.1.0
         version: 4.1.0
@@ -1509,9 +1506,6 @@ importers:
       terser:
         specifier: 5.29.1
         version: 5.29.1
-      terser-webpack-plugin:
-        specifier: 5.3.10
-        version: 5.3.10(webpack@5.90.3)
       typescript:
         specifier: ^5.4.2
         version: 5.4.2

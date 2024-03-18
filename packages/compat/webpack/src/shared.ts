@@ -26,7 +26,6 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.nodeAddons(),
     plugins.define(),
     import('./plugins/progress').then((m) => m.pluginProgress()),
-    import('./plugins/minimize').then((m) => m.pluginMinimize()),
     import('./plugins/css').then((m) => m.pluginCss()),
     import('./plugins/sass').then((m) => m.pluginSass()),
     import('./plugins/less').then((m) => m.pluginLess()),

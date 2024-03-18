@@ -13,9 +13,6 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       const config = api.getNormalizedConfig();
       const isMinimize = isProd && config.output.minify !== false;
 
-      // set minimize to allow users to disable minimize
-      chain.optimization.minimize(isMinimize);
-
       if (!isMinimize) {
         return;
       }

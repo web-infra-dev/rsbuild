@@ -13,7 +13,6 @@ describe('plugin-minimize', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].optimization?.minimize).toEqual(false);
     expect(bundlerConfigs[0].optimization?.minimizer).toBeUndefined();
 
     process.env.NODE_ENV = 'test';
@@ -27,8 +26,6 @@ describe('plugin-minimize', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-
-    expect(bundlerConfigs[0].optimization?.minimize).toEqual(true);
 
     expect(bundlerConfigs[0].optimization?.minimizer).toMatchInlineSnapshot(
       `
@@ -57,25 +54,6 @@ describe('plugin-minimize', () => {
       ]
     `,
     );
-
-    process.env.NODE_ENV = 'test';
-  });
-
-  it('should not apply minimizer when output.minify is false', async () => {
-    process.env.NODE_ENV = 'production';
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
-      rsbuildConfig: {
-        output: {
-          minify: false,
-        },
-      },
-    });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    expect(bundlerConfigs[0].optimization?.minimize).toEqual(false);
 
     process.env.NODE_ENV = 'test';
   });
