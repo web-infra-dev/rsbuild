@@ -5,7 +5,7 @@ import { SourceCode } from 'rspress/theme';
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-lightningcss" />
 
 :::tip About Lightning CSS
-[lightningcss](https://lightningcss.dev) is a high-performance CSS parser, transformer and minifier written in Rust. It supports parsing and converting many modern CSS features into syntax supported by target browsers, and Lightning CSS has better compression ratios.
+[Lightning CSS](https://lightningcss.dev) is a high performance CSS parser, transformer and minifier written in Rust. It supports parsing and transforming many modern CSS features into syntax supported by target browsers, and also provides a better compression ratio.
 :::
 
 The Lightning CSS plugin will use `lightningcss-loader` to replace the builtin `postcss-loader` in Rsbuild to solve the performance overhead of postcss and autoprefixer, and will use `LightningCSSMinifyPlugin` to replace the default builtin CSS minifier in Rspack to obtain greater compression ratios.
@@ -44,7 +44,7 @@ Use `lightningcss-loader` instead of Rsbuild's builtin `postcss-loader` to trans
 ```ts
 const defaultOptions = {
   targets: browserslistToTargets(browserslist),
-}
+};
 ```
 
 - **Example:** Enable or disable lightningcss features, which can be configured by importing a lightningcss instance from the plugin.
@@ -54,8 +54,8 @@ import { lightnincss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 
 pluginLightningcss({
   transform: {
-    include: lightningcss.Features.Nesting
-  }
+    include: lightningcss.Features.Nesting,
+  },
 });
 ```
 
@@ -72,9 +72,9 @@ pluginLightningcss({
             value: len.value,
           };
         },
-},
+      },
     },
-  }
+  },
 });
 ```
 
@@ -82,7 +82,7 @@ pluginLightningcss({
 
 ```ts
 pluginLightningcss({
-  transform: false
+  transform: false,
 });
 ```
 
@@ -96,7 +96,7 @@ Use Lightning CSS instead of Rspack's builtin CSS minifier. For options passed t
 ```ts
 const defaultOptions = {
   targets: browserslistToTargets(browserslist(browserslistUserConfig)),
-} 
+};
 ```
 
 - **Example:** Disable lightning CSS minify for `ColorFunctions` and `HexAlphaColors`
@@ -106,15 +106,18 @@ import { lightnincss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 
 pluginLightningcss({
   minify: {
-    exclude: lightningcss.Features.ColorFunction | lightningcss.Features.HexAlphaColors
-  }
+    exclude:
+      lightningcss.Features.ColorFunction |
+      lightningcss.Features.HexAlphaColors,
+  },
 });
 ```
+
 - **Example:** Disable the CSS minify of lightningcss, leaving only the CSS transform.
 
 ```ts
 pluginLightningcss({
-  minify: false
+  minify: false,
 });
 ```
 
@@ -132,7 +135,7 @@ import lightningcss from 'lightningcss';
 pluginLightningcss({
   implementation: lightningcss,
   minify: {
-    exclude: lightningcss.Features.ColorFunction
-  }
+    exclude: lightningcss.Features.ColorFunction,
+  },
 });
 ```
