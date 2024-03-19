@@ -329,17 +329,12 @@ function CreateDevServer(
 下面是一个在 [express](https://expressjs.com/) 中集成 Rsbuild DevServer 的例子:
 
 ```ts
-import { pluginReact } from '@rsbuild/plugin-react';
 import { createRsbuild } from '@rsbuild/core';
 import express from 'express';
 
 export async function startDevServer() {
   // 初始化 Rsbuild
-  const rsbuild = await createRsbuild({
-    rsbuildConfig: {
-      plugins: [pluginReact()],
-    },
-  });
+  const rsbuild = await createRsbuild();
 
   const app = express();
 

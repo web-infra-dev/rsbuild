@@ -333,17 +333,12 @@ function CreateDevServer(
 Here is an example with [express](https://expressjs.com/):
 
 ```ts
-import { pluginReact } from '@rsbuild/plugin-react';
 import { createRsbuild } from '@rsbuild/core';
 import express from 'express';
 
 export async function startDevServer() {
   // init Rsbuild
-  const rsbuild = await createRsbuild({
-    rsbuildConfig: {
-      plugins: [pluginReact()],
-    },
-  });
+  const rsbuild = await createRsbuild();
 
   const app = express();
 

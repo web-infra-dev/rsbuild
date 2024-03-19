@@ -1,5 +1,4 @@
 import { join } from 'node:path';
-import { pluginReact } from '@rsbuild/plugin-react';
 import { createRsbuild } from '@rsbuild/core';
 import polka from 'polka';
 
@@ -8,7 +7,6 @@ export async function startDevServerPure(fixtures) {
   const rsbuild = await createRsbuild({
     cwd: fixtures,
     rsbuildConfig: {
-      plugins: [pluginReact()],
       server: {
         htmlFallback: false,
       },
