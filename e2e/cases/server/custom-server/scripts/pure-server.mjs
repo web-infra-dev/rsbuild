@@ -34,16 +34,11 @@ export async function startDevServerPure(fixtures) {
 
   const rsbuildServer = await rsbuild.createDevServer({ runCompile: false });
 
-  const {
-    config: { port },
-    middlewares,
-  } = rsbuildServer;
-
   app.get('/aaa', (_req, res) => {
     res.end('Hello World!');
   });
 
-  app.use(middlewares);
+  app.use(rsbuildServer.middlewares);
 
   app.get('/bbb', (_req, res) => {
     res.end('Hello Express!');
@@ -57,7 +52,7 @@ export async function startDevServerPure(fixtures) {
   server.on('upgrade', rsbuildServer.onHTTPUpgrade);
 
   return {
-    config: rsbuildServer.config,
+    config: { port },
     close: async () => {
       await rsbuildServer.close();
       server.close();

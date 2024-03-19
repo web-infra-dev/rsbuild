@@ -24,7 +24,7 @@ export async function startDevServer(fixtures) {
     close,
     onHTTPUpgrade,
     afterListen,
-    config: { port },
+    port,
   } = rsbuildServer;
 
   app.get('/aaa', (_req, res) => {
@@ -45,7 +45,7 @@ export async function startDevServer(fixtures) {
   server.on('upgrade', onHTTPUpgrade);
 
   return {
-    config: rsbuildServer.config,
+    config: { port },
     close: async () => {
       await close();
       server.close();

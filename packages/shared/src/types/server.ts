@@ -107,13 +107,11 @@ export type RsbuildDevServer = {
   /** The following APIs will be used when you use a custom server */
 
   /**
-   * The resolved rsbuild server config
+   * The resolved port
    * 
-   * More config can be get from `rsbuild.getNormalizedConfig` api
+   * By default, Rsbuild Server listens on port `8080` and automatically increments the port number when the port is occupied.
    */
-  config: {
-    port: number;
-  };
+  port: number;
   /**
    * connect app instance.
    *

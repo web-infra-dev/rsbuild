@@ -143,7 +143,7 @@ export async function createDevServer<
   }
 
   const server = {
-    config: { port },
+    port,
     middlewares,
     listen: async () => {
       const httpServer = await createHttpServer({
