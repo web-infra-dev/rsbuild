@@ -11,3 +11,4 @@ export { setHTMLPlugin, getHTMLPlugin } from './htmlPluginUtil';
 export { formatStats } from './shared';
 export { getChainUtils } from './rspackConfig';
 export { applySwcDecoratorConfig } from './plugins/swc';
+export { getDevMiddleware } from './devMiddleware';
