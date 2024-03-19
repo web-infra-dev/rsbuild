@@ -267,6 +267,113 @@ await rsbuild.startDevServer({
 });
 ```
 
+## rsbuild.createDevServer
+
+Rsbuild comes with a built-in dev server designed to improve the development experience. When you run the `rsbuild dev` command, the server will start, providing features such as page preview, routing, and hot module reloading.
+
+If you want to integrate Rsbuild dev server into an custom server, you can use this method to get the instance methods of Rsbuild dev server and call them on demand.
+
+- **Type:**
+
+```ts
+type RsbuildDevServer = {
+  /** start the Rsbuild DevServer */
+  listen: () => Promise<{
+    urls: string[];
+    port: number;
+    server: Server;
+  }>;
+
+  /** The following APIs will be used when you use a custom server */
+
+  /**
+   * The resolved port
+   *
+   * By default, Rsbuild Server listens on port `8080` and automatically increments the port number when the port is occupied.
+   */
+  port: number;
+
+  /**
+   * connect app instance.
+   *
+   * Can be used to attach custom middlewares to the dev server.
+   */
+  middlewares: Middlewares;
+
+  /** Notify Rsbuild that the custom server has started */
+  afterListen: () => Promise<void>;
+
+  /** Subscribe to the http upgrade event */
+  onHTTPUpgrade: UpgradeEvent;
+
+  /** close the Rsbuild DevServer */
+  close: () => Promise<void>;
+};
+
+type CreateDevServerOptions = {
+  /** Custom Compiler */
+  compiler?: Compiler | MultiCompiler;
+
+  /** Whether to get the port silently, the default is false */
+  getPortSilently?: boolean;
+
+  /** Whether to trigger Rsbuild compilation, the default is true */
+  runCompile?: boolean;
+};
+
+function CreateDevServer(
+  options?: CreateDevServerOptions,
+): Promise<RsbuildDevServer>;
+```
+
+- **Example:**
+
+Here is an example with [express](https://expressjs.com/):
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+import express from 'express';
+
+export async function startDevServer() {
+  // init Rsbuild
+  const rsbuild = await createRsbuild();
+
+  const app = express();
+
+  // Create Rsbuild DevServer instance
+  const rsbuildServer = await rsbuild.createDevServer();
+
+  // Apply Rsbuild’s built-in middlewares
+  app.use(rsbuildServer.middlewares);
+
+  const { server } = app.listen({ port: rsbuildServer.port }, async () => {
+    // Notify Rsbuild that the custom server has started
+    await rsbuildServer.afterListen();
+  });
+
+  // Subscribe to the server's http upgrade event to handle WebSocket upgrades
+  server.on('upgrade', rsbuildServer.onHTTPUpgrade);
+
+  return {
+    close: async () => {
+      // Trigger the close of Rsbuild DevServer when the custom server is close
+      await rsbuildServer.close();
+      server.close();
+    },
+  };
+}
+```
+
+For detailed usage, please refer to: [Example](https://github.com/web-infra-dev/rsbuild/blob/main/e2e/cases/server/custom-server/scripts/server.mjs).
+
+If you want to use Rsbuild DevServer to start the project directly, you can use the [Rsbuild - startDevServer](#rsbuildstartdevserver) method directly. `startDevServer` is actually syntactic sugar for the following code:
+
+```ts
+const server = await rsbuild.createDevServer();
+
+await server.listen();
+```
+
 ## rsbuild.preview
 
 Start a server to preview the production build locally. This method should be executed after `rsbuild.build`.

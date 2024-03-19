@@ -121,3 +121,9 @@ export default {
   },
 };
 ```
+
+## Custom Server
+
+If you want to integrate Rsbuild DevServer into an existing Server, you can obtain the instance methods of Rsbuild DevServer through the `createDevServer` method of Rsbuild and call them on demand.
+
+For details, please refer to [Rsbuild - createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver-experimental).

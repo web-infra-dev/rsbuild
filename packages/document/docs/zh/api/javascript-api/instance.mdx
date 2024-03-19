@@ -267,6 +267,105 @@ await rsbuild.startDevServer({
 });
 ```
 
+## rsbuild.createDevServer
+
+Rsbuild 配备了一个内置的开发服务器，当你执行 `rsbuild dev` 时，将启动 Rsbuild dev server，并提供页面预览、路由、模块热更新等功能。
+
+如果你希望将 Rsbuild dev server 集成到自定义的 server 中，可以通过该方法获取 Rsbuild dev server 的实例方法，进行按需调用。
+
+- **类型：**
+
+```ts
+type RsbuildDevServer = {
+  /** 启动 Rsbuild DevServer */
+  listen: () => Promise<{
+    urls: string[];
+    port: number;
+    server: Server;
+  }>;
+
+  /** 以下 API 在使用自定义 Server 时会用到 */
+
+  /** 解析后的端口号 (默认情况下，Rsbuild Server 会监听 `8080` 端口，并在端口被占用时自动递增端口号。) */
+  port: number;
+
+  /** Connect 实例，包含 Rsbuild 内置中间件 */
+  middlewares: Middlewares;
+
+  /** 通知 Rsbuild 自定义 Server 已启动 */
+  afterListen: () => Promise<void>;
+
+  /** 订阅 http upgrade 事件 */
+  onHTTPUpgrade: UpgradeEvent;
+
+  /** 关闭 Rsbuild DevServer */
+  close: () => Promise<void>;
+};
+
+type CreateDevServerOptions = {
+  /** 自定义 Compiler 对象 */
+  compiler?: Compiler | MultiCompiler;
+
+  /** 是否在启动时静默获取端口号，默认为 false */
+  getPortSilently?: boolean;
+
+  /** 是否触发 Rsbuild 编译，默认为 true */
+  runCompile?: boolean;
+};
+
+function CreateDevServer(
+  options?: CreateDevServerOptions,
+): Promise<RsbuildDevServer>;
+```
+
+- **示例：**
+
+下面是一个在 [express](https://expressjs.com/) 中集成 Rsbuild DevServer 的例子:
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+import express from 'express';
+
+export async function startDevServer() {
+  // 初始化 Rsbuild
+  const rsbuild = await createRsbuild();
+
+  const app = express();
+
+  // 创建 Rsbuild DevServer 实例
+  const rsbuildServer = await rsbuild.createDevServer();
+
+  // 使用 Rsbuild 的内置中间件
+  app.use(rsbuildServer.middlewares);
+
+  const { server } = app.listen({ port: rsbuildServer.port }, async () => {
+    // 通知 Rsbuild 自定义 Server 已启动
+    await rsbuildServer.afterListen();
+  });
+
+  // 订阅服务器的 http 升级事件来处理 WebSocket 升级
+  server.on('upgrade', rsbuildServer.onHTTPUpgrade);
+
+  return {
+    close: async () => {
+      // 在自定义 server 关闭时触发 Rsbuild DevServer 的关闭
+      await rsbuildServer.close();
+      server.close();
+    },
+  };
+}
+```
+
+详细使用情况可参考：[示例](https://github.com/web-infra-dev/rsbuild/blob/main/e2e/cases/server/custom-server/scripts/server.mjs)。
+
+如果你希望直接使用 Rsbuild DevServer 启动项目，可以直接使用 [Rsbuild - startDevServer](#rsbuildstartdevserver) 方法。 `startDevServer` 实际上是以下代码的语法糖：
+
+```ts
+const server = await rsbuild.createDevServer();
+
+await server.listen();
+```
+
 ## rsbuild.preview
 
 在本地启动 Server 来预览生产环境构建的产物，需要在 `rsbuild.build` 方法之后执行。

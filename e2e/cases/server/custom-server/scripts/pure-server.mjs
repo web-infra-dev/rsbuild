@@ -1,5 +1,4 @@
 import { join } from 'node:path';
-import { pluginReact } from '@rsbuild/plugin-react';
 import { createRsbuild } from '@rsbuild/core';
 import polka from 'polka';
 
@@ -8,11 +7,11 @@ export async function startDevServerPure(fixtures) {
   const rsbuild = await createRsbuild({
     cwd: fixtures,
     rsbuildConfig: {
-      plugins: [pluginReact()],
       server: {
         htmlFallback: false,
       },
       dev: {
+        printUrls: false,
         setupMiddlewares: [
           (middlewares, server) => {
             middlewares.unshift((req, res, next) => {
@@ -21,8 +20,9 @@ export async function startDevServerPure(fixtures) {
                   Location: '/bbb',
                 });
                 res.end();
+              } else {
+                next();
               }
-              next();
             });
           },
         ],
@@ -32,43 +32,29 @@ export async function startDevServerPure(fixtures) {
 
   const app = polka();
 
-  const serverAPIs = await rsbuild.getServerAPIs();
-
-  const {
-    config: { host, port },
-  } = serverAPIs;
-
-  const { middlewares, close, onUpgrade } = await serverAPIs.getMiddlewares();
+  const rsbuildServer = await rsbuild.createDevServer({ runCompile: false });
 
   app.get('/aaa', (_req, res) => {
     res.end('Hello World!');
   });
 
-  for (const item of middlewares) {
-    if (Array.isArray(item)) {
-      app.use(...item);
-    } else {
-      app.use(item);
-    }
-  }
+  app.use(rsbuildServer.middlewares);
 
   app.get('/bbb', (_req, res) => {
     res.end('Hello Express!');
   });
 
-  await serverAPIs.beforeStart();
-
-  const { server } = app.listen({ host, port }, async () => {
-    await serverAPIs.afterStart();
+  const { server } = app.listen({ port: rsbuildServer.port }, async () => {
+    await rsbuildServer.afterListen();
   });
 
   // subscribe the server's http upgrade event to handle WebSocket upgrade
-  server.on('upgrade', onUpgrade);
+  server.on('upgrade', rsbuildServer.onHTTPUpgrade);
 
   return {
-    config: serverAPIs.config,
+    config: { port: rsbuildServer.port },
     close: async () => {
-      await close();
+      await rsbuildServer.close();
       server.close();
     },
   };
