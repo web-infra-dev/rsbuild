@@ -9,7 +9,9 @@ Create a Rsbuild instance object.
 - **Type:**
 
 ```ts
-function createRsbuild(options: CreateRsbuildOptions): Promise<RsbuildInstance>;
+function createRsbuild(
+  options?: CreateRsbuildOptions,
+): Promise<RsbuildInstance>;
 ```
 
 - **Example:**
@@ -47,7 +49,7 @@ Load Rsbuild configuration file.
 - **Type:**
 
 ```ts
-function loadConfig(params: {
+function loadConfig(params?: {
   // Default is process.cwd()
   cwd?: string;
   // Specify the configuration file, can be a relative or absolute path

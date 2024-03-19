@@ -107,7 +107,7 @@ export async function loadConfig({
   cwd?: string;
   path?: string;
   envMode?: string;
-}): Promise<{ content: RsbuildConfig; filePath: string | null }> {
+} = {}): Promise<{ content: RsbuildConfig; filePath: string | null }> {
   const configFilePath = resolveConfigPath(cwd, path);
 
   if (!configFilePath) {
