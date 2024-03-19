@@ -52,7 +52,7 @@ export async function startDevServerPure(fixtures) {
   server.on('upgrade', rsbuildServer.onHTTPUpgrade);
 
   return {
-    config: { port },
+    config: { port: rsbuildServer.port },
     close: async () => {
       await rsbuildServer.close();
       server.close();
