@@ -5,7 +5,7 @@ import { SourceCode } from 'rspress/theme';
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-lightningcss" />
 
 :::tip About Lightning CSS
-[Lightning CSS](https://lightningcss.dev) is a high-performance CSS parser, transformer and minifier written in Rust. It supports parsing and converting many modern CSS features into syntax supported by target browsers, and Lightning CSS has better compression ratios.
+[Lightning CSS](https://lightningcss.dev) is a high performance CSS parser, transformer and minifier written in Rust. It supports parsing and transforming many modern CSS features into syntax supported by target browsers, and also provides a better compression ratio.
 :::
 
 The Lightning CSS plugin will use `lightningcss-loader` to replace the builtin `postcss-loader` in Rsbuild to solve the performance overhead of postcss and autoprefixer, and will use `LightningCSSMinifyPlugin` to replace the default builtin CSS minifier in Rspack to obtain greater compression ratios.
