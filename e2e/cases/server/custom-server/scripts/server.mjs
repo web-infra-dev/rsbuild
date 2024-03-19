@@ -34,7 +34,7 @@ export async function startDevServer(fixtures) {
   app.use(middlewares);
 
   app.get('/bbb', (_req, res) => {
-    res.end('Hello Express!');
+    res.end('Hello polka!');
   });
 
   const { server } = app.listen({ port }, async () => {
