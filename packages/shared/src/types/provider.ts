@@ -18,7 +18,7 @@ export type StartDevServerOptions = {
 
 export type CreateDevServerOptions = StartDevServerOptions & {
   /**
-   * Whether trigger rsbuild compile
+   * Whether to trigger Rsbuild compilation
    * 
    * @default true
    */
