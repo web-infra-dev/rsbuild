@@ -121,11 +121,7 @@ export default {
 };
 ```
 
-The function will be executed at the end of the HTML processing flow. In the example below, the 'tags' parameter will contain all tag objects that form config, regardless of the function's location in config.
-
-Modifying the attributes `append`, `publicPath`, `hash` in the callback will not take effect, because they have been applied to the tag's location and path attributes, respectively.
-
-So the end product will look like:
+The HTML file will look like:
 
 ```html
 <html>
