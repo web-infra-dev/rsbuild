@@ -292,14 +292,14 @@ type RsbuildDevServer = {
     port: number;
     host: string;
     https: boolean;
-    defaultRoutes: Routes;
+    routes: Routes;
   };
 
   /** Connect 实例，包含 Rsbuild 内置中间件 */
   middlewares: Middlewares;
 
   /** 通知 Rsbuild 自定义 Server 已启动 */
-  afterListen: (options?: { port?: number; routes?: Routes }) => Promise<void>;
+  afterListen: () => Promise<void>;
 
   /** 订阅 http upgrade 事件 */
   onHTTPUpgrade: UpgradeEvent;

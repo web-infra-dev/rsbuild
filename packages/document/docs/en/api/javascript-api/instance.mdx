@@ -292,7 +292,7 @@ type RsbuildDevServer = {
     port: number;
     host: string;
     https: boolean;
-    defaultRoutes: Routes;
+    routes: Routes;
   };
 
   /**
@@ -303,7 +303,7 @@ type RsbuildDevServer = {
   middlewares: Middlewares;
 
   /** Notify Rsbuild that the custom server has started */
-  afterListen: (options?: { port?: number; routes?: Routes }) => Promise<void>;
+  afterListen: () => Promise<void>;
 
   /** Subscribe to the http upgrade event */
   onHTTPUpgrade: UpgradeEvent;

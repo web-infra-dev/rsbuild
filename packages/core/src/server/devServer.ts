@@ -6,7 +6,7 @@ import {
   getAddressUrls,
   isMultiCompiler,
   getPublicPathFromCompiler,
-  type Routes,
+
   type RsbuildDevServer,
   type StartServerResult,
   type CreateDevServerOptions,
@@ -53,7 +53,7 @@ export async function createDevServer<
     getPortSilently,
   });
 
-  const defaultRoutes = formatRoutes(
+  const routes = formatRoutes(
     options.context.entry,
     rsbuildConfig.output?.distPath?.html,
     rsbuildConfig.html?.outputStructure,
@@ -106,7 +106,7 @@ export async function createDevServer<
       printServerURLs({
         urls,
         port,
-        routes: defaultRoutes,
+        routes,
         protocol,
         printUrls: devServerConfig.printUrls,
       });
@@ -115,7 +115,7 @@ export async function createDevServer<
     printServerURLs({
       urls,
       port,
-      routes: defaultRoutes,
+      routes,
       protocol,
       printUrls: devServerConfig.printUrls,
     });
@@ -143,7 +143,7 @@ export async function createDevServer<
   }
 
   const server = {
-    config: { devServerConfig, port, host, https, defaultRoutes },
+    config: { devServerConfig, port, host, https, routes },
     middlewares,
     listen: async () => {
       const httpServer = await createHttpServer({
@@ -189,10 +189,10 @@ export async function createDevServer<
         );
       });
     },
-    afterListen: async (params: { port?: number; routes?: Routes } = {}) => {
+    afterListen: async () => {
       await options.context.hooks.onAfterStartDevServer.call({
-        port: params.port || port,
-        routes: params.routes || defaultRoutes,
+        port,
+        routes,
       });
     },
     onHTTPUpgrade: devMiddlewares.onUpgrade,

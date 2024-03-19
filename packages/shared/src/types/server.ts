@@ -115,7 +115,7 @@ export type RsbuildDevServer = {
     port: number;
     host: string;
     https: boolean;
-    defaultRoutes: Routes;
+    routes: Routes;
   };
   /**
    * connect app instance.
@@ -127,9 +127,8 @@ export type RsbuildDevServer = {
    * Notify Rsbuild Server has started
    * 
    * In rsbuild, we will trigger onAfterStartDevServer hook in this stage
-   *
    */
-  afterListen: (options?: { port?: number; routes?: Routes }) => Promise<void>;
+  afterListen: () => Promise<void>;
   /**
    * Subscribe http upgrade event
    *
