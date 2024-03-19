@@ -6,17 +6,16 @@ import {
   isFunction,
   withPublicPath,
   type HtmlTag,
-  type HtmlTagHandler,
-  type HtmlTagDescriptor,
   type HtmlTagUtils,
+  type HtmlTagDescriptor,
 } from '@rsbuild/shared';
 import { getHTMLPlugin } from '../provider/htmlPluginUtil';
 
 export type TagConfig = {
-  hash?: HtmlTag['hash'];
-  publicPath?: HtmlTag['publicPath'];
-  append?: HtmlTag['append'];
   tags?: HtmlTagDescriptor[];
+  hash?: HtmlTag['hash'];
+  append?: HtmlTag['append'];
+  publicPath?: HtmlTag['publicPath'];
 };
 
 /** @see {@link https://developer.mozilla.org/en-US/docs/Glossary/Void_element} */
@@ -159,36 +158,29 @@ const modifyTags = (
     return ret;
   };
 
-  // create tag list from html-webpack-plugin and options
-  const handlers: HtmlTagHandler[] = [];
   let tags = [
     ...formatTags(data.headTags, { head: true }),
     ...formatTags(data.bodyTags, { head: false }),
   ];
 
-  for (const tag of tagConfig.tags) {
-    if (isFunction(tag)) {
-      handlers.push(tag);
-    } else {
-      tags.push(tag);
-    }
-  }
-
-  // apply tag handler callbacks
-  tags = tags.sort(
-    (tag1, tag2) =>
-      getTagPriority(tag1, tagConfig) - getTagPriority(tag2, tagConfig),
-  );
-
   const utils: HtmlTagUtils = {
-    outputName: data.outputName,
-    publicPath: data.publicPath,
     hash: compilationHash,
     entryName,
+    outputName: data.outputName,
+    publicPath: data.publicPath,
   };
 
-  for (const handler of handlers) {
-    tags = handler(tags, utils) || tags;
+  for (const item of tagConfig.tags) {
+    if (isFunction(item)) {
+      tags = item(tags, utils) || tags;
+    } else {
+      tags.push(item);
+    }
+
+    tags = tags.sort(
+      (tag1, tag2) =>
+        getTagPriority(tag1, tagConfig) - getTagPriority(tag2, tagConfig),
+    );
   }
 
   const [headTags, bodyTags] = partition(
