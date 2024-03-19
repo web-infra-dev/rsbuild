@@ -721,9 +721,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "newTreeshaking": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
