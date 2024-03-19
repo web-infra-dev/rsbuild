@@ -44,7 +44,7 @@ export async function startDevServerPure(fixtures) {
     res.end('Hello Express!');
   });
 
-  const { server } = app.listen({ port }, async () => {
+  const { server } = app.listen({ port: rsbuildServer.port }, async () => {
     await rsbuildServer.afterListen();
   });
 
