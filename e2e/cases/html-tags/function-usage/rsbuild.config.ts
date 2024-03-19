@@ -8,14 +8,14 @@ export default defineConfig({
     tags: [
       {
         tag: 'script',
-        attrs: { src: 'https://www.cdn.com/foo.js' },
+        attrs: { src: 'foo.js' },
         append: false,
       },
       (tags) => {
         tags.push({ tag: 'script', attrs: { src: 'bar.js' }, append: false });
         return tags;
       },
-      { tag: 'meta', attrs: { name: 'referrer', content: 'origin' } },
+      { tag: 'script', attrs: { src: 'baz.js' }, append: false },
     ],
   },
 });
