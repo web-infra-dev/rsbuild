@@ -7,11 +7,9 @@ import {
   type Rspack,
   type RspackConfig,
 } from '@rsbuild/shared';
-import { formatStats, type InternalContext } from '@rsbuild/core/provider';
+import { formatStats, getDevMiddleware, type InternalContext } from '@rsbuild/core/provider';
 import type { WebpackConfig } from '../types';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
-import type { Compiler } from 'webpack';
-import { getDevMiddleware } from './devMiddleware';
 
 export async function createCompiler({
   context,
@@ -86,7 +84,7 @@ export async function createDevMiddleware(
   }
 
   return {
-    devMiddleware: getDevMiddleware(compiler as unknown as Compiler),
+    devMiddleware: getDevMiddleware(compiler),
     compiler,
   };
 }
