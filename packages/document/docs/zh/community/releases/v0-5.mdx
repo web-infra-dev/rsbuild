@@ -1,0 +1,55 @@
+# Rsbuild v0.5 发布
+
+> March 19, 2024
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/Rsbuild-v0-5.png)
+
+Rsbuild 0.5 版本是一个重要的里程碑，主要变更如下：
+
+- ⚡️ 支持启用 [Lightning CSS](https://lightningcss.dev/) 以加速 CSS 编译。
+- 🌟 支持基于 JavaScript API 实现自定义 server。
+- 🍭 重构 SVGR 插件，支持多种 SVG 转换方式。
+- 📍 API 达到稳定状态，在 1.0 版本前将避免引入 beaking change。
+
+## ⚡️ 支持 Lightning CSS
+
+Lightning CSS 是一个基于 Rust 编写的高性能 CSS 解析、转译和压缩工具。它支持将许多现代的 CSS 特性解析并转化为指定浏览器支持的语法，并提供更好的压缩比例。
+
+Rsbuild 提供了 [Lightning CSS 插件](/plugins/list/plugin-lightningcss)，用于按需开启 Lightning CSS 能力，替代 Rsbuild 内置的 PostCSS、autoprefixer 和 SWC CSS minimizer。
+
+只需要在 Rsbuild 配置中注册 Lightning CSS 插件，即可完成切换：
+
+```js title="rsbuild.config.ts"
+import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+
+export default {
+  plugins: [pluginLightningcss()],
+};
+```
+
+经过一个真实的大型 Web 应用验证，Lightning CSS 插件
+
+- CSS transform 耗时由 8.4s 下降到 0.1s
+-
+
+## 🌟 支持自定义 Server
+
+Rsbuild 现在支持将 Rsbuild dev server 集成到自定义的 server 中，并复用 Rsbuild 提供的页面预览、路由、模块热更新等能力，这将使得 Rsbuild 与其他 Node.js 框架结合使用变得更加容易。
+
+比如
+
+```ts
+import express from 'express';
+import { createRsbuild } from '@rsbuild/core';
+
+async function startCustomServer() {
+  const app = express();
+  const rsbuild = await createRsbuild();
+  const { port, middlewares } = await rsbuild.createDevServer();
+
+  app.use(middlewares);
+  app.listen(port);
+}
+```
+
+详情可参考 [Rsbuild - createDevServer](https://rsbuild.dev/zh/api/javascript-api/instance#rsbuildcreatedevserver)。
