@@ -335,8 +335,8 @@ import { createRsbuild } from '@rsbuild/core';
 import express from 'express';
 
 export async function startDevServer() {
-  // init Rsbuild
-  const rsbuild = await createRsbuild();
+  // Init Rsbuild
+  const rsbuild = await createRsbuild({});
 
   const app = express();
 
@@ -346,21 +346,13 @@ export async function startDevServer() {
   // Apply Rsbuild’s built-in middlewares
   app.use(rsbuildServer.middlewares);
 
-  const { server } = app.listen({ port: rsbuildServer.port }, async () => {
+  const httpServer = app.listen(rsbuildServer.port, async () => {
     // Notify Rsbuild that the custom server has started
     await rsbuildServer.afterListen();
   });
 
   // Subscribe to the server's http upgrade event to handle WebSocket upgrades
-  server.on('upgrade', rsbuildServer.onHTTPUpgrade);
-
-  return {
-    close: async () => {
-      // Trigger the close of Rsbuild DevServer when the custom server is close
-      await rsbuildServer.close();
-      server.close();
-    },
-  };
+  httpServer.on('upgrade', rsbuildServer.onHTTPUpgrade);
 }
 ```
 

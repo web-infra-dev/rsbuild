@@ -328,7 +328,7 @@ import express from 'express';
 
 export async function startDevServer() {
   // 初始化 Rsbuild
-  const rsbuild = await createRsbuild();
+  const rsbuild = await createRsbuild({});
 
   const app = express();
 
@@ -338,21 +338,13 @@ export async function startDevServer() {
   // 使用 Rsbuild 的内置中间件
   app.use(rsbuildServer.middlewares);
 
-  const { server } = app.listen({ port: rsbuildServer.port }, async () => {
+  const httpServer = app.listen(rsbuildServer.port, async () => {
     // 通知 Rsbuild 自定义 Server 已启动
     await rsbuildServer.afterListen();
   });
 
   // 订阅服务器的 http 升级事件来处理 WebSocket 升级
-  server.on('upgrade', rsbuildServer.onHTTPUpgrade);
-
-  return {
-    close: async () => {
-      // 在自定义 server 关闭时触发 Rsbuild DevServer 的关闭
-      await rsbuildServer.close();
-      server.close();
-    },
-  };
+  httpServer.on('upgrade', rsbuildServer.onHTTPUpgrade);
 }
 ```
 
