@@ -29,7 +29,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rsfamily-nav-icon": "^1.0.1",
-    "rspress": "^1.15.1"
+    "rspress": "0.0.0-next-20240319081819"
   },
   "publishConfig": {
     "access": "public",
