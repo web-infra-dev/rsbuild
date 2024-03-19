@@ -14,7 +14,7 @@ const getRspackProvider = async () => {
 };
 
 export async function createRsbuild(
-  options: CreateRsbuildOptions,
+  options: CreateRsbuildOptions = {},
 ): Promise<RsbuildInstance> {
   const { rsbuildConfig = {} } = options;
 
