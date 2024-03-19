@@ -35,7 +35,7 @@ export async function startDevServerPure(fixtures) {
   const rsbuildServer = await rsbuild.createDevServer({ runCompile: false });
 
   const {
-    config: { host, port },
+    config: { port },
     middlewares,
   } = rsbuildServer;
 
@@ -49,7 +49,7 @@ export async function startDevServerPure(fixtures) {
     res.end('Hello Express!');
   });
 
-  const { server } = app.listen({ host, port }, async () => {
+  const { server } = app.listen({ port }, async () => {
     await rsbuildServer.afterListen();
   });
 

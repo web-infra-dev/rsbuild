@@ -286,13 +286,13 @@ type RsbuildDevServer = {
 
   /** The following APIs will be used when you use a custom server */
 
-  /** The resolved rsbuild server config */
+  /**
+   * The resolved rsbuild server config
+   *
+   * More config can be get from `rsbuild.getNormalizedConfig` api
+   */
   config: {
-    devServerConfig: DevConfig & ServerConfig;
     port: number;
-    host: string;
-    https: boolean;
-    routes: Routes;
   };
 
   /**
@@ -349,10 +349,10 @@ export async function startDevServer() {
   app.use(rsbuildServer.middlewares);
 
   const {
-    config: { host, port },
+    config: { port },
   } = rsbuildServer;
 
-  const { server } = app.listen({ host, port }, async () => {
+  const { server } = app.listen({ port }, async () => {
     // Notify Rsbuild that the custom server has started
     await rsbuildServer.afterListen();
   });

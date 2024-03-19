@@ -7,7 +7,6 @@ import type {
   ServerAPIs,
 } from './config/dev';
 import type { ServerConfig } from './config/server';
-import type { Routes } from './hooks';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 import type { Server as ConnectServer } from '../../compiled/connect';
 
@@ -109,13 +108,11 @@ export type RsbuildDevServer = {
 
   /**
    * The resolved rsbuild server config
+   * 
+   * More config can be get from `rsbuild.getNormalizedConfig` api
    */
   config: {
-    devServerConfig: DevConfig & ServerConfig;
     port: number;
-    host: string;
-    https: boolean;
-    routes: Routes;
   };
   /**
    * connect app instance.

@@ -286,13 +286,9 @@ type RsbuildDevServer = {
 
   /** 以下 API 在使用自定义 Server 时会用到 */
 
-  /** 获取解析后的 Rsbuild DevServer 配置 */
+  /** 获取解析后的 Rsbuild DevServer 配置 (更多配置可以使用 `rsbuild.getNormalizedConfig` 方法获取) */
   config: {
-    devServerConfig: DevConfig & ServerConfig;
     port: number;
-    host: string;
-    https: boolean;
-    routes: Routes;
   };
 
   /** Connect 实例，包含 Rsbuild 内置中间件 */
@@ -345,10 +341,10 @@ export async function startDevServer() {
   app.use(rsbuildServer.middlewares);
 
   const {
-    config: { host, port },
+    config: { port },
   } = rsbuildServer;
 
-  const { server } = app.listen({ host, port }, async () => {
+  const { server } = app.listen({ port }, async () => {
     // 通知 Rsbuild 自定义 Server 已启动
     await rsbuildServer.afterListen();
   });

@@ -24,7 +24,7 @@ export async function startDevServer(fixtures) {
     close,
     onHTTPUpgrade,
     afterListen,
-    config: { host, port },
+    config: { port },
   } = rsbuildServer;
 
   app.get('/aaa', (_req, res) => {
@@ -37,7 +37,7 @@ export async function startDevServer(fixtures) {
     res.end('Hello Express!');
   });
 
-  const { server } = app.listen({ host, port }, async () => {
+  const { server } = app.listen({ port }, async () => {
     await rsbuildServer.afterListen();
   });
 
