@@ -112,12 +112,9 @@ However, it is important to contact the developer of the third-party dependency 
 
 ### Tree shaking does not take effect?
 
-Rsbuild will enable the tree shaking function of Rspack by default during production construction. Whether tree shaking can take effect depends on whether the business code can meet the tree shaking conditions of Rspack.
+Rsbuild will enable the tree shaking of Rspack by default during the production build. Whether tree shaking can take effect depends on whether the code can meet the conditions of Rspack's tree shaking.
 
-If you encounter the problem that tree shaking does not take effect, you can check whether the `sideEffects` configuration of the relevant npm package is correct. If you don't know what `sideEffects` is, or are interested in the principles behind tree shaking, you can read the following two documents:
-
-- [Rspack official documentation - Tree Shaking](https://rspack.dev/guide/tree-shaking)
-- [Tree Shaking Troubleshooting Guide](https://bytedance.feishu.cn/docs/doccn8E1ldDct5uv1EEDQs8Ycwe)
+If you find that tree shaking is not working as expected, you can check whether the `sideEffects` config of the related npm package is correct. If you do not understand the role of `sideEffects`, or if you are interested in the principles behind tree shaking, you can read [Rspack Official Documentation - Tree Shaking](https://rspack.dev/guide/tree-shaking).
 
 ---
 
