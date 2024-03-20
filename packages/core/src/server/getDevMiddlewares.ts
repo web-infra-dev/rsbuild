@@ -123,7 +123,7 @@ const applyDefaultMiddlewares = async ({
       compileMiddlewareAPI.onUpgrade.bind(compileMiddlewareAPI),
     );
 
-    middlewares.push((req,res, next) => {
+    middlewares.push((req, res, next) => {
       // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
       if (req.url?.endsWith('.hot-update.json')) {
         res.statusCode = 404;
