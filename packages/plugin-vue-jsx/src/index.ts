@@ -31,6 +31,18 @@ export function pluginVueJsx(options: PluginVueJsxOptions = {}): RsbuildPlugin {
         //   }
         // });
 
+        const rule = chain.module.rule('babel-js');
+        if (rule.uses.has('babel')) {
+          rule.use('babel').tap((babelOptions) => {
+            babelOptions.plugins ??= [];
+            babelOptions.plugins.push([
+              require.resolve('@vue/babel-plugin-jsx'),
+              options.vueJsxOptions || {},
+            ]);
+            return babelOptions;
+          });
+        }
+
         chain.module
           .rule('vue-jsx')
           .test(/\.(jsx|tsx)(\.js)?$/)
