@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import path from 'node:path';
 import fs from 'node:fs';
 
@@ -45,9 +45,8 @@ rspackOnlyTest('should update', async ({ page }) => {
 });
 
 rspackOnlyTest('hmr: named export', async ({ page }) => {
-  const rsbuild = await build({
+  const rsbuild = await dev({
     cwd: __dirname,
-    runServer: true,
   });
 
   await gotoPage(page, rsbuild);
