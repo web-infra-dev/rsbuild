@@ -168,36 +168,6 @@ If there is an error that `core-js` cannot be found, there may be several reason
 
 ---
 
-### Compilation error after referencing a type from lodash
-
-If the `@types/lodash` package is installed in your project, you may import some types from `lodash`, such as the `DebouncedFunc` type:
-
-```ts
-import { debounce, DebouncedFunc } from 'lodash';
-```
-
-Rsbuild will throw an error after compiling the above code:
-
-```bash
-Syntax error: /project/src/index.ts: The lodash method `DebouncedFunc` is not a known module.
-Please report bugs to https://github.com/lodash/babel-plugin-lodash/issues.
-```
-
-The reason is that Rsbuild has enabled the [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash) plugin by default to optimize the bundle size of lodash, but Babel cannot distinguish between "value" and "type", which resulting in an exception in the compiled code.
-
-The solution is to use TypeScript's `import type` syntax to explicitly declare the `DebouncedFunc` type:
-
-```ts
-import { debounce } from 'lodash';
-import type { DebouncedFunc } from 'lodash';
-```
-
-:::tip
-In any case, it is recommended to use `import type` to import types, this will help the compiler to identify the type.
-:::
-
----
-
 ### Division in Less file doesn't work?
 
 Compared with the v3 version, the Less v4 version has some differences in the way of writing division:
