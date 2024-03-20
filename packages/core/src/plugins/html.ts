@@ -208,7 +208,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
         const htmlPaths = api.getHTMLPaths();
         const htmlInfoMap: Record<string, HtmlInfo> = {};
 
-        await Promise.all(
+        const finalOptions = await Promise.all(
           entryNames.map(async (entryName) => {
             const entryValue = entries[entryName].values();
             const chunks = getChunks(
@@ -279,11 +279,16 @@ export const pluginHtml = (): RsbuildPlugin => ({
               },
             });
 
-            chain
-              .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
-              .use(HtmlPlugin, [finalOptions]);
+            return finalOptions;
           }),
         );
+
+        // keep html entry plugin registration order stable based on entryNames
+        entryNames.forEach((entryName, index) => {
+          chain
+          .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
+          .use(HtmlPlugin, [finalOptions[index]]);
+        })
 
         const { HtmlBasicPlugin } = await import('../rspack/HtmlBasicPlugin');
 
