@@ -16,11 +16,14 @@ The nonce mechanism plays a crucial role in Content Security Policy (CSP), enhan
 
 When the browser parses inline scripts with matching nonce values, it allows them to be executed or applied, otherwise CSP will prevent them from running. This effectively prevents potential Cross-Site Scripting (XSS) attacks. It's worth noting that a new nonce value should be generated each time the page is accessed.
 
-For more information about nonce, you can check [nonce - MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce)。
+For more information about nonce, you can refer to:
+
+- [nonce - MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce)
+- [webpack - Content Security Policies](https://webpack.js.org/guides/csp/)
 
 ### Example
 
-By default, `nonce` is not enabled，You can define this value based on your needs:
+By default, `nonce` is not enabled by Rsbuild, you can define this value based on your needs:
 
 ```js
 export default {

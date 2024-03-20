@@ -16,11 +16,14 @@ nonce 机制在 Content Security Policy（CSP，内容安全策略）中起到�
 
 浏览器在解析到带有匹配 `nonce` 值的内联脚本时，会允许其执行或应用，否则 CSP 将阻止其运行。这样可以有效地防止潜在的跨站脚本（XSS）攻击。值得注意的是，每次页面加载时，都应该生成新的 nonce 值。
 
-关于 nonce 的更多内容，可以查看 [nonce - MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce)。
+关于 nonce 的更多内容，可以参考：
+
+- [nonce - MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce)
+- [webpack - Content Security Policies](https://webpack.js.org/guides/csp/)
 
 ### 示例
 
-默认情况下，不会开启 `nonce`，你可以按照需求定义该值：
+默认情况下，Rsbuild 不会开启 `nonce`，你可以按照需求定义该值：
 
 ```js
 export default {
