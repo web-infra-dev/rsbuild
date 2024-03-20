@@ -94,9 +94,11 @@ export = wdm;
  * @param {NextFunction} next
  * @return {Promise<void>}
  */
+/** @typedef {import('./utils/getFilenameFromUrl').Extra} Extra */
 /**
  * @callback GetFilenameFromUrl
  * @param {string} url
+ * @param {Extra=} extra
  * @returns {string | undefined}
  */
 /**
@@ -165,6 +167,7 @@ declare namespace wdm {
     Headers,
     Options,
     Middleware,
+    Extra,
     GetFilenameFromUrl,
     WaitUntilValid,
     Invalidate,
@@ -285,7 +288,11 @@ type Middleware<
   res: ResponseInternal,
   next: NextFunction,
 ) => Promise<void>;
-type GetFilenameFromUrl = (url: string) => string | undefined;
+type Extra = import('./utils/getFilenameFromUrl').Extra;
+type GetFilenameFromUrl = (
+  url: string,
+  extra?: Extra | undefined,
+) => string | undefined;
 type WaitUntilValid = (callback: Callback) => any;
 type Invalidate = (callback: Callback) => any;
 type Close = (callback: (err: Error | null | undefined) => void) => any;
