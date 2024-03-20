@@ -2,6 +2,15 @@ import path from 'node:path';
 import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './src/rsbuildPluginOverview';
 
+function getMeta(name: string, value: string) {
+  return {
+    [name]: {
+      property: name,
+      content: value,
+    },
+  };
+}
+
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
   lang: 'en',
@@ -78,6 +87,15 @@ export default defineConfig({
       startUrl: 'http://localhost:<port>/',
     },
     html: {
+      meta: {
+        ...getMeta('og:title', 'Rsbuild'),
+        ...getMeta('og:type', 'website'),
+        ...getMeta('og:url', 'https://rsbuild.dev/'),
+        ...getMeta('og:image', 'https://rsbuild.dev/og-image.png'),
+        ...getMeta('og:description', 'The Rspack-based build tool'),
+        ...getMeta('twitter:site', '@rspack_dev'),
+        ...getMeta('twitter:card', 'summary_large_image'),
+      },
       tags: [
         // Configure Google Analytics
         {
