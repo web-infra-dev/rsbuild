@@ -1,5 +1,6 @@
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
 import { getHTMLPlugin } from '../provider/htmlPluginUtil';
+import { createVirtualModule } from '@rsbuild/shared';
 
 type NonceOptions = {
   nonce: string;
@@ -20,6 +21,15 @@ export class HtmlNoncePlugin implements RspackPluginInstance {
     if (!this.nonce) {
       return;
     }
+
+    // apply __webpack_nonce__
+    // https://webpack.js.org/guides/csp/
+    const injectCode = createVirtualModule(
+      `__webpack_nonce__ = "${this.nonce}";`,
+    );
+    new compiler.webpack.EntryPlugin(compiler.context, injectCode, {
+      name: undefined,
+    }).apply(compiler);
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       getHTMLPlugin()
