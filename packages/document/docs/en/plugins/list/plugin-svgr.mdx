@@ -197,6 +197,28 @@ It is recommended to use `?react` to convert SVG to React component instead of u
 1. Increased bundle size: Mixed import causes a single SVG module to be compiled into two types of code (even if some exports are not used), which will increase the bundle size.
 2. Slow down compiling: Mixed import will cause extra compilation overhead. Even if the ReactComponent export is not used in the code, the SVG file will still be compiled by SVGR. And SVGR is based on Babel, which has a high performance overhead.
 
+### query
+
+- **Type:** `RegExp`
+- **Default:** `/react/`
+- **Version:** `>= 0.5.2`
+
+Used to custom the query suffix to match SVGR transformation.
+
+For example, if you need to match import paths with the `?svgr` suffix:
+
+```ts
+pluginSvgr({
+  query: /svgr/,
+});
+```
+
+```jsx title="App.jsx"
+import Logo from './logo.svg?svgr';
+
+export const App = () => <Logo />;
+```
+
 ---
 
 ## Type Declaration
