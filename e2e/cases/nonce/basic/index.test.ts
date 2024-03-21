@@ -8,6 +8,8 @@ test('should apply nonce to script and style tags', async () => {
   const files = await rsbuild.unwrapOutputJSON();
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
-  expect(html).toContain(`<script defer="defer" nonce="this-is-nonce">`);
-  expect(html).toContain(`<style nonce="this-is-nonce">body{`);
+  expect(html).toContain(
+    `<script defer="defer" nonce="CSP_NONCE_PLACEHOLDER">`,
+  );
+  expect(html).toContain(`<style nonce="CSP_NONCE_PLACEHOLDER">body{`);
 });

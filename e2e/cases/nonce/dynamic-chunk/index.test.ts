@@ -8,7 +8,7 @@ test('should apply nonce to dynamic chunks in dev build', async ({ page }) => {
 
   await gotoPage(page, rsbuild);
   expect(await page.evaluate('window.dynamicChunkNonce')).toEqual(
-    'this-is-nonce',
+    'CSP_NONCE_PLACEHOLDER',
   );
 
   await rsbuild.close();
@@ -22,7 +22,7 @@ test('should apply nonce to dynamic chunks in prod build', async ({ page }) => {
 
   await gotoPage(page, rsbuild);
   expect(await page.evaluate('window.dynamicChunkNonce')).toEqual(
-    'this-is-nonce',
+    'CSP_NONCE_PLACEHOLDER',
   );
 
   await rsbuild.close();

@@ -2,7 +2,7 @@ import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
   security: {
-    nonce: 'this-is-nonce',
+    nonce: 'CSP_NONCE_PLACEHOLDER',
   },
   output: {
     inlineStyles: true,
