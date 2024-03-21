@@ -20,3 +20,6 @@ tsconfig.tsbuildinfo
 .history/
 .env.local
 .env.*.local
+
+# ignore directory for artifacts produced by tests
+test-results/
