@@ -197,6 +197,28 @@ console.log(Logo); // -> React component
 1. 包体积增加：混合导入会导致单个 SVG 模块被编译为两种代码（即使部分导出没有被使用），这会增加产物的包体积。
 2. 编译速度下降：混合导入会产生额外的编译开销。即使代码中未使用到 ReactComponent 导出，SVG 文件仍然会被 SVGR 编译。而 SVGR 是基于 Babel 实现的，性能开销较大。
 
+### query
+
+- **类型：** `RegExp`
+- **默认值：** `/react/`
+- **版本：** `>= 0.5.2`
+
+用于自定义匹配 SVGR 转换的 query 后缀。
+
+比如需要匹配带有 `?svgr` 后缀的 import 路径：
+
+```ts
+pluginSvgr({
+  query: /svgr/,
+});
+```
+
+```jsx title="App.jsx"
+import Logo from './logo.svg?svgr';
+
+export const App = () => <Logo />;
+```
+
 ---
 
 ## 类型声明

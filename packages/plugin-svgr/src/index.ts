@@ -24,6 +24,12 @@ export type PluginSvgrOptions = {
    * @default false
    */
   mixedImport?: boolean;
+
+  /**
+   * Custom query suffix to match SVGR transformation.
+   * @default /react/
+   */
+  query?: RegExp;
 };
 
 function getSvgoDefaultConfig() {
@@ -91,7 +97,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
       rule
         .oneOf(CHAIN_ID.ONE_OF.SVG_REACT)
         .type('javascript/auto')
-        .resourceQuery(/react/)
+        .resourceQuery(options.query || /react/)
         .use(CHAIN_ID.USE.SVGR)
         .loader(path.resolve(__dirname, './loader'))
         .options({
