@@ -1,2 +1,1 @@
-var currentScript = document.currentScript;
-window.dynamicChunkNonce = currentScript.nonce;
+window.dynamicChunkNonce = document.currentScript.nonce;
