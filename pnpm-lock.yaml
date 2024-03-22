@@ -755,8 +755,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       rsfamily-nav-icon:
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.0.2
+        version: 1.0.2
       rspress:
         specifier: 0.0.0-next-20240319081819
         version: 0.0.0-next-20240319081819(webpack@5.90.3)
@@ -12816,8 +12816,8 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /rsfamily-nav-icon@1.0.1:
-    resolution: {integrity: sha512-TJdyzLpFfmEGfJiPAwZqn1TdXwoR7j/Y0j9ejovNk3zABzJ1FRQ6WZl7DVQQTHoJnABlRgXphMuxnAZ2UMePdQ==}
+  /rsfamily-nav-icon@1.0.2:
+    resolution: {integrity: sha512-gbvJ3wxy1iV6g6T1m/+UIM09t1Sr1ISEBMLUVwPITW+Ckhjuca1xyDh2gbMpYnYX+jXhOSSqA9qtlXpchUOH9Q==}
     dev: true
 
   /rslog@1.2.1:
