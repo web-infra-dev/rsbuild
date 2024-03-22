@@ -73,6 +73,10 @@ const applyLightningCSSLoader = ({
 
   const { implementation } = options ?? {};
 
+  if (options?.transform === true) {
+    options.transform = {};
+  }
+
   const mergedOptions: LightningCSSLoaderOptions = mergeChainedOptions({
     defaults: defaultOptions,
     options: {
@@ -133,6 +137,10 @@ const applyLightningCSSMinifyPlugin = async ({
   } satisfies LightningCSSLoaderOptions;
 
   const { implementation } = options ?? {};
+
+  if (options?.minify === true) {
+    options.minify = {};
+  }
 
   const mergedOptions: LightningCSSLoaderOptions = mergeChainedOptions({
     defaults: defaultOptions,

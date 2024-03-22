@@ -147,6 +147,29 @@ describe('plugins/lightningcss', () => {
     process.env.NODE_ENV = 'test';
   });
 
+  it('plugin-lightningcss should be configurable by users with true options', async () => {
+    process.env.NODE_ENV = 'production';
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [
+          pluginLightningcss({
+            transform: true,
+            minify: true,
+          }),
+        ],
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    const cssRules = getCssRules(bundlerConfigs[0]);
+    expect(cssRules).toMatchSnapshot();
+    expect(cssRules).not.contain('postcss-loader');
+
+    expect(bundlerConfigs[0].optimization?.minimizer).toMatchSnapshot();
+
+    process.env.NODE_ENV = 'test';
+  });
+
   it('plugin-lightningcss should be cancelable by users with false options', async () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({

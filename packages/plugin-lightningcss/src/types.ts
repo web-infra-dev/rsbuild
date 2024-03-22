@@ -26,7 +26,7 @@ export type PluginLightningcssOptions = {
    *   targets: browserslistToTargets(browserslist)
    * }
    */
-  transform?: false | LightningCSSTransformOptions;
+  transform?: boolean | LightningCSSTransformOptions;
   /**
    * @see https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts
    * @default
@@ -34,7 +34,7 @@ export type PluginLightningcssOptions = {
    *   targets: browserslistToTargets(browserslist)
    * }
    */
-  minify?: false | LightningCSSTransformOptions;
+  minify?: boolean | LightningCSSTransformOptions;
   /**
    * lightningcss instance
    * @example

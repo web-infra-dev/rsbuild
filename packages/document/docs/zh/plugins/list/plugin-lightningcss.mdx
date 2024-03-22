@@ -42,7 +42,7 @@ export default {
 
 使用 `lightningcss-loader` 替换 Rsbuild 内置的 `postcss-loader` 进行 CSS 转译，传递给 `lightningcss-loader` 的选项，请查阅 [lightningcss 仓库](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) 了解具体用法。
 
-- **类型：** `false | lightningcss.TransformOptions<CustomAtRules>`
+- **类型：** `boolean | lightningcss.TransformOptions<CustomAtRules>`
 - **默认值：**
 
 ```ts
@@ -80,6 +80,14 @@ pluginLightningcss({
 });
 ```
 
+- **示例：** 仅在开发环境下启用 `lightningcss-loader`，生产环境下依然使用 `postcss-loader`
+
+```ts
+pluginLightningcss({
+  transform: process.env.NODE_ENV === 'development'
+});
+```
+
 - **示例：** 禁用 CSS 转译功能，仅保留 CSS 压缩功能。
 
 ```ts
@@ -92,7 +100,7 @@ pluginLightningcss({
 
 使用 Lightning CSS 替换 Rspack 内置的 CSS 压缩工具进行 CSS 压缩，传递给 `lightningcss` 的选项，请查阅 [lightningcss 仓库](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) 了解具体用法。
 
-- **类型：** `false | lightningcss.TransformOptions<CustomAtRules>`
+- **类型：** `boolean | lightningcss.TransformOptions<CustomAtRules>`
 - **默认值：**
 
 ```ts

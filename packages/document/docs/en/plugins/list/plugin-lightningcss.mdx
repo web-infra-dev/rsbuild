@@ -80,6 +80,14 @@ pluginLightningcss({
 });
 ```
 
+- **Example:** Enable `lightningcss-loader` only in the development build, still use `postcss-loader` in the production build
+
+```ts
+pluginLightningcss({
+  transform: process.env.NODE_ENV === 'development'
+});
+```
+
 - **Example:** Disable CSS transform of lightningcss, leaving only CSS minify.
 
 ```ts
