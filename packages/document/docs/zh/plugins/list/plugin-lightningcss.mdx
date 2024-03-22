@@ -68,14 +68,12 @@ pluginLightningcss({
 ```ts
 pluginLightningcss({
   transform: {
-    transform: {
-      visitor: {
-        Length(len) {
-          return {
-            unit: 'rem',
-            value: len.value,
-          };
-        },
+    visitor: {
+      Length(len) {
+        return {
+          unit: 'rem',
+          value: len.value,
+        };
       },
     },
   },
