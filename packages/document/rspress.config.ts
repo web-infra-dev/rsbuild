@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './src/rsbuildPluginOverview';
+import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 
 function getMeta(name: string, value: string) {
   return {
@@ -12,6 +13,7 @@ function getMeta(name: string, value: string) {
 }
 
 export default defineConfig({
+  plugins: [pluginFontOpenSans()],
   root: path.join(__dirname, 'docs'),
   lang: 'en',
   base: '/',
@@ -30,7 +32,6 @@ export default defineConfig({
     // exclude document fragments from routes
     exclude: ['**/zh/shared/**', '**/en/shared/**'],
   },
-  globalStyles: path.join(__dirname, './src/global.css'),
   themeConfig: {
     footer: {
       message: 'Copyright © 2024 ByteDance.',
