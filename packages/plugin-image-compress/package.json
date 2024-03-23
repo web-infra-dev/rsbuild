@@ -27,7 +27,7 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@napi-rs/image": "^1.7.0",
+    "@napi-rs/image": "^1.9.1",
     "@rsbuild/shared": "workspace:*",
     "svgo": "^3.2.0"
   },

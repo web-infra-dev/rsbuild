@@ -28,10 +28,10 @@
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
-    "@vue/babel-plugin-jsx": "1.2.1"
+    "@vue/babel-plugin-jsx": "1.2.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
+    "@babel/core": "^7.24.3",
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "typescript": "^5.4.2"

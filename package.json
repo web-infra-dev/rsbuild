@@ -37,19 +37,19 @@
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.6.1",
+    "@biomejs/biome": "1.6.2",
     "@changesets/cli": "^2.27.1",
-    "@ls-lint/ls-lint": "^2.2.2",
-    "@modern-js/module-tools": "^2.48.2",
+    "@ls-lint/ls-lint": "^2.2.3",
+    "@modern-js/module-tools": "^2.48.3",
     "@rsbuild/tsconfig": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "nano-staged": "^0.8.0",
-    "nx": "^18.0.4",
-    "prettier": "^3.2.4",
-    "simple-git-hooks": "^2.10.0",
-    "vitest": "^1.2.1"
+    "nx": "^18.1.2",
+    "prettier": "^3.2.5",
+    "simple-git-hooks": "^2.11.0",
+    "vitest": "^1.4.0"
   },
   "packageManager": "pnpm@8.15.5",
   "engines": {

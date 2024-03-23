@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "acorn": "^8.10.0",
+    "acorn": "^8.11.3",
     "htmlparser2": "9.1.0",
     "source-map": "^0.7.4"
   },
