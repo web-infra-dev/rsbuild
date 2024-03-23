@@ -882,8 +882,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       css-minimizer-webpack-plugin:
-        specifier: 5.0.1
-        version: 5.0.1(webpack@5.91.0)
+        specifier: 6.0.0
+        version: 6.0.0(webpack@5.91.0)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1916,7 +1916,7 @@ packages:
     dependencies:
       '@babel/types': 7.24.0
       '@jridgewell/gen-mapping': 0.3.4
-      '@jridgewell/trace-mapping': 0.3.23
+      '@jridgewell/trace-mapping': 0.3.25
       jsesc: 2.5.2
     dev: false
 
@@ -7204,9 +7204,9 @@ packages:
       semver: 7.6.0
       webpack: 5.91.0
 
-  /css-minimizer-webpack-plugin@5.0.1(webpack@5.91.0):
-    resolution: {integrity: sha512-3caImjKFQkS+ws1TGcFn0V1HyDJFq1Euy589JlD6/3rV2kj+w7r5G9WDMgSHvpvXHNZ2calVypZWuEDQd9wfLg==}
-    engines: {node: '>= 14.15.0'}
+  /css-minimizer-webpack-plugin@6.0.0(webpack@5.91.0):
+    resolution: {integrity: sha512-BLpR9CCDkKvhO3i0oZQgad6v9pCxUuhSc5RT6iUEy9M8hBXi4TJb5vqF2GQ2deqYHmRi3O6IR9hgAZQWg0EBwA==}
+    engines: {node: '>= 18.12.0'}
     peerDependencies:
       '@parcel/css': '*'
       '@swc/css': '*'
@@ -7229,7 +7229,7 @@ packages:
       lightningcss:
         optional: true
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.23
+      '@jridgewell/trace-mapping': 0.3.25
       cssnano: 6.0.5(postcss@8.4.38)
       jest-worker: 29.7.0
       postcss: 8.4.38
