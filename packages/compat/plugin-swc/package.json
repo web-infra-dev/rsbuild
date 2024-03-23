@@ -49,7 +49,7 @@
     "@rsbuild/webpack": "workspace:*",
     "@types/lodash": "^4.17.0",
     "typescript": "^5.4.2",
-    "webpack": "^5.89.0"
+    "webpack": "^5.91.0"
   },
   "peerDependencies": {
     "@rsbuild/core": "workspace:^0.5.2"
