@@ -29,7 +29,7 @@
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
     "esbuild": "0.17.19",
-    "webpack": "^5.89.0"
+    "webpack": "^5.91.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

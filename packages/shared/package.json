@@ -136,7 +136,7 @@
     "mini-css-extract-plugin": "2.8.1",
     "terser": "5.29.2",
     "typescript": "^5.4.2",
-    "webpack": "^5.89.0"
+    "webpack": "^5.91.0"
   },
   "publishConfig": {
     "access": "public",
