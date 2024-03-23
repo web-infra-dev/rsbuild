@@ -127,8 +127,8 @@
   },
   "dependencies": {
     "@rspack/core": "0.5.8",
-    "caniuse-lite": "^1.0.30001583",
-    "postcss": "^8.4.33"
+    "caniuse-lite": "^1.0.30001600",
+    "postcss": "^8.4.38"
   },
   "devDependencies": {
     "@types/node": "16.x",
