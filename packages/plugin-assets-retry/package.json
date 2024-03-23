@@ -33,7 +33,7 @@
   "devDependencies": {
     "@babel/core": "^7.24.3",
     "@babel/preset-env": "^7.24.3",
-    "@babel/preset-typescript": "^7.23.2",
+    "@babel/preset-typescript": "^7.24.1",
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/serialize-javascript": "^5.0.4",
