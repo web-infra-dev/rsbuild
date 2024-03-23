@@ -10,7 +10,7 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
-    "preact": "^10.19.3",
+    "preact": "^10.20.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",

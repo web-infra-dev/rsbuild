@@ -65,8 +65,8 @@ importers:
         specifier: ^2.30.1
         version: 2.30.1
       preact:
-        specifier: ^10.19.3
-        version: 10.19.7
+        specifier: ^10.20.1
+        version: 10.20.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -404,8 +404,8 @@ importers:
   examples/preact:
     dependencies:
       preact:
-        specifier: ^10.19.3
-        version: 10.19.7
+        specifier: ^10.20.1
+        version: 10.20.1
     devDependencies:
       '@rsbuild/core':
         specifier: link:../../packages/core
@@ -12130,8 +12130,8 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.2.0
 
-  /preact@10.19.7:
-    resolution: {integrity: sha512-IJOW6cQN1fwfC17HfNOqUtAGyB8wAYshuC+jG1JiL/1+sC4yVyuA3IcF0N9vdodMJjW/lbuEF5qFsJqGNcbHbw==}
+  /preact@10.20.1:
+    resolution: {integrity: sha512-JIFjgFg9B2qnOoGiYMVBtrcFxHqn+dNXbq76bVmcaHYJFYR4lW67AOcXgAYQQTDYXDOg/kTZrKPNCdRgJ2UJmw==}
     dev: false
 
   /preferred-pm@3.1.3:
