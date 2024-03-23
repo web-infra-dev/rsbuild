@@ -29,13 +29,13 @@
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/shared": "workspace:*",
-    "babel-preset-solid": "^1.8.6",
+    "babel-preset-solid": "^1.8.16",
     "solid-refresh": "0.7.5"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "@types/babel__core": "^7.20.3",
+    "@types/babel__core": "^7.20.5",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {

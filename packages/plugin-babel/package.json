@@ -27,11 +27,11 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@babel/core": "^7.23.2",
+    "@babel/core": "^7.24.3",
     "@babel/preset-typescript": "^7.23.2",
-    "@babel/plugin-proposal-decorators": "^7.23.2",
+    "@babel/plugin-proposal-decorators": "^7.24.1",
     "@rsbuild/shared": "workspace:*",
-    "@types/babel__core": "^7.20.3",
+    "@types/babel__core": "^7.20.5",
     "upath": "2.0.1"
   },
   "devDependencies": {

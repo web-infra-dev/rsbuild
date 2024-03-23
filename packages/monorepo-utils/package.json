@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "fast-glob": "^3.3.1"
+    "fast-glob": "^3.3.2"
   },
   "devDependencies": {
     "@types/node": "16.x",

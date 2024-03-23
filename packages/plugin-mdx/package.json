@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@mdx-js/loader": "^3.0.0"
+    "@mdx-js/loader": "^3.0.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
