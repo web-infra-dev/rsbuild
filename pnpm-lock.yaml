@@ -755,8 +755,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       rsbuild-plugin-google-analytics:
-        specifier: 1.0.0-beta.1
-        version: 1.0.0-beta.1(@rsbuild/core@packages+core)
+        specifier: 1.0.0
+        version: 1.0.0(@rsbuild/core@packages+core)
       rsfamily-nav-icon:
         specifier: ^1.0.2
         version: 1.0.2
@@ -12830,8 +12830,8 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /rsbuild-plugin-google-analytics@1.0.0-beta.1(@rsbuild/core@packages+core):
-    resolution: {integrity: sha512-jf7ZwXW0LHKIRjYRCvW6ibZnI8HpQ7NzKXcIOPRL6itzCG2KH5Vt40WjyQFbfPcjMe7HR8caaUmBvoNPTgmRIg==}
+  /rsbuild-plugin-google-analytics@1.0.0(@rsbuild/core@packages+core):
+    resolution: {integrity: sha512-Z2hVetWq48QT+X/HMmtp+YTxzPw+ujt/KUrbQXn98LmUDYqJyGSCBAjit8atAoRiThUSKlkG+NU3+zkFvKoLdA==}
     peerDependencies:
       '@rsbuild/core': link:packages/core
     peerDependenciesMeta:
