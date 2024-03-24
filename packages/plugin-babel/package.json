@@ -42,6 +42,7 @@
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
+    "@rsbuild/core": "workspace:^0.5.2"
   },
   "publishConfig": {
     "access": "public",
