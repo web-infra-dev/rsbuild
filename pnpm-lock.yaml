@@ -831,6 +831,9 @@ importers:
       '@babel/plugin-proposal-decorators':
         specifier: ^7.24.1
         version: 7.24.1(@babel/core@7.24.3)
+      '@babel/plugin-transform-class-properties':
+        specifier: ^7.24.1
+        version: 7.24.1(@babel/core@7.24.3)
       '@babel/preset-typescript':
         specifier: ^7.24.1
         version: 7.24.1(@babel/core@7.24.3)
