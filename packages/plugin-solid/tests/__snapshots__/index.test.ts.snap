@@ -20,10 +20,12 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
                     "version": "legacy",
                   },
                 ],
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
-                {
-                  "loose": true,
-                },
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+                  {
+                    "loose": true,
+                  },
+                ],
               ],
               "presets": [
                 [
@@ -73,10 +75,12 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
                     "version": "legacy",
                   },
                 ],
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
-                {
-                  "loose": true,
-                },
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+                  {
+                    "loose": true,
+                  },
+                ],
               ],
               "presets": [
                 [
@@ -123,10 +127,12 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
                     "version": "legacy",
                   },
                 ],
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
-                {
-                  "loose": true,
-                },
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+                  {
+                    "loose": true,
+                  },
+                ],
               ],
               "presets": [
                 [
