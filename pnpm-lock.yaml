@@ -754,6 +754,9 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      rsbuild-plugin-google-analytics:
+        specifier: 1.0.0
+        version: 1.0.0(@rsbuild/core@packages+core)
       rsfamily-nav-icon:
         specifier: ^1.0.2
         version: 1.0.2
@@ -12825,6 +12828,17 @@ packages:
       '@rollup/rollup-win32-ia32-msvc': 4.13.0
       '@rollup/rollup-win32-x64-msvc': 4.13.0
       fsevents: 2.3.3
+    dev: true
+
+  /rsbuild-plugin-google-analytics@1.0.0(@rsbuild/core@packages+core):
+    resolution: {integrity: sha512-Z2hVetWq48QT+X/HMmtp+YTxzPw+ujt/KUrbQXn98LmUDYqJyGSCBAjit8atAoRiThUSKlkG+NU3+zkFvKoLdA==}
+    peerDependencies:
+      '@rsbuild/core': link:packages/core
+    peerDependenciesMeta:
+      '@rsbuild/core':
+        optional: true
+    dependencies:
+      '@rsbuild/core': link:packages/core
     dev: true
 
   /rsfamily-nav-icon@1.0.2:
