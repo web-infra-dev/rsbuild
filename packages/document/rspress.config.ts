@@ -2,6 +2,7 @@ import path from 'node:path';
 import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './src/rsbuildPluginOverview';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
+import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 
 function getMeta(name: string, value: string) {
   return {
@@ -77,7 +78,10 @@ export default defineConfig({
     },
   },
   builderConfig: {
-    plugins: [rsbuildPluginOverview],
+    plugins: [
+      rsbuildPluginOverview,
+      pluginGoogleAnalytics({ id: 'G-L6BZ6TKW4R' }),
+    ],
     source: {
       alias: {
         '@components': path.join(__dirname, 'src/components'),
@@ -98,24 +102,6 @@ export default defineConfig({
         ...getMeta('twitter:site', '@rspack_dev'),
         ...getMeta('twitter:card', 'summary_large_image'),
       },
-      tags: [
-        // Configure Google Analytics
-        {
-          tag: 'script',
-          attrs: {
-            async: true,
-            src: 'https://www.googletagmanager.com/gtag/js?id=G-L6BZ6TKW4R',
-          },
-        },
-        {
-          tag: 'script',
-          children: `
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-L6BZ6TKW4R');`,
-        },
-      ],
     },
   },
 });
