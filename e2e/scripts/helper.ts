@@ -11,7 +11,9 @@ export const providerType = process.env.PROVIDE_TYPE || 'rspack';
 
 process.env.PROVIDE_TYPE = providerType;
 
-export const getProviderTest = (supportType: string[] = ['rspack']) => {
+export const getProviderTest = (
+  supportType: string[] = ['rspack'],
+): typeof test => {
   if (supportType.includes(providerType)) {
     return test;
   }
@@ -20,6 +22,7 @@ export const getProviderTest = (supportType: string[] = ['rspack']) => {
 
   // @ts-expect-error
   testSkip.describe = test.describe.skip;
+  // @ts-expect-error
   return testSkip as typeof test.skip & {
     describe: typeof test.describe.skip;
   };

@@ -72,8 +72,10 @@ export const getDefaultBabelOptions = (
       // see https://babeljs.io/docs/babel-plugin-proposal-decorators
       ...(isLegacyDecorators
         ? [
-            require.resolve('@babel/plugin-transform-class-properties'),
-            { loose: true },
+            [
+              require.resolve('@babel/plugin-transform-class-properties'),
+              { loose: true },
+            ],
           ]
         : []),
     ],

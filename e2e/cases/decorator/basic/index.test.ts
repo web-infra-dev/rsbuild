@@ -9,8 +9,9 @@ test('should use legacy decorators by default', async ({ page }) => {
   });
 
   await gotoPage(page, rsbuild);
-  expect(await page.evaluate('window.aaa')).toBe('hello!');
+  expect(await page.evaluate('window.aaa')).toBe('hello');
   expect(await page.evaluate('window.bbb')).toBe('world');
+  expect(await page.evaluate('window.ccc')).toBe('hello world');
 
   await rsbuild.close();
 });
@@ -29,8 +30,9 @@ test('should allow to use stage 3 decorators', async ({ page }) => {
   });
 
   await gotoPage(page, rsbuild);
-  expect(await page.evaluate('window.aaa')).toBe('hello!');
+  expect(await page.evaluate('window.aaa')).toBe('hello');
   expect(await page.evaluate('window.bbb')).toBe('world');
+  expect(await page.evaluate('window.ccc')).toBe('hello world');
 
   await rsbuild.close();
 });
@@ -45,8 +47,9 @@ rspackOnlyTest(
     });
 
     await gotoPage(page, rsbuild);
-    expect(await page.evaluate('window.aaa')).toBe('hello!');
+    expect(await page.evaluate('window.aaa')).toBe('hello');
     expect(await page.evaluate('window.bbb')).toBe('world');
+    expect(await page.evaluate('window.ccc')).toBe('hello world');
 
     await rsbuild.close();
   },
@@ -69,8 +72,9 @@ rspackOnlyTest(
     });
 
     await gotoPage(page, rsbuild);
-    expect(await page.evaluate('window.aaa')).toBe('hello!');
+    expect(await page.evaluate('window.aaa')).toBe('hello');
     expect(await page.evaluate('window.bbb')).toBe('world');
+    expect(await page.evaluate('window.ccc')).toBe('hello world');
 
     await rsbuild.close();
   },

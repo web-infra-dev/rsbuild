@@ -3,4 +3,4 @@ import { FooService } from './decorator';
 console.log(FooService);
 
 // @ts-ignore
-window.FooService = FooService;
+window.FooService = Boolean(FooService);

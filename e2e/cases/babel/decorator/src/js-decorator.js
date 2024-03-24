@@ -1,13 +1,17 @@
 class BarService {}
 
 const injectable = (..._args) => {
-  window.aaa = 'hello';
+  return () => {
+    window.aaa = 'hello';
+  };
 };
 
 const inject = (arg0, ..._args) => {
-  if (arg0 === BarService) {
-    window.bbb = 'world';
-  }
+  return () => {
+    if (arg0 === BarService) {
+      window.bbb = 'world';
+    }
+  };
 };
 
 @injectable()

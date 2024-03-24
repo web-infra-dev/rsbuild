@@ -2,4 +2,4 @@ import { FooService } from './decorator';
 
 console.log(FooService);
 
-window.FooService = FooService;
+window.FooService = Boolean(FooService);
