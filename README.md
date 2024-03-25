@@ -66,7 +66,7 @@ We plan to release Rsbuild v1.0 before July 2024 (based in Rspack v1.0), see [Rs
 
 To get started with Rsbuild, see the [Quick Start](https://rsbuild.dev/guide/start/quick-start).
 
-## 🦀 Ecosystem
+## 🦀 Links
 
 - [Rspack](https://github.com/web-infra-dev/rspack): A fast Rust-based web bundler.
 - [Rspress](https://github.com/web-infra-dev/rspress): A fast static site generator based on Rsbuild.

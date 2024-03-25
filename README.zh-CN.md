@@ -66,7 +66,7 @@ Rsbuild 具备以下特性：
 
 你可以参考 [快速上手](https://rsbuild.dev/zh/guide/start/quick-start) 来开始体验 Rsbuild。
 
-## 🦀 生态
+## 🦀 链接
 
 - [Rspack](https://github.com/web-infra-dev/rspack)：基于 Rust 的高性能打包工具。
 - [Rspress](https://github.com/web-infra-dev/rspress)：基于 Rsbuild 的静态站点生成器。
