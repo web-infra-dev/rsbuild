@@ -2,16 +2,8 @@ import path from 'node:path';
 import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './src/rsbuildPluginOverview';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
+import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
-
-function getMeta(name: string, value: string) {
-  return {
-    [name]: {
-      property: name,
-      content: value,
-    },
-  };
-}
 
 export default defineConfig({
   plugins: [pluginFontOpenSans()],
@@ -81,6 +73,17 @@ export default defineConfig({
     plugins: [
       rsbuildPluginOverview,
       pluginGoogleAnalytics({ id: 'G-L6BZ6TKW4R' }),
+      pluginOpenGraph({
+        title: 'Rsbuild',
+        type: 'website',
+        url: 'https://rsbuild.dev/',
+        image: 'https://rsbuild.dev/og-image.png',
+        description: 'The Rspack-based build tool',
+        twitter: {
+          site: '@rspack_dev',
+          card: 'summary_large_image',
+        },
+      }),
     ],
     source: {
       alias: {
@@ -91,17 +94,6 @@ export default defineConfig({
     },
     dev: {
       startUrl: 'http://localhost:<port>/',
-    },
-    html: {
-      meta: {
-        ...getMeta('og:title', 'Rsbuild'),
-        ...getMeta('og:type', 'website'),
-        ...getMeta('og:url', 'https://rsbuild.dev/'),
-        ...getMeta('og:image', 'https://rsbuild.dev/og-image.png'),
-        ...getMeta('og:description', 'The Rspack-based build tool'),
-        ...getMeta('twitter:site', '@rspack_dev'),
-        ...getMeta('twitter:card', 'summary_large_image'),
-      },
     },
   },
 });

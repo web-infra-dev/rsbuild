@@ -757,6 +757,9 @@ importers:
       rsbuild-plugin-google-analytics:
         specifier: 1.0.0
         version: 1.0.0(@rsbuild/core@packages+core)
+      rsbuild-plugin-open-graph:
+        specifier: 1.0.0
+        version: 1.0.0(@rsbuild/core@packages+core)
       rsfamily-nav-icon:
         specifier: ^1.0.2
         version: 1.0.2
@@ -12832,6 +12835,17 @@ packages:
 
   /rsbuild-plugin-google-analytics@1.0.0(@rsbuild/core@packages+core):
     resolution: {integrity: sha512-Z2hVetWq48QT+X/HMmtp+YTxzPw+ujt/KUrbQXn98LmUDYqJyGSCBAjit8atAoRiThUSKlkG+NU3+zkFvKoLdA==}
+    peerDependencies:
+      '@rsbuild/core': link:packages/core
+    peerDependenciesMeta:
+      '@rsbuild/core':
+        optional: true
+    dependencies:
+      '@rsbuild/core': link:packages/core
+    dev: true
+
+  /rsbuild-plugin-open-graph@1.0.0(@rsbuild/core@packages+core):
+    resolution: {integrity: sha512-SuN9w2FH2v9Mp9/jBowH/RvR74i5A1KzM8+3JrCwCpsuny2HQ3iZqVETgDJ0VIcXqLHUxPnI0aGMgbAcqmlzcg==}
     peerDependencies:
       '@rsbuild/core': link:packages/core
     peerDependenciesMeta:

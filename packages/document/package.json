@@ -27,6 +27,7 @@
     "@types/react-dom": "^18.2.22",
     "fast-glob": "^3.3.2",
     "rsbuild-plugin-google-analytics": "1.0.0",
+    "rsbuild-plugin-open-graph": "1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rsfamily-nav-icon": "^1.0.2",
