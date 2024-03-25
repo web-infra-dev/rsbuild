@@ -6,7 +6,11 @@ export default {
   buildConfig: buildConfigWithMjs.map((config) => {
     if (config.format === 'cjs') {
       // add loader to entry
-      config.input = ['src/index.ts', 'src/loader.ts'];
+      config.input = [
+        'src/index.ts',
+        'src/loader.ts',
+        'src/babel-plugin-vue-jsx-hmr.ts',
+      ];
     }
     return config;
   }),
