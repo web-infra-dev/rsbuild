@@ -59,10 +59,7 @@ const defaultOptions = {
   plugins: [
     ['@babel/plugin-proposal-decorators', config.source.decorators],
     ...(isLegacyDecorators
-      ? [
-          require.resolve('@babel/plugin-transform-class-properties'),
-          { loose: true },
-        ]
+      ? [['@babel/plugin-transform-class-properties', { loose: true }]]
       : []),
   ],
   presets: [
