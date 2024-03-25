@@ -65,6 +65,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
               "version": "legacy",
             },
           ],
+          "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
         ],
         "presets": [
           [
@@ -104,6 +105,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
                     "version": "legacy",
                   },
                 ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
               ],
               "presets": [
                 [
@@ -149,6 +151,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
                     "version": "legacy",
                   },
                 ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
                 [
                   "babel-plugin-import",
                   {

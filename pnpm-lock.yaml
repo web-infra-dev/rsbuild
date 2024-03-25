@@ -216,6 +216,12 @@ importers:
         specifier: ^5.4.2
         version: 5.4.2
 
+  e2e/cases/babel/decorator:
+    devDependencies:
+      '@babel/preset-env':
+        specifier: ^7.24.3
+        version: 7.24.3(@babel/core@7.24.3)
+
   e2e/cases/eslint:
     dependencies:
       eslint:
@@ -829,6 +835,9 @@ importers:
         specifier: ^7.24.3
         version: 7.24.3
       '@babel/plugin-proposal-decorators':
+        specifier: ^7.24.1
+        version: 7.24.1(@babel/core@7.24.3)
+      '@babel/plugin-transform-class-properties':
         specifier: ^7.24.1
         version: 7.24.1(@babel/core@7.24.3)
       '@babel/preset-typescript':
@@ -1951,7 +1960,7 @@ packages:
     resolution: {integrity: sha512-9JB548GZoQVmzrFgp8o7KxdgkTGm6xs9DW0o/Pim72UDjzr5ObUQ6ZzYPqA+g9OTS2bBQoctLJrky0RDCAWRgQ==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/compat-data': 7.23.5
+      '@babel/compat-data': 7.24.1
       '@babel/helper-validator-option': 7.23.5
       browserslist: 4.23.0
       lru-cache: 5.1.1
@@ -3064,7 +3073,7 @@ packages:
       babel-plugin-polyfill-corejs2: 0.4.10(@babel/core@7.24.3)
       babel-plugin-polyfill-corejs3: 0.10.4(@babel/core@7.24.3)
       babel-plugin-polyfill-regenerator: 0.6.1(@babel/core@7.24.3)
-      core-js-compat: 3.36.0
+      core-js-compat: 3.36.1
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
@@ -7059,11 +7068,6 @@ packages:
     dependencies:
       toggle-selection: 1.0.6
     dev: true
-
-  /core-js-compat@3.36.0:
-    resolution: {integrity: sha512-iV9Pd/PsgjNWBXeq8XRtWVSgz2tKAfhfvBs7qxYty+RlRd+OCksaWmOnc4JKrTc1cToXL1N0s3l/vwlxPtdElw==}
-    dependencies:
-      browserslist: 4.23.0
 
   /core-js-compat@3.36.1:
     resolution: {integrity: sha512-Dk997v9ZCt3X/npqzyGdTlq6t7lDBhZwGvV94PKzDArjp7BTRm7WlDAXYd/OWdeFHO8OChQYRJNJvUCqCbrtKA==}

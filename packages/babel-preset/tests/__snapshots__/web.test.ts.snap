@@ -35,6 +35,9 @@ exports[`should allow to enable legacy decorator 1`] = `
         "exclude": [
           "transform-typeof-symbol",
         ],
+        "include": [
+          "@babel/plugin-transform-class-properties",
+        ],
         "modules": "commonjs",
         "targets": [
           "Chrome >= 53",

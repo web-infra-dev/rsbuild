@@ -30,6 +30,7 @@
     "@babel/core": "^7.24.3",
     "@babel/preset-typescript": "^7.24.1",
     "@babel/plugin-proposal-decorators": "^7.24.1",
+    "@babel/plugin-transform-class-properties": "^7.24.1",
     "@rsbuild/shared": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "upath": "2.0.1"

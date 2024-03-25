@@ -56,7 +56,10 @@ const defaultOptions = {
   babelrc: false,
   compact: false,
   configFile: false,
-  plugins: [],
+  plugins: [
+    ['@babel/plugin-proposal-decorators', config.source.decorators],
+    ...(isLegacyDecorators ? ['@babel/plugin-transform-class-properties'] : []),
+  ],
   presets: [
     [
       '@babel/preset-typescript',
