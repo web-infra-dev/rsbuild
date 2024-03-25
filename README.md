@@ -60,15 +60,13 @@ The following diagram illustrates the relationship between Rsbuild and other too
 
 ## 📍 Roadmap
 
-- **Q4 2023**: release several minor versions of Rsbuild 0.x (based on Rspack 0.x).
-- **Q1 2024**: release Rsbuild 1.0 beta version (based on Rspack 1.0 beta).
-- **Q2 2024**: release Rsbuild 1.0 stable version (based on Rspack 1.0 stable).
+We plan to release Rsbuild v1.0 before July 2024 (based in Rspack v1.0), see [Rsbuild v1.0 Release Plan](https://github.com/web-infra-dev/rsbuild/discussions/1678).
 
 ## 📚 Getting Started
 
 To get started with Rsbuild, see the [Quick Start](https://rsbuild.dev/guide/start/quick-start).
 
-## 🦀 Ecosystem
+## 🦀 Links
 
 - [Rspack](https://github.com/web-infra-dev/rspack): A fast Rust-based web bundler.
 - [Rspress](https://github.com/web-infra-dev/rspress): A fast static site generator based on Rsbuild.
@@ -76,6 +74,7 @@ To get started with Rsbuild, see the [Quick Start](https://rsbuild.dev/guide/sta
 - [Modern.js](https://github.com/web-infra-dev/modern.js): A progressive React framework based on Rsbuild.
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rspack and Rsbuild.
 - [rspack-examples](https://github.com/rspack-contrib/rspack-examples): Examples for Rspack, Rsbuild, Rspress and Rsdoctor.
+- [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：Use this template to create your own Rsbuild plugin.
 
 ## 🤝 Contribution
 

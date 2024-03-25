@@ -60,15 +60,13 @@ Rsbuild 具备以下特性：
 
 ## 📍 路线图
 
-- **2023 年第 4 季度**：发布若干个 Rsbuild 0.x 版本（基于 Rspack 0.x 版本）。
-- **2024 年第 1 季度**：发布 Rsbuild 1.0 测试版本（基于 Rspack 1.0 测试版本）。
-- **2024 年第 2 季度**：发布 Rsbuild 1.0 稳定版本（基于 Rspack 1.0 稳定版本）。
+我们计划在 2024 年 7 月之前发布 Rsbuild v1.0（基于 Rspack v1.0），参见 [Rsbuild v1.0 Release Plan](https://github.com/web-infra-dev/rsbuild/discussions/1678)。
 
 ## 📚 快速上手
 
 你可以参考 [快速上手](https://rsbuild.dev/zh/guide/start/quick-start) 来开始体验 Rsbuild。
 
-## 🦀 生态
+## 🦀 链接
 
 - [Rspack](https://github.com/web-infra-dev/rspack)：基于 Rust 的高性能打包工具。
 - [Rspress](https://github.com/web-infra-dev/rspress)：基于 Rsbuild 的静态站点生成器。
@@ -76,6 +74,7 @@ Rsbuild 具备以下特性：
 - [Modern.js](https://github.com/web-infra-dev/modern.js)：基于 Rsbuild 的渐进式 React 框架。
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rspack 和 Rsbuild 相关的精彩内容列表。
 - [rspack-examples](https://github.com/rspack-contrib/rspack-examples)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的示例项目。
+- [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：使用此模板创建你的 Rsbuild 插件。
 
 ## 🤝 参与贡献
 
