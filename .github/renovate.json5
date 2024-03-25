@@ -65,6 +65,7 @@
 		// buffer v6 has compatibility issues as node polyfill
 		"buffer",
 		// align Node.js version minimum requirements
-		"@types/node"
+		"@types/node",
+		"node"
 	]
 }
