@@ -71,12 +71,7 @@ export const getDefaultBabelOptions = (
       // If you are using @babel/preset-env and legacy decorators, you must ensure the class elements transform is enabled regardless of your targets, because Babel only supports compiling legacy decorators when also compiling class properties:
       // see https://babeljs.io/docs/babel-plugin-proposal-decorators#legacy
       ...(isLegacyDecorators
-        ? [
-            [
-              require.resolve('@babel/plugin-transform-class-properties'),
-              { loose: true },
-            ],
-          ]
+        ? [require.resolve('@babel/plugin-transform-class-properties')]
         : []),
     ],
     presets: [

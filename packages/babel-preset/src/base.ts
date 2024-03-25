@@ -25,7 +25,7 @@ export const generateBaseConfig = (
 
         // If you are using @babel/preset-env and legacy decorators, you must ensure the class elements transform is enabled regardless of your targets, because Babel only supports compiling legacy decorators when also compiling class properties:
         // see https://babeljs.io/docs/babel-plugin-proposal-decorators#legacy
-        ...(pluginDecorators
+        ...(pluginDecorators && pluginDecorators.version === 'legacy'
           ? {
               include: [
                 '@babel/plugin-transform-class-properties',
