@@ -44,7 +44,7 @@ test.fail(
       rsbuildConfig: {
         source: {
           entry: {
-            index: './src/_decoratorBeforeExport.js',
+            index: './src/decoratorBeforeExport.js',
           },
         },
       },
