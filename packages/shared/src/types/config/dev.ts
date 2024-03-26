@@ -55,6 +55,8 @@ export interface DevConfig {
     port?: string;
     host?: string;
     protocol?: 'ws' | 'wss';
+    /** Shows an overlay in the browser when there are compiler errors. */
+    overlay?: boolean;
   };
   /** Provides the ability to execute a custom function and apply custom middlewares */
   setupMiddlewares?: Array<

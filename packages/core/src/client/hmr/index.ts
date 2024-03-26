@@ -6,15 +6,29 @@
  */
 import type { StatsError } from '@rsbuild/shared';
 import { formatStatsMessages } from '../formatStats';
-import { createSocketUrl } from './createSocketUrl';
+import { createSocketUrl, parseParams } from './createSocketUrl';
+import { ErrorOverlay, overlayId } from './overlay'
+
+const options = parseParams(__resourceQuery);
 
 // Connect to Dev Server
-const socketUrl = createSocketUrl(__resourceQuery);
+const socketUrl = createSocketUrl(options);
+
+const enableOverlay = options.overlay === 'true';
 
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
 let mostRecentCompilationHash: string | null = null;
 let hasCompileErrors = false;
+
+function createErrorOverlay(err: any) {
+  clearErrorOverlay()
+  document.body.appendChild(new ErrorOverlay(err))
+}
+
+function clearErrorOverlay() {
+  document.querySelectorAll<ErrorOverlay>(overlayId).forEach((n) => n.close())
+}
 
 function clearOutdatedErrors() {
   // Clean up outdated compile errors, if any.
@@ -94,6 +108,10 @@ function handleErrors(errors: StatsError[]) {
     for (const error of formatted.errors) {
       console.error(error);
     }
+  }
+
+  if (enableOverlay) {
+    createErrorOverlay(formatted.errors);
   }
 
   // Do not attempt to reload now.
@@ -176,12 +194,14 @@ function onMessage(e: MessageEvent<string>) {
   const message = JSON.parse(e.data);
   switch (message.type) {
     case 'hash':
+      clearErrorOverlay();
       handleAvailableHash(message.data);
       break;
     case 'still-ok':
     case 'ok':
       handleSuccess();
       break;
+    case 'static-changed':
     case 'content-changed':
       // Triggered when a file from `contentBase` changed.
       window.location.reload();
