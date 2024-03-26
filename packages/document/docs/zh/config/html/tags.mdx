@@ -17,7 +17,8 @@ type HtmlTag = {
   /** @default true */
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
   /**
-   * 将该标签添加到原有标签的末尾 / 开头
+   * 定义当前标签相对于原有标签的插入位置。
+   * 设为 `true` 时，将被插入原有标签之后；设为 `false` 时，将被插入原有标签之前。
    * @default true
    */
   append?: boolean;

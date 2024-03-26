@@ -17,7 +17,8 @@ type HtmlTag = {
   /** @default true */
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
   /**
-   * Add this tag to the end / beginning of the original tags
+   * Sets the insertion position of the current tag relative to the original tags.
+   * If set to `true` it will be inserted after the original tags, if set to `false` it will be inserted before the original tags.
    * @default true
    */
   append?: boolean;
