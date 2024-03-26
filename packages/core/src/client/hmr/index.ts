@@ -7,7 +7,7 @@
 import type { StatsError } from '@rsbuild/shared';
 import { formatStatsMessages } from '../formatStats';
 import { createSocketUrl, parseParams } from './createSocketUrl';
-import { ErrorOverlay, overlayId } from './overlay'
+import { ErrorOverlay, overlayId } from './overlay';
 
 const options = parseParams(__resourceQuery);
 
@@ -22,12 +22,14 @@ let mostRecentCompilationHash: string | null = null;
 let hasCompileErrors = false;
 
 function createErrorOverlay(err: any) {
-  clearErrorOverlay()
-  document.body.appendChild(new ErrorOverlay(err))
+  clearErrorOverlay();
+  document.body.appendChild(new ErrorOverlay(err));
 }
 
 function clearErrorOverlay() {
-  document.querySelectorAll<ErrorOverlay>(overlayId).forEach((n) => n.close())
+  // use NodeList's forEach api instead of dom.iterable
+  // biome-ignore lint/complexity/noForEach: <explanation>
+  document.querySelectorAll<ErrorOverlay>(overlayId).forEach((n) => n.close());
 }
 
 function clearOutdatedErrors() {

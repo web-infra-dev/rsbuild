@@ -153,9 +153,8 @@ export class ErrorOverlay extends HTMLElement {
     const el = this.root.querySelector(selector)!;
 
     let curIndex = 0;
-    let match: RegExpExecArray | null;
-    fileRE.lastIndex = 0;
-    while ((match = fileRE.exec(text))) {
+    let match: RegExpExecArray | null = fileRE.exec(text);
+    while (match !== null) {
       const { 0: file, index } = match;
       if (index != null) {
         const frag = text.slice(curIndex, index);
@@ -170,6 +169,7 @@ export class ErrorOverlay extends HTMLElement {
         el.appendChild(link);
         curIndex += frag.length + file.length;
       }
+      match = fileRE.exec(text)
     }
 
     const frag = text.slice(curIndex);
