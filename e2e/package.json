@@ -56,7 +56,7 @@
     "@scripts/test-helper": "workspace:*",
     "@types/lodash": "^4.17.0",
     "@types/node": "16.x",
-    "@types/react": "^18.2.69",
+    "@types/react": "^18.2.71",
     "@types/react-dom": "^18.2.22",
     "fast-glob": "^3.3.2",
     "playwright": "1.42.1",

@@ -30,7 +30,7 @@
     "lightningcss": "^1.24.1"
   },
   "devDependencies": {
-    "@rspack/core": "0.5.8",
+    "@rspack/core": "0.5.9",
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "16.x",
