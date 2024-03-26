@@ -27,7 +27,7 @@ export const applySplitChunksRule = (
 
     const extraGroups: Record<string, (string | RegExp)[]> = {};
 
-    if (options.react) {
+    if (options.react && !config.moduleFederation) {
       extraGroups.react = [
         'react',
         'react-dom',
