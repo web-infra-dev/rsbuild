@@ -107,7 +107,7 @@ export type RsbuildDevServer = {
   /** The following APIs will be used when you use a custom server */
 
   /**
-   * The resolved port
+   * The resolved port.
    *
    * By default, Rsbuild Server listens on port `8080` and automatically increments the port number when the port is occupied.
    */
@@ -121,7 +121,7 @@ export type RsbuildDevServer = {
   /**
    * Notify Rsbuild Server has started
    *
-   * In rsbuild, we will trigger onAfterStartDevServer hook in this stage
+   * In Rsbuild, we will trigger onAfterStartDevServer hook in this stage
    */
   afterListen: () => Promise<void>;
   /**
