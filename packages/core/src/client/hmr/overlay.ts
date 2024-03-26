@@ -127,7 +127,6 @@ const { HTMLElement = class {} as typeof globalThis.HTMLElement } = globalThis;
 
 export class ErrorOverlay extends HTMLElement {
   root: ShadowRoot;
-  closeOnEsc: (e: KeyboardEvent) => void;
 
   constructor(message: ErrorPayload['err']) {
     super();
@@ -140,6 +139,7 @@ export class ErrorOverlay extends HTMLElement {
       e.stopPropagation();
     });
 
+    // close overlay when click outside
     this.root.querySelector('.close')!.addEventListener('click', () => {
       this.close();
     });
@@ -147,19 +147,11 @@ export class ErrorOverlay extends HTMLElement {
     this.addEventListener('click', () => {
       this.close();
     });
-
-    this.closeOnEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' || e.code === 'Escape') {
-        this.close();
-      }
-    };
-
-    document.addEventListener('keydown', this.closeOnEsc);
   }
 
   linkedText(selector: string, text: string): void {
     const el = this.root.querySelector(selector)!;
-    
+
     let curIndex = 0;
     let match: RegExpExecArray | null;
     fileRE.lastIndex = 0;
@@ -173,9 +165,7 @@ export class ErrorOverlay extends HTMLElement {
         link.className = 'file-link';
 
         link.onclick = () => {
-          fetch(
-              `/__open-in-editor?file=${encodeURIComponent(file)}`,
-          );
+          fetch(`/__open-in-editor?file=${encodeURIComponent(file)}`);
         };
         el.appendChild(link);
         curIndex += frag.length + file.length;
@@ -188,7 +178,6 @@ export class ErrorOverlay extends HTMLElement {
 
   close(): void {
     this.parentNode?.removeChild(this);
-    document.removeEventListener('keydown', this.closeOnEsc);
   }
 }
 
