@@ -7,7 +7,11 @@ import {
   type Rspack,
   type RspackConfig,
 } from '@rsbuild/shared';
-import { formatStats, getDevMiddleware, type InternalContext } from '@rsbuild/core/provider';
+import {
+  formatStats,
+  getDevMiddleware,
+  type InternalContext,
+} from '@rsbuild/core/provider';
 import type { WebpackConfig } from '../types';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 

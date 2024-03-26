@@ -130,7 +130,7 @@ const applyDefaultMiddlewares = async ({
         res.end();
       } else {
         next();
-      } 
+      }
     });
   }
 

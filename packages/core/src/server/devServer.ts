@@ -6,7 +6,6 @@ import {
   getAddressUrls,
   isMultiCompiler,
   getPublicPathFromCompiler,
-
   type RsbuildDevServer,
   type StartServerResult,
   type CreateDevServerOptions,

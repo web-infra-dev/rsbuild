@@ -5,12 +5,12 @@
     "baseUrl": "./",
     "rootDir": "src",
     "composite": true,
-    "types": ["webpack/module"],
+    "types": ["webpack/module"]
   },
   "references": [
     {
-      "path": "../shared",
-    },
+      "path": "../shared"
+    }
   ],
-  "include": ["src"],
+  "include": ["src"]
 }

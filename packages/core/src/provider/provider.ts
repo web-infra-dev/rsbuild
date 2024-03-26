@@ -64,8 +64,12 @@ export const rspackProvider: RsbuildProvider = async ({
       const { createDevMiddleware } = await import('./createCompiler');
       await initRsbuildConfig({ context, pluginManager });
 
-      const server = await createDevServer({ context, pluginManager, rsbuildOptions }, createDevMiddleware, options);
-    
+      const server = await createDevServer(
+        { context, pluginManager, rsbuildOptions },
+        createDevMiddleware,
+        options,
+      );
+
       return server.listen();
     },
 

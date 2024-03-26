@@ -100,9 +100,7 @@ describe('plugin-swc', () => {
 
     const config = await rsbuild.unwrapConfig();
 
-    expect(JSON.stringify(config.optimization)).toContain(
-      '"comments":"some"',
-    );
+    expect(JSON.stringify(config.optimization)).toContain('"comments":"some"');
 
     process.env.NODE_ENV = 'test';
   });
