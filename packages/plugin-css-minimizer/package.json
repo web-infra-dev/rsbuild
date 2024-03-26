@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "css-minimizer-webpack-plugin": "5.0.1"
+    "css-minimizer-webpack-plugin": "6.0.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
