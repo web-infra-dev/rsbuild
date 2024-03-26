@@ -14,7 +14,6 @@ interface HotComponent {
 export default function vueJsxHmrPlugin({
   types: t,
 }: BabelPluginOptions): babelCore.PluginObj {
-  console.log('vueJsxHmrPlugin...');
   let declaredComponents: string[] = [];
   let hotComponents: HotComponent[] = [];
   let hasDefault = false;
@@ -23,7 +22,6 @@ export default function vueJsxHmrPlugin({
     VariableDeclaration(
       path: babelCore.NodePath<babelCore.types.VariableDeclaration>,
     ) {
-      console.log('VariableDeclaration', (path.hub as any).file.opts.filename);
       const names = parseComponentDecls(path.node);
       if (names.length) {
         declaredComponents.push(...names);
@@ -33,10 +31,6 @@ export default function vueJsxHmrPlugin({
     ExportNamedDeclaration(
       path: babelCore.NodePath<babelCore.types.ExportNamedDeclaration>,
     ) {
-      console.log(
-        'ExportNamedDeclaration',
-        (path.hub as any).file.opts.filename,
-      );
       if (
         path.node.declaration &&
         path.node.declaration.type === 'VariableDeclaration'
@@ -72,10 +66,6 @@ export default function vueJsxHmrPlugin({
     ExportDefaultDeclaration(
       path: babelCore.NodePath<babelCore.types.ExportDefaultDeclaration>,
     ) {
-      console.log(
-        'ExportDefaultDeclaration',
-        (path.hub as any).file.opts.filename,
-      );
       if (path.node.declaration.type === 'Identifier') {
         const _name = path.node.declaration.name;
         const matched = declaredComponents.find((name) => name === _name);
@@ -97,18 +87,13 @@ export default function vueJsxHmrPlugin({
 
   return {
     inherits: jsx,
-    pre(this, file) {
-      console.log('pre', file.opts.filename);
+    pre() {
       declaredComponents = [];
       hotComponents = [];
       hasDefault = false;
     },
     visitor,
     post(this, file) {
-      console.log('post', file.opts.filename);
-      console.log(babelCore.transformFromAstSync(file.ast, undefined)?.code);
-      console.log('hotComponents', hotComponents);
-
       if (hotComponents.length) {
         const code: babelCore.types.Statement[] = [];
         const callbackCode: babelCore.types.Statement[] = [];
@@ -154,10 +139,6 @@ export default function vueJsxHmrPlugin({
             ExportDefaultDeclaration(
               path: babelCore.NodePath<babelCore.types.ExportDefaultDeclaration>,
             ) {
-              console.log(
-                'ExportDefaultDeclaration',
-                path.node.declaration.type,
-              );
               if (
                 path.node.declaration.type === 'CallExpression' &&
                 t.isIdentifier(path.node.declaration.callee) &&
@@ -204,7 +185,6 @@ export default function vueJsxHmrPlugin({
         ];
 
         programPath.pushContainer('body', hotReloadCode);
-        // hotComponents = [];
       }
     },
   };
