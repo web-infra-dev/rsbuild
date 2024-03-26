@@ -8,6 +8,7 @@ import { pluginSwc } from '@rsbuild/plugin-swc';
 import type {
   RsbuildConfig,
   RsbuildPlugin,
+  RsbuildPlugins,
   CreateRsbuildOptions,
 } from '@rsbuild/core';
 import type { Page } from 'playwright';
@@ -23,37 +24,36 @@ export const gotoPage = async (
   page: Page,
   rsbuild: { port: number },
   path = 'index',
-) => page.goto(getHrefByEntryName(path, rsbuild.port));
+) => {
+  const url = getHrefByEntryName(path, rsbuild.port);
+  return page.goto(url);
+};
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = async () => {};
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions,
-  plugins: RsbuildPlugin[] = [],
+  plugins: RsbuildPlugins = [],
 ) => {
   const { createRsbuild } = await import('@rsbuild/core');
 
+  rsbuildOptions.rsbuildConfig ||= {};
+  rsbuildOptions.rsbuildConfig.plugins = [
+    ...(rsbuildOptions.rsbuildConfig.plugins || []),
+    ...(plugins || []),
+  ];
+
   if (process.env.PROVIDE_TYPE === 'rspack') {
     const rsbuild = await createRsbuild(rsbuildOptions);
-
-    if (plugins) {
-      rsbuild.addPlugins(plugins);
-    }
 
     return rsbuild;
   }
 
   const { webpackProvider } = await import('@rsbuild/webpack');
 
-  rsbuildOptions.rsbuildConfig ||= {};
   rsbuildOptions.rsbuildConfig.provider = webpackProvider;
 
   const rsbuild = await createRsbuild(rsbuildOptions);
-
-  if (plugins) {
-    rsbuild.addPlugins(plugins);
-  }
 
   const swc = pluginSwc();
   if (!rsbuild.isPluginExists(swc.name)) {
@@ -104,7 +104,7 @@ const updateConfigForTest = async (
   cwd: string = process.cwd(),
 ) => {
   const { loadConfig, mergeRsbuildConfig } = await import('@rsbuild/core');
-  const loadedConfig = await loadConfig({
+  const { content: loadedConfig } = await loadConfig({
     cwd,
   });
 
@@ -114,7 +114,7 @@ const updateConfigForTest = async (
   config.server = {
     ...(config.server || {}),
     printUrls: config.server?.printUrls || false,
-    port: await getRandomPort(config.server?.port),
+    port: config.server?.port || (await getRandomPort(config.server?.port)),
   };
 
   config.dev ??= {};
@@ -161,7 +161,12 @@ export async function dev({
 
   const rsbuild = await createRsbuild(options, plugins);
 
-  return rsbuild.startDevServer();
+  const result = await rsbuild.startDevServer();
+
+  return {
+    ...result,
+    close: () => result.server.close(),
+  };
 }
 
 export async function build({
@@ -169,7 +174,7 @@ export async function build({
   runServer = false,
   ...options
 }: CreateRsbuildOptions & {
-  plugins?: RsbuildPlugin[];
+  plugins?: RsbuildPlugins;
   runServer?: boolean;
 }) {
   process.env.NODE_ENV = 'production';

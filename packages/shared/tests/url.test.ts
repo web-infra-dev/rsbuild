@@ -21,6 +21,7 @@ describe('withPublicPath', () => {
     expect(withPublicPath('foo/bar.js', PUBLIC_PATH)).toBe(
       'https://www.example.com/static/foo/bar.js',
     );
+    expect(withPublicPath('foo/bar.js', '')).toBe('foo/bar.js');
     expect(withPublicPath('foo/bar.js', '/')).toBe('/foo/bar.js');
     expect(withPublicPath('/foo/bar.js', PUBLIC_PATH)).toBe(
       'https://www.example.com/static/foo/bar.js',

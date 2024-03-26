@@ -9,7 +9,7 @@ test('should not inject charset meta if template already contains it', async () 
         template: './src/index.html',
       },
       output: {
-        disableFilenameHash: true,
+        filenameHash: false,
       },
     },
   });

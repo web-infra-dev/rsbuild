@@ -1,5 +1,8 @@
-import type { RsbuildEntry } from '../rsbuild';
-import type { ChainedConfig } from '../utils';
+import type { RsbuildEntry, RsbuildTarget } from '../rsbuild';
+import type {
+  ChainedConfigWithUtils,
+  ChainedConfigCombineUtils,
+} from '../utils';
 import type { RuleSetCondition } from '@rspack/core';
 
 export type Alias = Record<string, string | false | (string | false)[]>;
@@ -9,12 +12,22 @@ export type Define = Record<string, any>;
 
 export type AliasStrategy = 'prefer-tsconfig' | 'prefer-alias';
 
+export type Decorators = {
+  /**
+   * Specify the version of decorators to use.
+   * @default 'legacy''
+   */
+  version?:
+    | 'legacy' // stage 1
+    | '2022-03'; // stage 3
+};
+
 export interface SourceConfig {
   /**
    * Create aliases to import or require certain modules,
    * same as the [resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) config of webpack.
    */
-  alias?: ChainedConfig<Alias>;
+  alias?: ChainedConfigWithUtils<Alias, { target: RsbuildTarget }>;
   /**
    * Used to control the priority between the `paths` option in `tsconfig.json`
    * and the `alias` option in the bundler.
@@ -29,7 +42,7 @@ export interface SourceConfig {
   /**
    * Set the entry modules.
    */
-  entry?: RsbuildEntry;
+  entry?: ChainedConfigCombineUtils<RsbuildEntry, { target: RsbuildTarget }>;
   /**
    * Specifies that certain files that will be excluded from compilation.
    */
@@ -44,6 +57,10 @@ export interface SourceConfig {
    * Used to replaces variables in your code with other values or expressions at compile time.
    */
   define?: Define;
+  /**
+   * Configuring decorators syntax.
+   */
+  decorators?: Decorators;
   /**
    * Used to import the code and style of the component library on demand.
    */
@@ -70,7 +87,8 @@ export type TransformImport = {
 
 export interface NormalizedSourceConfig extends SourceConfig {
   define: Define;
-  alias: ChainedConfig<Alias>;
+  alias: ChainedConfigWithUtils<Alias, { target: RsbuildTarget }>;
   aliasStrategy: AliasStrategy;
   preEntry: string[];
+  decorators: Required<Decorators>;
 }

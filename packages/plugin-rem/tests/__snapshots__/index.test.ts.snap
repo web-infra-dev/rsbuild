@@ -29,7 +29,6 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -76,7 +75,6 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -118,396 +116,6 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
   "plugins": [
     RemoveCssSourcemapPlugin {
       "name": "RemoveCssSourcemapPlugin",
-    },
-  ],
-}
-`;
-
-exports[`plugin-rem > should order plugins and run rem plugin with default config 1`] = `
-{
-  "builtins": {
-    "css": {
-      "modules": {
-        "exportsOnly": false,
-        "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camelCase",
-      },
-    },
-  },
-  "module": {
-    "rules": [
-      {
-        "oneOf": [
-          {
-            "resolve": {
-              "preferRelative": true,
-            },
-            "sideEffects": true,
-            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
-            "type": "css/module",
-            "use": [
-              {
-                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-                "options": {
-                  "postcssOptions": {
-                    "config": false,
-                    "plugins": [
-                      [Function],
-                      {
-                        "browsers": [
-                          "chrome >= 87",
-                          "edge >= 88",
-                          "firefox >= 78",
-                          "safari >= 14",
-                        ],
-                        "info": [Function],
-                        "options": {
-                          "flexbox": "no-2009",
-                          "overrideBrowserslist": [
-                            "chrome >= 87",
-                            "edge >= 88",
-                            "firefox >= 78",
-                            "safari >= 14",
-                          ],
-                        },
-                        "postcssPlugin": "autoprefixer",
-                        "prepare": [Function],
-                      },
-                      {
-                        "AtRule": [Function],
-                        "Declaration": [Function],
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-pxtorem",
-                      },
-                    ],
-                  },
-                  "sourceMap": false,
-                },
-              },
-            ],
-          },
-          {
-            "resolve": {
-              "preferRelative": true,
-            },
-            "sideEffects": true,
-            "type": "css",
-            "use": [
-              {
-                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-                "options": {
-                  "postcssOptions": {
-                    "config": false,
-                    "plugins": [
-                      [Function],
-                      {
-                        "browsers": [
-                          "chrome >= 87",
-                          "edge >= 88",
-                          "firefox >= 78",
-                          "safari >= 14",
-                        ],
-                        "info": [Function],
-                        "options": {
-                          "flexbox": "no-2009",
-                          "overrideBrowserslist": [
-                            "chrome >= 87",
-                            "edge >= 88",
-                            "firefox >= 78",
-                            "safari >= 14",
-                          ],
-                        },
-                        "postcssPlugin": "autoprefixer",
-                        "prepare": [Function],
-                      },
-                      {
-                        "AtRule": [Function],
-                        "Declaration": [Function],
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-pxtorem",
-                      },
-                    ],
-                  },
-                  "sourceMap": false,
-                },
-              },
-            ],
-          },
-        ],
-        "test": /\\\\\\.css\\$/,
-      },
-      {
-        "oneOf": [
-          {
-            "resolve": {
-              "preferRelative": true,
-            },
-            "sideEffects": true,
-            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
-            "type": "css/module",
-            "use": [
-              {
-                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-                "options": {
-                  "postcssOptions": {
-                    "config": false,
-                    "plugins": [
-                      [Function],
-                      {
-                        "browsers": [
-                          "chrome >= 87",
-                          "edge >= 88",
-                          "firefox >= 78",
-                          "safari >= 14",
-                        ],
-                        "info": [Function],
-                        "options": {
-                          "flexbox": "no-2009",
-                          "overrideBrowserslist": [
-                            "chrome >= 87",
-                            "edge >= 88",
-                            "firefox >= 78",
-                            "safari >= 14",
-                          ],
-                        },
-                        "postcssPlugin": "autoprefixer",
-                        "prepare": [Function],
-                      },
-                      {
-                        "AtRule": [Function],
-                        "Declaration": [Function],
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-pxtorem",
-                      },
-                    ],
-                  },
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/less-loader",
-                "options": {
-                  "implementation": "<ROOT>/packages/shared/compiled/less",
-                  "lessOptions": {
-                    "javascriptEnabled": true,
-                  },
-                  "sourceMap": false,
-                },
-              },
-            ],
-          },
-          {
-            "resolve": {
-              "preferRelative": true,
-            },
-            "sideEffects": true,
-            "type": "css",
-            "use": [
-              {
-                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-                "options": {
-                  "postcssOptions": {
-                    "config": false,
-                    "plugins": [
-                      [Function],
-                      {
-                        "browsers": [
-                          "chrome >= 87",
-                          "edge >= 88",
-                          "firefox >= 78",
-                          "safari >= 14",
-                        ],
-                        "info": [Function],
-                        "options": {
-                          "flexbox": "no-2009",
-                          "overrideBrowserslist": [
-                            "chrome >= 87",
-                            "edge >= 88",
-                            "firefox >= 78",
-                            "safari >= 14",
-                          ],
-                        },
-                        "postcssPlugin": "autoprefixer",
-                        "prepare": [Function],
-                      },
-                      {
-                        "AtRule": [Function],
-                        "Declaration": [Function],
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-pxtorem",
-                      },
-                    ],
-                  },
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/less-loader",
-                "options": {
-                  "implementation": "<ROOT>/packages/shared/compiled/less",
-                  "lessOptions": {
-                    "javascriptEnabled": true,
-                  },
-                  "sourceMap": false,
-                },
-              },
-            ],
-          },
-        ],
-        "test": /\\\\\\.less\\$/,
-      },
-      {
-        "oneOf": [
-          {
-            "resolve": {
-              "preferRelative": true,
-            },
-            "sideEffects": true,
-            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
-            "type": "css/module",
-            "use": [
-              {
-                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-                "options": {
-                  "postcssOptions": {
-                    "config": false,
-                    "plugins": [
-                      [Function],
-                      {
-                        "browsers": [
-                          "chrome >= 87",
-                          "edge >= 88",
-                          "firefox >= 78",
-                          "safari >= 14",
-                        ],
-                        "info": [Function],
-                        "options": {
-                          "flexbox": "no-2009",
-                          "overrideBrowserslist": [
-                            "chrome >= 87",
-                            "edge >= 88",
-                            "firefox >= 78",
-                            "safari >= 14",
-                          ],
-                        },
-                        "postcssPlugin": "autoprefixer",
-                        "prepare": [Function],
-                      },
-                      {
-                        "AtRule": [Function],
-                        "Declaration": [Function],
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-pxtorem",
-                      },
-                    ],
-                  },
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
-                "options": {
-                  "join": [Function],
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
-                "options": {
-                  "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
-                },
-              },
-            ],
-          },
-          {
-            "resolve": {
-              "preferRelative": true,
-            },
-            "sideEffects": true,
-            "type": "css",
-            "use": [
-              {
-                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-                "options": {
-                  "postcssOptions": {
-                    "config": false,
-                    "plugins": [
-                      [Function],
-                      {
-                        "browsers": [
-                          "chrome >= 87",
-                          "edge >= 88",
-                          "firefox >= 78",
-                          "safari >= 14",
-                        ],
-                        "info": [Function],
-                        "options": {
-                          "flexbox": "no-2009",
-                          "overrideBrowserslist": [
-                            "chrome >= 87",
-                            "edge >= 88",
-                            "firefox >= 78",
-                            "safari >= 14",
-                          ],
-                        },
-                        "postcssPlugin": "autoprefixer",
-                        "prepare": [Function],
-                      },
-                      {
-                        "AtRule": [Function],
-                        "Declaration": [Function],
-                        "Once": [Function],
-                        "postcssPlugin": "postcss-pxtorem",
-                      },
-                    ],
-                  },
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
-                "options": {
-                  "join": [Function],
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
-                "options": {
-                  "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
-                },
-              },
-            ],
-          },
-        ],
-        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
-      },
-    ],
-  },
-  "plugins": [
-    RemoveCssSourcemapPlugin {
-      "name": "RemoveCssSourcemapPlugin",
-    },
-    AutoSetRootFontSizePlugin {
-      "HtmlPlugin": [Function],
-      "distDir": "static/js",
-      "name": "AutoSetRootFontSizePlugin",
-      "options": {
-        "enableRuntime": true,
-        "excludeEntries": [],
-        "inlineRuntime": true,
-        "maxRootFontSize": 64,
-        "rootFontSize": 50,
-        "rootFontSizeVariableName": "ROOT_FONT_SIZE",
-        "screenWidth": 375,
-        "supportLandscape": false,
-        "useRootFontSizeBeyondMax": false,
-        "widthQueryKey": "",
-      },
-      "scriptPath": "",
-      "webpackEntries": [],
     },
   ],
 }
@@ -542,7 +150,6 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -589,7 +196,6 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -635,6 +241,7 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
     AutoSetRootFontSizePlugin {
       "HtmlPlugin": [Function],
       "distDir": "static/js",
+      "entries": [],
       "name": "AutoSetRootFontSizePlugin",
       "options": {
         "enableRuntime": true,
@@ -653,8 +260,8 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
         "useRootFontSizeBeyondMax": false,
         "widthQueryKey": "",
       },
+      "scriptLoading": "defer",
       "scriptPath": "",
-      "webpackEntries": [],
     },
   ],
 }
@@ -689,7 +296,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -736,7 +342,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -789,7 +394,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -827,6 +431,9 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/packages/plugin-rem/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -846,7 +453,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -884,6 +490,9 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/packages/plugin-rem/tests/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -909,7 +518,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -970,7 +578,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -1030,6 +637,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
     AutoSetRootFontSizePlugin {
       "HtmlPlugin": [Function],
       "distDir": "static/js",
+      "entries": [],
       "name": "AutoSetRootFontSizePlugin",
       "options": {
         "enableRuntime": true,
@@ -1043,8 +651,8 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
         "useRootFontSizeBeyondMax": false,
         "widthQueryKey": "",
       },
+      "scriptLoading": "defer",
       "scriptPath": "",
-      "webpackEntries": [],
     },
   ],
 }

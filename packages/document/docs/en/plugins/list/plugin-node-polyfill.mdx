@@ -1,5 +1,9 @@
 # Node Polyfill Plugin
 
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-node-polyfill" />
+
 :::tip About Node Polyfill
 Normally, we don't need to use Node libs on the browser side. However, it is possible to use some Node libs when the code will run on both the Node side and the browser side, and Node Polyfill provides browser versions of polyfills for these Node libs.
 :::
@@ -35,10 +39,23 @@ export default {
 - `Buffer`
 - `process`
 
-When the above global variables are used directly in code, the corresponding polyfill will be injected.
+When you use the above global variables in your code, the corresponding polyfill will be automatically injected.
+
+For instance, the following code would inject the `Buffer` polyfill:
 
 ```ts
 const bufferData = Buffer.from('xxxx');
+```
+
+You can disable this behavior through the `globals` option of the plugin:
+
+```ts
+pluginNodePolyfill({
+  globals: {
+    Buffer: false,
+    process: false,
+  },
+});
 ```
 
 ### Modules

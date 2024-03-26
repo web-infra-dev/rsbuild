@@ -6,7 +6,6 @@ import {
   CSS_REGEX,
   CSS_MODULES_REGEX,
   getCssLoaderOptions,
-  setConfig,
   getPostcssLoaderOptions,
   getCssModuleLocalIdentName,
   resolvePackage,
@@ -59,11 +58,7 @@ export async function applyBaseCSSRule({
 
     if (!isServer && !isWebWorker) {
       const styleLoaderOptions = mergeChainedOptions({
-        defaults: {
-          // todo: hmr does not work while esModule is true
-          // @ts-expect-error
-          esModule: false,
-        },
+        defaults: {},
         options: config.tools.styleLoader,
       });
 
@@ -227,7 +222,8 @@ export const pluginCss = (): RsbuildPlugin => {
           const config = api.getNormalizedConfig();
 
           if (!enableNativeCss(config)) {
-            setConfig(rspackConfig, 'experiments.css', false);
+            rspackConfig.experiments ||= {};
+            rspackConfig.experiments.css = false;
             return;
           }
 
@@ -244,11 +240,13 @@ export const pluginCss = (): RsbuildPlugin => {
           }
 
           // need use type: "css/module" rule instead of modules.auto config
-          setConfig(rspackConfig, 'builtins.css.modules', {
+          rspackConfig.builtins ||= {};
+          rspackConfig.builtins.css ||= {};
+          rspackConfig.builtins.css.modules = {
             localsConvention: config.output.cssModules.exportLocalsConvention,
             localIdentName,
             exportsOnly: isServer || isWebWorker,
-          });
+          };
 
           const rules = rspackConfig.module?.rules;
 

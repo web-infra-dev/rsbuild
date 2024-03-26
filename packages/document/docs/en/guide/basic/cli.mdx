@@ -12,7 +12,7 @@ To view all available CLI commands, run the following command in the project dir
 npx rsbuild -h
 ```
 
-输出如下所示：
+The output is shown below：
 
 ```text
 Usage: rsbuild <command> [options]
@@ -33,7 +33,7 @@ Commands:
 
 ## rsbuild dev
 
-The `rsbuild dev` command is used to start a local development server and compile the source code in the development environment.
+The `rsbuild dev` command is used to start a local dev server and compile the source code for development.
 
 ```bash
 Usage: rsbuild dev [options]
@@ -95,7 +95,7 @@ Do not use this as a production server as it's not designed for it.
 Usage: rsbuild preview [options]
 
 Options:
-  --open [url]          open the page in browser on startup
+  -o, --open [url]      open the page in browser on startup
   --port <port>         specify a port number for Rsbuild Server to listen
   --host <host>         specify the host that the Rsbuild Server listens to
   -c --config <config>  specify the configuration file, can be a relative or absolute path
@@ -137,7 +137,7 @@ Inspect config succeed, open following files to view the content:
 
 ### Specifying Environment
 
-By default, the inspect command outputs the configuration for the development environment. You can add the `--env production` option to output the configuration for the production environment:
+By default, the inspect command outputs the configuration for the development environment. You can add the `--env production` option to output the configuration for the production build:
 
 ```bash
 rsbuild inspect --env production

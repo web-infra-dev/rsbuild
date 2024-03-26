@@ -1,6 +1,30 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import * as nodeLibs from './libs';
 
+type Globals = {
+  process?: boolean;
+  Buffer?: boolean;
+};
+
+export type PluginNodePolyfillOptions = {
+  /**
+   * Whether to provide polyfill of globals.
+   * @default
+   * {
+   *   Buffer: true,
+   *   process: true,
+   * }
+   */
+  globals?: Globals;
+
+  /**
+   * Whether to polyfill Node.js builtin modules starting with `node:`.
+   * @see https://nodejs.org/api/esm.html#node-imports
+   * @default true
+   */
+  protocolImports?: boolean;
+};
+
 const getResolveFallback = (protocolImports?: boolean) => {
   const fallback: Record<string, string | false> = {};
 
@@ -17,20 +41,17 @@ const getResolveFallback = (protocolImports?: boolean) => {
   return fallback;
 };
 
-const getProvideLibs = async () => {
-  return {
-    Buffer: [nodeLibs.buffer, 'Buffer'],
-    process: [nodeLibs.process],
-  };
-};
+const getProvideGlobals = async (globals?: Globals) => {
+  const result: Record<string, string | string[]> = {};
 
-export type PluginNodePolyfillOptions = {
-  /**
-   * Whether to polyfill Node.js builtin modules starting with `node:`.
-   * @see https://nodejs.org/api/esm.html#node-imports
-   * @default true
-   */
-  protocolImports?: boolean;
+  if (globals?.Buffer !== false) {
+    result.Buffer = [nodeLibs.buffer, 'Buffer'];
+  }
+  if (globals?.process !== false) {
+    result.process = [nodeLibs.process];
+  }
+
+  return result;
 };
 
 export function pluginNodePolyfill(
@@ -43,7 +64,7 @@ export function pluginNodePolyfill(
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID, isServer, bundler }) => {
-        // it had not need `node polyfill`, if the target is 'node'(server runtime).
+        // The server bundle does not require node polyfill
         if (isServer) {
           return;
         }
@@ -51,9 +72,12 @@ export function pluginNodePolyfill(
         // module polyfill
         chain.resolve.fallback.merge(getResolveFallback(protocolImports));
 
-        chain
-          .plugin(CHAIN_ID.PLUGIN.NODE_POLYFILL_PROVIDE)
-          .use(bundler.ProvidePlugin, [await getProvideLibs()]);
+        const provideGlobals = await getProvideGlobals(options.globals);
+        if (Object.keys(provideGlobals).length) {
+          chain
+            .plugin(CHAIN_ID.PLUGIN.NODE_POLYFILL_PROVIDE)
+            .use(bundler.ProvidePlugin, [provideGlobals]);
+        }
       });
     },
   };

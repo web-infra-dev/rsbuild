@@ -1,4 +1,4 @@
-import { initHooks } from '../src/provider/core/initHooks';
+import { initHooks } from '../src/initHooks';
 import { createStubRsbuild } from '@scripts/test-helper';
 
 describe('initHooks', () => {
@@ -32,7 +32,9 @@ describe('onExit hook', () => {
     });
     await rsbuild.unwrapConfig();
 
-    exitCbs.forEach((cb) => cb());
+    for (const cb of exitCbs) {
+      cb();
+    }
 
     // wait exit async callback end
     await new Promise((resolve) => setTimeout(resolve));

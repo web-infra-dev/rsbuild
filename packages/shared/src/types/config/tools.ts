@@ -15,11 +15,14 @@ import type {
   StyleLoaderOptions,
   AutoprefixerOptions,
   PostCSSLoaderOptions,
-  TerserPluginOptions,
 } from '../thirdParty';
 import type { BundlerChain } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
-import type { RspackConfig, RspackRule } from '../rspack';
+import type {
+  RspackRule,
+  RspackConfig,
+  BuiltinSwcLoaderOptions,
+} from '../rspack';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
 import type { BundlerPluginInstance } from '../bundlerConfig';
 import type {
@@ -28,6 +31,8 @@ import type {
 } from '../plugin';
 
 export type { HTMLPluginOptions };
+
+export type ToolsSwcConfig = ChainedConfig<BuiltinSwcLoaderOptions>;
 
 export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
 
@@ -89,8 +94,6 @@ export type ToolsWebpackChainConfig = ArrayOrNot<
   (chain: WebpackChain, utils: ModifyWebpackChainUtils) => void
 >;
 
-export type ToolsTerserConfig = ChainedConfig<TerserPluginOptions>;
-
 export interface ToolsConfig {
   /**
    * Modify the config of [sass-loader](https://github.com/webpack-contrib/sass-loader).
@@ -123,7 +126,11 @@ export interface ToolsConfig {
   /**
    * Configure the html-webpack-plugin.
    */
-  htmlPlugin?: false | ToolsHtmlPluginConfig;
+  htmlPlugin?: boolean | ToolsHtmlPluginConfig;
+  /**
+   * Configure the `builtin:swc-loader` of Rspack.
+   */
+  swc?: ToolsSwcConfig;
   /**
    * Configure Rspack.
    * @requires rspack
@@ -144,11 +151,6 @@ export interface ToolsConfig {
    * @requires webpack
    */
   webpackChain?: ToolsWebpackChainConfig;
-  /**
-   * Modify the options of [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin).
-   * @requires webpack
-   */
-  terser?: ToolsTerserConfig;
 }
 
 export type NormalizedToolsConfig = ToolsConfig & {

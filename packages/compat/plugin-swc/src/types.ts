@@ -23,6 +23,12 @@ export interface ObjPluginSwcOptions<T extends 'inner' | 'outer' = 'inner'>
   jsMinify?: boolean | JsMinifyOptions;
   cssMinify?: boolean | CssMinifyOptions;
 
+  /**
+   * Specifies whether to modularize the import of [lodash](https://npmjs.com/package/lodash)
+   * and remove unused lodash modules to reduce the code size of lodash.
+   */
+  transformLodash?: boolean;
+
   extensions?: T extends 'inner' ? Extensions : OuterExtensions;
 
   overrides?: Override<T>[];

@@ -39,6 +39,100 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "test": /\\\\\\.m\\?js/,
       },
       {
+        "include": [
+          {
+            "and": [
+              "<ROOT>",
+              {
+                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+              },
+            ],
+          },
+          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+        ],
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "builtin:swc-loader",
+            "options": {
+              "env": {
+                "coreJs": "3.36",
+                "mode": "usage",
+                "shippedProposals": true,
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+              "isModule": "unknown",
+              "jsc": {
+                "externalHelpers": true,
+                "parser": {
+                  "decorators": true,
+                  "syntax": "typescript",
+                  "tsx": true,
+                },
+                "preserveAllComments": true,
+                "transform": {
+                  "decoratorMetadata": true,
+                  "legacyDecorator": true,
+                  "useDefineForClassFields": false,
+                },
+              },
+              "sourceMaps": true,
+            },
+          },
+        ],
+      },
+      {
+        "mimetype": {
+          "or": [
+            "text/javascript",
+            "application/javascript",
+          ],
+        },
+        "resolve": {
+          "fullySpecified": false,
+        },
+        "use": [
+          {
+            "loader": "builtin:swc-loader",
+            "options": {
+              "env": {
+                "coreJs": "3.36",
+                "mode": "usage",
+                "shippedProposals": true,
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+              "isModule": "unknown",
+              "jsc": {
+                "externalHelpers": true,
+                "parser": {
+                  "decorators": true,
+                  "syntax": "typescript",
+                  "tsx": true,
+                },
+                "preserveAllComments": true,
+                "transform": {
+                  "decoratorMetadata": true,
+                  "legacyDecorator": true,
+                  "useDefineForClassFields": false,
+                },
+              },
+              "sourceMaps": true,
+            },
+          },
+        ],
+      },
+      {
         "oneOf": [
           {
             "generator": {
@@ -63,7 +157,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
       },
       {
         "oneOf": [
@@ -117,7 +211,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
       },
       {
         "oneOf": [
@@ -170,7 +264,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -211,7 +304,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -258,7 +350,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -290,6 +381,9 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -309,7 +403,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -341,6 +434,9 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "implementation": "<ROOT>/packages/shared/compiled/less",
                   "lessOptions": {
                     "javascriptEnabled": true,
+                    "paths": [
+                      "<ROOT>/node_modules",
+                    ],
                   },
                   "sourceMap": false,
                 },
@@ -366,7 +462,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -421,7 +516,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "postcssOptions": {
                     "config": false,
                     "plugins": [
-                      [Function],
                       {
                         "browsers": [
                           "chrome >= 87",
@@ -465,95 +559,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
           },
         ],
         "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
-      },
-      {
-        "include": [
-          {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "sourceMaps": true,
-            },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
-          ],
-        },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.32",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                },
-              },
-              "sourceMaps": true,
-            },
-          },
-        ],
       },
     ],
   },
@@ -605,6 +610,36 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
       "name": "HotModuleReplacementPlugin",
     },
     HtmlWebpackPlugin {
+      "options": {
+        "base": false,
+        "cache": true,
+        "chunks": [
+          "index",
+        ],
+        "chunksSortMode": "auto",
+        "compile": true,
+        "entryName": "index",
+        "excludeChunks": [],
+        "favicon": false,
+        "filename": "index.html",
+        "hash": false,
+        "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
+        "minify": false,
+        "publicPath": "auto",
+        "scriptLoading": "defer",
+        "showErrors": true,
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateContent": false,
+        "templateParameters": [Function],
+        "title": "Rsbuild App",
+        "xhtml": false,
+      },
       "userOptions": {
         "chunks": [
           "index",
@@ -629,9 +664,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
@@ -662,7 +695,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;

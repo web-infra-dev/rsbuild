@@ -112,12 +112,9 @@ However, it is important to contact the developer of the third-party dependency 
 
 ### Tree shaking does not take effect?
 
-Rsbuild will enable the tree shaking function of Rspack by default during production construction. Whether tree shaking can take effect depends on whether the business code can meet the tree shaking conditions of Rspack.
+Rsbuild will enable the tree shaking of Rspack by default during the production build. Whether tree shaking can take effect depends on whether the code can meet the conditions of Rspack's tree shaking.
 
-If you encounter the problem that tree shaking does not take effect, you can check whether the `sideEffects` configuration of the relevant npm package is correct. If you don't know what `sideEffects` is, or are interested in the principles behind tree shaking, you can read the following two documents:
-
-- [Rspack official documentation - Tree Shaking](https://www.rspack.dev/guide/tree-shaking)
-- [Tree Shaking Troubleshooting Guide](https://bytedance.feishu.cn/docs/doccn8E1ldDct5uv1EEDQs8Ycwe)
+If you find that tree shaking is not working as expected, you can check whether the `sideEffects` config of the related npm package is correct. If you do not understand the role of `sideEffects`, or if you are interested in the principles behind tree shaking, you can read [Rspack Official Documentation - Tree Shaking](https://rspack.dev/guide/tree-shaking).
 
 ---
 
@@ -168,36 +165,6 @@ If there is an error that `core-js` cannot be found, there may be several reason
 1. The current project overrides the built-in `alias` configuration of Rsbuild, causing the incorrect resolution of the `core-js` path when referenced. In this case, you can check the `alias` configuration of the project.
 2. Some code in the project depends on `core-js` v2. In this case, you usually need to find out the corresponding code and upgrade `core-js` to the v3.
 3. An npm package in `node_modules` imported `core-js`, but does not declare the `core-js` dependency in `dependencies`. In this case, you need to declare the `core-js` dependency in the corresponding npm package, or install a copy of `core-js` in the project root directory.
-
----
-
-### Compilation error after referencing a type from lodash
-
-If the `@types/lodash` package is installed in your project, you may import some types from `lodash`, such as the `DebouncedFunc` type:
-
-```ts
-import { debounce, DebouncedFunc } from 'lodash';
-```
-
-Rsbuild will throw an error after compiling the above code:
-
-```bash
-Syntax error: /project/src/index.ts: The lodash method `DebouncedFunc` is not a known module.
-Please report bugs to https://github.com/lodash/babel-plugin-lodash/issues.
-```
-
-The reason is that Rsbuild has enabled the [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash) plugin by default to optimize the bundle size of lodash, but Babel cannot distinguish between "value" and "type", which resulting in an exception in the compiled code.
-
-The solution is to use TypeScript's `import type` syntax to explicitly declare the `DebouncedFunc` type:
-
-```ts
-import { debounce } from 'lodash';
-import type { DebouncedFunc } from 'lodash';
-```
-
-:::tip
-In any case, it is recommended to use `import type` to import types, this will help the compiler to identify the type.
-:::
 
 ---
 

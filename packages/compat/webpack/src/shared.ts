@@ -1,13 +1,11 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 import {
-  getSharedPkgCompiledPath,
-  type SharedCompiledPkgNames,
-} from '@rsbuild/shared';
-import {
   awaitableGetter,
+  getSharedPkgCompiledPath,
   type Plugins,
   type RsbuildPlugin,
+  type SharedCompiledPkgNames,
 } from '@rsbuild/shared';
 
 export const applyDefaultPlugins = (plugins: Plugins) =>
@@ -28,11 +26,11 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.nodeAddons(),
     plugins.define(),
     import('./plugins/progress').then((m) => m.pluginProgress()),
-    import('./plugins/minimize').then((m) => m.pluginMinimize()),
     import('./plugins/css').then((m) => m.pluginCss()),
     import('./plugins/sass').then((m) => m.pluginSass()),
     import('./plugins/less').then((m) => m.pluginLess()),
     plugins.bundleAnalyzer(),
+    plugins.rsdoctor(),
     plugins.splitChunks(),
     plugins.startUrl?.(),
     plugins.inlineChunk(),
@@ -41,6 +39,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     plugins.networkPerformance(),
     plugins.preloadOrPrefetch(),
     plugins.server(),
+    plugins.moduleFederation(),
   ]);
 
 export const getCompiledPath = (packageName: string) => {

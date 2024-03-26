@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/webpack",
-  "version": "0.3.6",
+  "version": "0.5.3",
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
@@ -33,19 +33,18 @@
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/shared": "workspace:*",
-    "fast-glob": "^3.3.1",
+    "fast-glob": "^3.3.2",
     "globby": "^11.1.0",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
-    "mini-css-extract-plugin": "2.7.7",
-    "postcss": "^8.4.33",
-    "terser-webpack-plugin": "5.3.10",
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
+    "mini-css-extract-plugin": "2.8.1",
+    "postcss": "^8.4.38",
     "tsconfig-paths-webpack-plugin": "4.1.0",
-    "webpack": "^5.89.0"
+    "webpack": "^5.91.0"
   },
   "devDependencies": {
     "@scripts/test-helper": "workspace:*",
     "@types/node": "16.x",
-    "typescript": "^5.3.0"
+    "typescript": "^5.4.2"
   },
   "publishConfig": {
     "access": "public",

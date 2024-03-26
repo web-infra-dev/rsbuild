@@ -3,7 +3,6 @@ import type { Stats, MultiStats } from './stats';
 import type { NodeEnv, PromiseOrNot } from './utils';
 import type { RsbuildTarget } from './rsbuild';
 import type { BundlerChain } from './bundlerConfig';
-import type { mergeRsbuildConfig } from '../mergeRsbuildConfig';
 import type { Rspack, RspackConfig } from './rspack';
 import type { RsbuildConfig } from './config';
 import type { WebpackConfig } from './thirdParty';
@@ -13,8 +12,11 @@ export type OnBeforeBuildFn<B = 'rspack'> = (params: {
 }) => PromiseOrNot<void>;
 
 export type OnAfterBuildFn = (params: {
+  isFirstCompile: boolean;
   stats?: Stats | MultiStats;
 }) => PromiseOrNot<void>;
+
+export type OnCloseDevServerFn = () => PromiseOrNot<void>;
 
 export type OnDevCompileDoneFn = (params: {
   isFirstCompile: boolean;
@@ -52,7 +54,7 @@ export type OnExitFn = () => void;
 
 export type ModifyRsbuildConfigUtils = {
   /** Merge multiple Rsbuild config objects into one. */
-  mergeRsbuildConfig: typeof mergeRsbuildConfig;
+  mergeRsbuildConfig: (...configs: RsbuildConfig[]) => RsbuildConfig;
 };
 
 export type ModifyRsbuildConfigFn = (
@@ -62,6 +64,7 @@ export type ModifyRsbuildConfigFn = (
 
 export type ModifyChainUtils = {
   env: NodeEnv;
+  isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
   isServer: boolean;

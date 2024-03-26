@@ -16,34 +16,36 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
     const files = await glob(globPath);
     const groups: Group[] = [];
 
-    files.forEach((file) => {
+    for (const file of files) {
       const filename = file.replace(root, '').replace(/\.mdx?/, '');
       const pair = filename.split('/');
 
       if (pair.length < 2) {
-        return;
+        continue;
       }
 
       const group = groups.find((group) => group.name === pair[0]);
       const item = {
-        text: `${pair[0]}.${camelCase(pair[1])}`,
+        text: `${camelCase(pair[0])}.${camelCase(pair[1])}`,
         link: `/config/${filename}`,
       };
       if (group) {
         group.items.push(item);
       } else {
         groups.push({
-          name: pair[0],
+          name: camelCase(pair[0]),
           items: [item],
         });
       }
-    });
+    }
 
     const order = [
       'source',
       'output',
       'html',
       'server',
+      'security',
+      'moduleFederation',
       'dev',
       'tools',
       'performance',

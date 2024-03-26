@@ -30,13 +30,11 @@
 
 ## 🚀 性能
 
-Rsbuild 的构建性能与原生 Rspack 处于同一水平。由于 Rsbuild 内置了更多开箱即用的功能，因此性能数据会略微低于 Rspack。
+Rsbuild 的构建性能与原生 Rspack 处于同一水平，以下是构建 1000 个 React 组件的时间：
 
-以下是构建 1000 个 React 组件的时间：
+![benchmark](https://github.com/web-infra-dev/rsbuild/assets/7237365/2909b68f-8928-49c6-8eb3-cd1486dbf876)
 
-![benchmark](https://github.com/web-infra-dev/rsbuild/assets/7237365/16442d44-6939-46de-94f8-369e94c9539a)
-
-> 以上数据基于 Farm 团队搭建的 benchmark，更多信息请参考 [performance-compare](https://github.com/rspack-contrib/performance-compare)。
+> 以上数据来自 [performance-compare](https://github.com/rspack-contrib/performance-compare) benchmark。
 
 ## 🔥 特性
 
@@ -44,7 +42,7 @@ Rsbuild 具备以下特性：
 
 - **易于配置**：Rsbuild 的目标之一，是为 Rspack 用户提供开箱即用的构建能力，使开发者能够在零配置的情况下开发 web 项目。同时，Rsbuild 提供一套语义化的构建配置，以降低 Rspack 配置的学习成本。
 
-- **性能优先**：Rsbuild 集成了社区中基于 Rust 的高性能工具，包括 [Rspack](https://github.com/web-infra-dev/rspack) 和 [SWC](https://swc.rs/)，以提供一流的构建速度和开发体验。与基于 Webpack 的 Create React App 和 Vue CLI 等工具相比，Rsbuild 提供了 5 ~ 10 倍的构建性能，以及更轻量的依赖体积。
+- **性能优先**：Rsbuild 集成了社区中基于 Rust 的高性能工具，包括 [Rspack](https://github.com/web-infra-dev/rspack)，[SWC](https://swc.rs/) 和 [Lightning CSS](https://lightningcss.dev/)，以提供一流的构建速度和开发体验。与基于 Webpack 的 Create React App 和 Vue CLI 等工具相比，Rsbuild 提供了 5 ~ 10 倍的构建性能，以及更轻量的依赖体积。
 
 - **插件生态**：Rsbuild 内置一个轻量级的插件系统，提供一系列高质量的官方插件。此外，Rsbuild 兼容大部分的 webpack 插件和所有的 Rspack 插件，这意味着你可以在 Rsbuild 中使用社区或公司内沉淀的现有插件，而不需要重写相关代码。
 
@@ -62,26 +60,78 @@ Rsbuild 具备以下特性：
 
 ## 📍 路线图
 
-- **2023 年第 4 季度**：发布若干个 Rsbuild 0.x 版本（基于 Rspack 0.x 版本）。
-- **2024 年第 1 季度**：发布 Rsbuild 1.0 测试版本（基于 Rspack 1.0 测试版本）。
-- **2024 年第 2 季度**：发布 Rsbuild 1.0 稳定版本（基于 Rspack 1.0 稳定版本）。
+我们计划在 2024 年 7 月之前发布 Rsbuild v1.0（基于 Rspack v1.0），参见 [Rsbuild v1.0 Release Plan](https://github.com/web-infra-dev/rsbuild/discussions/1678)。
 
 ## 📚 快速上手
 
 你可以参考 [快速上手](https://rsbuild.dev/zh/guide/start/quick-start) 来开始体验 Rsbuild。
 
-## 🦀 生态
+## 🦀 链接
 
-- [Rspack](https://github.com/web-infra-dev/rspack)：Rsbuild 的底层打包工具。
+- [Rspack](https://github.com/web-infra-dev/rspack)：基于 Rust 的高性能打包工具。
 - [Rspress](https://github.com/web-infra-dev/rspress)：基于 Rsbuild 的静态站点生成器。
+- [Rsdoctor](https://github.com/web-infra-dev/rsdoctor)：针对 Rspack 和 Webpack 的一站式构建分析工具。
 - [Modern.js](https://github.com/web-infra-dev/modern.js)：基于 Rsbuild 的渐进式 React 框架。
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rspack 和 Rsbuild 相关的精彩内容列表。
+- [rspack-examples](https://github.com/rspack-contrib/rspack-examples)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的示例项目。
+- [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：使用此模板创建你的 Rsbuild 插件。
 
 ## 🤝 参与贡献
 
 > 欢迎参与 Rsbuild 贡献！
 
 请阅读 [贡献指南](https://github.com/web-infra-dev/rsbuild/blob/main/CONTRIBUTING.md) 来共同参与 Rsbuild 的建设。
+
+### 贡献者
+
+<a href="https://github.com/web-infra-dev/rsbuild/graphs/contributors" target="_blank">
+  <table>
+    <tr>
+      <th colspan="2">
+        <br/>
+        <img src="https://contrib.rocks/image?repo=web-infra-dev/rsbuild&columns=16&max=96"><br/><br/>
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source 
+            media="(prefers-color-scheme: dark)" 
+            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=dark"
+          />
+          <img 
+            alt="Contributors of web-infra-dev/rsbuild" 
+            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=light"
+          />
+        </picture>
+      </td>
+      <td rowspan="2">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=4x7&color_scheme=dark">
+          <img alt="New trends of web-infra-dev" src="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=4x7&color_scheme=light">
+        </picture>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source 
+            media="(prefers-color-scheme: dark)" 
+            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=dark"
+          />
+          <img 
+            alt="Contributors of web-infra-dev/rsbuild" 
+            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=light"
+          />
+        </picture>
+      </td>
+    </tr>
+  </table>
+</a>
+
+### 行为准则
+
+本仓库采纳了字节跳动的开源项目行为准则。请点击 [行为准则](./CODE_OF_CONDUCT.md) 查看更多的信息。
 
 ## 🧑‍💻 社区
 
@@ -92,10 +142,6 @@ Rsbuild 具备以下特性：
 ## 🌟 质量
 
 Rsbuild 通过 [Web Infra QoS](https://web-infra-qos.netlify.app?product=rsbuild&metrics=bundle-size) 来观测核心指标的变化情况，比如 bundle size、compile speed 和 install size。
-
-## 🙌 行为准则
-
-本仓库采纳了字节跳动的开源项目行为准则。请点击 [行为准则](./CODE_OF_CONDUCT.md) 查看更多的信息。
 
 ## 🙏 致谢
 

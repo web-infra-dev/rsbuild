@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import { logger } from '@rsbuild/core';
-import { isBeyondReact17 } from '@rsbuild/plugin-react';
+import fs from 'node:fs';
 import {
+  findUp,
   isUsingHMR,
   getCoreJsVersion,
   getBrowserslistWithDefault,
@@ -9,13 +9,35 @@ import {
   type ModifyChainUtils,
   type NormalizedConfig,
 } from '@rsbuild/shared';
+import semver from '@rsbuild/shared/semver';
 import { getDefaultSwcConfig } from './plugin';
 import type {
   ObjPluginSwcOptions,
   PluginSwcOptions,
   TransformConfig,
 } from './types';
-import { CORE_JS_DIR_PATH, SWC_HELPERS_DIR_PATH } from './constants';
+import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
+import { applySwcDecoratorConfig } from '@rsbuild/core/provider';
+
+const isBeyondReact17 = async (cwd: string) => {
+  const pkgPath = await findUp({ cwd, filename: 'package.json' });
+
+  if (!pkgPath) {
+    return false;
+  }
+
+  const pkgInfo = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+  const deps = {
+    ...pkgInfo.devDependencies,
+    ...pkgInfo.dependencies,
+  };
+
+  if (typeof deps.react !== 'string') {
+    return false;
+  }
+
+  return semver.satisfies(semver.minVersion(deps.react)!, '>=17.0.0');
+};
 
 /**
  * Determine react runtime mode based on react version
@@ -24,7 +46,7 @@ export async function determinePresetReact(
   root: string,
   pluginConfig: ObjPluginSwcOptions,
 ) {
-  pluginConfig.presetReact ||= {};
+  pluginConfig.presetReact ??= {};
   pluginConfig.presetReact.runtime ??= (await isBeyondReact17(root))
     ? 'automatic'
     : 'classic';
@@ -37,7 +59,7 @@ export function checkUseMinify(
 ) {
   return (
     isProd &&
-    !config.output.disableMinimize &&
+    config.output.minify &&
     (options.jsMinify !== false || options.cssMinify !== false)
   );
 }
@@ -48,6 +70,7 @@ const PLUGIN_ONLY_OPTIONS: (keyof ObjPluginSwcOptions)[] = [
   'jsMinify',
   'cssMinify',
   'overrides',
+  'transformLodash',
   'test',
   'exclude',
   'include' as unknown as keyof ObjPluginSwcOptions, // include is not in SWC config, but we need it as loader condition
@@ -158,8 +181,7 @@ export async function applyPluginConfig(
   }
 
   if (!swc.env.coreJs) {
-    const CORE_JS_PATH = require.resolve('core-js/package.json');
-    swc.env.coreJs = getCoreJsVersion(CORE_JS_PATH);
+    swc.env.coreJs = getCoreJsVersion(CORE_JS_PKG_PATH);
   }
 
   // If `targets` is not specified manually, we get `browserslist` from project.
@@ -192,7 +214,7 @@ export async function applyPluginConfig(
     extensions.pluginImport.push(...rsbuildConfig.source.transformImport);
   }
 
-  if (rsbuildConfig.performance?.transformLodash) {
+  if (pluginOptions?.transformLodash !== false) {
     extensions.lodash = {
       cwd: rootPath,
       ids: ['lodash', 'lodash-es'],
@@ -200,16 +222,11 @@ export async function applyPluginConfig(
   }
 
   extensions.lockCorejsVersion ??= {
-    corejs: CORE_JS_DIR_PATH,
-    swcHelpers: SWC_HELPERS_DIR_PATH,
+    corejs: CORE_JS_DIR,
+    swcHelpers: SWC_HELPERS_DIR,
   };
 
-  /**
-   * SWC can't use latestDecorator in TypeScript file for now
-   */
-  if (rsbuildConfig.output.enableLatestDecorators) {
-    logger.warn('Cannot use latestDecorator in SWC compiler.');
-  }
+  applySwcDecoratorConfig(swc, rsbuildConfig);
 
   return await finalizeConfig(rawOptions, swc);
 }

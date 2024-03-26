@@ -4,17 +4,45 @@ Rsbuild provides a wide range of configuration options and sets a common default
 
 If you need to customize build behaviors, you can use these configuration options.
 
-## Config Categories
+## Configuration Structure
 
-Rsbuild Configs are divided into the following categories:
+The configuration structure of Rsbuild looks like this:
 
-- Dev: Config related to local development.
-- Html: Config related to HTML.
-- Tools: Config related to the low-level tools.
-- Server：Config related to Rsbuild Server, which will take effect during local development and preview.
-- Source: Config related to source code parsing and compilation.
-- Output: Config related to output.
-- Performance: Config related to performance.
+```ts title="rsbuild.config.ts"
+export default {
+  plugins: [
+    // configure Rsbuild plugins
+  ],
+  dev: {
+    // options for local development
+  },
+  html: {
+    // options for HTML generation
+  },
+  tools: {
+    // options for the low-level tools
+  },
+  output: {
+    // options for build outputs
+  },
+  source: {
+    // options for source code parsing and compilation
+  },
+  server: {
+    // options for the Rsbuild Server,
+    // will take effect during local development and preview
+  },
+  security: {
+    // options for Web security
+  },
+  performance: {
+    // options for build performance and runtime performance
+  },
+  moduleFederation: {
+    // options for module federation
+  },
+};
+```
 
 You can find detailed descriptions of all configs on the [Configure Overview](/config/) page.
 
@@ -109,7 +137,7 @@ Rsbuild supports the export of a function in the config file, where you can dyna
 ```js title="rsbuild.config.js"
 import { defineConfig } from '@rsbuild/core';
 
-export default defineConfig(({ env, command }) => ({
+export default defineConfig(({ env, command, envMode }) => ({
   source: {
     alias: {
       '@foo': env === 'development' ? './src/foo.dev.ts' : './src/foo.prod.ts',
@@ -118,16 +146,36 @@ export default defineConfig(({ env, command }) => ({
 }));
 ```
 
-The function accepts the following parameters:
-
-- `env`: the value of `process.env.NODE_ENV`.
-  - When running `rsbuild dev`, the value of `env` is `development`.
-  - When running `rsbuild build` or `rsbuild preview`, the value of `env` is `production`.
-- `command`: the current command being run, such as `dev`, `build`, `preview`.
-
 :::tip
 The exported config function must provide a return value. If you do not need to return any config, you can return an empty object.
 :::
+
+The function accepts the following parameters:
+
+### env
+
+- **Type:** `string`
+- **Default:** `process.env.NODE_ENV`
+
+The current running environment.
+
+- When running `rsbuild dev`, the default value of env is `development`.
+- When running `rsbuild build` or `rsbuild preview`, the default value of env is `production`.
+
+### envMode
+
+- **Type:** `string`
+- **Default:** `process.env.NODE_ENV`
+
+The current value of the CLI parameter `--env-mode`.
+
+For example, when running `rsbuild build --env-mode test`, the value of `envMode` is `test`.
+
+### command
+
+- **Type:** `string`
+
+The current running CLI command, such as `dev`, `build`, `preview`.
 
 ## Export Async Function
 

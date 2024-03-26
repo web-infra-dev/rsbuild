@@ -8,9 +8,6 @@ import type { StatsError } from '@rsbuild/shared';
 import { formatStatsMessages } from '../formatStats';
 import { createSocketUrl } from './createSocketUrl';
 
-// declare any to fix the type of `module.hot`
-declare const module: any;
-
 // Connect to Dev Server
 const socketUrl = createSocketUrl(__resourceQuery);
 
@@ -21,10 +18,8 @@ let hasCompileErrors = false;
 
 function clearOutdatedErrors() {
   // Clean up outdated compile errors, if any.
-  // eslint-disable-next-line node/no-unsupported-features/node-builtins
   if (typeof console !== 'undefined' && typeof console.clear === 'function') {
     if (hasCompileErrors) {
-      // eslint-disable-next-line node/no-unsupported-features/node-builtins
       console.clear();
     }
   }
@@ -119,7 +114,7 @@ function isUpdateAvailable() {
 
 // webpack disallows updates in other states.
 function canApplyUpdates() {
-  return module.hot.status() === 'idle';
+  return import.meta.webpackHot.status() === 'idle';
 }
 
 // Attempt to update code on the fly, fall back to a hard reload.
@@ -129,7 +124,7 @@ function tryApplyUpdates() {
     return;
   }
 
-  if (!module.hot) {
+  if (!import.meta.webpackHot) {
     // HotModuleReplacementPlugin is not in Rspack configuration.
     window.location.reload();
     return;
@@ -139,7 +134,10 @@ function tryApplyUpdates() {
     return;
   }
 
-  function handleApplyUpdates(err: any, updatedModules: any) {
+  function handleApplyUpdates(
+    err: unknown,
+    updatedModules: (string | number)[] | null,
+  ) {
     const wantsForcedReload = err || !updatedModules;
     if (wantsForcedReload) {
       window.location.reload();
@@ -153,19 +151,14 @@ function tryApplyUpdates() {
   }
 
   // https://webpack.js.org/concepts/hot-module-replacement
-  const result = module.hot.check(/* autoApply */ true, handleApplyUpdates);
-
-  // // webpack 2 returns a Promise instead of invoking a callback
-  if (result?.then) {
-    result.then(
-      (updatedModules: any) => {
-        handleApplyUpdates(null, updatedModules);
-      },
-      (err: any) => {
-        handleApplyUpdates(err, null);
-      },
-    );
-  }
+  import.meta.webpackHot.check(true).then(
+    (updatedModules) => {
+      handleApplyUpdates(null, updatedModules);
+    },
+    (err) => {
+      handleApplyUpdates(err, null);
+    },
+  );
 }
 
 const MAX_RETRIES = 100;
@@ -179,7 +172,7 @@ function onOpen() {
   }
 }
 
-function onMessage(e: MessageEvent<any>) {
+function onMessage(e: MessageEvent<string>) {
   const message = JSON.parse(e.data);
   switch (message.type) {
     case 'hash':

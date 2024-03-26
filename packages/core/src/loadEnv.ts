@@ -55,29 +55,39 @@ export function loadEnv({
 
   const parsed: Record<string, string> = {};
 
-  filePaths.forEach((envPath) => {
+  for (const envPath of filePaths) {
     Object.assign(parsed, parse(fs.readFileSync(envPath)));
-  });
+  }
 
   expand({ parsed });
 
   const publicVars: Record<string, string> = {};
 
-  Object.keys(process.env).forEach((key) => {
+  for (const key of Object.keys(process.env)) {
     const val = process.env[key];
     if (val && prefixes.some((prefix) => key.startsWith(prefix))) {
       publicVars[`process.env.${key}`] = JSON.stringify(val);
     }
-  });
+  }
 
   let cleaned = false;
   const cleanup = () => {
-    if (cleaned) return;
-    Object.keys(parsed).forEach((key) => {
+    if (cleaned) {
+      return;
+    }
+
+    for (const key of Object.keys(parsed)) {
+      // do not cleanup NODE_ENV,
+      // otherwise the .env.${mode} file will not be loaded
+      if (key === 'NODE_ENV') {
+        continue;
+      }
+
       if (process.env[key] === parsed[key]) {
         delete process.env[key];
       }
-    });
+    }
+
     cleaned = true;
   };
 

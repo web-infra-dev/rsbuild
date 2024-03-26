@@ -11,10 +11,10 @@ exports[`plugin-svelte > should add svelte loader properly 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
             "options": {
               "compilerOptions": {
-                "dev": true,
+                "dev": false,
               },
               "emitCss": true,
-              "hotReload": true,
+              "hotReload": false,
               "preprocess": {
                 "markup": [Function],
                 "script": [Function],

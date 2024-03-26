@@ -15,7 +15,7 @@ rspackOnlyTest(
     button.click();
     await expect(button).toHaveText('count: 1');
 
-    rsbuild.server.close();
+    rsbuild.close();
   },
 );
 

@@ -1,9 +1,12 @@
 import { join } from 'node:path';
-import { deepmerge, getCoreJsVersion } from '@rsbuild/shared';
 import { generateBaseConfig } from './base';
 import type { BabelConfig, WebPresetOptions } from './types';
+import type { PresetEnvOptions } from '@rsbuild/plugin-babel';
+import { getCoreJsVersion } from './pluginLockCorejsVersion';
 
-const getDefaultPresetEnvOption = (options: WebPresetOptions) => {
+const getDefaultPresetEnvOption = (
+  options: WebPresetOptions,
+): PresetEnvOptions | false => {
   if (options.presetEnv === false) {
     return false;
   }
@@ -13,7 +16,7 @@ const getDefaultPresetEnvOption = (options: WebPresetOptions) => {
     // core-js is required for web target
     corejs: options.presetEnv?.useBuiltIns
       ? {
-          version: getCoreJsVersion(require.resolve('core-js/package.json')),
+          version: getCoreJsVersion(),
           proposals: true,
         }
       : undefined,
@@ -21,15 +24,15 @@ const getDefaultPresetEnvOption = (options: WebPresetOptions) => {
 };
 
 export const getBabelConfigForWeb = (options: WebPresetOptions) => {
-  const mergedOptions = deepmerge(
-    {
-      presetEnv: getDefaultPresetEnvOption(options),
-    },
-    options,
-  );
+  if (options.presetEnv !== false) {
+    options.presetEnv = {
+      ...getDefaultPresetEnvOption(options),
+      ...options.presetEnv,
+    };
+  }
 
-  const config = generateBaseConfig(mergedOptions);
-  const { pluginTransformRuntime = {} } = mergedOptions;
+  const config = generateBaseConfig(options);
+  const { pluginTransformRuntime = {} } = options;
 
   // Skip plugin-transform-runtime when testing
   if (pluginTransformRuntime) {

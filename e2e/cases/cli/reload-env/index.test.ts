@@ -22,7 +22,7 @@ test.skip('should restart dev server when .env file is changed', async () => {
         writeToDisk: true,
       },
       output: {
-        disableFilenameHash: true,
+        filenameHash: false,
       },
       server: { port: ${await getRandomPort()} }
     };`,

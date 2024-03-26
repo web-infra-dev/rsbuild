@@ -1,4 +1,3 @@
-import { isTest } from '@rsbuild/shared';
 import type { BabelConfig, BasePresetOptions } from './types';
 
 export const generateBaseConfig = (
@@ -20,9 +19,20 @@ export const generateBaseConfig = (
       require.resolve('@babel/preset-env'),
       {
         // Jest only supports commonjs
-        modules: isTest() ? 'commonjs' : false,
+        modules: process.env.NODE_ENV === 'test' ? 'commonjs' : false,
         exclude: ['transform-typeof-symbol'],
         ...presetEnv,
+
+        // If you are using @babel/preset-env and legacy decorators, you must ensure the class elements transform is enabled regardless of your targets, because Babel only supports compiling legacy decorators when also compiling class properties:
+        // see https://babeljs.io/docs/babel-plugin-proposal-decorators#legacy
+        ...(pluginDecorators && pluginDecorators.version === 'legacy'
+          ? {
+              include: [
+                '@babel/plugin-transform-class-properties',
+                ...(presetEnv?.include ?? []),
+              ],
+            }
+          : {}),
       },
     ]);
   }

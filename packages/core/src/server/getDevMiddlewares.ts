@@ -7,9 +7,11 @@ import type {
   DevMiddlewaresConfig,
   CompileMiddlewareAPI,
 } from '@rsbuild/shared';
+import { isDebug } from '@rsbuild/shared';
 import {
   faviconFallbackMiddleware,
   getHtmlFallbackMiddleware,
+  getRequestLoggerMiddleware,
 } from './middlewares';
 import { join, isAbsolute } from 'node:path';
 
@@ -35,7 +37,7 @@ const applySetupMiddlewares = (
   const before: RequestHandler[] = [];
   const after: RequestHandler[] = [];
 
-  setupMiddlewares.forEach((handler) => {
+  for (const handler of setupMiddlewares) {
     handler(
       {
         unshift: (...handlers) => before.unshift(...handlers),
@@ -43,7 +45,7 @@ const applySetupMiddlewares = (
       },
       serverOptions,
     );
-  });
+  }
 
   return { before, after };
 };
@@ -102,9 +104,10 @@ const applyDefaultMiddlewares = async ({
       dev.proxy,
     );
     upgradeEvents.push(upgrade);
-    proxyMiddlewares.forEach((middleware) => {
+
+    for (const middleware of proxyMiddlewares) {
       middlewares.push(middleware);
-    });
+    }
   }
 
   const { default: launchEditorMiddleware } = await import(
@@ -119,6 +122,16 @@ const applyDefaultMiddlewares = async ({
     upgradeEvents.push(
       compileMiddlewareAPI.onUpgrade.bind(compileMiddlewareAPI),
     );
+
+    middlewares.push((req, res, next) => {
+      // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
+      if (req.url?.endsWith('.hot-update.json')) {
+        res.statusCode = 404;
+        res.end();
+      } else {
+        next();
+      }
+    });
   }
 
   if (dev.publicDir !== false && dev.publicDir?.name) {
@@ -164,7 +177,9 @@ const applyDefaultMiddlewares = async ({
 
   return {
     onUpgrade: (...args) => {
-      upgradeEvents.forEach((cb) => cb(...args));
+      for (const cb of upgradeEvents) {
+        cb(...args);
+      }
     },
   };
 };
@@ -173,13 +188,17 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
   const middlewares: Middlewares = [];
   const { compileMiddlewareAPI } = options;
 
+  if (isDebug()) {
+    middlewares.push(await getRequestLoggerMiddleware());
+  }
+
   // Order: setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push
   const { before, after } = applySetupMiddlewares(
     options.dev,
     compileMiddlewareAPI,
   );
 
-  before.forEach((fn) => middlewares.push(fn));
+  middlewares.push(...before);
 
   const { onUpgrade } = await applyDefaultMiddlewares({
     middlewares,
@@ -189,7 +208,7 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
     pwd: options.pwd,
   });
 
-  after.forEach((fn) => middlewares.push(fn));
+  middlewares.push(...after);
 
   return {
     close: async () => {

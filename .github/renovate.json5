@@ -1,12 +1,14 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:recommended"],
+	"extends": ["config:recommended", "schedule:weekly"],
 	"ignorePaths": ["**/tests/**", "**/compiled/**", "**/node_modules/**"],
 	"packageRules": [
 		// Use chore as semantic commit type for commit messages
 		{
 			"matchPackagePatterns": ["*"],
-			"semanticCommitType": "chore"
+			"semanticCommitType": "chore",
+			// always bump package.json
+			"rangeStrategy": "bump"
 		},
 		{
 			"groupName": "babel",
@@ -14,23 +16,34 @@
 			"groupSlug": "babel"
 		},
 		{
+			"groupName": "rspack",
+			"packagePatterns": ["rspack"],
+			"groupSlug": "rspack"
+		},
+		{
+			"groupName": "rspress",
+			"packagePatterns": ["rspress"],
+			"groupSlug": "rspress"
+		},
+		{
+			"groupName": "modern-js",
+			"packagePatterns": ["modern-js"],
+			"groupSlug": "modern-js"
+		},
+		{
 			"groupName": "types",
 			"packagePatterns": ["^@types/"],
 			"groupSlug": "types"
 		},
-		// manually update major versions
 		{
-			"matchUpdateTypes": ["major"],
-			"enabled": false
+			"groupName": "all patch dependencies",
+			"groupSlug": "all-patch",
+			"matchPackagePatterns": ["*"],
+			"matchUpdateTypes": ["patch"]
 		},
 		// manually update peer dependencies
 		{
 			"depTypeList": ["peerDependencies"],
-			"enabled": false
-		},
-		// use GitHub actions to update rspress and modern, manually update rspack
-		{
-			"packagePatterns": ["rspack", "rspress", "modern"],
 			"enabled": false
 		}
 	],
@@ -39,7 +52,20 @@
 		"core-js",
 		"esbuild",
 		"typescript",
-		// https://github.com/web-infra-dev/rsbuild/pull/1105
-		"webpack-bundle-analyzer"
+		// related to the SWC version built into Rspack
+		"@swc/helpers",
+		// plugin-vue2 depends on vue 2 and vue-loader v15
+		"vue",
+		"vue-loader",
+		"loader-utils2",
+		// pure esm packages can not be used now
+		"gzip-size",
+		"globby",
+		"open",
+		// buffer v6 has compatibility issues as node polyfill
+		"buffer",
+		// align Node.js version minimum requirements
+		"@types/node",
+		"node"
 	]
 }

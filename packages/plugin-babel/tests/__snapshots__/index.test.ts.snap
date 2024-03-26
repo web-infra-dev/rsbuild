@@ -24,7 +24,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
       "loader": "builtin:swc-loader",
       "options": {
         "env": {
-          "coreJs": "3.32",
+          "coreJs": "3.36",
           "mode": "usage",
           "shippedProposals": true,
           "targets": [
@@ -46,6 +46,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,
+            "useDefineForClassFields": false,
           },
         },
         "sourceMaps": true,
@@ -57,7 +58,15 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
         "babelrc": false,
         "compact": false,
         "configFile": false,
-        "plugins": [],
+        "plugins": [
+          [
+            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+            {
+              "version": "legacy",
+            },
+          ],
+          "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+        ],
         "presets": [
           [
             "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
@@ -89,7 +98,15 @@ exports[`plugins/babel > should set babel-loader 1`] = `
               "babelrc": false,
               "compact": false,
               "configFile": false,
-              "plugins": [],
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+              ],
               "presets": [
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
@@ -122,9 +139,19 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
             "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
             "options": {
               "babelrc": false,
+              "cacheCompression": false,
+              "cacheDirectory": "<ROOT>/packages/plugin-babel/tests/node_modules/.cache/babel-loader",
+              "cacheIdentifier": "test",
               "compact": false,
               "configFile": false,
               "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
                 [
                   "babel-plugin-import",
                   {

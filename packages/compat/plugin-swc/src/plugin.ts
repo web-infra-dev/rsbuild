@@ -1,12 +1,16 @@
 import path from 'node:path';
-import { PLUGIN_SWC_NAME, PLUGIN_BABEL_NAME } from '@rsbuild/core';
 import {
   SCRIPT_REGEX,
   DEFAULT_BROWSERSLIST,
   applyScriptCondition,
   type RsbuildPlugin,
+  parseMinifyOptions,
 } from '@rsbuild/shared';
-import type { PluginSwcOptions, TransformConfig } from './types';
+import type {
+  TransformConfig,
+  PluginSwcOptions,
+  ObjPluginSwcOptions,
+} from './types';
 import {
   applyPluginConfig,
   checkUseMinify,
@@ -22,86 +26,99 @@ import { SwcMinimizerPlugin } from './minimizer';
  * - Add swc minifier plugin
  */
 export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
-  name: PLUGIN_SWC_NAME,
-
-  pre: [PLUGIN_BABEL_NAME, 'uni-builder:babel'],
+  name: 'rsbuild-webpack:swc',
 
   setup(api) {
     if (api.context.bundlerType === 'rspack') {
       return;
     }
 
-    api.modifyBundlerChain(async (chain, utils) => {
-      const { CHAIN_ID, isProd } = utils;
-      const rsbuildConfig = api.getNormalizedConfig();
-      const { rootPath } = api.context;
+    // first config is the main config
+    let mainConfig: ObjPluginSwcOptions<'inner'>;
 
-      const swcConfigs = await applyPluginConfig(
-        options,
-        utils,
-        rsbuildConfig,
-        rootPath,
-      );
+    api.modifyBundlerChain({
+      // loader should be applied in the pre stage for customizing
+      order: 'pre',
+      handler: async (chain, utils) => {
+        const { CHAIN_ID } = utils;
+        const rsbuildConfig = api.getNormalizedConfig();
+        const { rootPath } = api.context;
 
-      // If babel plugin is used, replace babel-loader
-      if (chain.module.rules.get(CHAIN_ID.RULE.JS)) {
-        chain.module.rule(CHAIN_ID.RULE.JS).uses.delete(CHAIN_ID.USE.BABEL);
-        chain.module.delete(CHAIN_ID.RULE.TS);
-      } else {
-        applyScriptCondition({
-          rule: chain.module.rule(CHAIN_ID.RULE.JS),
-          config: rsbuildConfig,
-          context: api.context,
-          includes: [],
-          excludes: [],
-        });
-      }
+        const swcConfigs = await applyPluginConfig(
+          options,
+          utils,
+          rsbuildConfig,
+          rootPath,
+        );
 
-      for (let i = 0; i < swcConfigs.length; i++) {
-        const { test, include, exclude, swcConfig } = swcConfigs[i];
+        // If babel plugin is used, replace babel-loader
+        if (chain.module.rules.get(CHAIN_ID.RULE.JS)) {
+          chain.module.rule(CHAIN_ID.RULE.JS).uses.delete(CHAIN_ID.USE.BABEL);
+          chain.module.delete(CHAIN_ID.RULE.TS);
+        } else {
+          applyScriptCondition({
+            rule: chain.module.rule(CHAIN_ID.RULE.JS),
+            config: rsbuildConfig,
+            context: api.context,
+            includes: [],
+            excludes: [],
+          });
+        }
 
-        const ruleId =
-          i > 0 ? CHAIN_ID.RULE.JS + i.toString() : CHAIN_ID.RULE.JS;
-        const rule = chain.module.rule(ruleId);
+        for (let i = 0; i < swcConfigs.length; i++) {
+          const { test, include, exclude, swcConfig } = swcConfigs[i];
 
-        // Insert swc loader and plugin
-        rule
-          .test(test || SCRIPT_REGEX)
-          .use(CHAIN_ID.USE.SWC)
-          .loader(path.resolve(__dirname, './loader'))
-          .options(removeUselessOptions(swcConfig) satisfies TransformConfig);
+          const ruleId =
+            i > 0 ? CHAIN_ID.RULE.JS + i.toString() : CHAIN_ID.RULE.JS;
+          const rule = chain.module.rule(ruleId);
 
-        if (include) {
-          for (const extra of include) {
-            rule.include.add(extra);
+          // Insert swc loader and plugin
+          rule
+            .test(test || SCRIPT_REGEX)
+            .use(CHAIN_ID.USE.SWC)
+            .loader(path.resolve(__dirname, './loader'))
+            .options(removeUselessOptions(swcConfig) satisfies TransformConfig);
+
+          if (include) {
+            for (const extra of include) {
+              rule.include.add(extra);
+            }
+          }
+
+          if (exclude) {
+            for (const extra of exclude) {
+              rule.exclude.add(extra);
+            }
           }
         }
 
-        if (exclude) {
-          for (const extra of exclude) {
-            rule.exclude.add(extra);
-          }
+        // first config is the main config
+        mainConfig = swcConfigs[0].swcConfig;
+
+        if (chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI)) {
+          chain.module
+            .rule(CHAIN_ID.RULE.JS_DATA_URI)
+            .uses.delete(CHAIN_ID.USE.BABEL)
+            .end();
         }
-      }
 
-      // first config is the main config
-      const mainConfig = swcConfigs[0].swcConfig;
-
-      if (chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI)) {
         chain.module
           .rule(CHAIN_ID.RULE.JS_DATA_URI)
-          .uses.delete(CHAIN_ID.USE.BABEL)
-          .end();
-      }
+          .mimetype({
+            or: ['text/javascript', 'application/javascript'],
+          })
+          // compatible with legacy packages with type="module"
+          // https://github.com/webpack/webpack/issues/11467
+          .resolve.set('fullySpecified', false)
+          .end()
+          .use(CHAIN_ID.USE.SWC)
+          .loader(path.resolve(__dirname, './loader'))
+          .options(removeUselessOptions(mainConfig) satisfies TransformConfig);
+      },
+    });
 
-      chain.module
-        .rule(CHAIN_ID.RULE.JS_DATA_URI)
-        .mimetype({
-          or: ['text/javascript', 'application/javascript'],
-        })
-        .use(CHAIN_ID.USE.SWC)
-        .loader(path.resolve(__dirname, './loader'))
-        .options(removeUselessOptions(mainConfig) satisfies TransformConfig);
+    api.modifyBundlerChain((chain, { CHAIN_ID, isProd }) => {
+      const rsbuildConfig = api.getNormalizedConfig();
 
       if (checkUseMinify(mainConfig, rsbuildConfig, isProd)) {
         // Insert swc minify plugin
@@ -116,13 +133,17 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
           minimizersChain.delete(CHAIN_ID.MINIMIZER.CSS).end();
         }
 
+        const { minifyJs, minifyCss } = parseMinifyOptions(rsbuildConfig);
+
         minimizersChain
           .end()
           .minimizer(CHAIN_ID.MINIMIZER.SWC)
           .use(SwcMinimizerPlugin, [
             {
-              jsMinify: mainConfig.jsMinify ?? mainConfig.jsc?.minify,
-              cssMinify: mainConfig.cssMinify,
+              jsMinify: minifyJs
+                ? mainConfig.jsMinify ?? mainConfig.jsc?.minify
+                : false,
+              cssMinify: minifyCss ? mainConfig.cssMinify : false,
               rsbuildConfig,
             },
           ]);

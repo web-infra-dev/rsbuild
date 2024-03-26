@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/shared",
-  "version": "0.3.6",
+  "version": "0.5.3",
   "description": "The internal shared modules and dependencies of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -50,10 +50,6 @@
     "./connect": {
       "types": "./compiled/connect/index.d.ts",
       "default": "./compiled/connect/index.js"
-    },
-    "./commander": {
-      "types": "./compiled/commander/typings/index.d.ts",
-      "default": "./compiled/commander/index.js"
     },
     "./mime-types": {
       "types": "./compiled/mime-types/index.d.ts",
@@ -130,20 +126,17 @@
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@rspack/core": "0.5.0",
-    "caniuse-lite": "^1.0.30001559",
-    "lodash": "^4.17.21",
-    "postcss": "^8.4.33"
+    "@rspack/core": "0.5.9",
+    "caniuse-lite": "^1.0.30001600",
+    "postcss": "^8.4.38"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.200",
     "@types/node": "16.x",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
-    "mini-css-extract-plugin": "2.7.7",
-    "terser": "5.27.0",
-    "terser-webpack-plugin": "5.3.10",
-    "typescript": "^5.3.0",
-    "webpack": "^5.89.0"
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
+    "mini-css-extract-plugin": "2.8.1",
+    "terser": "5.29.2",
+    "typescript": "^5.4.2",
+    "webpack": "^5.91.0"
   },
   "publishConfig": {
     "access": "public",

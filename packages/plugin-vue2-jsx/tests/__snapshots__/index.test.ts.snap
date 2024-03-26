@@ -13,7 +13,15 @@ exports[`plugin-vue2-jsx > should allow to configure jsx babel plugin options 1`
               "babelrc": false,
               "compact": false,
               "configFile": false,
-              "plugins": [],
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+              ],
               "presets": [
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
@@ -54,7 +62,15 @@ exports[`plugin-vue2-jsx > should apply jsx babel plugin correctly 1`] = `
               "babelrc": false,
               "compact": false,
               "configFile": false,
-              "plugins": [],
+              "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+              ],
               "presets": [
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",

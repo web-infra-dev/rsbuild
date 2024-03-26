@@ -22,15 +22,15 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
     api.modifyRspackConfig(async (rspackConfig, { isProd }) => {
       const config = api.getNormalizedConfig();
-
       const cssPath = getDistPath(config, 'css');
+      const cssAsyncPath = getDistPath(config, 'cssAsync');
       const cssFilename = getFilename(config, 'css', isProd);
 
       rspackConfig.output ||= {};
       rspackConfig.output.cssFilename = posix.join(cssPath, cssFilename);
       rspackConfig.output.cssChunkFilename = posix.join(
-        cssPath,
-        `async/${cssFilename}`,
+        cssAsyncPath,
+        cssFilename,
       );
     });
   },

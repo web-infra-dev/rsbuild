@@ -3,7 +3,7 @@ import {
   NODE_MODULES_REGEX,
   createDependenciesRegExp,
   type Polyfill,
-  type CacheGroup,
+  type CacheGroups,
   type SplitChunks,
   type ForceSplitting,
   type RsbuildChunkSplit,
@@ -20,7 +20,7 @@ interface SplitChunksContext {
   /**
    * User defined cache groups which can be reused across different split strategies
    */
-  userDefinedCacheGroups: CacheGroup;
+  userDefinedCacheGroups: CacheGroups;
   /**
    * Default split config in webpack
    */
@@ -32,7 +32,7 @@ interface SplitChunksContext {
   /**
    * User Rsbuild `chunkSplit` config
    */
-  rsbuildConfig: RsbuildChunkSplit;
+  userConfig: RsbuildChunkSplit;
   /**
    * The root path of current project
    */
@@ -43,15 +43,17 @@ interface SplitChunksContext {
   polyfill: Polyfill;
 }
 
-function getUserDefinedCacheGroups(forceSplitting: ForceSplitting): CacheGroup {
-  const cacheGroups: CacheGroup = {};
+function getUserDefinedCacheGroups(
+  forceSplitting: ForceSplitting,
+): CacheGroups {
+  const cacheGroups: CacheGroups = {};
   const pairs = Array.isArray(forceSplitting)
     ? forceSplitting.map(
         (regexp, index) => [`force-split-${index}`, regexp] as const,
       )
     : Object.entries(forceSplitting);
 
-  pairs.forEach(([key, regexp]) => {
+  for (const [key, regexp] of pairs) {
     cacheGroups[key] = {
       test: regexp,
       name: key,
@@ -59,14 +61,14 @@ function getUserDefinedCacheGroups(forceSplitting: ForceSplitting): CacheGroup {
       // Ignore minimum size, minimum chunks and maximum requests and always create chunks for user defined cache group.
       enforce: true,
     };
-  });
+  }
 
   return cacheGroups;
 }
 
 function splitByExperience(ctx: SplitChunksContext): SplitChunks {
   const { override, polyfill, defaultConfig, userDefinedCacheGroups } = ctx;
-  const experienceCacheGroup: CacheGroup = {};
+  const experienceCacheGroup: CacheGroups = {};
 
   const packageRegExps: Record<string, RegExp> = {
     lodash: createDependenciesRegExp('lodash', 'lodash-es'),
@@ -82,7 +84,7 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
     );
   }
 
-  Object.entries(packageRegExps).forEach(([name, test]) => {
+  for (const [name, test] of Object.entries(packageRegExps)) {
     const key = `lib-${name}`;
 
     experienceCacheGroup[key] = {
@@ -91,7 +93,7 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
       name: key,
       reuseExistingChunk: true,
     };
-  });
+  }
 
   return {
     ...defaultConfig,
@@ -128,7 +130,7 @@ function splitByModule(ctx: SplitChunksContext): SplitChunks {
   return {
     ...defaultConfig,
     minSize: 0,
-    maxInitialRequests: Infinity,
+    maxInitialRequests: Number.POSITIVE_INFINITY,
     ...override,
     cacheGroups: {
       ...defaultConfig.cacheGroups,
@@ -149,14 +151,13 @@ function splitByModule(ctx: SplitChunksContext): SplitChunks {
 }
 
 function splitBySize(ctx: SplitChunksContext): SplitChunks {
-  const { override, userDefinedCacheGroups, defaultConfig, rsbuildConfig } =
-    ctx;
-  assert(rsbuildConfig.strategy === 'split-by-size');
+  const { override, userDefinedCacheGroups, defaultConfig, userConfig } = ctx;
+  assert(userConfig.strategy === 'split-by-size');
 
   return {
     ...defaultConfig,
-    minSize: rsbuildConfig.minSize ?? 0,
-    maxSize: rsbuildConfig.maxSize ?? Infinity,
+    minSize: userConfig.minSize ?? 0,
+    maxSize: userConfig.maxSize ?? Number.POSITIVE_INFINITY,
     ...override,
     cacheGroups: {
       ...defaultConfig.cacheGroups,
@@ -188,7 +189,7 @@ function allInOne(_ctx: SplitChunksContext): SplitChunks {
 function singleVendor(ctx: SplitChunksContext): SplitChunks {
   const { override, defaultConfig, userDefinedCacheGroups } = ctx;
 
-  const singleVendorCacheGroup: CacheGroup = {
+  const singleVendorCacheGroup: CacheGroups = {
     singleVendor: {
       test: NODE_MODULES_REGEX,
       priority: 0,
@@ -223,67 +224,69 @@ const SPLIT_STRATEGY_DISPATCHER: Record<
   'single-vendor': singleVendor,
 };
 
-export function pluginSplitChunks(): RsbuildPlugin {
-  return {
-    name: 'rsbuild:split-chunks',
-    setup(api) {
-      api.modifyBundlerChain(
-        async (chain, { isServer, isWebWorker, isServiceWorker }) => {
-          if (isServer || isWebWorker || isServiceWorker) {
-            chain.optimization.splitChunks(false);
+export const pluginSplitChunks = (): RsbuildPlugin => ({
+  name: 'rsbuild:split-chunks',
+  setup(api) {
+    api.modifyBundlerChain(
+      async (chain, { isServer, isWebWorker, isServiceWorker }) => {
+        if (isServer || isWebWorker || isServiceWorker) {
+          chain.optimization.splitChunks(false);
 
-            // web worker does not support dynamic imports, dynamicImportMode need set to eager
-            if (isWebWorker || isServiceWorker) {
-              chain.module.parser.merge({
-                javascript: {
-                  dynamicImportMode: 'eager',
-                },
-              });
-            }
-
-            return;
+          // web worker does not support dynamic imports, dynamicImportMode need set to eager
+          if (isWebWorker || isServiceWorker) {
+            chain.module.parser.merge({
+              javascript: {
+                dynamicImportMode: 'eager',
+              },
+            });
           }
 
-          const config = api.getNormalizedConfig();
-          const defaultConfig: Exclude<SplitChunks, false> = {
-            // Optimize both `initial` and `async` chunks
-            chunks: 'all',
-            // When chunk size >= 50000 bytes, split it into separate chunk
-            // @ts-expect-error Rspack type missing
-            enforceSizeThreshold: 50000,
-            cacheGroups: {},
-          };
-          const { chunkSplit } = config.performance;
-          let userDefinedCacheGroups = {};
-          if (chunkSplit.forceSplitting) {
-            userDefinedCacheGroups = getUserDefinedCacheGroups(
-              chunkSplit.forceSplitting,
-            );
-          }
-          // Patch the override config difference between the `custom` strategy and other strategy.
-          const override =
-            chunkSplit.strategy === 'custom'
-              ? // `chunkSplit.splitChunks` compat for Eden
-                chunkSplit.splitChunks ?? chunkSplit.override
-              : chunkSplit.override;
-          // Apply different strategy
-          const splitChunksOptions = await SPLIT_STRATEGY_DISPATCHER[
-            chunkSplit.strategy
-          ]({
-            defaultConfig,
-            override: override || {},
-            userDefinedCacheGroups,
-            rsbuildConfig: chunkSplit,
-            rootPath: api.context.rootPath,
-            polyfill: config.output.polyfill,
-          });
+          return;
+        }
 
-          chain.optimization.splitChunks(
-            // @ts-expect-error splitChunks type mismatch
-            splitChunksOptions,
+        const config = api.getNormalizedConfig();
+        const defaultConfig: Exclude<SplitChunks, false> = {
+          // Optimize both `initial` and `async` chunks
+          chunks: 'all',
+          // When chunk size >= 50000 bytes, split it into separate chunk
+          // @ts-expect-error Rspack type missing
+          enforceSizeThreshold: 50000,
+          cacheGroups: {},
+        };
+
+        const { chunkSplit } = config.performance;
+        let userDefinedCacheGroups = {};
+
+        if (chunkSplit.forceSplitting) {
+          userDefinedCacheGroups = getUserDefinedCacheGroups(
+            chunkSplit.forceSplitting,
           );
-        },
-      );
-    },
-  };
-}
+        }
+
+        // Patch the override config difference between the `custom` strategy and other strategy.
+        const override =
+          chunkSplit.strategy === 'custom'
+            ? // `chunkSplit.splitChunks` compat for Eden
+              chunkSplit.splitChunks ?? chunkSplit.override
+            : chunkSplit.override;
+
+        // Apply different strategy
+        const splitChunksOptions = await SPLIT_STRATEGY_DISPATCHER[
+          chunkSplit.strategy || 'split-by-experience'
+        ]({
+          defaultConfig,
+          override: override || {},
+          userDefinedCacheGroups,
+          userConfig: chunkSplit,
+          rootPath: api.context.rootPath,
+          polyfill: config.output.polyfill,
+        });
+
+        chain.optimization.splitChunks(
+          // @ts-expect-error splitChunks type mismatch
+          splitChunksOptions,
+        );
+      },
+    );
+  },
+});

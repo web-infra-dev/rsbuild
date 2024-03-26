@@ -1,12 +1,12 @@
 import {
   pick,
   debug,
-  createPluginStore,
   type RsbuildInstance,
   type RsbuildProvider,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
 import { plugins } from './plugins';
+import { createPluginManager } from './pluginManager';
 
 const getRspackProvider = async () => {
   const { rspackProvider } = await import('./provider');
@@ -14,7 +14,7 @@ const getRspackProvider = async () => {
 };
 
 export async function createRsbuild(
-  options: CreateRsbuildOptions,
+  options: CreateRsbuildOptions = {},
 ): Promise<RsbuildInstance> {
   const { rsbuildConfig = {} } = options;
 
@@ -27,7 +27,7 @@ export async function createRsbuild(
     ...options,
   };
 
-  const pluginStore = createPluginStore();
+  const pluginManager = createPluginManager();
   const {
     build,
     preview,
@@ -36,21 +36,21 @@ export async function createRsbuild(
     initConfigs,
     inspectConfig,
     createCompiler,
-    getServerAPIs,
+    createDevServer,
     startDevServer,
     applyDefaultPlugins,
   } = await provider({
     plugins,
-    pluginStore,
+    pluginManager,
     rsbuildOptions,
   });
 
   debug('add default plugins');
-  await applyDefaultPlugins(pluginStore);
+  await applyDefaultPlugins(pluginManager);
   debug('add default plugins done');
 
   const rsbuild = {
-    ...pick(pluginStore, ['addPlugins', 'removePlugins', 'isPluginExists']),
+    ...pick(pluginManager, ['addPlugins', 'removePlugins', 'isPluginExists']),
     ...pick(pluginAPI, [
       'onBeforeBuild',
       'onBeforeCreateCompiler',
@@ -60,6 +60,7 @@ export async function createRsbuild(
       'onAfterCreateCompiler',
       'onAfterStartDevServer',
       'onAfterStartProdServer',
+      'onCloseDevServer',
       'onDevCompileDone',
       'onExit',
       'getHTMLPaths',
@@ -71,13 +72,14 @@ export async function createRsbuild(
     createCompiler,
     initConfigs,
     inspectConfig,
-    getServerAPIs,
+    createDevServer,
     startDevServer,
     context: publicContext,
   };
 
   if (rsbuildConfig.plugins) {
-    rsbuild.addPlugins(rsbuildConfig.plugins);
+    const plugins = await Promise.all(rsbuildConfig.plugins);
+    rsbuild.addPlugins(plugins);
   }
 
   return rsbuild;

@@ -4,7 +4,7 @@ Rsbuild 支持通过 [Browserslist](https://browsersl.ist/) 来设置 Web 应用
 
 ## 什么是 Browserslist
 
-由于各种浏览器对 ECMAScript 和 CSS 的支持程度不同，因此开发者需要根据业务需求，为 Web 应用设置正确的浏览器范围。
+由于各种浏览器对 ECMAScript 和 CSS 的支持程度不同，因此开发者需要根据使用场景，为 Web 应用设置正确的浏览器范围。
 
 [Browserslist](https://browsersl.ist/) 可以指定 Web 应用能够在哪些浏览器中正常运行，它提供了统一的配置格式，并且已经成为了前端社区中的标准。Browserslist 被 Autoprefixer, Babel, ESLint, PostCSS，SWC 和 Webpack 等库所使用。
 

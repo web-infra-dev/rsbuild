@@ -10,6 +10,9 @@ test('should externalHelpers by default', async () => {
     rsbuildConfig: {
       source: {
         entry: { index: path.resolve(__dirname, './src/main.ts') },
+        decorators: {
+          version: '2022-03',
+        },
       },
       output: {
         sourceMap: {

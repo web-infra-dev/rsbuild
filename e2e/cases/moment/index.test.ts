@@ -1,8 +1,7 @@
 import { expect, test } from '@playwright/test';
-import { build, webpackOnlyTest } from '@e2e/helper';
+import { build } from '@e2e/helper';
 
-// todo: https://github.com/web-infra-dev/rspack/issues/3346
-webpackOnlyTest('removeMomentLocale false (default)', async () => {
+test('removeMomentLocale false (default)', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {

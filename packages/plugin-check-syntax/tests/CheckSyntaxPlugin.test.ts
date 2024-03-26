@@ -1,5 +1,4 @@
 import { getHtmlScripts } from '../src/helpers/generateHtmlScripts';
-import { getEcmaVersion } from '../src/helpers/getEcmaVersion';
 import { makeCodeFrame, displayCodePointer } from '../src/helpers';
 
 describe('getHtmlScripts', () => {
@@ -54,21 +53,6 @@ describe('getHtmlScripts', () => {
     </body>
   </html>`),
     ).toEqual([]);
-  });
-});
-
-describe('checkIsSupportBrowser', () => {
-  test('should get ecma version of single browser correctly', async () => {
-    expect(getEcmaVersion(['ie >= 11'])).toEqual(5);
-    expect(getEcmaVersion(['Chrome >= 33'])).toEqual(5);
-    expect(getEcmaVersion(['Edge >= 12'])).toEqual(5);
-    expect(getEcmaVersion(['Edge >= 15'])).toEqual(6);
-    expect(getEcmaVersion(['Chrome >= 53'])).toEqual(6);
-  });
-
-  test('should get ecma version of multiple browsers correctly', async () => {
-    expect(getEcmaVersion(['ie >= 11', 'Chrome >= 53'])).toEqual(5);
-    expect(getEcmaVersion(['Edge >= 15', 'Chrome >= 53'])).toEqual(6);
   });
 });
 

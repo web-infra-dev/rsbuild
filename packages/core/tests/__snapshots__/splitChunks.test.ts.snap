@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-split-chunks > 'should allow forceSplitting to be an object' 1`] = `
+exports[`plugin-split-chunks > should allow forceSplitting to be an object 1`] = `
 {
   "optimization": {
     "splitChunks": {
@@ -19,7 +19,7 @@ exports[`plugin-split-chunks > 'should allow forceSplitting to be an object' 1`]
 }
 `;
 
-exports[`plugin-split-chunks > 'should not split chunks when target is not' 1`] = `
+exports[`plugin-split-chunks > should not split chunks when target is node 1`] = `
 {
   "optimization": {
     "splitChunks": false,
@@ -27,7 +27,7 @@ exports[`plugin-split-chunks > 'should not split chunks when target is not' 1`] 
 }
 `;
 
-exports[`plugin-split-chunks > 'should set all-in-one config' 1`] = `
+exports[`plugin-split-chunks > should set all-in-one config 1`] = `
 {
   "optimization": {
     "splitChunks": false,
@@ -35,7 +35,7 @@ exports[`plugin-split-chunks > 'should set all-in-one config' 1`] = `
 }
 `;
 
-exports[`plugin-split-chunks > 'should set custom config' 1`] = `
+exports[`plugin-split-chunks > should set custom config 1`] = `
 {
   "optimization": {
     "splitChunks": {
@@ -54,7 +54,7 @@ exports[`plugin-split-chunks > 'should set custom config' 1`] = `
 }
 `;
 
-exports[`plugin-split-chunks > 'should set single-size config' 1`] = `
+exports[`plugin-split-chunks > should set single-size config 1`] = `
 {
   "optimization": {
     "splitChunks": {
@@ -68,7 +68,7 @@ exports[`plugin-split-chunks > 'should set single-size config' 1`] = `
 }
 `;
 
-exports[`plugin-split-chunks > 'should set single-vendor config' 1`] = `
+exports[`plugin-split-chunks > should set single-vendor config 1`] = `
 {
   "optimization": {
     "splitChunks": {
@@ -89,32 +89,7 @@ exports[`plugin-split-chunks > 'should set single-vendor config' 1`] = `
 }
 `;
 
-exports[`plugin-split-chunks > 'should set split-by-experience config correctly when polyfill is off' 1`] = `
-{
-  "optimization": {
-    "splitChunks": {
-      "cacheGroups": {
-        "lib-axios": {
-          "name": "lib-axios",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-lodash": {
-          "name": "lib-lodash",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
-        },
-      },
-      "chunks": "all",
-      "enforceSizeThreshold": 50000,
-    },
-  },
-}
-`;
-
-exports[`plugin-split-chunks > 'should set split-by-experience config' 1`] = `
+exports[`plugin-split-chunks > should set split-by-experience config 1`] = `
 {
   "optimization": {
     "splitChunks": {
@@ -145,7 +120,32 @@ exports[`plugin-split-chunks > 'should set split-by-experience config' 1`] = `
 }
 `;
 
-exports[`plugin-split-chunks > 'should set split-by-module config' 1`] = `
+exports[`plugin-split-chunks > should set split-by-experience config correctly when polyfill is off 1`] = `
+{
+  "optimization": {
+    "splitChunks": {
+      "cacheGroups": {
+        "lib-axios": {
+          "name": "lib-axios",
+          "priority": 0,
+          "reuseExistingChunk": true,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
+        },
+        "lib-lodash": {
+          "name": "lib-lodash",
+          "priority": 0,
+          "reuseExistingChunk": true,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
+        },
+      },
+      "chunks": "all",
+      "enforceSizeThreshold": 50000,
+    },
+  },
+}
+`;
+
+exports[`plugin-split-chunks > should set split-by-module config 1`] = `
 {
   "optimization": {
     "splitChunks": {

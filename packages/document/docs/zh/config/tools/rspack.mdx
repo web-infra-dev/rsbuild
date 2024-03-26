@@ -1,4 +1,4 @@
-# rspack
+# tools.rspack
 
 - **类型：** `Rspack.Configuration | Function | undefined`
 - **默认值：** `undefined`
@@ -33,6 +33,8 @@ export default {
 export default {
   tools: {
     rspack: (config) => {
+      config.resolve ||= {};
+      config.resolve.alias ||= {};
       config.resolve.alias['@util'] = 'src/util';
       return config;
     },
@@ -67,20 +69,38 @@ export default {
 };
 ```
 
-### isProd
+### isDev
 
 - **类型：** `boolean`
 
-通过 isProd 参数可以判断当前环境是否为 production。比如：
+用于判断当前是否为开发环境构建，比如：
 
 ```js
 export default {
   tools: {
-    rspack: (config, { isProd }) => {
-      if (isProd) {
-        config.devtool = 'source-map';
+    rspack: (config, { isDev }) => {
+      if (isDev) {
+        config.devtool = 'eval-cheap-source-map';
       }
       return config;
+    },
+  },
+};
+```
+
+### isProd
+
+- **类型：** `boolean`
+
+用于判断当前是否为生产环境构建，比如：
+
+```js
+export default {
+  tools: {
+    rspack: (chain, { isProd }) => {
+      if (isProd) {
+        chain.devtool('source-map');
+      }
     },
   },
 };
@@ -90,7 +110,7 @@ export default {
 
 - **类型：** `'web' | 'node' | 'web-worker' | 'service-worker'`
 
-通过 target 参数可以判断当前构建的目标运行时环境。比如：
+通过 target 参数可以判断构建的目标运行时环境。比如：
 
 ```js
 export default {
@@ -153,7 +173,7 @@ export default {
 export default {
   tools: {
     rspack: (config, { rspack }) => {
-      config.plugins.push(new rspack.BannerPlugin());
+      config.plugins?.push(new rspack.BannerPlugin());
       return config;
     },
   },

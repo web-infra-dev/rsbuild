@@ -1,6 +1,6 @@
 import { posix } from 'node:path';
 import { getDistPath, getFilename } from './fs';
-import { addTrailingSlash, isPlainObject } from './utils';
+import { addTrailingSlash, isPlainObject, removeTailingSlash } from './utils';
 import { castArray, ensureAbsolutePath } from './utils';
 import { debug } from './logger';
 import {
@@ -15,7 +15,7 @@ import type {
   RsbuildEntry,
   RspackConfig,
   RsbuildConfig,
-  ChainedConfig,
+  RsbuildTarget,
   RsbuildContext,
   CreateAsyncHook,
   BundlerChainRule,
@@ -55,9 +55,9 @@ export async function modifyBundlerChain(
   );
 
   if (context.config.tools?.bundlerChain) {
-    castArray(context.config.tools.bundlerChain).forEach((item) => {
+    for (const item of castArray(context.config.tools.bundlerChain)) {
       item(modifiedBundlerChain, utils);
-    });
+    }
   }
 
   debug('modify bundler chain done');
@@ -110,9 +110,10 @@ export const CHAIN_ID = {
   /** Predefined rule groups */
   ONE_OF: {
     SVG: 'svg',
-    SVG_URL: 'svg-url',
+    SVG_URL: 'svg-asset-url',
     SVG_ASSET: 'svg-asset',
-    SVG_INLINE: 'svg-inline',
+    SVG_REACT: 'svg-react',
+    SVG_INLINE: 'svg-asset-inline',
   },
   /** Predefined loaders */
   USE: {
@@ -132,8 +133,12 @@ export const CHAIN_ID = {
     PUG: 'pug',
     /** vue-loader */
     VUE: 'vue',
-    /** @svgr/webpack */
+    /** swc-loader */
+    SWC: 'swc',
+    /** svgr */
     SVGR: 'svgr',
+    /** plugin-image-compress svgo-loader */
+    SVGO: 'svgo',
     /** yaml-loader */
     YAML: 'yaml',
     /** toml-loader */
@@ -142,14 +147,16 @@ export const CHAIN_ID = {
     NODE: 'node',
     /** babel-loader */
     BABEL: 'babel',
-    /** esbuild-loader */
-    ESBUILD: 'esbuild',
-    /** swc-loader */
-    SWC: 'swc',
     /** style-loader */
     STYLE: 'style-loader',
+    /** svelte-loader */
+    SVELTE: 'svelte',
+    /** esbuild-loader */
+    ESBUILD: 'esbuild',
     /** postcss-loader */
     POSTCSS: 'postcss',
+    /** lightningcss-loader */
+    LIGHTNINGCSS: 'lightningcss',
     /** ignore-css-loader */
     IGNORE_CSS: 'ignore-css',
     /** css-modules-typescript-loader */
@@ -160,10 +167,6 @@ export const CHAIN_ID = {
     RESOLVE_URL: 'resolve-url-loader',
     /** plugin-image-compress.loader */
     IMAGE_COMPRESS: 'image-compress',
-    /** plugin-image-compress svgo-loader */
-    SVGO: 'svgo',
-    /** svelte-loader */
-    SVELTE: 'svelte',
   },
   /** Predefined plugins */
   PLUGIN: {
@@ -173,16 +176,12 @@ export const CHAIN_ID = {
     COPY: 'copy',
     /** HtmlWebpackPlugin */
     HTML: 'html',
+    /** ESLintWebpackPlugin */
+    ESLINT: 'eslint',
     /** DefinePlugin */
     DEFINE: 'define',
-    /** IgnorePlugin */
-    IGNORE: 'ignore',
-    /** BannerPlugin */
-    BANNER: 'banner',
     /** ProgressPlugin */
     PROGRESS: 'progress',
-    /** Inspector */
-    INSPECTOR: 'inspector',
     /** AppIconPlugin */
     APP_ICON: 'app-icon',
     /** WebpackManifestPlugin */
@@ -193,8 +192,8 @@ export const CHAIN_ID = {
     INLINE_HTML: 'inline-html',
     /** WebpackBundleAnalyzer */
     BUNDLE_ANALYZER: 'bundle-analyze',
-    /** HtmlTagsPlugin */
-    HTML_TAGS: 'html-tags-plugin',
+    /** ModuleFederationPlugin */
+    MODULE_FEDERATION: 'module-federation',
     /** HtmlBasicPlugin */
     HTML_BASIC: 'html-basic-plugin',
     /** HtmlNoncePlugin */
@@ -213,8 +212,6 @@ export const CHAIN_ID = {
     MINI_CSS_EXTRACT: 'mini-css-extract',
     /** VueLoaderPlugin */
     VUE_LOADER_PLUGIN: 'vue-loader-plugin',
-    /** PreactRefreshPlugin */
-    PREACT_REFRESH: 'preact-refresh',
     /** ReactFastRefreshPlugin */
     REACT_FAST_REFRESH: 'react-fast-refresh',
     /** ProvidePlugin for node polyfill */
@@ -225,14 +222,12 @@ export const CHAIN_ID = {
     ASSETS_RETRY: 'assets-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
-    /** HtmlAsyncChunkPlugin */
-    HTML_ASYNC_CHUNK: 'html-async-chunk',
   },
   /** Predefined minimizers */
   MINIMIZER: {
-    /** TerserWebpackPlugin */
+    /** SwcJsMinimizerRspackPlugin */
     JS: 'js',
-    /** CssMinimizerWebpackPlugin */
+    /** SwcCssMinimizerRspackPlugin */
     CSS: 'css',
     /** ESBuildPlugin */
     ESBUILD: 'js-css',
@@ -273,58 +268,81 @@ export function applyScriptCondition({
   // Otherwise, it will lead to compilation errors and incorrect output.
   rule.include.add(TS_AND_JSX_REGEX);
 
-  [...includes, ...(config.source.include || [])].forEach((condition) => {
+  for (const condition of [...includes, ...(config.source.include || [])]) {
     rule.include.add(condition);
-  });
+  }
 
-  [...excludes, ...(config.source.exclude || [])].forEach((condition) => {
+  for (const condition of [...excludes, ...(config.source.exclude || [])]) {
     rule.exclude.add(condition);
-  });
+  }
+}
+
+export const formatPublicPath = (publicPath: string, withSlash = true) => {
+  // 'auto' is a magic value in Rspack and we should not add trailing slash
+  if (publicPath === 'auto') {
+    return publicPath;
+  }
+
+  return withSlash
+    ? addTrailingSlash(publicPath)
+    : removeTailingSlash(publicPath);
+};
+
+export const getPublicPathFromChain = (
+  chain: BundlerChain,
+  withSlash = true,
+) => {
+  const publicPath = chain.output.get('publicPath');
+
+  if (typeof publicPath === 'string') {
+    return formatPublicPath(publicPath, withSlash);
+  }
+
+  return formatPublicPath(DEFAULT_ASSET_PREFIX, withSlash);
+};
+
+function getPublicPath({
+  config,
+  isProd,
+  context,
+}: {
+  config: NormalizedConfig;
+  isProd: boolean;
+  context: RsbuildContext;
+}) {
+  const { dev, output } = config;
+
+  let publicPath = DEFAULT_ASSET_PREFIX;
+
+  if (isProd) {
+    if (typeof output.assetPrefix === 'string') {
+      publicPath = output.assetPrefix;
+    }
+  } else if (typeof dev.assetPrefix === 'string') {
+    publicPath = dev.assetPrefix;
+  } else if (dev.assetPrefix === true) {
+    const protocol = context.devServer?.https ? 'https' : 'http';
+    const hostname = context.devServer?.hostname || DEFAULT_DEV_HOST;
+    const port = context.devServer?.port || DEFAULT_PORT;
+    if (hostname === DEFAULT_DEV_HOST) {
+      const localHostname = 'localhost';
+      // If user not specify the hostname, it would use 0.0.0.0
+      // The http://0.0.0.0:port can't visit in windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
+      // Relative to docs:
+      // - https://github.com/quarkusio/quarkus/issues/12246
+      publicPath = `${protocol}://${localHostname}:${port}/`;
+    } else {
+      publicPath = `${protocol}://${hostname}:${port}/`;
+    }
+  }
+
+  return formatPublicPath(publicPath);
 }
 
 export function applyOutputPlugin(api: RsbuildPluginAPI) {
-  function getPublicPath({
-    config,
-    isProd,
-    context,
-  }: {
-    config: NormalizedConfig;
-    isProd: boolean;
-    context: RsbuildContext;
-  }) {
-    const { dev, output } = config;
-
-    let publicPath = DEFAULT_ASSET_PREFIX;
-
-    if (isProd) {
-      if (output.assetPrefix) {
-        publicPath = output.assetPrefix;
-      }
-    } else if (typeof dev.assetPrefix === 'string') {
-      publicPath = dev.assetPrefix;
-    } else if (dev.assetPrefix === true) {
-      const protocol = context.devServer?.https ? 'https' : 'http';
-      const hostname = context.devServer?.hostname || DEFAULT_DEV_HOST;
-      const port = context.devServer?.port || DEFAULT_PORT;
-      if (hostname === DEFAULT_DEV_HOST) {
-        const localHostname = 'localhost';
-        // If user not specify the hostname, it would use 0.0.0.0
-        // The http://0.0.0.0:port can't visit in windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
-        // Relative to docs:
-        // - https://github.com/quarkusio/quarkus/issues/12246
-        publicPath = `${protocol}://${localHostname}:${port}/`;
-      } else {
-        publicPath = `${protocol}://${hostname}:${port}/`;
-      }
-    }
-
-    return addTrailingSlash(publicPath);
-  }
-
   api.modifyBundlerChain(
     async (chain, { isProd, isServer, isServiceWorker }) => {
       const config = api.getNormalizedConfig();
-      const jsPath = getDistPath(config, 'js');
 
       const publicPath = getPublicPath({
         config,
@@ -333,12 +351,14 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
       });
 
       // js output
+      const jsPath = getDistPath(config, 'js');
+      const jsAsyncPath = getDistPath(config, 'jsAsync');
       const jsFilename = getFilename(config, 'js', isProd);
 
       chain.output
         .path(api.context.distPath)
         .filename(posix.join(jsPath, jsFilename))
-        .chunkFilename(posix.join(jsPath, `async/${jsFilename}`))
+        .chunkFilename(posix.join(jsAsyncPath, jsFilename))
         .publicPath(publicPath)
         // disable pathinfo to improve compile performance
         // the path info is useless in most cases
@@ -350,11 +370,11 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
 
       if (isServer) {
         const serverPath = getDistPath(config, 'server');
-        const filename = posix.join(serverPath, '[name].js');
 
         chain.output
-          .filename(filename)
-          .chunkFilename(filename)
+          .path(posix.join(api.context.distPath, serverPath))
+          .filename('[name].js')
+          .chunkFilename('[name].js')
           .libraryTarget('commonjs2');
       }
 
@@ -369,18 +389,23 @@ export function applyOutputPlugin(api: RsbuildPluginAPI) {
 }
 
 export function applyResolvePlugin(api: RsbuildPluginAPI) {
-  api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-    const config = api.getNormalizedConfig();
+  api.modifyBundlerChain({
+    order: 'pre',
+    handler: (chain, { target, CHAIN_ID }) => {
+      const config = api.getNormalizedConfig();
 
-    applyExtensions({ chain });
+      applyExtensions({ chain });
 
-    applyAlias({
-      chain,
-      config,
-      rootPath: api.context.rootPath,
-    });
+      applyAlias({
+        chain,
+        target,
+        config,
+        rootPath: api.context.rootPath,
+      });
 
-    applyFullySpecified({ chain, config, CHAIN_ID });
+      // in some cases (modern.js), get error when fullySpecified rule after js rule
+      applyFullySpecified({ chain, config, CHAIN_ID });
+    },
   });
 }
 
@@ -398,12 +423,6 @@ function applyFullySpecified({
     .rule(CHAIN_ID.RULE.MJS)
     .test(/\.m?js/)
     .resolve.set('fullySpecified', false);
-
-  if (chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI)) {
-    chain.module
-      .rule(CHAIN_ID.RULE.JS_DATA_URI)
-      .resolve.set('fullySpecified', false);
-  }
 }
 
 function applyExtensions({ chain }: { chain: BundlerChain }) {
@@ -422,16 +441,16 @@ function applyExtensions({ chain }: { chain: BundlerChain }) {
 
 function applyAlias({
   chain,
+  target,
   config,
   rootPath,
 }: {
   chain: BundlerChain;
+  target: RsbuildTarget;
   config: NormalizedConfig;
   rootPath: string;
 }) {
-  const { alias } = config.source as {
-    alias?: ChainedConfig<Record<string, string>>;
-  };
+  const { alias } = config.source;
 
   if (!alias) {
     return;
@@ -440,6 +459,7 @@ function applyAlias({
   const mergedAlias = mergeChainedOptions({
     defaults: {},
     options: alias,
+    utils: { target },
   });
 
   /**
@@ -447,7 +467,7 @@ function applyAlias({
    * - Relative paths need to be turned into absolute paths.
    * - Absolute paths or a package name are not processed.
    */
-  Object.keys(mergedAlias).forEach((name) => {
+  for (const name of Object.keys(mergedAlias)) {
     const values = castArray(mergedAlias[name]);
     const formattedValues = values.map((value) => {
       if (typeof value === 'string' && value.startsWith('.')) {
@@ -458,9 +478,11 @@ function applyAlias({
 
     chain.resolve.alias.set(
       name,
-      formattedValues.length === 1 ? formattedValues[0] : formattedValues,
+      (formattedValues.length === 1 ? formattedValues[0] : formattedValues) as
+        | string
+        | string[],
     );
-  });
+  }
 }
 
 export function chainToConfig(chain: BundlerChain): RspackConfig {
@@ -477,14 +499,14 @@ export function chainToConfig(chain: BundlerChain): RspackConfig {
    * webpack-chain can not handle entry description object correctly,
    * so we need to format the entry object and correct the entry description object.
    */
-  Object.entries(entry).forEach(([entryName, entryValue]) => {
+  for (const [entryName, entryValue] of Object.entries(entry)) {
     const entryImport: string[] = [];
     let entryDescription: EntryDescription | null = null;
 
-    castArray(entryValue).forEach((item) => {
+    for (const item of castArray(entryValue)) {
       if (typeof item === 'string') {
         entryImport.push(item);
-        return;
+        continue;
       }
 
       if (item.import) {
@@ -497,7 +519,7 @@ export function chainToConfig(chain: BundlerChain): RspackConfig {
       } else {
         entryDescription = item;
       }
-    });
+    }
 
     formattedEntry[entryName] = entryDescription
       ? {
@@ -505,7 +527,7 @@ export function chainToConfig(chain: BundlerChain): RspackConfig {
           import: entryImport,
         }
       : entryImport;
-  });
+  }
 
   config.entry = formattedEntry;
 
@@ -521,12 +543,12 @@ export const modifySwcLoaderOptions = ({
 }) => {
   const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI];
 
-  ruleIds.forEach((ruleId) => {
+  for (const ruleId of ruleIds) {
     if (chain.module.rules.has(ruleId)) {
       const rule = chain.module.rule(ruleId);
       if (rule.uses.has(CHAIN_ID.USE.SWC)) {
         rule.use(CHAIN_ID.USE.SWC).tap(modifier);
       }
     }
-  });
+  }
 };

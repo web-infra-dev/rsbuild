@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 ```
 
-In the development environment, the above code will be compiled as:
+In the development build, the above code will be compiled as:
 
 ```js
 if (true) {
@@ -24,7 +24,7 @@ if (true) {
 }
 ```
 
-In the production environment, the above code will be compiled as:
+In the production build, the above code will be compiled as:
 
 ```js
 if (false) {
@@ -62,13 +62,13 @@ Then we can access the image URL in the client code:
 const Image = <img src={`${process.env.ASSET_PREFIX}/static/icon.png`} />;
 ```
 
-In the development environment, the above code will be compiled as:
+In the development build, the above code will be compiled as:
 
 ```jsx
 const Image = <img src={`/static/icon.png`} />;
 ```
 
-In the production environment, the above code will be compiled as:
+In the production build, the above code will be compiled as:
 
 ```jsx
 const Image = <img src={`https://example.com/static/icon.png`} />;
@@ -318,7 +318,7 @@ const App = () => {
 };
 ```
 
-Specifying the environment variable `REGION=sg` and then executing build will eliminate any dead code.
+Specifying the environment variable `REGION=sg` and then running build will eliminate any dead code.
 
 ```js
 const App = () => {

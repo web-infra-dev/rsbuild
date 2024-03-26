@@ -1,12 +1,22 @@
 # Bundle Size Optimization
 
-Bundle size optimization is an important part in production environment because it directly affects the user experience of online users. In this document, we will introduce some common bundle size optimization methods in Rsbuild.
+Bundle size optimization is an important part in production build because it directly affects the user experience of online users. In this document, we will introduce some common bundle size optimization methods in Rsbuild.
 
 ## Reduce duplicate dependencies
 
-In real projects, there will be some third-party dependencies installed with multiple versions. Duplicate dependencies can lead to larger bundles and slower builds.
+It is common for web projects to bundle multiple versions of third-party dependencies. Duplicate dependencies can lead to increased bundle size and slower build speed.
 
-We can detect or eliminate duplicate dependencies with some community tools.
+### Detect duplicate dependencies
+
+You can use [Rsdoctor](https://rsdoctor.dev) to detect whether there are duplicate dependencies in the project. Rsdoctor will analyze during the build process, find any duplicate bundled dependencies and display them visually:
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/lognuvj/rsdoctor/docs/usage/bundle/bundle-alerts.png)
+
+For more details, see [Rsdoctor - Duplicate Dependency Problem](https://rsdoctor.dev/blog/topic/duplicate-pkg-problem).
+
+### Eliminate duplicate dependencies
+
+We can eliminate duplicate dependencies with the package manager.
 
 - If you are using `pnpm >= 7.26.0`, you can use the [pnpm dedupe](https://pnpm.io/cli/dedupe) command to upgrade and eliminate duplicate dependencies.
 
@@ -94,7 +104,7 @@ See details in [plugin-image-compress](/plugins/list/plugin-image-compress).
 
 A great chunk splitting strategy is very important to improve the loading performance of the application. It can make full use of the browser's caching mechanism to reduce the number of requests and improve the loading speed of the application.
 
-A variety of [chunk splitting strategies](/guide/optimization/split-chunk) are built into Rsbuild, which can meet the needs of most applications. You can also customize the chunk splitting config according to your own business scenarios.
+Several [chunk splitting strategies](/guide/optimization/split-chunk) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
 
 For example, split the `axios` library under node_modules into `axios.js`:
 

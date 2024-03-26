@@ -2,16 +2,16 @@ import path, { isAbsolute } from 'node:path';
 import {
   fse,
   color,
+  isNil,
   isURL,
   castArray,
-  getMinify,
+  getHtmlMinifyOptions,
   getDistPath,
   isFileExists,
   isPlainObject,
   isHtmlDisabled,
-  removeTailSlash,
   mergeChainedOptions,
-  isNil,
+  getPublicPathFromChain,
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
 import type {
@@ -19,10 +19,8 @@ import type {
   RsbuildPluginAPI,
   NormalizedConfig,
   HTMLPluginOptions,
-  HtmlInjectTagDescriptor,
 } from '@rsbuild/shared';
-import type { HtmlTagsPluginOptions } from '../rspack/HtmlTagsPlugin';
-import type { HtmlInfo } from '../rspack/HtmlBasicPlugin';
+import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
 import type { RsbuildPlugin } from '../types';
 
 export function getTitle(entryName: string, config: NormalizedConfig) {
@@ -173,59 +171,21 @@ function getChunks(
   return [entryName];
 }
 
-export const applyInjectTags = (api: RsbuildPluginAPI) => {
-  api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-    const config = api.getNormalizedConfig();
+const getTagConfig = (api: RsbuildPluginAPI): TagConfig | undefined => {
+  const config = api.getNormalizedConfig();
+  const tags = castArray(config.html.tags).filter(Boolean);
 
-    const tags = castArray(config.html.tags).filter(Boolean);
-    const tagsByEntries = config.html.tagsByEntries || {};
+  // skip if options is empty.
+  if (!tags.length) {
+    return undefined;
+  }
 
-    Object.keys(tagsByEntries).forEach((key) => {
-      tagsByEntries[key] = castArray(tagsByEntries[key]).filter(Boolean);
-    });
-
-    const shouldByEntries = Object.values(tagsByEntries).some(
-      (entry) => Array.isArray(entry) && entry.length > 0,
-    );
-
-    // skip if options is empty.
-    if (!tags.length && !shouldByEntries) {
-      return;
-    }
-
-    const { HtmlTagsPlugin } = await import('../rspack/HtmlTagsPlugin');
-
-    // create shared options used for entry without specified options.
-    const sharedOptions: HtmlTagsPluginOptions = {
-      append: true,
-      hash: false,
-      publicPath: true,
-      tags,
-    };
-
-    // apply only one webpack plugin if `html.tagsByEntries` is empty.
-    if (tags.length && !shouldByEntries) {
-      chain
-        .plugin(CHAIN_ID.PLUGIN.HTML_TAGS)
-        .use(HtmlTagsPlugin, [sharedOptions]);
-      return;
-    }
-
-    // apply webpack plugin for each entries.
-    for (const [entry, filename] of Object.entries(api.getHTMLPaths())) {
-      const opts = { ...sharedOptions, includes: [filename] };
-
-      if (entry in tagsByEntries) {
-        opts.tags = (
-          tagsByEntries as Record<string, HtmlInjectTagDescriptor[]>
-        )[entry];
-      }
-
-      chain
-        .plugin(`${CHAIN_ID.PLUGIN.HTML_TAGS}#${entry}`)
-        .use(HtmlTagsPlugin, [opts]);
-    }
-  });
+  return {
+    append: true,
+    hash: false,
+    publicPath: true,
+    tags,
+  };
 };
 
 export const pluginHtml = (): RsbuildPlugin => ({
@@ -241,16 +201,14 @@ export const pluginHtml = (): RsbuildPlugin => ({
           return;
         }
 
-        const minify = await getMinify(isProd, config);
-        const assetPrefix = removeTailSlash(
-          chain.output.get('publicPath') || '',
-        );
+        const minify = await getHtmlMinifyOptions(isProd, config);
+        const assetPrefix = getPublicPathFromChain(chain, false);
         const entries = chain.entryPoints.entries() || {};
         const entryNames = Object.keys(entries);
         const htmlPaths = api.getHTMLPaths();
         const htmlInfoMap: Record<string, HtmlInfo> = {};
 
-        await Promise.all(
+        const finalOptions = await Promise.all(
           entryNames.map(async (entryName) => {
             const entryValue = entries[entryName].values();
             const chunks = getChunks(
@@ -292,6 +250,11 @@ export const pluginHtml = (): RsbuildPlugin => ({
               htmlInfo.templateContent = templateContent;
             }
 
+            const tagConfig = getTagConfig(api);
+            if (tagConfig) {
+              htmlInfo.tagConfig = tagConfig;
+            }
+
             pluginOptions.title = getTitle(entryName, config);
 
             const favicon = getFavicon(entryName, config);
@@ -306,24 +269,32 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
             const finalOptions = mergeChainedOptions({
               defaults: pluginOptions,
-              options: config.tools.htmlPlugin,
+              options:
+                typeof config.tools.htmlPlugin === 'boolean'
+                  ? {}
+                  : config.tools.htmlPlugin,
               utils: {
                 entryName,
                 entryValue,
               },
             });
 
-            chain
-              .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
-              .use(HtmlPlugin, [finalOptions]);
+            return finalOptions;
           }),
         );
+
+        // keep html entry plugin registration order stable based on entryNames
+        entryNames.forEach((entryName, index) => {
+          chain
+            .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
+            .use(HtmlPlugin, [finalOptions[index]]);
+        });
 
         const { HtmlBasicPlugin } = await import('../rspack/HtmlBasicPlugin');
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
-          .use(HtmlBasicPlugin, [{ info: htmlInfoMap }]);
+          .use(HtmlBasicPlugin, [htmlInfoMap]);
 
         if (config.security) {
           const { nonce } = config.security;
@@ -376,7 +347,5 @@ export const pluginHtml = (): RsbuildPlugin => ({
         }
       },
     );
-
-    applyInjectTags(api);
   },
 });

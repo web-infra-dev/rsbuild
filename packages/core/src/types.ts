@@ -6,7 +6,7 @@ import type {
   NormalizedConfig,
   RsbuildPluginAPI,
 } from '@rsbuild/shared';
-import type { Hooks } from './provider/core/initHooks';
+import type { Hooks } from './initHooks';
 
 export type { RsbuildPlugin, RsbuildPlugins, RsbuildPluginAPI };
 
@@ -31,14 +31,18 @@ export type {
   HtmlConfig,
   ToolsConfig,
   SourceConfig,
+  ServerConfig,
   OutputConfig,
   SecurityConfig,
   PerformanceConfig,
+  ModuleFederationConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
   NormalizedToolsConfig,
   NormalizedSourceConfig,
+  NormalizedServerConfig,
   NormalizedOutputConfig,
   NormalizedSecurityConfig,
   NormalizedPerformanceConfig,
+  NormalizedModuleFederationConfig,
 } from '@rsbuild/shared';

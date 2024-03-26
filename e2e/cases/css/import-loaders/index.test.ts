@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { build } from '@e2e/helper';
-import { webpackOnlyTest } from '../../../scripts/helper';
+import { webpackOnlyTest } from '@e2e/helper';
 
 webpackOnlyTest(
   'should compile CSS modules which depends on importLoaders correctly',

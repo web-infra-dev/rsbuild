@@ -1,0 +1,6 @@
+{
+  "name": "@rsdoctor/rspack-plugin",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.cjs"
+}

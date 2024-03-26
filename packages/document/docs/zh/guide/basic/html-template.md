@@ -218,7 +218,7 @@ Rsbuild 通过 Pug 插件来支持 Pug 模板引擎，请阅读 [Pug 插件文�
 ```ts
 export default {
   output: {
-    assetPrefix: '//example.com/'
+    assetPrefix: 'https://example.com/'
   },
   html: {
     tags: [
@@ -242,16 +242,16 @@ export default {
 ```html
 <html>
   <head>
-    <script src="//example.com/b.js"></script>
-    <link href="//example.com/style.css" rel="stylesheet" />
+    <script src="https://example.com/b.js"></script>
+    <link href="https://example.com/style.css" rel="stylesheet" />
     <link href="page.css" rel="stylesheet" />
     <!-- some other headTags... -->
-    <script src="//example.com/a.js"></script>
+    <script src="https://example.com/a.js"></script>
     <meta name="referrer" content="origin" />
   </head>
   <body>
     <!-- some other bodyTags... -->
-    <script src="//example.com/c.js"></script>
+    <script src="https://example.com/c.js"></script>
   </body>
 </html>
 ```
@@ -282,12 +282,32 @@ export default {
 <html>
   <head>
     <!-- some other headTags... -->
-    <script src="//example.com/c.js"></script>
-    <script src="//example.com/d.js"></script>
+    <script src="https://example.com/c.js"></script>
+    <script src="https://example.com/d.js"></script>
   </head>
   <body>
     <!-- some other bodyTags... -->
-    <script src="//example.com/a.js"></script>
+    <script src="https://example.com/a.js"></script>
   </body>
 </html>
+```
+
+## HTML 插件
+
+Rsbuild 内部基于 [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) 实现 HTML 相关的能力。它是 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) 的一个 fork 版本，具备完全一致的功能和选项。
+
+你可以通过 [tools.htmlPlugin](/config/tools/html-plugin) 来修改 html-rspack-plugin 的选项，也可以禁用内置的 html-rspack-plugin 插件。
+
+比如：
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    htmlPlugin(config, { entryName }) {
+      if (process.env.NODE_ENV === 'production') {
+        config.filename = `${entryName}.[contenthash:8].html`;
+      }
+    },
+  },
+};
 ```

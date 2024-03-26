@@ -1,3 +1,4 @@
+import path from 'node:path';
 import type {
   ToolsSassConfig,
   ToolsLessConfig,
@@ -58,6 +59,7 @@ export const getSassLoaderOptions = (
 export const getLessLoaderOptions = (
   rsbuildLessConfig: ToolsLessConfig | undefined,
   isUseCssSourceMap: boolean,
+  rootPath: string,
 ) => {
   const excludes: (RegExp | string)[] = [];
 
@@ -68,6 +70,9 @@ export const getLessLoaderOptions = (
   const defaultLessLoaderOptions: LessLoaderOptions = {
     lessOptions: {
       javascriptEnabled: true,
+      // let less resolve from node_modules in the current root directory,
+      // Avoid resolving from wrong node_modules.
+      paths: [path.join(rootPath, 'node_modules')],
     },
     sourceMap: isUseCssSourceMap,
     implementation: getSharedPkgCompiledPath('less'),

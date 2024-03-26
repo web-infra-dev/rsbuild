@@ -3,13 +3,13 @@
 exports[`plugin-output > should allow to custom server directory with distPath.server 1`] = `
 {
   "output": {
-    "chunkFilename": "server/[name].js",
+    "chunkFilename": "[name].js",
     "cssChunkFilename": "static/css/async/[name].css",
     "cssFilename": "static/css/[name].css",
-    "filename": "server/[name].js",
+    "filename": "[name].js",
     "hashFunction": "xxhash64",
     "libraryTarget": "commonjs2",
-    "path": "<ROOT>/packages/core/tests/dist",
+    "path": "<ROOT>/packages/core/tests/dist/server",
     "pathinfo": false,
     "publicPath": "/",
   },

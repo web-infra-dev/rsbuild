@@ -23,4 +23,20 @@ describe('plugin-node-polyfill', () => {
 
     expect(configs[0]).toMatchSnapshot();
   });
+
+  it('should allow to disable globals', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [
+        pluginNodePolyfill({
+          globals: {
+            Buffer: false,
+            process: false,
+          },
+        }),
+      ],
+    });
+    const configs = await rsbuild.initConfigs();
+
+    expect(configs[0]).toMatchSnapshot();
+  });
 });

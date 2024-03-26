@@ -42,8 +42,8 @@ export const pluginImageCompress: IPluginImageCompress = (
   setup(api) {
     const opts = normalizeOptions(castOptions(args));
 
-    api.modifyBundlerChain((chain, { isProd }) => {
-      if (!isProd) {
+    api.modifyBundlerChain((chain, { isDev }) => {
+      if (isDev) {
         return;
       }
 

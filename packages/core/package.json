@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "0.3.6",
+  "version": "0.5.3",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.dev",
   "bugs": {
@@ -22,9 +22,9 @@
       "types": "./dist/server/index.d.ts",
       "default": "./dist/server/index.js"
     },
-    "./client/*": {
-      "types": "./dist/client/*.d.ts",
-      "default": "./dist/client/*.js"
+    "./client/hmr": {
+      "types": "./dist/client/hmr/index.d.ts",
+      "default": "./dist/client/hmr.mjs"
     },
     "./plugins/*": {
       "types": "./dist/plugins/*.d.ts",
@@ -57,19 +57,19 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/core": "0.5.0",
+    "@rspack/core": "0.5.9",
     "@swc/helpers": "0.5.3",
-    "core-js": "~3.32.2",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.5.7",
-    "postcss": "^8.4.33"
+    "core-js": "~3.36.0",
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
+    "postcss": "^8.4.38"
   },
   "devDependencies": {
     "@types/node": "16.x",
-    "typescript": "^5.3.0",
-    "webpack": "^5.89.0"
+    "typescript": "^5.4.2",
+    "webpack": "^5.91.0"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.0.0"
   },
   "publishConfig": {
     "access": "public",

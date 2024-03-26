@@ -10,9 +10,10 @@ Static assets are files that are part of a web application and do not change, ev
 
 The following are the formats supported by Rsbuild by default:
 
-- **Image**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tiff, svg.
-- **Fonts**: woff, woff2, eot, ttf, otf, ttc.
-- **Media**: mp4, webm, ogg, mp3, wav, flac, aac, mov.
+- **image**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tif, tiff, jfif, pjpeg, pjp.
+- **fonts**: woff, woff2, eot, ttf, otf, ttc.
+- **audio**: mp3, wav, flac, aac, m4a, opus.
+- **video**: mp4, webm, ogg, mov.
 
 If you need to import assets in other formats, please refer to [Extend Asset Types](#extend-asset-types).
 
@@ -90,13 +91,54 @@ The URL returned after importing a asset will automatically include the path pre
 - In development, using [dev.assetPrefix](/config/dev/asset-prefix) to set the path prefix.
 - In production, using [output.assetPrefix](/config/output/asset-prefix) to set the path prefix.
 
-For example, you can set `output.assetPrefix` to `https://modern.com`:
+For example, you can set `output.assetPrefix` to `https://example.com`:
 
 ```js
 import logo from './static/logo.png';
 
-console.log(logo); // "https://modern.com/static/logo.6c12aba3.png"
+console.log(logo); // "https://example.com/static/logo.6c12aba3.png"
 ```
+
+## Public Folder
+
+The public folder at the project root can be used to place some static assets. These assets will not be bundled by Rsbuild.
+
+- When you start the dev server, these assets will be served under the root path, `/`.
+- When you perform a production build, these assets will be copied to the dist directory.
+
+For example, you can place files such as `robots.txt`, `manifest.json`, or `favicon.ico` in the public folder.
+
+### Reference Method
+
+In the HTML template, you can refer to the files in the public folder as follows. The `assetPrefix` is the URL prefix of the static assets.
+
+```html title="index.html"
+<link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
+```
+
+In JavaScript code, you can splice the URL via `process.env.ASSET_PREFIX`:
+
+```js title="index.js"
+const faviconURL = `${process.env.ASSET_PREFIX}/favicon.ico`;
+```
+
+### Custom Behavior
+
+Rsbuild provides the [server.publicDir](/config/server/public-dir) option which can be used to customize the name and behavior of the public folder, as well as to disable it.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    publicDir: false,
+  },
+};
+```
+
+### Notes
+
+- Avoid importing files from the public folder into your source code, instead reference them by URL.
+- When referencing resources in the public folder via URL, please use absolute paths instead of relative paths.
+- During the production build, the files in public folder will be copied to the output folder (default is `dist`). Please be careful to avoid name conflicts with the output files. When files in the `public` folder have the same name as outputs, the outputs have higher priority and will overwrite the files with the same name in the `public` folder. This feature can be disabled by setting `server.publicDir.copyOnBuild` to false.
 
 ## Type Declaration
 

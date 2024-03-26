@@ -6,6 +6,7 @@ import {
   generateScriptTag,
   getPublicPathFromCompiler,
   type Rspack,
+  type ScriptLoading,
 } from '@rsbuild/shared';
 import WebpackSources from '@rsbuild/shared/webpack-sources';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -60,28 +61,32 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
 
   options: Required<AutoSetRootFontSizeOptions>;
 
-  webpackEntries: Array<string>;
+  entries: Array<string>;
 
   scriptPath: string;
 
   HtmlPlugin: typeof HtmlWebpackPlugin;
+
+  scriptLoading: ScriptLoading;
 
   constructor(
     options: PluginRemOptions,
     entries: Array<string>,
     HtmlPlugin: typeof HtmlWebpackPlugin,
     distDir: string,
+    scriptLoading: ScriptLoading,
   ) {
     this.options = { ...DEFAULT_OPTIONS, ...(options || {}) };
     this.scriptPath = '';
     this.distDir = distDir;
-    this.webpackEntries = entries;
+    this.entries = entries;
     this.HtmlPlugin = HtmlPlugin;
+    this.scriptLoading = scriptLoading;
   }
 
   async getScriptPath() {
     if (!this.scriptPath) {
-      this.scriptPath = path.join(
+      this.scriptPath = path.posix.join(
         this.distDir,
         `convert-rem.${RSBUILD_VERSION}.js`,
       );
@@ -124,12 +129,11 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
     }
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
-      // @ts-expect-error compilation type mismatch
-      this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapPromise(
+      this.HtmlPlugin.getHooks(compilation).alterAssetTags.tapPromise(
         this.name,
         async (data) => {
           const isExclude = this.options.excludeEntries.find((item: string) => {
-            if (!this.webpackEntries.includes(item)) {
+            if (!this.entries.includes(item)) {
               logger.error(`convertToRem: can't find the entryName: ${item}`);
               return false;
             }
@@ -148,19 +152,29 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
           const scriptTag = generateScriptTag();
 
           if (this.options.inlineRuntime) {
-            data.headTags.unshift({
+            data.assetTags.scripts.unshift({
               ...scriptTag,
               innerHTML: await getRuntimeCode(),
             });
           } else {
             const publicPath = getPublicPathFromCompiler(compiler);
             const url = withPublicPath(await this.getScriptPath(), publicPath);
-            data.headTags.unshift({
+
+            const attributes: Record<string, string> = {
+              ...scriptTag.attributes,
+              src: url,
+            };
+
+            if (this.scriptLoading === 'defer') {
+              attributes.defer = '';
+            }
+            if (this.scriptLoading === 'module') {
+              attributes.type = 'module';
+            }
+
+            data.assetTags.scripts.unshift({
               ...scriptTag,
-              attributes: {
-                ...scriptTag.attributes,
-                src: url,
-              },
+              attributes,
             });
           }
 

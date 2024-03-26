@@ -45,6 +45,24 @@ describe('plugin-output', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
+  it('should allow to custom async js path via distPath.jsAsync', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginOutput()],
+      rsbuildConfig: {
+        output: {
+          distPath: {
+            jsAsync: 'custom/js',
+          },
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(bundlerConfigs[0].output?.chunkFilename).toEqual(
+      'custom/js/[name].js',
+    );
+  });
+
   it('should allow to use filename.js to modify filename', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
@@ -108,5 +126,19 @@ describe('plugin-output', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
+  });
+
+  it('should allow dev.assetPrefix to be `auto`', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginOutput()],
+      rsbuildConfig: {
+        dev: {
+          assetPrefix: 'auto',
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(bundlerConfigs[0]?.output?.publicPath).toEqual('auto');
   });
 });

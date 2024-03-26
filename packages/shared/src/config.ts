@@ -1,150 +1,15 @@
-import {
-  DEFAULT_PORT,
-  ROOT_DIST_DIR,
-  HTML_DIST_DIR,
-  JS_DIST_DIR,
-  CSS_DIST_DIR,
-  SVG_DIST_DIR,
-  FONT_DIST_DIR,
-  WASM_DIST_DIR,
-  IMAGE_DIST_DIR,
-  MEDIA_DIST_DIR,
-  SERVER_DIST_DIR,
-  SERVER_WORKER_DIST_DIR,
-  DEFAULT_MOUNT_ID,
-  DEFAULT_DATA_URL_SIZE,
-  DEFAULT_ASSET_PREFIX,
-} from './constants';
 import type {
-  BundlerChainRule,
   RsbuildConfig,
-  InspectConfigOptions,
-  NormalizedServerConfig,
-  NormalizedDevConfig,
-  NormalizedHtmlConfig,
-  NormalizedOutputConfig,
-  NormalizedSourceConfig,
-  NormalizedSecurityConfig,
-  NormalizedPerformanceConfig,
-  NormalizedToolsConfig,
   NormalizedConfig,
+  InspectConfigOptions,
+  MinifyJSOptions,
 } from './types';
 import { logger } from './logger';
 import { join } from 'node:path';
-import type { minify } from 'terser';
 import fse from '../compiled/fs-extra';
-import { pick, color, upperFirst } from './utils';
-
-import _ from 'lodash';
-import { DEFAULT_DEV_HOST } from './constants';
+import { pick, color, upperFirst, deepmerge } from './utils';
 import { getTerserMinifyOptions } from './minimize';
-
-export const getDefaultDevConfig = (): NormalizedDevConfig => ({
-  hmr: true,
-  liveReload: true,
-  assetPrefix: DEFAULT_ASSET_PREFIX,
-  startUrl: false,
-});
-
-export const getDefaultServerConfig = (): NormalizedServerConfig => ({
-  port: DEFAULT_PORT,
-  host: DEFAULT_DEV_HOST,
-  htmlFallback: 'index',
-  compress: true,
-  printUrls: true,
-  strictPort: false,
-  publicDir: {
-    name: 'public',
-    copyOnBuild: true,
-  },
-});
-
-export const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
-  alias: {},
-  define: {},
-  aliasStrategy: 'prefer-tsconfig',
-  preEntry: [],
-});
-
-export const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
-  meta: {
-    charset: { charset: 'UTF-8' },
-    viewport: 'width=device-width, initial-scale=1.0',
-  },
-  title: 'Rsbuild App',
-  inject: 'head',
-  mountId: DEFAULT_MOUNT_ID,
-  crossorigin: false,
-  outputStructure: 'flat',
-  scriptLoading: 'defer',
-});
-
-export const getDefaultSecurityConfig = (): NormalizedSecurityConfig => ({
-  nonce: '',
-});
-
-export const getDefaultToolsConfig = (): NormalizedToolsConfig => ({
-  cssExtract: {
-    loaderOptions: {},
-    pluginOptions: {},
-  },
-});
-
-export const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
-  profile: false,
-  buildCache: true,
-  printFileSize: true,
-  removeConsole: false,
-  transformLodash: true,
-  removeMomentLocale: false,
-  chunkSplit: {
-    strategy: 'split-by-experience',
-  },
-});
-
-export const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
-  targets: ['web'],
-  distPath: {
-    root: ROOT_DIST_DIR,
-    js: JS_DIST_DIR,
-    css: CSS_DIST_DIR,
-    svg: SVG_DIST_DIR,
-    font: FONT_DIST_DIR,
-    html: HTML_DIST_DIR,
-    wasm: WASM_DIST_DIR,
-    image: IMAGE_DIST_DIR,
-    media: MEDIA_DIST_DIR,
-    server: SERVER_DIST_DIR,
-    worker: SERVER_WORKER_DIST_DIR,
-  },
-  assetPrefix: DEFAULT_ASSET_PREFIX,
-  filename: {},
-  charset: 'ascii',
-  polyfill: 'usage',
-  dataUriLimit: {
-    svg: DEFAULT_DATA_URL_SIZE,
-    font: DEFAULT_DATA_URL_SIZE,
-    image: DEFAULT_DATA_URL_SIZE,
-    media: DEFAULT_DATA_URL_SIZE,
-  },
-  legalComments: 'linked',
-  cleanDistPath: true,
-  injectStyles: false,
-  disableMinimize: false,
-  sourceMap: {
-    js: undefined,
-    css: false,
-  },
-  disableFilenameHash: false,
-  enableLatestDecorators: false,
-  enableCssModuleTSDeclaration: false,
-  inlineScripts: false,
-  inlineStyles: false,
-  cssModules: {
-    auto: true,
-    exportLocalsConvention: 'camelCase',
-  },
-});
+import { parseMinifyOptions } from './minimize';
 
 export async function outputInspectConfigFiles({
   rsbuildConfig,
@@ -207,37 +72,21 @@ export async function outputInspectConfigFiles({
   );
 }
 
-/**
- * lodash set type declare.
- * eg. a.b.c; a[0].b[1]
- */
-export type GetTypeByPath<
-  T extends string,
-  C extends Record<string, any>,
-> = T extends `${infer K}[${infer P}]${infer S}`
-  ? GetTypeByPath<`${K}.${P}${S}`, C>
-  : T extends `${infer K}.${infer P}`
-  ? GetTypeByPath<P, K extends '' ? C : NonNullable<C[K]>>
-  : C[T];
-
-export const setConfig = <T extends Record<string, any>, P extends string>(
-  config: T,
-  path: P,
-  value: GetTypeByPath<P, T>,
-) => {
-  _.set(config, path, value);
-};
-
-type MinifyOptions = NonNullable<Parameters<typeof minify>[1]>;
-
-export async function getMinify(isProd: boolean, config: NormalizedConfig) {
-  if (config.output.disableMinimize || !isProd) {
+export async function getHtmlMinifyOptions(
+  isProd: boolean,
+  config: NormalizedConfig,
+) {
+  if (
+    !isProd ||
+    !config.output.minify ||
+    !parseMinifyOptions(config).minifyHtml
+  ) {
     return false;
   }
-  const minifyJS: MinifyOptions = (await getTerserMinifyOptions(config))
-    .terserOptions!;
 
-  return {
+  const minifyJS: MinifyJSOptions = getTerserMinifyOptions(config);
+
+  const htmlMinifyDefaultOptions = {
     removeComments: false,
     useShortDoctype: true,
     keepClosingSlash: true,
@@ -250,6 +99,11 @@ export async function getMinify(isProd: boolean, config: NormalizedConfig) {
     minifyCSS: true,
     minifyURLs: true,
   };
+
+  const htmlMinifyOptions = parseMinifyOptions(config).htmlOptions;
+  return typeof htmlMinifyOptions === 'object'
+    ? deepmerge(htmlMinifyDefaultOptions, htmlMinifyOptions)
+    : htmlMinifyDefaultOptions;
 }
 
 export async function stringifyConfig(config: unknown, verbose?: boolean) {
@@ -263,52 +117,6 @@ export async function stringifyConfig(config: unknown, verbose?: boolean) {
 
   return stringify(config as any, { verbose });
 }
-
-export const chainStaticAssetRule = ({
-  rule,
-  maxSize,
-  filename,
-  assetType,
-  issuer,
-}: {
-  rule: BundlerChainRule;
-  maxSize: number;
-  filename: string;
-  assetType: string;
-  issuer?: any;
-}) => {
-  // Rspack not support dataUrlCondition function
-  // forceNoInline: "foo.png?__inline=false" or "foo.png?url",
-  rule
-    .oneOf(`${assetType}-asset-url`)
-    .type('asset/resource')
-    .resourceQuery(/(__inline=false|url)/)
-    .set('generator', {
-      filename,
-    })
-    .set('issuer', issuer);
-
-  // forceInline: "foo.png?inline" or "foo.png?__inline",
-  rule
-    .oneOf(`${assetType}-asset-inline`)
-    .type('asset/inline')
-    .resourceQuery(/inline/)
-    .set('issuer', issuer);
-
-  // default: when size < dataUrlCondition.maxSize will inline
-  rule
-    .oneOf(`${assetType}-asset`)
-    .type('asset')
-    .parser({
-      dataUrlCondition: {
-        maxSize,
-      },
-    })
-    .set('generator', {
-      filename,
-    })
-    .set('issuer', issuer);
-};
 
 export const getDefaultStyledComponentsConfig = (
   isProd: boolean,
@@ -332,13 +140,15 @@ export const pickRsbuildConfig = (
 ): RsbuildConfig => {
   const keys: Array<keyof RsbuildConfig> = [
     'dev',
-    'server',
     'html',
     'tools',
-    'source',
     'output',
+    'source',
+    'server',
     'security',
     'performance',
+    'moduleFederation',
+    '_privateMeta',
   ];
   return pick(rsbuildConfig, keys);
 };

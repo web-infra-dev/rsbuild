@@ -4,9 +4,58 @@ Rsbuild optimizes build performance by default, but as the project becomes large
 
 This document provides some optional speed-up strategies, developers can choose some of them to improve the build performance.
 
-:::tip 📢 Notice
+:::tip
 The strategies in [Bundle Size Optimization](/guide/optimization/optimize-bundle) can also be used to improve build performance, so we won't repeat them here.
 :::
+
+## Performance Profiling
+
+Performing a performance analysis can help you identify performance bottlenecks in your project, allowing for targeted optimization.
+
+### Node.js Profiling
+
+In general, the performance overhead on the JS side will be greater than that on the Rust side, and you can use Node.js profiling to analyze the overhead on the JS side.
+
+Run the following command in the project root:
+
+```bash
+# dev
+node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js dev
+
+# build
+node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js build
+```
+
+The above commands will generate a cpuprofile file. We can use [speedscope](https://github.com/jlfwong/speedscope) to visualize this file:
+
+```bash
+# Install speedscope
+npm install -g speedscope
+
+# View cpuprofile content
+# Replace the name with the local file name
+speedscope CPU.date.000000.00000.0.001.cpuprofile
+```
+
+### Rspack Profiling
+
+Rsbuild supports the use of the `RSPACK_PROFILE` environment variable for Rspack build performance profile.
+
+```bash
+# dev
+RSPACK_PROFILE=ALL rsbuild dev
+
+# build
+RSPACK_PROFILE=ALL rsbuild build
+```
+
+This command will generate a `rspack-profile-${timestamp}` folder in the dist folder, and it will contain `logging.json`, `trace.json` and `jscpuprofile.json` files:
+
+- `trace.json`: The time spent on each phase of the Rust side is recorded at a granular level using tracing and can be viewed using [ui.perfetto.dev](https://ui.perfetto.dev/).
+- `jscpuprofile.json`: The time spent at each stage on the JavaScript side is recorded at a granular level using [Node.js inspector](https://nodejs.org/dist/latest-v18.x/docs/api/inspector.html) and can be viewed using [speedscope.app](https://www.speedscope.app/).
+- `logging.json`: Includes some logging information that keeps a coarse-grained record of how long each phase of the build took. (Not supported in development environment yet)
+
+For more information about Rspack build performance analysis usage, please refer to [Rspack - Profiling](https://web-infra-dev.github.io/rspack-dev-guide/profiling/intro.html#profiling).
 
 ## General optimization strategy
 
@@ -42,7 +91,7 @@ The following are strategies for improve build performance in development enviro
 
 ### Adjust Source Map format
 
-In order to provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format Source Map by default in the development environment, which is a high-quality Source Map format and will bring certain performance overhead.
+In order to provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format Source Map by default during development, which is a high-quality Source Map format and will bring certain performance overhead.
 
 You can improve build speed by adjusting the source map format of your development environment.
 
@@ -74,9 +123,9 @@ export default {
 
 ### Adjust Browserslist for development
 
-This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist), the difference is that we can set different browserslist for development and production environment, thereby reducing the compilation overhead in the development environment.
+This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist), the difference is that we can set different browserslist for development and production environment, thereby reducing the compilation overhead during development.
 
-For example, you can add the following config to `package.json`, which means that only the latest browsers are compatible in the development environment, and the actual browsers are compatible in the production environment:
+For example, you can add the following config to `package.json`, which means that only the latest browsers are compatible during development, and the actual browsers are compatible in the production environment:
 
 ```json
 {

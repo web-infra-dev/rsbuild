@@ -21,7 +21,7 @@ test('writeToDisk default', async ({ page }) => {
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('writeToDisk false', async ({ page }) => {
@@ -44,7 +44,7 @@ test('writeToDisk false', async ({ page }) => {
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('writeToDisk true', async ({ page }) => {
@@ -67,5 +67,5 @@ test('writeToDisk true', async ({ page }) => {
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });

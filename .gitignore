@@ -10,6 +10,7 @@ coverage/
 doc_build/
 playwright-report/
 tsconfig.tsbuildinfo
+.swc
 
 .vscode/**/*
 !.vscode/settings.json
@@ -19,3 +20,6 @@ tsconfig.tsbuildinfo
 .history/
 .env.local
 .env.*.local
+
+# ignore directory for artifacts produced by tests
+test-results/

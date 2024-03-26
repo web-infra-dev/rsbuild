@@ -15,7 +15,7 @@ test('should serve publicDir for dev server correctly', async ({ page }) => {
   const title = await page.$('title');
   expect(await title?.innerText()).toBe('Hello');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should serve publicDir for preview server correctly', async ({

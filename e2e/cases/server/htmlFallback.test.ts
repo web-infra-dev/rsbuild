@@ -36,7 +36,7 @@ test('should access / success and htmlFallback success by default', async ({
 
   await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should return 404 when htmlFallback false', async ({ page }) => {
@@ -63,7 +63,7 @@ test('should return 404 when htmlFallback false', async ({ page }) => {
 
   expect(res?.status()).toBe(404);
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should access /main with query or hash success', async ({ page }) => {
@@ -93,7 +93,7 @@ test('should access /main with query or hash success', async ({ page }) => {
 
   expect(res1?.status()).toBe(200);
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should access /main.html success when entry is main', async ({
@@ -125,7 +125,7 @@ test('should access /main.html success when entry is main', async ({
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should access /main success when entry is main', async ({ page }) => {
@@ -157,7 +157,7 @@ test('should access /main success when entry is main', async ({ page }) => {
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should access /main success when entry is main and use memoryFs', async ({
@@ -189,7 +189,7 @@ test('should access /main success when entry is main and use memoryFs', async ({
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should access /main success when entry is main and set assetPrefix', async ({
@@ -222,7 +222,7 @@ test('should access /main success when entry is main and set assetPrefix', async
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should access /main success when entry is main and outputPath is /main/index.html', async ({
@@ -257,7 +257,7 @@ test('should access /main success when entry is main and outputPath is /main/ind
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should return 404 when page is not found', async ({ page }) => {
@@ -286,7 +286,7 @@ test('should return 404 when page is not found', async ({ page }) => {
 
   expect(res?.status()).toBe(404);
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should access /html/main success when entry is main and outputPath is /html/main.html', async ({
@@ -327,7 +327,7 @@ test('should access /html/main success when entry is main and outputPath is /htm
 
   expect(res?.status()).toBe(404);
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should access /main success when modify publicPath in compiler', async ({
@@ -376,7 +376,7 @@ test('should access /main success when modify publicPath in compiler', async ({
 
   expect(content.includes('/aaaa/static/js/main.js')).toBeTruthy();
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });
 
 test('should access /main success when distPath is absolute', async ({
@@ -406,5 +406,5 @@ test('should access /main success when distPath is absolute', async ({
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });

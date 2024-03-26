@@ -77,6 +77,7 @@ export interface SwcReactConfig {
 export interface TransformConfig {
   react?: SwcReactConfig;
   legacyDecorator?: boolean;
+  decoratorVersion?: '2021-12' | '2022-03';
   decoratorMetadata?: boolean;
   treatConstEnumAsEnum?: boolean;
   useDefineForClassFields?: boolean;
@@ -112,6 +113,9 @@ export type BuiltinSwcLoaderOptions = {
       [from: string]: [string];
     };
     preserveAllComments?: boolean;
+    experimental?: {
+      plugins?: Array<[string, Record<string, any>]>;
+    };
   };
   rspackExperiments?: {
     relay?:

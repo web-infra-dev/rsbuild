@@ -1,5 +1,9 @@
 # Node Polyfill 插件
 
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-node-polyfill" />
+
 :::tip Node Polyfill 介绍
 通常情况下，我们不会在浏览器端使用 Node 模块。但在当前代码需要同时在 Node 端和浏览器端运行时，用到一些 Node 模块是有可能的。Node Polyfill 为这些 Node 模块提供了浏览器版本的 polyfills。
 :::
@@ -35,10 +39,23 @@ export default {
 - `Buffer`
 - `process`
 
-当你在代码中使用以上全局变量时，对应 polyfill 会被自动注入。
+当你在代码中使用以上全局变量时，对应的 polyfill 会被自动注入。
+
+比如以下代码会注入 `Buffer` 的 polyfill：
 
 ```ts
 const bufferData = Buffer.from('xxxx');
+```
+
+你可以通过插件的 `globals` 选项来关闭该行为：
+
+```ts
+pluginNodePolyfill({
+  globals: {
+    Buffer: false,
+    process: false,
+  },
+});
 ```
 
 ### Modules

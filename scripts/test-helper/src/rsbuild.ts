@@ -93,7 +93,8 @@ export async function createStubRsbuild({
     matchBundlerPlugin: (name: string) => Promise<BundlerPluginInstance | null>;
   }
 > {
-  const { pick, createPluginStore } = await import('@rsbuild/shared');
+  const { pick } = await import('@rsbuild/shared');
+  const { createPluginManager } = await import('@rsbuild/core/provider');
   const rsbuildOptions: Required<CreateRsbuildOptions> = {
     cwd: process.env.REBUILD_TEST_SUITE_CWD || process.cwd(),
     rsbuildConfig,
@@ -112,7 +113,7 @@ export async function createStubRsbuild({
     rsbuildConfig.provider ? rsbuildConfig.provider : await getRspackProvider()
   ) as RsbuildProvider;
 
-  const pluginStore = createPluginStore();
+  const pluginManager = createPluginManager();
   const {
     build,
     publicContext,
@@ -122,15 +123,15 @@ export async function createStubRsbuild({
     applyDefaultPlugins,
     initConfigs,
   } = await provider({
-    pluginStore,
+    pluginManager,
     rsbuildOptions,
     plugins: await getRsbuildPlugins(),
   });
 
   if (plugins) {
-    pluginStore.addPlugins(plugins);
+    pluginManager.addPlugins(plugins);
   } else {
-    await applyDefaultPlugins(pluginStore);
+    await applyDefaultPlugins(pluginManager);
   }
 
   const unwrapConfig = async () => {
@@ -150,7 +151,7 @@ export async function createStubRsbuild({
     baseMatchLoader({ config: await unwrapConfig(), loader, testFile });
 
   return {
-    ...pick(pluginStore, ['addPlugins', 'removePlugins', 'isPluginExists']),
+    ...pick(pluginManager, ['addPlugins', 'removePlugins', 'isPluginExists']),
     build,
     createCompiler,
     inspectConfig,

@@ -1,10 +1,10 @@
 # Babel Plugin
 
-Rsbuild uses SWC transpilation by default. When existing functions cannot meet the requirements, and some Babel presets or plugins need to be added for additional processing, you can use Rsbuild's Babel Plugin.
+import { SourceCode } from 'rspress/theme';
 
-:::tip
-Adding the Babel Plugin will perform additional Babel transpilation before the original SWC transpilation, resulting in additional compilation overhead and causing a significant decrease in build performance.
-:::
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-babel" />
+
+Rsbuild uses SWC transpilation by default. When existing functions cannot meet the requirements, and some Babel presets or plugins need to be added for additional processing, you can use Rsbuild's Babel Plugin.
 
 ## Quick Start
 
@@ -28,6 +28,20 @@ export default {
 };
 ```
 
+## Compilation Cache
+
+After using the Babel plugin, Rsbuild will perform the Babel transpilation in addition to the standard SWC transpilation, which adds additional compilation overhead. This can cause a noticeable decrease in build speed.
+
+To reduce the overhead of Babel transpilation, the `@rsbuild/plugin-babel` enables Babel compilation cache by default. If you want to disable the cache, you can set `performance.buildCache` to `false`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    buildCache: false,
+  },
+};
+```
+
 ## Options
 
 ### babelLoaderOptions
@@ -42,7 +56,10 @@ const defaultOptions = {
   babelrc: false,
   compact: false,
   configFile: false,
-  plugins: [],
+  plugins: [
+    ['@babel/plugin-proposal-decorators', config.source.decorators],
+    ...(isLegacyDecorators ? ['@babel/plugin-transform-class-properties'] : []),
+  ],
   presets: [
     [
       '@babel/preset-typescript',
@@ -67,6 +84,7 @@ pluginBabel({
   babelLoaderOptions: (config) => {
     // Add a Babel plugin
     // note: the plugin have been added to the default config to support antd load on demand
+    config.plugins ||= [];
     config.plugins.push([
       'babel-plugin-import',
       {

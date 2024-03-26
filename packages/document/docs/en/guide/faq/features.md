@@ -22,27 +22,7 @@ export default {
 
 ### How to run ESLint during compilation?
 
-For the sake of compilation performance, Rsbuild will not perform ESLint verification during the compilation process by default. If you need this function, you can manually install and register the [eslint-webpack-plugin](https://github.com/webpack) in the community -contrib/eslint-webpack-plugin).
-
-The sample code to register the plugin is as follows:
-
-```js
-import ESLintPlugin from 'eslint-webpack-plugin';
-
-export default {
-  tools: {
-    bundlerChain(chain) {
-      chain.plugin('eslint-plugin').use(ESLintPlugin, [
-        {
-          extensions: ['.js', '.ts', '.jsx', 'tsx', '.mjs', '.cjs'],
-        },
-      ]);
-    },
-  },
-};
-```
-
-> For more detailed usage, please refer to the [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin) documentation.
+For the sake of compilation performance, Rsbuild will not perform ESLint verification during the compilation process by default. If you require this feature, you can use Rsbuild's [ESLint plugin](/plugins/list/plugin-eslint).
 
 ---
 
@@ -62,7 +42,7 @@ export default {
 
 ### How to remove console after production build?
 
-When the production environment is built, we can remove the `console` from the code, so as to avoid the log of the development environment being output to the production environment.
+For the production build, we can remove the `console` from the code, so as to avoid the log of the development environment being output to the production.
 
 Rsbuild provides a configuration option to remove console by default, please see [performance.removeConsole](/config/performance/remove-console).
 

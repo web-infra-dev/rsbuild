@@ -45,8 +45,8 @@ const getIpv4Interfaces = () => {
   const interfaces = os.networkInterfaces();
   const ipv4Interfaces: Map<string, os.NetworkInterfaceInfo> = new Map();
 
-  Object.keys(interfaces).forEach((key) => {
-    interfaces[key]!.forEach((detail) => {
+  for (const key of Object.keys(interfaces)) {
+    for (const detail of interfaces[key]!) {
       // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
       const familyV4Value = typeof detail.family === 'string' ? 'IPv4' : 4;
 
@@ -56,19 +56,25 @@ const getIpv4Interfaces = () => {
       ) {
         ipv4Interfaces.set(detail.address, detail);
       }
-    });
-  });
+    }
+  }
+
   return Array.from(ipv4Interfaces.values());
 };
 
 const isLoopbackHost = (host: string) => {
-  const loopbackHosts = ['localhost', '127.0.0.1', '::1'];
+  const loopbackHosts = [
+    'localhost',
+    '127.0.0.1',
+    '::1',
+    '0000:0000:0000:0000:0000:0000:0000:0001',
+  ];
   return loopbackHosts.includes(host);
 };
 
 const getHostInUrl = (host: string) => {
   if (isIPv6(host)) {
-    return host === '::' ? '[::1]' : `${host}`;
+    return host === '::' ? '[::1]' : `[${host}]`;
   }
   return host;
 };
@@ -103,7 +109,7 @@ export const getAddressUrls = ({
   protocol?: string;
   port: number;
   host?: string;
-}) => {
+}): AddressUrl[] => {
   if (host && host !== DEFAULT_DEV_HOST) {
     return [
       {
@@ -118,17 +124,29 @@ export const getAddressUrls = ({
   }
 
   const ipv4Interfaces = getIpv4Interfaces();
+  const addressUrls: AddressUrl[] = [];
+  let hasLocalUrl = false;
 
-  return ipv4Interfaces.map((detail) => {
+  for (const detail of ipv4Interfaces) {
     if (isLoopbackHost(detail.address) || detail.internal) {
-      return {
+      // avoid multiple prints of localhost
+      // https://github.com/web-infra-dev/rsbuild/discussions/1543
+      if (hasLocalUrl) {
+        continue;
+      }
+
+      addressUrls.push({
         label: LOCAL_LABEL,
         url: concatUrl({ host: 'localhost', port, protocol }),
-      };
+      });
+      hasLocalUrl = true;
+    } else {
+      addressUrls.push({
+        label: NETWORK_LABEL,
+        url: concatUrl({ host: detail.address, port, protocol }),
+      });
     }
-    return {
-      label: NETWORK_LABEL,
-      url: concatUrl({ host: detail.address, port, protocol }),
-    };
-  });
+  }
+
+  return addressUrls;
 };

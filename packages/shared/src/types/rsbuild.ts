@@ -1,4 +1,4 @@
-import type { PluginStore } from './plugin';
+import type { PluginManager } from './plugin';
 import type { RsbuildConfig } from './config';
 import type { RsbuildContext } from './context';
 import type { RsbuildProvider, ProviderInstance } from './provider';
@@ -22,16 +22,16 @@ export type RsbuildInstance<
 > = {
   context: RsbuildContext;
 
-  addPlugins: PluginStore['addPlugins'];
-  removePlugins: PluginStore['removePlugins'];
-  isPluginExists: PluginStore['isPluginExists'];
+  addPlugins: PluginManager['addPlugins'];
+  removePlugins: PluginManager['removePlugins'];
+  isPluginExists: PluginManager['isPluginExists'];
 
   build: ProviderInstance['build'];
   preview: ProviderInstance['preview'];
   initConfigs: ProviderInstance['initConfigs'];
   inspectConfig: ProviderInstance['inspectConfig'];
   createCompiler: ProviderInstance['createCompiler'];
-  getServerAPIs: ProviderInstance['getServerAPIs'];
+  createDevServer: ProviderInstance['createDevServer'];
   startDevServer: ProviderInstance['startDevServer'];
 
   getHTMLPaths: Awaited<ReturnType<P>>['pluginAPI']['getHTMLPaths'];
@@ -60,6 +60,7 @@ export type RsbuildInstance<
   onAfterStartProdServer: Awaited<
     ReturnType<P>
   >['pluginAPI']['onAfterStartProdServer'];
+  onCloseDevServer: Awaited<ReturnType<P>>['pluginAPI']['onCloseDevServer'];
   onDevCompileDone: Awaited<ReturnType<P>>['pluginAPI']['onDevCompileDone'];
   onExit: Awaited<ReturnType<P>>['pluginAPI']['onExit'];
 };

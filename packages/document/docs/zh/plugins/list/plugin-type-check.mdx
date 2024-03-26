@@ -1,5 +1,9 @@
 # Type Check 插件
 
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-type-check" />
+
 Type Check 插件提供在单独的进程中运行 TypeScript 类型检查的能力，插件内部集成了 [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)。
 
 ## 介绍
@@ -112,10 +116,8 @@ const defaultOptions = {
     typescriptPath: require.resolve('typescript'),
   },
   issue: {
-    exclude: [
-      { file: '**/*.(spec|test).ts' },
-      { file: '**/node_modules/**/*' },
-    ],
+    // ignore types errors from node_modules
+    exclude: [({ file = '' }) => /[\\/]node_modules[\\/]/.test(file)],
   },
   logger: {
     log() {
@@ -137,7 +139,7 @@ const defaultOptions = {
 pluginTypeCheck({
   forkTsCheckerOptions: {
     issue: {
-      exclude: [{ file: '**/some-folder/**/*.ts' }],
+      exclude: [({ file = '' }) => /[\\/]some-folder[\\/]/.test(file)],
     },
   },
 });
@@ -150,9 +152,8 @@ pluginTypeCheck({
 ```ts
 pluginTypeCheck({
   forkTsCheckerOptions(options) {
-    options?.issue?.exclude.push({
-      file: '**/some-folder/**/*.ts',
-    });
+    options.async = false;
+    return options;
   },
 });
 ```

@@ -4,7 +4,17 @@
 
 ## 减少重复依赖
 
-在业务项目中，会存在某些第三方依赖被安装了多个版本的现象。重复依赖会导致包体积变大、构建速度变慢。
+在 Web 项目中，经常出现某些第三方依赖被打包了多个版本的现象。重复依赖会导致包体积变大、构建速度变慢。
+
+### 检测重复依赖
+
+你可以使用 [Rsdoctor](https://rsdoctor.dev) 来检测项目中是否存在重复依赖，Rsdoctor 会在构建过程中进行分析，找出所有重复打包的依赖包，并可视化展示出来：
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/lognuvj/rsdoctor/docs/usage/bundle/bundle-alerts.png)
+
+详见 [Rsdoctor - 重复依赖问题](https://rsdoctor.dev/zh/blog/topic/duplicate-pkg-problem)。
+
+### 消除重复依赖
 
 我们可以通过社区中的一些工具来检测或消除重复依赖。
 
@@ -94,7 +104,7 @@ export default {
 
 良好的拆包策略对于提升应用的加载性能是十分重要的，可以充分利用浏览器的缓存机制，减少请求数量，加快页面加载速度。
 
-在 Rsbuild 中内置了[多种拆包策略](/guide/optimization/split-chunk)，可以满足大部分应用的需求，你也可以根据自己的业务场景，自定义拆包配置。
+在 Rsbuild 中内置了[多种拆包策略](/guide/optimization/split-chunk)，可以满足大部分应用的需求，你也可以根据自己的使用场景，自定义拆包配置。
 
 比如将 node_modules 下的 `axios` 库拆分到 `axios.js` 中：
 

@@ -9,7 +9,9 @@
 - **类型：**
 
 ```ts
-function createRsbuild(options: CreateRsbuildOptions): Promise<RsbuildInstance>;
+function createRsbuild(
+  options?: CreateRsbuildOptions,
+): Promise<RsbuildInstance>;
 ```
 
 - **示例：**
@@ -18,7 +20,9 @@ function createRsbuild(options: CreateRsbuildOptions): Promise<RsbuildInstance>;
 import { createRsbuild } from '@rsbuild/core';
 
 const rsbuild = await createRsbuild({
-  // options
+  rsbuildConfig: {
+    // rsbuild configs
+  },
 });
 ```
 
@@ -36,7 +40,6 @@ type CreateRsbuildOptions = {
 各个选项的作用：
 
 - `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
-- `provider`：用于切换底层的打包工具。
 - `rsbuildConfig`：Rsbuild 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制，你可以在[配置](/config/)中找到所有可用的配置项。
 
 ## loadConfig
@@ -46,12 +49,15 @@ type CreateRsbuildOptions = {
 - **类型：**
 
 ```ts
-function loadConfig(params: {
+function loadConfig(params?: {
   // 默认为 process.cwd()
-  cwd: string;
+  cwd?: string;
   // 指定配置文件路径，可以为相对路径或绝对路径
   path?: string;
-}): Promise<RsbuildConfig>;
+}): Promise<{
+  content: RsbuildConfig;
+  filePath: string | null;
+}>;
 ```
 
 - **示例：**
@@ -59,10 +65,16 @@ function loadConfig(params: {
 ```ts
 import { loadConfig } from '@rsbuild/core';
 
-const config = await loadConfig();
+const { content } = await loadConfig();
 
-console.log(config); // -> RsbuildConfig
+console.log(content); // -> Rsbuild config object
+
+const rsbuild = await createRsbuild({
+  rsbuildConfig: content,
+});
 ```
+
+如果 cwd 目录下不存在 Rsbuild 配置文件，loadConfig 方法的返回值为 `{ content: {}, filePath: null }`。
 
 ## loadEnv
 
@@ -132,7 +144,7 @@ const mergedConfig = mergeRsbuildConfig(
 function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
 ```
 
-- **示例：**
+### 基础示例
 
 ```ts
 import { mergeRsbuildConfig } from '@rsbuild/core';
@@ -154,6 +166,70 @@ console.log(mergedConfig); // { dev: { https: true } }
 ```
 
 > 该方法不会修改入参中的 config 对象。
+
+### 合并规则
+
+除了深层合并外，`mergeRsbuildConfig` 函数还会对部分选项进行特殊处理。
+
+比如 [tools.rspack](/config/tools/rspack) 可以被设置为一个函数，当多份配置对象都包含 `tools.rspack` 时，`mergeRsbuildConfig` 不会简单地保留最后一个函数。相反，它会将所有的 `tools.rspack` 函数或对象合并到一个数组中。
+
+```ts
+import { mergeRsbuildConfig } from '@rsbuild/core';
+
+const config1 = {
+  tools: {
+    rspack: {
+      someOption: true,
+    },
+  },
+};
+const config2 = {
+  tools: {
+    rspack: (config) => {
+      console.log('function 1');
+      return config;
+    },
+  },
+};
+const config3 = {
+  tools: {
+    rspack: (config) => {
+      console.log('function 2');
+      return config;
+    },
+  },
+};
+
+const mergedConfig = mergeRsbuildConfig(config1, config2, config3);
+```
+
+在以上示例中，合并后的配置为以下形式，该数组首先包含了一个对象 `{ someOption: true }`，然后是按合并顺序排列的两个函数。
+
+数组中的每一项会依次执行，并且上一个函数的输出将作为下一个函数的输入，最终生成一份 Rspack 配置。
+
+```ts
+const mergedConfig = {
+  tools: {
+    rspack: [
+      {
+        someOption: true,
+      },
+      (config) => {
+        console.log('function 1');
+        return config;
+      },
+      (config) => {
+        console.log('function 2');
+        return config;
+      },
+    ],
+  },
+};
+```
+
+通过这种方法，我们可以确保合并多份配置对象时，相同的多个 `tools.rspack` 字段均能够生效。
+
+在 Rsbuild 中，大部分支持函数值的选项都使用上述规则，比如 `tools.postcss`、`toos.less`、`tools.bundlerChain` 等。
 
 ## logger
 

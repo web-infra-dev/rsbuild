@@ -20,11 +20,12 @@ export function pluginLess(): RsbuildPlugin {
         const { excludes, options } = getLessLoaderOptions(
           config.tools.less,
           config.output.sourceMap.css,
+          api.context.rootPath,
         );
 
-        excludes.forEach((item) => {
+        for (const item of excludes) {
           rule.exclude.add(item);
-        });
+        }
 
         await applyBaseCSSRule({
           rule,

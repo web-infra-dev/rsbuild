@@ -4,6 +4,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
 {
   "cache": {
     "buildDependencies": {
+      "rsbuildConfig": [
+        "/path/to/rsbuild.config.ts",
+      ],
       "tsconfig": [
         "<ROOT>/packages/compat/webpack/tests/tsconfig.json",
       ],
@@ -64,7 +67,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
       },
       {
         "oneOf": [
@@ -118,7 +121,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
       },
       {
         "oneOf": [
@@ -183,7 +186,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "postcssOptions": {
                 "config": false,
                 "plugins": [
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -239,7 +241,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "postcssOptions": {
                 "config": false,
                 "plugins": [
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -309,7 +310,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "postcssOptions": {
                 "config": false,
                 "plugins": [
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -341,6 +341,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/compat/webpack/tests/node_modules",
+                ],
               },
               "sourceMap": false,
             },
@@ -410,6 +413,36 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       },
     },
     HtmlWebpackPlugin {
+      "options": {
+        "base": false,
+        "cache": true,
+        "chunks": [
+          "index",
+        ],
+        "chunksSortMode": "auto",
+        "compile": true,
+        "entryName": "index",
+        "excludeChunks": [],
+        "favicon": false,
+        "filename": "index.html",
+        "hash": false,
+        "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
+        "minify": false,
+        "publicPath": "auto",
+        "scriptLoading": "defer",
+        "showErrors": true,
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateContent": false,
+        "templateParameters": [Function],
+        "title": "Rsbuild App",
+        "xhtml": false,
+      },
       "userOptions": {
         "chunks": [
           "index",
@@ -434,9 +467,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
@@ -497,7 +528,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;
@@ -566,7 +597,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
       },
       {
         "oneOf": [
@@ -620,7 +651,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
       },
       {
         "oneOf": [
@@ -685,7 +716,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               "postcssOptions": {
                 "config": false,
                 "plugins": [
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -741,7 +771,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               "postcssOptions": {
                 "config": false,
                 "plugins": [
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -811,7 +840,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               "postcssOptions": {
                 "config": false,
                 "plugins": [
-                  [Function],
                   {
                     "browsers": [
                       "chrome >= 87",
@@ -843,6 +871,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/compat/webpack/tests/node_modules",
+                ],
               },
               "sourceMap": false,
             },
@@ -854,28 +885,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   "name": "Client",
   "optimization": {
     "minimize": true,
-    "minimizer": [
-      TerserPlugin {
-        "options": {
-          "exclude": undefined,
-          "extractComments": true,
-          "include": undefined,
-          "minimizer": {
-            "implementation": [Function],
-            "options": {
-              "format": {
-                "ascii_only": true,
-              },
-              "mangle": {
-                "safari10": true,
-              },
-            },
-          },
-          "parallel": true,
-          "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-        },
-      },
-    ],
     "splitChunks": {
       "cacheGroups": {
         "lib-axios": {
@@ -930,6 +939,55 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       },
     },
     HtmlWebpackPlugin {
+      "options": {
+        "base": false,
+        "cache": true,
+        "chunks": [
+          "index",
+        ],
+        "chunksSortMode": "auto",
+        "compile": true,
+        "entryName": "index",
+        "excludeChunks": [],
+        "favicon": false,
+        "filename": "index.html",
+        "hash": false,
+        "inject": "head",
+        "meta": {
+          "charset": {
+            "charset": "UTF-8",
+          },
+          "viewport": "width=device-width, initial-scale=1.0",
+        },
+        "minify": {
+          "collapseWhitespace": true,
+          "keepClosingSlash": true,
+          "minifyCSS": true,
+          "minifyJS": {
+            "format": {
+              "ascii_only": true,
+            },
+            "mangle": {
+              "safari10": true,
+            },
+          },
+          "minifyURLs": true,
+          "removeComments": false,
+          "removeEmptyAttributes": true,
+          "removeRedundantAttributes": true,
+          "removeScriptTypeAttributes": true,
+          "removeStyleLinkTypeAttributes": true,
+          "useShortDoctype": true,
+        },
+        "publicPath": "auto",
+        "scriptLoading": "defer",
+        "showErrors": true,
+        "template": "<ROOT>/packages/core/static/template.html",
+        "templateContent": false,
+        "templateParameters": [Function],
+        "title": "Rsbuild App",
+        "xhtml": false,
+      },
       "userOptions": {
         "chunks": [
           "index",
@@ -973,9 +1031,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
@@ -1036,7 +1092,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;
@@ -1105,7 +1161,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
       },
       {
         "oneOf": [
@@ -1159,7 +1215,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
       },
       {
         "oneOf": [
@@ -1200,10 +1256,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/compiled/node-loader",
-            "options": {
-              "name": [Function],
-            },
+            "loader": "<ROOT>/packages/core/dist/rspack/nodeAddonsLoader",
           },
         ],
       },
@@ -1300,6 +1353,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/compat/webpack/tests/node_modules",
+                ],
               },
               "sourceMap": false,
             },
@@ -1311,36 +1367,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "name": "Server",
   "optimization": {
     "minimize": true,
-    "minimizer": [
-      TerserPlugin {
-        "options": {
-          "exclude": undefined,
-          "extractComments": true,
-          "include": undefined,
-          "minimizer": {
-            "implementation": [Function],
-            "options": {
-              "format": {
-                "ascii_only": true,
-              },
-              "mangle": {
-                "safari10": true,
-              },
-            },
-          },
-          "parallel": true,
-          "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-        },
-      },
-    ],
     "splitChunks": false,
   },
   "output": {
-    "chunkFilename": "server/[name].js",
-    "filename": "server/[name].js",
+    "chunkFilename": "[name].js",
+    "filename": "[name].js",
     "hashFunction": "xxhash64",
     "libraryTarget": "commonjs2",
-    "path": "<ROOT>/packages/compat/webpack/tests/dist",
+    "path": "<ROOT>/packages/compat/webpack/tests/dist/server",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1474,7 +1508,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tiff\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
       },
       {
         "oneOf": [
@@ -1528,7 +1562,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mp3\\|wav\\|flac\\|aac\\|mov\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
       },
       {
         "oneOf": [
@@ -1658,6 +1692,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
                 "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/compat/webpack/tests/node_modules",
+                ],
               },
               "sourceMap": false,
             },
@@ -1669,28 +1706,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "name": "Web Worker",
   "optimization": {
     "minimize": true,
-    "minimizer": [
-      TerserPlugin {
-        "options": {
-          "exclude": undefined,
-          "extractComments": true,
-          "include": undefined,
-          "minimizer": {
-            "implementation": [Function],
-            "options": {
-              "format": {
-                "ascii_only": true,
-              },
-              "mangle": {
-                "safari10": true,
-              },
-            },
-          },
-          "parallel": true,
-          "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-        },
-      },
-    ],
     "splitChunks": false,
   },
   "output": {
@@ -1764,7 +1779,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "target": [
     "webworker",
-    "es5",
+    "es2017",
   ],
 }
 `;

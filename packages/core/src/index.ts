@@ -6,12 +6,13 @@
 // Core Methods
 export { loadEnv } from './loadEnv';
 export { createRsbuild } from './createRsbuild';
-export { loadConfig, defineConfig } from './cli/config';
+export { loadConfig, defineConfig } from './config';
 
 export const version = RSBUILD_VERSION;
 
 // Helpers
-export { logger, mergeRsbuildConfig } from '@rsbuild/shared';
+export { logger } from '@rsbuild/shared';
+export { mergeRsbuildConfig } from './mergeConfig';
 
 // Constants
 export {
@@ -19,7 +20,6 @@ export {
   PLUGIN_CSS_NAME,
   PLUGIN_SASS_NAME,
   PLUGIN_LESS_NAME,
-  PLUGIN_BABEL_NAME,
   PLUGIN_STYLUS_NAME,
 } from './constants';
 
@@ -32,18 +32,22 @@ export type {
   HtmlConfig,
   ToolsConfig,
   SourceConfig,
+  ServerConfig,
   OutputConfig,
   SecurityConfig,
   PerformanceConfig,
+  ModuleFederationConfig,
   // Normalized Config Types
   NormalizedConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
   NormalizedToolsConfig,
   NormalizedSourceConfig,
+  NormalizedServerConfig,
   NormalizedOutputConfig,
   NormalizedSecurityConfig,
   NormalizedPerformanceConfig,
+  NormalizedModuleFederationConfig,
   // Plugin Types
   RsbuildPlugin,
   RsbuildPlugins,
@@ -68,6 +72,7 @@ export type {
   OnBeforeStartDevServerFn,
   OnBeforeStartProdServerFn,
   OnBeforeCreateCompilerFn,
+  OnCloseDevServerFn,
   OnDevCompileDoneFn,
   ModifyRsbuildConfigFn,
 } from '@rsbuild/shared';

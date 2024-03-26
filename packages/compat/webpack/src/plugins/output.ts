@@ -17,8 +17,6 @@ export const pluginOutput = (): RsbuildPlugin => ({
     api.modifyBundlerChain(async (chain, { isProd, target, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
 
-      const cssPath = getDistPath(config, 'css');
-
       // css output
       if (isUseCssExtract(config, target)) {
         const { default: MiniCssExtractPlugin } = await import(
@@ -29,6 +27,8 @@ export const pluginOutput = (): RsbuildPlugin => ({
           options: config.tools.cssExtract?.pluginOptions,
         });
 
+        const cssPath = getDistPath(config, 'css');
+        const cssAsyncPath = getDistPath(config, 'cssAsync');
         const cssFilename = getFilename(config, 'css', isProd);
 
         chain
@@ -36,7 +36,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
           .use(MiniCssExtractPlugin, [
             {
               filename: posix.join(cssPath, cssFilename),
-              chunkFilename: posix.join(cssPath, `async/${cssFilename}`),
+              chunkFilename: posix.join(cssAsyncPath, cssFilename),
               ignoreOrder: true,
               ...extractPluginOptions,
             },

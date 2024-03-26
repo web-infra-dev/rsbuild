@@ -1,12 +1,16 @@
 # Type Check Plugin
 
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-type-check" />
+
 The Type Check plugin provides the ability to run TypeScript type checks in a separate process. The plugin internally integrates with [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin).
 
 ## Introduction
 
 The type checking logic of `fork-ts-checker-webpack-plugin` is similar to the native `tsc` command of TypeScript. It automatically reads the configuration options from `tsconfig.json` and can also be modified via the configuration options provided by the Type Check plugin.
 
-The behavior of the plugin differs in the development and production environments:
+The behavior of the plugin differs in the development and production builds:
 
 - During development builds, type errors do not block the build process. They are only logged in the terminal.
 - During production builds, type errors cause the build to fail in order to ensure the stability of the production code.
@@ -112,10 +116,8 @@ const defaultOptions = {
     typescriptPath: require.resolve('typescript'),
   },
   issue: {
-    exclude: [
-      { file: '**/*.(spec|test).ts' },
-      { file: '**/node_modules/**/*' },
-    ],
+    // ignore types errors from node_modules
+    exclude: [({ file = '' }) => /[\\/]node_modules[\\/]/.test(file)],
   },
   logger: {
     log() {
@@ -137,7 +139,7 @@ When the value of `forkTsCheckerOptions` is an object, it will be deeply merged 
 pluginTypeCheck({
   forkTsCheckerOptions: {
     issue: {
-      exclude: [{ file: '**/some-folder/**/*.ts' }],
+      exclude: [({ file = '' }) => /[\\/]some-folder[\\/]/.test(file)],
     },
   },
 });
@@ -150,9 +152,8 @@ When the value of `forkTsCheckerOptions` is a function, the default configuratio
 ```ts
 pluginTypeCheck({
   forkTsCheckerOptions(options) {
-    options?.issue?.exclude.push({
-      file: '**/some-folder/**/*.ts',
-    });
+    options.async = false;
+    return options;
   },
 });
 ```
@@ -194,7 +195,7 @@ For example, properly configuring the `include` and `exclude` scopes in `tsconfi
 }
 ```
 
-3. Since the production build uses `vue-tsc` for type checking, you can disable the Type Check plugin in the production environment to avoid redundant checks.
+3. Since the production build uses `vue-tsc` for type checking, you can disable the Type Check plugin in the production build to avoid redundant checks.
 
 ```js
 pluginTypeCheck({

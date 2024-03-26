@@ -3,30 +3,34 @@
   "name": "@rsbuild/e2e",
   "version": "1.0.0",
   "scripts": {
-    "test": "pnpm run test:rspack && pnpm run test:webpack",
-    "test:webpack": "cross-env PROVIDE_TYPE=webpack playwright test",
+    "test": "pnpm test:rspack && pnpm test:webpack",
     "test:rspack": "playwright test",
-    "test:webpack-swc": "cross-env PROVIDE_TYPE=webpack playwright test swc"
+    "test:webpack": "cross-env PROVIDE_TYPE=webpack playwright test"
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "moment": "^2",
-    "preact": "^10.19.3",
+    "moment": "^2.30.1",
+    "preact": "^10.20.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.17.0",
-    "vue": "^3.3.4",
-    "vue-router": "^4.2.5"
+    "react-router-dom": "^6.22.3",
+    "solid-js": "^1.8.16",
+    "vue": "^3.4.19",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
-    "@playwright/test": "1.41.1",
+    "@playwright/test": "1.42.1",
+    "@rsbuild/babel-preset": "workspace:*",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/plugin-check-syntax": "workspace:*",
     "@rsbuild/plugin-css-minimizer": "workspace:*",
+    "@rsbuild/plugin-eslint": "workspace:*",
     "@rsbuild/plugin-image-compress": "workspace:*",
+    "@rsbuild/plugin-lightningcss": "workspace:*",
+    "@rsbuild/plugin-mdx": "workspace:*",
     "@rsbuild/plugin-node-polyfill": "workspace:*",
     "@rsbuild/plugin-preact": "workspace:*",
     "@rsbuild/plugin-pug": "workspace:*",
@@ -50,13 +54,13 @@
     "@rsbuild/shared": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "@types/lodash": "^4.14.200",
+    "@types/lodash": "^4.17.0",
     "@types/node": "16.x",
-    "@types/react": "^18.2.47",
-    "@types/react-dom": "^18.2.18",
-    "fast-glob": "^3.3.1",
-    "playwright": "1.41.1",
-    "tailwindcss": "^3.3.5",
-    "typescript": "^5.3.0"
+    "@types/react": "^18.2.71",
+    "@types/react-dom": "^18.2.22",
+    "fast-glob": "^3.3.2",
+    "playwright": "1.42.1",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.4.2"
   }
 }

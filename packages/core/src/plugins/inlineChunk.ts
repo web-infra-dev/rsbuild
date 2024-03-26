@@ -11,10 +11,10 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
   name: 'rsbuild:inline-chunk',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { target, CHAIN_ID, isProd }) => {
+    api.modifyBundlerChain(async (chain, { target, CHAIN_ID, isDev }) => {
       const config = api.getNormalizedConfig();
 
-      if (isHtmlDisabled(config, target) || !isProd) {
+      if (isHtmlDisabled(config, target) || isDev) {
         return;
       }
 
@@ -39,13 +39,17 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         return;
       }
 
-      chain.plugin(CHAIN_ID.PLUGIN.INLINE_HTML).use(InlineChunkHtmlPlugin, [
-        {
-          styleTests,
-          scriptTests,
-          distPath: pick(config.output.distPath, ['js', 'css']),
-        },
-      ]);
+      chain
+        .plugin(CHAIN_ID.PLUGIN.INLINE_HTML)
+        // ensure nonce can be applied to inlined style tags
+        .before(CHAIN_ID.PLUGIN.HTML_NONCE)
+        .use(InlineChunkHtmlPlugin, [
+          {
+            styleTests,
+            scriptTests,
+            distPath: pick(config.output.distPath, ['js', 'css']),
+          },
+        ]);
     });
   },
 });

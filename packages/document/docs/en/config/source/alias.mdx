@@ -1,4 +1,4 @@
-# alias
+# source.alias
 
 - **Type:**
 
@@ -53,6 +53,22 @@ export default {
       return {
         '@common': './src/common',
       };
+    },
+  },
+};
+```
+
+The function provides a `target` argument, which can be used to determine the build target environment, such as setting different aliases for web outputs and node outputs.
+
+```js
+export default {
+  source: {
+    alias: (alias, { target }) => {
+      if (target === 'node') {
+        alias['@common'] = './src/node/common';
+      } else if (target === 'web') {
+        alias['@common'] = './src/web/common';
+      }
     },
   },
 };

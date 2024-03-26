@@ -10,6 +10,11 @@ import type {
 const TEST_BUILDER_CONFIG = {
   output: {},
   tools: {},
+  source: {
+    decorators: {
+      version: 'legacy',
+    },
+  },
 } as unknown as NormalizedConfig;
 
 const UTILS = { target: 'web', isProd: true } as ModifyWebpackChainUtils;
@@ -37,6 +42,65 @@ describe('plugin-swc', () => {
     });
     const config = await rsbuild.unwrapConfig();
     expect(config.optimization).toMatchSnapshot();
+
+    process.env.NODE_ENV = 'test';
+  });
+
+  it('should remove all comments when output.legalComments is none', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginSwc()],
+      rsbuildConfig: {
+        output: {
+          legalComments: 'none',
+        },
+        provider: webpackProvider,
+      },
+    });
+
+    const config = await rsbuild.unwrapConfig();
+
+    expect(JSON.stringify(config.optimization)).toContain('"comments":false');
+
+    process.env.NODE_ENV = 'test';
+  });
+
+  it('should not enable ascii_only when output.charset is utf8', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginSwc()],
+      rsbuildConfig: {
+        output: {
+          charset: 'utf8',
+        },
+        provider: webpackProvider,
+      },
+    });
+
+    const config = await rsbuild.unwrapConfig();
+    expect(JSON.stringify(config.optimization)).toContain('"asciiOnly":false');
+
+    process.env.NODE_ENV = 'test';
+  });
+
+  it('should not extractComments when output.legalComments is inline', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginSwc()],
+      rsbuildConfig: {
+        output: {
+          legalComments: 'inline',
+        },
+        provider: webpackProvider,
+      },
+    });
+
+    const config = await rsbuild.unwrapConfig();
+
+    expect(JSON.stringify(config.optimization)).toContain('"comments":"some"');
 
     process.env.NODE_ENV = 'test';
   });
@@ -201,6 +265,7 @@ describe('plugin-swc', () => {
       await applyPluginConfig(
         (config, { setConfig }) => {
           setConfig(config, 'jsc.transform.react.runtime', 'foo');
+          return config;
         },
         UTILS,
         TEST_BUILDER_CONFIG,
@@ -267,6 +332,7 @@ describe('plugin-swc', () => {
         await applyPluginConfig(
           (config) => {
             config.env!.coreJs = '2';
+            return config;
           },
           UTILS,
           TEST_BUILDER_CONFIG,
@@ -307,5 +373,20 @@ describe('plugin-swc', () => {
     const config = await rsbuild.unwrapConfig();
 
     expect(config.module!.rules).toMatchSnapshot();
+  });
+
+  it('should allow to disable transformLodash', async () => {
+    const config = (
+      await applyPluginConfig(
+        {
+          transformLodash: false,
+        },
+        UTILS,
+        TEST_BUILDER_CONFIG,
+        process.cwd(),
+      )
+    )[0].swcConfig;
+
+    expect(config.extensions?.lodash).toBeFalsy();
   });
 });

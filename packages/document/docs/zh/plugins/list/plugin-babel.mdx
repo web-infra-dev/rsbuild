@@ -1,10 +1,10 @@
 # Babel 插件
 
-Rsbuild 默认使用 SWC 编译，当内置的功能无法满足诉求、需要添加一些 Babel presets 或 plugins 进行额外处理时，你可以使用 Rsbuild 的 Babel 插件。
+import { SourceCode } from 'rspress/theme';
 
-:::tip
-添加 Babel 插件会在原有的 SWC 转译的基础上，额外执行 Babel 转译，产生额外的编译开销，并导致构建性能明显下降。
-:::
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-babel" />
+
+Rsbuild 默认使用 SWC 编译，当内置的功能无法满足诉求、需要添加一些 Babel presets 或 plugins 进行额外处理时，你可以使用 Rsbuild 的 Babel 插件。
 
 ## 快速开始
 
@@ -28,6 +28,20 @@ export default {
 };
 ```
 
+## 编译缓存
+
+使用 Babel 插件后，Rsbuild 除了执行默认的 SWC 转译，还会执行 Babel 转译，存在额外的编译开销，这可能导致构建速度明显降低。
+
+为了降低 Babel 转译的开销，`@rsbuild/plugin-babel` 默认开启了 Babel 编译缓存。如果你希望禁用缓存，可以将 `performance.buildCache` 设置为 `false`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    buildCache: false,
+  },
+};
+```
+
 ## 选项
 
 ### babelLoaderOptions
@@ -42,7 +56,10 @@ const defaultOptions = {
   babelrc: false,
   compact: false,
   configFile: false,
-  plugins: [],
+  plugins: [
+    ['@babel/plugin-proposal-decorators', config.source.decorators],
+    ...(isLegacyDecorators ? ['@babel/plugin-transform-class-properties'] : []),
+  ],
   presets: [
     [
       '@babel/preset-typescript',
@@ -66,6 +83,7 @@ const defaultOptions = {
 pluginBabel({
   babelLoaderOptions: (config) => {
     // 添加一个插件，比如配置某个组件库的按需引入
+    config.plugins ||= [];
     config.plugins.push([
       'babel-plugin-import',
       {

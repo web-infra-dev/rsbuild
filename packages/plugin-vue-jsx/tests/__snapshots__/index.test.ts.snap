@@ -15,6 +15,13 @@ exports[`plugin-vue-jsx > should allow to configure jsx babel plugin options 1`]
               "configFile": false,
               "plugins": [
                 [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+                [
                   "<ROOT>/node_modules/<PNPM_INNER>/@vue/babel-plugin-jsx/dist/index.js",
                   {
                     "transformOn": false,
@@ -57,6 +64,13 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly 1`] = `
               "configFile": false,
               "plugins": [
                 [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+                [
                   "<ROOT>/node_modules/<PNPM_INNER>/@vue/babel-plugin-jsx/dist/index.js",
                   {},
                 ],
@@ -96,6 +110,13 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly in rspack mode
               "compact": false,
               "configFile": false,
               "plugins": [
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                  {
+                    "version": "legacy",
+                  },
+                ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@vue/babel-plugin-jsx/dist/index.js",
                   {},

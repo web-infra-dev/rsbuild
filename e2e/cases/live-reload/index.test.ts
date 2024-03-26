@@ -35,7 +35,7 @@ test('should fallback to live-reload when dev.hmr is false', async ({
   fs.writeFileSync(appFile, appCode.replace('Rsbuild', 'Live Reload'), 'utf-8');
   await expect(testEl).toHaveText('Hello Live Reload!');
 
-  rsbuild.server.close();
+  rsbuild.close();
 });
 
 test('should not reload page when live-reload is disabled', async ({
@@ -58,5 +58,5 @@ test('should not reload page when live-reload is disabled', async ({
   fs.writeFileSync(appFile, appCode.replace('Rsbuild', 'Live Reload'), 'utf-8');
   await expect(test).toHaveText('Hello Rsbuild!');
 
-  rsbuild.server.close();
+  rsbuild.close();
 });

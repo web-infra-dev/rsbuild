@@ -54,7 +54,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
 
   async getScriptPath() {
     if (!this.scriptPath) {
-      this.scriptPath = path.join(
+      this.scriptPath = path.posix.join(
         this.distDir,
         `assets-retry.${RSBUILD_VERSION}.js`,
       );
@@ -87,7 +87,6 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
 
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       // the behavior of inject/modify tags in afterTemplateExecution hook will not take effect when inject option is false
-      // @ts-expect-error compilation type mismatch
       this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapPromise(
         this.name,
         async (data) => {

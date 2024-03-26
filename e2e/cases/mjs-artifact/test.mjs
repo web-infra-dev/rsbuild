@@ -3,6 +3,7 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
+import { pluginEslint } from '@rsbuild/plugin-eslint';
 import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
 import { pluginPug } from '@rsbuild/plugin-pug';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -21,6 +22,7 @@ import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
 import { pluginVue2Jsx } from '@rsbuild/plugin-vue2-jsx';
 import { pluginToml } from '@rsbuild/plugin-toml';
 import { pluginYaml } from '@rsbuild/plugin-yaml';
+import { pluginMdx } from '@rsbuild/plugin-mdx';
 
 export default {
   pluginAssetsRetry,
@@ -28,6 +30,7 @@ export default {
   pluginCheckSyntax,
   pluginCssMinimizer,
   pluginImageCompress,
+  pluginEslint,
   pluginNodePolyfill,
   pluginPug,
   pluginReact,
@@ -46,4 +49,5 @@ export default {
   pluginVue2Jsx,
   pluginToml,
   pluginYaml,
+  pluginMdx,
 };

@@ -2,7 +2,7 @@
 
 ## 环境准备
 
-在开始使用前，你需要安装 [Node.js](https://nodejs.org/)，并保证 Node.js 版本不低于 16，**我们推荐使用 Node.js 18 的 LTS 版本**。
+在开始使用前，你需要安装 [Node.js](https://nodejs.org/)，并保证 Node.js 版本 >= 16，**我们推荐使用 Node.js 20 的 LTS 版本**。
 
 你可以通过以下命令检查当前使用的 Node.js 版本：
 
@@ -10,24 +10,20 @@
 node -v
 ```
 
-如果你当前的环境中尚未安装 Node.js，或是安装的版本低于 16，可以通过 [nvm](https://github.com/nvm-sh/nvm) 或 [fnm](https://github.com/Schniz/fnm) 安装需要的版本。
+如果你当前的环境中尚未安装 Node.js，或是安装的版本过低，可以通过 [nvm](https://github.com/nvm-sh/nvm) 或 [fnm](https://github.com/Schniz/fnm) 安装需要的版本。
 
-下面是通过 nvm 安装 Node.js 18 LTS 版本的例子：
+下面是通过 nvm 安装 Node.js 20 LTS 版本的例子：
 
 ```bash
-# 安装 Node.js 18 的长期支持版本
-nvm install 18 --lts
+# 安装 Node.js 20 的长期支持版本
+nvm install 20 --lts
 
-# 将刚安装的 Node.js 18 设置为默认版本
-nvm alias default 18
+# 将刚安装的 Node.js 20 设置为默认版本
+nvm alias default 20
 
-# 切换到刚安装的 Node.js 18
-nvm use 18
+# 切换到刚安装的 Node.js 20
+nvm use 20
 ```
-
-:::tip nvm 和 fnm
-nvm 和 fnm 都是 Node.js 版本管理工具。相对来说，nvm 较为成熟和稳定，而 fnm 是使用 Rust 实现的，比 nvm 提供了更好的性能。
-:::
 
 ## 创建 Rsbuild 项目
 
@@ -35,7 +31,14 @@ nvm 和 fnm 都是 Node.js 版本管理工具。相对来说，nvm 较为成熟�
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="create rsbuild@latest" />
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rsbuild@latest',
+    yarn: 'yarn create rsbuild',
+    pnpm: 'pnpm create rsbuild@latest',
+    bun: 'bun create rsbuild@latest',
+  }}
+/>
 
 然后按照提示操作即可，你可以选择 `create-rsbuild` 提供的下列模板：
 

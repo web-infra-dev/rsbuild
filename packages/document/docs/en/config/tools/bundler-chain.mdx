@@ -1,4 +1,4 @@
-# bundlerChain
+# tools.bundlerChain
 
 - **Type:**
 
@@ -43,11 +43,30 @@ export default {
 };
 ```
 
+### isDev
+
+- **Type:** `boolean`
+
+Used to determine whether the current build is a development build, such as:
+
+```js
+export default {
+  tools: {
+    bundlerChain: (config, { isDev }) => {
+      if (isDev) {
+        config.devtool = 'eval-cheap-source-map';
+      }
+      return config;
+    },
+  },
+};
+```
+
 ### isProd
 
 - **Type:** `boolean`
 
-The `isProd` parameter can be used to determine whether the current environment is production. For example:
+Used to determine whether the current build is a production build, such as:
 
 ```js
 export default {
@@ -65,7 +84,7 @@ export default {
 
 - **Type:** `'web' | 'node' | 'web-worker' | 'service-worker'`
 
-The `target` parameter can be used to determine the current environment. For example:
+The `target` parameter can be used to determine the build target environment. For example:
 
 ```js
 export default {
@@ -158,7 +177,7 @@ For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is regist
 | `RULE.MEDIA`  | Rule for `media`                                                          |
 | `RULE.VUE`    | Rule for `vue` (requires [Vue plugin](/plugins/list/plugin-vue))          |
 | `RULE.PUG`    | Rule for `pug` (requires [Pug plugin](/plugins/list/plugin-pug))          |
-| `RULE.TOML`   | Rule for `toml` (requires Toml plugin)                                    |
+| `RULE.TOML`   | Rule for `toml` (requires TOML plugin)                                    |
 | `RULE.SVELTE` | Rule for `svelte` (requires [Svelte plugin](/plugins/list/plugin-svelte)) |
 | `RULE.STYLUS` | Rule for `stylus` (requires [Stylus plugin](/plugins/list/plugin-stylus)) |
 
@@ -168,7 +187,6 @@ For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is regist
 
 | ID                  | Description                                                        |
 | ------------------- | ------------------------------------------------------------------ |
-| `ONE_OF.SVG`        | Rules for SVG, automatic choice between data URI and separate file |
 | `ONE_OF.SVG_URL`    | Rules for SVG, output as a separate file                           |
 | `ONE_OF.SVG_INLINE` | Rules for SVG, inlined into bundles as data URIs                   |
 | `ONE_OF.SVG_ASSETS` | Rules for SVG, automatic choice between data URI and separate file |
@@ -189,7 +207,7 @@ For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is regist
 | `USE.RESOLVE_URL` | correspond to `resolve-url-loader`                                                    |
 | `USE.VUE`         | correspond to `vue-loader` (requires [Vue plugin](/plugins/list/plugin-vue))          |
 | `USE.SVGR`        | correspond to `svgr-loader` (requires [Svgr plugin](/plugins/list/plugin-svgr))       |
-| `USE.TOML`        | correspond to `toml-loader` (requires Toml plugin)                                    |
+| `USE.TOML`        | correspond to `toml-loader` (requires TOML plugin)                                    |
 | `USE.BABEL`       | correspond to `babel-loader` (requires [Babel plugin](/plugins/list/plugin-babel))    |
 | `USE.SVELTE`      | correspond to `svelte-loader` (requires [Svelte plugin](/plugins/list/plugin-svelte)) |
 | `USE.STYLUS`      | correspond to `stylus-loader` (requires [Stylus plugin](/plugins/list/plugin-stylus)) |

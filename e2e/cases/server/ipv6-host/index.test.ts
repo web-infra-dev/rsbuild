@@ -12,5 +12,5 @@ test('should allow to listen ipv6 host', async ({ page }) => {
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  await rsbuild.server.close();
+  await rsbuild.close();
 });

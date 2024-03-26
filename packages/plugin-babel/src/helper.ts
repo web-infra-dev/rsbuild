@@ -14,6 +14,7 @@ import type {
   PresetReactOptions,
   BabelTransformOptions,
   PluginBabelOptions,
+  BabelLoaderOptions,
 } from './types';
 import type { PluginOptions as BabelPluginOptions } from '@babel/core';
 
@@ -127,7 +128,6 @@ const modifyPresetOptions = <T>(
 export const getBabelUtils = (
   config: BabelTransformOptions,
 ): BabelConfigUtils => {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const noop = () => {};
 
   return {
@@ -150,10 +150,10 @@ export const getBabelUtils = (
 };
 
 export const applyUserBabelConfig = (
-  defaultOptions: BabelTransformOptions,
+  defaultOptions: BabelLoaderOptions,
   userBabelConfig?: PluginBabelOptions['babelLoaderOptions'],
   extraBabelUtils?: Partial<BabelConfigUtils>,
-): BabelTransformOptions => {
+): BabelLoaderOptions => {
   if (userBabelConfig) {
     const babelUtils = {
       ...getBabelUtils(defaultOptions),
@@ -189,12 +189,12 @@ export const modifyBabelLoaderOptions = ({
 }) => {
   const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI, BABEL_JS_RULE];
 
-  ruleIds.forEach((ruleId) => {
+  for (const ruleId of ruleIds) {
     if (chain.module.rules.has(ruleId)) {
       const rule = chain.module.rule(ruleId);
       if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
         rule.use(CHAIN_ID.USE.BABEL).tap(modifier);
       }
     }
-  });
+  }
 };

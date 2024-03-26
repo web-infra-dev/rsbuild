@@ -24,7 +24,7 @@ export const DEFAULT_BROWSERSLIST = {
 export const ROOT_DIST_DIR = 'dist';
 export const HTML_DIST_DIR = '/';
 export const SERVER_DIST_DIR = 'server';
-export const SERVER_WORKER_DIST_DIR = 'worker';
+export const SERVICE_WORKER_DIST_DIR = 'worker';
 export const JS_DIST_DIR = 'static/js';
 export const CSS_DIST_DIR = 'static/css';
 export const SVG_DIST_DIR = 'static/svg';
@@ -39,29 +39,24 @@ export const IMAGE_EXTENSIONS = [
   'png',
   'jpg',
   'jpeg',
+  'pjpeg',
+  'pjp',
   'gif',
   'bmp',
   'webp',
   'ico',
   'apng',
   'avif',
+  'tif',
   'tiff',
+  'jfif',
 ];
-export const MEDIA_EXTENSIONS = [
-  'mp4',
-  'webm',
-  'ogg',
-  'mp3',
-  'wav',
-  'flac',
-  'aac',
-  'mov',
-];
+export const VIDEO_EXTENSIONS = ['mp4', 'webm', 'ogg', 'mov'];
+export const AUDIO_EXTENSIONS = ['mp3', 'wav', 'flac', 'aac', 'm4a', 'opus'];
 export const DEFAULT_ASSET_PREFIX = '/';
 
 // RegExp
 export const HTML_REGEX = /\.html$/;
-export const JSON_REGEX = /\.json$/;
 export const JS_REGEX = /\.(?:js|mjs|cjs|jsx)$/;
 export const TS_REGEX = /\.(?:ts|mts|cts|tsx)$/;
 export const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;

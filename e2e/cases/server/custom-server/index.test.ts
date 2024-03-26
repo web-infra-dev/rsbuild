@@ -15,7 +15,7 @@ test('custom server', async ({ page }) => {
 
   const res = await page.goto(url1.href);
 
-  expect(await res?.text()).toBe('Hello Express!');
+  expect(await res?.text()).toBe('Hello polka!');
 
   await close();
 });
@@ -30,13 +30,13 @@ test('custom server without compile', async ({ page }) => {
 
   const res = await page.goto(url1.href);
 
-  expect(await res?.text()).toBe('Hello Express!');
+  expect(await res?.text()).toBe('Hello polka!');
 
   const url2 = new URL(`http://localhost:${config.port}/test`);
 
   const res2 = await page.goto(url2.href);
 
-  expect(await res2?.text()).toBe('Hello Express!');
+  expect(await res2?.text()).toBe('Hello polka!');
 
   await close();
 });

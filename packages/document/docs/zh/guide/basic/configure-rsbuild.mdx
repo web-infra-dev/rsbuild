@@ -4,17 +4,45 @@ Rsbuild 提供了丰富的配置项，并为每个配置项预设了一个通用
 
 如果你需要定制一些构建行为，那么可以这些配置项。
 
-## 配置分类
+## 配置结构
 
-Rsbuild 中的配置可以分为以下几类：
+Rsbuild 的配置结构如下所示：
 
-- Dev：与本地开发有关的配置。
-- Html：与 HTML 有关的配置。
-- Tools：与底层工具有关的配置。
-- Server：与 Rsbuild 服务器有关的配置，在本地开发和预览时都会生效。
-- Source：与源代码解析、编译方式相关的配置。
-- Output：与构建产物有关的配置。
-- Performance：与编译性能、产物性能有关的配置。
+```ts title="rsbuild.config.ts"
+export default {
+  plugins: [
+    // 配置 Rsbuild 插件
+  ],
+  dev: {
+    // 与本地开发有关的选项
+  },
+  html: {
+    // 与 HTML 生成有关的选项
+  },
+  tools: {
+    // 与底层工具有关的选项
+  },
+  output: {
+    // 与构建产物有关的选项
+  },
+  source: {
+    // 与源代码解析、编译方式相关的选项
+  },
+  server: {
+    // 与 Rsbuild 服务器有关的选项
+    // 在本地开发和预览时都会生效
+  },
+  security: {
+    // 与 Web 安全有关的选项
+  },
+  performance: {
+    // 与构建性能、运行时性能有关的选项
+  },
+  moduleFederation: {
+    // 与模块联邦有关的选项
+  },
+};
+```
 
 你可以在 [Config 总览](/config/) 页面找到所有配置项的详细说明。
 
@@ -109,7 +137,7 @@ Rsbuild 支持在配置文件中导出一个函数，你可以在函数中动态
 ```js title="rsbuild.config.js"
 import { defineConfig } from '@rsbuild/core';
 
-export default defineConfig(({ env, command }) => ({
+export default defineConfig(({ env, command, envMode }) => ({
   source: {
     alias: {
       '@foo': env === 'development' ? './src/foo.dev.ts' : './src/foo.prod.ts',
@@ -118,16 +146,36 @@ export default defineConfig(({ env, command }) => ({
 }));
 ```
 
-该函数接受以下入参：
-
-- `env`：对应 `process.env.NODE_ENV` 的值。
-  - 当运行 `rsbuild dev` 时，`env` 的值为 `development`。
-  - 当运行 `rsbuild build` 或 `rsbuild preview` 时，`env` 的值为 `production`。
-- `command`：对应当前运行的命令，如 `dev`、`build`、`preview`。
-
 :::tip
 导出的配置函数必须提供一个返回值，如果你不需要返回任何配置，可以 return 一个空对象。
 :::
+
+该函数接受以下入参：
+
+### env
+
+- **类型：** `string`
+- **默认值：** `process.env.NODE_ENV`
+
+当前运行的环境。
+
+- 运行 `rsbuild dev` 时，env 的默认值为 `development`。
+- 运行 `rsbuild build` 或 `rsbuild preview` 时，env 的默认值为 `production`。
+
+### envMode
+
+- **类型：** `string`
+- **默认值：** `process.env.NODE_ENV`
+
+CLI 参数 `--env-mode` 当前的值。
+
+比如，当运行 `rsbuild build --env-mode test` 时，`envMode` 的值为 `test`。
+
+### command
+
+- **类型：** `string`
+
+当前运行的 CLI 命令，如 `dev`、`build`、`preview`。
 
 ## 导出异步函数
 

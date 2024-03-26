@@ -1,9 +1,13 @@
-/* eslint-disable no-undef */
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './App';
+
 import './index.css';
 
 window.aa = 2;
 
-render(React.createElement(App), document.getElementById('root'));
+const container = document.getElementById('root');
+if (container) {
+  const root = createRoot(container);
+  root.render(React.createElement(App));
+}

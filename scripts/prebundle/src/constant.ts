@@ -40,9 +40,11 @@ export const TASKS: TaskConfig[] = [
     packageName: '@rsbuild/core',
     dependencies: [
       'open',
+      'commander',
       'dotenv',
       'dotenv-expand',
       'ws',
+      'on-finished',
       {
         name: 'launch-editor-middleware',
         ignoreDts: true,
@@ -71,13 +73,6 @@ export const TASKS: TaskConfig[] = [
         name: 'connect-history-api-fallback',
         ignoreDts: true,
       },
-      {
-        name: 'node-loader',
-        ignoreDts: true,
-        externals: {
-          'loader-utils': '@rsbuild/shared/loader-utils2',
-        },
-      },
     ],
   },
   {
@@ -86,7 +81,6 @@ export const TASKS: TaskConfig[] = [
     dependencies: [
       'jiti',
       'rslog',
-      'commander',
       'deepmerge',
       'fs-extra',
       'chokidar',
@@ -154,10 +148,6 @@ export const TASKS: TaskConfig[] = [
         externals: {
           'icss-utils': '../icss-utils',
         },
-      },
-      {
-        name: 'postcss-flexbugs-fixes',
-        ignoreDts: true,
       },
       {
         name: 'sass-loader',
@@ -240,7 +230,7 @@ export const TASKS: TaskConfig[] = [
         // https://github.com/vercel/ncc/issues/935
         beforeBundle(task) {
           replaceFileContent(
-            join(task.depPath, 'src/index.js'),
+            join(task.depPath, 'src/req.js'),
             (content) => `${content.replace('await import', 'await __import')}`,
           );
         },
@@ -305,7 +295,6 @@ export const TASKS: TaskConfig[] = [
         // If we need to upgrade the version, please check if the chunk detail can be displayed correctly
         name: 'webpack-bundle-analyzer',
         externals: {
-          commander: '../commander',
           'gzip-size': '../gzip-size',
         },
       },
@@ -375,6 +364,16 @@ export const TASKS: TaskConfig[] = [
     dependencies: [
       {
         name: 'yaml-loader',
+        ignoreDts: true,
+      },
+    ],
+  },
+  {
+    packageDir: 'plugin-rem',
+    packageName: '@rsbuild/plugin-rem',
+    dependencies: [
+      {
+        name: 'postcss-pxtorem',
         ignoreDts: true,
       },
     ],

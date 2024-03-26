@@ -12,6 +12,7 @@ jobs:
     permissions:
       issues: write
     runs-on: ubuntu-latest
+    if: github.repository == 'web-infra-dev/rsbuild'
     steps:
       - name: need reproduction
         if: github.event.label.name == 'need reproduction'

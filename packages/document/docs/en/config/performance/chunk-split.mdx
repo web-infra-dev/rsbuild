@@ -1,4 +1,4 @@
-# chunkSplit
+# performance.chunkSplit
 
 - **Type:** `Object`
 - **Default:** `{ strategy: 'split-by-experience' }`
@@ -19,7 +19,7 @@ interface BaseChunkSplit {
 }
 
 interface SplitBySize {
-  strategy?: 'split-by-size';
+  strategy: 'split-by-size';
   minSize?: number;
   maxSize?: number;
   override?: SplitChunks;
@@ -27,12 +27,12 @@ interface SplitBySize {
 }
 
 interface SplitCustom {
-  strategy?: 'custom';
+  strategy: 'custom';
   splitChunks?: SplitChunks;
   forceSplitting?: ForceSplitting;
 }
 
-export type ChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;
+type ChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;
 ```
 
 ### chunkSplit.strategy
@@ -83,9 +83,9 @@ export default {
 ### chunkSplit.maxSize
 
 - **Type:** `number`
-- **Default:** `Infinity`
+- **Default:** `Number.POSITIVE_INFINITY`
 
-When `performance.chunkSplit.strategy` is `split-by-size`, you can specify the maximum size of a chunk via `performance.chunkSplit.maxSize`, the unit is bytes. The default value is `Infinity`. For example:
+When `performance.chunkSplit.strategy` is `split-by-size`, you can specify the maximum size of a chunk via `performance.chunkSplit.maxSize`, the unit is bytes. The default value is `Number.POSITIVE_INFINITY`. For example:
 
 ```js
 export default {
@@ -111,7 +111,6 @@ For example, split the `axios` library under node_modules into `axios.js`:
 export default {
   performance: {
     chunkSplit: {
-      strategy: 'split-by-experience',
       forceSplitting: {
         axios: /node_modules[\\/]axios/,
       },
@@ -157,7 +156,6 @@ When `performance.chunkSplit.strategy` is `split-by-experience`, `split-by-modul
 export default {
   performance: {
     chunkSplit: {
-      strategy: 'split-by-experience',
       override: {
         cacheGroups: {
           react: {

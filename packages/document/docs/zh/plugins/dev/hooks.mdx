@@ -1,36 +1,141 @@
 # Plugin Hooks
 
-本章节描述了 Rsbuild 插件提供的生命周期钩子。
+本章节介绍 Rsbuild 插件可用的 plugin hooks。
 
-## 概览
+## 总览
 
-**Common Hooks**
+### Common Hooks
 
-- `modifyRsbuildConfig`：修改传递给 Rsbuild 的配置项。
-- `modifyRspackConfig`：修改最终的 Rspack 配置对象。
-- `modifyBundlerChain`：通过 chain api 修改 Rspack / webpack 配置对象。
-- `onBeforeCreateCompiler`：在创建 compiler 实例前调用。
-- `onAfterCreateCompiler`：在创建 compiler 实例后、执行构建前调用。
+- [modifyRsbuildConfig](#modifyrsbuildconfig)：修改传递给 Rsbuild 的配置对象。
+- [modifyRspackConfig](#modifyrspackconfig)：修改传递给 Rspack 的配置对象。
+- [modifyBundlerChain](#modifybundlerchain)：通过 chain API 修改 Rspack 的配置对象。
+- [onBeforeCreateCompiler](#onbeforecreatecompiler)：在创建 compiler 实例前调用。
+- [onAfterCreateCompiler](#onaftercreatecompiler)：在创建 compiler 实例后、执行构建前调用。
+- [onExit](#onexit)：在进程即将退出时调用。
 
-**Build Hooks**：仅在执行 build 方法构建生产环境产物时调用。
+### Dev Hooks
 
-- `onBeforeBuild`：在执行生产环境构建前调用。
-- `onAfterBuild`：在执行生产环境构建后调用，可以获取到构建结果信息。
+仅在执行 `rsbuild dev` 命令或 `rsbuild.startDevServer()` 方法时调用。
 
-**Dev Server Hooks**：仅在执行 startDevServer 方法运行开发服务器时调用。
+- [onBeforeStartDevServer](#onbeforestartdevserver)：在启动开发服务器前调用。
+- [onAfterStartDevServer](#onafterstartdevserver)：在启动开发服务器后调用。
+- [onDevCompileDone](#ondevcompiledone)：在每次开发环境构建结束后调用。
+- [onCloseDevServer](#onclosedevserver)：在关闭开发服务器时调用。
 
-- `onBeforeStartDevServer`：在启动开发服务器前调用。
-- `onAfterStartDevServer`：在启动开发服务器后调用。
-- `onDevCompileDone`：在每次开发环境构建结束后调用。
+### Build Hooks
 
-**Prod Server Hooks**：仅在执行 preview 方法运行生产预览服务器时调用。
+仅在执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时调用。
 
-- `onBeforeStartProdServer`：在启动开发服务器前调用。
-- `onAfterStartProdServer`：在启动开发服务器后调用。
+- [onBeforeBuild](#onbeforebuild)：在执行生产环境构建前调用。
+- [onAfterBuild](#onafterbuild)：在执行生产环境构建后调用，可以获取到构建结果信息。
 
-**Other Hooks**
+### Preview Hooks
 
-- `onExit`：在进程即将退出时调用。
+仅在执行 `rsbuild preview` 命令或 `rsbuild.preview()` 方法时调用。
+
+- [onBeforeStartProdServer](#onbeforestartprodserver)：在启动生产服务器前调用。
+- [onAfterStartProdServer](#onafterstartprodserver)：在启动生产服务器后调用。
+
+---
+
+## Hooks 顺序
+
+### Dev Hooks
+
+执行 `rsbuild dev` 命令或 `rsbuild.startDevServer()` 方法时，Rsbuild 会依次执行以下 hooks：
+
+- [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [onBeforeStartDevServer](#onbeforestartdevserver)
+- [modifyBundlerChain](#modifybundlerchain)
+- [modifyRspackConfig](#modifyrspackconfig)
+- [onBeforeCreateCompiler](#onbeforecreatecompiler)
+- [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onAfterStartDevServer](#onafterstartdevserver)
+- [onDevCompileDone](#ondevcompiledone)
+- [onCloseDevServer](#onclosedevserver)
+- [onExit](#onexit)
+
+### Build Hooks
+
+执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时，Rsbuild 会依次执行以下 hooks：
+
+- [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [modifyBundlerChain](#modifybundlerchain)
+- [modifyRspackConfig](#modifyrspackconfig)
+- [onBeforeCreateCompiler](#onbeforecreatecompiler)
+- [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onBeforeBuild](#onbeforebuild)
+- [onAfterBuild](#onafterbuild)
+- [onExit](#onexit)
+
+### Preview Hooks
+
+执行 `rsbuild preview` 命令或 `rsbuild.preview()` 方法时，Rsbuild 会依次执行以下 hooks：
+
+- [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [onBeforeStartProdServer](#onbeforestartprodserver)
+- [onAfterStartProdServer](#onafterstartprodserver)
+- [onExit](#onexit)
+
+---
+
+## 回调函数顺序
+
+### 默认行为
+
+如果多个插件注册了相同的 hook，那么 hook 的回调函数会按照注册时的顺序执行。
+
+在以下例子中，控制台会依次输出 `'1'` 和 `'2'`：
+
+```ts
+const plugin1 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig(() => console.log('1'));
+  },
+});
+
+const plugin2 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig(() => console.log('2'));
+  },
+});
+
+rsbuild.addPlugins([plugin1, plugin2]);
+```
+
+### order 字段
+
+在注册 hook 时，可以通过 `order` 字段来声明 hook 的顺序。
+
+```ts
+type HookDescriptor<T extends (...args: any[]) => any> = {
+  handler: T;
+  order: 'pre' | 'post' | 'default';
+};
+```
+
+在以下例子中，控制台会依次输出 `'2'` 和 `'1'`，因为 plugin2 在调用 modifyRsbuildConfig 时设置了 order 为 `pre`。
+
+```ts
+const plugin1 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig(() => console.log('1'));
+  },
+});
+
+const plugin2 = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig({
+      handler: () => console.log('2'),
+      order: 'pre',
+    });
+  },
+});
+
+rsbuild.addPlugins([plugin1, plugin2]);
+```
+
+---
 
 ## Common Hooks
 
@@ -53,17 +158,39 @@ function ModifyRsbuildConfig(
 ): void;
 ```
 
-- **示例：**
+- **示例：** 为某个配置项设置一个默认值：
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
-    api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
-      config.html = config.html || {};
-      config.html.title = 'Hello World!';
-      return mergeRsbuildConfig(config, {
-        source: { preEntry: 'foo.js' },
-      });
+    api.modifyRsbuildConfig((config) => {
+      config.html ||= {};
+      config.html.title = 'My Default Title';
+    });
+  },
+});
+```
+
+- **示例：** 通过 `mergeRsbuildConfig` 合并配置多个对象，并返回合并后的对象。
+
+```ts
+import type { RsbuildConfig } from '@rsbuild/core';
+
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
+      const extraConfig: RsbuildConfig = {
+        source: {
+          // ...
+        },
+        output: {
+          // ...
+        },
+      };
+
+      // extraConfig 会覆盖 userConfig 里的字段，
+      // 如果你不希望覆盖 userConfig，可以调整为 `mergeRsbuildConfig(extraConfig, userConfig)`
+      return mergeRsbuildConfig(userConfig, extraConfig);
     });
   },
 });
@@ -78,6 +205,7 @@ export default () => ({
 ```ts
 type ModifyRspackConfigUtils = {
   env: NodeEnv;
+  isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
   isServer: boolean;
@@ -96,7 +224,7 @@ function ModifyRspackConfig(
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.modifyRspackConfig((config, utils) => {
       if (utils.env === 'development') {
@@ -123,6 +251,7 @@ import BundlerChain from '@zh/shared/bundlerChain.md';
 ```ts
 type ModifyBundlerChainUtils = {
   env: NodeEnv;
+  isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
   isServer: boolean;
@@ -130,10 +259,10 @@ type ModifyBundlerChainUtils = {
   CHAIN_ID: ChainIdentifier;
   HtmlPlugin: typeof import('html-webpack-plugin');
   bundler: {
-    // 取决于 bundler 类型
-    BannerPlugin: typeof webpack.BannerPlugin | typeof rspack.BannerPlugin;
-    DefinePlugin: typeof webpack.DefinePlugin | typeof rspack.DefinePlugin;
-    ProvidePlugin: typeof webpack.ProvidePlugin | typeof rspack.ProvidePlugin;
+    BannerPlugin: rspack.BannerPlugin;
+    DefinePlugin: rspack.DefinePlugin;
+    ProvidePlugin: rspack.ProvidePlugin;
+    HotModuleReplacementPlugin: rspack.HotModuleReplacementPlugin;
   };
 };
 
@@ -150,7 +279,7 @@ function ModifyBundlerChain(
 ```ts
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.modifyBundlerChain((chain, utils) => {
       if (utils.env === 'development') {
@@ -172,7 +301,7 @@ import OnBeforeCreateCompiler from '@zh/shared/onBeforeCreateCompiler.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
       console.log('the bundler config is ', bundlerConfigs);
@@ -190,7 +319,7 @@ import OnAfterCreateCompiler from '@zh/shared/onAfterCreateCompiler.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onAfterCreateCompiler(({ compiler }) => {
       console.log('the compiler is ', compiler);
@@ -210,7 +339,7 @@ import OnBeforeBuild from '@zh/shared/onBeforeBuild.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onBeforeBuild(({ bundlerConfigs }) => {
       console.log('the bundler config is ', bundlerConfigs);
@@ -228,16 +357,16 @@ import OnAfterBuild from '@zh/shared/onAfterBuild.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
-    api.onAfterBuild(({ stats }) => {
-      console.log(stats?.toJson());
+    api.onAfterBuild(({ isFirstCompile, stats }) => {
+      console.log(stats?.toJson(), isFirstCompile);
     });
   },
 });
 ```
 
-## Dev Server Hooks
+## Dev Hooks
 
 ### onBeforeStartDevServer
 
@@ -248,7 +377,7 @@ import OnBeforeStartDevServer from '@zh/shared/onBeforeStartDevServer.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onBeforeStartDevServer(() => {
       console.log('before start!');
@@ -266,7 +395,7 @@ import OnAfterStartDevServer from '@zh/shared/onAfterStartDevServer.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onAfterStartDevServer(({ port, routes }) => {
       console.log('this port is: ', port);
@@ -285,7 +414,7 @@ import OnDevCompileDone from '@zh/shared/onDevCompileDone.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onDevCompileDone(({ isFirstCompile }) => {
       if (isFirstCompile) {
@@ -298,7 +427,21 @@ export default () => ({
 });
 ```
 
-## Prod Server Hooks
+### onCloseDevServer
+
+import OnCloseDevServer from '@zh/shared/onCloseDevServer.md';
+
+<OnCloseDevServer />
+
+- **示例：**
+
+```ts
+rsbuild.onCloseDevServer(async () => {
+  console.log('close dev server!');
+});
+```
+
+## Preview Hooks
 
 ### onBeforeStartProdServer
 
@@ -309,7 +452,7 @@ import OnBeforeStartProdServer from '@zh/shared/onBeforeStartProdServer.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onBeforeStartProdServer(() => {
       console.log('before start!');
@@ -327,7 +470,7 @@ import OnAfterStartProdServer from '@zh/shared/onAfterStartProdServer.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onAfterStartProdServer(({ port, routes }) => {
       console.log('this port is: ', port);
@@ -348,7 +491,7 @@ import OnExit from '@zh/shared/onExit.md';
 - **示例：**
 
 ```ts
-export default () => ({
+const myPlugin = () => ({
   setup: (api) => {
     api.onExit(() => {
       console.log('exit!');

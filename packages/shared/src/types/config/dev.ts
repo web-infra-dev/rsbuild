@@ -40,7 +40,7 @@ export interface DevConfig {
    */
   beforeStartUrl?: ArrayOrNot<() => Promise<void> | void>;
   /**
-   * Set the URL prefix of static assets in the development environment,
+   * Set the URL prefix of static assets during development,
    * similar to the [output.publicPath](https://webpack.js.org/guides/public-path/) config of webpack.
    */
   assetPrefix?: string | boolean;
@@ -54,7 +54,7 @@ export interface DevConfig {
     path?: string;
     port?: string;
     host?: string;
-    protocol?: string;
+    protocol?: 'ws' | 'wss';
   };
   /** Provides the ability to execute a custom function and apply custom middlewares */
   setupMiddlewares?: Array<

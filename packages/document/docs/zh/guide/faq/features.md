@@ -22,27 +22,7 @@ export default {
 
 ### 如何在编译过程中进行 ESLint 代码校验？
 
-出于编译性能的考虑，Rsbuild 默认不会在编译过程中进行 ESLint 校验，如果需要该功能，可以手动安装并注册社区中的 [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin)。
-
-注册该插件的示例代码如下：
-
-```js
-import ESLintPlugin from 'eslint-webpack-plugin';
-
-export default {
-  tools: {
-    bundlerChain(chain) {
-      chain.plugin('eslint-plugin').use(ESLintPlugin, [
-        {
-          extensions: ['.js', '.ts', '.jsx', 'tsx', '.mjs', '.cjs'],
-        },
-      ]);
-    },
-  },
-};
-```
-
-> 更详细的用法请参考 [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin) 文档。
+出于编译性能的考虑，Rsbuild 默认不会在编译过程中进行 ESLint 校验，如果你需要该功能，可以使用 Rsbuild 的 [ESLint 插件](/plugins/list/plugin-eslint)。
 
 ---
 

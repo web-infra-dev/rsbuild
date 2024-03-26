@@ -1,9 +1,5 @@
-import { PLUGIN_SWC_NAME, type RsbuildPlugin } from '@rsbuild/core';
-import {
-  deepmerge,
-  modifySwcLoaderOptions,
-  type SwcReactConfig,
-} from '@rsbuild/shared';
+import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
+import { getNodeEnv, type SwcReactConfig } from '@rsbuild/shared';
 
 export type PluginPreactOptions = {
   /**
@@ -18,39 +14,39 @@ export const pluginPreact = (
 ): RsbuildPlugin => ({
   name: 'rsbuild:preact',
 
-  pre: [PLUGIN_SWC_NAME],
-
   setup(api) {
     const { reactAliasesEnabled = true } = options;
 
-    api.modifyBundlerChain(async (chain, { isProd }) => {
-      if (reactAliasesEnabled) {
-        chain.resolve.alias.merge({
-          react: 'preact/compat',
-          'react-dom/test-utils': 'preact/test-utils',
-          'react-dom': 'preact/compat',
-          'react/jsx-runtime': 'preact/jsx-runtime',
-        });
-      }
-
+    api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
       const reactOptions: SwcReactConfig = {
-        development: !isProd,
+        development: getNodeEnv() === 'development',
         runtime: 'automatic',
         importSource: 'preact',
       };
 
-      modifySwcLoaderOptions({
-        chain,
-        modifier: (options) => {
-          return deepmerge(options, {
+      const extraConfig: RsbuildConfig = {
+        tools: {
+          swc: {
             jsc: {
               transform: {
                 react: reactOptions,
               },
             },
-          });
+          },
         },
-      });
+      };
+
+      if (reactAliasesEnabled) {
+        extraConfig.source ||= {};
+        extraConfig.source.alias = {
+          react: 'preact/compat',
+          'react-dom/test-utils': 'preact/test-utils',
+          'react-dom': 'preact/compat',
+          'react/jsx-runtime': 'preact/jsx-runtime',
+        };
+      }
+
+      return mergeRsbuildConfig(extraConfig, userConfig);
     });
   },
 });

@@ -17,6 +17,14 @@ declare module '*.jpeg' {
   const src: string;
   export default src;
 }
+declare module '*.pjpeg' {
+  const src: string;
+  export default src;
+}
+declare module '*.pjp' {
+  const src: string;
+  export default src;
+}
 declare module '*.png' {
   const src: string;
   export default src;
@@ -41,7 +49,15 @@ declare module '*.avif' {
   const src: string;
   export default src;
 }
+declare module '*.tif' {
+  const src: string;
+  export default src;
+}
 declare module '*.tiff' {
+  const src: string;
+  export default src;
+}
+declare module '*.jfif' {
   const src: string;
   export default src;
 }
@@ -106,6 +122,14 @@ declare module '*.aac' {
   export default src;
 }
 declare module '*.mov' {
+  const src: string;
+  export default src;
+}
+declare module '*.m4a' {
+  const src: string;
+  export default src;
+}
+declare module '*.opus' {
   const src: string;
   export default src;
 }

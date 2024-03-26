@@ -1,8 +1,8 @@
 import path from 'node:path';
-import type { Compiler } from '@rspack/core';
+import type { Compiler, MultiCompiler } from '@rspack/core';
 import type {
   NodeEnv,
-  CacheGroup,
+  CacheGroups,
   CompilerTapFn,
   RsbuildTarget,
   ModifyChainUtils,
@@ -13,6 +13,10 @@ import fse from '../compiled/fs-extra';
 import deepmerge from '../compiled/deepmerge';
 import color from '../compiled/picocolors';
 import { DEFAULT_ASSET_PREFIX } from './constants';
+import type {
+  Compiler as WebpackCompiler,
+  MultiCompiler as WebpackMultiCompiler,
+} from 'webpack';
 
 export { color, deepmerge };
 
@@ -58,8 +62,7 @@ export const createVirtualModule = (content: string) =>
   `data:text/javascript,${content}`;
 
 export const removeLeadingSlash = (s: string): string => s.replace(/^\/+/, '');
-export const removeTailSlash = (s: string): string => s.replace(/\/+$/, '');
-
+export const removeTailingSlash = (s: string): string => s.replace(/\/+$/, '');
 export const addTrailingSlash = (s: string): string =>
   s.endsWith('/') ? s : `${s}/`;
 
@@ -75,7 +78,6 @@ export const awaitableGetter = <T>(
 ): AwaitableGetter<T> => {
   const then: PromiseLike<T[]>['then'] = (...args) =>
     Promise.all(promises).then(...args);
-  // eslint-disable-next-line no-thenable
   return { then, promises };
 };
 
@@ -139,21 +141,6 @@ export const castArray = <T>(arr?: T | T[]): T[] => {
   return Array.isArray(arr) ? arr : [arr];
 };
 
-/**
- * Try to resolve npm package, return true if package is installed.
- */
-export const isPackageInstalled = (
-  name: string,
-  resolvePaths: string | string[],
-) => {
-  try {
-    require.resolve(name, { paths: castArray(resolvePaths) });
-    return true;
-  } catch (err) {
-    return false;
-  }
-};
-
 export const camelCase = (input: string): string =>
   input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
 
@@ -174,10 +161,10 @@ export const createDependenciesRegExp = (
 
 export function createCacheGroups(
   group: Record<string, (string | RegExp)[]>,
-): CacheGroup {
-  const experienceCacheGroup: CacheGroup = {};
+): CacheGroups {
+  const experienceCacheGroup: CacheGroups = {};
 
-  Object.entries(group).forEach(([name, pkgs]) => {
+  for (const [name, pkgs] of Object.entries(group)) {
     const key = `lib-${name}`;
 
     experienceCacheGroup[key] = {
@@ -186,7 +173,7 @@ export function createCacheGroups(
       name: key,
       reuseExistingChunk: true,
     };
-  });
+  }
 
   return experienceCacheGroup;
 }
@@ -222,10 +209,16 @@ export const generateScriptTag = () => ({
 
 export const getPublicPathFromCompiler = (compiler: Compiler) => {
   const { publicPath } = compiler.options.output;
-  if (typeof publicPath === 'string' && publicPath !== 'auto') {
+
+  if (typeof publicPath === 'string') {
+    // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
+    if (publicPath === 'auto') {
+      return '';
+    }
     return addTrailingSlash(publicPath);
   }
-  // publicPath function is not supported yet
+
+  // publicPath function is not supported yet, fallback to default value
   return DEFAULT_ASSET_PREFIX;
 };
 
@@ -260,9 +253,9 @@ export function pick<T, U extends keyof T>(obj: T, keys: ReadonlyArray<U>) {
 }
 
 export const prettyTime = (seconds: number) => {
-  const format = (time: string) => color.bold(Number(time));
+  const format = (time: string) => color.bold(time);
 
-  if (seconds < 1) {
+  if (seconds < 10) {
     const digits = seconds >= 0.01 ? 2 : 3;
     return `${format(seconds.toFixed(digits))} s`;
   }
@@ -356,4 +349,13 @@ export const setupServerHooks = (
   compile.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
   invalid.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
   done.tap('rsbuild-dev-server', hookCallbacks.onDone);
+};
+
+export const isMultiCompiler = <
+  C extends Compiler | WebpackCompiler = Compiler,
+  M extends MultiCompiler | WebpackMultiCompiler = MultiCompiler,
+>(
+  compiler: C | M,
+): compiler is M => {
+  return compiler.constructor.name === 'MultiCompiler';
 };

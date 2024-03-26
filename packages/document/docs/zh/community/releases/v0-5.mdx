@@ -1,0 +1,135 @@
+# Rsbuild v0.5 发布
+
+> March 19, 2024
+
+![](https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/Rsbuild-v0-5.png)
+
+Rsbuild v0.5 是一个重要的里程碑，从该版本开始，Rsbuild 的绝大部分 API 已经达到稳定状态，我们预计在 2024 年 Q3 发布 Rsbuild v1.0。
+
+主要变更：
+
+- ⚡️ 支持启用 [Lightning CSS](https://lightningcss.dev/) 以加速 CSS 编译。
+- 🌟 支持基于新的 JavaScript API 实现自定义 server。
+- 🍭 重构 SVGR 插件以支持更丰富的用法。
+- 📍 支持自定义压缩选项。
+
+---
+
+## ⚡️ 支持 Lightning CSS
+
+Lightning CSS 是一个基于 Rust 编写的高性能 CSS 解析、转译和压缩工具。它支持将许多现代的 CSS 特性解析并转化为指定浏览器支持的语法，并提供更好的压缩比例。
+
+Rsbuild 提供了 [Lightning CSS 插件](/plugins/list/plugin-lightningcss)，用于按需开启 Lightning CSS 能力，并替代 Rsbuild 内置的 PostCSS、autoprefixer 和 SWC CSS minimizer。
+
+只需要在 Rsbuild 配置中注册 Lightning CSS 插件，即可完成切换：
+
+```js title="rsbuild.config.ts"
+import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+
+export default {
+  plugins: [pluginLightningcss()],
+};
+```
+
+在一个真实的大型 Web 应用中，我们接入了 Rsbuild Lightning CSS 插件，并使用 [Rsdoctor](https://rsdoctor.dev/) 分析构建耗时的变化：
+
+- CSS 编译耗时由 8.4s 降低到 0.12s，提升 70 倍。
+- 整体构建耗时由 33.1s 降低到 25.4s，提升 30%。
+
+---
+
+## 🌟 支持自定义 Server
+
+Rsbuild 现在支持将 dev server 替换为自定义的 server，并复用 Rsbuild 提供的页面预览、路由、模块热更新等功能。这将使得 Rsbuild 与其他 Node.js 框架结合使用变得更加容易。
+
+比如基于 express 实现自定义 server：
+
+```ts
+import express from 'express';
+import { createRsbuild } from '@rsbuild/core';
+
+async function startCustomServer() {
+  const app = express();
+  const rsbuild = await createRsbuild();
+  const { port, middlewares } = await rsbuild.createDevServer();
+
+  app.use(middlewares);
+  app.listen(port);
+}
+```
+
+详情可参考 [Rsbuild - createDevServer](https://rsbuild.dev/zh/api/javascript-api/instance#rsbuildcreatedevserver)。
+
+---
+
+## 🍭 重构 SVGR 插件
+
+在 0.5.0 之前的版本中，SVGR 插件的默认用法与 create-react-app 保持一致，允许以混合导入的形式使用 SVG：
+
+```js
+import logoUrl, { ReactComponent as Logo } from './logo.svg';
+
+console.log(logoUrl); // -> string
+console.log(Logo); // -> React component
+```
+
+但这种做法存在两个问题：
+
+1. **包体积增加**：混合导入会导致单个 SVG 模块被编译为两种代码（即使部分导出没有被使用），这会增加产物的包体积。
+2. **编译速度下降**：混合导入会产生额外的编译开销。即使代码中未使用到 ReactComponent 导出，SVG 文件仍然会被 SVGR 编译。而 SVGR 是基于 Babel 实现的，性能开销较大。
+
+因此，我们重构了 `@rsbuild/plugin-svgr` 插件，支持通过 `?react` query 来将 SVG 转换为 React 组件，这种用法能够解决以上问题，且更符合当前社区的最佳实践。
+
+```jsx
+import logoUrl from './logo.svg';
+import Logo from './logo.svg?react';
+
+console.log(logoUrl); // -> string
+console.log(Logo); // -> React component
+```
+
+SVGR 插件现在支持在多种 SVGR 用法之间切换，如果项目需要使用之前的混合导入用法，可以手动开启 [mixedImport](/plugins/list/plugin-svgr#mixedimport) 选项：
+
+```js
+pluginSvgr({
+  mixedImport: true,
+});
+```
+
+---
+
+## 📍 自定义压缩选项
+
+`output.disableMinimize` 选项已经被重命名为 [output.minify](/config/output/minify)，并允许自定义 JS 和 HTML 的压缩选项。
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      jsOptions: {
+        mangle: false,
+      },
+    },
+  },
+};
+```
+
+使用 `output.disableMinimize` 的项目可以参考以下示例：
+
+```diff
+export default {
+  output: {
+-    disableMinimize: true,
++    minify: false,
+  },
+};
+```
+
+> 详见 ["allow customize minify options"](https://github.com/web-infra-dev/rsbuild/issues/1681)。
+
+---
+
+更多内容请参考：
+
+- [Rsbuild 0.5.0 更新日志](https://github.com/web-infra-dev/rsbuild/releases/tag/v0.5.0)
+- [Rsbuild 0.5.0 不兼容更新](https://github.com/web-infra-dev/rsbuild/discussions/1732)

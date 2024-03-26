@@ -21,14 +21,15 @@ export function pluginLess(): RsbuildPlugin {
         const { options, excludes } = getLessLoaderOptions(
           config.tools.less,
           config.output.sourceMap.css,
+          api.context.rootPath,
         );
         const rule = chain.module
           .rule(utils.CHAIN_ID.RULE.LESS)
           .test(LESS_REGEX);
 
-        excludes.forEach((item) => {
+        for (const item of excludes) {
           rule.exclude.add(item);
-        });
+        }
 
         await applyBaseCSSRule({
           rule,

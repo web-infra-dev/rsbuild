@@ -55,9 +55,12 @@
 
 - [Assets Retry 插件](/plugins/list/plugin-assets-retry)：用于在静态资源加载失败时自动发起重试请求。
 - [Babel 插件](/plugins/list/plugin-babel)：提供对 Babel 转译能力的支持。
+- [ESLint 插件](/plugins/list/plugin-eslint)：用于在编译过程中运行 ESLint 检查。
 - [Type Check 插件](/plugins/list/plugin-type-check)：用于在单独的进程中运行 TypeScript 类型检查。
 - [Image Compress 插件](/plugins/list/plugin-image-compress)：将项目中用到的图片资源进行压缩处理。
+- [MDX 插件](/plugins/list/plugin-mdx)：提供 MDX 支持。
 - [Node Polyfill 插件](/plugins/list/plugin-node-polyfill)：用于注入 Node 核心模块在浏览器端的 polyfills。
+- [Lightning CSS 插件](/plugins/list/plugin-lightningcss)：用于使用 LightningCSS 作为 CSS 的转译和压缩工具。
 - [Source Build 插件](/plugins/list/plugin-source-build)：用于 monorepo 场景，支持引用其他子目录的源代码，并完成构建和热更新。
 - [Stylus 插件](/plugins/list/plugin-stylus)：使用 Stylus 作为 CSS 预处理器。
 - [Check Syntax 插件](/plugins/list/plugin-check-syntax)：用于分析产物的语法兼容性，判断是否存在导致兼容性问题的高级语法。
@@ -71,3 +74,9 @@
 :::tip
 你可以在 [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) 仓库中找到所有官方插件的源代码。
 :::
+
+## 社区插件
+
+你可以在 [awesome-rspack - Rsbuild Plugins](https://github.com/web-infra-dev/awesome-rspack?tab=readme-ov-file#rsbuild-plugins) 中查看社区提供的 Rsbuild 插件。
+
+也可以在 npm 上搜索 [rsbuild-plugin](https://www.npmjs.com/search?q=rsbuild-plugin&ranking=popularity) 关键词来发现更多 Rsbuild 插件。

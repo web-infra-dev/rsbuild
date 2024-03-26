@@ -1,20 +1,33 @@
 import nodePath from 'node:path';
 import * as t from '@babel/types';
+import { readFileSync } from 'node:fs';
+
+const CORE_JS_PKG_PATH = require.resolve('core-js/package.json');
 
 const REWRITE_TARGETS: Record<string, string> = {
   '@babel/runtime': nodePath.dirname(
     require.resolve('@babel/runtime/package.json'),
   ),
-  'core-js': nodePath.dirname(require.resolve('core-js/package.json')),
+  'core-js': nodePath.dirname(CORE_JS_PKG_PATH),
 };
 
 const matchedKey = (value: string) =>
   Object.keys(REWRITE_TARGETS).find((name) => value.startsWith(`${name}/`));
 
+export const getCoreJsVersion = () => {
+  try {
+    const { version } = JSON.parse(readFileSync(CORE_JS_PKG_PATH, 'utf-8'));
+    const [major, minor] = version.split('.');
+    return `${major}.${minor}`;
+  } catch (err) {
+    return '3';
+  }
+};
+
 export default (_: any) => {
   return {
     post({ path }: any) {
-      path.node.body.forEach((node: t.Node) => {
+      for (const node of path.node.body as t.Node[]) {
         // import
         if (t.isImportDeclaration(node)) {
           const key = matchedKey(node.source.value);
@@ -42,7 +55,7 @@ export default (_: any) => {
             }
           }
         }
-      });
+      }
     },
   };
 };

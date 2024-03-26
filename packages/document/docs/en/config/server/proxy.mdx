@@ -1,4 +1,4 @@
-# proxy
+# server.proxy
 
 - **Type:** `Record<string, string> | Record<string, ProxyDetail>`
 - **Default:** `undefined`
@@ -50,6 +50,23 @@ export default {
       '/api': {
         target: 'http://localhost:3000',
         pathRewrite: { '^/api': '' },
+      },
+    },
+  },
+};
+```
+
+### Proxy WebSocket
+
+If you want to proxy WebSocket requests, you can enable it through set `ws` to `true`:
+
+```js
+export default {
+  server: {
+    proxy: {
+      '/rsbuild-hmr': {
+        target: 'http://localhost:3000', // will proxy to ws://localhost:3000/rsbuild-hmr
+        ws: true,
       },
     },
   },

@@ -1,5 +1,9 @@
 # SVGR Plugin
 
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-svgr" />
+
 By default, Rsbuild will treat SVG files as static assets. For processing rules, please refer to: [Import Static Assets](/guide/basic/static-assets)。
 
 With SVGR plugin, Rsbuild supports convert SVG to React components via [SVGR](https://react-svgr.com/).
@@ -28,21 +32,35 @@ export default {
 
 ## Example
 
-After installing the plugin, When import an SVG in a JS file, if you import `ReactComponent`, Rsbuild will call SVGR to convert the SVG into a React component.
+After installing the plugin, when import an SVG in a JS file, if the imported path contains the `?react` suffix, Rsbuild will call SVGR to convert the SVG into a React component.
 
-```js
-import { ReactComponent as Logo } from './logo.svg';
+```jsx title="App.jsx"
+import Logo from './logo.svg?react';
 
-export default () => <Logo />;
+export const App = () => <Logo />;
 ```
 
-At this time，if you use the default import, then the SVG will be treated as a normal static asset and you will get a URL:
+:::tip
+@rsbuild/plugin-svgr supports the above usage since v0.4.14.
+:::
+
+If the imported path does not contain the `?react` suffix, then the SVG will be treated as a normal static asset and you will get a URL:
 
 ```js
 import logoURL from './static/logo.svg';
 
 console.log(logoURL); // => "/static/logo.6c12aba3.png"
 ```
+
+Rsbuild also supports named imports of the `ReactComponent` to use SVGR:
+
+```jsx title="App.jsx"
+import { ReactComponent as Logo } from './logo.svg';
+
+export const App = () => <Logo />;
+```
+
+---
 
 ## Options
 
@@ -56,11 +74,11 @@ type PluginSvgrOptions = {
    * Configure SVGR options.
    */
   svgrOptions?: import('@svgr/core').Config;
-
   /**
-   * Configure the default export type of SVG files.
+   * Whether to allow the use of default import and named import at the same time.
+   * @default false
    */
-  svgDefaultExport?: 'component' | 'url';
+  mixedImport?: boolean;
 };
 ```
 
@@ -102,23 +120,26 @@ pluginSvgr({
 });
 ```
 
-### svgDefaultExport
+### svgrOptions.exportType
 
-Modify the default export type of SVG files.
+Set the export type of SVG React components.
 
-- **Type:** `'component' | 'url'`
-- **Default:** `'url'`
+- **Type:** `'named' | 'default'`
+- **Default:** `undefined`
 
-For example, set the default export as a React component:
+`exportType` can be set as:
 
-```ts title="rsbuild.config.ts"
-export default {
-  plugins: [
-    pluginSvgr({
-      svgDefaultExport: 'component',
-    }),
-  ],
-};
+- `named`: use default export
+- `export`: use named export (`ReactComponent`)
+
+For example, set the default export of SVG file as a React component:
+
+```ts
+pluginSvgr({
+  svgrOptions: {
+    exportType: 'default',
+  },
+});
 ```
 
 Then import the SVG, you'll get a React component instead of a URL:
@@ -137,6 +158,69 @@ import logo from './logo.svg?url';
 console.log(logo); // => asset url
 ```
 
+:::tip
+When `svgrOptions.exportType` is set to `'default'`, the named imports (ReactComponent) cannot be used.
+:::
+
+### mixedImport
+
+- **Type：** `boolean`
+- **Default** `false`
+- **Version:** `>= 0.5.0`
+
+Whether to enable mixed import, allowing to use default import and named import at the same time.
+
+Mixed import is usually used with `svgrOptions.exportType: 'named'`, for example:
+
+```ts
+pluginSvgr({
+  mixedImport: true,
+  svgrOptions: {
+    exportType: 'named',
+  },
+});
+```
+
+At this time, the imported SVG file will export both URL and the React component:
+
+```js
+import logoUrl, { ReactComponent as Logo } from './logo.svg';
+
+console.log(logoUrl); // -> string
+console.log(Logo); // -> React component
+```
+
+#### Limitations
+
+It is recommended to use `?react` to convert SVG to React component instead of using mixed import. Because mixed import has the following limitations:
+
+1. Increased bundle size: Mixed import causes a single SVG module to be compiled into two types of code (even if some exports are not used), which will increase the bundle size.
+2. Slow down compiling: Mixed import will cause extra compilation overhead. Even if the ReactComponent export is not used in the code, the SVG file will still be compiled by SVGR. And SVGR is based on Babel, which has a high performance overhead.
+
+### query
+
+- **Type:** `RegExp`
+- **Default:** `/react/`
+- **Version:** `>= 0.5.2`
+
+Used to custom the query suffix to match SVGR transformation.
+
+For example, if you need to match import paths with the `?svgr` suffix:
+
+```ts
+pluginSvgr({
+  query: /svgr/,
+});
+```
+
+```jsx title="App.jsx"
+import Logo from './logo.svg?svgr';
+
+export const App = () => <Logo />;
+```
+
+---
+
 ## Type Declaration
 
 When you reference an SVG asset in TypeScript code, TypeScript may prompt that the module is missing a type definition:
@@ -145,7 +229,49 @@ When you reference an SVG asset in TypeScript code, TypeScript may prompt that t
 TS2307: Cannot find module './logo.svg' or its corresponding type declarations.
 ```
 
-To fix this, you need to add a type declaration file for the SVG asset, please create a `src/env.d.ts` file, and add the following type declaration:
+To fix this, you need to add type declaration for the SVG assets, please create a `src/env.d.ts` file, and add the type declaration.
+
+- By default, you can add the following type declarations:
+
+```ts
+declare module '*.svg' {
+  const content: string;
+  export default content;
+}
+declare module '*.svg?react' {
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+```
+
+- If the value of `svgrOptions.exportType` is `'default'`, set the type declaration to:
+
+```ts
+declare module '*.svg' {
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+declare module '*.svg?react' {
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+```
+
+- If the value of `svgrOptions.exportType` is `'named'`, set the type declaration to:
+
+```ts
+declare module '*.svg' {
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement>
+  >;
+}
+declare module '*.svg?react' {
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
+}
+```
+
+- If the value of `svgrOptions.exportType` is `'named'`, and `mixedImport` is enabled, set the type declaration to:
 
 ```ts
 declare module '*.svg' {
@@ -155,17 +281,10 @@ declare module '*.svg' {
   const content: string;
   export default content;
 }
-```
-
-If you set `svgDefaultExport` to `'component'`, then change the type declaration to:
-
-```ts
-declare module '*.svg' {
-  export const ReactComponent: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement>
-  >;
+declare module '*.svg?react' {
+  const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
 ```
 
-After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `env.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
+After adding the type declarations, if the type error still exists, you can try to restart the IDE, or adjust the directory where `env.d.ts` is located, making sure the TypeScript can correctly identify the type definition.

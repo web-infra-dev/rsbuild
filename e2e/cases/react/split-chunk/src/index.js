@@ -1,8 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
+import { createRoot } from 'react-dom/client';
 import App from './App';
+import { Link } from 'react-router-dom';
 
-ReactDOM.render(React.createElement(App), document.getElementById('root'));
+const container = document.getElementById('root');
+if (container) {
+  const root = createRoot(container);
+  root.render(React.createElement(App));
+}
 
 console.log(Link);
