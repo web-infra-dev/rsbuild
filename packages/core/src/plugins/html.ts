@@ -286,9 +286,9 @@ export const pluginHtml = (): RsbuildPlugin => ({
         // keep html entry plugin registration order stable based on entryNames
         entryNames.forEach((entryName, index) => {
           chain
-          .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
-          .use(HtmlPlugin, [finalOptions[index]]);
-        })
+            .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
+            .use(HtmlPlugin, [finalOptions[index]]);
+        });
 
         const { HtmlBasicPlugin } = await import('../rspack/HtmlBasicPlugin');
 

@@ -16,7 +16,7 @@ const Foo = {
 
 export default {
   components: {
-    Foo
+    Foo,
   },
 
   setup() {

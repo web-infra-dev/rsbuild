@@ -13,9 +13,7 @@ function applyRemoveConsole(
 ) {
   const { removeConsole } = config.performance;
   const compressOptions =
-    typeof options.compress === 'boolean'
-      ? {}
-      : options.compress || {};
+    typeof options.compress === 'boolean' ? {} : options.compress || {};
 
   if (removeConsole === true) {
     options.compress = {
