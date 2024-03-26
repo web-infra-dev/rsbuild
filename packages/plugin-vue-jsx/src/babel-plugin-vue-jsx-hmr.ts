@@ -14,7 +14,7 @@ interface HotComponent {
 export default function vueJsxHmrPlugin({
   types: t,
 }: BabelPluginOptions): babelCore.PluginObj {
-  console.log('vueJsxHmrPlugin');
+  console.log('vueJsxHmrPlugin...');
   let declaredComponents: string[] = [];
   let hotComponents: HotComponent[] = [];
   let hasDefault = false;
@@ -97,12 +97,16 @@ export default function vueJsxHmrPlugin({
 
   return {
     inherits: jsx,
+    pre(this, file) {
+      console.log('pre', file.opts.filename);
+      declaredComponents = [];
+      hotComponents = [];
+      hasDefault = false;
+    },
     visitor,
     post(this, file) {
-      // console.dir(file, { depth: null });
-      console.log('post');
-      // console.dir(this)
-      // console.dir(file)
+      console.log('post', file.opts.filename);
+      console.log(babelCore.transformFromAstSync(file.ast, undefined)?.code);
       console.log('hotComponents', hotComponents);
 
       if (hotComponents.length) {

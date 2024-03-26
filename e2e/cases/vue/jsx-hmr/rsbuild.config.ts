@@ -12,4 +12,8 @@ export default defineConfig({
     }),
     pluginVueJsx(),
   ],
+
+  performance: {
+    buildCache: false,
+  },
 });
