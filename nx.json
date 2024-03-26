@@ -18,7 +18,5 @@
       "inputs": ["build", "^build"]
     }
   },
-  "affected": {
-    "defaultBase": "main"
-  }
+  "defaultBase": "main"
 }
