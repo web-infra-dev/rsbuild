@@ -117,3 +117,42 @@ import fs from 'fs';
 
 console.log(fs); // -> {}
 ```
+
+## Options
+
+### globals
+
+Used to specify whether to inject polyfills for global variables.
+
+- **Type:**
+
+```ts
+type Globals = {
+  process?: boolean;
+  Buffer?: boolean;
+};
+```
+
+- **Default:**
+
+```ts
+const defaultGlobals = {
+  Buffer: true,
+  process: true,
+};
+```
+
+### protocolImports
+
+Whether to polyfill Node.js builtin modules starting with `node:`.
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+For example, if you disable `protocolImports`, modules such as `node:path`, `node:http`, etc. will not be polyfilled.
+
+```ts
+pluginNodePolyfill({
+  protocolImports: false,
+});
+```
