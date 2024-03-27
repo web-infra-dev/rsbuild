@@ -79,10 +79,12 @@ export function pluginNodePolyfill(
             .use(bundler.ProvidePlugin, [provideGlobals]);
         }
 
-        const { ProtocolImportsPlugin } = await import(
-          './ProtocolImportsPlugin'
-        );
-        chain.plugin('protocol-imports').use(ProtocolImportsPlugin);
+        if (protocolImports) {
+          const { ProtocolImportsPlugin } = await import(
+            './ProtocolImportsPlugin'
+          );
+          chain.plugin('protocol-imports').use(ProtocolImportsPlugin);
+        }
       });
     },
   };

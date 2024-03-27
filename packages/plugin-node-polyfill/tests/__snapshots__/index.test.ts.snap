@@ -205,7 +205,6 @@ exports[`plugin-node-polyfill > should allow to remove protocol imports 1`] = `
       "affectedHooks": undefined,
       "name": "ProvidePlugin",
     },
-    ProtocolImportsPlugin {},
   ],
   "resolve": {
     "fallback": {
