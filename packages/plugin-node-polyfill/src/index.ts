@@ -28,7 +28,7 @@ export type PluginNodePolyfillOptions = {
 const getResolveFallback = (protocolImports?: boolean) => {
   const fallback: Record<string, string | false> = {};
 
-  Object.keys(nodeLibs).forEach((name) => {
+  for (const name of Object.keys(nodeLibs)) {
     const libPath = nodeLibs[name as keyof typeof nodeLibs];
 
     fallback[name] = libPath ?? false;
@@ -36,7 +36,7 @@ const getResolveFallback = (protocolImports?: boolean) => {
     if (protocolImports) {
       fallback[`node:${name}`] = fallback[name];
     }
-  });
+  }
 
   return fallback;
 };
