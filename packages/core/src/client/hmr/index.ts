@@ -7,7 +7,7 @@
 import type { StatsError } from '@rsbuild/shared';
 import { formatStatsMessages } from '../formatStats';
 import { createSocketUrl, parseParams } from './createSocketUrl';
-import { ErrorOverlay, overlayId } from './overlay';
+import { createOverlay, clearOverlay } from './overlay';
 
 const options = parseParams(__resourceQuery);
 
@@ -20,17 +20,6 @@ const enableOverlay = options.overlay === 'true';
 let isFirstCompilation = true;
 let mostRecentCompilationHash: string | null = null;
 let hasCompileErrors = false;
-
-function createErrorOverlay(err: any) {
-  clearErrorOverlay();
-  document.body.appendChild(new ErrorOverlay(err));
-}
-
-function clearErrorOverlay() {
-  // use NodeList's forEach api instead of dom.iterable
-  // biome-ignore lint/complexity/noForEach: <explanation>
-  document.querySelectorAll<ErrorOverlay>(overlayId).forEach((n) => n.close());
-}
 
 function clearOutdatedErrors() {
   // Clean up outdated compile errors, if any.
@@ -113,7 +102,7 @@ function handleErrors(errors: StatsError[]) {
   }
 
   if (enableOverlay) {
-    createErrorOverlay(formatted.errors);
+    createOverlay(formatted.errors);
   }
 
   // Do not attempt to reload now.
@@ -196,7 +185,7 @@ function onMessage(e: MessageEvent<string>) {
   const message = JSON.parse(e.data);
   switch (message.type) {
     case 'hash':
-      clearErrorOverlay();
+      clearOverlay();
       handleAvailableHash(message.data);
       break;
     case 'still-ok':

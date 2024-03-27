@@ -1,27 +1,9 @@
-interface ErrorPayload {
-  type: 'error';
-  err: string[];
-}
-
-const template = /*html*/ `
+const template = `
 <style>
-:host {
+.root {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 99999;
-  --monospace: 'SFMono-Regular', Consolas,
-  'Liberation Mono', Menlo, Courier, monospace;
-  --red: #ff5555;
-  --window-background: #181818;
-  --window-color: #d8d8d8;
-}
-
-.backdrop {
-  position: fixed;
-  z-index: 99999;
+  z-index: 9999;
   top: 0;
   left: 0;
   width: 100%;
@@ -31,15 +13,14 @@ const template = /*html*/ `
   background: rgba(0, 0, 0, 0.66);
 }
 
-.window {
-  font-family: var(--monospace);
+.content {
   line-height: 1.5;
   width: 40%;
-  color: var(--window-color);
+  color: #d8d8d8;
   margin: 30px auto;
   padding: 25px 40px;
   position: relative;
-  background: var(--window-background);
+  background: #181818;
   border-radius: 6px 6px 8px 8px;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   overflow: hidden;
@@ -47,8 +28,12 @@ const template = /*html*/ `
   text-align: left;
 }
 
+.title {
+  font-weight: 600;
+  color: #ff5555;
+}
+
 pre {
-  font-family: var(--monospace);
   font-size: 16px;
   margin-top: 0;
   margin-bottom: 1em;
@@ -62,21 +47,14 @@ pre::-webkit-scrollbar {
 
 .message {
   line-height: 1.3;
-  font-weight: 600;
   white-space: pre-wrap;
-}
-
-.title {
-  color: var(--red);
-}
-.message-body {
-  color: var(--window-color);
+  color: #d8d8d8;
 }
 
 .file-link {
   text-decoration: underline;
   cursor: pointer;
-  color: rgb(0, 187, 187);
+  color: rgb(92 157 255);
 }
 
 .close {
@@ -91,22 +69,22 @@ pre::-webkit-scrollbar {
   border: none;
 }
 </style>
-<div class="backdrop" part="backdrop">
-  <div class="window" part="window">
+<div class="root">
+  <div class="content">
     <div class="close">x</div>
     <p class="title">Compile error:</p>
-    <pre class="message" part="message"><span class="message-body" part="message-body"></span></pre>
+    <pre class="message"></pre>
   </div>
 </div>
 `;
 
-function ansiRegex({ onlyFirst = false } = {}) {
+function ansiRegex() {
   const pattern = [
     '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
     '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
   ].join('|');
 
-  return new RegExp(pattern, onlyFirst ? undefined : 'g');
+  return new RegExp(pattern, 'g');
 }
 
 const regex = ansiRegex();
@@ -125,55 +103,28 @@ const fileRE = /(?:[a-zA-Z]:\\|\/).*?:\d+:\d+/g;
 // `HTMLElement` was not originally defined.
 const { HTMLElement = class {} as typeof globalThis.HTMLElement } = globalThis;
 
-export class ErrorOverlay extends HTMLElement {
+class ErrorOverlay extends HTMLElement {
   root: ShadowRoot;
 
-  constructor(message: ErrorPayload['err']) {
+  constructor(message: string[]) {
     super();
     this.root = this.attachShadow({ mode: 'open' });
     this.root.innerHTML = template;
 
-    this.linkedText('.message-body', stripAnsi(message.join('/n')).trim());
+    linkedText(this.root, '.message', stripAnsi(message.join('/n')).trim());
 
-    this.root.querySelector('.window')!.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-
-    // close overlay when click outside
     this.root.querySelector('.close')!.addEventListener('click', () => {
       this.close();
     });
 
+    // close overlay when click outside
     this.addEventListener('click', () => {
       this.close();
     });
-  }
 
-  linkedText(selector: string, text: string): void {
-    const el = this.root.querySelector(selector)!;
-
-    let curIndex = 0;
-    let match: RegExpExecArray | null = fileRE.exec(text);
-    while (match !== null) {
-      const { 0: file, index } = match;
-      if (index != null) {
-        const frag = text.slice(curIndex, index);
-        el.appendChild(document.createTextNode(frag));
-        const link = document.createElement('a');
-        link.textContent = file;
-        link.className = 'file-link';
-
-        link.onclick = () => {
-          fetch(`/__open-in-editor?file=${encodeURIComponent(file)}`);
-        };
-        el.appendChild(link);
-        curIndex += frag.length + file.length;
-      }
-      match = fileRE.exec(text)
-    }
-
-    const frag = text.slice(curIndex);
-    el.appendChild(document.createTextNode(frag));
+    this.root.querySelector('.content')!.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
   }
 
   close(): void {
@@ -181,9 +132,47 @@ export class ErrorOverlay extends HTMLElement {
   }
 }
 
-export const overlayId = 'rsbuild-error-overlay';
+const overlayId = 'rsbuild-error-overlay';
 
 const { customElements } = globalThis;
 if (customElements && !customElements.get(overlayId)) {
   customElements.define(overlayId, ErrorOverlay);
+}
+
+function linkedText(root: ShadowRoot, selector: string, text: string): void {
+  const el = root.querySelector(selector)!;
+
+  let curIndex = 0;
+  let match: RegExpExecArray | null = fileRE.exec(text);
+  while (match !== null) {
+    const { 0: file, index } = match;
+    if (index != null) {
+      const frag = text.slice(curIndex, index);
+      el.appendChild(document.createTextNode(frag));
+      const link = document.createElement('a');
+      link.textContent = file;
+      link.className = 'file-link';
+
+      link.onclick = () => {
+        fetch(`/__open-in-editor?file=${encodeURIComponent(file)}`);
+      };
+      el.appendChild(link);
+      curIndex += frag.length + file.length;
+    }
+    match = fileRE.exec(text)
+  }
+
+  const frag = text.slice(curIndex);
+  el.appendChild(document.createTextNode(frag));
+}
+
+export function createOverlay(err: any) {
+  clearOverlay();
+  document.body.appendChild(new ErrorOverlay(err));
+}
+
+export function clearOverlay() {
+  // use NodeList's forEach api instead of dom.iterable
+  // biome-ignore lint/complexity/noForEach: <explanation>
+  document.querySelectorAll<ErrorOverlay>(overlayId).forEach((n) => n.close());
 }
