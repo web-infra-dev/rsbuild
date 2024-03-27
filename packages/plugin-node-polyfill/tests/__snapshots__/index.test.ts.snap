@@ -16,6 +16,7 @@ exports[`plugin-node-polyfill > should add node-polyfill config 1`] = `
       "affectedHooks": undefined,
       "name": "ProvidePlugin",
     },
+    ProtocolImportsPlugin {},
   ],
   "resolve": {
     "fallback": {
@@ -102,6 +103,9 @@ exports[`plugin-node-polyfill > should add node-polyfill config 1`] = `
 
 exports[`plugin-node-polyfill > should allow to disable globals 1`] = `
 {
+  "plugins": [
+    ProtocolImportsPlugin {},
+  ],
   "resolve": {
     "fallback": {
       "_stream_duplex": "<ROOT>/node_modules/<PNPM_INNER>/readable-stream/lib/_stream_duplex.js",
@@ -201,6 +205,7 @@ exports[`plugin-node-polyfill > should allow to remove protocol imports 1`] = `
       "affectedHooks": undefined,
       "name": "ProvidePlugin",
     },
+    ProtocolImportsPlugin {},
   ],
   "resolve": {
     "fallback": {
