@@ -14,9 +14,7 @@ export const pluginTransition = (): RsbuildPlugin => ({
     process.env.WATCHPACK_WATCHER_LIMIT ||= '20';
 
     api.modifyRspackConfig((config) => {
-      // only enable new tree shaking in production build,
-      // because Rspack still has some problems when using it in dev mode.
-      // such as https://github.com/web-infra-dev/rspack/issues/5887
+      // rspack will be enabled by default in the next minor version
       config.experiments ||= {};
       config.experiments.rspackFuture ||= {};
       config.experiments.rspackFuture.newTreeshaking = true;
