@@ -90,6 +90,28 @@ export function pluginModuleFederation(): RsbuildPlugin {
     name: 'rsbuild:module-federation',
 
     setup(api) {
+      api.modifyRsbuildConfig({
+        order: 'post',
+        handler: (config) => {
+          /**
+           * Currently, splitChunks will take precedence over module federation shared modules.
+           * So we need to disable the default split chunks rules to make shared modules to work properly.
+           * @see https://github.com/module-federation/module-federation-examples/issues/3161
+           */
+          if (
+            config.moduleFederation?.options &&
+            config.performance?.chunkSplit?.strategy === 'split-by-experience'
+          ) {
+            config.performance.chunkSplit = {
+              ...config.performance.chunkSplit,
+              strategy: 'custom',
+            };
+          }
+
+          return config;
+        },
+      });
+
       api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
         const config = api.getNormalizedConfig();
 

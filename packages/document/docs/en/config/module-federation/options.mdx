@@ -4,15 +4,20 @@
 - **Default:** `undefined`
 - **Version:** `>= 0.4.0`
 
-Used to configure the Rspack module federation plugin.
+Used to configure the Rspack's module federation plugin.
 
-After setting the `moduleFederation.options` option, Rsbuild will take the following actions to ensure that the module federation runs correctly:
+## Introduction
+
+When using module federation, it is recommended that you use the `moduleFederation.options` option provided by Rsbuild. This option will automatically adjust some related configurations to ensure that the module federation application can run correctly.
+
+When you set the `moduleFederation.options` option, Rsbuild will take the following actions:
 
 - Automatically register the [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) plugin, and pass the value of `options` to the plugin.
-- Set the default value of the Rspack `output.publicPath` config to `'auto'`.
-- Turn off the splitChunks rules of the remote entry.
+- Set the default value of Rspack's [output.publicPath](https://rspack.dev/config/output#outputpublicpath) configuration to `'auto'`.
+- Turn off the `split-by-experience` rules in Rsbuild's [performance.chunkSplit](/config/performance/chunk-split) as it may conflict with shared modules, refer to [#3161](https://github.com/module-federation/module-federation-examples/issues/3161).
+- Turn off the splitChunks rule of remote entry.
 
-## Options
+## Usage
 
 The type of `moduleFederation.options` is exactly the same as the ModuleFederationPlugin plugin of Rspack:
 
