@@ -1,7 +1,45 @@
-const template = `
+function stripAnsi(content: string) {
+  const pattern = [
+    '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
+    '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
+  ].join('|');
+
+  const regex = new RegExp(pattern, 'g')
+
+  return content.replace(regex, '');
+}
+
+function linkedText(root: ShadowRoot, selector: string, text: string): void {
+  const el = root.querySelector(selector)!;
+  const fileRegex = /(?:[a-zA-Z]:\\|\/).*?:\d+:\d+/g;
+
+  let curIndex = 0;
+  let match = fileRegex.exec(text);
+  while (match !== null) {
+    const { 0: file, index } = match;
+    if (index != null) {
+      const frag = text.slice(curIndex, index);
+      el.appendChild(document.createTextNode(frag));
+      const link = document.createElement('a');
+      link.textContent = file;
+      link.className = 'file-link';
+
+      link.onclick = () => {
+        fetch(`/__open-in-editor?file=${encodeURIComponent(file)}`);
+      };
+      el.appendChild(link);
+      curIndex += frag.length + file.length;
+    }
+    match = fileRegex.exec(text);
+  }
+
+  const frag = text.slice(curIndex);
+  el.appendChild(document.createTextNode(frag));
+}
+
+const overlayTemplate = `
 <style>
 .root {
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   position: fixed;
   z-index: 9999;
   top: 0;
@@ -13,7 +51,8 @@ const template = `
   background: rgba(0, 0, 0, 0.66);
 }
 
-.content {
+.container {
+  font-family: Menlo, Consolas, monospace;
   line-height: 1.5;
   width: 40%;
   color: #d8d8d8;
@@ -70,7 +109,7 @@ pre::-webkit-scrollbar {
 }
 </style>
 <div class="root">
-  <div class="content">
+  <div class="container">
     <div class="close">x</div>
     <p class="title">Compile error:</p>
     <pre class="message"></pre>
@@ -78,42 +117,25 @@ pre::-webkit-scrollbar {
 </div>
 `;
 
-function ansiRegex() {
-  const pattern = [
-    '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
-    '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
-  ].join('|');
-
-  return new RegExp(pattern, 'g');
-}
-
-const regex = ansiRegex();
-
-function stripAnsi(content: string) {
-  if (typeof content !== 'string') {
-    throw new TypeError(`Expected a \`string\`, got \`${typeof content}\``);
-  }
-
-  return content.replace(regex, '');
-}
-
-const fileRE = /(?:[a-zA-Z]:\\|\/).*?:\d+:\d+/g;
-
-// Allow `ErrorOverlay` to extend `HTMLElement` even in environments where
-// `HTMLElement` was not originally defined.
-const { HTMLElement = class {} as typeof globalThis.HTMLElement } = globalThis;
+const { HTMLElement = class {} as typeof globalThis.HTMLElement, customElements } = globalThis;
 
 class ErrorOverlay extends HTMLElement {
-  root: ShadowRoot;
-
   constructor(message: string[]) {
     super();
-    this.root = this.attachShadow({ mode: 'open' });
-    this.root.innerHTML = template;
 
-    linkedText(this.root, '.message', stripAnsi(message.join('/n')).trim());
+    if (!this.attachShadow) {
+      console.warn(
+        'The current browser version does not support displaying rsbuild overlay',
+      );
+      return;
+    }
 
-    this.root.querySelector('.close')!.addEventListener('click', () => {
+    const root = this.attachShadow({ mode: 'open' });
+    root.innerHTML = overlayTemplate;
+
+    linkedText(root, '.message', stripAnsi(message.join('/n')).trim());
+
+    root.querySelector('.close')!.addEventListener('click', () => {
       this.close();
     });
 
@@ -122,51 +144,23 @@ class ErrorOverlay extends HTMLElement {
       this.close();
     });
 
-    this.root.querySelector('.content')!.addEventListener('click', (e) => {
+    root.querySelector('.container')!.addEventListener('click', (e) => {
       e.stopPropagation();
     });
   }
 
-  close(): void {
+  close() {
     this.parentNode?.removeChild(this);
   }
 }
 
 const overlayId = 'rsbuild-error-overlay';
 
-const { customElements } = globalThis;
 if (customElements && !customElements.get(overlayId)) {
   customElements.define(overlayId, ErrorOverlay);
 }
 
-function linkedText(root: ShadowRoot, selector: string, text: string): void {
-  const el = root.querySelector(selector)!;
-
-  let curIndex = 0;
-  let match: RegExpExecArray | null = fileRE.exec(text);
-  while (match !== null) {
-    const { 0: file, index } = match;
-    if (index != null) {
-      const frag = text.slice(curIndex, index);
-      el.appendChild(document.createTextNode(frag));
-      const link = document.createElement('a');
-      link.textContent = file;
-      link.className = 'file-link';
-
-      link.onclick = () => {
-        fetch(`/__open-in-editor?file=${encodeURIComponent(file)}`);
-      };
-      el.appendChild(link);
-      curIndex += frag.length + file.length;
-    }
-    match = fileRE.exec(text)
-  }
-
-  const frag = text.slice(curIndex);
-  el.appendChild(document.createTextNode(frag));
-}
-
-export function createOverlay(err: any) {
+export function createOverlay(err: string[]) {
   clearOverlay();
   document.body.appendChild(new ErrorOverlay(err));
 }
