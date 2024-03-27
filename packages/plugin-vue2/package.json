@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-vue2",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Vue 2 plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -38,7 +38,7 @@
     "webpack": "^5.91.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.5.3"
+    "@rsbuild/core": "workspace:^0.5.4"
   },
   "publishConfig": {
     "access": "public",
