@@ -6,13 +6,18 @@
 
 用于配置 Rspack 模块联邦插件。
 
-设置 `moduleFederation.options` 选项后，Rsbuild 会执行以下操作，以保证模块联邦可以正确运行：
+## 介绍
+
+在使用模块联邦时，我们推荐你使用 Rsbuild 提供的 `moduleFederation.options` 选项，这个选项会自动调整一些相关的配置，以保证模块联邦应用可以正确运行。
+
+当你设置 `moduleFederation.options` 选项后，Rsbuild 会执行以下操作：
 
 - 自动注册 [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) 插件，并将 `options` 的值透传给插件。
-- 将 Rspack `output.publicPath` 配置的默认值设置为 `'auto'`。
+- 将 Rspack [output.publicPath](https://rspack.dev/config/output#outputpublicpath) 配置的默认值设置为 `'auto'`。
+- 关闭 Rsbuild [performance.chunkSplit](/config/performance/chunk-split) 中 `split-by-experience` 相关的规则，因为这可能会与 shared modules 冲突，参考 [#3161](https://github.com/module-federation/module-federation-examples/issues/3161)。
 - 关闭 remote entry 的 splitChunks 规则。
 
-## 选项
+## 用法
 
 `moduleFederation.options` 的类型与 Rspack 的 ModuleFederationPlugin 插件完全一致：
 
