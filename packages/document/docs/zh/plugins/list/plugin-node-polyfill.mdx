@@ -117,3 +117,42 @@ import fs from 'fs';
 
 console.log(fs); // -> {}
 ```
+
+## 选项
+
+### globals
+
+用于指定是否注入全局变量对应的 polyfill。
+
+- **类型：**
+
+```ts
+type Globals = {
+  process?: boolean;
+  Buffer?: boolean;
+};
+```
+
+- **默认值：**
+
+```ts
+const defaultGlobals = {
+  Buffer: true,
+  process: true,
+};
+```
+
+### protocolImports
+
+是否 polyfill 以 `node:` 开头的 Node.js 内置模块。
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+比如关闭 `protocolImports`，将不会对 `node:path`，`node:http` 等模块进行 polyfill 注入。
+
+```ts
+pluginNodePolyfill({
+  protocolImports: false,
+});
+```
