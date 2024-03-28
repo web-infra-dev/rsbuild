@@ -12,6 +12,8 @@ import {
   type RspackConfig,
 } from '@rsbuild/shared';
 import type { Configuration as WebpackConfig } from 'webpack';
+// @ts-expect-error
+import WebpackMultiStats from 'webpack/lib/MultiStats';
 
 export const build = async (
   initOptions: InitConfigsOptions,
@@ -52,7 +54,35 @@ export const build = async (
 
   // MultiCompiler does not supports `done.tapPromise`
   if (isMultiCompiler(compiler)) {
-    compiler.hooks.done.tap('rsbuild:done', onDone);
+    const { compilers } = compiler;
+    const compilerStats: Stats[] = [];
+    let doneCompilers = 0;
+
+    for (let index = 0; index < compilers.length; index++) {
+      const compiler = compilers[index];
+      const compilerIndex = index;
+      let compilerDone = false;
+
+      compiler.hooks.done.tapPromise('rsbuild:done', async (stats) => {
+        if (!compilerDone) {
+          compilerDone = true;
+          doneCompilers++;
+        }
+
+        compilerStats[compilerIndex] = stats;
+
+        if (doneCompilers === compilers.length) {
+          await onDone(new WebpackMultiStats(compilerStats));
+        }
+      });
+
+      compiler.hooks.invalid.tap('rsbuild:done', () => {
+        if (compilerDone) {
+          compilerDone = false;
+          doneCompilers--;
+        }
+      });
+    }
   } else {
     compiler.hooks.done.tapPromise('rsbuild:done', onDone);
   }
