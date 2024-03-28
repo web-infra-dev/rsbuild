@@ -12,9 +12,12 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
       singleton: true,
       requiredVersion: dependencies.react,
     },
+    'react/': {},
+    'react-dom/': {},
     'react-dom': {
       singleton: true,
       requiredVersion: dependencies['react-dom'],
     },
   },
+  runtimePlugins: [require.resolve('./runtimePlugin.js')],
 };
