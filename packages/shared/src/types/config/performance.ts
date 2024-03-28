@@ -44,7 +44,7 @@ export interface PreloadOrPreFetchOption {
 
 export interface PerformanceConfig {
   /**
-   * Whether to remove `console.xx` in production build.
+   * Whether to remove `console.someMethod` in production build.
    */
   removeConsole?: boolean | ConsoleType[];
 
