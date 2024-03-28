@@ -154,7 +154,7 @@ Node.js 官方文档中有对以下参数更详细的解释：
 
 ---
 
-### 打包时出现 `Can't resolve 'core-js/modules/xxx.js'`？
+### 打包时出现 `Can't resolve 'core-js/modules/abc.js'`？
 
 如果你在打包时出现了类似下面的报错，表示项目中的 [core-js](https://github.com/zloirock/core-js) 无法被正确引用。
 
@@ -195,14 +195,3 @@ Less v4 版本与 v3 版本相比，除法的写法有一些区别：
 Rsbuild 内置的 Less 版本为 v4，低版本的写法不会生效，请注意区分。
 
 Less 中除法的写法也可以通过配置项来修改，详见 [Less - Math](https://lesscss.org/usage/#less-options-math)。
-
----
-
-### 修改配置后，报错 `TypeError: Cannot delete property 'xxx' of #<Object>`
-
-该报错表示在编译过程中对一个只读配置项进行了删除操作。通常情况下，我们不希望编译过程中的任何操作会直接对传入的配置进行修改，但难以限制底层插件（如 postcss-loader 等）的行为，如果出现该报错，请联系 Rsbuild 开发者，我们需要对该配置进行单独处理。
-
-同类型报错还有：
-
-- `TypeError: Cannot add property xxx, object is not extensible`
-- `TypeError: Cannot assign to read only property 'xxx' of object '#<Object>`

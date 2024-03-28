@@ -156,7 +156,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
                   "babel-plugin-import",
                   {
                     "libraryDirectory": "es",
-                    "libraryName": "xxx-components",
+                    "libraryName": "my-components",
                     "style": true,
                   },
                 ],

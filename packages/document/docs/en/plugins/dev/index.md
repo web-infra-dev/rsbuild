@@ -107,7 +107,7 @@ The roles of each part are as follows:
 
 The naming convention for plugins is as follows:
 
-- The function of the plugin is named `pluginXXX` and exported by name.
+- The function of the plugin is named `pluginAbc` and exported by name.
 - The `name` of the plugin follows the format `scope:foo-bar` or `plugin-foo-bar`, adding `scope:` can avoid naming conflicts with other plugins.
 
 Here is an example:
@@ -116,7 +116,7 @@ Here is an example:
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 export const pluginFooBar = (): RsbuildPlugin => ({
-  name: 'xxx:foo-bar',
+  name: 'scope:foo-bar',
   setup() {},
 });
 ```

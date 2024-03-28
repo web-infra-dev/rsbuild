@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-css > should apply custom css-modules-typescript-loader when enableCssModuleTSDeclarationg 1`] = `
+exports[`plugin-css > should apply custom css-modules-typescript-loader when enableCssModuleTSDeclaration 1`] = `
 {
   "builtins": {
     "css": {

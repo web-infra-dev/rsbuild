@@ -261,7 +261,7 @@ export const isUseCssExtract = (
   !config.output.injectStyles && target !== 'node' && target !== 'web-worker';
 
 /**
- * fix resolve-url-loader can't deal with resolve.alias config (such as @xxx、xxx)
+ * fix resolve-url-loader can't deal with resolve.alias config
  *
  * reference: https://github.com/bholloway/resolve-url-loader/blob/e2695cde68f325f617825e168173df92236efb93/packages/resolve-url-loader/docs/advanced-features.md
  */

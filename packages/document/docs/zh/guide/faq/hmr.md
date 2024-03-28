@@ -9,7 +9,7 @@
 :::tip 热更新原理
 
 1. 浏览器和开发服务器建立一个 Web Socket 连接，用于实时通信。
-2. 当开发服务器每次重新编译完成后，会通过 Web Socket 通知浏览器，浏览器向开发服务器发送 `hot-update.xxx` 请求，从而加载编译后的新模块。
+2. 当开发服务器每次重新编译完成后，会通过 Web Socket 通知浏览器，浏览器向开发服务器发送 `hot-update.(js|json)` 请求，从而加载编译后的新模块。
 3. 当浏览器收到新的模块后，如果是 React 项目，则会通过 React 官方的 React Refresh 来更新 React 组件，其他框架也是类似。
 
 :::
@@ -29,9 +29,9 @@ Web Socket 请求没有建立成功的原因可能有很多种，例如开启了
 
 当你修改一个模块的代码，并触发重新编译后，浏览器会向开发服务器发送若干个 `hot-update.json` 和 `hot-update.js` 请求，用于获取更新后的代码。
 
-你可以尝试修改一个模块并检查 `hot-update.xxx` 请求的内容，如果请求的内容是最新的代码，说明热更新的请求正常。
+你可以尝试修改一个模块并检查 `hot-update.(js|json)` 请求的内容，如果请求的内容是最新的代码，说明热更新的请求正常。
 
-如果请求的内容错误，大概率也是由于开启了网络代理，请检查 `hot-update.xxx` 请求的地址是否为你的开发服务器地址，如果不是，则需要调整代理规则，将 `hot-update.xxx` 请求代理到开发服务器地址。
+如果请求的内容错误，大概率也是由于开启了网络代理，请检查 `hot-update.(js|json)` 请求的地址是否为你的开发服务器地址，如果不是，则需要调整代理规则，将 `hot-update.(js|json)` 请求代理到开发服务器地址。
 
 #### 3. 检查其他原因
 
@@ -103,7 +103,7 @@ export default {
 
 ![hmr-connect-error-0](https://lf3-static.bytednsdoc.com/obj/eden-cn/6221eh7uhbfvhn/modern/img_v2_2f90d027-a232-4bd8-8021-dac3c651682g.jpg)
 
-此问题的解决方法为：点击 Chrome 浏览器问题页面的「高级」->「继续前往 xxx（不安全）」。
+此问题的解决方法为：点击 Chrome 浏览器问题页面的「高级」->「继续前往 some page（不安全）」。
 
 ![hmr-connect-error-1](https://lf3-static.bytednsdoc.com/obj/eden-cn/6221eh7uhbfvhn/modern/59b37606-52ad-4886-a423-af2edaa49245.png)
 

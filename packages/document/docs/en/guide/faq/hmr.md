@@ -9,7 +9,7 @@ Before starting the troubleshooting process, it is helpful to have a basic under
 :::tip HMR Principle
 
 1. The browser establishes a WebSocket connection with the dev server for real-time communication.
-2. Whenever the dev server finishes recompiling, it sends a notification to the browser via the WebSocket. The browser then sends a `hot-update.xxx` request to the dev server to load the newly compiled module.
+2. Whenever the dev server finishes recompiling, it sends a notification to the browser via the WebSocket. The browser then sends a `hot-update.(js|json)` request to the dev server to load the newly compiled module.
 3. After receiving the new module, if it is a React project, React Refresh, an official React tool, is used to update React components. Other frameworks have similar tools.
 
 :::
@@ -29,9 +29,9 @@ There can be various reasons why the WebSocket connection fails to establish, su
 
 When you modify the code of a module and trigger a recompilation, the browser sends several `hot-update.json` and `hot-update.js` requests to the dev server to fetch the updated code.
 
-You can try modifying a module and inspect the content of the `hot-update.xxx` requests. If the content of the request is the latest code, it indicates that the hot update request is working correctly.
+You can try modifying a module and inspect the content of the `hot-update.(js|json)` requests. If the content of the request is the latest code, it indicates that the hot update request is working correctly.
 
-If the content of the request is incorrect, it is likely due to a network proxy. Check whether the address of the `hot-update.xxx` request matches your dev server address. If it does not match, you need to adjust the proxy rules to route the `hot-update.xxx` request to the dev server address.
+If the content of the request is incorrect, it is likely due to a network proxy. Check whether the address of the `hot-update.(js|json)` request matches your dev server address. If it does not match, you need to adjust the proxy rules to route the `hot-update.(js|json)` request to the dev server address.
 
 #### 3. Check for Other Causes
 
@@ -103,7 +103,7 @@ If https is enabled, the HMR connection may fail due to a certificate issue, and
 
 ![hmr-connect-error-0](https://lf3-static.bytednsdoc.com/obj/eden-cn/6221eh7uhbfvhn/modern/img_v2_2f90d027-a232-4bd8-8021-dac3c651682g.jpg)
 
-The solution to this problem is to click on "Advanced" -> "Proceed to xxx (unsafe)" on the Chrome problem page.
+The solution to this problem is to click on "Advanced" -> "Proceed to some page (unsafe)" on the Chrome problem page.
 
 ![hmr-connect-error-1](https://lf3-static.bytednsdoc.com/obj/eden-cn/6221eh7uhbfvhn/modern/3d2d4a38-acfe-4fe2-bdff-48b3366db481.png)
 

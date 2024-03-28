@@ -90,7 +90,7 @@
 | 产物自动拆包        | Rsbuild 中内置了多种拆包策略，自动将代码包拆分为体积适中的文件 | <ul><li>[拆包最佳实践](/guide/optimization/split-chunk)</li><li>[performance.chunkSplit](/config/performance/chunk-split)</li></ul> |
 | 展示产物体积        | 在生产环境构建后，默认展示所有静态资源的体积信息               | <ul><li>[performance.printFileSize](/config/performance/print-file-size)</li></ul>                                                  |
 | 分析产物体积        | 可选功能，通过 Bundle Analyzer 分析产物体积                    | <ul><li>[performance.bundleAnalyze](/config/performance/bundle-analyze)</li></ul>                                                   |
-| 移除 console        | 可选功能，移除代码中的 `console.xx`                            | <ul><li>[performance.removeConsole](/config/performance/remove-console)</li></ul>                                                   |
+| 移除 console        | 可选功能，移除代码中的 `console.[methodName]`                  | <ul><li>[performance.removeConsole](/config/performance/remove-console)</li></ul>                                                   |
 | 优化 moment.js 体积 | 可选功能，移除 moment.js 多余的 locale 文件                    | <ul><li>[performance.removeMomentLocale](/config/performance/remove-moment-locale)</li></ul>                                        |
 | 组件库按需引入      | 可选功能，按需引入组件库的代码和样式                           | <ul><li>[source.transformImport](/config/source/transform-import)</li></ul>                                                         |
 | 图片压缩            | 可选功能，对引用的图片资源进行压缩处理                         | <ul><li>[Image Compress 插件](/plugins/list/plugin-image-compress)</li></ul>                                                        |

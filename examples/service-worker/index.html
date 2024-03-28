@@ -47,7 +47,7 @@
           `/sw.js?${Date.now()}`,
         );
         await untilActivate(reg);
-        const resp = await fetch('https://httpbin.org/anything', {
+        const resp = await fetch('https://example.org/anything', {
           method: 'POST',
           body: JSON.stringify({ answer: 'idk' }),
         });

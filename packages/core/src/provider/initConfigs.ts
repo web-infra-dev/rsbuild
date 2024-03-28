@@ -38,7 +38,7 @@ export async function initRsbuildConfig({
   InitConfigsOptions,
   'context' | 'pluginManager'
 >): Promise<NormalizedConfig> {
-  // inited
+  // initialized
   if (context.normalizedConfig) {
     return context.normalizedConfig;
   }

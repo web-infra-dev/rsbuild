@@ -9,9 +9,9 @@ test.describe('should print file size correctly', async () => {
   let restore: () => void;
 
   test.beforeEach(() => {
-    const proxied = proxyConsole();
-    logs = proxied.logs;
-    restore = proxied.restore;
+    const result = proxyConsole();
+    logs = result.logs;
+    restore = result.restore;
   });
 
   test.afterEach(() => {

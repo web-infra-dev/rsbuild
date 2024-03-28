@@ -2,7 +2,7 @@ import path from 'node:path';
 // biome-ignore lint: test non-import protocol
 import querystring from 'querystring';
 
-const bufferData = Buffer.from('xxxx');
+const bufferData = Buffer.from('abc');
 
 const qsRes = querystring.stringify({
   foo: 'bar',
