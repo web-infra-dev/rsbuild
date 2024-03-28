@@ -6,7 +6,9 @@ import {
   logger,
   prettyTime,
   TARGET_ID_MAP,
-  isMultiCompiler,
+  onCompileDone,
+  type Stats,
+  type MultiStats,
   type RspackConfig,
   type RspackCompiler,
   type RspackMultiCompiler,
@@ -14,7 +16,7 @@ import {
 } from '@rsbuild/shared';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import type { InternalContext } from '../types';
-import type { Stats, MultiStats, StatsCompilation } from '@rspack/core';
+import type { StatsCompilation } from '@rspack/core';
 import {
   formatStats,
   rspackMinVersion,
@@ -116,12 +118,14 @@ export async function createCompiler({
     isFirstCompile = false;
   };
 
-  // MultiCompiler does not supports `done.tapPromise`
-  if (isMultiCompiler(compiler)) {
-    compiler.hooks.done.tap('rsbuild:done', done);
-  } else {
-    compiler.hooks.done.tapPromise('rsbuild:done', done);
-  }
+  const { MultiStats: MultiStatsStor } = await import('@rspack/core');
+
+  onCompileDone(
+    compiler,
+    done,
+    // @ts-expect-error type mismatch
+    MultiStatsStor,
+  );
 
   await context.hooks.onAfterCreateCompiler.call({ compiler });
   debug('create compiler done');
