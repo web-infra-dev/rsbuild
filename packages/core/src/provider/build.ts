@@ -1,14 +1,9 @@
 import { createCompiler } from './createCompiler';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
-import {
-  logger,
-  getNodeEnv,
-  setNodeEnv,
-  isMultiCompiler,
-} from '@rsbuild/shared';
-import { MultiStats } from '@rspack/core';
+import { logger, getNodeEnv, setNodeEnv, onCompileDone } from '@rsbuild/shared';
 import type {
   Stats,
+  MultiStats,
   BuildOptions,
   RspackConfig,
   RspackCompiler,
@@ -50,41 +45,14 @@ export const build = async (
     await p;
   };
 
-  // MultiCompiler does not supports `done.tapPromise`
-  if (isMultiCompiler(compiler)) {
-    const { compilers } = compiler;
-    const compilerStats: Stats[] = [];
-    let doneCompilers = 0;
+  const { MultiStats: MultiStatsStor } = await import('@rspack/core');
 
-    for (let index = 0; index < compilers.length; index++) {
-      const compiler = compilers[index];
-      const compilerIndex = index;
-      let compilerDone = false;
-
-      compiler.hooks.done.tapPromise('rsbuild:done', async (stats) => {
-        if (!compilerDone) {
-          compilerDone = true;
-          doneCompilers++;
-        }
-
-        compilerStats[compilerIndex] = stats;
-
-        if (doneCompilers === compilers.length) {
-          // @ts-expect-error
-          await onDone(new MultiStats(compilerStats));
-        }
-      });
-
-      compiler.hooks.invalid.tap('rsbuild:done', () => {
-        if (compilerDone) {
-          compilerDone = false;
-          doneCompilers--;
-        }
-      });
-    }
-  } else {
-    compiler.hooks.done.tapPromise('rsbuild:done', onDone);
-  }
+  onCompileDone(
+    compiler,
+    onDone,
+    // @ts-expect-error type mismatch
+    MultiStatsStor,
+  );
 
   if (watch) {
     compiler.watch({}, (err) => {
