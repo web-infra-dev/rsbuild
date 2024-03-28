@@ -54,7 +54,7 @@ const defaultOptions = {
 - **示例：** 启用或禁用 lightningcss 的特性，可以通过从插件中导入 lightningcss 实例进行配置。
 
 ```ts
-import { lightnincss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+import { lightningcss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 
 pluginLightningcss({
   transform: {
@@ -63,7 +63,7 @@ pluginLightningcss({
 });
 ```
 
-- **示例：** 通过 lightningcss 的自定义 vistor 将所有的长度单位转化为 rem。
+- **示例：** 通过 lightningcss 的自定义 visitor 将所有的长度单位转化为 rem。
 
 ```ts
 pluginLightningcss({
@@ -112,7 +112,7 @@ const defaultOptions = {
 - **示例：** 禁用 lightningcss 对于 `ColorFunctions` 和 `HexAlphaColors` 的压缩功能
 
 ```ts
-import { lightnincss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
+import { lightningcss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 
 pluginLightningcss({
   minify: {

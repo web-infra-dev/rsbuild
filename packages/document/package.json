@@ -18,7 +18,8 @@
   "scripts": {
     "build:doc": "rspress build",
     "dev": "rspress dev",
-    "preview": "rspress preview"
+    "preview": "rspress preview",
+    "cspell": "npx cspell"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
