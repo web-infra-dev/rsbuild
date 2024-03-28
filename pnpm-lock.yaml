@@ -40,6 +40,9 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
+      cspell-ban-words:
+        specifier: ^0.0.3
+        version: 0.0.3
       nano-staged:
         specifier: ^0.8.0
         version: 0.8.0
@@ -7173,6 +7176,10 @@ packages:
       randombytes: 2.1.0
       randomfill: 1.0.4
     dev: false
+
+  /cspell-ban-words@0.0.3:
+    resolution: {integrity: sha512-Q7ZO16DFWEP8Vv5CJ63LG95/FomTuxB6WvKhvGUDE3L2hiYl7n2fH+0qoSXL5C3zH6NRPQT4rDS66t1Pi/fILA==}
+    dev: true
 
   /css-color-keywords@1.0.0:
     resolution: {integrity: sha512-FyyrDHZKEjXDpNJYvVsV960FiqQyXc/LlYmsxl2BcdMb2WPx0OGRVgTg55rPSyLSNMqP52R9r8geSp7apN3Ofg==}
