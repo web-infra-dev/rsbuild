@@ -4,7 +4,7 @@ function stripAnsi(content: string) {
     '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
   ].join('|');
 
-  const regex = new RegExp(pattern, 'g')
+  const regex = new RegExp(pattern, 'g');
 
   return content.replace(regex, '');
 }
@@ -49,45 +49,46 @@ const overlayTemplate = `
   overflow-y: scroll;
   margin: 0;
   background: rgba(0, 0, 0, 0.66);
+  cursor: pointer;
 }
 
 .container {
   font-family: Menlo, Consolas, monospace;
   line-height: 1.5;
-  width: 40%;
+  width: 800px;
+  max-width: 85%;
   color: #d8d8d8;
   margin: 30px auto;
-  padding: 25px 40px;
+  padding: 40px 40px 42px;
   position: relative;
   background: #181818;
-  border-radius: 6px 6px 8px 8px;
+  border-radius: 24px;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   overflow: hidden;
   direction: ltr;
   text-align: left;
+  box-sizing: border-box;
+  cursor: default;
 }
 
 .title {
+  margin: 0 0 16px;
+  font-size: 18px;
   font-weight: 600;
   color: #ff5555;
 }
 
-pre {
-  font-size: 16px;
-  margin-top: 0;
-  margin-bottom: 1em;
+.content {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.3;
   overflow-x: scroll;
   scrollbar-width: none;
+  color: #b8b8b8;
 }
 
-pre::-webkit-scrollbar {
+.content::-webkit-scrollbar {
   display: none;
-}
-
-.message {
-  line-height: 1.3;
-  white-space: pre-wrap;
-  color: #d8d8d8;
 }
 
 .file-link {
@@ -99,7 +100,7 @@ pre::-webkit-scrollbar {
 .close {
   line-height: 1rem;
   font-size: 1.5rem;
-  padding: 1rem;
+  padding: 1.4rem;
   cursor: pointer;
   position: absolute;
   right: 0px;
@@ -108,16 +109,20 @@ pre::-webkit-scrollbar {
   border: none;
 }
 </style>
+
 <div class="root">
   <div class="container">
     <div class="close">x</div>
     <p class="title">Compile error:</p>
-    <pre class="message"></pre>
+    <pre class="content"></pre>
   </div>
 </div>
 `;
 
-const { HTMLElement = class {} as typeof globalThis.HTMLElement, customElements } = globalThis;
+const {
+  HTMLElement = class {} as typeof globalThis.HTMLElement,
+  customElements,
+} = globalThis;
 
 class ErrorOverlay extends HTMLElement {
   constructor(message: string[]) {
@@ -133,7 +138,7 @@ class ErrorOverlay extends HTMLElement {
     const root = this.attachShadow({ mode: 'open' });
     root.innerHTML = overlayTemplate;
 
-    linkedText(root, '.message', stripAnsi(message.join('/n')).trim());
+    linkedText(root, '.content', stripAnsi(message.join('/n')).trim());
 
     root.querySelector('.close')!.addEventListener('click', () => {
       this.close();
