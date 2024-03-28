@@ -22,7 +22,7 @@ module.exports = {
   dictionaryDefinitions: [
     {
       name: 'dictionary',
-      path: './.cspell/dictionary.txt',
+      path: './scripts/dictionary.txt',
       addWords: true,
     },
   ],
