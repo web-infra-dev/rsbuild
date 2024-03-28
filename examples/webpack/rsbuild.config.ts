@@ -5,4 +5,7 @@ import { webpackProvider } from '@rsbuild/webpack';
 export default defineConfig({
   plugins: [pluginSwc()],
   provider: webpackProvider,
+  output: {
+    targets: ['web', 'node'],
+  },
 });
