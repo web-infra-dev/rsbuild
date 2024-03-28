@@ -75,6 +75,7 @@ To get started with Rsbuild, see the [Quick Start](https://rsbuild.dev/guide/sta
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rspack and Rsbuild.
 - [rspack-examples](https://github.com/rspack-contrib/rspack-examples): Examples for Rspack, Rsbuild, Rspress and Rsdoctor.
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：Use this template to create your own Rsbuild plugin.
+- [rsfamily-design-resources](https://github.com/rspack-contrib/rsfamily-design-resources)：Design resources for Rspack, Rsbuild, Rspress and Rsdoctor.
 
 ## 🤝 Contribution
 
