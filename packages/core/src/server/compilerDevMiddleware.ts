@@ -18,15 +18,15 @@ const noop = () => {
   // noop
 };
 
-function getHMRClientPath(client: DevMiddlewaresConfig['client']) {
-  const protocol = client?.protocol ? `&protocol=${client.protocol}` : '';
-  const host = client?.host ? `&host=${client.host}` : '';
-  const path = client?.path ? `&path=${client.path}` : '';
-  const port = client?.port ? `&port=${client.port}` : '';
+function getHMRClientPath(client: DevMiddlewaresConfig['client'] = {}) {
+  // host=localhost&port=8080&path=rsbuild-hmr
+  const params = Object.entries(client).reduce((query, [key, value]) => {
+    return value ? `${query}&${key}=${value}` : `${query}`;
+  }, '');
 
   const clientEntry = `${require.resolve(
     '@rsbuild/core/client/hmr',
-  )}?${host}${path}${port}${protocol}`;
+  )}?${params}`;
 
   // replace cjs with esm because we want to use the es5 version
   return clientEntry;

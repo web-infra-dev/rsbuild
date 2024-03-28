@@ -6,10 +6,15 @@
  */
 import type { StatsError } from '@rsbuild/shared';
 import { formatStatsMessages } from '../formatStats';
-import { createSocketUrl } from './createSocketUrl';
+import { createSocketUrl, parseParams } from './createSocketUrl';
+import { createOverlay, clearOverlay } from './overlay';
+
+const options = parseParams(__resourceQuery);
 
 // Connect to Dev Server
-const socketUrl = createSocketUrl(__resourceQuery);
+const socketUrl = createSocketUrl(options);
+
+const enableOverlay = options.overlay === 'true';
 
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
@@ -96,6 +101,10 @@ function handleErrors(errors: StatsError[]) {
     }
   }
 
+  if (enableOverlay) {
+    createOverlay(formatted.errors);
+  }
+
   // Do not attempt to reload now.
   // We will reload on next success instead.
 }
@@ -176,12 +185,14 @@ function onMessage(e: MessageEvent<string>) {
   const message = JSON.parse(e.data);
   switch (message.type) {
     case 'hash':
+      clearOverlay();
       handleAvailableHash(message.data);
       break;
     case 'still-ok':
     case 'ok':
       handleSuccess();
       break;
+    case 'static-changed':
     case 'content-changed':
       // Triggered when a file from `contentBase` changed.
       window.location.reload();
