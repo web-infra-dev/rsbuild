@@ -44,7 +44,7 @@ export default {
 比如以下代码会注入 `Buffer` 的 polyfill：
 
 ```ts
-const bufferData = Buffer.from('xxxx');
+const bufferData = Buffer.from('some words');
 ```
 
 你可以通过插件的 `globals` 选项来关闭该行为：
@@ -94,7 +94,7 @@ pluginNodePolyfill({
 ```ts
 import { Buffer } from 'buffer';
 
-const bufferData = Buffer.from('xxxx');
+const bufferData = Buffer.from('abc');
 ```
 
 ### Fallbacks

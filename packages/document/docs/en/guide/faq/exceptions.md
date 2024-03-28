@@ -150,7 +150,7 @@ If the above methods cannot solve your problem, it may be that some abnormal log
 
 ---
 
-### `Can't resolve 'core-js/modules/xxx.js'` when compiling?
+### `Can't resolve 'core-js/modules/abc.js'` when compiling?
 
 If you get an error similar to the following when compiling, it means that [core-js](https://github.com/zloirock/core-js) cannot be resolved properly in the project.
 
@@ -191,14 +191,3 @@ Compared with the v3 version, the Less v4 version has some differences in the wa
 The built-in Less version of Rsbuild is v4, and the writing method of the lower version will not take effect. Please pay attention to the distinction.
 
 The writing of division in Less can also be modified through configuration options, see [Less - Math](https://lesscss.org/usage/#less-options-math).
-
----
-
-### Compile error `TypeError: Cannot delete property 'xxx' of #<Object>`
-
-This error indicates that a read-only configuration option was deleted during the compilation process. Normally, we do not want any operation to directly modify the incoming configuration when compiling, but it is difficult to restrict the behavior of underlying plugins (such as postcss-loader, etc). If this error occurs, please contact the Rsbuild developer and we will need to do something special with that configuration.
-
-The same type of error is also reported:
-
-- `TypeError: Cannot add property xxx, object is not extensible`
-- `TypeError: Cannot assign to read only property 'xxx' of object '#<Object>`

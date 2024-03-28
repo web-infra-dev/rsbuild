@@ -1,3 +1,3 @@
-import { kababCase } from 'foo';
+import { kebabCase } from 'foo';
 
-console.log(kababCase);
+console.log(kebabCase);

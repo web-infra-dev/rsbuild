@@ -50,6 +50,6 @@ body:
       placeholder: |
         for example:
         1. execute `yarn dev`
-        2. find `xxx` error message in the console
+        2. find the error message in the console
     validations:
       required: true

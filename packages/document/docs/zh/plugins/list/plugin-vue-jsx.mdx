@@ -70,11 +70,11 @@ Babel 编译会产生额外的编译开销，在上述例子中，我们通过 `
 
 ```ts
 type VueJSXPluginOptions = {
-  /** 将 `on: { click: xx }` 转换为 `onClick: xxx` */
+  /** 将 `on: { click: someCallback }` 转换为 `onClick: someCallback` */
   transformOn?: boolean;
   /** 是否启用优化。 */
   optimize?: boolean;
-  /** 合并静态和动态 class / style 属性 / onXXX 事件处理函数 */
+  /** 合并静态和动态 class / style 属性 / onSomething 事件处理函数 */
   mergeProps?: boolean;
   /** 配置自定义元素 */
   isCustomElement?: (tag: string) => boolean;

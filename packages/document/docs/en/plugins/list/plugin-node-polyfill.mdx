@@ -44,7 +44,7 @@ When you use the above global variables in your code, the corresponding polyfill
 For instance, the following code would inject the `Buffer` polyfill:
 
 ```ts
-const bufferData = Buffer.from('xxxx');
+const bufferData = Buffer.from('abc');
 ```
 
 You can disable this behavior through the `globals` option of the plugin:
@@ -94,7 +94,7 @@ When the above module is referenced in code via import / require syntax, the cor
 ```ts
 import { Buffer } from 'buffer';
 
-const bufferData = Buffer.from('xxxx');
+const bufferData = Buffer.from('abc');
 ```
 
 ### Fallbacks

@@ -96,8 +96,8 @@ In a production, Rsbuild will generate shorter class names to reduce the bundle 
 ```ts
 import styles from './index.module.scss';
 
-// In development, the value is `.src-index-module__header-xxxxxx`
-// In production, the value is `.header-xxxxxx`
+// In development, the value is `.src-index-module__header-[hash]`
+// In production, the value is `.header-[hash]`
 console.log(styles.header);
 ```
 

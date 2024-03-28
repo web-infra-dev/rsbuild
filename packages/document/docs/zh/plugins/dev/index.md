@@ -107,7 +107,7 @@ export default {
 
 插件的命名规范如下：
 
-- 插件的函数命名为 `pluginXXX`，并通过具名导出。
+- 插件的函数命名为 `pluginAbc`，并通过具名导出。
 - 插件的 `name` 采用 `scope:foo-bar` 或 `plugin-foo-bar` 格式，添加 `scope:` 可以避免和其他插件产生命名冲突。
 
 下面是一个例子：
@@ -116,7 +116,7 @@ export default {
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 export const pluginFooBar = (): RsbuildPlugin => ({
-  name: 'xxx:foo-bar',
+  name: 'scope:foo-bar',
   setup() {},
 });
 ```

@@ -171,7 +171,7 @@ export default {
       // 方法二:
       // 编译 Monorepo 的 package 目录里某个包的源代码
       // 这种写法匹配的范围更加精准，对整体编译性能的影响更小
-      path.resolve(__dirname, '../../packages/xxx/src'),
+      path.resolve(__dirname, '../../packages/abc/src'),
     ],
   },
 };

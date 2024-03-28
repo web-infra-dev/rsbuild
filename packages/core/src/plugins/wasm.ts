@@ -21,7 +21,7 @@ export const pluginWasm = (): RsbuildPlugin => ({
         webassemblyModuleFilename: wasmFilename,
       });
 
-      // support new URL('./xx.wasm', import.meta.url)
+      // support new URL('./abc.wasm', import.meta.url)
       chain.module
         .rule(CHAIN_ID.RULE.WASM)
         .test(/\.wasm$/)

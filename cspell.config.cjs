@@ -9,7 +9,14 @@ module.exports = {
     // ignore markdown anchors such as [modifyRsbuildConfig](#modifyrsbuildconfig)
     '#.*?\\)',
   ],
-  ignorePaths: ['dist', 'dist-*', 'compiled', 'node_modules', 'pnpm-lock.yaml'],
+  ignorePaths: [
+    'dist',
+    'dist-*',
+    'compiled',
+    'coverage',
+    'node_modules',
+    'pnpm-lock.yaml',
+  ],
   flagWords: banWords,
   dictionaries: ['dictionary'],
   dictionaryDefinitions: [

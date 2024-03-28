@@ -76,7 +76,7 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
   const sourceCodeB = fs.readFileSync(bPath, 'utf-8');
   fs.writeFileSync(bPath, sourceCodeB.replace('B:', 'Beep:'), 'utf-8');
 
-  // content of B changed to `Beap: 5` means HMR has taken effect
+  // content of B changed to `Beep: 5` means HMR has taken effect
   await expect(b).toHaveText('Beep: 5');
   // the state (count) of A should be kept
   await expect(a).toHaveText('A: 5');

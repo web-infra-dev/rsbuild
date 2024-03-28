@@ -3,11 +3,11 @@
 - **类型：** `boolean | ConsoleType[]`
 - **默认值：** `false`
 
-在生产环境构建时，是否自动移除代码中的 `console.xx`。
+在生产环境构建时，是否自动移除代码中的 `console.[methodName]`。
 
 ## 全部移除
 
-当 `removeConsole` 被设置为 `true` 时，会移除所有类型的 `console.xx`：
+当 `removeConsole` 被设置为 `true` 时，会移除所有类型的 `console.[methodName]`：
 
 ```ts
 export default {
@@ -19,7 +19,7 @@ export default {
 
 ## 指定类型
 
-你也可以指定仅移除特定类型的 `console.xx`，比如移除 `console.log` 和 `console.warn`：
+你也可以指定仅移除特定类型的 `console.[methodName]`，比如移除 `console.log` 和 `console.warn`：
 
 ```ts
 export default {

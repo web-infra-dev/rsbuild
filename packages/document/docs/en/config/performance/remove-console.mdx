@@ -3,11 +3,11 @@
 - **Type:** `boolean | ConsoleType[]`
 - **Default:** `false`
 
-Whether to remove `console.xx` in production build.
+Whether to remove `console.[methodName]` in production build.
 
 ## Remove all
 
-When `removeConsole` is set to `true`, all types of `console.xx` are removed:
+When `removeConsole` is set to `true`, all types of `console.[methodName]` are removed:
 
 ```ts
 export default {
@@ -19,7 +19,7 @@ export default {
 
 ## Specific Type
 
-You can also specify to remove only certain types of `console.xx`, such as `console.log` and `console.warn`:
+You can also specify to remove only certain types of `console.[methodName]`, such as `console.log` and `console.warn`:
 
 ```ts
 export default {

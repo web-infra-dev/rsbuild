@@ -70,11 +70,11 @@ Options passed to `@vue/babel-plugin-jsx`, please refer to the [@vue/babel-plugi
 
 ```ts
 type VueJSXPluginOptions = {
-  /** transform `on: { click: xx }` to `onClick: xxx` */
+  /** transform `on: { click: someCallback }` to `onClick: someCallback` */
   transformOn?: boolean;
   /** enable optimization or not. */
   optimize?: boolean;
-  /** merge static and dynamic class / style attributes / onXXX handlers */
+  /** merge static and dynamic class / style attributes / onSomething handlers */
   mergeProps?: boolean;
   /** configuring custom elements */
   isCustomElement?: (tag: string) => boolean;
