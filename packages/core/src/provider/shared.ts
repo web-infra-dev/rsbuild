@@ -186,21 +186,25 @@ function formatErrorMessage(errors: string[]) {
 export const getAllStatsErrors = (statsData: StatsCompilation) => {
   // stats error + childCompiler error
   // only append child errors when stats error does not exist, because some errors will exist in both stats and childCompiler
-  return statsData.errorsCount && statsData.errors?.length === 0
-    ? statsData.children?.reduce<StatsError[]>(
-        (errors, curr) => errors.concat(curr.errors || []),
-        [],
-      )
-    : statsData.errors;
+  if (statsData.errorsCount && statsData.errors?.length === 0) {
+    return statsData.children?.reduce<StatsError[]>(
+      (errors, curr) => errors.concat(curr.errors || []),
+      [],
+    );
+  }
+
+  return statsData.errors;
 };
 
 export const getAllStatsWarnings = (statsData: StatsCompilation) => {
-  return statsData.warningsCount && statsData.warnings?.length === 0
-    ? statsData.children?.reduce<StatsError[]>(
-        (warnings, curr) => warnings.concat(curr.warnings || []),
-        [],
-      )
-    : statsData.warnings;
+  if (statsData.warningsCount && statsData.warnings?.length === 0) {
+    return statsData.children?.reduce<StatsError[]>(
+      (warnings, curr) => warnings.concat(curr.warnings || []),
+      [],
+    );
+  }
+
+  return statsData.warnings;
 };
 
 export function formatStats(stats: Stats | MultiStats) {
