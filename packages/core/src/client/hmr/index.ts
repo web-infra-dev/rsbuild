@@ -185,7 +185,9 @@ function onMessage(e: MessageEvent<string>) {
   const message = JSON.parse(e.data);
   switch (message.type) {
     case 'hash':
-      clearOverlay();
+      if (enableOverlay) {
+        clearOverlay();
+      }
       handleAvailableHash(message.data);
       break;
     case 'still-ok':
