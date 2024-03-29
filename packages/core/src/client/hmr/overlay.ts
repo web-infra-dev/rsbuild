@@ -172,12 +172,25 @@ if (customElements && !customElements.get(overlayId)) {
   customElements.define(overlayId, ErrorOverlay);
 }
 
+const documentAvailable = typeof document !== 'undefined';
+
 export function createOverlay(err: string[]) {
+  if (!documentAvailable) {
+    console.info(
+      'Failed to display Rsbuild overlay since document is not available, considering turning off the `dev.client.overlay` option.',
+    );
+    return;
+  }
+
   clearOverlay();
   document.body.appendChild(new ErrorOverlay(err));
 }
 
 export function clearOverlay() {
+  if (!documentAvailable) {
+    return;
+  }
+
   // use NodeList's forEach api instead of dom.iterable
   // biome-ignore lint/complexity/noForEach: <explanation>
   document.querySelectorAll<ErrorOverlay>(overlayId).forEach((n) => n.close());
