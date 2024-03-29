@@ -117,19 +117,19 @@ export default {
 
 This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist), the difference is that we can set different browserslist for development and production environment, thereby reducing the compilation overhead during development.
 
-For example, you can add the following config to `package.json`, which means that only the latest browsers are compatible during development, and the actual browsers are compatible in the production environment:
+For example, you can add the following config to `.browserslistrc`, which means that only the latest browsers are compatible during development, and the actual browsers are compatible in the production environment:
 
-```json
-{
-  "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
-}
+```yaml title=".browserslistrc"
+[production]
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
+
+[development]
+last 1 chrome version
+last 1 firefox version
+last 1 safari version
 ```
 
 Note that this strategy can lead to some differences in the build result of development production environment.
