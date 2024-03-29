@@ -170,7 +170,7 @@ const documentAvailable = typeof document !== 'undefined';
 export function createOverlay(err: string[]) {
   if (!documentAvailable) {
     console.info(
-      'Failed to display Rsbuild overlay since document is not available, considering turning off the overlay option.',
+      'Failed to display Rsbuild overlay since document is not available, considering turning off the `dev.client.overlay` option.',
     );
     return;
   }
