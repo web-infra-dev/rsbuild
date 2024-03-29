@@ -5,11 +5,13 @@ import {
   type Stats,
   type MultiStats,
   type SharedCompiledPkgNames,
+  type StatsError,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 import { awaitableGetter, type Plugins } from '@rsbuild/shared';
 import { formatStatsMessages } from '../client/formatStats';
+import type { StatsCompilation } from '@rspack/core';
 
 export const applyDefaultPlugins = (plugins: Plugins) =>
   awaitableGetter<RsbuildPlugin>([
@@ -181,12 +183,40 @@ function formatErrorMessage(errors: string[]) {
   return `${title}\n${tip}\n${text}`;
 }
 
+export const getAllStatsErrors = (statsData: StatsCompilation) => {
+  // stats error + childCompiler error
+  // only append child errors when stats error does not exist, because some errors will exist in both stats and childCompiler
+  if (statsData.errorsCount && statsData.errors?.length === 0) {
+    return statsData.children?.reduce<StatsError[]>(
+      (errors, curr) => errors.concat(curr.errors || []),
+      [],
+    );
+  }
+
+  return statsData.errors;
+};
+
+export const getAllStatsWarnings = (statsData: StatsCompilation) => {
+  if (statsData.warningsCount && statsData.warnings?.length === 0) {
+    return statsData.children?.reduce<StatsError[]>(
+      (warnings, curr) => warnings.concat(curr.warnings || []),
+      [],
+    );
+  }
+
+  return statsData.warnings;
+};
+
 export function formatStats(stats: Stats | MultiStats) {
   const statsData = stats.toJson({
     preset: 'errors-warnings',
+    children: true,
   });
 
-  const { errors, warnings } = formatStatsMessages(statsData);
+  const { errors, warnings } = formatStatsMessages({
+    errors: getAllStatsErrors(statsData),
+    warnings: getAllStatsWarnings(statsData),
+  });
 
   if (errors.length) {
     return {
