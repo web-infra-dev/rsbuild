@@ -63,28 +63,20 @@ RSPACK_PROFILE=ALL rsbuild build
 
 以下是一些通用的优化策略，对开发环境和生产环境均有提速效果，其中部分策略对包体积也有优化。
 
-### 升级 Node.js 版本
+### 启用 Lightning CSS 插件
 
-通常来说，将 Node.js 更新到最新的 [LTS 版本](https://github.com/nodejs/release#release-schedule)，有助于提升构建性能。
+Lightning CSS 是一个基于 Rust 编写的高性能 CSS 解析、转译和压缩工具。它支持将许多现代的 CSS 特性解析并转化为指定浏览器支持的语法，并提供更好的压缩比例。
 
-尤其是对于 Apple M1/M2 芯片的机型，推荐使用 Node 18 进行构建。
+Rsbuild 提供了 [Lightning CSS 插件](/plugins/list/plugin-lightningcss)，可以使用 [lightningcss](https://lightningcss.dev/) 替代内置的 `postcss-loader` 来编译 CSS，解决 PostCSS 和 autoprefixer 性能开销过大的问题。
 
-Node >= 16 默认提供了 Apple Silicon binaries，因此在 M1/M2 机型上性能会比 Node 14 有大幅度提升。根据我们的测试，**从 Node 14 切换到 Node >= 16 后，编译速度可以提升 100% 以上**。
+对于存在大量 CSS 文件的项目，启用 Lightning CSS 插件可以显著提升整体构建性能。
 
-你可以通过以下步骤来切换到 Node 18：
+```ts title="rsbuild.config.ts"
+import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 
-```bash
-# 安装 Node v18
-nvm install 18
-
-# 切换到 Node 18
-nvm use 18
-
-# 将 Node 18 设置为默认版本
-nvm default 18
-
-# 查看 Node 版本
-node -v
+export default {
+  plugins: [pluginLightningcss()],
+};
 ```
 
 ## 开发环境优化策略
@@ -127,19 +119,19 @@ export default {
 
 这项优化的原理与[「提升 Browserslist 范围」](/guide/optimization/optimize-bundle#adjust-browserslist)类似，区别在于，我们可以为开发环境和生产环境设置不同的 browserslist，从而减少开发环境下的编译开销。
 
-比如，你可以在 `package.json` 中添加以下配置，表示在开发环境下只兼容最新的浏览器，在生产环境下兼容实际需要的浏览器：
+比如，你可以在 `.browserslistrc` 中添加以下配置，表示在开发环境下只兼容最新的浏览器，在生产环境下兼容实际需要的浏览器：
 
-```json
-{
-  "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
-}
+```yaml title=".browserslistrc"
+[production]
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
+
+[development]
+last 1 chrome version
+last 1 firefox version
+last 1 safari version
 ```
 
 注意，这项优化策略会导致开发环境与生产环境的构建产物存在一定差异。
