@@ -176,7 +176,7 @@ export class SocketServer {
     }
 
     this.sockWrite('hash', stats.hash);
-  
+
     if (stats.errorsCount) {
       return this.sockWrite('errors', getAllStatsErrors(stats));
     }
