@@ -54,12 +54,12 @@ const overlayTemplate = `
 
 .container {
   font-family: Menlo, Consolas, monospace;
-  line-height: 1.5;
+  line-height: 1.6;
   width: 800px;
   max-width: 85%;
   color: #d8d8d8;
-  margin: 30px auto;
-  padding: 40px 40px 42px;
+  margin: 32px auto;
+  padding: 38px 40px 42px;
   position: relative;
   background: #181818;
   border-radius: 24px;
@@ -73,7 +73,7 @@ const overlayTemplate = `
 
 .title {
   margin: 0 0 16px;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   color: #ff5555;
 }
@@ -81,7 +81,6 @@ const overlayTemplate = `
 .content {
   margin: 0;
   font-size: 14px;
-  line-height: 1.3;
   overflow-x: scroll;
   scrollbar-width: none;
   color: #b8b8b8;
@@ -92,9 +91,17 @@ const overlayTemplate = `
 }
 
 .file-link {
-  text-decoration: underline;
   cursor: pointer;
-  color: rgb(92 157 255);
+  color: #13c2c2;
+  text-decoration: underline;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
 }
 
 .close {
@@ -113,7 +120,7 @@ const overlayTemplate = `
 <div class="root">
   <div class="container">
     <div class="close">x</div>
-    <p class="title">Compile error:</p>
+    <p class="title">Failed to compile:</p>
     <pre class="content"></pre>
   </div>
 </div>
