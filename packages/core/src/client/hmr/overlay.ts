@@ -59,7 +59,7 @@ const overlayTemplate = `
   max-width: 85%;
   color: #d8d8d8;
   margin: 32px auto;
-  padding: 38px 40px 42px;
+  padding: 32px 40px 42px;
   position: relative;
   background: #181818;
   border-radius: 24px;
@@ -72,55 +72,76 @@ const overlayTemplate = `
 }
 
 .title {
-  margin: 0 0 16px;
+  margin: 0 0 20px;
+  padding-bottom: 12px;
   font-size: 17px;
   font-weight: 600;
-  color: #ff5555;
+  color: #fc5e5e;
+  border-bottom: 2px solid rgba(252, 94, 94, 0.7);
 }
 
 .content {
   margin: 0;
   font-size: 14px;
+  font-family: inherit;
   overflow-x: scroll;
   scrollbar-width: none;
   color: #b8b8b8;
 }
-
 .content::-webkit-scrollbar {
   display: none;
 }
 
 .file-link {
   cursor: pointer;
-  color: #13c2c2;
+  color: #27caca;
   text-decoration: underline;
 
   &:hover {
     opacity: 0.8;
   }
-
   &:active {
     opacity: 0.6;
   }
 }
 
 .close {
-  line-height: 1rem;
-  font-size: 1.5rem;
-  padding: 1.4rem;
-  cursor: pointer;
   position: absolute;
-  right: 0px;
-  top: 0px;
-  background-color: transparent;
-  border: none;
+  top: 27px;
+  right: 32px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+.close:hover {
+  opacity: 0.8;
+}
+.close:active {
+  opacity: 0.6;
+}
+.close:before,
+.close:after {
+  position: absolute;
+  left: 16px;
+  top: 8px;
+  content: ' ';
+  height: 18px;
+  width: 2px;
+  border-radius: 4px;
+  background-color: #b8b8b8;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
 }
 </style>
 
 <div class="root">
   <div class="container">
-    <div class="close">x</div>
-    <p class="title">Failed to compile:</p>
+    <div class="close"></div>
+    <p class="title">Compilation failed</p>
     <pre class="content"></pre>
   </div>
 </div>
