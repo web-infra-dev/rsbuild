@@ -188,7 +188,16 @@ class ErrorOverlay extends HTMLElement {
   }
 
   close = () => {
-    this.parentNode?.removeChild(this);
+    const remove = () => this.parentNode?.removeChild(this);
+
+    if (this.animate) {
+      this.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 300,
+        easing: 'ease-out',
+      }).addEventListener('finish', remove);
+    } else {
+      remove();
+    }
   };
 }
 
