@@ -158,7 +158,7 @@ class ErrorOverlay extends HTMLElement {
 
     if (!this.attachShadow) {
       console.warn(
-        'The current browser version does not support displaying rsbuild overlay',
+        '[Rsbuild] Current browser version does not support displaying error overlay',
       );
       return;
     }
@@ -168,23 +168,28 @@ class ErrorOverlay extends HTMLElement {
 
     linkedText(root, '.content', stripAnsi(message.join('/n')).trim());
 
-    root.querySelector('.close')!.addEventListener('click', () => {
-      this.close();
-    });
+    root.querySelector('.close')?.addEventListener('click', this.close);
 
     // close overlay when click outside
-    this.addEventListener('click', () => {
-      this.close();
-    });
+    this.addEventListener('click', this.close);
 
     root.querySelector('.container')!.addEventListener('click', (e) => {
       e.stopPropagation();
     });
+
+    const onEscKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' || e.code === 'Escape') {
+        this.close();
+      }
+      document.removeEventListener('keydown', onEscKeydown);
+    };
+
+    document.addEventListener('keydown', onEscKeydown);
   }
 
-  close() {
+  close = () => {
     this.parentNode?.removeChild(this);
-  }
+  };
 }
 
 const overlayId = 'rsbuild-error-overlay';
@@ -198,7 +203,7 @@ const documentAvailable = typeof document !== 'undefined';
 export function createOverlay(err: string[]) {
   if (!documentAvailable) {
     console.info(
-      'Failed to display Rsbuild overlay since document is not available, considering turning off the `dev.client.overlay` option.',
+      '[Rsbuild] Failed to display error overlay as document is not available, you can disable the `dev.client.overlay` option.',
     );
     return;
   }
