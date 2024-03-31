@@ -64,6 +64,29 @@ The object returned by the `tools.swc` function will be used directly as the fin
 
 ## Example
 
+### Register SWC Plugin
+
+`tools.swc` can be used to register SWC's Wasm plugins, for example, registering `@swc/plugin-styled-jsx`:
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-styled-jsx', {}]],
+        },
+      },
+    },
+  },
+};
+```
+
+
+Please note that SWC's wasm plugins are currently not backward compatible, and there is a certain binding relationship between the SWC plugin and the version of `@swc/core` that Rspack depends on. Therefore, you must select the SWC plugin that matches the current version of `@swc/core` for SWC to work.
+
+For more information, refer to [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core).
+
 ### Enable emotion support
 
 Example of enabling the emotion support using the `builtin:swc-loader`:
