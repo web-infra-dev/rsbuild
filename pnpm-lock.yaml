@@ -1198,8 +1198,8 @@ importers:
         specifier: ^1.8.16
         version: 1.8.16(@babel/core@7.24.3)
       solid-refresh:
-        specifier: 0.7.5
-        version: 0.7.5(solid-js@1.8.16)
+        specifier: 0.6.3
+        version: 0.6.3(solid-js@1.8.16)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -13158,12 +13158,13 @@ packages:
       seroval-plugins: 1.0.4(seroval@1.0.4)
     dev: false
 
-  /solid-refresh@0.7.5(solid-js@1.8.16):
-    resolution: {integrity: sha512-ZYMbjWsy7IwSF3+oZCNnReiTYSyCAFRvC7oLUKxxh1wPa6/6YIWqsxa+Ma2kM4F/ypWT69B1c0fmKeZRdLueGw==}
+  /solid-refresh@0.6.3(solid-js@1.8.16):
+    resolution: {integrity: sha512-F3aPsX6hVw9ttm5LYlth8Q15x6MlI/J3Dn+o3EQyRTtTxidepSTwAYdozt01/YA+7ObcciagGEyXIopGZzQtbA==}
     peerDependencies:
       solid-js: ^1.3
     dependencies:
-      '@babel/generator': 7.23.6
+      '@babel/generator': 7.24.1
+      '@babel/helper-module-imports': 7.24.3
       '@babel/types': 7.24.0
       solid-js: 1.8.16
     dev: false
