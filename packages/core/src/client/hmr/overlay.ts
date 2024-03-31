@@ -187,9 +187,9 @@ class ErrorOverlay extends HTMLElement {
     document.addEventListener('keydown', onEscKeydown);
   }
 
-  close() {
+  close = () => {
     this.parentNode?.removeChild(this);
-  }
+  };
 }
 
 const overlayId = 'rsbuild-error-overlay';
