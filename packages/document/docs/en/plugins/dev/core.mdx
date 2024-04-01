@@ -179,3 +179,128 @@ const pluginFoo = () => ({
   },
 });
 ```
+
+## api.expose
+
+Used for plugin communication.
+
+`api.export` can explicitly expose some properties or methods of the current plugin, and other plugins can get these APIs through `api.useExposed`.
+
+- **Type:**
+
+```ts
+/**
+ * @param id Unique identifier, using Symbol can avoid naming conflicts
+ * @param api Properties or methods to be exposed, it is recommended to use object format
+ */
+function expose<T = any>(id: string | symbol, api: T): void;
+```
+
+- **Example:**
+
+```ts
+const pluginParent = () => ({
+  name: 'plugin-parent',
+  setup(api) {
+    api.expose('plugin-parent', {
+      value: 1,
+      double: (val: number) => val * 2,
+    });
+  },
+});
+```
+
+## api.useExposed
+
+Used for plugin communication.
+
+`api.useExposed` can get the properties or methods exposed by other plugins.
+
+- **Type:**
+
+```ts
+/**
+ * @param id Unique identifier
+ * @returns The properties or methods obtained
+ */
+function useExposed<T = any>(id: string | symbol): T | undefined;
+```
+
+- **Example:**
+
+```ts
+const pluginChild = () => ({
+  name: 'plugin-child',
+  pre: ['plugin-parent'],
+  setup(api) {
+    const parentApi = api.useExposed('plugin-parent');
+    if (parentApi) {
+      console.log(parentApi.value); // -> 1
+      console.log(parentApi.double(1)); // -> 2
+    }
+  },
+});
+```
+
+### Identifiers
+
+You can use Symbol as a unique identifier to avoid potential naming conflicts:
+
+```ts
+// pluginParent.ts
+export const PARENT_API_ID = Symbol('plugin-parent');
+
+const pluginParent = () => ({
+  name: 'plugin-parent',
+  setup(api) {
+    api.expose(PARENT_API_ID, {
+      // some api
+    });
+  },
+});
+
+// pluginChild.ts
+import { PARENT_API_ID } from './pluginParent';
+
+const pluginChild = () => ({
+  name: 'plugin-child',
+  setup(api) {
+    const parentApi = api.useExposed(PARENT_API_ID);
+    if (parentApi) {
+      console.log(parentApi);
+    }
+  },
+});
+```
+
+### Type Declaration
+
+You can declare types through the generics of the function:
+
+```ts
+// pluginParent.ts
+export type ParentAPI = {
+  // ...
+};
+
+// pluginChild.ts
+import type { ParentAPI } from './pluginParent';
+
+const pluginChild = () => ({
+  name: 'plugin-child',
+  setup(api) {
+    const parentApi = api.useExposed<ParentAPI>(PARENT_API_ID);
+    if (parentApi) {
+      console.log(parentApi);
+    }
+  },
+});
+```
+
+### Execution Order
+
+When communicating between plugins, you need to be aware of the order in which the plugins are executed.
+
+For example, in the above example, if `pluginParent` is not registered, or registers after `pluginChild`, then `api.useExposed('plugin-parent')` will return an `undefined`.
+
+You can use the `pre`, `post` options of the plugin object, and the `order` option of the plugin hook to ensure the order is correct.
