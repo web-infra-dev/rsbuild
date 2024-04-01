@@ -177,3 +177,128 @@ const pluginFoo = () => ({
   },
 });
 ```
+
+## api.expose
+
+用于插件间通信。
+
+`api.export` 可以显式暴露当前插件的一些属性或方法，其他插件可以通过 `api.useExposed` 来获取这些 API。
+
+- **类型：**
+
+```ts
+/**
+ * @param id 唯一标识符，使用 Symbol 可以避免命名冲突
+ * @param api 需要暴露的属性或方法，建议使用对象格式
+ */
+function expose<T = any>(id: string | symbol, api: T): void;
+```
+
+- **示例：**
+
+```ts
+const pluginParent = () => ({
+  name: 'plugin-parent',
+  setup(api) {
+    api.expose('plugin-parent', {
+      value: 1,
+      double: (val: number) => val * 2,
+    });
+  },
+});
+```
+
+## api.useExposed
+
+用于插件间通信。
+
+`api.useExposed` 可以获取到其他插件暴露的属性或方法。
+
+- **类型：**
+
+```ts
+/**
+ * @param id 唯一标识符
+ * @returns 获取的属性或方法
+ */
+function useExposed<T = any>(id: string | symbol): T | undefined;
+```
+
+- **示例：**
+
+```ts
+const pluginChild = () => ({
+  name: 'plugin-child',
+  pre: ['plugin-parent'],
+  setup(api) {
+    const parentApi = api.useExposed('plugin-parent');
+    if (parentApi) {
+      console.log(parentApi.value); // -> 1
+      console.log(parentApi.double(1)); // -> 2
+    }
+  },
+});
+```
+
+### 标识符
+
+你可以使用 Symbol 作为唯一标识符，从而避免潜在的命名冲突：
+
+```ts
+// pluginParent.ts
+export const PARENT_API_ID = Symbol('plugin-parent');
+
+const pluginParent = () => ({
+  name: 'plugin-parent',
+  setup(api) {
+    api.expose(PARENT_API_ID, {
+      // some api
+    });
+  },
+});
+
+// pluginChild.ts
+import { PARENT_API_ID } from './pluginParent';
+
+const pluginChild = () => ({
+  name: 'plugin-child',
+  setup(api) {
+    const parentApi = api.useExposed(PARENT_API_ID);
+    if (parentApi) {
+      console.log(parentApi);
+    }
+  },
+});
+```
+
+### 类型声明
+
+你可以通过函数的泛型来声明类型：
+
+```ts
+// pluginParent.ts
+export type ParentAPI = {
+  // ...
+};
+
+// pluginChild.ts
+import type { ParentAPI } from './pluginParent';
+
+const pluginChild = () => ({
+  name: 'plugin-child',
+  setup(api) {
+    const parentApi = api.useExposed<ParentAPI>(PARENT_API_ID);
+    if (parentApi) {
+      console.log(parentApi);
+    }
+  },
+});
+```
+
+### 执行顺序
+
+在进行插件间通信时，你需要留意插件的执行顺序。
+
+比如，在上面的示例中，如果 `pluginParent` 未注册，或者注册顺序晚于 `pluginChild`，那么 `api.useExposed('plugin-parent')` 会返回一个 `undefined`。
+
+你可以使用插件对象的 `pre`、`post` 选项，以及插件 hook 的 `order` 选项来保证顺序是正确的。
