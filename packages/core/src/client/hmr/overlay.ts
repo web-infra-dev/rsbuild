@@ -51,7 +51,6 @@ const overlayTemplate = `
   background: rgba(0, 0, 0, 0.66);
   cursor: pointer;
 }
-
 .container {
   font-family: Menlo, Consolas, monospace;
   line-height: 1.6;
@@ -59,7 +58,7 @@ const overlayTemplate = `
   max-width: 85%;
   color: #d8d8d8;
   margin: 32px auto;
-  padding: 32px 40px 42px;
+  padding: 32px 40px;
   position: relative;
   background: #181818;
   border-radius: 24px;
@@ -70,16 +69,14 @@ const overlayTemplate = `
   box-sizing: border-box;
   cursor: default;
 }
-
 .title {
   margin: 0 0 20px;
   padding-bottom: 12px;
   font-size: 17px;
   font-weight: 600;
   color: #fc5e5e;
-  border-bottom: 2px solid rgba(252, 94, 94, 0.7);
+  border-bottom: 2px solid rgba(252,94,94,.66);
 }
-
 .content {
   margin: 0;
   font-size: 14px;
@@ -91,12 +88,10 @@ const overlayTemplate = `
 .content::-webkit-scrollbar {
   display: none;
 }
-
 .file-link {
   cursor: pointer;
   color: #27caca;
   text-decoration: underline;
-
   &:hover {
     opacity: 0.8;
   }
@@ -104,7 +99,6 @@ const overlayTemplate = `
     opacity: 0.6;
   }
 }
-
 .close {
   position: absolute;
   top: 27px;
@@ -136,6 +130,19 @@ const overlayTemplate = `
 .close:after {
   transform: rotate(-45deg);
 }
+.footer {
+  font-size: 12px;
+  color: #7e6a92;
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 2px solid rgba(126,106,146,.6);
+}
+.footer p {
+  margin: 4px 0 0;
+}
+.footer span {
+  color: #a88dc3;
+}
 </style>
 
 <div class="root">
@@ -143,6 +150,10 @@ const overlayTemplate = `
     <div class="close"></div>
     <p class="title">Compilation failed</p>
     <pre class="content"></pre>
+    <footer class="footer">
+      <p><span>Fix error</span>, click outside, or press Esc to close the overlay.</p>
+      <p>Disable overlay by setting Rsbuild's <span>dev.client.overlay</span> config to false.<p>
+    </footer>
   </div>
 </div>
 `;
