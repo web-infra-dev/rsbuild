@@ -63,12 +63,26 @@ export function getPluginAPI({
     );
   };
 
+  const exposed: Array<{ id: string | symbol; api: any }> = [];
+
+  const expose = (id: string | symbol, api: any) => {
+    exposed.push({ id, api });
+  };
+  const useExposed = (id: string | symbol) => {
+    const matched = exposed.find((item) => item.id === id);
+    if (matched) {
+      return matched.api;
+    }
+  };
+
   onExitProcess(() => {
     hooks.onExit.call();
   });
 
   return {
     context: publicContext,
+    expose,
+    useExposed,
     getHTMLPaths,
     getRsbuildConfig,
     getNormalizedConfig,
