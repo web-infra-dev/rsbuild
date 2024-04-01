@@ -203,4 +203,10 @@ export type RsbuildPluginAPI = {
   getHTMLPaths: () => Record<string, string>;
   getRsbuildConfig: GetRsbuildConfig;
   getNormalizedConfig: () => NormalizedConfig;
+
+  /**
+   * For plugin communication
+   */
+  expose: <T = any>(id: string | symbol, api: T) => void;
+  useExposed: <T = any>(id: string | symbol) => T | undefined;
 };
