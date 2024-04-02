@@ -21,8 +21,9 @@ import type {
   NormalizedConfig,
   ModifyRspackConfigUtils,
 } from './config';
-import type { PromiseOrNot } from './utils';
-import type { RspackConfig } from './rspack';
+import type { MaybePromise } from './utils';
+import type { RspackConfig, RspackSourceMap } from './rspack';
+import type { RuleSetCondition } from '@rspack/core';
 import type {
   RuleSetRule,
   WebpackPluginInstance,
@@ -107,7 +108,7 @@ export type RsbuildPlugin = {
    * This function is called once when the plugin is initialized.
    * @param api provides the context info, utility functions and lifecycle hooks.
    */
-  setup: (api: RsbuildPluginAPI) => PromiseOrNot<void>;
+  setup: (api: RsbuildPluginAPI) => MaybePromise<void>;
   /**
    * Declare the names of pre-plugins, which will be executed before the current plugin.
    */
@@ -168,6 +169,25 @@ type PluginHook<T extends (...args: any[]) => any> = (
   options: T | HookDescriptor<T>,
 ) => void;
 
+type TransformResult =
+  | string
+  | {
+      code: string;
+      map?: string | RspackSourceMap | null;
+    };
+
+export type TransformHandler = (params: {
+  code: string;
+  resource: string;
+}) => MaybePromise<TransformResult>;
+
+export type TransformFn = (
+  handler: TransformHandler,
+  descriptor?: {
+    test?: RuleSetCondition;
+  },
+) => void;
+
 /**
  * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
@@ -209,4 +229,6 @@ export type RsbuildPluginAPI = {
    */
   expose: <T = any>(id: string | symbol, api: T) => void;
   useExposed: <T = any>(id: string | symbol) => T | undefined;
+
+  transform: TransformFn;
 };

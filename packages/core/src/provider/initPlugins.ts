@@ -1,13 +1,18 @@
+import { join } from 'node:path';
 import {
   getDistPath,
   onExitProcess,
   removeLeadingSlash,
+  type TransformFn,
+  type BundlerChain,
   type PluginManager,
   type RsbuildPluginAPI,
   type GetRsbuildConfig,
+  type TransformHandler,
 } from '@rsbuild/shared';
 import { createPublicContext } from './createContext';
 import type { InternalContext, NormalizedConfig } from '../types';
+import type { Compiler } from '@rspack/core';
 
 export function getHTMLPathByEntry(
   entryName: string,
@@ -20,6 +25,31 @@ export function getHTMLPathByEntry(
       : `${entryName}/index.html`;
 
   return removeLeadingSlash(`${htmlPath}/${filename}`);
+}
+
+function applyTransformPlugin(
+  chain: BundlerChain,
+  transformer: Record<string, TransformHandler>,
+) {
+  const name = 'RsbuildTransformPlugin';
+
+  if (chain.plugins.get(name)) {
+    return;
+  }
+
+  class RsbuildTransformPlugin {
+    apply(compiler: Compiler) {
+      compiler.__rsbuildTransformer = transformer;
+
+      compiler.hooks.thisCompilation.tap(name, (compilation) => {
+        compilation.hooks.childCompiler.tap(name, (childCompiler) => {
+          childCompiler.__rsbuildTransformer = transformer;
+        });
+      });
+    }
+  }
+
+  chain.plugin(name).use(RsbuildTransformPlugin);
 }
 
 export function getPluginAPI({
@@ -75,6 +105,32 @@ export function getPluginAPI({
     }
   };
 
+  let transformId = 0;
+  const transformer: Record<string, TransformHandler> = {};
+
+  const transform: TransformFn = (handler, descriptor = {}) => {
+    const id = `rsbuild-transform-${transformId}`;
+
+    transformer[id] = handler;
+
+    hooks.modifyBundlerChain.tap((chain) => {
+      const rule = chain.module.rule(id);
+
+      if (descriptor.test) {
+        rule.test(descriptor.test);
+      }
+
+      rule
+        .use(id)
+        .loader(join(__dirname, '../rspack/transformLoader'))
+        .options({ id });
+
+      applyTransformPlugin(chain, transformer);
+    });
+
+    transformId++;
+  };
+
   onExitProcess(() => {
     hooks.onExit.call();
   });
@@ -82,6 +138,7 @@ export function getPluginAPI({
   return {
     context: publicContext,
     expose,
+    transform,
     useExposed,
     getHTMLPaths,
     getRsbuildConfig,
