@@ -5,8 +5,15 @@ import type {
   RsbuildContext,
   NormalizedConfig,
   RsbuildPluginAPI,
+  TransformHandler,
 } from '@rsbuild/shared';
 import type { Hooks } from './initHooks';
+
+declare module '@rspack/core' {
+  interface Compiler {
+    __rsbuildTransformer: Record<string, TransformHandler>;
+  }
+}
 
 export type { RsbuildPlugin, RsbuildPlugins, RsbuildPluginAPI };
 
