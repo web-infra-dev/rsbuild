@@ -17,6 +17,8 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
 
   readonly inlineScript: boolean;
 
+  readonly minify: boolean;
+
   readonly HtmlPlugin: typeof HtmlWebpackPlugin;
 
   scriptPath: string;
@@ -33,6 +35,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
       distDir,
       HtmlPlugin,
       inlineScript = true,
+      minify = process.env.NODE_ENV === 'production',
       ...retryOptions
     } = options;
     this.name = 'AssetsRetryPlugin';
@@ -41,11 +44,15 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
     this.HtmlPlugin = HtmlPlugin;
     this.inlineScript = inlineScript;
     this.scriptPath = '';
+    this.minify = minify;
   }
 
   async getRetryCode() {
     const { default: serialize } = await import('serialize-javascript');
-    const runtimeFilePath = path.join(__dirname, './runtime.js');
+    const runtimeFilePath = path.join(
+      __dirname,
+      this.minify ? 'runtime.min.js' : 'runtime.js',
+    );
     const runtimeCode = await fse.readFile(runtimeFilePath, 'utf-8');
     return `(function(){${runtimeCode};init(${serialize(
       this.#retryOptions,

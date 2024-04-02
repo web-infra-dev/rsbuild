@@ -212,6 +212,15 @@ After adding the above configuration, the runtime code of Assets Retry plugin wi
 
 The downside is that `assets-retry.[version].js` itself may fail to load. If this happens, the assets retry will not work. Therefore, we prefer to inline the runtime code into the HTML file.
 
+### minify
+
+- **Type:** `boolean`
+- **Default:** `process.env.NODE_ENV === 'production'`
+
+Configure whether to enable code minification for runtime JavaScript code.
+
+By default, it will be affected by the [output.minify](/config/output/minify) configuration.
+
 ### Notes
 
 When you use Assets Retry plugin, the Rsbuild injects some runtime code into the HTML and serializes the Assets Retry plugin config, inserting it into the runtime code. Therefore, you need to be aware of the following:

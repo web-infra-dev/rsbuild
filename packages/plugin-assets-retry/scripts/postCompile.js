@@ -8,6 +8,7 @@ async function compileRetryRuntime() {
   const source = path.join(__dirname, '../src/runtime/index.ts');
   const runtimeCode = await readFile(source, 'utf8');
   const distPath = path.join(__dirname, '../dist/runtime.js');
+  const distMinPath = path.join(__dirname, '../dist/runtime.min.js');
   const { code } = await transformAsync(runtimeCode, {
     presets: [
       '@babel/preset-typescript',
@@ -29,7 +30,10 @@ async function compileRetryRuntime() {
       ecma: 5,
     },
   );
-  await writeFile(distPath, minifiedRuntimeCode);
+  await Promise.all([
+    writeFile(distPath, code),
+    writeFile(distMinPath, minifiedRuntimeCode),
+  ]);
 }
 
 async function compile() {
