@@ -7,9 +7,11 @@ import {
   type PluginManager,
   type RsbuildPluginAPI,
   type GetRsbuildConfig,
+  type TransformHandler,
 } from '@rsbuild/shared';
 import { createPublicContext } from './createContext';
 import type { InternalContext, NormalizedConfig } from '../types';
+import type { Compiler } from '@rspack/core';
 
 export function getHTMLPathByEntry(
   entryName: string,
@@ -22,6 +24,28 @@ export function getHTMLPathByEntry(
       : `${entryName}/index.html`;
 
   return removeLeadingSlash(`${htmlPath}/${filename}`);
+}
+
+const TRANSFORM_PLUGIN_NAME = 'RsbuildTransformPlugin';
+
+function getTransformPlugin(transformer: Record<string, TransformHandler>) {
+  return class RsbuildTransformPlugin {
+    apply(compiler: Compiler) {
+      compiler.__rsbuildTransformer = transformer;
+
+      compiler.hooks.thisCompilation.tap(
+        TRANSFORM_PLUGIN_NAME,
+        (compilation) => {
+          compilation.hooks.childCompiler.tap(
+            TRANSFORM_PLUGIN_NAME,
+            (childCompiler) => {
+              childCompiler.__rsbuildTransformer = transformer;
+            },
+          );
+        },
+      );
+    }
+  };
 }
 
 export function getPluginAPI({
@@ -78,9 +102,14 @@ export function getPluginAPI({
   };
 
   let transformId = 0;
+  const transformer: Record<string, TransformHandler> = {};
+
   const transform: TransformFn = (descriptor) => {
+    const id = `rsbuild-plugin-transform-${transformId}`;
+
+    transformer[id] = descriptor.handler;
+
     hooks.modifyBundlerChain.tap((chain) => {
-      const id = `'rsbuild-plugin-transform-${transformId}`;
       const rule = chain.module.rule(id);
       if (descriptor.test) {
         rule.test(descriptor.test);
@@ -88,7 +117,13 @@ export function getPluginAPI({
       rule
         .use(id)
         .loader(join(__dirname, '../rspack/transformLoader'))
-        .options({ id });
+        .options({ transformId: id });
+
+      if (!chain.plugins.get(TRANSFORM_PLUGIN_NAME)) {
+        chain
+          .plugin(TRANSFORM_PLUGIN_NAME)
+          .use(getTransformPlugin(transformer));
+      }
     });
 
     transformId++;
