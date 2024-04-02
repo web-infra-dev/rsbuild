@@ -4,6 +4,7 @@ import {
   onExitProcess,
   removeLeadingSlash,
   type TransformFn,
+  type BundlerChain,
   type PluginManager,
   type RsbuildPluginAPI,
   type GetRsbuildConfig,
@@ -26,26 +27,29 @@ export function getHTMLPathByEntry(
   return removeLeadingSlash(`${htmlPath}/${filename}`);
 }
 
-const TRANSFORM_PLUGIN_NAME = 'RsbuildTransformPlugin';
+function applyTransformPlugin(
+  chain: BundlerChain,
+  transformer: Record<string, TransformHandler>,
+) {
+  const name = 'RsbuildTransformPlugin';
 
-function getTransformPlugin(transformer: Record<string, TransformHandler>) {
-  return class RsbuildTransformPlugin {
+  if (chain.plugins.get(name)) {
+    return;
+  }
+
+  class RsbuildTransformPlugin {
     apply(compiler: Compiler) {
       compiler.__rsbuildTransformer = transformer;
 
-      compiler.hooks.thisCompilation.tap(
-        TRANSFORM_PLUGIN_NAME,
-        (compilation) => {
-          compilation.hooks.childCompiler.tap(
-            TRANSFORM_PLUGIN_NAME,
-            (childCompiler) => {
-              childCompiler.__rsbuildTransformer = transformer;
-            },
-          );
-        },
-      );
+      compiler.hooks.thisCompilation.tap(name, (compilation) => {
+        compilation.hooks.childCompiler.tap(name, (childCompiler) => {
+          childCompiler.__rsbuildTransformer = transformer;
+        });
+      });
     }
-  };
+  }
+
+  chain.plugin(name).use(RsbuildTransformPlugin);
 }
 
 export function getPluginAPI({
@@ -105,25 +109,23 @@ export function getPluginAPI({
   const transformer: Record<string, TransformHandler> = {};
 
   const transform: TransformFn = (descriptor) => {
-    const id = `rsbuild-plugin-transform-${transformId}`;
+    const id = `rsbuild-transform-${transformId}`;
 
     transformer[id] = descriptor.handler;
 
     hooks.modifyBundlerChain.tap((chain) => {
       const rule = chain.module.rule(id);
+
       if (descriptor.test) {
         rule.test(descriptor.test);
       }
+
       rule
         .use(id)
         .loader(join(__dirname, '../rspack/transformLoader'))
         .options({ id });
 
-      if (!chain.plugins.get(TRANSFORM_PLUGIN_NAME)) {
-        chain
-          .plugin(TRANSFORM_PLUGIN_NAME)
-          .use(getTransformPlugin(transformer));
-      }
+      applyTransformPlugin(chain, transformer);
     });
 
     transformId++;
