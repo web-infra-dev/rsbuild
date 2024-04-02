@@ -215,7 +215,7 @@ pluginAssetsRetry({
 ### minify
 
 - **类型：** `boolean`
-- **默认值：** `true`
+- **默认值：** `process.env.NODE_ENV === 'production'`
 
 是否对运行时 JavaScript 代码开启代码压缩。
 

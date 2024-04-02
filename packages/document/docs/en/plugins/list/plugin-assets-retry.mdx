@@ -215,7 +215,7 @@ The downside is that `assets-retry.[version].js` itself may fail to load. If thi
 ### minify
 
 - **Type:** `boolean`
-- **Default:** `true`
+- **Default:** `process.env.NODE_ENV === 'production'`
 
 Configure whether to enable code minification for runtime JavaScript code.
 
