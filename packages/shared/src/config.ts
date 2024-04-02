@@ -2,14 +2,11 @@ import type {
   RsbuildConfig,
   NormalizedConfig,
   InspectConfigOptions,
-  MinifyJSOptions,
 } from './types';
 import { logger } from './logger';
 import { join } from 'node:path';
 import fse from '../compiled/fs-extra';
-import { pick, color, upperFirst, deepmerge } from './utils';
-import { getTerserMinifyOptions } from './minimize';
-import { parseMinifyOptions } from './minimize';
+import { pick, color, upperFirst } from './utils';
 
 export async function outputInspectConfigFiles({
   rsbuildConfig,
@@ -70,40 +67,6 @@ export async function outputInspectConfigFiles({
   logger.success(
     `Inspect config succeed, open following files to view the content: \n\n${fileInfos}\n`,
   );
-}
-
-export async function getHtmlMinifyOptions(
-  isProd: boolean,
-  config: NormalizedConfig,
-) {
-  if (
-    !isProd ||
-    !config.output.minify ||
-    !parseMinifyOptions(config).minifyHtml
-  ) {
-    return false;
-  }
-
-  const minifyJS: MinifyJSOptions = getTerserMinifyOptions(config);
-
-  const htmlMinifyDefaultOptions = {
-    removeComments: false,
-    useShortDoctype: true,
-    keepClosingSlash: true,
-    collapseWhitespace: true,
-    removeRedundantAttributes: true,
-    removeScriptTypeAttributes: true,
-    removeStyleLinkTypeAttributes: true,
-    removeEmptyAttributes: true,
-    minifyJS,
-    minifyCSS: true,
-    minifyURLs: true,
-  };
-
-  const htmlMinifyOptions = parseMinifyOptions(config).htmlOptions;
-  return typeof htmlMinifyOptions === 'object'
-    ? deepmerge(htmlMinifyDefaultOptions, htmlMinifyOptions)
-    : htmlMinifyDefaultOptions;
 }
 
 export async function stringifyConfig(config: unknown, verbose?: boolean) {

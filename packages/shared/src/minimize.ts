@@ -1,8 +1,8 @@
 import { isObject } from './utils';
 import type {
-  HTMLPluginOptions,
-  NormalizedConfig,
   MinifyJSOptions,
+  NormalizedConfig,
+  HTMLPluginOptions,
 } from './types';
 import type { SwcJsMinimizerRspackPluginOptions } from '@rspack/core';
 import deepmerge from '../compiled/deepmerge';
@@ -31,21 +31,52 @@ function applyRemoveConsole(
   return options;
 }
 
-export function getTerserMinifyOptions(config: NormalizedConfig) {
+function getTerserMinifyOptions(config: NormalizedConfig) {
   const DEFAULT_OPTIONS: MinifyJSOptions = {
     mangle: {
-      // not need in rspack(swc)
-      // https://github.com/swc-project/swc/discussions/3373
       safari10: true,
     },
     format: {
       ascii_only: config.output.charset === 'ascii',
+      comments: config.output.legalComments !== 'none',
     },
   };
-
   const finalOptions = applyRemoveConsole(DEFAULT_OPTIONS, config);
-
   return finalOptions;
+}
+
+export async function getHtmlMinifyOptions(
+  isProd: boolean,
+  config: NormalizedConfig,
+) {
+  if (
+    !isProd ||
+    !config.output.minify ||
+    !parseMinifyOptions(config).minifyHtml
+  ) {
+    return false;
+  }
+
+  const minifyJS: MinifyJSOptions = getTerserMinifyOptions(config);
+
+  const htmlMinifyDefaultOptions = {
+    removeComments: false,
+    useShortDoctype: true,
+    keepClosingSlash: true,
+    collapseWhitespace: true,
+    removeRedundantAttributes: true,
+    removeScriptTypeAttributes: true,
+    removeStyleLinkTypeAttributes: true,
+    removeEmptyAttributes: true,
+    minifyJS,
+    minifyCSS: true,
+    minifyURLs: true,
+  };
+
+  const htmlMinifyOptions = parseMinifyOptions(config).htmlOptions;
+  return typeof htmlMinifyOptions === 'object'
+    ? deepmerge(htmlMinifyDefaultOptions, htmlMinifyOptions)
+    : htmlMinifyDefaultOptions;
 }
 
 export const getSwcMinimizerOptions = (config: NormalizedConfig) => {
