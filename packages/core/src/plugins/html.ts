@@ -161,8 +161,11 @@ function getChunks(
   entryValue: string | string[] | EntryDescription,
 ): string[] {
   if (isPlainObject(entryValue)) {
-    // @ts-expect-error Rspack do not support dependOn yet
-    const { dependOn } = entryValue as EntryDescription;
+    const { dependOn } = entryValue as EntryDescription & {
+      // TODO: remove this after bumping Rspack v0.6
+      // https://github.com/web-infra-dev/rspack/pull/6069
+      dependOn?: string | string[] | undefined;
+    };
     if (Array.isArray(dependOn)) {
       return [...dependOn, entryName];
     }
