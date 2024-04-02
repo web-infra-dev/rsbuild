@@ -117,7 +117,7 @@ export function getPluginAPI({
       rule
         .use(id)
         .loader(join(__dirname, '../rspack/transformLoader'))
-        .options({ transformId: id });
+        .options({ id });
 
       if (!chain.plugins.get(TRANSFORM_PLUGIN_NAME)) {
         chain

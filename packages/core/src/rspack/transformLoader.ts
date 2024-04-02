@@ -1,14 +1,6 @@
 import type { LoaderContext } from '@rspack/core';
 import type { RspackSourceMap, TransformHandler } from '@rsbuild/shared';
 
-const getTransformId = (query: string | { transformId: string }) => {
-  if (typeof query === 'string') {
-    const searchParams = new URLSearchParams(query);
-    return searchParams.get('transformId');
-  }
-  return query.transformId;
-};
-
 declare module '@rspack/core' {
   interface Compiler {
     __rsbuildTransformer: Record<string, TransformHandler>;
@@ -16,14 +8,14 @@ declare module '@rspack/core' {
 }
 
 export default async function transform(
-  this: LoaderContext<{ transformId: string }>,
+  this: LoaderContext<{ id: string }>,
   source: string,
   map?: string | RspackSourceMap,
 ) {
   const callback = this.async();
   const bypass = () => callback(null, source, map);
 
-  const transformId = getTransformId(this.query);
+  const transformId = this.getOptions().id;
   if (!transformId) {
     return bypass();
   }
