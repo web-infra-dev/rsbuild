@@ -108,10 +108,10 @@ export function getPluginAPI({
   let transformId = 0;
   const transformer: Record<string, TransformHandler> = {};
 
-  const transform: TransformFn = (descriptor) => {
+  const transform: TransformFn = (handler, descriptor = {}) => {
     const id = `rsbuild-transform-${transformId}`;
 
-    transformer[id] = descriptor.handler;
+    transformer[id] = handler;
 
     hooks.modifyBundlerChain.tap((chain) => {
       const rule = chain.module.rule(id);

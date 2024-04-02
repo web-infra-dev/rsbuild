@@ -181,10 +181,12 @@ export type TransformHandler = (params: {
   resource: string;
 }) => MaybePromise<TransformResult>;
 
-export type TransformFn = (descriptor: {
-  test?: RuleSetCondition;
-  handler: TransformHandler;
-}) => void;
+export type TransformFn = (
+  handler: TransformHandler,
+  descriptor?: {
+    test?: RuleSetCondition;
+  },
+) => void;
 
 /**
  * Define a generic Rsbuild plugin API that provider can extend as needed.
