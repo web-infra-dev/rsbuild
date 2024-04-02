@@ -32,16 +32,20 @@ function applyRemoveConsole(
 }
 
 function getTerserMinifyOptions(config: NormalizedConfig) {
-  const DEFAULT_OPTIONS: MinifyJSOptions = {
+  const options: MinifyJSOptions = {
     mangle: {
       safari10: true,
     },
     format: {
       ascii_only: config.output.charset === 'ascii',
-      comments: config.output.legalComments !== 'none',
     },
   };
-  const finalOptions = applyRemoveConsole(DEFAULT_OPTIONS, config);
+
+  if (config.output.legalComments === 'none') {
+    options.format!.comments = false;
+  }
+
+  const finalOptions = applyRemoveConsole(options, config);
   return finalOptions;
 }
 
