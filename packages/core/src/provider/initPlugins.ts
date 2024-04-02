@@ -1,7 +1,9 @@
+import { join } from 'node:path';
 import {
   getDistPath,
   onExitProcess,
   removeLeadingSlash,
+  type TransformFn,
   type PluginManager,
   type RsbuildPluginAPI,
   type GetRsbuildConfig,
@@ -75,6 +77,23 @@ export function getPluginAPI({
     }
   };
 
+  let transformId = 0;
+  const transform: TransformFn = (descriptor) => {
+    hooks.modifyBundlerChain.tap((chain) => {
+      const id = `'rsbuild-plugin-transform-${transformId}`;
+      const rule = chain.module.rule(id);
+      if (descriptor.test) {
+        rule.test(descriptor.test);
+      }
+      rule
+        .use(id)
+        .loader(join(__dirname, '../rspack/transformLoader'))
+        .options({ id });
+    });
+
+    transformId++;
+  };
+
   onExitProcess(() => {
     hooks.onExit.call();
   });
@@ -82,6 +101,7 @@ export function getPluginAPI({
   return {
     context: publicContext,
     expose,
+    transform,
     useExposed,
     getHTMLPaths,
     getRsbuildConfig,
