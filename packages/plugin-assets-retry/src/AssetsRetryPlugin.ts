@@ -35,7 +35,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
       distDir,
       HtmlPlugin,
       inlineScript = true,
-      minify = true,
+      minify = process.env.NODE_ENV === 'production',
       ...retryOptions
     } = options;
     this.name = 'AssetsRetryPlugin';
