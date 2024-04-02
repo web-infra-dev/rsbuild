@@ -52,6 +52,11 @@ export default defineConfig({
         label: 'English',
         title: 'Rsbuild',
         description: 'The Rspack-based build tool for the web',
+        editLink: {
+          docRepoBaseUrl:
+            'https://github.com/web-infra-dev/rsbuild/tree/main/packages/document/docs',
+          text: '📝 Edit this page on GitHub',
+        },
       },
       {
         lang: 'zh',
@@ -61,13 +66,13 @@ export default defineConfig({
         prevPageText: '上一页',
         nextPageText: '下一页',
         description: '基于 Rspack 的 Web 构建工具',
+        editLink: {
+          docRepoBaseUrl:
+            'https://github.com/web-infra-dev/rsbuild/tree/main/packages/document/docs',
+          text: '📝 在 GitHub 上编辑此页',
+        },
       },
     ],
-    editLink: {
-      docRepoBaseUrl:
-        'https://github.com/web-infra-dev/rsbuild/tree/main/packages/document/docs',
-      text: 'Edit this page on GitHub',
-    },
   },
   builderConfig: {
     plugins: [
