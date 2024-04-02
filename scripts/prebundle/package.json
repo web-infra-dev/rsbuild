@@ -1,7 +1,7 @@
 {
   "name": "@rsbuild/prebundle",
   "private": true,
-  "version": "0.5.5",
+  "version": "0.5.6",
   "main": "./dist/index.js",
   "scripts": {
     "dev": "tsc --watch",
