@@ -7,6 +7,7 @@ exports[`plugin-assets-retry > should add assets retry plugin 1`] = `
       "HtmlPlugin": [Function],
       "distDir": "static/js",
       "inlineScript": true,
+      "minify": true,
       "name": "AssetsRetryPlugin",
       "scriptPath": "",
     },

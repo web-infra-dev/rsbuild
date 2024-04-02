@@ -39,6 +39,10 @@ export type PluginAssetsRetryOptions = {
    * The callback function when the asset is successfully retried.
    */
   onSuccess?: (options: AssetsRetryHookContext) => void;
+  /**
+   * Whether to minify the runtime JavaScript code of Assets Retry plugin.
+   */
+  minify?: boolean;
 };
 
 export type AssetsRetryHookContext = {
