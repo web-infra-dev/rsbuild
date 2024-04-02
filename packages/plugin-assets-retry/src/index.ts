@@ -24,16 +24,18 @@ export const pluginAssetsRetry = (
         options.crossOrigin = config.html.crossorigin;
       }
 
-      const minify =
-        typeof config.output.minify === 'boolean'
-          ? config.output.minify
-          : config.output.minify?.js ?? true;
+      if (options.minify === undefined) {
+        const minify =
+          typeof config.output.minify === 'boolean'
+            ? config.output.minify
+            : config.output.minify?.js ?? true;
+        options.minify = minify;
+      }
 
       chain.plugin(CHAIN_ID.PLUGIN.ASSETS_RETRY).use(AssetsRetryPlugin, [
         {
           ...options,
           distDir,
-          minify,
           HtmlPlugin,
         },
       ]);
