@@ -1347,13 +1347,13 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      toml:
+        specifier: ^3.0.0
+        version: 3.0.0
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
         version: link:../core
-      '@scripts/test-helper':
-        specifier: workspace:*
-        version: link:../../scripts/test-helper
       typescript:
         specifier: ^5.4.2
         version: 5.4.2
@@ -1724,9 +1724,6 @@ importers:
       style-loader:
         specifier: 3.3.4
         version: 3.3.4(webpack@5.91.0)
-      toml-loader:
-        specifier: 1.0.0
-        version: 1.0.0
       url-loader:
         specifier: 4.1.1
         version: 4.1.1(file-loader@6.2.0)(webpack@5.91.0)
@@ -13866,15 +13863,9 @@ packages:
     resolution: {integrity: sha512-VSsyNPPW74RpHwR8Fc21uubwHY7wMDeJLys2IX5zJNih+OnAnaifKHo+1LHT7DAdloQ7apeaaWg8l7qnf/TnEg==}
     dev: false
 
-  /toml-loader@1.0.0:
-    resolution: {integrity: sha512-/1xtg+pmD6IOuJBGtFp75hSofSVx3F8akeOS+31Rk1R5n8mYSZGKuaLM39qcxUm+SEx7zuntWR2puwYSntUKAg==}
-    dependencies:
-      toml: 2.3.6
-    dev: true
-
-  /toml@2.3.6:
-    resolution: {integrity: sha512-gVweAectJU3ebq//Ferr2JUY4WKSDe5N+z0FvjDncLGyHmIDoxgY/2Ie4qfEIDm4IS7OA6Rmdm7pdEEdMcV/xQ==}
-    dev: true
+  /toml@3.0.0:
+    resolution: {integrity: sha512-y/mWCZinnvxjTKYhJ+pYxwD0mRLVvOtdS2Awbgxln6iEnt4rk0yBxeSBHkGJcPucRiG0e55mwWp+g/05rsrd6w==}
+    dev: false
 
   /totalist@3.0.1:
     resolution: {integrity: sha512-sf4i37nQ2LBx4m3wB74y+ubopq6W/dIzXg0FDGjsYnZHVa1Da8FH853wlL2gtUhg+xJXjfk3kUZS3BRoQeoQBQ==}

@@ -96,8 +96,6 @@ export const CHAIN_ID = {
     PUG: 'pug',
     /** Rule for Vue */
     VUE: 'vue',
-    /** Rule for toml */
-    TOML: 'toml',
     /** Rule for yaml */
     YAML: 'yaml',
     /** Rule for wasm */
@@ -141,8 +139,6 @@ export const CHAIN_ID = {
     SVGO: 'svgo',
     /** yaml-loader */
     YAML: 'yaml',
-    /** toml-loader */
-    TOML: 'toml',
     /** node-loader */
     NODE: 'node',
     /** babel-loader */
