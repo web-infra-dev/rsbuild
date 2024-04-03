@@ -244,7 +244,7 @@ export const pluginCss = (): RsbuildPlugin => {
           rspackConfig.module ||= {};
           rspackConfig.module.generator ||= {};
           rspackConfig.module.generator['css/module'] = {
-            localsConvention: kebabCase(
+            exportsConvention: kebabCase(
               config.output.cssModules.exportLocalsConvention,
             ),
             localIdentName,
