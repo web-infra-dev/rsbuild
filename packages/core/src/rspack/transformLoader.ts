@@ -24,6 +24,7 @@ export default async function transform(
     resource: this.resource,
     resourcePath: this.resourcePath,
     resourceQuery: this.resourceQuery,
+    addDependency: this.addDependency,
   });
 
   if (result === null || result === undefined) {
