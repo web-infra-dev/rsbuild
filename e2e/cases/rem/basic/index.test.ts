@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
+import { pluginReact } from '@rsbuild/plugin-react';
+import { pluginRem } from '@rsbuild/plugin-rem';
 
 const fixtures = __dirname;
 
@@ -8,6 +10,7 @@ test('should convert rem unit correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
     runServer: true,
+    plugins: [pluginReact(), pluginRem()],
   });
 
   await gotoPage(page, rsbuild);
