@@ -108,8 +108,8 @@ export function getPluginAPI({
   let transformId = 0;
   const transformer: Record<string, TransformHandler> = {};
 
-  const transform: TransformFn = (handler, descriptor = {}) => {
-    const id = `rsbuild-transform-${transformId}`;
+  const transform: TransformFn = (descriptor, handler) => {
+    const id = `rsbuild-transform-${transformId++}`;
 
     transformer[id] = handler;
 
@@ -127,8 +127,6 @@ export function getPluginAPI({
 
       applyTransformPlugin(chain, transformer);
     });
-
-    transformId++;
   };
 
   onExitProcess(() => {

@@ -14,7 +14,7 @@ export default async function transform(
     return bypass();
   }
 
-  const transform = this._compiler?.__rsbuildTransformer[transformId];
+  const transform = this._compiler?.__rsbuildTransformer?.[transformId];
   if (!transform) {
     return bypass();
   }

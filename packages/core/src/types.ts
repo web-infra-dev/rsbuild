@@ -11,7 +11,7 @@ import type { Hooks } from './initHooks';
 
 declare module '@rspack/core' {
   interface Compiler {
-    __rsbuildTransformer: Record<string, TransformHandler>;
+    __rsbuildTransformer?: Record<string, TransformHandler>;
   }
 }
 
