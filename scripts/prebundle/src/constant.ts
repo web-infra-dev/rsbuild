@@ -349,16 +349,6 @@ export const TASKS: TaskConfig[] = [
     ],
   },
   {
-    packageDir: 'plugin-toml',
-    packageName: '@rsbuild/plugin-toml',
-    dependencies: [
-      {
-        name: 'toml-loader',
-        ignoreDts: true,
-      },
-    ],
-  },
-  {
     packageDir: 'plugin-yaml',
     packageName: '@rsbuild/plugin-yaml',
     dependencies: [

@@ -20,19 +20,18 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "compiled"
+    "dist"
   ],
   "scripts": {
     "build": "modern build",
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*"
+    "@rsbuild/shared": "workspace:*",
+    "toml": "^3.0.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@scripts/test-helper": "workspace:*",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
