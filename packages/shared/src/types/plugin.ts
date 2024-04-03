@@ -196,14 +196,14 @@ export type TransformHandler = (params: {
 }) => MaybePromise<TransformResult>;
 
 export type TransformFn = (
-  handler: TransformHandler,
-  descriptor?: {
+  descriptor: {
     /**
      * Include modules that match the test assertion., the same as `rule.test`
      * @see https://rspack.dev/config/module#ruletest
      */
     test?: RuleSetCondition;
   },
+  handler: TransformHandler,
 ) => void;
 
 /**
