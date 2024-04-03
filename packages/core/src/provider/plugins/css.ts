@@ -1,6 +1,7 @@
 import path from 'node:path';
 import {
   logger,
+  kebabCase,
   getBrowserslistWithDefault,
   isUseCssExtract,
   CSS_REGEX,
@@ -239,11 +240,13 @@ export const pluginCss = (): RsbuildPlugin => {
             localIdentName = localIdentName.replace(':base64', '');
           }
 
-          // need use type: "css/module" rule instead of modules.auto config
-          rspackConfig.builtins ||= {};
-          rspackConfig.builtins.css ||= {};
-          rspackConfig.builtins.css.modules = {
-            localsConvention: config.output.cssModules.exportLocalsConvention,
+          // need use "css/module" generator instead of modules.auto config
+          rspackConfig.module ||= {};
+          rspackConfig.module.generator ||= {};
+          rspackConfig.module.generator['css/module'] = {
+            localsConvention: kebabCase(
+              config.output.cssModules.exportLocalsConvention,
+            ),
             localIdentName,
             exportsOnly: isServer || isWebWorker,
           };

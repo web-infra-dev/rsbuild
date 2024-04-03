@@ -2,15 +2,6 @@
 
 exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
 {
-  "builtins": {
-    "css": {
-      "modules": {
-        "exportsOnly": false,
-        "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camelCase",
-      },
-    },
-  },
   "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
   "entry": {
@@ -26,6 +17,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "mode": "development",
   "module": {
+    "generator": {
+      "css/auto": {
+        "exportsOnly": false,
+        "localIdentName": "[path][name]__[local]-[hash:6]",
+        "localsConvention": "camel-case",
+      },
+    },
     "parser": {
       "javascript": {
         "exportsPresence": "error",
@@ -703,15 +701,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
 
 exports[`applyDefaultPlugins > should apply default plugins correctly when prod 1`] = `
 {
-  "builtins": {
-    "css": {
-      "modules": {
-        "exportsOnly": false,
-        "localIdentName": "[local]-[hash:6]",
-        "localsConvention": "camelCase",
-      },
-    },
-  },
   "context": "<ROOT>/packages/core/tests",
   "devtool": false,
   "entry": {
@@ -727,6 +716,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "mode": "production",
   "module": {
+    "generator": {
+      "css/auto": {
+        "exportsOnly": false,
+        "localIdentName": "[local]-[hash:6]",
+        "localsConvention": "camel-case",
+      },
+    },
     "parser": {
       "javascript": {
         "exportsPresence": "error",
@@ -1469,15 +1465,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
 
 exports[`applyDefaultPlugins > should apply default plugins correctly when target = node 1`] = `
 {
-  "builtins": {
-    "css": {
-      "modules": {
-        "exportsOnly": true,
-        "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camelCase",
-      },
-    },
-  },
   "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
   "entry": {
@@ -1493,6 +1480,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "mode": "development",
   "module": {
+    "generator": {
+      "css/auto": {
+        "exportsOnly": true,
+        "localIdentName": "[path][name]__[local]-[hash:6]",
+        "localsConvention": "camel-case",
+      },
+    },
     "parser": {
       "javascript": {
         "exportsPresence": "error",
@@ -1885,15 +1879,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
 
 exports[`tools.rspack > should match snapshot 1`] = `
 {
-  "builtins": {
-    "css": {
-      "modules": {
-        "exportsOnly": false,
-        "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camelCase",
-      },
-    },
-  },
   "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
   "entry": {
@@ -1909,6 +1894,13 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "mode": "development",
   "module": {
+    "generator": {
+      "css/auto": {
+        "exportsOnly": false,
+        "localIdentName": "[path][name]__[local]-[hash:6]",
+        "localsConvention": "camel-case",
+      },
+    },
     "parser": {
       "javascript": {
         "exportsPresence": "error",
