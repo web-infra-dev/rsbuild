@@ -176,7 +176,10 @@ type TransformResult =
       map?: string | RspackSourceMap | null;
     };
 
-export type TransformHandler = (params: {
+export type TransformHandler = (context: {
+  /**
+   * The code of the module.
+   */
   code: string;
   /**
    * The absolute path of the module, including the query.
@@ -193,6 +196,12 @@ export type TransformHandler = (params: {
    * @example '?foo=123'
    */
   resourceQuery: string;
+  /**
+   * Add an additional file as the dependency.
+   * The file will be watched and changes to the file will trigger rebuild.
+   * @param file The absolute path of the module.
+   */
+  addDependency: (file: string) => void;
 }) => MaybePromise<TransformResult>;
 
 export type TransformFn = (
