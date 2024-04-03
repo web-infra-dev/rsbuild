@@ -250,6 +250,10 @@ export const pluginCss = (): RsbuildPlugin => {
             localIdentName,
             exportsOnly: isServer || isWebWorker,
           };
+          rspackConfig.module.parser ||= {};
+          rspackConfig.module.parser['css/module'] = {
+            namedExports: false,
+          };
 
           const rules = rspackConfig.module?.rules;
 

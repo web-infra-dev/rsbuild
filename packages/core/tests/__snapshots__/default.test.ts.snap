@@ -18,13 +18,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "mode": "development",
   "module": {
     "generator": {
-      "css/auto": {
+      "css/module": {
+        "exportsConvention": "camel-case",
         "exportsOnly": false,
         "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camel-case",
       },
     },
     "parser": {
+      "css/module": {
+        "namedExports": false,
+      },
       "javascript": {
         "exportsPresence": "error",
       },
@@ -717,13 +720,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "mode": "production",
   "module": {
     "generator": {
-      "css/auto": {
+      "css/module": {
+        "exportsConvention": "camel-case",
         "exportsOnly": false,
         "localIdentName": "[local]-[hash:6]",
-        "localsConvention": "camel-case",
       },
     },
     "parser": {
+      "css/module": {
+        "namedExports": false,
+      },
       "javascript": {
         "exportsPresence": "error",
       },
@@ -1481,13 +1487,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "mode": "development",
   "module": {
     "generator": {
-      "css/auto": {
+      "css/module": {
+        "exportsConvention": "camel-case",
         "exportsOnly": true,
         "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camel-case",
       },
     },
     "parser": {
+      "css/module": {
+        "namedExports": false,
+      },
       "javascript": {
         "exportsPresence": "error",
       },
@@ -1895,13 +1904,16 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "mode": "development",
   "module": {
     "generator": {
-      "css/auto": {
+      "css/module": {
+        "exportsConvention": "camel-case",
         "exportsOnly": false,
         "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camel-case",
       },
     },
     "parser": {
+      "css/module": {
+        "namedExports": false,
+      },
       "javascript": {
         "exportsPresence": "error",
       },

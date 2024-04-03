@@ -4,10 +4,15 @@ exports[`plugin-css > should apply custom css-modules-typescript-loader when ena
 {
   "module": {
     "generator": {
-      "css/auto": {
+      "css/module": {
+        "exportsConvention": "camel-case",
         "exportsOnly": false,
         "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camel-case",
+      },
+    },
+    "parser": {
+      "css/module": {
+        "namedExports": false,
       },
     },
     "rules": [
@@ -129,10 +134,15 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
 {
   "module": {
     "generator": {
-      "css/auto": {
+      "css/module": {
+        "exportsConvention": "camel-case",
         "exportsOnly": false,
         "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camel-case",
+      },
+    },
+    "parser": {
+      "css/module": {
+        "namedExports": false,
       },
     },
     "rules": [
@@ -224,10 +234,15 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
 {
   "module": {
     "generator": {
-      "css/auto": {
+      "css/module": {
+        "exportsConvention": "camel-case",
         "exportsOnly": false,
         "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camel-case",
+      },
+    },
+    "parser": {
+      "css/module": {
+        "namedExports": false,
       },
     },
     "rules": [

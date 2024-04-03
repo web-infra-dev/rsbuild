@@ -18,13 +18,16 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   "mode": "development",
   "module": {
     "generator": {
-      "css/auto": {
+      "css/module": {
+        "exportsConvention": "camel-case",
         "exportsOnly": false,
         "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camel-case",
       },
     },
     "parser": {
+      "css/module": {
+        "namedExports": false,
+      },
       "javascript": {
         "exportsPresence": "error",
       },
