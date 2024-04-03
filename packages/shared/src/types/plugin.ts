@@ -198,7 +198,7 @@ export type TransformHandler = (params: {
 export type TransformFn = (
   descriptor: {
     /**
-     * Include modules that match the test assertion., the same as `rule.test`
+     * Include modules that match the test assertion, the same as `rule.test`
      * @see https://rspack.dev/config/module#ruletest
      */
     test?: RuleSetCondition;
