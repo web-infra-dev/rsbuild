@@ -22,6 +22,8 @@ export default async function transform(
   const result = await transform({
     code: source,
     resource: this.resource,
+    resourcePath: this.resourcePath,
+    resourceQuery: this.resourceQuery,
   });
 
   if (result === null || result === undefined) {

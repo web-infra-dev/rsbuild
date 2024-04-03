@@ -178,12 +178,30 @@ type TransformResult =
 
 export type TransformHandler = (params: {
   code: string;
+  /**
+   * The absolute path of the module, including the query.
+   * @example '/home/user/project/src/index.js?foo=123'
+   */
   resource: string;
+  /**
+   * The absolute path of the module, without the query.
+   * @example '/home/user/project/src/index.js'
+   */
+  resourcePath: string;
+  /**
+   * The query of the module.
+   * @example '?foo=123'
+   */
+  resourceQuery: string;
 }) => MaybePromise<TransformResult>;
 
 export type TransformFn = (
   handler: TransformHandler,
   descriptor?: {
+    /**
+     * Include modules that match the test assertion., the same as `rule.test`
+     * @see https://rspack.dev/config/module#ruletest
+     */
     test?: RuleSetCondition;
   },
 ) => void;
