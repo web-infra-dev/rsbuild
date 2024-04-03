@@ -3,20 +3,14 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 export const myPlugin: RsbuildPlugin = {
   name: 'my-plugin',
   setup(api) {
-    api.transform(
-      ({ code }) => {
-        return code.replace('red', 'blue');
-      },
-      { test: /\.css$/ },
-    );
+    api.transform({ test: /\.css$/ }, ({ code }) => {
+      return code.replace('red', 'blue');
+    });
 
-    api.transform(
-      ({ code }) => {
-        return {
-          code: code.replace('hello', 'world'),
-        };
-      },
-      { test: /\.js$/ },
-    );
+    api.transform({ test: /\.js$/ }, ({ code }) => {
+      return {
+        code: code.replace('hello', 'world'),
+      };
+    });
   },
 };
