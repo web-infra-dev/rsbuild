@@ -1,4 +1,7 @@
 import './App.css';
+import style from './a.module.css';
+
+console.log(style);
 
 const App = () => {
   return (
