@@ -218,7 +218,7 @@ export type TransformFn = (
 /**
  * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
-export type RsbuildPluginAPI = {
+export type RsbuildPluginAPI = Readonly<{
   context: Readonly<RsbuildContext>;
   isPluginExists: PluginManager['isPluginExists'];
 
@@ -263,4 +263,4 @@ export type RsbuildPluginAPI = {
    * It will be stable in Rsbuild v0.6.0
    */
   transform: TransformFn;
-};
+}>;
