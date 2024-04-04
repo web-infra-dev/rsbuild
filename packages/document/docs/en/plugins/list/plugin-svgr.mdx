@@ -219,6 +219,44 @@ import Logo from './logo.svg?svgr';
 export const App = () => <Logo />;
 ```
 
+### exclude
+
+- **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **Default:** `undefined`
+
+Exclude some modules. This will prevent SVGR from transforming the SVG files they import.
+
+For example, if your project contains `page-a/index.ts` and `page-b/index.ts`, you can add `page-b` to exclude:
+
+```ts
+pluginSvgr({
+  svgrOptions: {
+    exportType: 'default',
+  },
+  exclude: /\/page-b\/index\.ts/,
+});
+```
+
+- SVGs referenced in page-a will be converted to React components:
+
+```ts title="page-a/index.ts"
+import Logo from './logo.svg';
+
+console.log(Logo); // => React component
+```
+
+- SVGs referenced in page-b will be treated as static assets:
+
+```ts title="page-b/index.ts"
+import url from './logo.svg';
+
+console.log(url); // => Resource url
+```
+
+:::tip
+The query in the module path has a higher priority than `exclude`. For example, if a module is excluded, adding `?react` can still make it converted by SVGR.
+:::
+
 ---
 
 ## Type Declaration
