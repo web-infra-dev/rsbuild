@@ -1,5 +1,5 @@
 import type { LoaderContext } from '@rspack/core';
-import type { RspackSourceMap } from '@rsbuild/shared';
+import type { TransformContext, RspackSourceMap } from '@rsbuild/shared';
 
 export default async function transform(
   this: LoaderContext<{ id: string }>,
@@ -25,6 +25,7 @@ export default async function transform(
     resourcePath: this.resourcePath,
     resourceQuery: this.resourceQuery,
     addDependency: this.addDependency,
+    emitFile: this.emitFile as TransformContext['emitFile'],
   });
 
   if (result === null || result === undefined) {

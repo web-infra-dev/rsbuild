@@ -7,7 +7,8 @@ export const myPlugin: RsbuildPlugin = {
       return code.replace('red', 'blue');
     });
 
-    api.transform({ test: /\.js$/ }, ({ code }) => {
+    api.transform({ test: /\.js$/ }, ({ code, emitFile }) => {
+      emitFile('static/hello.txt', 'hello world');
       return {
         code: code.replace('hello', 'world'),
       };

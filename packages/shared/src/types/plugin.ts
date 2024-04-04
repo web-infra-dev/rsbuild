@@ -176,7 +176,7 @@ type TransformResult =
       map?: string | RspackSourceMap | null;
     };
 
-export type TransformHandler = (context: {
+export type TransformContext = {
   /**
    * The code of the module.
    */
@@ -199,10 +199,27 @@ export type TransformHandler = (context: {
   /**
    * Add an additional file as the dependency.
    * The file will be watched and changes to the file will trigger rebuild.
-   * @param file The absolute path of the module.
+   * @param file The absolute path of the module
    */
   addDependency: (file: string) => void;
-}) => MaybePromise<TransformResult>;
+  /**
+   * Emits a file to the build output.
+   * @param name file name of the asset
+   * @param content the source of the asset
+   * @param sourceMap source map of the asset
+   * @param assetInfo additional asset information
+   */
+  emitFile: (
+    name: string,
+    content: string | Buffer,
+    sourceMap?: string,
+    assetInfo?: Record<string, any>,
+  ) => void;
+};
+
+export type TransformHandler = (
+  context: TransformContext,
+) => MaybePromise<TransformResult>;
 
 export type TransformFn = (
   descriptor: {
