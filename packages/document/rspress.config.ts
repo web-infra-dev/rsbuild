@@ -1,12 +1,32 @@
 import path from 'node:path';
 import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './src/rsbuildPluginOverview';
+import { pluginRss } from '@rspress/plugin-rss';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 
 export default defineConfig({
-  plugins: [pluginFontOpenSans()],
+  plugins: [
+    pluginFontOpenSans(),
+    pluginRss({
+      siteUrl: 'https://rsbuild.dev',
+      feed: [
+        {
+          id: 'releases',
+          test: '/community/releases/v',
+          title: 'Rsbuild Releases',
+          language: 'en-US',
+        },
+        {
+          id: 'releases-zh',
+          test: '/zh/community/releases/v',
+          title: 'Rsbuild Releases',
+          language: 'zh-CN',
+        },
+      ],
+    }),
+  ],
   root: path.join(__dirname, 'docs'),
   lang: 'en',
   base: '/',
