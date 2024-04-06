@@ -13,16 +13,42 @@ export default defineConfig({
       siteUrl: 'https://rsbuild.dev',
       feed: [
         {
-          id: 'releases',
+          id: 'releases-rss',
           test: '/community/releases/v',
           title: 'Rsbuild Releases',
-          language: 'en-US',
+          language: 'en',
+          output: {
+            type: 'rss',
+            filename: 'releases-rss.xml',
+          },
         },
         {
-          id: 'releases-zh',
+          id: 'releases-atom',
+          test: '/community/releases/v',
+          title: 'Rsbuild Releases',
+          language: 'en',
+          output: {
+            type: 'atom',
+          },
+        },
+        {
+          id: 'releases-rss-zh',
           test: '/zh/community/releases/v',
           title: 'Rsbuild Releases',
           language: 'zh-CN',
+          output: {
+            type: 'rss',
+            filename: 'releases-rss-zh.xml',
+          },
+        },
+        {
+          id: 'releases-atom-zh',
+          test: '/zh/community/releases/v',
+          title: 'Rsbuild Releases',
+          language: 'zh-CN',
+          output: {
+            type: 'atom',
+          },
         },
       ],
     }),
