@@ -1,6 +1,8 @@
 ---
 pageType: home
 
+link-rss: releases-zh
+
 hero:
   name: Rsbuild
   text: 基于 Rspack 的 Web 构建工具
