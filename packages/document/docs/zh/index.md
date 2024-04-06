@@ -1,9 +1,7 @@
 ---
 pageType: home
 
-link-rss:
-  - releases
-  - releases-zh
+link-rss: releases-zh
 
 hero:
   name: Rsbuild
