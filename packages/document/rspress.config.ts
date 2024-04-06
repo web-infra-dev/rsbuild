@@ -19,6 +19,7 @@ export default defineConfig({
           language: 'en',
           output: {
             type: 'rss',
+            filename: 'releases-rss.xml',
           },
         },
         {
@@ -28,7 +29,6 @@ export default defineConfig({
           language: 'en',
           output: {
             type: 'atom',
-            filename: 'releases-atom.xml',
           },
         },
         {
@@ -36,6 +36,10 @@ export default defineConfig({
           test: '/zh/community/releases/v',
           title: 'Rsbuild Releases',
           language: 'zh-CN',
+          output: {
+            type: 'rss',
+            filename: 'releases-rss-zh.xml',
+          },
         },
         {
           id: 'releases-atom-zh',
@@ -44,7 +48,6 @@ export default defineConfig({
           language: 'zh-CN',
           output: {
             type: 'atom',
-            filename: 'releases-atom-zh.xml',
           },
         },
       ],
