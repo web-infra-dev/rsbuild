@@ -1,7 +1,9 @@
 ---
 pageType: home
 
-link-rss: releases
+link-rss: 
+  - releases-rss
+  - releases-atom
 
 hero:
   name: Rsbuild
