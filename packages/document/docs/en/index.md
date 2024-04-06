@@ -1,6 +1,10 @@
 ---
 pageType: home
 
+link-rss:
+  - releases
+  - releases-zh
+
 hero:
   name: Rsbuild
   text: The Rspack-based Build Tool
