@@ -28,14 +28,15 @@
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
-    "@vue/babel-plugin-jsx": "1.2.1"
+    "@vue/babel-plugin-jsx": "1.2.1",
+    "babel-plugin-vue-jsx-hmr": "1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
-    "@types/babel__core": "^7.20.3",
     "@rsbuild/core": "workspace:*",
     "@rspack/core": "0.5.5",
     "@scripts/test-helper": "workspace:*",
+    "@types/babel__core": "^7.20.3",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
