@@ -326,6 +326,25 @@ importers:
         specifier: ^3.4.19
         version: 3.4.21(typescript@5.4.2)
 
+  e2e/cases/vue/jsx-hmr:
+    dependencies:
+      vue:
+        specifier: ^3.4.19
+        version: 3.4.21(typescript@5.4.2)
+    devDependencies:
+      '@rsbuild/core':
+        specifier: link:../../../../packages/core
+        version: link:../../../../packages/core
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../../../../packages/plugin-babel
+      '@rsbuild/plugin-vue':
+        specifier: workspace:*
+        version: link:../../../../packages/plugin-vue
+      '@rsbuild/plugin-vue-jsx':
+        specifier: workspace:*
+        version: link:../../../../packages/plugin-vue-jsx
+
   e2e/cases/vue2:
     dependencies:
       vue:
@@ -1428,6 +1447,9 @@ importers:
       '@vue/babel-plugin-jsx':
         specifier: 1.2.2
         version: 1.2.2(@babel/core@7.24.3)
+      babel-plugin-vue-jsx-hmr:
+        specifier: 1.0.0
+        version: 1.0.0
     devDependencies:
       '@babel/core':
         specifier: ^7.24.3
@@ -6341,6 +6363,15 @@ packages:
       '@babel/helper-define-polyfill-provider': 0.6.1(@babel/core@7.24.3)
     transitivePeerDependencies:
       - supports-color
+
+  /babel-plugin-vue-jsx-hmr@1.0.0:
+    resolution: {integrity: sha512-XRq+XTD4bub6HkavELMhihvLX2++JkSBAxRXlqQK32b+Tb0S9PEqxrDSMpOEZ1iGyOaJZj9Y0uU/FzICdyL9MA==}
+    dependencies:
+      '@babel/core': 7.24.3
+      '@vue/babel-plugin-jsx': 1.2.2(@babel/core@7.24.3)
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /babel-preset-solid@1.8.16(@babel/core@7.24.3):
     resolution: {integrity: sha512-b4HFg/xaKM+H3Tu5iUlZ/43TJOZnhi85xrm3JrXDQ0s4cmtmU37bXXYzb2m55G4QKiFjxLAjvb7sUorPrAMs5w==}
