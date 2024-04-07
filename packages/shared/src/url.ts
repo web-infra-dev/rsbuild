@@ -25,7 +25,8 @@ export const withPublicPath = (str: string, base: string) => {
   // Only absolute url with hostname & protocol can be parsed into URL instance.
   // e.g. str is https://example.com/foo.js
   try {
-    return new URL(str).toString();
+    new URL(str).toString();
+    return str;
   } catch {}
 
   if (base.startsWith('http')) {

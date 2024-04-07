@@ -11,7 +11,14 @@ test('should inject tags correctly', async () => {
   const indexHtml =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 
-  expect(indexHtml.match(/foo\.js/)).toBeTruthy();
-  expect(indexHtml.match(/src="https:\/\/www\.cdn\.com\/foo\.js/)).toBeTruthy();
-  expect(indexHtml.match(/content="origin"/)).toBeTruthy();
+  expect(indexHtml.includes('<script src="/foo.js"></script>')).toBeTruthy();
+  expect(
+    indexHtml.includes('<script src="https://www.cdn.com/foo.js"></script>'),
+  ).toBeTruthy();
+  expect(
+    indexHtml.includes('<meta name="referrer" content="origin">'),
+  ).toBeTruthy();
+  expect(
+    indexHtml.includes('<link ref="preconnect" href="https://example.com">'),
+  ).toBeTruthy();
 });
