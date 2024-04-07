@@ -144,8 +144,6 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
           })
           .end();
 
-        svgRule.exclude.add(options.exclude || []).end();
-
         /**
          * For mixed import.
          * @example import logoUrl, { ReactComponent } from './logo.svg';`
