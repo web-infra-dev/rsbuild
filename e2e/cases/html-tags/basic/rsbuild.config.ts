@@ -6,6 +6,10 @@ export default {
       { tag: 'script', attrs: { src: 'bar.js' }, append: false },
       { tag: 'script', attrs: { src: 'baz.js' }, append: false },
       { tag: 'meta', attrs: { name: 'referrer', content: 'origin' } },
+      {
+        tag: 'link',
+        attrs: { ref: 'preconnect', href: 'https://example.com' },
+      },
     ],
   },
 };
