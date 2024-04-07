@@ -32,9 +32,14 @@ export type PluginSvgrOptions = {
   query?: RegExp;
 
   /**
-   * Exclude specific files to be transformed by SVGR.
+   * Exclude some SVG files, they will not be transformed by SVGR.
    */
   exclude?: Rspack.RuleSetCondition;
+
+  /**
+   * Exclude some modules, the SVGs imported by these modules will not be transformed by SVGR.
+   */
+  excludeImporter?: Rspack.RuleSetCondition;
 };
 
 function getSvgoDefaultConfig() {
@@ -117,12 +122,17 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         const { exportType = mixedImport ? 'named' : undefined } = svgrOptions;
 
         const issuerInclude = [SCRIPT_REGEX, /\.mdx$/];
-        const issuer = options.exclude
-          ? { and: [issuerInclude, { not: options.exclude }] }
+        const issuer = options.excludeImporter
+          ? { and: [issuerInclude, { not: options.excludeImporter }] }
           : issuerInclude;
 
-        const svgRule = rule
-          .oneOf(CHAIN_ID.ONE_OF.SVG)
+        const svgRule = rule.oneOf(CHAIN_ID.ONE_OF.SVG);
+
+        if (options.exclude) {
+          svgRule.exclude.add(options.exclude);
+        }
+
+        svgRule
           .type('javascript/auto')
           // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
           .set('issuer', issuer)
