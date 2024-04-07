@@ -253,6 +253,8 @@ importers:
         specifier: ^15.7.12
         version: 15.7.12
 
+  e2e/cases/resolve-pkg-imports: {}
+
   e2e/cases/rsdoctor/mock: {}
 
   e2e/cases/server/custom-server:
