@@ -18,7 +18,7 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/mini-css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -94,7 +94,7 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/mini-css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -197,7 +197,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/mini-css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -258,7 +258,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/mini-css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -332,7 +332,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
         "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/mini-css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",

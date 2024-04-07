@@ -251,7 +251,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/mini-css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -306,7 +306,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/mini-css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -374,7 +374,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/mini-css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/shared/compiled/css-loader",
@@ -482,7 +482,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
-    RspackCssExtractPlugin {
+    CssExtractRspackPlugin {
       "options": {
         "chunkFilename": "static/css/async/[name].css",
         "filename": "static/css/[name].css",

@@ -4,8 +4,6 @@ exports[`plugin-output > should allow to custom server directory with distPath.s
 {
   "output": {
     "chunkFilename": "[name].js",
-    "cssChunkFilename": "static/css/async/[name].css",
-    "cssFilename": "static/css/[name].css",
     "filename": "[name].js",
     "hashFunction": "xxhash64",
     "libraryTarget": "commonjs2",
@@ -27,7 +25,7 @@ exports[`plugin-output > should allow to set distPath.js and distPath.css to emp
     "publicPath": "/",
   },
   "plugins": [
-    RspackCssExtractPlugin {
+    CssExtractRspackPlugin {
       "options": {
         "chunkFilename": "async/[name].css",
         "filename": "[name].css",
@@ -64,7 +62,7 @@ exports[`plugin-output > should allow to use copy plugin 1`] = `
       "affectedHooks": undefined,
       "name": "CopyRspackPlugin",
     },
-    RspackCssExtractPlugin {
+    CssExtractRspackPlugin {
       "options": {
         "chunkFilename": "static/css/async/[name].css",
         "filename": "static/css/[name].css",
@@ -115,7 +113,7 @@ exports[`plugin-output > should allow to use copy plugin with multiply config 1`
       "affectedHooks": undefined,
       "name": "CopyRspackPlugin",
     },
-    RspackCssExtractPlugin {
+    CssExtractRspackPlugin {
       "options": {
         "chunkFilename": "static/css/async/[name].css",
         "filename": "static/css/[name].css",
@@ -137,7 +135,7 @@ exports[`plugin-output > should allow to use filename.js to modify filename 1`] 
     "publicPath": "/",
   },
   "plugins": [
-    RspackCssExtractPlugin {
+    CssExtractRspackPlugin {
       "options": {
         "chunkFilename": "static/css/async/[name].css",
         "filename": "static/css/[name].css",
@@ -159,7 +157,7 @@ exports[`plugin-output > should set output correctly 1`] = `
     "publicPath": "/",
   },
   "plugins": [
-    RspackCssExtractPlugin {
+    CssExtractRspackPlugin {
       "options": {
         "chunkFilename": "static/css/async/[name].css",
         "filename": "static/css/[name].css",

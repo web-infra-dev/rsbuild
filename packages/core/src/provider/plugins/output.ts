@@ -7,7 +7,7 @@ import {
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../../types';
-import { RspackCssExtractPlugin } from '@rspack/core';
+import { CssExtractRspackPlugin } from '@rspack/core';
 
 export const pluginOutput = (): RsbuildPlugin => ({
   name: 'rsbuild:output',
@@ -40,7 +40,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
       
         chain
           .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
-          .use(RspackCssExtractPlugin, [
+          .use(CssExtractRspackPlugin, [
             {
               filename: posix.join(cssPath, cssFilename),
               chunkFilename: posix.join(

@@ -7,7 +7,7 @@ import {
   type BundlerChainRule,
   type ModifyChainUtils,
 } from '@rsbuild/shared';
-import { RspackCssExtractPlugin } from '@rspack/core';
+import { CssExtractRspackPlugin } from '@rspack/core';
 
 export async function applyBaseCSSRule({
   rule,
@@ -28,7 +28,7 @@ export async function applyBaseCSSRule({
     context,
     utils,
     importLoaders,
-    cssExtractPlugin: RspackCssExtractPlugin,
+    cssExtractPlugin: CssExtractRspackPlugin,
   });
 }
 
