@@ -31,7 +31,7 @@ export type RsbuildInstance<
   initConfigs: ProviderInstance['initConfigs'];
   inspectConfig: ProviderInstance['inspectConfig'];
   createCompiler: ProviderInstance['createCompiler'];
-  getServerAPIs: ProviderInstance['getServerAPIs'];
+  createDevServer: ProviderInstance['createDevServer'];
   startDevServer: ProviderInstance['startDevServer'];
 
   getHTMLPaths: Awaited<ReturnType<P>>['pluginAPI']['getHTMLPaths'];

@@ -1,8 +1,58 @@
 import path from 'node:path';
 import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './src/rsbuildPluginOverview';
+import { pluginRss } from '@rspress/plugin-rss';
+import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
+import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 
 export default defineConfig({
+  plugins: [
+    pluginFontOpenSans(),
+    pluginRss({
+      siteUrl: 'https://rsbuild.dev',
+      feed: [
+        {
+          id: 'releases-rss',
+          test: '/community/releases/v',
+          title: 'Rsbuild Releases',
+          language: 'en',
+          output: {
+            type: 'rss',
+            filename: 'releases-rss.xml',
+          },
+        },
+        {
+          id: 'releases-atom',
+          test: '/community/releases/v',
+          title: 'Rsbuild Releases',
+          language: 'en',
+          output: {
+            type: 'atom',
+          },
+        },
+        {
+          id: 'releases-rss-zh',
+          test: '/zh/community/releases/v',
+          title: 'Rsbuild Releases',
+          language: 'zh-CN',
+          output: {
+            type: 'rss',
+            filename: 'releases-rss-zh.xml',
+          },
+        },
+        {
+          id: 'releases-atom-zh',
+          test: '/zh/community/releases/v',
+          title: 'Rsbuild Releases',
+          language: 'zh-CN',
+          output: {
+            type: 'atom',
+          },
+        },
+      ],
+    }),
+  ],
   root: path.join(__dirname, 'docs'),
   lang: 'en',
   base: '/',
@@ -48,6 +98,11 @@ export default defineConfig({
         label: 'English',
         title: 'Rsbuild',
         description: 'The Rspack-based build tool for the web',
+        editLink: {
+          docRepoBaseUrl:
+            'https://github.com/web-infra-dev/rsbuild/tree/main/packages/document/docs',
+          text: '📝 Edit this page on GitHub',
+        },
       },
       {
         lang: 'zh',
@@ -57,16 +112,30 @@ export default defineConfig({
         prevPageText: '上一页',
         nextPageText: '下一页',
         description: '基于 Rspack 的 Web 构建工具',
+        editLink: {
+          docRepoBaseUrl:
+            'https://github.com/web-infra-dev/rsbuild/tree/main/packages/document/docs',
+          text: '📝 在 GitHub 上编辑此页',
+        },
       },
     ],
-    editLink: {
-      docRepoBaseUrl:
-        'https://github.com/web-infra-dev/rsbuild/tree/main/packages/document/docs',
-      text: 'Edit this page on GitHub',
-    },
   },
   builderConfig: {
-    plugins: [rsbuildPluginOverview],
+    plugins: [
+      rsbuildPluginOverview,
+      pluginGoogleAnalytics({ id: 'G-L6BZ6TKW4R' }),
+      pluginOpenGraph({
+        title: 'Rsbuild',
+        type: 'website',
+        url: 'https://rsbuild.dev/',
+        image: 'https://rsbuild.dev/og-image.png',
+        description: 'The Rspack-based build tool',
+        twitter: {
+          site: '@rspack_dev',
+          card: 'summary_large_image',
+        },
+      }),
+    ],
     source: {
       alias: {
         '@components': path.join(__dirname, 'src/components'),
@@ -76,26 +145,6 @@ export default defineConfig({
     },
     dev: {
       startUrl: 'http://localhost:<port>/',
-    },
-    html: {
-      tags: [
-        // Configure Google Analytics
-        {
-          tag: 'script',
-          attrs: {
-            async: true,
-            src: 'https://www.googletagmanager.com/gtag/js?id=G-L6BZ6TKW4R',
-          },
-        },
-        {
-          tag: 'script',
-          children: `
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-L6BZ6TKW4R');`,
-        },
-      ],
     },
   },
 });

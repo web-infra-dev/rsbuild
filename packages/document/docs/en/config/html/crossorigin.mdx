@@ -15,20 +15,35 @@ export default {
   html: {
     crossorigin: 'anonymous',
   },
+  output: {
+    assetPrefix: 'https://example.com',
+  },
 };
 ```
 
 After compilation, the `<script>` tag in HTML becomes:
 
 ```html
-<script defer src="/static/js/main.js" crossorigin="anonymous"></script>
+<script
+  defer
+  src="https://example.com/static/js/main.js"
+  crossorigin="anonymous"
+></script>
 ```
 
 The `<style>` tag becomes:
 
 ```html
-<link href="/static/css/main.css" rel="stylesheet" crossorigin="anonymous" />
+<link
+  href="https://example.com/static/css/main.css"
+  rel="stylesheet"
+  crossorigin="anonymous"
+/>
 ```
+
+:::tip
+If the domain of static assets is the same as the current page, Rsbuild will not add the crossorigin="anonymous" attribute, as this attribute is not required for non-cross-domain scenario.
+:::
 
 ### Optional Values
 

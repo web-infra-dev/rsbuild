@@ -1,7 +1,9 @@
 import path from 'node:path';
-import type { Compiler } from '@rspack/core';
+import type { Compiler, MultiCompiler } from '@rspack/core';
 import type {
+  Stats,
   NodeEnv,
+  MultiStats,
   CacheGroups,
   CompilerTapFn,
   RsbuildTarget,
@@ -13,6 +15,10 @@ import fse from '../compiled/fs-extra';
 import deepmerge from '../compiled/deepmerge';
 import color from '../compiled/picocolors';
 import { DEFAULT_ASSET_PREFIX } from './constants';
+import type {
+  Compiler as WebpackCompiler,
+  MultiCompiler as WebpackMultiCompiler,
+} from 'webpack';
 
 export { color, deepmerge };
 
@@ -74,7 +80,6 @@ export const awaitableGetter = <T>(
 ): AwaitableGetter<T> => {
   const then: PromiseLike<T[]>['then'] = (...args) =>
     Promise.all(promises).then(...args);
-  // eslint-disable-next-line no-thenable
   return { then, promises };
 };
 
@@ -161,7 +166,7 @@ export function createCacheGroups(
 ): CacheGroups {
   const experienceCacheGroup: CacheGroups = {};
 
-  Object.entries(group).forEach(([name, pkgs]) => {
+  for (const [name, pkgs] of Object.entries(group)) {
     const key = `lib-${name}`;
 
     experienceCacheGroup[key] = {
@@ -170,7 +175,7 @@ export function createCacheGroups(
       name: key,
       reuseExistingChunk: true,
     };
-  });
+  }
 
   return experienceCacheGroup;
 }
@@ -346,4 +351,55 @@ export const setupServerHooks = (
   compile.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
   invalid.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
   done.tap('rsbuild-dev-server', hookCallbacks.onDone);
+};
+
+export const isMultiCompiler = <
+  C extends Compiler | WebpackCompiler = Compiler,
+  M extends MultiCompiler | WebpackMultiCompiler = MultiCompiler,
+>(
+  compiler: C | M,
+): compiler is M => {
+  return compiler.constructor.name === 'MultiCompiler';
+};
+
+export const onCompileDone = (
+  compiler: Compiler | MultiCompiler,
+  onDone: (stats: Stats | MultiStats) => Promise<void>,
+  MultiStatsCtor: new (stats: Stats[]) => MultiStats,
+) => {
+  // The MultiCompiler of Rspack does not supports `done.tapPromise`,
+  // so we need to use the `done` hook of `MultiCompiler.compilers` to implement it.
+  if (isMultiCompiler(compiler)) {
+    const { compilers } = compiler;
+    const compilerStats: Stats[] = [];
+    let doneCompilers = 0;
+
+    for (let index = 0; index < compilers.length; index++) {
+      const compiler = compilers[index];
+      const compilerIndex = index;
+      let compilerDone = false;
+
+      compiler.hooks.done.tapPromise('rsbuild:done', async (stats) => {
+        if (!compilerDone) {
+          compilerDone = true;
+          doneCompilers++;
+        }
+
+        compilerStats[compilerIndex] = stats;
+
+        if (doneCompilers === compilers.length) {
+          await onDone(new MultiStatsCtor(compilerStats));
+        }
+      });
+
+      compiler.hooks.invalid.tap('rsbuild:done', () => {
+        if (compilerDone) {
+          compilerDone = false;
+          doneCompilers--;
+        }
+      });
+    }
+  } else {
+    compiler.hooks.done.tapPromise('rsbuild:done', onDone);
+  }
 };

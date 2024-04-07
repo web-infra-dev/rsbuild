@@ -3,7 +3,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./"
   },
-  "include": ["docs", "rspress.config.ts", "src", "theme"],
+  "include": ["docs", "rspress.config.ts", "src", "theme"]
 }

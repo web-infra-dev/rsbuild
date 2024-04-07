@@ -3,7 +3,7 @@
  * license at https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
 import path from 'node:path';
-import { fse } from '@rsbuild/shared';
+import { fse, JS_REGEX, CSS_REGEX, HTML_REGEX } from '@rsbuild/shared';
 import { color, logger } from '@rsbuild/shared';
 import type {
   Stats,
@@ -50,10 +50,23 @@ const calcFileSize = (len: number) => {
   return `${val.toFixed(val < 1 ? 2 : 1)} kB`;
 };
 
+const coloringAssetName = (assetName: string) => {
+  if (JS_REGEX.test(assetName)) {
+    return color.cyan(assetName);
+  }
+  if (CSS_REGEX.test(assetName)) {
+    return color.yellow(assetName);
+  }
+  if (HTML_REGEX.test(assetName)) {
+    return color.green(assetName);
+  }
+  return color.magenta(assetName);
+};
+
 async function printFileSizes(
   config: PrintFileSizeOptions,
   stats: Stats | MultiStats,
-  distPath: string,
+  rootPath: string,
 ) {
   if (config.detail === false && config.total === false) {
     return;
@@ -61,7 +74,11 @@ async function printFileSizes(
 
   const { default: gzipSize } = await import('@rsbuild/shared/gzip-size');
 
-  const formatAsset = (asset: StatsAsset) => {
+  const formatAsset = (
+    asset: StatsAsset,
+    distPath: string,
+    distFolder: string,
+  ) => {
     const fileName = asset.name.split('?')[0];
     const contents = fse.readFileSync(path.join(distPath, fileName));
     const size = contents.length;
@@ -69,7 +86,7 @@ async function printFileSizes(
 
     return {
       size,
-      folder: path.join(path.basename(distPath), path.dirname(fileName)),
+      folder: path.join(distFolder, path.dirname(fileName)),
       name: path.basename(fileName),
       gzippedSize,
       sizeLabel: calcFileSize(size),
@@ -80,6 +97,12 @@ async function printFileSizes(
   const multiStats = 'stats' in stats ? stats.stats : [stats];
   const assets = multiStats
     .map((stats) => {
+      const distPath = stats.compilation.outputOptions.path;
+
+      if (!distPath) {
+        return [];
+      }
+
       const origin = stats.toJson({
         all: false,
         assets: true,
@@ -94,8 +117,11 @@ async function printFileSizes(
       const filteredAssets = origin.assets!.filter((asset) =>
         filterAsset(asset.name),
       );
+      const distFolder = distPath.replace(rootPath + path.sep, '');
 
-      return filteredAssets.map(formatAsset);
+      return filteredAssets.map((asset) =>
+        formatAsset(asset, distPath, distFolder),
+      );
     })
     .reduce((single, all) => all.concat(single), []);
 
@@ -119,7 +145,7 @@ async function printFileSizes(
   let totalSize = 0;
   let totalGzipSize = 0;
 
-  assets.forEach((asset) => {
+  for (const asset of assets) {
     let { sizeLabel } = asset;
     const { name, folder, gzipSizeLabel } = asset;
     const fileNameLength = (folder + path.sep + name).length;
@@ -135,7 +161,7 @@ async function printFileSizes(
       }
 
       let fileNameLabel =
-        color.dim(asset.folder + path.sep) + color.cyan(asset.name);
+        color.dim(asset.folder + path.sep) + coloringAssetName(asset.name);
 
       if (fileNameLength < longestFileLength) {
         const rightPadding = ' '.repeat(longestFileLength - fileNameLength);
@@ -144,7 +170,7 @@ async function printFileSizes(
 
       logger.log(`  ${fileNameLabel}    ${sizeLabel}    ${gzipSizeLabel}`);
     }
-  });
+  }
 
   if (config.total !== false) {
     const totalSizeLabel = `${color.bold(
@@ -181,7 +207,7 @@ export const pluginFileSize = (): RsbuildPlugin => ({
           await printFileSizes(
             printFileSizeConfig,
             stats,
-            api.context.distPath,
+            api.context.rootPath,
           );
         } catch (err) {
           logger.warn('Failed to print file size.');

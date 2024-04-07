@@ -3,7 +3,7 @@ import { pluginProgress } from '../src/plugins/progress';
 import { createFriendlyPercentage } from '../src/progress/helpers';
 
 describe('plugin-progress', () => {
-  it('should register webpackbar by default', async () => {
+  it('should register ProgressPlugin by default', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginProgress()],
     });
@@ -12,7 +12,7 @@ describe('plugin-progress', () => {
     expect(matched).toBeTruthy();
   });
 
-  it('should not register webpackbar if dev.progressBar is false', async () => {
+  it('should not register ProgressPlugin if dev.progressBar is false', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginProgress()],
       rsbuildConfig: {

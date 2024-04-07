@@ -11,6 +11,19 @@ describe('plugin-node-polyfill', () => {
     expect(configs[0]).toMatchSnapshot();
   });
 
+  it('should allow to remove protocol imports', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [
+        pluginNodePolyfill({
+          protocolImports: false,
+        }),
+      ],
+    });
+    const configs = await rsbuild.initConfigs();
+
+    expect(configs[0]).toMatchSnapshot();
+  });
+
   it('should allow to disable globals', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [

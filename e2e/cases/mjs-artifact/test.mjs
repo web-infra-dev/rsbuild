@@ -3,6 +3,7 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
+import { pluginEslint } from '@rsbuild/plugin-eslint';
 import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
 import { pluginPug } from '@rsbuild/plugin-pug';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -29,6 +30,7 @@ export default {
   pluginCheckSyntax,
   pluginCssMinimizer,
   pluginImageCompress,
+  pluginEslint,
   pluginNodePolyfill,
   pluginPug,
   pluginReact,

@@ -33,3 +33,28 @@ rspackOnlyTest(
     await rsbuild.close();
   },
 );
+
+test.fail(
+  'stage 3 decorators do not support decoratorBeforeExport',
+  async ({ page }) => {
+    // SyntaxError: Decorators must be placed *after* the 'export' keyword
+    const rsbuild = await build({
+      cwd: __dirname,
+      runServer: true,
+      rsbuildConfig: {
+        source: {
+          entry: {
+            index: './src/decoratorBeforeExport.js',
+          },
+        },
+      },
+      plugins: [pluginBabel()],
+    });
+
+    await gotoPage(page, rsbuild);
+    expect(await page.evaluate('window.message')).toBe('hello');
+    expect(await page.evaluate('window.method')).toBe('targetMethod');
+    expect(await page.evaluate('window.field')).toBe('message');
+    await rsbuild.close();
+  },
+);

@@ -8,10 +8,7 @@ exports[`plugin-node-addons > should add node addons rule properly 1`] = `
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/compiled/node-loader",
-            "options": {
-              "name": [Function],
-            },
+            "loader": "<ROOT>/packages/core/src/rspack/nodeAddonsLoader",
           },
         ],
       },

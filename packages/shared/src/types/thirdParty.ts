@@ -5,7 +5,6 @@ import type {
 import type * as SassLoader from '../../compiled/sass-loader';
 import type Less from '../../compiled/less';
 import type { LoaderContext } from '@rspack/core';
-import type TerserPlugin from 'terser-webpack-plugin';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { Configuration as WebpackConfig } from 'webpack';
 import type {
@@ -13,6 +12,7 @@ import type {
   LoaderOptions as MiniCSSExtractLoaderOptions,
 } from 'mini-css-extract-plugin';
 import type { Options as AutoprefixerOptions } from '../../compiled/autoprefixer';
+import type { MinifyOptions } from 'terser';
 
 export interface CSSExtractOptions {
   pluginOptions?: MiniCSSExtractPluginOptions;
@@ -21,8 +21,8 @@ export interface CSSExtractOptions {
 
 export type { WebpackConfig, AutoprefixerOptions };
 
-export type TerserPluginOptions = TerserPlugin.BasePluginOptions &
-  TerserPlugin.DefinedDefaultMinimizerAndOptions<TerserPlugin.TerserOptions>;
+/** Currently using terser for html js minify and will be replaced by swc later */
+export type MinifyJSOptions = MinifyOptions;
 
 export type SassLoaderOptions = Omit<SassLoader.Options, 'sassOptions'> &
   (

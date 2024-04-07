@@ -45,7 +45,7 @@ export function extractChunks({
 
   // 'asyncChunks' are chunks intended for lazy/async loading usually generated as
   // part of code-splitting with import() or require.ensure(). By default, asyncChunks
-  // get wired up using link rel=preload when using this plugin. This behaviour can be
+  // get wired up using link rel=preload when using this plugin. This behavior can be
   // configured to preload all types of chunks or just prefetch chunks as needed.
   if (includeType === undefined || includeType === 'async-chunks') {
     return chunks.filter(isAsync);
@@ -62,7 +62,7 @@ export function extractChunks({
 
   if (includeType === 'all-assets') {
     // Every asset, regardless of which chunk it's in.
-    // Wrap it in a single, "psuedo-chunk" return value.
+    // Wrap it in a single, "pseudo-chunk" return value.
     // Note: webpack5 will extract license default, we do not need to preload them
     const licenseAssets = [...compilation.assetsInfo.values()]
       .map((info) => {

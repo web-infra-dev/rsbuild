@@ -52,7 +52,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -74,6 +74,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -96,7 +97,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -118,6 +119,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -542,9 +544,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
@@ -573,7 +573,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;
@@ -630,7 +630,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -652,6 +652,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": false,
@@ -674,7 +675,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -696,6 +697,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": false,
@@ -1177,9 +1179,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
@@ -1216,7 +1216,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;
@@ -1289,6 +1289,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -1327,6 +1328,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -1454,10 +1456,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/compiled/node-loader",
-            "options": {
-              "name": [Function],
-            },
+            "loader": "<ROOT>/packages/core/dist/rspack/nodeAddonsLoader",
           },
         ],
       },
@@ -1571,11 +1570,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "splitChunks": false,
   },
   "output": {
-    "chunkFilename": "server/[name].js",
-    "filename": "server/[name].js",
+    "chunkFilename": "[name].js",
+    "cssChunkFilename": "static/css/async/[name].css",
+    "cssFilename": "static/css/[name].css",
+    "filename": "[name].js",
     "hashFunction": "xxhash64",
     "libraryTarget": "commonjs2",
-    "path": "<ROOT>/packages/core/tests/dist",
+    "path": "<ROOT>/packages/core/tests/dist/server",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1597,10 +1598,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
     },
-    "conditionNames": [
-      "require",
-      "node",
-    ],
     "extensions": [
       ".ts",
       ".tsx",
@@ -1675,7 +1672,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -1697,6 +1694,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -1719,7 +1717,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -1741,6 +1739,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -2168,9 +2167,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
@@ -2199,7 +2196,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;

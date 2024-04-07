@@ -1,17 +1,34 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:recommended"],
+	"extends": ["config:recommended", "schedule:weekly"],
 	"ignorePaths": ["**/tests/**", "**/compiled/**", "**/node_modules/**"],
 	"packageRules": [
 		// Use chore as semantic commit type for commit messages
 		{
 			"matchPackagePatterns": ["*"],
-			"semanticCommitType": "chore"
+			"semanticCommitType": "chore",
+			// always bump package.json
+			"rangeStrategy": "bump"
 		},
 		{
 			"groupName": "babel",
 			"packagePatterns": ["babel"],
 			"groupSlug": "babel"
+		},
+		{
+			"groupName": "rspack",
+			"packagePatterns": ["rspack"],
+			"groupSlug": "rspack"
+		},
+		{
+			"groupName": "rspress",
+			"packagePatterns": ["rspress"],
+			"groupSlug": "rspress"
+		},
+		{
+			"groupName": "modern-js",
+			"packagePatterns": ["modern-js"],
+			"groupSlug": "modern-js"
 		},
 		{
 			"groupName": "types",
@@ -27,11 +44,6 @@
 		// manually update peer dependencies
 		{
 			"depTypeList": ["peerDependencies"],
-			"enabled": false
-		},
-		// use GitHub actions to update rspress and modern, manually update rspack
-		{
-			"packagePatterns": ["rspack", "rspress", "modern"],
 			"enabled": false
 		}
 	],
@@ -49,9 +61,11 @@
 		// pure esm packages can not be used now
 		"gzip-size",
 		"globby",
+		"open",
 		// buffer v6 has compatibility issues as node polyfill
 		"buffer",
 		// align Node.js version minimum requirements
-		"@types/node"
+		"@types/node",
+		"node"
 	]
 }

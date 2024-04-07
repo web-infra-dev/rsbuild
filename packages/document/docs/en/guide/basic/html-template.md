@@ -218,7 +218,7 @@ The purpose of `html.tags` is to adjust these template variables and thus modify
 ```ts
 export default {
   output: {
-    assetPrefix: '//example.com/'
+    assetPrefix: 'https://example.com/'
   },
   html: {
     tags: [
@@ -242,16 +242,16 @@ So the HTML output built with the above configuration will look like this.
 ```html
 <html>
   <head>
-    <script src="//example.com/b.js"></script>
-    <link href="//example.com/style.css" rel="stylesheet" />
+    <script src="https://example.com/b.js"></script>
+    <link href="https://example.com/style.css" rel="stylesheet" />
     <link href="page.css" rel="stylesheet" />
     <!-- some other headTags... -->
-    <script src="//example.com/a.js"></script>
+    <script src="https://example.com/a.js"></script>
     <meta name="referrer" content="origin" />
   </head>
   <body>
     <!-- some other bodyTags... -->
-    <script src="//example.com/c.js"></script>
+    <script src="https://example.com/c.js"></script>
   </body>
 </html>
 ```
@@ -282,12 +282,32 @@ And you will get:
 <html>
   <head>
     <!-- some other headTags... -->
-    <script src="//example.com/c.js"></script>
-    <script src="//example.com/d.js"></script>
+    <script src="https://example.com/c.js"></script>
+    <script src="https://example.com/d.js"></script>
   </head>
   <body>
     <!-- some other bodyTags... -->
-    <script src="//example.com/a.js"></script>
+    <script src="https://example.com/a.js"></script>
   </body>
 </html>
+```
+
+## HTML Plugin
+
+Rsbuild internally implements HTML-related features based on [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin). It is a fork of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin), with the same features and options.
+
+You can modify the html-rspack-plugin options via [tools.htmlPlugin](/config/tools/html-plugin), or disable the default html-rspack-plugin.
+
+For example:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    htmlPlugin(config, { entryName }) {
+      if (process.env.NODE_ENV === 'production') {
+        config.filename = `${entryName}.[contenthash:8].html`;
+      }
+    },
+  },
+};
 ```

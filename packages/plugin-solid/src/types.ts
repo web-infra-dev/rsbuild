@@ -31,7 +31,7 @@ export type SolidPresetOptions = {
    */
   wrapConditionals?: boolean;
   /**
-   * Boolean indicates whether to set current render context on Custom Elements and slots. Useful for seemless Context API with Web Components.
+   * Boolean indicates whether to set current render context on Custom Elements and slots. Useful for seamless Context API with Web Components.
    * @default false
    */
   contextToCustomElements?: boolean;

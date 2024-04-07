@@ -113,6 +113,9 @@ export type BuiltinSwcLoaderOptions = {
       [from: string]: [string];
     };
     preserveAllComments?: boolean;
+    experimental?: {
+      plugins?: Array<[string, Record<string, any>]>;
+    };
   };
   rspackExperiments?: {
     relay?:
@@ -160,4 +163,14 @@ export type BuiltinSwcLoaderOptions = {
       cssProps?: boolean;
     };
   };
+};
+
+export type RspackSourceMap = {
+  version: number;
+  sources: string[];
+  mappings: string;
+  file?: string;
+  sourceRoot?: string;
+  sourcesContent?: string[];
+  names?: string[];
 };

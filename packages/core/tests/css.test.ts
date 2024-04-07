@@ -119,7 +119,7 @@ describe('plugin-css', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should apply custom css-modules-typescript-loader when enableCssModuleTSDeclarationg', async () => {
+  it('should apply custom css-modules-typescript-loader when enableCssModuleTSDeclaration', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
       rsbuildConfig: {

@@ -1,16 +1,21 @@
 import {
+  debug,
   isDev,
   logger,
-  debug,
+  onCompileDone,
   type Stats,
   type Rspack,
   type RspackConfig,
 } from '@rsbuild/shared';
-import { formatStats, type InternalContext } from '@rsbuild/core/provider';
+import {
+  formatStats,
+  getDevMiddleware,
+  type InternalContext,
+} from '@rsbuild/core/provider';
 import type { WebpackConfig } from '../types';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
-import type { Compiler } from 'webpack';
-import { getDevMiddleware } from './devMiddleware';
+// @ts-expect-error
+import WebpackMultiStats from 'webpack/lib/MultiStats';
 
 export async function createCompiler({
   context,
@@ -32,9 +37,7 @@ export async function createCompiler({
     | Rspack.Compiler
     | Rspack.MultiCompiler;
 
-  let isFirstCompile = true;
-
-  compiler.hooks.done.tap('rsbuild:done', async (stats: unknown) => {
+  const done = async (stats: unknown) => {
     const { message, level } = formatStats(stats as Stats);
 
     if (level === 'error') {
@@ -52,7 +55,11 @@ export async function createCompiler({
     }
 
     isFirstCompile = false;
-  });
+  };
+
+  let isFirstCompile = true;
+
+  onCompileDone(compiler, done, WebpackMultiStats);
 
   await context.hooks.onAfterCreateCompiler.call({
     compiler,
@@ -78,7 +85,7 @@ export async function createDevMiddleware(
   }
 
   return {
-    devMiddleware: getDevMiddleware(compiler as unknown as Compiler),
+    devMiddleware: getDevMiddleware(compiler),
     compiler,
   };
 }

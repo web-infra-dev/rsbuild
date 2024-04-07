@@ -1,15 +1,12 @@
 import type {
   RsbuildConfig,
-  BundlerChainRule,
   NormalizedConfig,
   InspectConfigOptions,
 } from './types';
 import { logger } from './logger';
 import { join } from 'node:path';
-import type { minify } from 'terser';
 import fse from '../compiled/fs-extra';
 import { pick, color, upperFirst } from './utils';
-import { getTerserMinifyOptions } from './minimize';
 
 export async function outputInspectConfigFiles({
   rsbuildConfig,
@@ -72,43 +69,6 @@ export async function outputInspectConfigFiles({
   );
 }
 
-/**
- * lodash set type declare.
- * eg. a.b.c; a[0].b[1]
- */
-export type GetTypeByPath<
-  T extends string,
-  C extends Record<string, any>,
-> = T extends `${infer K}[${infer P}]${infer S}`
-  ? GetTypeByPath<`${K}.${P}${S}`, C>
-  : T extends `${infer K}.${infer P}`
-    ? GetTypeByPath<P, K extends '' ? C : NonNullable<C[K]>>
-    : C[T];
-
-type MinifyOptions = NonNullable<Parameters<typeof minify>[1]>;
-
-export async function getMinify(isProd: boolean, config: NormalizedConfig) {
-  if (config.output.disableMinimize || !isProd) {
-    return false;
-  }
-  const minifyJS: MinifyOptions = (await getTerserMinifyOptions(config))
-    .terserOptions!;
-
-  return {
-    removeComments: false,
-    useShortDoctype: true,
-    keepClosingSlash: true,
-    collapseWhitespace: true,
-    removeRedundantAttributes: true,
-    removeScriptTypeAttributes: true,
-    removeStyleLinkTypeAttributes: true,
-    removeEmptyAttributes: true,
-    minifyJS,
-    minifyCSS: true,
-    minifyURLs: true,
-  };
-}
-
 export async function stringifyConfig(config: unknown, verbose?: boolean) {
   const { default: WebpackChain } = await import('../compiled/webpack-chain');
 
@@ -120,52 +80,6 @@ export async function stringifyConfig(config: unknown, verbose?: boolean) {
 
   return stringify(config as any, { verbose });
 }
-
-export const chainStaticAssetRule = ({
-  rule,
-  maxSize,
-  filename,
-  assetType,
-  issuer,
-}: {
-  rule: BundlerChainRule;
-  maxSize: number;
-  filename: string;
-  assetType: string;
-  issuer?: any;
-}) => {
-  // Rspack not support dataUrlCondition function
-  // forceNoInline: "foo.png?__inline=false" or "foo.png?url",
-  rule
-    .oneOf(`${assetType}-asset-url`)
-    .type('asset/resource')
-    .resourceQuery(/(__inline=false|url)/)
-    .set('generator', {
-      filename,
-    })
-    .set('issuer', issuer);
-
-  // forceInline: "foo.png?inline" or "foo.png?__inline",
-  rule
-    .oneOf(`${assetType}-asset-inline`)
-    .type('asset/inline')
-    .resourceQuery(/inline/)
-    .set('issuer', issuer);
-
-  // default: when size < dataUrlCondition.maxSize will inline
-  rule
-    .oneOf(`${assetType}-asset`)
-    .type('asset')
-    .parser({
-      dataUrlCondition: {
-        maxSize,
-      },
-    })
-    .set('generator', {
-      filename,
-    })
-    .set('issuer', issuer);
-};
 
 export const getDefaultStyledComponentsConfig = (
   isProd: boolean,
@@ -197,6 +111,7 @@ export const pickRsbuildConfig = (
     'security',
     'performance',
     'moduleFederation',
+    '_privateMeta',
   ];
   return pick(rsbuildConfig, keys);
 };

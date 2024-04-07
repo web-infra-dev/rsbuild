@@ -40,6 +40,7 @@ export const TASKS: TaskConfig[] = [
     packageName: '@rsbuild/core',
     dependencies: [
       'open',
+      'commander',
       'dotenv',
       'dotenv-expand',
       'ws',
@@ -72,13 +73,6 @@ export const TASKS: TaskConfig[] = [
         name: 'connect-history-api-fallback',
         ignoreDts: true,
       },
-      {
-        name: 'node-loader',
-        ignoreDts: true,
-        externals: {
-          'loader-utils': '@rsbuild/shared/loader-utils2',
-        },
-      },
     ],
   },
   {
@@ -87,7 +81,6 @@ export const TASKS: TaskConfig[] = [
     dependencies: [
       'jiti',
       'rslog',
-      'commander',
       'deepmerge',
       'fs-extra',
       'chokidar',
@@ -237,7 +230,7 @@ export const TASKS: TaskConfig[] = [
         // https://github.com/vercel/ncc/issues/935
         beforeBundle(task) {
           replaceFileContent(
-            join(task.depPath, 'src/index.js'),
+            join(task.depPath, 'src/req.js'),
             (content) => `${content.replace('await import', 'await __import')}`,
           );
         },
@@ -302,7 +295,6 @@ export const TASKS: TaskConfig[] = [
         // If we need to upgrade the version, please check if the chunk detail can be displayed correctly
         name: 'webpack-bundle-analyzer',
         externals: {
-          commander: '../commander',
           'gzip-size': '../gzip-size',
         },
       },
@@ -346,23 +338,13 @@ export const TASKS: TaskConfig[] = [
         afterBundle(task) {
           writeEmptySchemaUtils(task);
           replaceFileContent(join(task.distPath, 'index.js'), (content) => {
-            // use prebundled file-loader
+            // use prebundle file-loader
             return content.replace(
               '"file-loader"',
               'require.resolve("../file-loader")',
             );
           });
         },
-      },
-    ],
-  },
-  {
-    packageDir: 'plugin-toml',
-    packageName: '@rsbuild/plugin-toml',
-    dependencies: [
-      {
-        name: 'toml-loader',
-        ignoreDts: true,
       },
     ],
   },

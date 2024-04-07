@@ -24,7 +24,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
       "loader": "builtin:swc-loader",
       "options": {
         "env": {
-          "coreJs": "3.32",
+          "coreJs": "3.36",
           "mode": "usage",
           "shippedProposals": true,
           "targets": [
@@ -46,6 +46,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,
+            "useDefineForClassFields": false,
           },
         },
         "sourceMaps": true,
@@ -64,6 +65,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
               "version": "legacy",
             },
           ],
+          "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
         ],
         "presets": [
           [
@@ -103,6 +105,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
                     "version": "legacy",
                   },
                 ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
               ],
               "presets": [
                 [
@@ -148,11 +151,12 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
                     "version": "legacy",
                   },
                 ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
                 [
                   "babel-plugin-import",
                   {
                     "libraryDirectory": "es",
-                    "libraryName": "xxx-components",
+                    "libraryName": "my-components",
                     "style": true,
                   },
                 ],

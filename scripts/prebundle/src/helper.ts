@@ -20,8 +20,8 @@ export function findDepPath(name: string) {
 export function parseTasks() {
   const result: ParsedTask[] = [];
 
-  TASKS.forEach(({ packageName, packageDir, dependencies }) => {
-    dependencies.forEach((dep) => {
+  for (const { packageName, packageDir, dependencies } of TASKS) {
+    for (const dep of dependencies) {
       const depName = typeof dep === 'string' ? dep : dep.name;
       const importPath = join(packageName, DIST_DIR, depName);
       const packagePath = join(PACKAGES_DIR, packageDir);
@@ -59,8 +59,8 @@ export function parseTasks() {
           ...info,
         });
       }
-    });
-  });
+    }
+  }
 
   return result;
 }

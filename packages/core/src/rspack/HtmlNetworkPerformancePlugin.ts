@@ -46,7 +46,6 @@ export class HtmlNetworkPerformancePlugin implements RspackPluginInstance {
       `HTML${this.type}Plugin`,
       (compilation: Compilation) => {
         getHTMLPlugin()
-          // @ts-expect-error compilation type mismatch
           .getHooks(compilation)
           .alterAssetTagGroups.tap(
             `HTML${upperFirst(this.type)}Plugin`,

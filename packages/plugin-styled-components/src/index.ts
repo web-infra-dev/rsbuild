@@ -1,8 +1,8 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
 import {
+  getNodeEnv,
   isServerTarget,
   mergeChainedOptions,
-  modifySwcLoaderOptions,
   getDefaultStyledComponentsConfig,
   type ChainedConfig,
 } from '@rsbuild/shared';
@@ -24,37 +24,42 @@ export type PluginStyledComponentsOptions = {
 };
 
 export const pluginStyledComponents = (
-  userConfig: ChainedConfig<PluginStyledComponentsOptions> = {},
+  pluginOptions: ChainedConfig<PluginStyledComponentsOptions> = {},
 ): RsbuildPlugin => ({
   name: 'rsbuild:styled-components',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { isProd }) => {
-      const { bundlerType } = api.context;
+    if (api.context.bundlerType === 'webpack') {
+      return;
+    }
 
-      if (bundlerType === 'webpack') {
-        return;
-      }
+    const getMergedOptions = () => {
+      const useSSR = isServerTarget(api.context.targets);
+      const isProd = getNodeEnv() === 'production';
 
-      const isSSR = isServerTarget(api.context.targets);
-
-      const styledComponentsOptions = mergeChainedOptions({
-        defaults: getDefaultStyledComponentsConfig(isProd, isSSR),
-        options: userConfig,
+      return mergeChainedOptions({
+        defaults: getDefaultStyledComponentsConfig(isProd, useSSR),
+        options: pluginOptions,
       });
+    };
 
-      if (!styledComponentsOptions) {
-        return;
-      }
+    api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
+      const extraConfig: RsbuildConfig = {
+        tools: {
+          swc(opts) {
+            const mergedOptions = getMergedOptions();
+            if (!mergedOptions) {
+              return opts;
+            }
 
-      modifySwcLoaderOptions({
-        chain,
-        modifier: (options) => {
-          options.rspackExperiments ??= {};
-          options.rspackExperiments.styledComponents = styledComponentsOptions;
-          return options;
+            opts.rspackExperiments ??= {};
+            opts.rspackExperiments.styledComponents = mergedOptions;
+            return opts;
+          },
         },
-      });
+      };
+
+      return mergeRsbuildConfig(extraConfig, userConfig);
     });
   },
 });

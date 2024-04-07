@@ -6,12 +6,13 @@
 // Core Methods
 export { loadEnv } from './loadEnv';
 export { createRsbuild } from './createRsbuild';
-export { loadConfig, defineConfig } from './cli/config';
+export { loadConfig, defineConfig } from './config';
 
 export const version = RSBUILD_VERSION;
 
 // Helpers
-export { logger, mergeRsbuildConfig } from '@rsbuild/shared';
+export { logger } from '@rsbuild/shared';
+export { mergeRsbuildConfig } from './mergeConfig';
 
 // Constants
 export {
@@ -73,5 +74,9 @@ export type {
   OnBeforeCreateCompilerFn,
   OnCloseDevServerFn,
   OnDevCompileDoneFn,
+  ModifyBundlerChainFn,
+  ModifyRspackConfigFn,
   ModifyRsbuildConfigFn,
+  TransformFn,
+  TransformHandler,
 } from '@rsbuild/shared';

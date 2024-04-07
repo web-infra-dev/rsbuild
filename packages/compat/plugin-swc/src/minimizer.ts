@@ -5,6 +5,7 @@ import {
   color,
   CSS_REGEX,
   getSwcMinimizerOptions,
+  parseMinifyOptions,
   type NormalizedConfig,
 } from '@rsbuild/shared';
 import type { Output, JsMinifyOptions, CssMinifyOptions } from './types';
@@ -39,12 +40,15 @@ export class SwcMinimizerPlugin {
     cssMinify?: boolean | CssMinifyOptions;
     rsbuildConfig: NormalizedConfig;
   }) {
+    const { minifyJs, minifyCss } = parseMinifyOptions(options.rsbuildConfig);
     this.minifyOptions = {
-      jsMinify: merge(
-        this.getDefaultJsMinifyOptions(options.rsbuildConfig),
-        normalize(options.jsMinify, {}),
-      ),
-      cssMinify: normalize(options.cssMinify, {}),
+      jsMinify: minifyJs
+        ? merge(
+            this.getDefaultJsMinifyOptions(options.rsbuildConfig),
+            normalize(options.jsMinify, {}),
+          )
+        : undefined,
+      cssMinify: minifyCss ? normalize(options.cssMinify, {}) : undefined,
     };
   }
 

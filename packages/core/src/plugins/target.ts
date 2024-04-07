@@ -1,4 +1,7 @@
-import { getBrowserslist } from '@rsbuild/shared';
+import {
+  browserslistToESVersion,
+  getBrowserslistWithDefault,
+} from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginTarget = (): RsbuildPlugin => ({
@@ -10,24 +13,21 @@ export const pluginTarget = (): RsbuildPlugin => ({
         chain.target('node');
         return;
       }
-      if (target === 'service-worker') {
-        chain.target('webworker');
+
+      const config = api.getNormalizedConfig();
+      const browserslist = await getBrowserslistWithDefault(
+        api.context.rootPath,
+        config,
+        target,
+      );
+      const esVersion = browserslistToESVersion(browserslist);
+
+      if (target === 'web-worker' || target === 'service-worker') {
+        chain.target(['webworker', `es${esVersion}`]);
         return;
       }
 
-      // browserslist is not supported when target is web-worker
-      if (target === 'web-worker') {
-        chain.target(['webworker', 'es5']);
-        return;
-      }
-
-      const browserslist = await getBrowserslist(api.context.rootPath);
-
-      if (browserslist) {
-        chain.merge({ target: ['web', 'browserslist'] });
-      } else {
-        chain.merge({ target: ['web', 'es5'] });
-      }
+      chain.target(['web', `es${esVersion}`]);
     });
   },
 });

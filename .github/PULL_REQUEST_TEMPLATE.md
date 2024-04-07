@@ -8,5 +8,5 @@
 
 <!--- Check and mark with an "x" -->
 
-- [ ] Tests updated.
-- [ ] Documentation updated.
+- [ ] Tests updated (or not required).
+- [ ] Documentation updated (or not required).

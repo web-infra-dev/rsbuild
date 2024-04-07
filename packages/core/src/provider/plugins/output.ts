@@ -36,13 +36,17 @@ export const pluginOutput = (): RsbuildPlugin => ({
         });
 
         const cssFilename = getFilename(config, 'css', isProd);
-
+        const cssAsyncPath = getDistPath(config, 'cssAsync');
+      
         chain
           .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
           .use(RspackCssExtractPlugin, [
             {
               filename: posix.join(cssPath, cssFilename),
-              chunkFilename: posix.join(cssPath, `async/${cssFilename}`),
+              chunkFilename: posix.join(
+                cssAsyncPath,
+                cssFilename,
+              ),
               ignoreOrder: true,
               ...extractPluginOptions,
             },

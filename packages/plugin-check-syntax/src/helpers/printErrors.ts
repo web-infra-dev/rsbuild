@@ -50,12 +50,14 @@ function printMain(error: Error, longest: number) {
     }
     return s;
   };
-  Object.entries(error).forEach(([key, content]) => {
+
+  for (const [key, content] of Object.entries(error)) {
     if (!content) {
-      return;
+      continue;
     }
     const title = color.magenta(`${fillWhiteSpace(`${key}:`, longest + 1)}`);
     console.info(`  ${title}  ${content}`);
-  });
+  }
+
   console.info('');
 }

@@ -52,7 +52,7 @@ const rsbuildPlugin = () => ({
   name: 'example',
   setup(api) {
     api.modifyRspackConfig((config) => {
-      config.plugins.push(new RspackExamplePlugin());
+      config.plugins?.push(new RspackExamplePlugin());
     });
   },
 });
@@ -107,7 +107,7 @@ The roles of each part are as follows:
 
 The naming convention for plugins is as follows:
 
-- The function of the plugin is named `pluginXXX` and exported by name.
+- The function of the plugin is named `pluginAbc` and exported by name.
 - The `name` of the plugin follows the format `scope:foo-bar` or `plugin-foo-bar`, adding `scope:` can avoid naming conflicts with other plugins.
 
 Here is an example:
@@ -116,7 +116,7 @@ Here is an example:
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 export const pluginFooBar = (): RsbuildPlugin => ({
-  name: 'xxx:foo-bar',
+  name: 'scope:foo-bar',
   setup() {},
 });
 ```
@@ -156,15 +156,14 @@ export const pluginUploadDist = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyRsbuildConfig((config) => {
       // try to disable minimize.
-      // should deal with optional value by self.
       config.output ||= {};
-      config.output.disableMinimize = true;
+      config.output.minify = false;
       // but also can be enable by other plugins...
     });
     api.onBeforeBuild(() => {
       // use the normalized config.
       const config = api.getNormalizedConfig();
-      if (!config.output.disableMinimize) {
+      if (config.output.minify !== false) {
         // let it crash when enable minimize.
         throw new Error(
           'You must disable minimize to upload readable dist files.',
@@ -196,7 +195,7 @@ api.modifyRsbuildConfig((config: RsbuildConfig) => {});
 api.getRsbuildConfig() as RsbuildConfig;
 type RsbuildConfig = {
   output?: {
-    disableMinimize?: boolean;
+    minify?: boolean;
     distPath?: { root?: string };
   };
 };
@@ -204,7 +203,7 @@ type RsbuildConfig = {
 api.getNormalizedConfig() as NormalizedConfig;
 type NormalizedConfig = {
   output: {
-    disableMinimize: boolean;
+    minify: boolean;
     distPath: { root: string };
   };
 };

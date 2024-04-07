@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { TS_CONFIG_FILE } from '@rsbuild/shared';
+import { TS_CONFIG_FILE, fse } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   filterByField,
@@ -19,7 +19,9 @@ export const getSourceInclude = async (options: {
 
   const includes = [];
   for (const project of projects) {
-    includes.push(...project.getSourceEntryPaths({ field: sourceField }));
+    includes.push(
+      ...project.getSourceEntryPaths({ field: sourceField, exports: true }),
+    );
   }
 
   return includes;
@@ -62,7 +64,7 @@ export function pluginSourceBuild(
         projects = await getDependentProjects(projectName || projectRootPath, {
           cwd: projectRootPath,
           recursive: true,
-          filter: filterByField(sourceField),
+          filter: filterByField(sourceField, true),
           extraMonorepoStrategies,
         });
 
@@ -76,7 +78,7 @@ export function pluginSourceBuild(
       });
 
       api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-        [CHAIN_ID.RULE.TS, CHAIN_ID.RULE.JS].forEach((ruleId) => {
+        for (const ruleId of [CHAIN_ID.RULE.TS, CHAIN_ID.RULE.JS]) {
           if (chain.module.rules.get(ruleId)) {
             const rule = chain.module.rule(ruleId);
 
@@ -95,16 +97,34 @@ export function pluginSourceBuild(
               conditionNames: ['...', sourceField],
             });
           }
-        });
+        }
       });
 
-      const getReferences = () =>
-        projects
+      const getReferences = async (): Promise<string[]> => {
+        const refers = projects
           .map((project) => path.join(project.dir, TS_CONFIG_FILE))
           .filter((filePath) => fs.existsSync(filePath));
 
+        // merge with user references
+        if (api.context.tsconfigPath) {
+          const { default: json5 } = await import('@rsbuild/shared/json5');
+          const { references } = json5.parse(
+            fse.readFileSync(api.context.tsconfigPath, 'utf-8'),
+          );
+
+          return Array.isArray(references)
+            ? references
+                .map((r) => r.path)
+                .filter(Boolean)
+                .concat(refers)
+            : refers;
+        }
+
+        return refers;
+      };
+
       if (api.context.bundlerType === 'rspack') {
-        api.modifyRspackConfig((config) => {
+        api.modifyRspackConfig(async (config) => {
           if (!api.context.tsconfigPath) {
             return;
           }
@@ -113,23 +133,25 @@ export function pluginSourceBuild(
           config.resolve.tsConfig = {
             ...config.resolve.tsConfig,
             configFile: api.context.tsconfigPath,
-            references: getReferences(),
+            references: await getReferences(),
           };
         });
       } else {
-        api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+        api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
           const { TS_CONFIG_PATHS } = CHAIN_ID.RESOLVE_PLUGIN;
 
           if (!chain.resolve.plugins.has(TS_CONFIG_PATHS)) {
             return;
           }
 
+          const references = await getReferences();
+
           // set references config
           // https://github.com/dividab/tsconfig-paths-webpack-plugin#options
           chain.resolve.plugin(TS_CONFIG_PATHS).tap((options) =>
             options.map((option) => ({
               ...option,
-              references: getReferences(),
+              references,
             })),
           );
         });

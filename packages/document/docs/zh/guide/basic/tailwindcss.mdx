@@ -6,7 +6,7 @@
 
 ## 安装 Tailwind CSS
 
-只需要安装 `tailwindcss` 即可，无须安装其他 npm 包。
+由于 Rsbuild 内置支持了 `postcss` 和 `autoprefixer`，你只需要安装 `tailwindcss`，无须安装其他 npm 包：
 
 import { PackageManagerTabs } from '@theme';
 
@@ -24,7 +24,9 @@ module.exports = {
 };
 ```
 
-Rsbuild 已经内置了 [autoprefixer](https://github.com/postcss/autoprefixer)，因此你只需要注册 `tailwindcss` 插件即可。
+:::tip
+Rsbuild 内置了 [autoprefixer](https://github.com/postcss/autoprefixer)，因此你只需要注册 `tailwindcss` 插件。
+:::
 
 ## 配置 Tailwind CSS
 

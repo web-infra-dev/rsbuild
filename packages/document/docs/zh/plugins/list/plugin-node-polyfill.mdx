@@ -1,5 +1,9 @@
 # Node Polyfill 插件
 
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-node-polyfill" />
+
 :::tip Node Polyfill 介绍
 通常情况下，我们不会在浏览器端使用 Node 模块。但在当前代码需要同时在 Node 端和浏览器端运行时，用到一些 Node 模块是有可能的。Node Polyfill 为这些 Node 模块提供了浏览器版本的 polyfills。
 :::
@@ -40,7 +44,7 @@ export default {
 比如以下代码会注入 `Buffer` 的 polyfill：
 
 ```ts
-const bufferData = Buffer.from('xxxx');
+const bufferData = Buffer.from('some words');
 ```
 
 你可以通过插件的 `globals` 选项来关闭该行为：
@@ -90,7 +94,7 @@ pluginNodePolyfill({
 ```ts
 import { Buffer } from 'buffer';
 
-const bufferData = Buffer.from('xxxx');
+const bufferData = Buffer.from('abc');
 ```
 
 ### Fallbacks
@@ -112,4 +116,43 @@ const bufferData = Buffer.from('xxxx');
 import fs from 'fs';
 
 console.log(fs); // -> {}
+```
+
+## 选项
+
+### globals
+
+用于指定是否注入全局变量对应的 polyfill。
+
+- **类型：**
+
+```ts
+type Globals = {
+  process?: boolean;
+  Buffer?: boolean;
+};
+```
+
+- **默认值：**
+
+```ts
+const defaultGlobals = {
+  Buffer: true,
+  process: true,
+};
+```
+
+### protocolImports
+
+是否 polyfill 以 `node:` 开头的 Node.js 内置模块。
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+比如关闭 `protocolImports`，将不会对 `node:path`，`node:http` 等模块进行 polyfill 注入。
+
+```ts
+pluginNodePolyfill({
+  protocolImports: false,
+});
 ```

@@ -1,5 +1,9 @@
 # CSS Minimizer Plugin
 
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-css-minimizer" />
+
 The Rsbuild by default uses the SWC built-in by Rspack to minify CSS code. You can customize the CSS minimizer by using the CSS Minimizer plugin and switch to [cssnano](https://cssnano.co/) or other tools for CSS minification.
 
 The CSS Minimizer plugin internally integrates [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
@@ -43,6 +47,7 @@ The value of `pluginOptions` will be merged with the default options inside the 
 
 ```ts
 const defaultOptions = {
+  minify: CssMinimizerWebpackPlugin.cssnanoMinify,
   minimizerOptions: {
     preset: [
       'default',
@@ -76,4 +81,26 @@ pluginCssMinimizer({
     };
   },
 });
+```
+
+- **Example 3:** Switch to other tools for CSS minification
+
+```js
+import {
+  pluginCssMinimizer,
+  CssMinimizerWebpackPlugin,
+} from '@rsbuild/plugin-css-minimizer';
+
+pluginCssMinimizer({
+  pluginOptions: {
+    minify: CssMinimizerWebpackPlugin.cleanCssMinify,
+    minimizerOptions: {
+      level: {
+        1: {
+          roundingPrecision: "all=3,px=5",
+        },
+      },
+    },
+  },
+}),
 ```

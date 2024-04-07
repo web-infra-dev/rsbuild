@@ -79,11 +79,12 @@ function getURLMessages(
       message += '\n';
     }
     message += `  ${`> ${label}`}\n`;
-    routes.forEach((r) => {
+
+    for (const r of routes) {
       message += `  ${color.dim('-')} ${color.dim(
         r.entryName.padEnd(maxNameLength + 4),
       )}${color.cyan(normalizeUrl(`${url}${r.pathname}`))}\n`;
-    });
+    }
   });
 
   return message;
@@ -161,7 +162,7 @@ export const mergeDevOptions = ({
       // By default it is set to "location.hostname"
       host: '',
       // By default it is set to "location.protocol === 'https:' ? 'wss' : 'ws'""
-      protocol: '',
+      protocol: undefined,
     },
     writeToDisk: false,
   };
@@ -194,7 +195,7 @@ export const getPort = async ({
   silent?: boolean;
 }): Promise<number> => {
   if (typeof port === 'string') {
-    port = parseInt(port, 10);
+    port = Number.parseInt(port, 10);
   }
 
   if (strictPort) {
@@ -276,10 +277,8 @@ export const getDevOptions = async ({
   const devConfig = mergeDevOptions({ rsbuildConfig, port });
 
   return {
-    devServerConfig: {
-      ...serverConfig,
-      ...devConfig,
-    },
+    devConfig,
+    serverConfig,
     port,
     host,
     https,

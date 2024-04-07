@@ -3,14 +3,15 @@ import {
   fse,
   CHAIN_ID,
   deepmerge,
+  NODE_MODULES_REGEX,
   mergeChainedOptions,
   type ChainedConfig,
 } from '@rsbuild/shared';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
-type ForkTsCheckerOptions = ConstructorParameters<
-  typeof ForkTSCheckerPlugin
->[0];
+type ForkTsCheckerOptions = NonNullable<
+  ConstructorParameters<typeof ForkTSCheckerPlugin>[0]
+>;
 
 export type PluginTypeCheckerOptions = {
   /**
@@ -83,10 +84,8 @@ export const pluginTypeCheck = (
             typescriptPath,
           },
           issue: {
-            exclude: [
-              { file: '**/*.(spec|test).ts' },
-              { file: '**/node_modules/**/*' },
-            ],
+            // ignore types errors from node_modules
+            exclude: [({ file = '' }) => NODE_MODULES_REGEX.test(file)],
           },
           logger: {
             log() {
@@ -105,11 +104,8 @@ export const pluginTypeCheck = (
           mergeFn: deepmerge,
         });
 
-        if (api.context.bundlerType === 'rspack' && isProd) {
-          logger.info('Ts checker running...');
-          logger.info(
-            'Ts checker is running slowly and will block builds until it is complete, please be patient and wait.',
-          );
+        if (isProd) {
+          logger.info('Type checker is enabled. It may take some time.');
         }
 
         chain

@@ -1,7 +1,8 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import ws from '../../compiled/ws';
-import { logger, type Stats, type DevMiddlewaresConfig } from '@rsbuild/shared';
+import { logger, type Stats, type DevConfig } from '@rsbuild/shared';
+import { getAllStatsErrors, getAllStatsWarnings } from '../provider/shared';
 
 interface ExtWebSocket extends ws {
   isAlive: boolean;
@@ -12,13 +13,13 @@ export class SocketServer {
 
   private readonly sockets: ws[] = [];
 
-  private readonly options: DevMiddlewaresConfig;
+  private readonly options: DevConfig;
 
   private stats?: Stats;
 
-  private timer: NodeJS.Timeout | null = null;
+  private timer: ReturnType<typeof setInterval> | null = null;
 
-  constructor(options: DevMiddlewaresConfig) {
+  constructor(options: DevConfig) {
     this.options = options;
   }
 
@@ -47,7 +48,7 @@ export class SocketServer {
     });
 
     this.timer = setInterval(() => {
-      this.wsServer.clients.forEach((socket) => {
+      for (const socket of this.wsServer.clients) {
         const extWs = socket as ExtWebSocket;
         if (!extWs.isAlive) {
           extWs.terminate();
@@ -57,7 +58,7 @@ export class SocketServer {
             // empty
           });
         }
-      });
+      }
     }, 30000);
 
     this.wsServer.on('connection', (socket) => {
@@ -75,9 +76,9 @@ export class SocketServer {
     type: string,
     data?: Record<string, any> | string | boolean,
   ) {
-    this.sockets.forEach((socket) => {
+    for (const socket of this.sockets) {
       this.send(socket, JSON.stringify({ type, data }));
-    });
+    }
   }
 
   public singleWrite(
@@ -89,9 +90,9 @@ export class SocketServer {
   }
 
   public close() {
-    this.sockets.forEach((socket) => {
+    for (const socket of this.sockets) {
       socket.close();
-    });
+    }
 
     if (this.timer) {
       clearInterval(this.timer);
@@ -144,8 +145,11 @@ export class SocketServer {
       hash: true,
       assets: true,
       warnings: true,
+      warningsCount: true,
       errors: true,
+      errorsCount: true,
       errorDetails: false,
+      children: true,
     };
 
     return curStats.toJson(defaultStats);
@@ -163,7 +167,7 @@ export class SocketServer {
     const shouldEmit =
       !force &&
       stats &&
-      (!stats.errors || stats.errors.length === 0) &&
+      !stats.errorsCount &&
       stats.assets &&
       stats.assets.every((asset: any) => !asset.emitted);
 
@@ -173,11 +177,11 @@ export class SocketServer {
 
     this.sockWrite('hash', stats.hash);
 
-    if (stats.errors && stats.errors.length > 0) {
-      return this.sockWrite('errors', stats.errors);
+    if (stats.errorsCount) {
+      return this.sockWrite('errors', getAllStatsErrors(stats));
     }
-    if (stats.warnings && stats.warnings.length > 0) {
-      return this.sockWrite('warnings', stats.warnings);
+    if (stats.warningsCount) {
+      return this.sockWrite('warnings', getAllStatsWarnings(stats));
     }
     return this.sockWrite('ok');
   }

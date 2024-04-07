@@ -11,5 +11,6 @@
   },
   "files.exclude": {
     "**/.DS_Store": true
-  }
+  },
+  "mdx.validate.validateFileLinks": "ignore"
 }

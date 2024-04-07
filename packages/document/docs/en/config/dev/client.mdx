@@ -7,13 +7,19 @@ Configure the client code injected by Rsbuild during the development process. Th
 ```ts
 type Client = {
   /** Specify the protocol name for the WebSocket request */
-  protocol?: string;
+  protocol?: 'ws' | 'wss';
   /** Specify the path for the WebSocket request */
   path?: string;
   /** Specify the port number for the WebSocket request */
   port?: string;
   /** Specify the host for the WebSocket request */
   host?: string;
+  /**
+   * Shows overlay in the browser when there are compiler errors
+   *
+   * This feature requires the current browser version to support [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+   */
+  overlay?: boolean;
 };
 ```
 
@@ -24,10 +30,9 @@ const defaultConfig = {
   path: '/rsbuild-hmr',
   // Defaults to the port number of the dev server
   port: '',
-  // Defaults to "location.hostname"
-  host: '',
-  // Defaults to "location.protocol === 'https:' ? 'wss' : 'ws'"
-  protocol: '',
+  host: location.hostname,
+  protocol: location.protocol === 'https:' ? 'wss' : 'ws',
+  overlay: false,
 };
 ```
 

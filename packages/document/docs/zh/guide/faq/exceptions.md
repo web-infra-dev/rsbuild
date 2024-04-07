@@ -112,12 +112,9 @@ export default {
 
 ### 打包后发现 tree shaking 没有生效？
 
-Rsbuild 在生产构建时会默认开启 Rspack 的 tree shaking 功能，tree shaking 是否能够生效，取决于业务代码能否满足 Rspack 的 tree shaking 条件。
+Rsbuild 在生产构建时会默认开启 Rspack 的 tree shaking 功能，tree shaking 是否能够生效，取决于代码能否满足 Rspack 的 tree shaking 条件。
 
-如果你遇到了 tree shaking 不生效的问题，可以检查下相关 npm 包的 `sideEffects` 配置是否正确，如果你不了解 `sideEffects` 的作用，或是对 tree shaking 背后的原理感兴趣，可以阅读以下两篇文档：
-
-- [Rspack 官方文档 - Tree Shaking](https://www.rspack.dev/zh/guide/tree-shaking)
-- [Tree Shaking 问题排查指南](https://bytedance.feishu.cn/docs/doccn8E1ldDct5uv1EEDQs8Ycwe)
+如果你发现 tree shaking 没有按照预期生效，可以检查下相关 npm 包的 `sideEffects` 配置是否正确，如果你不了解 `sideEffects` 的作用，或是对 tree shaking 背后的原理感兴趣，可以阅读 [Rspack 官方文档 - Tree Shaking](https://rspack.dev/zh/guide/tree-shaking)。
 
 如果你是 npm 包的开发者，可以阅读这篇文章：
 
@@ -157,7 +154,7 @@ Node.js 官方文档中有对以下参数更详细的解释：
 
 ---
 
-### 打包时出现 `Can't resolve 'core-js/modules/xxx.js'`？
+### 打包时出现 `Can't resolve 'core-js/modules/abc.js'`？
 
 如果你在打包时出现了类似下面的报错，表示项目中的 [core-js](https://github.com/zloirock/core-js) 无法被正确引用。
 
@@ -172,36 +169,6 @@ Module not found: Can't resolve 'core-js/modules/es.error.cause.js'
 1. 当前项目覆盖了 Rsbuild 内置的 `alias` 配置，导致引用 `core-js` 时，没有解析到正确的 `core-js` 路径，这种情况下，你可以检查项目的 `alias` 配置。
 2. 项目里某一处代码依赖了 `core-js` v2 版本。这种情况通常需要你找出对应的代码，并升级其中的 `core-js` 到 v3 版本。
 3. `node_modules` 中的某一个 npm 包引用了 `core-js`，但是没有在 `dependencies` 中声明 `core-js` 依赖。这种情况需要你在对应的 npm 包中声明 `core-js` 依赖，或者在项目根目录下安装一份 `core-js`。
-
----
-
-### 从 lodash 中引用类型后出现编译报错？
-
-当你的项目中安装了 `@types/lodash` 包时，你可能会从 `lodash` 中引用一些类型，比如引用 `DebouncedFunc` 类型：
-
-```ts
-import { debounce, DebouncedFunc } from 'lodash';
-```
-
-上述代码会在编译后产生如下报错：
-
-```bash
-SyntaxError: /project/src/index.ts: The 'lodash' method `DebouncedFunc` is not a known module.
-Please report bugs to https://github.com/lodash/babel-plugin-lodash/issues.
-```
-
-这个问题的原因是 Rsbuild 默认开启了 [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash) 插件来优化 lodash 产物体积，但 Babel 无法区别「值」和「类型」，导致编译后的代码出现异常。
-
-解决方法是使用 TypeScript 的 `import type` 语法，对 `DebouncedFunc` 类型进行显式声明：
-
-```ts
-import { debounce } from 'lodash';
-import type { DebouncedFunc } from 'lodash';
-```
-
-:::tip
-在任意情况下，我们都推荐使用 `import type` 来引用类型，这对于编译器识别类型会有很大帮助。
-:::
 
 ---
 
@@ -228,14 +195,3 @@ Less v4 版本与 v3 版本相比，除法的写法有一些区别：
 Rsbuild 内置的 Less 版本为 v4，低版本的写法不会生效，请注意区分。
 
 Less 中除法的写法也可以通过配置项来修改，详见 [Less - Math](https://lesscss.org/usage/#less-options-math)。
-
----
-
-### 修改配置后，报错 `TypeError: Cannot delete property 'xxx' of #<Object>`
-
-该报错表示在编译过程中对一个只读配置项进行了删除操作。通常情况下，我们不希望编译过程中的任何操作会直接对传入的配置进行修改，但难以限制底层插件（如 postcss-loader 等）的行为，如果出现该报错，请联系 Rsbuild 开发者，我们需要对该配置进行单独处理。
-
-同类型报错还有：
-
-- `TypeError: Cannot add property xxx, object is not extensible`
-- `TypeError: Cannot assign to read only property 'xxx' of object '#<Object>`

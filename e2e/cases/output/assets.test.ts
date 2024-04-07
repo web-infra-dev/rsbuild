@@ -12,7 +12,17 @@ const cases = [
     expected: 'inline',
   },
   {
-    name: 'assets(maxSize 0)',
+    name: 'assets(dataUriLimit 0)',
+    cwd: join(fixtures, 'assets'),
+    config: {
+      output: {
+        dataUriLimit: 0,
+      },
+    },
+    expected: 'url',
+  },
+  {
+    name: 'assets(dataUriLimit.image 0)',
     cwd: join(fixtures, 'assets'),
     config: {
       output: {
@@ -24,13 +34,12 @@ const cases = [
     expected: 'url',
   },
   {
-    name: 'assets(maxSize Infinity)',
+    name: 'assets(dataUriLimit max number)',
     cwd: join(fixtures, 'assets'),
     config: {
       output: {
         dataUriLimit: {
-          // Rspack not support Infinity
-          image: 5 * 1024,
+          image: Number.MAX_SAFE_INTEGER,
         },
       },
     },
@@ -58,18 +67,18 @@ const cases = [
   },
 ];
 
-cases.forEach((_case) => {
-  test(_case.name, async ({ page }) => {
+for (const item of cases) {
+  test(item.name, async ({ page }) => {
     const rsbuild = await build({
-      cwd: _case.cwd,
+      cwd: item.cwd,
       runServer: true,
       plugins: [pluginReact()],
-      rsbuildConfig: _case.config || {},
+      rsbuildConfig: item.config || {},
     });
 
     await gotoPage(page, rsbuild);
 
-    if (_case.expected === 'url') {
+    if (item.expected === 'url') {
       await expect(
         page.evaluate(
           `document.getElementById('test-img').src.includes('static/image/icon')`,
@@ -85,4 +94,4 @@ cases.forEach((_case) => {
 
     await rsbuild.close();
   });
-});
+}

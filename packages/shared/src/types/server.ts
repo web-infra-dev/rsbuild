@@ -1,14 +1,8 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
-import type {
-  DevConfig,
-  NextFunction,
-  RequestHandler,
-  ServerAPIs,
-} from './config/dev';
-import type { ServerConfig } from './config/server';
-import type { Routes } from './hooks';
+import type { NextFunction, RequestHandler, ServerAPIs } from './config/dev';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
+import type { Server as ConnectServer } from '../../compiled/connect';
 
 export type Middleware = (
   req: IncomingMessage,
@@ -55,17 +49,6 @@ export type CreateDevMiddlewareReturns = {
   compiler: RspackCompiler | RspackMultiCompiler;
 };
 
-export type DevMiddlewaresConfig = Omit<
-  DevConfig & ServerConfig,
-  | 'beforeStartUrl'
-  | 'progressBar'
-  | 'startUrl'
-  | 'https'
-  | 'host'
-  | 'port'
-  | 'strictPort'
->;
-
 export type StartServerResult = {
   urls: string[];
   port: number;
@@ -92,52 +75,46 @@ export type CompileMiddlewareAPI = {
 
 export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
 
-export type DevServerAPIs = {
+export type RsbuildDevServer = {
   /**
-   * The resolved rsbuild server config
+   * Use rsbuild inner server to listen
    */
-  config: {
-    devServerConfig: DevConfig & ServerConfig;
+  listen: () => Promise<{
     port: number;
-    host: string;
-    https: boolean;
-    defaultRoutes: Routes;
-  };
-  /**
-   * Trigger rsbuild compile
-   */
-  startCompile: () => Promise<CompileMiddlewareAPI>;
-  /**
-   * Trigger rsbuild onBeforeStartDevServer hook
-   *
-   * It should called before listen and after compile
-   */
-  beforeStart: () => Promise<void>;
-  /**
-   * Trigger rsbuild onAfterStartDevServer hook
-   *
-   * It should called after listen
-   */
-  afterStart: (options?: { port?: number; routes?: Routes }) => Promise<void>;
-  /**
-   * Get the corresponding builtin middleware according to the rsbuild config
-   *
-   * Related config: proxy / publicDir / historyApiFallback / headers / ...
-   */
-  getMiddlewares: (options?: {
-    compileMiddlewareAPI?: CompileMiddlewareAPI;
-    /**
-     * Overrides middleware configs
-     *
-     * By default, get config from rsbuild dev.xxx and server.xxx
-     */
-    overrides?: DevMiddlewaresConfig;
-  }) => Promise<{
-    middlewares: Middlewares;
-    close: () => Promise<void>;
-    /**
-     * Subscribe http upgrade event
-     */
-    onUpgrade: UpgradeEvent;
+    urls: string[];
+    server: {
+      close: () => Promise<void>;
+    };
   }>;
+
+  /** The following APIs will be used when you use a custom server */
+
+  /**
+   * The resolved port.
+   *
+   * By default, Rsbuild Server listens on port `8080` and automatically increments the port number when the port is occupied.
+   */
+  port: number;
+  /**
+   * connect app instance.
+   *
+   * Can be used to attach custom middlewares to the dev server.
+   */
+  middlewares: ConnectServer;
+  /**
+   * Notify Rsbuild Server has started
+   *
+   * In Rsbuild, we will trigger onAfterStartDevServer hook in this stage
+   */
+  afterListen: () => Promise<void>;
+  /**
+   * Subscribe http upgrade event
+   *
+   * It will used when you use custom server
+   */
+  onHTTPUpgrade: UpgradeEvent;
+  /**
+   * Close the Rsbuild server.
+   */
+  close: () => Promise<void>;
 };

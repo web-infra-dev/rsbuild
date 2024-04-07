@@ -16,9 +16,20 @@ export const getDistPath = (
 ): string => {
   const { distPath } = config.output || {};
   const ret = distPath?.[type];
+
   if (typeof ret !== 'string') {
+    if (type === 'jsAsync') {
+      const jsPath = getDistPath(config, 'js');
+      return jsPath ? `${jsPath}/async` : 'async';
+    }
+    if (type === 'cssAsync') {
+      const cssPath = getDistPath(config, 'css');
+      return cssPath ? `${cssPath}/async` : 'async';
+    }
+
     throw new Error(`unknown key ${type} in "output.distPath"`);
   }
+
   return ret;
 };
 
@@ -101,29 +112,6 @@ export async function findUp({
     try {
       const stats = await promises.stat(filePath);
       if (stats?.isFile()) {
-        return filePath;
-      }
-    } catch {}
-
-    dir = path.dirname(dir);
-  }
-}
-
-export function findUpSync({
-  filename,
-  cwd = process.cwd(),
-}: {
-  filename: string;
-  cwd?: string;
-}) {
-  const { root } = path.parse(cwd);
-
-  let dir = cwd;
-  while (dir && dir !== root) {
-    const filePath = path.join(dir, filename);
-
-    try {
-      if (isFileSync(filePath)) {
         return filePath;
       }
     } catch {}

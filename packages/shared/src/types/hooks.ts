@@ -1,31 +1,31 @@
 import type { ChainIdentifier } from '../chain';
 import type { Stats, MultiStats } from './stats';
-import type { NodeEnv, PromiseOrNot } from './utils';
+import type { NodeEnv, MaybePromise } from './utils';
 import type { RsbuildTarget } from './rsbuild';
 import type { BundlerChain } from './bundlerConfig';
-import type { mergeRsbuildConfig } from '../mergeRsbuildConfig';
 import type { Rspack, RspackConfig } from './rspack';
 import type { RsbuildConfig } from './config';
 import type { WebpackConfig } from './thirdParty';
 
 export type OnBeforeBuildFn<B = 'rspack'> = (params: {
   bundlerConfigs?: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
-}) => PromiseOrNot<void>;
+}) => MaybePromise<void>;
 
 export type OnAfterBuildFn = (params: {
+  isFirstCompile: boolean;
   stats?: Stats | MultiStats;
-}) => PromiseOrNot<void>;
+}) => MaybePromise<void>;
 
-export type OnCloseDevServerFn = () => PromiseOrNot<void>;
+export type OnCloseDevServerFn = () => MaybePromise<void>;
 
 export type OnDevCompileDoneFn = (params: {
   isFirstCompile: boolean;
   stats: Stats | MultiStats;
-}) => PromiseOrNot<void>;
+}) => MaybePromise<void>;
 
-export type OnBeforeStartDevServerFn = () => PromiseOrNot<void>;
+export type OnBeforeStartDevServerFn = () => MaybePromise<void>;
 
-export type OnBeforeStartProdServerFn = () => PromiseOrNot<void>;
+export type OnBeforeStartProdServerFn = () => MaybePromise<void>;
 
 export type Routes = Array<{
   entryName: string;
@@ -35,32 +35,32 @@ export type Routes = Array<{
 export type OnAfterStartDevServerFn = (params: {
   port: number;
   routes: Routes;
-}) => PromiseOrNot<void>;
+}) => MaybePromise<void>;
 
 export type OnAfterStartProdServerFn = (params: {
   port: number;
   routes: Routes;
-}) => PromiseOrNot<void>;
+}) => MaybePromise<void>;
 
 export type OnBeforeCreateCompilerFn<B = 'rspack'> = (params: {
   bundlerConfigs: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
-}) => PromiseOrNot<void>;
+}) => MaybePromise<void>;
 
 export type OnAfterCreateCompilerFn<
   Compiler = Rspack.Compiler | Rspack.MultiCompiler,
-> = (params: { compiler: Compiler }) => PromiseOrNot<void>;
+> = (params: { compiler: Compiler }) => MaybePromise<void>;
 
 export type OnExitFn = () => void;
 
 export type ModifyRsbuildConfigUtils = {
   /** Merge multiple Rsbuild config objects into one. */
-  mergeRsbuildConfig: typeof mergeRsbuildConfig;
+  mergeRsbuildConfig: (...configs: RsbuildConfig[]) => RsbuildConfig;
 };
 
 export type ModifyRsbuildConfigFn = (
   config: RsbuildConfig,
   utils: ModifyRsbuildConfigUtils,
-) => PromiseOrNot<RsbuildConfig | void>;
+) => MaybePromise<RsbuildConfig | void>;
 
 export type ModifyChainUtils = {
   env: NodeEnv;
@@ -96,7 +96,7 @@ export type ModifyBundlerChainUtils = ModifyChainUtils & {
 export type ModifyBundlerChainFn = (
   chain: BundlerChain,
   utils: ModifyBundlerChainUtils,
-) => PromiseOrNot<void>;
+) => MaybePromise<void>;
 
 export type CreateAsyncHook<Callback extends (...args: any[]) => any> = {
   tap: (cb: Callback) => void;

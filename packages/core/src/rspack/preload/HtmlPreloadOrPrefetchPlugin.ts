@@ -190,7 +190,6 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
   apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(this.constructor.name, (compilation) => {
       getHTMLPlugin()
-        // @ts-expect-error compilation type mismatch
         .getHooks(compilation)
         .beforeAssetTagGeneration.tap(
           `HTML${upperFirst(this.type)}Plugin`,
@@ -208,7 +207,6 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
         );
 
       getHTMLPlugin()
-        // @ts-expect-error compilation type mismatch
         .getHooks(compilation)
         .alterAssetTags.tap(
           `HTML${upperFirst(this.type)}Plugin`,

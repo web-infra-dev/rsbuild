@@ -1,5 +1,6 @@
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
 import { getHTMLPlugin } from '../provider/htmlPluginUtil';
+import { createVirtualModule } from '@rsbuild/shared';
 
 type NonceOptions = {
   nonce: string;
@@ -21,19 +22,31 @@ export class HtmlNoncePlugin implements RspackPluginInstance {
       return;
     }
 
+    // apply __webpack_nonce__
+    // https://webpack.js.org/guides/csp/
+    const injectCode = createVirtualModule(
+      `__webpack_nonce__ = "${this.nonce}";`,
+    );
+    new compiler.webpack.EntryPlugin(compiler.context, injectCode, {
+      name: undefined,
+    }).apply(compiler);
+
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       getHTMLPlugin()
-        // @ts-expect-error compilation type mismatch
         .getHooks(compilation)
-        .alterAssetTags.tap(this.name, (alterAssetTags) => {
-          const {
-            assetTags: { scripts },
-          } = alterAssetTags;
+        // use alterAssetTagGroups to update tags injected by alterAssetTags
+        .alterAssetTagGroups.tap(this.name, (data) => {
+          const { headTags, bodyTags } = data;
+          const allTags = [...headTags, ...bodyTags];
 
-          scripts.forEach((script) => {
-            script.attributes.nonce = this.nonce;
-          });
-          return alterAssetTags;
+          for (const tag of allTags) {
+            if (tag.tagName === 'script' || tag.tagName === 'style') {
+              tag.attributes ??= {};
+              tag.attributes.nonce = this.nonce;
+            }
+          }
+
+          return data;
         });
     });
   }

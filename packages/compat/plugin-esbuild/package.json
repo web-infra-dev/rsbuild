@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-esbuild",
-  "version": "0.4.4",
+  "version": "0.5.7",
   "description": "Esbuild plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -29,16 +29,16 @@
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
     "esbuild": "0.17.19",
-    "webpack": "^5.89.0"
+    "webpack": "^5.91.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "typescript": "^5.3.0"
+    "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.4.4"
+    "@rsbuild/core": "workspace:^0.5.7"
   },
   "publishConfig": {
     "access": "public",

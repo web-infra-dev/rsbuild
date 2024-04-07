@@ -6,7 +6,7 @@ You can integrate Tailwind CSS in Rsbuild via PostCSS plugins.
 
 ## Installing Tailwind CSS
 
-Only `tailwindcss` needs to be installed, no other npm packages are needed.
+Since Rsbuild has built-in support for `postcss` and `autoprefixer`, you only need to install `tailwindcss` and there is no need to install other npm packages:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -23,6 +23,10 @@ module.exports = {
   },
 };
 ```
+
+:::tip
+Rsbuild has built-in [autoprefixer](https://github.com/postcss/autoprefixer), so you only need to register the `tailwindcss` plugin.
+:::
 
 ## Configuring Tailwind CSS
 

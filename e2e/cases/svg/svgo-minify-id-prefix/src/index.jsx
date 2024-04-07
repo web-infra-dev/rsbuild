@@ -1,3 +1,3 @@
-import { ReactComponent } from './idPrefix.svg';
+import IdPrefix from './idPrefix.svg?react';
 
-console.log(ReactComponent);
+console.log(IdPrefix);

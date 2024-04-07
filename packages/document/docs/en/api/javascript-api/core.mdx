@@ -9,7 +9,9 @@ Create a Rsbuild instance object.
 - **Type:**
 
 ```ts
-function createRsbuild(options: CreateRsbuildOptions): Promise<RsbuildInstance>;
+function createRsbuild(
+  options?: CreateRsbuildOptions,
+): Promise<RsbuildInstance>;
 ```
 
 - **Example:**
@@ -18,7 +20,9 @@ function createRsbuild(options: CreateRsbuildOptions): Promise<RsbuildInstance>;
 import { createRsbuild } from '@rsbuild/core';
 
 const rsbuild = await createRsbuild({
-  // options
+  rsbuildConfig: {
+    // rsbuild configs
+  },
 });
 ```
 
@@ -36,7 +40,6 @@ type CreateRsbuildOptions = {
 Description:
 
 - `cwd`: The root path of the current build, the default value is `process.cwd()`.
-- `provider`: Used to switch the underlying bundler.
 - `rsbuildConfig`: Rsbuild configuration object. Rsbuild provides a rich set of configuration options that allow you to customize the build behavior flexibly. You can find all available configuration options in the [Configuration](/config/) section.
 
 ## loadConfig
@@ -46,9 +49,9 @@ Load Rsbuild configuration file.
 - **Type:**
 
 ```ts
-function loadConfig(params: {
+function loadConfig(params?: {
   // Default is process.cwd()
-  cwd: string;
+  cwd?: string;
   // Specify the configuration file, can be a relative or absolute path
   path?: string;
 }): Promise<{
@@ -65,6 +68,10 @@ import { loadConfig } from '@rsbuild/core';
 const { content } = await loadConfig();
 
 console.log(content); // -> Rsbuild config object
+
+const rsbuild = await createRsbuild({
+  rsbuildConfig: content,
+});
 ```
 
 If the Rsbuild config file does not exist in the cwd directory, the return value of the loadConfig method is `{ content: {}, filePath: null }`.
@@ -137,7 +144,7 @@ The `mergeRsbuildConfig` function takes multiple configuration objects as parame
 function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
 ```
 
-- **Example:**
+### Basic Example
 
 ```ts
 import { mergeRsbuildConfig } from '@rsbuild/core';
@@ -159,6 +166,70 @@ console.log(mergedConfig); // { dev: { https: true } }
 ```
 
 > This method will not modify the config object in the input parameter.
+
+### Merge Rules
+
+In addition to deep merging, the `mergeRsbuildConfig` function also handles some options in a special way.
+
+For example, [tools.rspack](/config/tools/rspack) can be set as a function. When multiple configuration objects contain `tools.rspack`, `mergeRsbuildConfig` will not simply retain the last function. On the contrary, it will merge all `tools.rspack` functions or objects into an array.
+
+```ts
+import { mergeRsbuildConfig } from '@rsbuild/core';
+
+const config1 = {
+  tools: {
+    rspack: {
+      someOption: true,
+    },
+  },
+};
+const config2 = {
+  tools: {
+    rspack: (config) => {
+      console.log('function 1');
+      return config;
+    },
+  },
+};
+const config3 = {
+  tools: {
+    rspack: (config) => {
+      console.log('function 2');
+      return config;
+    },
+  },
+};
+
+const mergedConfig = mergeRsbuildConfig(config1, config2, config3);
+```
+
+In the above example, the merged configuration is in the following format. The array first contains an object `{ someOption: true }`, followed by two functions in the order they were merged.
+
+Each item in the array will be executed in sequence, and the output of the previous function will serve as the input to the next one, ultimately generating an Rspack configuration.
+
+```ts
+const mergedConfig = {
+  tools: {
+    rspack: [
+      {
+        someOption: true,
+      },
+      (config) => {
+        console.log('function 1');
+        return config;
+      },
+      (config) => {
+        console.log('function 2');
+        return config;
+      },
+    ],
+  },
+};
+```
+
+By this way, we can ensure that when merging multiple configuration objects, the same multiple `tools.rspack` fields can all be effective.
+
+In Rsbuild, most options that support function values use this rule, such as `tools.postcss`, `tools.less`, `tools.bundlerChain`, etc.
 
 ## logger
 

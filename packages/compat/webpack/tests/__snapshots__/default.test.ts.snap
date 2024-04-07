@@ -4,6 +4,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
 {
   "cache": {
     "buildDependencies": {
+      "rsbuildConfig": [
+        "/path/to/rsbuild.config.ts",
+      ],
       "tsconfig": [
         "<ROOT>/packages/compat/webpack/tests/tsconfig.json",
       ],
@@ -464,9 +467,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
@@ -527,7 +528,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;
@@ -884,28 +885,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   "name": "Client",
   "optimization": {
     "minimize": true,
-    "minimizer": [
-      TerserPlugin {
-        "options": {
-          "exclude": undefined,
-          "extractComments": true,
-          "include": undefined,
-          "minimizer": {
-            "implementation": [Function],
-            "options": {
-              "format": {
-                "ascii_only": true,
-              },
-              "mangle": {
-                "safari10": true,
-              },
-            },
-          },
-          "parallel": true,
-          "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-        },
-      },
-    ],
     "splitChunks": {
       "cacheGroups": {
         "lib-axios": {
@@ -1052,9 +1031,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
@@ -1115,7 +1092,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;
@@ -1279,10 +1256,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/compiled/node-loader",
-            "options": {
-              "name": [Function],
-            },
+            "loader": "<ROOT>/packages/core/dist/rspack/nodeAddonsLoader",
           },
         ],
       },
@@ -1393,36 +1367,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "name": "Server",
   "optimization": {
     "minimize": true,
-    "minimizer": [
-      TerserPlugin {
-        "options": {
-          "exclude": undefined,
-          "extractComments": true,
-          "include": undefined,
-          "minimizer": {
-            "implementation": [Function],
-            "options": {
-              "format": {
-                "ascii_only": true,
-              },
-              "mangle": {
-                "safari10": true,
-              },
-            },
-          },
-          "parallel": true,
-          "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-        },
-      },
-    ],
     "splitChunks": false,
   },
   "output": {
-    "chunkFilename": "server/[name].js",
-    "filename": "server/[name].js",
+    "chunkFilename": "[name].js",
+    "filename": "[name].js",
     "hashFunction": "xxhash64",
     "libraryTarget": "commonjs2",
-    "path": "<ROOT>/packages/compat/webpack/tests/dist",
+    "path": "<ROOT>/packages/compat/webpack/tests/dist/server",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1754,28 +1706,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "name": "Web Worker",
   "optimization": {
     "minimize": true,
-    "minimizer": [
-      TerserPlugin {
-        "options": {
-          "exclude": undefined,
-          "extractComments": true,
-          "include": undefined,
-          "minimizer": {
-            "implementation": [Function],
-            "options": {
-              "format": {
-                "ascii_only": true,
-              },
-              "mangle": {
-                "safari10": true,
-              },
-            },
-          },
-          "parallel": true,
-          "test": /\\\\\\.\\[cm\\]\\?js\\(\\\\\\?\\.\\*\\)\\?\\$/i,
-        },
-      },
-    ],
     "splitChunks": false,
   },
   "output": {
@@ -1849,7 +1779,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "target": [
     "webworker",
-    "es5",
+    "es2017",
   ],
 }
 `;

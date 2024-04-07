@@ -6,10 +6,15 @@
  */
 import type { StatsError } from '@rsbuild/shared';
 import { formatStatsMessages } from '../formatStats';
-import { createSocketUrl } from './createSocketUrl';
+import { createSocketUrl, parseParams } from './createSocketUrl';
+import { createOverlay, clearOverlay } from './overlay';
+
+const options = parseParams(__resourceQuery);
 
 // Connect to Dev Server
-const socketUrl = createSocketUrl(__resourceQuery);
+const socketUrl = createSocketUrl(options);
+
+const enableOverlay = options.overlay === 'true';
 
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
@@ -18,10 +23,8 @@ let hasCompileErrors = false;
 
 function clearOutdatedErrors() {
   // Clean up outdated compile errors, if any.
-  // eslint-disable-next-line node/no-unsupported-features/node-builtins
   if (typeof console !== 'undefined' && typeof console.clear === 'function') {
     if (hasCompileErrors) {
-      // eslint-disable-next-line node/no-unsupported-features/node-builtins
       console.clear();
     }
   }
@@ -96,6 +99,10 @@ function handleErrors(errors: StatsError[]) {
     for (const error of formatted.errors) {
       console.error(error);
     }
+  }
+
+  if (enableOverlay) {
+    createOverlay(formatted.errors);
   }
 
   // Do not attempt to reload now.
@@ -178,12 +185,16 @@ function onMessage(e: MessageEvent<string>) {
   const message = JSON.parse(e.data);
   switch (message.type) {
     case 'hash':
+      if (enableOverlay) {
+        clearOverlay();
+      }
       handleAvailableHash(message.data);
       break;
     case 'still-ok':
     case 'ok':
       handleSuccess();
       break;
+    case 'static-changed':
     case 'content-changed':
       // Triggered when a file from `contentBase` changed.
       window.location.reload();

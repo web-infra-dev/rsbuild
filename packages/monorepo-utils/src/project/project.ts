@@ -95,12 +95,10 @@ export class Project {
     const pkgJson = this.getMetaData() as INodePackageJson &
       Record<string, string>;
 
-    if (!(sourceField in pkgJson)) {
-      throw new Error(`${this.name} 的 package.json 没有 ${sourceField} 字段`);
-    }
-    const sourceDir = path.normalize(pkgJson[sourceField]);
     // normalize strings
-    const sourceDirs = [sourceDir];
+    const sourceDirs = pkgJson[sourceField]
+      ? [path.normalize(pkgJson[sourceField])]
+      : [];
 
     if (checkExports) {
       /**
@@ -116,6 +114,12 @@ export class Project {
         sourceField,
       );
       sourceDirs.push(...exportsSourceDirs);
+    }
+
+    if (!sourceDirs.length) {
+      throw new Error(
+        `"${sourceField}" field is not found in ${this.name} package.json`,
+      );
     }
 
     return this.#getCommonRootPaths(sourceDirs);

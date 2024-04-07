@@ -12,6 +12,6 @@ export default defineConfig({
     template: './src/index.html',
   },
   tools: {
-    htmlPlugin: {},
+    htmlPlugin: true,
   },
 });

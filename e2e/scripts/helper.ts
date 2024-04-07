@@ -11,7 +11,9 @@ export const providerType = process.env.PROVIDE_TYPE || 'rspack';
 
 process.env.PROVIDE_TYPE = providerType;
 
-export const getProviderTest = (supportType: string[] = ['rspack']) => {
+export const getProviderTest = (
+  supportType: string[] = ['rspack'],
+): typeof test => {
   if (supportType.includes(providerType)) {
     return test;
   }
@@ -20,6 +22,7 @@ export const getProviderTest = (supportType: string[] = ['rspack']) => {
 
   // @ts-expect-error
   testSkip.describe = test.describe.skip;
+  // @ts-expect-error
   return testSkip as typeof test.skip & {
     describe: typeof test.describe.skip;
   };
@@ -70,7 +73,7 @@ export const proxyConsole = (
   const logs: string[] = [];
   const restores: Array<() => void> = [];
 
-  castArray(types).forEach((type) => {
+  for (const type of castArray(types)) {
     const method = console[type];
 
     restores.push(() => {
@@ -80,12 +83,14 @@ export const proxyConsole = (
     console[type] = (log) => {
       logs.push(log);
     };
-  });
+  }
 
   return {
     logs,
     restore: () => {
-      restores.forEach((restore) => restore());
+      for (const restore of restores) {
+        restore();
+      }
     },
   };
 };

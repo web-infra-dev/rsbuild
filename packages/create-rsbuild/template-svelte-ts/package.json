@@ -8,11 +8,11 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "svelte": "^4.2.10"
+    "svelte": "^4.2.12"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
-    "typescript": "^5.3.0"
+    "typescript": "^5.4.2"
   }
 }

@@ -210,31 +210,7 @@ describe('plugin-html', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should add one tags plugin instance', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        source: {
-          entry: {
-            main: './src/main.ts',
-            foo: './src/foo.ts',
-          },
-        },
-        html: {
-          tags: { tag: 'script', attrs: { src: 'jq.js' } },
-          tagsByEntries: {},
-        },
-      },
-    });
-    const config = await rsbuild.unwrapConfig();
-    const plugins = config.plugins?.filter(
-      (p: { name: string }) => p.name === 'HtmlTagsPlugin',
-    );
-    expect(plugins?.length).toBe(1);
-    expect(config).toMatchSnapshot();
-  });
-
-  it('should add tags plugin instances for each entries', async () => {
+  it('should allow to configure html.tags', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
       rsbuildConfig: {
@@ -246,17 +222,10 @@ describe('plugin-html', () => {
         },
         html: {
           tags: [{ tag: 'script', attrs: { src: 'jq.js' } }],
-          tagsByEntries: {
-            foo: [{ tag: 'script', attrs: { src: 'foo.js' } }],
-          },
         },
       },
     });
     const config = await rsbuild.unwrapConfig();
-    const plugins = config.plugins?.filter(
-      (p: { name: string }) => p.name === 'HtmlTagsPlugin',
-    );
-    expect(plugins?.length).toBe(2);
     expect(config).toMatchSnapshot();
   });
 

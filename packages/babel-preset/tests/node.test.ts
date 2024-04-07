@@ -21,3 +21,16 @@ test('should provide node preset as expected when presetEnv is false', () => {
     }).presets,
   ).toMatchSnapshot();
 });
+
+test('should allow to enable legacy decorator', () => {
+  expect(
+    getBabelConfigForNode({
+      presetEnv: {
+        targets: ['node >= 20'],
+      },
+      pluginDecorators: {
+        version: 'legacy',
+      },
+    }),
+  ).toMatchSnapshot();
+});

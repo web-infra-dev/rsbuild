@@ -69,7 +69,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -96,6 +96,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                     "refresh": true,
                     "runtime": "automatic",
                   },
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -118,7 +119,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -145,6 +146,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                     "refresh": true,
                     "runtime": "automatic",
                   },
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -580,9 +582,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
@@ -620,7 +620,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;

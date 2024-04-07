@@ -56,11 +56,11 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
       return webpackConfigs;
     },
 
-    async getServerAPIs(options) {
-      const { getServerAPIs } = await import('@rsbuild/core/server');
+    async createDevServer(options) {
+      const { createDevServer } = await import('@rsbuild/core/server');
       const { createDevMiddleware } = await import('./core/createCompiler');
       await initRsbuildConfig({ context, pluginManager });
-      return getServerAPIs(
+      return createDevServer(
         { context, pluginManager, rsbuildOptions },
         createDevMiddleware,
         options,
@@ -68,13 +68,13 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async startDevServer(options) {
-      const { startDevServer } = await import('@rsbuild/core/server');
+      const { createDevServer } = await import('@rsbuild/core/server');
       const { createDevMiddleware } = await import('./core/createCompiler');
       await initRsbuildConfig({
         context,
         pluginManager,
       });
-      return startDevServer(
+      const server = await createDevServer(
         {
           context,
           pluginManager,
@@ -83,6 +83,8 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
         createDevMiddleware,
         options,
       );
+
+      return server.listen();
     },
 
     async preview(options?: PreviewServerOptions) {

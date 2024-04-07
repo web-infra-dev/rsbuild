@@ -1,5 +1,9 @@
 # Source Build Plugin
 
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-source-build" />
+
 The Source Build plugin is used in monorepo development scenarios. It allows referencing source code from other subdirectories within the current project and performs the build and hot updates.
 
 ## Use Cases
@@ -84,7 +88,7 @@ export default {
 
 ### Configuring Sub-projects
 
-When the Source Build plugin is registed, the Rsbuild will prioritize reading the file specified in the `source` field of the sub-project during the build process. Therefore, you need to configure the `source` field in the package.json file of the sub-project and point it to the source code file.
+When the Source Build plugin is registered, the Rsbuild will prioritize reading the file specified in the `source` field of the sub-project during the build process. Therefore, you need to configure the `source` field in the package.json file of the sub-project and point it to the source code file.
 
 For example, in the following example, when the lib package is referenced, the `./src/index.ts` file will be read for building:
 

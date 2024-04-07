@@ -9,7 +9,7 @@
 | Rspack 打包     | 默认使用 Rspack 作为打包工具                                     | -                                                                                                                          |
 | SWC 编译        | 默认通过 SWC 对 JavaScript 和 TypeScript 代码进行转译和压缩      | -                                                                                                                          |
 | TS 编译         | 默认通过 SWC 编译 TS 文件                                        | <ul><li>[TypeScript 转译](/guide/basic/typescript#typescript-转译)</li></ul>                                               |
-| JS 压缩         | 默认在生产环境构建时开启压缩                                     | <ul><li>[output.disableMinimize](/config/output/disable-minimize)</li></ul>                                                |
+| 代码压缩        | 默认在生产环境构建时开启代码压缩                                 | <ul><li>[output.minify](/config/output/minify)</li></ul>                                                                   |
 | Polyfill 注入   | 默认会注入 core-js 等 Polyfill                                   | <ul><li>[浏览器兼容性](/guide/advanced/browser-compatibility)</li><li>[output.polyfill](/config/output/polyfill)</li></ul> |
 | SourceMap 生成  | 默认在开发环境生成 SourceMap                                     | <ul><li>[output.sourceMap](/config/output/source-map)</li></ul>                                                            |
 | 文件别名        | 可选功能，通过 alias 设置文件别名                                | <ul><li>[路径别名](/guide/advanced/alias)</li><li>[source.alias](/config/source/alias)</li></ul>                           |
@@ -90,7 +90,7 @@
 | 产物自动拆包        | Rsbuild 中内置了多种拆包策略，自动将代码包拆分为体积适中的文件 | <ul><li>[拆包最佳实践](/guide/optimization/split-chunk)</li><li>[performance.chunkSplit](/config/performance/chunk-split)</li></ul> |
 | 展示产物体积        | 在生产环境构建后，默认展示所有静态资源的体积信息               | <ul><li>[performance.printFileSize](/config/performance/print-file-size)</li></ul>                                                  |
 | 分析产物体积        | 可选功能，通过 Bundle Analyzer 分析产物体积                    | <ul><li>[performance.bundleAnalyze](/config/performance/bundle-analyze)</li></ul>                                                   |
-| 移除 console        | 可选功能，移除代码中的 `console.xx`                            | <ul><li>[performance.removeConsole](/config/performance/remove-console)</li></ul>                                                   |
+| 移除 console        | 可选功能，移除代码中的 `console.[methodName]`                  | <ul><li>[performance.removeConsole](/config/performance/remove-console)</li></ul>                                                   |
 | 优化 moment.js 体积 | 可选功能，移除 moment.js 多余的 locale 文件                    | <ul><li>[performance.removeMomentLocale](/config/performance/remove-moment-locale)</li></ul>                                        |
 | 组件库按需引入      | 可选功能，按需引入组件库的代码和样式                           | <ul><li>[source.transformImport](/config/source/transform-import)</li></ul>                                                         |
 | 图片压缩            | 可选功能，对引用的图片资源进行压缩处理                         | <ul><li>[Image Compress 插件](/plugins/list/plugin-image-compress)</li></ul>                                                        |

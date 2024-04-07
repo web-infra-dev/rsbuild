@@ -3,18 +3,18 @@
 - **Type:** `'head' | 'body' | boolean | Function`
 - **Default:** `'head'`
 
-Set the inject position of the `<script>` tag.
+Set the inject position of the \<script\> tag.
 
 Can be set to the following values:
 
-- `'head'`: The script tag will be inject inside the head tag.
-- `'body'`: The script tag is inject at the end of the body tag.
-- `true`: The result depends on the scriptLoading config of `html-webpack-plugin`.
-- `false`: script tags will not be injected.
+- `'head'`: The \<script\> tag will be inject inside the \<head\> tag.
+- `'body'`: The \<script\> tag is inject at the end of the \<body\> tag.
+- `true`: Automatic judgement based on the [html.scriptLoading](/config/html/script-loading), if set to 'blocking', it will inject into the \<body\> tag, otherwise it will inject into the \<head\> tag.
+- `false`: \<script\> tags will not be injected.
 
 ## Default inject position
 
-The script tag is inside the head tag by default:
+The \<script\> tag is inside the head tag by default:
 
 ```html
 <html>
@@ -32,7 +32,7 @@ The script tag is inside the head tag by default:
 
 ## Inject into body
 
-Add the following config to inject script into the body tag:
+Add the following config to inject \<script\> into the \<body\> tag:
 
 ```js
 export default {

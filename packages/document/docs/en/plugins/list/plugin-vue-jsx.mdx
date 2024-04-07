@@ -1,5 +1,9 @@
 # Vue JSX Plugin
 
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-vue-jsx" />
+
 The Vue plugin provides support for Vue 3 JSX / TSX syntax. The plugin internally integrates [@vue/babel-plugin-jsx](https://github.com/vuejs/babel-plugin-jsx).
 
 ## Quick Start
@@ -66,11 +70,11 @@ Options passed to `@vue/babel-plugin-jsx`, please refer to the [@vue/babel-plugi
 
 ```ts
 type VueJSXPluginOptions = {
-  /** transform `on: { click: xx }` to `onClick: xxx` */
+  /** transform `on: { click: someCallback }` to `onClick: someCallback` */
   transformOn?: boolean;
   /** enable optimization or not. */
   optimize?: boolean;
-  /** merge static and dynamic class / style attributes / onXXX handlers */
+  /** merge static and dynamic class / style attributes / onSomething handlers */
   mergeProps?: boolean;
   /** configuring custom elements */
   isCustomElement?: (tag: string) => boolean;

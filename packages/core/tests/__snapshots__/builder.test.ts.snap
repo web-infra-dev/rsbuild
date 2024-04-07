@@ -52,7 +52,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -74,6 +74,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -96,7 +97,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.32",
+                "coreJs": "3.36",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -118,6 +119,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "transform": {
                   "decoratorMetadata": true,
                   "legacyDecorator": true,
+                  "useDefineForClassFields": false,
                 },
               },
               "sourceMaps": true,
@@ -542,9 +544,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     HtmlBasicPlugin {
       "name": "HtmlBasicPlugin",
       "options": {
-        "info": {
-          "index": {},
-        },
+        "index": {},
       },
     },
     DefinePlugin {
@@ -572,7 +572,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   },
   "target": [
     "web",
-    "es5",
+    "es2017",
   ],
 }
 `;

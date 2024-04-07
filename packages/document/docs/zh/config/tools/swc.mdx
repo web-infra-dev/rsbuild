@@ -1,0 +1,123 @@
+# tools.swc
+
+- **类型：** `Object | Function`
+- **版本：** `>= 0.4.11`
+- **默认值：**
+
+```js
+const defaultOptions = {
+  jsc: {
+    externalHelpers: true,
+    parser: {
+      tsx: true,
+      syntax: 'typescript',
+      decorators: true,
+    },
+    preserveAllComments: true,
+  },
+  isModule: 'unknown',
+  // ...some other conditional options
+};
+```
+
+通过 `tools.swc` 可以设置 [builtin:swc-loader](https://rspack.dev/guide/builtin-swc-loader) 的选项。
+
+:::tip
+Rsbuild 默认使用 `builtin:swc-loader` 来转换 JavaScript 代码，它是 [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader) 的 Rust 版本，选项与 JS 版本的 swc-loader 保持对齐。
+:::
+
+## Object 类型
+
+`tools.swc` 可以配置为一个对象，这个对象将会和内置的 `builtin:swc-loader` 选项进行深层合并。
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        externalHelpers: false,
+      },
+    },
+  },
+};
+```
+
+## Function 类型
+
+`tools.swc` 也可以配置为一个函数，这个函数接收一个参数，即内置的 `builtin:swc-loader` 选项，你可以对这个对象进行修改，然后返回一份新的配置。比如：
+
+```js
+export default {
+  tools: {
+    swc: (config) => {
+      config.jsc ||= {};
+      config.jsc.externalHelpers = false;
+      return config;
+    },
+  },
+};
+```
+
+:::tip
+`tools.swc` 函数返回的对象会直接作为最终使用的 `builtin:swc-loader` 选项，不会再与内置的 `builtin:swc-loader` 选项进行合并。
+:::
+
+## 示例
+
+### 注册 SWC 插件
+
+`tools.swc` 可以用于注册 SWC 的 Wasm 插件，比如注册 `@swc/plugin-styled-jsx`：
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-styled-jsx', {}]],
+        },
+      },
+    },
+  },
+};
+```
+
+注意，目前 SWC 的 Wasm 插件不向后兼容，SWC 插件和 Rspack 依赖的 `@swc/core` 的版本存在一定的绑定关系。因此，你需要选择和当前 `@swc/core` 版本匹配的 SWC 插件，才能使 SWC 正常执行。
+
+更多信息可参考 [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core)。
+
+### 启用 emotion 支持
+
+启用 `builtin:swc-loader` 对 emotion 支持的示例：
+
+```js
+export default {
+  tools: {
+    swc: {
+      rspackExperiments: {
+        emotion: true,
+      },
+    },
+  },
+};
+```
+
+更多选项可参考 [Rspack - rspackExperiments.emotion](https://rspack.dev/guide/builtin-swc-loader#optionsrspackexperimentsemotion)。
+
+### 启用 relay 支持
+
+启用 `builtin:swc-loader` 对 relay 支持的示例：
+
+```js
+export default {
+  tools: {
+    swc: {
+      rspackExperiments: {
+        relay: true,
+      },
+    },
+  },
+};
+```
+
+更多选项可参考 [Rspack - rspackExperiments.relay](https://rspack.dev/guide/builtin-swc-loader#optionsrspackexperimentsrelay)。
