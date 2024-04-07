@@ -1,5 +1,6 @@
 import { rspack } from '@rspack/core';
 import {
+  getDevOptions,
   mergeDevOptions,
   formatRoutes,
   printServerURLs,
@@ -343,6 +344,41 @@ describe('test dev server', () => {
         },
         "hmr": false,
         "writeToDisk": false,
+      }
+    `);
+
+     expect(
+      await getDevOptions({
+        rsbuildConfig: {
+          dev: {
+            // @ts-expect-error
+            proxy: {},
+          },
+          server: {
+            proxy: {
+              '/api': 'http://localhost:3000',
+            }
+          }
+        },
+        port: 8081,
+      }),
+    ).toMatchInlineSnapshot(`
+      {
+        "devServerConfig": {
+          "client": {
+            "host": "",
+            "path": "/rsbuild-hmr",
+            "port": "8080",
+            "protocol": undefined,
+          },
+          "proxy": {
+            "/api": "/http/localhost:3000",
+          },
+          "writeToDisk": false,
+        },
+        "host": "0.0.0.0",
+        "https": false,
+        "port": 8080,
       }
     `);
   });

@@ -8,6 +8,7 @@ import {
   normalizeUrl,
   DEFAULT_PORT,
   DEFAULT_DEV_HOST,
+  pick,
 } from '@rsbuild/shared';
 import type {
   Routes,
@@ -279,7 +280,17 @@ export const getDevOptions = async ({
   return {
     devServerConfig: {
       ...serverConfig,
-      ...devConfig,
+      ...pick(devConfig, [
+        'assetPrefix',
+        'beforeStartUrl',
+        'client',
+        'hmr',
+        'liveReload',
+        'progressBar',
+        'setupMiddlewares',
+        'startUrl',
+        'writeToDisk',
+      ]),
     },
     port,
     host,
