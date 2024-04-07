@@ -232,7 +232,7 @@ export function createOverlay(err: string[]) {
   document.body.appendChild(new ErrorOverlay(err));
 }
 
-export function clearOverlay() {
+function clearOverlay() {
   if (!documentAvailable) {
     return;
   }
@@ -241,3 +241,7 @@ export function clearOverlay() {
   // biome-ignore lint/complexity/noForEach: <explanation>
   document.querySelectorAll<ErrorOverlay>(overlayId).forEach((n) => n.close());
 }
+
+window.createOverlay = createOverlay;
+
+window.clearOverlay = clearOverlay;

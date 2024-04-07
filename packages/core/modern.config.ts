@@ -6,7 +6,7 @@ export default defineConfig({
   buildConfig: [
     {
       ...baseBuildConfig.buildConfig,
-      input: ['src', '!src/client/hmr'],
+      input: ['src', '!src/client/hmr',  '!src/client/overlay'],
     },
     {
       buildType: 'bundle',
@@ -15,6 +15,7 @@ export default defineConfig({
       dts: false,
       input: {
         hmr: 'src/client/hmr/index.ts',
+        overlay: 'src/client/overlay/index.ts',
       },
       outDir: './dist/client',
       autoExtension: true,

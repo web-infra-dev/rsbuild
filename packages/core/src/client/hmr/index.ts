@@ -7,7 +7,6 @@
 import type { StatsError } from '@rsbuild/shared';
 import { formatStatsMessages } from '../formatStats';
 import { createSocketUrl, parseParams } from './createSocketUrl';
-import { createOverlay, clearOverlay } from './overlay';
 
 const options = parseParams(__resourceQuery);
 
@@ -102,7 +101,7 @@ function handleErrors(errors: StatsError[]) {
   }
 
   if (enableOverlay) {
-    createOverlay(formatted.errors);
+    window.createOverlay?.(formatted.errors);
   }
 
   // Do not attempt to reload now.
@@ -186,7 +185,7 @@ function onMessage(e: MessageEvent<string>) {
   switch (message.type) {
     case 'hash':
       if (enableOverlay) {
-        clearOverlay();
+        window.clearOverlay?.();
       }
       handleAvailableHash(message.data);
       break;

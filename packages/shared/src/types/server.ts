@@ -21,7 +21,7 @@ export type MiddlewareCallbacks = {
 
 export type DevMiddlewareOptions = {
   /** To ensure HMR works, the devMiddleware need inject the hmr client path into page when HMR enable. */
-  hmrClientPath?: string;
+  hmrClientPaths?: string[];
   publicPath?: string;
 
   /** The options need by compiler middleware (like webpackMiddleware) */

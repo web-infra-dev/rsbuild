@@ -20,7 +20,13 @@ const noop = () => {
   // noop
 };
 
-function getHMRClientPath(client: DevConfig['client'] = {}) {
+function getHMRClientPaths(client: DevConfig['client'] = {}) {
+  const clientPaths = [];
+
+  if (client.overlay) {
+    clientPaths.push(`${require.resolve('@rsbuild/core/client/overlay')}`);
+  }
+
   // host=localhost&port=8080&path=rsbuild-hmr
   const params = Object.entries(client).reduce((query, [key, value]) => {
     return value ? `${query}&${key}=${value}` : `${query}`;
@@ -31,7 +37,9 @@ function getHMRClientPath(client: DevConfig['client'] = {}) {
   )}?${params}`;
 
   // replace cjs with esm because we want to use the es5 version
-  return clientEntry;
+  clientPaths.push(clientEntry);
+
+  return clientPaths;
 }
 
 /**
@@ -112,8 +120,8 @@ export class CompilerDevMiddleware {
       publicPath: '/',
       stats: false,
       callbacks,
-      hmrClientPath: injectClient
-        ? getHMRClientPath(devOptions.client)
+      hmrClientPaths: injectClient
+        ? getHMRClientPaths(devOptions.client)
         : undefined,
       serverSideRender: true,
       writeToDisk: devOptions.writeToDisk,
