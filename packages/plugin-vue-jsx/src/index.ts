@@ -15,19 +15,26 @@ export function pluginVueJsx(options: PluginVueJsxOptions = {}): RsbuildPlugin {
     name: 'rsbuild:vue-jsx',
 
     setup(api) {
-      api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+      api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev }) => {
+        const rsbuildConfig = api.getNormalizedConfig();
+
         modifyBabelLoaderOptions({
           chain,
           CHAIN_ID,
           modifier: (babelOptions) => {
             babelOptions.plugins ??= [];
-            babelOptions.plugins.push(
-              [
-                require.resolve('@vue/babel-plugin-jsx'),
-                options.vueJsxOptions || {},
-              ],
-              [require.resolve('babel-plugin-vue-jsx-hmr')],
-            );
+            babelOptions.plugins.push([
+              require.resolve('@vue/babel-plugin-jsx'),
+              options.vueJsxOptions || {},
+            ]);
+
+            if (isDev && rsbuildConfig.dev.hmr) {
+              babelOptions.plugins ??= [];
+              babelOptions.plugins.push([
+                require.resolve('babel-plugin-vue-jsx-hmr'),
+              ]);
+            }
+
             return babelOptions;
           },
         });
