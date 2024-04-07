@@ -30,6 +30,7 @@ exports[`plugin-source-build > should allow to set resolve priority 1`] = `
                     "version": "legacy",
                   },
                 ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
               ],
               "presets": [
                 [

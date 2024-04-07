@@ -74,5 +74,9 @@ export type {
   OnBeforeCreateCompilerFn,
   OnCloseDevServerFn,
   OnDevCompileDoneFn,
+  ModifyBundlerChainFn,
+  ModifyRspackConfigFn,
   ModifyRsbuildConfigFn,
+  TransformFn,
+  TransformHandler,
 } from '@rsbuild/shared';

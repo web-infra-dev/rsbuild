@@ -57,6 +57,8 @@ export const getDefaultBabelOptions = (
   config: NormalizedConfig,
   context: RsbuildContext,
 ): BabelLoaderOptions => {
+  const isLegacyDecorators = config.source.decorators.version === 'legacy';
+
   const options: BabelLoaderOptions = {
     babelrc: false,
     configFile: false,
@@ -66,6 +68,11 @@ export const getDefaultBabelOptions = (
         require.resolve('@babel/plugin-proposal-decorators'),
         config.source.decorators,
       ],
+      // If you are using @babel/preset-env and legacy decorators, you must ensure the class elements transform is enabled regardless of your targets, because Babel only supports compiling legacy decorators when also compiling class properties:
+      // see https://babeljs.io/docs/babel-plugin-proposal-decorators#legacy
+      ...(isLegacyDecorators
+        ? [require.resolve('@babel/plugin-transform-class-properties')]
+        : []),
     ],
     presets: [
       // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)

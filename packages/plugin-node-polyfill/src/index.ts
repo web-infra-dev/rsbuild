@@ -16,20 +16,30 @@ export type PluginNodePolyfillOptions = {
    * }
    */
   globals?: Globals;
+
+  /**
+   * Whether to polyfill Node.js builtin modules starting with `node:`.
+   * @see https://nodejs.org/api/esm.html#node-imports
+   * @default true
+   */
+  protocolImports?: boolean;
 };
 
-const getResolveFallback = (nodeLibs: Record<string, any>) =>
-  Object.keys(nodeLibs).reduce<Record<string, string | false>>(
-    (previous, name) => {
-      if (nodeLibs[name]) {
-        previous[name] = nodeLibs[name];
-      } else {
-        previous[name] = false;
-      }
-      return previous;
-    },
-    {},
-  );
+const getResolveFallback = (protocolImports?: boolean) => {
+  const fallback: Record<string, string | false> = {};
+
+  for (const name of Object.keys(nodeLibs)) {
+    const libPath = nodeLibs[name as keyof typeof nodeLibs];
+
+    fallback[name] = libPath ?? false;
+
+    if (protocolImports) {
+      fallback[`node:${name}`] = fallback[name];
+    }
+  }
+
+  return fallback;
+};
 
 const getProvideGlobals = async (globals?: Globals) => {
   const result: Record<string, string | string[]> = {};
@@ -47,6 +57,8 @@ const getProvideGlobals = async (globals?: Globals) => {
 export function pluginNodePolyfill(
   options: PluginNodePolyfillOptions = {},
 ): RsbuildPlugin {
+  const { protocolImports = true } = options;
+
   return {
     name: 'rsbuild:node-polyfill',
 
@@ -58,13 +70,20 @@ export function pluginNodePolyfill(
         }
 
         // module polyfill
-        chain.resolve.fallback.merge(getResolveFallback(nodeLibs));
+        chain.resolve.fallback.merge(getResolveFallback(protocolImports));
 
         const provideGlobals = await getProvideGlobals(options.globals);
         if (Object.keys(provideGlobals).length) {
           chain
             .plugin(CHAIN_ID.PLUGIN.NODE_POLYFILL_PROVIDE)
             .use(bundler.ProvidePlugin, [provideGlobals]);
+        }
+
+        if (protocolImports) {
+          const { ProtocolImportsPlugin } = await import(
+            './ProtocolImportsPlugin'
+          );
+          chain.plugin('protocol-imports').use(ProtocolImportsPlugin);
         }
       });
     },

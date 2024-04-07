@@ -3,9 +3,9 @@
   "name": "@e2e/remove-prop-types",
   "version": "1.0.0",
   "dependencies": {
-    "prop-types": "^15"
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
-    "@types/prop-types": "^15"
+    "@types/prop-types": "^15.7.12"
   }
 }

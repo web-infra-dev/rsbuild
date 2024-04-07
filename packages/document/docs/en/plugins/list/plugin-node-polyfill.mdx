@@ -44,7 +44,7 @@ When you use the above global variables in your code, the corresponding polyfill
 For instance, the following code would inject the `Buffer` polyfill:
 
 ```ts
-const bufferData = Buffer.from('xxxx');
+const bufferData = Buffer.from('abc');
 ```
 
 You can disable this behavior through the `globals` option of the plugin:
@@ -94,7 +94,7 @@ When the above module is referenced in code via import / require syntax, the cor
 ```ts
 import { Buffer } from 'buffer';
 
-const bufferData = Buffer.from('xxxx');
+const bufferData = Buffer.from('abc');
 ```
 
 ### Fallbacks
@@ -116,4 +116,43 @@ Currently there is no polyfill for the above modules on the browser side, so whe
 import fs from 'fs';
 
 console.log(fs); // -> {}
+```
+
+## Options
+
+### globals
+
+Used to specify whether to inject polyfills for global variables.
+
+- **Type:**
+
+```ts
+type Globals = {
+  process?: boolean;
+  Buffer?: boolean;
+};
+```
+
+- **Default:**
+
+```ts
+const defaultGlobals = {
+  Buffer: true,
+  process: true,
+};
+```
+
+### protocolImports
+
+Whether to polyfill Node.js builtin modules starting with `node:`.
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+For example, if you disable `protocolImports`, modules such as `node:path`, `node:http`, etc. will not be polyfilled.
+
+```ts
+pluginNodePolyfill({
+  protocolImports: false,
+});
 ```

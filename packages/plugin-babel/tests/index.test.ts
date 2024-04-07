@@ -52,7 +52,7 @@ describe('plugins/babel', () => {
             config.plugins?.push([
               'babel-plugin-import',
               {
-                libraryName: 'xxx-components',
+                libraryName: 'my-components',
                 libraryDirectory: 'es',
                 style: true,
               },

@@ -154,7 +154,7 @@ function ModifyRsbuildConfig(
   callback: (
     config: RsbuildConfig,
     utils: ModifyRsbuildConfigUtils,
-  ) => PromiseOrNot<RsbuildConfig | void>,
+  ) => MaybePromise<RsbuildConfig | void>,
 ): void;
 ```
 

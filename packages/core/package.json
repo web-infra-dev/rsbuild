@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "0.5.1",
+  "version": "0.5.8",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.dev",
   "bugs": {
@@ -57,16 +57,16 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/core": "0.5.8",
+    "@rspack/core": "0.5.9-canary-8778e17-20240403045016",
     "@swc/helpers": "0.5.3",
     "core-js": "~3.36.0",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
-    "postcss": "^8.4.33"
+    "postcss": "^8.4.38"
   },
   "devDependencies": {
     "@types/node": "16.x",
     "typescript": "^5.4.2",
-    "webpack": "^5.89.0"
+    "webpack": "^5.91.0"
   },
   "engines": {
     "node": ">=16.0.0"

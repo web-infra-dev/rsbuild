@@ -21,8 +21,9 @@ import type {
   NormalizedConfig,
   ModifyRspackConfigUtils,
 } from './config';
-import type { PromiseOrNot } from './utils';
-import type { RspackConfig } from './rspack';
+import type { MaybePromise } from './utils';
+import type { RspackConfig, RspackSourceMap } from './rspack';
+import type { RuleSetCondition } from '@rspack/core';
 import type {
   RuleSetRule,
   WebpackPluginInstance,
@@ -107,7 +108,7 @@ export type RsbuildPlugin = {
    * This function is called once when the plugin is initialized.
    * @param api provides the context info, utility functions and lifecycle hooks.
    */
-  setup: (api: RsbuildPluginAPI) => PromiseOrNot<void>;
+  setup: (api: RsbuildPluginAPI) => MaybePromise<void>;
   /**
    * Declare the names of pre-plugins, which will be executed before the current plugin.
    */
@@ -168,10 +169,73 @@ type PluginHook<T extends (...args: any[]) => any> = (
   options: T | HookDescriptor<T>,
 ) => void;
 
+type TransformResult =
+  | string
+  | {
+      code: string;
+      map?: string | RspackSourceMap | null;
+    };
+
+export type TransformContext = {
+  /**
+   * The code of the module.
+   */
+  code: string;
+  /**
+   * The absolute path of the module, including the query.
+   * @example '/home/user/project/src/index.js?foo=123'
+   */
+  resource: string;
+  /**
+   * The absolute path of the module, without the query.
+   * @example '/home/user/project/src/index.js'
+   */
+  resourcePath: string;
+  /**
+   * The query of the module.
+   * @example '?foo=123'
+   */
+  resourceQuery: string;
+  /**
+   * Add an additional file as the dependency.
+   * The file will be watched and changes to the file will trigger rebuild.
+   * @param file The absolute path of the module
+   */
+  addDependency: (file: string) => void;
+  /**
+   * Emits a file to the build output.
+   * @param name file name of the asset
+   * @param content the source of the asset
+   * @param sourceMap source map of the asset
+   * @param assetInfo additional asset information
+   */
+  emitFile: (
+    name: string,
+    content: string | Buffer,
+    sourceMap?: string,
+    assetInfo?: Record<string, any>,
+  ) => void;
+};
+
+export type TransformHandler = (
+  context: TransformContext,
+) => MaybePromise<TransformResult>;
+
+export type TransformFn = (
+  descriptor: {
+    /**
+     * Include modules that match the test assertion, the same as `rule.test`
+     * @see https://rspack.dev/config/module#ruletest
+     */
+    test?: RuleSetCondition;
+  },
+  handler: TransformHandler,
+) => void;
+
 /**
  * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
-export type RsbuildPluginAPI = {
+export type RsbuildPluginAPI = Readonly<{
   context: Readonly<RsbuildContext>;
   isPluginExists: PluginManager['isPluginExists'];
 
@@ -203,4 +267,17 @@ export type RsbuildPluginAPI = {
   getHTMLPaths: () => Record<string, string>;
   getRsbuildConfig: GetRsbuildConfig;
   getNormalizedConfig: () => NormalizedConfig;
-};
+
+  /**
+   * For plugin communication
+   */
+  expose: <T = any>(id: string | symbol, api: T) => void;
+  useExposed: <T = any>(id: string | symbol) => T | undefined;
+
+  /**
+   * @experimental
+   * This is an experimental and may introduce breaking change in patch releases.
+   * It will be stable in Rsbuild v0.6.0
+   */
+  transform: TransformFn;
+}>;

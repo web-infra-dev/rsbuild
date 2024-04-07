@@ -179,14 +179,12 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 | `RULE.IMAGE`  | 处理 `image` 的规则                                                     |
 | `RULE.MEDIA`  | 处理 `media` 的规则                                                     |
 | `RULE.VUE`    | 处理 `vue` 的规则（依赖 [Vue 插件](/plugins/list/plugin-vue)）          |
-| `RULE.PUG`    | 处理 `pug` 的规则（依赖 [Pub 插件](/plugins/list/plugin-pug)）          |
-| `RULE.TOML`   | 处理 `toml` 的规则（依赖 Toml 插件）                                    |
 | `RULE.SVELTE` | 处理 `svelte` 的规则（依赖 [Svelte 插件](/plugins/list/plugin-svelte)） |
 | `RULE.STYLUS` | 处理 `stylus` 的规则（依赖 [Stylus 插件](/plugins/list/plugin-stylus)） |
 
 ### CHAIN_ID.ONE_OF
 
-通过 `ONE_OF.XXX` 可以匹配到规则数组中的某一类规则。
+通过 `ONE_OF.[ID]` 可以匹配到规则数组中的某一类规则。
 
 | ID                  | 描述                                                |
 | ------------------- | --------------------------------------------------- |
@@ -196,7 +194,7 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 
 ### CHAIN_ID.USE
 
-通过 `USE.XXX` 可以匹配到对应的 loader。
+通过 `USE.[ID]` 可以匹配到对应的 loader。
 
 | ID                | 描述                                                                     |
 | ----------------- | ------------------------------------------------------------------------ |
@@ -210,14 +208,13 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 | `USE.RESOLVE_URL` | 对应 `resolve-url-loader`                                                |
 | `USE.VUE`         | 对应 `vue-loader`（依赖 [Vue 插件](/plugins/list/plugin-vue)）           |
 | `USE.SVGR`        | 对应 `svgr-loader`（依赖 [Svgr 插件](/plugins/list/plugin-svgr)）        |
-| `USE.TOML`        | 对应 `toml-loader`（依赖 Toml 插件）                                     |
 | `USE.BABEL`       | 对应 `babel-loader`（依赖 [Babel 插件](/plugins/list/plugin-babel)）     |
 | `USE.SVELTE`      | 对应 `svelte-loader` （依赖 [Svelte 插件](/plugins/list/plugin-svelte)） |
 | `USE.STYLUS`      | 对应 `stylus-loader` （依赖 [Stylus 插件](/plugins/list/plugin-stylus)） |
 
 ### CHAIN_ID.PLUGIN
 
-通过 `PLUGIN.XXX` 可以匹配到特定的 Rspack 或 Webpack plugin。
+通过 `PLUGIN.[ID]` 可以匹配到特定的 Rspack 或 Webpack plugin。
 
 | ID                          | 描述                                                                        |
 | --------------------------- | --------------------------------------------------------------------------- |
@@ -231,7 +228,7 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 
 ### CHAIN_ID.MINIMIZER
 
-通过 `MINIMIZER.XXX` 可以匹配到对应的压缩工具。
+通过 `MINIMIZER.[ID]` 可以匹配到对应的压缩工具。
 
 | ID              | 描述                               |
 | --------------- | ---------------------------------- |

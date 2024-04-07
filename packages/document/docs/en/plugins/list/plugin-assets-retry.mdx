@@ -30,7 +30,7 @@ export default {
 
 ## Options
 
-You can configure the retry behaviour for assets retry through the options.
+You can configure the retry behavior for assets retry through the options.
 
 - **Type:**
 
@@ -211,6 +211,15 @@ pluginAssetsRetry({
 After adding the above configuration, the runtime code of Assets Retry plugin will be extracted into a separate `assets-retry.[version].js` file and output to the dist directory.
 
 The downside is that `assets-retry.[version].js` itself may fail to load. If this happens, the assets retry will not work. Therefore, we prefer to inline the runtime code into the HTML file.
+
+### minify
+
+- **Type:** `boolean`
+- **Default:** `process.env.NODE_ENV === 'production'`
+
+Configure whether to enable code minification for runtime JavaScript code.
+
+By default, it will be affected by the [output.minify](/config/output/minify) configuration.
 
 ### Notes
 

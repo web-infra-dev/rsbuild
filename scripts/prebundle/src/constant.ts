@@ -338,23 +338,13 @@ export const TASKS: TaskConfig[] = [
         afterBundle(task) {
           writeEmptySchemaUtils(task);
           replaceFileContent(join(task.distPath, 'index.js'), (content) => {
-            // use prebundled file-loader
+            // use prebundle file-loader
             return content.replace(
               '"file-loader"',
               'require.resolve("../file-loader")',
             );
           });
         },
-      },
-    ],
-  },
-  {
-    packageDir: 'plugin-toml',
-    packageName: '@rsbuild/plugin-toml',
-    dependencies: [
-      {
-        name: 'toml-loader',
-        ignoreDts: true,
       },
     ],
   },

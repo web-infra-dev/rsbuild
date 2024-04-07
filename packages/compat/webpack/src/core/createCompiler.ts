@@ -2,14 +2,20 @@ import {
   debug,
   isDev,
   logger,
-  isMultiCompiler,
+  onCompileDone,
   type Stats,
   type Rspack,
   type RspackConfig,
 } from '@rsbuild/shared';
-import { formatStats, getDevMiddleware, type InternalContext } from '@rsbuild/core/provider';
+import {
+  formatStats,
+  getDevMiddleware,
+  type InternalContext,
+} from '@rsbuild/core/provider';
 import type { WebpackConfig } from '../types';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
+// @ts-expect-error
+import WebpackMultiStats from 'webpack/lib/MultiStats';
 
 export async function createCompiler({
   context,
@@ -53,12 +59,7 @@ export async function createCompiler({
 
   let isFirstCompile = true;
 
-  // MultiCompiler does not supports `done.tapPromise`
-  if (isMultiCompiler(compiler)) {
-    compiler.hooks.done.tap('rsbuild:done', done);
-  } else {
-    compiler.hooks.done.tapPromise('rsbuild:done', done);
-  }
+  onCompileDone(compiler, done, WebpackMultiStats);
 
   await context.hooks.onAfterCreateCompiler.call({
     compiler,

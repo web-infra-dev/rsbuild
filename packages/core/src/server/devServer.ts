@@ -6,7 +6,6 @@ import {
   getAddressUrls,
   isMultiCompiler,
   getPublicPathFromCompiler,
-
   type RsbuildDevServer,
   type StartServerResult,
   type CreateDevServerOptions,
@@ -48,7 +47,7 @@ export async function createDevServer<
 
   const rsbuildConfig = options.context.config;
 
-  const { devServerConfig, port, host, https } = await getDevOptions({
+  const { devConfig, serverConfig, port, host, https } = await getDevOptions({
     rsbuildConfig,
     getPortSilently,
   });
@@ -80,7 +79,8 @@ export async function createDevServer<
 
     // create dev middleware instance
     const compilerDevMiddleware = new CompilerDevMiddleware({
-      dev: devServerConfig,
+      dev: devConfig,
+      server: serverConfig,
       publicPaths: publicPaths,
       devMiddleware,
     });
@@ -108,7 +108,7 @@ export async function createDevServer<
         port,
         routes,
         protocol,
-        printUrls: devServerConfig.printUrls,
+        printUrls: serverConfig.printUrls,
       });
     });
   } else {
@@ -117,7 +117,7 @@ export async function createDevServer<
       port,
       routes,
       protocol,
-      printUrls: devServerConfig.printUrls,
+      printUrls: serverConfig.printUrls,
     });
   }
 
@@ -126,7 +126,8 @@ export async function createDevServer<
   const devMiddlewares = await getMiddlewares({
     pwd: options.context.rootPath,
     compileMiddlewareAPI,
-    dev: devServerConfig,
+    dev: devConfig,
+    server: serverConfig,
     output: {
       distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
     },
@@ -147,7 +148,7 @@ export async function createDevServer<
     middlewares,
     listen: async () => {
       const httpServer = await createHttpServer({
-        https: devServerConfig.https,
+        https: serverConfig.https,
         middlewares,
       });
       debug('listen dev server');

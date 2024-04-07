@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/shared",
-  "version": "0.5.1",
+  "version": "0.5.8",
   "description": "The internal shared modules and dependencies of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -126,9 +126,9 @@
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@rspack/core": "0.5.8",
-    "caniuse-lite": "^1.0.30001583",
-    "postcss": "^8.4.33"
+    "@rspack/core": "0.5.9-canary-8778e17-20240403045016",
+    "caniuse-lite": "^1.0.30001600",
+    "postcss": "^8.4.38"
   },
   "devDependencies": {
     "@types/node": "16.x",
@@ -136,7 +136,7 @@
     "mini-css-extract-plugin": "2.8.1",
     "terser": "5.29.2",
     "typescript": "^5.4.2",
-    "webpack": "^5.89.0"
+    "webpack": "^5.91.0"
   },
   "publishConfig": {
     "access": "public",

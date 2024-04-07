@@ -1,14 +1,19 @@
-function logged() {
+function propertyDecorator() {
+  window.aaa = 'hello';
+}
+
+function methodDecorator() {
   window.bbb = 'world';
 }
 
 class C {
-  message = 'hello!';
+  @propertyDecorator
+  message = 'hello world';
 
-  @logged
+  @methodDecorator
   m() {
     return this.message;
   }
 }
 
-window.aaa = new C().m();
+window.ccc = new C().m();

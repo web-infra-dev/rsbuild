@@ -10,8 +10,8 @@ type ParsedSearch = {
  */
 export const HMR_SOCK_PATH = '/rsbuild-hmr';
 
-export function createSocketUrl(resourceQuery: string) {
-  // ?host=localhost&port=8080&path=modern_js_hmr_ws
+export function parseParams(resourceQuery: string) {
+  // ?host=localhost&port=8080&path=rsbuild-hmr
   const searchParams = resourceQuery.substr(1).split('&');
   const options: Record<string, string> = {};
 
@@ -20,6 +20,10 @@ export function createSocketUrl(resourceQuery: string) {
     options[ary[0]] = decodeURIComponent(ary[1]);
   }
 
+  return options;
+}
+
+export function createSocketUrl(options: Record<string, string> = {}) {
   const currentLocation = self.location;
 
   return getSocketUrl(options as ParsedSearch, currentLocation);

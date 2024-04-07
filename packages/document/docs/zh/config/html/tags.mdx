@@ -16,10 +16,14 @@ type HtmlTag = {
   hash?: boolean | string | ((url: string, hash: string) => string);
   /** @default true */
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
-  /** @default true */
+  /**
+   * 定义当前标签相对于原有标签的插入位置。
+   * 设为 `true` 时，将被插入原有标签之后；设为 `false` 时，将被插入原有标签之前。
+   * @default true
+   */
   append?: boolean;
   /**
-   * 仅对于允许包含在 head 中的元素会默认启用
+   * 是否将标签添加到 head 中 (仅对于允许包含在 head 中的元素会默认启用)
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also}
    */
   head?: boolean;
@@ -62,8 +66,6 @@ export default {
 </html>
 ```
 
-标签最终的插入位置由 `head` 和 `append` 选项决定，两个配置相同的元素将被插入到相同区域，并且维持彼此之间的相对位置。
-
 标签中表示外部资源文件路径的字段会受到 `publicPath` 和 `hash` 选项的影响，
 这些字段包括 `script` 标签的 `src` 和 `link` 标签的 `href`。
 
@@ -71,6 +73,30 @@ export default {
 而 `hash` 字段会让文件名后多出一个哈希查询用于控制浏览器缓存，哈希字符串与 HTML 文件产物的哈希值相同。
 
 用户也可以向这两个配置传入函数，以自行控制路径拼接的逻辑。
+
+### 设置标签插入位置
+
+标签最终的插入位置由 `head` 和 `append` 选项决定，当两个元素的 `head` 和 `append` 配置相同时，将被插入到相同区域，并且维持彼此之间的相对位置。
+
+- `append` 用于描述是将该标签添加到原有标签的末尾还是开头
+- `head` 用于描述是否将该标签添加到页面 `<head>` 中
+
+最终在页面中的插入位置如下：
+
+```html
+<html>
+  <head>
+    <!-- tags with `{ head: true, append: false }` here. -->
+    <!-- some other headTags... -->
+    <!-- tags with `{ head: true, append: true }` here. -->
+  </head>
+  <body>
+    <!-- tags with `{ head: false, append: false }` here. -->
+    <!-- some other bodyTags... -->
+    <!-- tags with `{ head: false, append: true }` here. -->
+  </body>
+</html>
+```
 
 ## 函数形式
 
@@ -88,7 +114,7 @@ type HtmlTagHandler = (
 ) => HtmlTag[] | void;
 ```
 
-`html.tags` 也支持传入回调函数，通过在回调中编写逻辑可以任意修改标签列表，常用于修改标签列表或是在插入标签的同时确保其相对位置。
+`html.tags` 也支持传入回调函数，通过在回调中编写逻辑可以任意修改标签列表，常用于**修改标签列表**或是**在插入标签的同时确保其相对位置**。
 
 回调函数接受 tags 列表作为参数，并需要修改或直接返回新的 tags 数组：
 
@@ -96,26 +122,23 @@ type HtmlTagHandler = (
 export default {
   html: {
     tags: [
+      (tags) => [{ tag: 'script', attrs: { src: 'a.js' } }, ...tags],
       (tags) => {
-        tags.splice(0, 1);
+        // 修改 'a.js' 标签
+        const target = tags.find((tag) => tag.attrs?.src === 'a.js');
+        if (target) {
+          target.attrs!.defer = true;
+        }
       },
-      /* ^?
-       *   { tag: 'script', attrs: { src: 'b.js' } },
-       *   ... some other headTags
-       *   { tag: 'script', attrs: { src: 'c.js' } },
-       *   ... some other bodyTags
-       *   { tag: 'script', attrs: { src: 'a.js' }, head: false },
-       */
-      { tag: 'script', attrs: { src: 'a.js' }, head: false },
-      { tag: 'script', attrs: { src: 'b.js' }, append: false },
-      { tag: 'script', attrs: { src: 'c.js' } },
-      (tags) => [...tags, { tag: 'script', attrs: { src: 'd.js' } }],
-      /* ^?
-       *   ... some other headTags
-       *   { tag: 'script', attrs: { src: 'c.js' } },
-       *   ... some other bodyTags
-       *   { tag: 'script', attrs: { src: 'a.js' }, head: false },
-       */
+      (tags) => {
+        // 将 'b.js' 插入到 'a.js' 之后
+        const targetIndex = tags.findIndex((tag) => tag.attrs?.src === 'a.js');
+
+        tags.splice(targetIndex + 1, 0, {
+          tag: 'script',
+          attrs: { src: 'd.js' },
+        });
+      },
     ],
   },
 };
@@ -126,17 +149,12 @@ export default {
 ```html
 <html>
   <head>
-    <!-- tags with `{ head: true, append: false }` here. -->
+    <script src="/a.js" defer></script>
+    <script src="/d.js"></script>
     <!-- some other headTags... -->
-    <!-- tags with `{ head: true, append: true }` here. -->
-    <script src="https://example.com/c.js"></script>
-    <script src="https://example.com/d.js"></script>
   </head>
   <body>
-    <!-- tags with `{ head: false, append: false }` here. -->
-    <!-- some other bodyTags... -->
-    <!-- tags with `{ head: false, append: true }` here. -->
-    <script src="https://example.com/a.js"></script>
+    <!-- some bodyTags... -->
   </body>
 </html>
 ```
@@ -152,10 +170,10 @@ web-app
 ├── src
 │   ├── index.tsx
 │   └── polyfill.ts
-└── modern.config.ts
+└── rsbuild.config.ts
 ```
 
-```ts title="modern.config.ts"
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     assetPrefix: 'https://example.com/',
@@ -187,10 +205,10 @@ web-app
 │   └── index.tsx
 ├── public
 │   └── service-worker.js
-└── modern.config.ts
+└── rsbuild.config.ts
 ```
 
-```ts title="modern.config.ts"
+```ts title="rsbuild.config.ts"
 function report() {
   fetch('https://www.example.com/report');
 }

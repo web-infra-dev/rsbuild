@@ -20,6 +20,7 @@ exports[`plugin-vue2-jsx > should allow to configure jsx babel plugin options 1`
                     "version": "legacy",
                   },
                 ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
               ],
               "presets": [
                 [
@@ -68,6 +69,7 @@ exports[`plugin-vue2-jsx > should apply jsx babel plugin correctly 1`] = `
                     "version": "legacy",
                   },
                 ],
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
               ],
               "presets": [
                 [

@@ -1,6 +1,6 @@
 # 提升构建性能
 
-Rsbuild 默认对构建性能进行了充分优化，但是随着业务场景变复杂、项目代码量变大，你可能会遇到一些构建性能的问题。
+Rsbuild 默认对构建性能进行了充分优化，但是随着使用场景变复杂、项目代码量变大，你可能会遇到一些构建性能的问题。
 
 本文档提供了一些可选的提速策略，**开发者可以根据实际场景选取其中的部分策略**，从而进一步提升构建速度。
 
@@ -10,81 +10,28 @@ Rsbuild 默认对构建性能进行了充分优化，但是随着业务场景变
 
 ## 性能分析
 
-进行性能分析可以帮助你确定项目中的性能瓶颈，从而采取针对性的优化。
+进行构建性能分析可以帮助你确定项目中的性能瓶颈，从而采取针对性的优化。
 
-### Node.js Profiling
-
-通常而言，JS 侧的性能开销会大于 Rust 侧的性能开销，你可以使用 Node.js Profiling 分析 JS 侧的开销。
-
-在项目根目录执行以下命令：
-
-```bash
-# dev
-node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js dev
-
-# build
-node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js build
-```
-
-以上命令执行后会生成一个 cpuprofile 文件，我们可以使用 [speedscope](https://github.com/jlfwong/speedscope) 来可视化查看该文件：
-
-```bash
-# 安装 speedscope
-npm install -g speedscope
-
-# 查看 cpuprofile 内容
-# 请将文件名替换为本地文件的名称
-speedscope CPU.date.000000.00000.0.001.cpuprofile
-```
-
-### Rspack Profiling
-
-Rsbuild 支持使用 `RSPACK_PROFILE` 环境变量来对 Rspack 进行构建性能分析。
-
-在项目根目录执行以下命令：
-
-```bash
-# dev
-RSPACK_PROFILE=ALL rsbuild dev
-
-# build
-RSPACK_PROFILE=ALL rsbuild build
-```
-
-执行该命令后会在当前产物目录下生成一个 `rspack-profile-${timestamp}` 文件夹，该文件夹下会包含 `logging.json`、`trace.json` 和 `jscpuprofile.json` 三个文件：
-
-- `trace.json`：使用 tracing 细粒度地记录了 Rust 侧各个阶段的耗时，可以使用 [ui.perfetto.dev](https://ui.perfetto.dev/) 进行查看。
-- `jscpuprofile.json`：使用 [Node.js inspector](https://nodejs.org/dist/latest-v18.x/docs/api/inspector.html) 细粒度地记录了 JavaScript 侧的各个阶段的耗时，可以使用 [speedscope.app](https://www.speedscope.app/) 进行查看。
-- `logging.json`：包含一些日志信息，粗粒度地记录了构建的各个阶段耗时 (开发环境下暂不支持)。
-
-更多 Rspack 构建性能分析用法可参考 [Rspack - Profiling](https://web-infra-dev.github.io/rspack-dev-guide/profiling/intro.html#profiling)
+请参考 [构建性能分析](/guide/debug/build-profiling) 章节了解更多。
 
 ## 通用优化策略
 
 以下是一些通用的优化策略，对开发环境和生产环境均有提速效果，其中部分策略对包体积也有优化。
 
-### 升级 Node.js 版本
+### 启用 Lightning CSS 插件
 
-通常来说，将 Node.js 更新到最新的 [LTS 版本](https://github.com/nodejs/release#release-schedule)，有助于提升构建性能。
+Lightning CSS 是一个基于 Rust 编写的高性能 CSS 解析、转译和压缩工具。它支持将许多现代的 CSS 特性解析并转化为指定浏览器支持的语法，并提供更好的压缩比例。
 
-尤其是对于 Apple M1/M2 芯片的机型，推荐使用 Node 18 进行构建。
+Rsbuild 提供了 [Lightning CSS 插件](/plugins/list/plugin-lightningcss)，可以使用 [lightningcss](https://lightningcss.dev/) 替代内置的 `postcss-loader` 来编译 CSS，解决 PostCSS 和 autoprefixer 性能开销过大的问题。
 
-Node >= 16 默认提供了 Apple Silicon binaries，因此在 M1/M2 机型上性能会比 Node 14 有大幅度提升。根据我们的测试，**从 Node 14 切换到 Node >= 16 后，编译速度可以提升 100% 以上**。
+对于存在大量 CSS 文件的项目，启用 Lightning CSS 插件可以显著提升整体构建性能。
 
-你可以通过以下步骤来切换到 Node 18：
+```ts title="rsbuild.config.ts"
+import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 
-```bash
-# 安装 Node v18
-nvm install 18
-
-# 切换到 Node 18
-nvm use 18
-
-# 将 Node 18 设置为默认版本
-nvm default 18
-
-# 查看 Node 版本
-node -v
+export default {
+  plugins: [pluginLightningcss()],
+};
 ```
 
 ## 开发环境优化策略
@@ -127,19 +74,19 @@ export default {
 
 这项优化的原理与[「提升 Browserslist 范围」](/guide/optimization/optimize-bundle#adjust-browserslist)类似，区别在于，我们可以为开发环境和生产环境设置不同的 browserslist，从而减少开发环境下的编译开销。
 
-比如，你可以在 `package.json` 中添加以下配置，表示在开发环境下只兼容最新的浏览器，在生产环境下兼容实际需要的浏览器：
+比如，你可以在 `.browserslistrc` 中添加以下配置，表示在开发环境下只兼容最新的浏览器，在生产环境下兼容实际需要的浏览器：
 
-```json
-{
-  "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
-}
+```yaml title=".browserslistrc"
+[production]
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
+
+[development]
+last 1 chrome version
+last 1 firefox version
+last 1 safari version
 ```
 
 注意，这项优化策略会导致开发环境与生产环境的构建产物存在一定差异。

@@ -1,12 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
-import type {
-  DevConfig,
-  NextFunction,
-  RequestHandler,
-  ServerAPIs,
-} from './config/dev';
-import type { ServerConfig } from './config/server';
+import type { NextFunction, RequestHandler, ServerAPIs } from './config/dev';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 import type { Server as ConnectServer } from '../../compiled/connect';
 
@@ -55,17 +49,6 @@ export type CreateDevMiddlewareReturns = {
   compiler: RspackCompiler | RspackMultiCompiler;
 };
 
-export type DevMiddlewaresConfig = Omit<
-  DevConfig & ServerConfig,
-  | 'beforeStartUrl'
-  | 'progressBar'
-  | 'startUrl'
-  | 'https'
-  | 'host'
-  | 'port'
-  | 'strictPort'
->;
-
 export type StartServerResult = {
   urls: string[];
   port: number;
@@ -107,8 +90,8 @@ export type RsbuildDevServer = {
   /** The following APIs will be used when you use a custom server */
 
   /**
-   * The resolved port
-   * 
+   * The resolved port.
+   *
    * By default, Rsbuild Server listens on port `8080` and automatically increments the port number when the port is occupied.
    */
   port: number;
@@ -120,8 +103,8 @@ export type RsbuildDevServer = {
   middlewares: ConnectServer;
   /**
    * Notify Rsbuild Server has started
-   * 
-   * In rsbuild, we will trigger onAfterStartDevServer hook in this stage
+   *
+   * In Rsbuild, we will trigger onAfterStartDevServer hook in this stage
    */
   afterListen: () => Promise<void>;
   /**
@@ -134,4 +117,4 @@ export type RsbuildDevServer = {
    * Close the Rsbuild server.
    */
   close: () => Promise<void>;
-}
+};

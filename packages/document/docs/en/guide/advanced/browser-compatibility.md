@@ -171,7 +171,7 @@ export default {
       // Method Two:
       // Compile the source code of a package in the Monorepo's package directory
       // The matching range of this writing method is more precise, and has less impact on the overall compilation performance
-      path.resolve(__dirname, '../../packages/xxx/src'),
+      path.resolve(__dirname, '../../packages/abc/src'),
     ],
   },
 };

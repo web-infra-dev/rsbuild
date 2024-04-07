@@ -13,7 +13,7 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
-  if (url.hostname === 'httpbin.org') {
+  if (url.hostname === 'example.org') {
     e.respondWith(new Response(JSON.stringify({ answer: 42 })));
   }
 });

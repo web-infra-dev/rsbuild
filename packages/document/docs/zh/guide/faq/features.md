@@ -9,7 +9,7 @@ export default {
   source: {
     transformImport: [
       {
-        libraryName: 'xxx-components',
+        libraryName: 'my-components',
         libraryDirectory: 'es',
         style: true,
       },

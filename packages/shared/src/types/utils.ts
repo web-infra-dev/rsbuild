@@ -6,7 +6,7 @@ export type Falsy = false | null | undefined;
 
 export type ArrayOrNot<T> = T | T[];
 
-export type PromiseOrNot<T> = T | Promise<T>;
+export type MaybePromise<T> = T | Promise<T>;
 
 export type NodeEnv = 'development' | 'production' | 'test';
 

@@ -104,7 +104,7 @@ See details in [plugin-image-compress](/plugins/list/plugin-image-compress).
 
 A great chunk splitting strategy is very important to improve the loading performance of the application. It can make full use of the browser's caching mechanism to reduce the number of requests and improve the loading speed of the application.
 
-A variety of [chunk splitting strategies](/guide/optimization/split-chunk) are built into Rsbuild, which can meet the needs of most applications. You can also customize the chunk splitting config according to your own business scenarios.
+Several [chunk splitting strategies](/guide/optimization/split-chunk) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
 
 For example, split the `axios` library under node_modules into `axios.js`:
 

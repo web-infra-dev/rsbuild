@@ -1,11 +1,6 @@
 import { createCompiler } from './createCompiler';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
-import {
-  logger,
-  getNodeEnv,
-  setNodeEnv,
-  isMultiCompiler,
-} from '@rsbuild/shared';
+import { logger, getNodeEnv, setNodeEnv, onCompileDone } from '@rsbuild/shared';
 import type {
   Stats,
   MultiStats,
@@ -50,12 +45,14 @@ export const build = async (
     await p;
   };
 
-  // MultiCompiler does not supports `done.tapPromise`
-  if (isMultiCompiler(compiler)) {
-    compiler.hooks.done.tap('rsbuild:done', onDone);
-  } else {
-    compiler.hooks.done.tapPromise('rsbuild:done', onDone);
-  }
+  const { MultiStats: MultiStatsStor } = await import('@rspack/core');
+
+  onCompileDone(
+    compiler,
+    onDone,
+    // @ts-expect-error type mismatch
+    MultiStatsStor,
+  );
 
   if (watch) {
     compiler.watch({}, (err) => {

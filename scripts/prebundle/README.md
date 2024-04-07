@@ -30,7 +30,7 @@ pnpm start commander
 ## Add a new dependency
 
 1. Remove the dependency from the `dependencies` of original package.
-2. Add the dependency to the `devDependencies` of `@rsbuild/prebundle`. If this package has a `@types/xxx` package, it also needs to be added. It is recommended to lock the version of dependencies.
+2. Add the dependency to the `devDependencies` of `@rsbuild/prebundle`. If this package has a `@types/package-name` package, it also needs to be added. It is recommended to lock the version of dependencies.
 3. Add the task config to `src/constant.ts`:
 
 ```ts
@@ -165,7 +165,7 @@ dependencies: [
 
 We will not prebundle the following packages because their dependencies are complex or are depended by many community packages:
 
-- @babel/xxx
+- @babel/some-package
 - webpack
 - lodash
 - caniuse-lite

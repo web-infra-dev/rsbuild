@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/document",
-  "version": "0.5.1",
+  "version": "0.5.8",
   "description": "Shared documentation of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -22,14 +22,18 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
+    "@rspress/plugin-rss": "^1.17.1",
     "@types/node": "16.x",
-    "@types/react": "^18.2.47",
-    "@types/react-dom": "^18.2.18",
-    "fast-glob": "^3.3.1",
+    "@types/react": "^18.2.71",
+    "@types/react-dom": "^18.2.22",
+    "fast-glob": "^3.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rsfamily-nav-icon": "^1.0.1",
-    "rspress": "0.0.0-next-20240319081819"
+    "rsbuild-plugin-google-analytics": "1.0.0",
+    "rsbuild-plugin-open-graph": "1.0.0",
+    "rsfamily-nav-icon": "^1.0.2",
+    "rspress": "^1.17.1",
+    "rspress-plugin-font-open-sans": "1.0.0"
   },
   "publishConfig": {
     "access": "public",

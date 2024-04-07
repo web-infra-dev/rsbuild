@@ -11,7 +11,7 @@ export async function startDevServer(fixtures) {
       },
       dev: {
         printUrls: false,
-      }
+      },
     },
   });
 
@@ -19,13 +19,8 @@ export async function startDevServer(fixtures) {
 
   const rsbuildServer = await rsbuild.createDevServer();
 
-  const {
-    middlewares,
-    close,
-    onHTTPUpgrade,
-    afterListen,
-    port,
-  } = rsbuildServer;
+  const { middlewares, close, onHTTPUpgrade, afterListen, port } =
+    rsbuildServer;
 
   app.get('/aaa', (_req, res) => {
     res.end('Hello World!');

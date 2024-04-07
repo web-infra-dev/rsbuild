@@ -39,13 +39,17 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         return;
       }
 
-      chain.plugin(CHAIN_ID.PLUGIN.INLINE_HTML).use(InlineChunkHtmlPlugin, [
-        {
-          styleTests,
-          scriptTests,
-          distPath: pick(config.output.distPath, ['js', 'css']),
-        },
-      ]);
+      chain
+        .plugin(CHAIN_ID.PLUGIN.INLINE_HTML)
+        // ensure nonce can be applied to inlined style tags
+        .before(CHAIN_ID.PLUGIN.HTML_NONCE)
+        .use(InlineChunkHtmlPlugin, [
+          {
+            styleTests,
+            scriptTests,
+            distPath: pick(config.output.distPath, ['js', 'css']),
+          },
+        ]);
     });
   },
 });

@@ -1,16 +1,18 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
 import type {
-  DevMiddlewaresConfig,
   DevMiddlewareAPI,
   NextFunction,
+  ServerConfig,
+  DevConfig,
   DevMiddleware as CustomDevMiddleware,
 } from '@rsbuild/shared';
 import { SocketServer } from './socketServer';
 
 type Options = {
   publicPaths: string[];
-  dev: DevMiddlewaresConfig;
+  dev: DevConfig;
+  server: ServerConfig;
   devMiddleware: CustomDevMiddleware;
 };
 
@@ -18,15 +20,15 @@ const noop = () => {
   // noop
 };
 
-function getHMRClientPath(client: DevMiddlewaresConfig['client']) {
-  const protocol = client?.protocol ? `&protocol=${client.protocol}` : '';
-  const host = client?.host ? `&host=${client.host}` : '';
-  const path = client?.path ? `&path=${client.path}` : '';
-  const port = client?.port ? `&port=${client.port}` : '';
+function getHMRClientPath(client: DevConfig['client'] = {}) {
+  // host=localhost&port=8080&path=rsbuild-hmr
+  const params = Object.entries(client).reduce((query, [key, value]) => {
+    return value ? `${query}&${key}=${value}` : `${query}`;
+  }, '');
 
   const clientEntry = `${require.resolve(
     '@rsbuild/core/client/hmr',
-  )}?${host}${path}${port}${protocol}`;
+  )}?${params}`;
 
   // replace cjs with esm because we want to use the es5 version
   return clientEntry;
@@ -40,7 +42,9 @@ function getHMRClientPath(client: DevMiddlewaresConfig['client']) {
 export class CompilerDevMiddleware {
   public middleware!: DevMiddlewareAPI;
 
-  private devOptions: DevMiddlewaresConfig;
+  private devOptions: DevConfig;
+
+  private serverOptions: ServerConfig;
 
   private devMiddleware: CustomDevMiddleware;
 
@@ -48,8 +52,9 @@ export class CompilerDevMiddleware {
 
   private socketServer: SocketServer;
 
-  constructor({ dev, devMiddleware, publicPaths }: Options) {
+  constructor({ dev, server, devMiddleware, publicPaths }: Options) {
     this.devOptions = dev;
+    this.serverOptions = server;
     this.publicPaths = publicPaths;
 
     // init socket server
@@ -89,7 +94,7 @@ export class CompilerDevMiddleware {
     devMiddleware: CustomDevMiddleware,
     publicPaths: string[],
   ): DevMiddlewareAPI {
-    const { devOptions } = this;
+    const { devOptions, serverOptions } = this;
 
     const callbacks = {
       onInvalid: () => {
@@ -103,7 +108,7 @@ export class CompilerDevMiddleware {
     const injectClient = this.devOptions.hmr || this.devOptions.liveReload;
 
     const middleware = devMiddleware({
-      headers: devOptions.headers,
+      headers: serverOptions.headers,
       publicPath: '/',
       stats: false,
       callbacks,

@@ -19,11 +19,11 @@ export type StartDevServerOptions = {
 export type CreateDevServerOptions = StartDevServerOptions & {
   /**
    * Whether to trigger Rsbuild compilation
-   * 
+   *
    * @default true
    */
   runCompile?: boolean;
-}
+};
 
 export type PreviewServerOptions = {
   getPortSilently?: boolean;
@@ -78,7 +78,9 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   /**
    * It is designed for high-level frameworks that require a custom server
    */
-  createDevServer: (options?: CreateDevServerOptions) => Promise<RsbuildDevServer>;
+  createDevServer: (
+    options?: CreateDevServerOptions,
+  ) => Promise<RsbuildDevServer>;
 
   startDevServer: (
     options?: StartDevServerOptions,

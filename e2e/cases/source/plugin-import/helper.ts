@@ -46,7 +46,7 @@ export function findEntry(
     }
   }
 
-  throw new Error('unreacheable');
+  throw new Error('unreachable');
 }
 
 export function copyPkgToNodeModules() {
