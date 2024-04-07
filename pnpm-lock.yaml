@@ -1444,6 +1444,9 @@ importers:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
         version: link:../plugin-babel
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@vue/babel-plugin-jsx':
         specifier: 1.2.2
         version: 1.2.2(@babel/core@7.24.3)
