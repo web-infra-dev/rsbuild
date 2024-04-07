@@ -34,9 +34,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.2",
     "@rsbuild/core": "workspace:*",
-    "@rspack/core": "0.5.5",
     "@scripts/test-helper": "workspace:*",
-    "@types/babel__core": "^7.20.3",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
