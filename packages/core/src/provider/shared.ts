@@ -175,6 +175,10 @@ function formatErrorMessage(errors: string[]) {
     color.red(isTerserError ? 'Minify error: ' : 'Compile error: '),
   );
 
+  if (!errors.length) {
+    return `${title}\n${color.yellow(`For more details, please setting 'stats.errors: true' `)}`;
+  }
+
   const tip = color.yellow(
     isTerserError
       ? 'Failed to minify with terser, check for syntax errors.'
@@ -241,17 +245,18 @@ export function formatStats(
     warnings: getAllStatsWarnings(statsData),
   });
 
-  if (errors.length) {
+  if (stats.hasErrors()) {
     return {
       message: formatErrorMessage(errors),
       level: 'error',
     };
   }
 
-  if (warnings.length) {
+  if (stats.hasWarnings()) {
     const title = color.bold(color.yellow('Compile Warning: \n'));
+
     return {
-      message: `${title}${`${warnings.join('\n\n')}\n`}`,
+      message: `${title}${`${warnings.join('\n\n') || color.yellow("For more details, please setting 'stats.warnings: true'")}\n`}`,
       level: 'warning',
     };
   }
