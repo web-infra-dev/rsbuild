@@ -13,6 +13,7 @@ import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
+import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 import { pluginSourceBuild } from '@rsbuild/plugin-source-build';
 import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
@@ -40,6 +41,7 @@ export default {
   pluginSolid,
   pluginStylus,
   pluginSvelte,
+  pluginLightningcss,
   pluginSourceBuild,
   pluginStyledComponents,
   pluginTypeCheck,
