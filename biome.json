@@ -3,20 +3,17 @@
   "organizeImports": {
     "enabled": true
   },
+  "vcs": {
+    "enabled": true,
+    "defaultBranch": "main",
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
   "files": {
     "ignore": [
-      ".nx/**/*",
-      "dist/**/*",
-      "dist-*/**/*",
-      "coverage/**/*",
-      "cspell.json",
       "compiled/**/*",
-      "node_modules/**/*",
-      "plugin-swc/tests/fixtures/**/*",
       "*.vue",
-      "*.json5",
-      "*.svelte",
-      "*.css.d.ts"
+      "*.svelte"
     ],
     "ignoreUnknown": true
   },
