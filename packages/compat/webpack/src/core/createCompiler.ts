@@ -9,6 +9,7 @@ import {
 } from '@rsbuild/shared';
 import {
   formatStats,
+  getStatsOptions,
   getDevMiddleware,
   type InternalContext,
 } from '@rsbuild/core/provider';
@@ -38,7 +39,7 @@ export async function createCompiler({
     | Rspack.MultiCompiler;
 
   const done = async (stats: unknown) => {
-    const { message, level } = formatStats(stats as Stats);
+    const { message, level } = formatStats(stats as Stats, getStatsOptions(compiler));
 
     if (level === 'error') {
       logger.error(message);

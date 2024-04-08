@@ -8,7 +8,7 @@ export { getPluginAPI } from './initPlugins';
 export { applyBaseCSSRule, applyCSSModuleRule } from './plugins/css';
 export type { InternalContext } from '../types';
 export { setHTMLPlugin, getHTMLPlugin } from './htmlPluginUtil';
-export { formatStats } from './shared';
+export { formatStats, getStatsOptions } from './shared';
 export { getChainUtils } from './rspackConfig';
 export { applySwcDecoratorConfig } from './plugins/swc';
 export { getDevMiddleware } from './devMiddleware';

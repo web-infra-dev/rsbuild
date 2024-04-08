@@ -2,6 +2,7 @@ import { join } from 'node:path';
 import {
   color,
   getSharedPkgCompiledPath,
+  isMultiCompiler,
   type Stats,
   type MultiStats,
   type SharedCompiledPkgNames,
@@ -11,7 +12,7 @@ import { fse } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 import { awaitableGetter, type Plugins } from '@rsbuild/shared';
 import { formatStatsMessages } from '../client/formatStats';
-import type { StatsCompilation } from '@rspack/core';
+import type { StatsCompilation, StatsValue } from '@rspack/core';
 
 export const applyDefaultPlugins = (plugins: Plugins) =>
   awaitableGetter<RsbuildPlugin>([
@@ -174,6 +175,10 @@ function formatErrorMessage(errors: string[]) {
     color.red(isTerserError ? 'Minify error: ' : 'Compile error: '),
   );
 
+  if (!errors.length) {
+    return `${title}\n${color.yellow(`For more details, please setting 'stats.errors: true' `)}`;
+  }
+
   const tip = color.yellow(
     isTerserError
       ? 'Failed to minify with terser, check for syntax errors.'
@@ -207,28 +212,51 @@ export const getAllStatsWarnings = (statsData: StatsCompilation) => {
   return statsData.warnings;
 };
 
-export function formatStats(stats: Stats | MultiStats) {
-  const statsData = stats.toJson({
-    preset: 'errors-warnings',
-    children: true,
-  });
+export function getStatsOptions(
+  compiler: Parameters<typeof isMultiCompiler>[0],
+): StatsValue | undefined {
+  if (isMultiCompiler(compiler)) {
+    return {
+      children: compiler.compilers.map((compiler) =>
+        compiler.options ? compiler.options.stats : undefined,
+      ),
+    } as unknown as StatsValue;
+  }
+
+  return compiler.options ? compiler.options.stats as StatsValue : undefined;
+}
+
+export function formatStats(
+  stats: Stats | MultiStats,
+  options: StatsValue = {},
+) {
+  const statsData = stats.toJson(
+    typeof options === 'object'
+      ? {
+          preset: 'errors-warnings',
+          children: true,
+          ...options,
+        }
+      : options,
+  );
 
   const { errors, warnings } = formatStatsMessages({
     errors: getAllStatsErrors(statsData),
     warnings: getAllStatsWarnings(statsData),
   });
 
-  if (errors.length) {
+  if (stats.hasErrors()) {
     return {
       message: formatErrorMessage(errors),
       level: 'error',
     };
   }
 
-  if (warnings.length) {
+  if (stats.hasWarnings()) {
     const title = color.bold(color.yellow('Compile Warning: \n'));
+
     return {
-      message: `${title}${`${warnings.join('\n\n')}\n`}`,
+      message: `${title}${`${warnings.join('\n\n') || color.yellow("For more details, please setting 'stats.warnings: true'")}\n`}`,
       level: 'warning',
     };
   }
