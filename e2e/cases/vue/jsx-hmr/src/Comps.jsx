@@ -5,7 +5,7 @@ export const Named = defineComponent(() => {
   const inc = () => count.value++;
 
   return () => (
-    <button class="named" onClick={inc}>
+    <button class="named" onClick={inc} type="button">
       named {count.value}
     </button>
   );
@@ -16,7 +16,7 @@ const NamedSpec = defineComponent(() => {
   const inc = () => count.value++;
 
   return () => (
-    <button class="named-specifier" onClick={inc}>
+    <button class="named-specifier" onClick={inc} type="button">
       named specifier {count.value}
     </button>
   );
@@ -28,7 +28,7 @@ export default defineComponent(() => {
   const inc = () => count.value++;
 
   return () => (
-    <button class="default" onClick={inc}>
+    <button class="default" onClick={inc} type="button">
       default {count.value}
     </button>
   );

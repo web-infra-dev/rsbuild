@@ -5,7 +5,7 @@ export default defineComponent(() => {
   const inc = () => count.value++;
 
   return () => (
-    <button class="src-import" onClick={inc}>
+    <button class="src-import" onClick={inc} type="button">
       src import {count.value}
     </button>
   );

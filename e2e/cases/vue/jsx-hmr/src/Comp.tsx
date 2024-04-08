@@ -5,7 +5,7 @@ const Default = defineComponent(() => {
   const inc = () => count.value++;
 
   return () => (
-    <button class="default-tsx" onClick={inc}>
+    <button class="default-tsx" onClick={inc} type="button">
       default tsx {count.value}
     </button>
   );

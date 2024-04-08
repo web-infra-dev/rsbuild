@@ -266,10 +266,10 @@ rspackOnlyTest('hmr: setup jsx in .vue', async ({ page }) => {
 });
 
 function editFile(filename: string, replacer: (str: string) => string): void {
-  filename = path.join(__dirname, 'src', filename);
-  const content = fs.readFileSync(filename, 'utf-8');
+  const fileName = path.join(__dirname, 'src', filename);
+  const content = fs.readFileSync(fileName, 'utf-8');
   const modified = replacer(content);
-  fs.writeFileSync(filename, modified);
+  fs.writeFileSync(fileName, modified);
 }
 
 const timeout = (n: number) => new Promise((r) => setTimeout(r, n));
@@ -284,8 +284,8 @@ export async function untilUpdated(
     if (actual.indexOf(expected) > -1 || tries === maxTries - 1) {
       expect(actual).toMatch(expected);
       break;
-    } else {
-      await timeout(50);
     }
+
+    await timeout(50);
   }
 }
