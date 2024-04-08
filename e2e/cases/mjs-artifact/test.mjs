@@ -16,6 +16,7 @@ import { pluginStylus } from '@rsbuild/plugin-stylus';
 import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 import { pluginSourceBuild } from '@rsbuild/plugin-source-build';
 import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
+import { pluginUmd } from '@rsbuild/plugin-umd';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginVue } from '@rsbuild/plugin-vue';
 import { pluginVue2 } from '@rsbuild/plugin-vue2';
@@ -44,6 +45,7 @@ export default {
   pluginLightningcss,
   pluginSourceBuild,
   pluginStyledComponents,
+  pluginUmd,
   pluginTypeCheck,
   pluginVue,
   pluginVue2,
