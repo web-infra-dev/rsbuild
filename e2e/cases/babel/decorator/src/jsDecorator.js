@@ -14,8 +14,9 @@ const inject = (arg0, ..._args) => {
   };
 };
 
+export
 @injectable()
-export class FooService {
+class FooService {
   @inject(BarService)
   barService;
 }
