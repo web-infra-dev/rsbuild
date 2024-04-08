@@ -1,4 +1,4 @@
-import { FooService } from './decorator';
+import { FooService } from './jsDecorator';
 
 console.log(FooService);
 
