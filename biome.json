@@ -13,7 +13,8 @@
     "ignore": [
       "compiled/**/*",
       "*.vue",
-      "*.svelte"
+      "*.svelte",
+      "template-lit-*/src/my-element.*"
     ],
     "ignoreUnknown": true
   },
@@ -22,7 +23,13 @@
     "rules": {
       "recommended": true,
       "style": {
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "off",
+        "useFilenamingConvention": {
+          "level": "error",
+          "options": {
+            "filenameCases": ["camelCase", "PascalCase", "export"]
+          }
+        }
       },
       "suspicious": {
         "noExplicitAny": "off",

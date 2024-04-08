@@ -28,7 +28,7 @@ test('should support legacy decorators and source.decorators.version in JavaScri
     rsbuildConfig: {
       source: {
         entry: {
-          index: './src/js-index.js',
+          index: './src/jsIndex.js',
         },
       },
     },
@@ -64,7 +64,7 @@ test('should work together with user custom @babel/preset-env config', async ({
     rsbuildConfig: {
       source: {
         entry: {
-          index: './src/js-index.js',
+          index: './src/jsIndex.js',
         },
       },
     },

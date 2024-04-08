@@ -22,9 +22,6 @@ importers:
       '@changesets/cli':
         specifier: ^2.27.1
         version: 2.27.1
-      '@ls-lint/ls-lint':
-        specifier: ^2.2.3
-        version: 2.2.3
       '@modern-js/module-tools':
         specifier: ^2.48.3
         version: 2.48.3
@@ -3874,13 +3871,6 @@ packages:
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
       react-is: 16.13.1
-    dev: true
-
-  /@ls-lint/ls-lint@2.2.3:
-    resolution: {integrity: sha512-ekM12jNm/7O2I/hsRv9HvYkRdfrHpiV1epVuI2NP+eTIcEgdIdKkKCs9KgQydu/8R5YXTov9aHdOgplmCHLupw==}
-    cpu: [x64, arm64, s390x]
-    os: [darwin, linux, win32]
-    hasBin: true
     dev: true
 
   /@manypkg/find-root@1.1.0:
