@@ -1,3 +1,5 @@
+import { registerOverlay } from '@rsbuild/core/client/hmr'
+
 function stripAnsi(content: string) {
   const pattern = [
     '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
@@ -220,7 +222,7 @@ if (customElements && !customElements.get(overlayId)) {
 
 const documentAvailable = typeof document !== 'undefined';
 
-export function createOverlay(err: string[]) {
+function createOverlay(err: string[]) {
   if (!documentAvailable) {
     console.info(
       '[Rsbuild] Failed to display error overlay as document is not available, you can disable the `dev.client.overlay` option.',
@@ -242,6 +244,4 @@ function clearOverlay() {
   document.querySelectorAll<ErrorOverlay>(overlayId).forEach((n) => n.close());
 }
 
-window.createOverlay = createOverlay;
-
-window.clearOverlay = clearOverlay;
+registerOverlay({ createOverlay, clearOverlay });

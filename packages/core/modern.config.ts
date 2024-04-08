@@ -19,8 +19,6 @@ export default defineConfig({
       },
       outDir: './dist/client',
       autoExtension: true,
-      // bundle shared deps when used in client
-      autoExternal: false,
     },
   ],
 });
