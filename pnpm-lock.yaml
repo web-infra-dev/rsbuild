@@ -1694,8 +1694,8 @@ importers:
         specifier: 4.0.4
         version: 4.0.4(postcss@8.4.38)
       postcss-modules-scope:
-        specifier: 3.1.1
-        version: 3.1.1(postcss@8.4.38)
+        specifier: 3.2.0
+        version: 3.2.0(postcss@8.4.38)
       postcss-modules-values:
         specifier: 4.0.0
         version: 4.0.0(postcss@8.4.38)
@@ -11963,16 +11963,6 @@ packages:
       postcss-selector-parser: 6.0.15
       postcss-value-parser: 4.2.0
 
-  /postcss-modules-scope@3.1.1(postcss@8.4.38):
-    resolution: {integrity: sha512-uZgqzdTleelWjzJY+Fhti6F3C9iF1JR/dODLs/JDefozYcKTBCdD8BIl6nNPbTbcLnGrk56hzwZC2DaGNvYjzA==}
-    engines: {node: ^10 || ^12 || >= 14}
-    peerDependencies:
-      postcss: ^8.1.0
-    dependencies:
-      postcss: 8.4.38
-      postcss-selector-parser: 6.0.15
-    dev: true
-
   /postcss-modules-scope@3.2.0(postcss@8.4.38):
     resolution: {integrity: sha512-oq+g1ssrsZOsx9M96c5w8laRmvEu9C3adDSjI8oTcbfkrTE8hx/zfyobUoWIxaKPO8bt6S62kxpw5GqypEw1QQ==}
     engines: {node: ^10 || ^12 || >= 14}
@@ -12002,7 +11992,7 @@ packages:
       postcss: 8.4.38
       postcss-modules-extract-imports: 3.0.0(postcss@8.4.38)
       postcss-modules-local-by-default: 4.0.4(postcss@8.4.38)
-      postcss-modules-scope: 3.1.1(postcss@8.4.38)
+      postcss-modules-scope: 3.2.0(postcss@8.4.38)
       postcss-modules-values: 4.0.0(postcss@8.4.38)
       string-hash: 1.1.3
     dev: true
