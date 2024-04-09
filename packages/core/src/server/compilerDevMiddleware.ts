@@ -112,6 +112,7 @@ export class CompilerDevMiddleware {
       publicPath: '/',
       stats: false,
       callbacks,
+      etag: 'weak',
       hmrClientPath: injectClient
         ? getHMRClientPath(devOptions.client)
         : undefined,
