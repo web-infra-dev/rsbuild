@@ -26,6 +26,10 @@
       "types": "./dist/client/hmr/index.d.ts",
       "default": "./dist/client/hmr.mjs"
     },
+    "./client/overlay": {
+      "types": "./dist/client/overlay.d.ts",
+      "default": "./dist/client/overlay.mjs"
+    },
     "./plugins/*": {
       "types": "./dist/plugins/*.d.ts",
       "default": "./dist/plugins/*.js"

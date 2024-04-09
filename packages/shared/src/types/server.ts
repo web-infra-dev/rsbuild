@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
-import type { NextFunction, RequestHandler, ServerAPIs } from './config/dev';
+import type { NextFunction, RequestHandler, ServerAPIs, DevConfig } from './config/dev';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 import type { Server as ConnectServer } from '../../compiled/connect';
 
@@ -21,7 +21,8 @@ export type MiddlewareCallbacks = {
 
 export type DevMiddlewareOptions = {
   /** To ensure HMR works, the devMiddleware need inject the hmr client path into page when HMR enable. */
-  hmrClientPath?: string;
+  hmrClientPaths?: string[];
+  RSBUILD_HMR_OPTIONS: DevConfig['client'];
   publicPath?: string;
 
   /** The options need by compiler middleware (like webpackMiddleware) */

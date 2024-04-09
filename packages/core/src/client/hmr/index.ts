@@ -6,15 +6,14 @@
  */
 import type { StatsError } from '@rsbuild/shared';
 import { formatStatsMessages } from '../formatStats';
-import { createSocketUrl, parseParams } from './createSocketUrl';
-import { createOverlay, clearOverlay } from './overlay';
+import { createSocketUrl } from './createSocketUrl';
 
-const options = parseParams(__resourceQuery);
+const options = RSBUILD_HMR_OPTIONS;
 
 // Connect to Dev Server
 const socketUrl = createSocketUrl(options);
 
-const enableOverlay = options.overlay === 'true';
+const enableOverlay = !!options.overlay;
 
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
@@ -28,6 +27,17 @@ function clearOutdatedErrors() {
       console.clear();
     }
   }
+}
+
+let createOverlay: undefined | ((err: string[]) => void);
+let clearOverlay: undefined | (() => void);   
+
+export const registerOverlay = (options: {
+  createOverlay: ((err: string[]) => void);
+  clearOverlay: (() => void)
+}) => {
+  createOverlay = options.createOverlay;
+  clearOverlay = options.clearOverlay;
 }
 
 // Successful compilation.
@@ -102,7 +112,7 @@ function handleErrors(errors: StatsError[]) {
   }
 
   if (enableOverlay) {
-    createOverlay(formatted.errors);
+    createOverlay?.(formatted.errors);
   }
 
   // Do not attempt to reload now.
@@ -186,7 +196,7 @@ function onMessage(e: MessageEvent<string>) {
   switch (message.type) {
     case 'hash':
       if (enableOverlay) {
-        clearOverlay();
+        clearOverlay?.();
       }
       handleAvailableHash(message.data);
       break;

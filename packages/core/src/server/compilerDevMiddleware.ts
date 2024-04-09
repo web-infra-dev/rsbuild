@@ -20,18 +20,22 @@ const noop = () => {
   // noop
 };
 
-function getHMRClientPath(client: DevConfig['client'] = {}) {
-  // host=localhost&port=3000&path=rsbuild-hmr
-  const params = Object.entries(client).reduce((query, [key, value]) => {
-    return value ? `${query}&${key}=${value}` : `${query}`;
-  }, '');
+function getHMRClientPaths(client: DevConfig['client'] = {}) {
+  const clientPaths = [];
 
-  const clientEntry = `${require.resolve(
-    '@rsbuild/core/client/hmr',
-  )}?${params}`;
+  if (client.overlay) {
+    clientPaths.push(`${require.resolve('@rsbuild/core/client/overlay')}`);
+  }
+
+  const clientEntry = require.resolve('@rsbuild/core/client/hmr');
 
   // replace cjs with esm because we want to use the es5 version
-  return clientEntry;
+  clientPaths.push(clientEntry);
+
+  return {
+    clientPaths,
+    RSBUILD_HMR_OPTIONS: client,
+  };
 }
 
 /**
@@ -107,14 +111,17 @@ export class CompilerDevMiddleware {
 
     const injectClient = this.devOptions.hmr || this.devOptions.liveReload;
 
+    const { clientPaths, RSBUILD_HMR_OPTIONS } = injectClient
+      ? getHMRClientPaths(devOptions.client)
+      : { clientPaths: [], RSBUILD_HMR_OPTIONS: {} };
+
     const middleware = devMiddleware({
       headers: serverOptions.headers,
       publicPath: '/',
       stats: false,
       callbacks,
-      hmrClientPath: injectClient
-        ? getHMRClientPath(devOptions.client)
-        : undefined,
+      hmrClientPaths: clientPaths,
+      RSBUILD_HMR_OPTIONS,
       serverSideRender: true,
       writeToDisk: devOptions.writeToDisk,
     });
