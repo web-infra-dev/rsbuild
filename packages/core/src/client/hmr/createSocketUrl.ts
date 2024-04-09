@@ -11,7 +11,7 @@ type ParsedSearch = {
 export const HMR_SOCK_PATH = '/rsbuild-hmr';
 
 export function parseParams(resourceQuery: string) {
-  // ?host=localhost&port=8080&path=rsbuild-hmr
+  // ?host=localhost&port=3000&path=rsbuild-hmr
   const searchParams = resourceQuery.substr(1).split('&');
   const options: Record<string, string> = {};
 

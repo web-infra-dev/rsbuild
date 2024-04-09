@@ -223,8 +223,8 @@ try {
 After successfully starting Dev Server, you can see the following logs:
 
 ```bash
-  > Local:    http://localhost:8080
-  > Network:  http://192.168.0.1:8080
+  > Local:    http://localhost:3000
+  > Network:  http://192.168.0.1:3000
 ```
 
 `startDevServer` returns the following parameters:
@@ -235,8 +235,8 @@ After successfully starting Dev Server, you can see the following logs:
 
 ```ts
 const { urls, port, server } = await rsbuild.startDevServer();
-console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
-console.log(port); // 8080
+console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
+console.log(port); // 3000
 
 // Close the dev server
 await server.close();
@@ -289,7 +289,7 @@ type RsbuildDevServer = {
   /**
    * The resolved port
    *
-   * By default, Rsbuild Server listens on port `8080` and automatically increments the port number when the port is occupied.
+   * By default, Rsbuild Server listens on port `3000` and automatically increments the port number when the port is occupied.
    */
   port: number;
 
@@ -410,8 +410,8 @@ try {
 
 ```ts
 const { urls, port, server } = await rsbuild.preview();
-console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
-console.log(port); // 8080
+console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
+console.log(port); // 3000
 
 // Close the server
 await server.close();
