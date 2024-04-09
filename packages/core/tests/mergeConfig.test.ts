@@ -165,7 +165,7 @@ describe('mergeRsbuildConfig', () => {
       mergeRsbuildConfig(
         {
           dev: {
-            startUrl: ['http://localhost:8080'],
+            startUrl: ['http://localhost:3000'],
           },
         },
         {

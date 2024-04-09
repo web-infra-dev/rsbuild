@@ -38,11 +38,11 @@ const defaultConfig = {
 
 ## Configure WebSocket URL
 
-By default, when you start the dev server and visit the `http://localhost:8080/`, a WebSocket request is made to `ws://localhost:8080/rsbuild-hmr`, establishing a connection between the page and the dev server.
+By default, when you start the dev server and visit the `http://localhost:3000/`, a WebSocket request is made to `ws://localhost:3000/rsbuild-hmr`, establishing a connection between the page and the dev server.
 
 In some development scenarios, you may need to adjust the WebSocket URL to ensure that the WebSocket request can connect correctly.
 
-For example, if you are developing using a proxy tool, you may actually be accessing an online domain. In this case, you can manually configure `dev.client` to point the WebSocket URL to your local dev server. Below is an example where the WebSocket request URL is `ws://127.0.0.1:8080/rsbuild-hmr`:
+For example, if you are developing using a proxy tool, you may actually be accessing an online domain. In this case, you can manually configure `dev.client` to point the WebSocket URL to your local dev server. Below is an example where the WebSocket request URL is `ws://127.0.0.1:3000/rsbuild-hmr`:
 
 ```ts title="rsbuild.config.ts"
 export default {

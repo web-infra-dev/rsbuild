@@ -25,8 +25,8 @@ type PrintUrls =
 默认情况下，当你启动 dev server 或 preview server 后，Rsbuild 会输出以下日志信息：
 
 ```text
-> Local:    http://localhost:8080
-> Network:  http://192.168.0.1:8080
+> Local:    http://localhost:3000
+> Network:  http://192.168.0.1:3000
 ```
 
 ## 自定义日志
@@ -50,8 +50,8 @@ export default {
 输出为：
 
 ```text
-> Local:    http://localhost:8080/base/
-> Network:  http://192.168.0.1:8080/base/
+> Local:    http://localhost:3000/base/
+> Network:  http://192.168.0.1:3000/base/
 ```
 
 ### 完全自定义
@@ -62,8 +62,8 @@ export default {
 export default {
   server: {
     printUrls({ urls, port, protocol }) {
-      console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
-      console.log(port); // 8080
+      console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
+      console.log(port); // 3000
       console.log(protocol); // 'http' or 'https'
     },
   },

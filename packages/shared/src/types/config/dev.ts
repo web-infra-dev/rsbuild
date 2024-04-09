@@ -20,6 +20,15 @@ export type ServerAPIs = {
   ) => void;
 };
 
+export type ClientConfig = {
+  path?: string;
+  port?: string;
+  host?: string;
+  protocol?: 'ws' | 'wss';
+  /** Shows an overlay in the browser when there are compiler errors. */
+  overlay?: boolean;
+};
+
 export interface DevConfig {
   /**
    * Whether to enable Hot Module Replacement.
@@ -48,16 +57,8 @@ export interface DevConfig {
    * Whether to display progress bar during compilation.
    */
   progressBar?: boolean | ProgressBarConfig;
-
-  /** config of hmr client. */
-  client?: {
-    path?: string;
-    port?: string;
-    host?: string;
-    protocol?: 'ws' | 'wss';
-    /** Shows an overlay in the browser when there are compiler errors. */
-    overlay?: boolean;
-  };
+  /** config of Rsbuild client code. */
+  client?: ClientConfig;
   /** Provides the ability to execute a custom function and apply custom middlewares */
   setupMiddlewares?: Array<
     (

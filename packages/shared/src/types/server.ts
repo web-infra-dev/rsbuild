@@ -1,6 +1,11 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
-import type { NextFunction, RequestHandler, ServerAPIs } from './config/dev';
+import type {
+  NextFunction,
+  RequestHandler,
+  ServerAPIs,
+  DevConfig,
+} from './config/dev';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 import type { Server as ConnectServer } from '../../compiled/connect';
 
@@ -21,7 +26,8 @@ export type MiddlewareCallbacks = {
 
 export type DevMiddlewareOptions = {
   /** To ensure HMR works, the devMiddleware need inject the hmr client path into page when HMR enable. */
-  hmrClientPath?: string;
+  clientPaths?: string[];
+  clientConfig: DevConfig['client'];
   publicPath?: string;
 
   etag?: 'weak' | 'strong';
@@ -94,7 +100,7 @@ export type RsbuildDevServer = {
   /**
    * The resolved port.
    *
-   * By default, Rsbuild Server listens on port `8080` and automatically increments the port number when the port is occupied.
+   * By default, Rsbuild Server listens on port `3000` and automatically increments the port number when the port is occupied.
    */
   port: number;
   /**

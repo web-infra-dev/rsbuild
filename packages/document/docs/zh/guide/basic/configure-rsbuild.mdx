@@ -203,13 +203,13 @@ export default defineConfig(async ({ env, command }) => {
 import { defineConfig, mergeRsbuildConfig } from '@rsbuild/core';
 
 const config1 = defineConfig({
-  dev: { port: '8080' },
+  dev: { port: '3000' },
 });
 const config2 = defineConfig({
-  dev: { port: '8081' },
+  dev: { port: '3001' },
 });
 
-// { dev: { port: '8081' }
+// { dev: { port: '3001' }
 export default mergeRsbuildConfig(config1, config2);
 ```
 
