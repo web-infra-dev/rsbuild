@@ -223,7 +223,7 @@ export function getStatsOptions(
     } as unknown as StatsValue;
   }
 
-  return compiler.options ? compiler.options.stats as StatsValue : undefined;
+  return compiler.options ? (compiler.options.stats as StatsValue) : undefined;
 }
 
 export function formatStats(

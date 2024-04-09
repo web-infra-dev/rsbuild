@@ -126,7 +126,7 @@
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@rspack/core": "0.5.9-canary-8778e17-20240403045016",
+    "@rspack/core": "0.5.9-canary-5be4c34-20240403005129",
     "caniuse-lite": "^1.0.30001600",
     "postcss": "^8.4.38"
   },

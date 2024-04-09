@@ -39,7 +39,10 @@ export async function createCompiler({
     | Rspack.MultiCompiler;
 
   const done = async (stats: unknown) => {
-    const { message, level } = formatStats(stats as Stats, getStatsOptions(compiler));
+    const { message, level } = formatStats(
+      stats as Stats,
+      getStatsOptions(compiler),
+    );
 
     if (level === 'error') {
       logger.error(message);
