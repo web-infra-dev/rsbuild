@@ -118,6 +118,9 @@ export class CompilerDevMiddleware {
       clientConfig: devConfig.client,
       writeToDisk: devConfig.writeToDisk,
       serverSideRender: true,
+      // weak is enough in dev
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#weak_validation
+      etag: 'weak',
     });
 
     const warp = async (

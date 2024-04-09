@@ -30,6 +30,8 @@ export type DevMiddlewareOptions = {
   clientConfig: DevConfig['client'];
   publicPath?: string;
 
+  etag?: 'weak' | 'strong';
+
   /** The options need by compiler middleware (like webpackMiddleware) */
   headers?: Record<string, string | string[]>;
   writeToDisk?: boolean | ((filename: string) => boolean);
