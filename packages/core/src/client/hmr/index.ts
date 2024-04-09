@@ -2,7 +2,7 @@
  * This has been adapted from `create-react-app`, authored by Facebook, Inc.
  * see: https://github.com/facebookincubator/create-react-app/tree/master/packages/react-dev-utils
  *
- * Tips: this package will be bundled and running in the browser, do not import from the entry of @rsbuild/core.
+ * Tips: this package will be bundled and running in the browser, do not import any Node.js modules.
  */
 import type { StatsError, ClientConfig } from '@rsbuild/shared';
 import { formatStatsMessages } from '../formatStats';
