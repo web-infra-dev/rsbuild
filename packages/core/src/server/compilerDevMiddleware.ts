@@ -112,6 +112,8 @@ export class CompilerDevMiddleware {
       publicPath: '/',
       stats: false,
       callbacks,
+      // weak is enough in dev
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#weak_validation
       etag: 'weak',
       hmrClientPath: injectClient
         ? getHMRClientPath(devOptions.client)
