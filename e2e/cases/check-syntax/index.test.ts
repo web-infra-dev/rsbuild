@@ -16,11 +16,6 @@ function getCommonBuildConfig(cwd: string): RsbuildConfig {
       },
       overrideBrowserslist: ['ie 11'],
     },
-    tools: {
-      rspack: (config) => {
-        config.target = ['web'];
-      },
-    },
   };
 }
 

@@ -19,6 +19,7 @@ import type { InternalContext } from '../types';
 import type { StatsCompilation } from '@rspack/core';
 import {
   formatStats,
+  getStatsOptions,
   rspackMinVersion,
   isSatisfyRspackVersion,
 } from './shared';
@@ -98,7 +99,7 @@ export async function createCompiler({
       }
     }
 
-    const { message, level } = formatStats(stats);
+    const { message, level } = formatStats(stats, getStatsOptions(compiler));
 
     if (level === 'error') {
       logger.error(message);

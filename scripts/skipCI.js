@@ -1,3 +1,4 @@
+// biome-ignore lint/style/useFilenamingConvention: allow CI
 const { execSync } = require('node:child_process');
 
 const SKIP_FOLDERS = [

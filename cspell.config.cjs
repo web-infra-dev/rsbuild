@@ -14,6 +14,7 @@ module.exports = {
     'dist-*',
     'compiled',
     'coverage',
+    'doc_build',
     'node_modules',
     'pnpm-lock.yaml',
   ],

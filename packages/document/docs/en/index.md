@@ -1,7 +1,7 @@
 ---
 pageType: home
 
-link-rss: 
+link-rss:
   - releases-rss
   - releases-atom
 

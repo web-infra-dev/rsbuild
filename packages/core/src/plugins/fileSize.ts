@@ -106,6 +106,8 @@ async function printFileSizes(
       const origin = stats.toJson({
         all: false,
         assets: true,
+        // TODO: need supported in rspack
+        // @ts-expect-error
         cachedAssets: true,
         groupAssetsByInfo: false,
         groupAssetsByPath: false,

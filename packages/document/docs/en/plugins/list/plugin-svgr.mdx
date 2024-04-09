@@ -6,7 +6,7 @@ import { SourceCode } from 'rspress/theme';
 
 By default, Rsbuild will treat SVG files as static assets. For processing rules, please refer to: [Import Static Assets](/guide/basic/static-assets)。
 
-With SVGR plugin, Rsbuild supports convert SVG to React components via [SVGR](https://react-svgr.com/).
+With SVGR plugin, Rsbuild supports transform SVG to React components via [SVGR](https://react-svgr.com/).
 
 ## Quick Start
 
@@ -32,7 +32,7 @@ export default {
 
 ## Example
 
-After installing the plugin, when import an SVG in a JS file, if the imported path contains the `?react` suffix, Rsbuild will call SVGR to convert the SVG into a React component.
+After installing the plugin, when import an SVG in a JS file, if the imported path contains the `?react` suffix, Rsbuild will call SVGR to transform the SVG into a React component.
 
 ```jsx title="App.jsx"
 import Logo from './logo.svg?react';
@@ -192,7 +192,7 @@ console.log(Logo); // -> React component
 
 #### Limitations
 
-It is recommended to use `?react` to convert SVG to React component instead of using mixed import. Because mixed import has the following limitations:
+It is recommended to use `?react` to transform SVG to React component instead of using mixed import. Because mixed import has the following limitations:
 
 1. Increased bundle size: Mixed import causes a single SVG module to be compiled into two types of code (even if some exports are not used), which will increase the bundle size.
 2. Slow down compiling: Mixed import will cause extra compilation overhead. Even if the ReactComponent export is not used in the code, the SVG file will still be compiled by SVGR. And SVGR is based on Babel, which has a high performance overhead.
@@ -224,20 +224,48 @@ export const App = () => <Logo />;
 - **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)
 - **Default:** `undefined`
 
-Exclude some modules. This will prevent SVGR from transforming the SVG files they import.
+Exclude some SVG files, they will not be transformed by SVGR.
 
-For example, if your project contains `page-a/index.ts` and `page-b/index.ts`, you can add `page-b` to exclude:
+For example, if a project includes `a.svg` and `b.svg`, you can add `b.svg` to exclude:
 
 ```ts
 pluginSvgr({
   svgrOptions: {
     exportType: 'default',
   },
-  exclude: /\/page-b\/index\.ts/,
+  exclude: /b\.svg/,
 });
 ```
 
-- SVGs referenced in page-a will be converted to React components:
+When imported, `a.svg` will be transformed into a React component, while `b.svg` will be treated as a regular static asset:
+
+```ts title="src/index.ts"
+import component from './a.svg';
+import url from './b.svg';
+
+console.log(component); // => React component
+console.log(url); // => resource url
+```
+
+### excludeImporter
+
+- **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **Default:** `undefined`
+
+Exclude some modules, the SVGs imported by these modules will not be transformed by SVGR.
+
+For example, if your project contains `page-a/index.ts` and `page-b/index.ts`, you can add `page-b` to excludeImporter:
+
+```ts
+pluginSvgr({
+  svgrOptions: {
+    exportType: 'default',
+  },
+  excludeImporter: /\/page-b\/index\.ts/,
+});
+```
+
+- SVGs referenced in page-a will be transformed to React components:
 
 ```ts title="page-a/index.ts"
 import Logo from './logo.svg';
@@ -254,7 +282,7 @@ console.log(url); // => Resource url
 ```
 
 :::tip
-The query in the module path has a higher priority than `exclude`. For example, if a module is excluded, adding `?react` can still make it converted by SVGR.
+The query in the module path has a higher priority than `exclude` and `excludeImporter`. For example, if a module is excluded, adding `?react` can still make it transformed by SVGR.
 :::
 
 ---

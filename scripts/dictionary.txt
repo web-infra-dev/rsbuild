@@ -24,6 +24,7 @@ docgen
 envinfo
 estree
 facti
+filenaming
 flac
 flexbox
 flexbugs

@@ -1,5 +1,5 @@
 import { startDevServer } from './server.mjs';
-import { startDevServerPure } from './pure-server.mjs';
+import { startDevServerPure } from './pureServer.mjs';
 
 const isPure = process.argv[2] === 'pure';
 
