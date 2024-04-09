@@ -31,7 +31,7 @@
     "@rsbuild/shared": "workspace:*"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.3",
+    "@babel/core": "^7.24.4",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
     "@scripts/test-helper": "workspace:*",

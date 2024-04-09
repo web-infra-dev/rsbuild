@@ -9,7 +9,7 @@
     "start": "pnpm build && node ./dist/index.js"
   },
   "dependencies": {
-    "@babel/core": "^7.24.3",
+    "@babel/core": "^7.24.4",
     "@types/node": "16.x",
     "@types/ws": "^8.5.10",
     "@vercel/ncc": "0.38.1",
@@ -56,7 +56,7 @@
     "postcss-load-config": "5.0.3",
     "postcss-loader": "8.1.1",
     "postcss-modules-extract-imports": "3.1.0",
-    "postcss-modules-local-by-default": "4.0.4",
+    "postcss-modules-local-by-default": "4.0.5",
     "postcss-modules-scope": "3.2.0",
     "postcss-modules-values": "4.0.0",
     "postcss-pxtorem": "6.1.0",
