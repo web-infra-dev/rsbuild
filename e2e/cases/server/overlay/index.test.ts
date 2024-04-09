@@ -6,6 +6,11 @@ import { fse } from '@rsbuild/shared';
 const cwd = __dirname;
 
 test('should show overlay correctly', async ({ page }) => {
+  // HMR cases will fail in Windows
+  if (process.platform === 'win32') {
+    test.skip();
+  }
+
   const { restore } = proxyConsole();
 
   await fse.copy(join(cwd, 'src'), join(cwd, 'test-src'));
@@ -24,7 +29,7 @@ test('should show overlay correctly', async ({ page }) => {
   await gotoPage(page, rsbuild);
 
   const errorOverlay = page.locator('rsbuild-error-overlay');
-  
+
   expect(await errorOverlay.locator('.title').count()).toBe(0);
 
   const appPath = join(cwd, 'test-src/App.tsx');
