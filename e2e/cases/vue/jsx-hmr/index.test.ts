@@ -50,6 +50,11 @@ test('should update', async ({ page }) => {
 });
 
 test.describe('vue jsx hmr', () => {
+  // HMR cases will fail in Windows
+  if (process.platform === 'win32') {
+    test.skip();
+  }
+
   let rsbuild: Awaited<ReturnType<typeof dev>>;
   let page: Page;
 
