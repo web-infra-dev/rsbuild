@@ -38,9 +38,9 @@
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.6.3",
+    "@biomejs/biome": "1.6.4",
     "@changesets/cli": "^2.27.1",
-    "@modern-js/module-tools": "^2.48.3",
+    "@modern-js/module-tools": "^2.48.4",
     "@rsbuild/tsconfig": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
@@ -52,7 +52,7 @@
     "simple-git-hooks": "^2.11.1",
     "vitest": "^1.4.0"
   },
-  "packageManager": "pnpm@8.15.5",
+  "packageManager": "pnpm@8.15.6",
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=8.7.0"
