@@ -1,5 +1,5 @@
 import type { LoaderContext } from '@rspack/core';
-import type { RspackSourceMap } from '@rsbuild/shared';
+import type { TransformContext, RspackSourceMap } from '@rsbuild/shared';
 
 export default async function transform(
   this: LoaderContext<{ id: string }>,
@@ -14,7 +14,7 @@ export default async function transform(
     return bypass();
   }
 
-  const transform = this._compiler?.__rsbuildTransformer[transformId];
+  const transform = this._compiler?.__rsbuildTransformer?.[transformId];
   if (!transform) {
     return bypass();
   }
@@ -24,6 +24,8 @@ export default async function transform(
     resource: this.resource,
     resourcePath: this.resourcePath,
     resourceQuery: this.resourceQuery,
+    addDependency: this.addDependency,
+    emitFile: this.emitFile as TransformContext['emitFile'],
   });
 
   if (result === null || result === undefined) {

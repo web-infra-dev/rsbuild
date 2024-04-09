@@ -13,7 +13,11 @@ test('should allow plugin to transform code', async () => {
   const indexCss = Object.keys(files).find(
     (file) => file.includes('index') && file.endsWith('.css'),
   );
+  const helloTxt = Object.keys(files).find((file) =>
+    file.includes('hello.txt'),
+  );
 
   expect(files[indexJs!].includes('world')).toBeTruthy();
   expect(files[indexCss!].includes('blue')).toBeTruthy();
+  expect(files[helloTxt!].includes('hello world')).toBeTruthy();
 });

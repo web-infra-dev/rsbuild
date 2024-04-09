@@ -1,7 +1,7 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import ws from '../../compiled/ws';
-import { logger, type Stats, type DevMiddlewaresConfig } from '@rsbuild/shared';
+import { logger, type Stats, type DevConfig } from '@rsbuild/shared';
 import { getAllStatsErrors, getAllStatsWarnings } from '../provider/shared';
 
 interface ExtWebSocket extends ws {
@@ -13,13 +13,13 @@ export class SocketServer {
 
   private readonly sockets: ws[] = [];
 
-  private readonly options: DevMiddlewaresConfig;
+  private readonly options: DevConfig;
 
   private stats?: Stats;
 
   private timer: ReturnType<typeof setInterval> | null = null;
 
-  constructor(options: DevMiddlewaresConfig) {
+  constructor(options: DevConfig) {
     this.options = options;
   }
 

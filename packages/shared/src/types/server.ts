@@ -1,12 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
-import type {
-  DevConfig,
-  NextFunction,
-  RequestHandler,
-  ServerAPIs,
-} from './config/dev';
-import type { ServerConfig } from './config/server';
+import type { NextFunction, RequestHandler, ServerAPIs } from './config/dev';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 import type { Server as ConnectServer } from '../../compiled/connect';
 
@@ -54,17 +48,6 @@ export type CreateDevMiddlewareReturns = {
   devMiddleware: (options: DevMiddlewareOptions) => DevMiddlewareAPI;
   compiler: RspackCompiler | RspackMultiCompiler;
 };
-
-export type DevMiddlewaresConfig = Omit<
-  DevConfig & ServerConfig,
-  | 'beforeStartUrl'
-  | 'progressBar'
-  | 'startUrl'
-  | 'https'
-  | 'host'
-  | 'port'
-  | 'strictPort'
->;
 
 export type StartServerResult = {
   urls: string[];

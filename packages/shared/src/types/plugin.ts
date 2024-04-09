@@ -176,7 +176,10 @@ type TransformResult =
       map?: string | RspackSourceMap | null;
     };
 
-export type TransformHandler = (params: {
+export type TransformContext = {
+  /**
+   * The code of the module.
+   */
   code: string;
   /**
    * The absolute path of the module, including the query.
@@ -193,23 +196,46 @@ export type TransformHandler = (params: {
    * @example '?foo=123'
    */
   resourceQuery: string;
-}) => MaybePromise<TransformResult>;
+  /**
+   * Add an additional file as the dependency.
+   * The file will be watched and changes to the file will trigger rebuild.
+   * @param file The absolute path of the module
+   */
+  addDependency: (file: string) => void;
+  /**
+   * Emits a file to the build output.
+   * @param name file name of the asset
+   * @param content the source of the asset
+   * @param sourceMap source map of the asset
+   * @param assetInfo additional asset information
+   */
+  emitFile: (
+    name: string,
+    content: string | Buffer,
+    sourceMap?: string,
+    assetInfo?: Record<string, any>,
+  ) => void;
+};
+
+export type TransformHandler = (
+  context: TransformContext,
+) => MaybePromise<TransformResult>;
 
 export type TransformFn = (
-  handler: TransformHandler,
-  descriptor?: {
+  descriptor: {
     /**
-     * Include modules that match the test assertion., the same as `rule.test`
+     * Include modules that match the test assertion, the same as `rule.test`
      * @see https://rspack.dev/config/module#ruletest
      */
     test?: RuleSetCondition;
   },
+  handler: TransformHandler,
 ) => void;
 
 /**
  * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
-export type RsbuildPluginAPI = {
+export type RsbuildPluginAPI = Readonly<{
   context: Readonly<RsbuildContext>;
   isPluginExists: PluginManager['isPluginExists'];
 
@@ -248,5 +274,10 @@ export type RsbuildPluginAPI = {
   expose: <T = any>(id: string | symbol, api: T) => void;
   useExposed: <T = any>(id: string | symbol) => T | undefined;
 
+  /**
+   * @experimental
+   * This is an experimental and may introduce breaking change in patch releases.
+   * It will be stable in Rsbuild v0.6.0
+   */
   transform: TransformFn;
-};
+}>;

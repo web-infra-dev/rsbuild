@@ -12,50 +12,7 @@ The strategies in [Bundle Size Optimization](/guide/optimization/optimize-bundle
 
 Performing a performance analysis can help you identify performance bottlenecks in your project, allowing for targeted optimization.
 
-### Node.js Profiling
-
-In general, the performance overhead on the JS side will be greater than that on the Rust side, and you can use Node.js profiling to analyze the overhead on the JS side.
-
-Run the following command in the project root:
-
-```bash
-# dev
-node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js dev
-
-# build
-node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js build
-```
-
-The above commands will generate a cpuprofile file. We can use [speedscope](https://github.com/jlfwong/speedscope) to visualize this file:
-
-```bash
-# Install speedscope
-npm install -g speedscope
-
-# View cpuprofile content
-# Replace the name with the local file name
-speedscope CPU.date.000000.00000.0.001.cpuprofile
-```
-
-### Rspack Profiling
-
-Rsbuild supports the use of the `RSPACK_PROFILE` environment variable for Rspack build performance profile.
-
-```bash
-# dev
-RSPACK_PROFILE=ALL rsbuild dev
-
-# build
-RSPACK_PROFILE=ALL rsbuild build
-```
-
-This command will generate a `rspack-profile-${timestamp}` folder in the dist folder, and it will contain `logging.json`, `trace.json` and `jscpuprofile.json` files:
-
-- `trace.json`: The time spent on each phase of the Rust side is recorded at a granular level using tracing and can be viewed using [ui.perfetto.dev](https://ui.perfetto.dev/).
-- `jscpuprofile.json`: The time spent at each stage on the JavaScript side is recorded at a granular level using [Node.js inspector](https://nodejs.org/dist/latest-v18.x/docs/api/inspector.html) and can be viewed using [speedscope.app](https://www.speedscope.app/).
-- `logging.json`: Includes some logging information that keeps a coarse-grained record of how long each phase of the build took. (Not supported in development environment yet)
-
-For more information about Rspack build performance analysis usage, please refer to [Rspack - Profiling](https://web-infra-dev.github.io/rspack-dev-guide/profiling/intro.html#profiling).
+Please refer to the [Performance Building Analysis](/guide/debug/build-profiling) section for more information.
 
 ## General Optimization Strategy
 
