@@ -157,15 +157,15 @@ test('printServerURLs', () => {
   let message: string | undefined;
 
   message = printServerURLs({
-    port: 8080,
+    port: 3000,
     protocol: 'http',
     urls: [
       {
-        url: 'http://localhost:8080',
+        url: 'http://localhost:3000',
         label: 'local',
       },
       {
-        url: 'http://10.94.62.193:8080/',
+        url: 'http://10.94.62.193:3000/',
         label: 'network',
       },
     ],
@@ -178,21 +178,21 @@ test('printServerURLs', () => {
   });
 
   expect(message!).toMatchInlineSnapshot(`
-    "  > local     http:/localhost:8080/
-      > network   http:/10.94.62.193:8080/
+    "  > local     http:/localhost:3000/
+      > network   http:/10.94.62.193:3000/
     "
   `);
 
   message = printServerURLs({
-    port: 8080,
+    port: 3000,
     protocol: 'http',
     urls: [
       {
-        url: 'http://localhost:8080',
+        url: 'http://localhost:3000',
         label: 'local',
       },
       {
-        url: 'http://10.94.62.193:8080/',
+        url: 'http://10.94.62.193:3000/',
         label: 'network',
       },
     ],
@@ -214,14 +214,14 @@ test('printServerURLs', () => {
 
   expect(message!).toMatchInlineSnapshot(`
     "  > local
-      - index    http:/localhost:8080/
-      - foo      http:/localhost:8080/html/foo
-      - bar      http:/localhost:8080/bar
+      - index    http:/localhost:3000/
+      - foo      http:/localhost:3000/html/foo
+      - bar      http:/localhost:3000/bar
 
       > network
-      - index    http:/10.94.62.193:8080/
-      - foo      http:/10.94.62.193:8080/html/foo
-      - bar      http:/10.94.62.193:8080/bar
+      - index    http:/10.94.62.193:3000/
+      - foo      http:/10.94.62.193:3000/html/foo
+      - bar      http:/10.94.62.193:3000/bar
     "
   `);
 });
@@ -306,14 +306,14 @@ describe('test dev server', () => {
     expect(
       mergeDevOptions({
         rsbuildConfig: {},
-        port: 8080,
+        port: 3000,
       }),
     ).toMatchInlineSnapshot(`
       {
         "client": {
           "host": "",
           "path": "/rsbuild-hmr",
-          "port": "8080",
+          "port": "3000",
           "protocol": undefined,
         },
         "writeToDisk": false,
@@ -331,14 +331,14 @@ describe('test dev server', () => {
             },
           },
         },
-        port: 8081,
+        port: 3001,
       }),
     ).toMatchInlineSnapshot(`
       {
         "client": {
           "host": "",
           "path": "",
-          "port": "8081",
+          "port": "3001",
           "protocol": undefined,
         },
         "hmr": false,

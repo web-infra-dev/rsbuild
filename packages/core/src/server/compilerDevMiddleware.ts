@@ -21,7 +21,7 @@ const noop = () => {
 };
 
 function getHMRClientPath(client: DevConfig['client'] = {}) {
-  // host=localhost&port=8080&path=rsbuild-hmr
+  // host=localhost&port=3000&path=rsbuild-hmr
   const params = Object.entries(client).reduce((query, [key, value]) => {
     return value ? `${query}&${key}=${value}` : `${query}`;
   }, '');

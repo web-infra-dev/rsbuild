@@ -223,8 +223,8 @@ try {
 成功启动 Dev Server 后，可以看到以下日志信息：
 
 ```bash
-  > Local:    http://localhost:8080
-  > Network:  http://192.168.0.1:8080
+  > Local:    http://localhost:3000
+  > Network:  http://192.168.0.1:3000
 ```
 
 `startDevServer` 会返回以下参数：
@@ -235,8 +235,8 @@ try {
 
 ```ts
 const { urls, port, server } = await rsbuild.startDevServer();
-console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
-console.log(port); // 8080
+console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
+console.log(port); // 3000
 
 // 关闭 Dev Server
 await server.close();
@@ -286,7 +286,7 @@ type RsbuildDevServer = {
 
   /** 以下 API 在使用自定义 Server 时会用到 */
 
-  /** 解析后的端口号 (默认情况下，Rsbuild Server 会监听 `8080` 端口，并在端口被占用时自动递增端口号。) */
+  /** 解析后的端口号 (默认情况下，Rsbuild Server 会监听 `3000` 端口，并在端口被占用时自动递增端口号。) */
   port: number;
 
   /** Connect 实例，包含 Rsbuild 内置中间件 */
@@ -402,8 +402,8 @@ try {
 
 ```ts
 const { urls, port, server } = await rsbuild.preview();
-console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
-console.log(port); // 8080
+console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
+console.log(port); // 3000
 
 // 关闭 Server
 await server.close();

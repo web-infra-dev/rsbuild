@@ -92,7 +92,7 @@ export type RsbuildDevServer = {
   /**
    * The resolved port.
    *
-   * By default, Rsbuild Server listens on port `8080` and automatically increments the port number when the port is occupied.
+   * By default, Rsbuild Server listens on port `3000` and automatically increments the port number when the port is occupied.
    */
   port: number;
   /**
