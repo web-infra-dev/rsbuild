@@ -2,13 +2,13 @@
  * This has been adapted from `create-react-app`, authored by Facebook, Inc.
  * see: https://github.com/facebookincubator/create-react-app/tree/master/packages/react-dev-utils
  *
- * Tips: this package will be bundled and running in the browser, do not import from the entry of @rsbuild/core.
+ * Tips: this package will be bundled and running in the browser, do not import any Node.js modules.
  */
-import type { StatsError } from '@rsbuild/shared';
+import type { StatsError, ClientConfig } from '@rsbuild/shared';
 import { formatStatsMessages } from '../formatStats';
 import { createSocketUrl } from './createSocketUrl';
 
-const options = RSBUILD_HMR_OPTIONS;
+const options: ClientConfig = RSBUILD_CLIENT_CONFIG;
 
 // Connect to Dev Server
 const socketUrl = createSocketUrl(options);
@@ -30,15 +30,15 @@ function clearOutdatedErrors() {
 }
 
 let createOverlay: undefined | ((err: string[]) => void);
-let clearOverlay: undefined | (() => void);   
+let clearOverlay: undefined | (() => void);
 
 export const registerOverlay = (options: {
-  createOverlay: ((err: string[]) => void);
-  clearOverlay: (() => void)
+  createOverlay: (err: string[]) => void;
+  clearOverlay: () => void;
 }) => {
   createOverlay = options.createOverlay;
   clearOverlay = options.clearOverlay;
-}
+};
 
 // Successful compilation.
 function handleSuccess() {

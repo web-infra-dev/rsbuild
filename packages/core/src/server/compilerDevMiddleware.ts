@@ -20,22 +20,20 @@ const noop = () => {
   // noop
 };
 
-function getHMRClientPaths(client: DevConfig['client'] = {}) {
-  const clientPaths = [];
+function getClientPaths(devConfig: DevConfig) {
+  const clientPaths: string[] = [];
 
-  if (client.overlay) {
+  if (!devConfig.hmr && !devConfig.liveReload) {
+    return clientPaths;
+  }
+
+  clientPaths.push(require.resolve('@rsbuild/core/client/hmr'));
+
+  if (devConfig.client?.overlay) {
     clientPaths.push(`${require.resolve('@rsbuild/core/client/overlay')}`);
   }
 
-  const clientEntry = require.resolve('@rsbuild/core/client/hmr');
-
-  // replace cjs with esm because we want to use the es5 version
-  clientPaths.push(clientEntry);
-
-  return {
-    clientPaths,
-    RSBUILD_HMR_OPTIONS: client,
-  };
+  return clientPaths;
 }
 
 /**
@@ -46,9 +44,9 @@ function getHMRClientPaths(client: DevConfig['client'] = {}) {
 export class CompilerDevMiddleware {
   public middleware!: DevMiddlewareAPI;
 
-  private devOptions: DevConfig;
+  private devConfig: DevConfig;
 
-  private serverOptions: ServerConfig;
+  private serverConfig: ServerConfig;
 
   private devMiddleware: CustomDevMiddleware;
 
@@ -57,8 +55,8 @@ export class CompilerDevMiddleware {
   private socketServer: SocketServer;
 
   constructor({ dev, server, devMiddleware, publicPaths }: Options) {
-    this.devOptions = dev;
-    this.serverOptions = server;
+    this.devConfig = dev;
+    this.serverConfig = server;
     this.publicPaths = publicPaths;
 
     // init socket server
@@ -98,7 +96,7 @@ export class CompilerDevMiddleware {
     devMiddleware: CustomDevMiddleware,
     publicPaths: string[],
   ): DevMiddlewareAPI {
-    const { devOptions, serverOptions } = this;
+    const { devConfig, serverConfig } = this;
 
     const callbacks = {
       onInvalid: () => {
@@ -109,21 +107,17 @@ export class CompilerDevMiddleware {
       },
     };
 
-    const injectClient = this.devOptions.hmr || this.devOptions.liveReload;
-
-    const { clientPaths, RSBUILD_HMR_OPTIONS } = injectClient
-      ? getHMRClientPaths(devOptions.client)
-      : { clientPaths: [], RSBUILD_HMR_OPTIONS: {} };
+    const clientPaths = getClientPaths(devConfig);
 
     const middleware = devMiddleware({
-      headers: serverOptions.headers,
+      headers: serverConfig.headers,
       publicPath: '/',
       stats: false,
       callbacks,
-      hmrClientPaths: clientPaths,
-      RSBUILD_HMR_OPTIONS,
+      clientPaths: clientPaths,
+      clientConfig: devConfig.client,
+      writeToDisk: devConfig.writeToDisk,
       serverSideRender: true,
-      writeToDisk: devOptions.writeToDisk,
     });
 
     const warp = async (
