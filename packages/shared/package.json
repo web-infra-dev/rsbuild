@@ -127,7 +127,7 @@
   },
   "dependencies": {
     "@rspack/core": "0.6.0",
-    "caniuse-lite": "^1.0.30001600",
+    "caniuse-lite": "^1.0.30001607",
     "postcss": "^8.4.38"
   },
   "devDependencies": {
