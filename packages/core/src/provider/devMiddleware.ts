@@ -10,22 +10,22 @@ import type { Compiler, MultiCompiler } from '@rspack/core';
 
 function applyHMREntry({
   compiler,
-  hmrClientPaths,
-  RSBUILD_HMR_OPTIONS,
+  clientPaths,
+  clientConfig = {},
 }: {
   compiler: Compiler;
-  hmrClientPaths: string[];
-  RSBUILD_HMR_OPTIONS: DevConfig['client'];
+  clientPaths: string[];
+  clientConfig: DevConfig['client'];
 }) {
   if (!isClientCompiler(compiler)) {
     return;
   }
 
   new compiler.webpack.DefinePlugin({
-    RSBUILD_HMR_OPTIONS: JSON.stringify(RSBUILD_HMR_OPTIONS),
+    RSBUILD_CLIENT_CONFIG: JSON.stringify(clientConfig),
   }).apply(compiler);
 
-  for (const clientPath of hmrClientPaths) {
+  for (const clientPath of clientPaths) {
     new compiler.webpack.EntryPlugin(compiler.context, clientPath, {
       name: undefined,
     }).apply(compiler);
@@ -35,15 +35,14 @@ function applyHMREntry({
 export const getDevMiddleware =
   (multiCompiler: Compiler | MultiCompiler): NonNullable<DevMiddleware> =>
   (options) => {
-    const { hmrClientPaths, RSBUILD_HMR_OPTIONS, callbacks, ...restOptions } =
-      options;
+    const { clientPaths, clientConfig, callbacks, ...restOptions } = options;
 
     const setupCompiler = (compiler: Compiler) => {
-      if (hmrClientPaths) {
+      if (clientPaths) {
         applyHMREntry({
           compiler,
-          hmrClientPaths,
-          RSBUILD_HMR_OPTIONS,
+          clientPaths,
+          clientConfig,
         });
       }
       // register hooks for each compilation, update socket stats if recompiled
