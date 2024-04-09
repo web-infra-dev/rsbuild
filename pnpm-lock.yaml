@@ -696,9 +696,6 @@ importers:
 
   packages/core:
     dependencies:
-      '@rsbuild/core':
-        specifier: 'link:'
-        version: 'link:'
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared

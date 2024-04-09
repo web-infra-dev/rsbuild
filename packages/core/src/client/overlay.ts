@@ -1,4 +1,4 @@
-import { registerOverlay } from '@rsbuild/core/client/hmr'
+import { registerOverlay } from './hmr'
 
 function stripAnsi(content: string) {
   const pattern = [

@@ -27,7 +27,7 @@
       "default": "./dist/client/hmr.mjs"
     },
     "./client/overlay": {
-      "types": "./dist/client/overlay/index.d.ts",
+      "types": "./dist/client/overlay.d.ts",
       "default": "./dist/client/overlay.mjs"
     },
     "./plugins/*": {
@@ -60,7 +60,6 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/core": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "@rspack/core": "0.5.9-canary-8778e17-20240403045016",
     "@swc/helpers": "0.5.3",
