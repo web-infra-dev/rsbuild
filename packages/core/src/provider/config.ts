@@ -40,6 +40,9 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   liveReload: true,
   assetPrefix: DEFAULT_ASSET_PREFIX,
   startUrl: false,
+  client: {
+    overlay: true,
+  },
 });
 
 const getDefaultServerConfig = (): NormalizedServerConfig => ({
