@@ -229,6 +229,20 @@ In the Rsbuild project, you can remove the dependency and code related to react-
 
 You can read [Browser Compatibility](/guide/advanced/browser-compatibility) to understand how Rsbuild handles polyfills.
 
+## Reading jsconfig.json
+
+In non-TypeScript projects, CRA supports reading the `paths` field in jsconfig.json as the path alias.
+
+If you want to use this feature in Rsbuild, you can set the [source.tsconfigPath](/config/source/tsconfig-path) option, so that Rsbuild can recognize the `paths` field in jsconfig.json.
+
+```js title="rsbuild.config.mjs"
+export default {
+  source: {
+    tsconfigPath: './jsconfig.json',
+  },
+};
+```
+
 ## CRACO Migration
 
 If your project is using [CRACO](https://craco.js.org) to override CRA configuration, you can refer to the table below for migration:

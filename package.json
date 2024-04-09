@@ -17,7 +17,7 @@
     "check-spell": "npx cspell",
     "dev:doc": "cd packages/document && pnpm run dev",
     "build:doc": "cd packages/document && pnpm run build:doc",
-    "lint": "biome lint . --diagnostic-level=warn && ls-lint && pnpm run check-spell",
+    "lint": "biome lint . --diagnostic-level=warn && pnpm run check-spell",
     "prepare": "pnpm run build && simple-git-hooks",
     "sort-package-json": "npx sort-package-json \"packages/*/package.json\" \"packages/compat/*/package.json\"",
     "test": "pnpm run ut",
@@ -40,7 +40,6 @@
   "devDependencies": {
     "@biomejs/biome": "1.6.3",
     "@changesets/cli": "^2.27.1",
-    "@ls-lint/ls-lint": "^2.2.3",
     "@modern-js/module-tools": "^2.48.3",
     "@rsbuild/tsconfig": "workspace:*",
     "@scripts/test-helper": "workspace:*",

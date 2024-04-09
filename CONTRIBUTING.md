@@ -151,7 +151,7 @@ pnpm e2e:rspack -g vue
 
 ## Linting
 
-To help maintain consistency and readability of the codebase, we use [Biome](https://github.com/biomejs/biome) to lint the codes, [ls-lint](https://github.com/loeffel-io/ls-lint) to lint the directory and filename.
+To help maintain consistency and readability of the codebase, we use [Biome](https://github.com/biomejs/biome) to lint the codes.
 
 You can run the linters by executing the following command:
 

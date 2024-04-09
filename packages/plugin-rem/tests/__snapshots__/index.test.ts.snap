@@ -2,16 +2,19 @@
 
 exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] = `
 {
-  "builtins": {
-    "css": {
-      "modules": {
+  "module": {
+    "generator": {
+      "css/module": {
+        "exportsConvention": "camel-case",
         "exportsOnly": false,
         "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camelCase",
       },
     },
-  },
-  "module": {
+    "parser": {
+      "css/module": {
+        "namedExports": false,
+      },
+    },
     "rules": [
       {
         "oneOf": [
@@ -123,16 +126,19 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
 
 exports[`plugin-rem > should run rem plugin with custom config 1`] = `
 {
-  "builtins": {
-    "css": {
-      "modules": {
+  "module": {
+    "generator": {
+      "css/module": {
+        "exportsConvention": "camel-case",
         "exportsOnly": false,
         "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camelCase",
       },
     },
-  },
-  "module": {
+    "parser": {
+      "css/module": {
+        "namedExports": false,
+      },
+    },
     "rules": [
       {
         "oneOf": [
@@ -269,16 +275,19 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
 
 exports[`plugin-rem > should run rem plugin with default config 1`] = `
 {
-  "builtins": {
-    "css": {
-      "modules": {
+  "module": {
+    "generator": {
+      "css/module": {
+        "exportsConvention": "camel-case",
         "exportsOnly": false,
         "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camelCase",
       },
     },
-  },
-  "module": {
+    "parser": {
+      "css/module": {
+        "namedExports": false,
+      },
+    },
     "rules": [
       {
         "oneOf": [

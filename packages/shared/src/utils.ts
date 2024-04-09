@@ -146,6 +146,12 @@ export const castArray = <T>(arr?: T | T[]): T[] => {
 export const camelCase = (input: string): string =>
   input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
 
+export const kebabCase = (str: string) =>
+  str
+    .replace(/([A-Z])/g, '-$1')
+    .toLowerCase()
+    .replace(/^-/, '');
+
 export const cloneDeep = <T>(value: T): T => deepmerge({}, value);
 
 const DEP_MATCH_TEMPLATE = /[\\/]node_modules[\\/](<SOURCES>)[\\/]/.source;
