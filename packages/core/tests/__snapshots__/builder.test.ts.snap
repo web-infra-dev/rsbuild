@@ -2,15 +2,6 @@
 
 exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
 {
-  "builtins": {
-    "css": {
-      "modules": {
-        "exportsOnly": false,
-        "localIdentName": "[path][name]__[local]-[hash:6]",
-        "localsConvention": "camelCase",
-      },
-    },
-  },
   "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
   "entry": {
@@ -26,7 +17,17 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   },
   "mode": "development",
   "module": {
+    "generator": {
+      "css/module": {
+        "exportsConvention": "camel-case",
+        "exportsOnly": false,
+        "localIdentName": "[path][name]__[local]-[hash:6]",
+      },
+    },
     "parser": {
+      "css/module": {
+        "namedExports": false,
+      },
       "javascript": {
         "exportsPresence": "error",
       },

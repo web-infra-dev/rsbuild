@@ -26,10 +26,10 @@ export = wdm;
  * @typedef {Compiler["watching"]} Watching
  */
 /**
- * @typedef {ReturnType<Compiler["watch"]>} MultiWatching
+ * @typedef {ReturnType<MultiCompiler["watch"]>} MultiWatching
  */
 /**
- * @typedef {Compiler["outputFileSystem"] & { createReadStream?: import('fs').createReadStream, statSync?: import('fs').statSync, lstat?: import('fs').lstat, readFileSync?: import('fs').readFileSync }} OutputFileSystem
+ * @typedef {Object & { createReadStream?: import('fs').createReadStream, statSync?: import('fs').statSync, lstat?: import('fs').lstat, readFileSync?: import('fs').readFileSync }} OutputFileSystem
  */
 /** @typedef {ReturnType<Compiler["getInfrastructureLogger"]>} Logger */
 /**
@@ -60,14 +60,20 @@ export = wdm;
  * @property {Callback[]} callbacks
  * @property {Options<RequestInternal, ResponseInternal>} options
  * @property {Compiler | MultiCompiler} compiler
- * @property {Watching | MultiWatching} watching
+ * @property {Watching | MultiWatching | undefined} watching
  * @property {Logger} logger
  * @property {OutputFileSystem} outputFileSystem
  */
 /**
  * @template {IncomingMessage} RequestInternal
  * @template {ServerResponse} ResponseInternal
- * @typedef {Record<string, string | number> | Array<{ key: string, value: number | string }> | ((req: RequestInternal, res: ResponseInternal, context: Context<RequestInternal, ResponseInternal>) =>  void | undefined | Record<string, string | number>) | undefined} Headers
+ * @typedef {WithoutUndefined<Context<RequestInternal, ResponseInternal>, "watching">} FilledContext
+ */
+/** @typedef {Record<string, string | number> | Array<{ key: string, value: number | string }>} NormalizedHeaders */
+/**
+ * @template {IncomingMessage} RequestInternal
+ * @template {ServerResponse} ResponseInternal
+ * @typedef {NormalizedHeaders | ((req: RequestInternal, res: ResponseInternal, context: Context<RequestInternal, ResponseInternal>) =>  void | undefined | NormalizedHeaders) | undefined} Headers
  */
 /**
  * @template {IncomingMessage} RequestInternal
@@ -129,6 +135,16 @@ export = wdm;
  * @typedef {Middleware<RequestInternal, ResponseInternal> & AdditionalMethods<RequestInternal, ResponseInternal>} API
  */
 /**
+ * @template T
+ * @template {keyof T} K
+ * @typedef {Omit<T, K> & Partial<T>} WithOptional
+ */
+/**
+ * @template T
+ * @template {keyof T} K
+ * @typedef {T & { [P in K]: NonNullable<T[P]> }} WithoutUndefined
+ */
+/**
  * @template {IncomingMessage} RequestInternal
  * @template {ServerResponse} ResponseInternal
  * @param {Compiler | MultiCompiler} compiler
@@ -164,6 +180,8 @@ declare namespace wdm {
     ResponseData,
     ModifyResponseData,
     Context,
+    FilledContext,
+    NormalizedHeaders,
     Headers,
     Options,
     Middleware,
@@ -174,6 +192,8 @@ declare namespace wdm {
     Close,
     AdditionalMethods,
     API,
+    WithOptional,
+    WithoutUndefined,
   };
 }
 type Compiler = import('webpack').Compiler;
@@ -206,8 +226,8 @@ type ServerResponse = import('http').ServerResponse & ExtendedServerResponse;
 type NextFunction = (err?: any) => void;
 type WatchOptions = NonNullable<Configuration["watchOptions"]>;
 type Watching = Compiler["watching"];
-type MultiWatching = ReturnType<Compiler["watch"]>;
-type OutputFileSystem = Compiler["outputFileSystem"] & {
+type MultiWatching = ReturnType<MultiCompiler["watch"]>;
+type OutputFileSystem = Object & {
   createReadStream?: typeof import('fs').createReadStream;
   statSync?: import('fs').StatSyncFn;
   lstat?: typeof import('fs').lstat;
@@ -239,24 +259,30 @@ type Context<
   callbacks: Callback[];
   options: Options<RequestInternal, ResponseInternal>;
   compiler: Compiler | MultiCompiler;
-  watching: Watching | MultiWatching;
+  watching: Watching | MultiWatching | undefined;
   logger: Logger;
   outputFileSystem: OutputFileSystem;
 };
+type FilledContext<
+  RequestInternal extends import('http').IncomingMessage,
+  ResponseInternal extends ServerResponse,
+> = WithoutUndefined<Context<RequestInternal, ResponseInternal>, "watching">;
+type NormalizedHeaders =
+  | Record<string, string | number>
+  | Array<{
+      key: string;
+      value: number | string;
+    }>;
 type Headers<
   RequestInternal extends import('http').IncomingMessage,
   ResponseInternal extends ServerResponse,
 > =
-  | Record<string, string | number>
-  | {
-      key: string;
-      value: number | string;
-    }[]
+  | NormalizedHeaders
   | ((
       req: RequestInternal,
       res: ResponseInternal,
       context: Context<RequestInternal, ResponseInternal>,
-    ) => void | undefined | Record<string, string | number>)
+    ) => void | undefined | NormalizedHeaders)
   | undefined;
 type Options<
   RequestInternal extends import('http').IncomingMessage,
@@ -305,4 +331,8 @@ type AdditionalMethods<
   invalidate: Invalidate;
   close: Close;
   context: Context<RequestInternal, ResponseInternal>;
+};
+type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<T>;
+type WithoutUndefined<T, K extends keyof T> = T & {
+  [P in K]: NonNullable<T[P]>;
 };

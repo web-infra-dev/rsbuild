@@ -8,7 +8,7 @@ export default {
       svgrOptions: {
         exportType: 'default',
       },
-      exclude: /Bar\.jsx/,
+      exclude: /small\.svg/,
     }),
   ],
 };
