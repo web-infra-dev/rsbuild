@@ -25,8 +25,8 @@ Whether to print the server's urls.
 By default, when you start the dev server or preview server, Rsbuild will print the following logs:
 
 ```text
-> Local:    http://localhost:8080
-> Network:  http://192.168.0.1:8080
+> Local:    http://localhost:3000
+> Network:  http://192.168.0.1:3000
 ```
 
 ## Custom Logging
@@ -50,8 +50,8 @@ export default {
 Output:
 
 ```text
-> Local:    http://localhost:8080/base/
-> Network:  http://192.168.0.1:8080/base/
+> Local:    http://localhost:3000/base/
+> Network:  http://192.168.0.1:3000/base/
 ```
 
 ### Fully Customizable
@@ -62,8 +62,8 @@ If the `printUrls` function does not return a value, Rsbuild will not print the 
 export default {
   server: {
     printUrls({ urls, port, protocol }) {
-      console.log(urls); // ['http://localhost:8080', 'http://192.168.0.1:8080']
-      console.log(port); // 8080
+      console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
+      console.log(port); // 3000
       console.log(protocol); // 'http' or 'https'
     },
   },

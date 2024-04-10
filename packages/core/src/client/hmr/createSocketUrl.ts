@@ -1,32 +1,14 @@
-type ParsedSearch = {
-  host: string;
-  port: string;
-  path: string;
-  protocol?: 'ws' | 'wss';
-};
+import type { ClientConfig } from '@rsbuild/shared';
 
 /**
  * hmr socket connect path
  */
 export const HMR_SOCK_PATH = '/rsbuild-hmr';
 
-export function parseParams(resourceQuery: string) {
-  // ?host=localhost&port=8080&path=rsbuild-hmr
-  const searchParams = resourceQuery.substr(1).split('&');
-  const options: Record<string, string> = {};
-
-  for (const pair of searchParams) {
-    const ary = pair.split('=');
-    options[ary[0]] = decodeURIComponent(ary[1]);
-  }
-
-  return options;
-}
-
-export function createSocketUrl(options: Record<string, string> = {}) {
+export function createSocketUrl(options: ClientConfig = {}) {
   const currentLocation = self.location;
 
-  return getSocketUrl(options as ParsedSearch, currentLocation);
+  return getSocketUrl(options, currentLocation);
 }
 
 export function formatURL({
@@ -54,7 +36,7 @@ export function formatURL({
   return `${protocol}${colon}//${hostname}:${port}${pathname}`;
 }
 
-function getSocketUrl(urlParts: ParsedSearch, location: Location) {
+function getSocketUrl(urlParts: ClientConfig, location: Location) {
   const { host, port, path, protocol } = urlParts;
 
   return formatURL({

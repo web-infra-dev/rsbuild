@@ -13,8 +13,8 @@
 export default {
   server: {
     proxy: {
-      // http://localhost:8080/api -> http://localhost:3000/api
-      // http://localhost:8080/api/foo -> http://localhost:3000/api/foo
+      // http://localhost:3000/api -> http://localhost:3000/api
+      // http://localhost:3000/api/foo -> http://localhost:3000/api/foo
       '/api': 'http://localhost:3000',
     },
   },
@@ -29,8 +29,8 @@ export default {
 export default {
   server: {
     proxy: {
-      // http://localhost:8080/api -> https://nodejs.org/api
-      // http://localhost:8080/api/foo -> https://nodejs.org/foo
+      // http://localhost:3000/api -> https://nodejs.org/api
+      // http://localhost:3000/api/foo -> https://nodejs.org/foo
       '/api': 'https://nodejs.org',
     },
   },
@@ -45,8 +45,8 @@ export default {
 export default {
   server: {
     proxy: {
-      // http://localhost:8080/api -> http://localhost:3000
-      // http://localhost:8080/api/foo -> http://localhost:3000/foo
+      // http://localhost:3000/api -> http://localhost:3000
+      // http://localhost:3000/api/foo -> http://localhost:3000/foo
       '/api': {
         target: 'http://localhost:3000',
         pathRewrite: { '^/api': '' },
