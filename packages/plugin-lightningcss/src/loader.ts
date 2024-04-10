@@ -3,7 +3,7 @@
  * MIT License https://github.com/fz6m/lightningcss-loader/blob/main/LICENSE
  * Author @fz6m
  */
-import type { LoaderContext } from '@rspack/core';
+import type { Rspack } from '@rsbuild/shared';
 import { transform as _transform } from 'lightningcss';
 import { Buffer } from 'node:buffer';
 import type { LightningCSSLoaderOptions } from './types';
@@ -11,7 +11,7 @@ import type { LightningCSSLoaderOptions } from './types';
 const LOADER_NAME = 'lightningcss-loader';
 
 async function LightningCSSLoader(
-  this: LoaderContext<LightningCSSLoaderOptions>,
+  this: Rspack.LoaderContext<LightningCSSLoaderOptions>,
   source: string,
   prevMap?: Record<string, any>,
 ): Promise<void> {

@@ -6,7 +6,7 @@
 import { transform as _transform } from 'lightningcss';
 import { Buffer } from 'node:buffer';
 import { CSS_REGEX } from '@rsbuild/shared';
-import type { Compilation, Compiler } from '@rspack/core';
+import type { Rspack } from '@rsbuild/shared';
 import type { LightningCSSMinifyPluginOptions } from './types';
 
 const PLUGIN_NAME = 'lightningcss-minify-plugin';
@@ -32,7 +32,7 @@ export class LightningCSSMinifyPlugin {
     this.options = opts;
   }
 
-  apply(compiler: Compiler) {
+  apply(compiler: Rspack.Compiler) {
     compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.processAssets.tapPromise(
         {
@@ -54,7 +54,9 @@ export class LightningCSSMinifyPlugin {
     });
   }
 
-  private async transformAssets(compilation: Compilation): Promise<void> {
+  private async transformAssets(
+    compilation: Rspack.Compilation,
+  ): Promise<void> {
     const {
       options: { devtool },
       webpack: {
