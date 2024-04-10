@@ -27,8 +27,10 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
+    "@rsbuild/shared": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
-    "@vue/babel-plugin-jsx": "1.2.2"
+    "@vue/babel-plugin-jsx": "1.2.2",
+    "babel-plugin-vue-jsx-hmr": "1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",

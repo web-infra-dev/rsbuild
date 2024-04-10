@@ -1,6 +1,7 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { VueJSXPluginOptions } from '@vue/babel-plugin-jsx';
 import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
+import { isUsingHMR } from '@rsbuild/shared';
 
 export type PluginVueJsxOptions = {
   /**
@@ -15,7 +16,9 @@ export function pluginVueJsx(options: PluginVueJsxOptions = {}): RsbuildPlugin {
     name: 'rsbuild:vue-jsx',
 
     setup(api) {
-      api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+      api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
+        const config = api.getNormalizedConfig();
+
         modifyBabelLoaderOptions({
           chain,
           CHAIN_ID,
@@ -25,6 +28,16 @@ export function pluginVueJsx(options: PluginVueJsxOptions = {}): RsbuildPlugin {
               require.resolve('@vue/babel-plugin-jsx'),
               options.vueJsxOptions || {},
             ]);
+
+            const usingHMR = isUsingHMR(config, { target, isProd });
+
+            if (usingHMR) {
+              babelOptions.plugins ??= [];
+              babelOptions.plugins.push([
+                require.resolve('babel-plugin-vue-jsx-hmr'),
+              ]);
+            }
+
             return babelOptions;
           },
         });

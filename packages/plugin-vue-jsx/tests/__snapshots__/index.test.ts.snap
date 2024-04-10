@@ -27,6 +27,9 @@ exports[`plugin-vue-jsx > should allow to configure jsx babel plugin options 1`]
                     "transformOn": false,
                   },
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-vue-jsx-hmr/dist/index.cjs",
+                ],
               ],
               "presets": [
                 [
@@ -74,6 +77,9 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly 1`] = `
                   "<ROOT>/node_modules/<PNPM_INNER>/@vue/babel-plugin-jsx/dist/index.js",
                   {},
                 ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-vue-jsx-hmr/dist/index.cjs",
+                ],
               ],
               "presets": [
                 [
@@ -120,6 +126,9 @@ exports[`plugin-vue-jsx > should apply jsx babel plugin correctly in rspack mode
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@vue/babel-plugin-jsx/dist/index.js",
                   {},
+                ],
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/babel-plugin-vue-jsx-hmr/dist/index.cjs",
                 ],
               ],
               "presets": [
