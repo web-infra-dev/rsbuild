@@ -11,6 +11,7 @@ published_at: 2024-04-10 18:00:00
 主要变更：
 
 - 默认启用 error overlay
+- 支持 Vue JSX HMR
 - 全新的 transform 插件 API
 - 默认端口调整为 3000
 
@@ -33,6 +34,14 @@ export default defineConfig({
   },
 });
 ```
+
+---
+
+## 支持 Vue JSX HMR
+
+`@rsbuild/plugin-vue-jsx` 现已支持 JSX HMR，当你在 Vue 3 应用中修改 JSX 代码时，会自动触发模块热替换，并保留当前页面的状态。
+
+该功能由社区贡献者 [@liyincode](https://github.com/liyincode) 实现 ❤️，并且发布为独立的 [babel-plugin-vue-jsx-hmr](https://github.com/liyincode/babel-plugin-vue-jsx-hmr) 插件，以便在 Rsbuild 以外的项目中使用。
 
 ---
 

@@ -36,6 +36,14 @@ export default defineConfig({
 
 ---
 
+## Vue JSX HMR Support
+
+`@rsbuild/plugin-vue-jsx` now supports JSX HMR. When you modify JSX code in a Vue 3 application, it will automatically trigger hot module replacement and preserve the current page state.
+
+This feature is implemented by community contributor [@liyincode](https://github.com/liyincode) ❤️, and released as a standalone plugin [babel-plugin-vue-jsx-hmr](https://github.com/liyincode/babel-plugin-vue-jsx-hmr), for use in projects outside of Rsbuild.
+
+---
+
 ## New transform API
 
 Rsbuild plugin now supports the [transform API](/plugins/dev/core#apitransform), which can be thought of as a lightweight implementation of Rspack loader. It provides a simple and easy to use API and automatically calls Rspack loader at the backend to transform the code.
