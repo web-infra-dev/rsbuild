@@ -178,6 +178,51 @@ const pluginFoo = () => ({
 });
 ```
 
+## api.transform
+
+用于转换模块的代码。
+
+- **版本：** `>= 0.6.0`
+- **类型：**
+
+```ts
+function Transform(
+  descriptor: { test?: RuleSetCondition | undefined },
+  handler: TransformHandler,
+): void;
+```
+
+`api.transform` 接受两个参数：
+
+- `descriptor`：一个对象，用于描述模块的匹配条件。
+- `handler`：一个转换函数，接收模块当前的代码，并返回转换后的代码。
+
+### 示例
+
+比如匹配以 `.pug` 为后缀的模块，并转换为 JavaScript 代码：
+
+```js
+import pug from 'pug';
+
+const pluginPug = () => ({
+  name: 'my-pug-plugin',
+  setup(api) {
+    api.transform({ test: /\.pug$/ }, ({ code }) => {
+      const templateCode = pug.compileClient(code, {});
+      return `${templateCode}; module.exports = template;`;
+    });
+  },
+});
+```
+
+### 与 loader 的区别
+
+`api.transform` 可以理解为 Rspack loader 的一个轻量化实现，它提供了简单易用的 API，并在底层自动调用 Rspack loader 进行代码转换。
+
+在 Rsbuild 插件中，你可以通过 `api.transform` 快速实现代码转换功能，能够满足大部分常见场景，而无须学习 Rspack loader 的编写方法。
+
+注意，对于一些复杂的代码转换场景，`api.transform` 可能无法满足，此时你可以使用 Rspack loader 进行实现。
+
 ## api.expose
 
 用于插件间通信。

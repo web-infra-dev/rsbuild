@@ -180,6 +180,51 @@ const pluginFoo = () => ({
 });
 ```
 
+## api.transform
+
+Used to transform the code of modules.
+
+- **Version:** `>= 0.6.0`
+- **Type:**
+
+```ts
+function Transform(
+  descriptor: { test?: RuleSetCondition | undefined },
+  handler: TransformHandler,
+): void;
+```
+
+`api.transform` accepts two params:
+
+- `descriptor`: a object describing the module's matching conditions.
+- `handler`: a transformation function that takes the current module code and returns the transformed code.
+
+### Example
+
+For example, match modules with the `.pug` extension and transform them to JavaScript code:
+
+```js
+import pug from 'pug';
+
+const pluginPug = () => ({
+  name: 'my-pug-plugin',
+  setup(api) {
+    api.transform({ test: /\.pug$/ }, ({ code }) => {
+      const templateCode = pug.compileClient(code, {});
+      return `${templateCode}; module.exports = template;`;
+    });
+  },
+});
+```
+
+### Difference with loader
+
+`api.transform` can be thought of as a lightweight implementation of Rspack loader. It provides a simple and easy to use API and automatically calls Rspack loader at the backend to transform the code.
+
+In Rsbuild plugins, you can quickly implement code transformation functions using `api.transform`, which can handle the majority of common scenarios without having to learn how to write an Rspack loader.
+
+Note that for some complex code transformation scenarios, `api.transform` may not be sufficient. In such situations, you can implement it using the Rspack loader.
+
 ## api.expose
 
 Used for plugin communication.
