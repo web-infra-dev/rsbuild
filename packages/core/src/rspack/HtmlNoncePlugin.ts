@@ -1,5 +1,5 @@
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
-import { getHTMLPlugin } from '../provider/htmlPluginUtil';
+import { getHTMLPlugin } from '../htmlUtils';
 import { createVirtualModule } from '@rsbuild/shared';
 
 type NonceOptions = {

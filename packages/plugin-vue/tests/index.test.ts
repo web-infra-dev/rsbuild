@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginDefine } from '@rsbuild/core/plugins/define';
+import { pluginDefine } from '../../core/src/plugins/define';
 import { pluginVue } from '../src';
 
 describe('plugin-vue', () => {

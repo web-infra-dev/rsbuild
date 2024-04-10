@@ -9,7 +9,7 @@ import { plugins } from './plugins';
 import { createPluginManager } from './pluginManager';
 
 const getRspackProvider = async () => {
-  const { rspackProvider } = await import('./provider');
+  const { rspackProvider } = await import('./provider/provider');
   return rspackProvider;
 };
 

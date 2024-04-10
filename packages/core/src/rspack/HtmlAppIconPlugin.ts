@@ -3,7 +3,7 @@ import { posix, basename } from 'node:path';
 import type { Compiler, Compilation } from '@rspack/core';
 import WebpackSources from '@rsbuild/shared/webpack-sources';
 import { withPublicPath, getPublicPathFromCompiler } from '@rsbuild/shared';
-import { getHTMLPlugin } from '../provider/htmlPluginUtil';
+import { getHTMLPlugin } from '../htmlUtils';
 
 type AppIconOptions = {
   distDir: string;

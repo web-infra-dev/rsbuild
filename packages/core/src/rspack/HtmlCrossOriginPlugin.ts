@@ -1,6 +1,6 @@
 import { DEFAULT_ASSET_PREFIX, type CrossOrigin } from '@rsbuild/shared';
 import type { Compiler, RspackPluginInstance } from '@rspack/core';
-import { getHTMLPlugin } from '../provider/htmlPluginUtil';
+import { getHTMLPlugin } from '../htmlUtils';
 
 type CrossOriginOptions = {
   crossOrigin: CrossOrigin;

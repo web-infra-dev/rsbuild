@@ -13,7 +13,7 @@ import {
 import {
   getChainUtils as getBaseChainUtils,
   type InternalContext,
-} from '@rsbuild/core/provider';
+} from '@rsbuild/core/internal';
 import { getCompiledPath } from '../shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import type { WebpackConfig } from '../types';
@@ -69,7 +69,7 @@ async function getChainUtils(
   target: RsbuildTarget,
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
-  const { getHTMLPlugin } = await import('@rsbuild/core/provider');
+  const { getHTMLPlugin } = await import('@rsbuild/core/internal');
   const nameMap = {
     web: 'client',
     node: 'server',

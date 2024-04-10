@@ -24,7 +24,7 @@ export {
 } from './constants';
 
 // Types
-export type { Rspack } from './provider';
+export type { Rspack } from '@rsbuild/shared';
 export type {
   // Config Types
   RsbuildConfig,

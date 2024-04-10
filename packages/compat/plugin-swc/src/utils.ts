@@ -17,7 +17,7 @@ import type {
   TransformConfig,
 } from './types';
 import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
-import { applySwcDecoratorConfig } from '@rsbuild/core/provider';
+import { applySwcDecoratorConfig } from '@rsbuild/core/internal';
 
 const isBeyondReact17 = async (cwd: string) => {
   const pkgPath = await findUp({ cwd, filename: 'package.json' });

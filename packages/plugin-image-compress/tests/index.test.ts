@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginAsset } from '@rsbuild/core/plugins/asset';
+import { pluginAsset } from '../../core/src/plugins/asset';
 import { pluginImageCompress } from '../src';
 
 process.env.NODE_ENV = 'production';

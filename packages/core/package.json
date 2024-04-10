@@ -18,10 +18,6 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./server": {
-      "types": "./dist/server/index.d.ts",
-      "default": "./dist/server/index.js"
-    },
     "./client/hmr": {
       "types": "./dist/client/hmr/index.d.ts",
       "default": "./dist/client/hmr.mjs"
@@ -30,13 +26,9 @@
       "types": "./dist/client/overlay.d.ts",
       "default": "./dist/client/overlay.mjs"
     },
-    "./plugins/*": {
-      "types": "./dist/plugins/*.d.ts",
-      "default": "./dist/plugins/*.js"
-    },
-    "./provider": {
-      "types": "./dist/provider/index.d.ts",
-      "default": "./dist/provider/index.js"
+    "./internal": {
+      "types": "./dist/internal.d.ts",
+      "default": "./dist/internal.js"
     },
     "./types": {
       "types": "./types.d.ts"
