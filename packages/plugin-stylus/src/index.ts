@@ -49,7 +49,7 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
         const { applyBaseCSSRule } = await import(
           bundlerType === 'webpack'
             ? '@rsbuild/webpack/plugin-css'
-            : '@rsbuild/core/provider'
+            : '@rsbuild/core/internal'
         );
 
         await applyBaseCSSRule({
@@ -67,7 +67,7 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
       });
 
       api.modifyRspackConfig(async (rspackConfig) => {
-        const { applyCSSModuleRule } = await import('@rsbuild/core/provider');
+        const { applyCSSModuleRule } = await import('@rsbuild/core/internal');
 
         const config = api.getNormalizedConfig();
         const rules = rspackConfig.module?.rules;

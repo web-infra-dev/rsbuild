@@ -8,12 +8,12 @@ import type {
 } from '@rsbuild/shared';
 
 const getRspackProvider = async () => {
-  const { rspackProvider } = await import('@rsbuild/core/provider');
+  const { rspackProvider } = await import('@rsbuild/core/internal');
   return rspackProvider;
 };
 
 export const getRsbuildPlugins = async () => {
-  const { plugins } = await import('@rsbuild/core/plugins/index');
+  const { plugins } = await import('@rsbuild/core/internal');
   return plugins;
 };
 
@@ -94,7 +94,7 @@ export async function createStubRsbuild({
   }
 > {
   const { pick } = await import('@rsbuild/shared');
-  const { createPluginManager } = await import('@rsbuild/core/provider');
+  const { createPluginManager } = await import('@rsbuild/core/internal');
   const rsbuildOptions: Required<CreateRsbuildOptions> = {
     cwd: process.env.REBUILD_TEST_SUITE_CWD || process.cwd(),
     rsbuildConfig,

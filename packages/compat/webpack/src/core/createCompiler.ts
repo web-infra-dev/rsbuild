@@ -12,7 +12,7 @@ import {
   getStatsOptions,
   getDevMiddleware,
   type InternalContext,
-} from '@rsbuild/core/provider';
+} from '@rsbuild/core/internal';
 import type { WebpackConfig } from '../types';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 // @ts-expect-error

@@ -7,7 +7,7 @@ import {
 import {
   initRsbuildConfig,
   type InternalContext,
-} from '@rsbuild/core/provider';
+} from '@rsbuild/core/internal';
 import { inspectConfig } from './inspectConfig';
 import { generateWebpackConfig } from './webpackConfig';
 import type { WebpackConfig } from '../types';
