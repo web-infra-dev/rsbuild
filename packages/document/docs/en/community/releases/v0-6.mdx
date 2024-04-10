@@ -10,11 +10,32 @@ published_at: 2024-04-10 18:00:00
 
 Main changes:
 
-- Added new transform plugin API
+- Error overlay enabled by default
+- New transform plugin API
 
 ---
 
-## Transform API
+## Error overlay enabled by default
+
+Starting from Rsbuild v0.6, the default value of [dev.client.overlay](/config/dev/client) has been adjusted to `true`. This means that when a compilation error occurs, Rsbuild will pop up the error overlay by default to display the error information:
+
+![](https://rsfamily-design-resources.netlify.app/rsbuild/assets/rsbuild-error-overlay.png)
+
+If you do not need this feature, you can set `dev.client.overlay` to `false` to disable it.
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  dev: {
+    client: {
+      overlay: false,
+    },
+  },
+});
+```
+
+---
+
+## New transform API
 
 Rsbuild plugin now supports the [transform API](/plugins/dev/core#apitransform), which can be thought of as a lightweight implementation of Rspack loader. It provides a simple and easy to use API and automatically calls Rspack loader at the backend to transform the code.
 
