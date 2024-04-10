@@ -1,6 +1,5 @@
 import { expect, test } from '@playwright/test';
 import { dev, getRandomPort, gotoPage } from '@e2e/helper';
-import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should allow to set port via server.port', async ({ page }) => {
   const errors: string[] = [];
@@ -9,11 +8,7 @@ test('should allow to set port via server.port', async ({ page }) => {
   const port = await getRandomPort();
   const rsbuild = await dev({
     cwd: __dirname,
-    plugins: [pluginReact()],
     rsbuildConfig: {
-      dev: {
-        writeToDisk: true,
-      },
       server: {
         port,
       },
