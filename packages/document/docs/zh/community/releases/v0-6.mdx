@@ -12,6 +12,7 @@ published_at: 2024-04-10 18:00:00
 
 - 默认启用 error overlay
 - 全新的 transform 插件 API
+- 默认端口调整为 3000
 
 ---
 
@@ -58,3 +59,21 @@ const pluginPug = () => ({
 ```
 
 对于一些复杂的代码转换场景，`api.transform` 可能无法满足，此时你可以使用 Rspack loader 进行实现。
+
+---
+
+## 默认端口调整为 3000
+
+Rsbuild 已将 [server.port](/config/server/port) 的默认值从 `8080` 调整到 `3000`。
+
+端口 3000 通常用于 web 开发领域，也是 create-react-app 等工具默认使用的端口。通过更改默认端口为 3000，可以避免在使用 8080 时可能遇到的端口冲突问题。
+
+如果你需要使用 8080 端口，可以手动设置：
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  server: {
+    port: 8080,
+  },
+});
+```

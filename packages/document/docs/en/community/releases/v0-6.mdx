@@ -12,6 +12,7 @@ Main changes:
 
 - Error overlay enabled by default
 - New transform plugin API
+- Default port changed to 3000
 
 ---
 
@@ -58,3 +59,21 @@ const pluginPug = () => ({
 ```
 
 For some complex code transformation scenarios, `api.transform` may not be sufficient. In such situations, you can implement it using the Rspack loader.
+
+---
+
+## Default port changed to 3000
+
+Rsbuild has changed the default value of [server.port](/config/server/port) from `8080` to `3000`.
+
+Port 3000 is commonly used for web development, and is also the default port used by tools such as create-react-app. Changing the default port to 3000 can prevent possible port conflicts when using 8080.
+
+If you need to use port 8080, you can manually set it as follows:
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  server: {
+    port: 8080,
+  },
+});
+```
