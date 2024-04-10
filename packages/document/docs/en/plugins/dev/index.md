@@ -135,7 +135,7 @@ Rsbuild uses lifetime planning work internally, and plugins can also register ho
 
 The full list of Rsbuild's lifetime hooks can be found in the [API References](/plugins/dev/hooks).
 
-The Rsbuild does not take over the hooks of the underlying Rspack, whose documents can be found here: [Rspack Plugin API](https://rspack.dev/api/plugin-api)。
+The Rsbuild does not take over the hooks of the underlying Rspack, whose documents can be found here: [Rspack Plugin API](https://rspack.dev/api/plugin-api).
 
 ## Use Rsbuild Config
 
