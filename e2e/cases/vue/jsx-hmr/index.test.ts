@@ -1,9 +1,9 @@
 import { expect, test, type Page } from '@playwright/test';
-import { dev, gotoPage } from '@e2e/helper';
+import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import path from 'node:path';
 import fs from 'node:fs';
 
-test('should render', async ({ page }) => {
+rspackOnlyTest('should render', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
   });
@@ -22,7 +22,7 @@ test('should render', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should update', async ({ page }) => {
+rspackOnlyTest('should update', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
   });
@@ -49,7 +49,7 @@ test('should update', async ({ page }) => {
   await rsbuild.close();
 });
 
-test.describe('vue jsx hmr', () => {
+rspackOnlyTest.describe('vue jsx hmr', () => {
   // HMR cases will fail in Windows
   if (process.platform === 'win32') {
     test.skip();
