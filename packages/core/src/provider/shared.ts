@@ -52,7 +52,7 @@ export const applyDefaultPlugins = (plugins: Plugins) =>
     import('./plugins/rspackProfile').then((m) => m.pluginRspackProfile()),
   ]);
 
-// apply CSS modules generator
+// depend on CSS modules generator config
 export const rspackMinVersion = '0.6.0';
 
 const compareSemver = (version1: string, version2: string) => {
