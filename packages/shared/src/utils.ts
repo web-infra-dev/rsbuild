@@ -309,13 +309,7 @@ export function isUsingHMR(
   config: NormalizedConfig,
   { isProd, target }: Pick<ModifyChainUtils, 'isProd' | 'target'>,
 ) {
-  return (
-    !isProd &&
-    target !== 'node' &&
-    target !== 'web-worker' &&
-    target !== 'service-worker' &&
-    config.dev.hmr
-  );
+  return !isProd && config.dev.hmr && target === 'web';
 }
 
 export const isClientCompiler = (compiler: {
