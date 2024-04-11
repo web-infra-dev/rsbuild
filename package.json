@@ -62,8 +62,8 @@
       "esbuild": "~0.19.0",
       "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@1.0.24",
       "@rsbuild/core": "link:packages/core",
-      "@rspack/core": "0.5.9-canary-1fbcb90-20240408152758",
-      "@rspack/plugin-react-refresh": "0.5.9-canary-1fbcb90-20240408152758",
+      "@rspack/core": "0.6.0-canary-ce6da72-20240410133259",
+      "@rspack/plugin-react-refresh": "0.6.0-canary-ce6da72-20240410133259",
       "@rsbuild/plugin-react": "link:packages/plugin-react"
     },
     "allowedDeprecatedVersions": {
