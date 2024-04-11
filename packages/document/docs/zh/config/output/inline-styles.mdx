@@ -80,13 +80,13 @@ export default {
 - `name`：文件名，比如 `static/css/main.18a568e5.css`。
 - `size`：文件大小，单位为 byte。
 
-比如，我们希望内联小于 10KB 的资源，可以添加如下配置：
+比如，我们希望内联小于 10kB 的资源，可以添加如下配置：
 
 ```js
 export default {
   output: {
     inlineStyles({ size }) {
-      return size < 10 * 1024;
+      return size < 10 * 1000;
     },
   },
 };
