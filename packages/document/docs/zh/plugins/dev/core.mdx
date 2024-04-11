@@ -187,7 +187,7 @@ const pluginFoo = () => ({
 
 ```ts
 function Transform(
-  descriptor: { test?: RuleSetCondition | undefined },
+  descriptor: TransformDescriptor,
   handler: TransformHandler,
 ): void;
 ```
@@ -212,6 +212,26 @@ const pluginPug = () => ({
       return `${templateCode}; module.exports = template;`;
     });
   },
+});
+```
+
+### 匹配条件
+
+descriptor 参数支持传入以下匹配条件：
+
+- `test`：匹配模块的路径（不包含 query），等价于 Rspack 的 [Rule.test](https://rspack.dev/config/module#ruletest)。
+
+```js
+api.transform({ test: /\.pug$/ }, ({ code }) => {
+  // ...
+});
+```
+
+- `resourceQuery`：匹配模块的 query，等价于 Rspack 的 [Rule.resourceQuery](https://rspack.dev/config/module#ruleresourcequery)。
+
+```js
+api.transform({ resourceQuery: /raw/ }, ({ code }) => {
+  // ...
 });
 ```
 

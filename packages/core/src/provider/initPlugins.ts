@@ -119,6 +119,9 @@ export function getPluginAPI({
       if (descriptor.test) {
         rule.test(descriptor.test);
       }
+      if (descriptor.resourceQuery) {
+        rule.resourceQuery(descriptor.resourceQuery);
+      }
 
       rule
         .use(id)
