@@ -4,7 +4,9 @@ A great chunk splitting strategy is very important to improve the loading perfor
 
 Several [chunk splitting strategies](/guide/optimization/split-chunk) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
 
-## Splitting Strategies
+---
+
+## Strategies
 
 > The chunk splitting config of Rsbuild is in [performance.chunkSplit](/config/performance/chunk-split).
 
@@ -17,9 +19,11 @@ Rsbuild supports the following chunk splitting strategies:
 - `single-vendor`: bundle all NPM packages into a single chunk.
 - `custom`: custom chunk splitting strategy.
 
-### split-by-experience
+---
 
-#### Behavior
+## split-by-experience
+
+### Behavior
 
 Rsbuild adopts the `split-by-experience` strategy by default, which is a strategy we have developed from experience. Specifically, when the following npm packages are referenced in your project, they will automatically be split into separate chunks:
 
@@ -31,7 +35,7 @@ Rsbuild adopts the `split-by-experience` strategy by default, which is a strateg
 
 This strategy groups commonly used packages and then splits them into separate chunks. Generally, the number of chunks is not large, which is suitable for most applications and is also our recommended strategy.
 
-#### Config
+### Config
 
 ```ts
 export default {
@@ -43,13 +47,15 @@ export default {
 };
 ```
 
-#### Notes
+### Notes
 
 - If the npm packages mentioned above are not installed or used in the project, the corresponding chunk will not be generated.
 
-### split-by-module
+---
 
-#### Behavior
+## split-by-module
+
+### Behavior
 
 Split each NPM package into a Chunk.
 
@@ -57,7 +63,7 @@ Split each NPM package into a Chunk.
 This strategy will split the node_modules in the most granular way, and at the same time, under HTTP/2, multiplexing will speed up the loading time of resources.However, in non-HTTP/2 environments, it needs to be used with caution because of HTTP head-of-line blocking problem.
 :::
 
-#### Config
+### Config
 
 ```ts
 export default {
@@ -69,19 +75,21 @@ export default {
 };
 ```
 
-#### Notes
+### Notes
 
 - This configuration will split the node_modules into smaller chunks, resulting in a large number of file requests.
 - When using HTTP/2, resource loading time will be accelerated and cache hit rate will be improved due to multiplexing.
 - When not using HTTP/2, the performance of page loading may be reduced due to HTTP head-of-line blocking. Please use with caution.
 
-### all-in-one
+---
 
-#### Behavior
+## all-in-one
+
+### Behavior
 
 This strategy puts all source code and third-party dependencies in the same Chunk.
 
-#### Config
+### Config
 
 ```ts
 export default {
@@ -93,18 +101,39 @@ export default {
 };
 ```
 
-#### Notes
+### Notes
 
 - This configuration will bundle all the generated JS code into one file (except for dynamically imported chunks).
 - The size of a single JS file may be very large, leading to a decrease in page loading performance.
 
-### single-vendor
+If you need to bundle the chunks split by dynamic import into the single file, you can set the [output.asyncChunks](https://rspack.dev/config/output#outputasyncchunks) option in Rspack to `false`：
 
-#### Behavior
+```js
+export default defineConfig({
+  performance: {
+    chunkSplit: {
+      strategy: 'all-in-one',
+    },
+  },
+  tools: {
+    rspack: {
+      output: {
+        asyncChunks: false,
+      },
+    },
+  },
+});
+```
+
+---
+
+## single-vendor
+
+### Behavior
 
 This strategy puts third-party dependencies in one Chunk, and source code in another chunk.
 
-#### Config
+### Config
 
 ```ts
 export default {
@@ -116,17 +145,19 @@ export default {
 };
 ```
 
-#### Notes
+### Notes
 
 - The size of a single vendor file may be very large, leading to a decrease in page loading performance.
 
-### split-by-size
+---
 
-#### Behavior
+## split-by-size
+
+### Behavior
 
 Under this strategy, after setting `minSize`, `maxSize` to a fixed value, Rsbuild will automatically split them without extra config.
 
-#### Config
+### Config
 
 ```ts
 export default {
@@ -139,6 +170,8 @@ export default {
   },
 };
 ```
+
+---
 
 ## Custom Splitting Strategy
 
@@ -174,7 +207,7 @@ Through `forceSplitting` config, you can easily split some packages into a Chunk
 
 Chunks split using the `forceSplitting` configuration will be inserted into the HTML file as resources requested for the initial screen using `<script>` tags. Therefore, please split them appropriately based on the actual scenario to avoid excessive size of initial screen resources.
 
-### Custom Bundler `splitChunks` Config
+### Custom Config
 
 In addition to using custom grouping, you can also customize the native bundler config through `override`, such as:
 
@@ -193,6 +226,8 @@ export default {
 ```
 
 The config in `override` will be merged with the bundler config. For specific config details, please refer to [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) or [Rspack - splitChunks](https://rspack.dev/config/optimization#optimization-splitchunks).
+
+---
 
 ## Using Dynamic Import for Code Splitting
 

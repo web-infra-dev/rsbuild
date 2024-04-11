@@ -8,10 +8,6 @@ on:
 
   push:
     branches: [main]
-    paths-ignore:
-      - "packages/document/**"
-      - "*.md"
-      - "*.mdx"
 
   merge_group:
 
@@ -42,27 +38,28 @@ jobs:
       - name: Install Pnpm
         run: corepack enable
 
-      - name: Check skip CI
-        shell: bash
-        run: echo "RESULT=$(node ./scripts/skipCI.js)" >> "$GITHUB_OUTPUT"
-        id: skip-ci
-
-      - name: Log skip CI result
-        run: echo "${{steps.skip-ci.outputs.RESULT}}"
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          predicate-quantifier: 'every'
+          filters: |
+            changed:
+              - "!**/*.md"
+              - "!**/*.mdx"
 
       - name: Setup Node.js ${{ matrix.node-version }}
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        if: steps.changes.outputs.changed == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
       - name: Install Dependencies
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        if: steps.changes.outputs.changed == 'true'
         run: pnpm install
 
       - name: Unit Test
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        if: steps.changes.outputs.changed == 'true'
         run: pnpm run ut
 
   # # ======== e2e ========
@@ -87,25 +84,26 @@ jobs:
       - name: Install Pnpm
         run: corepack enable
 
-      - name: Check skip CI
-        shell: bash
-        run: echo "RESULT=$(node ./scripts/skipCI.js)" >> "$GITHUB_OUTPUT"
-        id: skip-ci
-
-      - name: Log skip CI result
-        run: echo "${{steps.skip-ci.outputs.RESULT}}"
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          predicate-quantifier: 'every'
+          filters: |
+            changed:
+              - "!**/*.md"
+              - "!**/*.mdx"
 
       - name: Setup Node.js ${{ matrix.node-version }}
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        if: steps.changes.outputs.changed == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
       - name: Install Dependencies
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        if: steps.changes.outputs.changed == 'true'
         run: pnpm install && cd ./e2e && npx playwright install
 
       - name: E2E Test
-        if: ${{steps.skip-ci.outputs.RESULT != 'true'}}
+        if: steps.changes.outputs.changed == 'true'
         run: pnpm run e2e
