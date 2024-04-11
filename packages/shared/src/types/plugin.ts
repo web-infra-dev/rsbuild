@@ -221,14 +221,21 @@ export type TransformHandler = (
   context: TransformContext,
 ) => MaybePromise<TransformResult>;
 
+export type TransformDescriptor = {
+  /**
+   * Include modules that match the test assertion, the same as `rule.test`
+   * @see https://rspack.dev/config/module#ruletest
+   */
+  test?: RuleSetCondition;
+  /**
+   * A condition that matches the resource query.
+   * @see https://rspack.dev/config/module#ruleresourcequery
+   */
+  resourceQuery?: RuleSetCondition;
+};
+
 export type TransformFn = (
-  descriptor: {
-    /**
-     * Include modules that match the test assertion, the same as `rule.test`
-     * @see https://rspack.dev/config/module#ruletest
-     */
-    test?: RuleSetCondition;
-  },
+  descriptor: TransformDescriptor,
   handler: TransformHandler,
 ) => void;
 

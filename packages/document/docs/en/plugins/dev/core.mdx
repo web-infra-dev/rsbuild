@@ -217,6 +217,26 @@ const pluginPug = () => ({
 });
 ```
 
+### Matching Conditions
+
+The `descriptor` param supports the following matching conditions:
+
+- `test`: matches module's path (without query), the same as Rspack's [Rule.test](https://rspack.dev/config/module#ruletest).
+
+```js
+api.transform({ test: /\.pug$/ }, ({ code }) => {
+  // ...
+});
+```
+
+- `resourceQuery`: matches module's query, the same as Rspack's [Rule.resourceQuery](https://rspack.dev/config/module#ruleresourcequery).
+
+```js
+api.transform({ resourceQuery: /raw/ }, ({ code }) => {
+  // ...
+});
+```
+
 ### Difference with loader
 
 `api.transform` can be thought of as a lightweight implementation of Rspack loader. It provides a simple and easy to use API and automatically calls Rspack loader at the backend to transform the code.
