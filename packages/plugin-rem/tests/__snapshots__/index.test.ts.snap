@@ -4,9 +4,6 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
 {
   "experiments": {
     "css": false,
-    "rspackFuture": {
-      "newTreeshaking": true,
-    },
   },
   "module": {
     "rules": [
@@ -80,9 +77,6 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
 {
   "experiments": {
     "css": false,
-    "rspackFuture": {
-      "newTreeshaking": true,
-    },
   },
   "module": {
     "rules": [
@@ -183,9 +177,6 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
 {
   "experiments": {
     "css": false,
-    "rspackFuture": {
-      "newTreeshaking": true,
-    },
   },
   "module": {
     "rules": [

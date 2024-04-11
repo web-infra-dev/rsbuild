@@ -4,9 +4,6 @@ exports[`plugin-css > should apply custom css-modules-typescript-loader when ena
 {
   "experiments": {
     "css": false,
-    "rspackFuture": {
-      "newTreeshaking": true,
-    },
   },
   "module": {
     "rules": [
@@ -84,9 +81,6 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
 {
   "experiments": {
     "css": false,
-    "rspackFuture": {
-      "newTreeshaking": true,
-    },
   },
   "module": {
     "rules": [
@@ -148,9 +142,6 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
 {
   "experiments": {
     "css": false,
-    "rspackFuture": {
-      "newTreeshaking": true,
-    },
   },
   "module": {
     "rules": [
@@ -218,9 +209,6 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
 {
   "experiments": {
     "css": false,
-    "rspackFuture": {
-      "newTreeshaking": true,
-    },
   },
   "module": {
     "rules": [
@@ -258,9 +246,6 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
 {
   "experiments": {
     "css": false,
-    "rspackFuture": {
-      "newTreeshaking": true,
-    },
   },
   "module": {
     "rules": [

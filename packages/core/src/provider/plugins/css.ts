@@ -51,8 +51,6 @@ export const pluginCss = (): RsbuildPlugin => {
       api.modifyRspackConfig(async (rspackConfig) => {
         rspackConfig.experiments ||= {};
         rspackConfig.experiments.css = false;
-        rspackConfig.experiments.rspackFuture ||= {};
-        rspackConfig.experiments.rspackFuture.newTreeshaking = true;
       });
     },
   };
