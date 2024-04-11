@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-image-compress",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Image compress plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -40,7 +40,7 @@
     "webpack": "^5.91.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.6.0"
+    "@rsbuild/core": "workspace:^0.6.1"
   },
   "publishConfig": {
     "access": "public",
