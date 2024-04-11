@@ -21,6 +21,9 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
                   },
                 ],
                 "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                ],
               ],
               "presets": [
                 [
@@ -47,6 +50,11 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
       },
     ],
   },
+  "resolve": {
+    "alias": {
+      "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
+    },
+  },
 }
 `;
 
@@ -71,6 +79,9 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
                   },
                 ],
                 "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                ],
               ],
               "presets": [
                 [
@@ -93,6 +104,11 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
         ],
       },
     ],
+  },
+  "resolve": {
+    "alias": {
+      "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
+    },
   },
 }
 `;
@@ -118,6 +134,9 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
                   },
                 ],
                 "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+                [
+                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                ],
               ],
               "presets": [
                 [
@@ -140,6 +159,11 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
         ],
       },
     ],
+  },
+  "resolve": {
+    "alias": {
+      "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
+    },
   },
 }
 `;
