@@ -57,11 +57,11 @@ export default defineConfig({
   lang: 'en',
   base: '/',
   title: 'Rsbuild',
-  icon: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/favicon-128x128.png',
+  icon: 'https://rsfamily-design-resources.netlify.app/rsbuild/favicon-128x128.png',
   logo: {
     light:
-      'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/navbar-logo-10164.png',
-    dark: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/navbar-logo-dark-10164.png',
+      'https://rsfamily-design-resources.netlify.app/rsbuild/navbar-logo-light.png',
+    dark: 'https://rsfamily-design-resources.netlify.app/rsbuild/navbar-logo-dark.png',
   },
   markdown: {
     checkDeadLinks: true,

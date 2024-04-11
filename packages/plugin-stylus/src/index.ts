@@ -49,7 +49,7 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
         const { applyBaseCSSRule } = await import(
           bundlerType === 'webpack'
             ? '@rsbuild/webpack/plugin-css'
-            : '@rsbuild/core/provider'
+            : '@rsbuild/core/internal'
         );
 
         await applyBaseCSSRule({

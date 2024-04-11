@@ -1,0 +1,19 @@
+{
+  "name": "@e2e/vue-jsx-hmr",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "vue": "^3.4.19"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/plugin-vue": "workspace:*",
+    "@rsbuild/plugin-vue-jsx": "workspace:*",
+    "@rsbuild/plugin-babel": "workspace:*"
+  }
+}

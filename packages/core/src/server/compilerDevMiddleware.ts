@@ -20,18 +20,20 @@ const noop = () => {
   // noop
 };
 
-function getHMRClientPath(client: DevConfig['client'] = {}) {
-  // host=localhost&port=8080&path=rsbuild-hmr
-  const params = Object.entries(client).reduce((query, [key, value]) => {
-    return value ? `${query}&${key}=${value}` : `${query}`;
-  }, '');
+function getClientPaths(devConfig: DevConfig) {
+  const clientPaths: string[] = [];
 
-  const clientEntry = `${require.resolve(
-    '@rsbuild/core/client/hmr',
-  )}?${params}`;
+  if (!devConfig.hmr && !devConfig.liveReload) {
+    return clientPaths;
+  }
 
-  // replace cjs with esm because we want to use the es5 version
-  return clientEntry;
+  clientPaths.push(require.resolve('@rsbuild/core/client/hmr'));
+
+  if (devConfig.client?.overlay) {
+    clientPaths.push(`${require.resolve('@rsbuild/core/client/overlay')}`);
+  }
+
+  return clientPaths;
 }
 
 /**
@@ -42,9 +44,9 @@ function getHMRClientPath(client: DevConfig['client'] = {}) {
 export class CompilerDevMiddleware {
   public middleware!: DevMiddlewareAPI;
 
-  private devOptions: DevConfig;
+  private devConfig: DevConfig;
 
-  private serverOptions: ServerConfig;
+  private serverConfig: ServerConfig;
 
   private devMiddleware: CustomDevMiddleware;
 
@@ -53,8 +55,8 @@ export class CompilerDevMiddleware {
   private socketServer: SocketServer;
 
   constructor({ dev, server, devMiddleware, publicPaths }: Options) {
-    this.devOptions = dev;
-    this.serverOptions = server;
+    this.devConfig = dev;
+    this.serverConfig = server;
     this.publicPaths = publicPaths;
 
     // init socket server
@@ -94,7 +96,7 @@ export class CompilerDevMiddleware {
     devMiddleware: CustomDevMiddleware,
     publicPaths: string[],
   ): DevMiddlewareAPI {
-    const { devOptions, serverOptions } = this;
+    const { devConfig, serverConfig } = this;
 
     const callbacks = {
       onInvalid: () => {
@@ -105,18 +107,20 @@ export class CompilerDevMiddleware {
       },
     };
 
-    const injectClient = this.devOptions.hmr || this.devOptions.liveReload;
+    const clientPaths = getClientPaths(devConfig);
 
     const middleware = devMiddleware({
-      headers: serverOptions.headers,
+      headers: serverConfig.headers,
       publicPath: '/',
       stats: false,
       callbacks,
-      hmrClientPath: injectClient
-        ? getHMRClientPath(devOptions.client)
-        : undefined,
+      clientPaths: clientPaths,
+      clientConfig: devConfig.client,
+      writeToDisk: devConfig.writeToDisk,
       serverSideRender: true,
-      writeToDisk: devOptions.writeToDisk,
+      // weak is enough in dev
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#weak_validation
+      etag: 'weak',
     });
 
     const warp = async (

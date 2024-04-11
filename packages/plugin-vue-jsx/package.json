@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-vue-jsx",
-  "version": "0.5.9",
+  "version": "0.6.0",
   "description": "Vue 3 JSX plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -27,17 +27,19 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
+    "@rsbuild/shared": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
-    "@vue/babel-plugin-jsx": "1.2.2"
+    "@vue/babel-plugin-jsx": "1.2.2",
+    "babel-plugin-vue-jsx-hmr": "1.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.3",
+    "@babel/core": "^7.24.4",
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.5.9"
+    "@rsbuild/core": "workspace:^0.6.0"
   },
   "publishConfig": {
     "access": "public",

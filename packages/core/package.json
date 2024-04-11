@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "0.5.9",
+  "version": "0.6.0",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.dev",
   "bugs": {
@@ -18,21 +18,17 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./server": {
-      "types": "./dist/server/index.d.ts",
-      "default": "./dist/server/index.js"
-    },
     "./client/hmr": {
       "types": "./dist/client/hmr/index.d.ts",
       "default": "./dist/client/hmr.mjs"
     },
-    "./plugins/*": {
-      "types": "./dist/plugins/*.d.ts",
-      "default": "./dist/plugins/*.js"
+    "./client/overlay": {
+      "types": "./dist/client/overlay.d.ts",
+      "default": "./dist/client/overlay.mjs"
     },
-    "./provider": {
-      "types": "./dist/provider/index.d.ts",
-      "default": "./dist/provider/index.js"
+    "./internal": {
+      "types": "./dist/internal.d.ts",
+      "default": "./dist/internal.js"
     },
     "./types": {
       "types": "./types.d.ts"
@@ -57,7 +53,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/core": "0.5.9-canary-5be4c34-20240403005129",
+    "@rspack/core": "0.6.0",
     "@swc/helpers": "0.5.3",
     "core-js": "~3.36.0",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",

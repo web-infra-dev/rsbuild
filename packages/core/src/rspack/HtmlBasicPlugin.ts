@@ -9,7 +9,7 @@ import {
   type HtmlTagUtils,
   type HtmlTagDescriptor,
 } from '@rsbuild/shared';
-import { getHTMLPlugin } from '../provider/htmlPluginUtil';
+import { getHTMLPlugin } from '../htmlUtils';
 
 export type TagConfig = {
   tags?: HtmlTagDescriptor[];

@@ -7,7 +7,7 @@ import {
   type DnsPrefetchOption,
 } from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import { getHTMLPlugin } from '../provider/htmlPluginUtil';
+import { getHTMLPlugin } from '../htmlUtils';
 
 type NetworkPerformanceType = 'preconnect' | 'dnsPrefetch';
 

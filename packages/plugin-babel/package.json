@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-babel",
-  "version": "0.5.9",
+  "version": "0.6.0",
   "description": "Babel plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@babel/core": "^7.24.3",
+    "@babel/core": "^7.24.4",
     "@babel/preset-typescript": "^7.24.1",
     "@babel/plugin-proposal-decorators": "^7.24.1",
     "@babel/plugin-transform-class-properties": "^7.24.1",
@@ -42,7 +42,7 @@
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.5.9"
+    "@rsbuild/core": "workspace:^0.6.0"
   },
   "publishConfig": {
     "access": "public",

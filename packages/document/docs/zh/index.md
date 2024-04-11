@@ -17,7 +17,7 @@ hero:
       text: 快速上手
       link: /zh/guide/start/quick-start
   image:
-    src: https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/home-logo-1200.png
+    src: https://rsfamily-design-resources.netlify.app/rsbuild/rsbuild-logo.svg
     alt: Rsbuild Logo
 
 features:

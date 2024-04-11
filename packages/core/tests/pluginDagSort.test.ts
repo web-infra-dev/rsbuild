@@ -13,18 +13,53 @@ describe('sort plugins', () => {
     ] as RsbuildPlugin[];
 
     const result = pluginDagSort(cases);
-    const p1Index = result.findIndex((item) => item.name === '1');
-    const p2Index = result.findIndex((item) => item.name === '2');
-    const p3Index = result.findIndex((item) => item.name === '3');
-    const p5Index = result.findIndex((item) => item.name === '5');
-    const p6Index = result.findIndex((item) => item.name === '6');
+    expect(result).toEqual([
+      {
+        name: '1',
+      },
+      {
+        name: '4',
+        post: [],
+        pre: [],
+      },
+      {
+        name: '6',
+        post: [],
+        pre: [],
+      },
+      {
+        name: '5',
+        post: ['3'],
+        pre: ['6'],
+      },
+      {
+        name: '3',
+        post: ['2'],
+        pre: ['1'],
+      },
+      {
+        name: '2',
+        post: [],
+        pre: [],
+      },
+    ]);
+  });
 
-    // is plugin 3 verified
-    expect(p2Index > p3Index).toBeTruthy();
-    expect(p1Index < p3Index).toBeTruthy();
-    // is plugin 5 verified
-    expect(p5Index < p3Index).toBeTruthy();
-    expect(p5Index > p6Index).toBeTruthy();
+  it('should keep the order consistent', () => {
+    const cases = [
+      { name: '1' },
+      { name: '2', pre: ['3'] },
+      { name: '3' },
+      { name: '4' },
+    ] as RsbuildPlugin[];
+
+    const result = pluginDagSort(cases);
+    expect(result).toEqual([
+      { name: '1' },
+      { name: '3' },
+      { name: '2', pre: ['3'] },
+      { name: '4' },
+    ]);
   });
 
   it('should allow some invalid plugins', () => {
@@ -36,12 +71,24 @@ describe('sort plugins', () => {
     ] as RsbuildPlugin[];
 
     const result = pluginDagSort(cases);
-    const p1Index = result.findIndex((item) => item.name === '1');
-    const p2Index = result.findIndex((item) => item.name === '2');
-    const p3Index = result.findIndex((item) => item.name === '3');
-
-    expect(p2Index > p3Index).toBeTruthy();
-    expect(p1Index < p3Index).toBeTruthy();
+    expect(result).toEqual([
+      {
+        name: '1',
+      },
+      {
+        name: '3',
+        post: ['2', undefined],
+        pre: ['1'],
+      },
+      {
+        name: '2',
+        post: [],
+        pre: [undefined],
+      },
+      {
+        name: undefined,
+      },
+    ]);
   });
 
   it('should throw error when plugin has ring', () => {

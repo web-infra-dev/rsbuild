@@ -275,9 +275,7 @@ export type RsbuildPluginAPI = Readonly<{
   useExposed: <T = any>(id: string | symbol) => T | undefined;
 
   /**
-   * @experimental
-   * This is an experimental and may introduce breaking change in patch releases.
-   * It will be stable in Rsbuild v0.6.0
+   * Used to transform the code of modules.
    */
   transform: TransformFn;
 }>;
