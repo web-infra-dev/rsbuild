@@ -129,36 +129,6 @@ export type RsbuildPlugins = (
   | Promise<RsbuildPlugin | Falsy>
 )[];
 
-type PluginsFn<T = undefined> = T extends undefined
-  ? () => Promise<RsbuildPlugin>
-  : (arg: T) => Promise<RsbuildPlugin>;
-
-export type Plugins = {
-  basic: PluginsFn;
-  cleanOutput: PluginsFn;
-  startUrl: PluginsFn;
-  fileSize: PluginsFn;
-  target: PluginsFn;
-  entry: PluginsFn;
-  cache: PluginsFn;
-  splitChunks: PluginsFn;
-  inlineChunk: PluginsFn;
-  bundleAnalyzer: PluginsFn;
-  rsdoctor: PluginsFn;
-  asset: PluginsFn;
-  html: PluginsFn;
-  wasm: PluginsFn;
-  moment: PluginsFn;
-  nodeAddons: PluginsFn;
-  externals: PluginsFn;
-  networkPerformance: PluginsFn;
-  preloadOrPrefetch: PluginsFn;
-  performance: PluginsFn;
-  define: PluginsFn;
-  server: PluginsFn;
-  moduleFederation: PluginsFn;
-};
-
 export type GetRsbuildConfig = {
   (): Readonly<RsbuildConfig>;
   (type: 'original' | 'current'): Readonly<RsbuildConfig>;

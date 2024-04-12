@@ -14,7 +14,6 @@ import { applyDefaultPlugins } from './shared';
 import { initConfigs } from './core/initConfigs';
 
 export const webpackProvider: RsbuildProvider<'webpack'> = async ({
-  plugins,
   pluginManager,
   rsbuildOptions,
 }) => {
@@ -44,7 +43,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     publicContext: createPublicContext(context),
 
     async applyDefaultPlugins() {
-      pluginManager.addPlugins(await applyDefaultPlugins(plugins));
+      pluginManager.addPlugins(await applyDefaultPlugins());
     },
 
     async initConfigs() {
