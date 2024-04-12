@@ -4,8 +4,9 @@ Rsbuild provides a lightweight yet powerful plugin system to implement most of i
 
 Plugins written by developers can modify the default behavior of Rsbuild and add various additional features, including but not limited to:
 
-- Obtain context information
+- Get context information
 - Register lifecycle hooks
+- Transform module source code
 - Modify Rspack configuration
 - Modify Rsbuild configuration
 - ...

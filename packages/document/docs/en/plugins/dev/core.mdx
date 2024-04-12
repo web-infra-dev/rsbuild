@@ -196,7 +196,7 @@ function Transform(
 
 `api.transform` accepts two params:
 
-- `descriptor`: a object describing the module's matching conditions.
+- `descriptor`: an object describing the module's matching conditions.
 - `handler`: a transformation function that takes the current module code and returns the transformed code.
 
 ### Example
@@ -217,7 +217,18 @@ const pluginPug = () => ({
 });
 ```
 
-### Matching Conditions
+### Descriptor Param
+
+The descriptor param is an object describing the module's matching conditions.
+
+- **Type:**
+
+```ts
+type TransformDescriptor = {
+  test?: RuleSetCondition;
+  resourceQuery?: RuleSetCondition;
+};
+```
 
 The `descriptor` param supports the following matching conditions:
 
@@ -235,6 +246,62 @@ api.transform({ test: /\.pug$/ }, ({ code }) => {
 api.transform({ resourceQuery: /raw/ }, ({ code }) => {
   // ...
 });
+```
+
+### Handler Param
+
+The handler param is a transformation function that takes the current module code and returns the transformed code.
+
+- **Type:**
+
+```ts
+type TransformContext = {
+  code: string;
+  resource: string;
+  resourcePath: string;
+  resourceQuery: string;
+  addDependency: (file: string) => void;
+  emitFile: (
+    name: string,
+    content: string | Buffer,
+    sourceMap?: string,
+    assetInfo?: Record<string, any>,
+  ) => void;
+};
+
+type TransformResult =
+  | string
+  | {
+      code: string;
+      map?: string | RspackSourceMap | null;
+    };
+
+type TransformHandler = (
+  context: TransformContext,
+) => MaybePromise<TransformResult>;
+```
+
+The `handler` function provides the following params:
+
+- `code`: The code of the module.
+- `resource`: The absolute path of the module, including the query.
+- `resourcePath`: The absolute path of the module, without the query.
+- `resourceQuery`: The query of the module.
+- `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild.
+- `emitFile`: Emits a file to the build output.
+
+For example:
+
+```js
+api.transform(
+  { test: /\.pug$/ },
+  ({ code, resource, resourcePath, resourceQuery }) => {
+    console.log(code); // -> some code
+    console.log(resource); // -> '/home/user/project/src/template.pug?foo=123'
+    console.log(resourcePath); // -> '/home/user/project/src/template.pug'
+    console.log(resourceQuery); // -> '?foo=123'
+  },
+);
 ```
 
 ### Difference with loader
