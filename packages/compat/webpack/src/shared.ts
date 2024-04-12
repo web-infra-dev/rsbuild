@@ -3,12 +3,12 @@ import { join } from 'node:path';
 import {
   awaitableGetter,
   getSharedPkgCompiledPath,
-  type Plugins,
   type RsbuildPlugin,
   type SharedCompiledPkgNames,
 } from '@rsbuild/shared';
+import { plugins } from '@rsbuild/core/internal';
 
-export const applyDefaultPlugins = (plugins: Plugins) =>
+export const applyDefaultPlugins = () =>
   awaitableGetter<RsbuildPlugin>([
     plugins.basic?.(),
     plugins.entry?.(),

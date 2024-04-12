@@ -12,7 +12,6 @@ import { applyDefaultPlugins } from './shared';
 export const rspackProvider: RsbuildProvider = async ({
   pluginManager,
   rsbuildOptions,
-  plugins,
 }) => {
   const rsbuildConfig = pickRsbuildConfig(rsbuildOptions.rsbuildConfig);
 
@@ -45,7 +44,7 @@ export const rspackProvider: RsbuildProvider = async ({
     publicContext: createPublicContext(context),
 
     async applyDefaultPlugins() {
-      pluginManager.addPlugins(await applyDefaultPlugins(plugins));
+      pluginManager.addPlugins(await applyDefaultPlugins());
     },
 
     async createDevServer(options) {

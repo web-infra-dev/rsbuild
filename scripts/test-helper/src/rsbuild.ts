@@ -12,11 +12,6 @@ const getRspackProvider = async () => {
   return rspackProvider;
 };
 
-export const getRsbuildPlugins = async () => {
-  const { plugins } = await import('@rsbuild/core/internal');
-  return plugins;
-};
-
 export function baseMatchLoader({
   config,
   loader,
@@ -125,7 +120,6 @@ export async function createStubRsbuild({
   } = await provider({
     pluginManager,
     rsbuildOptions,
-    plugins: await getRsbuildPlugins(),
   });
 
   if (plugins) {

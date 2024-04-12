@@ -9,12 +9,13 @@ import {
   type StatsError,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
+import { plugins } from '../plugins';
 import type { RsbuildPlugin } from '../types';
-import { awaitableGetter, type Plugins } from '@rsbuild/shared';
+import { awaitableGetter } from '@rsbuild/shared';
 import { formatStatsMessages } from '../client/formatStats';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
 
-export const applyDefaultPlugins = (plugins: Plugins) =>
+export const applyDefaultPlugins = () =>
   awaitableGetter<RsbuildPlugin>([
     import('./plugins/transition').then((m) => m.pluginTransition()),
     plugins.basic(),

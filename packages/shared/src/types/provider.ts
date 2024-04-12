@@ -1,4 +1,4 @@
-import type { PluginManager, Plugins, RsbuildPluginAPI } from './plugin';
+import type { PluginManager, RsbuildPluginAPI } from './plugin';
 import type { RsbuildContext } from './context';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
@@ -55,7 +55,6 @@ export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
 
 export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
   (options: {
-    plugins: Plugins;
     pluginManager: PluginManager;
     rsbuildOptions: Required<CreateRsbuildOptions>;
   }) => Promise<ProviderInstance<B>>;
