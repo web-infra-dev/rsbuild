@@ -11,9 +11,10 @@ import type {
   OnBeforeStartProdServerFn,
   OnAfterCreateCompilerFn,
   OnBeforeCreateCompilerFn,
-  ModifyRsbuildConfigFn,
-  ModifyBundlerChainFn,
   ModifyChainUtils,
+  ModifyHTMLTagsFn,
+  ModifyBundlerChainFn,
+  ModifyRsbuildConfigFn,
 } from './hooks';
 import type { RsbuildContext } from './context';
 import type {
@@ -228,6 +229,7 @@ export type RsbuildPluginAPI = Readonly<{
   onAfterCreateCompiler: PluginHook<OnAfterCreateCompilerFn>;
   onBeforeCreateCompiler: PluginHook<OnBeforeCreateCompilerFn>;
 
+  modifyHTMLTags: PluginHook<ModifyHTMLTagsFn>;
   modifyRsbuildConfig: PluginHook<ModifyRsbuildConfigFn>;
   modifyBundlerChain: PluginHook<ModifyBundlerChainFn>;
   /** Only works when bundler is Rspack */

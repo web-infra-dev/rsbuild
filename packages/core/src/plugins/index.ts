@@ -1,6 +1,9 @@
+import type { ModifyHTMLTagsFn } from '@rsbuild/shared';
+
 export const plugins = {
   basic: () => import('./basic').then((m) => m.pluginBasic()),
-  html: () => import('./html').then((m) => m.pluginHtml()),
+  html: (modifyTagsFn: ModifyHTMLTagsFn) =>
+    import('./html').then((m) => m.pluginHtml(modifyTagsFn)),
   cleanOutput: () => import('./cleanOutput').then((m) => m.pluginCleanOutput()),
   startUrl: () => import('./startUrl').then((m) => m.pluginStartUrl()),
   fileSize: () => import('./fileSize').then((m) => m.pluginFileSize()),

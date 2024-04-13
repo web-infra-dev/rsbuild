@@ -99,6 +99,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -219,6 +220,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
