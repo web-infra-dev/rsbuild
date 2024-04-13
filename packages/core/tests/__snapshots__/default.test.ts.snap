@@ -663,6 +663,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -1422,6 +1423,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -2560,6 +2562,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},

@@ -3,20 +3,21 @@
 exports[`initHooks > should init hooks correctly 1`] = `
 [
   "onExit",
+  "onAfterBuild",
+  "onBeforeBuild",
   "onDevCompileDone",
   "onCloseDevServer",
   "onAfterStartDevServer",
   "onBeforeStartDevServer",
   "onAfterStartProdServer",
   "onBeforeStartProdServer",
-  "onAfterBuild",
-  "onBeforeBuild",
+  "onAfterCreateCompiler",
+  "onBeforeCreateCompiler",
+  "modifyHTMLTags",
   "modifyRspackConfig",
   "modifyBundlerChain",
   "modifyWebpackChain",
   "modifyWebpackConfig",
   "modifyRsbuildConfig",
-  "onAfterCreateCompiler",
-  "onBeforeCreateCompiler",
 ]
 `;
