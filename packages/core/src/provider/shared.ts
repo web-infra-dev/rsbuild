@@ -1,57 +1,16 @@
 import { join } from 'node:path';
 import {
   color,
-  getSharedPkgCompiledPath,
   isMultiCompiler,
+  getSharedPkgCompiledPath,
   type Stats,
   type MultiStats,
   type SharedCompiledPkgNames,
   type StatsError,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
-import { plugins } from '../plugins';
-import type { RsbuildPlugin } from '../types';
-import { awaitableGetter } from '@rsbuild/shared';
 import { formatStatsMessages } from '../client/formatStats';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
-
-export const applyDefaultPlugins = () =>
-  awaitableGetter<RsbuildPlugin>([
-    import('./plugins/transition').then((m) => m.pluginTransition()),
-    plugins.basic(),
-    plugins.entry(),
-    // plugins.cache(),
-    plugins.target(),
-    import('./plugins/output').then((m) => m.pluginOutput()),
-    import('./plugins/resolve').then((m) => m.pluginResolve()),
-    plugins.fileSize(),
-    // cleanOutput plugin should before the html plugin
-    plugins.cleanOutput(),
-    plugins.asset(),
-    plugins.html(),
-    plugins.wasm(),
-    plugins.moment(),
-    plugins.nodeAddons(),
-    plugins.define(),
-    import('./plugins/css').then((m) => m.pluginCss()),
-    import('./plugins/less').then((m) => m.pluginLess()),
-    import('./plugins/sass').then((m) => m.pluginSass()),
-    import('./plugins/minimize').then((m) => m.pluginMinimize()),
-    import('./plugins/progress').then((m) => m.pluginProgress()),
-    import('./plugins/swc').then((m) => m.pluginSwc()),
-    plugins.externals(),
-    plugins.splitChunks(),
-    plugins.startUrl(),
-    plugins.inlineChunk(),
-    plugins.bundleAnalyzer(),
-    plugins.rsdoctor(),
-    plugins.networkPerformance(),
-    plugins.preloadOrPrefetch(),
-    plugins.performance(),
-    plugins.server(),
-    plugins.moduleFederation(),
-    import('./plugins/rspackProfile').then((m) => m.pluginRspackProfile()),
-  ]);
 
 // depend on CSS modules generator config
 export const rspackMinVersion = '0.6.0';

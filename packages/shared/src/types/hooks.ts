@@ -6,6 +6,7 @@ import type { BundlerChain } from './bundlerConfig';
 import type { Rspack, RspackConfig } from './rspack';
 import type { RsbuildConfig } from './config';
 import type { WebpackConfig } from './thirdParty';
+import type { HtmlTagObject } from 'html-webpack-plugin';
 
 export type OnBeforeBuildFn<B = 'rspack'> = (params: {
   bundlerConfigs?: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
@@ -51,6 +52,13 @@ export type OnAfterCreateCompilerFn<
 > = (params: { compiler: Compiler }) => MaybePromise<void>;
 
 export type OnExitFn = () => void;
+
+type HTMLTags = {
+  headTags: HtmlTagObject[];
+  bodyTags: HtmlTagObject[];
+};
+
+export type ModifyHTMLTagsFn = (tags: HTMLTags) => MaybePromise<HTMLTags>;
 
 export type ModifyRsbuildConfigUtils = {
   /** Merge multiple Rsbuild config objects into one. */

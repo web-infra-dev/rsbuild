@@ -5,12 +5,12 @@ import {
   type PreviewServerOptions,
 } from '@rsbuild/shared';
 import {
+  plugins,
   getPluginAPI,
   createContext,
   initRsbuildConfig,
   createPublicContext,
 } from '@rsbuild/core/internal';
-import { applyDefaultPlugins } from './shared';
 import { initConfigs } from './core/initConfigs';
 
 export const webpackProvider: RsbuildProvider<'webpack'> = async ({
@@ -43,7 +43,43 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     publicContext: createPublicContext(context),
 
     async applyDefaultPlugins() {
-      pluginManager.addPlugins(await applyDefaultPlugins());
+      const allPlugins = await Promise.all([
+        plugins.basic?.(),
+        plugins.entry?.(),
+        plugins.cache?.(),
+        plugins.target?.(),
+        import('./plugins/output').then((m) => m.pluginOutput()),
+        import('./plugins/resolve').then((m) => m.pluginResolve()),
+        plugins.fileSize?.(),
+        plugins.cleanOutput?.(),
+        plugins.asset(),
+        import('./plugins/copy').then((m) => m.pluginCopy()),
+        plugins.html(async (tags) => {
+          const result = await context.hooks.modifyHTMLTags.call(tags);
+          return result[0];
+        }),
+        plugins.wasm(),
+        plugins.moment(),
+        plugins.nodeAddons(),
+        plugins.define(),
+        import('./plugins/progress').then((m) => m.pluginProgress()),
+        import('./plugins/css').then((m) => m.pluginCss()),
+        import('./plugins/sass').then((m) => m.pluginSass()),
+        import('./plugins/less').then((m) => m.pluginLess()),
+        plugins.bundleAnalyzer(),
+        plugins.rsdoctor(),
+        plugins.splitChunks(),
+        plugins.startUrl?.(),
+        plugins.inlineChunk(),
+        plugins.externals(),
+        plugins.performance(),
+        plugins.networkPerformance(),
+        plugins.preloadOrPrefetch(),
+        plugins.server(),
+        plugins.moduleFederation(),
+      ]);
+
+      pluginManager.addPlugins(allPlugins);
     },
 
     async initConfigs() {

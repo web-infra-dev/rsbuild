@@ -18,6 +18,7 @@ import type {
   HtmlConfig,
   RsbuildPluginAPI,
   NormalizedConfig,
+  ModifyHTMLTagsFn,
   HTMLPluginOptions,
 } from '@rsbuild/shared';
 import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
@@ -191,7 +192,7 @@ const getTagConfig = (api: RsbuildPluginAPI): TagConfig | undefined => {
   };
 };
 
-export const pluginHtml = (): RsbuildPlugin => ({
+export const pluginHtml = (modifyTagsFn: ModifyHTMLTagsFn): RsbuildPlugin => ({
   name: 'rsbuild:html',
 
   setup(api) {
@@ -297,7 +298,7 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
-          .use(HtmlBasicPlugin, [htmlInfoMap]);
+          .use(HtmlBasicPlugin, [htmlInfoMap, modifyTagsFn]);
 
         if (config.security) {
           const { nonce } = config.security;

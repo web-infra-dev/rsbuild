@@ -5,6 +5,7 @@ import type {
   HookDescriptor,
   OnAfterBuildFn,
   OnBeforeBuildFn,
+  ModifyHTMLTagsFn,
   OnCloseDevServerFn,
   OnDevCompileDoneFn,
   ModifyBundlerChainFn,
@@ -62,25 +63,23 @@ export function createAsyncHook<
 
 export function initHooks() {
   return {
-    /** parameters are not bundler-related */
     onExit: createAsyncHook<OnExitFn>(),
+    onAfterBuild: createAsyncHook<OnAfterBuildFn>(),
+    onBeforeBuild: createAsyncHook<OnBeforeBuildFn>(),
     onDevCompileDone: createAsyncHook<OnDevCompileDoneFn>(),
     onCloseDevServer: createAsyncHook<OnCloseDevServerFn>(),
     onAfterStartDevServer: createAsyncHook<OnAfterStartDevServerFn>(),
     onBeforeStartDevServer: createAsyncHook<OnBeforeStartDevServerFn>(),
     onAfterStartProdServer: createAsyncHook<OnAfterStartProdServerFn>(),
     onBeforeStartProdServer: createAsyncHook<OnBeforeStartProdServerFn>(),
-
-    /** parameters are bundler-related */
-    onAfterBuild: createAsyncHook<OnAfterBuildFn>(),
-    onBeforeBuild: createAsyncHook<OnBeforeBuildFn>(),
+    onAfterCreateCompiler: createAsyncHook<OnAfterCreateCompilerFn>(),
+    onBeforeCreateCompiler: createAsyncHook<OnBeforeCreateCompilerFn>(),
+    modifyHTMLTags: createAsyncHook<ModifyHTMLTagsFn>(),
     modifyRspackConfig: createAsyncHook<ModifyRspackConfigFn>(),
     modifyBundlerChain: createAsyncHook<ModifyBundlerChainFn>(),
     modifyWebpackChain: createAsyncHook<ModifyWebpackChainFn>(),
     modifyWebpackConfig: createAsyncHook<ModifyWebpackConfigFn>(),
     modifyRsbuildConfig: createAsyncHook<ModifyRsbuildConfigFn>(),
-    onAfterCreateCompiler: createAsyncHook<OnAfterCreateCompilerFn>(),
-    onBeforeCreateCompiler: createAsyncHook<OnBeforeCreateCompilerFn>(),
   };
 }
 

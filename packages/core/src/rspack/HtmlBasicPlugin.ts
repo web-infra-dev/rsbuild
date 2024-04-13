@@ -8,6 +8,7 @@ import {
   type HtmlTag,
   type HtmlTagUtils,
   type HtmlTagDescriptor,
+  type ModifyHTMLTagsFn,
 } from '@rsbuild/shared';
 import { getHTMLPlugin } from '../htmlUtils';
 
@@ -98,7 +99,7 @@ const formatTags = (
     ...override,
   }));
 
-const modifyTags = (
+const applyTagConfig = (
   data: AlterAssetTagGroupsData,
   tagConfig: TagConfig,
   compilationHash: string,
@@ -222,23 +223,26 @@ export class HtmlBasicPlugin {
 
   readonly options: HtmlBasicPluginOptions;
 
-  constructor(options: HtmlBasicPluginOptions) {
+  readonly modifyTagsFn: ModifyHTMLTagsFn;
+
+  constructor(options: HtmlBasicPluginOptions, modifyTagsFn: ModifyHTMLTagsFn) {
     this.name = 'HtmlBasicPlugin';
     this.options = options;
+    this.modifyTagsFn = modifyTagsFn;
   }
 
   apply(compiler: Compiler) {
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       getHTMLPlugin()
         .getHooks(compilation)
-        .alterAssetTagGroups.tap(this.name, (data) => {
+        .alterAssetTagGroups.tapPromise(this.name, async (data) => {
           const entryName = data.plugin.options?.entryName;
 
           if (!entryName) {
             return data;
           }
 
-          const { headTags } = data;
+          const { headTags, bodyTags } = data;
           const { favicon, tagConfig, templateContent } =
             this.options[entryName];
 
@@ -248,9 +252,12 @@ export class HtmlBasicPlugin {
 
           addFavicon(headTags, favicon);
 
+          const result = await this.modifyTagsFn({ headTags, bodyTags });
+          Object.assign(data, result);
+
           if (tagConfig) {
             const hash = compilation.hash ?? '';
-            modifyTags(data, tagConfig, hash, entryName);
+            applyTagConfig(data, tagConfig, hash, entryName);
           }
 
           return data;
