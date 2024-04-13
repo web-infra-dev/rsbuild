@@ -88,7 +88,7 @@ const getTagPriority = (tag: HtmlTag, tagConfig: TagConfig) => {
 };
 
 /**
- * `HtmlBasicTag` -> `HtmlTagObject`
+ * `HtmlTagObject` -> `HtmlBasicTag`
  */
 const formatBasicTag = (tag: HtmlTagObject): HtmlBasicTag => ({
   tag: tag.tagName,
@@ -97,7 +97,7 @@ const formatBasicTag = (tag: HtmlTagObject): HtmlBasicTag => ({
 });
 
 /**
- * `HtmlTagObject` -> `HtmlBasicTag`
+ * `HtmlBasicTag` -> `HtmlTagObject`
  */
 const fromBasicTag = (tag: HtmlBasicTag): HtmlTagObject => ({
   meta: {},
@@ -167,15 +167,10 @@ const applyTagConfig = (
         }
 
         attrs[filenameTag] = filename;
+        tag.attrs = attrs;
       }
 
-      ret.push({
-        meta: {},
-        tagName: tag.tag,
-        attributes: attrs,
-        voidTag: VOID_TAGS.includes(tag.tag),
-        innerHTML: tag.children,
-      });
+      ret.push(fromBasicTag(tag));
     }
     return ret;
   };
