@@ -7,6 +7,7 @@ import {
   withPublicPath,
   type HtmlTag,
   type HtmlTagUtils,
+  type HtmlBasicTag,
   type HtmlTagDescriptor,
   type ModifyHTMLTagsFn,
 } from '@rsbuild/shared';
@@ -86,15 +87,35 @@ const getTagPriority = (tag: HtmlTag, tagConfig: TagConfig) => {
   return priority;
 };
 
-// convert tags between `HtmlTag` and `HtmlTagObject`.
+/**
+ * `HtmlBasicTag` -> `HtmlTagObject`
+ */
+const formatBasicTag = (tag: HtmlTagObject): HtmlBasicTag => ({
+  tag: tag.tagName,
+  attrs: tag.attributes,
+  children: tag.innerHTML,
+});
+
+/**
+ * `HtmlTagObject` -> `HtmlBasicTag`
+ */
+const fromBasicTag = (tag: HtmlBasicTag): HtmlTagObject => ({
+  meta: {},
+  tagName: tag.tag,
+  attributes: tag.attrs ?? {},
+  voidTag: VOID_TAGS.includes(tag.tag),
+  innerHTML: tag.children,
+});
+
+/**
+ * `HtmlTagObject[]` -> `HtmlTag[]`
+ */
 const formatTags = (
   tags: HtmlTagObject[],
   override?: Partial<HtmlTag>,
 ): HtmlTag[] =>
   tags.map((tag) => ({
-    tag: tag.tagName,
-    attrs: tag.attributes,
-    children: tag.innerHTML,
+    ...formatBasicTag(tag),
     publicPath: false,
     ...override,
   }));
@@ -252,8 +273,14 @@ export class HtmlBasicPlugin {
 
           addFavicon(headTags, favicon);
 
-          const result = await this.modifyTagsFn({ headTags, bodyTags });
-          Object.assign(data, result);
+          const result = await this.modifyTagsFn({
+            headTags: headTags.map(formatBasicTag),
+            bodyTags: bodyTags.map(formatBasicTag),
+          });
+          Object.assign(data, {
+            headTags: result.headTags.map(fromBasicTag),
+            bodyTags: result.bodyTags.map(fromBasicTag),
+          });
 
           if (tagConfig) {
             const hash = compilation.hash ?? '';
