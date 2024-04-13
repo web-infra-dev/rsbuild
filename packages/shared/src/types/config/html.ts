@@ -26,10 +26,13 @@ export type MetaOptions = {
   [name: string]: string | false | MetaAttrs;
 };
 
-export type HtmlTag = {
+export type HtmlBasicTag = {
   tag: string;
   attrs?: Record<string, string | boolean | null | undefined>;
   children?: string;
+};
+
+export type HtmlTag = HtmlBasicTag & {
   hash?: boolean | string | ((url: string, hash: string) => string);
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
   append?: boolean;
