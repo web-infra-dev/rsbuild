@@ -21,21 +21,23 @@ Here are all the main features supported by Rsbuild.
 | Environment variable | Optional feature, inject environment variables or expressions into the code                                                    | <ul><li>[Environment Variables](/guide/advanced/env-vars)</li></ul>                                                                 |
 | Node Polyfill        | Optional feature, inject polyfills for Node core modules on the browser side                                                   | <ul><li>[Node Polyfill Plugin](/plugins/list/plugin-node-polyfill)</li></ul>                                                        |
 | Type check           | Optional feature, run type checker to check for type issues in code                                                            | <ul><li>[Type checking](/guide/basic/typescript#type-checking)</li></ul>                                                            |
+| Module Federation    | Optional feature, dynamically load modules and share dependencies                                                              | <ul><li>[moduleFederation.options](/config/module-federation/options)</li></ul>                                                     |
 
 ## CSS
 
-| Features                | Description                                                                        | Links                                                                                                                                                          |
-| ----------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| PostCSS compilation     | PostCSS compilation is enabled by default, built-in autoprefixer and other plugins | <ul><li>[CSS Usage](/guide/basic/css-usage)</li><li>[tools.postcss](/config/tools/postcss)</li><li> [tools.autoprefixer](/config/tools/autoprefixer)</li></ul> |
-| Sass preprocessing      | Support compile Sass files by default                                              | <ul><li>[CSS Usage](/guide/basic/css-usage)</li><li>[tools.sass](/config/tools/sass)</li> </ul>                                                                |
-| Less preprocessing      | Support compile Less files by default                                              | <ul><li>[CSS Usage](/guide/basic/css-usage)</li><li>[tools.less](/config/tools/less)</li></ul>                                                                 |
-| Stylus preprocessing    | Optional feature, compile Stylus files                                             | <ul><li>[Stylus Plugin](/plugins/list/plugin-stylus)</li></ul>                                                                                                 |
-| CSS Modules compilation | Support compiling `*.module.*` files by default                                    | <ul><li>[Use CSS Modules](/guide/basic/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul>                                              |
-| CSS Modules type        | Optional feature, automatically generate type definition for CSS Modules           | <ul><li>[Use CSS Modules](/guide/basic/css-modules)</li></ul>                                                                                                  |
-| CSS minification        | CSS minification is enabled by default in production build                         | <ul><li>[CSS Usage](/guide/basic/css-usage)</li></ul>                                                                                                          |
-| Styled Components       | Optional feature, Support styled components compilation                            | <ul><li>[Styled Components Plugin](/plugins/list/plugin-styled-components)</li></ul>                                                                           |
-| Inline CSS into JS      | Optional feature, inline CSS files to JavaScript files                             | <ul><li>[CSS Usage](/guide/basic/css-usage)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul>                                              |
-| rem unit conversion     | Optional feature, convert px units in CSS to rem units                             | <ul><li>[Rem Plugin](/plugins/list/plugin-rem)</li></ul>                                                                                                       |
+| Features                | Description                                                              | Links                                                                                                                                                          |
+| ----------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| PostCSS compilation     | PostCSS compilation is enabled by default, built-in autoprefixer plugin  | <ul><li>[CSS Usage](/guide/basic/css-usage)</li><li>[tools.postcss](/config/tools/postcss)</li><li> [tools.autoprefixer](/config/tools/autoprefixer)</li></ul> |
+| Sass preprocessing      | Support compile Sass files by default                                    | <ul><li>[CSS Usage](/guide/basic/css-usage)</li><li>[tools.sass](/config/tools/sass)</li> </ul>                                                                |
+| Less preprocessing      | Support compile Less files by default                                    | <ul><li>[CSS Usage](/guide/basic/css-usage)</li><li>[tools.less](/config/tools/less)</li></ul>                                                                 |
+| Stylus preprocessing    | Optional feature, compile Stylus files                                   | <ul><li>[Stylus Plugin](/plugins/list/plugin-stylus)</li></ul>                                                                                                 |
+| CSS Modules compilation | Support compiling `*.module.*` files by default                          | <ul><li>[Use CSS Modules](/guide/basic/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul>                                              |
+| CSS Modules type        | Optional feature, automatically generate type definition for CSS Modules | <ul><li>[Use CSS Modules](/guide/basic/css-modules)</li></ul>                                                                                                  |
+| CSS minification        | CSS minification is enabled by default in production build               | <ul><li>[CSS Usage](/guide/basic/css-usage)</li></ul>                                                                                                          |
+| Styled Components       | Optional feature, Support styled components compilation                  | <ul><li>[Styled Components Plugin](/plugins/list/plugin-styled-components)</li></ul>                                                                           |
+| Inline CSS into JS      | Optional feature, inline CSS files to JavaScript files                   | <ul><li>[CSS Usage](/guide/basic/css-usage)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul>                                              |
+| Rem unit conversion     | Optional feature, convert px units in CSS to rem units                   | <ul><li>[Rem Plugin](/plugins/list/plugin-rem)</li></ul>                                                                                                       |
+| Lightning CSS           | Optional feature, use Lightning CSS to improve compile performance       | <ul><li>[Lightning CSS Plugin](/plugins/list/plugin-lightningcss)</li></ul>                                                                                    |
 
 ## HTML
 
@@ -52,23 +54,26 @@ Here are all the main features supported by Rsbuild.
 
 ## Development and Preview
 
-| Features                | Description                                                                       | Links                                                    |
-| ----------------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| Automatically open page | Optional feature, automatically open page URL in browser when starting Dev Server | <ul><li>[dev.startUrl](/config/dev/start-url) </li></ul> |
-| HTTPS Server            | Optional feature, enable HTTPS Server                                             | <ul><li>[server.https](/config/server/https)</li></ul>   |
+| Features   | Description                                                                    | Links                                                           |
+| ---------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| Public Dir | Use the public directory as the directory for serving public assets by default | <ul><li>[server.publicDir](/config/server/public-dir)</li></ul> |
+| Proxy      | Optional feature, proxy requests to the specified service                      | <ul><li>[dev.proxy](/config/dev/proxy)</li></ul>                |
+| Open page  | Optional feature, automatically open page in browser when starting server      | <ul><li>[dev.startUrl](/config/dev/start-url) </li></ul>        |
+| HTTPS      | Optional feature, enable HTTPS server                                          | <ul><li>[server.https](/config/server/https)</li></ul>          |
 
 ## Frontend Framework
 
-| Features               | Description                                                                | Links                                                                                              |
-| ---------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| React                  | Optional feature, enable React syntax                                      | <ul><li>[React Plugin](/plugins/list/plugin-react)</li></ul>                                       |
-| React Refresh          | After enable React plugin, Support React Refresh by default                | <ul><li>[Hot Module Replacement](/guide/advanced/hmr)</li><li>[dev.hmr](/config/dev/hmr)</li></ul> |
-| SVG to React component | Support to import SVG as component by default                              | <ul><li>[SVGR Plugin](/plugins/list/plugin-svgr)</li></ul>                                         |
-| Vue 3 SFC compilation  | Optional feature, enable compilation of Vue 3 SFC (Single File Components) | <ul><li>[Vue Plugin](/plugins/list/plugin-vue)</li></ul>                                           |
-| Vue 3 JSX compilation  | Optional feature, enable compilation of Vue 3 JSX syntax                   | <ul><li>[Vue JSX Plugin](/plugins/list/plugin-vue-jsx)</li></ul>                                   |
-| Vue 2 SFC compilation  | Optional feature, enable compilation of Vue 2 SFC (Single File Components) | <ul><li>[Vue 2 Plugin](/plugins/list/plugin-vue2)</li></ul>                                        |
-| Vue 2 JSX compilation  | Optional feature, enable compilation of Vue 2 JSX syntax                   | <ul><li>[Vue 2 JSX Plugin](/plugins/list/plugin-vue2-jsx)</li></ul>                                |
-| Svelte compilation     | Optional feature, enable compilation of Svelte component                   | <ul><li>[Svelte Plugin](/plugins/list/plugin-svelte)</li></ul>                                     |
+| Features      | Description                                                                | Links                                                                                              |
+| ------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| React         | Optional feature, enable compilation of React JSX                          | <ul><li>[React Plugin](/plugins/list/plugin-react)</li></ul>                                       |
+| React Refresh | Optional feature, enable React Refresh                                     | <ul><li>[Hot Module Replacement](/guide/advanced/hmr)</li><li>[dev.hmr](/config/dev/hmr)</li></ul> |
+| SVGR          | Optional feature, transform SVG to React component                         | <ul><li>[SVGR Plugin](/plugins/list/plugin-svgr)</li></ul>                                         |
+| Vue 3 SFC     | Optional feature, enable compilation of Vue 3 SFC (Single File Components) | <ul><li>[Vue Plugin](/plugins/list/plugin-vue)</li></ul>                                           |
+| Vue 3 JSX     | Optional feature, enable compilation of Vue 3 JSX syntax                   | <ul><li>[Vue JSX Plugin](/plugins/list/plugin-vue-jsx)</li></ul>                                   |
+| Vue 2 SFC     | Optional feature, enable compilation of Vue 2 SFC (Single File Components) | <ul><li>[Vue 2 Plugin](/plugins/list/plugin-vue2)</li></ul>                                        |
+| Vue 2 JSX     | Optional feature, enable compilation of Vue 2 JSX syntax                   | <ul><li>[Vue 2 JSX Plugin](/plugins/list/plugin-vue2-jsx)</li></ul>                                |
+| Svelte        | Optional feature, enable compilation of Svelte component                   | <ul><li>[Svelte Plugin](/plugins/list/plugin-svelte)</li></ul>                                     |
+| Solid         | Optional feature, enable compilation of Solid JSX                          | <ul><li>[Solid Plugin](/plugins/list/plugin-solid)</li></ul>                                       |
 
 ## Static Assets
 

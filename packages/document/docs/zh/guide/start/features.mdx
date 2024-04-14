@@ -21,21 +21,23 @@
 | 注入环境变量    | 可选功能，向代码中注入环境变量或表达式                           | <ul><li>[环境变量](/guide/advanced/env-vars)</li></ul>                                                                     |
 | Node polyfill   | 可选功能，在浏览器端注入 Node 核心模块的 polyfills               | <ul><li>[Node Polyfill 插件](/plugins/list/plugin-node-polyfill)</li></ul>                                                 |
 | TS 类型检查     | 可选功能，运行 type checker 检查代码中的类型问题                 | <ul><li>[类型检查](/guide/basic/typescript#类型检查)</li></ul>                                                             |
+| 模块联邦        | 可选功能，动态加载模块，并共享依赖关系                           | <ul><li>[moduleFederation.options](/config/module-federation/options)</li></ul>                                            |
 
 ## CSS 编译
 
-| 功能                 | 描述                                                | 相关链接                                                                                                                                                         |
-| -------------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| PostCSS 编译         | 默认开启 PostCSS 编译，内置 autoprefixer 等多个插件 | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.postcss](/config/tools/postcss)</li><li>[tools.autoprefixer](/config/tools/autoprefixer)</li></ul> |
-| Sass 预处理          | 默认支持编译 Sass/Scss 文件                         | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.sass](/config/tools/sass)</li></ul>                                                                |
-| Less 预处理          | 默认支持编译 Less 文件                              | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.less](/config/tools/less)</li></ul>                                                                |
-| Stylus 预处理        | 可选功能，编译 Stylus 文件                          | <ul><li>[Stylus 插件](/plugins/list/plugin-stylus)</li></ul>                                                                                                     |
-| CSS Modules 编译     | 默认支持编译 CSS Modules 文件                       | <ul><li>[使用 CSS Modules](/guide/basic/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul>                                               |
-| CSS Modules 类型提示 | 可选功能，自动生成 CSS Modules 的类型定义文件       | <ul><li>[使用 CSS Modules](/guide/basic/css-modules)</li></ul>                                                                                                   |
-| CSS 压缩             | 默认在生产环境构建时开启压缩                        | <ul><li>[引用样式资源](/guide/basic/css-usage)</li></ul>                                                                                                         |
-| Styled Components    | 可选功能，支持 styled-components 编译               | <ul><li>[Styled Components 插件](/plugins/list/plugin-styled-components)</li></ul>                                                                               |
-| 内联 CSS 到 JS 中    | 可选功能，将 CSS 文件内联到 JS 文件中               | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul>                                             |
-| rem 单位转换         | 可选功能，将 CSS 中的 px 转成 rem 单位              | <ul><li>[Rem 插件](/plugins/list/plugin-rem)</li></ul>                                                                                                           |
+| 功能                 | 描述                                          | 相关链接                                                                                                                                                         |
+| -------------------- | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| PostCSS 编译         | 默认开启 PostCSS 编译，内置 autoprefixer 插件 | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.postcss](/config/tools/postcss)</li><li>[tools.autoprefixer](/config/tools/autoprefixer)</li></ul> |
+| Sass 预处理          | 默认支持编译 Sass/Scss 文件                   | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.sass](/config/tools/sass)</li></ul>                                                                |
+| Less 预处理          | 默认支持编译 Less 文件                        | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.less](/config/tools/less)</li></ul>                                                                |
+| Stylus 预处理        | 可选功能，编译 Stylus 文件                    | <ul><li>[Stylus 插件](/plugins/list/plugin-stylus)</li></ul>                                                                                                     |
+| CSS Modules 编译     | 默认支持编译 CSS Modules 文件                 | <ul><li>[使用 CSS Modules](/guide/basic/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul>                                               |
+| CSS Modules 类型提示 | 可选功能，自动生成 CSS Modules 的类型定义文件 | <ul><li>[使用 CSS Modules](/guide/basic/css-modules)</li></ul>                                                                                                   |
+| CSS 压缩             | 默认在生产环境构建时开启压缩                  | <ul><li>[引用样式资源](/guide/basic/css-usage)</li></ul>                                                                                                         |
+| Styled Components    | 可选功能，支持 styled-components 编译         | <ul><li>[Styled Components 插件](/plugins/list/plugin-styled-components)</li></ul>                                                                               |
+| 内联 CSS 到 JS 中    | 可选功能，将 CSS 文件内联到 JS 文件中         | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul>                                             |
+| Rem 单位转换         | 可选功能，将 CSS 中的 px 转成 rem 单位        | <ul><li>[Rem 插件](/plugins/list/plugin-rem)</li></ul>                                                                                                           |
+| Lightning CSS        | 可选功能，使用 Lightning CSS 提升编译性能     | <ul><li>[Lightning CSS 插件](/plugins/list/plugin-lightningcss)</li></ul>                                                                                        |
 
 ## HTML 编译
 
@@ -52,23 +54,26 @@
 
 ## 开发预览相关
 
-| 功能         | 描述                                                     | 相关链接                                                |
-| ------------ | -------------------------------------------------------- | ------------------------------------------------------- |
-| 自动打开页面 | 可选功能，在启动 Dev Server 时自动在浏览器中打开页面 URL | <ul><li>[dev.startUrl](/config/dev/start-url)</li></ul> |
-| HTTPS Server | 可选功能，开启 Rsbuild Server 对 HTTPS 的支持            | <ul><li>[server.https](/config/server/https)</li></ul>  |
+| 功能        | 描述                                             | 相关链接                                                        |
+| ----------- | ------------------------------------------------ | --------------------------------------------------------------- |
+| Public 目录 | 默认将 public 目录作为静态资源服务的文件夹       | <ul><li>[server.publicDir](/config/server/public-dir)</li></ul> |
+| 请求代理    | 可选功能，将请求代理到指定的服务上               | <ul><li>[dev.proxy](/config/dev/proxy)</li></ul>                |
+| 打开页面    | 可选功能，在启动 server 时自动在浏览器中打开页面 | <ul><li>[dev.startUrl](/config/dev/start-url)</li></ul>         |
+| HTTPS       | 可选功能，开启 server 对 HTTPS 的支持            | <ul><li>[server.https](/config/server/https)</li></ul>          |
 
-## 前端框架相关
+## 框架支持
 
-| 功能              | 描述                                             | 相关链接                                                                               |
-| ----------------- | ------------------------------------------------ | -------------------------------------------------------------------------------------- |
-| React             | 可选功能，开启后提供 React 语法支持              | <ul><li>[React 插件](/plugins/list/plugin-react)</li></ul>                             |
-| React Refresh     | 开启 React 插件后，默认支持 React Refresh 热更新 | <ul><li>[模块热更新](/guide/advanced/hmr)</li><li>[dev.hmr](/config/dev/hmr)</li></ul> |
-| SVG 转 React 组件 | 默认支持在 React 组件中引用 SVG 作为组件         | <ul><li>[SVGR 插件](/plugins/list/plugin-svgr)</li></ul>                               |
-| Vue 3 SFC 编译    | 可选功能，开启 Vue 3 SFC 单文件组件编译          | <ul><li>[Vue 插件](/plugins/list/plugin-vue)</li></ul>                                 |
-| Vue 3 JSX 编译    | 可选功能，开启 Vue 3 JSX 语法编译                | <ul><li>[Vue JSX 插件](/plugins/list/plugin-vue-jsx)</li></ul>                         |
-| Vue 2 SFC 编译    | 可选功能，开启 Vue 2 SFC 单文件组件编译          | <ul><li>[Vue 2 插件](/plugins/list/plugin-vue2)</li></ul>                              |
-| Vue 2 JSX 编译    | 可选功能，开启 Vue 2 JSX 语法编译                | <ul><li>[Vue 2 JSX 插件](/plugins/list/plugin-vue2-jsx)</li></ul>                      |
-| Svelte 编译       | 可选功能，开启 Svelte 组件编译                   | <ul><li>[Svelte 插件](/plugins/list/plugin-svelte)</li></ul>                           |
+| 功能          | 描述                                    | 相关链接                                                                               |
+| ------------- | --------------------------------------- | -------------------------------------------------------------------------------------- |
+| React         | 可选功能，开启 React JSX 语法编译       | <ul><li>[React 插件](/plugins/list/plugin-react)</li></ul>                             |
+| React Refresh | 可选功能，开启 React Refresh 热更新     | <ul><li>[模块热更新](/guide/advanced/hmr)</li><li>[dev.hmr](/config/dev/hmr)</li></ul> |
+| SVGR          | 可选功能，转换 SVG 为 React 组件        | <ul><li>[SVGR 插件](/plugins/list/plugin-svgr)</li></ul>                               |
+| Vue 3 SFC     | 可选功能，开启 Vue 3 SFC 单文件组件编译 | <ul><li>[Vue 插件](/plugins/list/plugin-vue)</li></ul>                                 |
+| Vue 3 JSX     | 可选功能，开启 Vue 3 JSX 语法编译       | <ul><li>[Vue JSX 插件](/plugins/list/plugin-vue-jsx)</li></ul>                         |
+| Vue 2 SFC     | 可选功能，开启 Vue 2 SFC 单文件组件编译 | <ul><li>[Vue 2 插件](/plugins/list/plugin-vue2)</li></ul>                              |
+| Vue 2 JSX     | 可选功能，开启 Vue 2 JSX 语法编译       | <ul><li>[Vue 2 JSX 插件](/plugins/list/plugin-vue2-jsx)</li></ul>                      |
+| Svelte        | 可选功能，开启 Svelte 组件编译          | <ul><li>[Svelte 插件](/plugins/list/plugin-svelte)</li></ul>                           |
+| Solid         | 可选功能，开启 Solid JSX 语法编译       | <ul><li>[Solid 插件](/plugins/list/plugin-solid)</li></ul>                             |
 
 ## 静态资源相关
 
