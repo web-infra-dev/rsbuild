@@ -318,19 +318,8 @@ export const pluginHtml = (modifyTagsFn: ModifyHTMLTagsFn): RsbuildPlugin => ({
           const { appIcon, crossorigin } = config.html;
 
           if (crossorigin) {
-            const { HtmlCrossOriginPlugin } = await import(
-              '../rspack/HtmlCrossOriginPlugin'
-            );
-
             const formattedCrossorigin =
               crossorigin === true ? 'anonymous' : crossorigin;
-
-            chain
-              .plugin(CHAIN_ID.PLUGIN.HTML_CROSS_ORIGIN)
-              .use(HtmlCrossOriginPlugin, [
-                { crossOrigin: formattedCrossorigin },
-              ]);
-
             chain.output.crossOriginLoading(formattedCrossorigin);
           }
 
@@ -351,5 +340,31 @@ export const pluginHtml = (modifyTagsFn: ModifyHTMLTagsFn): RsbuildPlugin => ({
         }
       },
     );
+
+    api.modifyHTMLTags({
+      // ensure `crossorigin` can be applied to all tags
+      order: 'post',
+      handler: ({ headTags, bodyTags }) => {
+        const config = api.getNormalizedConfig();
+        const { crossorigin } = config.html;
+
+        if (crossorigin) {
+          const formattedCrossorigin =
+            crossorigin === true ? 'anonymous' : crossorigin;
+
+          for (const tag of [...headTags, ...bodyTags]) {
+            if (
+              (tag.tag === 'script' && tag.attrs?.src) ||
+              (tag.tag === 'link' && tag.attrs?.rel === 'stylesheet')
+            ) {
+              tag.attrs ||= {};
+              tag.attrs.crossorigin ??= formattedCrossorigin;
+            }
+          }
+        }
+
+        return { headTags, bodyTags };
+      },
+    });
   },
 });

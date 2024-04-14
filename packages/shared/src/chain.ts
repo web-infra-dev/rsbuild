@@ -194,8 +194,6 @@ export const CHAIN_ID = {
     HTML_BASIC: 'html-basic-plugin',
     /** HtmlNoncePlugin */
     HTML_NONCE: 'html-nonce-plugin',
-    /** HtmlCrossOriginPlugin */
-    HTML_CROSS_ORIGIN: 'html-cross-origin-plugin',
     /** htmlPreconnectPlugin */
     HTML_PRECONNECT: 'html-preconnect-plugin',
     /** htmlDnsPrefetchPlugin */
