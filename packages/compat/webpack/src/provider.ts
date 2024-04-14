@@ -73,8 +73,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
         plugins.inlineChunk(),
         plugins.externals(),
         plugins.performance(),
-        plugins.networkPerformance(),
-        plugins.preloadOrPrefetch(),
+        plugins.resourceHints(),
         plugins.server(),
         plugins.moduleFederation(),
       ]);
