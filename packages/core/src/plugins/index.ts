@@ -20,10 +20,8 @@ export const plugins = {
   moment: () => import('./moment').then((m) => m.pluginMoment()),
   nodeAddons: () => import('./nodeAddons').then((m) => m.pluginNodeAddons()),
   externals: () => import('./externals').then((m) => m.pluginExternals()),
-  networkPerformance: () =>
-    import('./networkPerformance').then((m) => m.pluginNetworkPerformance()),
-  preloadOrPrefetch: () =>
-    import('./preloadOrPrefetch').then((m) => m.pluginPreloadOrPrefetch()),
+  resourceHints: () =>
+    import('./resourceHints').then((m) => m.pluginResourceHints()),
   performance: () => import('./performance').then((m) => m.pluginPerformance()),
   define: () => import('./define').then((m) => m.pluginDefine()),
   server: () => import('./server').then((m) => m.pluginServer()),

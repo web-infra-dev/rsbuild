@@ -17,8 +17,8 @@ const generateLinks = (
     },
   }));
 
-export const pluginNetworkPerformance = (): RsbuildPlugin => ({
-  name: 'rsbuild:network-performance',
+export const pluginResourceHints = (): RsbuildPlugin => ({
+  name: 'rsbuild:resource-hints',
 
   setup(api) {
     api.modifyHTMLTags(({ headTags, bodyTags }) => {
@@ -43,5 +43,40 @@ export const pluginNetworkPerformance = (): RsbuildPlugin => ({
 
       return { headTags, bodyTags };
     });
+
+    api.modifyBundlerChain(
+      async (chain, { CHAIN_ID, isServer, isWebWorker, isServiceWorker }) => {
+        const config = api.getNormalizedConfig();
+        const {
+          performance: { preload, prefetch },
+        } = config;
+
+        if (isServer || isWebWorker || isServiceWorker) {
+          return;
+        }
+
+        const HTMLCount = chain.entryPoints.values().length;
+
+        const { HtmlPreloadOrPrefetchPlugin } = await import(
+          '../rspack/preload/HtmlPreloadOrPrefetchPlugin'
+        );
+
+        if (prefetch) {
+          chain
+            .plugin(CHAIN_ID.PLUGIN.HTML_PREFETCH)
+            .use(HtmlPreloadOrPrefetchPlugin, [
+              prefetch,
+              'prefetch',
+              HTMLCount,
+            ]);
+        }
+
+        if (preload) {
+          chain
+            .plugin(CHAIN_ID.PLUGIN.HTML_PRELOAD)
+            .use(HtmlPreloadOrPrefetchPlugin, [preload, 'preload', HTMLCount]);
+        }
+      },
+    );
   },
 });
