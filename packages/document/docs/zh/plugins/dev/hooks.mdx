@@ -9,6 +9,7 @@
 - [modifyRsbuildConfig](#modifyrsbuildconfig)：修改传递给 Rsbuild 的配置对象。
 - [modifyRspackConfig](#modifyrspackconfig)：修改传递给 Rspack 的配置对象。
 - [modifyBundlerChain](#modifybundlerchain)：通过 chain API 修改 Rspack 的配置对象。
+- [modifyHTMLTags](#modifyhtmltags)：修改注入到 HTML 中的标签。
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)：在创建 compiler 实例前调用。
 - [onAfterCreateCompiler](#onaftercreatecompiler)：在创建 compiler 实例后、执行构建前调用。
 - [onExit](#onexit)：在进程即将退出时调用。
@@ -51,6 +52,7 @@
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onAfterStartDevServer](#onafterstartdevserver)
+- [modifyHTMLTags](#modifyhtmltags)
 - [onDevCompileDone](#ondevcompiledone)
 - [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
@@ -65,6 +67,7 @@
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onBeforeBuild](#onbeforebuild)
+- [modifyHTMLTags](#modifyhtmltags)
 - [onAfterBuild](#onafterbuild)
 - [onExit](#onexit)
 
@@ -287,6 +290,55 @@ const myPlugin = () => ({
       }
 
       chain.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
+    });
+  },
+});
+```
+
+### modifyHTMLTags
+
+修改注入到 HTML 中的标签。
+
+- **类型：**
+
+```ts
+type HtmlBasicTag = {
+  // 标签名
+  tag: string;
+  // 标签的属性
+  attrs?: Record<string, string | boolean | null | undefined>;
+  // 标签的 innerHTML
+  children?: string;
+};
+
+type HTMLTags = {
+  // 插入到 <head> 的标签组
+  headTags: HtmlBasicTag[];
+  // 插入到 <body> 的标签组
+  bodyTags: HtmlBasicTag[];
+};
+
+function ModifyHTMLTags(
+  callback: (tags: HTMLTags) => MaybePromise<HTMLTags>,
+): void;
+```
+
+- **示例：**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyHTMLTags(({ headTags, bodyTags }) => {
+      headTags.push({
+        tag: 'script',
+        attrs: { src: 'https://example.com/foo.js' },
+      });
+      bodyTags.push({
+        tag: 'script',
+        children: 'console.log("hello world!");',
+      });
+
+      return { headTags, bodyTags };
     });
   },
 });
