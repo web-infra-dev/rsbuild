@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import { posix, basename } from 'node:path';
 import type { Compiler, Compilation } from '@rspack/core';
-import WebpackSources from '@rsbuild/shared/webpack-sources';
 import { withPublicPath, getPublicPathFromCompiler } from '@rsbuild/shared';
 import { getHTMLPlugin } from '../htmlUtils';
 
@@ -64,11 +63,11 @@ export class HtmlAppIconPlugin {
             stage:
               compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
           },
-          (assets) => {
+          () => {
             const source = fs.readFileSync(this.iconPath);
-            assets[iconRelativePath] = new WebpackSources.RawSource(
-              source,
-              false,
+            compilation.emitAsset(
+              iconRelativePath,
+              new compiler.webpack.sources.RawSource(source, false),
             );
           },
         );
