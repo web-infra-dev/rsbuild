@@ -1,5 +1,4 @@
 import path from 'node:path';
-import WebpackSources from '@rsbuild/shared/webpack-sources';
 import {
   fse,
   withPublicPath,
@@ -80,11 +79,12 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
               stage:
                 compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
             },
-            async (assets) => {
+            async () => {
               const scriptPath = await this.getScriptPath();
-              assets[scriptPath] = new WebpackSources.RawSource(
-                await this.getRetryCode(),
-                false,
+              const code = await this.getRetryCode();
+              compilation.emitAsset(
+                scriptPath,
+                new compiler.webpack.sources.RawSource(code, false),
               );
             },
           );
