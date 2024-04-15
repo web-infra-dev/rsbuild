@@ -17,7 +17,7 @@ hero:
       text: Quick Start
       link: /guide/start/quick-start
   image:
-    src: https://rsfamily-design-resources.netlify.app/rsbuild/rsbuild-logo.svg
+    src: https://assets.rspack.dev/rsbuild/rsbuild-logo.svg
     alt: Rsbuild Logo
 
 features:
