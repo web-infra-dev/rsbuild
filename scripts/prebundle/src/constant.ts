@@ -115,10 +115,6 @@ export const TASKS: TaskConfig[] = [
         ignoreDts: true,
       },
       {
-        name: 'webpack-sources',
-        ignoreDts: true,
-      },
-      {
         name: 'icss-utils',
         ignoreDts: true,
       },

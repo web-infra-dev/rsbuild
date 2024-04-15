@@ -8,7 +8,6 @@ import {
   type Rspack,
   type ScriptLoading,
 } from '@rsbuild/shared';
-import WebpackSources from '@rsbuild/shared/webpack-sources';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginRemOptions } from './types';
 
@@ -116,11 +115,12 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
               stage:
                 compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
             },
-            async (assets) => {
+            async () => {
               const scriptPath = await this.getScriptPath();
-              assets[scriptPath] = new WebpackSources.RawSource(
-                await getRuntimeCode(),
-                false,
+              const code = await getRuntimeCode();
+              compilation.emitAsset(
+                scriptPath,
+                new compiler.webpack.sources.RawSource(code, false),
               );
             },
           );

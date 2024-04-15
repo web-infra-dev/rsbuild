@@ -59,10 +59,6 @@
       "types": "./compiled/loader-utils2/index.d.ts",
       "default": "./compiled/loader-utils2/index.js"
     },
-    "./webpack-sources": {
-      "types": "./compiled/webpack-sources/index.d.ts",
-      "default": "./compiled/webpack-sources/index.js"
-    },
     "./webpack-dev-middleware": {
       "types": "./compiled/webpack-dev-middleware/types/index.d.ts",
       "default": "./compiled/webpack-dev-middleware/index.js"
