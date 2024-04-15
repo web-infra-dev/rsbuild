@@ -1,7 +1,8 @@
 import path from 'node:path';
 import { test, expect } from '@playwright/test';
+import { gotoPage } from '@e2e/helper';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
-import { fse } from '@rsbuild/shared';
+import { fse, setNodeEnv } from '@rsbuild/shared';
 
 const distFile = path.join(__dirname, 'node_modules/hooksTempFile');
 
@@ -22,6 +23,10 @@ const plugin: RsbuildPlugin = {
     api.modifyWebpackChain(() => write('ModifyBundlerConfig'));
     api.modifyRsbuildConfig(() => write('ModifyRsbuildConfig'));
     api.modifyBundlerChain(() => write('ModifyBundlerChain'));
+    api.modifyHTMLTags((tags) => {
+      write('ModifyHTMLTags');
+      return tags;
+    });
     api.onBeforeStartDevServer(() => write('BeforeStartDevServer'));
     api.onAfterStartDevServer(() => write('AfterStartDevServer'));
     api.onBeforeCreateCompiler(() => write('BeforeCreateCompiler'));
@@ -31,6 +36,7 @@ const plugin: RsbuildPlugin = {
     api.onBeforeStartProdServer(() => write('BeforeStartProdServer'));
     api.onCloseDevServer(() => write('OnCloseDevServer'));
     api.onAfterStartProdServer(() => write('AfterStartProdServer'));
+    api.onDevCompileDone(() => write('OnDevCompileDone'));
   },
 };
 
@@ -53,11 +59,15 @@ test('should run plugin hooks correctly when running build', async () => {
     'BeforeCreateCompiler',
     'AfterCreateCompiler',
     'BeforeBuild',
+    'ModifyHTMLTags',
     'AfterBuild',
   ]);
 });
 
-test('should run plugin hooks correctly when running startDevServer', async () => {
+test('should run plugin hooks correctly when running startDevServer', async ({
+  page,
+}) => {
+  setNodeEnv('development');
   fse.removeSync(distFile);
 
   const rsbuild = await createRsbuild({
@@ -69,6 +79,8 @@ test('should run plugin hooks correctly when running startDevServer', async () =
 
   const result = await rsbuild.startDevServer();
 
+  await gotoPage(page, result);
+
   await result.server.close();
 
   expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
@@ -79,8 +91,12 @@ test('should run plugin hooks correctly when running startDevServer', async () =
     'BeforeCreateCompiler',
     'AfterCreateCompiler',
     'AfterStartDevServer',
+    'ModifyHTMLTags',
+    'OnDevCompileDone',
     'OnCloseDevServer',
   ]);
+
+  setNodeEnv('test');
 });
 
 test('should run plugin hooks correctly when running preview', async () => {
