@@ -1468,7 +1468,7 @@ importers:
         version: link:../shared
       vue-loader:
         specifier: ^15.11.1
-        version: 15.11.1(css-loader@6.11.0)(prettier@3.2.5)(webpack@5.91.0)
+        version: 15.11.1(css-loader@7.1.1)(prettier@3.2.5)(webpack@5.91.0)
       webpack:
         specifier: ^5.91.0
         version: 5.91.0
@@ -1638,8 +1638,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       css-loader:
-        specifier: 6.11.0
-        version: 6.11.0(webpack@5.91.0)
+        specifier: 7.1.1
+        version: 7.1.1(webpack@5.91.0)
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -7231,12 +7231,12 @@ packages:
       postcss: 8.4.38
     dev: false
 
-  /css-loader@6.11.0(webpack@5.91.0):
-    resolution: {integrity: sha512-CTJ+AEQJjq5NzLga5pE39qdiSV56F8ywCIsqNIRF0r7BDgWsN25aazToqAFg7ZrtA/U016xudB3ffgweORxX7g==}
-    engines: {node: '>= 12.13.0'}
+  /css-loader@7.1.1(webpack@5.91.0):
+    resolution: {integrity: sha512-OxIR5P2mjO1PSXk44bWuQ8XtMK4dpEqpIyERCx3ewOo3I8EmbcxMPUc5ScLtQfgXtOojoMv57So4V/C02HQLsw==}
+    engines: {node: '>= 18.12.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
-      webpack: ^5.0.0
+      webpack: ^5.27.0
     peerDependenciesMeta:
       '@rspack/core':
         optional: true
@@ -14434,7 +14434,7 @@ packages:
     resolution: {integrity: sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==}
     dev: false
 
-  /vue-loader@15.11.1(css-loader@6.11.0)(prettier@3.2.5)(webpack@5.91.0):
+  /vue-loader@15.11.1(css-loader@7.1.1)(prettier@3.2.5)(webpack@5.91.0):
     resolution: {integrity: sha512-0iw4VchYLePqJfJu9s62ACWUXeSqM30SQqlIftbYWM3C+jpPcEHKSPUZBLjSF9au4HTHQ/naF6OGnO3Q/qGR3Q==}
     peerDependencies:
       '@vue/compiler-sfc': ^3.0.8
@@ -14454,7 +14454,7 @@ packages:
         optional: true
     dependencies:
       '@vue/component-compiler-utils': 3.3.0
-      css-loader: 6.11.0(webpack@5.91.0)
+      css-loader: 7.1.1(webpack@5.91.0)
       hash-sum: 1.0.2
       loader-utils: 1.4.2
       prettier: 3.2.5
