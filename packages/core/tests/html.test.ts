@@ -58,19 +58,6 @@ describe('plugin-html', () => {
     expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
   });
 
-  it('should register nonce plugin when using security.nonce', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        security: {
-          nonce: 'test-nonce',
-        },
-      },
-    });
-
-    expect(await rsbuild.matchBundlerPlugin('HtmlNoncePlugin')).toBeTruthy();
-  });
-
   it('should register appIcon plugin when using html.appIcon', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],

@@ -362,6 +362,17 @@ export const isMultiCompiler = <
   return compiler.constructor.name === 'MultiCompiler';
 };
 
+export const applyToCompiler = (
+  compiler: Compiler | MultiCompiler,
+  apply: (c: Compiler) => void,
+) => {
+  if (isMultiCompiler(compiler)) {
+    compiler.compilers.forEach(apply);
+  } else {
+    apply(compiler);
+  }
+};
+
 export const onCompileDone = (
   compiler: Compiler | MultiCompiler,
   onDone: (stats: Stats | MultiStats) => Promise<void>,
