@@ -64,7 +64,7 @@
     "resolve-url-loader": "5.0.0",
     "rslog": "^1.2.1",
     "sass": "^1.75.0",
-    "sass-loader": "14.1.1",
+    "sass-loader": "14.2.0",
     "semver": "^7.6.0",
     "sirv": "^2.0.4",
     "style-loader": "3.3.4",

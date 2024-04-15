@@ -1734,8 +1734,8 @@ importers:
         specifier: ^1.75.0
         version: 1.75.0
       sass-loader:
-        specifier: 14.1.1
-        version: 14.1.1(sass@1.75.0)(webpack@5.91.0)
+        specifier: 14.2.0
+        version: 14.2.0(sass@1.75.0)(webpack@5.91.0)
       semver:
         specifier: ^7.6.0
         version: 7.6.0
@@ -12977,8 +12977,8 @@ packages:
       rimraf: 2.7.1
     dev: false
 
-  /sass-loader@14.1.1(sass@1.75.0)(webpack@5.91.0):
-    resolution: {integrity: sha512-QX8AasDg75monlybel38BZ49JP5Z+uSKfKwF2rO7S74BywaRmGQMUBw9dtkS+ekyM/QnP+NOrRYq8ABMZ9G8jw==}
+  /sass-loader@14.2.0(sass@1.75.0)(webpack@5.91.0):
+    resolution: {integrity: sha512-jxmjDXD9OYNDb2bp9JvopdE6QjecQY9beTWik/6sEHrsMxyo90Gyc471A4NUz60NLs4WsAh6yVtIvhLwEZcXeg==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
