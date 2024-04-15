@@ -159,6 +159,14 @@ function tryApplyUpdates() {
   ) {
     const wantsForcedReload = err || !updatedModules;
     if (wantsForcedReload) {
+      if (
+        err &&
+        typeof console !== 'undefined' &&
+        typeof console.error === 'function'
+      ) {
+        console.error('[HMR] Forced reload caused by: ', err);
+      }
+
       window.location.reload();
       return;
     }
