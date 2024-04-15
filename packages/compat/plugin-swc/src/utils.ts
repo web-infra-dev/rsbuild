@@ -176,7 +176,7 @@ export async function applyPluginConfig(
   }
 
   const { polyfill } = rsbuildConfig.output;
-  if (swc.env.mode === undefined && polyfill !== 'ua' && polyfill !== 'off') {
+  if (swc.env.mode === undefined && polyfill !== 'off') {
     swc.env.mode = polyfill;
   }
 

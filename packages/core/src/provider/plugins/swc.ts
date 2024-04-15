@@ -93,7 +93,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
         if (isWebTarget(target)) {
           const polyfillMode = config.output.polyfill;
 
-          if (polyfillMode === 'off' || polyfillMode === 'ua') {
+          if (polyfillMode === 'off') {
             swcConfig.env!.mode = undefined;
           } else {
             swcConfig.env!.mode = polyfillMode;

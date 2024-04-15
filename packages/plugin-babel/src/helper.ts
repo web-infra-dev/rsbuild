@@ -172,7 +172,7 @@ export const applyUserBabelConfig = (
 
 export const getUseBuiltIns = (config: NormalizedConfig) => {
   const { polyfill } = config.output;
-  if (polyfill === 'ua' || polyfill === 'off') {
+  if (polyfill === 'off') {
     return false;
   }
   return polyfill;

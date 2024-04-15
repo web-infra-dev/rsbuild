@@ -129,7 +129,7 @@ export type LegalComments = 'none' | 'inline' | 'linked';
 
 export type NormalizedDataUriLimit = Required<DataUriLimit>;
 
-export type Polyfill = 'usage' | 'entry' | 'ua' | 'off';
+export type Polyfill = 'usage' | 'entry' | 'off';
 
 export type SourceMap = {
   js?: RspackConfig['devtool'];
