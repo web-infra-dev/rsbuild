@@ -1,7 +1,7 @@
 import webpackDevMiddleware from '@rsbuild/shared/webpack-dev-middleware';
 import {
+  applyToCompiler,
   isClientCompiler,
-  isMultiCompiler,
   setupServerHooks,
   type DevConfig,
   type DevMiddleware,
@@ -49,11 +49,7 @@ export const getDevMiddleware =
       setupServerHooks(compiler, callbacks);
     };
 
-    if (isMultiCompiler(multiCompiler)) {
-      multiCompiler.compilers.forEach(setupCompiler);
-    } else {
-      setupCompiler(multiCompiler);
-    }
+    applyToCompiler(multiCompiler, setupCompiler);
 
     // @ts-expect-error compiler type mismatch
     return webpackDevMiddleware(multiCompiler, restOptions);

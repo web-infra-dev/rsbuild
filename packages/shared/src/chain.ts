@@ -192,8 +192,6 @@ export const CHAIN_ID = {
     MODULE_FEDERATION: 'module-federation',
     /** HtmlBasicPlugin */
     HTML_BASIC: 'html-basic-plugin',
-    /** HtmlNoncePlugin */
-    HTML_NONCE: 'html-nonce-plugin',
     /** htmlPreconnectPlugin */
     HTML_PRECONNECT: 'html-preconnect-plugin',
     /** htmlDnsPrefetchPlugin */

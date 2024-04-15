@@ -42,7 +42,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
       chain
         .plugin(CHAIN_ID.PLUGIN.INLINE_HTML)
         // ensure nonce can be applied to inlined style tags
-        .before(CHAIN_ID.PLUGIN.HTML_NONCE)
+        .before(CHAIN_ID.PLUGIN.HTML_BASIC)
         .use(InlineChunkHtmlPlugin, [
           {
             styleTests,
