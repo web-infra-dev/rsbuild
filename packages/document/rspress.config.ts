@@ -57,11 +57,10 @@ export default defineConfig({
   lang: 'en',
   base: '/',
   title: 'Rsbuild',
-  icon: 'https://rsfamily-design-resources.netlify.app/rsbuild/favicon-128x128.png',
+  icon: 'https://assets.rspack.dev/rsbuild/favicon-128x128.png',
   logo: {
-    light:
-      'https://rsfamily-design-resources.netlify.app/rsbuild/navbar-logo-light.png',
-    dark: 'https://rsfamily-design-resources.netlify.app/rsbuild/navbar-logo-dark.png',
+    light: 'https://assets.rspack.dev/rsbuild/navbar-logo-light.png',
+    dark: 'https://assets.rspack.dev/rsbuild/navbar-logo-dark.png',
   },
   markdown: {
     checkDeadLinks: true,
