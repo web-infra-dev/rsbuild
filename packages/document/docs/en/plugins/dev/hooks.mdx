@@ -9,6 +9,7 @@ This chapter introduces the plugin hooks available for Rsbuild plugins.
 - [modifyRsbuildConfig](#modifyrsbuildconfig): Modify the configuration object passed to Rsbuild.
 - [modifyRspackConfig](#modifyrspackconfig): Modify the configuration object passed to Rspack.
 - [modifyBundlerChain](#modifybundlerchain): Modify the configuration object of Rspack through the chain API.
+- [modifyHTMLTags](#modifyhtmltags): Modify the tags that are injected into the HTML.
 - [onBeforeCreateCompiler](#onbeforecreatecompiler): Called before creating a compiler instance.
 - [onAfterCreateCompiler](#onaftercreatecompiler): Called after creating a compiler instance and before building.
 - [onExit](#onexit): Called when the process is about to exit.
@@ -51,6 +52,7 @@ When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed,
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onAfterStartDevServer](#onafterstartdevserver)
+- [modifyHTMLTags](#modifyhtmltags)
 - [onDevCompileDone](#ondevcompiledone)
 - [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
@@ -65,6 +67,7 @@ When the `rsbuild build` command or `rsbuild.build()` method is executed, Rsbuil
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onBeforeBuild](#onbeforebuild)
+- [modifyHTMLTags](#modifyhtmltags)
 - [onAfterBuild](#onafterbuild)
 - [onExit](#onexit)
 
@@ -285,6 +288,55 @@ const myPlugin = () => ({
       }
 
       chain.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
+    });
+  },
+});
+```
+
+### modifyHTMLTags
+
+Modify the tags that are injected into the HTML.
+
+- **Type:**
+
+```ts
+type HtmlBasicTag = {
+  // Tag name
+  tag: string;
+  // Attributes of the tag
+  attrs?: Record<string, string | boolean | null | undefined>;
+  // innerHTML of the tag
+  children?: string;
+};
+
+type HTMLTags = {
+  // Tags group inserted into <head>
+  headTags: HtmlBasicTag[];
+  // Tags group inserted into <body>
+  bodyTags: HtmlBasicTag[];
+};
+
+function ModifyHTMLTags(
+  callback: (tags: HTMLTags) => MaybePromise<HTMLTags>,
+): void;
+```
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyHTMLTags(({ headTags, bodyTags }) => {
+      headTags.push({
+        tag: 'script',
+        attrs: { src: 'https://example.com/foo.js' },
+      });
+      bodyTags.push({
+        tag: 'script',
+        children: 'console.log("hello world!");',
+      });
+
+      return { headTags, bodyTags };
     });
   },
 });
