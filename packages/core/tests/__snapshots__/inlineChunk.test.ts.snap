@@ -98,13 +98,6 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
       },
       "version": 5,
     },
-    HtmlBasicPlugin {
-      "modifyTagsFn": undefined,
-      "name": "HtmlBasicPlugin",
-      "options": {
-        "index": {},
-      },
-    },
     InlineChunkHtmlPlugin {
       "distPath": {
         "css": "static/css",
@@ -116,6 +109,13 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
         /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
       ],
       "styleTests": [],
+    },
+    HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "index": {},
+      },
     },
   ],
 }
@@ -219,13 +219,6 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
       },
       "version": 5,
     },
-    HtmlBasicPlugin {
-      "modifyTagsFn": undefined,
-      "name": "HtmlBasicPlugin",
-      "options": {
-        "index": {},
-      },
-    },
     InlineChunkHtmlPlugin {
       "distPath": {
         "css": "static/css",
@@ -237,6 +230,13 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
       "styleTests": [
         /\\\\\\.css\\$/,
       ],
+    },
+    HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
+      "name": "HtmlBasicPlugin",
+      "options": {
+        "index": {},
+      },
     },
   ],
 }
