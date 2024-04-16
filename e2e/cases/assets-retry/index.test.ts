@@ -27,13 +27,15 @@ function count404Response(logs: string[]) {
 }
 
 function createBlockMiddleware({
+  urlPrefix,
   blockNum,
 }: {
+  urlPrefix: string;
   blockNum: number;
 }): RequestHandler {
   let counter = 0;
   return (req, res, next) => {
-    if (req.url?.startsWith('/static/js/index.js')) {
+    if (req.url?.startsWith(urlPrefix)) {
       counter++;
       // if blockNum is 3, 1 2 3 would be blocked, 4 would be passed
       if (counter % (blockNum + 1) !== 0) {
@@ -56,7 +58,6 @@ async function createRsbuildWithMiddleware(
       dev: {
         hmr: false,
         liveReload: false,
-        writeToDisk: true,
         setupMiddlewares: [
           (middlewares, _server) => {
             middlewares.unshift(middleware);
@@ -64,19 +65,22 @@ async function createRsbuildWithMiddleware(
         ],
       },
       output: {
-        minify: false,
+        minify: false, // test faster
       },
     },
   });
   return rsbuild;
 }
 
-test('@rsbuild/plugin-assets-retry should work when block index.js`', async ({
+test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index.js`', async ({
   page,
 }) => {
   process.env.DEBUG = 'rsbuild';
   const { logs, restore } = proxyConsole();
-  const blockedMiddleware = createBlockMiddleware({ blockNum: 3 });
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/index.js',
+  });
   const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {});
 
   await gotoPage(page, rsbuild);
@@ -88,12 +92,15 @@ test('@rsbuild/plugin-assets-retry should work when block index.js`', async ({
   restore();
 });
 
-test('@rsbuild/plugin-assets-retry should work when block index.js and minified runtime`', async ({
+test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking initial chunk index.js`', async ({
   page,
 }) => {
   process.env.DEBUG = 'rsbuild';
   const { logs, restore } = proxyConsole();
-  const blockedMiddleware = createBlockMiddleware({ blockNum: 3 });
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/index.js',
+  });
   const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
     minify: true,
   });
