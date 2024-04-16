@@ -289,14 +289,14 @@ function init(options: PluginAssetsRetryOptions) {
   const config: PluginAssetsRetryOptions = {};
 
   for (const key in defaultConfig) {
-    if (Object.prototype.hasOwnProperty.call(config, key)) {
+    if (!Object.prototype.hasOwnProperty.call(config, key)) {
       // @ts-ignore
       config[key] = defaultConfig[key];
     }
   }
 
   for (const key in options) {
-    if (Object.prototype.hasOwnProperty.call(config, key)) {
+    if (!Object.prototype.hasOwnProperty.call(config, key)) {
       // @ts-ignore
       config[key] = options[key];
     }
