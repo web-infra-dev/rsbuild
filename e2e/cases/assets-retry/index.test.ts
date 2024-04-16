@@ -26,12 +26,17 @@ function count404Response(logs: string[]) {
   return count;
 }
 
-function createBlockedMiddleware(): RequestHandler {
+function createBlockMiddleware({
+  blockNum,
+}: {
+  blockNum: number;
+}): RequestHandler {
   let counter = 0;
   return (req, res, next) => {
     if (req.url?.startsWith('/static/js/index.js')) {
       counter++;
-      if (counter % 4 !== 0) {
+      // if blockNum is 3, 1 2 3 would be blocked, 4 would be passed
+      if (counter % (blockNum + 1) !== 0) {
         res.statusCode = 404;
       }
       res.setHeader('block-async', counter);
@@ -71,7 +76,7 @@ test('@rsbuild/plugin-assets-retry should work when block index.js`', async ({
 }) => {
   process.env.DEBUG = 'rsbuild';
   const { logs, restore } = proxyConsole();
-  const blockedMiddleware = createBlockedMiddleware();
+  const blockedMiddleware = createBlockMiddleware({ blockNum: 3 });
   const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {});
 
   await gotoPage(page, rsbuild);
@@ -88,7 +93,7 @@ test('@rsbuild/plugin-assets-retry should work when block index.js and minified 
 }) => {
   process.env.DEBUG = 'rsbuild';
   const { logs, restore } = proxyConsole();
-  const blockedMiddleware = createBlockedMiddleware();
+  const blockedMiddleware = createBlockMiddleware({ blockNum: 3 });
   const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
     minify: true,
   });
