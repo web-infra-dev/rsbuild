@@ -1,3 +1,4 @@
+// rsbuild/initial-chunk/retry
 import type { CrossOrigin } from '@rsbuild/shared';
 import type {
   PluginAssetsRetryOptions,
@@ -99,10 +100,14 @@ function createElement(
     if (attributes.isAsync) {
       script.dataset.rsbuildAsync = '';
     }
-
     return {
       element: script,
-      str: `<script src="${attributes.url}" ${crossOriginAttr} ${retryTimesAttr} ${isAsyncAttr}></script>`,
+      str:
+        // biome-ignore lint/style/useTemplate: template string including html tag causes errors when inlining in html
+        '<script' +
+        `src="${attributes.url}" ${crossOriginAttr} ${retryTimesAttr} ${isAsyncAttr}>` +
+        '</' +
+        'script>',
     };
   }
   if (origin instanceof HTMLLinkElement) {
@@ -122,11 +127,14 @@ function createElement(
     }
     return {
       element: link,
-      str: `<link rel="${link.rel}" href="${
-        attributes.url
-      }" ${crossOriginAttr} ${retryTimesAttr} ${
-        link.as ? `as="${link.as}"` : ''
-      }></link>`,
+      str:
+        // biome-ignore lint/style/useTemplate: template string including html tag causes errors when inlining in html
+        '<link' +
+        `rel="${link.rel}" href="${
+          attributes.url
+        }" ${crossOriginAttr} ${retryTimesAttr} ${
+          link.as ? `as="${link.as}"` : ''
+        }></link>`,
     };
   }
 }
@@ -278,7 +286,22 @@ function resourceMonitor(
 
 // @ts-expect-error init is a global function, ignore ts(6133)
 function init(options: PluginAssetsRetryOptions) {
-  const config = Object.assign({}, defaultConfig, options);
+  const config: PluginAssetsRetryOptions = {};
+
+  for (const key in defaultConfig) {
+    if (Object.prototype.hasOwnProperty.call(config, key)) {
+      // @ts-ignore
+      config[key] = defaultConfig[key];
+    }
+  }
+
+  for (const key in options) {
+    if (Object.prototype.hasOwnProperty.call(config, key)) {
+      // @ts-ignore
+      config[key] = options[key];
+    }
+  }
+
   // Normalize config
   if (!Array.isArray(config.type) || config.type.length === 0) {
     config.type = defaultConfig.type;
