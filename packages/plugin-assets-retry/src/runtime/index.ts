@@ -104,7 +104,7 @@ function createElement(
       element: script,
       str:
         // biome-ignore lint/style/useTemplate: template string including html tag causes errors when inlining in html
-        '<script' +
+        '<script ' +
         `src="${attributes.url}" ${crossOriginAttr} ${retryTimesAttr} ${isAsyncAttr}>` +
         '</' +
         'script>',
@@ -129,7 +129,7 @@ function createElement(
       element: link,
       str:
         // biome-ignore lint/style/useTemplate: template string including html tag causes errors when inlining in html
-        '<link' +
+        '<link ' +
         `rel="${link.rel}" href="${
           attributes.url
         }" ${crossOriginAttr} ${retryTimesAttr} ${
