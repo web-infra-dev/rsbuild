@@ -216,40 +216,6 @@ importers:
         specifier: ^5.4.2
         version: 5.4.2
 
-  e2e/cases/assets-retry:
-    dependencies:
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../../../packages/core
-        version: link:../../../packages/core
-      '@rsbuild/plugin-assets-retry':
-        specifier: /Users/appe/Documents/codes/rsbuild/packages/plugin-assets-retry
-        version: link:../../../packages/plugin-assets-retry
-      '@rsbuild/plugin-react':
-        specifier: link:../../../packages/plugin-react
-        version: link:../../../packages/plugin-react
-      '@rspack/core':
-        specifier: /Users/appe/Documents/codes/rsbuild/node_modules/.pnpm/@rspack+core@0.6.0_@swc+helpers@0.5.3/node_modules/@rspack/core
-        version: link:../../../node_modules/.pnpm/@rspack+core@0.6.0_@swc+helpers@0.5.3/node_modules/@rspack/core
-      '@types/node':
-        specifier: latest
-        version: 20.12.7
-      '@types/react':
-        specifier: ^18.2.71
-        version: 18.2.75
-      '@types/react-dom':
-        specifier: ^18.2.22
-        version: 18.2.24
-      typescript:
-        specifier: ^5.4.2
-        version: 5.4.2
-
   e2e/cases/babel/decorator:
     devDependencies:
       '@babel/preset-env':
@@ -5481,12 +5447,6 @@ packages:
 
   /@types/node@16.18.84:
     resolution: {integrity: sha512-mtn6ixzrUK5IMf6gyyMVUsm0TIeF3IYpUr3i0HHTuPJVbdZ6kc93poZ+wCkFNtxXoP/tyGrdVPOL6/WqGXjfXw==}
-
-  /@types/node@20.12.7:
-    resolution: {integrity: sha512-wq0cICSkRLVaf3UGLMGItu/PtdY7oaXaI/RVU+xliKVOtRna3PRY57ZDfztpDL0n11vfymMUnXv8QwYCO7L1wg==}
-    dependencies:
-      undici-types: 5.26.5
-    dev: true
 
   /@types/normalize-package-data@2.4.4:
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -14068,10 +14028,6 @@ packages:
 
   /ufo@1.4.0:
     resolution: {integrity: sha512-Hhy+BhRBleFjpJ2vchUNN40qgkh0366FWJGqVLYBHev0vpHTrXSA0ryT+74UiW6KWsldNurQMKGqCm1M2zBciQ==}
-    dev: true
-
-  /undici-types@5.26.5:
-    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
     dev: true
 
   /unicode-canonical-property-names-ecmascript@2.0.0:
