@@ -14,7 +14,7 @@ const App = () => {
         </ErrorBoundary>
       </div>
       <div style={{ border: '1px solid white', padding: 20 }}>
-        <ErrorBoundary elementId='"async-comp-test-error"'>
+        <ErrorBoundary elementId="async-comp-test-error">
           <AsyncCompTest />
         </ErrorBoundary>
       </div>

@@ -45,6 +45,11 @@ export type PluginAssetsRetryOptions = {
   minify?: boolean;
 };
 
+export type RuntimeRetryOptions = Omit<
+  PluginAssetsRetryOptions,
+  'crossOrigin' | 'inlineScript' | 'minify'
+>;
+
 export type AssetsRetryHookContext = {
   url: string;
   times: number;

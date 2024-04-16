@@ -1,4 +1,4 @@
-// rsbuild/initial-chunk/retry
+// rsbuild/runtime/initial-chunk-retry
 import type { CrossOrigin } from '@rsbuild/shared';
 import type {
   AssetsRetryHookContext,
@@ -18,6 +18,11 @@ const TAG_TYPE: { [propName: string]: new () => HTMLElement } = {
   img: HTMLImageElement,
 };
 const TYPES = Object.keys(TAG_TYPE);
+
+declare global {
+  // global variables shared with async chunk
+  var __ASYNC_CHUNK_FILENAME_LIST__: Record<string, boolean>;
+}
 
 function findCurrentDomain(url: string, domainList: string[]) {
   let domain = '';
@@ -163,7 +168,21 @@ function retry(config: PluginAssetsRetryOptions, e: Event) {
   if (targetInfo === false) {
     return;
   }
+
   const { target, tagName, url } = targetInfo;
+
+  // If the requested failed chunk is async chunk，skip it, because async chunk will be retried by asyncChunkRetry runtime
+  if (
+    window &&
+    Object.keys(window.__ASYNC_CHUNK_FILENAME_LIST__ || {}).some(
+      (chunkName) => {
+        return url.indexOf(chunkName) !== -1;
+      },
+    )
+  ) {
+    return;
+  }
+
   // Filter by config.test and config.domain
   let tester = config.test;
   if (tester) {
@@ -216,6 +235,7 @@ function retry(config: PluginAssetsRetryOptions, e: Event) {
     crossOrigin: config.crossOrigin,
     isAsync,
   };
+
   const element = createElement(target, attributes)!;
 
   if (config.onRetry && typeof config.onRetry === 'function') {
@@ -306,6 +326,10 @@ function init(options: PluginAssetsRetryOptions) {
     config.domain = config.domain.filter(Boolean);
   }
 
+  // init global variables shared with async chunk
+  if (window && !window.__ASYNC_CHUNK_FILENAME_LIST__) {
+    window.__ASYNC_CHUNK_FILENAME_LIST__ = {};
+  }
   // Bind event in window
   try {
     resourceMonitor(

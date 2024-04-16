@@ -11,6 +11,15 @@ exports[`plugin-assets-retry > should add assets retry plugin 1`] = `
       "name": "AssetsRetryPlugin",
       "scriptPath": "",
     },
+    AsyncChunkRetryPlugin {
+      "name": "ASYNC_CHUNK_RETRY_PLUGIN",
+      "options": {
+        "crossOrigin": false,
+        "isRspack": false,
+        "minify": true,
+      },
+      "runtimeOptions": {},
+    },
   ],
 }
 `;

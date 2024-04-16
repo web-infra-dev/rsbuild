@@ -48,9 +48,11 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
 
   async getRetryCode() {
     const { default: serialize } = await import('serialize-javascript');
+    const filename = 'initialChunkRetry';
     const runtimeFilePath = path.join(
       __dirname,
-      this.minify ? 'runtime.min.js' : 'runtime.js',
+      'runtime',
+      this.minify ? `${filename}.min.js` : `${filename}.js`,
     );
     const runtimeCode = await fse.readFile(runtimeFilePath, 'utf-8');
     return `(function(){${runtimeCode};init(${serialize(
