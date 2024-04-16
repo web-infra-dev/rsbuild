@@ -65,9 +65,6 @@ async function createRsbuildWithMiddleware(
           },
         ],
       },
-      output: {
-        minify: false, // test faster
-      },
     },
   });
   return rsbuild;
