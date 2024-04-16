@@ -103,9 +103,8 @@ function createElement(
     return {
       element: script,
       str:
-        // biome-ignore lint/style/useTemplate: template string including html tag causes errors when inlining in html
-        '<script ' +
-        `src="${attributes.url}" ${crossOriginAttr} ${retryTimesAttr} ${isAsyncAttr}>` +
+        // biome-ignore lint/style/useTemplate: template string including script html tag causes errors when inlining in html
+        `<script src="${attributes.url}" ${crossOriginAttr} ${retryTimesAttr} ${isAsyncAttr}>` +
         '</' +
         'script>',
     };
@@ -127,14 +126,11 @@ function createElement(
     }
     return {
       element: link,
-      str:
-        // biome-ignore lint/style/useTemplate: template string including html tag causes errors when inlining in html
-        '<link ' +
-        `rel="${link.rel}" href="${
-          attributes.url
-        }" ${crossOriginAttr} ${retryTimesAttr} ${
-          link.as ? `as="${link.as}"` : ''
-        }></link>`,
+      str: `<link rel="${link.rel}" href="${
+        attributes.url
+      }" ${crossOriginAttr} ${retryTimesAttr} ${
+        link.as ? `as="${link.as}"` : ''
+      }></link>`,
     };
   }
 }
