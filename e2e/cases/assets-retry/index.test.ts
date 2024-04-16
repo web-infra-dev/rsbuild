@@ -87,6 +87,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index
   expect(blockedResponseCount).toBe(3);
   await rsbuild.close();
   restore();
+  delete process.env.DEBUG;
 });
 
 test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking initial chunk index.js`', async ({
@@ -109,4 +110,5 @@ test('@rsbuild/plugin-assets-retry should work with minified runtime code when b
   expect(blockedResponseCount).toBe(3);
   await rsbuild.close();
   restore();
+  delete process.env.DEBUG;
 });
