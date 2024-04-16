@@ -75,8 +75,8 @@ test('@rsbuild/plugin-assets-retry should work when block index.js`', async ({
   const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {});
 
   await gotoPage(page, rsbuild);
-  const testAsyncCompEle = page.locator('#comp-test');
-  await expect(testAsyncCompEle).toHaveText('Hello CompTest');
+  const compTestElement = page.locator('#comp-test');
+  await expect(compTestElement).toHaveText('Hello CompTest');
   const blockedResponseCount = count404Response(logs);
   expect(blockedResponseCount).toBe(3);
   await rsbuild.close();
@@ -94,8 +94,8 @@ test('@rsbuild/plugin-assets-retry should work when block index.js and minified 
   });
 
   await gotoPage(page, rsbuild);
-  const testAsyncCompEle = page.locator('#comp-test');
-  await expect(testAsyncCompEle).toHaveText('Hello CompTest');
+  const compTestElement = page.locator('#comp-test');
+  await expect(compTestElement).toHaveText('Hello CompTest');
   const blockedResponseCount = count404Response(logs);
   expect(blockedResponseCount).toBe(3);
   await rsbuild.close();
