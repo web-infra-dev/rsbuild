@@ -1,0 +1,24 @@
+{
+  "name": "rsbuild-react-asset-retry",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "rsbuild dev --open",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@rspack/core": "/Users/appe/Documents/codes/rsbuild/node_modules/.pnpm/@rspack+core@0.6.0_@swc+helpers@0.5.3/node_modules/@rspack/core",
+    "@rsbuild/core": "/Users/appe/Documents/codes/rsbuild/packages/core",
+    "@rsbuild/plugin-react": "/Users/appe/Documents/codes/rsbuild/packages/plugin-react",
+    "@rsbuild/plugin-assets-retry": "/Users/appe/Documents/codes/rsbuild/packages/plugin-assets-retry",
+    "@types/react": "^18.2.71",
+    "@types/react-dom": "^18.2.22",
+    "typescript": "^5.4.2",
+    "@types/node": "latest"
+  }
+}
