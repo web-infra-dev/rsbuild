@@ -103,7 +103,7 @@ function createElement(
     return {
       element: script,
       str:
-        // biome-ignore lint/style/useTemplate: use "</" + "script>" instead of script label to avoid syntax error when inlining in html
+        // biome-ignore lint/style/useTemplate: use "</" + "script>" instead of script tag to avoid syntax error when inlining in html
         `<script src="${attributes.url}" ${crossOriginAttr} ${retryTimesAttr} ${isAsyncAttr}>` +
         '</' +
         'script>',
