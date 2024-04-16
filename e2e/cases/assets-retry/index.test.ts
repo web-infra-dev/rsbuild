@@ -76,6 +76,7 @@ async function createRsbuildWithMiddleware(
 test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index.js`', async ({
   page,
 }) => {
+  process.env.DEBUG = 'rsbuild';
   logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
@@ -96,6 +97,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index
 test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking initial chunk index.js`', async ({
   page,
 }) => {
+  process.env.DEBUG = 'rsbuild';
   logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
