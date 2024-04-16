@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { dev, gotoPage, proxyConsole } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
+import { logger } from '@rsbuild/shared';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import type { RequestHandler } from '@rsbuild/shared';
@@ -75,7 +76,7 @@ async function createRsbuildWithMiddleware(
 test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index.js`', async ({
   page,
 }) => {
-  process.env.DEBUG = 'rsbuild';
+  logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
     blockNum: 3,
@@ -95,7 +96,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index
 test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking initial chunk index.js`', async ({
   page,
 }) => {
-  process.env.DEBUG = 'rsbuild';
+  logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
     blockNum: 3,
