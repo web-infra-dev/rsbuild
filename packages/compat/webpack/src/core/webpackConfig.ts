@@ -145,6 +145,7 @@ export async function generateWebpackConfig({
   const {
     BannerPlugin,
     DefinePlugin,
+    IgnorePlugin,
     ProvidePlugin,
     HotModuleReplacementPlugin,
   } = await import('webpack');
@@ -154,6 +155,7 @@ export async function generateWebpackConfig({
     bundler: {
       BannerPlugin,
       DefinePlugin,
+      IgnorePlugin,
       ProvidePlugin,
       HotModuleReplacementPlugin,
     },
