@@ -1,11 +1,11 @@
 #test-css-small {
   width: 50px;
   height: 50px;
-  background-image: url('./small.svg');
+  background-image: url('@assets/circle.svg');
 }
 
 #test-css-large {
   width: 50px;
   height: 50px;
-  background-image: url('./large.svg');
+  background-image: url('@assets/mobile.svg');
 }

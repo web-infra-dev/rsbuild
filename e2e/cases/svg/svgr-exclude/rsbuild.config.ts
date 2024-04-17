@@ -8,7 +8,7 @@ export default {
       svgrOptions: {
         exportType: 'default',
       },
-      exclude: /small\.svg/,
+      exclude: /circle\.svg/,
     }),
   ],
 };

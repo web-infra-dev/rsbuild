@@ -24,8 +24,8 @@ test.describe('should combine multiple html config correctly', () => {
             description: 'a description of the page',
           },
           inject: 'body',
-          appIcon: './src/assets/icon.png',
-          favicon: './src/assets/icon.png',
+          appIcon: '../../../assets/icon.png',
+          favicon: '../../../assets/icon.png',
         },
       },
     });
