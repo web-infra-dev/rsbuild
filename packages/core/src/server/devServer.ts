@@ -11,7 +11,7 @@ import {
   type CreateDevServerOptions,
   type StartDevServerOptions,
   type CreateDevMiddlewareReturns,
-  DevConfig,
+  type DevConfig,
 } from '@rsbuild/shared';
 import { formatRoutes, getDevOptions, printServerURLs } from './helper';
 import connect from '@rsbuild/shared/connect';
@@ -223,8 +223,9 @@ async function setupWatchFiles(
   const normalizeWatchFilesOptions = (
     watchFilesOptions: DevConfig['watchFiles'],
   ) => {
+    let normalizedWatchFilesOptions = watchFilesOptions;
     if (typeof watchFilesOptions === 'string') {
-      watchFilesOptions = {
+      normalizedWatchFilesOptions = {
         paths: watchFilesOptions,
         options: {},
       };
@@ -238,12 +239,12 @@ async function setupWatchFiles(
             options: {},
           }
         : watchFilesOptions;
-      watchFilesOptions = { paths, options };
+      normalizedWatchFilesOptions = { paths, options };
     } else {
-      watchFilesOptions = undefined;
+      normalizedWatchFilesOptions = undefined;
     }
 
-    return watchFilesOptions;
+    return normalizedWatchFilesOptions;
   };
 
   const watchFilesOptions = normalizeWatchFilesOptions(watchFiles);
