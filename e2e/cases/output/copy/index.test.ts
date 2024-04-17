@@ -11,7 +11,7 @@ test('should copy asset to dist folder correctly', async () => {
         distPath: {
           root: 'dist-1',
         },
-        copy: [{ from: './src/assets', to: '' }],
+        copy: [{ from: '../../../assets', to: '' }],
       },
     },
   });
