@@ -13,14 +13,17 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
     test.skip();
   }
 
-  await fse.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src'));
+  await fse.copy(
+    join(fixtures, 'hmr/src'),
+    join(fixtures, 'hmr/test-temp-src'),
+  );
   const rsbuild = await dev({
     cwd: join(fixtures, 'hmr'),
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
         entry: {
-          index: join(fixtures, 'hmr', 'test-src/index.ts'),
+          index: join(fixtures, 'hmr', 'test-temp-src/index.ts'),
         },
       },
       output: {
@@ -46,7 +49,7 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
   const locatorKeep = page.locator('#test-keep');
   const keepNum = await locatorKeep.innerHTML();
 
-  const appPath = join(fixtures, 'hmr', 'test-src/App.tsx');
+  const appPath = join(fixtures, 'hmr', 'test-temp-src/App.tsx');
 
   await fse.writeFile(
     appPath,
@@ -58,7 +61,7 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
   // #test-keep should unchanged when app.tsx hmr
   await expect(locatorKeep.innerHTML()).resolves.toBe(keepNum);
 
-  const cssPath = join(fixtures, 'hmr', 'test-src/App.css');
+  const cssPath = join(fixtures, 'hmr', 'test-temp-src/App.css');
 
   await fse.writeFile(
     cssPath,
@@ -93,7 +96,10 @@ rspackOnlyTest(
       test.skip();
     }
 
-    await fse.copy(join(fixtures, 'hmr/src'), join(fixtures, 'hmr/test-src-1'));
+    await fse.copy(
+      join(fixtures, 'hmr/src'),
+      join(fixtures, 'hmr/test-temp-src-1'),
+    );
     const cwd = join(fixtures, 'hmr');
     const rsbuild = await dev({
       cwd,
@@ -101,7 +107,7 @@ rspackOnlyTest(
       rsbuildConfig: {
         source: {
           entry: {
-            index: join(cwd, 'test-src-1/index.ts'),
+            index: join(cwd, 'test-temp-src-1/index.ts'),
           },
         },
         output: {
@@ -123,7 +129,7 @@ rspackOnlyTest(
     await gotoPage(page, rsbuild);
     expect(rsbuild.port).toBe(3001);
 
-    const appPath = join(fixtures, 'hmr', 'test-src-1/App.tsx');
+    const appPath = join(fixtures, 'hmr', 'test-temp-src-1/App.tsx');
 
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild!');
