@@ -11,6 +11,7 @@ import {
   type CreateDevServerOptions,
   type StartDevServerOptions,
   type CreateDevMiddlewareReturns,
+  DevConfig,
 } from '@rsbuild/shared';
 import { formatRoutes, getDevOptions, printServerURLs } from './helper';
 import connect from '@rsbuild/shared/connect';
@@ -203,7 +204,63 @@ export async function createDevServer<
     },
   };
 
+  await setupWatchFiles(devConfig, compileMiddlewareAPI);
+
   debug('create dev server done');
 
   return server;
+}
+
+async function setupWatchFiles(
+  dev: DevConfig,
+  compileMiddlewareAPI: RsbuildDevMiddlewareOptions['compileMiddlewareAPI'],
+) {
+  const { watchFiles } = dev;
+  if (!watchFiles) {
+    return;
+  }
+
+  const normalizeWatchFilesOptions = (
+    watchFilesOptions: DevConfig['watchFiles'],
+  ) => {
+    if (typeof watchFilesOptions === 'string') {
+      watchFilesOptions = {
+        paths: watchFilesOptions,
+        options: {},
+      };
+    } else if (
+      typeof watchFilesOptions === 'object' &&
+      watchFilesOptions !== null
+    ) {
+      const { paths, options = {} } = Array.isArray(watchFilesOptions)
+        ? {
+            paths: watchFilesOptions,
+            options: {},
+          }
+        : watchFilesOptions;
+      watchFilesOptions = { paths, options };
+    } else {
+      watchFilesOptions = undefined;
+    }
+
+    return watchFilesOptions;
+  };
+
+  const watchFilesOptions = normalizeWatchFilesOptions(watchFiles);
+  if (!watchFilesOptions) {
+    return;
+  }
+
+  const { paths, options } = watchFilesOptions;
+
+  const chokidar = await import('@rsbuild/shared/chokidar');
+  const watcher = chokidar.watch(paths, options);
+
+  if (dev.hmr || dev.liveReload) {
+    watcher.on('change', () => {
+      if (compileMiddlewareAPI) {
+        compileMiddlewareAPI.sockWrite('static-changed');
+      }
+    });
+  }
 }

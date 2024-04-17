@@ -213,6 +213,8 @@ function onMessage(e: MessageEvent<string>) {
       handleSuccess();
       break;
     case 'static-changed':
+      window.location.reload();
+      break;
     case 'content-changed':
       // Triggered when a file from `contentBase` changed.
       window.location.reload();

@@ -1,5 +1,6 @@
 import type { ArrayOrNot } from '../utils';
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import { WatchOptions } from '../../../compiled/chokidar';
 
 export type ProgressBarConfig = {
   id?: string;
@@ -76,6 +77,13 @@ export interface DevConfig {
    * Used to control whether the build artifacts of the development environment are written to the disk.
    */
   writeToDisk?: boolean | ((filename: string) => boolean);
+  /**
+   * This option allows you to configure a list of globs/directories/files to watch for file changes.
+   */
+  watchFiles?:
+    | string
+    | string[]
+    | { paths: string | string[]; options?: WatchOptions };
 }
 
 export type NormalizedDevConfig = DevConfig &
