@@ -1,5 +1,5 @@
 // @ts-expect-error
-import Png from './icon.png?url';
+import Png from '@assets/icon.png?url';
 
 const App = () => (
   <>

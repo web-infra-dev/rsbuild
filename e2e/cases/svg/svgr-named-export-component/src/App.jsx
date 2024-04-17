@@ -1,4 +1,4 @@
-import { ReactComponent as Logo } from './app.svg';
+import { ReactComponent as Logo } from '@assets/mobile.svg';
 
 function App() {
   return (

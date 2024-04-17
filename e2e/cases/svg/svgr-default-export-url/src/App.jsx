@@ -1,4 +1,4 @@
-import largeImg, { ReactComponent as Logo } from './large.svg';
+import largeImg, { ReactComponent as Logo } from '@assets/mobile.svg';
 import smallImg from '@assets/circle.svg';
 import './App.css';
 
