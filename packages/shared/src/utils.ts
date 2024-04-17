@@ -281,10 +281,6 @@ const colorList: Colors[] = ['green', 'cyan', 'yellow', 'blue', 'magenta'];
 export const getProgressColor = (index: number) =>
   colorList[index % colorList.length];
 
-export function onExitProcess(listener: NodeJS.ExitListener) {
-  process.on('exit', listener);
-}
-
 export const isHtmlDisabled = (
   config: NormalizedConfig,
   target: RsbuildTarget,

@@ -1,7 +1,6 @@
 import { join } from 'node:path';
 import {
   getDistPath,
-  onExitProcess,
   removeLeadingSlash,
   type TransformFn,
   type BundlerChain,
@@ -132,7 +131,7 @@ export function getPluginAPI({
     });
   };
 
-  onExitProcess(() => {
+  process.on('exit', () => {
     hooks.onExit.call();
   });
 
