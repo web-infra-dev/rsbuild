@@ -12,8 +12,8 @@ import { fse } from '@rsbuild/shared';
 import { formatStatsMessages } from '../client/formatStats';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
 
-// depend on CSS modules generator config
-export const rspackMinVersion = '0.6.0';
+// depend on native IgnorePlugin
+export const rspackMinVersion = '0.6.2';
 
 const compareSemver = (version1: string, version2: string) => {
   const parts1 = version1.split('.').map(Number);

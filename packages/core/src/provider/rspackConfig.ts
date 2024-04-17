@@ -118,6 +118,7 @@ export async function generateRspackConfig({
   const {
     BannerPlugin,
     DefinePlugin,
+    IgnorePlugin,
     ProvidePlugin,
     HotModuleReplacementPlugin,
   } = await import('@rspack/core');
@@ -127,6 +128,7 @@ export async function generateRspackConfig({
     bundler: {
       BannerPlugin,
       DefinePlugin,
+      IgnorePlugin,
       ProvidePlugin,
       HotModuleReplacementPlugin,
     },
