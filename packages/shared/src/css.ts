@@ -230,10 +230,11 @@ export const getCssLoaderOptions = ({
 }) => {
   const { cssModules } = config.output;
 
-  const defaultOptions = {
+  const defaultOptions: CSSLoaderOptions = {
     importLoaders,
     modules: {
       auto: cssModules.auto,
+      namedExport: false,
       exportLocalsConvention: cssModules.exportLocalsConvention,
       localIdentName,
     },

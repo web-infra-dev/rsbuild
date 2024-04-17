@@ -171,8 +171,8 @@ function getDefaultEntry(root: string): RsbuildEntry {
     'js',
     'tsx',
     'jsx',
-    '.mjs',
-    '.cjs',
+    'mjs',
+    'cjs',
   ].map((ext) => join(root, `src/index.${ext}`));
 
   const entryFile = findExists(files);

@@ -11,6 +11,7 @@ export const isDebug = () => {
     return false;
   }
 
+  logger.level = 'verbose'; // support `process.env.DEBUG` in e2e
   const values = process.env.DEBUG.toLocaleLowerCase().split(',');
   return ['rsbuild', 'builder', '*'].some((key) => values.includes(key));
 };
