@@ -30,6 +30,7 @@ flexbox
 flexbugs
 fnames
 fullhash
+gzipped
 icss
 idents
 iife

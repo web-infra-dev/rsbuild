@@ -1,10 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { dev, build, gotoPage } from '@e2e/helper';
 
-// TODO: https://github.com/web-infra-dev/rspack/issues/5921
-test.skip('should run swc warm plugin correctly in dev mode', async ({
-  page,
-}) => {
+test('should run SWC Wasm plugin correctly in dev mode', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
   });
@@ -18,7 +15,7 @@ test.skip('should run swc warm plugin correctly in dev mode', async ({
   await rsbuild.close();
 });
 
-test.skip('should run swc warm plugin correctly in production build', async ({
+test('should run SWC Wasm plugin correctly in production build', async ({
   page,
 }) => {
   const rsbuild = await build({
