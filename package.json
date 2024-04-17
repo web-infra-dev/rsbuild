@@ -38,7 +38,7 @@
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.6.4",
+    "@biomejs/biome": "1.7.0",
     "@changesets/cli": "^2.27.1",
     "@modern-js/module-tools": "^2.48.4",
     "@rsbuild/tsconfig": "workspace:*",
