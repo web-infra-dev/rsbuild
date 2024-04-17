@@ -1,4 +1,3 @@
-// @ts-expect-error
 import Png from '@assets/icon.png?url';
 
 const App = () => (
