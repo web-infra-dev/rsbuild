@@ -5,21 +5,10 @@ import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import type { RequestHandler } from '@rsbuild/shared';
 
-function stripAnsi(content: string) {
-  const pattern = [
-    '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
-    '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
-  ].join('|');
-
-  const regex = new RegExp(pattern, 'g');
-
-  return content.replace(regex, '');
-}
-
 function count404Response(logs: string[]) {
   let count = 0;
   for (const log of logs) {
-    if (stripAnsi(log).includes('404')) {
+    if (log.includes('404')) {
       count++;
     }
   }
