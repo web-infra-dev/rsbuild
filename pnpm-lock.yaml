@@ -240,16 +240,6 @@ importers:
         specifier: ^3.4.19
         version: 3.4.21(typescript@5.4.2)
 
-  e2e/cases/react/remove-prop-types:
-    dependencies:
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
-    devDependencies:
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
-
   e2e/cases/resolve-pkg-imports: {}
 
   e2e/cases/rsdoctor/mock: {}
@@ -12251,6 +12241,7 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
+    dev: true
 
   /property-information@5.6.0:
     resolution: {integrity: sha512-YUHSPk+A30YPv+0Qf8i9Mbfe/C0hdPXk1s1jPVToV8pk8BQtpw10ct89Eo7OWkutrwqvT0eicAxlOg3dOAu8JA==}
@@ -12469,6 +12460,7 @@ packages:
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+    dev: true
 
   /react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
