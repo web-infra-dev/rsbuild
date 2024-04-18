@@ -4,8 +4,6 @@ A great chunk splitting strategy is very important to improve the loading perfor
 
 Several [chunk splitting strategies](/guide/optimization/split-chunk) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
 
----
-
 ## Strategies
 
 > The chunk splitting config of Rsbuild is in [performance.chunkSplit](/config/performance/chunk-split).
@@ -18,8 +16,6 @@ Rsbuild supports the following chunk splitting strategies:
 - `all-in-one`: bundle all codes into one chunk.
 - `single-vendor`: bundle all NPM packages into a single chunk.
 - `custom`: custom chunk splitting strategy.
-
----
 
 ## split-by-experience
 
@@ -51,8 +47,6 @@ export default {
 
 - If the npm packages mentioned above are not installed or used in the project, the corresponding chunk will not be generated.
 
----
-
 ## split-by-module
 
 ### Behavior
@@ -80,8 +74,6 @@ export default {
 - This configuration will split the node_modules into smaller chunks, resulting in a large number of file requests.
 - When using HTTP/2, resource loading time will be accelerated and cache hit rate will be improved due to multiplexing.
 - When not using HTTP/2, the performance of page loading may be reduced due to HTTP head-of-line blocking. Please use with caution.
-
----
 
 ## all-in-one
 
@@ -125,8 +117,6 @@ export default defineConfig({
 });
 ```
 
----
-
 ## single-vendor
 
 ### Behavior
@@ -149,8 +139,6 @@ export default {
 
 - The size of a single vendor file may be very large, leading to a decrease in page loading performance.
 
----
-
 ## split-by-size
 
 ### Behavior
@@ -170,8 +158,6 @@ export default {
   },
 };
 ```
-
----
 
 ## Custom Splitting Strategy
 
@@ -226,8 +212,6 @@ export default {
 ```
 
 The config in `override` will be merged with the bundler config. For specific config details, please refer to [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) or [Rspack - splitChunks](https://rspack.dev/config/optimization#optimization-splitchunks).
-
----
 
 ## Using Dynamic Import for Code Splitting
 

@@ -18,15 +18,11 @@ Notable changes:
 - New transform plugin API
 - Default port changed to 3000
 
----
-
 ## Upgrade to Rspack v0.6
 
 Rsbuild has upgraded the dependent Rspack to version v0.6, and adapted the breaking changes of CSS modules contained in Rspack v0.6.
 
 In the new version, Rspack has enabled the new tree shaking algorithm by default, resulting in a significant improvement in bundle size and artifact stability. Please refer to the [Rspack 0.6 release announcement](https://rspack.dev/blog/announcing-0.6) to learn more.
-
----
 
 ## Error overlay enabled by default
 
@@ -46,15 +42,11 @@ export default defineConfig({
 });
 ```
 
----
-
 ## Support for Vue JSX HMR
 
 `@rsbuild/plugin-vue-jsx` now supports JSX HMR. When you modify JSX code in a Vue 3 application, it will automatically trigger hot module replacement and preserve the current page state.
 
 This feature is implemented by community contributor [@liyincode](https://github.com/liyincode) ❤️, and released as a standalone package [babel-plugin-vue-jsx-hmr](https://github.com/liyincode/babel-plugin-vue-jsx-hmr), for use in projects outside of Rsbuild.
-
----
 
 ## New transform API
 
@@ -79,8 +71,6 @@ const pluginPug = () => ({
 ```
 
 For some complex code transformation scenarios, `api.transform` may not be sufficient. In such situations, you can implement it using the Rspack loader.
-
----
 
 ## Default port changed to 3000
 

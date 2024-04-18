@@ -18,15 +18,11 @@ Rsbuild v0.6 已与 Rspack v0.6 同步发布！
 - 全新的 transform 插件 API
 - 默认端口调整为 3000
 
----
-
 ## 升级 Rspack v0.6
 
 Rsbuild 已将依赖的 Rspack 升级至 v0.6 版本，并适配了 Rspack v0.6 包含的 CSS Modules 不兼容更新。
 
 在新版本中，Rspack 默认开启了新版 tree shaking 算法，使产物体积和产物稳定性得到显著提升。请参考 [Rspack 0.6 发布公告](https://rspack.dev/blog/announcing-0.6) 了解更多。
-
----
 
 ## 默认启用 error overlay
 
@@ -46,15 +42,11 @@ export default defineConfig({
 });
 ```
 
----
-
 ## 支持 Vue JSX HMR
 
 `@rsbuild/plugin-vue-jsx` 现已支持 JSX HMR，当你在 Vue 3 应用中修改 JSX 代码时，会自动触发模块热替换，并保留当前页面的状态。
 
 该功能由社区贡献者 [@liyincode](https://github.com/liyincode) 实现 ❤️，并且发布为独立的 [babel-plugin-vue-jsx-hmr](https://github.com/liyincode/babel-plugin-vue-jsx-hmr) 包，以便在 Rsbuild 以外的项目中使用。
-
----
 
 ## 全新的 transform API
 
@@ -79,8 +71,6 @@ const pluginPug = () => ({
 ```
 
 对于一些复杂的代码转换场景，`api.transform` 可能无法满足，此时你可以使用 Rspack loader 进行实现。
-
----
 
 ## 默认端口调整为 3000
 
