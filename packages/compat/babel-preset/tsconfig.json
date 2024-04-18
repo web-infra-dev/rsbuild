@@ -8,13 +8,13 @@
   },
   "references": [
     {
-      "path": "../core"
+      "path": "../../core"
     },
     {
-      "path": "../shared"
+      "path": "../../shared"
     },
     {
-      "path": "../plugin-babel"
+      "path": "../../plugin-babel"
     }
   ],
   "include": ["src"]

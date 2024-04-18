@@ -94,7 +94,7 @@ importers:
         version: 1.43.1
       '@rsbuild/babel-preset':
         specifier: workspace:*
-        version: link:../packages/babel-preset
+        version: link:../packages/compat/babel-preset
       '@rsbuild/core':
         specifier: link:../packages/core
         version: link:../packages/core
@@ -548,7 +548,7 @@ importers:
         specifier: ^5.4.2
         version: 5.4.5
 
-  packages/babel-preset:
+  packages/compat/babel-preset:
     dependencies:
       '@babel/core':
         specifier: ^7.24.4
@@ -592,7 +592,7 @@ importers:
     devDependencies:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
-        version: link:../plugin-babel
+        version: link:../../plugin-babel
       '@types/node':
         specifier: 16.x
         version: 16.18.96
