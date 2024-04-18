@@ -84,13 +84,13 @@ export default {
     entry({ target }) {
       if (target === 'web') {
         return {
-          index: './src/index.client.js';
-        }
+          index: './src/index.client.js',
+        };
       }
       if (target === 'node') {
         return {
-          index: './src/index.server.js';
-        }
+          index: './src/index.server.js',
+        };
       }
     },
   },
