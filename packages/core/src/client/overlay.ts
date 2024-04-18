@@ -1,4 +1,4 @@
-import { registerOverlay } from './hmr'
+import { registerOverlay } from './hmr';
 
 function stripAnsi(content: string) {
   const pattern = [
@@ -163,7 +163,7 @@ const overlayTemplate = `
 const {
   HTMLElement = class {} as typeof globalThis.HTMLElement,
   customElements,
-} = globalThis;
+} = typeof window !== 'undefined' ? window : globalThis;
 
 class ErrorOverlay extends HTMLElement {
   constructor(message: string[]) {
