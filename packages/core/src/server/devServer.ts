@@ -12,6 +12,7 @@ import {
   type StartDevServerOptions,
   type CreateDevMiddlewareReturns,
   type DevConfig,
+  type WatchFiles,
 } from '@rsbuild/shared';
 import { formatRoutes, getDevOptions, printServerURLs } from './helper';
 import connect from '@rsbuild/shared/connect';
@@ -222,7 +223,7 @@ async function setupWatchFiles(
 
   const normalizeWatchFilesOptions = (
     watchFilesOptions: DevConfig['watchFiles'],
-  ) => {
+  ): WatchFiles | undefined => {
     let normalizedWatchFilesOptions = watchFilesOptions;
     if (typeof watchFilesOptions === 'string') {
       normalizedWatchFilesOptions = {

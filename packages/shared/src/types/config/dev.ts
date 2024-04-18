@@ -30,6 +30,11 @@ export type ClientConfig = {
   overlay?: boolean;
 };
 
+export type WatchFiles = {
+  paths: string | string[];
+  options?: WatchOptions;
+};
+
 export interface DevConfig {
   /**
    * Whether to enable Hot Module Replacement.
@@ -80,10 +85,7 @@ export interface DevConfig {
   /**
    * This option allows you to configure a list of globs/directories/files to watch for file changes.
    */
-  watchFiles?:
-    | string
-    | string[]
-    | { paths: string | string[]; options?: WatchOptions };
+  watchFiles?: string | string[] | WatchFiles;
 }
 
 export type NormalizedDevConfig = DevConfig &
