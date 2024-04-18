@@ -9,10 +9,10 @@ import {
   type NormalizedConfig,
   type CreateRsbuildOptions,
 } from '@rsbuild/shared';
-import type { InternalContext } from '../types';
-import { initHooks } from '../initHooks';
-import { withDefaultConfig } from '../config';
-import { getEntryObject } from '../plugins/entry';
+import type { InternalContext } from './types';
+import { initHooks } from './initHooks';
+import { withDefaultConfig } from './config';
+import { getEntryObject } from './plugins/entry';
 
 function getAbsolutePath(root: string, filepath: string) {
   return isAbsolute(filepath) ? filepath : join(root, filepath);

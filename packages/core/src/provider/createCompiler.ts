@@ -149,7 +149,7 @@ export async function createDevMiddleware(
     });
   }
 
-  const { getDevMiddleware } = await import('./devMiddleware');
+  const { getDevMiddleware } = await import('../server/devMiddleware');
   return {
     devMiddleware: getDevMiddleware(compiler),
     compiler,

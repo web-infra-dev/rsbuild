@@ -13,7 +13,7 @@ import {
   getDevMiddleware,
   type InternalContext,
 } from '@rsbuild/core/internal';
-import type { WebpackConfig } from '../types';
+import type { WebpackConfig } from './types';
 import { initConfigs, type InitConfigsOptions } from './initConfigs';
 // @ts-expect-error
 import WebpackMultiStats from 'webpack/lib/MultiStats';
