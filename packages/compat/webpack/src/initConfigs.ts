@@ -10,7 +10,7 @@ import {
 } from '@rsbuild/core/internal';
 import { inspectConfig } from './inspectConfig';
 import { generateWebpackConfig } from './webpackConfig';
-import type { WebpackConfig } from '../types';
+import type { WebpackConfig } from './types';
 
 export type InitConfigsOptions = {
   context: InternalContext;

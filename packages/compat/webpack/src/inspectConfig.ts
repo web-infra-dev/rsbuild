@@ -9,7 +9,7 @@ import {
   type InspectConfigResult,
   type InspectConfigOptions,
 } from '@rsbuild/shared';
-import type { WebpackConfig } from '../types';
+import type { WebpackConfig } from './types';
 
 export async function inspectConfig({
   context,

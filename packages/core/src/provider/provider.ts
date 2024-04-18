@@ -4,9 +4,9 @@ import {
   type RsbuildProvider,
   type PreviewServerOptions,
 } from '@rsbuild/shared';
-import { createContext, createPublicContext } from './createContext';
+import { createContext, createPublicContext } from '../createContext';
 import { initConfigs, initRsbuildConfig } from './initConfigs';
-import { getPluginAPI } from './initPlugins';
+import { getPluginAPI } from '../initPlugins';
 import { plugins } from '../plugins';
 
 export const rspackProvider: RsbuildProvider = async ({

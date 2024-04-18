@@ -11,7 +11,7 @@ import {
   initRsbuildConfig,
   createPublicContext,
 } from '@rsbuild/core/internal';
-import { initConfigs } from './core/initConfigs';
+import { initConfigs } from './initConfigs';
 
 export const webpackProvider: RsbuildProvider<'webpack'> = async ({
   pluginManager,
@@ -24,7 +24,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
   context.pluginAPI = pluginAPI;
 
   const createCompiler = (async () => {
-    const { createCompiler } = await import('./core/createCompiler');
+    const { createCompiler } = await import('./createCompiler');
     const { webpackConfigs } = await initConfigs({
       context,
       pluginManager,
@@ -92,7 +92,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
 
     async createDevServer(options) {
       const { createDevServer } = await import('@rsbuild/core/internal');
-      const { createDevMiddleware } = await import('./core/createCompiler');
+      const { createDevMiddleware } = await import('./createCompiler');
       await initRsbuildConfig({ context, pluginManager });
       return createDevServer(
         { context, pluginManager, rsbuildOptions },
@@ -103,7 +103,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
 
     async startDevServer(options) {
       const { createDevServer } = await import('@rsbuild/core/internal');
-      const { createDevMiddleware } = await import('./core/createCompiler');
+      const { createDevMiddleware } = await import('./createCompiler');
       await initRsbuildConfig({
         context,
         pluginManager,
@@ -131,12 +131,12 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async build(options) {
-      const { build } = await import('./core/build');
+      const { build } = await import('./build');
       return build({ context, pluginManager, rsbuildOptions }, options);
     },
 
     async inspectConfig(inspectOptions) {
-      const { inspectConfig } = await import('./core/inspectConfig');
+      const { inspectConfig } = await import('./inspectConfig');
       return await inspectConfig({
         context,
         pluginManager,

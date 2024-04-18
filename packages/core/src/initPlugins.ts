@@ -10,7 +10,7 @@ import {
   type TransformHandler,
 } from '@rsbuild/shared';
 import { createPublicContext } from './createContext';
-import type { InternalContext, NormalizedConfig } from '../types';
+import type { InternalContext, NormalizedConfig } from './types';
 import type { Compiler } from '@rspack/core';
 
 export function getHTMLPathByEntry(
@@ -124,7 +124,7 @@ export function getPluginAPI({
 
       rule
         .use(id)
-        .loader(join(__dirname, '../rspack/transformLoader'))
+        .loader(join(__dirname, './rspack/transformLoader'))
         .options({ id });
 
       applyTransformPlugin(chain, transformer);

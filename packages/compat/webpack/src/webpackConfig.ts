@@ -14,9 +14,9 @@ import {
   getChainUtils as getBaseChainUtils,
   type InternalContext,
 } from '@rsbuild/core/internal';
-import { getCompiledPath } from '../shared';
+import { getCompiledPath } from './shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
-import type { WebpackConfig } from '../types';
+import type { WebpackConfig } from './types';
 
 async function modifyWebpackChain(
   context: InternalContext,
