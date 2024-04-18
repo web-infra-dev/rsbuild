@@ -15,10 +15,7 @@ test('should build Vue sfc style correctly', async ({ page }) => {
   const body = page.locator('body');
   await expect(body).toHaveCSS('background-color', 'rgb(0, 0, 255)');
 
-  await expect(body).toHaveCSS(
-    'padding',
-    '-webkit-calc(16px + env(safe-area-inset-bottom))',
-  );
+  await expect(body).toHaveCSS('padding', '16px');
 
   await rsbuild.close();
 });
