@@ -163,7 +163,7 @@ const overlayTemplate = `
 const {
   HTMLElement = class {} as typeof globalThis.HTMLElement,
   customElements,
-} = typeof window === 'object' ? window : globalThis;
+} = typeof window !== 'undefined' ? window : globalThis;
 
 class ErrorOverlay extends HTMLElement {
   constructor(message: string[]) {
