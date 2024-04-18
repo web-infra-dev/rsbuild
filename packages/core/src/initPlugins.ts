@@ -124,7 +124,7 @@ export function getPluginAPI({
 
       rule
         .use(id)
-        .loader(join(__dirname, '../rspack/transformLoader'))
+        .loader(join(__dirname, './rspack/transformLoader'))
         .options({ id });
 
       applyTransformPlugin(chain, transformer);
