@@ -67,7 +67,7 @@
     "sass-loader": "14.2.0",
     "semver": "^7.6.0",
     "sirv": "^2.0.4",
-    "style-loader": "3.3.4",
+    "style-loader": "4.0.0",
     "url-loader": "4.1.1",
     "webpack-bundle-analyzer": "^4.10.1",
     "webpack-chain": "npm:webpack-5-chain@8.0.1",
