@@ -1,7 +1,7 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { SwcReactConfig } from '@rsbuild/shared';
 import { applySplitChunksRule } from './splitChunks';
-import { applyBasicReactSupport } from './react';
+import { applyBasicReactSupport, applyReactProfiler } from './react';
 
 export type SplitReactChunkOptions = {
   /**
@@ -28,18 +28,24 @@ export type PluginReactOptions = {
    * Configuration for chunk splitting of React-related dependencies.
    */
   splitChunks?: SplitReactChunkOptions;
+  enableReactProfiler?: boolean;
 };
 
 export const PLUGIN_REACT_NAME = 'rsbuild:react';
 
-export const pluginReact = (
-  options: PluginReactOptions = {},
-): RsbuildPlugin => ({
+export const pluginReact = ({
+  enableReactProfiler = false,
+  ...options
+}: PluginReactOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_REACT_NAME,
 
   setup(api) {
     if (api.context.bundlerType === 'rspack') {
       applyBasicReactSupport(api, options);
+
+      if (enableReactProfiler) {
+        applyReactProfiler(api);
+      }
     }
 
     applySplitChunksRule(api, options?.splitChunks);
