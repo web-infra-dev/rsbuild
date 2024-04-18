@@ -99,7 +99,7 @@ export default defineConfig({
         description: 'The Rspack-based build tool for the web',
         editLink: {
           docRepoBaseUrl:
-            'https://github.com/web-infra-dev/rsbuild/tree/main/website',
+            'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
           text: '📝 Edit this page on GitHub',
         },
       },
@@ -113,7 +113,7 @@ export default defineConfig({
         description: '基于 Rspack 的 Web 构建工具',
         editLink: {
           docRepoBaseUrl:
-            'https://github.com/web-infra-dev/rsbuild/tree/main/website',
+            'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
           text: '📝 在 GitHub 上编辑此页',
         },
       },
