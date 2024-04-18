@@ -1,5 +1,5 @@
 import { Link } from 'rspress/theme';
-import { useUrl } from '../utils';
+import { useUrl } from './utils';
 import styles from './Step.module.scss';
 
 const Step = (props: { href: string; title: string; description: string }) => {
