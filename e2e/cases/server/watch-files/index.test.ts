@@ -19,7 +19,7 @@ rspackOnlyTest(
     await fse.writeFile(file, 'test');
 
     // check the page is reloaded
-    await page.waitForURL(`${rsbuild.urls[0]}/index.html`);
+    await page.waitForResponse((response) => response.url() === page.url());
 
     // reset file
     fse.truncateSync(file);
