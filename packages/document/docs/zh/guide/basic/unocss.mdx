@@ -14,13 +14,15 @@ import { PackageManagerTabs } from '@theme';
 
 ## 配置 PostCSS
 
-你可以通过 [postcss.config.cjs](https://www.npmjs.com/package/postcss-loader#config) 或 [tools.postcss](/config/tools/postcss) 来注册 `unocss` 的 PostCSS 插件。
+你可以通过 [postcss.config.mjs](https://www.npmjs.com/package/postcss-loader#config) 或 [tools.postcss](/config/tools/postcss) 来注册 `unocss` 的 PostCSS 插件。
 
-```js title="postcss.config.cjs"
-module.exports = {
-  plugins: {
-    '@unocss/postcss': {},
-  },
+```js title="postcss.config.mjs"
+import UnoCSS from '@unocss/postcss';
+
+export default {
+  plugins: [
+    UnoCSS(),
+  ],
 };
 ```
 
