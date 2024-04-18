@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-react",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "React plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -37,7 +37,7 @@
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.6.3"
+    "@rsbuild/core": "workspace:^0.6.4"
   },
   "publishConfig": {
     "access": "public",
