@@ -4,8 +4,6 @@
 
 在 Rsbuild 中内置了多种拆包策略，可以满足大部分应用的需求，你也可以根据自己的使用场景，自定义拆包配置。
 
----
-
 ## 拆包策略
 
 > Rsbuild 的拆包配置集中在 [performance.chunkSplit](/config/performance/chunk-split) 中。
@@ -18,8 +16,6 @@ Rsbuild 支持设置以下几种拆包策略：
 - `all-in-one`: 将所有代码全部打包到一个 chunk 中。
 - `single-vendor`: 将所有 NPM 包的代码打包到一个单独的 chunk 中。
 - `custom`: 自定义拆包配置。
-
----
 
 ## split-by-experience
 
@@ -51,8 +47,6 @@ export default {
 
 - 如果项目中没有安装或引用以上 npm 包，则不会生成相应的 chunk。
 
----
-
 ## split-by-module
 
 ### 分包策略
@@ -76,8 +70,6 @@ export default {
 - 这个配置会最细化地拆分 node_modules，产生大量的文件请求。
 - 在使用 HTTP/2 时，由于存在多路复用，会加快资源的加载时间，并提高缓存命中率。
 - 在未使用 HTTP/2 时，由于 HTTP 队头阻塞问题，会导致页面加载性能下降，请谨慎使用。
-
----
 
 ## all-in-one
 
@@ -121,8 +113,6 @@ export default defineConfig({
 });
 ```
 
----
-
 ## single-vendor
 
 ### 分包策略
@@ -145,8 +135,6 @@ export default {
 
 - 单个 vendor 文件的体积可能会非常大，使页面加载性能下降。
 
----
-
 ## split-by-size
 
 ### 分包策略
@@ -166,8 +154,6 @@ export default {
   },
 };
 ```
-
----
 
 ## 自定义拆包
 
@@ -222,8 +208,6 @@ export default {
 ```
 
 其中 `override` 中的配置会和 bundler 的配置进行合并，具体配置项请参考 [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) 或 [Rspack - splitChunks](https://rspack.dev/zh/config/optimization#optimization-splitchunks)。
-
----
 
 ## 使用 Dynamic Import 拆包
 

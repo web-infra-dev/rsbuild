@@ -60,8 +60,6 @@ import { ReactComponent as Logo } from './logo.svg';
 export const App = () => <Logo />;
 ```
 
----
-
 ## 选项
 
 如果你需要自定义 SVGR 的编译行为，可以使用以下配置项：
@@ -284,8 +282,6 @@ console.log(url); // => 资源 url
 :::tip
 模块路径中的 query 比 `exclude` 和 `excludeImporter` 具有更高的优先级。比如某个模块被 exclude，添加 `?react` 依然可以使它被 SVGR 转换。
 :::
-
----
 
 ## 类型声明
 
