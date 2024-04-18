@@ -723,48 +723,6 @@ importers:
         specifier: ^5.4.2
         version: 5.4.5
 
-  packages/document:
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../core
-        version: link:../core
-      '@rspress/plugin-rss':
-        specifier: ^1.18.2
-        version: 1.18.2(react@18.2.0)(rspress@1.18.2(webpack@5.91.0))
-      '@types/node':
-        specifier: 16.x
-        version: 16.18.96
-      '@types/react':
-        specifier: ^18.2.75
-        version: 18.2.79
-      '@types/react-dom':
-        specifier: ^18.2.24
-        version: 18.2.25
-      fast-glob:
-        specifier: ^3.3.2
-        version: 3.3.2
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      rsbuild-plugin-google-analytics:
-        specifier: 1.0.0
-        version: 1.0.0(@rsbuild/core@packages+core)
-      rsbuild-plugin-open-graph:
-        specifier: 1.0.0
-        version: 1.0.0(@rsbuild/core@packages+core)
-      rsfamily-nav-icon:
-        specifier: ^1.0.2
-        version: 1.0.2
-      rspress:
-        specifier: ^1.18.2
-        version: 1.18.2(webpack@5.91.0)
-      rspress-plugin-font-open-sans:
-        specifier: 1.0.0
-        version: 1.0.0
-
   packages/monorepo-utils:
     dependencies:
       '@rsbuild/shared':
@@ -1760,6 +1718,48 @@ importers:
         version: 2.0.1
 
   scripts/tsconfig: {}
+
+  website:
+    devDependencies:
+      '@rsbuild/core':
+        specifier: link:../packages/core
+        version: link:../packages/core
+      '@rspress/plugin-rss':
+        specifier: ^1.18.2
+        version: 1.18.2(react@18.2.0)(rspress@1.18.2(webpack@5.91.0))
+      '@types/node':
+        specifier: 16.x
+        version: 16.18.96
+      '@types/react':
+        specifier: ^18.2.75
+        version: 18.2.79
+      '@types/react-dom':
+        specifier: ^18.2.24
+        version: 18.2.25
+      fast-glob:
+        specifier: ^3.3.2
+        version: 3.3.2
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      rsbuild-plugin-google-analytics:
+        specifier: 1.0.0
+        version: 1.0.0(@rsbuild/core@packages+core)
+      rsbuild-plugin-open-graph:
+        specifier: 1.0.0
+        version: 1.0.0(@rsbuild/core@packages+core)
+      rsfamily-nav-icon:
+        specifier: ^1.0.2
+        version: 1.0.2
+      rspress:
+        specifier: ^1.18.2
+        version: 1.18.2(webpack@5.91.0)
+      rspress-plugin-font-open-sans:
+        specifier: 1.0.0
+        version: 1.0.0
 
 packages:
 
@@ -5568,9 +5568,6 @@ packages:
 
   html-entities@2.3.3:
     resolution: {integrity: sha512-DV5Ln36z34NNTDgnz0EWGBLZENelNAtkiFA4kyNOG2tDI6Mz1uSWiq1wAKdyjnJwyDiDO7Fa2SO1CTxPXL8VxA==}
-
-  html-entities@2.5.2:
-    resolution: {integrity: sha512-K//PSRMQk4FZ78Kyau+mZurHn3FH0Vwr+H36eE0rPbeYkRRi9YxceYPhuN60UwWorxyKHhqoAJl2OFKa4BVtaA==}
 
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
@@ -13134,8 +13131,6 @@ snapshots:
 
   html-entities@2.3.3: {}
 
-  html-entities@2.5.2: {}
-
   html-escaper@2.0.2: {}
 
   html-rspack-plugin@5.6.2(@rspack/core@0.6.2(@swc/helpers@0.5.3)):
@@ -13182,7 +13177,7 @@ snapshots:
 
   htmr@1.0.2(react@18.2.0):
     dependencies:
-      html-entities: 2.5.2
+      html-entities: 2.3.3
       htmlparser2: 6.1.0
       react: 18.2.0
 

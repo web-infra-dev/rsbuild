@@ -5,5 +5,5 @@
     "outDir": "./dist",
     "baseUrl": "./"
   },
-  "include": ["docs", "rspress.config.ts", "src", "theme"]
+  "include": ["docs", "rspress.config.ts", "theme", "components"]
 }

@@ -1,33 +1,33 @@
 # Create React App
 
-This chapter introduces how to migrate a [Create React App](https://github.com/facebook/create-react-app) (CRA) or [CRACO](https://craco.js.org/) project to Rsbuild.
+本章节介绍如何将 [Create React App](https://github.com/facebook/create-react-app)（简称 CRA）或 [CRACO](https://craco.js.org/) 项目迁移到 Rsbuild。
 
 :::tip CRA eject
-If your project has already run the CRA `eject` command, then most of the content in this document will no longer be applicable.
+如果你的项目已经执行了 CRA 的 `eject` 命令，那么本文档的大部分内容将不再适用。
 
-After ejecting a CRA project, it becomes more like a project directly using webpack, so you can refer to the [webpack migration guide](/guide/migration/webpack).
+CRA 项目在 eject 后，更近似于直接使用 webpack 的项目，因此你可以参考 [webpack 迁移指南](/guide/migration/webpack)。
 
 :::
 
-## Installing Dependencies
+## 安装依赖
 
-First, you need to replace the npm dependencies of CRA with Rsbuild's dependencies.
+首先你需要把 CRA 的 npm 依赖替换为 Rsbuild 的依赖。
 
 import { PackageManagerTabs } from '@theme';
 
-- Remove CRA dependencies:
+- 移除 CRA 的依赖：
 
 <PackageManagerTabs command="remove react-scripts" />
 
-> For projects using CRACO, you can also remove the @craco/craco dependency.
+> 对于使用 CRACO 的项目，你还可以移除 `@craco/craco` 依赖。
 
-- Install Rsbuild dependencies:
+- 安装 Rsbuild 的依赖：
 
 <PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-react -D" />
 
-## Updating npm scripts
+## 更新 npm scripts
 
-Next, you need to update the npm scripts in package.json to Rsbuild's CLI commands.
+下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
 
 ```diff title="package.json"
 {
@@ -43,14 +43,14 @@ Next, you need to update the npm scripts in package.json to Rsbuild's CLI comman
 ```
 
 :::tip
-Rsbuild does not integrate testing frameworks, so it does not provide a command to replace `react-scripts test`. You can directly use testing frameworks such as Jest or Vitest. You can refer to the [Rsbuild react-jest](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/react-jest) example project for configuration.
+Rsbuild 未集成测试框架，因此没有提供用于替换 `react-scripts test` 的命令，你可以直接使用 Jest 或 Vitest 等测试框架。你可以参考 [Rsbuild react-jest](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/react-jest) 示例项目进行配置。
 :::
 
-## Creating Configuration File
+## 创建配置文件
 
-Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json and add the following content:
+在 package.json 的同级目录下创建 Rsbuild 的配置文件 `rsbuild.config.ts`，并添加以下内容：
 
-```typescript title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
@@ -59,9 +59,9 @@ export default defineConfig({
 });
 ```
 
-## HTML Template
+## HTML 模板
 
-CRA uses the `public/index.html` file as the default HTML template. In Rsbuild, you can specify the HTML template through [html.template](/config/html/template):
+CRA 默认使用 `public/index.html` 文件作为 HTML 模板。在 Rsbuild 中，你可以通过 [html.template](/config/html/template) 来指定 HTML 模板：
 
 ```ts title="rsbuild.config.ts"
 export default defineConfig({
@@ -71,20 +71,20 @@ export default defineConfig({
 });
 ```
 
-In the HTML template, if you are using the `%PUBLIC_URL%` variable from CRA, replace it with Rsbuild's [assetPrefix variable](/config/html/template-parameters) and use a forward slash for concatenation:
+在 HTML 模板中，如果使用了 CRA 的 `%PUBLIC_URL%` 变量，请替换为 Rsbuild 的 [assetPrefix 变量](/config/html/template-parameters)，并使用斜杠进行连接：
 
 ```diff
 -  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
 +  <link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
 ```
 
-This completes the basic migration from CRA to Rsbuild. You can now run the `npm run start` command to try starting the dev server.
+这样就完成了从 CRA 到 Rsbuild 的基本迁移，此时你可以执行 `npm run start` 命令来尝试启动开发服务器。
 
-## Output Directory
+## 构建产物目录
 
-By default, CRA outputs to the `build` directory, while Rsbuild's default output directory is `dist`.
+CRA 默认会将构建产物输出到 `build` 目录，而 Rsbuild 的默认构建产物目录为 `dist`。
 
-You can configure Rsbuild's [output.distPath.root](/config/output/dist-path) option to change the directory to `build`, in line with CRA:
+你可以配置 Rsbuild 的 [output.distPath.root](/config/output/dist-path) 选项，将目录修改为 `build`，与 CRA 保持一致：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -96,13 +96,13 @@ export default {
 };
 ```
 
-> For more details, please refer to the [Output Files](/guide/basic/output-files) section.
+> 更多细节请参考[构建产物目录](/guide/basic/output-files)章节。
 
-## Using SVGR
+## 使用 SVGR
 
-If you are using the "SVG to React Component" feature of CRA (i.e., [SVGR](https://react-svgr.com/)), you also need to install the SVGR plugin for Rsbuild.
+如果你使用了 CRA 的 "SVG 转 React 组件" 功能（即 [SVGR](https://react-svgr.com/)），那么还需要安装 Rsbuild 的 SVGR 插件。
 
-For example, if you are using the following usage:
+比如使用了以下用法：
 
 ```jsx
 import { ReactComponent as Logo } from './logo.svg';
@@ -114,7 +114,7 @@ const App = () => (
 );
 ```
 
-You only need to install and register `@rsbuild/plugin-svgr`:
+只需要安装和注册 `@rsbuild/plugin-svgr` 即可：
 
 ```ts title="rsbuild.config.ts"
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
@@ -124,11 +124,11 @@ export default {
 };
 ```
 
-Please refer to the [SVGR plugin](/plugins/list/plugin-svgr) documentation to learn how to use SVGR in Rsbuild.
+请参考 [SVGR 插件](/plugins/list/plugin-svgr) 文档了解如何在 Rsbuild 中使用 SVGR。
 
-## Configuration Migration
+## 配置迁移
 
-Here is the corresponding Rsbuild configuration for [CRA configuration](https://create-react-app.dev/docs/advanced-configuration/):
+以下是 [CRA 配置](https://create-react-app.dev/docs/advanced-configuration/)对应的 Rsbuild 配置：
 
 | CRA                     | Rsbuild                                                                                         |
 | ----------------------- | ----------------------------------------------------------------------------------------------- |
@@ -145,21 +145,21 @@ Here is the corresponding Rsbuild configuration for [CRA configuration](https://
 | FAST_REFRESH            | [dev.hmr](/config/dev/hmr)                                                                      |
 | TSC_COMPILE_ON_ERROR    | [Type Check Plugin](/plugins/list/plugin-type-check)                                            |
 
-Notes:
+说明：
 
-- The above table does not cover all configurations of CRA, feel free to add more.
+- 上述表格尚未覆盖到 CRA 的所有配置，欢迎补充。
 
-## Compile node_modules
+## 编译 node_modules
 
-By default, CRA uses Babel to compile dependencies in node_modules, but Rsbuild does not, to avoid the performance overhead and potential compilation errors caused by secondary compilation.
+CRA 默认会使用 Babel 编译 node_modules 中的依赖，但 Rsbuild 则不会，这是为了避免二次编译带来的性能损耗和潜在的编译错误。
 
-If you need to handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](/config/source/include#compile-node_modules) config to compile node_modules.
+如果你需要处理 node_modules 中依赖引起的语法兼容性问题，可以使用 [source.include](/config/source/include#编译-node_modules) 配置项来编译 node_modules。
 
-## Environment Variables
+## 环境变量
 
-CRA injects environment variables starting with `REACT_APP_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
+CRA 默认会将 `REACT_APP_` 开头的环境变量注入到 client 代码中，而 Rsbuild 默认会注入 `PUBLIC_` 开头的环境变量（参考 [public 变量](/guide/advanced/env-vars#public-变量)）。
 
-To be compatible with CRA's behavior, you can manually call Rsbuild's [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables starting with `REACT_APP_`, and inject them into the client code through the [source.define](/config/source/define) config.
+为了兼容 CRA 的行为，你可以手动调用 Rsbuild 提供的 [loadEnv](/api/javascript-api/core#loadenv) 方法来读取 `REACT_APP_` 开头的环境变量，并通过 [source.define](/config/source/define) 配置项注入到 client 代码中。
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig, loadEnv } from '@rsbuild/core';
@@ -173,26 +173,26 @@ export default defineConfig({
 });
 ```
 
-## Import Unknown Assets
+## 引用未知资源
 
-In CRA, if you import an asset that the build tool cannot recognize, CRA will by default output the file to the `build/static/media` directory, for example, the `document.pdf` file:
+在 CRA 中，如果你引用了一个构建工具无法识别的资源，CRA 默认会将该文件输出到 `build/static/media` 目录下，比如 `document.pdf` 文件：
 
 ```js title="index.js"
 import document from './document.pdf';
 ```
 
-In Rsbuild, when importing unrecognized assets, Rsbuild will logs errors:
+在 Rsbuild 中，遇到无法识别的资源时，Rsbuild 会输出报错日志，类似于：
 
 ```text
 You may need an appropriate loader to handle this file type.
 ```
 
-To resolve this error, you can use the following methods:
+为了解决该错误，你可以采用以下方法：
 
-- Configure a suitable loader to handle this type of asset via [tools.rspack](/config/tools/rspack).
-- Configure [asset modules](https://rspack.dev/guide/asset-module) rule to handle this type of asset via [tools.rspack](/config/tools/rspack).
+- 使用 [tools.rspack](/config/tools/rspack) 配置一个合适的 loader 来处理该类型的资源。
+- 使用 [tools.rspack](/config/tools/rspack) 配置 [asset modules](https://rspack.dev/guide/asset-module) 规则来处理该类型的资源。
 
-For example, you can add the following asset modules config to get the same output result as CRA:
+比如，你可以添加以下 asset modules 配置，来保持与 CRA 相同的输出结果：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -201,8 +201,8 @@ export default {
       module: {
         rules: [
           {
-            // Match .png asset
-            // You can change this regular expression to match different types of files
+            // 匹配 .png 文件
+            // 你可以调整该正则表达式，以匹配不同类型的文件
             test: /\.png$/,
             type: 'asset/resource',
             generator: {
@@ -216,24 +216,24 @@ export default {
 };
 ```
 
-## Remove react-app-polyfill
+## 移除 react-app-polyfill
 
-CRA provides [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill) to manually inject polyfill code.
+CRA 提供了 [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill) 来手动注入 polyfill 代码。
 
-In the Rsbuild project, you can remove the dependency and code related to react-app-polyfill, as Rsbuild will automatically read the browserslist config and inject polyfill code as needed.
+在 Rsbuild 项目中，你可以移除 react-app-polyfill 相关的依赖和代码，因为 Rsbuild 会自动读取 browserslist 配置，并按需注入 polyfill 代码。
 
 ```diff title="src/index.js"
 - import 'react-app-polyfill/ie11';
 - import 'react-app-polyfill/stable';
 ```
 
-You can read [Browser Compatibility](/guide/advanced/browser-compatibility) to understand how Rsbuild handles polyfills.
+你可以参考 [浏览器兼容性](/guide/advanced/browser-compatibility) 来了解 Rsbuild 是如何处理 polyfill 的。
 
-## Reading jsconfig.json
+## 读取 jsconfig.json
 
-In non-TypeScript projects, CRA supports reading the `paths` field in jsconfig.json as the path alias.
+在非 TypeScript 项目中，CRA 支持读取 jsconfig.json 中的 `paths` 字段作为路径别名。
 
-If you want to use this feature in Rsbuild, you can set the [source.tsconfigPath](/config/source/tsconfig-path) option, so that Rsbuild can recognize the `paths` field in jsconfig.json.
+如果你需要在 Rsbuild 中使用该特性，可以使用 [source.tsconfigPath](/config/source/tsconfig-path) 选项，使 Rsbuild 能够识别 jsconfig.json 中的 `paths` 字段。
 
 ```js title="rsbuild.config.mjs"
 export default {
@@ -243,9 +243,9 @@ export default {
 };
 ```
 
-## CRACO Migration
+## CRACO 迁移
 
-If your project is using [CRACO](https://craco.js.org) to override CRA configuration, you can refer to the table below for migration:
+如果你的项目使用了 [CRACO](https://craco.js.org) 来覆盖 CRA 的配置，可以参考下表来迁移：
 
 | CRACO                                                                                           | Rsbuild                                                          |
 | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
@@ -261,11 +261,11 @@ If your project is using [CRACO](https://craco.js.org) to override CRA configura
 | [typescript](https://craco.js.org/docs/configuration/typescript/)                               | [Type Check Plugin](/plugins/list/plugin-type-check)             |
 | [devServer](https://craco.js.org/docs/configuration/devserver/)                                 | [server configs](/config/index)                                  |
 
-### Example
+### 示例
 
-Here is an example of migrating from `webpack.configure` to `tools.rspack`:
+下面是一个从 `webpack.configure` 迁移到 `tools.rspack` 的例子：
 
-- Before migration:
+- 迁移前：
 
 ```js title="craco.config.js"
 const { whenDev } = require('@craco/craco');
@@ -282,7 +282,7 @@ module.exports = {
 };
 ```
 
-- After migration:
+- 迁移后：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -298,8 +298,8 @@ export default {
 };
 ```
 
-## Contents Supplement
+## 内容补充
 
-The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
+当前文档只涵盖了迁移过程的部分事项，如果你发现有合适的内容可以补充，欢迎通过 pull request 来完善文档 🤝。
 
-> The documentation for rsbuild can be found in the [rsbuild/packages/document](https://github.com/web-infra-dev/rsbuild/tree/main/packages/document) directory.
+> Rsbuild 的文档位于 [rsbuild/website](https://github.com/web-infra-dev/rsbuild/tree/main/website) 目录。

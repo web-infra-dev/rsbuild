@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { defineConfig } from 'rspress/config';
-import { rsbuildPluginOverview } from './src/rsbuildPluginOverview';
+import { rsbuildPluginOverview } from './theme/rsbuildPluginOverview';
 import { pluginRss } from '@rspress/plugin-rss';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
@@ -68,7 +68,7 @@ export default defineConfig({
   route: {
     cleanUrls: true,
     // exclude document fragments from routes
-    exclude: ['**/zh/shared/**', '**/en/shared/**'],
+    exclude: ['**/zh/shared/**', '**/en/shared/**', './theme', './src'],
   },
   themeConfig: {
     footer: {
@@ -99,7 +99,7 @@ export default defineConfig({
         description: 'The Rspack-based build tool for the web',
         editLink: {
           docRepoBaseUrl:
-            'https://github.com/web-infra-dev/rsbuild/tree/main/packages/document/docs',
+            'https://github.com/web-infra-dev/rsbuild/tree/main/website',
           text: '📝 Edit this page on GitHub',
         },
       },
@@ -113,7 +113,7 @@ export default defineConfig({
         description: '基于 Rspack 的 Web 构建工具',
         editLink: {
           docRepoBaseUrl:
-            'https://github.com/web-infra-dev/rsbuild/tree/main/packages/document/docs',
+            'https://github.com/web-infra-dev/rsbuild/tree/main/website',
           text: '📝 在 GitHub 上编辑此页',
         },
       },
@@ -137,7 +137,7 @@ export default defineConfig({
     ],
     source: {
       alias: {
-        '@components': path.join(__dirname, 'src/components'),
+        '@components': path.join(__dirname, 'components'),
         '@en': path.join(__dirname, 'docs/en'),
         '@zh': path.join(__dirname, 'docs/zh'),
       },
