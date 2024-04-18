@@ -1,0 +1,26 @@
+# output.emitAssets
+
+- **类型：**
+
+```ts
+type EmitAssets = (params: { target: RsbuildTarget }) => boolean;
+```
+
+- **默认值：** `() => true`
+
+用于控制是否输出图片、字体、音频、视频等静态资源。
+
+在 SSR 等场景下，你可能不需要输出重复的静态资源，因此你可以在 `emitAssets` 返回 `false` 来避免资源输出。
+
+## 示例
+
+比如，以下例子会在构建 web 产物时输出静态资源，而在构建 node 产物时避免输出。
+
+```js
+export default {
+  output: {
+    targets: ['web', 'node'],
+    emitAssets: ({ target }) => target !== 'node',
+  },
+};
+```

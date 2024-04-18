@@ -186,6 +186,8 @@ export type InlineChunkTestFunction = (params: {
 
 export type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
+export type EmitAssets = (params: { target: RsbuildTarget }) => boolean;
+
 export interface OutputConfig {
   /**
    * Specify build targets to run in different target environments.
@@ -281,6 +283,11 @@ export interface OutputConfig {
    * Copies the specified file or directory to the dist directory.
    */
   copy?: CopyPluginOptions | CopyPluginOptions['patterns'];
+  /**
+   * Whether to emit static assets such as image, font, etc.
+   * Return `false` to avoid outputting unnecessary assets for some scenarios such as SSR.
+   */
+  emitAssets?: EmitAssets;
 }
 
 export type OverrideBrowserslist =
@@ -309,4 +316,5 @@ export interface NormalizedOutputConfig extends OutputConfig {
     exportLocalsConvention: CssModuleLocalsConvention;
     auto?: CssModules['auto'];
   };
+  emitAssets: EmitAssets;
 }

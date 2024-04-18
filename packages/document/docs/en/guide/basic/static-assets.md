@@ -1,6 +1,6 @@
 # Import Static Assets
 
-Rsbuild supports import static assets, including images, fonts, and medias.
+Rsbuild supports import static assets, including images, fonts, audio and video.
 
 :::tip What is Static Assets
 Static assets are files that are part of a web application and do not change, even when the application is being used. Examples of static assets include images, fonts, medias, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN, and delivered to the user's web browser when the Web application is accessed. Because they do not change, static assets can be cached by the browser, which helps to improve the performance of the Web application.
@@ -10,7 +10,7 @@ Static assets are files that are part of a web application and do not change, ev
 
 The following are the formats supported by Rsbuild by default:
 
-- **image**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tif, tiff, jfif, pjpeg, pjp.
+- **images**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tif, tiff, jfif, pjpeg, pjp.
 - **fonts**: woff, woff2, eot, ttf, otf, ttc.
 - **audio**: mp3, wav, flac, aac, m4a, opus.
 - **video**: mp4, webm, ogg, mov.
