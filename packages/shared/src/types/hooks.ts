@@ -94,6 +94,7 @@ export type ModifyBundlerChainUtils = ModifyChainUtils & {
   bundler: {
     BannerPlugin: PluginInstance;
     DefinePlugin: PluginInstance;
+    IgnorePlugin: PluginInstance;
     ProvidePlugin: PluginInstance;
     HotModuleReplacementPlugin: PluginInstance;
   };

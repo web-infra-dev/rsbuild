@@ -6,7 +6,7 @@ test('should emit app icon to dist path', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       html: {
-        appIcon: './src/icon.png',
+        appIcon: '../../../assets/icon.png',
       },
     },
   });
@@ -29,7 +29,7 @@ test('should apply asset prefix to app icon URL', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       html: {
-        appIcon: './src/icon.png',
+        appIcon: '../../../assets/icon.png',
       },
       output: {
         assetPrefix: 'https://www.example.com',

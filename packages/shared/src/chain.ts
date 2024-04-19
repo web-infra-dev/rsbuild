@@ -214,6 +214,8 @@ export const CHAIN_ID = {
     ASSETS_RETRY: 'assets-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
+    /** VueLoader15PitchFixPlugin */
+    VUE_LOADER_15_PITCH_FIX_PLUGIN: 'vue-loader-15-pitch-fix',
   },
   /** Predefined minimizers */
   MINIMIZER: {

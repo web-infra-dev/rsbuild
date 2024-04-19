@@ -7,7 +7,7 @@ test('should emit local favicon to dist path', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       html: {
-        favicon: './src/icon.png',
+        favicon: '../../../assets/icon.png',
       },
     },
   });
@@ -28,7 +28,7 @@ test('should apply asset prefix to favicon URL', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       html: {
-        favicon: './src/icon.png',
+        favicon: '../../../assets/icon.png',
       },
       output: {
         assetPrefix: 'https://www.example.com',

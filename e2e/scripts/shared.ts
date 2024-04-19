@@ -108,42 +108,27 @@ const updateConfigForTest = async (
     cwd,
   });
 
-  const config = mergeRsbuildConfig(loadedConfig, originalConfig);
-
-  // make devPort random to avoid port conflict
-  config.server = {
-    ...(config.server || {}),
-    printUrls: config.server?.printUrls || false,
-    port: config.server?.port || (await getRandomPort(config.server?.port)),
+  const baseConfig: RsbuildConfig = {
+    dev: {
+      progressBar: false,
+    },
+    source: {
+      alias: {
+        '@assets': join(__dirname, '../assets'),
+      },
+    },
+    server: {
+      // make port random to avoid conflict
+      port: await getRandomPort(),
+      printUrls: false,
+    },
+    performance: {
+      buildCache: false,
+      printFileSize: false,
+    },
   };
 
-  config.dev ??= {};
-
-  config.dev!.progressBar = config.dev!.progressBar || false;
-
-  if (!config.performance?.buildCache) {
-    config.performance = {
-      ...(config.performance || {}),
-      buildCache: false,
-    };
-  }
-
-  if (config.performance?.printFileSize === undefined) {
-    config.performance = {
-      ...(config.performance || {}),
-      printFileSize: false,
-    };
-  }
-
-  // disable polyfill to make the tests faster
-  if (config.output?.polyfill === undefined) {
-    config.output = {
-      ...(config.output || {}),
-      polyfill: 'off',
-    };
-  }
-
-  return config;
+  return mergeRsbuildConfig(baseConfig, loadedConfig, originalConfig);
 };
 
 export async function dev({

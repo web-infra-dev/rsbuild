@@ -1,3 +1,4 @@
+// rsbuild/initial-chunk/retry
 import type { CrossOrigin } from '@rsbuild/shared';
 import type {
   PluginAssetsRetryOptions,
@@ -99,10 +100,13 @@ function createElement(
     if (attributes.isAsync) {
       script.dataset.rsbuildAsync = '';
     }
-
     return {
       element: script,
-      str: `<script src="${attributes.url}" ${crossOriginAttr} ${retryTimesAttr} ${isAsyncAttr}></script>`,
+      str:
+        // biome-ignore lint/style/useTemplate: use "</" + "script>" instead of script tag to avoid syntax error when inlining in html
+        `<script src="${attributes.url}" ${crossOriginAttr} ${retryTimesAttr} ${isAsyncAttr}>` +
+        '</' +
+        'script>',
     };
   }
   if (origin instanceof HTMLLinkElement) {
@@ -278,7 +282,18 @@ function resourceMonitor(
 
 // @ts-expect-error init is a global function, ignore ts(6133)
 function init(options: PluginAssetsRetryOptions) {
-  const config = Object.assign({}, defaultConfig, options);
+  const config: PluginAssetsRetryOptions = {};
+
+  for (const key in defaultConfig) {
+    // @ts-ignore
+    config[key] = defaultConfig[key];
+  }
+
+  for (const key in options) {
+    // @ts-ignore
+    config[key] = options[key];
+  }
+
   // Normalize config
   if (!Array.isArray(config.type) || config.type.length === 0) {
     config.type = defaultConfig.type;

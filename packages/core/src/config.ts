@@ -150,6 +150,7 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     auto: true,
     exportLocalsConvention: 'camelCase',
   },
+  emitAssets: () => true,
 });
 
 const createDefaultConfig = (): RsbuildConfig => ({

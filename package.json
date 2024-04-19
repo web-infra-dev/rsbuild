@@ -15,8 +15,8 @@
     "check-changeset": "cd ./scripts/check-changeset && pnpm start",
     "check-dependency-version": "check-dependency-version-consistency . --ignore-dep vue-loader",
     "check-spell": "npx cspell",
-    "dev:doc": "cd packages/document && pnpm run dev",
-    "build:doc": "cd packages/document && pnpm run build:doc",
+    "dev:doc": "cd website && pnpm run dev",
+    "build:doc": "cd website && pnpm run build",
     "lint": "biome lint . --diagnostic-level=warn && pnpm run check-spell",
     "prepare": "pnpm run build && simple-git-hooks",
     "sort-package-json": "npx sort-package-json \"packages/*/package.json\" \"packages/compat/*/package.json\"",
@@ -38,7 +38,7 @@
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.6.4",
+    "@biomejs/biome": "1.7.0",
     "@changesets/cli": "^2.27.1",
     "@modern-js/module-tools": "^2.48.4",
     "@rsbuild/tsconfig": "workspace:*",
@@ -52,10 +52,10 @@
     "simple-git-hooks": "^2.11.1",
     "vitest": "^1.4.0"
   },
-  "packageManager": "pnpm@8.15.6",
+  "packageManager": "pnpm@9.0.2",
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=8.7.0"
+    "pnpm": ">=9.0.0"
   },
   "pnpm": {
     "overrides": {

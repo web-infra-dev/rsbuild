@@ -5,12 +5,21 @@ node_modules/
 
 dist/
 dist-*
+!website/**/dist-path.mdx
 !packages/shared/compiled/rslog/dist
 coverage/
 doc_build/
 playwright-report/
 tsconfig.tsbuildinfo
 .swc
+
+# CSS Modules dist files
+*.css.d.ts
+*.less.d.ts
+*.scss.d.ts
+
+# Test temp files
+test-temp-*
 
 .vscode/**/*
 !.vscode/settings.json

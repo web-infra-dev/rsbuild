@@ -1,7 +1,7 @@
-import imageIco from './image.ico?url';
-import imagePng from './image.png?url';
-import imageJpeg from './image.jpeg?url';
-import imageSvg from './image.svg?url';
+import imageIco from '@assets/image.ico?url';
+import imagePng from '@assets/image.png?url';
+import imageJpeg from '@assets/image.jpeg?url';
+import imageSvg from '@assets/mobile.svg?url';
 
 const images = [imageIco, imagePng, imageJpeg, imageSvg];
 
