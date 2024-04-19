@@ -32,26 +32,27 @@ export async function setupWatchFiles(
 function normalizeWatchFilesOptions(
   watchFilesOptions: DevConfig['watchFiles'],
 ): WatchFiles | undefined {
-  let normalizedWatchFilesOptions;
   if (typeof watchFilesOptions === 'string') {
-    normalizedWatchFilesOptions = {
+    return {
       paths: watchFilesOptions,
       options: {},
     };
-  } else if (
-    typeof watchFilesOptions === 'object' &&
-    watchFilesOptions !== null
-  ) {
-    const { paths, options = {} } = Array.isArray(watchFilesOptions)
-      ? {
-          paths: watchFilesOptions,
-          options: {},
-        }
-      : watchFilesOptions;
-    normalizedWatchFilesOptions = { paths, options };
-  } else {
-    normalizedWatchFilesOptions = undefined;
   }
 
-  return normalizedWatchFilesOptions;
+  if (Array.isArray(watchFilesOptions)) {
+    return {
+      paths: watchFilesOptions,
+      options: {},
+    };
+  }
+
+  if (typeof watchFilesOptions === 'object' && watchFilesOptions !== null) {
+    const { paths = [], options = {} } = watchFilesOptions;
+    return {
+      paths,
+      options,
+    };
+  }
+
+  return undefined;
 }
