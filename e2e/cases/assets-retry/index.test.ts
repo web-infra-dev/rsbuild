@@ -27,7 +27,7 @@ function createBlockMiddleware({
     if (req.url?.startsWith(urlPrefix)) {
       counter++;
       // if blockNum is 3, 1 2 3 would be blocked, 4 would be passed
-      if (counter % (blockNum + 1) !== 0) {
+      if (counter <= blockNum) {
         res.statusCode = 404;
       }
       res.setHeader('block-async', counter);
