@@ -46,14 +46,14 @@ rspackOnlyTest(
       test.skip();
     }
 
-    await fse.copy(join(fixtures, 'src'), join(fixtures, 'test-src'));
+    await fse.copy(join(fixtures, 'src'), join(fixtures, 'test-temp-src'));
 
     const rsbuild = await dev({
       cwd: fixtures,
       rsbuildConfig: {
         source: {
           entry: {
-            index: join(fixtures, 'test-src/index.ts'),
+            index: join(fixtures, 'test-temp-src/index.ts'),
           },
         },
       },
@@ -72,7 +72,7 @@ rspackOnlyTest(
     const locatorKeep = page.locator('#test-keep');
     const keepNum = await locatorKeep.innerHTML();
 
-    const filePath = join(fixtures, 'test-src/App.module.less');
+    const filePath = join(fixtures, 'test-temp-src/App.module.less');
 
     await fse.writeFile(
       filePath,

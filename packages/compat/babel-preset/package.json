@@ -1,0 +1,74 @@
+{
+  "name": "@rsbuild/babel-preset",
+  "version": "0.6.4",
+  "description": "The babel config of Rsbuild.",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/babel-preset"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./web": {
+      "types": "./dist/web.d.ts",
+      "default": "./dist/web.js"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "default": "./dist/node.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/index.d.ts"
+      ],
+      "web": [
+        "./dist/web.d.ts"
+      ],
+      "node": [
+        "./dist/node.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "modern build",
+    "dev": "modern build --watch"
+  },
+  "dependencies": {
+    "@babel/core": "^7.24.4",
+    "@babel/plugin-proposal-decorators": "^7.24.1",
+    "@babel/plugin-proposal-export-default-from": "^7.24.1",
+    "@babel/plugin-proposal-partial-application": "^7.24.1",
+    "@babel/plugin-proposal-pipeline-operator": "^7.24.1",
+    "@babel/plugin-transform-runtime": "^7.24.3",
+    "@babel/preset-env": "^7.24.4",
+    "@babel/preset-typescript": "^7.24.1",
+    "@babel/runtime": "^7.24.4",
+    "@babel/types": "^7.24.0",
+    "@types/babel__core": "^7.20.5",
+    "babel-plugin-dynamic-import-node": "2.3.3",
+    "core-js": "~3.36.0"
+  },
+  "devDependencies": {
+    "@rsbuild/plugin-babel": "workspace:*",
+    "@types/node": "16.x",
+    "typescript": "^5.4.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}

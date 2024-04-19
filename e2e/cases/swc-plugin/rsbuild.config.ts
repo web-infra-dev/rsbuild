@@ -7,7 +7,7 @@ export default defineConfig({
         experimental: {
           plugins: [
             [
-              '@swc/plugin-remove-console',
+              require.resolve('@swc/plugin-remove-console'),
               {
                 exclude: ['error'],
               },

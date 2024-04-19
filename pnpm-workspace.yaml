@@ -1,4 +1,5 @@
 packages:
+  - 'website'
   - 'e2e/**'
   - 'scripts/**'
   - 'packages/**'

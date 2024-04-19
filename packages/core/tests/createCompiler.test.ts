@@ -1,5 +1,5 @@
 import { createCompiler } from '../src/provider/createCompiler';
-import { createContext } from '../src/provider/createContext';
+import { createContext } from '../src/createContext';
 
 describe('createCompiler', () => {
   const createDefaultContext = () =>

@@ -33,7 +33,7 @@ test('should generate prefetch link when prefetch is defined', async () => {
     name.endsWith('.html'),
   )!;
 
-  // test.js、test.css、test.png
+  // test.js、test.css、image.png
   expect(content.match(/rel="prefetch"/g)?.length).toBe(3);
 
   expect(
@@ -103,19 +103,19 @@ test('should generate prefetch link with filter', async () => {
   const files = await rsbuild.unwrapOutputJSON();
 
   const asyncFileName = Object.keys(files).find((file) =>
-    file.includes('/static/image/test'),
+    file.includes('/static/image/image'),
   )!;
   const [, content] = Object.entries(files).find(([name]) =>
     name.endsWith('.html'),
   )!;
 
-  // test.js、test.css、test.png
+  // test.js、test.css、image.png
   expect(content.match(/rel="prefetch"/g)?.length).toBe(1);
 
   expect(
     content.includes(
       `<link href="${asyncFileName.slice(
-        asyncFileName.indexOf('/static/image/test'),
+        asyncFileName.indexOf('/static/image/image'),
       )}" rel="prefetch">`,
     ),
   ).toBeTruthy();
@@ -146,7 +146,7 @@ test('should generate prefetch link by config (distinguish html)', async () => {
     name.endsWith('page1.html'),
   )!;
 
-  // icon.png、test.js、test.css、test.png
+  // icon.png、test.js、test.css、image.png
   expect(content.match(/rel="prefetch"/g)?.length).toBe(4);
 
   const assetFileName = Object.keys(files).find((file) =>
@@ -165,7 +165,7 @@ test('should generate prefetch link by config (distinguish html)', async () => {
     name.endsWith('page2.html'),
   )!;
 
-  // test.js、test.css、test.png
+  // test.js、test.css、image.png
   expect(content2.match(/rel="prefetch"/g)?.length).toBe(3);
 });
 
@@ -194,7 +194,7 @@ test('should generate preload link when preload is defined', async () => {
     name.endsWith('.html'),
   )!;
 
-  // test.js、test.css、test.png
+  // test.js、test.css、image.png
   expect(content.match(/rel="preload"/g)?.length).toBe(3);
 
   expect(
@@ -237,7 +237,7 @@ test('should generate preload link with crossOrigin', async () => {
     name.endsWith('.html'),
   )!;
 
-  // test.js、test.css、test.png
+  // test.js、test.css、image.png
   expect(content.match(/rel="preload"/g)?.length).toBe(3);
 
   expect(
@@ -277,7 +277,7 @@ test('should generate preload link without crossOrigin when same origin', async 
     name.endsWith('.html'),
   )!;
 
-  // test.js、test.css、test.png
+  // test.js、test.css、image.png
   expect(content.match(/rel="preload"/g)?.length).toBe(3);
 
   expect(

@@ -229,7 +229,7 @@ function editFile(filename: string, replacer: (str: string) => string): void {
 
 const timeout = (n: number) => new Promise((r) => setTimeout(r, n));
 
-export async function untilUpdated(
+async function untilUpdated(
   poll: () => Promise<string | null>,
   expected: string,
 ): Promise<void> {

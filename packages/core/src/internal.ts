@@ -5,17 +5,17 @@
  */
 
 export { rspackProvider } from './provider/provider';
-export { createContext, createPublicContext } from './provider/createContext';
+export { createContext, createPublicContext } from './createContext';
 export { initPlugins, createPluginManager } from './pluginManager';
 export { initHooks, type Hooks } from './initHooks';
 export { initRsbuildConfig } from './provider/initConfigs';
-export { getPluginAPI } from './provider/initPlugins';
+export { getPluginAPI } from './initPlugins';
 export { applyBaseCSSRule, applyCSSModuleRule } from './provider/plugins/css';
 export type { InternalContext } from './types';
 export { setHTMLPlugin, getHTMLPlugin } from './htmlUtils';
 export { formatStats, getStatsOptions } from './provider/shared';
 export { getChainUtils } from './provider/rspackConfig';
 export { applySwcDecoratorConfig } from './provider/plugins/swc';
-export { getDevMiddleware } from './provider/devMiddleware';
+export { getDevMiddleware } from './server/devMiddleware';
 export { createDevServer, startProdServer } from './server';
 export { plugins } from './plugins';

@@ -43,7 +43,7 @@ test('should allow to custom dist path of different files', async () => {
   // Image
   expect(
     filenames.some((filename) =>
-      filename.includes('dist/hello/my-image/small.png'),
+      filename.includes('dist/hello/my-image/icon.png'),
     ),
   ).toBeTruthy();
 });

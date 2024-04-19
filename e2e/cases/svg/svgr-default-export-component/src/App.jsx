@@ -1,4 +1,4 @@
-import Logo from './app.svg';
+import Logo from '@assets/mobile.svg';
 
 function App() {
   return (
