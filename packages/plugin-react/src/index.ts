@@ -29,20 +29,20 @@ export type PluginReactOptions = {
    * Configuration for chunk splitting of React-related dependencies.
    */
   splitChunks?: SplitReactChunkOptions;
-  enableReactProfiler?: boolean;
+  enableProfiler?: boolean;
 };
 
 export const PLUGIN_REACT_NAME = 'rsbuild:react';
 
 export const pluginReact = ({
-  enableReactProfiler = false,
+  enableProfiler = false,
   ...options
 }: PluginReactOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_REACT_NAME,
 
   setup(api) {
     const isEnvProductionProfile =
-      enableReactProfiler && getNodeEnv() === 'production';
+      enableProfiler && getNodeEnv() === 'production';
     if (api.context.bundlerType === 'rspack') {
       applyBasicReactSupport(api, options);
 

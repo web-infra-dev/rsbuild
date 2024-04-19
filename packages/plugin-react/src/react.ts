@@ -55,7 +55,7 @@ export const applyBasicReactSupport = (
 
 export const applyReactProfiler = (api: RsbuildPluginAPI) => {
   api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
-    const enableReactProfilerConfig: RsbuildConfig = {
+    const enableProfilerConfig: RsbuildConfig = {
       output: {
         minify: {
           jsOptions: {
@@ -68,7 +68,7 @@ export const applyReactProfiler = (api: RsbuildPluginAPI) => {
         },
       },
     };
-    return mergeRsbuildConfig(config, enableReactProfilerConfig);
+    return mergeRsbuildConfig(config, enableProfilerConfig);
   });
 
   api.modifyBundlerChain((chain) => {
