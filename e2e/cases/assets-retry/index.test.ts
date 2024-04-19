@@ -5,10 +5,10 @@ import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import type { RequestHandler } from '@rsbuild/shared';
 
-function count404Response(logs: string[]) {
+function count404Response(logs: string[], urlPrefix: string): number {
   let count = 0;
   for (const log of logs) {
-    if (log.includes('404')) {
+    if (log.includes('404') && log.includes(urlPrefix)) {
       count++;
     }
   }
@@ -27,7 +27,7 @@ function createBlockMiddleware({
     if (req.url?.startsWith(urlPrefix)) {
       counter++;
       // if blockNum is 3, 1 2 3 would be blocked, 4 would be passed
-      if (counter % (blockNum + 1) !== 0) {
+      if (counter <= blockNum) {
         res.statusCode = 404;
       }
       res.setHeader('block-async', counter);
@@ -72,7 +72,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index
   await gotoPage(page, rsbuild);
   const compTestElement = page.locator('#comp-test');
   await expect(compTestElement).toHaveText('Hello CompTest');
-  const blockedResponseCount = count404Response(logs);
+  const blockedResponseCount = count404Response(logs, '/static/js/index.js');
   expect(blockedResponseCount).toBe(3);
   await rsbuild.close();
   restore();
@@ -95,7 +95,7 @@ test('@rsbuild/plugin-assets-retry should work with minified runtime code when b
   await gotoPage(page, rsbuild);
   const compTestElement = page.locator('#comp-test');
   await expect(compTestElement).toHaveText('Hello CompTest');
-  const blockedResponseCount = count404Response(logs);
+  const blockedResponseCount = count404Response(logs, '/static/js/index.js');
   expect(blockedResponseCount).toBe(3);
   await rsbuild.close();
   restore();
