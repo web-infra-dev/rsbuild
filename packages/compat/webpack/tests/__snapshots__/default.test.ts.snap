@@ -26,7 +26,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "asyncWebAssembly": true,
   },
   "ignoreWarnings": [
-    /Conflicting order between/,
+    /Conflicting order/,
   ],
   "infrastructureLogging": {
     "level": "error",
@@ -563,7 +563,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "asyncWebAssembly": true,
   },
   "ignoreWarnings": [
-    /Conflicting order between/,
+    /Conflicting order/,
   ],
   "infrastructureLogging": {
     "level": "error",
@@ -1134,7 +1134,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "asyncWebAssembly": true,
   },
   "ignoreWarnings": [
-    /Conflicting order between/,
+    /Conflicting order/,
   ],
   "infrastructureLogging": {
     "level": "error",
@@ -1486,7 +1486,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "asyncWebAssembly": true,
   },
   "ignoreWarnings": [
-    /Conflicting order between/,
+    /Conflicting order/,
   ],
   "infrastructureLogging": {
     "level": "error",
