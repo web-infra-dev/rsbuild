@@ -8,6 +8,7 @@ test('should allow to export function in config file', async () => {
   const targetDir = path.join(__dirname, 'dist-production-build');
   fse.removeSync(targetDir);
 
+  delete process.env.NODE_ENV;
   execSync('npx rsbuild build', {
     cwd: __dirname,
   });
