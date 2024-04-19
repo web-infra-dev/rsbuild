@@ -4,9 +4,10 @@ const { transformAsync } = require('@babel/core');
 const { performance } = require('node:perf_hooks');
 
 /**
- *
+ * transform ../src/runtime/${filename}.ts
+ *  to ../dist/runtime/${filename}.js
+ * and ../dist/runtime/${filename}.min.js
  * @param {string} filename
- * @param {string} output
  */
 async function compileRuntimeFile(filename) {
   const sourceFilePath = path.join(__dirname, `../src/runtime/${filename}.ts`);
