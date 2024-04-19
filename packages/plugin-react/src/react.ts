@@ -71,8 +71,7 @@ export const applyReactProfiler = (api: RsbuildPluginAPI) => {
     return mergeRsbuildConfig(config, enableReactProfilerConfig);
   });
 
-  api.modifyBundlerChain((chain, { isProd }) => {
-    if (!isProd) return;
+  api.modifyBundlerChain((chain) => {
     // Replace react-dom with the profiling version.
     // Reference: https://gist.github.com/bvaughn/25e6233aeb1b4f0cdb8d8366e54a3977
     chain.resolve.alias.set('react-dom$', 'react-dom/profiling');

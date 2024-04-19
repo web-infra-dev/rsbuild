@@ -2,6 +2,7 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 import type { SwcReactConfig } from '@rsbuild/shared';
 import { applySplitChunksRule } from './splitChunks';
 import { applyBasicReactSupport, applyReactProfiler } from './react';
+import { getNodeEnv } from '@rsbuild/shared';
 
 export type SplitReactChunkOptions = {
   /**
@@ -40,10 +41,12 @@ export const pluginReact = ({
   name: PLUGIN_REACT_NAME,
 
   setup(api) {
+    const isEnvProductionProfile =
+      enableReactProfiler && getNodeEnv() === 'production';
     if (api.context.bundlerType === 'rspack') {
       applyBasicReactSupport(api, options);
 
-      if (enableReactProfiler) {
+      if (isEnvProductionProfile) {
         applyReactProfiler(api);
       }
     }
