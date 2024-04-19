@@ -16,7 +16,9 @@ rspackOnlyTest('should work with string and path to file', async ({ page }) => {
 
   await fse.writeFile(file, 'test');
   // check the page is reloaded
-  await page.waitForResponse((response) => response.url() === page.url());
+  await new Promise((resolve) => {
+    page.waitForURL(page.url()).then(resolve);
+  });
 
   // reset file
   fse.truncateSync(file);
@@ -38,8 +40,10 @@ rspackOnlyTest(
     await gotoPage(page, rsbuild);
 
     await fse.writeFile(file, 'test');
-    // check the page is reloaded
-    await page.waitForResponse((response) => response.url() === page.url());
+
+    await new Promise((resolve) => {
+      page.waitForURL(page.url()).then(resolve);
+    });
 
     // reset file
     fse.truncateSync(file);
@@ -65,13 +69,17 @@ rspackOnlyTest('should work with string array directory', async ({ page }) => {
 
   await fse.writeFile(file, 'test');
   // check the page is reloaded
-  await page.waitForResponse((response) => response.url() === page.url());
+  await new Promise((resolve) => {
+    page.waitForURL(page.url()).then(resolve);
+  });
   // reset file
   fse.truncateSync(file);
 
   await fse.writeFile(other, 'test');
   // check the page is reloaded
-  await page.waitForResponse((response) => response.url() === page.url());
+  await new Promise((resolve) => {
+    page.waitForURL(page.url()).then(resolve);
+  });
   // reset file
   fse.truncateSync(other);
 
@@ -93,7 +101,9 @@ rspackOnlyTest('should work with string and glob', async ({ page }) => {
 
   await fse.writeFile(file, 'test');
   // check the page is reloaded
-  await page.waitForResponse((response) => response.url() === page.url());
+  await new Promise((resolve) => {
+    page.waitForURL(page.url()).then(resolve);
+  });
 
   // reset file
   fse.truncateSync(file);
@@ -116,7 +126,9 @@ rspackOnlyTest('should work with object with single path', async ({ page }) => {
 
   await fse.writeFile(file, 'test');
   // check the page is reloaded
-  await page.waitForResponse((response) => response.url() === page.url());
+  await new Promise((resolve) => {
+    page.waitForURL(page.url()).then(resolve);
+  });
 
   // reset file
   fse.truncateSync(file);
@@ -140,13 +152,17 @@ rspackOnlyTest(
 
     await fse.writeFile(file, 'test');
     // check the page is reloaded
-    await page.waitForResponse((response) => response.url() === page.url());
+    await new Promise((resolve) => {
+      page.waitForURL(page.url()).then(resolve);
+    });
     // reset file
     fse.truncateSync(file);
 
     await fse.writeFile(other, 'test');
     // check the page is reloaded
-    await page.waitForResponse((response) => response.url() === page.url());
+    await new Promise((resolve) => {
+      page.waitForURL(page.url()).then(resolve);
+    });
     // reset file
     fse.truncateSync(other);
 
@@ -173,7 +189,9 @@ rspackOnlyTest('should work with options', async ({ page }) => {
 
   await fse.writeFile(file, 'test');
   // check the page is reloaded
-  await page.waitForResponse((response) => response.url() === page.url());
+  await new Promise((resolve) => {
+    page.waitForURL(page.url()).then(resolve);
+  });
 
   // reset file
   fse.truncateSync(file);
