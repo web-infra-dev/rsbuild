@@ -183,9 +183,10 @@ function ensureChunk(chunkId: string): Promise<unknown> {
 
     // biome-ignore lint/complexity/useArrowFunction: use function instead of () => {}
     return new Promise(function (resolve) {
-      setTimeout(() => {
-        resolve(ensureChunk(chunkId));
-      }, 300); // TODO: options to set retryDelay
+      // TODO: options to set retryDelay
+      // setTimeout(() => {
+      resolve(ensureChunk(chunkId));
+      // }, 300);
     })
       .then((result) => {
         if (typeof config.onSuccess === 'function') {

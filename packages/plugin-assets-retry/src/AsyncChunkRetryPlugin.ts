@@ -6,12 +6,13 @@ import serialize from 'serialize-javascript';
 
 const { RuntimeGlobals } = Rspack;
 
+// https://github.com/web-infra-dev/rspack/pull/5370
 function appendWebpackScript(module: any, appendSource: string) {
   try {
     const originSource = module.getGeneratedCode();
     module.getGeneratedCode = () => `${originSource}\n${appendSource}`;
   } catch (err) {
-    console.error('Failed to modify Webpack RuntimeModule', err);
+    console.error('Failed to modify Webpack RuntimeModule');
     throw err;
   }
 }
@@ -24,7 +25,7 @@ function appendRspackScript(
     const source = module.source.source.toString();
     module.source.source = Buffer.from(`${source}\n${appendSource}`, 'utf-8');
   } catch (err) {
-    console.error('Failed to modify Rspack RuntimeModule', err);
+    console.error('Failed to modify Rspack RuntimeModule');
     throw err;
   }
 }
@@ -75,12 +76,20 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
   apply(compiler: Rspack.Compiler) {
     compiler.hooks.thisCompilation.tap(this.name, (compilation) => {
       compilation.hooks.runtimeModule.tap(this.name, (module, _chunk) => {
+        const runtimeCode = this.getRawRuntimeRetryCode();
         // Rspack currently does not have module.addRuntimeModule on the js side, so we insert our runtime code after PublicPathRuntimeModule
-        if (module.constructorName === 'PublicPathRuntimeModule') {
-          const runtimeCode = this.getRawRuntimeRetryCode();
-          if (this.options.isRspack === false) {
+        if (this.options.isRspack === false) {
+          if (
+            module.name === 'publicPath' ||
+            module.constructor?.name === 'PublicPathRuntimeModule'
+          ) {
             appendWebpackScript(module, runtimeCode);
-          } else {
+          }
+        } else {
+          if (
+            module.name === 'publicPath' ||
+            module.constructorName === 'PublicPathRuntimeModule'
+          ) {
             appendRspackScript(module, runtimeCode);
           }
         }
