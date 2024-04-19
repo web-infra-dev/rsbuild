@@ -28,7 +28,8 @@ test.skip('should restart dev server when .env file is changed', async () => {
     };`,
   );
 
-  const process = exec('npx rsbuild dev', {
+  delete process.env.NODE_ENV;
+  const devProcess = exec('npx rsbuild dev', {
     cwd: __dirname,
   });
 
@@ -40,5 +41,5 @@ test.skip('should restart dev server when .env file is changed', async () => {
   await awaitFileExists(distIndex);
   expect(fse.readFileSync(distIndex, 'utf-8')).toContain('rose');
 
-  process.kill();
+  devProcess.kill();
 });
