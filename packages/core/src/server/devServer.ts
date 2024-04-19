@@ -11,8 +11,6 @@ import {
   type CreateDevServerOptions,
   type StartDevServerOptions,
   type CreateDevMiddlewareReturns,
-  type DevConfig,
-  type WatchFiles,
 } from '@rsbuild/shared';
 import { formatRoutes, getDevOptions, printServerURLs } from './helper';
 import connect from '@rsbuild/shared/connect';
@@ -24,6 +22,7 @@ import {
   type RsbuildDevMiddlewareOptions,
 } from './getDevMiddlewares';
 import { notFoundMiddleware } from './middlewares';
+import { setupWatchFiles } from './watchFiles';
 
 export async function createDevServer<
   Options extends {
@@ -210,59 +209,4 @@ export async function createDevServer<
   debug('create dev server done');
 
   return server;
-}
-
-async function setupWatchFiles(
-  dev: DevConfig,
-  compileMiddlewareAPI: RsbuildDevMiddlewareOptions['compileMiddlewareAPI'],
-) {
-  const { watchFiles } = dev;
-  if (!watchFiles) {
-    return;
-  }
-
-  const normalizeWatchFilesOptions = (
-    watchFilesOptions: DevConfig['watchFiles'],
-  ): WatchFiles | undefined => {
-    let normalizedWatchFilesOptions = watchFilesOptions;
-    if (typeof watchFilesOptions === 'string') {
-      normalizedWatchFilesOptions = {
-        paths: watchFilesOptions,
-        options: {},
-      };
-    } else if (
-      typeof watchFilesOptions === 'object' &&
-      watchFilesOptions !== null
-    ) {
-      const { paths, options = {} } = Array.isArray(watchFilesOptions)
-        ? {
-            paths: watchFilesOptions,
-            options: {},
-          }
-        : watchFilesOptions;
-      normalizedWatchFilesOptions = { paths, options };
-    } else {
-      normalizedWatchFilesOptions = undefined;
-    }
-
-    return normalizedWatchFilesOptions;
-  };
-
-  const watchFilesOptions = normalizeWatchFilesOptions(watchFiles);
-  if (!watchFilesOptions) {
-    return;
-  }
-
-  const { paths, options } = watchFilesOptions;
-
-  const chokidar = await import('@rsbuild/shared/chokidar');
-  const watcher = chokidar.watch(paths, options);
-
-  if (dev.hmr || dev.liveReload) {
-    watcher.on('change', () => {
-      if (compileMiddlewareAPI) {
-        compileMiddlewareAPI.sockWrite('static-changed');
-      }
-    });
-  }
 }
