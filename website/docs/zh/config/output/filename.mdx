@@ -84,7 +84,7 @@ export default {
 const { add } = await import('./add.ts');
 ```
 
-如果你希望为异步模块指定一个固定的名称，可以通过打包工具提供的 [magic comments](https://webpack.js.org/api/module-methods/#magic-comments) 来实现，通过 `webpackChunkName` 指定模块名称：
+如果你希望为异步模块指定一个固定的名称，可以通过打包工具提供的 [magic comments](https://rspack.dev/api/modules#magic-comments) 来实现，通过 `webpackChunkName` 指定模块名称：
 
 ```js title="src/index.ts"
 const { add } = await import(

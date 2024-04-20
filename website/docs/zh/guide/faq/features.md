@@ -86,4 +86,4 @@ export default {
 };
 ```
 
-详细信息可参考: [ignoreWarnings](https://webpack.js.org/configuration/other-options/#ignorewarnings)。
+详细信息可参考: [ignoreWarnings](https://rspack.dev/zh/config/other-options#ignorewarnings)。
