@@ -25,7 +25,7 @@ export type Decorators = {
 export interface SourceConfig {
   /**
    * Create aliases to import or require certain modules,
-   * same as the [resolve.alias](https://webpack.js.org/configuration/resolve/#resolvealias) config of webpack.
+   * same as the [resolve.alias](https://rspack.dev/config/resolve) config of Rspack.
    */
   alias?: ChainedConfigWithUtils<Alias, { target: RsbuildTarget }>;
   /**

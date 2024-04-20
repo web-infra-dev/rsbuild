@@ -229,7 +229,7 @@ Rsbuild 插件可以通过多种方式修改 Rspack 的配置项。
 
 ### 修改 Loader
 
-Loader 可以读取和处理不同类型的文件模块，具体参考 [concepts](https://webpack.js.org/concepts/loaders) 和 [loaders](https://webpack.js.org/loaders/)。
+Loader 可以读取和处理不同类型的文件模块，具体参考 [loaders](https://rspack.dev/zh/api/loader-api)。
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';
