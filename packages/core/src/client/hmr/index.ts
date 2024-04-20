@@ -177,7 +177,7 @@ function tryApplyUpdates() {
     }
   }
 
-  // https://webpack.js.org/concepts/hot-module-replacement
+  // https://rspack.dev/api/modules#importmetawebpackhot-webpack-specific
   import.meta.webpackHot.check(true).then(
     (updatedModules) => {
       handleApplyUpdates(null, updatedModules);

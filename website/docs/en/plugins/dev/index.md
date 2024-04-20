@@ -230,7 +230,7 @@ The Rsbuild plugin can modify the configuration of Rspack in various ways.
 
 ### Modifying Loader
 
-Loaders can read and process different types of file modules, refer to [concepts](https://webpack.js.org/concepts/loaders) and [loaders](https://webpack.js.org/loaders/).
+Loaders can read and process different types of file modules, refer to [loaders](https://rspack.dev/api/loader-api).
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';

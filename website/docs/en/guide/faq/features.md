@@ -86,4 +86,4 @@ export default {
 };
 ```
 
-For details, please refer to: [ignoreWarnings](https://webpack.js.org/configuration/other-options/#ignorewarnings).
+For details, please refer to: [ignoreWarnings](https://rspack.dev/config/other-options#ignorewarnings).

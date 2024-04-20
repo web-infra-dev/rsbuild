@@ -211,7 +211,7 @@ export default {
 };
 ```
 
-The config in `override` will be merged with the bundler config. For specific config details, please refer to [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) or [Rspack - splitChunks](https://rspack.dev/config/optimization#optimization-splitchunks).
+The config in `override` will be merged with the bundler config. For specific config details, please refer to [Rspack - splitChunks](https://rspack.dev/config/optimization#optimization-splitchunks).
 
 ## Using Dynamic Import for Code Splitting
 
