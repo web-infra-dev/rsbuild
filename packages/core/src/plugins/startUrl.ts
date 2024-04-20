@@ -96,7 +96,12 @@ export function pluginStartUrl(): RsbuildPlugin {
         const config = api.getNormalizedConfig();
         const { startUrl, beforeStartUrl } = config.dev;
         const { https } = api.context.devServer || {};
-        const shouldOpen = Boolean(startUrl);
+
+        // Skip open in codesandbox. After being bundled, the `open` package will
+        // try to call system xdg-open, which will cause an error on codesandbox.
+        // https://github.com/codesandbox/codesandbox-client/issues/6642
+        const isCodesandbox = process.env.CSB === 'true';
+        const shouldOpen = Boolean(startUrl) && !isCodesandbox;
 
         if (!shouldOpen) {
           return;
