@@ -27,11 +27,13 @@ type WatchFiles =
 export default {
   dev: {
     // 监视单个文件
-    watchFiles: 'src/**/*.txt'
-    // 监视多个文件
-    watchFiles: ['src/**/*.txt', 'public/**/*']
-  }
-}
+    watchFiles: 'public/demo.txt',
+    // 使用 glob 模式
+    watchFiles: 'src/**/*.txt',
+    // 监视多个文件路径
+    watchFiles: ['src/**/*.txt', 'public/**/*'],
+  },
+};
 ```
 
 你也可以通过传入一个包含 `paths` 和 `options` 属性的对象,来指定 [chokidar](https://github.com/paulmillr/chokidar#api) 选项。
