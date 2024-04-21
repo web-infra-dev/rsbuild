@@ -51,7 +51,11 @@ rspackOnlyTest(
       runServer: true,
       plugins: [
         pluginBabel({
-          babelLoaderOptions(_, { addPresets }) {
+          babelLoaderOptions(options, { addPresets }) {
+            // CWD is set to <project>/e2e by playwright, to find @babel/preset-env
+            // correctly, manually set it to `__dirname`, better setting CWD to project root
+            // for each test file with something like `setupFiles` in Vitest, playwright lacks though.
+            options.cwd = __dirname;
             addPresets([
               [
                 '@babel/preset-env',
