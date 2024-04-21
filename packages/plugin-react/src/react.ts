@@ -5,7 +5,7 @@ import {
   modifySwcLoaderOptions,
   type SwcReactConfig,
 } from '@rsbuild/shared';
-import type { RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildConfig, RsbuildPluginAPI } from '@rsbuild/core';
 import type { PluginReactOptions } from '.';
 
 export const applyBasicReactSupport = (
@@ -50,5 +50,31 @@ export const applyBasicReactSupport = (
     chain
       .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
       .use(ReactRefreshRspackPlugin, [{ include: [SCRIPT_REGEX] }]);
+  });
+};
+
+export const applyReactProfiler = (api: RsbuildPluginAPI) => {
+  api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+    const enableProfilerConfig: RsbuildConfig = {
+      output: {
+        minify: {
+          jsOptions: {
+            // Need to keep classnames and function names like Components for debugging purposes.
+            mangle: {
+              keep_classnames: true,
+              keep_fnames: true,
+            },
+          },
+        },
+      },
+    };
+    return mergeRsbuildConfig(config, enableProfilerConfig);
+  });
+
+  api.modifyBundlerChain((chain) => {
+    // Replace react-dom with the profiling version.
+    // Reference: https://gist.github.com/bvaughn/25e6233aeb1b4f0cdb8d8366e54a3977
+    chain.resolve.alias.set('react-dom$', 'react-dom/profiling');
+    chain.resolve.alias.set('scheduler/tracing', 'scheduler/tracing-profiling');
   });
 };
