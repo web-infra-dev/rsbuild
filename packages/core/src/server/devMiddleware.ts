@@ -1,11 +1,11 @@
-import webpackDevMiddleware from '@rsbuild/shared/webpack-dev-middleware';
 import {
+  type DevConfig,
+  type DevMiddleware,
   applyToCompiler,
   isClientCompiler,
   setupServerHooks,
-  type DevConfig,
-  type DevMiddleware,
 } from '@rsbuild/shared';
+import webpackDevMiddleware from '@rsbuild/shared/webpack-dev-middleware';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 
 function applyHMREntry({

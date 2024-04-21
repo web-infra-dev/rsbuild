@@ -1,34 +1,34 @@
-import type {
-  ArrayOrNot,
-  WebpackChain,
-  ChainedConfig,
-  FileFilterUtil,
-  ChainedConfigWithUtils,
-} from '../utils';
-import type {
-  WebpackConfig,
-  PostCSSPlugin,
-  CSSLoaderOptions,
-  SassLoaderOptions,
-  LessLoaderOptions,
-  CSSExtractOptions,
-  StyleLoaderOptions,
-  AutoprefixerOptions,
-  PostCSSLoaderOptions,
-} from '../thirdParty';
-import type { BundlerChain } from '../bundlerConfig';
-import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
-import type {
-  RspackRule,
-  RspackConfig,
-  BuiltinSwcLoaderOptions,
-} from '../rspack';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+import type { BundlerChain } from '../bundlerConfig';
 import type { BundlerPluginInstance } from '../bundlerConfig';
+import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type {
   ModifyWebpackChainUtils,
   ModifyWebpackConfigUtils,
 } from '../plugin';
+import type {
+  BuiltinSwcLoaderOptions,
+  RspackConfig,
+  RspackRule,
+} from '../rspack';
+import type {
+  AutoprefixerOptions,
+  CSSExtractOptions,
+  CSSLoaderOptions,
+  LessLoaderOptions,
+  PostCSSLoaderOptions,
+  PostCSSPlugin,
+  SassLoaderOptions,
+  StyleLoaderOptions,
+  WebpackConfig,
+} from '../thirdParty';
+import type {
+  ArrayOrNot,
+  ChainedConfig,
+  ChainedConfigWithUtils,
+  FileFilterUtil,
+  WebpackChain,
+} from '../utils';
 
 export type { HTMLPluginOptions };
 

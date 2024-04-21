@@ -1,18 +1,18 @@
-import { join, isAbsolute } from 'node:path';
+import { isAbsolute, join } from 'node:path';
 import {
-  logger,
-  getDistPath,
   type BundlerType,
-  type RsbuildConfig,
-  type RsbuildTarget,
-  type RsbuildContext,
-  type NormalizedConfig,
   type CreateRsbuildOptions,
+  type NormalizedConfig,
+  type RsbuildConfig,
+  type RsbuildContext,
+  type RsbuildTarget,
+  getDistPath,
+  logger,
 } from '@rsbuild/shared';
-import type { InternalContext } from './types';
-import { initHooks } from './initHooks';
 import { withDefaultConfig } from './config';
+import { initHooks } from './initHooks';
 import { getEntryObject } from './plugins/entry';
+import type { InternalContext } from './types';
 
 function getAbsolutePath(root: string, filepath: string) {
   return isAbsolute(filepath) ? filepath : join(root, filepath);

@@ -1,16 +1,16 @@
 import { join } from 'node:path';
 import {
-  color,
-  isMultiCompiler,
-  getSharedPkgCompiledPath,
-  type Stats,
   type MultiStats,
   type SharedCompiledPkgNames,
+  type Stats,
   type StatsError,
+  color,
+  getSharedPkgCompiledPath,
+  isMultiCompiler,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
-import { formatStatsMessages } from '../client/formatStats';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
+import { formatStatsMessages } from '../client/formatStats';
 
 // depend on native IgnorePlugin
 export const rspackMinVersion = '0.6.2';

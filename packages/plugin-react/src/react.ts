@@ -1,11 +1,11 @@
 import path from 'node:path';
-import {
-  isUsingHMR,
-  SCRIPT_REGEX,
-  modifySwcLoaderOptions,
-  type SwcReactConfig,
-} from '@rsbuild/shared';
 import type { RsbuildConfig, RsbuildPluginAPI } from '@rsbuild/core';
+import {
+  SCRIPT_REGEX,
+  type SwcReactConfig,
+  isUsingHMR,
+  modifySwcLoaderOptions,
+} from '@rsbuild/shared';
 import type { PluginReactOptions } from '.';
 
 export const applyBasicReactSupport = (

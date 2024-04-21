@@ -1,9 +1,9 @@
 import { Buffer } from 'node:buffer';
 import {
+  Transformer,
   compressJpeg,
   losslessCompressPng,
   pngQuantize,
-  Transformer,
 } from '@napi-rs/image';
 import svgo from 'svgo';
 import type { Codec, Codecs } from '../types';

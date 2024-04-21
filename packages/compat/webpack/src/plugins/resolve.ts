@@ -1,10 +1,10 @@
 import {
-  isWebTarget,
-  applyResolvePlugin,
   type BundlerChain,
-  type RsbuildTarget,
-  type RsbuildPlugin,
   type ChainIdentifier,
+  type RsbuildPlugin,
+  type RsbuildTarget,
+  applyResolvePlugin,
+  isWebTarget,
 } from '@rsbuild/shared';
 
 async function applyTsConfigPathsPlugin({

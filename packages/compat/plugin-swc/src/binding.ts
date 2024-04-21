@@ -1,4 +1,4 @@
-import { Compiler as RawCompiler, type Output } from '@modern-js/swc-plugins';
+import { type Output, Compiler as RawCompiler } from '@modern-js/swc-plugins';
 import type { TransformConfig } from './types';
 
 export {

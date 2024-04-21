@@ -1,5 +1,5 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
 import type { Options as MdxLoaderOptions } from '@mdx-js/loader';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 export type PluginMdxOptions = {
   /**

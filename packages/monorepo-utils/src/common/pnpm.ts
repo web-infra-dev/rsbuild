@@ -2,10 +2,10 @@ import path from 'node:path';
 import { fse } from '@rsbuild/shared';
 import { parse } from '@rsbuild/shared/yaml';
 import glob, { type Options as GlobOptions } from 'fast-glob';
+import { PACKAGE_JSON, PNPM_WORKSPACE_FILE } from '../constants';
 import { Project } from '../project/project';
-import { PNPM_WORKSPACE_FILE, PACKAGE_JSON } from '../constants';
-import { readPackageJson } from '../utils';
 import type { IPnpmWorkSpace } from '../types';
+import { readPackageJson } from '../utils';
 
 export const getPatternsFromYaml = async (monorepoRoot: string) => {
   const workspaceYamlFilePath = path.join(monorepoRoot, PNPM_WORKSPACE_FILE);

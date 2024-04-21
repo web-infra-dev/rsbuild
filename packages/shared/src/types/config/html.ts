@@ -1,7 +1,7 @@
 import type {
   ArrayOrNot,
-  ChainedConfigWithUtils,
   ChainedConfigCombineUtils,
+  ChainedConfigWithUtils,
 } from '../utils';
 
 export type CrossOrigin = 'anonymous' | 'use-credentials';

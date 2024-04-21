@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { test, expect } from '@playwright/test';
 import { gotoPage } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
 import { fse, setNodeEnv } from '@rsbuild/shared';
 

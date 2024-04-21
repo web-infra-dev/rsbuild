@@ -1,6 +1,6 @@
 import './App.css';
-import stylesForSass from './App.module.scss';
 import stylesForLess from './App.module.less';
+import stylesForSass from './App.module.scss';
 
 const App = () => (
   <div className="container">

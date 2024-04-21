@@ -1,7 +1,7 @@
-import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginBabel } from '@rsbuild/plugin-babel';
-import { pluginSolid } from '../src';
 import type { RsbuildConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { createStubRsbuild } from '@scripts/test-helper';
+import { pluginSolid } from '../src';
 
 describe('plugin-solid', () => {
   const rsbuildConfig: RsbuildConfig = {

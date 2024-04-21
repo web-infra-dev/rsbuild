@@ -1,9 +1,9 @@
-import {
-  getBrowserslistWithDefault,
-  type RsbuildTarget,
-  type NormalizedConfig,
-} from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
+import {
+  type NormalizedConfig,
+  type RsbuildTarget,
+  getBrowserslistWithDefault,
+} from '@rsbuild/shared';
 import type { CheckSyntaxOptions } from './types';
 
 export type PluginCheckSyntaxOptions = CheckSyntaxOptions;

@@ -1,6 +1,6 @@
 import { join } from 'node:path';
+import { dev, getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { dev, gotoPage, getRandomPort, rspackOnlyTest } from '@e2e/helper';
 
 const host = join(__dirname, 'host');
 const remote = join(__dirname, 'remote');

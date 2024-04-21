@@ -2,10 +2,10 @@ import crypto from 'node:crypto';
 import { isAbsolute, join } from 'node:path';
 import { fse } from '@rsbuild/shared';
 import {
+  type BuildCacheOptions,
+  type RsbuildContext,
   findExists,
   isFileExists,
-  type RsbuildContext,
-  type BuildCacheOptions,
 } from '@rsbuild/shared';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';
 

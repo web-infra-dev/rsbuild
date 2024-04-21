@@ -1,6 +1,6 @@
 import { join } from 'node:path';
+import { build, dev, globContentJSON, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { dev, build, globContentJSON, gotoPage } from '@e2e/helper';
 import { getPolyfillContent } from '../helper';
 
 test('should read browserslist for development env correctly', async ({

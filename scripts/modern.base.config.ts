@@ -1,7 +1,7 @@
 import {
+  type PartialBaseBuildConfig,
   defineConfig,
   moduleTools,
-  type PartialBaseBuildConfig,
 } from '@modern-js/module-tools';
 
 const define = {

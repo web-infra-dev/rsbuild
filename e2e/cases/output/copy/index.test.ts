@@ -1,7 +1,7 @@
 import { join } from 'node:path';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { build } from '@e2e/helper';
 
 test('should copy asset to dist folder correctly', async () => {
   await build({

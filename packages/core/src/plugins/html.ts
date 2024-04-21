@@ -1,28 +1,28 @@
 import path, { isAbsolute } from 'node:path';
 import {
-  fse,
-  color,
-  isNil,
-  isURL,
-  castArray,
-  getDistPath,
-  isFileExists,
-  isPlainObject,
-  isHtmlDisabled,
   applyToCompiler,
+  castArray,
+  color,
   createVirtualModule,
-  mergeChainedOptions,
+  fse,
+  getDistPath,
   getHtmlMinifyOptions,
   getPublicPathFromChain,
+  isFileExists,
+  isHtmlDisabled,
+  isNil,
+  isPlainObject,
+  isURL,
+  mergeChainedOptions,
+} from '@rsbuild/shared';
+import type {
+  HTMLPluginOptions,
+  HtmlConfig,
+  ModifyHTMLTagsFn,
+  NormalizedConfig,
+  RsbuildPluginAPI,
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
-import type {
-  HtmlConfig,
-  RsbuildPluginAPI,
-  NormalizedConfig,
-  ModifyHTMLTagsFn,
-  HTMLPluginOptions,
-} from '@rsbuild/shared';
 import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
 import type { RsbuildPlugin } from '../types';
 

@@ -1,5 +1,5 @@
 import { isProd } from '@rsbuild/shared';
-import type { RsbuildConfig, RsbuildPlugin, NormalizedConfig } from '../types';
+import type { NormalizedConfig, RsbuildConfig, RsbuildPlugin } from '../types';
 
 // There are two ways to enable the bundle analyzer:
 // 1. Set environment variable `BUNDLE_ANALYZE`

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import { ErrorBoundary } from './ErrorBoundary';
 import CompTest from './CompTest';
+import { ErrorBoundary } from './ErrorBoundary';
 
 const AsyncCompTest = React.lazy(() => import('./AsyncCompTest'));
 

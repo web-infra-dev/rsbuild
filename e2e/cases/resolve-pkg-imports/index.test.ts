@@ -1,5 +1,5 @@
+import { build, dev, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { dev, build, gotoPage } from '@e2e/helper';
 
 test('should resolve package.json#imports correctly in dev build', async ({
   page,

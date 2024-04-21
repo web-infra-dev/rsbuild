@@ -1,10 +1,10 @@
-import { color, debug, logger, isFunction } from '@rsbuild/shared';
+import { color, debug, isFunction, logger } from '@rsbuild/shared';
 import type {
+  BundlerPluginInstance,
   Falsy,
   PluginManager,
   RsbuildPlugin,
   RsbuildPluginAPI,
-  BundlerPluginInstance,
 } from '@rsbuild/shared';
 
 function validatePlugin(plugin: unknown) {

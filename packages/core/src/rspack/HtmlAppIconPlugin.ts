@@ -1,7 +1,7 @@
 import fs from 'node:fs';
-import { posix, basename } from 'node:path';
-import type { Compiler, Compilation } from '@rspack/core';
-import { withPublicPath, getPublicPathFromCompiler } from '@rsbuild/shared';
+import { basename, posix } from 'node:path';
+import { getPublicPathFromCompiler, withPublicPath } from '@rsbuild/shared';
+import type { Compilation, Compiler } from '@rspack/core';
 import { getHTMLPlugin } from '../htmlUtils';
 
 type AppIconOptions = {

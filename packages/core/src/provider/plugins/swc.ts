@@ -1,25 +1,25 @@
+import path from 'node:path';
 import {
+  type BuiltinSwcLoaderOptions,
+  type BundlerChain,
+  type Polyfill,
+  type RsbuildTarget,
+  SCRIPT_REGEX,
+  applyScriptCondition,
   cloneDeep,
   deepmerge,
-  isWebTarget,
-  SCRIPT_REGEX,
-  getJsSourceMap,
-  getCoreJsVersion,
-  mergeChainedOptions,
-  applyScriptCondition,
   getBrowserslistWithDefault,
-  type Polyfill,
-  type BundlerChain,
-  type RsbuildTarget,
-  type BuiltinSwcLoaderOptions,
+  getCoreJsVersion,
+  getJsSourceMap,
+  isWebTarget,
+  mergeChainedOptions,
 } from '@rsbuild/shared';
-import path from 'node:path';
+import { PLUGIN_SWC_NAME } from '../../constants';
 import type {
-  RsbuildPlugin,
   NormalizedConfig,
   NormalizedSourceConfig,
+  RsbuildPlugin,
 } from '../../types';
-import { PLUGIN_SWC_NAME } from '../../constants';
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
 

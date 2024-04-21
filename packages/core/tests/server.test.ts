@@ -1,10 +1,10 @@
+import { isClientCompiler, setupServerHooks } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import {
-  mergeDevOptions,
   formatRoutes,
+  mergeDevOptions,
   printServerURLs,
 } from '../src/server/helper';
-import { isClientCompiler, setupServerHooks } from '@rsbuild/shared';
 
 test('formatRoutes', () => {
   expect(

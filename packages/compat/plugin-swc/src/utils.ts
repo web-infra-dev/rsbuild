@@ -1,23 +1,23 @@
-import _ from 'lodash';
 import fs from 'node:fs';
+import { applySwcDecoratorConfig } from '@rsbuild/core/internal';
 import {
-  findUp,
-  isUsingHMR,
-  getCoreJsVersion,
-  getBrowserslistWithDefault,
-  getDefaultStyledComponentsConfig,
   type ModifyChainUtils,
   type NormalizedConfig,
+  findUp,
+  getBrowserslistWithDefault,
+  getCoreJsVersion,
+  getDefaultStyledComponentsConfig,
+  isUsingHMR,
 } from '@rsbuild/shared';
 import semver from '@rsbuild/shared/semver';
+import _ from 'lodash';
+import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
 import { getDefaultSwcConfig } from './plugin';
 import type {
   ObjPluginSwcOptions,
   PluginSwcOptions,
   TransformConfig,
 } from './types';
-import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
-import { applySwcDecoratorConfig } from '@rsbuild/core/internal';
 
 const isBeyondReact17 = async (cwd: string) => {
   const pkgPath = await findUp({ cwd, filename: 'package.json' });

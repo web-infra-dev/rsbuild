@@ -1,7 +1,7 @@
-import { expect, test, type Page } from '@playwright/test';
-import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
-import path from 'node:path';
 import fs from 'node:fs';
+import path from 'node:path';
+import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { type Page, expect, test } from '@playwright/test';
 
 rspackOnlyTest('should render', async ({ page }) => {
   const rsbuild = await dev({

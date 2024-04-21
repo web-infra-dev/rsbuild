@@ -1,18 +1,18 @@
 import path, { isAbsolute, join } from 'node:path';
 import type {
-  RsbuildPlugin,
-  RsbuildContext,
   NormalizedConfig,
+  RsbuildContext,
+  RsbuildPlugin,
 } from '@rsbuild/core';
 import {
-  fse,
-  isProd,
+  SCRIPT_REGEX,
   castArray,
   cloneDeep,
+  fse,
   getNodeEnv,
-  SCRIPT_REGEX,
+  isProd,
 } from '@rsbuild/shared';
-import { applyUserBabelConfig, BABEL_JS_RULE } from './helper';
+import { BABEL_JS_RULE, applyUserBabelConfig } from './helper';
 import type { BabelLoaderOptions, PluginBabelOptions } from './types';
 
 export const PLUGIN_BABEL_NAME = 'rsbuild:babel';

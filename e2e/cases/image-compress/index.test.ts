@@ -1,7 +1,7 @@
-import { join } from 'node:path';
-import { expect, test } from '@playwright/test';
-import { build, globContentJSON } from '@e2e/helper';
 import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { build, globContentJSON } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should compress image with use plugin-image-compress', async () => {
   await expect(

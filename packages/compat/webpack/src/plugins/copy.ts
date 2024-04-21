@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import type { RsbuildPlugin, CopyPluginOptions } from '@rsbuild/shared';
+import type { CopyPluginOptions, RsbuildPlugin } from '@rsbuild/shared';
 
 export const pluginCopy = (): RsbuildPlugin => ({
   name: 'rsbuild-webpack:copy',

@@ -1,7 +1,7 @@
-import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginBabel } from '@rsbuild/plugin-babel';
-import { pluginVueJsx } from '../src';
 import type { RsbuildConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { createStubRsbuild } from '@scripts/test-helper';
+import { pluginVueJsx } from '../src';
 
 describe('plugin-vue-jsx', () => {
   const rsbuildConfig: RsbuildConfig = {

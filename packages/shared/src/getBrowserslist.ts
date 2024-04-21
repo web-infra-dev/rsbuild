@@ -1,7 +1,7 @@
-import { getNodeEnv } from './utils';
 import browserslist from '../compiled/browserslist';
 import { DEFAULT_BROWSERSLIST } from './constants';
-import type { RsbuildTarget, OverrideBrowserslist } from './types';
+import type { OverrideBrowserslist, RsbuildTarget } from './types';
+import { getNodeEnv } from './utils';
 
 // using cache to avoid multiple calls to loadConfig
 const browsersListCache = new Map<string, string[]>();

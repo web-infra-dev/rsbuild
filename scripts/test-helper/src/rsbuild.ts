@@ -1,10 +1,10 @@
 import type {
-  RspackConfig,
-  RsbuildProvider,
-  RsbuildPlugin,
-  RsbuildInstance,
-  CreateRsbuildOptions,
   BundlerPluginInstance,
+  CreateRsbuildOptions,
+  RsbuildInstance,
+  RsbuildPlugin,
+  RsbuildProvider,
+  RspackConfig,
 } from '@rsbuild/shared';
 
 const getRspackProvider = async () => {

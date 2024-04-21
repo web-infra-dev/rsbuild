@@ -1,8 +1,8 @@
 import { createStubRsbuild } from '@scripts/test-helper';
 import {
-  pluginSplitChunks,
   MODULE_PATH_REGEX,
   getPackageNameFromModulePath,
+  pluginSplitChunks,
 } from '../src/plugins/splitChunks';
 
 describe('plugin-split-chunks', () => {

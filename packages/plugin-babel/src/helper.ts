@@ -1,22 +1,22 @@
 import { isAbsolute, normalize, sep } from 'node:path';
+import type { PluginOptions as BabelPluginOptions } from '@babel/core';
 import {
-  castArray,
-  mergeChainedOptions,
   type BundlerChain,
   type ChainIdentifier,
   type NormalizedConfig,
+  castArray,
+  mergeChainedOptions,
 } from '@rsbuild/shared';
 import upath from 'upath';
 import type {
-  BabelPlugin,
   BabelConfigUtils,
-  PresetEnvOptions,
-  PresetReactOptions,
+  BabelLoaderOptions,
+  BabelPlugin,
   BabelTransformOptions,
   PluginBabelOptions,
-  BabelLoaderOptions,
+  PresetEnvOptions,
+  PresetReactOptions,
 } from './types';
-import type { PluginOptions as BabelPluginOptions } from '@babel/core';
 
 export const BABEL_JS_RULE = 'babel-js';
 

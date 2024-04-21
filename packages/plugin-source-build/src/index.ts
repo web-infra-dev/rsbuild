@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { TS_CONFIG_FILE, fse } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import {
+  type ExtraMonorepoStrategies,
+  type Project,
   filterByField,
   getDependentProjects,
-  type Project,
-  type ExtraMonorepoStrategies,
 } from '@rsbuild/monorepo-utils';
+import { TS_CONFIG_FILE, fse } from '@rsbuild/shared';
 
 export const PLUGIN_SOURCE_BUILD_NAME = 'rsbuild:source-build';
 

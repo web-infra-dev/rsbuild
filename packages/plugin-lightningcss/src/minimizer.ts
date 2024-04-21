@@ -1,12 +1,12 @@
+import { Buffer } from 'node:buffer';
+import { CSS_REGEX } from '@rsbuild/shared';
+import type { Rspack } from '@rsbuild/shared';
 /**
  * modified from https://github.com/fz6m/lightningcss-loader
  * MIT License https://github.com/fz6m/lightningcss-loader/blob/main/LICENSE
  * Author @fz6m
  */
 import { transform as _transform } from 'lightningcss';
-import { Buffer } from 'node:buffer';
-import { CSS_REGEX } from '@rsbuild/shared';
-import type { Rspack } from '@rsbuild/shared';
 import type { LightningCSSMinifyPluginOptions } from './types';
 
 const PLUGIN_NAME = 'lightningcss-minify-plugin';

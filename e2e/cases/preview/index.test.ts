@@ -1,6 +1,6 @@
 import { join } from 'node:path';
-import { expect, test } from '@playwright/test';
 import { build, getRandomPort, gotoPage } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 test('should preview dist files correctly', async ({ page }) => {

@@ -1,10 +1,10 @@
 import path from 'node:path';
 import {
+  type Rspack,
   fse,
-  withPublicPath,
   generateScriptTag,
   getPublicPathFromCompiler,
-  type Rspack,
+  withPublicPath,
 } from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginAssetsRetryOptions } from './types';

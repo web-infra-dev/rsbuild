@@ -1,14 +1,14 @@
 import {
-  createProxyMiddleware as baseCreateProxyMiddleware,
-  type RequestHandler,
-} from '@rsbuild/shared/http-proxy-middleware';
-import {
-  logger,
-  type ProxyDetail,
   type RequestHandler as Middleware,
+  type ProxyDetail,
   type ProxyOptions,
   type UpgradeEvent,
+  logger,
 } from '@rsbuild/shared';
+import {
+  type RequestHandler,
+  createProxyMiddleware as baseCreateProxyMiddleware,
+} from '@rsbuild/shared/http-proxy-middleware';
 
 export function formatProxyOptions(proxyOptions: ProxyOptions) {
   const ret: ProxyDetail[] = [];

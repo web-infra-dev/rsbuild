@@ -1,13 +1,13 @@
 import {
-  pickRsbuildConfig,
   type CreateCompiler,
-  type RsbuildProvider,
   type PreviewServerOptions,
+  type RsbuildProvider,
+  pickRsbuildConfig,
 } from '@rsbuild/shared';
 import { createContext, createPublicContext } from '../createContext';
-import { initConfigs, initRsbuildConfig } from './initConfigs';
 import { getPluginAPI } from '../initPlugins';
 import { plugins } from '../plugins';
+import { initConfigs, initRsbuildConfig } from './initConfigs';
 
 export const rspackProvider: RsbuildProvider = async ({
   pluginManager,

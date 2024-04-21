@@ -1,5 +1,5 @@
 import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
-import { getNodeEnv, type SwcReactConfig } from '@rsbuild/shared';
+import { type SwcReactConfig, getNodeEnv } from '@rsbuild/shared';
 
 export type PluginPreactOptions = {
   /**

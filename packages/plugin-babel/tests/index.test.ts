@@ -1,7 +1,7 @@
-import { expect, describe, it } from 'vitest';
-import { pluginBabel } from '../src';
-import { createStubRsbuild } from '@scripts/test-helper';
 import { SCRIPT_REGEX } from '@rsbuild/shared';
+import { createStubRsbuild } from '@scripts/test-helper';
+import { describe, expect, it } from 'vitest';
+import { pluginBabel } from '../src';
 
 describe('plugins/babel', () => {
   it('babel-loader should works with builtin:swc-loader', async () => {

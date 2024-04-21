@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 import {
-  getSharedPkgCompiledPath,
   type SharedCompiledPkgNames,
+  getSharedPkgCompiledPath,
 } from '@rsbuild/shared';
 
 export const getCompiledPath = (packageName: string) => {

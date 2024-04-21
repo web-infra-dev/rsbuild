@@ -1,4 +1,4 @@
-import { color, logger, type BundlerPluginInstance } from '@rsbuild/shared';
+import { type BundlerPluginInstance, color, logger } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 type RsdoctorExports = {

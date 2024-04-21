@@ -1,5 +1,5 @@
-import { expect } from '@playwright/test';
 import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 const asyncPlugin = async (): Promise<RsbuildPlugin> => {
