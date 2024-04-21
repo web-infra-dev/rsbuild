@@ -1341,7 +1341,7 @@ importers:
         version: link:../shared
       vue-loader:
         specifier: ^17.4.0
-        version: 17.4.2(webpack@5.91.0)
+        version: 17.4.2(vue@3.4.23(typescript@5.4.5))(webpack@5.91.0)
       webpack:
         specifier: ^5.91.0
         version: 5.91.0
@@ -1355,6 +1355,9 @@ importers:
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
+      vue:
+        specifier: ^3.4.19
+        version: 3.4.23(typescript@5.4.5)
 
   packages/plugin-vue-jsx:
     dependencies:
@@ -16689,12 +16692,14 @@ snapshots:
       - walrus
       - whiskers
 
-  vue-loader@17.4.2(webpack@5.91.0):
+  vue-loader@17.4.2(vue@3.4.23(typescript@5.4.5))(webpack@5.91.0):
     dependencies:
       chalk: 4.1.2
       hash-sum: 2.0.0
       watchpack: 2.4.1
       webpack: 5.91.0
+    optionalDependencies:
+      vue: 3.4.23(typescript@5.4.5)
 
   vue-router@4.3.1(vue@3.4.23(typescript@5.4.5)):
     dependencies:
