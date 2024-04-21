@@ -147,3 +147,26 @@ pluginReact({
   },
 });
 ```
+
+### enableProfiler
+
+- **类型：** `boolean`
+- **默认值：** `false`
+
+当设置为 `true` 时，在生产构建中启用 React 性能分析器以用于性能分析。需要搭配 React DevTools 来检查分析结果并识别潜在的性能优化方案。分析会增加一些额外开销，因此出于性能考虑，在生产环境中默认是禁用的。
+
+```ts title="rsbuild.config.ts"
+pluginReact({
+  // 仅在 REACT_PROFILER 为 true 时启用性能分析器
+  // 因为该选项会增加构建时间并产生一些额外开销
+  enableProfiler: process.env.REACT_PROFILER === 'true',
+});
+```
+
+执行构建脚本时，设置 `REACT_PROFILER=true` 即可：
+
+```bash
+REACT_PROFILER=true npx rsbuild build
+```
+
+> 关于使用 React DevTools 进行性能分析的详细信息，请参见 [React 文档](https://legacy.reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler)。
