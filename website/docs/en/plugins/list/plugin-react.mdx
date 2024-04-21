@@ -148,17 +148,23 @@ pluginReact({
 
 ### enableProfiler
 
-When set to true, enables the React Profiler for performance analysis in production builds. Use the React DevTools to examine profiling results and identify potential performance optimizations. Profiling adds a slight overhead, so it's disabled by default in production environments.
+- **Type:** `boolean`
+- **Default:** `false`
+
+When set to `true`, enables the React Profiler for performance analysis in production builds. Use the React DevTools to examine profiling results and identify potential performance optimizations. Profiling adds a slight overhead, so it's disabled by default in production environments.
 
 ```ts title="rsbuild.config.ts"
 pluginReact({
-  // Only enable the profiler when REACT_PROFILER is true, as the option will increase the build time and adds some small additional overhead.
+  // Only enable the profiler when REACT_PROFILER is true,
+  // as the option will increase the build time and adds some small additional overhead.
   enableProfiler: process.env.REACT_PROFILER === 'true',
 });
 ```
 
-Set `REACT_PROFILER` when running build script.
+Set `REACT_PROFILER=true` when running build script:
 
-```
+```bash
 REACT_PROFILER=true npx rsbuild build
 ```
+
+> See the [React docs](https://legacy.reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler) for details about profiling using the React DevTools.
