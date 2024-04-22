@@ -1,6 +1,6 @@
+import path from 'node:path';
 import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { fse } from '@rsbuild/shared';
-import path from 'node:path';
 
 rspackOnlyTest('should work with string and path to file', async ({ page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
