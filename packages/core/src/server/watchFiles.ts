@@ -1,4 +1,4 @@
-import type { DevConfig, WatchFiles } from '@rsbuild/shared';
+import type { DevConfig } from '@rsbuild/shared';
 import type { RsbuildDevMiddlewareOptions } from './getDevMiddlewares';
 
 export async function setupWatchFiles(
@@ -10,14 +10,9 @@ export async function setupWatchFiles(
     return;
   }
 
-  const watchFilesOptions = normalizeWatchFilesOptions(watchFiles);
-  if (!watchFilesOptions) {
-    return;
-  }
-
   const chokidar = await import('@rsbuild/shared/chokidar');
 
-  const { paths, options } = watchFilesOptions;
+  const { paths, options } = watchFiles;
   const watcher = chokidar.watch(paths, options);
 
   watcher.on('change', () => {
@@ -25,32 +20,4 @@ export async function setupWatchFiles(
       compileMiddlewareAPI.sockWrite('static-changed');
     }
   });
-}
-
-function normalizeWatchFilesOptions(
-  watchFilesOptions: DevConfig['watchFiles'],
-): WatchFiles | undefined {
-  if (typeof watchFilesOptions === 'string') {
-    return {
-      paths: watchFilesOptions,
-      options: {},
-    };
-  }
-
-  if (Array.isArray(watchFilesOptions)) {
-    return {
-      paths: watchFilesOptions,
-      options: {},
-    };
-  }
-
-  if (typeof watchFilesOptions === 'object' && watchFilesOptions !== null) {
-    const { paths = [], options = {} } = watchFilesOptions;
-    return {
-      paths,
-      options,
-    };
-  }
-
-  return undefined;
 }

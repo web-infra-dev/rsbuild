@@ -8,7 +8,9 @@ rspackOnlyTest('should work with string and path to file', async ({ page }) => {
     cwd: __dirname,
     rsbuildConfig: {
       dev: {
-        watchFiles: file,
+        watchFiles: {
+          paths: file,
+        },
       },
     },
   });
@@ -33,7 +35,9 @@ rspackOnlyTest(
       cwd: __dirname,
       rsbuildConfig: {
         dev: {
-          watchFiles: path.join(__dirname, '/assets'),
+          watchFiles: {
+            paths: path.join(__dirname, '/assets'),
+          },
         },
       },
     });
@@ -58,10 +62,12 @@ rspackOnlyTest('should work with string array directory', async ({ page }) => {
     cwd: __dirname,
     rsbuildConfig: {
       dev: {
-        watchFiles: [
-          path.join(__dirname, '/assets'),
-          path.join(__dirname, '/other'),
-        ],
+        watchFiles: {
+          paths: [
+            path.join(__dirname, '/assets'),
+            path.join(__dirname, '/other'),
+          ],
+        },
       },
     },
   });
@@ -93,31 +99,8 @@ rspackOnlyTest('should work with string and glob', async ({ page }) => {
     cwd: __dirname,
     rsbuildConfig: {
       dev: {
-        watchFiles: `${watchDir}/**/*`,
-      },
-    },
-  });
-  await gotoPage(page, rsbuild);
-
-  await fse.writeFile(file, 'test');
-  // check the page is reloaded
-  await new Promise((resolve) => {
-    page.waitForURL(page.url()).then(resolve);
-  });
-
-  // reset file
-  fse.truncateSync(file);
-  await rsbuild.close();
-});
-
-rspackOnlyTest('should work with object with single path', async ({ page }) => {
-  const file = path.join(__dirname, '/assets/example.txt');
-  const rsbuild = await dev({
-    cwd: __dirname,
-    rsbuildConfig: {
-      dev: {
         watchFiles: {
-          paths: file,
+          paths: `${watchDir}/**/*`,
         },
       },
     },
@@ -134,41 +117,6 @@ rspackOnlyTest('should work with object with single path', async ({ page }) => {
   fse.truncateSync(file);
   await rsbuild.close();
 });
-
-rspackOnlyTest(
-  'should work with object with multiple paths',
-  async ({ page }) => {
-    const file = path.join(__dirname, '/assets/example.txt');
-    const other = path.join(__dirname, '/other/other.txt');
-    const rsbuild = await dev({
-      cwd: __dirname,
-      rsbuildConfig: {
-        dev: {
-          watchFiles: { paths: [file, other] },
-        },
-      },
-    });
-    await gotoPage(page, rsbuild);
-
-    await fse.writeFile(file, 'test');
-    // check the page is reloaded
-    await new Promise((resolve) => {
-      page.waitForURL(page.url()).then(resolve);
-    });
-    // reset file
-    fse.truncateSync(file);
-
-    await fse.writeFile(other, 'test');
-    // check the page is reloaded
-    await new Promise((resolve) => {
-      page.waitForURL(page.url()).then(resolve);
-    });
-    // reset file
-    fse.truncateSync(other);
-
-    await rsbuild.close();
-  },
-);
 
 rspackOnlyTest('should work with options', async ({ page }) => {
   const file = path.join(__dirname, '/assets/example.txt');

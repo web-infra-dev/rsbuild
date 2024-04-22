@@ -3,14 +3,11 @@
 - **Type:**
 
 ```ts
-type WatchFiles =
-  | string
-  | string[]
-  | {
-      paths: string | string[];
-      //  chokidar 选项
-      options?: WatchOptions;
-    };
+type WatchFiles = {
+  paths: string | string[];
+  //  chokidar 选项
+  options?: WatchOptions;
+};
 ```
 
 - **Default:** `undefined`
@@ -26,12 +23,14 @@ type WatchFiles =
 ```js
 export default {
   dev: {
-    // 监视单个文件
-    watchFiles: 'public/demo.txt',
-    // 使用 glob 模式
-    watchFiles: 'src/**/*.txt',
-    // 监视多个文件路径
-    watchFiles: ['src/**/*.txt', 'public/**/*'],
+    watchFiles: {
+      // 监视单个文件
+      paths: 'public/demo.txt',
+      // 使用 glob 模式
+      paths: 'src/**/*.txt',
+      // 监视多个文件路径
+      paths: ['src/**/*.txt', 'public/**/*'],
+    },
   },
 };
 ```

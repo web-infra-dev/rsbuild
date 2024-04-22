@@ -3,14 +3,11 @@
 - **Type:**
 
 ```ts
-type WatchFiles =
-  | string
-  | string[]
-  | {
-      paths: string | string[];
-      // watch options for chokidar
-      options?: WatchOptions;
-    };
+type WatchFiles = {
+  paths: string | string[];
+  // watch options for chokidar
+  options?: WatchOptions;
+};
 ```
 
 - **Default:** `undefined`
@@ -26,12 +23,14 @@ You can configure a list of globs/directories/files to watch for file changes.
 ```js
 export default {
   dev: {
-    // watch a single file
-    watchFiles: 'public/demo.txt',
-    // use a glob pattern
-    watchFiles: 'src/**/*.txt',
-    // watch multiple file paths
-    watchFiles: ['src/**/*.txt', 'public/**/*'],
+    watchFiles: {
+      // watch a single file
+      paths: 'public/demo.txt',
+      // use a glob pattern
+      paths: 'src/**/*.txt',
+      // watch multiple file paths
+      paths: ['src/**/*.txt', 'public/**/*'],
+    },
   },
 };
 ```
