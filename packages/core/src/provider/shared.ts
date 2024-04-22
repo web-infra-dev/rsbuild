@@ -216,7 +216,7 @@ export function formatStats(
     const title = color.bold(color.yellow('Compile Warning: \n'));
 
     return {
-      message: `${title}${`${warnings.join('\n\n')}\n`}`,
+      message: `${title}${warnings.join('\n\n')}\n`,
       level: 'warning',
     };
   }
