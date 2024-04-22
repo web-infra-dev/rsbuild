@@ -1,19 +1,19 @@
 import {
-  debug,
   CHAIN_ID,
-  castArray,
-  getNodeEnv,
-  chainToConfig,
-  modifyBundlerChain,
-  mergeChainedOptions,
-  type RspackConfig,
-  type RsbuildTarget,
   type ModifyChainUtils,
   type ModifyRspackConfigUtils,
+  type RsbuildTarget,
+  type RspackConfig,
+  castArray,
+  chainToConfig,
+  debug,
+  getNodeEnv,
+  mergeChainedOptions,
+  modifyBundlerChain,
 } from '@rsbuild/shared';
-import { getCompiledPath } from './shared';
-import type { InternalContext } from '../types';
 import { getHTMLPlugin } from '../htmlUtils';
+import type { InternalContext } from '../types';
+import { getCompiledPath } from './shared';
 
 async function modifyRspackConfig(
   context: InternalContext,

@@ -1,5 +1,5 @@
-import { createStubRsbuild } from '@scripts/test-helper';
 import type { RsbuildPlugin } from '@rsbuild/shared';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { BUILTIN_LOADER } from '../src/provider/shared';
 
 describe('applyDefaultPlugins', () => {

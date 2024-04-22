@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
 import { build, proxyConsole } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
 

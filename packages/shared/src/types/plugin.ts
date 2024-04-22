@@ -1,36 +1,36 @@
-import type { Falsy, WebpackChain } from './utils';
-import type {
-  OnExitFn,
-  OnAfterBuildFn,
-  OnBeforeBuildFn,
-  OnCloseDevServerFn,
-  OnDevCompileDoneFn,
-  OnAfterStartDevServerFn,
-  OnBeforeStartDevServerFn,
-  OnAfterStartProdServerFn,
-  OnBeforeStartProdServerFn,
-  OnAfterCreateCompilerFn,
-  OnBeforeCreateCompilerFn,
-  ModifyChainUtils,
-  ModifyHTMLTagsFn,
-  ModifyBundlerChainFn,
-  ModifyRsbuildConfigFn,
-} from './hooks';
-import type { RsbuildContext } from './context';
-import type {
-  RsbuildConfig,
-  NormalizedConfig,
-  ModifyRspackConfigUtils,
-} from './config';
-import type { MaybePromise } from './utils';
-import type { RspackConfig, RspackSourceMap } from './rspack';
 import type { RuleSetCondition } from '@rspack/core';
 import type {
   RuleSetRule,
-  WebpackPluginInstance,
   Configuration as WebpackConfig,
+  WebpackPluginInstance,
 } from 'webpack';
 import type { ChainIdentifier } from '../chain';
+import type {
+  ModifyRspackConfigUtils,
+  NormalizedConfig,
+  RsbuildConfig,
+} from './config';
+import type { RsbuildContext } from './context';
+import type {
+  ModifyBundlerChainFn,
+  ModifyChainUtils,
+  ModifyHTMLTagsFn,
+  ModifyRsbuildConfigFn,
+  OnAfterBuildFn,
+  OnAfterCreateCompilerFn,
+  OnAfterStartDevServerFn,
+  OnAfterStartProdServerFn,
+  OnBeforeBuildFn,
+  OnBeforeCreateCompilerFn,
+  OnBeforeStartDevServerFn,
+  OnBeforeStartProdServerFn,
+  OnCloseDevServerFn,
+  OnDevCompileDoneFn,
+  OnExitFn,
+} from './hooks';
+import type { RspackConfig, RspackSourceMap } from './rspack';
+import type { Falsy, WebpackChain } from './utils';
+import type { MaybePromise } from './utils';
 
 type HookOrder = 'pre' | 'post' | 'default';
 

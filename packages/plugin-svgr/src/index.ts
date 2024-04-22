@@ -1,13 +1,13 @@
 import path from 'node:path';
+import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
+import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
 import {
+  SCRIPT_REGEX,
   SVG_REGEX,
   deepmerge,
   getDistPath,
   getFilename,
-  SCRIPT_REGEX,
 } from '@rsbuild/shared';
-import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
-import type { Rspack, RsbuildPlugin } from '@rsbuild/core';
 import type { Config } from '@svgr/core';
 
 export type SvgDefaultExport = 'component' | 'url';

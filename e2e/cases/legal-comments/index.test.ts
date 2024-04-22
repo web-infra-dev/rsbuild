@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
 import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;

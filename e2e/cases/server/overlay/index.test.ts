@@ -1,6 +1,6 @@
-import { expect, test } from '@playwright/test';
-import { dev, gotoPage, proxyConsole } from '@e2e/helper';
 import { join } from 'node:path';
+import { dev, gotoPage, proxyConsole } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
 
 const cwd = __dirname;

@@ -1,12 +1,12 @@
 import path from 'node:path';
 import { logger } from '@rsbuild/core';
 import {
-  isProd,
-  withPublicPath,
-  generateScriptTag,
-  getPublicPathFromCompiler,
   type Rspack,
   type ScriptLoading,
+  generateScriptTag,
+  getPublicPathFromCompiler,
+  isProd,
+  withPublicPath,
 } from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginRemOptions } from './types';

@@ -1,7 +1,7 @@
+import { color as colors } from '@rsbuild/shared';
 import cliTruncate from '../../../compiled/cli-truncate';
 import type { Props } from './type';
 import { clamp } from './utils';
-import { color as colors } from '@rsbuild/shared';
 
 const defaultOption: Props = {
   total: 100,

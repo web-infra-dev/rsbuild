@@ -1,5 +1,5 @@
-import { Compiler } from '../src/binding';
 import type { TransformConfig } from '@modern-js/swc-plugins';
+import { Compiler } from '../src/binding';
 
 describe('concurrent compile', async () => {
   test('transform and transformSync', async () => {

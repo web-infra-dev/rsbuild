@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
 import { build, gotoPage, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
 test('should run stage 3 decorators correctly', async ({ page }) => {

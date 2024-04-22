@@ -1,6 +1,6 @@
 import {
-  rspackMinVersion,
   isSatisfyRspackVersion,
+  rspackMinVersion,
 } from '../src/provider/shared';
 
 describe('rspack version', () => {

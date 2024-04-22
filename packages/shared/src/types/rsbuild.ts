@@ -1,8 +1,8 @@
-import type { PluginManager } from './plugin';
+import type { EntryDescription } from '@rspack/core';
 import type { RsbuildConfig } from './config';
 import type { RsbuildContext } from './context';
-import type { RsbuildProvider, ProviderInstance } from './provider';
-import type { EntryDescription } from '@rspack/core';
+import type { PluginManager } from './plugin';
+import type { ProviderInstance, RsbuildProvider } from './provider';
 
 export type RsbuildTarget = 'web' | 'node' | 'web-worker' | 'service-worker';
 

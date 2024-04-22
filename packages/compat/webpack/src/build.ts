@@ -1,19 +1,19 @@
-import { createCompiler } from './createCompiler';
-import { initConfigs, type InitConfigsOptions } from './initConfigs';
 import {
-  logger,
-  getNodeEnv,
-  setNodeEnv,
-  onCompileDone,
-  type Stats,
-  type Rspack,
-  type MultiStats,
   type BuildOptions,
+  type MultiStats,
+  type Rspack,
   type RspackConfig,
+  type Stats,
+  getNodeEnv,
+  logger,
+  onCompileDone,
+  setNodeEnv,
 } from '@rsbuild/shared';
 import type { Configuration as WebpackConfig } from 'webpack';
 // @ts-expect-error
 import WebpackMultiStats from 'webpack/lib/MultiStats';
+import { createCompiler } from './createCompiler';
+import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export const build = async (
   initOptions: InitConfigsOptions,

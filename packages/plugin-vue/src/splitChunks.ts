@@ -1,8 +1,8 @@
 import type { RsbuildPluginAPI } from '@rsbuild/core';
 import {
-  isPlainObject,
-  createCacheGroups,
   type SplitChunks,
+  createCacheGroups,
+  isPlainObject,
 } from '@rsbuild/shared';
 import type { SplitVueChunkOptions } from '.';
 

@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
-import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { proxyConsole } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
+import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 
 test('should throw error when exist type errors', async () => {
   const { logs, restore } = proxyConsole();

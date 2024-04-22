@@ -1,5 +1,5 @@
-import { expect } from '@playwright/test';
 import { build, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
 rspackOnlyTest('should allow to set hash format to fullhash', async () => {
   const rsbuild = await build({

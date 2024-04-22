@@ -1,8 +1,8 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import type { SwcReactConfig } from '@rsbuild/shared';
-import { applySplitChunksRule } from './splitChunks';
-import { applyBasicReactSupport, applyReactProfiler } from './react';
 import { getNodeEnv } from '@rsbuild/shared';
+import { applyBasicReactSupport, applyReactProfiler } from './react';
+import { applySplitChunksRule } from './splitChunks';
 
 export type SplitReactChunkOptions = {
   /**

@@ -1,9 +1,9 @@
+import type { RuleSetCondition } from '@rspack/core';
 import type { RsbuildEntry, RsbuildTarget } from '../rsbuild';
 import type {
-  ChainedConfigWithUtils,
   ChainedConfigCombineUtils,
+  ChainedConfigWithUtils,
 } from '../utils';
-import type { RuleSetCondition } from '@rspack/core';
 
 export type Alias = Record<string, string | false | (string | false)[]>;
 

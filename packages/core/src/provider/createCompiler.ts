@@ -1,27 +1,27 @@
 import {
+  type CreateDevMiddlewareReturns,
+  type MultiStats,
+  type RspackCompiler,
+  type RspackConfig,
+  type RspackMultiCompiler,
+  type Stats,
+  TARGET_ID_MAP,
+  color,
+  debug,
   isDev,
   isProd,
-  debug,
-  color,
   logger,
-  prettyTime,
-  TARGET_ID_MAP,
   onCompileDone,
-  type Stats,
-  type MultiStats,
-  type RspackConfig,
-  type RspackCompiler,
-  type RspackMultiCompiler,
-  type CreateDevMiddlewareReturns,
+  prettyTime,
 } from '@rsbuild/shared';
-import { initConfigs, type InitConfigsOptions } from './initConfigs';
-import type { InternalContext } from '../types';
 import type { StatsCompilation } from '@rspack/core';
+import type { InternalContext } from '../types';
+import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import {
   formatStats,
   getStatsOptions,
-  rspackMinVersion,
   isSatisfyRspackVersion,
+  rspackMinVersion,
 } from './shared';
 
 export async function createCompiler({

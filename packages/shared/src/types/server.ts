@@ -1,13 +1,13 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
+import type { Server as ConnectServer } from '../../compiled/connect';
 import type {
+  DevConfig,
   NextFunction,
   RequestHandler,
   ServerAPIs,
-  DevConfig,
 } from './config/dev';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
-import type { Server as ConnectServer } from '../../compiled/connect';
 
 export type Middleware = (
   req: IncomingMessage,

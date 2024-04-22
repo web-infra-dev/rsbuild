@@ -1,7 +1,7 @@
-import { expect, describe, it, vi } from 'vitest';
-import { pluginReact } from '../src';
-import { createStubRsbuild } from '@scripts/test-helper';
 import { SCRIPT_REGEX } from '@rsbuild/shared';
+import { createStubRsbuild } from '@scripts/test-helper';
+import { describe, expect, it, vi } from 'vitest';
+import { pluginReact } from '../src';
 
 describe('splitChunks', () => {
   it('should apply antd/semi/... splitChunks rule when pkg is installed', async () => {

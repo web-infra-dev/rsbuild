@@ -1,15 +1,15 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { parse } from 'node:url';
 import {
-  color,
-  debug,
-  logger,
-  isDebug,
   type HtmlFallback,
   type RequestHandler as Middleware,
+  color,
+  debug,
+  isDebug,
+  logger,
 } from '@rsbuild/shared';
 import type { NextHandleFunction } from '@rsbuild/shared/connect';
-import { parse } from 'node:url';
-import path from 'node:path';
-import fs from 'node:fs';
 
 export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
   if (req.url === '/favicon.ico') {

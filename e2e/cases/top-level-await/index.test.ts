@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should run top level await correctly', async ({ page }) => {
   const rsbuild = await build({

@@ -1,7 +1,7 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { SolidPresetOptions } from './types';
 import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
 import { isUsingHMR } from '@rsbuild/shared';
+import type { SolidPresetOptions } from './types';
 
 export type PluginSolidOptions = {
   /**

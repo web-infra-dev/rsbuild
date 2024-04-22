@@ -1,10 +1,10 @@
 import path from 'node:path';
+import { pluginRss } from '@rspress/plugin-rss';
+import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
+import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './theme/rsbuildPluginOverview';
-import { pluginRss } from '@rspress/plugin-rss';
-import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
-import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
-import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 
 export default defineConfig({
   plugins: [

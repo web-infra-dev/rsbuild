@@ -1,8 +1,8 @@
 import type {
-  Falsy,
   ChainedConfig,
-  ChainedConfigWithUtils,
   ChainedConfigCombineUtils,
+  ChainedConfigWithUtils,
+  Falsy,
 } from './types';
 import { isFunction, isPlainObject } from './utils';
 

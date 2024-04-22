@@ -1,7 +1,7 @@
-import path from 'node:path';
 import { execSync } from 'node:child_process';
-import { expect, test } from '@playwright/test';
+import path from 'node:path';
 import { globContentJSON } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should use custom config when using --config option', async () => {
   execSync('npx rsbuild build --config ./custom.config.mjs', {

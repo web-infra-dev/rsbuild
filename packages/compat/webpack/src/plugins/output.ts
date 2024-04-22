@@ -1,11 +1,11 @@
 import { posix } from 'node:path';
 import {
+  type RsbuildPlugin,
+  applyOutputPlugin,
   getDistPath,
   getFilename,
   isUseCssExtract,
-  applyOutputPlugin,
   mergeChainedOptions,
-  type RsbuildPlugin,
 } from '@rsbuild/shared';
 
 export const pluginOutput = (): RsbuildPlugin => ({

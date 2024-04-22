@@ -1,25 +1,25 @@
 import { resolve } from 'node:path';
+import type { Rspack } from '@rsbuild/core';
+import {
+  HTML_REGEX,
+  JS_REGEX,
+  browserslistToESVersion,
+  fse,
+} from '@rsbuild/shared';
 import { parse } from 'acorn';
 import {
-  printErrors,
+  checkIsExcludeSource,
   generateError,
   generateHtmlScripts,
-  checkIsExcludeSource,
+  printErrors,
 } from './helpers';
-import {
-  fse,
-  JS_REGEX,
-  HTML_REGEX,
-  browserslistToESVersion,
-} from '@rsbuild/shared';
 import type {
+  AcornParseError,
+  CheckSyntaxExclude,
+  CheckSyntaxOptions,
   ECMASyntaxError,
   EcmaVersion,
-  CheckSyntaxOptions,
-  CheckSyntaxExclude,
-  AcornParseError,
 } from './types';
-import type { Rspack } from '@rsbuild/core';
 
 type Compiler = Rspack.Compiler;
 type Compilation = Rspack.Compilation;

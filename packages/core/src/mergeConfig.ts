@@ -1,8 +1,8 @@
 import {
+  type RsbuildConfig,
   castArray,
   isFunction,
   isPlainObject,
-  type RsbuildConfig,
 } from '@rsbuild/shared';
 
 const OVERRIDE_PATH = [

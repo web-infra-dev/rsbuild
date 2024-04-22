@@ -1,7 +1,7 @@
 import { platform } from 'node:os';
 import { join } from 'node:path';
 import { test } from '@playwright/test';
-import { fse, type ConsoleType, castArray } from '@rsbuild/shared';
+import { type ConsoleType, castArray, fse } from '@rsbuild/shared';
 import glob, {
   convertPathToPattern,
   type Options as GlobOptions,

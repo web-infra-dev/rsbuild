@@ -1,11 +1,11 @@
+import type {
+  ModifyWebpackChainUtils,
+  NormalizedConfig,
+} from '@rsbuild/shared';
+import { webpackProvider } from '@rsbuild/webpack';
 import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginSwc } from '../src';
-import { webpackProvider } from '@rsbuild/webpack';
 import { applyPluginConfig } from '../src/utils';
-import type {
-  NormalizedConfig,
-  ModifyWebpackChainUtils,
-} from '@rsbuild/shared';
 
 const TEST_BUILDER_CONFIG = {
   output: {},

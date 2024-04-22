@@ -1,22 +1,22 @@
 import {
+  type InternalContext,
+  formatStats,
+  getDevMiddleware,
+  getStatsOptions,
+} from '@rsbuild/core/internal';
+import {
+  type Rspack,
+  type RspackConfig,
+  type Stats,
   debug,
   isDev,
   logger,
   onCompileDone,
-  type Stats,
-  type Rspack,
-  type RspackConfig,
 } from '@rsbuild/shared';
-import {
-  formatStats,
-  getStatsOptions,
-  getDevMiddleware,
-  type InternalContext,
-} from '@rsbuild/core/internal';
-import type { WebpackConfig } from './types';
-import { initConfigs, type InitConfigsOptions } from './initConfigs';
 // @ts-expect-error
 import WebpackMultiStats from 'webpack/lib/MultiStats';
+import { type InitConfigsOptions, initConfigs } from './initConfigs';
+import type { WebpackConfig } from './types';
 
 export async function createCompiler({
   context,

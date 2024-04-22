@@ -1,8 +1,8 @@
 import { isPathString, normalizeToPosixPath } from './path';
 import {
+  type PathMatcher,
   applyMatcherReplacement,
   createDefaultPathMatchers,
-  type PathMatcher,
 } from './pathSerializer';
 
 export { normalizeToPosixPath } from './path';

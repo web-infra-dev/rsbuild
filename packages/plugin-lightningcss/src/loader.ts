@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer';
 /**
  * modified from https://github.com/fz6m/lightningcss-loader
  * MIT License https://github.com/fz6m/lightningcss-loader/blob/main/LICENSE
@@ -5,7 +6,6 @@
  */
 import type { Rspack } from '@rsbuild/shared';
 import { transform as _transform } from 'lightningcss';
-import { Buffer } from 'node:buffer';
 import type { LightningCSSLoaderOptions } from './types';
 
 const LOADER_NAME = 'lightningcss-loader';

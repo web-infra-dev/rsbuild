@@ -1,7 +1,7 @@
-import { join } from 'node:path';
-import { expect, test } from '@playwright/test';
-import { dev } from '@e2e/helper';
 import fs from 'node:fs';
+import { join } from 'node:path';
+import { dev } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 const fixtures = __dirname;
 

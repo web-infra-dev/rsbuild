@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should import svg with SVGR plugin and query URL correctly', async () => {
   const rsbuild = await build({

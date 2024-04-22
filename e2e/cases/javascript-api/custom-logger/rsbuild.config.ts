@@ -1,4 +1,4 @@
-import { logger, defineConfig } from '@rsbuild/core';
+import { defineConfig, logger } from '@rsbuild/core';
 
 const defaultReady = logger.ready;
 

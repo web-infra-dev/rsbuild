@@ -1,24 +1,24 @@
 import path from 'node:path';
 import {
-  logger,
-  kebabCase,
-  getBrowserslistWithDefault,
-  isUseCssExtract,
-  CSS_REGEX,
-  CSS_MODULES_REGEX,
-  getCssLoaderOptions,
-  getPostcssLoaderOptions,
-  getCssModuleLocalIdentName,
-  resolvePackage,
-  mergeChainedOptions,
-  getSharedPkgCompiledPath,
   type BundlerChain,
+  CSS_MODULES_REGEX,
+  CSS_REGEX,
+  type ModifyBundlerChainUtils,
   type RsbuildContext,
   type RspackRule,
   type RuleSetRule,
-  type ModifyBundlerChainUtils,
+  getBrowserslistWithDefault,
+  getCssLoaderOptions,
+  getCssModuleLocalIdentName,
+  getPostcssLoaderOptions,
+  getSharedPkgCompiledPath,
+  isUseCssExtract,
+  kebabCase,
+  logger,
+  mergeChainedOptions,
+  resolvePackage,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin, NormalizedConfig } from '../../types';
+import type { NormalizedConfig, RsbuildPlugin } from '../../types';
 
 export const enableNativeCss = (config: NormalizedConfig) =>
   !config.output.injectStyles;

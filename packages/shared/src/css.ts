@@ -1,15 +1,15 @@
-import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
 import type { AcceptedPlugin } from 'postcss';
 import deepmerge from '../compiled/deepmerge';
+import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
 import { mergeChainedOptions } from './mergeChainedOptions';
-import { isFunction, isPlainObject } from './utils';
 import type {
-  RsbuildTarget,
-  PostCSSOptions,
   CSSLoaderOptions,
   NormalizedConfig,
   PostCSSLoaderOptions,
+  PostCSSOptions,
+  RsbuildTarget,
 } from './types';
+import { isFunction, isPlainObject } from './utils';
 
 export const getCssModuleLocalIdentName = (
   config: NormalizedConfig,

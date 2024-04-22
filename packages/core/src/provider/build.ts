@@ -1,14 +1,14 @@
-import { createCompiler } from './createCompiler';
-import { initConfigs, type InitConfigsOptions } from './initConfigs';
-import { logger, getNodeEnv, setNodeEnv, onCompileDone } from '@rsbuild/shared';
+import { getNodeEnv, logger, onCompileDone, setNodeEnv } from '@rsbuild/shared';
 import type {
-  Stats,
-  MultiStats,
   BuildOptions,
-  RspackConfig,
+  MultiStats,
   RspackCompiler,
+  RspackConfig,
   RspackMultiCompiler,
+  Stats,
 } from '@rsbuild/shared';
+import { createCompiler } from './createCompiler';
+import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export const build = async (
   initOptions: InitConfigsOptions,

@@ -1,24 +1,24 @@
+import path from 'node:path';
 import {
   getBrowserslistWithDefault,
   mergeChainedOptions,
   parseMinifyOptions,
 } from '@rsbuild/shared';
 import type {
-  ModifyBundlerChainUtils,
-  RsbuildPlugin,
   BundlerChain,
-  RsbuildContext,
+  ModifyBundlerChainUtils,
   NormalizedConfig,
+  RsbuildContext,
+  RsbuildPlugin,
   RsbuildTarget,
 } from '@rsbuild/shared';
 import browserslist from '@rsbuild/shared/browserslist';
 import { browserslistToTargets as _browserslistToTargets } from 'lightningcss';
-import path from 'node:path';
+import type * as LightningCSS from 'lightningcss';
 import type {
   LightningCSSLoaderOptions,
   PluginLightningcssOptions,
 } from './types';
-import type * as LightningCSS from 'lightningcss';
 
 const PLUGIN_NAME = 'rsbuild:lightningcss';
 

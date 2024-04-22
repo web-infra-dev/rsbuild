@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
 import { build } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should allow plugin to modify HTML tags', async () => {
   const rsbuild = await build({

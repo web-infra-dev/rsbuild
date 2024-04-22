@@ -1,17 +1,17 @@
-import type { DevConfig, NormalizedDevConfig } from './dev';
-import type { ServerConfig, NormalizedServerConfig } from './server';
-import type { HtmlConfig, NormalizedHtmlConfig } from './html';
-import type { OutputConfig, NormalizedOutputConfig } from './output';
-import type { SourceConfig, NormalizedSourceConfig } from './source';
-import type { SecurityConfig, NormalizedSecurityConfig } from './security';
-import type {
-  PerformanceConfig,
-  NormalizedPerformanceConfig,
-} from './performance';
-import type { ToolsConfig, NormalizedToolsConfig } from './tools';
-import type { DeepReadonly } from '../utils';
-import type { RsbuildPlugins, RsbuildProvider } from '..';
 import type { ModuleFederationPluginOptions } from '@rspack/core';
+import type { RsbuildPlugins, RsbuildProvider } from '..';
+import type { DeepReadonly } from '../utils';
+import type { DevConfig, NormalizedDevConfig } from './dev';
+import type { HtmlConfig, NormalizedHtmlConfig } from './html';
+import type { NormalizedOutputConfig, OutputConfig } from './output';
+import type {
+  NormalizedPerformanceConfig,
+  PerformanceConfig,
+} from './performance';
+import type { NormalizedSecurityConfig, SecurityConfig } from './security';
+import type { NormalizedServerConfig, ServerConfig } from './server';
+import type { NormalizedSourceConfig, SourceConfig } from './source';
+import type { NormalizedToolsConfig, ToolsConfig } from './tools';
 
 export type ModuleFederationConfig = {
   options: ModuleFederationPluginOptions;

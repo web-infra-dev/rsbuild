@@ -1,10 +1,10 @@
 import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
 import {
+  type ChainedConfig,
+  getDefaultStyledComponentsConfig,
   getNodeEnv,
   isServerTarget,
   mergeChainedOptions,
-  getDefaultStyledComponentsConfig,
-  type ChainedConfig,
 } from '@rsbuild/shared';
 
 /**

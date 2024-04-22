@@ -1,17 +1,17 @@
-import net from 'node:net';
-import { URL } from 'node:url';
 import assert from 'node:assert';
+import net from 'node:net';
 import { join } from 'node:path';
-import { fse } from '@rsbuild/shared';
-import { globContentJSON } from './helper';
-import { pluginSwc } from '@rsbuild/plugin-swc';
+import { URL } from 'node:url';
 import type {
+  CreateRsbuildOptions,
   RsbuildConfig,
   RsbuildPlugin,
   RsbuildPlugins,
-  CreateRsbuildOptions,
 } from '@rsbuild/core';
+import { pluginSwc } from '@rsbuild/plugin-swc';
+import { fse } from '@rsbuild/shared';
 import type { Page } from 'playwright';
+import { globContentJSON } from './helper';
 
 export const getHrefByEntryName = (entryName: string, port: number) => {
   const htmlRoot = new URL(`http://localhost:${port}`);

@@ -1,13 +1,13 @@
 import path from 'node:path';
+import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
-  ToolsSassConfig,
-  ToolsLessConfig,
   FileFilterUtil,
-  SassLoaderOptions,
   LessLoaderOptions,
+  SassLoaderOptions,
+  ToolsLessConfig,
+  ToolsSassConfig,
 } from './types';
 import { castArray, deepmerge, getSharedPkgCompiledPath } from './utils';
-import { mergeChainedOptions } from './mergeChainedOptions';
 
 export const getSassLoaderOptions = (
   rsbuildSassConfig: ToolsSassConfig | undefined,

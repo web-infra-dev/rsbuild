@@ -1,5 +1,5 @@
-import { getDistPath, isHtmlDisabled } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
+import { getDistPath, isHtmlDisabled } from '@rsbuild/shared';
 import type { PluginAssetsRetryOptions } from './types';
 
 export type { PluginAssetsRetryOptions };

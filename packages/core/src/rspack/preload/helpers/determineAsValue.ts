@@ -18,13 +18,13 @@
 
 import path from 'node:path';
 import { URL } from 'node:url';
-import type { As } from './type';
 import {
-  FONT_EXTENSIONS,
   AUDIO_EXTENSIONS,
+  FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
   VIDEO_EXTENSIONS,
 } from '@rsbuild/shared';
+import type { As } from './type';
 
 export function determineAsValue({
   href,

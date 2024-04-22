@@ -1,10 +1,10 @@
-import {
-  isCssModules,
-  applyAutoprefixer,
-  normalizeCssLoaderOptions,
-} from '../src/css';
 import autoprefixer from '../compiled/autoprefixer';
 import type { NormalizedConfig } from '../src';
+import {
+  applyAutoprefixer,
+  isCssModules,
+  normalizeCssLoaderOptions,
+} from '../src/css';
 
 describe('normalizeCssLoaderOptions', () => {
   it('should enable exportOnlyLocals correctly', () => {

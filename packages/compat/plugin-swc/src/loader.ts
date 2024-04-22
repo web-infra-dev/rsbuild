@@ -1,6 +1,6 @@
+import type { Options as SwcOptions } from '@modern-js/swc-plugins';
 import { getBrowserslist } from '@rsbuild/shared';
 import type { LoaderContext, LoaderDefinitionFunction } from 'webpack';
-import type { Options as SwcOptions } from '@modern-js/swc-plugins';
 import { Compiler } from './binding';
 import type { TransformConfig } from './types';
 
