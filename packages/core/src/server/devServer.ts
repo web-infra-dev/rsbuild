@@ -22,6 +22,7 @@ import { formatRoutes, getDevOptions, printServerURLs } from './helper';
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
 import { onBeforeRestartServer } from './restart';
+import { setupWatchFiles } from './watchFiles';
 
 export async function createDevServer<
   Options extends {
@@ -123,6 +124,8 @@ export async function createDevServer<
 
   const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
 
+  const fileWatcher = await setupWatchFiles(devConfig, compileMiddlewareAPI);
+
   const devMiddlewares = await getMiddlewares({
     pwd: options.context.rootPath,
     compileMiddlewareAPI,
@@ -200,6 +203,7 @@ export async function createDevServer<
     close: async () => {
       await options.context.hooks.onCloseDevServer.call();
       await devMiddlewares.close();
+      await fileWatcher?.close();
     },
   };
 
