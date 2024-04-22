@@ -9,7 +9,7 @@ test('should allow to set entry by build target', async () => {
   const files = await rsbuild.unwrapOutputJSON();
   const fileNames = Object.keys(files);
   const webIndex = fileNames.find(
-    (file) => file.includes('static/js') && file.includes('index.js'),
+    (file) => file.includes('static/js') && file.endsWith('index.js'),
   );
   const nodeIndex = fileNames.find((file) => file.includes('server/index'));
 
