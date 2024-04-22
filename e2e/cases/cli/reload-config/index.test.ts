@@ -1,8 +1,8 @@
-import path from 'node:path';
 import { exec } from 'node:child_process';
+import path from 'node:path';
+import { awaitFileExists, getRandomPort } from '@e2e/helper';
 import { test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { getRandomPort, awaitFileExists } from '@e2e/helper';
 
 test('should restart dev server and reload config when config file changed', async () => {
   const dist1 = path.join(__dirname, 'dist');

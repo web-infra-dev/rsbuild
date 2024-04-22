@@ -1,6 +1,6 @@
-import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
 import { proxyConsole } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should throw error when exist ESLint errors', async () => {
   const { logs, restore } = proxyConsole();

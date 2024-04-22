@@ -1,21 +1,21 @@
 import {
-  debug,
-  castArray,
-  chainToConfig,
-  modifyBundlerChain,
-  mergeChainedOptions,
+  type InternalContext,
+  getChainUtils as getBaseChainUtils,
+} from '@rsbuild/core/internal';
+import {
   type BundlerChain,
-  type RsbuildTarget,
-  type WebpackChain,
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
+  type RsbuildTarget,
+  type WebpackChain,
+  castArray,
+  chainToConfig,
+  debug,
+  mergeChainedOptions,
+  modifyBundlerChain,
 } from '@rsbuild/shared';
-import {
-  getChainUtils as getBaseChainUtils,
-  type InternalContext,
-} from '@rsbuild/core/internal';
-import { getCompiledPath } from './shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
+import { getCompiledPath } from './shared';
 import type { WebpackConfig } from './types';
 
 async function modifyWebpackChain(

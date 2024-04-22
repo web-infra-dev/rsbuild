@@ -1,5 +1,5 @@
-import { expect } from '@playwright/test';
 import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
 rspackOnlyTest(
   'should build Vue sfc with lang="tsx" correctly',

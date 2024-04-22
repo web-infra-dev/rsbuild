@@ -1,4 +1,4 @@
-import { withPublicPath, normalizeUrl } from '../src/url';
+import { normalizeUrl, withPublicPath } from '../src/url';
 
 const PUBLIC_PATH = 'https://www.example.com/static';
 

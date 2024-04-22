@@ -94,7 +94,7 @@ export default {
 - 这个配置会将构建生成的 JS 代码全部打包到一个文件里（除了 dynamic import 拆分的 chunk）。
 - 单个 JS 文件的体积可能会非常大，使页面加载性能下降。
 
-如果你需要将 dynamic import 拆分的 chunk 也打包到单个文件中，可以将 Rspack 的 [output.asyncChunks](https://www.rspack.dev/config/output#outputasyncchunks) 选项设置为 `false`：
+如果你需要将 dynamic import 拆分的 chunk 也打包到单个文件中，可以将 Rspack 的 [output.asyncChunks](https://rspack.dev/config/output#outputasyncchunks) 选项设置为 `false`：
 
 ```js
 export default defineConfig({
@@ -207,7 +207,7 @@ export default {
 };
 ```
 
-其中 `override` 中的配置会和 bundler 的配置进行合并，具体配置项请参考 [webpack - splitChunks](https://webpack.js.org/plugins/split-chunks-plugin/#splitchunkschunks) 或 [Rspack - splitChunks](https://rspack.dev/zh/config/optimization#optimization-splitchunks)。
+其中 `override` 中的配置会和 bundler 的配置进行合并，具体配置项请参考 [Rspack - splitChunks](https://rspack.dev/zh/config/optimization#optimization-splitchunks)。
 
 ## 使用 Dynamic Import 拆包
 

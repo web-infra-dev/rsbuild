@@ -1,6 +1,6 @@
 import { FONT_EXTENSIONS } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginAsset, getRegExpForExts } from '../src/plugins/asset';
+import { getRegExpForExts, pluginAsset } from '../src/plugins/asset';
 
 describe('getRegExpForExts', () => {
   it('should get correct RegExp of exts', () => {

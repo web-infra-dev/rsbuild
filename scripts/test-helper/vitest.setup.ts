@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { expect, beforeAll } from 'vitest';
+import { beforeAll, expect } from 'vitest';
 import { createSnapshotSerializer } from './dist';
 
 beforeAll((suite) => {

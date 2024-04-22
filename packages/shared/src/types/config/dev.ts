@@ -1,5 +1,5 @@
-import type { ArrayOrNot } from '../utils';
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { ArrayOrNot } from '../utils';
 
 export type ProgressBarConfig = {
   id?: string;
@@ -50,7 +50,7 @@ export interface DevConfig {
   beforeStartUrl?: ArrayOrNot<() => Promise<void> | void>;
   /**
    * Set the URL prefix of static assets during development,
-   * similar to the [output.publicPath](https://webpack.js.org/guides/public-path/) config of webpack.
+   * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath) config of webpack.
    */
   assetPrefix?: string | boolean;
   /**

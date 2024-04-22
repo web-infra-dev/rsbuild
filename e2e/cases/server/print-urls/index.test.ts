@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
 import { dev, proxyConsole } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
 

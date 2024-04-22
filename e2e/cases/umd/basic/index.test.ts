@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should generate UMD bundle correctly', async ({ page }) => {
   const rsbuild = await build({

@@ -1,4 +1,4 @@
-import { logger, type Logger } from '../compiled/rslog';
+import { type Logger, logger } from '../compiled/rslog';
 import { color } from './utils';
 
 // setup the logger level

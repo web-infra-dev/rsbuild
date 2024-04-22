@@ -17,7 +17,7 @@
     "check-spell": "npx cspell",
     "dev:doc": "cd website && pnpm run dev",
     "build:doc": "cd website && pnpm run build",
-    "lint": "biome lint . --diagnostic-level=warn && pnpm run check-spell",
+    "lint": "biome check . --diagnostic-level=warn && pnpm run check-spell",
     "prepare": "pnpm run build && simple-git-hooks",
     "sort-package-json": "npx sort-package-json \"packages/*/package.json\" \"packages/compat/*/package.json\"",
     "test": "pnpm run ut",
@@ -33,6 +33,7 @@
   "nano-staged": {
     "*.{md,mdx,json,css,less,scss}": "prettier --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "biome check --apply --formatter-enabled=false --linter-enabled=false",
       "prettier --write"
     ],
     "package.json": "pnpm run check-dependency-version"

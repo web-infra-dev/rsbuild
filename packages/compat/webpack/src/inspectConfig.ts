@@ -1,14 +1,14 @@
-import { join, isAbsolute } from 'node:path';
-import { initConfigs, type InitConfigsOptions } from './initConfigs';
+import { isAbsolute, join } from 'node:path';
 import {
-  setNodeEnv,
-  getNodeEnv,
-  stringifyConfig,
-  outputInspectConfigFiles,
-  type NormalizedConfig,
-  type InspectConfigResult,
   type InspectConfigOptions,
+  type InspectConfigResult,
+  type NormalizedConfig,
+  getNodeEnv,
+  outputInspectConfigFiles,
+  setNodeEnv,
+  stringifyConfig,
 } from '@rsbuild/shared';
+import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import type { WebpackConfig } from './types';
 
 export async function inspectConfig({

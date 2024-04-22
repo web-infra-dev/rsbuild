@@ -1,8 +1,8 @@
-import { expect, test } from '@playwright/test';
 import { dev, gotoPage, proxyConsole } from '@e2e/helper';
-import { pluginReact } from '@rsbuild/plugin-react';
+import { expect, test } from '@playwright/test';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
+import { pluginReact } from '@rsbuild/plugin-react';
 import type { RequestHandler } from '@rsbuild/shared';
 
 function count404Response(logs: string[], urlPrefix: string): number {

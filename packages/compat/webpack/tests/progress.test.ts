@@ -1,6 +1,6 @@
-import { createStubRsbuild } from './helper';
 import { pluginProgress } from '../src/plugins/progress';
 import { createFriendlyPercentage } from '../src/progress/helpers';
+import { createStubRsbuild } from './helper';
 
 describe('plugin-progress', () => {
   it('should register ProgressPlugin by default', async () => {

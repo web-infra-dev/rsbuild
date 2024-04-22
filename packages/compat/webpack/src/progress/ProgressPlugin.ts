@@ -1,5 +1,5 @@
-import webpack from 'webpack';
 import { logger, prettyTime } from '@rsbuild/shared';
+import webpack from 'webpack';
 import { bus, createFriendlyPercentage } from './helpers';
 import { createNonTTYLogger } from './helpers/nonTty';
 import type { Props } from './helpers/type';

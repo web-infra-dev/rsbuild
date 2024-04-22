@@ -1,7 +1,7 @@
 import {
+  type Define,
   getNodeEnv,
   getPublicPathFromChain,
-  type Define,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 

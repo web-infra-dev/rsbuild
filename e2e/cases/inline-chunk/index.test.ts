@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import type { BundlerChain } from '@rsbuild/shared';
 
 // use source-map for easy to test. By default, Rsbuild use hidden-source-map

@@ -1,4 +1,4 @@
-import type { Compiler, Compilation } from '@rspack/core';
+import type { Compilation, Compiler } from '@rspack/core';
 
 export class RemoveCssSourcemapPlugin {
   name: string;

@@ -1,9 +1,9 @@
 import {
-  pick,
-  debug,
+  type CreateRsbuildOptions,
   type RsbuildInstance,
   type RsbuildProvider,
-  type CreateRsbuildOptions,
+  debug,
+  pick,
 } from '@rsbuild/shared';
 import { createPluginManager } from './pluginManager';
 

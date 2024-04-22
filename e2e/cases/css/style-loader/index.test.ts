@@ -1,7 +1,7 @@
+import { join } from 'node:path';
 import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { join } from 'node:path';
 
 const fixtures = __dirname;
 

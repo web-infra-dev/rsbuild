@@ -1,6 +1,6 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { cases, shareTest, copyPkgToNodeModules, findEntry } from './helper';
+import { cases, copyPkgToNodeModules, findEntry, shareTest } from './helper';
 
 test('should import with template config', async () => {
   copyPkgToNodeModules();

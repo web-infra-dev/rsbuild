@@ -1,4 +1,4 @@
-import type { Compilation, StatsValue, StatsCompilation } from '@rspack/core';
+import type { Compilation, StatsCompilation, StatsValue } from '@rspack/core';
 
 export type { StatsError, StatsAsset } from '@rspack/core';
 

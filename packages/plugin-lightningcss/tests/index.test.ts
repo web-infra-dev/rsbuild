@@ -1,12 +1,12 @@
-import { expect, describe, it } from 'vitest';
-import { pluginLightningcss, lightningcss } from '../src';
-import { createStubRsbuild } from '@scripts/test-helper';
 import { createRsbuild } from '@rsbuild/core';
 import {
+  type RspackConfig,
   type RuleSetRule,
   isPlainObject,
-  type RspackConfig,
 } from '@rsbuild/shared';
+import { createStubRsbuild } from '@scripts/test-helper';
+import { describe, expect, it } from 'vitest';
+import { lightningcss, pluginLightningcss } from '../src';
 
 const getCssRules = (rspackConfig: RspackConfig) => {
   const CSS_RULES = ['css', 'scss', 'sass', 'less', 'stylus'];

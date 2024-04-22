@@ -1,6 +1,6 @@
-import { webpackProvider } from '../src/provider';
-import type { RsbuildPlugin, CreateRsbuildOptions } from '@rsbuild/shared';
+import type { CreateRsbuildOptions, RsbuildPlugin } from '@rsbuild/shared';
 import { createStubRsbuild as createBaseRsbuild } from '@scripts/test-helper';
+import { webpackProvider } from '../src/provider';
 
 export async function createStubRsbuild({
   rsbuildConfig = {},

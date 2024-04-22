@@ -1,5 +1,5 @@
-import { expect } from '@playwright/test';
 import { build, gotoPage, webpackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
 webpackOnlyTest(
   'should allow to use tools.webpackChain to configure Webpack',

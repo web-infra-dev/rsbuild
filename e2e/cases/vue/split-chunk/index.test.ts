@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
 import { build } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import { pluginVue } from '@rsbuild/plugin-vue';
 
 const fixtures = __dirname;

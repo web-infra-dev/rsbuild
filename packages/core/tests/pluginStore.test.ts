@@ -1,4 +1,4 @@
-import { initPlugins, createPluginManager } from '../src/pluginManager';
+import { createPluginManager, initPlugins } from '../src/pluginManager';
 
 describe('initPlugins', () => {
   it('should sort plugin correctly', async () => {

@@ -1,7 +1,7 @@
+import { execSync } from 'node:child_process';
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { execSync } from 'node:child_process';
 
 test('should inject public env vars to client', async () => {
   execSync('npx rsbuild build', {

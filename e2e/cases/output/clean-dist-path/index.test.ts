@@ -1,7 +1,7 @@
 import { join } from 'node:path';
+import { build, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { build, proxyConsole } from '@e2e/helper';
 
 const cwd = __dirname;
 const testDistFile = join(cwd, 'dist/test.json');

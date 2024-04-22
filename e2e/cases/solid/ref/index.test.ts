@@ -1,5 +1,5 @@
-import { expect } from '@playwright/test';
 import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
 // https://github.com/web-infra-dev/rsbuild/issues/1963
 rspackOnlyTest('Solid ref should work', async ({ page }) => {

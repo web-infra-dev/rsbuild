@@ -1,5 +1,5 @@
+import { displayCodePointer, makeCodeFrame } from '../src/helpers';
 import { getHtmlScripts } from '../src/helpers/generateHtmlScripts';
-import { makeCodeFrame, displayCodePointer } from '../src/helpers';
 
 describe('getHtmlScripts', () => {
   test('should extract inline scripts correctly', async () => {

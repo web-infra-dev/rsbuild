@@ -1,8 +1,8 @@
 // rsbuild/initial-chunk/retry
 import type { CrossOrigin } from '@rsbuild/shared';
 import type {
-  PluginAssetsRetryOptions,
   AssetsRetryHookContext,
+  PluginAssetsRetryOptions,
 } from '../types';
 
 interface ScriptElementAttributes {

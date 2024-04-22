@@ -1,10 +1,10 @@
 import {
-  DEFAULT_ASSET_PREFIX,
   type CacheGroup,
+  DEFAULT_ASSET_PREFIX,
   type RspackCompiler,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
 import type { RspackPluginInstance } from '@rspack/core';
+import type { RsbuildPlugin } from '../types';
 
 /**
  * Force remote entry not be affected by user's chunkSplit strategy,

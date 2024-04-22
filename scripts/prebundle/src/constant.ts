@@ -1,7 +1,7 @@
 import path, { join } from 'node:path';
-import type { ParsedTask, TaskConfig } from './types';
 import fs, { copySync } from 'fs-extra';
 import { replaceFileContent } from './helper';
+import type { ParsedTask, TaskConfig } from './types';
 
 export const ROOT_DIR = join(__dirname, '..', '..', '..');
 export const PACKAGES_DIR = join(ROOT_DIR, 'packages');

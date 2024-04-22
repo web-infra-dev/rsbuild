@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('Use SVGR and default export React component', async ({ page }) => {
   const rsbuild = await build({

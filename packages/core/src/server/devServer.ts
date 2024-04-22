@@ -1,27 +1,27 @@
 import {
-  debug,
-  getNodeEnv,
-  setNodeEnv,
-  ROOT_DIST_DIR,
-  getAddressUrls,
-  isMultiCompiler,
-  getPublicPathFromCompiler,
-  type RsbuildDevServer,
-  type StartServerResult,
-  type CreateDevServerOptions,
-  type StartDevServerOptions,
   type CreateDevMiddlewareReturns,
+  type CreateDevServerOptions,
+  ROOT_DIST_DIR,
+  type RsbuildDevServer,
+  type StartDevServerOptions,
+  type StartServerResult,
+  debug,
+  getAddressUrls,
+  getNodeEnv,
+  getPublicPathFromCompiler,
+  isMultiCompiler,
+  setNodeEnv,
 } from '@rsbuild/shared';
-import { formatRoutes, getDevOptions, printServerURLs } from './helper';
 import connect from '@rsbuild/shared/connect';
-import { onBeforeRestartServer } from './restart';
 import type { InternalContext } from '../types';
-import { createHttpServer } from './httpServer';
 import {
-  getMiddlewares,
   type RsbuildDevMiddlewareOptions,
+  getMiddlewares,
 } from './getDevMiddlewares';
+import { formatRoutes, getDevOptions, printServerURLs } from './helper';
+import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
+import { onBeforeRestartServer } from './restart';
 
 export async function createDevServer<
   Options extends {

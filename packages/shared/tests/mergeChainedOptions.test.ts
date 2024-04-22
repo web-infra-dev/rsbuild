@@ -1,4 +1,4 @@
-import { mergeChainedOptions, isNil } from '../src';
+import { isNil, mergeChainedOptions } from '../src';
 
 describe('mergeChainedOptions', () => {
   test('should return default options', () => {

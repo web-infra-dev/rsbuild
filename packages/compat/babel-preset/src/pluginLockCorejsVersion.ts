@@ -1,6 +1,6 @@
+import { readFileSync } from 'node:fs';
 import nodePath from 'node:path';
 import * as t from '@babel/types';
-import { readFileSync } from 'node:fs';
 
 const CORE_JS_PKG_PATH = require.resolve('core-js/package.json');
 

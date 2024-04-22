@@ -1,11 +1,11 @@
 import { Console } from 'node:console';
-import patchConsole from '../../../compiled/patch-console';
+import { getProgressColor } from '@rsbuild/shared';
 import cliTruncate from '../../../compiled/cli-truncate';
-import type { Props } from './type';
+import patchConsole from '../../../compiled/patch-console';
 import { FULL_WIDTH, renderBar } from './bar';
 import { create } from './log';
 import type { LogUpdate } from './log';
-import { getProgressColor } from '@rsbuild/shared';
+import type { Props } from './type';
 
 class Bus {
   states: Partial<Props>[] = [];

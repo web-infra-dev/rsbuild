@@ -1,6 +1,6 @@
 import { join } from 'node:path';
+import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { dev, build } from '@e2e/helper';
 
 const cwd = __dirname;
 

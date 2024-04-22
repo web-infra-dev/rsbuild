@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
 import { build, proxyConsole } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should compile common css import correctly', async () => {
   const { restore, logs } = proxyConsole();

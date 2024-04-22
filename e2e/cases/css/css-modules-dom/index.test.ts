@@ -1,8 +1,8 @@
 import { join, resolve } from 'node:path';
-import { fse } from '@rsbuild/shared';
 import { build, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
+import { fse } from '@rsbuild/shared';
 
 const fixtures = resolve(__dirname);
 

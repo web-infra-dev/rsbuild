@@ -1,7 +1,7 @@
 import type {
+  DnsPrefetchOption,
   HtmlBasicTag,
   PreconnectOption,
-  DnsPrefetchOption,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 

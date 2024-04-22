@@ -4,7 +4,7 @@ import { getMonorepoBaseData, getMonorepoSubProjects } from '../common';
 import type { Project } from '../project/project';
 import type { MonorepoAnalyzer } from '../types';
 import { readPackageJson } from '../utils';
-import { defaultFilter, type Filter } from './filter';
+import { type Filter, defaultFilter } from './filter';
 
 export type ExtraMonorepoStrategies = Record<string, MonorepoAnalyzer>;
 

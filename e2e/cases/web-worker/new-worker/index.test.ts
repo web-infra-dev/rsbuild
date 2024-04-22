@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should allow to build web-worker with new Worker', async ({ page }) => {
   const rsbuild = await build({
