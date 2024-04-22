@@ -13,7 +13,7 @@ export type ProxyDetail = BaseProxyOptions & {
     req: IncomingMessage,
     res: ServerResponse,
     proxyOptions: ProxyOptions,
-  ) => string | undefined | null | false;
+  ) => string | undefined | null | boolean;
   context?: ProxyFilter;
 };
 

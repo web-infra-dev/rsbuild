@@ -89,7 +89,7 @@ type ProxyDetail = HttpProxyOptions & {
     req: IncomingMessage,
     res: ServerResponse,
     proxyOptions: ProxyOptions,
-  ) => string | undefined | null | false;
+  ) => string | undefined | null | boolean;
   context?: Filter;
 };
 
@@ -107,6 +107,7 @@ In addition to the http-proxy-middleware option, Rsbuild also support the bypass
 Bypass the proxy based on the return value of a function.
 
 - Return `null` or `undefined` to continue processing the request with proxy.
+- Return `true` to continue processing the request without proxy.
 - Return `false` to produce a 404 error for the request.
 - Return a path to serve from, instead of continuing to proxy the request.
 
