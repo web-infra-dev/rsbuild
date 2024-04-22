@@ -1,10 +1,10 @@
-import type { DevConfig } from '@rsbuild/shared';
+import type { DevConfig, FSWatcher } from '@rsbuild/shared';
 import type { RsbuildDevMiddlewareOptions } from './getDevMiddlewares';
 
 export async function setupWatchFiles(
   dev: DevConfig,
   compileMiddlewareAPI: RsbuildDevMiddlewareOptions['compileMiddlewareAPI'],
-) {
+): Promise<FSWatcher | undefined> {
   const { watchFiles, hmr, liveReload } = dev;
   if (!watchFiles || (!hmr && !liveReload)) {
     return;
@@ -20,4 +20,6 @@ export async function setupWatchFiles(
       compileMiddlewareAPI.sockWrite('static-changed');
     }
   });
+
+  return watcher;
 }

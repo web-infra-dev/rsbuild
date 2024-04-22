@@ -124,6 +124,8 @@ export async function createDevServer<
 
   const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
 
+  const fileWatcher = await setupWatchFiles(devConfig, compileMiddlewareAPI);
+
   const devMiddlewares = await getMiddlewares({
     pwd: options.context.rootPath,
     compileMiddlewareAPI,
@@ -201,10 +203,9 @@ export async function createDevServer<
     close: async () => {
       await options.context.hooks.onCloseDevServer.call();
       await devMiddlewares.close();
+      await fileWatcher?.close();
     },
   };
-
-  await setupWatchFiles(devConfig, compileMiddlewareAPI);
 
   debug('create dev server done');
 

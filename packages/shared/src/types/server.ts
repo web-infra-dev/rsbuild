@@ -9,6 +9,8 @@ import type {
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 import type { Server as ConnectServer } from '../../compiled/connect';
 
+export type { FSWatcher } from '../../compiled/chokidar';
+
 export type Middleware = (
   req: IncomingMessage,
   res: ServerResponse,
