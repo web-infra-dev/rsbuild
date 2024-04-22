@@ -5,8 +5,8 @@ export async function setupWatchFiles(
   dev: DevConfig,
   compileMiddlewareAPI: RsbuildDevMiddlewareOptions['compileMiddlewareAPI'],
 ) {
-  const { watchFiles } = dev;
-  if (!watchFiles) {
+  const { watchFiles, hmr, liveReload } = dev;
+  if (!watchFiles || (!hmr && !liveReload)) {
     return;
   }
 
@@ -15,18 +15,16 @@ export async function setupWatchFiles(
     return;
   }
 
-  const { paths, options } = watchFilesOptions;
-
   const chokidar = await import('@rsbuild/shared/chokidar');
+
+  const { paths, options } = watchFilesOptions;
   const watcher = chokidar.watch(paths, options);
 
-  if (dev.hmr || dev.liveReload) {
-    watcher.on('change', () => {
-      if (compileMiddlewareAPI) {
-        compileMiddlewareAPI.sockWrite('static-changed');
-      }
-    });
-  }
+  watcher.on('change', () => {
+    if (compileMiddlewareAPI) {
+      compileMiddlewareAPI.sockWrite('static-changed');
+    }
+  });
 }
 
 function normalizeWatchFilesOptions(
