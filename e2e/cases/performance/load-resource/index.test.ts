@@ -26,8 +26,9 @@ test('should generate prefetch link when prefetch is defined', async () => {
 
   const files = await rsbuild.unwrapOutputJSON();
 
-  const asyncFileName = Object.keys(files).find((file) =>
-    file.includes('/static/js/async/'),
+  const asyncFileName = Object.keys(files).find(
+    (file) =>
+      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
   )!;
   const [, content] = Object.entries(files).find(([name]) =>
     name.endsWith('.html'),
@@ -66,8 +67,9 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
 
   const files = await rsbuild.unwrapOutputJSON();
 
-  const asyncFileName = Object.keys(files).find((file) =>
-    file.includes('/static/js/async/'),
+  const asyncFileName = Object.keys(files).find(
+    (file) =>
+      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
   )!;
   const [, content] = Object.entries(files).find(([name]) =>
     name.endsWith('.html'),
@@ -187,8 +189,9 @@ test('should generate preload link when preload is defined', async () => {
 
   const files = await rsbuild.unwrapOutputJSON();
 
-  const asyncFileName = Object.keys(files).find((file) =>
-    file.includes('/static/js/async/'),
+  const asyncFileName = Object.keys(files).find(
+    (file) =>
+      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
   )!;
   const [, content] = Object.entries(files).find(([name]) =>
     name.endsWith('.html'),
@@ -230,8 +233,9 @@ test('should generate preload link with crossOrigin', async () => {
 
   const files = await rsbuild.unwrapOutputJSON();
 
-  const asyncFileName = Object.keys(files).find((file) =>
-    file.includes('/static/js/async/'),
+  const asyncFileName = Object.keys(files).find(
+    (file) =>
+      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
   )!;
   const [, content] = Object.entries(files).find(([name]) =>
     name.endsWith('.html'),
@@ -270,8 +274,9 @@ test('should generate preload link without crossOrigin when same origin', async 
 
   const files = await rsbuild.unwrapOutputJSON();
 
-  const asyncFileName = Object.keys(files).find((file) =>
-    file.includes('/static/js/async/'),
+  const asyncFileName = Object.keys(files).find(
+    (file) =>
+      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
   )!;
   const [, content] = Object.entries(files).find(([name]) =>
     name.endsWith('.html'),
